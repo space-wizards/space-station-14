@@ -18,7 +18,7 @@
     This copies all dependencies,
     but on the plus side it's automatically located in the right place.
     -->
-    <OutputPath>..\bin\Server\Assemblies\</OutputPath>
+    <OutputPath>..\bin\Content.Server\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -30,7 +30,7 @@
     This copies all dependencies,
     but on the plus side it's automatically located in the right place.
     -->
-    <OutputPath>..\bin\Server\Assemblies\</OutputPath>
+    <OutputPath>..\bin\Content.Server\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -71,4 +71,24 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Choose>
+    <When Condition="'$(OS)'=='Windows_NT' Or '$(OS)'=='Windows'">
+      <PropertyGroup>
+        <PostBuildEvent>
+        if not exist "..\Server\Assemblies" (
+          mkdir ..\Server\Assemblies\
+        )
+        copy Content.* ..\Server\Assemblies\
+        </PostBuildEvent>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+          <PostBuildEvent>
+           mkdir -p ../Server/Assemblies/
+           cp Content.* ../Server/Assemblies/
+         </PostBuildEvent>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 </Project>
