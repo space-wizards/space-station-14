@@ -33,7 +33,6 @@
     <OutputPath>..\bin\Content.Server\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -78,7 +77,7 @@
         if not exist "..\Server\Assemblies" (
           mkdir ..\Server\Assemblies\
         )
-        copy Content.* ..\Server\Assemblies\
+        copy Content.* ..\Server\Assemblies\ > NUL
         </PostBuildEvent>
       </PropertyGroup>
     </When>

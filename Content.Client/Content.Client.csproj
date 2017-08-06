@@ -33,7 +33,6 @@
     <OutputPath>..\bin\Content.Client\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -82,7 +81,7 @@
         if not exist "..\Client\Assemblies" (
           mkdir ..\Client\Assemblies\
         )
-        copy Content.* ..\Client\Assemblies\
+        copy Content.* ..\Client\Assemblies\ > NUL
         </PostBuildEvent>
       </PropertyGroup>
     </When>
