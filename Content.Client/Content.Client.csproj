@@ -11,6 +11,7 @@
     <AssemblyName>Content.Client</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ContentAssemblyTarget>..\bin\Client\Assemblies\</ContentAssemblyTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -74,24 +75,13 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Choose>
-    <When Condition="'$(OS)'=='Windows_NT' Or '$(OS)'=='Windows'">
-      <PropertyGroup>
-        <PostBuildEvent>
-        if not exist "..\Client\Assemblies" (
-          mkdir ..\Client\Assemblies\
-        )
-        copy Content.* ..\Client\Assemblies\ > NUL
-        </PostBuildEvent>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-          <PostBuildEvent>
-           mkdir -p ../Client/Assemblies/
-           cp Content.* ../Client/Assemblies/
-         </PostBuildEvent>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
+  <Import Project="..\SS14.Content.targets" />
+  <Target Name="AfterBuild" DependsOnTargets="CopyContentAssemblies" />
+  <ItemGroup>
+    <!-- Files to be copied into Client/Assemblies -->
+    <ContentAssemblies Include="$(OutputPath)Content.Client.dll" />
+    <ContentAssemblies Include="$(OutputPath)Content.Shared.dll" />
+    <ContentAssemblies Include="$(OutputPath)Content.Client.pdb" Condition="'$(Configuration)' == 'Debug'" />
+    <ContentAssemblies Include="$(OutputPath)Content.Shared.pdb" Condition="'$(Configuration)' == 'Debug'" />
+  </ItemGroup>
 </Project>

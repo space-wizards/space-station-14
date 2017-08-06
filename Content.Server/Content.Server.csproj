@@ -11,13 +11,10 @@
     <AssemblyName>Content.Server</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ContentAssemblyTarget>..\bin\Server\Assemblies\</ContentAssemblyTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <!--
-    This copies all dependencies,
-    but on the plus side it's automatically located in the right place.
-    -->
     <OutputPath>..\bin\Content.Server\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
@@ -26,10 +23,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <!--
-    This copies all dependencies,
-    but on the plus side it's automatically located in the right place.
-    -->
     <OutputPath>..\bin\Content.Server\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
@@ -70,24 +63,12 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Choose>
-    <When Condition="'$(OS)'=='Windows_NT' Or '$(OS)'=='Windows'">
-      <PropertyGroup>
-        <PostBuildEvent>
-        if not exist "..\Server\Assemblies" (
-          mkdir ..\Server\Assemblies\
-        )
-        copy Content.* ..\Server\Assemblies\ > NUL
-        </PostBuildEvent>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-          <PostBuildEvent>
-           mkdir -p ../Server/Assemblies/
-           cp Content.* ../Server/Assemblies/
-         </PostBuildEvent>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
+  <Import Project="..\SS14.Content.targets" />
+  <Target Name="AfterBuild" DependsOnTargets="CopyContentAssemblies" />
+  <ItemGroup>
+    <ContentAssemblies Include="$(OutputPath)Content.Server.dll" />
+    <ContentAssemblies Include="$(OutputPath)Content.Shared.dll" />
+    <ContentAssemblies Include="$(OutputPath)Content.Server.pdb" Condition="'$(Configuration)' == 'Debug'" />
+    <ContentAssemblies Include="$(OutputPath)Content.Shared.pdb" Condition="'$(Configuration)' == 'Debug'" />
+  </ItemGroup>
 </Project>
