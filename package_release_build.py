@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Packages a full release build that can be unzipped and you'll have your SS14 client and server.
+# Packages a full release build that can be unzipped and you'll have your SS14 client or server.
 
 import os
 import shutil
@@ -21,10 +21,15 @@ except ImportError:
     Back = ColorDummy()
 
 def main():
-    # Wipe out old build directory.
+    # Wipe out old build directory. Cleans potential leftovers to make sure we have a clean build.
     if os.path.exists("bin"):
-        print(Fore.BLUE + Style.DIM + "Clearing old build artifacts..." + Style.RESET_ALL)
+        print(Fore.BLUE + Style.DIM + "Clearing old build artifacts (bin/)..." + Style.RESET_ALL)
         shutil.rmtree("bin")
+
+    if os.path.exists("release"):
+        print(Fore.BLUE + Style.DIM + "Cleaning old release packages (release/)..." + Style.RESET_ALL)
+        shutil.rmtree("release")
+    os.mkdir("release")
 
     build_windows()
 
@@ -57,7 +62,7 @@ def build_windows():
 
 def build_linux():
     print(Fore.GREEN + "Building project for Linux x86..." + Style.RESET_ALL)
-        subprocess.run(["msbuild",
+    subprocess.run(["msbuild",
                     "SpaceStation14Content.sln",
                     "/m",
                     "/p:Configuration=Release",
