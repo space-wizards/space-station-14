@@ -1,0 +1,15 @@
+- type: entity
+  id: medkit_r
+  name: Medkit
+  components:
+  - type: Transform
+  - type: Velocity
+  - type: Clickable
+  - type: Direction
+  - type: Sprite
+    sprites:
+    - medkit_r
+
+  - type: Icon
+    icon: medkit_r
+
