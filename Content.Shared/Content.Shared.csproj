@@ -52,6 +52,32 @@
       <Project>{0529f740-0000-0000-0000-000000000000}</Project>
       <Name>SS14.Shared</Name>
     </ProjectReference>
+    <!-- Ensure these get built first to prevent sync issues with resoure copying. -->
+    <ProjectReference Include="..\engine\SS14.Client\SS14.Client.csproj">
+      <Name>SS14.Client</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\SS14.Server\SS14.Server.csproj">
+      <Name>SS14.Server</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemDefinitionGroup>
+    <Resource>
+        <Visible>False</Visible>
+        <Prefix></Prefix>
+    </Resource>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Resource Include="..\Resources\**\*.*" Exclude="..\Resources\Prototypes\**\*.*;..\Resources\CONTENT_GOES_HERE" />
+    <Resource Include="..\Resources\Prototypes\**\*.*" Exclude="..\Resources\Prototypes\PROTOTYPES_GO_HERE">
+      <Prefix>Prototypes\Content\</Prefix>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="CopyResources">
+    <Copy SourceFiles="@(Resource)" DestinationFiles="..\bin\Client\Resources\%(Prefix)%(RecursiveDir)%(Filename)%(Extension)" />
+    <Copy SourceFiles="@(Resource)" DestinationFiles="..\bin\Server\Resources\%(Prefix)%(RecursiveDir)%(Filename)%(Extension)" />
+  </Target>
+  <Target Name="AfterBuild" DependsOnTargets="CopyResources" />
 </Project>
