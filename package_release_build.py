@@ -28,10 +28,25 @@ def main():
 
     build_windows()
 
+    if os.path.exists("bin"):
+        print(Fore.BLUE + Style.DIM + "Clearing old build artifacts..." + Style.RESET_ALL)
+        shutil.rmtree("bin")
+
+    build_linux()
+
 def build_windows():
     # Run a full build.
     print(Fore.GREEN + "Building project for Windows x86..." + Style.RESET_ALL)
-    subprocess.run(["msbuild", "SpaceStation14Content.sln", "/m", "/p:Configuration=Release", "/p:Platform=x86", "/nologo", "/v:m"], check=True)
+    subprocess.run(["msbuild",
+                    "SpaceStation14Content.sln",
+                    "/m",
+                    "/p:Configuration=Release",
+                    "/p:Platform=x86",
+                    "/nologo",
+                    "/v:m",
+                    "/p:TargetOS=Windows_NT",
+                    "/t:Rebuild"
+                    ], check=True)
 
     # Package client.
     print(Fore.GREEN + "Packaging Windows x86 client..." + Style.RESET_ALL)
@@ -39,6 +54,26 @@ def build_windows():
 
     print(Fore.GREEN + "Packaging Windows x86 server..." + Style.RESET_ALL)
     package_zip(os.path.join("bin", "Server"), os.path.join("bin", "SS14.Server_windows_x86.zip"))
+
+def build_linux():
+    print(Fore.GREEN + "Building project for Linux x86..." + Style.RESET_ALL)
+        subprocess.run(["msbuild",
+                    "SpaceStation14Content.sln",
+                    "/m",
+                    "/p:Configuration=Release",
+                    "/p:Platform=x86",
+                    "/nologo",
+                    "/v:m",
+                    "/p:TargetOS=Linux",
+                    "/t:Rebuild"
+                    ], check=True)
+
+    # Package client.
+    print(Fore.GREEN + "Packaging Linux x86 client..." + Style.RESET_ALL)
+    package_zip(os.path.join("bin", "Client"), os.path.join("bin", "SS14.Client_linux_x86.zip"))
+
+    print(Fore.GREEN + "Packaging Linux x86 server..." + Style.RESET_ALL)
+    package_zip(os.path.join("bin", "Server"), os.path.join("bin", "SS14.Server_linux_x86.zip"))
 
 def package_zip(directory, zipname):
     with zipfile.ZipFile(zipname, "w") as f:
