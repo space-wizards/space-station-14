@@ -22,8 +22,9 @@ except ImportError:
 
 def main():
     # Wipe out old build directory.
-    print(Fore.BLUE + Style.DIM + "Clearing old build artifacts..." + Style.RESET_ALL)
-    shutil.rmtree("bin")
+    if os.path.exists("bin"):
+        print(Fore.BLUE + Style.DIM + "Clearing old build artifacts..." + Style.RESET_ALL)
+        shutil.rmtree("bin")
 
     build_windows()
 
