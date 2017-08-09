@@ -50,10 +50,10 @@ def build_windows():
 
     # Package client.
     print(Fore.GREEN + "Packaging Windows x86 client..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Client"), os.path.join("bin", "SS14.Client_windows_x86.zip"))
+    package_zip(os.path.join("bin", "Client"), os.path.join("release", "SS14.Client_windows_x86.zip"))
 
     print(Fore.GREEN + "Packaging Windows x86 server..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Server"), os.path.join("bin", "SS14.Server_windows_x86.zip"))
+    package_zip(os.path.join("bin", "Server"), os.path.join("release", "SS14.Server_windows_x86.zip"))
 
 def build_linux():
     print(Fore.GREEN + "Building project for Linux x86..." + Style.RESET_ALL)
@@ -70,10 +70,10 @@ def build_linux():
 
     # Package client.
     print(Fore.GREEN + "Packaging Linux x86 client..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Client"), os.path.join("bin", "SS14.Client_linux_x86.zip"))
+    package_zip(os.path.join("bin", "Client"), os.path.join("release", "SS14.Client_linux_x86.zip"))
 
     print(Fore.GREEN + "Packaging Linux x86 server..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Server"), os.path.join("bin", "SS14.Server_linux_x86.zip"))
+    package_zip(os.path.join("bin", "Server"), os.path.join("release", "SS14.Server_linux_x86.zip"))
 
 def package_zip(directory, zipname):
     with zipfile.ZipFile(zipname, "w") as f:
