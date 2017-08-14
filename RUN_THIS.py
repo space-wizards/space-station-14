@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 # Import future so people on py2 still get the clear error that they need to upgrade.
 from __future__ import print_function

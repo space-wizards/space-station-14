@@ -265,3 +265,6 @@ __pycache__/
 
 # Release package files go here:
 release/
+
+# Apple please go.
+.DS_Store

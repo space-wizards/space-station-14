@@ -4,10 +4,12 @@
 import os
 import shutil
 import subprocess
+import sys
 import zipfile
+import argparse
 
 try:
-    from colorama import init, Fore, Back, Style
+    from colorama import init, Fore, Style
     init()
 
 except ImportError:
@@ -18,26 +20,39 @@ except ImportError:
 
     Fore = ColorDummy()
     Style = ColorDummy()
-    Back = ColorDummy()
 
 def main():
-    # Wipe out old build directory. Cleans potential leftovers to make sure we have a clean build.
-    if os.path.exists("bin"):
-        print(Fore.BLUE + Style.DIM + "Clearing old build artifacts (bin/)..." + Style.RESET_ALL)
-        shutil.rmtree("bin")
+    parser = argparse.ArgumentParser(
+        description="Packages the SS14 content repo for release on all platforms.")
+    parser.add_argument("--platform",
+                        action="store",
+                        choices=["windows", "mac", "linux", "all"],
+                        help="Which platform to build for.",
+                        default="all")
+    args = parser.parse_args()
 
     if os.path.exists("release"):
-        print(Fore.BLUE + Style.DIM + "Cleaning old release packages (release/)..." + Style.RESET_ALL)
+        print(Fore.BLUE+Style.DIM + "Cleaning old release packages (release/)..." + Style.RESET_ALL)
         shutil.rmtree("release")
+
     os.mkdir("release")
 
-    build_windows()
+    if args.platform == "all" or args.platform == "windows":
+        wipe_bin()
+        build_windows()
 
+    if args.platform == "all" or args.platform == "linux":
+        wipe_bin()
+        build_linux()
+
+    if args.platform == "all" or args.platform == "mac":
+        wipe_bin()
+        build_macos()
+
+def wipe_bin():
     if os.path.exists("bin"):
         print(Fore.BLUE + Style.DIM + "Clearing old build artifacts..." + Style.RESET_ALL)
         shutil.rmtree("bin")
-
-    build_linux()
 
 def build_windows():
     # Run a full build.
@@ -49,16 +64,19 @@ def build_windows():
                     "/p:Platform=x86",
                     "/nologo",
                     "/v:m",
-                    "/p:TargetOS=Windows_NT",
+                    "/p:TargetOS=Windows",
                     "/t:Rebuild"
-                    ], check=True)
+                   ], check=True)
 
     # Package client.
     print(Fore.GREEN + "Packaging Windows x86 client..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Client"), os.path.join("release", "SS14.Client_windows_x86.zip"))
+    package_zip(os.path.join("bin", "Client"),
+                os.path.join("release", "SS14.Client_windows_x86.zip"))
 
     print(Fore.GREEN + "Packaging Windows x86 server..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Server"), os.path.join("release", "SS14.Server_windows_x86.zip"))
+    package_zip(os.path.join("bin", "Server"),
+                os.path.join("release", "SS14.Server_windows_x86.zip"))
+
 
 def build_linux():
     print(Fore.GREEN + "Building project for Linux x86..." + Style.RESET_ALL)
@@ -71,7 +89,7 @@ def build_linux():
                     "/v:m",
                     "/p:TargetOS=Linux",
                     "/t:Rebuild"
-                    ], check=True)
+                   ], check=True)
 
     # Package client.
     print(Fore.GREEN + "Packaging Linux x86 client..." + Style.RESET_ALL)
@@ -80,28 +98,69 @@ def build_linux():
     print(Fore.GREEN + "Packaging Linux x86 server..." + Style.RESET_ALL)
     package_zip(os.path.join("bin", "Server"), os.path.join("release", "SS14.Server_linux_x86.zip"))
 
+
+def build_macos():
+    # Haha this is gonna suck.
+    print(Fore.GREEN + "Building project for MacOS x86..." + Style.RESET_ALL)
+    subprocess.run(["msbuild",
+                    "SpaceStation14Content.sln",
+                    "/m",
+                    "/p:Configuration=Release",
+                    "/p:Platform=x86",
+                    "/nologo",
+                    "/v:m",
+                    "/p:TargetOS=MacOS",
+                    "/t:Rebuild"
+                   ], check=True)
+
+    print(Fore.GREEN + "Packaging MacOS x86 client..." + Style.RESET_ALL)
+    # Client has to go in an app bundle.
+    bundle = os.path.join("bin", "app", "Space Station 14.app")
+    shutil.copytree(os.path.join("BuildFiles", "Mac", "Space Station 14.app"),
+                    bundle)
+
+    _copytree(os.path.join("bin", "Client"),
+              os.path.join(bundle, "Contents", "MacOS"))
+
+    package_zip(os.path.join("bin", "app"),
+                os.path.join("release", "SS14.Client_MacOS_x86.zip"))
+
+    print(Fore.GREEN + "Packaging MacOS x86 server..." + Style.RESET_ALL)
+    package_zip(os.path.join("bin", "Server"),
+                os.path.join("release", "SS14.Server_MacOS_x86.zip"))
+
+# Hack copied from Stack Overflow to get around the fact that
+# shutil.copytree doesn't allow copying into existing directories.
+def _copytree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
 def package_zip(directory, zipname):
-    with zipfile.ZipFile(zipname, "w") as f:
-        for dir, _, files in os.walk(directory):
-            relpath = os.path.relpath(dir, directory)
+    with zipfile.ZipFile(zipname, "w") as zipf:
+        for dirs, _, files in os.walk(directory):
+            relpath = os.path.relpath(dirs, directory)
             if relpath != ".":
                 # Write directory node except for root level.
-                f.write(dir, relpath)
+                zipf.write(dirs, relpath)
 
             for filename in files:
                 zippath = os.path.join(relpath, filename)
-                filepath = os.path.join(dir, filename)
+                filepath = os.path.join(dirs, filename)
 
-                print(Fore.CYAN + "{dim}{diskroot}{sep}{zipfile}{dim} -> {ziproot}{sep}{zipfile}"
-                    .format(
-                        sep = os.sep + Style.NORMAL,
-                        dim = Style.DIM,
-                        diskroot = directory,
-                        ziproot = zipname,
-                        zipfile = os.path.normpath(zippath)
-                    ) + Style.RESET_ALL)
+                message = "{dim}{diskroot}{sep}{zipfile}{dim} -> {ziproot}{sep}{zipfile}".format(
+                    sep=os.sep + Style.NORMAL,
+                    dim=Style.DIM,
+                    diskroot=directory,
+                    ziproot=zipname,
+                    zipfile=os.path.normpath(zippath))
 
-                f.write(filepath, zippath)
+                print(Fore.CYAN + message + Style.RESET_ALL)
+                zipf.write(filepath, zippath)
 
 if __name__ == '__main__':
     main()
