@@ -3,4 +3,9 @@
   <Target Name="CopyContentAssemblies">
     <Copy SourceFiles="@(ContentAssemblies)" DestinationFolder="$(ContentAssemblyTarget)" />
   </Target>
+  <ItemDefinitionGroup>
+    <ContentAssemblies>
+      <Visible>False</Visible>
+    </ContentAssemblies>
+  </ItemDefinitionGroup>
 </Project>

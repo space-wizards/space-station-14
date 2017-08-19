@@ -41,12 +41,6 @@
     <Reference Include="YamlDotNet">
       <HintPath>$(SolutionDir)packages\YamlDotNet.4.2.1\lib\net35\YamlDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="sfmlnet-graphics-2">
-      <HintPath>..\engine\Third-Party\sfmlnet-graphics-2.dll</HintPath>
-    </Reference>
-    <Reference Include="sfmlnet-system-2">
-      <HintPath>..\engine\Third-Party\sfmlnet-system-2.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)packages\OpenTK.3.0.0-pre\lib\net20\OpenTK.dll</HintPath>
     </Reference>
@@ -59,6 +53,14 @@
     <ProjectReference Include="..\engine\Lidgren.Network\Lidgren.Network.csproj">
       <Project>{59250baf-0000-0000-0000-000000000000}</Project>
       <Name>Lidgren.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\SFML\src\Graphics\sfml-graphics.csproj">
+      <Project>{46786269-57b9-48e7-aa4f-8f4d84609fe6}</Project>
+      <Name>sfml-graphics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\SFML\src\System\sfml-system.csproj">
+      <Project>{31d24303-f6a9-4d53-bb03-a73edcb3186d}</Project>
+      <Name>sfml-system</Name>
     </ProjectReference>
     <ProjectReference Include="..\engine\SS14.Shared\SS14.Shared.csproj">
       <Project>{0529f740-0000-0000-0000-000000000000}</Project>
@@ -76,8 +78,9 @@
   </ItemGroup>
   <ItemDefinitionGroup>
     <Resource>
-        <Visible>False</Visible>
-        <Prefix></Prefix>
+      <Visible>False</Visible>
+      <Prefix>
+      </Prefix>
     </Resource>
   </ItemDefinitionGroup>
   <ItemGroup>
