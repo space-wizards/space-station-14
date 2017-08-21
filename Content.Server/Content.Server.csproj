@@ -59,14 +59,6 @@
       <Project>{59250baf-0000-0000-0000-000000000000}</Project>
       <Name>Lidgren.Network</Name>
     </ProjectReference>
-    <ProjectReference Include="..\engine\SFML\src\Graphics\sfml-graphics.csproj">
-      <Project>{46786269-57b9-48e7-aa4f-8f4d84609fe6}</Project>
-      <Name>sfml-graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\SFML\src\System\sfml-system.csproj">
-      <Project>{31d24303-f6a9-4d53-bb03-a73edcb3186d}</Project>
-      <Name>sfml-system</Name>
-    </ProjectReference>
     <ProjectReference Include="..\engine\SS14.Server\SS14.Server.csproj">
       <Project>{b04aae71-0000-0000-0000-000000000000}</Project>
       <Name>SS14.Server</Name>
