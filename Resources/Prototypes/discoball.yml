@@ -12,3 +12,11 @@
     icon: wall_light
 
   - type: PointLight
+
+- type: entity
+  name: Disco Ball Small Edition
+  id: discoballsmall
+  parent: discoball
+  components:
+  - type: PointLight
+    radius: 128
