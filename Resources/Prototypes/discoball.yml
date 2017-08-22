@@ -1,0 +1,14 @@
+- type: entity
+  name: Disco Ball
+  id: discoball
+  class: Content.Client.Prototypes.DiscoBall
+  components:
+  - type: Transform
+  - type: Sprite
+    sprites:
+    - wall_light
+
+  - type: Icon
+    icon: wall_light
+
+  - type: PointLight
