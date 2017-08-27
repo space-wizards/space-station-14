@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="GameObjects\Components\Damage\DamageableComponent.cs" />
+    <Compile Include="GameObjects\Components\Damage\DestructibleComponent.cs" />
+    <Compile Include="GameObjects\Components\Damage\ResistanceSet.cs" />
+    <Compile Include="GameObjects\Components\Temperature\TemperatureComponent.cs" />
+    <Compile Include="GameObjects\PhysicalConstants.cs" />
+    <Compile Include="Interfaces\GameObjects\IOnDamageBehaviour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,4 +83,5 @@
     <ContentAssemblies Include="$(OutputPath)Content.Server.pdb" Condition="'$(Configuration)' == 'Debug'" />
     <ContentAssemblies Include="$(OutputPath)Content.Shared.pdb" Condition="'$(Configuration)' == 'Debug'" />
   </ItemGroup>
+  <ItemGroup />
 </Project>
