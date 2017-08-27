@@ -1,4 +1,7 @@
-﻿using SS14.Shared.ContentPack;
+﻿using Content.Server.GameObjects;
+using SS14.Shared.ContentPack;
+using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.IoC;
 
 namespace Content.Server
 {
@@ -6,7 +9,12 @@ namespace Content.Server
     {
         public override void Init()
         {
-            // TODO: Anything at all.
+            var factory = IoCManager.Resolve<IComponentFactory>();
+
+            factory.Register<DamageableComponent>();
+            factory.Register<DestructibleComponent>();
+
+            factory.Register<TemperatureComponent>();
         }
     }
 }
