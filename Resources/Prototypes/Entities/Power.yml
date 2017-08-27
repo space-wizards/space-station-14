@@ -17,19 +17,9 @@
   - Wire
 
 - type: entity
+  parent: Wire
   id: BlueWire
   name: BlueWire
   components:
-  - type: Transform
-  - type: Clickable
   - type: Sprite
-    drawdepth: FloorPlaceable
     color: Blue
-    sprites:
-    - eightdirwire
-
-  - type: Icon
-    icon: eightdirwire
-
-  snap:
-  - Wire
