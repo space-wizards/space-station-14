@@ -1,0 +1,25 @@
+- type: entity
+  id: Wire
+  name: Wire
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: Sprite
+    drawdepth: FloorPlaceable
+    color: Red
+    sprites:
+    - eightdirwire
+
+  - type: Icon
+    icon: eightdirwire
+
+  snap:
+  - Wire
+
+- type: entity
+  parent: Wire
+  id: BlueWire
+  name: BlueWire
+  components:
+  - type: Sprite
+    color: Blue
