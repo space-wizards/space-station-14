@@ -29,14 +29,31 @@ namespace Content.Server.Interfaces.GameObjects
         /// <param name="slot">The slot to put the item in.</param>
         /// <param name="item">The item to insert into the slot.</param>
         /// <returns>True if the item was successfully inserted, false otherwise.</returns>
-        bool PutInSlot(string slot, IItemComponent item);
+        bool Insert(string slot, IItemComponent item);
+
+        /// <summary>
+        ///     Checks whether an item can be put in the specified slot.
+        /// </summary>
+        /// <param name="slot">The slot to check for.</param>
+        /// <param name="item">The item to check for.</param>
+        /// <returns>True if the item can be inserted into the specified slot.</returns>
+        bool CanInsert(string slot, IItemComponent item);
 
         /// <summary>
         ///     Drops the item in a slot.
         /// </summary>
         /// <param name="slot">The slot to drop the item from.</param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        bool DropSlot(string slot);
+        bool Drop(string slot);
+
+        /// <summary>
+        ///     Checks whether an item can be dropped from the specified slot.
+        /// </summary>
+        /// <param name="slot">The slot to check for.</param>
+        /// <returns>
+        ///     True if there is an item in the slot and it can be dropped, false otherwise.
+        /// </returns>
+        bool CanDrop(string slot);
 
         /// <summary>
         ///     Adds a new slot to this inventory component.
@@ -57,10 +74,10 @@ namespace Content.Server.Interfaces.GameObjects
         void RemoveSlot(string slot);
 
         /// <summary>
-        ///
+        ///     Checks whether a slot with the specified name exists.
         /// </summary>
-        /// <param name="slot"></param>
-        /// <returns></returns>
+        /// <param name="slot">The slot name to check.</param>
+        /// <returns>True if the slot exists, false otherwise.</returns>
         bool HasSlot(string slot);
     }
 

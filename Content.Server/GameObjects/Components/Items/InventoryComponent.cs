@@ -45,10 +45,15 @@ namespace Content.Server.Interfaces.GameObjects
             return slots[slot];
         }
 
-        public bool PutInSlot(string slot, IItemComponent item)
+        public bool Insert(string slot, IItemComponent item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item), "An item must be passed. To remove an item from a slot, use Drop()");
+            }
+
             var inventorySlot = _GetSlot(slot);
-            if (inventorySlot.Item != null)
+            if (!CanInsert(slot, item))
             {
                 return false;
             }
@@ -58,11 +63,22 @@ namespace Content.Server.Interfaces.GameObjects
             return true;
         }
 
-        public bool DropSlot(string slot)
+        public bool CanInsert(string slot, IItemComponent item)
         {
             var inventorySlot = _GetSlot(slot);
+            return inventorySlot.Item == null;
+        }
+
+        public bool Drop(string slot)
+        {
+            if (!CanDrop(slot))
+            {
+                return false;
+            }
+
+            var inventorySlot = _GetSlot(slot);
             var item = inventorySlot.Item;
-            if (item == null || !container.Remove(item.Owner))
+            if (!container.Remove(item.Owner))
             {
                 return false;
             }
@@ -76,17 +92,42 @@ namespace Content.Server.Interfaces.GameObjects
             return true;
         }
 
+        public bool CanDrop(string slot)
+        {
+            var inventorySlot = _GetSlot(slot);
+            var item = inventorySlot.Item;
+            return item != null && container.CanRemove(item.Owner);
+        }
+
         public void AddSlot(string slot)
         {
-            if (slots.ContainsKey(slot))
+            if (HasSlot(slot))
             {
-
+                throw new InvalidOperationException($"Slot '{slot}' already exists.");
             }
+
+            slots[slot] = new InventorySlot(slot, this);
         }
 
         public void RemoveSlot(string slot)
         {
-            throw new NotImplementedException();
+            if (!HasSlot(slot))
+            {
+                throw new InvalidOperationException($"Slow '{slot}' does not exist.");
+            }
+
+            if (Get(slot) != null && !Drop(slot))
+            {
+                // TODO: Handle this potential failiure better.
+                throw new InvalidOperationException("Unable to remove slot as the contained item could not be dropped");
+            }
+
+            slots.Remove(slot);
+        }
+
+        public bool HasSlot(string slot)
+        {
+            return slots.ContainsKey(slot);
         }
 
         private class InventorySlot : IInventorySlot

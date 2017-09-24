@@ -41,10 +41,34 @@ namespace Content.Server.Interfaces.GameObjects
         bool PutInHand(IItemComponent item, string index, bool fallback=true);
 
         /// <summary>
+        ///     Checks to see if an item can be put in any hand.
+        /// </summary>
+        /// <param name="item">The item to check for.</param>
+        /// <returns>True if the item can be inserted, false otherwise.</returns>
+        bool CanPutInHand(IItemComponent item);
+
+        /// <summary>
+        ///     Checks to see if an item can be put in the specified hand.
+        /// </summary>
+        /// <param name="item">The item to check for.</param>
+        /// <param name="index">The index for the hand to check for.</param>
+        /// <returns>True if the item can be inserted, false otherwise.</returns>
+        bool CanPutInHand(IItemComponent item, string index);
+
+        /// <summary>
         ///     Drops an item on the ground, removing it from the hand.
         /// </summary>
         /// <param name="index">The hand to drop from.</param>
         /// <returns>True if an item was successfully dropped, false otherwise.</returns>
         bool Drop(string index);
+
+        /// <summary>
+        ///     Checks whether the item in the specified hand can be dropped.
+        /// </summary>
+        /// <param name="index">The hand to check for.</param>
+        /// <returns>
+        ///     True if the item can be dropped, false if the hand is empty or the item in the hand cannot be dropped.
+        /// </returns>
+        bool CanDrop(string index);
     }
 }
