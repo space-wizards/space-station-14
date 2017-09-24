@@ -8,7 +8,7 @@ namespace Content.Server.Interfaces.GameObjects
         /// <summary>
         ///     The hand index of the currently active hand.
         /// </summary>
-        string ActiveIndex { get; }
+        string ActiveIndex { get; set; }
 
         /// <summary>
         ///     Enumerates over every held item.

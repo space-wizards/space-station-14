@@ -3,7 +3,7 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using System;
 
-namespace Content.Server.Interfaces.GameObjects
+namespace Content.Server.GameObjects
 {
     public class ItemComponent : Component, IItemComponent
     {

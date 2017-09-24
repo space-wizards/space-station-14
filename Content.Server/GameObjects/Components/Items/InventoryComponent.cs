@@ -1,12 +1,13 @@
 using Content.Server.Interfaces.GameObjects;
 using SS14.Server.GameObjects;
+using SS14.Server.GameObjects.Components.Container;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using System;
 using System.Collections.Generic;
 
-namespace Content.Server.Interfaces.GameObjects
+namespace Content.Server.GameObjects
 {
     public class InventoryComponent : Component, IInventoryComponent
     {
@@ -20,12 +21,18 @@ namespace Content.Server.Interfaces.GameObjects
         public override void Initialize()
         {
             transform = Owner.GetComponent<TransformComponent>();
+            container = Container.Create("inventory", Owner);
             base.Initialize();
         }
 
         public override void OnRemove()
         {
+            foreach (var slot in slots.Keys)
+            {
+                RemoveSlot(slot);
+            }
             transform = null;
+            container = null;
             base.OnRemove();
         }
 
@@ -53,7 +60,7 @@ namespace Content.Server.Interfaces.GameObjects
             }
 
             var inventorySlot = _GetSlot(slot);
-            if (!CanInsert(slot, item))
+            if (!CanInsert(slot, item) || !container.Insert(item.Owner))
             {
                 return false;
             }
@@ -66,7 +73,7 @@ namespace Content.Server.Interfaces.GameObjects
         public bool CanInsert(string slot, IItemComponent item)
         {
             var inventorySlot = _GetSlot(slot);
-            return inventorySlot.Item == null;
+            return inventorySlot.Item == null && container.CanInsert(item.Owner);
         }
 
         public bool Drop(string slot)
