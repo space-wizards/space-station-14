@@ -11,7 +11,7 @@
     <AssemblyName>Content.Client</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ContentAssemblyTarget>..\bin\Client\Assemblies\</ContentAssemblyTarget>
+    <ContentAssemblyTarget>..\bin\Client\Resources\Assemblies\</ContentAssemblyTarget>
     <!--
     This copies all dependencies,
     but on the plus side it's automatically located in the right place.

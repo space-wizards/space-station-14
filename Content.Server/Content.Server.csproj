@@ -11,7 +11,7 @@
     <AssemblyName>Content.Server</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ContentAssemblyTarget>..\bin\Server\Assemblies\</ContentAssemblyTarget>
+    <ContentAssemblyTarget>..\bin\Server\Resources\Assemblies\</ContentAssemblyTarget>
     <OutputPath>..\bin\Content.Server\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
