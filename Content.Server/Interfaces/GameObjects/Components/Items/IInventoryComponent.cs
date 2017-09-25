@@ -62,7 +62,7 @@ namespace Content.Server.Interfaces.GameObjects
         /// <exception cref="InvalidOperationException">
         ///     Thrown if the slot with specified name already exists.
         /// </exception>
-        void AddSlot(string slot);
+        IInventorySlot AddSlot(string slot);
 
         /// <summary>
         ///     Removes a slot from this inventory component.

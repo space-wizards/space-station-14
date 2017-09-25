@@ -1,9 +1,11 @@
 using Content.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Utility;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects
 {
@@ -32,10 +34,28 @@ namespace Content.Server.GameObjects
         public override void Initialize()
         {
             inventory = Owner.GetComponent<IInventoryComponent>();
+            base.Initialize();
         }
 
-        public IEnumerable<IItemComponent> GetAllHands()
+        public override void OnRemove()
         {
+            inventory = null;
+            base.OnRemove();
+        }
+
+        public override void LoadParameters(YamlMappingNode mapping)
+        {
+            foreach (var node in mapping.GetNode<YamlSequenceNode>("hands"))
+            {
+                AddHand(node.AsString());
+            }
+            base.LoadParameters(mapping);
+        }
+
+        public IEnumerable<IItemComponent> GetAllHeldItems()
+        {
+            throw new NotImplementedException();
+            /*
             foreach (var slot in hands.Values)
             {
                 if (slot.Item != null)
@@ -43,6 +63,7 @@ namespace Content.Server.GameObjects
                     yield return slot.Item;
                 }
             }
+            */
         }
 
         public IItemComponent GetHand(string index)
@@ -56,6 +77,8 @@ namespace Content.Server.GameObjects
         /// </summary>
         private IEnumerable<string> ActivePriorityEnumerable()
         {
+            throw new NotImplementedException();
+            /*
             yield return ActiveIndex;
             foreach (var hand in hands.Keys)
             {
@@ -66,6 +89,7 @@ namespace Content.Server.GameObjects
 
                 yield return hand;
             }
+            */
         }
 
         public bool PutInHand(IItemComponent item)
@@ -127,5 +151,37 @@ namespace Content.Server.GameObjects
             var slot = hands[index];
             return slot.Item != null && slot.Owner.CanDrop(slot.Name);
         }
+
+        public void AddHand(string index)
+        {
+            if (HasHand(index))
+            {
+                throw new InvalidOperationException($"Hand '{index}' already exists.");
+            }
+
+            var slot = inventory.AddSlot(HandSlotName(index));
+            hands[index] = slot;
+        }
+
+        public void RemoveHand(string index)
+        {
+            if (!HasHand(index))
+            {
+                throw new InvalidOperationException($"Hand '{index}' does not exist.");
+            }
+
+            inventory.RemoveSlot(HandSlotName(index));
+            hands.Remove(index);
+        }
+
+        public bool HasHand(string index)
+        {
+            return hands.ContainsKey(index);
+        }
+
+        /// <summary>
+        ///     Get the name of the slot passed to the inventory component.
+        /// </summary>
+        private string HandSlotName(string index) => $"_hand_{index}";
     }
 }

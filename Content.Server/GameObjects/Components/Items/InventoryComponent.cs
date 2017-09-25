@@ -2,10 +2,12 @@ using Content.Server.Interfaces.GameObjects;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Server.Interfaces.GameObjects;
+using SS14.Shared.Utility;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using System;
 using System.Collections.Generic;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects
 {
@@ -34,6 +36,18 @@ namespace Content.Server.GameObjects
             transform = null;
             container = null;
             base.OnRemove();
+        }
+
+        public override void LoadParameters(YamlMappingNode mapping)
+        {
+            if (mapping.TryGetNode<YamlSequenceNode>("slots", out var slotsNode))
+            {
+                foreach (var node in slotsNode)
+                {
+                    AddSlot(node.AsString());
+                }
+            }
+            base.LoadParameters(mapping);
         }
 
         public IItemComponent Get(string slot)
@@ -106,14 +120,14 @@ namespace Content.Server.GameObjects
             return item != null && container.CanRemove(item.Owner);
         }
 
-        public void AddSlot(string slot)
+        public IInventorySlot AddSlot(string slot)
         {
             if (HasSlot(slot))
             {
                 throw new InvalidOperationException($"Slot '{slot}' already exists.");
             }
 
-            slots[slot] = new InventorySlot(slot, this);
+            return slots[slot] = new InventorySlot(slot, this);
         }
 
         public void RemoveSlot(string slot)

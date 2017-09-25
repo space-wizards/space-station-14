@@ -13,7 +13,7 @@ namespace Content.Server.Interfaces.GameObjects
         /// <summary>
         ///     Enumerates over every held item.
         /// </summary>
-        IEnumerable<IItemComponent> GetAllHands();
+        IEnumerable<IItemComponent> GetAllHeldItems();
 
         /// <summary>
         ///     Gets the item held by a hand.
@@ -70,5 +70,30 @@ namespace Content.Server.Interfaces.GameObjects
         ///     True if the item can be dropped, false if the hand is empty or the item in the hand cannot be dropped.
         /// </returns>
         bool CanDrop(string index);
+
+        /// <summary>
+        ///     Adds a new hand to this hands component.
+        /// </summary>
+        /// <param name="index">The name of the hand to add.</param>
+        /// <exception cref="InvalidOperationException">
+        ///     Thrown if a hand with specified name already exists.
+        /// </exception>
+        void AddHand(string index);
+
+        /// <summary>
+        ///     Removes a hand from this hands component.
+        /// </summary>
+        /// <remarks>
+        ///     If the hand contains an item, the item is dropped.
+        /// </remarks>
+        /// <param name="index">The name of the hand to remove.</param>
+        void RemoveHand(string index);
+
+        /// <summary>
+        ///     Checks whether a hand with the specified name exists.
+        /// </summary>
+        /// <param name="index">The hand name to check.</param>
+        /// <returns>True if the hand exists, false otherwise.</returns>
+        bool HasHand(string index);
     }
 }
