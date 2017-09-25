@@ -1,0 +1,14 @@
+- type: entity
+  name: IT HAS HANDS
+  id: thing_with_hands
+  components:
+  - type: Transform
+  - type: Hands
+    hands:
+    - left
+    - right
+  - type: Inventory
+    slots:
+    - head
+    - shoes
+    - uniform
