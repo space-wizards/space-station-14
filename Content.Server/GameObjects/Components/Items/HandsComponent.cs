@@ -29,10 +29,19 @@ namespace Content.Server.GameObjects
 
         private Dictionary<string, IInventorySlot> hands = new Dictionary<string, IInventorySlot>();
         private IInventoryComponent inventory;
+        private YamlMappingNode tempParametersMapping;
 
         public override void Initialize()
         {
             inventory = Owner.GetComponent<IInventoryComponent>();
+            if (tempParametersMapping != null)
+            {
+                foreach (var node in tempParametersMapping.GetNode<YamlSequenceNode>("hands"))
+                {
+                    AddHand(node.AsString());
+                }
+            }
+
             base.Initialize();
         }
 
@@ -44,10 +53,7 @@ namespace Content.Server.GameObjects
 
         public override void LoadParameters(YamlMappingNode mapping)
         {
-            foreach (var node in mapping.GetNode<YamlSequenceNode>("hands"))
-            {
-                AddHand(node.AsString());
-            }
+            tempParametersMapping = mapping;
             base.LoadParameters(mapping);
         }
 
