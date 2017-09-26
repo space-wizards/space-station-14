@@ -1,4 +1,6 @@
-﻿using SS14.Shared.ContentPack;
+﻿using Content.Client.GameObjects;
+using Content.Client.Interfaces.GameObjects;
+using SS14.Shared.ContentPack;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 
@@ -12,6 +14,9 @@ namespace Content.Client
 
             factory.RegisterIgnore("Inventory");
             factory.RegisterIgnore("Item");
+
+            factory.Register<HandsComponent>();
+            factory.RegisterReference<HandsComponent, IHandsComponent>();
         }
     }
 }

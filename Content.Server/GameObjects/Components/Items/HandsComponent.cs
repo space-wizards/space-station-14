@@ -1,4 +1,5 @@
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Utility;
@@ -9,10 +10,8 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects
 {
-    public class HandsComponent : Component, IHandsComponent
+    public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
-        public override string Name => "Hands";
-
         private string activeIndex;
         public string ActiveIndex
         {
@@ -54,8 +53,6 @@ namespace Content.Server.GameObjects
 
         public IEnumerable<IItemComponent> GetAllHeldItems()
         {
-            throw new NotImplementedException();
-            /*
             foreach (var slot in hands.Values)
             {
                 if (slot.Item != null)
@@ -63,7 +60,6 @@ namespace Content.Server.GameObjects
                     yield return slot.Item;
                 }
             }
-            */
         }
 
         public IItemComponent GetHand(string index)
@@ -77,8 +73,6 @@ namespace Content.Server.GameObjects
         /// </summary>
         private IEnumerable<string> ActivePriorityEnumerable()
         {
-            throw new NotImplementedException();
-            /*
             yield return ActiveIndex;
             foreach (var hand in hands.Keys)
             {
@@ -89,7 +83,6 @@ namespace Content.Server.GameObjects
 
                 yield return hand;
             }
-            */
         }
 
         public bool PutInHand(IItemComponent item)
@@ -183,5 +176,18 @@ namespace Content.Server.GameObjects
         ///     Get the name of the slot passed to the inventory component.
         /// </summary>
         private string HandSlotName(string index) => $"_hand_{index}";
+
+        public override ComponentState GetComponentState()
+        {
+            var dict = new Dictionary<string, int>(hands.Count);
+            foreach (var hand in hands)
+            {
+                if (hand.Value.Item != null)
+                {
+                    dict[hand.Key] = hand.Value.Item.Owner.Uid;
+                }
+            }
+            return new HandsComponentState(dict);
+        }
     }
 }
