@@ -1,4 +1,6 @@
 ﻿using SS14.Shared.ContentPack;
+using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.IoC;
 
 namespace Content.Client
 {
@@ -6,7 +8,10 @@ namespace Content.Client
     {
         public override void Init()
         {
-            // TODO: Anything at all.
+            var factory = IoCManager.Resolve<IComponentFactory>();
+
+            factory.RegisterIgnore("Inventory");
+            factory.RegisterIgnore("Item");
         }
     }
 }
