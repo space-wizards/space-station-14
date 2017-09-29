@@ -1,5 +1,7 @@
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
+using SS14.Server.GameObjects.Events;
+using SS14.Shared;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Utility;
@@ -28,6 +30,7 @@ namespace Content.Server.GameObjects
         }
 
         private Dictionary<string, IInventorySlot> hands = new Dictionary<string, IInventorySlot>();
+        private List<string> orderedHands = new List<string>();
         private IInventoryComponent inventory;
         private YamlMappingNode tempParametersMapping;
 
@@ -42,6 +45,7 @@ namespace Content.Server.GameObjects
                 }
             }
 
+            Owner.SubscribeEvent<BoundKeyChangeEventArgs>(OnKeyChange, this);
             base.Initialize();
         }
 
@@ -160,6 +164,7 @@ namespace Content.Server.GameObjects
 
             var slot = inventory.AddSlot(HandSlotName(index));
             hands[index] = slot;
+            orderedHands.Add(index);
         }
 
         public void RemoveHand(string index)
@@ -171,6 +176,19 @@ namespace Content.Server.GameObjects
 
             inventory.RemoveSlot(HandSlotName(index));
             hands.Remove(index);
+            orderedHands.Remove(index);
+
+            if (index == ActiveIndex)
+            {
+                if (orderedHands.Count == 0)
+                {
+                    activeIndex = null;
+                }
+                else
+                {
+                    activeIndex = orderedHands[0];
+                }
+            }
         }
 
         public bool HasHand(string index)
@@ -194,6 +212,25 @@ namespace Content.Server.GameObjects
                 }
             }
             return new HandsComponentState(dict);
+        }
+
+        // Game logic goes here.
+        public void OnKeyChange(object sender, EntityEventArgs uncast)
+        {
+            var cast = (BoundKeyChangeEventArgs)uncast;
+            if (cast.Actor != Owner || cast.KeyFunction != BoundKeyFunctions.SwitchHands || cast.KeyState != BoundKeyState.Down)
+            {
+                return;
+            }
+
+            var index = orderedHands.FindIndex(x => x == ActiveIndex);
+            index++;
+            if (index >= orderedHands.Count)
+            {
+                index = 0;
+            }
+
+            ActiveIndex = orderedHands[index];
         }
     }
 }
