@@ -1,6 +1,7 @@
-using Content.Server.Interfaces.GameObjects;
+﻿using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using SS14.Server.GameObjects.Events;
+using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
@@ -32,11 +33,16 @@ namespace Content.Server.GameObjects
         private Dictionary<string, IInventorySlot> hands = new Dictionary<string, IInventorySlot>();
         private List<string> orderedHands = new List<string>();
         private IInventoryComponent inventory;
+        private IServerTransformComponent transform;
         private YamlMappingNode tempParametersMapping;
+
+        // Mostly arbitrary.
+        public const float PICKUP_RANGE = 2;
 
         public override void Initialize()
         {
             inventory = Owner.GetComponent<IInventoryComponent>();
+            transform = Owner.GetComponent<IServerTransformComponent>();
             if (tempParametersMapping != null)
             {
                 foreach (var node in tempParametersMapping.GetNode<YamlSequenceNode>("hands"))
@@ -46,12 +52,15 @@ namespace Content.Server.GameObjects
             }
 
             Owner.SubscribeEvent<BoundKeyChangeEventArgs>(OnKeyChange, this);
+            Owner.SubscribeEvent<ClickedOnEntityEventArgs>(OnClick, this);
             base.Initialize();
         }
 
         public override void OnRemove()
         {
             inventory = null;
+            Owner.UnsubscribeEvent<BoundKeyChangeEventArgs>(this);
+            Owner.UnsubscribeEvent<ClickedOnEntityEventArgs>(this);
             base.OnRemove();
         }
 
@@ -165,6 +174,10 @@ namespace Content.Server.GameObjects
             var slot = inventory.AddSlot(HandSlotName(index));
             hands[index] = slot;
             orderedHands.Add(index);
+            if (ActiveIndex == null)
+            {
+                ActiveIndex = index;
+            }
         }
 
         public void RemoveHand(string index)
@@ -218,11 +231,24 @@ namespace Content.Server.GameObjects
         public void OnKeyChange(object sender, EntityEventArgs uncast)
         {
             var cast = (BoundKeyChangeEventArgs)uncast;
-            if (cast.Actor != Owner || cast.KeyFunction != BoundKeyFunctions.SwitchHands || cast.KeyState != BoundKeyState.Down)
+            if (cast.Actor != Owner || cast.KeyState != BoundKeyState.Down)
             {
                 return;
             }
 
+            switch (cast.KeyFunction)
+            {
+                case BoundKeyFunctions.SwitchHands:
+                    SwapHands();
+                    break;
+                case BoundKeyFunctions.Drop:
+                    Drop(ActiveIndex);
+                    break;
+            }
+        }
+
+        private void SwapHands()
+        {
             var index = orderedHands.FindIndex(x => x == ActiveIndex);
             index++;
             if (index >= orderedHands.Count)
@@ -231,6 +257,24 @@ namespace Content.Server.GameObjects
             }
 
             ActiveIndex = orderedHands[index];
+        }
+
+        public void OnClick(object sender, EntityEventArgs uncast)
+        {
+            var cast = (ClickedOnEntityEventArgs)uncast;
+            if (cast.MouseButton != MouseClickType.Left || Owner.EntityManager.GetEntity(cast.Clicker) != Owner)
+            {
+                return;
+            }
+
+            var target = Owner.EntityManager.GetEntity(cast.Clicked);
+            var targetTransform = target.GetComponent<IServerTransformComponent>();
+            if (!target.TryGetComponent<IItemComponent>(out var item) || (targetTransform.WorldPosition - transform.WorldPosition).Length > PICKUP_RANGE)
+            {
+                return;
+            }
+
+            PutInHand(item, ActiveIndex, fallback: false);
         }
     }
 }

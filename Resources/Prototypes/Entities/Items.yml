@@ -1,0 +1,7 @@
+- type: entity
+  name: "Toolbox 2: Handle edition"
+  parent: Toolbox
+  id: ToolboxItem
+  components:
+  - type: Item
+
