@@ -59,7 +59,7 @@
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IInventoryComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IItemComponent.cs" />
-    <Compile Include="GameObjects\Components\Items\HandsComponent.cs" />
+    <Compile Include="GameObjects\Components\Items\ServerHandsComponent.cs" />
     <Compile Include="GameObjects\Components\Items\InventoryComponent.cs" />
     <Compile Include="GameObjects\Components\Items\ItemComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,7 @@
-using Content.Server.Interfaces.GameObjects;
+﻿using Content.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Server.Interfaces.GameObjects;
 using System;
 
 namespace Content.Server.GameObjects
@@ -20,6 +21,11 @@ namespace Content.Server.GameObjects
             }
 
             ContainingSlot = null;
+
+            foreach (var component in Owner.GetComponents<ISpriteRenderableComponent>())
+            {
+                component.Visible = true;
+            }
         }
 
         public void EquippedToSlot(IInventorySlot slot)
@@ -30,6 +36,11 @@ namespace Content.Server.GameObjects
             }
 
             ContainingSlot = slot;
+
+            foreach (var component in Owner.GetComponents<ISpriteRenderableComponent>())
+            {
+                component.Visible = false;
+            }
         }
     }
 }

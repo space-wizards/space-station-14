@@ -62,8 +62,9 @@
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Prototypes\DiscoBall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GameObjects\Components\Items\HandsComponent.cs" />
+    <Compile Include="GameObjects\Components\Items\ClientHandsComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
+    <Compile Include="UserInterface\HandsGui.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">
@@ -81,6 +82,10 @@
     <ProjectReference Include="..\engine\SFML\src\System\sfml-system.csproj">
       <Project>{31d24303-f6a9-4d53-bb03-a73edcb3186d}</Project>
       <Name>sfml-system</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\SFML\src\Window\sfml-window.csproj">
+      <Project>{d17de83d-a592-461f-8af2-53f9e22e1d0f}</Project>
+      <Name>sfml-window</Name>
     </ProjectReference>
     <ProjectReference Include="..\engine\SS14.Client.Graphics\SS14.Client.Graphics.csproj">
       <Project>{302b877e-0000-0000-0000-000000000000}</Project>

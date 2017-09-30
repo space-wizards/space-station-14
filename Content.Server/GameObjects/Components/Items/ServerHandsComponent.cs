@@ -4,12 +4,11 @@ using SS14.Server.GameObjects.Events;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared;
 using SS14.Shared.GameObjects;
-using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Utility;
-using System.Collections.Generic;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using YamlDotNet.RepresentationModel;
+using Lidgren.Network;
 
 namespace Content.Server.GameObjects
 {
@@ -224,7 +223,7 @@ namespace Content.Server.GameObjects
                     dict[hand.Key] = hand.Value.Item.Owner.Uid;
                 }
             }
-            return new HandsComponentState(dict);
+            return new HandsComponentState(dict, ActiveIndex);
         }
 
         // Game logic goes here.
@@ -275,6 +274,20 @@ namespace Content.Server.GameObjects
             }
 
             PutInHand(item, ActiveIndex, fallback: false);
+        }
+
+        public override void HandleNetworkMessage(IncomingEntityComponentMessage message, NetConnection sender)
+        {
+            if (message.MessageParameters.Count != 1)
+            {
+                return;
+            }
+            var index = message.MessageParameters[0];
+            if (index is string newIndex && HasHand(newIndex))
+            {
+                ActiveIndex = newIndex;
+            }
+            base.HandleNetworkMessage(message, sender);
         }
     }
 }

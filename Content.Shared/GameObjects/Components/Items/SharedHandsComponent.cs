@@ -1,4 +1,4 @@
-using SS14.Shared.GameObjects;
+﻿using SS14.Shared.GameObjects;
 using System;
 using System.Collections.Generic;
 
@@ -16,10 +16,12 @@ namespace Content.Shared.GameObjects
     public class HandsComponentState : ComponentState
     {
         public readonly Dictionary<string, int> Hands;
+        public readonly string ActiveIndex;
 
-        public HandsComponentState(Dictionary<string, int> hands)
+        public HandsComponentState(Dictionary<string, int> hands, string activeIndex) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
+            ActiveIndex = activeIndex;
         }
     }
 }

@@ -1,9 +1,4 @@
-using Content.Client.Interfaces.GameObjects;
-using Content.Shared.GameObjects;
-using SS14.Shared.GameObjects;
-using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.IoC;
-using System.Collections.Generic;
+﻿using SS14.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.Interfaces.GameObjects
 {
@@ -12,5 +7,8 @@ namespace Content.Client.Interfaces.GameObjects
     public interface IHandsComponent
     {
         IEntity GetEntity(string index);
+        string ActiveIndex { get; }
+
+        void SendChangeHand(string index);
     }
 }
