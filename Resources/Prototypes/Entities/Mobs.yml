@@ -1,0 +1,10 @@
+- type: entity
+  name: Urist McHands
+  id: HumanMob_Content
+  parent: HumanMob
+  components:
+  - type: Hands
+    hands:
+    - left
+    - right
+  - type: Inventory

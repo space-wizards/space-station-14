@@ -1,0 +1,14 @@
+- type: entity
+  name: "Toolbox 2: Handle edition"
+  parent: Toolbox
+  id: ToolboxItem
+  components:
+  - type: Item
+
+- type: entity
+  name: "Mop 2: Handle edition"
+  parent: Mop
+  id: MopItem
+  components:
+  - type: Item
+

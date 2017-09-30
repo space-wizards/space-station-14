@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GameObjects\Components\Items\SharedHandsComponent.cs" />
+    <Compile Include="GameObjects\Components\NetIDs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\engine\Lidgren.Network\Lidgren.Network.csproj">

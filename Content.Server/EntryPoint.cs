@@ -1,4 +1,8 @@
-﻿using SS14.Shared.ContentPack;
+﻿using Content.Server.GameObjects;
+using Content.Server.Interfaces.GameObjects;
+using SS14.Shared.ContentPack;
+using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.IoC;
 
 namespace Content.Server
 {
@@ -6,7 +10,16 @@ namespace Content.Server
     {
         public override void Init()
         {
-            // TODO: Anything at all.
+            var factory = IoCManager.Resolve<IComponentFactory>();
+
+            factory.Register<HandsComponent>();
+            factory.RegisterReference<HandsComponent, IHandsComponent>();
+
+            factory.Register<InventoryComponent>();
+            factory.RegisterReference<InventoryComponent, IInventoryComponent>();
+
+            factory.Register<ItemComponent>();
+            factory.RegisterReference<ItemComponent, IItemComponent>();
         }
     }
 }
