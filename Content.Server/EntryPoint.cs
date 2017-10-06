@@ -20,6 +20,9 @@ namespace Content.Server
 
             factory.Register<ItemComponent>();
             factory.RegisterReference<ItemComponent, IItemComponent>();
+
+            factory.Register<InteractableComponent>();
+            factory.RegisterReference<InteractableComponent, IInteractableComponent>();
         }
     }
 }
