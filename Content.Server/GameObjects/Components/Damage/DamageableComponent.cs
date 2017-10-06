@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Content.Server.Interfaces.GameObjects;
+using System;
 using System.Collections.Generic;
 using OpenTK;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using Content.Server.Interfaces;
+using Content.Shared.GameObjects;
 
 namespace Content.Server.GameObjects
 {
@@ -14,7 +16,7 @@ namespace Content.Server.GameObjects
     /// A component that handles receiving damage and healing,
     /// as well as informing other components of it.
     /// </summary>
-    public class DamageableComponent : Component
+    public class DamageableComponent : Component, IDamageableComponent
     {
         /// <inheritdoc />
         public override string Name => "Damageable";
@@ -32,41 +34,36 @@ namespace Content.Server.GameObjects
         Dictionary<DamageType, List<int>> Thresholds = new Dictionary<DamageType, List<int>>();
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
-        protected virtual void OnDamageThresholdPassed(DamageThresholdPassedEventArgs e)
-        {
-            DamageThresholdPassed?.Invoke(this, e);
-        }
 
         /// <inheritdoc />
         public override void LoadParameters(YamlMappingNode mapping)
         {
-            YamlNode node;
-
-            if (mapping.TryGetNode("resistanceset", out node))
+            if (mapping.TryGetNode("resistanceset", out YamlNode node))
+            {
                 Resistances = ResistanceSet.GetResistanceSet(node.AsString());
+            }
         }
 
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
-
             InitializeDamageType(DamageType.Total);
-
-            AddThresholdsFrom(Owner as IOnDamageBehaviour);
+            if (Owner is IOnDamageBehavior damageBehavior)
+            {
+                AddThresholdsFrom(damageBehavior);
+            }
 
             RecalculateComponentThresholds();
         }
 
-        /// <summary>
-        /// The function that handles receiving damage.
-        /// Converts damage via the resistance set then applies it
-        /// and informs components of thresholds passed as necessary.
-        /// </summary>
-        /// <param name="damageType">Type of damage being received.</param>
-        /// <param name="amount">Amount of damage being received.</param>
+        /// <inheritdoc />
         public void TakeDamage(DamageType damageType, int amount)
         {
+            if (damageType == DamageType.Total)
+            {
+                throw new ArgumentException("Cannot take damage for DamageType.Total");
+            }
             InitializeDamageType(damageType);
 
             int oldValue = CurrentDamage[damageType];
@@ -89,15 +86,13 @@ namespace Content.Server.GameObjects
             }
         }
 
-        /// <summary>
-        /// Handles receiving healing.
-        /// Converts healing via the resistance set then applies it
-        /// and informs components of thresholds passed as necessary.
-        /// </summary>
-        /// <param name="damageType">Type of damage being received.</param>
-        /// <param name="amount">Amount of damage being received.</param>
+        /// <inheritdoc />
         public void TakeHealing(DamageType damageType, int amount)
         {
+            if (damageType == DamageType.Total)
+            {
+                throw new ArgumentException("Cannot heal for DamageType.Total");
+            }
             TakeDamage(damageType, -amount);
         }
 
@@ -106,7 +101,9 @@ namespace Content.Server.GameObjects
             int change = CurrentDamage[damageType] - oldValue;
 
             if (change == 0)
+            {
                 return;
+            }
 
             int changeSign = Math.Sign(change);
 
@@ -114,25 +111,28 @@ namespace Content.Server.GameObjects
             {
                 if (((value * changeSign) > (oldValue * changeSign)) && ((value * changeSign) <= (CurrentDamage[damageType] * changeSign)))
                 {
-                    OnDamageThresholdPassed(new DamageThresholdPassedEventArgs(new DamageThreshold(damageType, value), (changeSign > 0)));
+                    var args = new DamageThresholdPassedEventArgs(new DamageThreshold(damageType, value), (changeSign > 0));
+                    DamageThresholdPassed?.Invoke(this, args);
                 }
             }
         }
 
         void RecalculateComponentThresholds()
         {
-            foreach (IOnDamageBehaviour onDamageBehaviourComponent in Owner.GetComponents<IOnDamageBehaviour>())
+            foreach (IOnDamageBehavior onDamageBehaviorComponent in Owner.GetComponents<IOnDamageBehavior>())
             {
-                AddThresholdsFrom(onDamageBehaviourComponent);
+                AddThresholdsFrom(onDamageBehaviorComponent);
             }
         }
 
-        void AddThresholdsFrom(IOnDamageBehaviour onDamageBehaviour)
+        void AddThresholdsFrom(IOnDamageBehavior onDamageBehavior)
         {
-            if (onDamageBehaviour == null)
-                return;
+            if (onDamageBehavior == null)
+            {
+                throw new ArgumentNullException(nameof(onDamageBehavior));
+            }
 
-            List<DamageThreshold> thresholds = onDamageBehaviour.GetAllDamageThresholds();
+            List<DamageThreshold> thresholds = onDamageBehavior.GetAllDamageThresholds();
 
             foreach (DamageThreshold threshold in thresholds)
             {
@@ -155,8 +155,8 @@ namespace Content.Server.GameObjects
 
     public struct DamageThreshold
     {
-        public DamageType DamageType { get; private set; }
-        public int Value { get; private set; }
+        public DamageType DamageType { get; }
+        public int Value { get; }
 
         public DamageThreshold(DamageType damageType, int value)
         {
@@ -184,8 +184,8 @@ namespace Content.Server.GameObjects
 
     public class DamageThresholdPassedEventArgs : EventArgs
     {
-        public DamageThreshold DamageThreshold { get; set; }
-        public bool Passed { get; set; }
+        public DamageThreshold DamageThreshold { get; }
+        public bool Passed { get; }
 
         public DamageThresholdPassedEventArgs(DamageThreshold threshold, bool passed)
         {

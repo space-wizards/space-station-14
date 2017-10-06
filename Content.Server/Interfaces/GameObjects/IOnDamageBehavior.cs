@@ -9,7 +9,7 @@ namespace Content.Server.Interfaces
     /// you need to hook it up to the DamageableComponent via Initialize().
     /// See DestructibleComponent.Initialize() for an example.
     /// </summary>
-    interface IOnDamageBehaviour
+    interface IOnDamageBehavior
     {
         /// <summary>
         /// Gets a list of all DamageThresholds this component/entity are interested in.

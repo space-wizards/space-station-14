@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Content.Server.Interfaces.GameObjects;
+using Content.Shared.Maths;
+using System;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
+using Content.Shared.GameObjects;
 
 namespace Content.Server.GameObjects
 {
@@ -10,7 +13,7 @@ namespace Content.Server.GameObjects
     /// informing others of the current temperature,
     /// and taking fire damage from high temperature.
     /// </summary>
-    class TemperatureComponent : Component
+    public class TemperatureComponent : Component, ITemperatureComponent
     {
         /// <inheritdoc />
         public override string Name => "Temperature";

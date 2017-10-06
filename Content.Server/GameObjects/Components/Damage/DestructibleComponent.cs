@@ -5,13 +5,15 @@ using SS14.Shared.Log;
 using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using Content.Server.Interfaces;
+using Content.Shared.GameObjects;
+
 
 namespace Content.Server.GameObjects
 {
     /// <summary>
     /// Deletes the entity once a certain damage threshold has been reached.
     /// </summary>
-    class DestructibleComponent : Component, IOnDamageBehaviour
+    public class DestructibleComponent : Component, IOnDamageBehavior
     {
         /// <inheritdoc />
         public override string Name => "Destructible";

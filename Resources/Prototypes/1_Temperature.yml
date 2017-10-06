@@ -10,14 +10,14 @@
 
   - type: Icon
     icon: galoshes
-  
+
   - type: Damageable
     resistanceset: Standard
-  
+
   - type: Destructible
     thresholdtype: Total
     thresholdvalue: 100
-  
+
   - type: Temperature
     firedamagethreshold: 200
     firedamagecoefficient: 20
