@@ -51,7 +51,6 @@ namespace Content.Server.GameObjects
             }
 
             Owner.SubscribeEvent<BoundKeyChangeEventArgs>(OnKeyChange, this);
-            Owner.SubscribeEvent<ClickedOnEntityEventArgs>(OnClick, this);
             base.Initialize();
         }
 
@@ -256,24 +255,6 @@ namespace Content.Server.GameObjects
             }
 
             ActiveIndex = orderedHands[index];
-        }
-
-        public void OnClick(object sender, EntityEventArgs uncast)
-        {
-            var cast = (ClickedOnEntityEventArgs)uncast;
-            if (cast.MouseButton != MouseClickType.Left || Owner.EntityManager.GetEntity(cast.Clicker) != Owner)
-            {
-                return;
-            }
-
-            var target = Owner.EntityManager.GetEntity(cast.Clicked);
-            var targetTransform = target.GetComponent<IServerTransformComponent>();
-            if (!target.TryGetComponent<IItemComponent>(out var item) || (targetTransform.WorldPosition - transform.WorldPosition).Length > PICKUP_RANGE)
-            {
-                return;
-            }
-
-            PutInHand(item, ActiveIndex, fallback: false);
         }
 
         public override void HandleNetworkMessage(IncomingEntityComponentMessage message, NetConnection sender)

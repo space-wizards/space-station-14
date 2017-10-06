@@ -14,6 +14,7 @@ namespace Content.Client
 
             factory.RegisterIgnore("Inventory");
             factory.RegisterIgnore("Item");
+            factory.RegisterIgnore("Interactable");
 
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
