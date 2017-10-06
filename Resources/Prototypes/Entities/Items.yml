@@ -4,6 +4,7 @@
   id: ToolboxItem
   components:
   - type: Item
+  - type: Interactable
 
 - type: entity
   name: "Mop 2: Handle edition"
@@ -11,4 +12,4 @@
   id: MopItem
   components:
   - type: Item
-
+  - type: Interactable
