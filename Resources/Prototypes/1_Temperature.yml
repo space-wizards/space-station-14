@@ -6,10 +6,10 @@
   - type: Clickable
   - type: Sprite
     sprites:
-    - galoshes
+    - shoes
 
   - type: Icon
-    icon: galoshes
+    icon: shoes
 
   - type: Damageable
     resistanceset: Standard
