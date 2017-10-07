@@ -1,0 +1,23 @@
+- type: entity
+  id: thing_that_heats_up_on_its_own_and_dies
+  name: Thing that heats up on its own and dies
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: Sprite
+    sprites:
+    - shoes
+
+  - type: Icon
+    icon: shoes
+
+  - type: Damageable
+    resistanceset: Standard
+
+  - type: Destructible
+    thresholdtype: Total
+    thresholdvalue: 100
+
+  - type: Temperature
+    firedamagethreshold: 200
+    firedamagecoefficient: 20
