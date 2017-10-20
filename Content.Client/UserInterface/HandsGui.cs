@@ -1,10 +1,8 @@
 ﻿using Content.Client.Interfaces.GameObjects;
-using OpenTK.Graphics;
-using SFML.Graphics;
-using SFML.Window;
 using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
-using SS14.Client.Graphics.Utility;
+using SS14.Client.Graphics.Input;
+using SS14.Client.Graphics.Sprites;
 using SS14.Client.Interfaces.Player;
 using SS14.Client.Interfaces.Resource;
 using SS14.Client.Interfaces.UserInterface;
@@ -18,7 +16,7 @@ namespace Content.Client.UserInterface
 {
     public class HandsGui : GuiComponent
     {
-        private readonly Color4 _inactiveColor = new Color4(90, 90, 90, 255);
+        private readonly Color _inactiveColor = new Color(90, 90, 90);
 
         private readonly IPlayerManager _playerManager = IoCManager.Resolve<IPlayerManager>();
         private readonly IUserInterfaceManager _userInterfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
@@ -46,7 +44,7 @@ namespace Content.Client.UserInterface
 
         public override void Update(float frameTime)
         {
-            var slotBounds = handSlot.GetLocalBounds();
+            var slotBounds = handSlot.LocalBounds;
             var width = (int)((slotBounds.Width * 2) + spacing);
             var height = (int)slotBounds.Height;
             Position = new Vector2i((int)(CluwneLib.Window.Viewport.Width - width) / 2, (int)CluwneLib.Window.Viewport.Height - height - 10);
@@ -74,13 +72,13 @@ namespace Content.Client.UserInterface
             handSlot.SetTransformToRect(leftActive ? handL : handR);
             handSlot.Draw();
 
-            handSlot.Color = _inactiveColor.Convert();
+            handSlot.Color = _inactiveColor;
             handSlot.SetTransformToRect(leftActive ? handR : handL);
             handSlot.Draw();
 
             if (LeftHand.Entity != null && LeftHand.HeldSprite != null)
             {
-                var bounds = LeftHand.HeldSprite.GetLocalBounds();
+                var bounds = LeftHand.HeldSprite.LocalBounds;
                 LeftHand.HeldSprite.SetTransformToRect(
                     Box2i.FromDimensions(handL.Left + (int)(handL.Width / 2f - bounds.Width / 2f),
                                   handL.Top + (int)(handL.Height / 2f - bounds.Height / 2f),
@@ -90,7 +88,7 @@ namespace Content.Client.UserInterface
 
             if (RightHand.Entity != null && RightHand.HeldSprite != null)
             {
-                var bounds = RightHand.HeldSprite.GetLocalBounds();
+                var bounds = RightHand.HeldSprite.LocalBounds;
                 RightHand.HeldSprite.SetTransformToRect(
                     Box2i.FromDimensions(handR.Left + (int)(handR.Width / 2f - bounds.Width / 2f),
                                   handR.Top + (int)(handR.Height / 2f - bounds.Height / 2f),
