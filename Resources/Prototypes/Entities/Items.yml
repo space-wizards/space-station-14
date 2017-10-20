@@ -1,15 +1,55 @@
 - type: entity
-  name: "Toolbox 2: Handle edition"
-  parent: Toolbox
-  id: ToolboxItem
+  name: "Item"
+  id: BaseItem
   components:
-  - type: Item
+  - type: Transform
   - type: Interactable
+  - type: Item
+  - type: Clickable
+  - type: BoundingBox
+  - type: Physics
+    mass: 5
 
 - type: entity
-  name: "Mop 2: Handle edition"
-  parent: Mop
+  name: "Emergency Toolbox With Handle"
+  parent: BaseItem
+  id: RedToolboxItem
+  components:
+  - type: WearableAnimatedSprite
+    notWornSprite: toolbox_r
+    sprite: player_toolbox
+  - type: Icon
+    icon: toolbox_r
+
+- type: entity
+  name: "Mechanical Toolbox With Handle"
+  parent: BaseItem
+  id: BlueToolboxItem
+  components:
+  - type: WearableAnimatedSprite
+    notWornSprite: toolbox_b
+    sprite: player_toolbox
+  - type: Icon
+    icon: toolbox_b
+
+- type: entity
+  name: "Electrical Toolbox With Handle"
+  parent: BaseItem
+  id: YellowToolboxItem
+  components:
+  - type: WearableAnimatedSprite
+    notWornSprite: toolbox_y
+    sprite: player_toolbox
+  - type: Icon
+    icon: toolbox_y
+
+- type: entity
+  name: "Extra-Grip™ Mop"
+  parent: BaseItem
   id: MopItem
   components:
-  - type: Item
-  - type: Interactable
+  - type: WearableAnimatedSprite
+    notWornSprite: mop
+    sprite: player_mop
+  - type: Icon
+    sprite: mop

@@ -1,0 +1,15 @@
+- type: entity
+  parent: BaseItem
+  id: ShoesItem
+  name: Shoes
+  - type: WearableAnimatedSprite
+    sprite: player_shoes
+    notWornSprite: shoes
+
+- type: entity
+  parent: BaseItem
+  id: JanitorUniformItem
+  name: Janitor Jumpsuit
+  - type: WearableAnimatedSprite
+    sprite: player_jumpsuit_gray
+    notWornSprite: janitorsuit
