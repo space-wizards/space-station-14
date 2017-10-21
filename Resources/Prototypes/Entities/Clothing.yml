@@ -2,6 +2,7 @@
   parent: BaseItem
   id: ShoesItem
   name: Shoes
+  components:
   - type: WearableAnimatedSprite
     sprite: player_shoes
     notWornSprite: shoes
@@ -10,6 +11,7 @@
   parent: BaseItem
   id: JanitorUniformItem
   name: Janitor Jumpsuit
+  components:
   - type: WearableAnimatedSprite
     sprite: player_jumpsuit_gray
     notWornSprite: janitorsuit
