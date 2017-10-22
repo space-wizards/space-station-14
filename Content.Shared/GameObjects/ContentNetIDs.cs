@@ -7,5 +7,6 @@
         public const uint DESTRUCTIBLE = 1001;
         public const uint TEMPERATURE = 1002;
         public const uint HANDS = 1003;
+        public const uint DOOR = 1004;
     }
 }

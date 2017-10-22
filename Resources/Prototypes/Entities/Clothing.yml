@@ -7,6 +7,9 @@
     sprite: player_shoes
     notWornSprite: shoes
 
+  - type: Icon
+    icon: shoes
+
 - type: entity
   parent: BaseItem
   id: JanitorUniformItem
@@ -15,3 +18,6 @@
   - type: WearableAnimatedSprite
     sprite: player_jumpsuit_gray
     notWornSprite: janitorsuit
+
+  - type: Icon
+    icon: janitorsuit
