@@ -26,10 +26,15 @@ def main():
         description="Packages the SS14 content repo for release on all platforms.")
     parser.add_argument("--platform",
                         action="store",
-                        choices=["windows", "mac", "linux", "all"],
-                        help="Which platform to build for.",
-                        default="all")
+                        choices=["windows", "mac", "linux"],
+                        nargs="*",
+                        help="Which platform to build for. If not provided, all platforms will be built")
+
     args = parser.parse_args()
+    platforms = args.platform
+
+    if not platforms:
+        platforms = ["windows", "mac", "linux"]
 
     if os.path.exists("release"):
         print(Fore.BLUE+Style.DIM + "Cleaning old release packages (release/)..." + Style.RESET_ALL)
@@ -37,15 +42,15 @@ def main():
 
     os.mkdir("release")
 
-    if args.platform == "all" or args.platform == "windows":
+    if "windows" in platforms:
         wipe_bin()
         build_windows()
 
-    if args.platform == "all" or args.platform == "linux":
+    if "linux" in platforms:
         wipe_bin()
         build_linux()
 
-    if args.platform == "all" or args.platform == "mac":
+    if "mac" in platforms:
         wipe_bin()
         build_macos()
 
@@ -106,7 +111,7 @@ def build_macos():
                     "SpaceStation14Content.sln",
                     "/m",
                     "/p:Configuration=Release",
-                    "/p:Platform=x86",
+                    "/p:Platform=x64",
                     "/nologo",
                     "/v:m",
                     "/p:TargetOS=MacOS",
