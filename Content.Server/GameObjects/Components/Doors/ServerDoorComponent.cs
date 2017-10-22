@@ -24,12 +24,14 @@ namespace Content.Server.GameObjects
             interactableComponent = Owner.GetComponent<IInteractableComponent>();
             interactableComponent.OnAttackHand += OnAttackHand;
             collidableComponent = Owner.GetComponent<CollidableComponent>();
+            collidableComponent.OnBump += OnBump;
         }
 
         public override void OnRemove()
         {
             interactableComponent.OnAttackHand -= OnAttackHand;
             interactableComponent = null;
+            collidableComponent.OnBump -= OnBump;
             collidableComponent = null;
         }
 
@@ -47,6 +49,7 @@ namespace Content.Server.GameObjects
 
         private void OnBump(object sender, BumpEventArgs args)
         {
+            Logger.Info("Bump!");
             if (Opened)
             {
                 return;
