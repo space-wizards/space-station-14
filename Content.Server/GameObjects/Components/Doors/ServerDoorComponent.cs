@@ -47,7 +47,12 @@ namespace Content.Server.GameObjects
 
         private void OnBump(object sender, BumpEventArgs args)
         {
-            Logger.Info("Bumped!");
+            if (Opened)
+            {
+                return;
+            }
+
+            Open();
         }
 
         public void Open()
