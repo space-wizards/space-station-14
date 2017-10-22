@@ -1,0 +1,23 @@
+- type: entity
+  id: DoorContent
+  name: Actual door
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: Interactable
+  - type: Sprite
+    drawdepth: FloorPlaceable
+    sprites:
+    - door_ew
+    - door_ewo
+
+  - type: Icon
+    icon: door_ew
+
+  - type: BoundingBox
+  - type: Collidable
+  - type: Door
+
+  placement:
+    snap:
+    - Wall
