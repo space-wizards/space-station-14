@@ -15,6 +15,8 @@
     icon: door_ew
 
   - type: BoundingBox
+    sizeX: 1.9
+    offsetY: 1.5
   - type: Collidable
   - type: Door
 
