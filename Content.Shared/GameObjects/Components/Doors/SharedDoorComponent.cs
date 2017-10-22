@@ -1,7 +1,7 @@
 ﻿using System;
 using SS14.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Door
+namespace Content.Shared.GameObjects
 {
     public abstract class SharedDoorComponent : Component
     {
@@ -15,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Door
     {
         public readonly bool Opened;
 
-        public DoorComponentState(bool opened)
+        public DoorComponentState(bool opened) : base(ContentNetIDs.DOOR)
         {
             Opened = opened;
         }

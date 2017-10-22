@@ -63,6 +63,7 @@
     <Compile Include="Prototypes\DiscoBall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\Components\Items\ClientHandsComponent.cs" />
+    <Compile Include="GameObjects\Components\Doors\ClientDoorComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="UserInterface\HandsGui.cs" />
   </ItemGroup>

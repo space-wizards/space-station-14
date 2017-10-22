@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
-    <Compile Include="GameObjects\Components\Door\DoorComponent.cs" />
+    <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\InteractableComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Interactable\IInteractableComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
@@ -73,7 +73,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Temperature\ITemperatureComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Damage\IDamageableComponent.cs" />
-    <Compile Include="Prototypes\Door.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">

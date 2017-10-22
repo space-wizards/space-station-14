@@ -27,6 +27,7 @@ namespace Content.Server
             factory.Register<DamageableComponent>();
             factory.Register<DestructibleComponent>();
             factory.Register<TemperatureComponent>();
+            factory.Register<ServerDoorComponent>();
         }
     }
 }
