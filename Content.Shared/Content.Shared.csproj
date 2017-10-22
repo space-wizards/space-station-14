@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -75,12 +75,10 @@
     <ProjectReference Include="..\engine\SS14.Client\SS14.Client.csproj">
       <Name>SS14.Client</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Project>{0C31DFDF-0000-0000-0000-000000000000}</Project>
     </ProjectReference>
     <ProjectReference Include="..\engine\SS14.Server\SS14.Server.csproj">
       <Name>SS14.Server</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Project>{B04AAE71-0000-0000-0000-000000000000}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup>
