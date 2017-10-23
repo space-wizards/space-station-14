@@ -5,7 +5,7 @@ pipeline {
         stage('Setup') {
             steps {
                 sh './RUN_THIS.py'
-                sh '~/.cache/NuGet/ nuget restore'
+                sh 'TMP=~/.cache/NuGet/ nuget restore'
             }
         }
         stage('Build') {
