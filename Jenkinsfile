@@ -10,7 +10,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh './package_release_build.py --platform windows linux'
+                sh './package_release_build.py'
                 archiveArtifacts artifacts: 'release/*.zip'
                 archiveArtifacts artifacts: 'engine/Resources/ResourcePack.zip'
             }
