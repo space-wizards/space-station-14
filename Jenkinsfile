@@ -12,6 +12,7 @@ pipeline {
             steps {
                 sh './package_release_build.py --platform windows linux'
                 archiveArtifacts artifacts: 'release/*.zip'
+                archiveArtifacts artifacts: 'engine/Resources/ResourcePack.zip'
             }
         }
     }
