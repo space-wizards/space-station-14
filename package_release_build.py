@@ -106,7 +106,7 @@ def build_linux():
 
 def build_macos():
     # Haha this is gonna suck.
-    print(Fore.GREEN + "Building project for MacOS x86..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Building project for MacOS x64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
                     "SpaceStation14Content.sln",
                     "/m",
@@ -118,7 +118,7 @@ def build_macos():
                     "/t:Rebuild"
                    ], check=True)
 
-    print(Fore.GREEN + "Packaging MacOS x86 client..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Packaging MacOS x64 client..." + Style.RESET_ALL)
     # Client has to go in an app bundle.
     bundle = os.path.join("bin", "app", "Space Station 14.app")
     shutil.copytree(os.path.join("BuildFiles", "Mac", "Space Station 14.app"),
@@ -128,11 +128,11 @@ def build_macos():
               os.path.join(bundle, "Contents", "MacOS"))
 
     package_zip(os.path.join("bin", "app"),
-                os.path.join("release", "SS14.Client_MacOS_x86.zip"))
+                os.path.join("release", "SS14.Client_MacOS.zip"))
 
-    print(Fore.GREEN + "Packaging MacOS x86 server..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Packaging MacOS x64 server..." + Style.RESET_ALL)
     package_zip(os.path.join("bin", "Server"),
-                os.path.join("release", "SS14.Server_MacOS_x86.zip"))
+                os.path.join("release", "SS14.Server_MacOS.zip"))
 
 # Hack copied from Stack Overflow to get around the fact that
 # shutil.copytree doesn't allow copying into existing directories.
