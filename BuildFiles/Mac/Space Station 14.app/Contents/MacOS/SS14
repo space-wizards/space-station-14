@@ -6,4 +6,4 @@ echo "$BASEDIR"
 cd "$BASEDIR"
 
 # TODO: unhardcode this, probably ship Mono with SS14.
-/Library/Frameworks/Mono.framework/Versions/Current/Commands/mono ./SS14.Client.exe
+/Library/Frameworks/Mono.framework/Versions/Current/Commands/mono --arch=64 ./SS14.Client.exe
