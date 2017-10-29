@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects;
 using Content.Server.Interfaces.GameObjects;
+using SS14.Server.Interfaces.Player;
 using SS14.Shared.ContentPack;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
@@ -28,6 +29,9 @@ namespace Content.Server
             factory.Register<DestructibleComponent>();
             factory.Register<TemperatureComponent>();
             factory.Register<ServerDoorComponent>();
+
+            var playerManager = IoCManager.Resolve<IPlayerManager>();
+            playerManager.PlayerPrototypeName = "HumanMob_Content";
         }
     }
 }

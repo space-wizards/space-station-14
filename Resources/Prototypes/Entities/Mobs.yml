@@ -1,7 +1,7 @@
 - type: entity
   name: Urist McHands
   id: HumanMob_Content
-  parent: HumanMob
+  parent: __engine_human
   components:
   - type: Hands
     hands:
