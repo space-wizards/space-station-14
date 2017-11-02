@@ -146,7 +146,7 @@ def _copytree(src, dst, symlinks=False, ignore=None):
             shutil.copy2(s, d)
 
 def package_zip(directory, zipname):
-    with zipfile.ZipFile(zipname, "w") as zipf:
+    with zipfile.ZipFile(zipname, "w", zipfile.ZIP_DEFLATED) as zipf:
         for dirs, _, files in os.walk(directory):
             relpath = os.path.relpath(dirs, directory)
             if relpath != ".":
