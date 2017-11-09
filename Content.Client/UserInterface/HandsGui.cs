@@ -6,15 +6,14 @@ using SS14.Client.Graphics.Sprites;
 using SS14.Client.Interfaces.Player;
 using SS14.Client.Interfaces.Resource;
 using SS14.Client.Interfaces.UserInterface;
-using SS14.Client.UserInterface.Components;
-using SS14.Shared;
+using SS14.Client.UserInterface.Controls;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Maths;
 
 namespace Content.Client.UserInterface
 {
-    public class HandsGui : GuiComponent
+    public class HandsGui : Control
     {
         private readonly Color _inactiveColor = new Color(90, 90, 90);
 
@@ -31,29 +30,30 @@ namespace Content.Client.UserInterface
         public HandsGui()
         {
             var _resMgr = IoCManager.Resolve<IResourceCache>();
-            ComponentClass = GuiComponentType.HandsUi;
             handSlot = _resMgr.GetSprite("hand");
-            ZDepth = 5;
+            // OnCalcRect() calculates position so this needs to be ran
+            // as it doesn't automatically get called by the UI manager.
+            DoLayout();
         }
 
-        public override void ComponentUpdate(params object[] args)
+        protected override void OnCalcRect()
         {
-            base.ComponentUpdate(args);
-            UpdateHandIcons();
-        }
-
-        public override void Update(float frameTime)
-        {
+            // Individual size of the hand slot sprite.
             var slotBounds = handSlot.LocalBounds;
             var width = (int)((slotBounds.Width * 2) + spacing);
             var height = (int)slotBounds.Height;
+
+            // Force size because refactoring is HARD.
+            Size = new Vector2i(width, height);
+            ClientArea = Box2i.FromDimensions(0, 0, Width, Height);
+
+            // Hell force position too what could go wrong!
             Position = new Vector2i((int)(CluwneLib.Window.Viewport.Width - width) / 2, (int)CluwneLib.Window.Viewport.Height - height - 10);
             handL = Box2i.FromDimensions(Position.X, Position.Y, (int)slotBounds.Width, (int)slotBounds.Height);
             handR = Box2i.FromDimensions(Position.X + (int)slotBounds.Width + spacing, Position.Y, (int)slotBounds.Width, (int)slotBounds.Height);
-            ClientArea = Box2i.FromDimensions(Position.X, Position.Y, width, (int)slotBounds.Height);
         }
 
-        public override void Render()
+        protected override void DrawContents()
         {
             if (_playerManager?.ControlledEntity == null)
             {

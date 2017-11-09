@@ -38,13 +38,14 @@ namespace Content.Client.GameObjects
 
             ActiveIndex = cast.ActiveIndex;
 
-            var uiMgr = (UserInterfaceManager)IoCManager.Resolve<IUserInterfaceManager>();
-
-            if (uiMgr.GetSingleComponentByGuiComponentType(GuiComponentType.HandsUi) == null)
+            // Tell UI to update.
+            var uiMgr = IoCManager.Resolve<IUserInterfaceManager>();
+            if (!uiMgr.TryGetSingleComponent<HandsGui>(out var component))
             {
-                uiMgr.AddComponent(new HandsGui());
+                component = new HandsGui();
+                uiMgr.AddComponent(component);
             }
-            uiMgr.ComponentUpdate(GuiComponentType.HandsUi, this);
+            component.UpdateHandIcons();
         }
 
         public void SendChangeHand(string index)
