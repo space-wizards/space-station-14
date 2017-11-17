@@ -53,3 +53,16 @@
     sprite: player_mop
   - type: Icon
     sprite: mop
+
+#handheld lights
+- type: entity
+  name: "Lantern"
+  parent: BaseItem
+  id: FlashlightLantern
+  components:
+  - type: WearableAnimatedSprite
+    notWornSprite: Flashlight
+    sprite: player_Flashlight
+  - type: Icon
+    icon: Flashlight
+  - type: PointLight
