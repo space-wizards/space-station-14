@@ -38,7 +38,7 @@ namespace Content.Server
 
             _server.RunLevelChanged += HandleRunLevelChanged;
             _players.PlayerStatusChanged += HandlePlayerStatusChanged;
-            //_players.PlayerPrototypeName = "HumanMob_Content";
+            _players.PlayerPrototypeName = "HumanMob_Content";
 
             var factory = IoCManager.Resolve<IComponentFactory>();
 
