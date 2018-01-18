@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using YamlDotNet.RepresentationModel;
 using Lidgren.Network;
+using SS14.Shared.Enums;
 
 namespace Content.Server.GameObjects
 {
@@ -257,7 +258,7 @@ namespace Content.Server.GameObjects
             ActiveIndex = orderedHands[index];
         }
 
-        public override void HandleNetworkMessage(IncomingEntityComponentMessage message, NetConnection sender)
+        public override void HandleNetworkMessage(IncomingEntityComponentMessage message)
         {
             if (message.MessageParameters.Count != 1)
             {
@@ -268,7 +269,7 @@ namespace Content.Server.GameObjects
             {
                 ActiveIndex = newIndex;
             }
-            base.HandleNetworkMessage(message, sender);
+            base.HandleNetworkMessage(message);
         }
     }
 }

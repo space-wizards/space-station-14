@@ -55,12 +55,12 @@ namespace Content.Client.UserInterface
 
         protected override void DrawContents()
         {
-            if (_playerManager?.ControlledEntity == null)
+            if (_playerManager?.LocalPlayer.ControlledEntity == null)
             {
                 return;
             }
 
-            IEntity entity = _playerManager.ControlledEntity;
+            IEntity entity = _playerManager.LocalPlayer.ControlledEntity;
             if (!entity.TryGetComponent<IHandsComponent>(out var hands))
             {
                 return;
@@ -99,12 +99,12 @@ namespace Content.Client.UserInterface
 
         public void UpdateHandIcons()
         {
-            if (_playerManager?.ControlledEntity == null)
+            if (_playerManager?.LocalPlayer.ControlledEntity == null)
             {
                 return;
             }
 
-            IEntity entity = _playerManager.ControlledEntity;
+            IEntity entity = _playerManager.LocalPlayer.ControlledEntity;
             if (!entity.TryGetComponent<IHandsComponent>(out var hands))
             {
                 return;
@@ -144,7 +144,7 @@ namespace Content.Client.UserInterface
 
         private void SendSwitchHandTo(string index)
         {
-            IEntity entity = _playerManager.ControlledEntity;
+            IEntity entity = _playerManager.LocalPlayer.ControlledEntity;
             if (!entity.TryGetComponent<IHandsComponent>(out var hands))
             {
                 return;
