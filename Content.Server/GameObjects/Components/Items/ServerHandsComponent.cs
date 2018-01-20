@@ -215,7 +215,7 @@ namespace Content.Server.GameObjects
 
         public override ComponentState GetComponentState()
         {
-            var dict = new Dictionary<string, int>(hands.Count);
+            var dict = new Dictionary<string, EntityUid>(hands.Count);
             foreach (var hand in hands)
             {
                 if (hand.Value.Item != null)
