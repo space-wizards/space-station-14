@@ -15,10 +15,10 @@ namespace Content.Shared.GameObjects
     [Serializable]
     public class HandsComponentState : ComponentState
     {
-        public readonly Dictionary<string, int> Hands;
+        public readonly Dictionary<string, EntityUid> Hands;
         public readonly string ActiveIndex;
 
-        public HandsComponentState(Dictionary<string, int> hands, string activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(Dictionary<string, EntityUid> hands, string activeIndex) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
             ActiveIndex = activeIndex;
