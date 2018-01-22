@@ -14,16 +14,15 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public override string Name => "PowerGenerator";
 
-        //Power supply from this entity
+        /// <summary>
+        /// Power supply from this entity
+        /// </summary>
         private float _supply = 1000; //arbitrary initial magic number to start
         public float Supply
         {
             get => _supply;
             set { UpdateSupply(value); }
         }
-
-        //If we connect directly to a powernet through a node it is stored here
-        public Powernet Parent { get; private set; }
 
         public override void LoadParameters(YamlMappingNode mapping)
         {

@@ -13,19 +13,30 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public override string Name => "Dont fucking use this, this isn't a real component it just needs to update";
 
-        //The entities that make up the powernet's physical location and allow powernet connection
+        /// <summary>
+        /// The entities that make up the powernet's physical location and allow powernet connection
+        /// </summary>
         public List<PowerTransferComponent> Wirelist { get; set; } = new List<PowerTransferComponent>();
 
-        //Entities that connect directly to the powernet through PTC above to add power or add power load
+        /// <summary>
+        /// Entities that connect directly to the powernet through PTC above to add power or add power load
+        /// </summary>
         public List<PowerNodeComponent> Nodelist { get; set; } = new List<PowerNodeComponent>();
 
-        //Subset of nodelist that draw power, stores information on current continuous powernet load
+        /// <summary>
+        /// Subset of nodelist that draw power, stores information on current continuous powernet load
+        /// </summary>
         public Dictionary<PowerDeviceComponent, float> Deviceloadlist { get; set; } = new Dictionary<PowerDeviceComponent, float>();
 
-        //Subset of nodelist that draws power from a number of devices combined, adding load from devices at a range from one single node
+        /// <summary>
+        /// Subset of nodelist that draws power from a number of devices combined, adding load from devices at a range from one single node
+        /// </summary>
         public Dictionary<PowerProviderComponent, float> Providerloadlist { get; set; } = new Dictionary<PowerProviderComponent, float>();
 
-        //Subset of nodelist that adds a continuous power supply to the network
+
+        /// <summary>
+        /// Subset of nodelist that adds a continuous power supply to the network
+        /// </summary>
         public Dictionary<PowerGeneratorComponent, float> Generatorlist { get; set; } = new Dictionary<PowerGeneratorComponent, float>();
 
         public float Load { get; private set; } = 0;
@@ -36,7 +47,10 @@ namespace Content.Server.GameObjects.Components.Power
 
         }
 
-        //Combines two powernets when they connect via powertransfer components
+
+        /// <summary>
+        /// Combines two powernets when they connect via powertransfer components
+        /// </summary>
         public void MergePowernets(Powernet toMerge)
         {
             //TODO: load balance reconciliation between powernets on merge tick here
@@ -70,14 +84,18 @@ namespace Content.Server.GameObjects.Components.Power
 
 
         #region Registration
-        //Register a continuous load from a device connected to the powernet
+        /// <summary>
+        /// Register a continuous load from a device connected to the powernet
+        /// </summary>
         public void AddDevice(PowerDeviceComponent device)
         {
             Deviceloadlist.Add(device, device.Load);
             Load += device.Load;
         }
 
-        //Update one of the loads from a deviceconnected to the powernet
+        /// <summary>
+        /// Update one of the loads from a deviceconnected to the powernet
+        /// </summary>
         public void UpdateDevice(PowerDeviceComponent device)
         {
             if(Deviceloadlist.ContainsKey(device))
@@ -87,8 +105,10 @@ namespace Content.Server.GameObjects.Components.Power
                 Load += device.Load;
             }
         }
-        
-        //Remove a continuous load from a device connected to the powernet
+
+        /// <summary>
+        /// Remove a continuous load from a device connected to the powernet
+        /// </summary>
         public void RemoveDevice(PowerDeviceComponent device)
         {
             if(Deviceloadlist.ContainsKey(device))
@@ -103,14 +123,18 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        //Register a power supply from a generator connected to the powernet
+        /// <summary>
+        /// Register a power supply from a generator connected to the powernet
+        /// </summary>
         public void AddGenerator(PowerGeneratorComponent generator)
         {
             Generatorlist.Add(generator, generator.Supply);
             Supply += generator.Supply;
         }
 
-        //Update the value supplied from a generator connected to the powernet
+        /// <summary>
+        /// Update the value supplied from a generator connected to the powernet
+        /// </summary>
         public void UpdateGenerator(PowerGeneratorComponent generator)
         {
             if (Generatorlist.ContainsKey(generator))
@@ -121,7 +145,9 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        //Remove a power supply from a generator connected to the powernet
+        /// <summary>
+        /// Remove a power supply from a generator connected to the powernet
+        /// </summary>
         public void RemoveGenerator(PowerGeneratorComponent generator)
         {
             if (Generatorlist.ContainsKey(generator))

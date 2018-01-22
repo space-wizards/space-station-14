@@ -14,15 +14,24 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public override string Name => "PowerDevice";
 
-        //The method of draw we will try to use to place our load set via component parameter, defaults to not needing power
+        /// <summary>
+        /// The method of draw we will try to use to place our load set via component parameter, defaults to not needing power
+        /// </summary>
         public DrawTypes Drawtype { get; private set; } = DrawTypes.None;
 
+        /// <summary>
+        /// The power draw method we are currently connected to and using
+        /// </summary>
         public DrawTypes Connected { get; private set; } = DrawTypes.None;
 
-        //Powered status indicator
+        /// <summary>
+        /// Status indicator variable for powered
+        /// </summary>
         public bool Powered { get; private set; } = false;
 
-        //Power load from this entity
+        /// <summary>
+        /// Power load from this entity
+        /// </summary>
         private float _load = 100; //arbitrary magic number to start
         public float Load
         {
@@ -30,7 +39,9 @@ namespace Content.Server.GameObjects.Components.Power
             set { UpdateLoad(value); }
         }
 
-        //A power provider that will handle our load, if we are linked to any
+        /// <summary>
+        /// A power provider that will handle our load, if we are linked to any
+        /// </summary>
         public PowerProviderComponent Provider { get; private set; }
 
         public override void LoadParameters(YamlMappingNode mapping)

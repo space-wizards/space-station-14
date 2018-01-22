@@ -61,7 +61,6 @@
     <Compile Include="GameObjects\Components\Power\PowerGeneratorComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDevice.cs" />
     <Compile Include="GameObjects\Components\Power\Powernet.cs" />
-    <Compile Include="GameObjects\Components\Power\PowernetManager.cs" />
     <Compile Include="GameObjects\Components\Power\PowerNodeComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerProviderComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerTransferComponent.cs" />
