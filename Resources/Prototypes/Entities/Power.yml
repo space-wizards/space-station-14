@@ -9,7 +9,7 @@
     color: Red
     sprites:
     - eightdirwire
-
+  - type: PowerTransfer
   - type: Icon
     icon: eightdirwire
 

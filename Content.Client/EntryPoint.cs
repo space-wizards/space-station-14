@@ -18,6 +18,7 @@ namespace Content.Client
             factory.RegisterIgnore("Damageable");
             factory.RegisterIgnore("Destructible");
             factory.RegisterIgnore("Temperature");
+            factory.RegisterIgnore("PowerTransfer");
 
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
