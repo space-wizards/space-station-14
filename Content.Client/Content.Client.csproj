@@ -99,4 +99,7 @@
     <ContentAssemblies Include="$(OutputPath)Content.Client.pdb" Condition="'$(Configuration)' == 'Debug'" />
     <ContentAssemblies Include="$(OutputPath)Content.Shared.pdb" Condition="'$(Configuration)' == 'Debug'" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
 </Project>
