@@ -2,19 +2,20 @@
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.IoC;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Power
 {
-    //Component to transfer power to nearby components, can create powernets and connect to nodes
+    /// <summary>
+    /// Component to transfer power to nearby components, can create powernets and connect to nodes
+    /// </summary>
     public class PowerTransferComponent : Component
     {
         public override string Name => "PowerTransfer";
 
+        /// <summary>
+        /// The powernet this component is connected to
+        /// </summary>
         public Powernet Parent;
 
         public override void Initialize()
@@ -25,6 +26,9 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
+        /// <summary>
+        /// Searches for local powernets to connect to, otherwise creates its own, and spreads powernet to nearby entities
+        /// </summary>
         public void SpreadPowernet()
         {
             var _emanager = IoCManager.Resolve<IServerEntityManager>();
@@ -53,7 +57,18 @@ namespace Content.Server.GameObjects.Components.Power
                 }
             }
 
-            //TODO: code to find nodes that intersect our bounding box here and add them
+            //Find nodes intersecting us and if not already assigned to a powernet assign them to us
+            var nodes = _emanager.GetEntitiesIntersecting(Owner)
+                        .Where(x => x.HasComponent<PowerNodeComponent>())
+                        .Select(x => x.GetComponent<PowerNodeComponent>());
+
+            foreach(var node in nodes)
+            {
+                if(node.Parent == null)
+                {
+                    node.ConnectToPowernet(Parent);
+                }
+            }
 
             //spread powernet to nearby wires which haven't got one yet, and tell them to spread as well
             foreach (var wire in wires)

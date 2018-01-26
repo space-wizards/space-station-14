@@ -3,12 +3,12 @@ using SS14.Shared.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Power
 {
-    //Master class for group of powertransfercomponents, takes in and distributes power via nodes
+    /// <summary>
+    /// Master class for group of powertransfercomponents, takes in and distributes power via nodes
+    /// </summary>
     public class Powernet : Component
     {
         public override string Name => "Dont fucking use this, this isn't a real component it just needs to update";
@@ -57,13 +57,27 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public List<PowerDeviceComponent> DepoweredDevices { get; set; } = new List<PowerDeviceComponent>();
 
+        /// <summary>
+        /// A list of the energy storage components that will feed the powernet if necessary, and if there is enough power feed itself
+        /// </summary>
         public List<PowerStorageComponent> PowerStorageSupplierlist { get; set; } = new List<PowerStorageComponent>();
+
+        /// <summary>
+        /// A list of energy storage components that will never feed the powernet, will try to draw energy to feed themselves if possible
+        /// </summary>
         public List<PowerStorageComponent> PowerStorageConsumerlist { get; set; } = new List<PowerStorageComponent>();
 
+        /// <summary>
+        /// Static counter of all continuous load placed from devices on this power network
+        /// </summary>
         public float Load { get; private set; } = 0;
+
+        /// <summary>
+        /// Static counter of all continiuous supply from generators on this power network
+        /// </summary>
         public float Supply { get; private set; } = 0;
 
-        public void Update()
+        public override void Update(float frametime)
         {
             float activesupply = Supply;
             float activeload = Load;
@@ -118,6 +132,8 @@ namespace Content.Server.GameObjects.Components.Power
                 RetrievePassiveStorage();
                 
                 var depowervalue = activeload - (activesupply + passivesupply);
+
+                //Providers use same method to recreate functionality
                 foreach(var kvp in Deviceloadlist)
                 {
                     kvp.Key.Powered = false;
@@ -183,21 +199,31 @@ namespace Content.Server.GameObjects.Components.Power
             Nodelist.AddRange(toMerge.Nodelist);
             toMerge.Nodelist.Clear();
 
-
-
-            Deviceloadlist.Concat(toMerge.Deviceloadlist).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            Generatorlist.Concat(toMerge.Generatorlist).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-
-            Load += toMerge.Load;
-            Supply += toMerge.Supply;
-
-            toMerge.Deviceloadlist.Clear();
+            foreach (var generator in toMerge.Generatorlist)
+            {
+                Generatorlist.Add(generator.Key, generator.Value);
+            }
             toMerge.Generatorlist.Clear();
-            //just shutdown the other powernet instead?? or manually destroy here
+
+            foreach (var device in toMerge.Deviceloadlist)
+            {
+                Deviceloadlist.Add(device.Key, device.Value);
+            }
+            toMerge.Deviceloadlist.Clear();
+
+            DepoweredDevices.AddRange(toMerge.DepoweredDevices);
+            toMerge.DepoweredDevices.Clear();
+
+            PowerStorageSupplierlist.AddRange(toMerge.PowerStorageSupplierlist);
+            toMerge.PowerStorageSupplierlist.Clear();
+
+            PowerStorageConsumerlist.AddRange(toMerge.PowerStorageConsumerlist);
+            toMerge.PowerStorageConsumerlist.Clear();
         }
 
 
         #region Registration
+
         /// <summary>
         /// Register a continuous load from a device connected to the powernet
         /// </summary>

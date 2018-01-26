@@ -2,14 +2,13 @@
 using SS14.Shared.Log;
 using SS14.Shared.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power
 {
+    /// <summary>
+    /// Component that creates power and supplies it to the powernet
+    /// </summary>
     public class PowerGeneratorComponent : Component
     {
         public override string Name => "PowerGenerator";

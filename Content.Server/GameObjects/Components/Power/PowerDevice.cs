@@ -1,12 +1,8 @@
 ﻿using SS14.Server.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Utility;
-using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -28,20 +24,26 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public DrawTypes Connected { get; protected set; } = DrawTypes.None;
 
+        public bool _powered = false;
         /// <summary>
         /// Status indicator variable for powered
         /// </summary>
-        public bool Powered { get; set; } = false;
+        public virtual bool Powered
+        {
+            get => _powered;
+            set => SetPowered(value);
+        }
 
         /// <summary>
-        /// Priority for powernet draw, lower will draw first
+        /// Priority for powernet draw, lower will draw first, defined in powernet.cs
         /// </summary>
         public virtual Powernet.Priority Priority { get; protected set; } = Powernet.Priority.Medium;
 
+
+        private float _load = 100; //arbitrary magic number to start
         /// <summary>
         /// Power load from this entity
         /// </summary>
-        private float _load = 100; //arbitrary magic number to start
         public float Load
         {
             get => _load;
@@ -53,10 +55,11 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public List<PowerProviderComponent> AvailableProviders = new List<PowerProviderComponent>();
 
+
+        private PowerProviderComponent _provider;
         /// <summary>
         /// A power provider that will handle our load, if we are linked to any
         /// </summary>
-        private PowerProviderComponent _provider;
         public PowerProviderComponent Provider
         {
             get => _provider;
@@ -109,6 +112,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void UpdateLoad(float value)
         {
+            _load = value;
             if(Connected == DrawTypes.Node)
             {
                 var node = Owner.GetComponent<PowerNodeComponent>();
@@ -118,6 +122,34 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 Provider.UpdateDevice(this);
             }
+        }
+
+        /// <summary>
+        /// Changes behavior when receiving a command to become powered or depowered
+        /// </summary>
+        public virtual void SetPowered(bool value)
+        {
+            //Let them set us to true
+            if (value == true)
+            {
+                _powered = true;
+                return;
+            }
+
+            //A powernet has decided we will not be powered this tick, lets try to power ourselves
+            if (value == false && Owner.TryGetComponent(out PowerStorageComponent storage))
+            {
+                if (storage.CanDeductCharge(Load))
+                {
+                    storage.DeductCharge(Load);
+                    _powered = true;
+                    return;
+                }
+            }
+
+            //For some reason above we could not power ourselves, we depower
+            _powered = false;
+            return;
         }
 
         /// <summary>
