@@ -58,6 +58,7 @@
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\InteractableComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerGeneratorComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDevice.cs" />
     <Compile Include="GameObjects\Components\Power\Powernet.cs" />
