@@ -87,7 +87,7 @@ namespace Content.Server
                     var startTime = timing.RealTime;
                     {
                         var newMap = mapMan.CreateMap(new MapId(1));
-                        NewDemoGrid(newMap, new GridId(1));
+                        //NewDemoGrid(newMap, new GridId(1));
                     
                         mapLoader.LoadGrid(newMap, "./Maps/Demo/Grid.yaml");
                         mapLoader.LoadEntities(newMap, "./Maps/Demo/Entities.yaml");
