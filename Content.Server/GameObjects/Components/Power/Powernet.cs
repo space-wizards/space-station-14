@@ -1,17 +1,22 @@
-﻿using SS14.Shared.GameObjects;
+﻿using Content.Shared.GameObjects.EntitySystems;
+using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     /// <summary>
     /// Master class for group of powertransfercomponents, takes in and distributes power via nodes
     /// </summary>
-    public class Powernet : Component
+    public class Powernet
     {
-        public override string Name => "Dont fucking use this, this isn't a real component it just needs to update";
+        Powernet()
+        {
+            var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+            EntitySystemManager.GetEntitySystem<PowerSystem>().Powernets.Add(this);
+        }
 
         /// <summary>
         /// The entities that make up the powernet's physical location and allow powernet connection
@@ -77,7 +82,12 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public float Supply { get; private set; } = 0;
 
-        public override void Update(float frametime)
+        /// <summary>
+        /// Variable that causes powernet to be regenerated from its wires during the next update cycle
+        /// </summary>
+        public bool Dirty { get; set; } = false;
+
+        public void Update(float frametime)
         {
             float activesupply = Supply;
             float activeload = Load;
@@ -302,7 +312,7 @@ namespace Content.Server.GameObjects.Components.Power
             else
             {
                 var name = generator.Owner.Prototype.Name;
-                Logger.Log(String.Format("We tried to remove a device twice from the same {0} somehow, prototype {1}", Name, name));
+                Logger.Log(String.Format("We tried to remove a device twice from the same power somehow, prototype {1}", name));
             }
         }
 

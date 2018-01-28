@@ -65,6 +65,7 @@
     <Compile Include="GameObjects\Components\Power\PowerNodeComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerProviderComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerTransferComponent.cs" />
+    <Compile Include="GameObjects\EntitySystem\PowerSystem.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Interactable\IInteractableComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IInventoryComponent.cs" />
