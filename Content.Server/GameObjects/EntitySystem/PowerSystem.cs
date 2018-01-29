@@ -19,7 +19,13 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         public override void Update(float frametime)
         {
-            foreach()
+            foreach(var powernet in Powernets)
+            {
+                if (powernet.Dirty)
+                {
+
+                }
+            }
         }
     }
 }

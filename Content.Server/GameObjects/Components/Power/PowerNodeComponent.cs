@@ -41,7 +41,9 @@ namespace Content.Server.GameObjects.Components.Power
             var wires = _emanager.GetEntitiesIntersecting(Owner)
                         .Where(x => x.HasComponent<PowerTransferComponent>())
                         .OrderByDescending(x => (x.GetComponent<TransformComponent>().WorldPosition - position).Length);
-            ConnectToPowernet(wires.First().GetComponent<PowerTransferComponent>().Parent);
+            var choose = wires.FirstOrDefault();
+            if(choose != null)
+                ConnectToPowernet(choose.GetComponent<PowerTransferComponent>().Parent);
         }
 
         public void ConnectToPowernet(Powernet toconnect)

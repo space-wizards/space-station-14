@@ -61,6 +61,11 @@ namespace Content.Server
             factory.Register<TemperatureComponent>();
             factory.Register<ServerDoorComponent>();
             factory.Register<PowerTransferComponent>();
+            factory.Register<PowerProviderComponent>();
+            factory.Register<PowerNodeComponent>();
+            factory.Register<PowerStorageComponent>();
+            factory.Register<PowerDeviceComponent>();
+            factory.Register<PowerGeneratorComponent>();
         }
 
         /// <inheritdoc />

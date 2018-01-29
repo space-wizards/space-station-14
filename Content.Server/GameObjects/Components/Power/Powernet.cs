@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// </summary>
     public class Powernet
     {
-        Powernet()
+        public Powernet()
         {
             var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
             EntitySystemManager.GetEntitySystem<PowerSystem>().Powernets.Add(this);

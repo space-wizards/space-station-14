@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Power
                 var device = entity.GetComponent<PowerDeviceComponent>();
                 
                 //Make sure the device can accept power providers to give it power
-                if (device.Drawtype == DrawTypes.PowerProvider || device.Drawtype == DrawTypes.Both)
+                if (device.Drawtype == DrawTypes.Provider || device.Drawtype == DrawTypes.Both)
                 {
                     device.AddProvider(this);
                 }

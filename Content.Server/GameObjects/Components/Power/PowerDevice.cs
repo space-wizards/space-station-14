@@ -15,9 +15,9 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "PowerDevice";
 
         /// <summary>
-        /// The method of draw we will try to use to place our load set via component parameter, defaults to not needing power
+        /// The method of draw we will try to use to place our load set via component parameter, defaults to using power providers
         /// </summary>
-        public virtual DrawTypes Drawtype { get; protected set; } = DrawTypes.None;
+        public virtual DrawTypes Drawtype { get; protected set; } = DrawTypes.Provider;
 
         /// <summary>
         /// The power draw method we are currently connected to and using
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             get => _provider;
             set {
-                Connected = DrawTypes.PowerProvider;
+                Connected = DrawTypes.Provider;
                 if (_provider != null)
                 {
                     _provider.RemoveDevice(this);
@@ -118,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Power
                 var node = Owner.GetComponent<PowerNodeComponent>();
                 node.Parent.UpdateDevice(this);
             }
-            else if(Connected == DrawTypes.PowerProvider)
+            else if(Connected == DrawTypes.Provider)
             {
                 Provider.UpdateDevice(this);
             }
@@ -179,7 +179,7 @@ namespace Content.Server.GameObjects.Components.Power
             var bestprovider = AvailableProviders[0];
 
             //If we are already connected to a power provider we need to do a loop to find the nearest one, otherwise skip it and use first entry
-            if (Connected == DrawTypes.PowerProvider)
+            if (Connected == DrawTypes.Provider)
             {
                 var bestdistance = (bestprovider.Owner.GetComponent<TransformComponent>().WorldPosition - position).LengthSquared;
 
@@ -241,7 +241,7 @@ namespace Content.Server.GameObjects.Components.Power
     {
         None = 0,
         Node = 1,
-        PowerProvider = 2,
+        Provider = 2,
         Both = 3
     }
 }
