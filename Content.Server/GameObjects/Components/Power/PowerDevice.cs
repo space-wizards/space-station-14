@@ -1,5 +1,7 @@
 ﻿using SS14.Server.GameObjects;
 using SS14.Shared.GameObjects;
+using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.IoC;
 using SS14.Shared.Utility;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,6 +84,22 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
+        public override void OnAdd(IEntity owner)
+        {
+            if (Drawtype == DrawTypes.Both || Drawtype == DrawTypes.Node)
+            {
+                if (!owner.TryGetComponent(out PowerNodeComponent node))
+                {
+                    var factory = IoCManager.Resolve<IComponentFactory>();
+                    node = factory.GetComponent<PowerNodeComponent>();
+                    owner.AddComponent(node);
+                }
+                node.OnPowernetConnect += PowernetConnect;
+                node.OnPowernetDisconnect += PowernetDisconnect;
+                node.OnPowernetRegenerate += PowernetRegenerate;
+            }
+        }
+
         public override void LoadParameters(YamlMappingNode mapping)
         {
             if (mapping.TryGetNode("Drawtype", out YamlNode node))
@@ -95,18 +113,6 @@ namespace Content.Server.GameObjects.Components.Power
             if (mapping.TryGetNode("Priority", out node))
             {
                 Priority = node.AsEnum<Powernet.Priority>();
-            }
-        }
-
-        public override void Initialize()
-        {
-            if(Drawtype == DrawTypes.Both || Drawtype == DrawTypes.Node)
-            {
-                if(Owner.TryGetComponent(out PowerNodeComponent node))
-                {
-                    node.OnPowernetConnect += PowernetConnect;
-                    node.OnPowernetDisconnect += PowernetDisconnect;
-                }
             }
         }
 
@@ -225,6 +231,11 @@ namespace Content.Server.GameObjects.Components.Power
 
             eventarg.Powernet.AddDevice(this);
             Connected = DrawTypes.Node;
+        }
+
+        private void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
+        {
+            eventarg.Powernet.AddDevice(this);
         }
 
         //Node has become unanchored from a powernet

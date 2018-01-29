@@ -35,7 +35,6 @@
     - generator
   - type: Icon
     icon: generator
-  - type: PowerNode
   - type: PowerGenerator
   
 - type: entity
@@ -49,7 +48,6 @@
     - provider
   - type: Icon
     icon: provider
-  - type: PowerNode
   - type: PowerProvider
     Range: 5
     Priority: Provider
@@ -59,9 +57,6 @@
   id: WPP
   name: WPP
   components:
-  - type: Sprite
-    color: Blue
-  - type: PowerNode
   - type: PowerStorage
     Capacity: 3000
     Charge: 1000
@@ -81,7 +76,6 @@
     - storage
   - type: Icon
     icon: storage
-  - type: PowerNode
   - type: PowerProvider
     Range: 5
     Priority: Provider
@@ -97,7 +91,6 @@
     - wiredmachine
   - type: Icon
     icon: wiredmachine
-  - type: PowerNode
   - type: PowerDevice
     Drawtype: Node
     Load: 100

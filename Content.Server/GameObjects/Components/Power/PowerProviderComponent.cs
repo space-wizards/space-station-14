@@ -1,5 +1,6 @@
 ﻿using SS14.Server.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Utility;
@@ -33,6 +34,19 @@ namespace Content.Server.GameObjects.Components.Power
         public List<PowerDeviceComponent> DepoweredDevices = new List<PowerDeviceComponent>();
 
         public override Powernet.Priority Priority { get; protected set; } = Powernet.Priority.Provider;
+
+        public override void OnAdd(IEntity owner)
+        {
+            if (!owner.TryGetComponent(out PowerNodeComponent node))
+            {
+                var factory = IoCManager.Resolve<IComponentFactory>();
+                node = factory.GetComponent<PowerNodeComponent>();
+                owner.AddComponent(node);
+            }
+            node.OnPowernetConnect += PowernetConnect;
+            node.OnPowernetDisconnect += PowernetDisconnect;
+            node.OnPowernetRegenerate += PowernetRegenerate;
+        }
 
         public override void LoadParameters(YamlMappingNode mapping)
         {
@@ -135,6 +149,11 @@ namespace Content.Server.GameObjects.Components.Power
                     device.AddProvider(this);
                 }
             }
+        }
+
+        private void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
+        {
+            eventarg.Powernet.AddDevice(this);
         }
 
         private void PowernetDisconnect(object sender, PowernetEventArgs eventarg)

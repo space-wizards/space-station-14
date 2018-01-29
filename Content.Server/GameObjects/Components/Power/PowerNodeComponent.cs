@@ -29,6 +29,11 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public event EventHandler<PowernetEventArgs> OnPowernetDisconnect;
 
+        /// <summary>
+        /// An event that registers us to a regenerating powernet
+        /// </summary>
+        public event EventHandler<PowernetEventArgs> OnPowernetRegenerate;
+
         public override void Initialize()
         {
             TryCreatePowernetConnection();
@@ -51,6 +56,16 @@ namespace Content.Server.GameObjects.Components.Power
             Parent = toconnect;
             Parent.Nodelist.Add(this);
             OnPowernetConnect?.Invoke(this, new PowernetEventArgs(Parent));
+        }
+
+        public void RegeneratePowernet(Powernet toconnect)
+        {
+            //This removes the device from things that will be powernet disconnected when dirty powernet is killed
+            Parent.Nodelist.Remove(this);
+
+            Parent = toconnect;
+            Parent.Nodelist.Add(this);
+            OnPowernetRegenerate?.Invoke(this, new PowernetEventArgs(Parent));
         }
 
         public void DisconnectFromPowernet()

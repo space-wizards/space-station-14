@@ -18,6 +18,8 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public Powernet Parent;
 
+        public bool Regenerating { get; set; } = false;
+
         public override void Initialize()
         {
             if(Parent == null)
@@ -37,12 +39,12 @@ namespace Content.Server.GameObjects.Components.Power
                         .Where(x => x.HasComponent<PowerTransferComponent>());
 
             //we have no parent so lets find a partner we can join his powernet
-            if(Parent == null)
+            if(Parent == null || Regenerating)
             {
                 foreach (var wire in wires)
                 {
                     var ptc = wire.GetComponent<PowerTransferComponent>();
-                    if (ptc.Parent != null)
+                    if (ptc.CanConnectTo())
                     {
                         ConnectToPowernet(Parent);
                         break;
@@ -50,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Power
                 }
 
                 //we couldn't find a partner so none must have spread yet, lets make our own powernet to spread
-                if (Parent == null)
+                if (Parent == null || Regenerating)
                 {
                     var powernew = new Powernet();
                     ConnectToPowernet(powernew);
@@ -68,18 +70,22 @@ namespace Content.Server.GameObjects.Components.Power
                 {
                     node.ConnectToPowernet(Parent);
                 }
+                else if(node.Parent.Dirty)
+                {
+                    node.RegeneratePowernet(Parent);
+                }
             }
 
             //spread powernet to nearby wires which haven't got one yet, and tell them to spread as well
             foreach (var wire in wires)
             {
                 var ptc = wire.GetComponent<PowerTransferComponent>();
-                if (ptc.Parent == null)
+                if (ptc.Parent == null || Regenerating)
                 {
                     ptc.ConnectToPowernet(Parent);
                     SpreadPowernet();
                 }
-                else if(ptc.Parent != Parent)
+                else if(ptc.Parent != Parent && !ptc.Parent.Dirty)
                 {
                     Parent.MergePowernets(ptc.Parent);
                 }
@@ -90,12 +96,18 @@ namespace Content.Server.GameObjects.Components.Power
         {
             Parent = toconnect;
             Parent.Wirelist.Add(this);
+            Regenerating = false;
         }
 
         public void DisconnectFromPowernet()
         {
             Parent.Wirelist.Remove(this);
             Parent = null;
+        }
+
+        public bool CanConnectTo()
+        {
+            return Parent != null && Parent.Dirty == false && !Regenerating;
         }
     }
 }

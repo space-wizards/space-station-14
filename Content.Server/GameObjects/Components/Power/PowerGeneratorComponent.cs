@@ -1,4 +1,6 @@
 ﻿using SS14.Shared.GameObjects;
+using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Utility;
 using System;
@@ -31,18 +33,17 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public override void Initialize()
+        public override void OnAdd(IEntity owner)
         {
-            if (Owner.TryGetComponent(out PowerNodeComponent node))
+            if (!owner.TryGetComponent(out PowerNodeComponent node))
             {
-                node.OnPowernetConnect += PowernetConnect;
-                node.OnPowernetDisconnect += PowernetDisconnect;
+                var factory = IoCManager.Resolve<IComponentFactory>();
+                node = factory.GetComponent<PowerNodeComponent>();
+                owner.AddComponent(node);
             }
-            else
-            {
-                var prototype = Owner.Prototype.Name;
-                Logger.Log(String.Format("Powergenerator type needs node to function in prototype {0}", prototype));
-            }
+            node.OnPowernetConnect += PowernetConnect;
+            node.OnPowernetDisconnect += PowernetDisconnect;
+            node.OnPowernetRegenerate += PowernetRegenerate;
         }
 
         private void UpdateSupply(float value)
@@ -54,6 +55,12 @@ namespace Content.Server.GameObjects.Components.Power
 
         //Node has become anchored to a powernet
         private void PowernetConnect(object sender, PowernetEventArgs eventarg)
+        {
+            eventarg.Powernet.AddGenerator(this);
+        }
+
+        //Node has had its powernet regenerated
+        private void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.AddGenerator(this);
         }
