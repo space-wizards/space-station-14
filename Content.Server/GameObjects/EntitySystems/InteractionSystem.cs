@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public static void UserInteraction(object sender, ClickEventArgs e)
         {
-            if (e.ClickType != Clicktype.Left)
+            if (e.ClickType != ClickType.Left)
                 return;
 
             IEntity user = e.User;
