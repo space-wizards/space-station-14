@@ -71,7 +71,7 @@ namespace Content.Server
             base.Dispose();
         }
 
-        private void HandleRunLevelChanged(object sender, RunLevelChangedEventArgs args)
+        private static void HandleRunLevelChanged(object sender, RunLevelChangedEventArgs args)
         {
             switch (args.NewLevel)
             {
@@ -82,18 +82,16 @@ namespace Content.Server
 
                     var mapLoader = IoCManager.Resolve<IMapLoader>();
                     var mapMan = IoCManager.Resolve<IMapManager>();
-
-
+                    
                     var startTime = timing.RealTime;
                     {
                         var newMap = mapMan.CreateMap(new MapId(1));
-                        //NewDemoGrid(newMap, new GridId(1));
                     
                         mapLoader.LoadGrid(newMap, "./Maps/Demo/Grid.yaml");
                         mapLoader.LoadEntities(newMap, "./Maps/Demo/Entities.yaml");
                     }
                     var timeSpan = timing.RealTime - startTime;
-                    Logger.Info($"Loaded map in {timeSpan.Seconds:N2} seconds.");
+                    Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
 
                     IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Round loaded!");
                     break;
@@ -155,35 +153,5 @@ namespace Content.Server
                     break;
             }
         }
-
-        //TODO: This whole method should be removed once file loading/saving works, and replaced with a 'Demo' map.
-        /// <summary>
-        ///     Generates 'Demo' grid and inserts it into the map manager.
-        /// </summary>
-        private static void NewDemoGrid(IMap map, GridId gridId)
-        {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var defManager = IoCManager.Resolve<ITileDefinitionManager>();
-
-            mapManager.SuppressOnTileChanged = true;
-
-            Logger.Log("Cannot find map. Generating blank map.", LogLevel.Warning);
-            var floor = defManager["Floor"].TileId;
-
-            Debug.Assert(floor > 0);
-            
-            var grid = map.CreateGrid(gridId);
-
-            for (var y = -32; y <= 32; ++y)
-            {
-                for (var x = -32; x <= 32; ++x)
-                {
-                    grid.SetTile(new LocalCoordinates(x, y, gridId, map.Index), new Tile(floor));
-                }
-            }
-            
-            mapManager.SuppressOnTileChanged = false;
-        }
-
     }
 }
