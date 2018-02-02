@@ -48,7 +48,10 @@ namespace Content.Server.GameObjects.Components.Power
                 int compare = y.Priority.CompareTo(x.Priority);
 
                 //If the comparer returns 0 sortedset will believe it is a duplicate and return 0, so return 1 instead
-                if (compare == 0 && !y.Equals(x)) return 1;
+                if (compare == 0 && !x.Equals(y))
+                {
+                    return 1;
+                }
                 return compare;
             }
         }

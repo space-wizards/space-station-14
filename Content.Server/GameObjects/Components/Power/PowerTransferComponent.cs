@@ -120,6 +120,7 @@ namespace Content.Server.GameObjects.Components.Power
             Parent = null;
         }
 
+
         public bool CanConnectTo()
         {
             return Parent != null && Parent.Dirty == false && !Regenerating;
