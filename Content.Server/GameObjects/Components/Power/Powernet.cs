@@ -43,7 +43,9 @@ namespace Content.Server.GameObjects.Components.Power
         {
             public int Compare(PowerDeviceComponent x, PowerDeviceComponent y)
             {
-                return y.Priority.CompareTo(x.Priority);
+                int compare = y.Priority.CompareTo(x.Priority);
+                if (compare == 0 && !y.Equals(x)) return 1;
+                return compare;
             }
         }
 
