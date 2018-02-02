@@ -35,6 +35,8 @@ namespace Content.Server.GameObjects.Components.Power
 
         public override void OnAdd(IEntity owner)
         {
+            base.OnAdd(owner);
+
             if (!owner.TryGetComponent(out PowerNodeComponent node))
             {
                 var factory = IoCManager.Resolve<IComponentFactory>();
@@ -44,6 +46,23 @@ namespace Content.Server.GameObjects.Components.Power
             node.OnPowernetConnect += PowernetConnect;
             node.OnPowernetDisconnect += PowernetDisconnect;
             node.OnPowernetRegenerate += PowernetRegenerate;
+        }
+
+        public override void OnRemove()
+        {
+            if (Owner.TryGetComponent(out PowerNodeComponent node))
+            {
+                if (node.Parent != null)
+                {
+                    node.Parent.RemoveGenerator(this);
+                }
+
+                node.OnPowernetConnect -= PowernetConnect;
+                node.OnPowernetDisconnect -= PowernetDisconnect;
+                node.OnPowernetRegenerate -= PowernetRegenerate;
+            }
+
+            base.OnRemove();
         }
 
         private void UpdateSupply(float value)

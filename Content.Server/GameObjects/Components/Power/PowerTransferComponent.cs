@@ -28,6 +28,13 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
+        public override void OnRemove()
+        {
+            DisconnectFromPowernet();
+
+            base.OnRemove();
+        }
+
         /// <summary>
         /// Searches for local powernets to connect to, otherwise creates its own, and spreads powernet to nearby entities
         /// </summary>
@@ -102,6 +109,7 @@ namespace Content.Server.GameObjects.Components.Power
         public void DisconnectFromPowernet()
         {
             Parent.Wirelist.Remove(this);
+            Parent.Dirty = true;
             Parent = null;
         }
 

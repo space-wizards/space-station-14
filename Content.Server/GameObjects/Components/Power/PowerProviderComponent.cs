@@ -35,19 +35,6 @@ namespace Content.Server.GameObjects.Components.Power
 
         public override Powernet.Priority Priority { get; protected set; } = Powernet.Priority.Provider;
 
-        public override void OnAdd(IEntity owner)
-        {
-            if (!owner.TryGetComponent(out PowerNodeComponent node))
-            {
-                var factory = IoCManager.Resolve<IComponentFactory>();
-                node = factory.GetComponent<PowerNodeComponent>();
-                owner.AddComponent(node);
-            }
-            node.OnPowernetConnect += PowernetConnect;
-            node.OnPowernetDisconnect += PowernetDisconnect;
-            node.OnPowernetRegenerate += PowernetRegenerate;
-        }
-
         public override void LoadParameters(YamlMappingNode mapping)
         {
             if (mapping.TryGetNode("Range", out YamlNode node))

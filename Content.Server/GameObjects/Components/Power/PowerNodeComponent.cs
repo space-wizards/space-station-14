@@ -39,6 +39,13 @@ namespace Content.Server.GameObjects.Components.Power
             TryCreatePowernetConnection();
         }
 
+        public override void OnRemove()
+        {
+            DisconnectFromPowernet();
+
+            base.OnRemove();
+        }
+
         public void TryCreatePowernetConnection()
         {
             var _emanager = IoCManager.Resolve<IServerEntityManager>();

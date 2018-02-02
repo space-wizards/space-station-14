@@ -86,6 +86,8 @@ namespace Content.Server.GameObjects.Components.Power
 
         public override void OnAdd(IEntity owner)
         {
+            base.OnAdd(owner);
+
             if (Drawtype == DrawTypes.Both || Drawtype == DrawTypes.Node)
             {
                 if (!owner.TryGetComponent(out PowerNodeComponent node))
@@ -98,6 +100,23 @@ namespace Content.Server.GameObjects.Components.Power
                 node.OnPowernetDisconnect += PowernetDisconnect;
                 node.OnPowernetRegenerate += PowernetRegenerate;
             }
+        }
+
+        public override void OnRemove()
+        {
+            if (Owner.TryGetComponent(out PowerNodeComponent node))
+            {
+                if(node.Parent != null)
+                {
+                    node.Parent.RemoveDevice(this);
+                }
+
+                node.OnPowernetConnect -= PowernetConnect;
+                node.OnPowernetDisconnect -= PowernetDisconnect;
+                node.OnPowernetRegenerate -= PowernetRegenerate;
+            }
+
+            base.OnRemove();
         }
 
         public override void LoadParameters(YamlMappingNode mapping)
