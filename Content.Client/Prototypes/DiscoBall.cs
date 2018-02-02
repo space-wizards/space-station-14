@@ -1,7 +1,6 @@
-using OpenTK;
-using OpenTK.Graphics;
-using SS14.Client.GameObjects;
+﻿using SS14.Client.GameObjects;
 using SS14.Shared.GameObjects;
+using SS14.Shared.Maths;
 
 namespace Content.Client.Prototypes
 {
