@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// List storing all the power devices that we are currently providing power to
         /// </summary>
-        public SortedDictionary<PowerDeviceComponent, float> Deviceloadlist = new SortedDictionary<PowerDeviceComponent, float>(new Powernet.DevicePriorityCompare());
+        public SortedSet<PowerDeviceComponent> Deviceloadlist = new SortedSet<PowerDeviceComponent>(new Powernet.DevicePriorityCompare());
 
         public List<PowerDeviceComponent> DepoweredDevices = new List<PowerDeviceComponent>();
 
@@ -73,11 +73,11 @@ namespace Content.Server.GameObjects.Components.Power
                     var depowervalue = storage.RequestAllCharge() - Load;
                     _powered = true;
                     //See code in powernet for same functionality
-                    foreach (var kvp in Deviceloadlist)
+                    foreach (var device in Deviceloadlist)
                     {
-                        kvp.Key.Powered = false;
-                        DepoweredDevices.Add(kvp.Key);
-                        depowervalue -= kvp.Value;
+                        device.Powered = false;
+                        DepoweredDevices.Add(device);
+                        depowervalue -= device.Load;
                         if (depowervalue < 0)
                             break;
                     }
@@ -103,6 +103,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 device.Powered = true;
             }
+            DepoweredDevices.Clear();
         }
 
         private void DepowerAllDevices()
@@ -149,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Power
             Connected = DrawTypes.None;
 
             //We don't want to make the devices under us think we're still a valid provider if we have no powernet to connect to
-            foreach (var device in Deviceloadlist.Keys)
+            foreach (var device in Deviceloadlist)
             {
                 device.RemoveProvider(this);
             }
@@ -160,19 +161,20 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void AddDevice(PowerDeviceComponent device)
         {
-            Deviceloadlist.Add(device, device.Load);
+            Deviceloadlist.Add(device);
             Load += device.Load;
+            if (!device.Powered)
+                DepoweredDevices.Add(device);
         }
 
         /// <summary>
         /// Update one of the loads from a deviceconnected to the powernet
         /// </summary>
-        public void UpdateDevice(PowerDeviceComponent device)
+        public void UpdateDevice(PowerDeviceComponent device, float oldLoad)
         {
-            if (Deviceloadlist.ContainsKey(device))
+            if (Deviceloadlist.Contains(device))
             {
-                Load -= Deviceloadlist[device];
-                Deviceloadlist[device] = device.Load;
+                Load -= oldLoad;
                 Load += device.Load;
             }
         }
@@ -182,10 +184,12 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void RemoveDevice(PowerDeviceComponent device)
         {
-            if (Deviceloadlist.ContainsKey(device))
+            if (Deviceloadlist.Contains(device))
             {
-                Load -= Deviceloadlist[device];
+                Load -= device.Load;
                 Deviceloadlist.Remove(device);
+                if (DepoweredDevices.Contains(device))
+                    DepoweredDevices.Remove(device);
             }
             else
             {

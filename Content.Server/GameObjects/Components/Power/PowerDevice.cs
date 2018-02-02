@@ -137,15 +137,16 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void UpdateLoad(float value)
         {
+            var oldLoad = _load;
             _load = value;
             if(Connected == DrawTypes.Node)
             {
                 var node = Owner.GetComponent<PowerNodeComponent>();
-                node.Parent.UpdateDevice(this);
+                node.Parent.UpdateDevice(this, oldLoad);
             }
             else if(Connected == DrawTypes.Provider)
             {
-                Provider.UpdateDevice(this);
+                Provider.UpdateDevice(this, oldLoad);
             }
         }
 

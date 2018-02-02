@@ -4,6 +4,7 @@
   components:
   - type: Transform
   - type: Clickable
+  - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
     color: Red
@@ -29,6 +30,8 @@
   name: Generator
   components:
   - type: Transform
+  - type: Clickable
+  - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:
@@ -42,6 +45,8 @@
   name: WPPnobattery
   components:
   - type: Transform
+  - type: Clickable
+  - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:
@@ -58,11 +63,10 @@
   name: WPP
   components:
   - type: PowerStorage
-    Capacity: 3000
+    Capacity: 1000
     Charge: 1000
     ChargeRate: 200
-    DistributionRate: 400
-    ChargePowernet: true
+    ChargePowernet: false
   
   
 - type: entity
@@ -70,21 +74,28 @@
   name: SMES
   components:
   - type: Transform
+  - type: Clickable
+  - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:
     - storage
   - type: Icon
     icon: storage
-  - type: PowerProvider
-    Range: 5
-    Priority: Provider
+  - type: PowerStorage
+    Capacity: 3000
+    Charge: 1000
+    ChargeRate: 200
+    DistributionRate: 400
+    ChargePowernet: true
 
 - type: entity
   id: WiredMachine
   name: WiredMachine
   components:
   - type: Transform
+  - type: Clickable
+  - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:
@@ -101,6 +112,8 @@
   name: WirelessMachine
   components:
   - type: Transform
+  - type: Clickable
+  - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:

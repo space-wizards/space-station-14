@@ -78,8 +78,8 @@ namespace Content.Server.GameObjects.Components.Power
         public void DisconnectFromPowernet()
         {
             Parent.Nodelist.Remove(this);
-            Parent = null;
             OnPowernetDisconnect?.Invoke(this, new PowernetEventArgs(Parent));
+            Parent = null;
         }
     }
 

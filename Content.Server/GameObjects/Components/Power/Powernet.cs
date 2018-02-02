@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Subset of nodelist that draw power, stores information on current continuous powernet load
         /// </summary>
-        public SortedDictionary<PowerDeviceComponent, float> Deviceloadlist { get; set; } = new SortedDictionary<PowerDeviceComponent, float>(new DevicePriorityCompare());
+        public SortedSet<PowerDeviceComponent> Deviceloadlist { get; set; } = new SortedSet<PowerDeviceComponent>(new DevicePriorityCompare());
 
         //Comparer that keeps the device dictionary sorted by powernet priority
         public class DevicePriorityCompare : IComparer<PowerDeviceComponent>
@@ -144,11 +144,11 @@ namespace Content.Server.GameObjects.Components.Power
                 var depowervalue = activeload - (activesupply + passivesupply);
 
                 //Providers use same method to recreate functionality
-                foreach(var kvp in Deviceloadlist)
+                foreach(var device in Deviceloadlist)
                 {
-                    kvp.Key.Powered = false;
-                    DepoweredDevices.Add(kvp.Key);
-                    depowervalue -= kvp.Value;
+                    device.Powered = false;
+                    DepoweredDevices.Add(device);
+                    depowervalue -= device.Load;
                     if (depowervalue < 0)
                         break;
                 }
@@ -194,15 +194,17 @@ namespace Content.Server.GameObjects.Components.Power
         public void DirtyKill()
         {
             Wirelist.Clear();
-            foreach(var node in Nodelist)
+            while(Nodelist.Count != 0)
             {
-                node.DisconnectFromPowernet();
+                Nodelist[0].DisconnectFromPowernet();
             }
             Generatorlist.Clear();
             Deviceloadlist.Clear();
             DepoweredDevices.Clear();
             PowerStorageSupplierlist.Clear();
             PowerStorageConsumerlist.Clear();
+
+            RemoveFromSystem();
         }
 
         /// <summary>
@@ -234,7 +236,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             foreach (var device in toMerge.Deviceloadlist)
             {
-                Deviceloadlist.Add(device.Key, device.Value);
+                Deviceloadlist.Add(device);
             }
             toMerge.Deviceloadlist.Clear();
 
@@ -246,8 +248,15 @@ namespace Content.Server.GameObjects.Components.Power
 
             PowerStorageConsumerlist.AddRange(toMerge.PowerStorageConsumerlist);
             toMerge.PowerStorageConsumerlist.Clear();
+
+            toMerge.RemoveFromSystem();
         }
 
+        private void RemoveFromSystem()
+        {
+            var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+            EntitySystemManager.GetEntitySystem<PowerSystem>().Powernets.Remove(this);
+        }
 
         #region Registration
 
@@ -256,7 +265,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void AddDevice(PowerDeviceComponent device)
         {
-            Deviceloadlist.Add(device, device.Load);
+            Deviceloadlist.Add(device);
             Load += device.Load;
             if (!device.Powered)
                 DepoweredDevices.Add(device);
@@ -265,12 +274,11 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Update one of the loads from a deviceconnected to the powernet
         /// </summary>
-        public void UpdateDevice(PowerDeviceComponent device)
+        public void UpdateDevice(PowerDeviceComponent device, float oldLoad)
         {
-            if(Deviceloadlist.ContainsKey(device))
+            if(Deviceloadlist.Contains(device))
             {
-                Load -= Deviceloadlist[device];
-                Deviceloadlist[device] = device.Load;
+                Load -= oldLoad;
                 Load += device.Load;
             }
         }
@@ -280,9 +288,9 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void RemoveDevice(PowerDeviceComponent device)
         {
-            if(Deviceloadlist.ContainsKey(device))
+            if(Deviceloadlist.Contains(device))
             {
-                Load -= Deviceloadlist[device];
+                Load -= device.Load;
                 Deviceloadlist.Remove(device);
                 if (DepoweredDevices.Contains(device))
                     DepoweredDevices.Remove(device);
