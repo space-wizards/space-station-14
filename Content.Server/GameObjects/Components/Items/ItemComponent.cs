@@ -4,16 +4,19 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Log;
 using System;
+using SS14.Shared.Interfaces.GameObjects;
+using SS14.Server.GameObjects;
+using SS14.Shared.IoC;
+using Content.Server.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects
 {
-    public class ItemComponent : Component, IItemComponent
+    public class ItemComponent : Component, IItemComponent, EntitySystems.IAttackHand
     {
         public override string Name => "Item";
 
         /// <inheritdoc />
         public IInventorySlot ContainingSlot { get; private set; }
-        private IInteractableComponent interactableComponent;
 
         public void RemovedFromSlot()
         {
@@ -47,35 +50,28 @@ namespace Content.Server.GameObjects
 
         public override void Initialize()
         {
-            if (Owner.TryGetComponent<IInteractableComponent>(out var interactable))
-            {
-                interactableComponent = interactable;
-                interactableComponent.OnAttackHand += InteractableComponent_OnAttackHand;
-            }
-            else
-            {
-                Logger.Error($"Item component must have an interactable component to function! Prototype: {Owner.Prototype.ID}");
-            }
             base.Initialize();
+
+            var interactionsystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
+            interactionsystem.AddEvent(Owner.GetComponent<ClickableComponent>());
         }
 
-        private void InteractableComponent_OnAttackHand(object sender, AttackHandEventArgs e)
+        public bool Attackhand(IEntity user)
         {
             if (ContainingSlot != null)
             {
-                return;
+                return false;
             }
-            var hands = e.User.GetComponent<IHandsComponent>();
-            hands.PutInHand(this, e.HandIndex, fallback: false);
+            var hands = user.GetComponent<IHandsComponent>();
+            hands.PutInHand(this, hands.ActiveIndex, fallback: false);
+            return true;
         }
 
         public override void Shutdown()
         {
-            if (interactableComponent != null)
-            {
-                interactableComponent.OnAttackHand -= InteractableComponent_OnAttackHand;
-                interactableComponent = null;
-            }
+            var interactionsystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
+            interactionsystem.RemoveEvent(Owner.GetComponent<ClickableComponent>());
+
             base.Shutdown();
         }
     }

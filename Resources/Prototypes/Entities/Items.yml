@@ -3,7 +3,6 @@
   id: BaseItem
   components:
   - type: Transform
-  - type: Interactable
   - type: Item
   - type: Clickable
   - type: BoundingBox
