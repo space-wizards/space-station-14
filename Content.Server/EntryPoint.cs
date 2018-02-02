@@ -1,6 +1,7 @@
 ﻿
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.Interfaces.GameObjects;
 using SS14.Server;
 using SS14.Server.Interfaces;
@@ -8,7 +9,6 @@ using SS14.Server.Interfaces.Chat;
 using SS14.Server.Interfaces.Maps;
 using SS14.Server.Interfaces.Player;
 using SS14.Server.Player;
-using SS14.Shared;
 using SS14.Shared.Console;
 using SS14.Shared.ContentPack;
 using SS14.Shared.Enums;
@@ -57,12 +57,22 @@ namespace Content.Server
             factory.Register<DestructibleComponent>();
             factory.Register<TemperatureComponent>();
             factory.Register<ServerDoorComponent>();
+
+            //Power Components
             factory.Register<PowerTransferComponent>();
             factory.Register<PowerProviderComponent>();
             factory.Register<PowerNodeComponent>();
             factory.Register<PowerStorageComponent>();
             factory.Register<PowerDeviceComponent>();
             factory.Register<PowerGeneratorComponent>();
+
+            //Tools
+            factory.Register<MultitoolComponent>();
+            factory.Register<WirecutterComponent>();
+            factory.Register<WrenchComponent>();
+            factory.Register<WelderComponent>();
+            factory.Register<ScrewdriverComponent>();
+            factory.Register<CrowbarComponent>();
         }
 
         /// <inheritdoc />
