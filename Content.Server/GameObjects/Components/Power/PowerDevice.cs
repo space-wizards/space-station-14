@@ -153,6 +153,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Changes behavior when receiving a command to become powered or depowered
         /// </summary>
+        /// <param name="value"></param>
         public virtual void SetPowered(bool value)
         {
             //Let them set us to true
@@ -181,6 +182,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Register a new power provider as a possible connection to this device
         /// </summary>
+        /// <param name="provider"></param>
         public void AddProvider(PowerProviderComponent provider)
         {
             AvailableProviders.Add(provider);
@@ -230,6 +232,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Remove a power provider from being a possible connection to this device
         /// </summary>
+        /// <param name="provider"></param>
         public void RemoveProvider(PowerProviderComponent provider)
         {
             if (!AvailableProviders.Contains(provider))
@@ -243,7 +246,11 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        //Node has become anchored to a powernet
+        /// <summary>
+        /// Node has become anchored to a powernet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventarg"></param>
         private void PowernetConnect(object sender, PowernetEventArgs eventarg)
         {
             //This sets connected = none so it must be first
@@ -253,12 +260,21 @@ namespace Content.Server.GameObjects.Components.Power
             Connected = DrawTypes.Node;
         }
 
+        /// <summary>
+        /// Powernet wire was remove so we need to regenerate the powernet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventarg"></param>
         private void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.AddDevice(this);
         }
 
-        //Node has become unanchored from a powernet
+        /// <summary>
+        /// Node has become unanchored from a powernet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventarg"></param>
         private void PowernetDisconnect(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.RemoveDevice(this);

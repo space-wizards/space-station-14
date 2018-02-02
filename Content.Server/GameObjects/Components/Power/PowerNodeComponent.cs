@@ -46,6 +46,9 @@ namespace Content.Server.GameObjects.Components.Power
             base.OnRemove();
         }
 
+        /// <summary>
+        /// Find a nearby wire which will have a powernet and connect ourselves to its powernet
+        /// </summary>
         public void TryCreatePowernetConnection()
         {
             var _emanager = IoCManager.Resolve<IServerEntityManager>();
@@ -58,6 +61,10 @@ namespace Content.Server.GameObjects.Components.Power
                 ConnectToPowernet(choose.GetComponent<PowerTransferComponent>().Parent);
         }
 
+        /// <summary>
+        /// Triggers event telling power components that we connected to a powernet
+        /// </summary>
+        /// <param name="toconnect"></param>
         public void ConnectToPowernet(Powernet toconnect)
         {
             Parent = toconnect;
@@ -65,6 +72,10 @@ namespace Content.Server.GameObjects.Components.Power
             OnPowernetConnect?.Invoke(this, new PowernetEventArgs(Parent));
         }
 
+        /// <summary>
+        /// Triggers event telling power components that we haven't disconnected but have readded ourselves to a regenerated powernet
+        /// </summary>
+        /// <param name="toconnect"></param>
         public void RegeneratePowernet(Powernet toconnect)
         {
             //This removes the device from things that will be powernet disconnected when dirty powernet is killed
@@ -75,6 +86,9 @@ namespace Content.Server.GameObjects.Components.Power
             OnPowernetRegenerate?.Invoke(this, new PowernetEventArgs(Parent));
         }
 
+        /// <summary>
+        /// Triggers event telling power components we have exited any powernets
+        /// </summary>
         public void DisconnectFromPowernet()
         {
             Parent.Nodelist.Remove(this);

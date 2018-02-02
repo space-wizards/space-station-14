@@ -72,19 +72,31 @@ namespace Content.Server.GameObjects.Components.Power
             node.Parent.UpdateGenerator(this);
         }
 
-        //Node has become anchored to a powernet
+        /// <summary>
+        /// Node has become anchored to a powernet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventarg"></param>
         private void PowernetConnect(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.AddGenerator(this);
         }
 
-        //Node has had its powernet regenerated
+        /// <summary>
+        /// Node has had its powernet regenerated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventarg"></param>
         private void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.AddGenerator(this);
         }
 
-        //Node has become unanchored from a powernet
+        /// <summary>
+        /// Node has become unanchored from a powernet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventarg"></param>
         private void PowernetDisconnect(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.RemoveGenerator(this);

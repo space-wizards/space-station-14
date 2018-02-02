@@ -168,18 +168,31 @@ namespace Content.Server.GameObjects.Components.Power
             Charge = Math.Min(Charge - DistributionRate, 0);
         }
 
-        //Node has become anchored to a powernet
+        /// <summary>
+        /// Node has become anchored to a powernet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventarg"></param>
         private void PowernetConnect(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.AddPowerStorage(this);
         }
 
+        /// <summary>
+        /// Node has had its powernet regenerated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventarg"></param>
         private void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.AddPowerStorage(this);
         }
 
-        //Node has become unanchored from a powernet
+        /// <summary>
+        /// Node has become unanchored from a powernet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventarg"></param>
         private void PowernetDisconnect(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.RemovePowerStorage(this);

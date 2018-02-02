@@ -38,17 +38,24 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public SortedSet<PowerDeviceComponent> Deviceloadlist { get; set; } = new SortedSet<PowerDeviceComponent>(new DevicePriorityCompare());
 
-        //Comparer that keeps the device dictionary sorted by powernet priority
+        /// <summary>
+        /// Comparer that keeps the device dictionary sorted by powernet priority
+        /// </summary>
         public class DevicePriorityCompare : IComparer<PowerDeviceComponent>
         {
             public int Compare(PowerDeviceComponent x, PowerDeviceComponent y)
             {
                 int compare = y.Priority.CompareTo(x.Priority);
+
+                //If the comparer returns 0 sortedset will believe it is a duplicate and return 0, so return 1 instead
                 if (compare == 0 && !y.Equals(x)) return 1;
                 return compare;
             }
         }
 
+        /// <summary>
+        /// Priority that a device will receive power if powernet cannot supply every device
+        /// </summary>
         public enum Priority
         {
             Necessary,
@@ -254,6 +261,9 @@ namespace Content.Server.GameObjects.Components.Power
             toMerge.RemoveFromSystem();
         }
 
+        /// <summary>
+        /// Removes reference from the powernets list on the powernet system
+        /// </summary>
         private void RemoveFromSystem()
         {
             var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();

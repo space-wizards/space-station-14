@@ -99,6 +99,10 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
+        /// <summary>
+        /// Called when connecting to a new powernet, either on creation or on regeneration
+        /// </summary>
+        /// <param name="toconnect"></param>
         public void ConnectToPowernet(Powernet toconnect)
         {
             Parent = toconnect;
@@ -106,6 +110,9 @@ namespace Content.Server.GameObjects.Components.Power
             Regenerating = false;
         }
 
+        /// <summary>
+        /// Called when we are removed and telling the powernet that it is now dirty and must regenerate
+        /// </summary>
         public void DisconnectFromPowernet()
         {
             Parent.Wirelist.Remove(this);
