@@ -1,6 +1,5 @@
 ﻿using Content.Server.Interfaces.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
-using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.System;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
@@ -50,7 +49,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public static void UserInteraction(object sender, ClickEventArgs e)
         {
-            if (e.ClickType != ClickType.Left)
+            if (e.ClickType != SS14.Shared.GameObjects.Clicktype.Left)
                 return;
 
             IEntity user = e.User;
