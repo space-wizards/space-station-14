@@ -1,5 +1,6 @@
 ﻿
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.Interfaces.GameObjects;
 using SS14.Server;
 using SS14.Server.Interfaces;
@@ -59,6 +60,12 @@ namespace Content.Server
             factory.Register<DestructibleComponent>();
             factory.Register<TemperatureComponent>();
             factory.Register<ServerDoorComponent>();
+            factory.Register<PowerTransferComponent>();
+            factory.Register<PowerProviderComponent>();
+            factory.Register<PowerNodeComponent>();
+            factory.Register<PowerStorageComponent>();
+            factory.Register<PowerDeviceComponent>();
+            factory.Register<PowerGeneratorComponent>();
         }
 
         /// <inheritdoc />

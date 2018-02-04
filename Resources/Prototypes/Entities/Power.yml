@@ -4,14 +4,15 @@
   components:
   - type: Transform
   - type: Clickable
+  - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
     color: Red
     sprites:
     - eightdirwire
-
   - type: Icon
     icon: eightdirwire
+  - type: PowerTransfer
 
   snap:
   - Wire
@@ -23,3 +24,103 @@
   components:
   - type: Sprite
     color: Blue
+
+- type: entity
+  id: Generator
+  name: Generator
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    drawdepth: FloorPlaceable
+    sprites:
+    - generator
+  - type: Icon
+    icon: generator
+  - type: PowerGenerator
+  
+- type: entity
+  id: WPPnobattery
+  name: WPPnobattery
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    drawdepth: FloorPlaceable
+    sprites:
+    - provider
+  - type: Icon
+    icon: provider
+  - type: PowerProvider
+    Range: 5
+    Priority: Provider
+
+- type: entity
+  parent: WPPnobattery
+  id: WPP
+  name: WPP
+  components:
+  - type: PowerStorage
+    Capacity: 1000
+    Charge: 1000
+    ChargeRate: 200
+    ChargePowernet: false
+  
+  
+- type: entity
+  id: SMES
+  name: SMES
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    drawdepth: FloorPlaceable
+    sprites:
+    - storage
+  - type: Icon
+    icon: storage
+  - type: PowerStorage
+    Capacity: 3000
+    Charge: 1000
+    ChargeRate: 200
+    DistributionRate: 400
+    ChargePowernet: true
+
+- type: entity
+  id: WiredMachine
+  name: WiredMachine
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    drawdepth: FloorPlaceable
+    sprites:
+    - wiredmachine
+  - type: Icon
+    icon: wiredmachine
+  - type: PowerDevice
+    Drawtype: Node
+    Load: 100
+    Priority: High
+
+- type: entity
+  id: WirelessMachine
+  name: WirelessMachine
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    drawdepth: FloorPlaceable
+    sprites:
+    - wirelessmachine
+  - type: Icon
+    icon: wirelessmachine
+  - type: PowerDevice
+    Drawtype: Both
+    Load: 200
+    Priority: Low
