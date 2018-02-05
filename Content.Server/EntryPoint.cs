@@ -1,5 +1,4 @@
-﻿
-using Content.Server.GameObjects;
+﻿using Content.Server.GameObjects;
 using Content.Server.Interfaces.GameObjects;
 using SS14.Server;
 using SS14.Server.Interfaces;
@@ -7,7 +6,6 @@ using SS14.Server.Interfaces.Chat;
 using SS14.Server.Interfaces.Maps;
 using SS14.Server.Interfaces.Player;
 using SS14.Server.Player;
-using SS14.Shared;
 using SS14.Shared.Console;
 using SS14.Shared.ContentPack;
 using SS14.Shared.Enums;
@@ -18,7 +16,6 @@ using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Shared.Timers;
-using System.Diagnostics;
 using SS14.Shared.Interfaces.Timing;
 
 namespace Content.Server
@@ -86,9 +83,8 @@ namespace Content.Server
                     var startTime = timing.RealTime;
                     {
                         var newMap = mapMan.CreateMap(new MapId(1));
-                    
-                        mapLoader.LoadGrid(newMap, "./Maps/Demo/Grid.yaml");
-                        mapLoader.LoadEntities(newMap, "./Maps/Demo/Entities.yaml");
+
+                        mapLoader.LoadBlueprint(newMap, new GridId(1), "./Maps/Demo/FullGrid.yaml");
                     }
                     var timeSpan = timing.RealTime - startTime;
                     Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
