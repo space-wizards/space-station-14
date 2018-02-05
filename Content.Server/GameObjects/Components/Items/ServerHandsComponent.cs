@@ -2,13 +2,11 @@
 using Content.Shared.GameObjects;
 using SS14.Server.GameObjects.Events;
 using SS14.Server.Interfaces.GameObjects;
-using SS14.Shared;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using YamlDotNet.RepresentationModel;
-using Lidgren.Network;
 using SS14.Shared.Enums;
 
 namespace Content.Server.GameObjects

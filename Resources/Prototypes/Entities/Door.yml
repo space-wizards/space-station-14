@@ -4,7 +4,6 @@
   components:
   - type: Transform
   - type: Clickable
-  - type: Interactable
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:

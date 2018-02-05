@@ -57,7 +57,6 @@
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
-    <Compile Include="GameObjects\Components\Interactable\InteractableComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerGeneratorComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDevice.cs" />
@@ -65,8 +64,8 @@
     <Compile Include="GameObjects\Components\Power\PowerNodeComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerProviderComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerTransferComponent.cs" />
+    <Compile Include="GameObjects\EntitySystems\InteractionSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSystem.cs" />
-    <Compile Include="Interfaces\GameObjects\Components\Interactable\IInteractableComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IInventoryComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IItemComponent.cs" />
@@ -108,5 +107,8 @@
     <ContentAssemblies Include="$(OutputPath)Content.Shared.dll" />
     <ContentAssemblies Include="$(OutputPath)Content.Server.pdb" Condition="'$(Configuration)' == 'Debug'" />
     <ContentAssemblies Include="$(OutputPath)Content.Shared.pdb" Condition="'$(Configuration)' == 'Debug'" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameObjects\Components\Interactable\" />
   </ItemGroup>
 </Project>

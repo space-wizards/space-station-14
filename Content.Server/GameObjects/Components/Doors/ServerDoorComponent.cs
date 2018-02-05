@@ -1,41 +1,40 @@
-﻿using Content.Server.Interfaces.GameObjects;
+﻿using System;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using SS14.Server.GameObjects;
 using SS14.Shared.GameObjects;
+using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Log;
 using SS14.Shared.Maths;
+using SS14.Shared.IoC;
+using Content.Server.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects
 {
-    public class ServerDoorComponent : SharedDoorComponent
+    public class ServerDoorComponent : SharedDoorComponent, IAttackHand
     {
         public bool Opened { get; private set; }
 
         private float OpenTimeCounter;
-
-        private IInteractableComponent interactableComponent;
+        
         private CollidableComponent collidableComponent;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            interactableComponent = Owner.GetComponent<IInteractableComponent>();
-            interactableComponent.OnAttackHand += OnAttackHand;
             collidableComponent = Owner.GetComponent<CollidableComponent>();
             collidableComponent.OnBump += OnBump;
         }
 
         public override void OnRemove()
         {
-            interactableComponent.OnAttackHand -= OnAttackHand;
-            interactableComponent = null;
             collidableComponent.OnBump -= OnBump;
             collidableComponent = null;
         }
 
-        private void OnAttackHand(object sender, AttackHandEventArgs args)
+        public bool Attackhand(IEntity user)
         {
             if (Opened)
             {
@@ -45,6 +44,7 @@ namespace Content.Server.GameObjects
             {
                 Open();
             }
+            return true;
         }
 
         private void OnBump(object sender, BumpEventArgs args)
