@@ -24,19 +24,12 @@ namespace Content.Server.GameObjects
         {
             base.Initialize();
 
-            var interactionsystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionsystem.AddEvent(Owner.GetComponent<ClickableComponent>());
-
-
             collidableComponent = Owner.GetComponent<CollidableComponent>();
             collidableComponent.OnBump += OnBump;
         }
 
         public override void OnRemove()
         {
-            var interactionsystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionsystem.RemoveEvent(Owner.GetComponent<ClickableComponent>());
-
             collidableComponent.OnBump -= OnBump;
             collidableComponent = null;
         }

@@ -48,14 +48,6 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            var interactionsystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionsystem.AddEvent(Owner.GetComponent<ClickableComponent>());
-        }
-
         public bool Attackhand(IEntity user)
         {
             if (ContainingSlot != null)
@@ -65,14 +57,6 @@ namespace Content.Server.GameObjects
             var hands = user.GetComponent<IHandsComponent>();
             hands.PutInHand(this, hands.ActiveIndex, fallback: false);
             return true;
-        }
-
-        public override void Shutdown()
-        {
-            var interactionsystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionsystem.RemoveEvent(Owner.GetComponent<ClickableComponent>());
-
-            base.Shutdown();
         }
     }
 }

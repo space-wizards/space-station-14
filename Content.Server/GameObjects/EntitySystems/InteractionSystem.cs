@@ -1,8 +1,10 @@
 ﻿using Content.Server.Interfaces.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
+using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.System;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.IoC;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,23 +39,21 @@ namespace Content.Server.GameObjects.EntitySystems
         private const float INTERACTION_RANGE = 2;
         private const float INTERACTION_RANGE_SQUARED = INTERACTION_RANGE * INTERACTION_RANGE;
 
-        public void AddEvent(IClickableComponent click)
+        public override void Initialize()
         {
-            click.OnClick += UserInteraction;
+            base.Initialize();
+
+            SubscribeEvent<ClickedOnEntityEventArgs>(UserInteraction, this);
         }
 
-        public void RemoveEvent(IClickableComponent click)
+        public void UserInteraction(object sender, EntityEventArgs arg)
         {
-            click.OnClick -= UserInteraction;
-        }
-
-        public static void UserInteraction(object sender, ClickEventArgs e)
-        {
-            if (e.ClickType != SS14.Shared.GameObjects.Clicktype.Left)
+            ClickedOnEntityEventArgs e = (ClickedOnEntityEventArgs)arg;
+            if (e.MouseButton != Clicktype.Left)
                 return;
 
-            IEntity user = e.User;
-            IEntity attacked = e.Source;
+            IEntity user = EntityManager.GetEntity(e.Clicker);
+            IEntity attacked = EntityManager.GetEntity(e.Clicked);
 
             if (!user.TryGetComponent<IServerTransformComponent>(out var userTransform))
             {
