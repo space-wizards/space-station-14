@@ -1,13 +1,8 @@
 ﻿using Content.Server.Interfaces.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
-using SS14.Shared.Interfaces.GameObjects.Components;
-using SS14.Shared.Log;
 using System;
 using SS14.Shared.Interfaces.GameObjects;
-using SS14.Server.GameObjects;
-using SS14.Shared.IoC;
-using Content.Server.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects
 {
