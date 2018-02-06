@@ -75,16 +75,16 @@ namespace Content.Server
                 case ServerRunLevel.PreGame:
                     var timing = IoCManager.Resolve<IGameTiming>();
 
-                    IoCManager.Resolve<IPlayerManager>().FallbackSpawnPoint = new LocalCoordinates(0, 0, GridId.DefaultGrid, new MapId(1));
+                    IoCManager.Resolve<IPlayerManager>().FallbackSpawnPoint = new LocalCoordinates(0, 0, GridId.DefaultGrid, new MapId(2));
 
                     var mapLoader = IoCManager.Resolve<IMapLoader>();
                     var mapMan = IoCManager.Resolve<IMapManager>();
                     
                     var startTime = timing.RealTime;
                     {
-                        var newMap = mapMan.CreateMap(new MapId(1));
+                        var newMap = mapMan.CreateMap(new MapId(2));
 
-                        mapLoader.LoadBlueprint(newMap, new GridId(1), "./Maps/Demo/FullGrid.yaml");
+                        mapLoader.LoadBlueprint(newMap, new GridId(4), "Maps/Demo/DemoGrid.yaml");
                     }
                     var timeSpan = timing.RealTime - startTime;
                     Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
