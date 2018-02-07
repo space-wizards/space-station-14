@@ -4,32 +4,36 @@ using SS14.Shared.Maths;
 
 namespace Content.Client.Prototypes
 {
+    // Instantiated through reflection by the prototype system.
     public class DiscoBall : Entity
     {
-        private PointLightComponent LightComponent;
-        private float Hue;
+        private PointLightComponent _lightComponent;
+        private float _hue;
 
+        /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
-            LightComponent = GetComponent<PointLightComponent>();
+            _lightComponent = GetComponent<PointLightComponent>();
         }
 
+        /// <inheritdoc />
         public override void Shutdown()
         {
             base.Shutdown();
-            LightComponent = null;
+            _lightComponent = null;
         }
 
+        /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            Hue += frameTime / 10;
-            if (Hue > 1)
+            _hue += frameTime / 10;
+            if (_hue > 1)
             {
-                Hue -= 1;
+                _hue -= 1;
             }
 
-            LightComponent.Color = Color4.FromHsl(new Vector4(Hue, 1, 0.5f, 0.5f));
+            _lightComponent.Color = Color4.FromHsl(new Vector4(_hue, 1, 0.5f, 0.5f));
         }
     }
 }

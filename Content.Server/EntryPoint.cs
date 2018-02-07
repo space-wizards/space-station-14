@@ -1,5 +1,4 @@
-﻿
-using Content.Server.GameObjects;
+﻿using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.Interfaces.GameObjects;
@@ -19,7 +18,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Shared.Timers;
-using System.Diagnostics;
+using SS14.Shared.Interfaces.Timing;
 
 namespace Content.Server
 {
@@ -84,13 +83,26 @@ namespace Content.Server
             base.Dispose();
         }
 
-        private void HandleRunLevelChanged(object sender, RunLevelChangedEventArgs args)
+        private static void HandleRunLevelChanged(object sender, RunLevelChangedEventArgs args)
         {
             switch (args.NewLevel)
             {
                 case ServerRunLevel.PreGame:
-                    IoCManager.Resolve<IPlayerManager>().FallbackSpawnPoint = new LocalCoordinates(0, 0, GridId.DefaultGrid, new MapId(1));
-                    NewDemoGrid(new GridId(1), new MapId(1));
+                    var timing = IoCManager.Resolve<IGameTiming>();
+
+                    IoCManager.Resolve<IPlayerManager>().FallbackSpawnPoint = new LocalCoordinates(0, 0, GridId.DefaultGrid, new MapId(2));
+
+                    var mapLoader = IoCManager.Resolve<IMapLoader>();
+                    var mapMan = IoCManager.Resolve<IMapManager>();
+                    
+                    var startTime = timing.RealTime;
+                    {
+                        var newMap = mapMan.CreateMap(new MapId(2));
+
+                        mapLoader.LoadBlueprint(newMap, new GridId(4), "Maps/Demo/DemoGrid.yaml");
+                    }
+                    var timeSpan = timing.RealTime - startTime;
+                    Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
 
                     IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Round loaded!");
                     break;
@@ -152,39 +164,5 @@ namespace Content.Server
                     break;
             }
         }
-
-        //TODO: This whole method should be removed once file loading/saving works, and replaced with a 'Demo' map.
-        /// <summary>
-        ///     Generates 'Demo' grid and inserts it into the map manager.
-        /// </summary>
-        private void NewDemoGrid(GridId gridId, MapId mapId)
-        {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var defManager = IoCManager.Resolve<ITileDefinitionManager>();
-
-            mapManager.SuppressOnTileChanged = true;
-
-            Logger.Log("Cannot find map. Generating blank map.", LogLevel.Warning);
-            var floor = defManager["Floor"].TileId;
-
-            Debug.Assert(floor > 0);
-
-            var map = mapManager.CreateMap(mapId);
-            var grid = map.CreateGrid(gridId);
-
-            for (var y = -32; y <= 32; ++y)
-            {
-                for (var x = -32; x <= 32; ++x)
-                {
-                    grid.SetTile(new LocalCoordinates(x, y, gridId, mapId), new Tile(floor));
-                }
-            }
-
-            // load entities
-            IoCManager.Resolve<IMapLoader>().Load(_server.MapName, map);
-
-            mapManager.SuppressOnTileChanged = false;
-        }
-
     }
 }
