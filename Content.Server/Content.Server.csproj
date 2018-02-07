@@ -57,8 +57,22 @@
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
-    <Compile Include="GameObjects\Components\Interactable\InteractableComponent.cs" />
-    <Compile Include="Interfaces\GameObjects\Components\Interactable\IInteractableComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\BaseTool.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\CrowbarComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\MultitoolComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\ScrewdriverComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\WelderComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\WirecutterComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\WrenchComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerGeneratorComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerDevice.cs" />
+    <Compile Include="GameObjects\Components\Power\Powernet.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerNodeComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerProviderComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerTransferComponent.cs" />
+    <Compile Include="GameObjects\EntitySystems\InteractionSystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\PowerSystem.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IInventoryComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IItemComponent.cs" />

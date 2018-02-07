@@ -18,6 +18,19 @@ namespace Content.Client
             factory.RegisterIgnore("Damageable");
             factory.RegisterIgnore("Destructible");
             factory.RegisterIgnore("Temperature");
+            factory.RegisterIgnore("PowerTransfer");
+            factory.RegisterIgnore("PowerNode");
+            factory.RegisterIgnore("PowerProvider");
+            factory.RegisterIgnore("PowerDevice");
+            factory.RegisterIgnore("PowerStorage");
+            factory.RegisterIgnore("PowerGenerator");
+
+            factory.RegisterIgnore("Wirecutter");
+            factory.RegisterIgnore("Screwdriver");
+            factory.RegisterIgnore("Multitool");
+            factory.RegisterIgnore("Welder");
+            factory.RegisterIgnore("Wrench");
+            factory.RegisterIgnore("Crowbar");
 
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
