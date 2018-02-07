@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void UserInteraction(object sender, EntityEventArgs arg)
         {
             ClickedOnEntityEventArgs e = (ClickedOnEntityEventArgs)arg;
-            if (e.MouseButton != Clicktype.Left)
+            if (e.MouseButton != ClickType.Left)
                 return;
 
             IEntity user = EntityManager.GetEntity(e.Clicker);

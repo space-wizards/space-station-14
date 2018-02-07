@@ -57,6 +57,13 @@
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\BaseTool.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\CrowbarComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\MultitoolComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\ScrewdriverComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\WelderComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\WirecutterComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\Tools\WrenchComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerGeneratorComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDevice.cs" />
@@ -108,7 +115,5 @@
     <ContentAssemblies Include="$(OutputPath)Content.Server.pdb" Condition="'$(Configuration)' == 'Debug'" />
     <ContentAssemblies Include="$(OutputPath)Content.Shared.pdb" Condition="'$(Configuration)' == 'Debug'" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameObjects\Components\Interactable\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

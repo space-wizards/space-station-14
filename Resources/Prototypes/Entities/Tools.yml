@@ -1,0 +1,71 @@
+- type: entity
+  name: Wirecutter
+  parent: BaseItem
+  id: Wirecutter
+  components:
+  - type: Wirecutter
+  - type: WearableAnimatedSprite
+    notWornSprite: wirecutter
+    sprite: wirecutter
+  - type: Icon
+    icon: wirecutter
+    
+- type: entity
+  name: Screwdriver
+  parent: BaseItem
+  id: Screwdriver
+  components:
+  - type: Screwdriver
+  - type: WearableAnimatedSprite
+    notWornSprite: screwdriver
+    sprite: screwdriver
+  - type: Icon
+    icon: screwdriver
+
+- type: entity
+  name: Welder
+  parent: BaseItem
+  id: Welder
+  components:
+  - type: Welder
+  - type: WearableAnimatedSprite
+    notWornSprite: welder
+    sprite: welder
+  - type: Icon
+    icon: welder
+
+- type: entity
+  name: Wrench
+  parent: BaseItem
+  id: Wrench
+  components:
+  - type: Wrench
+  - type: WearableAnimatedSprite
+    notWornSprite: wrench
+    sprite: wrench
+  - type: Icon
+    icon: wrench
+    
+- type: entity
+  name: Crowbar
+  parent: BaseItem
+  id: Crowbar
+  components:
+  - type: Crowbar
+  - type: WearableAnimatedSprite
+    notWornSprite: crowbar
+    sprite: crowbar
+  - type: Icon
+    icon: crowbar
+    
+- type: entity
+  name: Multitool
+  parent: BaseItem
+  id: Multitool
+  components:
+  - type: Multitool
+  - type: WearableAnimatedSprite
+    notWornSprite: multitool
+    sprite: multitool
+  - type: Icon
+    icon: multitool
