@@ -1,15 +1,18 @@
-﻿using SS14.Server.GameObjects;
+﻿using Content.Server.GameObjects.EntitySystems;
+using SS14.Server.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.IoC;
 using System.Linq;
+using SS14.Shared.Interfaces.GameObjects;
+using Content.Server.GameObjects.Components.Interactable.Tools;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     /// <summary>
     /// Component to transfer power to nearby components, can create powernets and connect to nodes
     /// </summary>
-    public class PowerTransferComponent : Component
+    public class PowerTransferComponent : Component, IAttackby
     {
         public override string Name => "PowerTransfer";
 
@@ -124,6 +127,16 @@ namespace Content.Server.GameObjects.Components.Power
         public bool CanConnectTo()
         {
             return Parent != null && Parent.Dirty == false && !Regenerating;
+        }
+
+        public bool Attackby(IEntity user, IEntity attackwith)
+        {
+            if(attackwith.TryGetComponent(out WirecutterComponent wirecutter))
+            {
+                Owner.Delete();
+                return true;
+            }
+            return false;
         }
     }
 }
