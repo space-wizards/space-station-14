@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Shared", "Content.Shared\Content.Shared.csproj", "{26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -135,7 +135,6 @@ Global
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Release|x64.ActiveCfg = Debug|Any CPU
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Release|x64.Build.0 = Debug|Any CPU
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Release|x86.ActiveCfg = Debug|Any CPU
-		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Release|x86.Build.0 = Debug|Any CPU
 		{31D24303-F6A9-4D53-BB03-A73EDCB3186D}.Debug|x64.ActiveCfg = Debug|x64
 		{31D24303-F6A9-4D53-BB03-A73EDCB3186D}.Debug|x64.Build.0 = Debug|x64
 		{31D24303-F6A9-4D53-BB03-A73EDCB3186D}.Debug|x86.ActiveCfg = Debug|x86
