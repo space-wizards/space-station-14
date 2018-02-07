@@ -1,4 +1,4 @@
 [submodule "engine"]
 	path = engine
 	url = https://github.com/space-wizards/space-station-14.git
-	branch = a8c302eadb516f919df1f751af8a5d2993458b2e
+	branch = 1771ca4b4c043f95e2a1830e78362df9bb03a656
