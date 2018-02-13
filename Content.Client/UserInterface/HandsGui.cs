@@ -1,4 +1,5 @@
-﻿using Content.Client.Interfaces.GameObjects;
+﻿/*
+using Content.Client.Interfaces.GameObjects;
 using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
 using SS14.Client.Graphics.Input;
@@ -188,3 +189,4 @@ namespace Content.Client.UserInterface
         }
     }
 }
+*/
