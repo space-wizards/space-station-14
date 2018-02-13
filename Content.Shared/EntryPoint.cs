@@ -1,4 +1,6 @@
 ﻿using SS14.Shared.ContentPack;
+using SS14.Shared.Interfaces;
+using SS14.Shared.IoC;
 
 namespace Content.Shared
 {
@@ -6,7 +8,10 @@ namespace Content.Shared
     {
         public override void Init()
         {
-            // TODO: Anything at all.
+#if DEBUG
+            var resm = IoCManager.Resolve<IResourceManager>();
+            resm.MountContentDirectory(@"../../../Resources/");
+#endif
         }
     }
 }
