@@ -4,20 +4,18 @@
   id: Wirecutter
   components:
   - type: Wirecutter
-  - type: WearableAnimatedSprite
-    notWornSprite: wirecutter
+  - type: Sprite
     sprite: wirecutter
   - type: Icon
     icon: wirecutter
-    
+
 - type: entity
   name: Screwdriver
   parent: BaseItem
   id: Screwdriver
   components:
   - type: Screwdriver
-  - type: WearableAnimatedSprite
-    notWornSprite: screwdriver
+  - type: Sprite
     sprite: screwdriver
   - type: Icon
     icon: screwdriver
@@ -28,8 +26,7 @@
   id: Welder
   components:
   - type: Welder
-  - type: WearableAnimatedSprite
-    notWornSprite: welder
+  - type: Sprite
     sprite: welder
   - type: Icon
     icon: welder
@@ -40,32 +37,29 @@
   id: Wrench
   components:
   - type: Wrench
-  - type: WearableAnimatedSprite
-    notWornSprite: wrench
+  - type: Sprite
     sprite: wrench
   - type: Icon
     icon: wrench
-    
+
 - type: entity
   name: Crowbar
   parent: BaseItem
   id: Crowbar
   components:
   - type: Crowbar
-  - type: WearableAnimatedSprite
-    notWornSprite: crowbar
+  - type: Sprite
     sprite: crowbar
   - type: Icon
     icon: crowbar
-    
+
 - type: entity
   name: Multitool
   parent: BaseItem
   id: Multitool
   components:
   - type: Multitool
-  - type: WearableAnimatedSprite
-    notWornSprite: multitool
+  - type: Sprite
     sprite: multitool
   - type: Icon
     icon: multitool

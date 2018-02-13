@@ -3,9 +3,8 @@
   id: ShoesItem
   name: Shoes
   components:
-  - type: WearableAnimatedSprite
-    sprite: player_shoes
-    notWornSprite: shoes
+  - type: Sprite
+    sprite: shoes
 
   - type: Icon
     icon: shoes
@@ -15,9 +14,8 @@
   id: JanitorUniformItem
   name: Janitor Jumpsuit
   components:
-  - type: WearableAnimatedSprite
-    sprite: player_jumpsuit_gray
-    notWornSprite: janitorsuit
+  - type: Sprite
+    sprite: janitorsuit
 
   - type: Icon
     icon: janitorsuit

@@ -14,9 +14,8 @@
   parent: BaseItem
   id: RedToolboxItem
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: toolbox_r
-    sprite: player_toolbox
+  - type: Sprite
+    sprite: toolbox_r
   - type: Icon
     icon: toolbox_r
 
@@ -25,9 +24,8 @@
   parent: BaseItem
   id: BlueToolboxItem
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: toolbox_b
-    sprite: player_toolbox
+  - type: Sprite
+    sprite: toolbox_b
   - type: Icon
     icon: toolbox_b
 
@@ -36,9 +34,8 @@
   parent: BaseItem
   id: YellowToolboxItem
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: toolbox_y
-    sprite: player_toolbox
+  - type: Sprite
+    sprite: toolbox_y
   - type: Icon
     icon: toolbox_y
 
@@ -47,9 +44,8 @@
   parent: BaseItem
   id: MopItem
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: mop
-    sprite: player_mop
+  - type: Sprite
+    sprite: mop
   - type: Icon
     sprite: mop
 
@@ -59,9 +55,8 @@
   parent: BaseItem
   id: FlashlightLantern
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: Flashlight
-    sprite: player_Flashlight
+  - type: Sprite
+    sprite: Flashlight
   - type: Icon
     icon: Flashlight
   - type: PointLight
