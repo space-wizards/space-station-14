@@ -4,10 +4,10 @@
   name: Shoes
   components:
   - type: Sprite
-    sprite: shoes
+    sprite: Items/shoes.png
 
   - type: Icon
-    icon: shoes
+    icon: Items/shoes.png
 
 - type: entity
   parent: BaseItem
@@ -15,7 +15,7 @@
   name: Janitor Jumpsuit
   components:
   - type: Sprite
-    sprite: janitorsuit
+    sprite: Items/janitorsuit.png
 
   - type: Icon
-    icon: janitorsuit
+    icon: Items/janitorsuit.png

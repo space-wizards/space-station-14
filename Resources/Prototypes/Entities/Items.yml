@@ -15,9 +15,9 @@
   id: RedToolboxItem
   components:
   - type: Sprite
-    sprite: toolbox_r
+    sprite: Items/toolbox_r.png
   - type: Icon
-    icon: toolbox_r
+    icon: Items/toolbox_r.png
 
 - type: entity
   name: "Mechanical Toolbox With Handle"
@@ -25,9 +25,9 @@
   id: BlueToolboxItem
   components:
   - type: Sprite
-    sprite: toolbox_b
+    sprite: Items/toolbox_b.png
   - type: Icon
-    icon: toolbox_b
+    icon: Items/toolbox_b.png
 
 - type: entity
   name: "Electrical Toolbox With Handle"
@@ -35,9 +35,9 @@
   id: YellowToolboxItem
   components:
   - type: Sprite
-    sprite: toolbox_y
+    sprite: Items/toolbox_y.png
   - type: Icon
-    icon: toolbox_y
+    icon: Items/toolbox_y.png
 
 - type: entity
   name: "Extra-Grip™ Mop"
@@ -45,9 +45,9 @@
   id: MopItem
   components:
   - type: Sprite
-    sprite: mop
+    sprite: Items/mop.png
   - type: Icon
-    sprite: mop
+    icon: Items/mop.png
 
 #handheld lights
 - type: entity
@@ -56,7 +56,7 @@
   id: FlashlightLantern
   components:
   - type: Sprite
-    sprite: Flashlight
+    sprite: Items/Flashlight.png
   - type: Icon
-    icon: Flashlight
+    icon: Items/Flashlight.png
   - type: PointLight

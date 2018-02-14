@@ -5,9 +5,9 @@
   components:
   - type: Wirecutter
   - type: Sprite
-    sprite: wirecutter
+    sprite: Objects/wirecutter.png
   - type: Icon
-    icon: wirecutter
+    icon: Objects/wirecutter.png
 
 - type: entity
   name: Screwdriver
@@ -16,9 +16,9 @@
   components:
   - type: Screwdriver
   - type: Sprite
-    sprite: screwdriver
+    sprite: Objects/screwdriver.png
   - type: Icon
-    icon: screwdriver
+    icon: Objects/screwdriver.png
 
 - type: entity
   name: Welder
@@ -27,9 +27,9 @@
   components:
   - type: Welder
   - type: Sprite
-    sprite: welder
+    sprite: Objects/welder.png
   - type: Icon
-    icon: welder
+    icon: Objects/welder.png
 
 - type: entity
   name: Wrench
@@ -38,9 +38,9 @@
   components:
   - type: Wrench
   - type: Sprite
-    sprite: wrench
+    sprite: Objects/wrench.png
   - type: Icon
-    icon: wrench
+    icon: Objects/wrench.png
 
 - type: entity
   name: Crowbar
@@ -49,9 +49,9 @@
   components:
   - type: Crowbar
   - type: Sprite
-    sprite: crowbar
+    sprite: Objects/crowbar.png
   - type: Icon
-    icon: crowbar
+    icon: Objects/crowbar.png
 
 - type: entity
   name: Multitool
@@ -60,6 +60,6 @@
   components:
   - type: Multitool
   - type: Sprite
-    sprite: multitool
+    sprite: Objects/multitool.png
   - type: Icon
-    icon: multitool
+    icon: Objects/multitool.png
