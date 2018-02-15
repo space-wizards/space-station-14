@@ -33,13 +33,13 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public override void OnAdd(IEntity owner)
+        public override void OnAdd()
         {
-            base.OnAdd(owner);
+            base.OnAdd();
 
-            if (!owner.TryGetComponent(out PowerNodeComponent node))
+            if (!Owner.TryGetComponent(out PowerNodeComponent node))
             {
-                owner.AddComponent<PowerNodeComponent>();
+                Owner.AddComponent<PowerNodeComponent>();
             }
             node.OnPowernetConnect += PowernetConnect;
             node.OnPowernetDisconnect += PowernetDisconnect;
