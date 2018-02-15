@@ -84,9 +84,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (!owner.TryGetComponent(out PowerNodeComponent node))
             {
-                var factory = IoCManager.Resolve<IComponentFactory>();
-                node = factory.GetComponent<PowerNodeComponent>();
-                owner.AddComponent(node);
+                owner.AddComponent<PowerNodeComponent>();
             }
             node.OnPowernetConnect += PowernetConnect;
             node.OnPowernetDisconnect += PowernetDisconnect;
