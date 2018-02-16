@@ -256,18 +256,17 @@ namespace Content.Server.GameObjects
             ActiveIndex = orderedHands[index];
         }
 
-        public override void HandleNetworkMessage(IncomingEntityComponentMessage message)
+        public override void HandleMessage(object owner, ComponentMessage message)
         {
-            if (message.MessageParameters.Count != 1)
+            base.HandleMessage(owner, message);
+
+            switch (message)
             {
-                return;
+                case ClientChangedHandMsg msg:
+                    if (HasHand(msg.Index))
+                        ActiveIndex = msg.Index;
+                    break;
             }
-            var index = message.MessageParameters[0];
-            if (index is string newIndex && HasHand(newIndex))
-            {
-                ActiveIndex = newIndex;
-            }
-            base.HandleNetworkMessage(message);
         }
     }
 }
