@@ -21,6 +21,12 @@ except ImportError:
     Fore = ColorDummy()
     Style = ColorDummy()
 
+
+SHARED_IGNORED_RESOURCES = {"ss13model.7z", "ResourcePack.zip", "buildResourcePack.py", "CONTENT_GOES_HERE"}
+CLIENT_IGNORED_RESOURCES = {"Maps", "emotes.xml"}
+SERVER_IGNORED_RESOURCES = {"Textures", "Fonts"}
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Packages the SS14 content repo for release on all platforms.")
@@ -54,33 +60,38 @@ def main():
         wipe_bin()
         build_macos()
 
+
 def wipe_bin():
+    print(Fore.BLUE + Style.DIM + "Clearing old build artifacts (if any)..." + Style.RESET_ALL)
+    if os.path.exists("engine/bin"):
+        shutil.rmtree("engine/bin")
+
     if os.path.exists("bin"):
-        print(Fore.BLUE + Style.DIM + "Clearing old build artifacts..." + Style.RESET_ALL)
         shutil.rmtree("bin")
+
 
 def build_windows():
     # Run a full build.
-    print(Fore.GREEN + "Building project for Windows x86..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Building project for Windows x64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
                     "SpaceStation14Content.sln",
                     "/m",
                     "/p:Configuration=Release",
-                    "/p:Platform=x86",
+                    "/p:Platform=x64",
                     "/nologo",
                     "/v:m",
                     "/p:TargetOS=Windows",
                     "/t:Rebuild"
                    ], check=True)
 
-    # Package client.
-    print(Fore.GREEN + "Packaging Windows x86 client..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Client"),
-                os.path.join("release", "SS14.Client_windows_x86.zip"))
+    copy_resources(os.path.join("engine", "bin", "Client", "Resources"), False)
+    print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
+    package_zip(os.path.join("engine", "bin", "Client"),
+                os.path.join("release", "SS14.Client_windows_x64.zip"))
 
-    print(Fore.GREEN + "Packaging Windows x86 server..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Server"),
-                os.path.join("release", "SS14.Server_windows_x86.zip"))
+    #print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
+    #package_zip(os.path.join("bin", "Server"),
+    #            os.path.join("release", "SS14.Server_windows_x64.zip"))
 
 
 def build_linux():
@@ -134,6 +145,30 @@ def build_macos():
     package_zip(os.path.join("bin", "Server"),
                 os.path.join("release", "SS14.Server_MacOS.zip"))
 
+
+def copy_resources(target, server):
+    # Content repo goes FIRST so that it won't override engine files as that's forbidden.
+    do_resource_copy(target, "Resources", server)
+    do_resource_copy(target, os.path.join("engine", "Resources"), server)
+
+
+def do_resource_copy(target, base, server):
+    for filename in os.listdir(base):
+        if filename in SHARED_IGNORED_RESOURCES \
+        or filename in SERVER_IGNORED_RESOURCES if server else CLIENT_IGNORED_RESOURCES:
+            continue
+
+        print(filename)
+
+        path = os.path.join(base, filename)
+        target_path = os.path.join(target, filename)
+        if os.path.isdir(path):
+            _copytree(path, target_path)
+
+        else:
+            shutil.copy(path, target_path)
+
+
 # Hack copied from Stack Overflow to get around the fact that
 # shutil.copytree doesn't allow copying into existing directories.
 def _copytree(src, dst, symlinks=False, ignore=None):
@@ -144,6 +179,7 @@ def _copytree(src, dst, symlinks=False, ignore=None):
             shutil.copytree(s, d, symlinks, ignore)
         else:
             shutil.copy2(s, d)
+
 
 def package_zip(directory, zipname):
     with zipfile.ZipFile(zipname, "w", zipfile.ZIP_DEFLATED) as zipf:
