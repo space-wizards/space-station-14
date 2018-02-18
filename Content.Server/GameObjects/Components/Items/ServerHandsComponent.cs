@@ -1,19 +1,20 @@
-﻿using Content.Server.Interfaces.GameObjects;
+﻿using System;
+using System.Collections.Generic;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using SS14.Server.GameObjects.Events;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
+using SS14.Shared.Input;
 using SS14.Shared.Utility;
-using System;
-using System.Collections.Generic;
 using YamlDotNet.RepresentationModel;
-using SS14.Shared.Enums;
 
 namespace Content.Server.GameObjects
 {
     public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
         private string activeIndex;
+
         public string ActiveIndex
         {
             get => activeIndex;
@@ -227,7 +228,7 @@ namespace Content.Server.GameObjects
         // Game logic goes here.
         public void OnKeyChange(object sender, EntityEventArgs uncast)
         {
-            var cast = (BoundKeyChangeEventArgs)uncast;
+            var cast = (BoundKeyChangeEventArgs) uncast;
             if (cast.Actor != Owner || cast.KeyState != BoundKeyState.Down)
             {
                 return;
