@@ -42,17 +42,17 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeEvent<ClickedOnEntityEventArgs>(UserInteraction, this);
+            SubscribeEvent<ClickedOnEntityMessage>(UserInteraction);
         }
 
-        public void UserInteraction(object sender, EntityEventArgs arg)
+        private void UserInteraction(object sender, EntityEventArgs arg)
         {
-            ClickedOnEntityEventArgs e = (ClickedOnEntityEventArgs)arg;
+            var e = (ClickedOnEntityMessage)arg;
             if (e.MouseButton != ClickType.Left)
                 return;
 
-            IEntity user = EntityManager.GetEntity(e.Clicker);
-            IEntity attacked = EntityManager.GetEntity(e.Clicked);
+            var user = EntityManager.GetEntity(e.Owner);
+            var attacked = EntityManager.GetEntity(e.Clicked);
 
             if (!user.TryGetComponent<IServerTransformComponent>(out var userTransform))
             {
