@@ -1,5 +1,5 @@
 ﻿using Content.Client.Interfaces.GameObjects;
-//using Content.Client.UserInterface;
+using Content.Client.UserInterface;
 using Content.Shared.GameObjects;
 using Lidgren.Network;
 using SS14.Client.Interfaces.UserInterface;
@@ -37,16 +37,14 @@ namespace Content.Client.GameObjects
             }
 
             ActiveIndex = cast.ActiveIndex;
-/*
             // Tell UI to update.
             var uiMgr = IoCManager.Resolve<IUserInterfaceManager>();
-            if (!uiMgr.TryGetSingleComponent<HandsGui>(out var component))
+            if (!uiMgr.StateRoot.TryGetChild<HandsGui>("HandsGui", out var control))
             {
-                component = new HandsGui();
-                uiMgr.AddComponent(component);
+                control = new HandsGui();
+                uiMgr.StateRoot.AddChild(control);
             }
-            component.UpdateHandIcons();
-*/
+            control.UpdateHandIcons();
         }
 
         public void SendChangeHand(string index)

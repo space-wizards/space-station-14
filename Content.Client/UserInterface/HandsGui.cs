@@ -1,12 +1,11 @@
-﻿/*
-using Content.Client.Interfaces.GameObjects;
+﻿using Content.Client.Interfaces.GameObjects;
 using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
-using SS14.Client.Graphics.Input;
-using SS14.Client.Graphics.Sprites;
+using SS14.Client.Graphics.Drawing;
 using SS14.Client.Interfaces.Player;
-using SS14.Client.Interfaces.Resource;
+using SS14.Client.Interfaces.ResourceManagement;
 using SS14.Client.Interfaces.UserInterface;
+using SS14.Client.ResourceManagement;
 using SS14.Client.UserInterface.Controls;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
@@ -14,48 +13,51 @@ using SS14.Shared.Maths;
 
 namespace Content.Client.UserInterface
 {
-    public class HandsGui : Control
+    public class HandsGui : HBoxContainer
     {
-        private readonly Color _inactiveColor = new Color(90, 90, 90);
+        private static readonly Color _inactiveColor = new Color(90, 90, 90);
+        private const int BOX_SPACING = 1;
+        // The boxes are square so that's both width and height.
+        private const int BOX_SIZE = 80;
 
         private readonly IPlayerManager _playerManager = IoCManager.Resolve<IPlayerManager>();
         private readonly IUserInterfaceManager _userInterfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
-        private readonly Sprite handSlot;
-        private readonly int spacing = 1;
+        private StyleBoxTexture handBox;
+        private StyleBoxTexture inactiveHandBox;
 
         private UiHandInfo LeftHand;
         private UiHandInfo RightHand;
         private Box2i handL;
         private Box2i handR;
 
-        public HandsGui()
+        protected override void Initialize()
         {
+            base.Initialize();
+
             var _resMgr = IoCManager.Resolve<IResourceCache>();
-            handSlot = _resMgr.GetSprite("hand");
-            // OnCalcRect() calculates position so this needs to be ran
-            // as it doesn't automatically get called by the UI manager.
-            DoLayout();
+            var handsBoxTexture = _resMgr.GetResource<TextureResource>("Textures/UserInterface/handsbox.png");
+            handBox = new StyleBoxTexture()
+            {
+                Texture = handsBoxTexture,
+            };
+            handBox.SetMargin(StyleBox.Margin.All, 6);
+            inactiveHandBox = new StyleBoxTexture(handBox)
+            {
+                Modulate = _inactiveColor,
+            };
+
+            SetAnchorPreset(LayoutPreset.CenterBottom);
         }
 
-        protected override void OnCalcRect()
+        protected override Vector2 CalculateMinimumSize()
         {
-            // Individual size of the hand slot sprite.
-            var slotBounds = handSlot.LocalBounds;
-            var width = (int)((slotBounds.Width * 2) + spacing);
-            var height = (int)slotBounds.Height;
-
-            // Force size because refactoring is HARD.
-            Size = new Vector2i(width, height);
-            ClientArea = Box2i.FromDimensions(0, 0, Width, Height);
-
-            // Hell force position too what could go wrong!
-            Position = new Vector2i((int)(CluwneLib.Window.Viewport.Width - width) / 2, (int)CluwneLib.Window.Viewport.Height - height - 10);
-            handL = Box2i.FromDimensions(Position.X, Position.Y, (int)slotBounds.Width, (int)slotBounds.Height);
-            handR = Box2i.FromDimensions(Position.X + (int)slotBounds.Width + spacing, Position.Y, (int)slotBounds.Width, (int)slotBounds.Height);
+            return new Vector2(BOX_SIZE * 2 + 1, BOX_SIZE);
         }
 
-        protected override void DrawContents()
+        protected override void Draw(DrawingHandle handle)
         {
+            handle.DrawStyleBox(handBox, new Box2(Vector2.Zero, Size));
+            /*
             if (_playerManager?.LocalPlayer.ControlledEntity == null)
             {
                 return;
@@ -82,8 +84,8 @@ namespace Content.Client.UserInterface
                 var bounds = LeftHand.HeldSprite.LocalBounds;
                 LeftHand.HeldSprite.SetTransformToRect(
                     Box2i.FromDimensions(handL.Left + (int)(handL.Width / 2f - bounds.Width / 2f),
-                                  handL.Top + (int)(handL.Height / 2f - bounds.Height / 2f),
-                                  (int)bounds.Width, (int)bounds.Height));
+                                    handL.Top + (int)(handL.Height / 2f - bounds.Height / 2f),
+                                    (int)bounds.Width, (int)bounds.Height));
                 LeftHand.HeldSprite.Draw();
             }
 
@@ -92,14 +94,16 @@ namespace Content.Client.UserInterface
                 var bounds = RightHand.HeldSprite.LocalBounds;
                 RightHand.HeldSprite.SetTransformToRect(
                     Box2i.FromDimensions(handR.Left + (int)(handR.Width / 2f - bounds.Width / 2f),
-                                  handR.Top + (int)(handR.Height / 2f - bounds.Height / 2f),
-                                  (int)bounds.Width, (int)bounds.Height));
+                                    handR.Top + (int)(handR.Height / 2f - bounds.Height / 2f),
+                                    (int)bounds.Width, (int)bounds.Height));
                 RightHand.HeldSprite.Draw();
             }
+            */
         }
 
         public void UpdateHandIcons()
         {
+            UpdateDraw();
             if (_playerManager?.LocalPlayer.ControlledEntity == null)
             {
                 return;
@@ -153,6 +157,7 @@ namespace Content.Client.UserInterface
             hands.SendChangeHand(index);
         }
 
+        /*
         public override bool MouseDown(MouseButtonEventArgs e)
         {
             if (e.Button != Mouse.Button.Right)
@@ -171,22 +176,21 @@ namespace Content.Client.UserInterface
             }
             return false;
         }
+        */
 
-        private static Sprite GetIconSprite(IEntity entity)
+        private static Texture GetIconSprite(IEntity entity)
         {
-            Sprite icon = null;
-            if (entity.TryGetComponent<IconComponent>(out var component))
+            if (entity.TryGetComponent<IconComponent>(out var component) && component.Icon != null)
             {
-                icon = component.Icon;
+                return component.Icon;
             }
-            return icon ?? IoCManager.Resolve<IResourceCache>().DefaultSprite();
+            return IoCManager.Resolve<IResourceCache>().GetFallback<TextureResource>();
         }
 
         private struct UiHandInfo
         {
             public IEntity Entity { get; set; }
-            public Sprite HeldSprite { get; set; }
+            public Texture HeldSprite { get; set; }
         }
     }
 }
-*/
