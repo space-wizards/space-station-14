@@ -1,10 +1,7 @@
 ﻿using Content.Client.Interfaces.GameObjects;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects;
-using Lidgren.Network;
 using SS14.Client.Interfaces.UserInterface;
-using SS14.Client.UserInterface;
-using SS14.Shared;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
@@ -50,7 +47,7 @@ namespace Content.Client.GameObjects
 
         public void SendChangeHand(string index)
         {
-            Owner.SendComponentNetworkMessage(this, NetDeliveryMethod.ReliableUnordered, index);
+            SendNetworkMessage(new ClientChangedHandMsg(index));
         }
     }
 }
