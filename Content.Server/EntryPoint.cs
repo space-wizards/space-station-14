@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Placement;
 using SS14.Server;
 using SS14.Server.Interfaces;
 using SS14.Server.Interfaces.Chat;
@@ -19,6 +20,7 @@ using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Shared.Timers;
 using SS14.Shared.Interfaces.Timing;
+using SS14.Shared.Maths;
 
 namespace Content.Server
 {
@@ -100,6 +102,9 @@ namespace Content.Server
                         var newMap = mapMan.CreateMap(new MapId(2));
 
                         mapLoader.LoadBlueprint(newMap, new GridId(4), "Maps/Demo/DemoGrid.yaml");
+
+                        var grid = newMap.GetGrid(new GridId(4));
+                        SpawnHelpers.SpawnLightTurret(grid, new Vector2(-15, 15));
                     }
                     var timeSpan = timing.RealTime - startTime;
                     Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
