@@ -8,7 +8,7 @@
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:
-    - TurretBase
+    - TurrBase
     
 - type: entity
   id: TurretTopGun
@@ -20,7 +20,7 @@
   - type: Sprite
     drawdepth: WallMountedItems
     sprites:
-    - TurretTop
+    - TurrTop
   - type: AiController
     logic: AimShootLife
     vision: 6.0
@@ -35,7 +35,7 @@
   - type: Sprite
     drawdepth: WallMountedItems
     sprites:
-    - TurretTopLight
+    - TurrLamp
   - type: AiController
     logic: AimShootLife
     vision: 6.0
