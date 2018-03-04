@@ -1,19 +1,19 @@
-﻿using Content.Server.Interfaces.GameObjects;
+﻿using System;
+using System.Collections.Generic;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
-using SS14.Server.GameObjects.Events;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
+using SS14.Shared.Input;
 using SS14.Shared.Utility;
-using System;
-using System.Collections.Generic;
 using YamlDotNet.RepresentationModel;
-using SS14.Shared.Enums;
 
 namespace Content.Server.GameObjects
 {
     public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
         private string activeIndex;
+
         public string ActiveIndex
         {
             get => activeIndex;
@@ -48,16 +48,13 @@ namespace Content.Server.GameObjects
                     AddHand(node.AsString());
                 }
             }
-
-            Owner.SubscribeEvent<BoundKeyChangeEventArgs>(OnKeyChange, this);
+            
             base.Initialize();
         }
 
         public override void OnRemove()
         {
             inventory = null;
-            Owner.UnsubscribeEvent<BoundKeyChangeEventArgs>(this);
-            Owner.UnsubscribeEvent<ClickedOnEntityEventArgs>(this);
             base.OnRemove();
         }
 
@@ -223,27 +220,7 @@ namespace Content.Server.GameObjects
             }
             return new HandsComponentState(dict, ActiveIndex);
         }
-
-        // Game logic goes here.
-        public void OnKeyChange(object sender, EntityEventArgs uncast)
-        {
-            var cast = (BoundKeyChangeEventArgs)uncast;
-            if (cast.Actor != Owner || cast.KeyState != BoundKeyState.Down)
-            {
-                return;
-            }
-
-            switch (cast.KeyFunction)
-            {
-                case BoundKeyFunctions.SwitchHands:
-                    SwapHands();
-                    break;
-                case BoundKeyFunctions.Drop:
-                    Drop(ActiveIndex);
-                    break;
-            }
-        }
-
+        
         private void SwapHands()
         {
             var index = orderedHands.FindIndex(x => x == ActiveIndex);
@@ -265,6 +242,20 @@ namespace Content.Server.GameObjects
                 case ClientChangedHandMsg msg:
                     if (HasHand(msg.Index))
                         ActiveIndex = msg.Index;
+                    break;
+
+                case BoundKeyChangedMsg msg:
+                    if(msg.State != BoundKeyState.Down)
+                        return;
+                    switch (msg.Function)
+                    {
+                        case BoundKeyFunctions.SwitchHands:
+                            SwapHands();
+                            break;
+                        case BoundKeyFunctions.Drop:
+                            Drop(ActiveIndex);
+                            break;
+                    }
                     break;
             }
         }

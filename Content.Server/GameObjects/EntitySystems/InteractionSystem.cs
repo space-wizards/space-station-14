@@ -3,11 +3,9 @@ using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.System;
 using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.GameObjects.Components;
-using SS14.Shared.IoC;
 using System.Collections.Generic;
 using System.Linq;
-using SS14.Shared.Enums;
+using SS14.Shared.Input;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -44,17 +42,17 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeEvent<ClickedOnEntityEventArgs>(UserInteraction, this);
+            SubscribeEvent<ClickedOnEntityMessage>(UserInteraction);
         }
 
-        public void UserInteraction(object sender, EntityEventArgs arg)
+        private void UserInteraction(object sender, EntityEventArgs arg)
         {
-            ClickedOnEntityEventArgs e = (ClickedOnEntityEventArgs)arg;
+            var e = (ClickedOnEntityMessage)arg;
             if (e.MouseButton != ClickType.Left)
                 return;
 
-            IEntity user = EntityManager.GetEntity(e.Clicker);
-            IEntity attacked = EntityManager.GetEntity(e.Clicked);
+            var user = EntityManager.GetEntity(e.Owner);
+            var attacked = EntityManager.GetEntity(e.Clicked);
 
             if (!user.TryGetComponent<IServerTransformComponent>(out var userTransform))
             {
