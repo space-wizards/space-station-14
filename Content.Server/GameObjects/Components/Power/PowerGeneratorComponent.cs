@@ -40,6 +40,7 @@ namespace Content.Server.GameObjects.Components.Power
             if (!Owner.TryGetComponent(out PowerNodeComponent node))
             {
                 Owner.AddComponent<PowerNodeComponent>();
+                node = Owner.GetComponent<PowerNodeComponent>();
             }
             node.OnPowernetConnect += PowernetConnect;
             node.OnPowernetDisconnect += PowernetDisconnect;
