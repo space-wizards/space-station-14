@@ -2,10 +2,12 @@
 using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
 using SS14.Client.Graphics.Drawing;
+using SS14.Client.Input;
 using SS14.Client.Interfaces.Player;
 using SS14.Client.Interfaces.ResourceManagement;
 using SS14.Client.Interfaces.UserInterface;
 using SS14.Client.ResourceManagement;
+using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
@@ -18,7 +20,7 @@ namespace Content.Client.UserInterface
         private static readonly Color _inactiveColor = new Color(90, 90, 90);
         private const int BOX_SPACING = 1;
         // The boxes are square so that's both width and height.
-        private const int BOX_SIZE = 80;
+        private const int BOX_SIZE = 50;
 
         private readonly IPlayerManager _playerManager = IoCManager.Resolve<IPlayerManager>();
         private readonly IUserInterfaceManager _userInterfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
@@ -51,6 +53,7 @@ namespace Content.Client.UserInterface
             handL = new Box2i(0, 0, BOX_SIZE, BOX_SIZE);
             handR = handL.Translated(new Vector2i(BOX_SIZE + BOX_SPACING, 0));
             SS14.Shared.Log.Logger.Debug($"{handL}, {handR}");
+            MouseFilter = MouseFilterMode.Stop;
         }
 
         protected override Vector2 CalculateMinimumSize()
@@ -151,26 +154,29 @@ namespace Content.Client.UserInterface
             hands.SendChangeHand(index);
         }
 
-        /*
-        public override bool MouseDown(MouseButtonEventArgs e)
+        protected override bool HasPoint(Vector2 point)
         {
-            if (e.Button != Mouse.Button.Right)
+            return handL.Contains((Vector2i)point) || handR.Contains((Vector2i)point);
+        }
+
+        protected override void MouseDown(GUIMouseButtonEventArgs args)
+        {
+            base.MouseDown(args);
+
+            if (args.Button != Mouse.Button.Right)
             {
-                return false;
+                return;
             }
-            if (handL.Contains(e.X, e.Y))
+
+            if (handL.Contains((Vector2i)args.RelativePosition))
             {
                 SendSwitchHandTo("left");
-                return true;
             }
-            if (handR.Contains(e.X, e.Y))
+            if (handR.Contains((Vector2i)args.RelativePosition))
             {
                 SendSwitchHandTo("right");
-                return true;
             }
-            return false;
         }
-        */
 
         private static Texture GetIconSprite(IEntity entity)
         {

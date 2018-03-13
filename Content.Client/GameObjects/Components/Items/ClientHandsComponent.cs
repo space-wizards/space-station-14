@@ -30,7 +30,16 @@ namespace Content.Client.GameObjects
             hands.Clear();
             foreach (var hand in cast.Hands)
             {
-                hands[hand.Key] = Owner.EntityManager.GetEntity(hand.Value);
+                IEntity entity = null;
+                try
+                {
+                    entity = Owner.EntityManager.GetEntity(hand.Value);
+                }
+                catch
+                {
+                    // Nothing.
+                }
+                hands[hand.Key] = entity;
             }
 
             ActiveIndex = cast.ActiveIndex;
