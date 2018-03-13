@@ -45,8 +45,12 @@ namespace Content.Client.UserInterface
             {
                 Modulate = _inactiveColor,
             };
-
+            SetMarginsPreset(LayoutPreset.CenterBottom);
             SetAnchorPreset(LayoutPreset.CenterBottom);
+
+            handL = new Box2i(0, 0, BOX_SIZE, BOX_SIZE);
+            handR = handL.Translated(new Vector2i(BOX_SIZE + BOX_SPACING, 0));
+            SS14.Shared.Log.Logger.Debug($"{handL}, {handR}");
         }
 
         protected override Vector2 CalculateMinimumSize()
@@ -56,8 +60,6 @@ namespace Content.Client.UserInterface
 
         protected override void Draw(DrawingHandle handle)
         {
-            handle.DrawStyleBox(handBox, new Box2(Vector2.Zero, Size));
-            /*
             if (_playerManager?.LocalPlayer.ControlledEntity == null)
             {
                 return;
@@ -71,34 +73,26 @@ namespace Content.Client.UserInterface
 
             var leftActive = hands.ActiveIndex == "left";
 
-            handSlot.Color = Color.White;
-            handSlot.SetTransformToRect(leftActive ? handL : handR);
-            handSlot.Draw();
-
-            handSlot.Color = _inactiveColor;
-            handSlot.SetTransformToRect(leftActive ? handR : handL);
-            handSlot.Draw();
+            handle.DrawStyleBox(handBox, leftActive ? handL : handR);
+            handle.DrawStyleBox(inactiveHandBox, leftActive ? handR : handL);
 
             if (LeftHand.Entity != null && LeftHand.HeldSprite != null)
             {
-                var bounds = LeftHand.HeldSprite.LocalBounds;
-                LeftHand.HeldSprite.SetTransformToRect(
-                    Box2i.FromDimensions(handL.Left + (int)(handL.Width / 2f - bounds.Width / 2f),
-                                    handL.Top + (int)(handL.Height / 2f - bounds.Height / 2f),
-                                    (int)bounds.Width, (int)bounds.Height));
-                LeftHand.HeldSprite.Draw();
+                var bounds = LeftHand.HeldSprite.Size;
+                handle.DrawTextureRect(LeftHand.HeldSprite,
+                    Box2i.FromDimensions(handL.Left + (int)(handL.Width / 2f - bounds.X / 2f),
+                                    handL.Top + (int)(handL.Height / 2f - bounds.Y / 2f),
+                                    (int)bounds.X, (int)bounds.Y), tile: false);
             }
 
             if (RightHand.Entity != null && RightHand.HeldSprite != null)
             {
-                var bounds = RightHand.HeldSprite.LocalBounds;
-                RightHand.HeldSprite.SetTransformToRect(
-                    Box2i.FromDimensions(handR.Left + (int)(handR.Width / 2f - bounds.Width / 2f),
-                                    handR.Top + (int)(handR.Height / 2f - bounds.Height / 2f),
-                                    (int)bounds.Width, (int)bounds.Height));
-                RightHand.HeldSprite.Draw();
+                var bounds = RightHand.HeldSprite.Size;
+                handle.DrawTextureRect(RightHand.HeldSprite,
+                    Box2i.FromDimensions(handR.Left + (int)(handR.Width / 2f - bounds.Y / 2f),
+                                    handR.Top + (int)(handR.Height / 2f - bounds.Y / 2f),
+                                    (int)bounds.X, (int)bounds.Y), tile: false);
             }
-            */
         }
 
         public void UpdateHandIcons()
