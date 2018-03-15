@@ -1,0 +1,46 @@
+- type: entity
+  id: TurretBase
+  name: Turret Base
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    drawdepth: FloorPlaceable
+    sprites:
+    - TurrBase
+    
+- type: entity
+  id: TurretTopGun
+  name: Turret (Gun)
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprites:
+    - TurrTop
+  - type: AiController
+    logic: AimShootLife
+    vision: 6.0
+    
+- type: entity
+  id: TurretTopLight
+  name: Turret (Light)
+  components:
+  - type: Transform
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprites:
+    - TurrLamp
+  - type: AiController
+    logic: AimShootLife
+    vision: 6.0
+  - type: PointLight
+    radius: 512
+    mask: flashlight_mask
+    autoRot: true
+    
