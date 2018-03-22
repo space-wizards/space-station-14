@@ -55,7 +55,7 @@ namespace Content.Client.UserInterface
 
         protected override void DrawContents()
         {
-            if (_playerManager == null || _playerManager.LocalPlayer == null)
+            if (_playerManager?.LocalPlayer == null)
             {
                 return;
             }
