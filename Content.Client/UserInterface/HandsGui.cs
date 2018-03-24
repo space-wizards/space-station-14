@@ -55,13 +55,13 @@ namespace Content.Client.UserInterface
 
         protected override void DrawContents()
         {
-            if (_playerManager?.LocalPlayer.ControlledEntity == null)
+            if (_playerManager?.LocalPlayer == null)
             {
                 return;
             }
 
             IEntity entity = _playerManager.LocalPlayer.ControlledEntity;
-            if (!entity.TryGetComponent<IHandsComponent>(out var hands))
+            if (entity == null || !entity.TryGetComponent<IHandsComponent>(out var hands))
             {
                 return;
             }
