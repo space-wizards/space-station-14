@@ -22,15 +22,27 @@ except ImportError:
     Style = ColorDummy()
 
 
-SHARED_IGNORED_RESOURCES = {"ss13model.7z", "ResourcePack.zip", "buildResourcePack.py", "CONTENT_GOES_HERE"}
-CLIENT_IGNORED_RESOURCES = {"Maps", "emotes.xml"}
-SERVER_IGNORED_RESOURCES = {"Textures", "Fonts"}
+SHARED_IGNORED_RESOURCES = {
+    "ss13model.7z",
+    "ResourcePack.zip",
+    "buildResourcePack.py",
+    "CONTENT_GOES_HERE"
+}
+CLIENT_IGNORED_RESOURCES = {
+    "Maps",
+    "emotes.xml"
+}
+SERVER_IGNORED_RESOURCES = {
+    "Textures",
+    "Fonts"
+}
 
 
 def main():
     parser = argparse.ArgumentParser(
         description="Packages the SS14 content repo for release on all platforms.")
     parser.add_argument("--platform",
+                        "-p",
                         action="store",
                         choices=["windows", "mac", "linux"],
                         nargs="*",
@@ -43,7 +55,8 @@ def main():
         platforms = ["windows", "mac", "linux"]
 
     if os.path.exists("release"):
-        print(Fore.BLUE+Style.DIM + "Cleaning old release packages (release/)..." + Style.RESET_ALL)
+        print(Fore.BLUE+Style.DIM +
+              "Cleaning old release packages (release/)..." + Style.RESET_ALL)
         shutil.rmtree("release")
 
     os.mkdir("release")
@@ -62,9 +75,10 @@ def main():
 
 
 def wipe_bin():
-    print(Fore.BLUE + Style.DIM + "Clearing old build artifacts (if any)..." + Style.RESET_ALL)
-    if os.path.exists("engine/bin"):
-        shutil.rmtree("engine/bin")
+    print(Fore.BLUE + Style.DIM +
+          "Clearing old build artifacts (if any)..." + Style.RESET_ALL)
+    if os.path.exists(os.path.join("engine", "bin")):
+        shutil.rmtree(os.path.join("engine", "bin"))
 
     if os.path.exists("bin"):
         shutil.rmtree("bin")
@@ -82,15 +96,16 @@ def build_windows():
                     "/v:m",
                     "/p:TargetOS=Windows",
                     "/t:Rebuild"
-                   ], check=True)
+                    ], check=True)
 
-    copy_resources(os.path.join("engine", "bin", "Client", "Resources"), False)
+    copy_resources(os.path.join("engine", "bin",
+                                "Client", "Resources"), server=False)
     print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
     package_zip(os.path.join("engine", "bin", "Client"),
                 os.path.join("release", "SS14.Client_windows_x64.zip"))
 
     #print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
-    #package_zip(os.path.join("bin", "Server"),
+    # package_zip(os.path.join("bin", "Server"),
     #            os.path.join("release", "SS14.Server_windows_x64.zip"))
 
 
@@ -105,14 +120,16 @@ def build_linux():
                     "/v:m",
                     "/p:TargetOS=Linux",
                     "/t:Rebuild"
-                   ], check=True)
+                    ], check=True)
 
     # Package client.
     print(Fore.GREEN + "Packaging Linux x86 client..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Client"), os.path.join("release", "SS14.Client_linux_x86.zip"))
+    package_zip(os.path.join("bin", "Client"), os.path.join(
+        "release", "SS14.Client_linux_x86.zip"))
 
     print(Fore.GREEN + "Packaging Linux x86 server..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Server"), os.path.join("release", "SS14.Server_linux_x86.zip"))
+    package_zip(os.path.join("bin", "Server"), os.path.join(
+        "release", "SS14.Server_linux_x86.zip"))
 
 
 def build_macos():
@@ -135,11 +152,24 @@ def build_macos():
     shutil.copytree(os.path.join("BuildFiles", "Mac", "Space Station 14.app"),
                     bundle)
 
-    _copytree(os.path.join("bin", "Client"),
-              os.path.join(bundle, "Contents", "MacOS"))
+    os.makedirs(os.path.join(bundle, "Contents",
+                             "MacOS", "bin", "Client"), exist_ok=True)
+
+    _copytree(os.path.join("engine", "bin", "Client"),
+              os.path.join(bundle, "Contents", "MacOS", "bin", "Client"))
+
+    copy_resources(os.path.join(bundle, "Contents",
+                                "MacOS", "bin", "Client", "Resources"), server=False)
+
+    os.makedirs(os.path.join(bundle, "Contents", "MacOS", "SS14.Client.Godot"), exist_ok=True)
+
+    _copytree(os.path.join("engine", "SS14.Client.Godot"),
+              os.path.join(bundle, "Contents", "MacOS", "SS14.Client.Godot"))
 
     package_zip(os.path.join("bin", "app"),
                 os.path.join("release", "SS14.Client_MacOS.zip"))
+
+    return
 
     print(Fore.GREEN + "Packaging MacOS x64 server..." + Style.RESET_ALL)
     package_zip(os.path.join("bin", "Server"),
@@ -155,13 +185,12 @@ def copy_resources(target, server):
 def do_resource_copy(target, base, server):
     for filename in os.listdir(base):
         if filename in SHARED_IGNORED_RESOURCES \
-        or filename in SERVER_IGNORED_RESOURCES if server else CLIENT_IGNORED_RESOURCES:
+                or filename in (SERVER_IGNORED_RESOURCES if server else CLIENT_IGNORED_RESOURCES):
             continue
-
-        print(filename)
 
         path = os.path.join(base, filename)
         target_path = os.path.join(target, filename)
+        os.makedirs(target_path, exist_ok=True)
         if os.path.isdir(path):
             _copytree(path, target_path)
 
@@ -176,7 +205,8 @@ def _copytree(src, dst, symlinks=False, ignore=None):
         s = os.path.join(src, item)
         d = os.path.join(dst, item)
         if os.path.isdir(s):
-            shutil.copytree(s, d, symlinks, ignore)
+            os.makedirs(d, exist_ok=True)
+            _copytree(s, d, symlinks, ignore)
         else:
             shutil.copy2(s, d)
 
@@ -202,6 +232,7 @@ def package_zip(directory, zipname):
 
                 print(Fore.CYAN + message + Style.RESET_ALL)
                 zipf.write(filepath, zippath)
+
 
 if __name__ == '__main__':
     main()

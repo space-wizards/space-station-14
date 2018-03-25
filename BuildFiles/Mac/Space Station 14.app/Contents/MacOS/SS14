@@ -5,5 +5,4 @@ BASEDIR=$(dirname "$0")
 echo "$BASEDIR"
 cd "$BASEDIR"
 
-# TODO: unhardcode this, probably ship Mono with SS14.
-/Library/Frameworks/Mono.framework/Versions/Current/Commands/mono --arch=64 ./SS14.Client.exe
+./Godot --path ./SS14.Client.Godot
