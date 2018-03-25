@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\AimShootLifeProcessor.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\Tools\BaseTool.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="GameObjects\Components\Damage\ResistanceSet.cs" />
     <Compile Include="GameObjects\Components\Temperature\TemperatureComponent.cs" />
     <Compile Include="Interfaces\GameObjects\IOnDamageBehavior.cs" />
+    <Compile Include="Placement\SpawnHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Temperature\ITemperatureComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Damage\IDamageableComponent.cs" />
