@@ -98,24 +98,40 @@ def build_windows():
                     "/t:Rebuild"
                     ], check=True)
 
-    copy_resources(os.path.join("engine", "bin",
-                                "Client", "Resources"), server=False)
     print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
-    package_zip(os.path.join("engine", "bin", "Client"),
-                os.path.join("release", "SS14.Client_windows_x64.zip"))
+    bundle = os.path.join("bin", "win_app")
+    shutil.copytree(os.path.join("BuildFiles", "Windows"),
+                    bundle)
 
-    #print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
-    # package_zip(os.path.join("bin", "Server"),
-    #            os.path.join("release", "SS14.Server_windows_x64.zip"))
+    os.makedirs(os.path.join(bundle, "bin", "Client"), exist_ok=True)
+
+    _copytree(os.path.join("engine", "bin", "Client"),
+              os.path.join(bundle, "bin", "Client"))
+
+    copy_resources(os.path.join(bundle, "bin", "Client", "Resources"), server=False)
+
+    os.makedirs(os.path.join(bundle, "SS14.Client.Godot"), exist_ok=True)
+
+    _copytree(os.path.join("engine", "SS14.Client.Godot"),
+              os.path.join(bundle, "SS14.Client.Godot"))
+
+    package_zip(os.path.join("bin", "win_app"),
+                os.path.join("release", "SS14.Client_Windows_x64.zip"))
+
+    return
+
+    print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
+    package_zip(os.path.join("bin", "Server"),
+    os.path.join("release", "SS14.Server_windows_x64.zip"))
 
 
 def build_linux():
-    print(Fore.GREEN + "Building project for Linux x86..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Building project for Linux x64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
                     "SpaceStation14Content.sln",
                     "/m",
                     "/p:Configuration=Release",
-                    "/p:Platform=x86",
+                    "/p:Platform=x64",
                     "/nologo",
                     "/v:m",
                     "/p:TargetOS=Linux",
@@ -123,13 +139,13 @@ def build_linux():
                     ], check=True)
 
     # Package client.
-    print(Fore.GREEN + "Packaging Linux x86 client..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Packaging Linux x64 client..." + Style.RESET_ALL)
     package_zip(os.path.join("bin", "Client"), os.path.join(
-        "release", "SS14.Client_linux_x86.zip"))
+        "release", "SS14.Client_linux_x64.zip"))
 
-    print(Fore.GREEN + "Packaging Linux x86 server..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Packaging Linux x64 server..." + Style.RESET_ALL)
     package_zip(os.path.join("bin", "Server"), os.path.join(
-        "release", "SS14.Server_linux_x86.zip"))
+        "release", "SS14.Server_linux_x64.zip"))
 
 
 def build_macos():
@@ -148,7 +164,7 @@ def build_macos():
 
     print(Fore.GREEN + "Packaging MacOS x64 client..." + Style.RESET_ALL)
     # Client has to go in an app bundle.
-    bundle = os.path.join("bin", "app", "Space Station 14.app")
+    bundle = os.path.join("bin", "mac_app", "Space Station 14.app")
     shutil.copytree(os.path.join("BuildFiles", "Mac", "Space Station 14.app"),
                     bundle)
 
@@ -166,7 +182,7 @@ def build_macos():
     _copytree(os.path.join("engine", "SS14.Client.Godot"),
               os.path.join(bundle, "Contents", "MacOS", "SS14.Client.Godot"))
 
-    package_zip(os.path.join("bin", "app"),
+    package_zip(os.path.join("bin", "mac_app"),
                 os.path.join("release", "SS14.Client_MacOS.zip"))
 
     return
