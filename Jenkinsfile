@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh './RUN_THIS.py'
+                sh 'git submodule update --init --recursive'
                 sh 'TMP=~/.cache/NuGet/ nuget restore'
             }
         }
