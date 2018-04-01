@@ -108,7 +108,8 @@ def build_windows():
     _copytree(os.path.join("engine", "bin", "Client"),
               os.path.join(bundle, "bin", "Client"))
 
-    copy_resources(os.path.join(bundle, "bin", "Client", "Resources"), server=False)
+    copy_resources(os.path.join(
+        bundle, "bin", "Client", "Resources"), server=False)
 
     os.makedirs(os.path.join(bundle, "SS14.Client.Godot"), exist_ok=True)
 
@@ -118,11 +119,11 @@ def build_windows():
     package_zip(os.path.join("bin", "win_app"),
                 os.path.join("release", "SS14.Client_Windows_x64.zip"))
 
-    return
-
     print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Server"),
-    os.path.join("release", "SS14.Server_windows_x64.zip"))
+    copy_resources(os.path.join("engine", "bin",
+                                "Server", "Resources"), server=True)
+    package_zip(os.path.join("engine", "bin", "Server"),
+                os.path.join("release", "SS14.Server_windows_x64.zip"))
 
 
 def build_linux():
@@ -138,13 +139,16 @@ def build_linux():
                     "/t:Rebuild"
                     ], check=True)
 
+    # NOTE: Temporarily disabled because I can't test it.
     # Package client.
-    print(Fore.GREEN + "Packaging Linux x64 client..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Client"), os.path.join(
-        "release", "SS14.Client_linux_x64.zip"))
+    #print(Fore.GREEN + "Packaging Linux x64 client..." + Style.RESET_ALL)
+    # package_zip(os.path.join("bin", "Client"), os.path.join(
+    #    "release", "SS14.Client_linux_x64.zip"))
 
     print(Fore.GREEN + "Packaging Linux x64 server..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Server"), os.path.join(
+    copy_resources(os.path.join("engine", "bin",
+                                "Server", "Resources"), server=True)
+    package_zip(os.path.join("engine", "bin", "Server"), os.path.join(
         "release", "SS14.Server_linux_x64.zip"))
 
 
@@ -160,7 +164,7 @@ def build_macos():
                     "/v:m",
                     "/p:TargetOS=MacOS",
                     "/t:Rebuild"
-                   ], check=True)
+                    ], check=True)
 
     print(Fore.GREEN + "Packaging MacOS x64 client..." + Style.RESET_ALL)
     # Client has to go in an app bundle.
@@ -177,7 +181,8 @@ def build_macos():
     copy_resources(os.path.join(bundle, "Contents",
                                 "MacOS", "bin", "Client", "Resources"), server=False)
 
-    os.makedirs(os.path.join(bundle, "Contents", "MacOS", "SS14.Client.Godot"), exist_ok=True)
+    os.makedirs(os.path.join(bundle, "Contents", "MacOS",
+                             "SS14.Client.Godot"), exist_ok=True)
 
     _copytree(os.path.join("engine", "SS14.Client.Godot"),
               os.path.join(bundle, "Contents", "MacOS", "SS14.Client.Godot"))
@@ -185,10 +190,11 @@ def build_macos():
     package_zip(os.path.join("bin", "mac_app"),
                 os.path.join("release", "SS14.Client_MacOS.zip"))
 
-    return
-
     print(Fore.GREEN + "Packaging MacOS x64 server..." + Style.RESET_ALL)
-    package_zip(os.path.join("bin", "Server"),
+    copy_resources(os.path.join("engine", "bin",
+                                "Server", "Resources"), server=True)
+
+    package_zip(os.path.join("engine", "bin", "Server"),
                 os.path.join("release", "SS14.Server_MacOS.zip"))
 
 
@@ -204,10 +210,12 @@ def do_resource_copy(target, base, server):
                 or filename in (SERVER_IGNORED_RESOURCES if server else CLIENT_IGNORED_RESOURCES):
             continue
 
+        print(filename, base, server)
+
         path = os.path.join(base, filename)
         target_path = os.path.join(target, filename)
-        os.makedirs(target_path, exist_ok=True)
         if os.path.isdir(path):
+            os.makedirs(target_path, exist_ok=True)
             _copytree(path, target_path)
 
         else:
