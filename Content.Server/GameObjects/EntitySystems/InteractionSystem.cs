@@ -216,10 +216,11 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="clicklocation"></param>
         private void InteractAfterattack(IEntity user, IEntity weapon, LocalCoordinates clicklocation)
         {
-            //If not lets attempt to use afterattack from the held item on the click location
-            if (weapon.TryGetComponent(out IAfterAttack attacker))
+            List<IAfterAttack> afterattacks = weapon.GetComponents<IAfterAttack>().ToList();
+
+            for (var i = 0; i < afterattacks.Count; i++)
             {
-                attacker.Afterattack(user, clicklocation);
+                afterattacks[i].Afterattack(user, clicklocation);
             }
         }
 
@@ -244,10 +245,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
             //Else check damage component to see if we damage if not attackby, and if so can we attack object
 
+
             //If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            if (weapon.TryGetComponent(out IAfterAttack attacker))
+            List<IAfterAttack> afterattacks = weapon.GetComponents<IAfterAttack>().ToList();
+
+            for (var i = 0; i < afterattacks.Count; i++)
             {
-                attacker.Afterattack(user, clicklocation);
+                afterattacks[i].Afterattack(user, clicklocation);
             }
         }
 
@@ -312,10 +316,15 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            //If not lets attempt to use afterattack from the held item on the click location
-            if (weapon != null && weapon.TryGetComponent(out IAfterAttack attacker))
+            if(weapon != null)
             {
-                attacker.Afterattack(user, clicklocation);
+                List<IAfterAttack> afterattacks = weapon.GetComponents<IAfterAttack>().ToList();
+
+                //See if we have a ranged attack interaction
+                for (var i = 0; i < afterattacks.Count; i++)
+                {
+                    afterattacks[i].Afterattack(user, clicklocation);
+                }
             }
         }
     }
