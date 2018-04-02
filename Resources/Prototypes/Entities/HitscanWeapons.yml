@@ -16,8 +16,8 @@
   id: GUNITEM
   components:
   - type: WearableAnimatedSprite
-    notWornSprite: gun
-    sprite: gun
+    notWornSprite: projectileweapon
+    sprite: projectileweapon
   - type: Icon
     icon: gun
   - type: ProjectileWeapon
