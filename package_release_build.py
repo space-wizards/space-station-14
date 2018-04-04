@@ -37,6 +37,8 @@ SERVER_IGNORED_RESOURCES = {
     "Fonts"
 }
 
+GODOT = "/home/pjbriers/builds_shared/godot"
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -153,7 +155,6 @@ def build_linux():
 
 
 def build_macos():
-    # Haha this is gonna suck.
     print(Fore.GREEN + "Building project for MacOS x64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
                     "SpaceStation14Content.sln",
@@ -168,12 +169,13 @@ def build_macos():
 
     print(Fore.GREEN + "Packaging MacOS x64 client..." + Style.RESET_ALL)
     # Client has to go in an app bundle.
-    bundle = os.path.join("bin", "mac_app", "Space Station 14.app")
-    shutil.copytree(os.path.join("BuildFiles", "Mac", "Space Station 14.app"),
-                    bundle)
-
-    os.makedirs(os.path.join(bundle, "Contents",
-                             "MacOS", "bin", "Client"), exist_ok=True)
+    subprocess.run(GODOT,
+                   "--verbose",
+                   "--export-debug",
+                   "mac",
+                   "../../release/mac_export.zip",
+                   cwd="engine/SS14.Client.Godot",
+                   check=True)
 
     _copytree(os.path.join("engine", "bin", "Client"),
               os.path.join(bundle, "Contents", "MacOS", "bin", "Client"))
@@ -233,6 +235,9 @@ def _copytree(src, dst, symlinks=False, ignore=None):
             _copytree(s, d, symlinks, ignore)
         else:
             shutil.copy2(s, d)
+
+
+def copy_dir_into_zip(directory, zip, basepath):
 
 
 def package_zip(directory, zipname):
