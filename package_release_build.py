@@ -21,6 +21,7 @@ except ImportError:
     Fore = ColorDummy()
     Style = ColorDummy()
 
+p = os.path.join
 
 SHARED_IGNORED_RESOURCES = {
     "ss13model.7z",
@@ -37,10 +38,10 @@ SERVER_IGNORED_RESOURCES = {
     "Fonts"
 }
 
-GODOT = "/home/pjbriers/builds_shared/godot"
-
+GODOT = None
 
 def main():
+    global GODOT
     parser = argparse.ArgumentParser(
         description="Packages the SS14 content repo for release on all platforms.")
     parser.add_argument("--platform",
@@ -50,8 +51,19 @@ def main():
                         nargs="*",
                         help="Which platform to build for. If not provided, all platforms will be built")
 
+    parser.add_argument("--godot",
+                        action="store",
+                        help="Path to the Godot executable used for exporting.")
+
+    parser.add_argument("--windows-godot-build",
+                        action="store")
+
     args = parser.parse_args()
     platforms = args.platform
+    GODOT = args.godot
+    if not GODOT:
+        print("No Godot executable passed.")
+        exit(1)
 
     if not platforms:
         platforms = ["windows", "mac", "linux"]
@@ -65,7 +77,10 @@ def main():
 
     if "windows" in platforms:
         wipe_bin()
-        build_windows()
+        if not args.windows_godot_build:
+            print("No --window-godot-build passed")
+            exit(1)
+        build_windows(args.windows_godot_build)
 
     if "linux" in platforms:
         wipe_bin()
@@ -79,14 +94,14 @@ def main():
 def wipe_bin():
     print(Fore.BLUE + Style.DIM +
           "Clearing old build artifacts (if any)..." + Style.RESET_ALL)
-    if os.path.exists(os.path.join("engine", "bin")):
-        shutil.rmtree(os.path.join("engine", "bin"))
+    if os.path.exists(p("engine", "bin")):
+        shutil.rmtree(p("engine", "bin"))
 
     if os.path.exists("bin"):
         shutil.rmtree("bin")
 
 
-def build_windows():
+def build_windows(godot_build):
     # Run a full build.
     print(Fore.GREEN + "Building project for Windows x64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
@@ -98,34 +113,32 @@ def build_windows():
                     "/v:m",
                     "/p:TargetOS=Windows",
                     "/t:Rebuild"
-                    ], check=True)
+                   ], check=True)
 
     print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
-    bundle = os.path.join("bin", "win_app")
-    shutil.copytree(os.path.join("BuildFiles", "Windows"),
-                    bundle)
 
-    os.makedirs(os.path.join(bundle, "bin", "Client"), exist_ok=True)
+    os.makedirs("bin/win_export", exist_ok=True)
+    subprocess.run([GODOT,
+                    "--verbose",
+                    "--export-debug",
+                    "win",
+                    "../../bin/win_export/SS14.Client.exe"],
+                   cwd="engine/SS14.Client.Godot")
 
-    _copytree(os.path.join("engine", "bin", "Client"),
-              os.path.join(bundle, "bin", "Client"))
-
-    copy_resources(os.path.join(
-        bundle, "bin", "Client", "Resources"), server=False)
-
-    os.makedirs(os.path.join(bundle, "SS14.Client.Godot"), exist_ok=True)
-
-    _copytree(os.path.join("engine", "SS14.Client.Godot"),
-              os.path.join(bundle, "SS14.Client.Godot"))
-
-    package_zip(os.path.join("bin", "win_app"),
-                os.path.join("release", "SS14.Client_Windows_x64.zip"))
+    client_zip = zipfile.ZipFile(p("release", "SS14.Client_Windows_x64.zip"), "w", compression=zipfile.ZIP_DEFLATED)
+    client_zip.writestr("spess.bat", "cd godot\ncall SS14.Client.exe --path SS14.Client.Godot")
+    client_zip.write(p("bin", "win_export"), "godot")
+    client_zip.write(p("bin", "win_export", "SS14.Client.pck"), p("godot", "SS14.Client.pck"))
+    copy_dir_into_zip(godot_build, "godot", client_zip)
+    copy_dir_into_zip(p("engine", "bin", "Client"), p("bin", "Client"), client_zip)
+    copy_resources(p("bin", "Client", "Resources"), client_zip, server=False)
+    client_zip.close()
 
     print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
-    copy_resources(os.path.join("engine", "bin",
-                                "Server", "Resources"), server=True)
-    package_zip(os.path.join("engine", "bin", "Server"),
-                os.path.join("release", "SS14.Server_windows_x64.zip"))
+    server_zip = zipfile.ZipFile(p("release", "SS14.Server_Windows_x64.zip"), "w", compression=zipfile.ZIP_DEFLATED)
+    copy_dir_into_zip(p("engine", "bin", "Server"), "", server_zip)
+    copy_resources(p("Resources"), server_zip, server=True)
+    server_zip.close()
 
 
 def build_linux():
@@ -144,14 +157,15 @@ def build_linux():
     # NOTE: Temporarily disabled because I can't test it.
     # Package client.
     #print(Fore.GREEN + "Packaging Linux x64 client..." + Style.RESET_ALL)
-    # package_zip(os.path.join("bin", "Client"), os.path.join(
+    # package_zip(p("bin", "Client"), p(
     #    "release", "SS14.Client_linux_x64.zip"))
 
     print(Fore.GREEN + "Packaging Linux x64 server..." + Style.RESET_ALL)
-    copy_resources(os.path.join("engine", "bin",
-                                "Server", "Resources"), server=True)
-    package_zip(os.path.join("engine", "bin", "Server"), os.path.join(
-        "release", "SS14.Server_linux_x64.zip"))
+    server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_x64.zip"), "w", compression=zipfile.ZIP_DEFLATED)
+    copy_dir_into_zip(p("engine", "bin", "Server"), "", server_zip)
+    copy_resources(p("Resources"), server_zip, server=True)
+    server_zip.close()
+
 
 
 def build_macos():
@@ -177,90 +191,82 @@ def build_macos():
                    cwd="engine/SS14.Client.Godot",
                    check=True)
 
-    _copytree(os.path.join("engine", "bin", "Client"),
-              os.path.join(bundle, "Contents", "MacOS", "bin", "Client"))
+    _copytree(p("engine", "bin", "Client"),
+              p(bundle, "Contents", "MacOS", "bin", "Client"))
 
-    copy_resources(os.path.join(bundle, "Contents",
+    copy_resources(p(bundle, "Contents",
                                 "MacOS", "bin", "Client", "Resources"), server=False)
 
-    os.makedirs(os.path.join(bundle, "Contents", "MacOS",
+    os.makedirs(p(bundle, "Contents", "MacOS",
                              "SS14.Client.Godot"), exist_ok=True)
 
-    _copytree(os.path.join("engine", "SS14.Client.Godot"),
-              os.path.join(bundle, "Contents", "MacOS", "SS14.Client.Godot"))
+    _copytree(p("engine", "SS14.Client.Godot"),
+              p(bundle, "Contents", "MacOS", "SS14.Client.Godot"))
 
-    package_zip(os.path.join("bin", "mac_app"),
-                os.path.join("release", "SS14.Client_MacOS.zip"))
+    package_zip(p("bin", "mac_app"),
+                p("release", "SS14.Client_MacOS.zip"))
 
     print(Fore.GREEN + "Packaging MacOS x64 server..." + Style.RESET_ALL)
-    copy_resources(os.path.join("engine", "bin",
+    copy_resources(p("engine", "bin",
                                 "Server", "Resources"), server=True)
 
-    package_zip(os.path.join("engine", "bin", "Server"),
-                os.path.join("release", "SS14.Server_MacOS.zip"))
+    package_zip(p("engine", "bin", "Server"),
+                p("release", "SS14.Server_MacOS.zip"))
 
 
-def copy_resources(target, server):
+def copy_resources(target, zipf, server):
     # Content repo goes FIRST so that it won't override engine files as that's forbidden.
-    do_resource_copy(target, "Resources", server)
-    do_resource_copy(target, os.path.join("engine", "Resources"), server)
+    do_resource_copy(target, "Resources", zipf, server)
+    do_resource_copy(target, p("engine", "Resources"), zipf, server)
 
 
-def do_resource_copy(target, base, server):
-    for filename in os.listdir(base):
+def do_resource_copy(target, source, zipf, server):
+    for filename in os.listdir(source):
         if filename in SHARED_IGNORED_RESOURCES \
                 or filename in (SERVER_IGNORED_RESOURCES if server else CLIENT_IGNORED_RESOURCES):
             continue
 
-        print(filename, base, server)
-
-        path = os.path.join(base, filename)
-        target_path = os.path.join(target, filename)
+        path = p(source, filename)
+        target_path = p(target, filename)
         if os.path.isdir(path):
-            os.makedirs(target_path, exist_ok=True)
-            _copytree(path, target_path)
+            copy_dir_into_zip(path, target_path, zipf)
 
         else:
-            shutil.copy(path, target_path)
+            zipf.write(path, target_path)
 
 
-# Hack copied from Stack Overflow to get around the fact that
-# shutil.copytree doesn't allow copying into existing directories.
-def _copytree(src, dst, symlinks=False, ignore=None):
-    for item in os.listdir(src):
-        s = os.path.join(src, item)
-        d = os.path.join(dst, item)
-        if os.path.isdir(s):
-            os.makedirs(d, exist_ok=True)
-            _copytree(s, d, symlinks, ignore)
-        else:
-            shutil.copy2(s, d)
+def zip_entry_exists(zipf, name):
+    try:
+        # Trick ZipInfo into sanitizing the name for us so this awful module stops spewing warnings.
+        zinfo = zipfile.ZipInfo.from_file("Resources", name)
+        zipf.getinfo(zinfo.filename)
+    except KeyError:
+        return False
+    return True
 
 
-def copy_dir_into_zip(directory, zip, basepath):
+def copy_dir_into_zip(directory, basepath, zipf):
+    if basepath and not zip_entry_exists(zipf, basepath):
+        zipf.write(directory, basepath)
 
+    for root, _, files in os.walk(directory):
+        relpath = os.path.relpath(root, directory)
+        if relpath != "." and not zip_entry_exists(zipf, p(basepath, relpath)):
+            zipf.write(root, p(basepath, relpath))
 
-def package_zip(directory, zipname):
-    with zipfile.ZipFile(zipname, "w", zipfile.ZIP_DEFLATED) as zipf:
-        for dirs, _, files in os.walk(directory):
-            relpath = os.path.relpath(dirs, directory)
-            if relpath != ".":
-                # Write directory node except for root level.
-                zipf.write(dirs, relpath)
+        for filename in files:
+            zippath = p(basepath, relpath, filename)
+            filepath = p(root, filename)
 
-            for filename in files:
-                zippath = os.path.join(relpath, filename)
-                filepath = os.path.join(dirs, filename)
+            message = "{dim}{diskroot}{sep}{zipfile}{dim} -> {ziproot}{sep}{zipfile}".format(
+                sep=os.sep + Style.NORMAL,
+                dim=Style.DIM,
+                diskroot=directory,
+                ziproot=zipf.filename,
+                zipfile=os.path.normpath(zippath))
 
-                message = "{dim}{diskroot}{sep}{zipfile}{dim} -> {ziproot}{sep}{zipfile}".format(
-                    sep=os.sep + Style.NORMAL,
-                    dim=Style.DIM,
-                    diskroot=directory,
-                    ziproot=zipname,
-                    zipfile=os.path.normpath(zippath))
-
-                print(Fore.CYAN + message + Style.RESET_ALL)
-                zipf.write(filepath, zippath)
+            print(Fore.CYAN + message + Style.RESET_ALL)
+            zipf.write(filepath, zippath)
 
 
 if __name__ == '__main__':
