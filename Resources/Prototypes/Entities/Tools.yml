@@ -8,6 +8,7 @@
     sprite: Objects/wirecutter.png
   - type: Icon
     icon: Objects/wirecutter.png
+  - type: MeleeWeapon
 
 - type: entity
   name: Screwdriver
@@ -19,6 +20,7 @@
     sprite: Objects/screwdriver.png
   - type: Icon
     icon: Objects/screwdriver.png
+  - type: MeleeWeapon
 
 - type: entity
   name: Welder
@@ -30,6 +32,7 @@
     sprite: Objects/welder.png
   - type: Icon
     icon: Objects/welder.png
+  - type: MeleeWeapon
 
 - type: entity
   name: Wrench
@@ -41,6 +44,7 @@
     sprite: Objects/wrench.png
   - type: Icon
     icon: Objects/wrench.png
+  - type: MeleeWeapon
 
 - type: entity
   name: Crowbar
@@ -52,6 +56,7 @@
     sprite: Objects/crowbar.png
   - type: Icon
     icon: Objects/crowbar.png
+  - type: MeleeWeapon
 
 - type: entity
   name: Multitool

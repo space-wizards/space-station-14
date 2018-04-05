@@ -31,6 +31,10 @@ namespace Content.Client
             factory.RegisterIgnore("Welder");
             factory.RegisterIgnore("Wrench");
             factory.RegisterIgnore("Crowbar");
+            factory.RegisterIgnore("HitscanWeapon");
+            factory.RegisterIgnore("ProjectileWeapon");
+            factory.RegisterIgnore("Projectile");
+            factory.RegisterIgnore("MeleeWeapon");
 
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
