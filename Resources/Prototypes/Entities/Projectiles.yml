@@ -1,0 +1,17 @@
+- type: entity
+  id: ProjectileBullet
+  name: ProjectileBullet
+  components:
+  - type: Transform
+  - type: Sprite
+    drawdepth: FloorPlaceable
+    sprites:
+    - projectilebullet
+  - type: Icon
+    icon: projectilebullet
+  - type: BoundingBox
+  - type: Physics
+    edgeslide: false
+  - type: Projectile
+  - type: Collidable
+    hard: false

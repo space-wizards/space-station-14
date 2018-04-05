@@ -72,6 +72,11 @@
     <Compile Include="GameObjects\Components\Power\PowerNodeComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerProviderComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerTransferComponent.cs" />
+    <Compile Include="GameObjects\Components\Projectiles\ProjectileComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapon\Melee\MeleeWeaponComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapon\Ranged\Hitscan\HitscanWeaponComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\ProjectileWeapon.cs" />
+    <Compile Include="GameObjects\Components\Weapon\Ranged\RangedWeapon.cs" />
     <Compile Include="GameObjects\EntitySystems\InteractionSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSystem.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />

@@ -1,0 +1,23 @@
+- type: entity
+  name: "LASER"
+  parent: BaseItem
+  id: LaserItem
+  components:
+  - type: WearableAnimatedSprite
+    notWornSprite: gun
+    sprite: gun
+  - type: Icon
+    icon: gun
+  - type: HitscanWeapon
+  
+- type: entity
+  name: GUN
+  parent: BaseItem
+  id: GUNITEM
+  components:
+  - type: WearableAnimatedSprite
+    notWornSprite: projectileweapon
+    sprite: projectileweapon
+  - type: Icon
+    icon: gun
+  - type: ProjectileWeapon

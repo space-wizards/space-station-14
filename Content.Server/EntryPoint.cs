@@ -21,6 +21,10 @@ using SS14.Shared.Map;
 using SS14.Shared.Timers;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.Maths;
+using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
+using Content.Server.GameObjects.Components.Weapon.Ranged.Projectile;
+using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.GameObjects.Components.Weapon.Melee;
 
 namespace Content.Server
 {
@@ -74,6 +78,11 @@ namespace Content.Server
             factory.Register<WelderComponent>();
             factory.Register<ScrewdriverComponent>();
             factory.Register<CrowbarComponent>();
+
+            factory.Register<HitscanWeaponComponent>();
+            factory.Register<ProjectileWeaponComponent>();
+            factory.Register<ProjectileComponent>();
+            factory.Register<MeleeWeaponComponent>();
         }
 
         /// <inheritdoc />
