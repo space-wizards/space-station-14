@@ -91,6 +91,6 @@ def reset_solution():
     with SOLUTION_PATH.open("w") as f:
         f.write(content)
 
-#if __name__ == '__main__':
-#    install_hooks()
-#    update_submodules()
+if __name__ == '__main__':
+    install_hooks()
+    update_submodules()
