@@ -17,6 +17,7 @@ https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
     <Python>python3</Python>
     <Python Condition="'$(OS)'=='Windows_NT' Or '$(OS)'=='Windows'">py -3</Python>
     <ProjectGuid>{C899FCA4-7037-4E49-ABC2-44DE72487110}</ProjectGuid>
+    <TargetFrameworkMoniker>.NETFramework, Version=v4.5.1</TargetFrameworkMoniker>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -30,5 +31,9 @@ https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
   <Target Name="Rebuild" DependsOnTargets="Build" />
   <Target Name="Clean">
     <Message Importance="low" Text="Ignoring 'Clean' target." />
+  </Target>
+  <Target Name="Compile">
+  </Target>
+  <Target Name="CoreCompile">
   </Target>
 </Project>

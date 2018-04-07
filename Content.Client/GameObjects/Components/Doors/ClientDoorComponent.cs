@@ -12,8 +12,8 @@ namespace Content.Client.GameObjects
         public bool Opened { get; private set; }
         private SpriteComponent spriteComponent;
 
-        private string OpenSprite = "door_ewo";
-        private string CloseSprite = "door_ew";
+        private string OpenSprite = "Objects/door_ewo.png";
+        private string CloseSprite = "Objects/door_ew.png";
 
         public override void Initialize()
         {

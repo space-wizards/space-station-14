@@ -3,21 +3,19 @@
   id: ShoesItem
   name: Shoes
   components:
-  - type: WearableAnimatedSprite
-    sprite: player_shoes
-    notWornSprite: shoes
+  - type: Sprite
+    sprite: Items/shoes.png
 
   - type: Icon
-    icon: shoes
+    icon: Items/shoes.png
 
 - type: entity
   parent: BaseItem
   id: JanitorUniformItem
   name: Janitor Jumpsuit
   components:
-  - type: WearableAnimatedSprite
-    sprite: player_jumpsuit_gray
-    notWornSprite: janitorsuit
+  - type: Sprite
+    sprite: Items/janitorsuit.png
 
   - type: Icon
-    icon: janitorsuit
+    icon: Items/janitorsuit.png

@@ -268,3 +268,9 @@ release/
 
 # Apple please go.
 .DS_Store
+
+BuildFiles/Mac/Space Station 14.app/Contents/MacOS/Godot
+BuildFiles/Mac/Space Station 14.app/Contents/MacOS/GodotSharpTools.dll
+BuildFiles/Mac/Space Station 14.app/Contents/MacOS/mscorlib.dll
+BuildFiles/Mac/Space Station 14.app/Contents/MacOS/libmonosgen-2.0.dylib
+BuildFiles/Windows/Godot/*

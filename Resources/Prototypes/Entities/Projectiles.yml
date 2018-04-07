@@ -5,10 +5,9 @@
   - type: Transform
   - type: Sprite
     drawdepth: FloorPlaceable
-    sprites:
-    - projectilebullet
+    sprite: Objects/projectilebullet.png
   - type: Icon
-    icon: projectilebullet
+    icon: Objects/projectilebullet.png
   - type: BoundingBox
   - type: Physics
     edgeslide: false

@@ -5,9 +5,8 @@
   - type: Transform
   - type: Clickable
   - type: Sprite
-    sprites:
-    - medkit_r
+    sprite: Items/medkit_r.png
 
   - type: Icon
-    icon: medkit_r
+    icon: Items/medkit_r.png
 

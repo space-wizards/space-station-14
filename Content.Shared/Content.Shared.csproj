@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,29 +13,38 @@
     <FileAlignment>512</FileAlignment>
     <OutputPath>bin\x86\Debug\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(ActualOS)' == 'Windows'">MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
     <Optimize>true</Optimize>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
     <Optimize>true</Optimize>
     <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -75,33 +84,17 @@
     <ProjectReference Include="..\engine\SS14.Client\SS14.Client.csproj">
       <Name>SS14.Client</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Project>{83429BD6-6358-4B18-BE51-401DF8EA2673}</Project>
     </ProjectReference>
     <ProjectReference Include="..\engine\SS14.Server\SS14.Server.csproj">
       <Name>SS14.Server</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Project>{B04AAE71-0000-0000-0000-000000000000}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemDefinitionGroup>
-    <Resource>
-      <Visible>False</Visible>
-      <Prefix>
-      </Prefix>
-    </Resource>
-  </ItemDefinitionGroup>
-  <ItemGroup>
-    <Resource Include="..\Resources\**\*.*" Exclude="..\Resources\Prototypes\**\*.*;..\Resources\CONTENT_GOES_HERE" />
-    <Resource Include="..\Resources\Prototypes\**\*.*" Exclude="..\Resources\Prototypes\PROTOTYPES_GO_HERE">
-      <Prefix>Prototypes\Content\</Prefix>
-    </Resource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="CopyResources">
-    <Copy SourceFiles="@(Resource)" DestinationFiles="..\bin\Client\Resources\%(Prefix)%(RecursiveDir)%(Filename)%(Extension)" />
-    <Copy SourceFiles="@(Resource)" DestinationFiles="..\bin\Server\Resources\%(Prefix)%(RecursiveDir)%(Filename)%(Extension)" />
-  </Target>
-  <Target Name="AfterBuild" DependsOnTargets="CopyResources" />
 </Project>

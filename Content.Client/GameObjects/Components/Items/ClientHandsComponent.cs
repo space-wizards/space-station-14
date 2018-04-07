@@ -30,19 +30,27 @@ namespace Content.Client.GameObjects
             hands.Clear();
             foreach (var hand in cast.Hands)
             {
-                hands[hand.Key] = Owner.EntityManager.GetEntity(hand.Value);
+                IEntity entity = null;
+                try
+                {
+                    entity = Owner.EntityManager.GetEntity(hand.Value);
+                }
+                catch
+                {
+                    // Nothing.
+                }
+                hands[hand.Key] = entity;
             }
 
             ActiveIndex = cast.ActiveIndex;
-
             // Tell UI to update.
             var uiMgr = IoCManager.Resolve<IUserInterfaceManager>();
-            if (!uiMgr.TryGetSingleComponent<HandsGui>(out var component))
+            if (!uiMgr.StateRoot.TryGetChild<HandsGui>("HandsGui", out var control))
             {
-                component = new HandsGui();
-                uiMgr.AddComponent(component);
+                control = new HandsGui();
+                uiMgr.StateRoot.AddChild(control);
             }
-            component.UpdateHandIcons();
+            control.UpdateHandIcons();
         }
 
         public void SendChangeHand(string index)

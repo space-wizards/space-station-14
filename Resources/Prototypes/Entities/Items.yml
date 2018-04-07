@@ -14,44 +14,40 @@
   parent: BaseItem
   id: RedToolboxItem
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: toolbox_r
-    sprite: player_toolbox
+  - type: Sprite
+    sprite: Items/toolbox_r.png
   - type: Icon
-    icon: toolbox_r
+    icon: Items/toolbox_r.png
 
 - type: entity
   name: "Mechanical Toolbox With Handle"
   parent: BaseItem
   id: BlueToolboxItem
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: toolbox_b
-    sprite: player_toolbox
+  - type: Sprite
+    sprite: Items/toolbox_b.png
   - type: Icon
-    icon: toolbox_b
+    icon: Items/toolbox_b.png
 
 - type: entity
   name: "Electrical Toolbox With Handle"
   parent: BaseItem
   id: YellowToolboxItem
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: toolbox_y
-    sprite: player_toolbox
+  - type: Sprite
+    sprite: Items/toolbox_y.png
   - type: Icon
-    icon: toolbox_y
+    icon: Items/toolbox_y.png
 
 - type: entity
   name: "Extra-Grip™ Mop"
   parent: BaseItem
   id: MopItem
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: mop
-    sprite: player_mop
+  - type: Sprite
+    sprite: Items/mop.png
   - type: Icon
-    sprite: mop
+    icon: Items/mop.png
 
 #handheld lights
 - type: entity
@@ -59,9 +55,8 @@
   parent: BaseItem
   id: FlashlightLantern
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: Flashlight
-    sprite: player_Flashlight
+  - type: Sprite
+    sprite: Items/Flashlight.png
   - type: Icon
-    icon: Flashlight
+    icon: Items/Flashlight.png
   - type: PointLight

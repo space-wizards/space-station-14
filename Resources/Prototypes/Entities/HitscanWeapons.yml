@@ -3,21 +3,19 @@
   parent: BaseItem
   id: LaserItem
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: gun
-    sprite: gun
+  - type: Sprite
+    sprite: Objects/gun.png
   - type: Icon
-    icon: gun
+    icon: Objects/gun.png
   - type: HitscanWeapon
-  
+
 - type: entity
   name: GUN
   parent: BaseItem
   id: GUNITEM
   components:
-  - type: WearableAnimatedSprite
-    notWornSprite: projectileweapon
-    sprite: projectileweapon
+  - type: Sprite
+    sprite: Objects/projectileweapon.png
   - type: Icon
-    icon: gun
+    icon: Objects/projectileweapon.png
   - type: ProjectileWeapon

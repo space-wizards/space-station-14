@@ -6,10 +6,10 @@
   - type: Clickable
   - type: Sprite
     sprites:
-    - shoes
+    - Items/shoes.png
 
   - type: Icon
-    icon: shoes
+    icon: Items/shoes.png
 
   - type: Damageable
     resistanceset: Standard

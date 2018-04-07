@@ -4,24 +4,22 @@
   id: Wirecutter
   components:
   - type: Wirecutter
-  - type: WearableAnimatedSprite
-    notWornSprite: wirecutter
-    sprite: wirecutter
+  - type: Sprite
+    sprite: Objects/wirecutter.png
   - type: Icon
-    icon: wirecutter
+    icon: Objects/wirecutter.png
   - type: MeleeWeapon
-    
+
 - type: entity
   name: Screwdriver
   parent: BaseItem
   id: Screwdriver
   components:
   - type: Screwdriver
-  - type: WearableAnimatedSprite
-    notWornSprite: screwdriver
-    sprite: screwdriver
+  - type: Sprite
+    sprite: Objects/screwdriver.png
   - type: Icon
-    icon: screwdriver
+    icon: Objects/screwdriver.png
   - type: MeleeWeapon
 
 - type: entity
@@ -30,11 +28,10 @@
   id: Welder
   components:
   - type: Welder
-  - type: WearableAnimatedSprite
-    notWornSprite: welder
-    sprite: welder
+  - type: Sprite
+    sprite: Objects/welder.png
   - type: Icon
-    icon: welder
+    icon: Objects/welder.png
   - type: MeleeWeapon
 
 - type: entity
@@ -43,34 +40,31 @@
   id: Wrench
   components:
   - type: Wrench
-  - type: WearableAnimatedSprite
-    notWornSprite: wrench
-    sprite: wrench
+  - type: Sprite
+    sprite: Objects/wrench.png
   - type: Icon
-    icon: wrench
+    icon: Objects/wrench.png
   - type: MeleeWeapon
-    
+
 - type: entity
   name: Crowbar
   parent: BaseItem
   id: Crowbar
   components:
   - type: Crowbar
-  - type: WearableAnimatedSprite
-    notWornSprite: crowbar
-    sprite: crowbar
+  - type: Sprite
+    sprite: Objects/crowbar.png
   - type: Icon
-    icon: crowbar
+    icon: Objects/crowbar.png
   - type: MeleeWeapon
-    
+
 - type: entity
   name: Multitool
   parent: BaseItem
   id: Multitool
   components:
   - type: Multitool
-  - type: WearableAnimatedSprite
-    notWornSprite: multitool
-    sprite: multitool
+  - type: Sprite
+    sprite: Objects/multitool.png
   - type: Icon
-    icon: multitool
+    icon: Objects/multitool.png

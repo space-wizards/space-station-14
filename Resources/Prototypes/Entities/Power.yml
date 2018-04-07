@@ -9,9 +9,9 @@
     drawdepth: FloorPlaceable
     color: Red
     sprites:
-    - eightdirwire
+    - Objects/eightdirwire.png
   - type: Icon
-    icon: eightdirwire
+    icon: Objects/eightdirwire.png
   - type: PowerTransfer
 
   snap:
@@ -35,11 +35,11 @@
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:
-    - generator
+    - Objects/generator.png
   - type: Icon
-    icon: generator
+    icon: Objects/generator.png
   - type: PowerGenerator
-  
+
 - type: entity
   id: WPPnobattery
   name: WPPnobattery
@@ -50,9 +50,9 @@
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:
-    - provider
+    - Objects/provider.png
   - type: Icon
-    icon: provider
+    icon: Objects/provider.png
   - type: PowerProvider
     Range: 5
     Priority: Provider
@@ -67,8 +67,8 @@
     Charge: 1000
     ChargeRate: 200
     ChargePowernet: false
-  
-  
+
+
 - type: entity
   id: SMES
   name: SMES
@@ -79,9 +79,9 @@
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:
-    - storage
+    - Objects/storage.png
   - type: Icon
-    icon: storage
+    icon: Objects/storage.png
   - type: PowerStorage
     Capacity: 3000
     Charge: 1000
@@ -99,9 +99,9 @@
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:
-    - wiredmachine
+    - Objects/wiredmachine.png
   - type: Icon
-    icon: wiredmachine
+    icon: Objects/wiredmachine.png
   - type: PowerDevice
     Drawtype: Node
     Load: 100
@@ -117,9 +117,9 @@
   - type: Sprite
     drawdepth: FloorPlaceable
     sprites:
-    - wirelessmachine
+    - Objects/wirelessmachine.png
   - type: Icon
-    icon: wirelessmachine
+    icon: Objects/wirelessmachine.png
   - type: PowerDevice
     Drawtype: Both
     Load: 200
