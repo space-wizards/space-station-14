@@ -1,5 +1,6 @@
 ﻿using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
+using SS14.Shared.Audio;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.Interfaces.GameObjects;
@@ -57,7 +58,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
                 Color = new Vector4(255, 255, 255, 750),
                 Shaded = false
             };
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EffectSystem>().CreateParticle(message);
+            var mgr = IoCManager.Resolve<IEntitySystemManager>();
+            mgr.GetEntitySystem<EffectSystem>().CreateParticle(message);
+            mgr.GetEntitySystem<AudioSystem>().Play("/Audio/laser.ogg", Owner, AudioParams.Default.WithVolume(-5));
         }
     }
 }
