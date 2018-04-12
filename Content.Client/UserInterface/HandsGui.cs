@@ -37,7 +37,7 @@ namespace Content.Client.UserInterface
             base.Initialize();
 
             var _resMgr = IoCManager.Resolve<IResourceCache>();
-            var handsBoxTexture = _resMgr.GetResource<TextureResource>("Textures/UserInterface/handsbox.png");
+            var handsBoxTexture = _resMgr.GetResource<TextureResource>("/Textures/UserInterface/handsbox.png");
             handBox = new StyleBoxTexture()
             {
                 Texture = handsBoxTexture,

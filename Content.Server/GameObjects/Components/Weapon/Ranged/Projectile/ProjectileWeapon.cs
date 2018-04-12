@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             projectile.GetComponent<TransformComponent>().LocalRotation = angle.Theta;
 
             // Sound!
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play("Audio/gunshot_c20.ogg");
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play("/Audio/gunshot_c20.ogg");
         }
     }
 }
