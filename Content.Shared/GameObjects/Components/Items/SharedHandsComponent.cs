@@ -1,4 +1,5 @@
 ﻿using SS14.Shared.GameObjects;
+using SS14.Shared.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -22,6 +23,18 @@ namespace Content.Shared.GameObjects
         {
             Hands = hands;
             ActiveIndex = activeIndex;
+        }
+    }
+
+    /// <summary>
+    /// A message that activates the inhand, presumed for now the activation will occur only on the active hand
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class ActivateInhandMsg : ComponentMessage
+    {
+        public ActivateInhandMsg()
+        {
+            Directed = true;
         }
     }
 }

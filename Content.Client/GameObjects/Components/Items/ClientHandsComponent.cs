@@ -57,5 +57,10 @@ namespace Content.Client.GameObjects
         {
             SendNetworkMessage(new ClientChangedHandMsg(index));
         }
+
+        public void UseActiveHand()
+        {
+            SendNetworkMessage(new ActivateInhandMsg());
+        }
     }
 }

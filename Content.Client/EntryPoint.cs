@@ -1,4 +1,5 @@
 ﻿using Content.Client.GameObjects;
+using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Interfaces.GameObjects;
 using SS14.Shared.ContentPack;
 using SS14.Shared.Interfaces.GameObjects;
@@ -36,8 +37,11 @@ namespace Content.Client
             factory.RegisterIgnore("Projectile");
             factory.RegisterIgnore("MeleeWeapon");
 
+            factory.RegisterIgnore("Storeable");
+
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
+            factory.Register<ClientStorageComponent>();
 
             factory.Register<ClientDoorComponent>();
         }

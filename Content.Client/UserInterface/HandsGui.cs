@@ -1,4 +1,5 @@
-﻿using Content.Client.Interfaces.GameObjects;
+﻿using Content.Client.GameObjects;
+using Content.Client.Interfaces.GameObjects;
 using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
 using SS14.Client.Graphics.Drawing;
@@ -11,6 +12,7 @@ using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
+using SS14.Shared.Log;
 using SS14.Shared.Maths;
 
 namespace Content.Client.UserInterface
@@ -63,16 +65,8 @@ namespace Content.Client.UserInterface
 
         protected override void Draw(DrawingHandle handle)
         {
-            if (_playerManager?.LocalPlayer == null)
-            {
+            if (!TryGetHands(out IHandsComponent hands))
                 return;
-            }
-
-            IEntity entity = _playerManager.LocalPlayer.ControlledEntity;
-            if (entity == null || !entity.TryGetComponent<IHandsComponent>(out var hands))
-            {
-                return;
-            }
 
             var leftActive = hands.ActiveIndex == "left";
 
@@ -98,19 +92,34 @@ namespace Content.Client.UserInterface
             }
         }
 
-        public void UpdateHandIcons()
+        /// <summary>
+        /// Gets the hands component controling this gui, returns true if successful and false if failure
+        /// </summary>
+        /// <param name="hands"></param>
+        /// <returns></returns>
+        private bool TryGetHands(out IHandsComponent hands)
         {
-            UpdateDraw();
-            if (_playerManager?.LocalPlayer.ControlledEntity == null)
+            hands = null;
+            if (_playerManager?.LocalPlayer == null)
             {
-                return;
+                return false;
             }
 
             IEntity entity = _playerManager.LocalPlayer.ControlledEntity;
-            if (!entity.TryGetComponent<IHandsComponent>(out var hands))
+            if (entity == null || !entity.TryGetComponent(out hands))
             {
-                return;
+                return false;
             }
+
+            return true;
+        }
+
+        public void UpdateHandIcons()
+        {
+            UpdateDraw();
+
+            if (!TryGetHands(out IHandsComponent hands))
+                return;
 
             var left = hands.GetEntity("left");
             var right = hands.GetEntity("right");
@@ -146,12 +155,19 @@ namespace Content.Client.UserInterface
 
         private void SendSwitchHandTo(string index)
         {
-            IEntity entity = _playerManager.LocalPlayer.ControlledEntity;
-            if (!entity.TryGetComponent<IHandsComponent>(out var hands))
-            {
+            if (!TryGetHands(out IHandsComponent hands))
                 return;
-            }
+
             hands.SendChangeHand(index);
+        }
+
+        private void UseActiveHand()
+        {
+            if (!TryGetHands(out IHandsComponent hands))
+                return;
+
+            //Todo: remove hands interface, so weird
+            ((HandsComponent)hands).UseActiveHand();
         }
 
         protected override bool HasPoint(Vector2 point)
@@ -163,18 +179,28 @@ namespace Content.Client.UserInterface
         {
             base.MouseDown(args);
 
-            if (args.Button != Mouse.Button.Right)
-            {
-                return;
-            }
+            var lefthandcontains = handL.Contains((Vector2i)args.RelativePosition);
+            var righthandcontains = handR.Contains((Vector2i)args.RelativePosition);
 
-            if (handL.Contains((Vector2i)args.RelativePosition))
+            if (args.Button == Mouse.Button.Left)
             {
-                SendSwitchHandTo("left");
+                if (!TryGetHands(out IHandsComponent hands))
+                    return;
+
+                if ((hands.ActiveIndex == "left" && lefthandcontains)
+                    || (hands.ActiveIndex == "right" && righthandcontains))
+                    UseActiveHand();
             }
-            if (handR.Contains((Vector2i)args.RelativePosition))
+            else if (args.Button == Mouse.Button.Right)
             {
-                SendSwitchHandTo("right");
+                if (lefthandcontains)
+                {
+                    SendSwitchHandTo("left");
+                }
+                if (righthandcontains)
+                {
+                    SendSwitchHandTo("right");
+                }
             }
         }
 

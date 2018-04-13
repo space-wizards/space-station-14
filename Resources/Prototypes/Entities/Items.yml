@@ -4,6 +4,7 @@
   components:
   - type: Transform
   - type: Item
+    Size: 5
   - type: Clickable
   - type: BoundingBox
   - type: Physics
@@ -18,6 +19,10 @@
     sprite: Items/toolbox_r.png
   - type: Icon
     icon: Items/toolbox_r.png
+  - type: Storage
+    Capacity: 60
+  - type: Item
+    Size: 9999
 
 - type: entity
   name: "Mechanical Toolbox With Handle"
@@ -28,6 +33,10 @@
     sprite: Items/toolbox_b.png
   - type: Icon
     icon: Items/toolbox_b.png
+  - type: Storage
+    Capacity: 60
+  - type: Item
+    Size: 9999
 
 - type: entity
   name: "Electrical Toolbox With Handle"
@@ -38,6 +47,10 @@
     sprite: Items/toolbox_y.png
   - type: Icon
     icon: Items/toolbox_y.png
+  - type: Storage
+    Capacity: 60
+  - type: Item
+    Size: 9999
 
 - type: entity
   name: "Extra-Grip™ Mop"
@@ -48,6 +61,8 @@
     sprite: Items/mop.png
   - type: Icon
     icon: Items/mop.png
+  - type: Item
+    Size: 10
 
 #handheld lights
 - type: entity

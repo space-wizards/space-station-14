@@ -55,9 +55,11 @@ namespace Content.Server
             factory.Register<InventoryComponent>();
             factory.RegisterReference<InventoryComponent, IInventoryComponent>();
 
+            factory.Register<StoreableComponent>();
             factory.Register<ItemComponent>();
             factory.RegisterReference<ItemComponent, IItemComponent>();
-            
+            factory.RegisterReference<ItemComponent, StoreableComponent>();
+
             factory.Register<DamageableComponent>();
             factory.Register<DestructibleComponent>();
             factory.Register<TemperatureComponent>();
@@ -83,6 +85,8 @@ namespace Content.Server
             factory.Register<ProjectileWeaponComponent>();
             factory.Register<ProjectileComponent>();
             factory.Register<MeleeWeaponComponent>();
+
+            factory.Register<ServerStorageComponent>();
         }
 
         /// <inheritdoc />
