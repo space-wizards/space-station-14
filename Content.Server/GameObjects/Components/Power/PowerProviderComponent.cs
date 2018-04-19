@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Power
                     return;
                 }
                 //Storage doesn't have anything, depower everything
-                else if(storage.RequestAllCharge() == 0)
+                else if (storage.RequestAllCharge() == 0)
                 {
                     DepowerAllDevices();
                     return;
@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Power
             foreach (var entity in entities)
             {
                 var device = entity.GetComponent<PowerDeviceComponent>();
-                
+
                 //Make sure the device can accept power providers to give it power
                 if (device.Drawtype == DrawTypes.Provider || device.Drawtype == DrawTypes.Both)
                 {
@@ -194,7 +194,7 @@ namespace Content.Server.GameObjects.Components.Power
             else
             {
                 var name = device.Owner.Prototype.Name;
-                Logger.Log(String.Format("We tried to remove a device twice from the same {0} somehow, prototype {1}", Name, name));
+                Logger.Info(String.Format("We tried to remove a device twice from the same {0} somehow, prototype {1}", Name, name));
             }
         }
     }
