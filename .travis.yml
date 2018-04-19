@@ -1,0 +1,37 @@
+language: csharp
+
+dist: trusty
+sudo: false
+
+os:
+- linux
+#- osx
+
+addons:
+  apt:
+    sources:
+    - deadsnakes
+
+    packages:
+    - python3.6
+
+cache:
+  directories:
+  - packages/
+  - engine/Dependencies/
+  - engine/SS14.Client.Godot/.mono/assemblies/
+
+#before_install:
+#  - if [ $TRAVIS_OS_NAME = osx ]; then brew update && brew upgrade python; fi
+
+before_script:
+- "if [ $TRAVIS_OS_NAME = linux ]; then pyenv shell 3.6; fi"
+- "pip3 install --user requests"
+- "nuget restore SpaceStation14Content.sln"
+- "python3.6 RUN_THIS.py --no-prompt"
+- "engine/Tools/download_godotsharp.py"
+
+script:
+- "msbuild /p:Configuration=Debug /p:Platform=x64 /p:HEADLESS=1 /p:Configuratio=Debug /nologo /m /p:AllowMissingMacNatives=yes SpaceStation14Content.sln /p:Python=python3.6"
+
+
