@@ -10,7 +10,7 @@ from typing import List
 
 SOLUTION_PATH = Path("..") / "SpaceStation14Content.sln"
 # If this doesn't match the saved version we overwrite them all.
-CURRENT_HOOKS_VERSION = "1"
+CURRENT_HOOKS_VERSION = "2"
 QUIET = len(sys.argv) == 2 and sys.argv[1] == "--quiet"
 
 
