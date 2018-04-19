@@ -27,11 +27,11 @@ cache:
 before_script:
 - "if [ $TRAVIS_OS_NAME = linux ]; then pyenv shell 3.6; fi"
 - "pip3 install --user requests"
-- "nuget restore SpaceStation14.sln"
+- "nuget restore SpaceStation14Content.sln"
 - "python3.6 RUN_THIS.py --no-prompt"
 - "engine/Tools/download_godotsharp.py"
 
 script:
-- "msbuild /p:Configuration=Debug /p:Platform=x64 /p:HEADLESS=1 /p:Configuratio=Debug /nologo /m /p:AllowMissingMacNatives=yes SpaceStation14.sln /p:Python=python3.6"
+- "msbuild /p:Configuration=Debug /p:Platform=x64 /p:HEADLESS=1 /p:Configuratio=Debug /nologo /m /p:AllowMissingMacNatives=yes SpaceStation14Content.sln /p:Python=python3.6"
 
 
