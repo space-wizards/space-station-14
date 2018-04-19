@@ -152,11 +152,11 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 PowerAllDevices(); //This merely makes our inevitable betrayal all the sweeter
                 RetrievePassiveStorage();
-                
+
                 var depowervalue = activeload - (activesupply + passivesupply);
 
                 //Providers use same method to recreate functionality
-                foreach(var device in Deviceloadlist)
+                foreach (var device in Deviceloadlist)
                 {
                     device.Powered = false;
                     DepoweredDevices.Add(device);
@@ -169,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void PowerAllDevices()
         {
-            foreach(var device in DepoweredDevices)
+            foreach (var device in DepoweredDevices)
             {
                 device.Powered = true;
             }
@@ -206,7 +206,7 @@ namespace Content.Server.GameObjects.Components.Power
         public void DirtyKill()
         {
             Wirelist.Clear();
-            while(Nodelist.Count != 0)
+            while (Nodelist.Count != 0)
             {
                 Nodelist[0].DisconnectFromPowernet();
             }
@@ -291,7 +291,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void UpdateDevice(PowerDeviceComponent device, float oldLoad)
         {
-            if(Deviceloadlist.Contains(device))
+            if (Deviceloadlist.Contains(device))
             {
                 Load -= oldLoad;
                 Load += device.Load;
@@ -303,7 +303,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void RemoveDevice(PowerDeviceComponent device)
         {
-            if(Deviceloadlist.Contains(device))
+            if (Deviceloadlist.Contains(device))
             {
                 Load -= device.Load;
                 Deviceloadlist.Remove(device);
@@ -313,7 +313,7 @@ namespace Content.Server.GameObjects.Components.Power
             else
             {
                 var name = device.Owner.Prototype.Name;
-                Logger.Log(String.Format("We tried to remove a device twice from the same powernet somehow, prototype {0}", name));
+                Logger.Info(String.Format("We tried to remove a device twice from the same powernet somehow, prototype {0}", name));
             }
         }
 
@@ -352,7 +352,7 @@ namespace Content.Server.GameObjects.Components.Power
             else
             {
                 var name = generator.Owner.Prototype.Name;
-                Logger.Log(String.Format("We tried to remove a device twice from the same power somehow, prototype {1}", name));
+                Logger.Info(String.Format("We tried to remove a device twice from the same power somehow, prototype {1}", name));
             }
         }
 
@@ -361,12 +361,12 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void AddPowerStorage(PowerStorageComponent storage)
         {
-            if(storage.ChargePowernet)
+            if (storage.ChargePowernet)
                 PowerStorageSupplierlist.Add(storage);
             else
                 PowerStorageConsumerlist.Add(storage);
         }
-        
+
         //How do I even call this? TODO: fix
         public void UpdateStorageType(PowerStorageComponent storage)
         {
