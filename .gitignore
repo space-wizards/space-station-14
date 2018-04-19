@@ -274,3 +274,6 @@ BuildFiles/Mac/Space Station 14.app/Contents/MacOS/GodotSharpTools.dll
 BuildFiles/Mac/Space Station 14.app/Contents/MacOS/mscorlib.dll
 BuildFiles/Mac/Space Station 14.app/Contents/MacOS/libmonosgen-2.0.dylib
 BuildFiles/Windows/Godot/*
+
+# Working on the tools scripts is getting annoying okay?
+.mypy_cache/

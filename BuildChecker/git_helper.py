@@ -9,8 +9,10 @@ from pathlib import Path
 from typing import List
 
 SOLUTION_PATH = Path("..") / "SpaceStation14Content.sln"
-CURRENT_HOOKS_VERSION = "1" # If this doesn't match the saved version we overwrite them all.
+# If this doesn't match the saved version we overwrite them all.
+CURRENT_HOOKS_VERSION = "2"
 QUIET = len(sys.argv) == 2 and sys.argv[1] == "--quiet"
+
 
 def run_command(command: List[str], capture: bool = False) -> subprocess.CompletedProcess:
     """
@@ -40,6 +42,9 @@ def update_submodules():
     Updates all submodules.
     """
 
+    if os.path.isfile("DISABLE_SUBMODULE_AUTOUPDATE"):
+        return
+
     # If the status doesn't match, force VS to reload the solution.
     # status = run_command(["git", "submodule", "status"], capture=True)
     run_command(["git", "submodule", "update", "--init", "--recursive"])
@@ -49,6 +54,7 @@ def update_submodules():
     # if status.stdout != status2.stdout:
     #     print("Git submodules changed. Reloading solution.")
     #     reset_solution()
+
 
 def install_hooks():
     """
@@ -77,7 +83,8 @@ def install_hooks():
 
     for filename in os.listdir(str(hooks_source_dir)):
         print("Copying hook {}".format(filename))
-        shutil.copyfile(str(hooks_source_dir/filename), str(hooks_target_dir/filename))
+        shutil.copyfile(str(hooks_source_dir/filename),
+                        str(hooks_target_dir/filename))
 
 
 def reset_solution():
@@ -90,6 +97,7 @@ def reset_solution():
 
     with SOLUTION_PATH.open("w") as f:
         f.write(content)
+
 
 if __name__ == '__main__':
     install_hooks()
