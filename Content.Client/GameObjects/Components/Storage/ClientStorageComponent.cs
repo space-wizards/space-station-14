@@ -96,7 +96,7 @@ namespace Content.Client.GameObjects.Components.Storage
             private Label Information;
             public ClientStorageComponent StorageEntity;
 
-            protected override ResourcePath ScenePath => new ResourcePath("Scenes/Storage/Storage.tscn");
+            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Storage/Storage.tscn");
             
             protected override void Initialize()
             {
@@ -175,6 +175,7 @@ namespace Content.Client.GameObjects.Components.Storage
             private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
             {
                 var control = (EntityButton)args.Button.Parent;
+                args.Button.Pressed = false;
                 StorageEntity.Interact(control.EntityuID);
             }
         }
@@ -187,7 +188,7 @@ namespace Content.Client.GameObjects.Components.Storage
             public EntityUid EntityuID { get; set; }
             public Button ActualButton { get; private set; }
 
-            protected override ResourcePath ScenePath => new ResourcePath("Scenes/Storage/StorageEntity.tscn");
+            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Storage/StorageEntity.tscn");
 
             protected override void Initialize()
             {
