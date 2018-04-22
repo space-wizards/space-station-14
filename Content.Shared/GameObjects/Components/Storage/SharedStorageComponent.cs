@@ -8,7 +8,7 @@ namespace Content.Shared.GameObjects.Components.Storage
     public abstract class SharedStorageComponent : Component
     {
         public sealed override string Name => "Storage";
-        public override uint? NetID => ContentNetIDs.STORAGE;
+        public override uint? NetID => ContentNetIDs.INVENTORY;
     }
 
     /// <summary>

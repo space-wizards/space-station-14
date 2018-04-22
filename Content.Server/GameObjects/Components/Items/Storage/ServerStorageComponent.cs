@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects
         {
             base.OnAdd();
 
-            storage = Container.Create("storagebase", Owner);
+            storage = ContainerManagerComponent.Create<Container>("storagebase", Owner);
         }
 
         public override void ExposeData(EntitySerializer serializer)
@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects
                 else
                 {
                     //Return the object to the hand since its too big or something like that
-                    hands.PutInHand(attackwith.GetComponent<IItemComponent>());
+                    hands.PutInHand(attackwith.GetComponent<ItemComponent>());
                 }
             }
             return false;
@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects
                             Remove(entity);
                             UpdateClientInventory();
 
-                            var item = entity.GetComponent<IItemComponent>();
+                            var item = entity.GetComponent<ItemComponent>();
                             if (item != null && playerentity.TryGetComponent(out HandsComponent hands))
                             {
                                 if (hands.PutInHand(item))

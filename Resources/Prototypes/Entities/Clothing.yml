@@ -1,13 +1,27 @@
 - type: entity
-  parent: BaseItem
+  name: "Clothing"
+  id: Clothing
+  components:
+  - type: Transform
+  - type: Clothing
+    Size: 5
+  - type: Clickable
+  - type: BoundingBox
+  - type: Physics
+    mass: 5
+
+- type: entity
+  parent: Clothing
   id: ShoesItem
   name: Shoes
   components:
   - type: Sprite
     sprite: Items/shoes.png
-
   - type: Icon
     icon: Items/shoes.png
+  - type: Clothing
+    Slots:
+    - shoes
 
 - type: entity
   parent: BaseItem
@@ -19,3 +33,6 @@
 
   - type: Icon
     icon: Items/janitorsuit.png
+  - type: Clothing
+    Slots:
+    - innerclothing

@@ -13,7 +13,6 @@ namespace Content.Client
         {
             var factory = IoCManager.Resolve<IComponentFactory>();
 
-            factory.RegisterIgnore("Inventory");
             factory.RegisterIgnore("Item");
             factory.RegisterIgnore("Interactable");
             factory.RegisterIgnore("Damageable");
@@ -38,12 +37,14 @@ namespace Content.Client
             factory.RegisterIgnore("MeleeWeapon");
 
             factory.RegisterIgnore("Storeable");
+            factory.RegisterIgnore("Clothing");
 
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
             factory.Register<ClientStorageComponent>();
 
             factory.Register<ClientDoorComponent>();
+            factory.Register<ClientInventoryComponent>();
         }
     }
 }
