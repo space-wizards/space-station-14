@@ -5,7 +5,6 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
-using SS14.Server.Interfaces.GameObjects;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Serialization;
@@ -13,8 +12,6 @@ using SS14.Shared.Input;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
-using SS14.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects
 {

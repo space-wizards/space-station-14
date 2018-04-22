@@ -12,6 +12,7 @@ using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Maths;
+using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -101,16 +102,13 @@ namespace Content.Client.GameObjects
             private Dictionary<Slots, InventoryButton> InventorySlots = new Dictionary<Slots, InventoryButton>(); //ordered dictionary?
             private ClientInventoryComponent InventoryComponent;
 
+            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Inventory/HumanInventory.tscn");
+
             public InventoryWindow(ClientInventoryComponent inventory)
             {
                 InventoryComponent = inventory;
 
                 HideOnClose = true;
-            }
-
-            protected override Godot.Control SpawnSceneControl()
-            {
-                return LoadScene("res://Scenes/Inventory/HumanInventory.tscn");
             }
 
             /// <summary>
@@ -192,7 +190,6 @@ namespace Content.Client.GameObjects
             /// <param name="message"></param>
             public void RemoveFromSlot(ServerInventoryMessage message)
             {
-                Logger.Info("received removed from slot message");
                 InventoryButton button = InventorySlots[message.Inventoryslot];
                 button.GetChild("CenterContainer").GetChild<TextureRect>("TextureRect").Texture = null;
                 button.EntityUid = EntityUid.Invalid;
@@ -223,14 +220,11 @@ namespace Content.Client.GameObjects
             public Slots Slot;
             public EntityUid EntityUid;
 
+            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Inventory/StorageSlot.tscn");
+
             public InventoryButton(Slots slot)
             {
                 Slot = slot;
-            }
-
-            protected override Godot.Control SpawnSceneControl()
-            {
-                return LoadScene("res://Scenes/Inventory/StorageSlot.tscn");
             }
         }
     }

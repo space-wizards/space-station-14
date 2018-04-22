@@ -1,10 +1,7 @@
-﻿using Content.Server.Interfaces.GameObjects;
-using SS14.Server.GameObjects;
+﻿using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
-using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
-using YamlDotNet.RepresentationModel;
 using Content.Shared.GameObjects;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using SS14.Shared.GameObjects;
@@ -15,7 +12,6 @@ using static Content.Shared.GameObjects.SharedInventoryComponent.ServerInventory
 using SS14.Shared.IoC;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects.Serialization;
-using SS14.Shared.Log;
 using SS14.Shared.ContentPack;
 
 namespace Content.Server.GameObjects
