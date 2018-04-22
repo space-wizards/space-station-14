@@ -148,32 +148,36 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return;
             }
-            var item = hands.GetHand(hands.ActiveIndex)?.Owner;
+            var item = hands.GetActiveHand?.Owner;
 
 
+            if (!MobCanInteract(player))
+                return;
             //TODO: Mob status code that allows or rejects interactions based on current mob status
             //Check if client should be able to see that object to click on it in the first place, prevent using locaters by firing a laser or something
 
-            //Off entity click handling
-            if (attacked == null)
+            
+            //Clicked on empty space behavior, try using ranged attack
+            if (attacked == null && item != null)
             {
-                if(item != null)
-                {
-                    //AFTERATTACK: Check if we clicked on an empty location, if so the only interaction we can do is afterattack
-                    InteractAfterattack(player, item, msg.Coordinates);
-                    return;
-                }
+                //AFTERATTACK: Check if we clicked on an empty location, if so the only interaction we can do is afterattack
+                InteractAfterattack(player, item, msg.Coordinates);
                 return;
             }
-            //USE: Check if we clicked on the item we are holding in our active hand to use it
-            else if(attacked == item && item != null)
+            else if(attacked == null)
             {
-                UseInteraction(player, item);
+                return;
+            }
+
+            //Verify attacked object is on the map if we managed to click on it somehow
+            if (!attacked.GetComponent<TransformComponent>().IsMapTransform)
+            {
+                Logger.Warning(string.Format("Player named {0} clicked on object {1} that isn't currently on the map somehow", player.Name, attacked.Name));
                 return;
             }
 
             //Check if ClickLocation is in object bounds here, if not lets log as warning and see why
-            if(attacked != null && attacked.TryGetComponent(out BoundingBoxComponent boundingbox))
+            if (attacked.TryGetComponent(out BoundingBoxComponent boundingbox))
             {
                 if (!boundingbox.WorldAABB.Contains(msg.Coordinates.Position))
                 {
@@ -206,6 +210,15 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 Interaction(player, attacked);
             }
+        }
+
+        /// <summary>
+        /// TODO function for blocking activity based on mob status
+        /// </summary>
+        /// <returns></returns>
+        private static bool MobCanInteract(IEntity user)
+        {
+            return true; //Hook into future planned mob status system
         }
 
         /// <summary>
@@ -274,6 +287,20 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             //Else check damage component to see if we damage if not attackby, and if so can we attack object
+        }
+
+        /// <summary>
+        /// Activates the Use behavior of an object
+        /// Verifies that the user is capable of doing the use interaction first
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="used"></param>
+        public static void TryUseInteraction(IEntity user, IEntity used)
+        {
+            if(user != null && used != null && MobCanInteract(user))
+            {
+                UseInteraction(user, used);
+            }
         }
 
         /// <summary>

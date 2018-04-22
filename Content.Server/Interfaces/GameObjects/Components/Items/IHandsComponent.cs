@@ -1,4 +1,4 @@
-using SS14.Shared.Interfaces.GameObjects;
+﻿using SS14.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
 
 namespace Content.Server.Interfaces.GameObjects
@@ -21,6 +21,11 @@ namespace Content.Server.Interfaces.GameObjects
         /// <param name="index">The index of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
         IItemComponent GetHand(string index);
+
+        /// <summary>
+        /// Gets item held by the current active hand
+        /// </summary>
+        IItemComponent GetActiveHand { get; }
 
         /// <summary>
         ///     Puts an item into any empty hand, preferring the active hand.

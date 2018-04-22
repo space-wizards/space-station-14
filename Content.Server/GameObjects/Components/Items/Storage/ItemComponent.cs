@@ -1,12 +1,11 @@
 ﻿using Content.Server.Interfaces.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
-using SS14.Shared.GameObjects;
 using System;
 using SS14.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects
 {
-    public class ItemComponent : Component, IItemComponent, EntitySystems.IAttackHand
+    public class ItemComponent : StoreableComponent, IItemComponent, EntitySystems.IAttackHand
     {
         public override string Name => "Item";
 

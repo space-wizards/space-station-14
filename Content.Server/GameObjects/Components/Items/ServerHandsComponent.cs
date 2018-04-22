@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
+using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Input;
+using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.Network;
+using SS14.Shared.IoC;
 using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -80,6 +85,8 @@ namespace Content.Server.GameObjects
             var slot = hands[index];
             return slot.Item;
         }
+
+        public IItemComponent GetActiveHand => GetHand(ActiveIndex);
 
         /// <summary>
         ///     Enumerates over the hand keys, returning the active hand first.
@@ -233,19 +240,40 @@ namespace Content.Server.GameObjects
             ActiveIndex = orderedHands[index];
         }
 
-        public override void HandleMessage(object owner, ComponentMessage message)
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
-            base.HandleMessage(owner, message);
-
+            base.HandleMessage(message, netChannel, component);
+            
             switch (message)
             {
                 case ClientChangedHandMsg msg:
-                    if (HasHand(msg.Index))
-                        ActiveIndex = msg.Index;
-                    break;
+                    {
+                        var playerMan = IoCManager.Resolve<IPlayerManager>();
+                        var session = playerMan.GetSessionByChannel(netChannel);
+                        var playerentity = session.AttachedEntity;
 
+                        if (playerentity == Owner && HasHand(msg.Index))
+                            ActiveIndex = msg.Index;
+                        break;
+                    }
+
+                case ActivateInhandMsg msg:
+                    {
+                        var playerMan = IoCManager.Resolve<IPlayerManager>();
+                        var session = playerMan.GetSessionByChannel(netChannel);
+                        var playerentity = session.AttachedEntity;
+                        var used = GetActiveHand?.Owner;
+
+                        if (playerentity == Owner && used != null)
+                        {
+                            InteractionSystem.TryUseInteraction(Owner, used);
+                        }
+                        break;
+                    }
+
+                //Boundkeychangedmsg only works for the player entity
                 case BoundKeyChangedMsg msg:
-                    if(msg.State != BoundKeyState.Down)
+                    if (msg.State != BoundKeyState.Down)
                         return;
                     switch (msg.Function)
                     {
@@ -254,6 +282,13 @@ namespace Content.Server.GameObjects
                             break;
                         case BoundKeyFunctions.Drop:
                             Drop(ActiveIndex);
+                            break;
+                        case BoundKeyFunctions.ActivateItemInHand:
+                            var used = GetActiveHand?.Owner;
+                            if(used != null)
+                            {
+                                InteractionSystem.TryUseInteraction(Owner, used);
+                            }
                             break;
                     }
                     break;

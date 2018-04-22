@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Doors\SharedDoorComponent.cs" />
+    <Compile Include="GameObjects\Components\Storage\SharedStorageComponent.cs" />
     <Compile Include="GameObjects\ContentNetIDs.cs" />
     <Compile Include="GameObjects\PhysicalConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

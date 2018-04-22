@@ -8,6 +8,8 @@
   - type: Icon
     icon: Objects/gun.png
   - type: HitscanWeapon
+  - type: Item
+    Size: 24
 
 - type: entity
   name: GUN
@@ -19,3 +21,6 @@
   - type: Icon
     icon: Objects/projectileweapon.png
   - type: ProjectileWeapon
+  - type: Item
+    Size: 24
+
