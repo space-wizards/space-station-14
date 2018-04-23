@@ -6,9 +6,8 @@
   - type: Sprite
     directional: false
     drawdepth: FloorPlaceable
-    layers:
-    - texture: Objects/projectilebullet.png
-      rotation: 180
+    texture: Objects/projectilebullet.png
+    rotation: 180
 
   - type: Icon
     texture: Objects/projectilebullet.png
