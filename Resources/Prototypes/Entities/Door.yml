@@ -6,12 +6,10 @@
   - type: Clickable
   - type: Sprite
     drawdepth: FloorPlaceable
-    sprites:
-    - Objects/door_ew.png
-    - Objects/door_ewo.png
+    texture: Objects/door_ew.png
 
   - type: Icon
-    icon: Objects/door_ew.png
+    texture: Objects/door_ew.png
 
   - type: BoundingBox
     aabb: "1,-0.75,2,0.75"

@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects;
+﻿using Content.Shared.GameObjects;
 using Lidgren.Network;
 using SS14.Client.GameObjects;
 using SS14.Shared.GameObjects;
@@ -25,13 +25,13 @@ namespace Content.Client.GameObjects
         private void Open()
         {
             Opened = true;
-            spriteComponent.SetSpriteByKey(OpenSprite);
+            spriteComponent.LayerSetTexture(0, OpenSprite);
         }
 
         private void Close()
         {
             Opened = false;
-            spriteComponent.SetSpriteByKey(CloseSprite);
+            spriteComponent.LayerSetTexture(0, CloseSprite);
         }
 
         public override void HandleComponentState(ComponentState state)

@@ -7,9 +7,8 @@
   - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
-    sprites:
-    - TurrBase
-    
+    texture: Buildings/TurrBase.png
+
 - type: entity
   id: TurretTopGun
   name: Turret (Gun)
@@ -19,12 +18,11 @@
   - type: BoundingBox
   - type: Sprite
     drawdepth: WallMountedItems
-    sprites:
-    - TurrTop
+    texture: Buildings/TurrTop.png
   - type: AiController
     logic: AimShootLife
     vision: 6.0
-    
+
 - type: entity
   id: TurretTopLight
   name: Turret (Light)
@@ -34,8 +32,7 @@
   - type: BoundingBox
   - type: Sprite
     drawdepth: WallMountedItems
-    sprites:
-    - TurrLamp
+    texture: Buildings/TurrLamp.png
   - type: AiController
     logic: AimShootLife
     vision: 6.0
@@ -43,4 +40,3 @@
     radius: 512
     mask: flashlight_mask
     autoRot: true
-    

@@ -8,10 +8,9 @@
   - type: Sprite
     drawdepth: FloorPlaceable
     color: Red
-    sprites:
-    - Objects/eightdirwire.png
+    texture: Objects/eightdirwire.png
   - type: Icon
-    icon: Objects/eightdirwire.png
+    texture: Objects/eightdirwire.png
   - type: PowerTransfer
 
   snap:
@@ -34,10 +33,9 @@
   - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
-    sprites:
-    - Objects/generator.png
+    texture: Objects/generator.png
   - type: Icon
-    icon: Objects/generator.png
+    texture: Objects/generator.png
   - type: PowerGenerator
 
 - type: entity
@@ -49,10 +47,9 @@
   - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
-    sprites:
-    - Objects/provider.png
+    texture: Objects/provider.png
   - type: Icon
-    icon: Objects/provider.png
+    texture: Objects/provider.png
   - type: PowerProvider
     Range: 5
     Priority: Provider
@@ -78,10 +75,9 @@
   - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
-    sprites:
-    - Objects/storage.png
+    texture: Objects/storage.png
   - type: Icon
-    icon: Objects/storage.png
+    texture: Objects/storage.png
   - type: PowerStorage
     Capacity: 3000
     Charge: 1000
@@ -98,10 +94,9 @@
   - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
-    sprites:
-    - Objects/wiredmachine.png
+    texture: Objects/wiredmachine.png
   - type: Icon
-    icon: Objects/wiredmachine.png
+    texture: Objects/wiredmachine.png
   - type: PowerDevice
     Drawtype: Node
     Load: 100
@@ -116,10 +111,9 @@
   - type: BoundingBox
   - type: Sprite
     drawdepth: FloorPlaceable
-    sprites:
-    - Objects/wirelessmachine.png
+    texture: Objects/wirelessmachine.png
   - type: Icon
-    icon: Objects/wirelessmachine.png
+    texture: Objects/wirelessmachine.png
   - type: PowerDevice
     Drawtype: Both
     Load: 200

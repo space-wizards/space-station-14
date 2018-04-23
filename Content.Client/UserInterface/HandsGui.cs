@@ -208,7 +208,7 @@ namespace Content.Client.UserInterface
         {
             if (entity.TryGetComponent<IconComponent>(out var component) && component.Icon != null)
             {
-                return component.Icon;
+                return component.Icon.Default;
             }
             return IoCManager.Resolve<IResourceCache>().GetFallback<TextureResource>();
         }
