@@ -29,9 +29,16 @@
   components:
   - type: Welder
   - type: Sprite
-    texture: Objects/welder.png
+    sprite: Objects/tools.rsi
+    layers:
+    - state: welder
+    - state: welder_flame
+      shader: unshaded
+      visible: false
+
   - type: Icon
-    texture: Objects/welder.png
+    sprite: Objects/tools.rsi
+    state: welder
   - type: MeleeWeapon
 
 - type: entity
