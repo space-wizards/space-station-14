@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects
         Wallet = 4,
         Pocket = 12,
         Box = 24,
+        Belt = 30,
         Toolbox = 60,
         Backpack = 100,
         NoStoring = 9999

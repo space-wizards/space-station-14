@@ -9,5 +9,6 @@
         public const uint HANDS = 1003;
         public const uint DOOR = 1004;
         public const uint STORAGE = 1005;
+        public const uint INVENTORY = 1006;
     }
 }
