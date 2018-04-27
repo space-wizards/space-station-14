@@ -6,9 +6,6 @@ using SS14.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
 using System.Linq;
 using SS14.Shared.Input;
-using SS14.Shared.Interfaces.Network;
-using SS14.Shared.IoC;
-using SS14.Server.Interfaces.Player;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Server.GameObjects;
@@ -92,40 +89,8 @@ namespace Content.Server.GameObjects.EntitySystems
         private const float INTERACTION_RANGE = 2;
         private const float INTERACTION_RANGE_SQUARED = INTERACTION_RANGE * INTERACTION_RANGE;
 
-        /// <inheritdoc />
-        public override void RegisterMessageTypes()
+        public void UserInteraction(ClickEventMessage msg, IEntity player)
         {
-            base.RegisterMessageTypes();
-
-            RegisterMessageType<ClickEventMessage>();
-        }
-
-        //Grab click events sent from the client input system
-        public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
-        {
-            base.HandleNetMessage(channel, message);
-
-            var playerMan = IoCManager.Resolve<IPlayerManager>();
-            var session = playerMan.GetSessionByChannel(channel);
-            var playerentity = session.AttachedEntity;
-
-            if (playerentity == null)
-                return;
-
-            switch (message)
-            {
-                case ClickEventMessage msg:
-                    UserInteraction(msg, playerentity);
-                    break;
-            }
-        }
-
-        private void UserInteraction(ClickEventMessage msg, IEntity player)
-        {
-            //Verify click type
-            if (msg.Click != ClickType.Left)
-                return;
-
             //Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             IEntity attacked = null;
             if (msg.Uid.IsValid())
@@ -227,7 +192,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="weapon"></param>
         /// <param name="clicklocation"></param>
-        private void InteractAfterattack(IEntity user, IEntity weapon, LocalCoordinates clicklocation)
+        public static void InteractAfterattack(IEntity user, IEntity weapon, LocalCoordinates clicklocation)
         {
             List<IAfterAttack> afterattacks = weapon.GetComponents<IAfterAttack>().ToList();
 
