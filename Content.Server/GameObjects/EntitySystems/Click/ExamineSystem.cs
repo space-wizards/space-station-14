@@ -44,13 +44,16 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            StringBuilder fullexaminetext = new StringBuilder("This is " + examined.Name + ", it is awesome");
+            //Start a stringbuilder since we have no idea how many times this could be appended to
+            StringBuilder fullexaminetext = new StringBuilder("This is " + examined.Name);
 
+            //Add an entity description if one is declared
             if(!string.IsNullOrEmpty(examined.Description))
             {
                 fullexaminetext.Append(Environment.NewLine + examined.Description);
             }
-            
+
+            //Add component statuses from components that report one
             foreach (var examinecomponents in examined.GetComponents<IExamine>())
             {
                 string componentdescription = examinecomponents.Examine();
@@ -60,6 +63,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
+            //Send to client chat channel
+            //TODO: Fix fact you can only send to all clients because you cant resolve clients from player entities
             IoCManager.Resolve<IChatManager>().DispatchMessage(SS14.Shared.Console.ChatChannel.Visual, fullexaminetext.ToString());
         }
     }
