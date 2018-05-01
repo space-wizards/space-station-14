@@ -1,6 +1,7 @@
 - type: entity
   id: DoorContent
   name: Actual door
+  description: It opens, it closes!
   components:
   - type: Transform
   - type: Clickable
