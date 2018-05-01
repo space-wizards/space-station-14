@@ -91,7 +91,8 @@
     <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\ProjectileWeapon.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\RangedWeapon.cs" />
     <Compile Include="GameObjects\ContainerSlot.cs" />
-    <Compile Include="GameObjects\EntitySystems\InteractionSystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\Click\ClickParser.cs" />
+    <Compile Include="GameObjects\EntitySystems\Click\InteractionSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSystem.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="GameObjects\Components\GUI\ServerHandsComponent.cs" />
@@ -137,4 +138,5 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
 </Project>
