@@ -1,5 +1,17 @@
 - type: entity
-  parent: BaseItem
+  name: "Clothing"
+  id: Clothing
+  components:
+  - type: Transform
+  - type: Clothing
+    Size: 5
+  - type: Clickable
+  - type: BoundingBox
+  - type: Physics
+    mass: 5
+
+- type: entity
+  parent: Clothing
   id: ShoesItem
   name: Shoes
   components:
@@ -9,9 +21,13 @@
   - type: Icon
     texture: Items/shoes.png
 
+  - type: Clothing
+    Slots:
+    - shoes
+
 - type: entity
-  parent: BaseItem
-  id: JanitorUniformItem
+  parent: Clothing
+  id: JanitorUniform
   name: Janitor Jumpsuit
   components:
   - type: Sprite
@@ -19,3 +35,130 @@
 
   - type: Icon
     texture: Items/janitorsuit.png
+
+  - type: Clothing
+    Slots:
+    - innerclothing
+
+- type: entity
+  parent: Clothing
+  id: SecurityVestClothing
+  name: Security Vest
+  components:
+  - type: Sprite
+    texture: Clothing/armorvest.png
+  - type: Icon
+    texture: Clothing/armorvest.png
+  - type: Clothing
+    Slots:
+    - outerclothing
+
+- type: entity
+  parent: Clothing
+  id: UtilityBeltClothing
+  name: Utility Belt
+  components:
+  - type: Sprite
+    texture: Clothing/belt_utility.png
+  - type: Icon
+    texture: Clothing/belt_utility.png
+    Size: 30
+  - type: Clothing
+    Slots:
+    - belt
+  - type: Storage
+    Capacity: 30
+
+- type: entity
+  parent: Clothing
+  id: BackpackClothing
+  name: Backpack
+  components:
+  - type: Sprite
+    texture: Clothing/backpack.png
+  - type: Icon
+    texture: Clothing/backpack.png
+    Size: 9999
+  - type: Clothing
+    Slots:
+    - back
+  - type: Storage
+    Capacity: 100
+
+- type: entity
+  parent: Clothing
+  id: MesonGlasses
+  name: Mesons
+  components:
+  - type: Sprite
+    texture: Clothing/glasses_meson.png
+  - type: Icon
+    texture: Clothing/glasses_meson.png
+  - type: Clothing
+    Slots:
+    - eyes
+
+- type: entity
+  parent: Clothing
+  id: YellowGloves
+  name: Insulated Gloves
+  components:
+  - type: Sprite
+    texture: Clothing/gloves_yellow.png
+  - type: Icon
+    texture: Clothing/gloves_yellow.png
+  - type: Clothing
+    Slots:
+    - gloves
+
+- type: entity
+  parent: Clothing
+  id: HelmetSecurity
+  name: Security Helmet
+  components:
+  - type: Sprite
+    texture: Clothing/helmet_sec.png
+  - type: Icon
+    texture: Clothing/helmet_sec.png
+  - type: Clothing
+    Slots:
+    - head
+
+- type: entity
+  parent: Clothing
+  id: GasMaskClothing
+  name: Gas Mask
+  components:
+  - type: Sprite
+    texture: Clothing/gasmask.png
+  - type: Icon
+    texture: Clothing/gasmask.png
+  - type: Clothing
+    Slots:
+    - mask
+
+- type: entity
+  parent: Clothing
+  id: IDCardStandard
+  name: Identification Card
+  components:
+  - type: Sprite
+    texture: Clothing/idcard_standard.png
+  - type: Icon
+    texture: Clothing/idcard_standard.png
+  - type: Clothing
+    Slots:
+    - idcard
+
+- type: entity
+  parent: Clothing
+  id: RadioHeadsetEars
+  name: Headset Radio
+  components:
+  - type: Sprite
+    texture: Clothing/ears_headset.png
+  - type: Icon
+    texture: Clothing/ears_headset.png
+  - type: Clothing
+    Slots:
+    - ears

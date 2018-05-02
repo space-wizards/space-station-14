@@ -1,0 +1,51 @@
+﻿using SS14.Server.GameObjects.Components.Container;
+using SS14.Server.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Content.Server.GameObjects
+{
+    public class ContainerSlot : BaseContainer
+    {
+        public IEntity ContainedEntity { get; private set; } = null;
+
+        /// <inheritdoc />
+        public override IReadOnlyCollection<IEntity> ContainedEntities => new List<IEntity> { ContainedEntity }.AsReadOnly();
+
+        public ContainerSlot(string id, IContainerManager manager) : base(id, manager)
+        {
+        }
+
+        /// <inheritdoc />
+        public override bool CanInsert(IEntity toinsert)
+        {
+            if (ContainedEntity != null)
+                return false;
+            return base.CanInsert(toinsert);
+        }
+
+        /// <inheritdoc />
+        public override bool Contains(IEntity contained)
+        {
+            if (contained == ContainedEntity)
+                return true;
+            return false;
+        }
+
+        /// <inheritdoc />
+        protected override void InternalInsert(IEntity toinsert)
+        {
+            ContainedEntity = toinsert;
+        }
+
+        /// <inheritdoc />
+        protected override void InternalRemove(IEntity toremove)
+        {
+            ContainedEntity = null;
+        }
+    }
+}

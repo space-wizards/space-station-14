@@ -1,4 +1,5 @@
-﻿using SS14.Shared.Interfaces.GameObjects;
+﻿using Content.Server.GameObjects;
+using SS14.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
 
 namespace Content.Server.Interfaces.GameObjects
@@ -13,26 +14,26 @@ namespace Content.Server.Interfaces.GameObjects
         /// <summary>
         ///     Enumerates over every held item.
         /// </summary>
-        IEnumerable<IItemComponent> GetAllHeldItems();
+        IEnumerable<ItemComponent> GetAllHeldItems();
 
         /// <summary>
         ///     Gets the item held by a hand.
         /// </summary>
         /// <param name="index">The index of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
-        IItemComponent GetHand(string index);
+        ItemComponent GetHand(string index);
 
         /// <summary>
         /// Gets item held by the current active hand
         /// </summary>
-        IItemComponent GetActiveHand { get; }
+        ItemComponent GetActiveHand { get; }
 
         /// <summary>
         ///     Puts an item into any empty hand, preferring the active hand.
         /// </summary>
         /// <param name="item">The item to put in a hand.</param>
         /// <returns>True if the item was inserted, false otherwise.</returns>
-        bool PutInHand(IItemComponent item);
+        bool PutInHand(ItemComponent item);
 
         /// <summary>
         ///     Puts an item into a specific hand.
@@ -40,17 +41,17 @@ namespace Content.Server.Interfaces.GameObjects
         /// <param name="item">The item to put in the hand.</param>
         /// <param name="index">The index of the hand to put the item into.</param>
         /// <param name="fallback">
-        ///     If true and the provided hand is full, the method will fall back to <see cref="PutInHand(IItemComponent)" />
+        ///     If true and the provided hand is full, the method will fall back to <see cref="PutInHand(ItemComponent)" />
         /// </param>
         /// <returns>True if the item was inserted into a hand, false otherwise.</returns>
-        bool PutInHand(IItemComponent item, string index, bool fallback=true);
+        bool PutInHand(ItemComponent item, string index, bool fallback=true);
 
         /// <summary>
         ///     Checks to see if an item can be put in any hand.
         /// </summary>
         /// <param name="item">The item to check for.</param>
         /// <returns>True if the item can be inserted, false otherwise.</returns>
-        bool CanPutInHand(IItemComponent item);
+        bool CanPutInHand(ItemComponent item);
 
         /// <summary>
         ///     Checks to see if an item can be put in the specified hand.
@@ -58,7 +59,7 @@ namespace Content.Server.Interfaces.GameObjects
         /// <param name="item">The item to check for.</param>
         /// <param name="index">The index for the hand to check for.</param>
         /// <returns>True if the item can be inserted, false otherwise.</returns>
-        bool CanPutInHand(IItemComponent item, string index);
+        bool CanPutInHand(ItemComponent item, string index);
 
         /// <summary>
         ///     Drops an item on the ground, removing it from the hand.

@@ -53,12 +53,12 @@ namespace Content.Server
             factory.RegisterReference<HandsComponent, IHandsComponent>();
 
             factory.Register<InventoryComponent>();
-            factory.RegisterReference<InventoryComponent, IInventoryComponent>();
 
             factory.Register<StoreableComponent>();
             factory.Register<ItemComponent>();
-            factory.RegisterReference<ItemComponent, IItemComponent>();
             factory.RegisterReference<ItemComponent, StoreableComponent>();
+            factory.Register<ClothingComponent>();
+            factory.RegisterReference<ClothingComponent, ItemComponent>();
 
             factory.Register<DamageableComponent>();
             factory.Register<DestructibleComponent>();
