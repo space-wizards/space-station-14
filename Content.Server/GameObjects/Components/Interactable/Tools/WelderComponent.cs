@@ -123,7 +123,6 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             if (Activated)
             {
                 Activated = false;
-                SS14.Shared.Log.Logger.Info("OFF");
                 // Layer 1 is the flame.
                 spriteComponent.LayerSetVisible(1, false);
                 return true;
@@ -131,7 +130,6 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             else if (CanActivate())
             {
                 Activated = true;
-                SS14.Shared.Log.Logger.Info("ON");
                 spriteComponent.LayerSetVisible(1, true);
                 return true;
             }
