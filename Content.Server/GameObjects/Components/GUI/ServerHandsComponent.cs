@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects
         public bool CanDrop(string slot)
         {
             var inventorySlot = hands[slot];
-            return (inventorySlot.ContainedEntity != null) && inventorySlot.CanRemove(inventorySlot.ContainedEntity);
+            return inventorySlot.CanRemove(inventorySlot.ContainedEntity);
         }
 
         public void AddHand(string index)
