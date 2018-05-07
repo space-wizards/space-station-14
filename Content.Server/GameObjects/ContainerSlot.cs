@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects
         /// <inheritdoc />
         public override bool Contains(IEntity contained)
         {
-            if (contained == ContainedEntity)
+            if (contained != null && contained == ContainedEntity)
                 return true;
             return false;
         }
