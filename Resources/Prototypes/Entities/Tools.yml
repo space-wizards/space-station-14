@@ -5,9 +5,9 @@
   components:
   - type: Wirecutter
   - type: Sprite
-    sprite: Objects/wirecutter.png
+    texture: Objects/wirecutter.png
   - type: Icon
-    icon: Objects/wirecutter.png
+    texture: Objects/wirecutter.png
   - type: MeleeWeapon
 
 - type: entity
@@ -17,9 +17,9 @@
   components:
   - type: Screwdriver
   - type: Sprite
-    sprite: Objects/screwdriver.png
+    texture: Objects/screwdriver.png
   - type: Icon
-    icon: Objects/screwdriver.png
+    texture: Objects/screwdriver.png
   - type: MeleeWeapon
 
 - type: entity
@@ -29,9 +29,16 @@
   components:
   - type: Welder
   - type: Sprite
-    sprite: Objects/welder.png
+    sprite: Objects/tools.rsi
+    layers:
+    - state: welder
+    - state: welder_flame
+      shader: unshaded
+      visible: false
+
   - type: Icon
-    icon: Objects/welder.png
+    sprite: Objects/tools.rsi
+    state: welder
   - type: MeleeWeapon
 
 - type: entity
@@ -41,9 +48,9 @@
   components:
   - type: Wrench
   - type: Sprite
-    sprite: Objects/wrench.png
+    texture: Objects/wrench.png
   - type: Icon
-    icon: Objects/wrench.png
+    texture: Objects/wrench.png
   - type: MeleeWeapon
 
 - type: entity
@@ -53,9 +60,9 @@
   components:
   - type: Crowbar
   - type: Sprite
-    sprite: Objects/crowbar.png
+    texture: Objects/crowbar.png
   - type: Icon
-    icon: Objects/crowbar.png
+    texture: Objects/crowbar.png
   - type: MeleeWeapon
 
 - type: entity
@@ -65,6 +72,6 @@
   components:
   - type: Multitool
   - type: Sprite
-    sprite: Objects/multitool.png
+    texture: Objects/multitool.png
   - type: Icon
-    icon: Objects/multitool.png
+    texture: Objects/multitool.png

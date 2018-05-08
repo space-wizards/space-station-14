@@ -11,6 +11,8 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
     /// </summary>
     class WelderComponent : ToolComponent, EntitySystems.IUse
     {
+        SpriteComponent spriteComponent;
+
         public override string Name => "Welder";
 
         /// <summary>
@@ -40,6 +42,13 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
 
         //private string OnSprite { get; set; }
         //private string OffSprite { get; set; }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            spriteComponent = Owner.GetComponent<SpriteComponent>();
+        }
 
         public override void LoadParameters(YamlMappingNode mapping)
         {
@@ -72,9 +81,14 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
 
         public override void Update(float frameTime)
         {
-            Fuel = Math.Min(Fuel - FuelLossRate, 0);
+            if (!Activated)
+            {
+                return;
+            }
 
-            if(Activated && Fuel == 0)
+            Fuel = Math.Max(Fuel - (FuelLossRate * frameTime), 0);
+
+            if (Fuel == 0)
             {
                 ToggleStatus();
             }
@@ -106,18 +120,17 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         /// <returns></returns>
         public bool ToggleStatus()
         {
-            if(Activated)
+            if (Activated)
             {
                 Activated = false;
-
-                //TODO : Change sprite on deactivation
+                // Layer 1 is the flame.
+                spriteComponent.LayerSetVisible(1, false);
                 return true;
             }
-            else if(CanActivate())
+            else if (CanActivate())
             {
                 Activated = true;
-
-                //TODO : Change sprite on activation
+                spriteComponent.LayerSetVisible(1, true);
                 return true;
             }
             else

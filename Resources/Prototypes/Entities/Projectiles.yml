@@ -4,10 +4,13 @@
   components:
   - type: Transform
   - type: Sprite
+    directional: false
     drawdepth: FloorPlaceable
-    sprite: Objects/projectilebullet.png
+    texture: Objects/projectilebullet.png
+    rotation: 180
+
   - type: Icon
-    icon: Objects/projectilebullet.png
+    texture: Objects/projectilebullet.png
   - type: BoundingBox
   - type: Physics
     edgeslide: false

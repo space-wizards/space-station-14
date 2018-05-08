@@ -42,8 +42,6 @@ namespace Content.Client
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
             factory.Register<ClientStorageComponent>();
-
-            factory.Register<ClientDoorComponent>();
             factory.Register<ClientInventoryComponent>();
         }
     }

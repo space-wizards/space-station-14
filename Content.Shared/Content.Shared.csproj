@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
-    <Compile Include="GameObjects\Components\Doors\SharedDoorComponent.cs" />
     <Compile Include="GameObjects\Components\Inventory\EquipmentSlotDefinitions.cs" />
     <Compile Include="GameObjects\Components\Inventory\InventoryTemplates.cs" />
     <Compile Include="GameObjects\Components\Inventory\SharedInventoryComponent.cs" />

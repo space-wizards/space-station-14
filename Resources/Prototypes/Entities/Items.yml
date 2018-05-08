@@ -16,9 +16,9 @@
   id: RedToolboxItem
   components:
   - type: Sprite
-    sprite: Items/toolbox_r.png
+    texture: Items/toolbox_r.png
   - type: Icon
-    icon: Items/toolbox_r.png
+    texture: Items/toolbox_r.png
   - type: Storage
     Capacity: 60
   - type: Item
@@ -30,9 +30,9 @@
   id: BlueToolboxItem
   components:
   - type: Sprite
-    sprite: Items/toolbox_b.png
+    texture: Items/toolbox_b.png
   - type: Icon
-    icon: Items/toolbox_b.png
+    texture: Items/toolbox_b.png
   - type: Storage
     Capacity: 60
   - type: Item
@@ -44,9 +44,9 @@
   id: YellowToolboxItem
   components:
   - type: Sprite
-    sprite: Items/toolbox_y.png
+    texture: Items/toolbox_y.png
   - type: Icon
-    icon: Items/toolbox_y.png
+    texture: Items/toolbox_y.png
   - type: Storage
     Capacity: 60
   - type: Item
@@ -58,9 +58,9 @@
   id: MopItem
   components:
   - type: Sprite
-    sprite: Items/mop.png
+    texture: Items/mop.png
   - type: Icon
-    icon: Items/mop.png
+    texture: Items/mop.png
   - type: Item
     Size: 10
 
@@ -71,7 +71,7 @@
   id: FlashlightLantern
   components:
   - type: Sprite
-    sprite: Items/Flashlight.png
+    texture: Items/Flashlight.png
   - type: Icon
-    icon: Items/Flashlight.png
+    texture: Items/Flashlight.png
   - type: PointLight

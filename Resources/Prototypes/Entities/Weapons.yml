@@ -4,9 +4,9 @@
   id: LaserItem
   components:
   - type: Sprite
-    sprite: Objects/gun.png
+    texture: Objects/gun.png
   - type: Icon
-    icon: Objects/gun.png
+    texture: Objects/gun.png
   - type: HitscanWeapon
   - type: Item
     Size: 24
@@ -17,9 +17,9 @@
   id: GUNITEM
   components:
   - type: Sprite
-    sprite: Objects/projectileweapon.png
+    texture: Objects/projectileweapon.png
   - type: Icon
-    icon: Objects/projectileweapon.png
+    texture: Objects/projectileweapon.png
   - type: ProjectileWeapon
   - type: Item
     Size: 24

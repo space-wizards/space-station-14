@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnAdd();
 
             Window = new StorageWindow()
-            { StorageEntity = this};
+            { StorageEntity = this };
         }
 
         public override void OnRemove()
@@ -97,10 +97,9 @@ namespace Content.Client.GameObjects.Components.Storage
             public ClientStorageComponent StorageEntity;
 
             protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Storage/Storage.tscn");
-            
+
             protected override void Initialize()
             {
-
                 base.Initialize();
 
                 HideOnClose = true;
@@ -117,12 +116,11 @@ namespace Content.Client.GameObjects.Components.Storage
             public void BuildEntityList()
             {
                 EntityList.DisposeAllChildren();
-                
+
                 var storagelist = StorageEntity.StoredEntities;
 
                 foreach (var entityuid in storagelist)
                 {
-
                     var entity = IoCManager.Resolve<IEntityManager>().GetEntity(entityuid.Key);
 
                     var button = new EntityButton()
@@ -136,9 +134,9 @@ namespace Content.Client.GameObjects.Components.Storage
                     container.GetChild<Control>("Control").GetChild<Label>("Size").Text = string.Format("{0}", entityuid.Value);
 
                     //Gets entity sprite and assigns it to button texture
-                    if (entity.TryGetComponent(out SpriteComponent sprite))
+                    if (entity.TryGetComponent(out IconComponent icon))
                     {
-                        var tex = sprite.CurrentSprite;
+                        var tex = icon.Icon.Default;
                         var rect = container.GetChild("TextureWrap").GetChild<TextureRect>("TextureRect");
 
                         if (tex != null)
@@ -158,7 +156,7 @@ namespace Content.Client.GameObjects.Components.Storage
                 }
 
                 //Sets information about entire storage container current capacity
-                if(StorageEntity.StorageCapacityMax != 0)
+                if (StorageEntity.StorageCapacityMax != 0)
                 {
                     Information.Text = String.Format("Items: {0}, Stored: {1}/{2}", storagelist.Count, StorageEntity.StorageSizeUsed, StorageEntity.StorageCapacityMax);
                 }

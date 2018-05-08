@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects
         /// <param name="message"></param>
         private void OpenMenu(object sender, BoundKeyChangedMessage message)
         {
-            if(message.Function == BoundKeyFunctions.OpenCharacterMenu && message.State == BoundKeyState.Down)
+            if (message.Function == BoundKeyFunctions.OpenCharacterMenu && message.State == BoundKeyState.Down)
             {
                 Window.AddToScreen();
                 Window.Open();
@@ -126,7 +126,7 @@ namespace Content.Client.GameObjects
                 GridContainer.Columns = elements_x;
                 IndexedSlots = new List<Slots>(inventory.SlotMasks);
 
-                foreach(Slots slot in IndexedSlots)
+                foreach (Slots slot in IndexedSlots)
                 {
                     InventoryButton newbutton = new InventoryButton(slot);
 
@@ -138,7 +138,7 @@ namespace Content.Client.GameObjects
                     else
                     {
                         //Store slot button and give it the default onpress behavior for empty elements
-                        newbutton.GetChild<Button>("Button").OnPressed += AddToInventory; 
+                        newbutton.GetChild<Button>("Button").OnPressed += AddToInventory;
                         InventorySlots.Add(slot, newbutton);
                     }
 
@@ -146,7 +146,7 @@ namespace Content.Client.GameObjects
                     {
                         newbutton.GetChild<Button>("Button").Text = SlotNames[slot];
                     }
-                    
+
                     GridContainer.AddChild(newbutton);
                 }
             }
@@ -166,9 +166,9 @@ namespace Content.Client.GameObjects
                 button.GetChild<Button>("Button").OnPressed -= AddToInventory;
 
                 //Gets entity sprite and assigns it to button texture
-                if (entity.TryGetComponent(out SpriteComponent sprite))
+                if (entity.TryGetComponent(out IconComponent sprite))
                 {
-                    var tex = sprite.CurrentSprite;
+                    var tex = sprite.Icon.Default;
 
                     var rect = button.GetChild("CenterContainer").GetChild<TextureRect>("TextureRect");
 
@@ -213,7 +213,6 @@ namespace Content.Client.GameObjects
                 InventoryComponent.SendEquipMessage(control.Slot);
             }
         }
-        
 
         private class InventoryButton : Control
         {

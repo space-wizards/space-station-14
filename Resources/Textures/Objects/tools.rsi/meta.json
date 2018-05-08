@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "welder",
+            "select": [],
+            "flags": {},
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "welder_flame",
+            "select": [],
+            "flags": {},
+            "directions": 1,
+            "delays": [
+                [
+                    0.2,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

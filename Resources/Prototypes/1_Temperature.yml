@@ -5,11 +5,10 @@
   - type: Transform
   - type: Clickable
   - type: Sprite
-    sprites:
-    - Items/shoes.png
+    texture: Items/shoes.png
 
   - type: Icon
-    icon: Items/shoes.png
+    texture: Items/shoes.png
 
   - type: Damageable
     resistanceset: Standard
