@@ -122,7 +122,7 @@
   parent: Clothing
   id: HelmetSecurity
   name: Security Helmet
-  description: A slick logo covers the ear: "Concussions are better than holes!"
+  description: "A slick logo covers the ear: \"Concussions are better than holes!\""
   components:
   - type: Sprite
     texture: Clothing/helmet_sec.png
