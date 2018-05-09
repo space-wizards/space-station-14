@@ -1,6 +1,7 @@
 - type: entity
   id: ProjectileBullet
   name: ProjectileBullet
+  description: If you can see this you're dead!
   components:
   - type: Transform
   - type: Sprite

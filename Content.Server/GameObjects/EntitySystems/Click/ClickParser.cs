@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     EntitySystemManager.GetEntitySystem<InteractionSystem>().UserInteraction(message, player);
                     break;
                 case (ClickType.Left | ClickType.Shift):
-                    //Examine system
+                    EntitySystemManager.GetEntitySystem<ExamineSystem>().Examine(message, player);
                     break;
                 case ClickType.Right:
                     //Verb System

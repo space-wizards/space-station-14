@@ -1,6 +1,7 @@
 - type: entity
   id: Wire
   name: Wire
+  description: Transfers power, avoid letting things come down it
   components:
   - type: Transform
   - type: Clickable
@@ -20,6 +21,7 @@
   parent: Wire
   id: BlueWire
   name: BlueWire
+  description: Transfers power, and puts on a good show of it
   components:
   - type: Sprite
     color: Blue
@@ -27,6 +29,7 @@
 - type: entity
   id: Generator
   name: Generator
+  description: A portal to hell which summons power from the nether
   components:
   - type: Transform
   - type: Clickable
@@ -41,6 +44,7 @@
 - type: entity
   id: WPPnobattery
   name: WPPnobattery
+  description: Supplies power directly to nearby objects
   components:
   - type: Transform
   - type: Clickable
@@ -58,6 +62,7 @@
   parent: WPPnobattery
   id: WPP
   name: WPP
+  description: Supplies power at range, has a backup battery just in case
   components:
   - type: PowerStorage
     Capacity: 1000
@@ -69,6 +74,7 @@
 - type: entity
   id: SMES
   name: SMES
+  description: Stores power in its supermagnetic cells
   components:
   - type: Transform
   - type: Clickable
@@ -88,6 +94,7 @@
 - type: entity
   id: WiredMachine
   name: WiredMachine
+  description: A monstrosity that does nothing but suck up power from the nearby wires
   components:
   - type: Transform
   - type: Clickable
@@ -105,6 +112,7 @@
 - type: entity
   id: WirelessMachine
   name: WirelessMachine
+  description: A terrifying monstrosity that sucks up power from the wireless transmitters, Tesla would be proud
   components:
   - type: Transform
   - type: Clickable

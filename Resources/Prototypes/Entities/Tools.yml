@@ -2,6 +2,7 @@
   name: Wirecutter
   parent: BaseItem
   id: Wirecutter
+  description: This kills the wire.
   components:
   - type: Wirecutter
   - type: Sprite
@@ -14,6 +15,7 @@
   name: Screwdriver
   parent: BaseItem
   id: Screwdriver
+  description: Industrial grade torque in a small screwdriving package
   components:
   - type: Screwdriver
   - type: Sprite
@@ -26,6 +28,7 @@
   name: Welder
   parent: BaseItem
   id: Welder
+  description: Melts anything as long as its fueled, don't forget your eye protection
   components:
   - type: Welder
   - type: Sprite
@@ -45,6 +48,7 @@
   name: Wrench
   parent: BaseItem
   id: Wrench
+  description: A common tool for assembly and disassembly, righty tighty lefty loosey
   components:
   - type: Wrench
   - type: Sprite
@@ -57,6 +61,7 @@
   name: Crowbar
   parent: BaseItem
   id: Crowbar
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders
   components:
   - type: Crowbar
   - type: Sprite
@@ -69,6 +74,7 @@
   name: Multitool
   parent: BaseItem
   id: Multitool
+  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
   components:
   - type: Multitool
   - type: Sprite

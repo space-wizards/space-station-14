@@ -2,9 +2,26 @@
   name: Urist McHands
   id: HumanMob_Content
   parent: __engine_human
+  description: A miserable pile of secrets
   components:
   - type: Hands
     hands:
     - left
     - right
   - type: Inventory
+
+- type: entity
+  id: MobObserver
+  name: Observer
+  save: false
+  description: Boo!
+  components:
+  - type: Transform
+  - type: Sprite
+    sprite: Mob/observer.png
+    scale: 2, 2
+    drawdepth: MobBase
+  - type: Icon
+    icon: Mob/observer.png
+  - type: Physics
+    mass: 5

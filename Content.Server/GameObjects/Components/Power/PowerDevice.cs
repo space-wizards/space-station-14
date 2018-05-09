@@ -1,4 +1,5 @@
-﻿using SS14.Server.GameObjects;
+﻿using Content.Server.GameObjects.EntitySystems;
+using SS14.Server.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
@@ -12,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// <summary>
     /// Component that requires power to function
     /// </summary>
-    public class PowerDeviceComponent : Component
+    public class PowerDeviceComponent : Component, EntitySystems.IExamine
     {
         public override string Name => "PowerDevice";
 
@@ -132,6 +133,15 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 Priority = node.AsEnum<Powernet.Priority>();
             }
+        }
+
+        string IExamine.Examine()
+        {
+            if(!Powered)
+            {
+                return "The device is not powered";
+            }
+            return null;
         }
 
         private void UpdateLoad(float value)

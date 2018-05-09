@@ -2,6 +2,7 @@
   name: "LASER"
   parent: BaseItem
   id: LaserItem
+  description: A weapon using light amplified by the stimulated emission of radiation
   components:
   - type: Sprite
     texture: Objects/gun.png
@@ -15,6 +16,7 @@
   name: GUN
   parent: BaseItem
   id: GUNITEM
+  description: A rooty tooty point and shooty
   components:
   - type: Sprite
     texture: Objects/projectileweapon.png

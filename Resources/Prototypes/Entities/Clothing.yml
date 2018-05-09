@@ -14,6 +14,7 @@
   parent: Clothing
   id: ShoesItem
   name: Shoes
+  description: Don't take them off at your office Christmas party
   components:
   - type: Sprite
     texture: Items/shoes.png
@@ -29,6 +30,7 @@
   parent: Clothing
   id: JanitorUniform
   name: Janitor Jumpsuit
+  description: The jumpsuit for the poor sop with a mop
   components:
   - type: Sprite
     texture: Items/janitorsuit.png
@@ -44,6 +46,7 @@
   parent: Clothing
   id: SecurityVestClothing
   name: Security Vest
+  description: Bulletproof vest, more or less
   components:
   - type: Sprite
     texture: Clothing/armorvest.png
@@ -57,6 +60,7 @@
   parent: Clothing
   id: UtilityBeltClothing
   name: Utility Belt
+  description: Belt for holding all your usual tools
   components:
   - type: Sprite
     texture: Clothing/belt_utility.png
@@ -73,6 +77,7 @@
   parent: Clothing
   id: BackpackClothing
   name: Backpack
+  description: A convenient storage pack
   components:
   - type: Sprite
     texture: Clothing/backpack.png
@@ -88,7 +93,8 @@
 - type: entity
   parent: Clothing
   id: MesonGlasses
-  name: Mesons
+  name: Optical Meson Scanners
+  description: The pinnacle of modern science, wallhacks in real life
   components:
   - type: Sprite
     texture: Clothing/glasses_meson.png
@@ -102,6 +108,7 @@
   parent: Clothing
   id: YellowGloves
   name: Insulated Gloves
+  description: Electrical gloves that keep you from frying
   components:
   - type: Sprite
     texture: Clothing/gloves_yellow.png
@@ -115,6 +122,7 @@
   parent: Clothing
   id: HelmetSecurity
   name: Security Helmet
+  description: A slick logo covers the ear: "Concussions are better than holes!"
   components:
   - type: Sprite
     texture: Clothing/helmet_sec.png
@@ -128,6 +136,7 @@
   parent: Clothing
   id: GasMaskClothing
   name: Gas Mask
+  description: Regulations require these to be stocked after the fourth coolant leak
   components:
   - type: Sprite
     texture: Clothing/gasmask.png
@@ -141,6 +150,7 @@
   parent: Clothing
   id: IDCardStandard
   name: Identification Card
+  description: A card necessary to access various areas aboard the station
   components:
   - type: Sprite
     texture: Clothing/idcard_standard.png
@@ -154,6 +164,7 @@
   parent: Clothing
   id: RadioHeadsetEars
   name: Headset Radio
+  description: The radio to keep up to date in real time with fun onboard station activities
   components:
   - type: Sprite
     texture: Clothing/ears_headset.png

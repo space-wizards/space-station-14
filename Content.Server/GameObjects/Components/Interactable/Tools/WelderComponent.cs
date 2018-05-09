@@ -3,13 +3,14 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using SS14.Server.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Interactable.Tools
 {
     /// <summary>
     /// Tool used to weld metal together, light things on fire, or melt into constituent parts
     /// </summary>
-    class WelderComponent : ToolComponent, EntitySystems.IUse
+    class WelderComponent : ToolComponent, EntitySystems.IUse, EntitySystems.IExamine
     {
         SpriteComponent spriteComponent;
 
@@ -137,6 +138,15 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             {
                 return false;
             }
+        }
+
+        string IExamine.Examine()
+        {
+            if(Activated)
+            {
+                return "The welding tool is currently lit";
+            }
+            return null;
         }
     }
 }
