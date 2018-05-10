@@ -13,6 +13,7 @@ using SS14.Shared.IoC;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects.Serialization;
 using SS14.Shared.ContentPack;
+using System.Linq;
 
 namespace Content.Server.GameObjects
 {
@@ -24,7 +25,7 @@ namespace Content.Server.GameObjects
         public override void ExposeData(EntitySerializer serializer)
         {
             base.ExposeData(serializer);
-            
+
             serializer.DataField(ref TemplateName, "Template", "HumanInventory");
             CreateInventory(TemplateName);
         }
@@ -35,7 +36,7 @@ namespace Content.Server.GameObjects
             Inventory inventory = (Inventory)Activator.CreateInstance(type);
             foreach (Slots slotnames in inventory.SlotMasks)
             {
-                if(slotnames != Slots.NONE)
+                if (slotnames != Slots.NONE)
                 {
                     var newslot = AddSlot(slotnames);
                 }
@@ -44,7 +45,8 @@ namespace Content.Server.GameObjects
 
         public override void OnRemove()
         {
-            foreach (var slot in SlotContainers.Keys)
+            var slots = SlotContainers.Keys.ToList();
+            foreach (var slot in slots)
             {
                 RemoveSlot(slot);
             }
@@ -87,7 +89,7 @@ namespace Content.Server.GameObjects
                 throw new ArgumentNullException(nameof(clothing), "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
             }
 
-            if(clothing.SlotFlags == SlotFlags.PREVENTEQUIP //Flag to prevent equipping at all
+            if (clothing.SlotFlags == SlotFlags.PREVENTEQUIP //Flag to prevent equipping at all
                 || (clothing.SlotFlags & SlotMasks[slot]) == 0) //Does the clothing flag have any of our requested slot flags
             {
                 return false;
@@ -235,7 +237,7 @@ namespace Content.Server.GameObjects
                 if (activehand != null && activehand.Owner.TryGetComponent(out ClothingComponent clothing))
                 {
                     hands.Drop(hands.ActiveIndex);
-                    if(!Equip(msg.Inventoryslot, clothing))
+                    if (!Equip(msg.Inventoryslot, clothing))
                     {
                         hands.PutInHand(clothing);
                     }
@@ -257,7 +259,7 @@ namespace Content.Server.GameObjects
         {
             base.HandleMessage(message, netChannel, component);
 
-            switch(message)
+            switch (message)
             {
                 case ClientInventoryMessage msg:
                     var playerMan = IoCManager.Resolve<IPlayerManager>();
