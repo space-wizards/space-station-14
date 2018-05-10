@@ -27,6 +27,13 @@ namespace Content.Client.GameObjects
         private string TemplateName = "HumanInventory"; //stored for serialization purposes
         public event EventHandler<BoundKeyChangedMessage> OnCharacterMenuKey;
 
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            Window.Dispose();
+        }
+
         public override void ExposeData(EntitySerializer serializer)
         {
             base.ExposeData(serializer);
