@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.EntitySystems
             IEntity attacked = null;
             if (msg.Uid.IsValid())
                 attacked = EntityManager.GetEntity(msg.Uid);
-            
+
             //Verify player has a transform component
             if (!player.TryGetComponent<IServerTransformComponent>(out var playerTransform))
             {
@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.EntitySystems
             //TODO: Mob status code that allows or rejects interactions based on current mob status
             //Check if client should be able to see that object to click on it in the first place, prevent using locaters by firing a laser or something
 
-            
+
             //Clicked on empty space behavior, try using ranged attack
             if (attacked == null && item != null)
             {
@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 InteractAfterattack(player, item, msg.Coordinates);
                 return;
             }
-            else if(attacked == null)
+            else if (attacked == null)
             {
                 return;
             }
@@ -156,14 +156,14 @@ namespace Content.Server.GameObjects.EntitySystems
             var distance = (playerTransform.WorldPosition - attacked.GetComponent<IServerTransformComponent>().WorldPosition).LengthSquared;
             if (distance > INTERACTION_RANGE_SQUARED)
             {
-                if(item != null)
+                if (item != null)
                 {
                     RangedInteraction(player, item, attacked, msg.Coordinates);
                     return;
                 }
                 return; //Add some form of ranged attackhand here if you need it someday, or perhaps just ways to modify the range of attackhand
             }
-            
+
             //We are close to the nearby object and the object isn't contained in our active hand
             //ATTACKBY/AFTERATTACK: We will either use the item on the nearby object
             if (item != null)
@@ -194,7 +194,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="clicklocation"></param>
         public static void InteractAfterattack(IEntity user, IEntity weapon, LocalCoordinates clicklocation)
         {
-            List<IAfterAttack> afterattacks = weapon.GetComponents<IAfterAttack>().ToList();
+            List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
 
             for (var i = 0; i < afterattacks.Count; i++)
             {
@@ -211,9 +211,9 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attacked"></param>
         public static void Interaction(IEntity user, IEntity weapon, IEntity attacked, LocalCoordinates clicklocation)
         {
-            List<IAttackby> interactables = attacked.GetComponents<IAttackby>().ToList();
+            List<IAttackby> interactables = attacked.GetAllComponents<IAttackby>().ToList();
 
-            for(var i = 0; i < interactables.Count; i++)
+            for (var i = 0; i < interactables.Count; i++)
             {
                 if (interactables[i].Attackby(user, weapon)) //If an attackby returns a status completion we finish our attack
                 {
@@ -225,7 +225,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
 
             //If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            List<IAfterAttack> afterattacks = weapon.GetComponents<IAfterAttack>().ToList();
+            List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
 
             for (var i = 0; i < afterattacks.Count; i++)
             {
@@ -241,7 +241,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attacked"></param>
         public static void Interaction(IEntity user, IEntity attacked)
         {
-            List<IAttackHand> interactables = attacked.GetComponents<IAttackHand>().ToList();
+            List<IAttackHand> interactables = attacked.GetAllComponents<IAttackHand>().ToList();
 
             for (var i = 0; i < interactables.Count; i++)
             {
@@ -262,7 +262,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="used"></param>
         public static void TryUseInteraction(IEntity user, IEntity used)
         {
-            if(user != null && used != null && MobCanInteract(user))
+            if (user != null && used != null && MobCanInteract(user))
             {
                 UseInteraction(user, used);
             }
@@ -276,7 +276,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attacked"></param>
         public static void UseInteraction(IEntity user, IEntity used)
         {
-            List<IUse> usables = used.GetComponents<IUse>().ToList();
+            List<IUse> usables = used.GetAllComponents<IUse>().ToList();
 
             //Try to use item on any components which have the interface
             for (var i = 0; i < usables.Count; i++)
@@ -297,7 +297,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attacked"></param>
         public static void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, LocalCoordinates clicklocation)
         {
-            List<IRangedAttackby> rangedusables = attacked.GetComponents<IRangedAttackby>().ToList();
+            List<IRangedAttackby> rangedusables = attacked.GetAllComponents<IRangedAttackby>().ToList();
 
             //See if we have a ranged attack interaction
             for (var i = 0; i < rangedusables.Count; i++)
@@ -308,9 +308,9 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            if(weapon != null)
+            if (weapon != null)
             {
-                List<IAfterAttack> afterattacks = weapon.GetComponents<IAfterAttack>().ToList();
+                List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
 
                 //See if we have a ranged attack interaction
                 for (var i = 0; i < afterattacks.Count; i++)
