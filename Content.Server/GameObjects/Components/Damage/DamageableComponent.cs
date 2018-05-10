@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects
 
         void RecalculateComponentThresholds()
         {
-            foreach (IOnDamageBehavior onDamageBehaviorComponent in Owner.GetComponents<IOnDamageBehavior>())
+            foreach (IOnDamageBehavior onDamageBehaviorComponent in Owner.GetAllComponents<IOnDamageBehavior>())
             {
                 AddThresholdsFrom(onDamageBehaviorComponent);
             }

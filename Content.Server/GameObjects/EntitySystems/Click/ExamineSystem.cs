@@ -48,16 +48,16 @@ namespace Content.Server.GameObjects.EntitySystems
             StringBuilder fullexaminetext = new StringBuilder("This is " + examined.Name);
 
             //Add an entity description if one is declared
-            if(!string.IsNullOrEmpty(examined.Description))
+            if (!string.IsNullOrEmpty(examined.Description))
             {
                 fullexaminetext.Append(Environment.NewLine + examined.Description);
             }
 
             //Add component statuses from components that report one
-            foreach (var examinecomponents in examined.GetComponents<IExamine>())
+            foreach (var examinecomponents in examined.GetAllComponents<IExamine>())
             {
                 string componentdescription = examinecomponents.Examine();
-                if(!string.IsNullOrEmpty(componentdescription))
+                if (!string.IsNullOrEmpty(componentdescription))
                 {
                     fullexaminetext.Append(Environment.NewLine + componentdescription);
                 }

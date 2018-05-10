@@ -8,11 +8,11 @@ namespace Content.Server.GameObjects
     public class ItemComponent : StoreableComponent, EntitySystems.IAttackHand
     {
         public override string Name => "Item";
-        
+
 
         public void RemovedFromSlot()
         {
-            foreach (var component in Owner.GetComponents<ISpriteRenderableComponent>())
+            foreach (var component in Owner.GetAllComponents<ISpriteRenderableComponent>())
             {
                 component.Visible = true;
             }
@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects
 
         public void EquippedToSlot(ContainerSlot slot)
         {
-            foreach (var component in Owner.GetComponents<ISpriteRenderableComponent>())
+            foreach (var component in Owner.GetAllComponents<ISpriteRenderableComponent>())
             {
                 component.Visible = false;
             }
