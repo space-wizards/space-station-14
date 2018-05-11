@@ -107,6 +107,7 @@ namespace Content.Server.GameObjects
             }
 
             var slot = hands[index];
+            Dirty();
             return slot.Insert(item.Owner);
         }
 
@@ -153,6 +154,7 @@ namespace Content.Server.GameObjects
             // TODO: The item should be dropped to the container our owner is in, if any.
             var itemTransform = item.Owner.GetComponent<TransformComponent>();
             itemTransform.LocalPosition = Owner.GetComponent<TransformComponent>().LocalPosition;
+            Dirty();
             return true;
         }
 
@@ -178,7 +180,7 @@ namespace Content.Server.GameObjects
 
             var slot = ContainerManagerComponent.Create<ContainerSlot>(Name + "_" + index, Owner);
             hands[index] = slot;
-            if(!orderedHands.Contains(index))
+            if (!orderedHands.Contains(index))
             {
                 orderedHands.Add(index);
             }
@@ -186,6 +188,7 @@ namespace Content.Server.GameObjects
             {
                 ActiveIndex = index;
             }
+            Dirty();
         }
 
         public void RemoveHand(string index)
@@ -210,6 +213,7 @@ namespace Content.Server.GameObjects
                     activeIndex = orderedHands[0];
                 }
             }
+            Dirty();
         }
 
         public bool HasHand(string index)
@@ -234,7 +238,7 @@ namespace Content.Server.GameObjects
             }
             return new HandsComponentState(dict, ActiveIndex);
         }
-        
+
         private void SwapHands()
         {
             var index = orderedHands.FindIndex(x => x == ActiveIndex);
@@ -245,13 +249,14 @@ namespace Content.Server.GameObjects
             }
 
             ActiveIndex = orderedHands[index];
+            Dirty();
         }
-        
+
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
-            
+
             switch (message)
             {
                 case ClientChangedHandMsg msg:
@@ -293,7 +298,7 @@ namespace Content.Server.GameObjects
                             break;
                         case BoundKeyFunctions.ActivateItemInHand:
                             var used = GetActiveHand?.Owner;
-                            if(used != null)
+                            if (used != null)
                             {
                                 InteractionSystem.TryUseInteraction(Owner, used);
                             }
