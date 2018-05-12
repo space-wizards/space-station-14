@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects
                 }
 
                 activeIndex = value;
+                Dirty();
             }
         }
 
@@ -249,9 +250,7 @@ namespace Content.Server.GameObjects
             }
 
             ActiveIndex = orderedHands[index];
-            Dirty();
         }
-
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
