@@ -40,6 +40,7 @@ SERVER_IGNORED_RESOURCES = {
 
 GODOT = None
 
+
 def main():
     global GODOT
     parser = argparse.ArgumentParser(
@@ -69,11 +70,13 @@ def main():
         platforms = ["windows", "mac", "linux"]
 
     if os.path.exists("release"):
-        print(Fore.BLUE+Style.DIM +
+        print(Fore.BLUE + Style.DIM +
               "Cleaning old release packages (release/)..." + Style.RESET_ALL)
         shutil.rmtree("release")
 
     os.mkdir("release")
+
+    copy_godot_scenes()
 
     if "windows" in platforms:
         wipe_bin()
@@ -113,7 +116,7 @@ def build_windows(godot_build):
                     "/v:m",
                     "/p:TargetOS=Windows",
                     "/t:Rebuild"
-                   ], check=True)
+                    ], check=True)
 
     print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
 
@@ -167,7 +170,6 @@ def build_linux():
     server_zip.close()
 
 
-
 def build_macos():
     print(Fore.GREEN + "Building project for MacOS x64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
@@ -195,10 +197,10 @@ def build_macos():
               p(bundle, "Contents", "MacOS", "bin", "Client"))
 
     copy_resources(p(bundle, "Contents",
-                                "MacOS", "bin", "Client", "Resources"), server=False)
+                     "MacOS", "bin", "Client", "Resources"), server=False)
 
     os.makedirs(p(bundle, "Contents", "MacOS",
-                             "SS14.Client.Godot"), exist_ok=True)
+                  "SS14.Client.Godot"), exist_ok=True)
 
     _copytree(p("engine", "SS14.Client.Godot"),
               p(bundle, "Contents", "MacOS", "SS14.Client.Godot"))
@@ -208,7 +210,7 @@ def build_macos():
 
     print(Fore.GREEN + "Packaging MacOS x64 server..." + Style.RESET_ALL)
     copy_resources(p("engine", "bin",
-                                "Server", "Resources"), server=True)
+                     "Server", "Resources"), server=True)
 
     package_zip(p("engine", "bin", "Server"),
                 p("release", "SS14.Server_MacOS.zip"))
@@ -267,6 +269,45 @@ def copy_dir_into_zip(directory, basepath, zipf):
 
             print(Fore.CYAN + message + Style.RESET_ALL)
             zipf.write(filepath, zippath)
+
+
+def copy_godot_scenes():
+    target_dir = p("engine", "SS14.Client.Godot", "Scenes")
+    from_dir = p("Resources", "Scenes")
+    for path in os.listdir(from_dir):
+        if path.startswith("."):
+            continue
+
+        frompath = p(from_dir, path)
+        targetpath = p(target_dir, path)
+        if os.path.exists(targetpath):
+            if os.path.isfile(targetpath):
+                os.remove(targetpath)
+
+            elif os.path.isdir(targetpath):
+                shutil.rmtree(targetpath)
+
+            else:
+                print("So, what the hell is {} exactly and how did it get there?"
+                      .format(targetpath))
+                exit(1)
+
+        copy_dir_or_file(frompath, targetpath)
+
+
+def copy_dir_or_file(src, dst):
+    """
+    Just something from src to dst. If src is a dir it gets copied recursively.
+    """
+
+    if os.path.isfile(src):
+        shutil.copy2(src, dst)
+
+    elif os.path.isdir(src):
+        shutil.copytree(src, dst)
+
+    else:
+        raise IOError("{} is neither file nor directory. Can't copy.".format(src))
 
 
 if __name__ == '__main__':
