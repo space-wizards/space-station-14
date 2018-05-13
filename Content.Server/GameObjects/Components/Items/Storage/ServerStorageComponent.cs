@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool Remove(IEntity toremove)
         {
-            if(storage.Remove(toremove))
+            if (storage.Remove(toremove))
             {
                 StorageUsed -= toremove.GetComponent<StoreableComponent>().ObjectSize;
                 UpdateClientInventory();
@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool Insert(IEntity toinsert)
         {
-            if(CanInsert(toinsert) && storage.Insert(toinsert))
+            if (CanInsert(toinsert) && storage.Insert(toinsert))
             {
                 StorageUsed += toinsert.GetComponent<StoreableComponent>().ObjectSize;
                 UpdateClientInventory();
@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool CanInsert(IEntity toinsert)
         {
-            if(toinsert.TryGetComponent(out StoreableComponent store))
+            if (toinsert.TryGetComponent(out StoreableComponent store))
             {
                 if (store.ObjectSize <= (StorageCapacityMax - StorageUsed))
                     return true;
@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects
         {
             var hands = user.GetComponent<HandsComponent>();
             //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
-            if(hands.Drop(hands.ActiveIndex))
+            if (hands.Drop(hands.ActiveIndex))
             {
                 var inserted = Insert(attackwith);
                 if (inserted)

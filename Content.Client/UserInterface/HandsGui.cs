@@ -17,7 +17,7 @@ using SS14.Shared.Maths;
 
 namespace Content.Client.UserInterface
 {
-    public class HandsGui : HBoxContainer
+    public class HandsGui : Control
     {
         private static readonly Color _inactiveColor = new Color(90, 90, 90);
         private const int BOX_SPACING = 1;
