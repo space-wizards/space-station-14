@@ -106,7 +106,7 @@ def wipe_bin():
 
 def build_windows(godot_build):
     # Run a full build.
-    print(Fore.GREEN + "Building project for Windows x64..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Building project for Windows amd64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
                     "SpaceStation14Content.sln",
                     "/m",
@@ -118,7 +118,7 @@ def build_windows(godot_build):
                     "/t:Rebuild"
                     ], check=True)
 
-    print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Packaging Windows amd64 client..." + Style.RESET_ALL)
 
     os.makedirs("bin/win_export", exist_ok=True)
     subprocess.run([GODOT,
@@ -128,24 +128,75 @@ def build_windows(godot_build):
                     "../../bin/win_export/SS14.Client.exe"],
                    cwd="engine/SS14.Client.Godot")
 
-    client_zip = zipfile.ZipFile(p("release", "SS14.Client_Windows_x64.zip"), "w", compression=zipfile.ZIP_DEFLATED)
+    client_zip = zipfile.ZipFile(p("release", "SS14.Client_Windows_amd64.zip"), "w",
+                                 compression=zipfile.ZIP_DEFLATED)
+    # Write the launcher batch script.
     client_zip.writestr("spess.bat", "cd godot\ncall SS14.Client.exe --path SS14.Client.Godot")
+    # Add a /godot/ directory to the zip and put the pck in there.
     client_zip.write(p("bin", "win_export"), "godot")
     client_zip.write(p("bin", "win_export", "SS14.Client.pck"), p("godot", "SS14.Client.pck"))
+    # Write in the other files like mono dlls into the /godot/ directory.
     copy_dir_into_zip(godot_build, "godot", client_zip)
+    # Copy the main client files into /bin/Client.
     copy_dir_into_zip(p("engine", "bin", "Client"), p("bin", "Client"), client_zip)
+    # Copy all resources into /bin/Client/Resources.
     copy_resources(p("bin", "Client", "Resources"), client_zip, server=False)
+    # Cool we're done.
     client_zip.close()
 
-    print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
-    server_zip = zipfile.ZipFile(p("release", "SS14.Server_Windows_x64.zip"), "w", compression=zipfile.ZIP_DEFLATED)
+    print(Fore.GREEN + "Packaging Windows amd64 server..." + Style.RESET_ALL)
+    server_zip = zipfile.ZipFile(p("release", "SS14.Server_Windows_amd64.zip"), "w",
+                                 compression=zipfile.ZIP_DEFLATED)
+    copy_dir_into_zip(p("engine", "bin", "Server"), "", server_zip)
+    copy_resources(p("Resources"), server_zip, server=True)
+    server_zip.close()
+
+
+def build_macos():
+    print(Fore.GREEN + "Building project for macOS amd64..." + Style.RESET_ALL)
+    subprocess.run(["msbuild",
+                    "SpaceStation14Content.sln",
+                    "/m",
+                    "/p:Configuration=Release",
+                    "/p:Platform=x64",
+                    "/nologo",
+                    "/v:m",
+                    "/p:TargetOS=MacOS",
+                    "/t:Rebuild"
+                    ], check=True)
+
+    print(Fore.GREEN + "Packaging macOS amd64 client..." + Style.RESET_ALL)
+    # Client has to go in an app bundle.
+    subprocess.run([GODOT,
+                    "--verbose",
+                    "--export-debug",
+                    "mac",
+                    "../../release/SS14.Client_macOS_amd64.zip"],
+                   cwd="engine/SS14.Client.Godot",
+                   check=True)
+
+    client_zip = zipfile.ZipFile(p("release", "SS14.Client_macOS_amd64.zip"), "a",
+                                 compression=zipfile.ZIP_DEFLATED)
+
+    contents = p("Space Station 14.app", "Contents")
+    # Copy the main client files into /Space Station 14.app/Contents/bin/Client.
+    # Yes Apple would have me put this shit in /Space Station 14.app/Contents/Resources but screw that.
+    copy_dir_into_zip(p("engine", "bin", "Client"), p(contents, "bin", "Client"), client_zip)
+
+    # Copy all resources into /Space Station 14.app/Contents/bin/Client/Resources.
+    copy_resources(p(contents, "Client", "Resources"), client_zip, server=False)
+    client_zip.close()
+
+    print(Fore.GREEN + "Packaging macOS amd64 server..." + Style.RESET_ALL)
+    server_zip = zipfile.ZipFile(p("release", "SS14.Server_macOS_amd64.zip"), "w",
+                                 compression=zipfile.ZIP_DEFLATED)
     copy_dir_into_zip(p("engine", "bin", "Server"), "", server_zip)
     copy_resources(p("Resources"), server_zip, server=True)
     server_zip.close()
 
 
 def build_linux():
-    print(Fore.GREEN + "Building project for Linux x64..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Building project for Linux amd64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
                     "SpaceStation14Content.sln",
                     "/m",
@@ -159,61 +210,16 @@ def build_linux():
 
     # NOTE: Temporarily disabled because I can't test it.
     # Package client.
-    #print(Fore.GREEN + "Packaging Linux x64 client..." + Style.RESET_ALL)
+    #print(Fore.GREEN + "Packaging Linux amd64 client..." + Style.RESET_ALL)
     # package_zip(p("bin", "Client"), p(
-    #    "release", "SS14.Client_linux_x64.zip"))
+    #    "release", "SS14.Client_linux_amd64.zip"))
 
-    print(Fore.GREEN + "Packaging Linux x64 server..." + Style.RESET_ALL)
-    server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_x64.zip"), "w", compression=zipfile.ZIP_DEFLATED)
+    print(Fore.GREEN + "Packaging Linux amd64 server..." + Style.RESET_ALL)
+    server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_amd64.zip"), "w",
+                                 compression=zipfile.ZIP_DEFLATED)
     copy_dir_into_zip(p("engine", "bin", "Server"), "", server_zip)
     copy_resources(p("Resources"), server_zip, server=True)
     server_zip.close()
-
-
-def build_macos():
-    print(Fore.GREEN + "Building project for MacOS x64..." + Style.RESET_ALL)
-    subprocess.run(["msbuild",
-                    "SpaceStation14Content.sln",
-                    "/m",
-                    "/p:Configuration=Release",
-                    "/p:Platform=x64",
-                    "/nologo",
-                    "/v:m",
-                    "/p:TargetOS=MacOS",
-                    "/t:Rebuild"
-                    ], check=True)
-
-    print(Fore.GREEN + "Packaging MacOS x64 client..." + Style.RESET_ALL)
-    # Client has to go in an app bundle.
-    subprocess.run(GODOT,
-                   "--verbose",
-                   "--export-debug",
-                   "mac",
-                   "../../release/mac_export.zip",
-                   cwd="engine/SS14.Client.Godot",
-                   check=True)
-
-    _copytree(p("engine", "bin", "Client"),
-              p(bundle, "Contents", "MacOS", "bin", "Client"))
-
-    copy_resources(p(bundle, "Contents",
-                     "MacOS", "bin", "Client", "Resources"), server=False)
-
-    os.makedirs(p(bundle, "Contents", "MacOS",
-                  "SS14.Client.Godot"), exist_ok=True)
-
-    _copytree(p("engine", "SS14.Client.Godot"),
-              p(bundle, "Contents", "MacOS", "SS14.Client.Godot"))
-
-    package_zip(p("bin", "mac_app"),
-                p("release", "SS14.Client_MacOS.zip"))
-
-    print(Fore.GREEN + "Packaging MacOS x64 server..." + Style.RESET_ALL)
-    copy_resources(p("engine", "bin",
-                     "Server", "Resources"), server=True)
-
-    package_zip(p("engine", "bin", "Server"),
-                p("release", "SS14.Server_MacOS.zip"))
 
 
 def copy_resources(target, zipf, server):
