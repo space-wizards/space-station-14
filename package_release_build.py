@@ -184,7 +184,7 @@ def build_macos():
     copy_dir_into_zip(p("engine", "bin", "Client"), p(contents, "bin", "Client"), client_zip)
 
     # Copy all resources into /Space Station 14.app/Contents/bin/Client/Resources.
-    copy_resources(p(contents, "Client", "Resources"), client_zip, server=False)
+    copy_resources(p(contents, "bin", "Client", "Resources"), client_zip, server=False)
     client_zip.close()
 
     print(Fore.GREEN + "Packaging macOS amd64 server..." + Style.RESET_ALL)
