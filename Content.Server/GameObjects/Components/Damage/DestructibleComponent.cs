@@ -43,17 +43,7 @@ namespace Content.Server.GameObjects
 
                 Threshold = new DamageThreshold(damageType, damageValue);
             }
-        }
-
-        /// <inheritdoc />
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            if (Owner.TryGetComponent<DamageableComponent>(out DamageableComponent damageable))
-            {
-                damageable.DamageThresholdPassed += OnDamageThresholdPassed;
-            }
+            Threshold = new DamageThreshold(damageType, damageValue, ThresholdTypes.Destruction);
         }
 
         /// <inheritdoc />

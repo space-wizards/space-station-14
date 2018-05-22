@@ -3,6 +3,7 @@ using SS14.Server.GameObjects.EntitySystems;
 using SS14.Shared.Audio;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.EntitySystemMessages;
+using SS14.Shared.GameObjects.Serialization;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Physics;
@@ -19,7 +20,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
     {
         public override string Name => "HitscanWeapon";
 
-        string spritename = "Objects/laser.png";
+        string Spritename = "Objects/laser.png";
+        int Damage = 10;
+
+        public override void ExposeData(EntitySerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref Spritename, "sprite", "Objects/laser.png");
+            serializer.DataField(ref Damage, "damage", 10);
+        }
 
         protected override void Fire(IEntity user, GridLocalCoordinates clicklocation)
         {
@@ -37,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
         {
             if (ray.HitEntity != null && ray.HitEntity.TryGetComponent(out DamageableComponent damage))
             {
-                damage.TakeDamage(DamageType.Heat, 10);
+                damage.TakeDamage(DamageType.Heat, Damage);
             }
         }
 
@@ -48,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
             EffectSystemMessage message = new EffectSystemMessage
             {
-                EffectSprite = spritename,
+                EffectSprite = Spritename,
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(1),
                 Size = new Vector2(ray.Distance, 1f),

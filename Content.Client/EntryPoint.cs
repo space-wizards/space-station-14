@@ -49,6 +49,8 @@ namespace Content.Client
             factory.RegisterIgnore("Material");
             factory.RegisterIgnore("Stack");
 
+            factory.RegisterIgnore("Species");
+
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
             factory.Register<ClientStorageComponent>();

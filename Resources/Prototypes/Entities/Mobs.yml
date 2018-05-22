@@ -32,6 +32,10 @@
 
   - type: Input
     context: "human"
+    
+  - type: Species
+    Template: Human
+  - type: Damageable
 
 - type: entity
   id: MobObserver

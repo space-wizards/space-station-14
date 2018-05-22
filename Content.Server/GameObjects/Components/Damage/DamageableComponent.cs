@@ -31,8 +31,8 @@ namespace Content.Server.GameObjects
         /// </summary>
         public ResistanceSet Resistances { get; private set; }
 
-        Dictionary<DamageType, int> CurrentDamage = new Dictionary<DamageType, int>();
-        Dictionary<DamageType, List<int>> Thresholds = new Dictionary<DamageType, List<int>>();
+        public Dictionary<DamageType, int> CurrentDamage = new Dictionary<DamageType, int>();
+        Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
 
@@ -53,9 +53,10 @@ namespace Content.Server.GameObjects
         {
             base.Initialize();
             InitializeDamageType(DamageType.Total);
-            if (Owner is IOnDamageBehavior damageBehavior)
+
+            foreach (var damagebehavior in Owner.GetAllComponents<IOnDamageBehavior>())
             {
-                AddThresholdsFrom(damageBehavior);
+                AddThresholdsFrom(damagebehavior);
             }
 
             RecalculateComponentThresholds();
@@ -111,11 +112,12 @@ namespace Content.Server.GameObjects
 
             int changeSign = Math.Sign(change);
 
-            foreach (int value in Thresholds[damageType])
+            foreach (var threshold in Thresholds[damageType])
             {
+                var value = threshold.Value;
                 if (((value * changeSign) > (oldValue * changeSign)) && ((value * changeSign) <= (CurrentDamage[damageType] * changeSign)))
                 {
-                    var args = new DamageThresholdPassedEventArgs(new DamageThreshold(damageType, value), (changeSign > 0));
+                    var args = new DamageThresholdPassedEventArgs(threshold, (changeSign > 0));
                     DamageThresholdPassed?.Invoke(this, args);
                 }
             }
@@ -140,11 +142,13 @@ namespace Content.Server.GameObjects
 
             foreach (DamageThreshold threshold in thresholds)
             {
-                if (!Thresholds[threshold.DamageType].Contains(threshold.Value))
+                if (!Thresholds[threshold.DamageType].Contains(threshold))
                 {
-                    Thresholds[threshold.DamageType].Add(threshold.Value);
+                    Thresholds[threshold.DamageType].Add(threshold);
                 }
             }
+
+            DamageThresholdPassed += onDamageBehavior.OnDamageThresholdPassed;
         }
 
         void InitializeDamageType(DamageType damageType)
@@ -152,49 +156,8 @@ namespace Content.Server.GameObjects
             if (!CurrentDamage.ContainsKey(damageType))
             {
                 CurrentDamage.Add(damageType, 0);
-                Thresholds.Add(damageType, new List<int>());
+                Thresholds.Add(damageType, new List<DamageThreshold>());
             }
-        }
-    }
-
-    public struct DamageThreshold
-    {
-        public DamageType DamageType { get; }
-        public int Value { get; }
-
-        public DamageThreshold(DamageType damageType, int value)
-        {
-            DamageType = damageType;
-            Value = value;
-        }
-
-        public override bool Equals(Object obj)
-        {
-            return obj is DamageThreshold && this == (DamageThreshold)obj;
-        }
-        public override int GetHashCode()
-        {
-            return DamageType.GetHashCode() ^ Value.GetHashCode();
-        }
-        public static bool operator ==(DamageThreshold x, DamageThreshold y)
-        {
-            return x.DamageType == y.DamageType && x.Value == y.Value;
-        }
-        public static bool operator !=(DamageThreshold x, DamageThreshold y)
-        {
-            return !(x == y);
-        }
-    }
-
-    public class DamageThresholdPassedEventArgs : EventArgs
-    {
-        public DamageThreshold DamageThreshold { get; }
-        public bool Passed { get; }
-
-        public DamageThresholdPassedEventArgs(DamageThreshold threshold, bool passed)
-        {
-            DamageThreshold = threshold;
-            Passed = passed;
         }
     }
 }

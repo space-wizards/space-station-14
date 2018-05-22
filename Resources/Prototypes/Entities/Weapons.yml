@@ -9,6 +9,8 @@
   - type: Icon
     texture: Objects/gun.png
   - type: HitscanWeapon
+    damage: 30
+    sprite: "Objects/laser.png"
   - type: Item
     Size: 24
 

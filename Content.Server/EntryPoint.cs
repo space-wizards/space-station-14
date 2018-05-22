@@ -116,6 +116,7 @@ namespace Content.Server
             factory.RegisterIgnore("ConstructionGhost");
 
             factory.Register<MindComponent>();
+            factory.Register<SpeciesComponent>();
         }
 
         /// <inheritdoc />

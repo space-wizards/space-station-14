@@ -166,10 +166,9 @@ namespace Content.Server.GameObjects.EntitySystems
             var item = hands.GetActiveHand?.Owner;
 
 
-            if (!MobCanInteract(player))
+            if (!ActionBlockerSystem.CanInteract(player))
                 return;
-            //TODO: Mob status code that allows or rejects interactions based on current mob status
-            //Check if client should be able to see that object to click on it in the first place, prevent using locaters by firing a laser or something
+            //TODO: Check if client should be able to see that object to click on it in the first place, prevent using locaters by firing a laser or something
 
 
             //Clicked on empty space behavior, try using ranged attack
@@ -225,15 +224,6 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 Interaction(player, attacked);
             }
-        }
-
-        /// <summary>
-        /// TODO function for blocking activity based on mob status
-        /// </summary>
-        /// <returns></returns>
-        private static bool MobCanInteract(IEntity user)
-        {
-            return true; //Hook into future planned mob status system
         }
 
         /// <summary>
@@ -312,7 +302,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="used"></param>
         public static void TryUseInteraction(IEntity user, IEntity used)
         {
-            if (user != null && used != null && MobCanInteract(user))
+            if (user != null && used != null && ActionBlockerSystem.CanUse(user))
             {
                 UseInteraction(user, used);
             }
