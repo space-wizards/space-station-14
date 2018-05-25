@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
+using Content.Shared.Input;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Server.Interfaces.Player;
@@ -39,6 +40,10 @@ namespace Content.Server.GameObjects
 
         // Mostly arbitrary.
         public const float PICKUP_RANGE = 2;
+
+        private InputCommand SwapHandsCommand;
+        private InputCommand DropCommand;
+        private InputCommand ActivateItemInHandCommand;
 
         public override void ExposeData(EntitySerializer serializer)
         {
@@ -256,6 +261,7 @@ namespace Content.Server.GameObjects
         {
             base.HandleMessage(message, netChannel, component);
 
+            IPlayerInput input;
             switch (message)
             {
                 case ClientChangedHandMsg msg:
@@ -284,27 +290,40 @@ namespace Content.Server.GameObjects
                     }
 
                 //Boundkeychangedmsg only works for the player entity and doesn't need any extra verification
-                case BoundKeyChangedMsg msg:
-                    if (msg.State != BoundKeyState.Down)
-                        return;
-                    switch (msg.Function)
-                    {
-                        case BoundKeyFunctions.SwitchHands:
-                            SwapHands();
-                            break;
-                        case BoundKeyFunctions.Drop:
-                            Drop(ActiveIndex);
-                            break;
-                        case BoundKeyFunctions.ActivateItemInHand:
-                            var used = GetActiveHand?.Owner;
-                            if (used != null)
-                            {
-                                InteractionSystem.TryUseInteraction(Owner, used);
-                            }
-                            break;
-                    }
+                case PlayerAttachedMsg msg:
+                    InitInputCommands();
+                    input = msg.NewPlayer.Input;
+                    input.SetCommand(ContentKeyFunctions.SwapHands, SwapHandsCommand);
+                    input.SetCommand(ContentKeyFunctions.Drop, DropCommand);
+                    input.SetCommand(ContentKeyFunctions.ActivateItemInHand, ActivateItemInHandCommand);
+                    break;
+
+                case PlayerDetachedMsg msg:
+                    input = msg.OldPlayer.Input;
+                    input.SetCommand(ContentKeyFunctions.SwapHands, null);
+                    input.SetCommand(ContentKeyFunctions.Drop, null);
+                    input.SetCommand(ContentKeyFunctions.ActivateItemInHand, null);
                     break;
             }
+        }
+
+        private void InitInputCommands()
+        {
+            if (SwapHandsCommand != null)
+            {
+                return;
+            }
+
+            SwapHandsCommand = InputCommand.FromDelegate(SwapHands);
+            DropCommand = InputCommand.FromDelegate(() => Drop(ActiveIndex));
+            ActivateItemInHandCommand = InputCommand.FromDelegate(() =>
+            {
+                var used = GetActiveHand?.Owner;
+                if (used != null)
+                {
+                    InteractionSystem.TryUseInteraction(Owner, used);
+                }
+            });
         }
     }
 }
