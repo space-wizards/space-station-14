@@ -90,12 +90,15 @@ namespace Content.Server
         }
 
         /// <inheritdoc />
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            _server.RunLevelChanged -= HandleRunLevelChanged;
-            _players.PlayerStatusChanged -= HandlePlayerStatusChanged;
+            if (disposing)
+            {
+                _server.RunLevelChanged -= HandleRunLevelChanged;
+                _players.PlayerStatusChanged -= HandlePlayerStatusChanged;
+            }
 
-            base.Dispose();
+            base.Dispose(disposing);
         }
 
         private static void HandleRunLevelChanged(object sender, RunLevelChangedEventArgs args)
@@ -109,7 +112,7 @@ namespace Content.Server
 
                     var mapLoader = IoCManager.Resolve<IMapLoader>();
                     var mapMan = IoCManager.Resolve<IMapManager>();
-                    
+
                     var startTime = timing.RealTime;
                     {
                         var newMap = mapMan.CreateMap(new MapId(2));
