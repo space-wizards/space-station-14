@@ -2,7 +2,7 @@ version: 1 # Not used right now, whatever.
 binds:
 - function: SwapHands
   key: Tab
-  type: Toggle
+  type: State
 - function: Drop
   key: Q
   type: State
