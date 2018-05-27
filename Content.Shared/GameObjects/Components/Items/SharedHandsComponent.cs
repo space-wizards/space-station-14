@@ -13,7 +13,7 @@ namespace Content.Shared.GameObjects
     }
 
     // The IDs of the items get synced over the network.
-    [Serializable]
+    [Serializable, NetSerializable]
     public class HandsComponentState : ComponentState
     {
         public readonly Dictionary<string, EntityUid> Hands;

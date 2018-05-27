@@ -1,5 +1,7 @@
 ﻿using Content.Shared.GameObjects;
+using Content.Shared.Input;
 using SS14.Client.GameObjects;
+using SS14.Client.Interfaces.Input;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Client.UserInterface.CustomControls;
@@ -25,7 +27,8 @@ namespace Content.Client.GameObjects
     {
         private InventoryWindow Window;
         private string TemplateName = "HumanInventory"; //stored for serialization purposes
-        public event EventHandler<BoundKeyChangedMessage> OnCharacterMenuKey;
+
+        private InputCommand OpenMenuCommand;
 
         public override void OnRemove()
         {
@@ -39,12 +42,14 @@ namespace Content.Client.GameObjects
             base.ExposeData(serializer);
 
             Window = new InventoryWindow(this);
+            OpenMenuCommand = InputCommand.FromDelegate(() => { Window.AddToScreen(); Window.Open(); });
             serializer.DataField(ref TemplateName, "Template", "HumanInventory");
             Window.CreateInventory(TemplateName);
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
+            var inputMgr = IoCManager.Resolve<IInputManager>();
             switch (message)
             {
                 //Updates what we are storing in UI slots
@@ -58,30 +63,14 @@ namespace Content.Client.GameObjects
                         Window.RemoveFromSlot(msg);
                     }
                     break;
-            }
-        }
 
-        /// <summary>
-        /// Register a hotkey to open the character menu with
-        /// </summary>
-        public override void Initialize()
-        {
-            base.Initialize();
-            OnCharacterMenuKey += OpenMenu;
-            IoCManager.Resolve<IEntityManager>().SubscribeEvent<BoundKeyChangedMessage>(OnCharacterMenuKey, this);
-        }
+                case PlayerAttachedMsg _:
+                    inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, OpenMenuCommand);
+                    break;
 
-        /// <summary>
-        /// Hotkey opens the character menu window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="message"></param>
-        private void OpenMenu(object sender, BoundKeyChangedMessage message)
-        {
-            if (message.Function == BoundKeyFunctions.OpenCharacterMenu && message.State == BoundKeyState.Down)
-            {
-                Window.AddToScreen();
-                Window.Open();
+                case PlayerDetachedMsg _:
+                    inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
+                    break;
             }
         }
 

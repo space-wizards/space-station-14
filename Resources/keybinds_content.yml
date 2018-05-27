@@ -1,0 +1,14 @@
+version: 1 # Not used right now, whatever.
+binds:
+- function: SwapHands
+  key: Tab
+  type: State
+- function: Drop
+  key: Q
+  type: State
+- function: ActivateItemInHand
+  key: F
+  type: State
+- function: OpenCharacterMenu
+  key: C
+  type: State
