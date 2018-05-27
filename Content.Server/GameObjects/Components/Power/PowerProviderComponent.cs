@@ -72,18 +72,20 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
             }
 
-            if (storage.CanDeductCharge(Load))
+
+            if (storage.CanDeductCharge(Load * frametime))
             {
                 PowerAllDevices();
-                storage.DeductCharge(Load);
+                storage.DeductCharge(Load * frametime);
                 return;
             }
 
-            var remainingLoad = storage.AvailableCharge();
-            var usedLoad = 0f;
+            var remainingEnergy = storage.AvailableCharge(frametime);
+            var usedEnergy = 0f;
             foreach (var device in DeviceLoadList)
             {
-                if (device.Load > remainingLoad)
+                var deviceLoad = device.Load * frametime;
+                if (deviceLoad > remainingEnergy)
                 {
                     device.ExternalPowered = false;
                     DepoweredDevices.Add(device);
@@ -92,15 +94,15 @@ namespace Content.Server.GameObjects.Components.Power
                 {
                     if (!device.ExternalPowered)
                     {
-                        device.ExternalPowered = true;
                         DepoweredDevices.Remove(device);
+                        device.ExternalPowered = true;
                     }
-                    usedLoad += device.Load;
-                    remainingLoad -= device.Load;
+                    usedEnergy += deviceLoad;
+                    remainingEnergy -= deviceLoad;
                 }
             }
 
-            storage.DeductCharge(usedLoad);
+            storage.DeductCharge(usedEnergy);
         }
         private void PowerAllDevices()
         {

@@ -15,22 +15,26 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "PowerStorage";
 
         /// <summary>
-        /// Maximum amount of energy the internal battery can store
+        ///     Maximum amount of energy the internal battery can store.
+        ///     In Joules.
         /// </summary>
         public float Capacity { get; private set; } = 10000; //arbitrary value replace
 
         /// <summary>
-        /// Energy the battery is currently storing
+        ///     Energy the battery is currently storing.
+        ///     In Joules.
         /// </summary>
         public float Charge { get; private set; } = 0;
 
         /// <summary>
-        /// Rate at which energy will be taken to charge internal battery
+        ///     Rate at which energy will be taken to charge internal battery.
+        ///     In Watts.
         /// </summary>
         public float ChargeRate { get; private set; } = 1000;
 
         /// <summary>
-        /// Rate at which energy will be distributed to the powernet if needed
+        ///     Rate at which energy will be distributed to the powernet if needed.
+        ///     In Watts.
         /// </summary>
         public float DistributionRate { get; private set; } = 1000;
 
@@ -124,47 +128,33 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void DeductCharge(float todeduct)
         {
-            Charge = Math.Min(0, Charge - todeduct);
+            Charge = Math.Max(0, Charge - todeduct);
         }
 
-        /// <summary>
-        /// Returns all possible charge available from the energy storage
-        /// </summary>
-        public float RequestAllCharge()
+        public void AddCharge(float charge)
         {
-            return Math.Min(ChargeRate, Capacity - Charge);
-        }
-
-        /// <summary>
-        /// Returns the charge available from the energy storage
-        /// </summary>
-        public float RequestCharge()
-        {
-            return Math.Min(ChargeRate, Capacity - Charge);
+            Charge = Math.Min(Capacity, Charge + charge);
         }
 
         /// <summary>
         /// Returns the charge available from the energy storage
         /// </summary>
-        public float AvailableCharge()
+        public float RequestCharge(float frameTime)
         {
-            return Math.Min(DistributionRate, Charge);
+            return Math.Min(ChargeRate * frameTime, Capacity - Charge);
         }
 
         /// <summary>
-        /// Gives the storage one full tick of charging its energy storage
+        /// Returns the charge available from the energy storage
         /// </summary>
-        public void ChargePowerTick()
+        public float AvailableCharge(float frameTime)
         {
-            Charge = Math.Min(Charge + ChargeRate, Capacity);
+            return Math.Min(DistributionRate * frameTime, Charge);
         }
 
-        /// <summary>
-        /// Takes from the storage one full tick of energy
-        /// </summary>
-        public void RetrievePassiveStorage()
+        public void ChargePowerTick(float frameTime)
         {
-            Charge = Math.Min(Charge - DistributionRate, 0);
+            AddCharge(RequestCharge(frameTime));
         }
 
         /// <summary>

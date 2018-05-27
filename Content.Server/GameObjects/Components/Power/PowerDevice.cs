@@ -67,7 +67,8 @@ namespace Content.Server.GameObjects.Components.Power
 
         private float _load = 100; //arbitrary magic number to start
         /// <summary>
-        /// Power load from this entity
+        ///     Power load from this entity.
+        ///     In Watts.
         /// </summary>
         public float Load
         {

@@ -20,153 +20,147 @@ namespace Content.Server.GameObjects.Components.Power
             Uid = powerSystem.NewUid();
         }
 
+        /// <summary>
+        ///     Unique identifier per powernet, used for debugging mostly.
+        /// </summary>
         public int Uid { get; }
 
         /// <summary>
-        /// The entities that make up the powernet's physical location and allow powernet connection
+        ///     The entities that make up the powernet's physical location and allow powernet connection
         /// </summary>
-        public List<PowerTransferComponent> WireList { get; set; } = new List<PowerTransferComponent>();
+        public readonly List<PowerTransferComponent> WireList = new List<PowerTransferComponent>();
 
         /// <summary>
-        /// Entities that connect directly to the powernet through PTC above to add power or add power load
+        ///     Entities that connect directly to the powernet through <see cref="PowerTransferComponent" /> above to add power or add power load
         /// </summary>
-        public List<PowerNodeComponent> NodeList { get; set; } = new List<PowerNodeComponent>();
+        public readonly List<PowerNodeComponent> NodeList = new List<PowerNodeComponent>();
 
         /// <summary>
-        /// Subset of nodelist that adds a continuous power supply to the network
+        ///     Subset of nodelist that adds a continuous power supply to the network
         /// </summary>
-        public Dictionary<PowerGeneratorComponent, float> GeneratorList { get; set; } = new Dictionary<PowerGeneratorComponent, float>();
+        private readonly Dictionary<PowerGeneratorComponent, float> GeneratorList = new Dictionary<PowerGeneratorComponent, float>();
 
         /// <summary>
-        /// Subset of nodelist that draw power, stores information on current continuous powernet load
+        ///     Subset of nodelist that draw power, stores information on current continuous powernet load
         /// </summary>
-        public SortedSet<PowerDeviceComponent> DeviceLoadList { get; set; } = new SortedSet<PowerDeviceComponent>(new DevicePriorityCompare());
+        private readonly SortedSet<PowerDeviceComponent> DeviceLoadList = new SortedSet<PowerDeviceComponent>(new DevicePriorityCompare());
 
         /// <summary>
-        /// Comparer that keeps the device dictionary sorted by powernet priority
+        ///     All the devices that have been depowered by this powernet or depowered prior to being absorted into this powernet
         /// </summary>
-        public class DevicePriorityCompare : IComparer<PowerDeviceComponent>
-        {
-            public int Compare(PowerDeviceComponent x, PowerDeviceComponent y)
-            {
-                int compare = y.Priority.CompareTo(x.Priority);
-
-                //If the comparer returns 0 sortedset will believe it is a duplicate and return 0, so return 1 instead
-                if (compare == 0 && !x.Equals(y))
-                {
-                    return 1;
-                }
-                return compare;
-            }
-        }
+        private readonly List<PowerDeviceComponent> DepoweredDevices = new List<PowerDeviceComponent>();
 
         /// <summary>
-        /// Priority that a device will receive power if powernet cannot supply every device
+        ///     A list of the energy storage components that will feed the powernet if necessary, and if there is enough power feed itself
         /// </summary>
-        public enum Priority
-        {
-            Necessary,
-            High,
-            Medium,
-            Low,
-            Provider,
-            Unnecessary
-        }
+        private readonly List<PowerStorageComponent> PowerStorageSupplierList = new List<PowerStorageComponent>();
 
         /// <summary>
-        /// All the devices that have been depowered by this powernet or depowered prior to being absorted into this powernet
+        ///     A list of energy storage components that will never feed the powernet, will try to draw energy to feed themselves if possible
         /// </summary>
-        public List<PowerDeviceComponent> DepoweredDevices { get; set; } = new List<PowerDeviceComponent>();
+        private readonly List<PowerStorageComponent> PowerStorageConsumerList = new List<PowerStorageComponent>();
 
         /// <summary>
-        /// A list of the energy storage components that will feed the powernet if necessary, and if there is enough power feed itself
-        /// </summary>
-        public List<PowerStorageComponent> PowerStorageSupplierlist { get; set; } = new List<PowerStorageComponent>();
-
-        /// <summary>
-        /// A list of energy storage components that will never feed the powernet, will try to draw energy to feed themselves if possible
-        /// </summary>
-        public List<PowerStorageComponent> PowerStorageConsumerlist { get; set; } = new List<PowerStorageComponent>();
-
-        /// <summary>
-        /// Static counter of all continuous load placed from devices on this power network
+        ///     Static counter of all continuous load placed from devices on this power network.
+        ///     In Watts.
         /// </summary>
         public float Load { get; private set; } = 0;
 
         /// <summary>
-        /// Static counter of all continiuous supply from generators on this power network
+        ///     Static counter of all continiuous supply from generators on this power network.
+        ///     In Watts.
         /// </summary>
         public float Supply { get; private set; } = 0;
 
         /// <summary>
-        /// Variable that causes powernet to be regenerated from its wires during the next update cycle
+        ///     Variable that causes powernet to be regenerated from its wires during the next update cycle.
         /// </summary>
         public bool Dirty { get; set; } = false;
 
-        public void Update(float frametime)
+        public void Update(float frameTime)
         {
-            float activesupply = Supply;
-            float activeload = Load;
+            float activesupply = Supply * frameTime;
+            float activeload = Load * frameTime;
 
-            float storagedemand = 0;
+            float storageconsumerdemand = 0;
 
-            foreach (var supply in PowerStorageConsumerlist)
+            foreach (var supply in PowerStorageConsumerList)
             {
-                storagedemand += supply.RequestCharge();
+                storageconsumerdemand += supply.RequestCharge(frameTime);
             }
 
-            float passivesupply = 0;
-            float passivedemand = 0;
+            float storagesupply = 0;
+            float storagesupplierdemand = 0;
 
-            foreach (var supply in PowerStorageSupplierlist)
+            foreach (var supply in PowerStorageSupplierList)
             {
-                passivesupply += supply.AvailableCharge();
-                passivedemand += supply.RequestCharge();
+                storagesupply += supply.AvailableCharge(frameTime);
+                storagesupplierdemand += supply.RequestCharge(frameTime);
             }
 
 
             //If we have enough power to feed all load and storage demand, then feed everything
-            if (activesupply > activeload + storagedemand + passivedemand)
+            if (activesupply > activeload + storageconsumerdemand + storagesupplierdemand)
             {
                 PowerAllDevices();
-                ChargeActiveStorage();
-                ChargePassiveStorage();
+                ChargeStorageConsumers(frameTime);
+                ChargeStorageSuppliers(frameTime);
+                return;
             }
             //We don't have enough power for the storage powernet suppliers, ignore powering them
-            else if (activesupply > activeload + storagedemand)
+            else if (activesupply > activeload + storageconsumerdemand)
             {
                 PowerAllDevices();
-                ChargeActiveStorage();
+                ChargeStorageConsumers(frameTime);
+                return;
             }
-            //We require the storage powernet suppliers to power the remaining storage components and device load
-            else if (activesupply + passivesupply > activeload + storagedemand)
-            {
-                PowerAllDevices();
-                ChargeActiveStorage();
-                RetrievePassiveStorage();
-            }
-            //We cant afford to fund the storage components, so lets try to power the basic load using our supply and storage supply
-            else if (activesupply + passivesupply > activeload)
-            {
-                PowerAllDevices();
-                RetrievePassiveStorage();
-            }
-            //We cant even cover the basic device load, start disabling devices in order of priority until the remaining load is lowered enough to be met
-            else if (activesupply + passivesupply < activeload)
-            {
-                PowerAllDevices(); //This merely makes our inevitable betrayal all the sweeter
-                RetrievePassiveStorage();
 
-                var depowervalue = activeload - (activesupply + passivesupply);
 
-                //Providers use same method to recreate functionality
-                foreach (var device in DeviceLoadList)
+            float totalRemaining = activesupply + storagesupply;
+
+            foreach (var device in DeviceLoadList)
+            {
+                var deviceLoad = device.Load * frameTime;
+                if (deviceLoad > totalRemaining)
                 {
                     device.ExternalPowered = false;
                     DepoweredDevices.Add(device);
-                    depowervalue -= device.Load;
-                    if (depowervalue < 0)
-                        break;
+                }
+                else
+                {
+                    totalRemaining -= deviceLoad;
+                    if (!device.ExternalPowered)
+                    {
+                        DepoweredDevices.Remove(device);
+                        device.ExternalPowered = true;
+                    }
+                }
+            }
+
+            // What we have left goes into storage consumers.
+            foreach (var consumer in PowerStorageConsumerList)
+            {
+                if (totalRemaining < 0)
+                {
+                    break;
+                }
+                var demand = consumer.RequestCharge(frameTime);
+                var taken = Math.Min(demand, totalRemaining);
+                totalRemaining -= taken;
+                consumer.AddCharge(taken);
+            }
+
+            var supplierUsed = storagesupply - totalRemaining;
+
+            foreach (var supplier in PowerStorageSupplierList)
+            {
+                var load = supplier.AvailableCharge(frameTime);
+                var added = Math.Min(load, supplierUsed);
+                supplierUsed -= added;
+                supplier.DeductCharge(added);
+                if (supplierUsed <= 0)
+                {
+                    return;
                 }
             }
         }
@@ -180,27 +174,19 @@ namespace Content.Server.GameObjects.Components.Power
             DepoweredDevices.Clear();
         }
 
-        private void ChargeActiveStorage()
+        private void ChargeStorageConsumers(float frametime)
         {
-            foreach (var storage in PowerStorageConsumerlist)
+            foreach (var storage in PowerStorageConsumerList)
             {
-                storage.ChargePowerTick();
+                storage.ChargePowerTick(frametime);
             }
         }
 
-        private void ChargePassiveStorage()
+        private void ChargeStorageSuppliers(float frametime)
         {
-            foreach (var storage in PowerStorageSupplierlist)
+            foreach (var storage in PowerStorageSupplierList)
             {
-                storage.ChargePowerTick();
-            }
-        }
-
-        private void RetrievePassiveStorage()
-        {
-            foreach (var storage in PowerStorageSupplierlist)
-            {
-                storage.ChargePowerTick();
+                storage.ChargePowerTick(frametime);
             }
         }
 
@@ -217,8 +203,8 @@ namespace Content.Server.GameObjects.Components.Power
             GeneratorList.Clear();
             DeviceLoadList.Clear();
             DepoweredDevices.Clear();
-            PowerStorageSupplierlist.Clear();
-            PowerStorageConsumerlist.Clear();
+            PowerStorageSupplierList.Clear();
+            PowerStorageConsumerList.Clear();
 
             RemoveFromSystem();
         }
@@ -259,11 +245,11 @@ namespace Content.Server.GameObjects.Components.Power
             DepoweredDevices.AddRange(toMerge.DepoweredDevices);
             toMerge.DepoweredDevices.Clear();
 
-            PowerStorageSupplierlist.AddRange(toMerge.PowerStorageSupplierlist);
-            toMerge.PowerStorageSupplierlist.Clear();
+            PowerStorageSupplierList.AddRange(toMerge.PowerStorageSupplierList);
+            toMerge.PowerStorageSupplierList.Clear();
 
-            PowerStorageConsumerlist.AddRange(toMerge.PowerStorageConsumerlist);
-            toMerge.PowerStorageConsumerlist.Clear();
+            PowerStorageConsumerList.AddRange(toMerge.PowerStorageConsumerList);
+            toMerge.PowerStorageConsumerList.Clear();
 
             toMerge.RemoveFromSystem();
         }
@@ -366,25 +352,25 @@ namespace Content.Server.GameObjects.Components.Power
         public void AddPowerStorage(PowerStorageComponent storage)
         {
             if (storage.ChargePowernet)
-                PowerStorageSupplierlist.Add(storage);
+                PowerStorageSupplierList.Add(storage);
             else
-                PowerStorageConsumerlist.Add(storage);
+                PowerStorageConsumerList.Add(storage);
         }
 
         //How do I even call this? TODO: fix
         public void UpdateStorageType(PowerStorageComponent storage)
         {
             //If our chargepowernet settings change we need to tell the powernet of this new setting and remove traces of our old setting
-            if (PowerStorageSupplierlist.Contains(storage))
-                PowerStorageSupplierlist.Remove(storage);
-            if (PowerStorageConsumerlist.Contains(storage))
-                PowerStorageConsumerlist.Remove(storage);
+            if (PowerStorageSupplierList.Contains(storage))
+                PowerStorageSupplierList.Remove(storage);
+            if (PowerStorageConsumerList.Contains(storage))
+                PowerStorageConsumerList.Remove(storage);
 
             //Apply new setting
             if (storage.ChargePowernet)
-                PowerStorageSupplierlist.Add(storage);
+                PowerStorageSupplierList.Add(storage);
             else
-                PowerStorageConsumerlist.Add(storage);
+                PowerStorageConsumerList.Add(storage);
         }
 
         /// <summary>
@@ -392,15 +378,46 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void RemovePowerStorage(PowerStorageComponent storage)
         {
-            if (PowerStorageSupplierlist.Contains(storage))
+            if (PowerStorageSupplierList.Contains(storage))
             {
-                PowerStorageSupplierlist.Remove(storage);
+                PowerStorageSupplierList.Remove(storage);
             }
-            if (PowerStorageConsumerlist.Contains(storage))
+            if (PowerStorageConsumerList.Contains(storage))
             {
-                PowerStorageSupplierlist.Remove(storage);
+                PowerStorageSupplierList.Remove(storage);
             }
         }
         #endregion Registration
+
+        /// <summary>
+        ///     Priority that a device will receive power if powernet cannot supply every device
+        /// </summary>
+        public enum Priority
+        {
+            Necessary,
+            High,
+            Medium,
+            Low,
+            Provider,
+            Unnecessary
+        }
+
+        /// <summary>
+        ///     Comparer that keeps the device dictionary sorted by powernet priority
+        /// </summary>
+        public class DevicePriorityCompare : IComparer<PowerDeviceComponent>
+        {
+            public int Compare(PowerDeviceComponent x, PowerDeviceComponent y)
+            {
+                int compare = y.Priority.CompareTo(x.Priority);
+
+                //If the comparer returns 0 sortedset will believe it is a duplicate and return 0, so return 1 instead
+                if (compare == 0 && !x.Equals(y))
+                {
+                    return 1;
+                }
+                return compare;
+            }
+        }
     }
 }
