@@ -19,12 +19,12 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 if (args.Powered)
                 {
-                    sprite.LayerSetTexture(0, "Objects/wall_light.png");
+                    sprite.LayerSetState(0, "on");
                     light.State = LightState.On;
                 }
                 else
                 {
-                    sprite.LayerSetTexture(0, "Objects/wall_light_off.png");
+                    sprite.LayerSetState(0, "off");
                     light.State = LightState.Off;
                 }
             };

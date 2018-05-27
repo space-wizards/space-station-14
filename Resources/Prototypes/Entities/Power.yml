@@ -55,9 +55,9 @@
   - type: Icon
     texture: Objects/provider.png
   - type: PowerProvider
-    Range: 5
-    Priority: Provider
-    Load: 0
+    range: 5
+    priority: Provider
+    load: 0
 
 - type: entity
   parent: WPPnobattery
@@ -66,10 +66,10 @@
   description: Supplies power at range, has a backup battery just in case
   components:
   - type: PowerStorage
-    Capacity: 1000
-    Charge: 1000
-    ChargeRate: 200
-    ChargePowernet: false
+    capacity: 1000
+    charge: 1000
+    chargerate: 200
+    chargepowernet: false
 
 
 - type: entity
@@ -86,11 +86,11 @@
   - type: Icon
     texture: Objects/storage.png
   - type: PowerStorage
-    Capacity: 3000
-    Charge: 1000
-    ChargeRate: 200
-    DistributionRate: 400
-    ChargePowernet: true
+    capacity: 3000
+    charge: 1000
+    chargerate: 200
+    distributionrate: 400
+    chargepowernet: true
 
 - type: entity
   id: WiredMachine
@@ -106,9 +106,9 @@
   - type: Icon
     texture: Objects/wiredmachine.png
   - type: PowerDevice
-    Drawtype: Node
-    Load: 100
-    Priority: High
+    drawtype: Node
+    load: 100
+    priority: High
 
 - type: entity
   id: WirelessMachine
@@ -124,6 +124,6 @@
   - type: Icon
     texture: Objects/wirelessmachine.png
   - type: PowerDevice
-    Drawtype: Both
-    Load: 200
-    Priority: Low
+    drawtype: Both
+    load: 200
+    priority: Low

@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         public override void LoadParameters(YamlMappingNode mapping)
         {
-            if (mapping.TryGetNode("Supply", out YamlNode node))
+            if (mapping.TryGetNode("supply", out YamlNode node))
             {
                 Supply = node.AsFloat();
             }

@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public override void OnRemove()
+        public override void Shutdown()
         {
             if (Owner.TryGetComponent(out PowerNodeComponent node))
             {
@@ -143,20 +143,25 @@ namespace Content.Server.GameObjects.Components.Power
                 node.OnPowernetRegenerate -= PowernetRegenerate;
             }
 
-            base.OnRemove();
+            if (Provider != null)
+            {
+                Provider.RemoveDevice(this);
+            }
+
+            base.Shutdown();
         }
 
         public override void LoadParameters(YamlMappingNode mapping)
         {
-            if (mapping.TryGetNode("Drawtype", out YamlNode node))
+            if (mapping.TryGetNode("drawtype", out YamlNode node))
             {
                 DrawType = node.AsEnum<DrawTypes>();
             }
-            if (mapping.TryGetNode("Load", out node))
+            if (mapping.TryGetNode("load", out node))
             {
                 Load = node.AsFloat();
             }
-            if (mapping.TryGetNode("Priority", out node))
+            if (mapping.TryGetNode("priority", out node))
             {
                 Priority = node.AsEnum<Powernet.Priority>();
             }

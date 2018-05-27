@@ -303,7 +303,7 @@ namespace Content.Server.GameObjects.Components.Power
             else
             {
                 var name = device.Owner.Prototype.Name;
-                Logger.Info(String.Format("We tried to remove a device twice from the same powernet somehow, prototype {0}", name));
+                Logger.Info("We tried to remove a device twice from the same powernet somehow, prototype {0}", name);
             }
         }
 

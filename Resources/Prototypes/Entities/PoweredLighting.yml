@@ -1,17 +1,28 @@
 - type: entity
   name: Light
   id: poweredlight
-  parent: __engine_wall_light
   components:
+  - type: Transform
+  - type: Clickable
   # So we can click on it for deletion.
   - type: BoundingBox
   - type: Sprite
-    texture: Objects/wall_light_off.png
+    sprite: Objects/lighting.rsi
+    state: off
+
+  - type: Icon
+    sprite: Objects/lighting.rsi
+    state: off
+
+  - type: PointLight
+    state: Off
+    radius: 8
+    energy: 1.2
+    offset: "0, -16"
+    color: "#DCDCC6"
 
   - type: PowerDevice
-    load: 1
+    load: 50
     priority: Low
 
   - type: PoweredLight
-  - type: PointLight
-    state: Off

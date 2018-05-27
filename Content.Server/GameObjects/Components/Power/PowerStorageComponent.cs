@@ -60,23 +60,23 @@ namespace Content.Server.GameObjects.Components.Power
 
         public override void LoadParameters(YamlMappingNode mapping)
         {
-            if (mapping.TryGetNode("Capacity", out YamlNode node))
+            if (mapping.TryGetNode("capacity", out YamlNode node))
             {
                 Capacity = node.AsFloat();
             }
-            if (mapping.TryGetNode("Charge", out node))
+            if (mapping.TryGetNode("charge", out node))
             {
                 Charge = node.AsFloat();
             }
-            if (mapping.TryGetNode("ChargeRate", out node))
+            if (mapping.TryGetNode("chargerate", out node))
             {
                 ChargeRate = node.AsFloat();
             }
-            if (mapping.TryGetNode("DistributionRate", out node))
+            if (mapping.TryGetNode("distributionrate", out node))
             {
                 DistributionRate = node.AsFloat();
             }
-            if (mapping.TryGetNode("ChargePowernet", out node))
+            if (mapping.TryGetNode("chargepowernet", out node))
             {
                 _chargepowernet = node.AsBool();
             }

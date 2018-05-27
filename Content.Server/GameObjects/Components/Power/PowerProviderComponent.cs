@@ -31,27 +31,38 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public SortedSet<PowerDeviceComponent> DeviceLoadList = new SortedSet<PowerDeviceComponent>(new Powernet.DevicePriorityCompare());
 
+        /// <summary>
+        ///     List of devices in range that we "advertised" to.
+        /// </summary>
+        public HashSet<PowerDeviceComponent> AdvertisedDevices = new HashSet<PowerDeviceComponent>();
+
         public List<PowerDeviceComponent> DepoweredDevices = new List<PowerDeviceComponent>();
 
         public override Powernet.Priority Priority { get; protected set; } = Powernet.Priority.Provider;
 
-        public override void OnRemove()
+        public PowerProviderComponent()
         {
-            base.OnRemove();
+            Load = 0;
+        }
 
-            foreach (var device in DeviceLoadList)
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            foreach (var device in AdvertisedDevices.ToList())
             {
                 device.RemoveProvider(this);
             }
+            AdvertisedDevices.Clear();
         }
 
         public override void LoadParameters(YamlMappingNode mapping)
         {
-            if (mapping.TryGetNode("Range", out YamlNode node))
+            if (mapping.TryGetNode("range", out YamlNode node))
             {
                 PowerRange = node.AsInt();
             }
-            if (mapping.TryGetNode("Priority", out node))
+            if (mapping.TryGetNode("priority", out node))
             {
                 Priority = node.AsEnum<Powernet.Priority>();
             }
@@ -139,7 +150,11 @@ namespace Content.Server.GameObjects.Components.Power
                 //Make sure the device can accept power providers to give it power
                 if (device.DrawType == DrawTypes.Provider || device.DrawType == DrawTypes.Both)
                 {
-                    device.AddProvider(this);
+                    if (!AdvertisedDevices.Contains(device))
+                    {
+                        device.AddProvider(this);
+                        AdvertisedDevices.Add(device);
+                    }
                 }
             }
         }
@@ -150,10 +165,11 @@ namespace Content.Server.GameObjects.Components.Power
             base.PowernetDisconnect(sender, eventarg);
 
             //We don't want to make the devices under us think we're still a valid provider if we have no powernet to connect to
-            foreach (var device in DeviceLoadList.ToList())
+            foreach (var device in AdvertisedDevices.ToList())
             {
                 device.RemoveProvider(this);
             }
+            AdvertisedDevices.Clear();
         }
 
         /// <summary>
@@ -194,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Power
             else
             {
                 var name = device.Owner.Prototype.Name;
-                Logger.Info(String.Format("We tried to remove a device twice from the same {0} somehow, prototype {1}", Name, name));
+                Logger.WarningS("power", "We tried to remove a device twice from the same {0} somehow, prototype {1}", Name, name);
             }
         }
     }
