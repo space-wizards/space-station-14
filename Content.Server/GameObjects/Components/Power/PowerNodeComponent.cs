@@ -51,6 +51,10 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void TryCreatePowernetConnection()
         {
+            if (Parent != null)
+            {
+                return;
+            }
             var _emanager = IoCManager.Resolve<IServerEntityManager>();
             var position = Owner.GetComponent<TransformComponent>().WorldPosition;
             var wires = _emanager.GetEntitiesIntersecting(Owner)
@@ -58,7 +62,13 @@ namespace Content.Server.GameObjects.Components.Power
                         .OrderByDescending(x => (x.GetComponent<TransformComponent>().WorldPosition - position).Length);
             var choose = wires.FirstOrDefault();
             if (choose != null)
-                ConnectToPowernet(choose.GetComponent<PowerTransferComponent>().Parent);
+            {
+                var transfer = choose.GetComponent<PowerTransferComponent>();
+                if (transfer.Parent != null)
+                {
+                    ConnectToPowernet(transfer.Parent);
+                }
+            }
         }
 
         /// <summary>
