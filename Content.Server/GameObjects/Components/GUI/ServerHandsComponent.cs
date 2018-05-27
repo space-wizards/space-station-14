@@ -50,9 +50,12 @@ namespace Content.Server.GameObjects
             base.ExposeData(serializer);
 
             serializer.DataField(ref orderedHands, "hands", new List<string>(0));
-            foreach (var handsname in orderedHands)
+            if (serializer.Reading)
             {
-                AddHand(handsname);
+                foreach (var handsname in orderedHands)
+                {
+                    AddHand(handsname);
+                }
             }
         }
 

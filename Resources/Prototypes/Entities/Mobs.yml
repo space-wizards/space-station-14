@@ -1,4 +1,5 @@
 - type: entity
+  save: false
   name: Urist McHands
   id: HumanMob_Content
   parent: __engine_human

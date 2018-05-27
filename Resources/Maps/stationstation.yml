@@ -1,0 +1,2737 @@
+- &1363196850 grid:
+    settings:
+      csz: 16
+      tsz: &686545570 1
+      sgsz: 1
+    chunks:
+    - &575354035 ind: "-1,0"
+      &2021433458 tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAA==
+    - ind: "-1,-1"
+      tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAA==
+    - ind: "0,-1"
+      tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    - ind: "0,0"
+      tiles: AQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+- entities:
+  - &623125836 type: &1924697326 entity
+    &831805725 id: &2040055387 Wire
+    &1895586930 name: Wire
+    &570320026 components:
+    - type: &1577147404 Transform
+      &2136750520 map: 1
+      grid: 1
+      &172794913 pos: 4.5,3.5
+      &75233749 rot: &1885783477 3.141593
+    - &1693689570
+      type: &1420848703 Clickable
+    - &809774648
+      type: &1724227243 BoundingBox
+    - &1884445100
+      type: &5271897 Sprite
+      &268748452 color: &1184849814 '#FF0000FF'
+    - &585535893
+      type: &741081393 PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,0.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: &2103293244 __engine_wall
+    name: &1353616502 '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,-6
+      rot: 3.141593
+    - type: Clickable
+    - &1941819289
+      type: Sprite
+    - type: BoundingBox
+    - &678053465
+      type: &240772465 Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,4
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,3
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,2
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,1
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,0
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,-1
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,7
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,9
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,-5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,-6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,-5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,9
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,-1
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,0
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,1
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,2
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,3
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,4
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: &675075262 DoorContent
+    name: &302650728 Actual door
+    components:
+    - &894637331
+      type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,4.5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - &1571879074
+      type: BoundingBox
+      &1174114059 aabb: 1,-0.75,2,0.75
+    - type: Collidable
+    - &849614143
+      type: Door
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4,6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4,5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4,4
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -3,6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -2,6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -1,6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 0,6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,-0.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: &568952208 __engine_worktop
+    name: &112663802 '[engine] worktop'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -2.5,4.5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - &1948367855
+      type: BoundingBox
+      aabb: &1339111911 -0.45,-1,0.95,1
+    - type: Collidable
+  - type: entity
+    id: DoorContent
+    name: Actual door
+    components:
+    - &1215664080
+      type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,4.5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+      aabb: 1,-0.75,2,0.75
+    - type: Collidable
+    - type: Door
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 1,6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 2,6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3,6
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3,5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3,4
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_worktop
+    name: '[engine] worktop'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -0.5,4.5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+      aabb: -0.45,-1,0.95,1
+    - type: Collidable
+  - type: entity
+    id: __engine_worktop
+    name: '[engine] worktop'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 1.5,4.5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+      aabb: -0.45,-1,0.95,1
+    - type: Collidable
+  - type: entity
+    id: &1100177411 LaserItem
+    name: &2014269159 LASER
+    components:
+    - type: Sprite
+    - &1473699405
+      type: HitscanWeapon
+    - &919715855
+      type: &1895081465 Item
+      &2079341423 Size: &781629548 24
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -3.015625,3.890625
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - &1680976249
+      type: &1667575459 Physics
+      &1182002758 mass: &901509068 5
+  - type: entity
+    id: LaserItem
+    name: LASER
+    components:
+    - type: Sprite
+    - type: HitscanWeapon
+    - type: Item
+      Size: 24
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -2.015625,3.859375
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: &1089420058 GUNITEM
+    name: &494460102 GUN
+    components:
+    - type: Sprite
+    - &620540391
+      type: ProjectileWeapon
+    - type: Item
+      Size: 24
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -2.890625,4.484375
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: GUNITEM
+    name: GUN
+    components:
+    - type: Sprite
+    - type: ProjectileWeapon
+    - type: Item
+      Size: 24
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -1.984375,4.484375
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: &1094448398 medkit_r
+    name: &1649179403 Medkit
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -0.859375,3.921875
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+  - type: entity
+    id: medkit_r
+    name: Medkit
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -0.921875,4.640625
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+  - type: entity
+    id: MopItem
+    name: Extra-Grip™ Mop
+    components:
+    - type: Sprite
+    - type: Item
+      Size: 10
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 0.015625,3.921875
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: FlashlightLantern
+    name: Lantern
+    components:
+    - type: Sprite
+    - type: &2137301789 PointLight
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 0.046875,4.609375
+      rot: 3.141593
+    - &1280352065
+      type: Item
+      Size: 5
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: IDCardStandard
+    name: Identification Card
+    components:
+    - type: Sprite
+    - type: &667316239 Clothing
+      Size: 5
+      &571080824 Slots:
+      - idcard
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 0.890625,3.921875
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: RadioHeadsetEars
+    name: Headset Radio
+    components:
+    - type: Sprite
+    - type: Clothing
+      Size: 5
+      Slots:
+      - ears
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 0.984375,4.640625
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: BackpackClothing
+    name: Backpack
+    components:
+    - type: Sprite
+    - type: Clothing
+      Size: 5
+      Slots:
+      - back
+    - type: &1037470083 Storage
+      &1362001922 Capacity: 100
+    - &1654814465
+      type: &2042728411 ContainerContainer
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 1.890625,3.796875
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: JanitorUniform
+    name: Janitor Jumpsuit
+    components:
+    - type: Sprite
+    - type: Clothing
+      Size: 5
+      Slots:
+      - innerclothing
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 2.109375,4.546875
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: ShoesItem
+    name: Shoes
+    components:
+    - type: Sprite
+    - type: Clothing
+      Size: 5
+      Slots:
+      - shoes
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 1.546875,4.484375
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: __engine_worktop
+    name: '[engine] worktop'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 1.5,7.5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+      aabb: -0.45,-1,0.95,1
+    - type: Collidable
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,5.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,4.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,7
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,2.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,1.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,7.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,6.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: &1274496676 WirelessMachine
+    name: WirelessMachine
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: &1242113189 3,3
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - &748399486
+      type: &1048603337 PowerDevice
+    - &1036169334
+      type: &1124737362 PowerNode
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,-7
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -6,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -3,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -2,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -1,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 0,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 1,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 2,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 5,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,-8
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,-7
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_worktop
+    name: '[engine] worktop'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -2.5,7.5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+      aabb: -0.45,-1,0.95,1
+    - type: Collidable
+  - type: entity
+    id: __engine_worktop
+    name: '[engine] worktop'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -0.5,7.5
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+      aabb: -0.45,-1,0.95,1
+    - type: Collidable
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,8.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: YellowGloves
+    name: Insulated Gloves
+    components:
+    - type: Sprite
+    - type: Clothing
+      Size: 5
+      Slots:
+      - gloves
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -3.015625,6.796875
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: MesonGlasses
+    name: Optical Meson Scanners
+    components:
+    - type: Sprite
+    - type: Clothing
+      Size: 5
+      Slots:
+      - eyes
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -3.046875,7.484375
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: UtilityBeltClothing
+    name: Utility Belt
+    components:
+    - type: Sprite
+    - type: Clothing
+      Size: 5
+      Slots:
+      - belt
+    - type: Storage
+      Capacity: 30
+    - type: ContainerContainer
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -2.109375,6.765625
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: GasMaskClothing
+    name: Gas Mask
+    components:
+    - type: Sprite
+    - type: Clothing
+      Size: 5
+      Slots:
+      - mask
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -2.234375,7.390625
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: BlueToolboxItem
+    name: Mechanical Toolbox With Handle
+    components:
+    - type: Sprite
+    - &1308184901
+      type: Storage
+      Capacity: 60
+    - type: ContainerContainer
+    - &1008890440
+      type: Item
+      Size: 9999
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -1.109375,6.796875
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: YellowToolboxItem
+    name: Electrical Toolbox With Handle
+    components:
+    - type: Sprite
+    - type: Storage
+      Capacity: 60
+    - type: ContainerContainer
+    - type: Item
+      Size: 9999
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -1.078125,7.578125
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: &385115332 Wirecutter
+    name: Wirecutter
+    components:
+    - type: Wirecutter
+    - type: Sprite
+    - &668781020
+      type: &1052578133 MeleeWeapon
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -0.234375,6.640625
+      rot: 3.141593
+    - type: Item
+      Size: 5
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: &401962940 Welder
+    name: Welder
+    components:
+    - type: Welder
+    - type: Sprite
+      &1858634056 sprite: Objects/tools.rsi
+    - type: MeleeWeapon
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -0.234375,7.515625
+      rot: 3.141593
+    - type: Item
+      Size: 5
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: &1813303685 Screwdriver
+    name: Screwdriver
+    components:
+    - type: Screwdriver
+    - type: Sprite
+    - type: MeleeWeapon
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 0.703125,6.609375
+      rot: 3.141593
+    - type: Item
+      Size: 5
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: &993483575 Crowbar
+    name: Crowbar
+    components:
+    - type: Crowbar
+    - type: Sprite
+    - type: MeleeWeapon
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 0.578125,7.484375
+      rot: 3.141593
+    - type: Item
+      Size: 5
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: &23951821 Multitool
+    name: Multitool
+    components:
+    - type: Multitool
+    - type: Sprite
+    - type: PowerDebugTool
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 1.515625,6.921875
+      rot: 3.141593
+    - type: Item
+      Size: 5
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: &571986954 Wrench
+    name: Wrench
+    components:
+    - type: Wrench
+    - type: Sprite
+    - type: MeleeWeapon
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 1.421875,7.484375
+      rot: 3.141593
+    - type: Item
+      Size: 5
+    - type: Clickable
+    - type: BoundingBox
+    - type: Physics
+      mass: 5
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,10
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,11
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,12
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,13
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,10
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,11
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,12
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,13
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -7,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -6,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -3,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -2,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -1,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 0,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 1,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 2,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 5,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: __engine_wall
+    name: '[engine] Wall'
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 6,14
+      rot: 3.141593
+    - type: Clickable
+    - type: Sprite
+    - type: BoundingBox
+    - type: Collidable
+  - type: entity
+    id: &260843040 SMES
+    name: SMES
+    components:
+    - &1157961653
+      type: Transform
+      map: 1
+      grid: 1
+      pos: -2.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - &1206253354
+      type: &1921049841 PowerStorage
+    - type: PowerNode
+  - type: entity
+    id: SMES
+    name: SMES
+    components:
+    - &1360714317
+      type: Transform
+      map: 1
+      grid: 1
+      pos: 1.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - type: PowerStorage
+    - type: PowerNode
+  - type: entity
+    id: &400177229 BlueWire
+    name: BlueWire
+    components:
+    - &951338683
+      type: Sprite
+      color: &79665661 '#FFFF'
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -2.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: PowerTransfer
+  - type: entity
+    id: BlueWire
+    name: BlueWire
+    components:
+    - type: Sprite
+      color: '#FFFF'
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -1.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: PowerTransfer
+  - type: entity
+    id: BlueWire
+    name: BlueWire
+    components:
+    - type: Sprite
+      color: '#FFFF'
+    - &1347918387
+      type: Transform
+      map: 1
+      grid: 1
+      pos: -0.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: PowerTransfer
+  - type: entity
+    id: BlueWire
+    name: BlueWire
+    components:
+    - type: Sprite
+      color: '#FFFF'
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 0.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: PowerTransfer
+  - type: entity
+    id: BlueWire
+    name: BlueWire
+    components:
+    - type: Sprite
+      color: '#FFFF'
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 1.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: PowerTransfer
+  - type: entity
+    id: &579134066 Generator
+    name: Generator
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -0.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - type: PowerGenerator
+    - type: PowerNode
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -3.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - &979795384
+      type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,11.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,10.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,9.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,8.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,7.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,6.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,5.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,4.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,3.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,2.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,1.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,0.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,-0.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 2.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - &1281051616
+      type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,11.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,10.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,9.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: &768031087 poweredlight
+    name: &178193997 Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: &1885659136 -4,7
+      rot: &359454694 1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - &1578454641
+      type: Sprite
+      sprite: &1792702826 Objects/lighting.rsi
+    - &652968276
+      type: PointLight
+      color: &1330941937 '#DCDCC6FF'
+      &1880509858 radius: &644806915 8
+      &542838097 offset: &2021301504 0,-16
+    - type: PowerDevice
+    - &2040102275
+      type: &704304726 PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: &1973162729 3,7
+      rot: 1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3,13
+      rot: &1715445905 -1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4,13
+      rot: -1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: &692485458 WPP
+    name: WPP
+    components:
+    - type: PowerStorage
+    - type: PowerNode
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4,7
+      rot: -1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - &1938028994
+      type: &323998104 PowerProvider
+  - type: entity
+    id: WPP
+    name: WPP
+    components:
+    - type: PowerStorage
+    - type: PowerNode
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3,7
+      rot: -1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - type: PowerProvider
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4.5,7.5
+      rot: -1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3.5,7.5
+      rot: -1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -6,2
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 5,2
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 2,4
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -3,4
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: WPP
+    name: WPP
+    components:
+    - type: PowerStorage
+    - type: PowerNode
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4,3
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - type: PowerProvider
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -4.5,2.5
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: WPP
+    name: WPP
+    components:
+    - type: PowerStorage
+    - type: PowerNode
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3,3
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - type: PowerProvider
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 3.5,2.5
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -10.5,-1.5
+      rot: -1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -10.5,-4.5
+      rot: 1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 9.5,-4.5
+      rot: 1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 9.5,-1.5
+      rot: -1.570796
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: &286868490 -6,-6
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: poweredlight
+    name: Light
+    components:
+    - &643364418
+      type: Transform
+      map: 1
+      grid: 1
+      pos: 5,-6
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      sprite: Objects/lighting.rsi
+    - type: PointLight
+      color: '#DCDCC6FF'
+      radius: 8
+      offset: 0,-16
+    - type: PowerDevice
+    - type: PoweredLight
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,-1.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,-5.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,-4.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,-3.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,-2.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,-5.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,-3.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,-4.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: WPP
+    name: WPP
+    components:
+    - type: PowerStorage
+    - type: PowerNode
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -6,-6
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - type: PowerProvider
+  - type: entity
+    id: WPP
+    name: WPP
+    components:
+    - type: PowerStorage
+    - type: PowerNode
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 5,-6
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - type: PowerProvider
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,-1.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: Wire
+    name: Wire
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,-2.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+      color: '#FF0000FF'
+    - type: PowerTransfer
+  - type: entity
+    id: &2146577517 WiredMachine
+    name: WiredMachine
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: -5.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - type: PowerDevice
+    - type: PowerNode
+  - type: entity
+    id: WiredMachine
+    name: WiredMachine
+    components:
+    - type: Transform
+      map: 1
+      grid: 1
+      pos: 4.5,12.5
+      rot: 3.141593
+    - type: Clickable
+    - type: BoundingBox
+    - type: Sprite
+    - type: PowerDevice
+    - type: PowerNode
+...
