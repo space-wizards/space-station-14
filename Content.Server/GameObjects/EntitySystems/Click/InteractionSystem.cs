@@ -65,7 +65,8 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         /// <param name="user"></param>
         /// <param name="clicklocation"></param>
-        void Afterattack(IEntity user, LocalCoordinates clicklocation);
+        /// <param name="attacked">The entity that was clicked on out of range. May be null if no entity was clicked on.true</param>
+        void Afterattack(IEntity user, LocalCoordinates clicklocation, IEntity attacked);
     }
 
     /// <summary>
@@ -198,7 +199,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             for (var i = 0; i < afterattacks.Count; i++)
             {
-                afterattacks[i].Afterattack(user, clicklocation);
+                afterattacks[i].Afterattack(user, clicklocation, null);
             }
         }
 
@@ -229,7 +230,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             for (var i = 0; i < afterattacks.Count; i++)
             {
-                afterattacks[i].Afterattack(user, clicklocation);
+                afterattacks[i].Afterattack(user, clicklocation, attacked);
             }
         }
 
@@ -315,7 +316,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 //See if we have a ranged attack interaction
                 for (var i = 0; i < afterattacks.Count; i++)
                 {
-                    afterattacks[i].Afterattack(user, clicklocation);
+                    afterattacks[i].Afterattack(user, clicklocation, attacked);
                 }
             }
         }

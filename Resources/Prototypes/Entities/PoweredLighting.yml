@@ -1,0 +1,17 @@
+- type: entity
+  name: Light
+  id: poweredlight
+  parent: __engine_wall_light
+  components:
+  # So we can click on it for deletion.
+  - type: BoundingBox
+  - type: Sprite
+    texture: Objects/wall_light_off.png
+
+  - type: PowerDevice
+    load: 1
+    priority: Low
+
+  - type: PoweredLight
+  - type: PointLight
+    state: Off

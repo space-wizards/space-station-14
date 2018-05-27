@@ -81,3 +81,4 @@
     texture: Objects/multitool.png
   - type: Icon
     texture: Objects/multitool.png
+  - type: PowerDebugTool

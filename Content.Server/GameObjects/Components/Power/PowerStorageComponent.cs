@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// Rate at which energy will be distributed to the powernet if needed
         /// </summary>
         public float DistributionRate { get; private set; } = 1000;
-        
+
         private bool _chargepowernet = false;
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void ChargePowerTick()
         {
-            Charge = Math.Max(Charge + ChargeRate, Capacity);
+            Charge = Math.Min(Charge + ChargeRate, Capacity);
         }
 
         /// <summary>

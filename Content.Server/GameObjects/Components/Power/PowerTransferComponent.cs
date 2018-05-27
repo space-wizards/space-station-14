@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         public override void Initialize()
         {
-            if(Parent == null)
+            if (Parent == null)
             {
                 SpreadPowernet();
             }
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Power
                         .Where(x => x.HasComponent<PowerTransferComponent>());
 
             //we have no parent so lets find a partner we can join his powernet
-            if(Parent == null || Regenerating)
+            if (Parent == null || Regenerating)
             {
                 foreach (var wire in wires)
                 {
@@ -74,13 +74,13 @@ namespace Content.Server.GameObjects.Components.Power
                         .Where(x => x.HasComponent<PowerNodeComponent>())
                         .Select(x => x.GetComponent<PowerNodeComponent>());
 
-            foreach(var node in nodes)
+            foreach (var node in nodes)
             {
-                if(node.Parent == null)
+                if (node.Parent == null)
                 {
                     node.ConnectToPowernet(Parent);
                 }
-                else if(node.Parent.Dirty)
+                else if (node.Parent.Dirty)
                 {
                     node.RegeneratePowernet(Parent);
                 }
@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Power
                     ptc.ConnectToPowernet(Parent);
                     SpreadPowernet();
                 }
-                else if(ptc.Parent != Parent && !ptc.Parent.Dirty)
+                else if (ptc.Parent != Parent && !ptc.Parent.Dirty)
                 {
                     Parent.MergePowernets(ptc.Parent);
                 }
@@ -109,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Power
         public void ConnectToPowernet(Powernet toconnect)
         {
             Parent = toconnect;
-            Parent.Wirelist.Add(this);
+            Parent.WireList.Add(this);
             Regenerating = false;
         }
 
@@ -118,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void DisconnectFromPowernet()
         {
-            Parent.Wirelist.Remove(this);
+            Parent.WireList.Remove(this);
             Parent.Dirty = true;
             Parent = null;
         }
@@ -131,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         public bool Attackby(IEntity user, IEntity attackwith)
         {
-            if(attackwith.TryGetComponent(out WirecutterComponent wirecutter))
+            if (attackwith.TryGetComponent(out WirecutterComponent wirecutter))
             {
                 Owner.Delete();
                 return true;

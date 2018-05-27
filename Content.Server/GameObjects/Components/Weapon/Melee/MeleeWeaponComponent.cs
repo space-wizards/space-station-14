@@ -31,18 +31,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         }
 
-        void IAfterAttack.Afterattack(IEntity user, LocalCoordinates clicklocation)
+        void IAfterAttack.Afterattack(IEntity user, LocalCoordinates clicklocation, IEntity attacked)
         {
             var location = user.GetComponent<TransformComponent>().LocalPosition;
             var angle = new Angle(clicklocation.ToWorld().Position - location.ToWorld().Position);
             var entities = IoCManager.Resolve<IServerEntityManager>().GetEntitiesInArc(user.GetComponent<TransformComponent>().LocalPosition, Range, angle, ArcWidth);
 
-            foreach(var entity in entities)
+            foreach (var entity in entities)
             {
                 if (!entity.GetComponent<TransformComponent>().IsMapTransform || entity == user)
                     continue;
-                
-                if(entity.TryGetComponent(out DamageableComponent damagecomponent))
+
+                if (entity.TryGetComponent(out DamageableComponent damagecomponent))
                 {
                     damagecomponent.TakeDamage(DamageType.Brute, Damage);
                 }

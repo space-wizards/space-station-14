@@ -57,6 +57,7 @@
   - type: PowerProvider
     Range: 5
     Priority: Provider
+    Load: 0
 
 - type: entity
   parent: WPPnobattery

@@ -4,6 +4,7 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using YamlDotNet.RepresentationModel;
@@ -18,24 +19,45 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "PowerDevice";
 
         /// <summary>
-        /// The method of draw we will try to use to place our load set via component parameter, defaults to using power providers
+        ///     The method of draw we will try to use to place our load set via component parameter, defaults to using power providers
         /// </summary>
-        public virtual DrawTypes Drawtype { get; protected set; } = DrawTypes.Provider;
+        public virtual DrawTypes DrawType { get; protected set; } = DrawTypes.Provider;
 
         /// <summary>
-        /// The power draw method we are currently connected to and using
+        ///     The power draw method we are currently connected to and using
         /// </summary>
         public DrawTypes Connected { get; protected set; } = DrawTypes.None;
 
-        public bool _powered = false;
+        public bool Powered { get; private set; } = false;
+
+
         /// <summary>
-        /// Status indicator variable for powered
+        ///     Is an external power source currently available?
         /// </summary>
-        public virtual bool Powered
+        public bool ExternalPowered
         {
-            get => _powered;
-            set => SetPowered(value);
+            get => _externalPowered;
+            set
+            {
+                _externalPowered = value;
+                UpdatePowered();
+            }
         }
+        private bool _externalPowered = false;
+
+        /// <summary>
+        ///     Is an internal power source currently available?
+        /// </summary>
+        public bool InternalPowered
+        {
+            get => _internalPowered;
+            set
+            {
+                _internalPowered = value;
+                UpdatePowered();
+            }
+        }
+        private bool _internalPowered = false;
 
         /// <summary>
         /// Priority for powernet draw, lower will draw first, defined in powernet.cs
@@ -50,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Power
         public float Load
         {
             get => _load;
-            set { UpdateLoad(value); }
+            set => UpdateLoad(value);
         }
 
         /// <summary>
@@ -60,20 +82,22 @@ namespace Content.Server.GameObjects.Components.Power
 
 
         private PowerProviderComponent _provider;
+
         /// <summary>
         /// A power provider that will handle our load, if we are linked to any
         /// </summary>
         public PowerProviderComponent Provider
         {
             get => _provider;
-            set {
+            set
+            {
                 Connected = DrawTypes.Provider;
                 if (_provider != null)
                 {
                     _provider.RemoveDevice(this);
                 }
 
-                if(value != null)
+                if (value != null)
                 {
                     _provider = value;
                     _provider.AddDevice(this);
@@ -85,11 +109,13 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
+        public event EventHandler<PowerStateEventArgs> OnPowerStateChanged;
+
         public override void OnAdd()
         {
             base.OnAdd();
 
-            if (Drawtype == DrawTypes.Both || Drawtype == DrawTypes.Node)
+            if (DrawType == DrawTypes.Node || DrawType == DrawTypes.Both)
             {
                 if (!Owner.TryGetComponent(out PowerNodeComponent node))
                 {
@@ -106,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (Owner.TryGetComponent(out PowerNodeComponent node))
             {
-                if(node.Parent != null)
+                if (node.Parent != null)
                 {
                     node.Parent.RemoveDevice(this);
                 }
@@ -123,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (mapping.TryGetNode("Drawtype", out YamlNode node))
             {
-                Drawtype = node.AsEnum<DrawTypes>();
+                DrawType = node.AsEnum<DrawTypes>();
             }
             if (mapping.TryGetNode("Load", out node))
             {
@@ -137,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         string IExamine.Examine()
         {
-            if(!Powered)
+            if (!Powered)
             {
                 return "The device is not powered";
             }
@@ -148,44 +174,32 @@ namespace Content.Server.GameObjects.Components.Power
         {
             var oldLoad = _load;
             _load = value;
-            if(Connected == DrawTypes.Node)
+            if (Connected == DrawTypes.Node)
             {
                 var node = Owner.GetComponent<PowerNodeComponent>();
                 node.Parent.UpdateDevice(this, oldLoad);
             }
-            else if(Connected == DrawTypes.Provider)
+            else if (Connected == DrawTypes.Provider)
             {
                 Provider.UpdateDevice(this, oldLoad);
             }
         }
 
-        /// <summary>
-        /// Changes behavior when receiving a command to become powered or depowered
-        /// </summary>
-        /// <param name="value"></param>
-        public virtual void SetPowered(bool value)
+        private void UpdatePowered()
         {
-            //Let them set us to true
-            if (value == true)
+            var oldPowered = Powered;
+            Powered = ExternalPowered || InternalPowered;
+            if (oldPowered != Powered)
             {
-                _powered = true;
-                return;
-            }
-
-            //A powernet has decided we will not be powered this tick, lets try to power ourselves
-            if (value == false && Owner.TryGetComponent(out PowerStorageComponent storage))
-            {
-                if (storage.CanDeductCharge(Load))
+                if (Powered)
                 {
-                    storage.DeductCharge(Load);
-                    _powered = true;
-                    return;
+                    OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(true));
+                }
+                else
+                {
+                    OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(false));
                 }
             }
-
-            //For some reason above we could not power ourselves, we depower
-            _powered = false;
-            return;
         }
 
         /// <summary>
@@ -196,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             AvailableProviders.Add(provider);
 
-            if(Connected != DrawTypes.Node)
+            if (Connected != DrawTypes.Node)
             {
                 ConnectToBestProvider();
             }
@@ -234,7 +248,7 @@ namespace Content.Server.GameObjects.Components.Power
                 }
             }
 
-            if(Provider != bestprovider)
+            if (Provider != bestprovider)
                 Provider = bestprovider;
         }
 
@@ -246,8 +260,14 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (!AvailableProviders.Contains(provider))
                 return;
-            
+
             AvailableProviders.Remove(provider);
+
+            if (provider == Provider)
+            {
+                Provider = null;
+                ExternalPowered = false;
+            }
 
             if (Connected != DrawTypes.Node)
             {
@@ -260,7 +280,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventarg"></param>
-        private void PowernetConnect(object sender, PowernetEventArgs eventarg)
+        protected virtual void PowernetConnect(object sender, PowernetEventArgs eventarg)
         {
             //This sets connected = none so it must be first
             Provider = null;
@@ -274,7 +294,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventarg"></param>
-        private void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
+        protected virtual void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.AddDevice(this);
         }
@@ -284,12 +304,30 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventarg"></param>
-        private void PowernetDisconnect(object sender, PowernetEventArgs eventarg)
+        protected virtual void PowernetDisconnect(object sender, PowernetEventArgs eventarg)
         {
             eventarg.Powernet.RemoveDevice(this);
             Connected = DrawTypes.None;
 
             ConnectToBestProvider();
+        }
+
+        internal virtual void ProcessInternalPower(float frametime)
+        {
+            if (Owner.TryGetComponent<PowerStorageComponent>(out var storage) && storage.CanDeductCharge(Load))
+            {
+                // We still keep InternalPowered correct if connected externally,
+                // but don't use it.
+                if (!ExternalPowered)
+                {
+                    storage.DeductCharge(Load);
+                }
+                InternalPowered = true;
+            }
+            else
+            {
+                InternalPowered = false;
+            }
         }
     }
 
@@ -298,6 +336,16 @@ namespace Content.Server.GameObjects.Components.Power
         None = 0,
         Node = 1,
         Provider = 2,
-        Both = 3
+        Both = 3,
+    }
+
+    public class PowerStateEventArgs : EventArgs
+    {
+        public readonly bool Powered;
+
+        public PowerStateEventArgs(bool powered)
+        {
+            Powered = powered;
+        }
     }
 }

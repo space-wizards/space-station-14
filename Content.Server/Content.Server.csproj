@@ -107,6 +107,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Temperature\ITemperatureComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Damage\IDamageableComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PoweredLightComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">
@@ -139,5 +141,4 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
 </Project>

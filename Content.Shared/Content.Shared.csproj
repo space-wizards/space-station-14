@@ -72,6 +72,7 @@
     <Compile Include="GameObjects\PhysicalConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\Components\Items\SharedHandsComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\SharedPowerDebugTool.cs" />
     <Compile Include="Maths\PhysicalConstants.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -75,6 +75,7 @@
     <Compile Include="GameObjects\Components\Items\ClientHandsComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="UserInterface\HandsGui.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">

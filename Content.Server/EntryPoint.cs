@@ -68,6 +68,7 @@ namespace Content.Server
             //Power Components
             factory.Register<PowerTransferComponent>();
             factory.Register<PowerProviderComponent>();
+            factory.RegisterReference<PowerProviderComponent, PowerDeviceComponent>();
             factory.Register<PowerNodeComponent>();
             factory.Register<PowerStorageComponent>();
             factory.Register<PowerDeviceComponent>();
@@ -87,6 +88,9 @@ namespace Content.Server
             factory.Register<MeleeWeaponComponent>();
 
             factory.Register<ServerStorageComponent>();
+
+            factory.Register<PowerDebugTool>();
+            factory.Register<PoweredLightComponent>();
         }
 
         /// <inheritdoc />

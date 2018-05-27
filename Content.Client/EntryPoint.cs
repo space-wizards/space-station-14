@@ -1,4 +1,5 @@
 ﻿using Content.Client.GameObjects;
+using Content.Client.GameObjects.Components.Power;
 using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Interfaces.GameObjects;
 using SS14.Shared.ContentPack;
@@ -43,6 +44,7 @@ namespace Content.Client
             factory.RegisterReference<HandsComponent, IHandsComponent>();
             factory.Register<ClientStorageComponent>();
             factory.Register<ClientInventoryComponent>();
+            factory.Register<PowerDebugTool>();
         }
     }
 }

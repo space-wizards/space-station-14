@@ -15,28 +15,32 @@ namespace Content.Server.GameObjects.Components.Power
         public Powernet()
         {
             var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            EntitySystemManager.GetEntitySystem<PowerSystem>().Powernets.Add(this);
+            var powerSystem = EntitySystemManager.GetEntitySystem<PowerSystem>();
+            powerSystem.Powernets.Add(this);
+            Uid = powerSystem.NewUid();
         }
+
+        public int Uid { get; }
 
         /// <summary>
         /// The entities that make up the powernet's physical location and allow powernet connection
         /// </summary>
-        public List<PowerTransferComponent> Wirelist { get; set; } = new List<PowerTransferComponent>();
+        public List<PowerTransferComponent> WireList { get; set; } = new List<PowerTransferComponent>();
 
         /// <summary>
         /// Entities that connect directly to the powernet through PTC above to add power or add power load
         /// </summary>
-        public List<PowerNodeComponent> Nodelist { get; set; } = new List<PowerNodeComponent>();
+        public List<PowerNodeComponent> NodeList { get; set; } = new List<PowerNodeComponent>();
 
         /// <summary>
         /// Subset of nodelist that adds a continuous power supply to the network
         /// </summary>
-        public Dictionary<PowerGeneratorComponent, float> Generatorlist { get; set; } = new Dictionary<PowerGeneratorComponent, float>();
+        public Dictionary<PowerGeneratorComponent, float> GeneratorList { get; set; } = new Dictionary<PowerGeneratorComponent, float>();
 
         /// <summary>
         /// Subset of nodelist that draw power, stores information on current continuous powernet load
         /// </summary>
-        public SortedSet<PowerDeviceComponent> Deviceloadlist { get; set; } = new SortedSet<PowerDeviceComponent>(new DevicePriorityCompare());
+        public SortedSet<PowerDeviceComponent> DeviceLoadList { get; set; } = new SortedSet<PowerDeviceComponent>(new DevicePriorityCompare());
 
         /// <summary>
         /// Comparer that keeps the device dictionary sorted by powernet priority
@@ -156,9 +160,9 @@ namespace Content.Server.GameObjects.Components.Power
                 var depowervalue = activeload - (activesupply + passivesupply);
 
                 //Providers use same method to recreate functionality
-                foreach (var device in Deviceloadlist)
+                foreach (var device in DeviceLoadList)
                 {
-                    device.Powered = false;
+                    device.ExternalPowered = false;
                     DepoweredDevices.Add(device);
                     depowervalue -= device.Load;
                     if (depowervalue < 0)
@@ -171,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             foreach (var device in DepoweredDevices)
             {
-                device.Powered = true;
+                device.ExternalPowered = true;
             }
             DepoweredDevices.Clear();
         }
@@ -205,13 +209,13 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void DirtyKill()
         {
-            Wirelist.Clear();
-            while (Nodelist.Count != 0)
+            WireList.Clear();
+            while (NodeList.Count != 0)
             {
-                Nodelist[0].DisconnectFromPowernet();
+                NodeList[0].DisconnectFromPowernet();
             }
-            Generatorlist.Clear();
-            Deviceloadlist.Clear();
+            GeneratorList.Clear();
+            DeviceLoadList.Clear();
             DepoweredDevices.Clear();
             PowerStorageSupplierlist.Clear();
             PowerStorageConsumerlist.Clear();
@@ -226,31 +230,31 @@ namespace Content.Server.GameObjects.Components.Power
         {
             //TODO: load balance reconciliation between powernets on merge tick here
 
-            foreach (var wire in toMerge.Wirelist)
+            foreach (var wire in toMerge.WireList)
             {
                 wire.Parent = this;
             }
-            Wirelist.AddRange(toMerge.Wirelist);
-            toMerge.Wirelist.Clear();
+            WireList.AddRange(toMerge.WireList);
+            toMerge.WireList.Clear();
 
-            foreach (var node in toMerge.Nodelist)
+            foreach (var node in toMerge.NodeList)
             {
                 node.Parent = this;
             }
-            Nodelist.AddRange(toMerge.Nodelist);
-            toMerge.Nodelist.Clear();
+            NodeList.AddRange(toMerge.NodeList);
+            toMerge.NodeList.Clear();
 
-            foreach (var generator in toMerge.Generatorlist)
+            foreach (var generator in toMerge.GeneratorList)
             {
-                Generatorlist.Add(generator.Key, generator.Value);
+                GeneratorList.Add(generator.Key, generator.Value);
             }
-            toMerge.Generatorlist.Clear();
+            toMerge.GeneratorList.Clear();
 
-            foreach (var device in toMerge.Deviceloadlist)
+            foreach (var device in toMerge.DeviceLoadList)
             {
-                Deviceloadlist.Add(device);
+                DeviceLoadList.Add(device);
             }
-            toMerge.Deviceloadlist.Clear();
+            toMerge.DeviceLoadList.Clear();
 
             DepoweredDevices.AddRange(toMerge.DepoweredDevices);
             toMerge.DepoweredDevices.Clear();
@@ -280,7 +284,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void AddDevice(PowerDeviceComponent device)
         {
-            Deviceloadlist.Add(device);
+            DeviceLoadList.Add(device);
             Load += device.Load;
             if (!device.Powered)
                 DepoweredDevices.Add(device);
@@ -291,7 +295,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void UpdateDevice(PowerDeviceComponent device, float oldLoad)
         {
-            if (Deviceloadlist.Contains(device))
+            if (DeviceLoadList.Contains(device))
             {
                 Load -= oldLoad;
                 Load += device.Load;
@@ -303,10 +307,10 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void RemoveDevice(PowerDeviceComponent device)
         {
-            if (Deviceloadlist.Contains(device))
+            if (DeviceLoadList.Contains(device))
             {
                 Load -= device.Load;
-                Deviceloadlist.Remove(device);
+                DeviceLoadList.Remove(device);
                 if (DepoweredDevices.Contains(device))
                     DepoweredDevices.Remove(device);
             }
@@ -322,7 +326,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void AddGenerator(PowerGeneratorComponent generator)
         {
-            Generatorlist.Add(generator, generator.Supply);
+            GeneratorList.Add(generator, generator.Supply);
             Supply += generator.Supply;
         }
 
@@ -331,10 +335,10 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void UpdateGenerator(PowerGeneratorComponent generator)
         {
-            if (Generatorlist.ContainsKey(generator))
+            if (GeneratorList.ContainsKey(generator))
             {
-                Supply -= Generatorlist[generator];
-                Generatorlist[generator] = generator.Supply;
+                Supply -= GeneratorList[generator];
+                GeneratorList[generator] = generator.Supply;
                 Supply += generator.Supply;
             }
         }
@@ -344,10 +348,10 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void RemoveGenerator(PowerGeneratorComponent generator)
         {
-            if (Generatorlist.ContainsKey(generator))
+            if (GeneratorList.ContainsKey(generator))
             {
-                Supply -= Generatorlist[generator];
-                Generatorlist.Remove(generator);
+                Supply -= GeneratorList[generator];
+                GeneratorList.Remove(generator);
             }
             else
             {

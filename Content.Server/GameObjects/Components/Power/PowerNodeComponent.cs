@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Power
     public class PowerNodeComponent : Component
     {
         public override string Name => "PowerNode";
-        
+
         /// <summary>
         /// The powernet this node is connected to
         /// </summary>
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Power
                         .Where(x => x.HasComponent<PowerTransferComponent>())
                         .OrderByDescending(x => (x.GetComponent<TransformComponent>().WorldPosition - position).Length);
             var choose = wires.FirstOrDefault();
-            if(choose != null)
+            if (choose != null)
                 ConnectToPowernet(choose.GetComponent<PowerTransferComponent>().Parent);
         }
 
@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Power
         public void ConnectToPowernet(Powernet toconnect)
         {
             Parent = toconnect;
-            Parent.Nodelist.Add(this);
+            Parent.NodeList.Add(this);
             OnPowernetConnect?.Invoke(this, new PowernetEventArgs(Parent));
         }
 
@@ -79,10 +79,10 @@ namespace Content.Server.GameObjects.Components.Power
         public void RegeneratePowernet(Powernet toconnect)
         {
             //This removes the device from things that will be powernet disconnected when dirty powernet is killed
-            Parent.Nodelist.Remove(this);
+            Parent.NodeList.Remove(this);
 
             Parent = toconnect;
-            Parent.Nodelist.Add(this);
+            Parent.NodeList.Add(this);
             OnPowernetRegenerate?.Invoke(this, new PowernetEventArgs(Parent));
         }
 
@@ -91,7 +91,11 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void DisconnectFromPowernet()
         {
-            Parent.Nodelist.Remove(this);
+            if (Parent == null)
+            {
+                return;
+            }
+            Parent.NodeList.Remove(this);
             OnPowernetDisconnect?.Invoke(this, new PowernetEventArgs(Parent));
             Parent = null;
         }
