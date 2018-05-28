@@ -119,6 +119,7 @@ namespace Content.Server.GameObjects
         bool IUse.UseEntity(IEntity user)
         {
             SendNetworkMessage(new OpenStorageUIMessage());
+            UpdateClientInventory();
             return false;
         }
 
