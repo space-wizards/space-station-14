@@ -17,7 +17,10 @@ namespace Content.Client.GameObjects.Components.Power
             switch (message)
             {
                 case OpenDataWindowMsg msg:
-                    var window = new SS14Window();
+                    var window = new SS14Window
+                    {
+                        Title = "Power Debug Tool"
+                    };
                     window.Contents.AddChild(new Label() { Text = msg.Data });
                     window.AddToScreen();
                     window.Open();

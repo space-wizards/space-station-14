@@ -19,6 +19,8 @@ namespace Content.Server.GameObjects.Components.Power
 
             var builder = new StringBuilder();
 
+            builder.AppendFormat("Entity: {0} ({1})\n", attacked.Name, attacked.Uid);
+
             if (attacked.TryGetComponent<PowerNodeComponent>(out var node))
             {
                 builder.AppendFormat("Power Node:\n");
@@ -47,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Power
                     foreach (var provider in device.AvailableProviders)
                     {
                         var providerTransform = provider.Owner.GetComponent<IServerTransformComponent>();
-                        builder.AppendFormat("      {0} @ {1}", provider.Name, providerTransform.LocalPosition);
+                        builder.AppendFormat("      {0} ({1}) @ {2}", provider.Owner.Name, provider.Owner.Uid, providerTransform.LocalPosition);
                         if (device.Provider == provider)
                         {
                             builder.Append(" (CURRENT)");
@@ -62,6 +64,13 @@ namespace Content.Server.GameObjects.Components.Power
                 builder.AppendFormat(@"Power Storage:
   Capacity: {0}, Charge: {1}, ChargeRate: {2}, DistributionRate: {3}, ChargePowernet: {4}
 ", storage.Capacity, storage.Charge, storage.ChargeRate, storage.DistributionRate, storage.ChargePowernet);
+            }
+
+            if (attacked.TryGetComponent<PowerTransferComponent>(out var transfer))
+            {
+                builder.AppendFormat(@"Power Transfer:
+  Powernet: {0}
+", transfer.Parent.Uid);
             }
 
             OpenDataWindowClientSide(user, builder.ToString());
