@@ -192,6 +192,10 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
+        /// <summary>
+        ///     Updates the state of whether or not this device is powered,
+        ///     and fires off events if said state has changed.
+        /// </summary>
         private void UpdatePowered()
         {
             var oldPowered = Powered;
@@ -319,6 +323,10 @@ namespace Content.Server.GameObjects.Components.Power
             ConnectToBestProvider();
         }
 
+        /// <summary>
+        ///     Process mechanism to keep track of internal battery and power status.
+        /// </summary>
+        /// <param name="frametime">Time since the last process frame.</param>
         internal virtual void ProcessInternalPower(float frametime)
         {
             if (Owner.TryGetComponent<PowerStorageComponent>(out var storage) && storage.CanDeductCharge(Load))
