@@ -173,7 +173,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <summary>
-        /// Register a continuous load from a device connected to the powernet
+        ///     Register a continuous load from a device connected to the powernet
         /// </summary>
         public void AddDevice(PowerDeviceComponent device)
         {
@@ -184,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <summary>
-        /// Update one of the loads from a deviceconnected to the powernet
+        ///     Update one of the loads from a deviceconnected to the powernet
         /// </summary>
         public void UpdateDevice(PowerDeviceComponent device, float oldLoad)
         {
@@ -196,7 +196,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <summary>
-        /// Remove a continuous load from a device connected to the powernet
+        ///     Remove a continuous load from a device connected to the powernet
         /// </summary>
         public void RemoveDevice(PowerDeviceComponent device)
         {
@@ -209,8 +209,7 @@ namespace Content.Server.GameObjects.Components.Power
             }
             else
             {
-                var name = device.Owner.Prototype.Name;
-                Logger.WarningS("power", "We tried to remove a device twice from the same {0} somehow, prototype {1}", Name, name);
+                Logger.WarningS("power", "We tried to remove device {0} twice from the same {1}, somehow.", device.Owner, Owner);
             }
         }
     }

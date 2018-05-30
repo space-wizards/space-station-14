@@ -289,7 +289,17 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <summary>
-        /// Remove a continuous load from a device connected to the powernet
+        ///     Returns whether or not a power device is in this powernet's load list.
+        /// </summary>
+        /// <param name="device">The device to check for.</param>
+        /// <returns>True if the device is in the load list, false otherwise.</returns>
+        public bool HasDevice(PowerDeviceComponent device)
+        {
+            return DeviceLoadList.Contains(device);
+        }
+
+        /// <summary>
+        ///     Remove a continuous load from a device connected to the powernet
         /// </summary>
         public void RemoveDevice(PowerDeviceComponent device)
         {
@@ -302,8 +312,7 @@ namespace Content.Server.GameObjects.Components.Power
             }
             else
             {
-                var name = device.Owner.Prototype.Name;
-                Logger.Info("We tried to remove a device twice from the same powernet somehow, prototype {0}", name);
+                Logger.WarningS("power", "We tried to remove device {0} twice from {1}, somehow.", device.Owner, this);
             }
         }
 
@@ -341,8 +350,7 @@ namespace Content.Server.GameObjects.Components.Power
             }
             else
             {
-                var name = generator.Owner.Prototype.Name;
-                Logger.Info(String.Format("We tried to remove a device twice from the same power somehow, prototype {1}", name));
+                Logger.WarningS("power", "We tried to remove generator {0} twice from {1}, somehow.", generator.Owner, this);
             }
         }
 
@@ -389,17 +397,22 @@ namespace Content.Server.GameObjects.Components.Power
         }
         #endregion Registration
 
+        public override string ToString()
+        {
+            return $"Powernet {Uid}";
+        }
+
         /// <summary>
         ///     Priority that a device will receive power if powernet cannot supply every device
         /// </summary>
         public enum Priority
         {
-            Necessary,
-            High,
-            Medium,
-            Low,
-            Provider,
-            Unnecessary
+            Necessary = 0,
+            High = 1,
+            Medium = 2,
+            Low = 3,
+            Provider = 4,
+            Unnecessary = 5
         }
 
         /// <summary>
@@ -412,9 +425,9 @@ namespace Content.Server.GameObjects.Components.Power
                 int compare = y.Priority.CompareTo(x.Priority);
 
                 //If the comparer returns 0 sortedset will believe it is a duplicate and return 0, so return 1 instead
-                if (compare == 0 && !x.Equals(y))
+                if (compare == 0)
                 {
-                    return 1;
+                    return y.Owner.Uid.CompareTo(x.Owner.Uid);
                 }
                 return compare;
             }

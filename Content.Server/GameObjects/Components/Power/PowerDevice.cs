@@ -98,15 +98,16 @@ namespace Content.Server.GameObjects.Components.Power
                     _provider.RemoveDevice(this);
                 }
 
+                _provider = value;
                 if (value != null)
                 {
-                    _provider = value;
                     _provider.AddDevice(this);
                 }
                 else
                 {
                     Connected = DrawTypes.None;
                 }
+
             }
         }
 
@@ -133,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (Owner.TryGetComponent(out PowerNodeComponent node))
             {
-                if (node.Parent != null)
+                if (node.Parent != null && node.Parent.HasDevice(this))
                 {
                     node.Parent.RemoveDevice(this);
                 }
@@ -145,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (Provider != null)
             {
-                Provider.RemoveDevice(this);
+                Provider = null;
             }
 
             base.Shutdown();
@@ -228,7 +229,7 @@ namespace Content.Server.GameObjects.Components.Power
         private void ConnectToBestProvider()
         {
             //Any values we can connect to or are we already connected to a node, cancel!
-            if (!AvailableProviders.Any() || Connected == DrawTypes.Node)
+            if (!AvailableProviders.Any() || Connected == DrawTypes.Node || Deleted)
                 return;
 
             //Get the starting value for our loop
