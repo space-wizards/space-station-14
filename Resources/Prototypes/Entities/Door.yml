@@ -6,7 +6,7 @@
   - type: Transform
   - type: Clickable
   - type: Sprite
-    drawdepth: FloorPlaceable
+    drawdepth: Mobs # They're on the same layer as mobs, perspective.
     texture: Objects/door_ew.png
 
   - type: Icon

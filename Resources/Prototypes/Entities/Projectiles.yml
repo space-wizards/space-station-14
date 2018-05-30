@@ -6,7 +6,6 @@
   - type: Transform
   - type: Sprite
     directional: false
-    drawdepth: FloorPlaceable
     texture: Objects/projectilebullet.png
     rotation: 180
 

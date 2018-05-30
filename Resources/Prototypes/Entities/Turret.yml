@@ -6,7 +6,6 @@
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
-    drawdepth: FloorPlaceable
     texture: Buildings/TurrBase.png
 
 - type: entity
