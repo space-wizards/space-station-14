@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             var _emanager = IoCManager.Resolve<IServerEntityManager>();
             var position = Owner.GetComponent<TransformComponent>().WorldPosition;
-            var wires = _emanager.GetEntitiesInRange(Owner, 0.1f) //arbitrarily low, just scrape things //wip
+            var wires = _emanager.GetEntitiesInRange(Owner, 1.1f) //arbitrarily low, just scrape things //wip
                         .Where(x => x.HasComponent<PowerTransferComponent>());
 
             //we have no parent so lets find a partner we can join his powernet
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Power
                 if (ptc.Parent == null || Regenerating)
                 {
                     ptc.ConnectToPowernet(Parent);
-                    SpreadPowernet();
+                    ptc.SpreadPowernet();
                 }
                 else if (ptc.Parent != Parent && !ptc.Parent.Dirty)
                 {
