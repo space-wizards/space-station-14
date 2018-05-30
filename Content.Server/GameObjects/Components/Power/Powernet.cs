@@ -234,12 +234,16 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 GeneratorList.Add(generator.Key, generator.Value);
             }
+            Supply += toMerge.Supply;
+            toMerge.Supply = 0;
             toMerge.GeneratorList.Clear();
 
             foreach (var device in toMerge.DeviceLoadList)
             {
                 DeviceLoadList.Add(device);
             }
+            Load += toMerge.Load;
+            toMerge.Load = 0;
             toMerge.DeviceLoadList.Clear();
 
             DepoweredDevices.AddRange(toMerge.DepoweredDevices);
