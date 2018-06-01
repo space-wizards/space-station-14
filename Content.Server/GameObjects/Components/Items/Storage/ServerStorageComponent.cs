@@ -23,6 +23,21 @@ namespace Content.Server.GameObjects
 
         private int StorageUsed = 0;
         private int StorageCapacityMax = 10000;
+        public HashSet<INetChannel> SubscribedChannels = new HashSet<INetChannel>();
+
+        public ServerStorageComponent()
+        {
+            var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+            var storageSystem = EntitySystemManager.GetEntitySystem<StorageSystem>();
+            storageSystem.StoringComponents.Add(this);
+        }
+
+        ~ServerStorageComponent()
+        {
+            var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+            var storageSystem = EntitySystemManager.GetEntitySystem<StorageSystem>();
+            storageSystem.StoringComponents.Remove(this);
+        }
 
         public override void OnAdd()
         {
@@ -48,7 +63,7 @@ namespace Content.Server.GameObjects
             if (storage.Remove(toremove))
             {
                 StorageUsed -= toremove.GetComponent<StoreableComponent>().ObjectSize;
-                UpdateClientInventory();
+                UpdateClientInventories();
                 return true;
             }
             return false;
@@ -64,7 +79,7 @@ namespace Content.Server.GameObjects
             if (CanInsert(toinsert) && storage.Insert(toinsert))
             {
                 StorageUsed += toinsert.GetComponent<StoreableComponent>().ObjectSize;
-                UpdateClientInventory();
+                UpdateClientInventories();
                 return true;
             }
             return false;
@@ -118,21 +133,69 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool IUse.UseEntity(IEntity user)
         {
-            SendNetworkMessage(new OpenStorageUIMessage());
+            var user_channel = user.GetComponent<BasicActorComponent>().playerSession.ConnectedClient;
+            SubscribedChannels.Add(user_channel);
+            SendNetworkMessage(new OpenStorageUIMessage(), user_channel);
+            UpdateClientInventory(user_channel);
             return false;
         }
 
         /// <summary>
-        /// Updates the storage UI on all clients telling them of the entities stored in this container
+        /// Updates the storage UI on all subscribed clients, informing them of the state of the container.
         /// </summary>
-        private void UpdateClientInventory()
+        private void UpdateClientInventories()
+        {
+            foreach (INetChannel channel in SubscribedChannels)
+            {
+                UpdateClientInventory(channel);
+            }
+        }
+
+        /// <summary>
+        /// Stops a channel from receiving updates.
+        /// </summary>
+        /// <param name="channel"></param>
+        public void UnsubscribeChannel(INetChannel channel)
+        {
+            SubscribedChannels.Remove(channel);
+            SendNetworkMessage(new CloseStorageUIMessage(), channel);
+        }
+
+        /// <summary>
+        /// Unsubscribes all subscribed channels that are no longer allowed to see this storage.
+        /// E.g actors who are too far away from this storage.
+        /// </summary>
+        public void ValidateChannels()
+        {
+            foreach (INetChannel channel in SubscribedChannels)
+            {
+                var PlayerManager = IoCManager.Resolve<IPlayerManager>();
+                var PlayerSession = PlayerManager.GetSessionByChannel(channel);
+                var Player = PlayerSession.AttachedEntity;
+                if (Player.HasComponent<TransformComponent>() && Owner.HasComponent<TransformComponent>())
+                {
+                    var player_transform = Player.GetComponent<TransformComponent>();
+                    var owner_transform = Player.GetComponent<TransformComponent>();
+                    if (player_transform.MapID != owner_transform.MapID ||
+                        (player_transform.WorldPosition - owner_transform.WorldPosition).Length > 2) //Todo: replace with player's "reach"
+                    {
+                        UnsubscribeChannel(channel);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates storage UI on a client, informing them of the state of the container.
+        /// </summary>
+        private void UpdateClientInventory(INetChannel channel)
         {
             Dictionary<EntityUid, int> storedentities = new Dictionary<EntityUid, int>();
             foreach (var entities in storage.ContainedEntities)
             {
                 storedentities.Add(entities.Uid, entities.GetComponent<StoreableComponent>().ObjectSize);
             }
-            SendNetworkMessage(new StorageHeldItemsMessage(storedentities, StorageUsed, StorageCapacityMax));
+            SendNetworkMessage(new StorageHeldItemsMessage(storedentities, StorageUsed, StorageCapacityMax), channel);
         }
 
         /// <summary>
@@ -148,7 +211,6 @@ namespace Content.Server.GameObjects
 
             switch (message)
             {
-
                 case RemoveEntityMessage msg:
                     var playerMan = IoCManager.Resolve<IPlayerManager>();
                     var session = playerMan.GetSessionByChannel(netChannel);
@@ -165,7 +227,6 @@ namespace Content.Server.GameObjects
                         if (entity != null && storage.Contains(entity))
                         {
                             Remove(entity);
-                            UpdateClientInventory();
 
                             var item = entity.GetComponent<ItemComponent>();
                             if (item != null && playerentity.TryGetComponent(out HandsComponent hands))

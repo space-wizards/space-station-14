@@ -56,4 +56,17 @@ namespace Content.Shared.GameObjects.Components.Storage
             Directed = true;
         }
     }
+
+    /// <summary>
+    /// Component message for closing the storage UI.
+    /// E.g when the player moves too far away from the container.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class CloseStorageUIMessage : ComponentMessage
+    {
+        public CloseStorageUIMessage()
+        {
+            Directed = true;
+        }
+    }
 }
