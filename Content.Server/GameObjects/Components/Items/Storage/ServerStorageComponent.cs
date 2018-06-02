@@ -23,21 +23,7 @@ namespace Content.Server.GameObjects
 
         private int StorageUsed = 0;
         private int StorageCapacityMax = 10000;
-        public HashSet<INetChannel> SubscribedChannels = new HashSet<INetChannel>();
-
-        public ServerStorageComponent()
-        {
-            var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            var storageSystem = EntitySystemManager.GetEntitySystem<StorageSystem>();
-            storageSystem.StoringComponents.Add(this);
-        }
-
-        ~ServerStorageComponent()
-        {
-            var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            var storageSystem = EntitySystemManager.GetEntitySystem<StorageSystem>();
-            storageSystem.StoringComponents.Remove(this);
-        }
+        public HashSet<BasicActorComponent> SubscribedActors = new HashSet<BasicActorComponent>();
 
         public override void OnAdd()
         {
@@ -133,10 +119,10 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool IUse.UseEntity(IEntity user)
         {
-            var user_channel = user.GetComponent<BasicActorComponent>().playerSession.ConnectedClient;
-            SubscribedChannels.Add(user_channel);
-            SendNetworkMessage(new OpenStorageUIMessage(), user_channel);
-            UpdateClientInventory(user_channel);
+            var user_actor = user.GetComponent<BasicActorComponent>();
+            SubscribeActor(user_actor);
+            SendNetworkMessage(new OpenStorageUIMessage(), user_actor.playerSession.ConnectedClient);
+            UpdateClientInventory(user_actor);
             return false;
         }
 
@@ -145,9 +131,18 @@ namespace Content.Server.GameObjects
         /// </summary>
         private void UpdateClientInventories()
         {
-            foreach (INetChannel channel in SubscribedChannels)
+            foreach (BasicActorComponent actor in SubscribedActors)
             {
-                UpdateClientInventory(channel);
+                UpdateClientInventory(actor);
+            }
+        }
+
+        public void SubscribeActor(BasicActorComponent actor)
+        {
+            if (!SubscribedActors.Contains(actor))
+            {
+                Logger.GetSawmill("Storage").Info("Added actor with attached entity UID {0}.", actor.playerSession.AttachedEntityUid);
+                SubscribedActors.Add(actor);
             }
         }
 
@@ -155,47 +150,23 @@ namespace Content.Server.GameObjects
         /// Stops a channel from receiving updates.
         /// </summary>
         /// <param name="channel"></param>
-        public void UnsubscribeChannel(INetChannel channel)
+        public void UnsubscribeChannel(BasicActorComponent actor)
         {
-            SubscribedChannels.Remove(channel);
-            SendNetworkMessage(new CloseStorageUIMessage(), channel);
-        }
-
-        /// <summary>
-        /// Unsubscribes all subscribed channels that are no longer allowed to see this storage.
-        /// E.g actors who are too far away from this storage.
-        /// </summary>
-        public void ValidateChannels()
-        {
-            foreach (INetChannel channel in SubscribedChannels)
-            {
-                var PlayerManager = IoCManager.Resolve<IPlayerManager>();
-                var PlayerSession = PlayerManager.GetSessionByChannel(channel);
-                var Player = PlayerSession.AttachedEntity;
-                if (Player.HasComponent<TransformComponent>() && Owner.HasComponent<TransformComponent>())
-                {
-                    var player_transform = Player.GetComponent<TransformComponent>();
-                    var owner_transform = Player.GetComponent<TransformComponent>();
-                    if (player_transform.MapID != owner_transform.MapID ||
-                        (player_transform.WorldPosition - owner_transform.WorldPosition).Length > 2) //Todo: replace with player's "reach"
-                    {
-                        UnsubscribeChannel(channel);
-                    }
-                }
-            }
+            SubscribedActors.Remove(actor);
+            SendNetworkMessage(new CloseStorageUIMessage(), actor.playerSession.ConnectedClient);
         }
 
         /// <summary>
         /// Updates storage UI on a client, informing them of the state of the container.
         /// </summary>
-        private void UpdateClientInventory(INetChannel channel)
+        private void UpdateClientInventory(BasicActorComponent actor)
         {
             Dictionary<EntityUid, int> storedentities = new Dictionary<EntityUid, int>();
             foreach (var entities in storage.ContainedEntities)
             {
                 storedentities.Add(entities.Uid, entities.GetComponent<StoreableComponent>().ObjectSize);
             }
-            SendNetworkMessage(new StorageHeldItemsMessage(storedentities, StorageUsed, StorageCapacityMax), channel);
+            SendNetworkMessage(new StorageHeldItemsMessage(storedentities, StorageUsed, StorageCapacityMax), actor.playerSession.ConnectedClient);
         }
 
         /// <summary>
