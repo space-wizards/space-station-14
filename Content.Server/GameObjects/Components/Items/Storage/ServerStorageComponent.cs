@@ -127,7 +127,7 @@ namespace Content.Server.GameObjects
         }
 
         /// <summary>
-        /// Updates the storage UI on all subscribed clients, informing them of the state of the container.
+        /// Updates the storage UI on all subscribed actors, informing them of the state of the container.
         /// </summary>
         private void UpdateClientInventories()
         {
@@ -137,6 +137,10 @@ namespace Content.Server.GameObjects
             }
         }
 
+        /// <summary>
+        /// Adds actor to the update list.
+        /// </summary>
+        /// <param name="actor"></param>
         public void SubscribeActor(BasicActorComponent actor)
         {
             if (!SubscribedActors.Contains(actor))
@@ -147,10 +151,10 @@ namespace Content.Server.GameObjects
         }
 
         /// <summary>
-        /// Stops a channel from receiving updates.
+        /// Removes actor from the update list.
         /// </summary>
         /// <param name="channel"></param>
-        public void UnsubscribeChannel(BasicActorComponent actor)
+        public void UnsubscribeActor(BasicActorComponent actor)
         {
             SubscribedActors.Remove(actor);
             SendNetworkMessage(new CloseStorageUIMessage(), actor.playerSession.ConnectedClient);
