@@ -53,6 +53,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     OpenUI();
                     break;
                 case CloseStorageUIMessage msg:
+                    // todo: close window/grey it out
                     break;
             }
         }
