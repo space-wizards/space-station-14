@@ -9,6 +9,8 @@
   - type: BoundingBox
   - type: Physics
     mass: 5
+  - type: Sprite
+    drawdepth: Items
 
 - type: entity
   name: "Emergency Toolbox With Handle"

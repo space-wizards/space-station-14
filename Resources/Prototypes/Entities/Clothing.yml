@@ -1,14 +1,10 @@
 - type: entity
   name: "Clothing"
   id: Clothing
+  parent: BaseItem
   components:
-  - type: Transform
   - type: Clothing
     Size: 5
-  - type: Clickable
-  - type: BoundingBox
-  - type: Physics
-    mass: 5
 
 - type: entity
   parent: Clothing
