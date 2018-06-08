@@ -59,6 +59,9 @@ def main():
     parser.add_argument("--windows-godot-build",
                         action="store")
 
+    parser.add_argument("--linux-godot-build",
+                        action="store")
+
     args = parser.parse_args()
     platforms = args.platform
     GODOT = args.godot
@@ -87,7 +90,10 @@ def main():
 
     if "linux" in platforms:
         wipe_bin()
-        build_linux()
+        if not args.linux_godot_build:
+            print("No --linux-godot-build passed")
+            exit(1)
+        build_linux(args.linux_godot_build)
 
     if "mac" in platforms:
         wipe_bin()
@@ -195,7 +201,7 @@ def build_macos():
     server_zip.close()
 
 
-def build_linux():
+def build_linux(godot_build):
     print(Fore.GREEN + "Building project for Linux amd64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
                     "SpaceStation14Content.sln",
@@ -208,11 +214,33 @@ def build_linux():
                     "/t:Rebuild"
                     ], check=True)
 
-    # NOTE: Temporarily disabled because I can't test it.
-    # Package client.
-    #print(Fore.GREEN + "Packaging Linux amd64 client..." + Style.RESET_ALL)
-    # package_zip(p("bin", "Client"), p(
-    #    "release", "SS14.Client_linux_amd64.zip"))
+    print(Fore.GREEN + "Packaging Linux amd64 client..." + Style.RESET_ALL)
+
+    os.makedirs("bin/linux_export", exist_ok=True)
+    subprocess.run([GODOT,
+                    "--verbose",
+                    "--export-debug",
+                    "x11",
+                    "../../bin/linux_export/SS14.Client.x86_64"],
+                   cwd="engine/SS14.Client.Godot")
+
+    client_zip = zipfile.ZipFile(p("release", "SS14.Client_Linux_amd64.zip"), "w",
+                                 compression=zipfile.ZIP_DEFLATED)
+    # Write the launcher shell script.
+    info = zipfile.ZipInfo("spess.sh")
+    info.external_attr = (0o755 << 16) # Give it -rwxr-xr-x permissions.
+    client_zip.writestr(info, "#!/bin/sh\ncd godot\n./SS14.Client.x86_64")
+    # Add a /godot/ directory to the zip and put the pck in there.
+    client_zip.write(p("bin", "linux_export"), "godot")
+    client_zip.write(p("bin", "linux_export", "SS14.Client.pck"), p("godot", "SS14.Client.pck"))
+    # Write in the other files like mono dlls into the /godot/ directory.
+    copy_dir_into_zip(godot_build, "godot", client_zip)
+    # Copy the main client files into /bin/Client.
+    copy_dir_into_zip(p("engine", "bin", "Client"), p("bin", "Client"), client_zip)
+    # Copy all resources into /bin/Client/Resources.
+    copy_resources(p("bin", "Client", "Resources"), client_zip, server=False)
+    # Cool we're done.
+    client_zip.close()
 
     print(Fore.GREEN + "Packaging Linux amd64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_amd64.zip"), "w",
