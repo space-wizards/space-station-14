@@ -33,7 +33,7 @@ before_script:
 
 script:
   # Prevent people from putting in textures/ (lowercase).
-- "if [ -d Resources/textures ]; exit 1; fi"
+- "if [ -d Resources/textures ]; then exit 1; fi"
 - "msbuild /p:Configuration=Debug /p:Platform=x64 /p:HEADLESS=1 /p:Configuratio=Debug /nologo /m /p:AllowMissingMacNatives=yes SpaceStation14Content.sln /p:Python=python3.6"
 
 
