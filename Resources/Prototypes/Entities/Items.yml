@@ -34,9 +34,9 @@
   description: A blue box, not the kind you're thinking of
   components:
   - type: Sprite
-    texture: Items/toolbox_b.png
+    texture: Items/Toolbox_b.png
   - type: Icon
-    texture: Items/toolbox_b.png
+    texture: Items/Toolbox_b.png
   - type: Storage
     Capacity: 60
   - type: Item
@@ -49,9 +49,9 @@
   description: A toolbox typically stocked with electrical gear
   components:
   - type: Sprite
-    texture: Items/toolbox_y.png
+    texture: Items/Toolbox_y.png
   - type: Icon
-    texture: Items/toolbox_y.png
+    texture: Items/Toolbox_y.png
   - type: Storage
     Capacity: 60
   - type: Item
