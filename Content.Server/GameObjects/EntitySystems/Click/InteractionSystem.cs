@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attackwith"></param>
         /// <param name="clicklocation"></param>
         /// <returns></returns>
-        bool RangedAttackby(IEntity user, IEntity attackwith, LocalCoordinates clicklocation);
+        bool RangedAttackby(IEntity user, IEntity attackwith, GridLocalCoordinates clicklocation);
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="clicklocation"></param>
         /// <param name="attacked">The entity that was clicked on out of range. May be null if no entity was clicked on.true</param>
-        void Afterattack(IEntity user, LocalCoordinates clicklocation, IEntity attacked);
+        void Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked);
     }
 
     /// <summary>
@@ -193,7 +193,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="weapon"></param>
         /// <param name="clicklocation"></param>
-        public static void InteractAfterattack(IEntity user, IEntity weapon, LocalCoordinates clicklocation)
+        public static void InteractAfterattack(IEntity user, IEntity weapon, GridLocalCoordinates clicklocation)
         {
             List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
 
@@ -210,7 +210,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="weapon"></param>
         /// <param name="attacked"></param>
-        public static void Interaction(IEntity user, IEntity weapon, IEntity attacked, LocalCoordinates clicklocation)
+        public static void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridLocalCoordinates clicklocation)
         {
             List<IAttackby> interactables = attacked.GetAllComponents<IAttackby>().ToList();
 
@@ -296,7 +296,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="weapon"></param>
         /// <param name="attacked"></param>
-        public static void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, LocalCoordinates clicklocation)
+        public static void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridLocalCoordinates clicklocation)
         {
             List<IRangedAttackby> rangedusables = attacked.GetAllComponents<IRangedAttackby>().ToList();
 

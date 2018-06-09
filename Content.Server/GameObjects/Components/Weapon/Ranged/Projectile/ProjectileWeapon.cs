@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         private float _velocity = 20f;
 
-        protected override void Fire(IEntity user, LocalCoordinates clicklocation)
+        protected override void Fire(IEntity user, GridLocalCoordinates clicklocation)
         {
             var userposition = user.GetComponent<TransformComponent>().LocalPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clicklocation.Position - userposition.Position);
