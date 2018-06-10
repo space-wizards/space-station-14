@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Storage;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Server.Interfaces.Player;
+using SS14.Server.Player;
 using SS14.Shared.Enums;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Serialization;
@@ -151,6 +152,7 @@ namespace Content.Server.GameObjects
             if (!SubscribedSessions.Contains(session))
             {
                 Logger.DebugS("Storage", "Storage (UID {0}) subscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
+                session.PlayerStatusChanged += HandlePlayerSessionChangeEvent;
                 SubscribedSessions.Add(session);
             }
         }
@@ -166,14 +168,23 @@ namespace Content.Server.GameObjects
             SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
         }
 
+        public void HandlePlayerSessionChangeEvent(object obj, SessionStatusEventArgs SSEA)
+        {
+            Logger.DebugS("Storage", "Storage (UID {0}) handled a status change in player session (UID {1}).", Owner.Uid, SSEA.Session.AttachedEntityUid);
+            if (SSEA.NewStatus != SessionStatus.InGame)
+            {
+                UnsubscribeSession(SSEA.Session);
+            }
+        }
+
         /// <summary>
         /// Updates storage UI on a client, informing them of the state of the container.
         /// </summary>
         private void UpdateClientInventory(IPlayerSession session)
         {
-            if (session.Status != SessionStatus.InGame || session.AttachedEntity == null)
+            if (session.AttachedEntity == null)
             {
-                Logger.DebugS("Storage", "Storage (UID {0}) attempted to update invalid player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
+                Logger.DebugS("Storage", "Storage (UID {0}) detected no attached entity in player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
                 UnsubscribeSession(session);
                 return;
             }
