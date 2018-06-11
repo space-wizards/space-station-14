@@ -148,10 +148,8 @@ namespace Content.Server
                 case SessionStatus.Connected:
                     {
                         // timer time must be > tick length
-                        IoCManager.Resolve<ITimerManager>().AddTimer(new Timer(250, false, () =>
-                        {
-                            args.Session.JoinLobby();
-                        }));
+                        Timer.Spawn(250, args.Session.JoinLobby);
+
                         IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Player joined server!", args.Session.Index);
                     }
                     break;
@@ -162,11 +160,11 @@ namespace Content.Server
                         if (_server.RunLevel == ServerRunLevel.PreGame && !_countdownStarted)
                         {
                             _countdownStarted = true;
-                            IoCManager.Resolve<ITimerManager>().AddTimer(new Timer(2000, false, () =>
+                            Timer.Spawn(2000, () =>
                             {
                                 _server.RunLevel = ServerRunLevel.Game;
                                 _countdownStarted = false;
-                            }));
+                            });
                         }
 
                         IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Lobby!", args.Session.Index);
