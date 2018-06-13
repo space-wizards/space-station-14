@@ -111,21 +111,15 @@ namespace Content.Server
             {
                 case ServerRunLevel.PreGame:
                     var timing = IoCManager.Resolve<IGameTiming>();
-
-                    var mainMap = new MapId(1);
-                    var mainGrid = new GridId(1);
-
-                    IoCManager.Resolve<IPlayerManager>().FallbackSpawnPoint = new LocalCoordinates(0, 0, mainGrid, mainMap);
-
                     var mapLoader = IoCManager.Resolve<IMapLoader>();
                     var mapMan = IoCManager.Resolve<IMapManager>();
 
-                    var startTime = timing.RealTime;
-                    {
-                        var newMap = mapMan.CreateMap(mainMap);
+                    var newMap = mapMan.CreateMap();
+                    var grid = mapLoader.LoadBlueprint(newMap, "Maps/stationstation.yml");
 
-                        mapLoader.LoadBlueprint(newMap, mainGrid, "Maps/stationstation.yml");
-                    }
+                    IoCManager.Resolve<IPlayerManager>().FallbackSpawnPoint = new GridLocalCoordinates(Vector2.Zero, grid);
+
+                    var startTime = timing.RealTime;
                     var timeSpan = timing.RealTime - startTime;
                     Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
 

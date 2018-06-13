@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
         string spritename = "Objects/laser.png";
 
-        protected override void Fire(IEntity user, LocalCoordinates clicklocation)
+        protected override void Fire(IEntity user, GridLocalCoordinates clicklocation)
         {
             var userposition = user.GetComponent<TransformComponent>().WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clicklocation.Position - userposition);

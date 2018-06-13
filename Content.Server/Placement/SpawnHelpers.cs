@@ -20,10 +20,10 @@ namespace Content.Server.Placement
         {
             var entMan = IoCManager.Resolve<IServerEntityManager>();
             var tBase = entMan.SpawnEntity("TurretBase");
-            tBase.GetComponent<IServerTransformComponent>().LocalPosition = new LocalCoordinates(localPosition, grid);
+            tBase.GetComponent<IServerTransformComponent>().LocalPosition = new GridLocalCoordinates(localPosition, grid);
 
             var tTop = entMan.SpawnEntity("TurretTopLight");
-            tTop.GetComponent<IServerTransformComponent>().LocalPosition = new LocalCoordinates(localPosition, grid);
+            tTop.GetComponent<IServerTransformComponent>().LocalPosition = new GridLocalCoordinates(localPosition, grid);
             tTop.GetComponent<IServerTransformComponent>().AttachParent(tBase);
         }
     }
