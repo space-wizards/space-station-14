@@ -37,7 +37,6 @@ namespace Content.Client.GameObjects.Components.Storage
         public override void OnRemove()
         {
             Window.Dispose();
-
             base.OnRemove();
         }
 
@@ -52,6 +51,9 @@ namespace Content.Client.GameObjects.Components.Storage
                 //Opens the UI
                 case OpenStorageUIMessage msg:
                     OpenUI();
+                    break;
+                case CloseStorageUIMessage msg:
+                    // todo: close window/grey it out
                     break;
             }
         }
