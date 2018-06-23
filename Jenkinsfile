@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh './package_release_build.py -p windows mac linux --godot /home/pjbriers/builds_shared/godot --windows-godot-build /home/pjbriers/builds_shared/win --linux-godot-bbuilds /home/pjbriers/builds_shared/linux'
+                sh './package_release_build.py -p windows mac linux --godot /home/pjbriers/builds_shared/godot --windows-godot-build /home/pjbriers/builds_shared/win --linux-godot-build /home/pjbriers/builds_shared/linux'
                 archiveArtifacts artifacts: 'release/*.zip'
             }
         }
