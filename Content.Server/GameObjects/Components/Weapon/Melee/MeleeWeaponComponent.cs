@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         }
 
-        void IAfterAttack.Afterattack(IEntity user, LocalCoordinates clicklocation, IEntity attacked)
+        void IAfterAttack.Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked)
         {
             var location = user.GetComponent<TransformComponent>().LocalPosition;
             var angle = new Angle(clicklocation.ToWorld().Position - location.ToWorld().Position);

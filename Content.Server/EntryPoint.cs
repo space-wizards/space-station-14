@@ -111,21 +111,15 @@ namespace Content.Server
             {
                 case ServerRunLevel.PreGame:
                     var timing = IoCManager.Resolve<IGameTiming>();
-
-                    var mainMap = new MapId(1);
-                    var mainGrid = new GridId(1);
-
-                    IoCManager.Resolve<IPlayerManager>().FallbackSpawnPoint = new LocalCoordinates(0, 0, mainGrid, mainMap);
-
                     var mapLoader = IoCManager.Resolve<IMapLoader>();
                     var mapMan = IoCManager.Resolve<IMapManager>();
 
-                    var startTime = timing.RealTime;
-                    {
-                        var newMap = mapMan.CreateMap(mainMap);
+                    var newMap = mapMan.CreateMap();
+                    var grid = mapLoader.LoadBlueprint(newMap, "Maps/stationstation.yml");
 
-                        mapLoader.LoadBlueprint(newMap, mainGrid, "Maps/stationstation.yml");
-                    }
+                    IoCManager.Resolve<IPlayerManager>().FallbackSpawnPoint = new GridLocalCoordinates(Vector2.Zero, grid);
+
+                    var startTime = timing.RealTime;
                     var timeSpan = timing.RealTime - startTime;
                     Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
 
@@ -148,10 +142,8 @@ namespace Content.Server
                 case SessionStatus.Connected:
                     {
                         // timer time must be > tick length
-                        IoCManager.Resolve<ITimerManager>().AddTimer(new Timer(250, false, () =>
-                        {
-                            args.Session.JoinLobby();
-                        }));
+                        Timer.Spawn(250, args.Session.JoinLobby);
+
                         IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Player joined server!", args.Session.Index);
                     }
                     break;
@@ -162,11 +154,11 @@ namespace Content.Server
                         if (_server.RunLevel == ServerRunLevel.PreGame && !_countdownStarted)
                         {
                             _countdownStarted = true;
-                            IoCManager.Resolve<ITimerManager>().AddTimer(new Timer(2000, false, () =>
+                            Timer.Spawn(2000, () =>
                             {
                                 _server.RunLevel = ServerRunLevel.Game;
                                 _countdownStarted = false;
-                            }));
+                            });
                         }
 
                         IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Lobby!", args.Session.Index);

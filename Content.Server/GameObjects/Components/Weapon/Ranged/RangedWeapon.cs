@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
     {
         public override string Name => "RangedWeapon";
 
-        void IAfterAttack.Afterattack(IEntity user, LocalCoordinates clicklocation, IEntity attacked)
+        void IAfterAttack.Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked)
         {
             if (UserCanFire(user) && WeaponCanFire())
             {
@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             return true;
         }
 
-        protected virtual void Fire(IEntity user, LocalCoordinates clicklocation)
+        protected virtual void Fire(IEntity user, GridLocalCoordinates clicklocation)
         {
             return;
         }

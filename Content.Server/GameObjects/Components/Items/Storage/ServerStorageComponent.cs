@@ -4,6 +4,8 @@ using Content.Shared.GameObjects.Components.Storage;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Server.Interfaces.Player;
+using SS14.Server.Player;
+using SS14.Shared.Enums;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Serialization;
 using SS14.Shared.Interfaces.GameObjects;
@@ -23,6 +25,7 @@ namespace Content.Server.GameObjects
 
         private int StorageUsed = 0;
         private int StorageCapacityMax = 10000;
+        public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
         public override void OnAdd()
         {
@@ -47,8 +50,9 @@ namespace Content.Server.GameObjects
         {
             if (storage.Remove(toremove))
             {
+                Logger.InfoS("Storage", "Storage (UID {0}) had entity (UID {1}) removed from it.", Owner.Uid, toremove.Uid);
                 StorageUsed -= toremove.GetComponent<StoreableComponent>().ObjectSize;
-                UpdateClientInventory();
+                UpdateClientInventories();
                 return true;
             }
             return false;
@@ -63,8 +67,9 @@ namespace Content.Server.GameObjects
         {
             if (CanInsert(toinsert) && storage.Insert(toinsert))
             {
+                Logger.InfoS("Storage", "Storage (UID {0}) had entity (UID {1}) inserted into it.", Owner.Uid, toinsert.Uid);
                 StorageUsed += toinsert.GetComponent<StoreableComponent>().ObjectSize;
-                UpdateClientInventory();
+                UpdateClientInventories();
                 return true;
             }
             return false;
@@ -93,6 +98,7 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool IAttackby.Attackby(IEntity user, IEntity attackwith)
         {
+            Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, user.Uid, attackwith.Uid);
             var hands = user.GetComponent<HandsComponent>();
             //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
             if (hands.Drop(hands.ActiveIndex))
@@ -118,21 +124,76 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool IUse.UseEntity(IEntity user)
         {
-            SendNetworkMessage(new OpenStorageUIMessage());
+            var user_session = user.GetComponent<BasicActorComponent>().playerSession;
+            Logger.DebugS("Storage", "Storage (UID {0}) \"used\" by player session (UID {1}).", Owner.Uid, user_session.AttachedEntityUid);
+            SubscribeSession(user_session);
+            SendNetworkMessage(new OpenStorageUIMessage(), user_session.ConnectedClient);
+            UpdateClientInventory(user_session);
             return false;
         }
 
         /// <summary>
-        /// Updates the storage UI on all clients telling them of the entities stored in this container
+        /// Updates the storage UI on all subscribed actors, informing them of the state of the container.
         /// </summary>
-        private void UpdateClientInventory()
+        private void UpdateClientInventories()
         {
+            foreach (IPlayerSession session in SubscribedSessions)
+            {
+                UpdateClientInventory(session);
+            }
+        }
+
+        /// <summary>
+        /// Adds actor to the update list.
+        /// </summary>
+        /// <param name="actor"></param>
+        public void SubscribeSession(IPlayerSession session)
+        {
+            if (!SubscribedSessions.Contains(session))
+            {
+                Logger.DebugS("Storage", "Storage (UID {0}) subscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
+                session.PlayerStatusChanged += HandlePlayerSessionChangeEvent;
+                SubscribedSessions.Add(session);
+            }
+        }
+
+        /// <summary>
+        /// Removes actor from the update list.
+        /// </summary>
+        /// <param name="channel"></param>
+        public void UnsubscribeSession(IPlayerSession session)
+        {
+            Logger.DebugS("Storage", "Storage (UID {0}) unsubscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
+            SubscribedSessions.Remove(session);
+            SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
+        }
+
+        public void HandlePlayerSessionChangeEvent(object obj, SessionStatusEventArgs SSEA)
+        {
+            Logger.DebugS("Storage", "Storage (UID {0}) handled a status change in player session (UID {1}).", Owner.Uid, SSEA.Session.AttachedEntityUid);
+            if (SSEA.NewStatus != SessionStatus.InGame)
+            {
+                UnsubscribeSession(SSEA.Session);
+            }
+        }
+
+        /// <summary>
+        /// Updates storage UI on a client, informing them of the state of the container.
+        /// </summary>
+        private void UpdateClientInventory(IPlayerSession session)
+        {
+            if (session.AttachedEntity == null)
+            {
+                Logger.DebugS("Storage", "Storage (UID {0}) detected no attached entity in player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
+                UnsubscribeSession(session);
+                return;
+            }
             Dictionary<EntityUid, int> storedentities = new Dictionary<EntityUid, int>();
             foreach (var entities in storage.ContainedEntities)
             {
                 storedentities.Add(entities.Uid, entities.GetComponent<StoreableComponent>().ObjectSize);
             }
-            SendNetworkMessage(new StorageHeldItemsMessage(storedentities, StorageUsed, StorageCapacityMax));
+            SendNetworkMessage(new StorageHeldItemsMessage(storedentities, StorageUsed, StorageCapacityMax), session.ConnectedClient);
         }
 
         /// <summary>
@@ -148,7 +209,6 @@ namespace Content.Server.GameObjects
 
             switch (message)
             {
-
                 case RemoveEntityMessage msg:
                     var playerMan = IoCManager.Resolve<IPlayerManager>();
                     var session = playerMan.GetSessionByChannel(netChannel);
@@ -165,7 +225,6 @@ namespace Content.Server.GameObjects
                         if (entity != null && storage.Contains(entity))
                         {
                             Remove(entity);
-                            UpdateClientInventory();
 
                             var item = entity.GetComponent<ItemComponent>();
                             if (item != null && playerentity.TryGetComponent(out HandsComponent hands))
