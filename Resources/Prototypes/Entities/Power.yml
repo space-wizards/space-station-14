@@ -13,6 +13,9 @@
   - type: Icon
     texture: Objects/eightdirwire.png
   - type: PowerTransfer
+  - type: Mesh
+    scene: base
+    state: PipeCyan
 
   snap:
   - Wire
@@ -57,6 +60,10 @@
     range: 5
     priority: Provider
     load: 0
+  - type: Mesh
+    scene: base
+    state: APC
+    offset: 0, 0, 1
 
 - type: entity
   parent: WPPnobattery

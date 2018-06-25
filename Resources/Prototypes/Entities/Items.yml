@@ -26,6 +26,9 @@
     Capacity: 60
   - type: Item
     Size: 9999
+  - type: Mesh
+    scene: base
+    state: Toolbox-01
 
 - type: entity
   name: "Mechanical Toolbox With Handle"

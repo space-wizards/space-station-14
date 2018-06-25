@@ -26,3 +26,10 @@
     priority: Low
 
   - type: PoweredLight
+
+  - type: Mesh
+    scene: base
+    state: LightTube
+    offset: 0, 0, 2
+    rotation: 0, 0, 0
+    scale: 2, 2, 2

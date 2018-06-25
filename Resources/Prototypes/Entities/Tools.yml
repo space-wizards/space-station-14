@@ -69,7 +69,12 @@
   - type: Icon
     texture: Objects/crowbar.png
   - type: MeleeWeapon
-
+  - type: Mesh
+    scene: base
+    state: Crowbar
+    rotation: 90, 0, 90
+    scale: 2, 2, 2
+  
 - type: entity
   name: Multitool
   parent: BaseItem
