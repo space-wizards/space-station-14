@@ -1,5 +1,6 @@
 ﻿using SS14.Shared.ContentPack;
 using SS14.Shared.Interfaces;
+using SS14.Shared.Interfaces.Resources;
 using SS14.Shared.IoC;
 
 namespace Content.Shared
