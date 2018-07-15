@@ -1746,6 +1746,7 @@
       type: &1921049841 PowerStorage
     - type: PowerNode
     - type: SMES
+    - type: Appearance
   - type: entity
     id: SMES
     name: SMES
@@ -1762,6 +1763,7 @@
     - type: PowerStorage
     - type: PowerNode
     - type: SMES
+    - type: Appearance
   - type: entity
     id: &400177229 BlueWire
     name: BlueWire

@@ -80,22 +80,13 @@
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
+    netsync: false
     sprite: Buildings/smes.rsi
+    state: smes
     scale: 2, 2
     layers:
-    - state: smes
     - state: smes-display
       shader: unshaded
-    # Input lights.
-    - shader: unshaded
-      state: smes-oc0
-    # Charge meter.
-    - visible: false
-      shader: unshaded
-      state: smes-og1
-    # Output lights.
-    - shader: unshaded
-      state: smes-op0
   - type: Icon
     sprite: Buildings/smes.rsi
     state: smes
@@ -106,6 +97,9 @@
     distributionrate: 400
     chargepowernet: true
   - type: SMES
+  - type: Appearance
+    visuals:
+    - type: SMESVisualizer2D
 
 - type: entity
   id: WiredMachine

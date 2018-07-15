@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Content.Shared.Utility
 {
@@ -34,7 +34,16 @@ namespace Content.Shared.Utility
                 return 0;
             }
             var toOne = actual / max;
-            if (toOne <= 0.5f)
+            float threshold;
+            if (levels % 2 == 0)
+            {
+                threshold = ((levels / 2f) - 1) / (levels-1);
+            }
+            else
+            {
+                threshold = 0.5f;
+            }
+            if (toOne <= threshold)
             {
                 return (int)Math.Ceiling(toOne * (levels - 1));
             }
