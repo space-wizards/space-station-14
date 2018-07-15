@@ -91,6 +91,7 @@ namespace Content.Server
 
             factory.Register<PowerDebugTool>();
             factory.Register<PoweredLightComponent>();
+            factory.Register<SMESComponent>();
         }
 
         /// <inheritdoc />

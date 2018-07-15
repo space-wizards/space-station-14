@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
@@ -61,9 +62,11 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (attacked.TryGetComponent<PowerStorageComponent>(out var storage))
             {
+                var stateSeconds = (DateTime.Now - storage.LastChargeStateChange).TotalSeconds;
                 builder.AppendFormat(@"Power Storage:
   Capacity: {0}, Charge: {1}, ChargeRate: {2}, DistributionRate: {3}, ChargePowernet: {4}
-", storage.Capacity, storage.Charge, storage.ChargeRate, storage.DistributionRate, storage.ChargePowernet);
+  LastChargeState: {5} ({6}), LastChargeStateChange: {7:0.00} seconds ago.
+", storage.Capacity, storage.Charge, storage.ChargeRate, storage.DistributionRate, storage.ChargePowernet, storage.LastChargeState, storage.GetChargeState(), stateSeconds);
             }
 
             if (attacked.TryGetComponent<PowerTransferComponent>(out var transfer))

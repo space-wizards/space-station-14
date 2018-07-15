@@ -10,6 +10,7 @@ namespace Content.Client.GameObjects.Components.Power
 {
     public class PowerDebugTool : SharedPowerDebugTool
     {
+        SS14Window LastWindow;
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
@@ -17,13 +18,17 @@ namespace Content.Client.GameObjects.Components.Power
             switch (message)
             {
                 case OpenDataWindowMsg msg:
-                    var window = new SS14Window
+                    if (LastWindow != null && !LastWindow.Disposed)
                     {
-                        Title = "Power Debug Tool"
+                        LastWindow.Dispose();
+                    }
+                    LastWindow = new SS14Window
+                    {
+                        Title = "Power Debug Tool",
                     };
-                    window.Contents.AddChild(new Label() { Text = msg.Data });
-                    window.AddToScreen();
-                    window.Open();
+                    LastWindow.Contents.AddChild(new Label() { Text = msg.Data });
+                    LastWindow.AddToScreen();
+                    LastWindow.Open();
                     break;
             }
         }
