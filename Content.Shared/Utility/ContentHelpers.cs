@@ -19,7 +19,7 @@ namespace Content.Shared.Utility
         /// <exception cref="ArgumentException">
         ///     Thrown if levels is less than 1.
         /// </exception>
-        public static int RoundToLevels(float actual, float max, int levels)
+        public static int RoundToLevels(double actual, double max, int levels)
         {
             if (levels <= 0)
             {
@@ -34,22 +34,26 @@ namespace Content.Shared.Utility
                 return 0;
             }
             var toOne = actual / max;
-            float threshold;
+            double threshold;
             if (levels % 2 == 0)
             {
-                threshold = ((levels / 2f) - 1) / (levels-1);
+                // Basically, if we have an even count of levels, there's no exact "mid point".
+                // Thus, I nominate the first one below the 50% mark.
+                threshold = ((levels / 2f) - 1) / (levels - 1);
             }
             else
             {
                 threshold = 0.5f;
             }
+
+            var preround = toOne * (levels - 1);
             if (toOne <= threshold)
             {
-                return (int)Math.Ceiling(toOne * (levels - 1));
+                return (int)Math.Ceiling(preround);
             }
             else
             {
-                return (int)Math.Floor(toOne * (levels - 1));
+                return (int)Math.Floor(preround);
             }
         }
     }
