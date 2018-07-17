@@ -97,7 +97,6 @@
     netsync: false
     sprite: Buildings/smes.rsi
     state: smes
-    scale: 2, 2
     layers:
     - state: smes-display
       shader: unshaded
