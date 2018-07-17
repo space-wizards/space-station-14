@@ -67,6 +67,7 @@
     <Compile Include="GameObjects\Components\Inventory\EquipmentSlotDefinitions.cs" />
     <Compile Include="GameObjects\Components\Inventory\InventoryTemplates.cs" />
     <Compile Include="GameObjects\Components\Inventory\SharedInventoryComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerShared.cs" />
     <Compile Include="GameObjects\Components\Storage\SharedStorageComponent.cs" />
     <Compile Include="GameObjects\ContentNetIDs.cs" />
     <Compile Include="GameObjects\PhysicalConstants.cs" />
@@ -100,6 +101,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <Compile Include="Input\ContentKeyFunctions.cs" />
+    <Compile Include="Utility\ContentHelpers.cs" />
+    <Compile Include="GameObjects\Components\Power\SharedSmesComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\SharedApcComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

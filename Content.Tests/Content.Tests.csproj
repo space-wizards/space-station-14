@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(SolutionDir)packages\NUnit.3.10.1\build\NUnit.props" Condition="Exists('$(SolutionDir)packages\NUnit.3.10.1\build\NUnit.props')" />
+  <Import Project="$(SolutionDir)packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('$(SolutionDir)packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8EDF4429-251A-416D-BB68-93F227191BCF}</ProjectGuid>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Content.Tests</RootNamespace>
+    <AssemblyName>Content.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TestProjectType>UnitTest</TestProjectType>
+    <OutputPath>..\bin\Content.Tests\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>$(SolutionDir)packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\Utility\ContentHelpers_Test.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Content.Client\Content.Client.csproj">
+      <Project>{a2e5f175-78af-4ddd-8f97-e2d2552372ed}</Project>
+      <Name>Content.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Content.Server\Content.Server.csproj">
+      <Project>{b38dbbd0-04c2-4d1a-84e2-b3446f6adf2a}</Project>
+      <Name>Content.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">
+      <Project>{26aeebb3-dde7-443a-9f43-7bc7f4acf6b5}</Project>
+      <Name>Content.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\Lidgren.Network\Lidgren.Network.csproj">
+      <Project>{59250baf-0000-0000-0000-000000000000}</Project>
+      <Name>Lidgren.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\SS14.Client.Godot\SS14.Client.Godot.csproj">
+      <Project>{8af31169-49b1-4a12-b8f4-2a0674a9e7cb}</Project>
+      <Name>SS14.Client.Godot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\SS14.Client\SS14.Client.csproj">
+      <Project>{83429bd6-6358-4b18-be51-401df8ea2673}</Project>
+      <Name>SS14.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\SS14.Server\SS14.Server.csproj">
+      <Project>{b04aae71-0000-0000-0000-000000000000}</Project>
+      <Name>SS14.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\SS14.Shared\SS14.Shared.csproj">
+      <Project>{0529f740-0000-0000-0000-000000000000}</Project>
+      <Name>SS14.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\SS14.UnitTesting\SS14.UnitTesting.csproj">
+      <Project>{f0ada779-40b8-4f7e-ba6c-cdb19f3065d9}</Project>
+      <Name>SS14.UnitTesting</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

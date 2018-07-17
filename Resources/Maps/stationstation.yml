@@ -1745,6 +1745,8 @@
     - &1206253354
       type: &1921049841 PowerStorage
     - type: PowerNode
+    - type: Smes
+    - type: Appearance
   - type: entity
     id: SMES
     name: SMES
@@ -1760,6 +1762,8 @@
     - type: Sprite
     - type: PowerStorage
     - type: PowerNode
+    - type: Smes
+    - type: Appearance
   - type: entity
     id: &400177229 BlueWire
     name: BlueWire
@@ -2236,8 +2240,8 @@
     - type: PowerDevice
     - type: PoweredLight
   - type: entity
-    id: &692485458 WPP
-    name: WPP
+    id: &692485458 APC
+    name: APC
     components:
     - type: PowerStorage
     - type: PowerNode
@@ -2251,9 +2255,11 @@
     - type: Sprite
     - &1938028994
       type: &323998104 PowerProvider
+    - type: Apc
+    - type: Appearance
   - type: entity
-    id: WPP
-    name: WPP
+    id: APC
+    name: APC
     components:
     - type: PowerStorage
     - type: PowerNode
@@ -2266,6 +2272,8 @@
     - type: BoundingBox
     - type: Sprite
     - type: PowerProvider
+    - type: Apc
+    - type: Appearance
   - type: entity
     id: Wire
     name: Wire
@@ -2369,8 +2377,8 @@
     - type: PowerDevice
     - type: PoweredLight
   - type: entity
-    id: WPP
-    name: WPP
+    id: APC
+    name: APC
     components:
     - type: PowerStorage
     - type: PowerNode
@@ -2382,6 +2390,8 @@
     - type: BoundingBox
     - type: Sprite
     - type: PowerProvider
+    - type: Apc
+    - type: Appearance
   - type: entity
     id: Wire
     name: Wire
@@ -2396,8 +2406,8 @@
       color: '#FF0000FF'
     - type: PowerTransfer
   - type: entity
-    id: WPP
-    name: WPP
+    id: APC
+    name: APC
     components:
     - type: PowerStorage
     - type: PowerNode
@@ -2409,6 +2419,8 @@
     - type: BoundingBox
     - type: Sprite
     - type: PowerProvider
+    - type: Apc
+    - type: Appearance
   - type: entity
     id: Wire
     name: Wire
@@ -2649,8 +2661,8 @@
       color: '#FF0000FF'
     - type: PowerTransfer
   - type: entity
-    id: WPP
-    name: WPP
+    id: APC
+    name: APC
     components:
     - type: PowerStorage
     - type: PowerNode
@@ -2663,9 +2675,11 @@
     - type: BoundingBox
     - type: Sprite
     - type: PowerProvider
+    - type: Apc
+    - type: Appearance
   - type: entity
-    id: WPP
-    name: WPP
+    id: APC
+    name: APC
     components:
     - type: PowerStorage
     - type: PowerNode
@@ -2678,6 +2692,8 @@
     - type: BoundingBox
     - type: Sprite
     - type: PowerProvider
+    - type: Apc
+    - type: Appearance
   - type: entity
     id: Wire
     name: Wire

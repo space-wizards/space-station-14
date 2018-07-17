@@ -108,5 +108,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <Compile Include="GameObjects\Components\Power\SmesVisualizer2D.cs" />
+    <Compile Include="GameObjects\Components\Power\ApcVisualizer2D.cs" />
   </ItemGroup>
 </Project>

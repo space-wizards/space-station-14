@@ -145,6 +145,10 @@ namespace Content.Server.GameObjects.Components.Power
                     break;
                 }
                 var demand = consumer.RequestCharge(frameTime);
+                if (demand == 0)
+                {
+                    continue;
+                }
                 var taken = Math.Min(demand, totalRemaining);
                 totalRemaining -= taken;
                 consumer.AddCharge(taken);
@@ -155,6 +159,10 @@ namespace Content.Server.GameObjects.Components.Power
             foreach (var supplier in PowerStorageSupplierList)
             {
                 var load = supplier.AvailableCharge(frameTime);
+                if (load == 0)
+                {
+                    continue;
+                }
                 var added = Math.Min(load, supplierUsed);
                 supplierUsed -= added;
                 supplier.DeductCharge(added);

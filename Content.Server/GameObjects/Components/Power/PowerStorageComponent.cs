@@ -1,4 +1,5 @@
-﻿using SS14.Shared.GameObjects;
+﻿using Content.Shared.GameObjects.Components.Power;
+using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Utility;
@@ -13,6 +14,9 @@ namespace Content.Server.GameObjects.Components.Power
     public class PowerStorageComponent : Component
     {
         public override string Name => "PowerStorage";
+
+        public ChargeState LastChargeState { get; private set; } = ChargeState.Still;
+        public DateTime LastChargeStateChange { get; private set; }
 
         /// <summary>
         ///     Maximum amount of energy the internal battery can store.
@@ -37,6 +41,8 @@ namespace Content.Server.GameObjects.Components.Power
         ///     In Watts.
         /// </summary>
         public float DistributionRate { get; private set; } = 1000;
+
+        public bool Full => Charge >= Capacity;
 
         private bool _chargepowernet = false;
 
@@ -129,15 +135,19 @@ namespace Content.Server.GameObjects.Components.Power
         public void DeductCharge(float todeduct)
         {
             Charge = Math.Max(0, Charge - todeduct);
+            LastChargeState = ChargeState.Discharging;
+            LastChargeStateChange = DateTime.Now;
         }
 
         public void AddCharge(float charge)
         {
             Charge = Math.Min(Capacity, Charge + charge);
+            LastChargeState = ChargeState.Charging;
+            LastChargeStateChange = DateTime.Now;
         }
 
         /// <summary>
-        /// Returns the charge available from the energy storage
+        ///     Returns the amount of energy that can be taken in by this storage in the specified amount of time.
         /// </summary>
         public float RequestCharge(float frameTime)
         {
@@ -145,15 +155,33 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <summary>
-        /// Returns the charge available from the energy storage
+        ///     Returns the amount of energy available for discharge in the specified amount of time.
         /// </summary>
         public float AvailableCharge(float frameTime)
         {
             return Math.Min(DistributionRate * frameTime, Charge);
         }
 
+        public ChargeState GetChargeState()
+        {
+            return GetChargeState(TimeSpan.FromSeconds(1));
+        }
+
+        public ChargeState GetChargeState(TimeSpan timeout)
+        {
+            if (LastChargeStateChange + timeout > DateTime.Now)
+            {
+                return LastChargeState;
+            }
+            return ChargeState.Still;
+        }
+
         public void ChargePowerTick(float frameTime)
         {
+            if (Full)
+            {
+                return;
+            }
             AddCharge(RequestCharge(frameTime));
         }
 

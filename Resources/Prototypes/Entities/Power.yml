@@ -70,25 +70,49 @@
     chargerate: 200
     chargepowernet: false
 
+- type: entity
+  parent: WPP
+  id: APC
+  name: APC
+  components:
+  - type: Apc
+  - type: Sprite
+    netsync: false
+    texture: ""
+    sprite: "Buildings/apc.rsi"
+    state: apc0
+  - type: Appearance
+    visuals:
+    - type: ApcVisualizer2D
 
 - type: entity
   id: SMES
-  name: SMES
-  description: Stores power in its supermagnetic cells
+  name: Smes
+  description: Stores power in its super-magnetic cells
   components:
   - type: Transform
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
-    texture: Objects/storage.png
+    netsync: false
+    sprite: Buildings/smes.rsi
+    state: smes
+    layers:
+    - state: smes-display
+      shader: unshaded
   - type: Icon
-    texture: Objects/storage.png
+    sprite: Buildings/smes.rsi
+    state: smes
   - type: PowerStorage
     capacity: 3000
     charge: 1000
     chargerate: 200
     distributionrate: 400
     chargepowernet: true
+  - type: Smes
+  - type: Appearance
+    visuals:
+    - type: SmesVisualizer2D
 
 - type: entity
   id: WiredMachine
