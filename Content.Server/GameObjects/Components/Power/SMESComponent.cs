@@ -6,9 +6,14 @@ using SS14.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Power
 {
-    public class SMESComponent : Component
+    /// <summary>
+    ///     Handles the "user-facing" side of the actual SMES object.
+    ///     This is operations that are specific to the SMES, like UI and visuals.
+    ///     Code interfacing with the powernet is handled in <see cref="PowerStorageComponent" />.
+    /// </summary>
+    public class SmesComponent : Component
     {
-        public override string Name => "SMES";
+        public override string Name => "Smes";
 
         PowerStorageComponent Storage;
         AppearanceComponent Appearance;
@@ -29,14 +34,14 @@ namespace Content.Server.GameObjects.Components.Power
             if (newLevel != LastChargeLevel)
             {
                 LastChargeLevel = newLevel;
-                Appearance.SetData(SMESVisuals.LastChargeLevel, newLevel);
+                Appearance.SetData(SmesVisuals.LastChargeLevel, newLevel);
             }
 
             var newState = Storage.GetChargeState();
             if (newState != LastChargeState)
             {
                 LastChargeState = newState;
-                Appearance.SetData(SMESVisuals.LastChargeState, newState);
+                Appearance.SetData(SmesVisuals.LastChargeState, newState);
             }
         }
 

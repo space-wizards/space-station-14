@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Content.Client.GameObjects.Components.Power
 {
-    public class SMESVisualizer2D : AppearanceVisualizer
+    public class SmesVisualizer2D : AppearanceVisualizer
     {
         public override void InitializeEntity(IEntity entity)
         {
@@ -32,7 +32,7 @@ namespace Content.Client.GameObjects.Components.Power
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData<int>(SMESVisuals.LastChargeLevel, out var level) || level == 0)
+            if (!component.TryGetData<int>(SmesVisuals.LastChargeLevel, out var level) || level == 0)
             {
                 sprite.LayerSetVisible(Layers.Charge, false);
             }
@@ -42,7 +42,7 @@ namespace Content.Client.GameObjects.Components.Power
                 sprite.LayerSetState(Layers.Charge, $"smes-og{level}");
             }
 
-            if (component.TryGetData<ChargeState>(SMESVisuals.LastChargeState, out var state))
+            if (component.TryGetData<ChargeState>(SmesVisuals.LastChargeState, out var state))
             {
                 switch (state)
                 {

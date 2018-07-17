@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Content.Shared.GameObjects.Components.Power
 {
     [Serializable, NetSerializable]
-    public enum SMESVisuals
+    public enum SmesVisuals
     {
         LastChargeState,
         LastChargeLevel,

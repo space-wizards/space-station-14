@@ -1731,7 +1731,7 @@
     - type: Collidable
   - type: entity
     id: &260843040 SMES
-    name: SMES
+    name: Smes
     components:
     - &1157961653
       type: Transform
@@ -1749,7 +1749,7 @@
     - type: Appearance
   - type: entity
     id: SMES
-    name: SMES
+    name: Smes
     components:
     - &1360714317
       type: Transform

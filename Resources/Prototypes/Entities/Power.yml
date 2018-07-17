@@ -73,7 +73,7 @@
 
 - type: entity
   id: SMES
-  name: SMES
+  name: Smes
   description: Stores power in its super-magnetic cells
   components:
   - type: Transform
@@ -99,7 +99,7 @@
   - type: SMES
   - type: Appearance
     visuals:
-    - type: SMESVisualizer2D
+    - type: SmesVisualizer2D
 
 - type: entity
   id: WiredMachine
