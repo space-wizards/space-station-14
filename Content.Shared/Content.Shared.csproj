@@ -103,6 +103,7 @@
     <Compile Include="Input\ContentKeyFunctions.cs" />
     <Compile Include="Utility\ContentHelpers.cs" />
     <Compile Include="GameObjects\Components\Power\SharedSmesComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\SharedApcComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

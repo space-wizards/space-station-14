@@ -42,6 +42,8 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public float DistributionRate { get; private set; } = 1000;
 
+        public bool Full => Charge >= Capacity;
+
         private bool _chargepowernet = false;
 
         /// <summary>
@@ -176,6 +178,10 @@ namespace Content.Server.GameObjects.Components.Power
 
         public void ChargePowerTick(float frameTime)
         {
+            if (Full)
+            {
+                return;
+            }
             AddCharge(RequestCharge(frameTime));
         }
 

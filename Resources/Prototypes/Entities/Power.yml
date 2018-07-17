@@ -70,6 +70,20 @@
     chargerate: 200
     chargepowernet: false
 
+- type: entity
+  parent: WPP
+  id: APC
+  name: APC
+  components:
+  - type: Apc
+  - type: Sprite
+    netsync: false
+    texture: ""
+    sprite: "Buildings/apc.rsi"
+    state: apc0
+  - type: Appearance
+    visuals:
+    - type: ApcVisualizer2D
 
 - type: entity
   id: SMES
@@ -96,7 +110,7 @@
     chargerate: 200
     distributionrate: 400
     chargepowernet: true
-  - type: SMES
+  - type: Smes
   - type: Appearance
     visuals:
     - type: SmesVisualizer2D
