@@ -11,9 +11,9 @@ using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventory
 using static Content.Shared.GameObjects.SharedInventoryComponent.ServerInventoryMessage;
 using SS14.Shared.IoC;
 using SS14.Server.Interfaces.Player;
-using SS14.Shared.GameObjects.Serialization;
 using SS14.Shared.ContentPack;
 using System.Linq;
+using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
@@ -22,12 +22,15 @@ namespace Content.Server.GameObjects
         private Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
         string TemplateName = "HumanInventory"; //stored for serialization purposes
 
-        public override void ExposeData(EntitySerializer serializer)
+        public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref TemplateName, "Template", "HumanInventory");
-            CreateInventory(TemplateName);
+            if (serializer.Reading)
+            {
+                CreateInventory(TemplateName);
+            }
         }
 
         private void CreateInventory(string TemplateName)

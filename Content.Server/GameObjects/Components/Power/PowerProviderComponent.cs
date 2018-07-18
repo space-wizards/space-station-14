@@ -3,6 +3,7 @@ using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
+using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,12 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Variable that determines the range that the power provider will try to supply power to
         /// </summary>
-        public int PowerRange { get; private set; } = 0;
+        public int PowerRange
+        {
+            get => _range;
+            private set => _range = value;
+        }
+        private int _range = 0;
 
         /// <summary>
         /// List storing all the power devices that we are currently providing power to
@@ -56,16 +62,11 @@ namespace Content.Server.GameObjects.Components.Power
             AdvertisedDevices.Clear();
         }
 
-        public override void LoadParameters(YamlMappingNode mapping)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (mapping.TryGetNode("range", out YamlNode node))
-            {
-                PowerRange = node.AsInt();
-            }
-            if (mapping.TryGetNode("priority", out node))
-            {
-                Priority = node.AsEnum<Powernet.Priority>();
-            }
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _range, "range", 0);
         }
 
         internal override void ProcessInternalPower(float frametime)

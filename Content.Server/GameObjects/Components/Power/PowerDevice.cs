@@ -3,6 +3,7 @@ using SS14.Server.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
+using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,12 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         ///     The method of draw we will try to use to place our load set via component parameter, defaults to using power providers
         /// </summary>
-        public virtual DrawTypes DrawType { get; protected set; } = DrawTypes.Provider;
+        public virtual DrawTypes DrawType
+        {
+            get => _drawType;
+            protected set => _drawType = value;
+        }
+        private DrawTypes _drawType = DrawTypes.Provider;
 
         /// <summary>
         ///     The power draw method we are currently connected to and using
@@ -62,8 +68,12 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Priority for powernet draw, lower will draw first, defined in powernet.cs
         /// </summary>
-        public virtual Powernet.Priority Priority { get; protected set; } = Powernet.Priority.Medium;
-
+        public virtual Powernet.Priority Priority
+        {
+            get => _priority;
+            protected set => _priority = value;
+        }
+        private Powernet.Priority _priority = Powernet.Priority.Medium;
 
         private float _load = 100; //arbitrary magic number to start
         /// <summary>
@@ -152,20 +162,13 @@ namespace Content.Server.GameObjects.Components.Power
             base.Shutdown();
         }
 
-        public override void LoadParameters(YamlMappingNode mapping)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (mapping.TryGetNode("drawtype", out YamlNode node))
-            {
-                DrawType = node.AsEnum<DrawTypes>();
-            }
-            if (mapping.TryGetNode("load", out node))
-            {
-                Load = node.AsFloat();
-            }
-            if (mapping.TryGetNode("priority", out node))
-            {
-                Priority = node.AsEnum<Powernet.Priority>();
-            }
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _drawType, "drawtype", DrawTypes.Provider);
+            serializer.DataField(ref _load, "load", 100);
+            serializer.DataField(ref _priority, "priority", Powernet.Priority.Medium);
         }
 
         string IExamine.Examine()

@@ -1,4 +1,4 @@
-﻿using SS14.Shared.GameObjects.Serialization;
+﻿using SS14.Shared.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +14,18 @@ namespace Content.Server.GameObjects
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
         private List<string> slotstrings = new List<string>(); //serialization
 
-        public override void ExposeData(EntitySerializer serializer)
+        public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            
-            serializer.DataField(ref slotstrings, "Slots", new List<string>(0));
 
-            foreach(var slotflagsloaded in slotstrings)
+            // TODO: Writing.
+            serializer.DataReadFunction("Slots", new List<string>(0), list =>
             {
-                SlotFlags |= (SlotFlags)Enum.Parse(typeof(SlotFlags), slotflagsloaded.ToUpper());
-            }   
+                foreach (var slotflagsloaded in slotstrings)
+                {
+                    SlotFlags |= (SlotFlags)Enum.Parse(typeof(SlotFlags), slotflagsloaded.ToUpper());
+                }
+            });
         }
     }
 }

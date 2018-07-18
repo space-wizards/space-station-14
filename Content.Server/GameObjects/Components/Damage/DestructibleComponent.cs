@@ -6,7 +6,7 @@ using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
-
+using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
@@ -27,26 +27,22 @@ namespace Content.Server.GameObjects
         /// </summary>
         public DamageThreshold Threshold { get; private set; }
 
-        /// <inheritdoc />
-        public override void LoadParameters(YamlMappingNode mapping)
+
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            //TODO currently only supports one threshold pair; gotta figure out YAML better
+            base.ExposeData(serializer);
 
-            YamlNode node;
-
-            DamageType damageType = DamageType.Total;
-            int damageValue = 0;
-
-            if (mapping.TryGetNode("thresholdtype", out node))
+            // TODO: Writing
+            if (serializer.Reading)
             {
-                damageType = node.AsEnum<DamageType>();
-            }
-            if (mapping.TryGetNode("thresholdvalue", out node))
-            {
-                damageValue = node.AsInt();
-            }
+                DamageType damageType = DamageType.Total;
+                int damageValue = 0;
 
-            Threshold = new DamageThreshold(damageType, damageValue);
+                serializer.DataReadFunction("thresholdtype", DamageType.Total, type => damageType = type);
+                serializer.DataReadFunction("thresholdvalue", 0, val => damageValue = val);
+
+                Threshold = new DamageThreshold(damageType, damageValue);
+            }
         }
 
         /// <inheritdoc />
