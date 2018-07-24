@@ -45,10 +45,8 @@ namespace Content.Server.GameObjects
         }
 
         /// <inheritdoc />
-        public override void Update(float frameTime)
+        public void OnUpdate(float frameTime)
         {
-            base.Update(frameTime);
-
             int fireDamage = (int)Math.Floor(Math.Max(0, CurrentTemperature - _fireDamageThreshold) / _fireDamageCoefficient);
 
             _secondsSinceLastDamageUpdate += frameTime;
