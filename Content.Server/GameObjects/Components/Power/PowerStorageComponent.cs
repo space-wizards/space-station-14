@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Power
             base.ExposeData(serializer);
 
             serializer.DataField(ref _capacity, "capacity", 10000);
-            serializer.DataField(ref _charge, "capacity", 0);
+            serializer.DataField(ref _charge, "charge", 0);
             serializer.DataField(ref _chargeRate, "chargerate", 1000);
             serializer.DataField(ref _distributionRate, "distributionrate", 1000);
             serializer.DataField(ref _chargepowernet, "chargepowernet", false);
