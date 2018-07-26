@@ -5,6 +5,7 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using Content.Shared.GameObjects;
+using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
@@ -29,19 +30,12 @@ namespace Content.Server.GameObjects
 
         float _secondsSinceLastDamageUpdate = 0;
 
-        /// <inheritdoc />
-        public override void LoadParameters(YamlMappingNode mapping)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            YamlNode node;
+            base.ExposeData(serializer);
 
-            if (mapping.TryGetNode("firedamagethreshold", out node))
-            {
-                _fireDamageThreshold = node.AsFloat();
-            }
-            if (mapping.TryGetNode("firedamagecoefficient", out node))
-            {
-                _fireDamageCoefficient = node.AsFloat();
-            }
+            serializer.DataField(ref _fireDamageThreshold, "firedamagethreshold", 0);
+            serializer.DataField(ref _fireDamageCoefficient, "firedamagecoefficient", 1);
         }
 
         /// <inheritdoc />

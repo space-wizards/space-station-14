@@ -4,6 +4,7 @@ using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using SS14.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
+using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Interactable.Tools
 {
@@ -19,12 +20,22 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         /// <summary>
         /// Maximum fuel capacity the welder can hold
         /// </summary>
-        public float FuelCapacity { get; set; } = 50;
+        public float FuelCapacity
+        {
+            get => _fuelCapacity;
+            set => _fuelCapacity = value;
+        }
+        private float _fuelCapacity = 50;
 
         /// <summary>
         /// Fuel the welder has to do tasks
         /// </summary>
-        public float Fuel { get; set; } = 0;
+        public float Fuel
+        {
+            get => _fuel;
+            set => _fuel = value;
+        }
+        private float _fuel = 0;
 
         /// <summary>
         /// Default Cost of using the welder fuel for an action
@@ -51,33 +62,12 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             spriteComponent = Owner.GetComponent<SpriteComponent>();
         }
 
-        public override void LoadParameters(YamlMappingNode mapping)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            base.LoadParameters(mapping);
+            base.ExposeData(serializer);
 
-            if (mapping.TryGetNode("Capacity", out YamlNode node))
-            {
-                FuelCapacity = node.AsFloat();
-            }
-
-            //if (mapping.TryGetNode("On", out node))
-            //{
-            //    OnSprite = node.AsString();
-            //}
-
-            //if (mapping.TryGetNode("Off", out node))
-            //{
-            //    OffSprite = node.AsString();
-            //}
-
-            if (mapping.TryGetNode("Fuel", out node))
-            {
-                Fuel = node.AsFloat();
-            }
-            else
-            {
-                Fuel = FuelCapacity;
-            }
+            serializer.DataField(ref _fuelCapacity, "Capacity", 50);
+            serializer.DataField(ref _fuel, "Fuel", FuelCapacity);
         }
 
         public void OnUpdate(float frameTime)
@@ -142,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
 
         string IExamine.Examine()
         {
-            if(Activated)
+            if (Activated)
             {
                 return "The welding tool is currently lit";
             }

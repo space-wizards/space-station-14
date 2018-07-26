@@ -8,11 +8,11 @@ using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects;
-using SS14.Shared.GameObjects.Serialization;
 using SS14.Shared.Input;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
+using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
@@ -45,10 +45,11 @@ namespace Content.Server.GameObjects
         private InputCommand DropCommand;
         private InputCommand ActivateItemInHandCommand;
 
-        public override void ExposeData(EntitySerializer serializer)
+        public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
+            // TODO: This does not serialize what objects are held.
             serializer.DataField(ref orderedHands, "hands", new List<string>(0));
             if (serializer.Reading)
             {

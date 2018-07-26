@@ -1,5 +1,5 @@
 ﻿using SS14.Shared.GameObjects;
-using SS14.Shared.GameObjects.Serialization;
+using SS14.Shared.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects
 
         public int ObjectSize = 0;
 
-        public override void ExposeData(EntitySerializer serializer)
+        public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 

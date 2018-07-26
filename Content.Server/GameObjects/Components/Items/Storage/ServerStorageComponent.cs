@@ -7,11 +7,11 @@ using SS14.Server.Interfaces.Player;
 using SS14.Server.Player;
 using SS14.Shared.Enums;
 using SS14.Shared.GameObjects;
-using SS14.Shared.GameObjects.Serialization;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
+using SS14.Shared.Serialization;
 using System.Collections.Generic;
 
 namespace Content.Server.GameObjects
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects
             storage = ContainerManagerComponent.Create<Container>("storagebase", Owner);
         }
 
-        public override void ExposeData(EntitySerializer serializer)
+        public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 

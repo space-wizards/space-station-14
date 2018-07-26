@@ -7,6 +7,7 @@ using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
+using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
@@ -35,13 +36,16 @@ namespace Content.Server.GameObjects
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
 
-        /// <inheritdoc />
-        public override void LoadParameters(YamlMappingNode mapping)
+
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (mapping.TryGetNode("resistanceset", out YamlNode node))
+            base.ExposeData(serializer);
+
+            // TODO: Writing.
+            serializer.DataReadFunction("resistanceset", "honk", name =>
             {
-                Resistances = ResistanceSet.GetResistanceSet(node.AsString());
-            }
+                Resistances = ResistanceSet.GetResistanceSet(name);
+            });
         }
 
         /// <inheritdoc />

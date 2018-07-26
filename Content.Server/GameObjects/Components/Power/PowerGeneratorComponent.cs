@@ -2,6 +2,7 @@
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
+using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
 using System;
 using YamlDotNet.RepresentationModel;
@@ -25,12 +26,11 @@ namespace Content.Server.GameObjects.Components.Power
             set { UpdateSupply(value); }
         }
 
-        public override void LoadParameters(YamlMappingNode mapping)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (mapping.TryGetNode("supply", out YamlNode node))
-            {
-                Supply = node.AsFloat();
-            }
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _supply, "supply", 1000);
         }
 
         public override void OnAdd()

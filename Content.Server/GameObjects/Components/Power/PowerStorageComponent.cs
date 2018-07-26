@@ -2,6 +2,7 @@
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
+using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
 using System;
 using YamlDotNet.RepresentationModel;
@@ -22,25 +23,29 @@ namespace Content.Server.GameObjects.Components.Power
         ///     Maximum amount of energy the internal battery can store.
         ///     In Joules.
         /// </summary>
-        public float Capacity { get; private set; } = 10000; //arbitrary value replace
+        public float Capacity => _capacity;
+        private float _capacity = 10000; // Arbitrary value, replace.
 
         /// <summary>
         ///     Energy the battery is currently storing.
         ///     In Joules.
         /// </summary>
-        public float Charge { get; private set; } = 0;
+        public float Charge => _charge;
+        private float _charge = 0;
 
         /// <summary>
         ///     Rate at which energy will be taken to charge internal battery.
         ///     In Watts.
         /// </summary>
-        public float ChargeRate { get; private set; } = 1000;
+        public float ChargeRate => _chargeRate;
+        private float _chargeRate = 1000;
 
         /// <summary>
         ///     Rate at which energy will be distributed to the powernet if needed.
         ///     In Watts.
         /// </summary>
-        public float DistributionRate { get; private set; } = 1000;
+        public float DistributionRate => _distributionRate;
+        private float _distributionRate = 1000;
 
         public bool Full => Charge >= Capacity;
 
@@ -63,29 +68,15 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-
-        public override void LoadParameters(YamlMappingNode mapping)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (mapping.TryGetNode("capacity", out YamlNode node))
-            {
-                Capacity = node.AsFloat();
-            }
-            if (mapping.TryGetNode("charge", out node))
-            {
-                Charge = node.AsFloat();
-            }
-            if (mapping.TryGetNode("chargerate", out node))
-            {
-                ChargeRate = node.AsFloat();
-            }
-            if (mapping.TryGetNode("distributionrate", out node))
-            {
-                DistributionRate = node.AsFloat();
-            }
-            if (mapping.TryGetNode("chargepowernet", out node))
-            {
-                _chargepowernet = node.AsBool();
-            }
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _capacity, "capacity", 10000);
+            serializer.DataField(ref _charge, "charge", 0);
+            serializer.DataField(ref _chargeRate, "chargerate", 1000);
+            serializer.DataField(ref _distributionRate, "distributionrate", 1000);
+            serializer.DataField(ref _chargepowernet, "chargepowernet", false);
         }
 
         public override void OnAdd()
@@ -134,14 +125,14 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void DeductCharge(float todeduct)
         {
-            Charge = Math.Max(0, Charge - todeduct);
+            _charge = Math.Max(0, Charge - todeduct);
             LastChargeState = ChargeState.Discharging;
             LastChargeStateChange = DateTime.Now;
         }
 
         public void AddCharge(float charge)
         {
-            Charge = Math.Min(Capacity, Charge + charge);
+            _charge = Math.Min(Capacity, Charge + charge);
             LastChargeState = ChargeState.Charging;
             LastChargeStateChange = DateTime.Now;
         }

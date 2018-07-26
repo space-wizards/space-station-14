@@ -3,13 +3,13 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using SS14.Server.GameObjects;
 using SS14.Shared.GameObjects;
-using SS14.Shared.GameObjects.Serialization;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Log;
 using SS14.Shared.Maths;
 using SS14.Shared.IoC;
 using Content.Server.GameObjects.EntitySystems;
+using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects
         private string OpenSprite;
         private string CloseSprite;
 
-        public override void ExposeData(EntitySerializer serializer)
+        public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 

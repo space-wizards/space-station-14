@@ -1,6 +1,5 @@
 ﻿using System;
 using SS14.Shared.GameObjects;
-using SS14.Shared.GameObjects.Serialization;
 using Content.Server.GameObjects.EntitySystems;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Map;
@@ -10,6 +9,7 @@ using SS14.Shared.Maths;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.GameObjects.EntitySystemMessages;
+using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -21,14 +21,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public float Range = 1;
         public float ArcWidth = 90;
 
-        public override void ExposeData(EntitySerializer serializer)
+        public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref Damage, "damage", 5);
-            serializer.DataField(ref Range, "damage", 1);
-            serializer.DataField(ref ArcWidth, "damage", 90);
-
+            serializer.DataField(ref Range, "range", 1);
+            serializer.DataField(ref ArcWidth, "arcwidth", 90);
         }
 
         void IAfterAttack.Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked)
