@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             serializer.DataField(ref _fuel, "Fuel", FuelCapacity);
         }
 
-        public override void Update(float frameTime)
+        public void OnUpdate(float frameTime)
         {
             if (!Activated)
             {

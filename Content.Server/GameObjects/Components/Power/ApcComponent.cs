@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components.Power;
+﻿using Content.Shared.GameObjects.Components.Power;
 using SS14.Server.GameObjects;
 using SS14.Shared.GameObjects;
 
@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Power
             Appearance = Owner.GetComponent<AppearanceComponent>();
         }
 
-        public override void Update(float frameTime)
+        public void OnUpdate()
         {
             var newState = CalcChargeState();
             if (newState != LastChargeState)

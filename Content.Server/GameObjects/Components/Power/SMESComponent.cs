@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Power
             Appearance = Owner.GetComponent<AppearanceComponent>();
         }
 
-        public override void Update(float frameTime)
+        public void OnUpdate()
         {
             var newLevel = CalcChargeLevel();
             if (newLevel != LastChargeLevel)

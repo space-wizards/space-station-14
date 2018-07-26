@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects
         }
 
         private const float AUTO_CLOSE_DELAY = 5;
-        public override void Update(float frameTime)
+        public void OnUpdate(float frameTime)
         {
             if (!Opened)
             {
