@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             }
         }
 
-        public override void Update(float frameTime)
+        public void OnUpdate(float frameTime)
         {
             if (!Activated)
             {

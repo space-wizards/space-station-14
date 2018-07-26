@@ -2,11 +2,8 @@
 using SS14.Shared.GameObjects.System;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SS14.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -17,6 +14,11 @@ namespace Content.Shared.GameObjects.EntitySystems
         private IComponentManager componentManager;
 
         private int _lastUid = 0;
+
+        public PowerSystem()
+        {
+            EntityQuery = new TypeEntityQuery(typeof(PowerDeviceComponent));
+        }
 
         public override void Initialize()
         {
@@ -61,8 +63,9 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             // Draw power for devices not connected to anything.
-            foreach (var device in componentManager.GetComponents<PowerDeviceComponent>())
+            foreach (var entity in EntityManager.GetEntities(EntityQuery))
             {
+                var device = entity.GetComponent<PowerDeviceComponent>();
                 device.ProcessInternalPower(frametime);
             }
         }
