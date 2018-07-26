@@ -10,6 +10,7 @@ using SS14.Shared.Maths;
 using SS14.Shared.IoC;
 using Content.Server.GameObjects.EntitySystems;
 using SS14.Shared.Serialization;
+using SS14.Shared.Interfaces.Network;
 
 namespace Content.Server.GameObjects
 {
@@ -39,15 +40,15 @@ namespace Content.Server.GameObjects
             base.Initialize();
 
             collidableComponent = Owner.GetComponent<CollidableComponent>();
-            collidableComponent.OnBump += OnBump;
             spriteComponent = Owner.GetComponent<SpriteComponent>();
         }
 
         public override void OnRemove()
         {
-            collidableComponent.OnBump -= OnBump;
             collidableComponent = null;
             spriteComponent = null;
+
+            base.OnRemove();
         }
 
         public bool Attackhand(IEntity user)
@@ -63,15 +64,21 @@ namespace Content.Server.GameObjects
             return true;
         }
 
-        private void OnBump(object sender, BumpEventArgs args)
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
-            Logger.Info("Bump!");
-            if (Opened)
-            {
-                return;
-            }
+            base.HandleMessage(message, netChannel, component);
 
-            Open();
+            switch (message)
+            {
+                case BumpedEntMsg msg:
+                    if (Opened)
+                    {
+                        return;
+                    }
+
+                    Open();
+                    break;
+            }
         }
 
         public void Open()
