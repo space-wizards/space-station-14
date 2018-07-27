@@ -147,5 +147,7 @@
     <None Include="packages.config" />
     <Compile Include="GameObjects\Components\Power\SmesComponent.cs" />
     <Compile Include="GameObjects\Components\Power\ApcComponent.cs" />
+    <Compile Include="Materials\Material.cs" />
+    <Compile Include="GameObjects\Components\Materials\MaterialComponent.cs" />
   </ItemGroup>
 </Project>
