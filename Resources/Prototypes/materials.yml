@@ -1,0 +1,17 @@
+- type: material
+  id: steel
+  name: Steel
+  color: gray
+  density: 7700
+  electricresistivity: 6.9e-7
+  thermalconductivity: 18
+  specificheat: 500
+
+- type: material
+  id: glass
+  name: Glass
+  color: '#e8f0ff33'
+  density: 2500
+  electricresistivity: 1.0e+13
+  thermalconductivity: 0.9
+  specificheat: 840

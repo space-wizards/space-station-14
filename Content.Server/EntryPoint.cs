@@ -25,6 +25,7 @@ using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Projectile;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Melee;
+using Content.Server.GameObjects.Components.Materials;
 
 namespace Content.Server
 {
@@ -93,6 +94,7 @@ namespace Content.Server
             factory.Register<PoweredLightComponent>();
             factory.Register<SmesComponent>();
             factory.Register<ApcComponent>();
+            factory.Register<MaterialComponent>();
         }
 
         /// <inheritdoc />
