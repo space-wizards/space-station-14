@@ -1,7 +1,7 @@
 ﻿using Content.Server.Interfaces.GameObjects;
 using System;
 using System.Collections.Generic;
-using OpenTK;
+using SS14.Shared.Math;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
