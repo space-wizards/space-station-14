@@ -10,6 +10,7 @@
     - left
     - right
   - type: Inventory
+  - type: Constructor
 
 - type: entity
   id: MobObserver

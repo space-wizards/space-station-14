@@ -1,6 +1,7 @@
 ﻿using SS14.Server.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Serialization;
@@ -139,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             //Find devices within range to take under our control
             var _emanager = IoCManager.Resolve<IServerEntityManager>();
-            var position = Owner.GetComponent<TransformComponent>().WorldPosition;
+            var position = Owner.GetComponent<ITransformComponent>().WorldPosition;
             var entities = _emanager.GetEntitiesInRange(Owner, PowerRange)
                         .Where(x => x.HasComponent<PowerDeviceComponent>());
 

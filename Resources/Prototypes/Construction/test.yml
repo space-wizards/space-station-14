@@ -1,0 +1,93 @@
+- type: construction
+  name: SMES
+  category: Machines/Power
+  keywords: [battery, cell, storage]
+  description: A SMES is a large battery capable of connecting directly to a power grid.
+  icon: /Textures/Buildings/smes.rsi/smes.png # TODO: Don't do this. Don't read RSI PNGs directly.
+  result: SMES
+  steps: []
+
+- type: construction
+  name: Generator
+  category: Machines/Power
+  description: A portable generator capable of producing power from thin air.
+  icon: /Textures/Objects/generator.png
+  result: Generator
+  steps: []
+
+- type: construction
+  name: APC
+  category: Machines/Power
+  description: Provides power from the grid wirelessly to other machines in the area.
+  icon: /Textures/Buildings/apc.rsi/apc0.png
+  result: APC
+  steps: []
+
+- type: construction
+  name: Wall Light
+  keywords: [fixture, lamp]
+  category: Machines
+  description: A simple wall-mounted light fixture.
+  result: poweredlight
+  steps:
+  - material: Metal
+    amount: 1
+
+  - material: Cable
+    amount: 1
+
+  - material: Glass
+    amount: 1
+
+- type: construction
+  name: Wall
+  category: Structures
+  description: Keeps the air in and the greytide out.
+  icon: /Textures/Tiles/wall_texture.png
+  objecttype: Structure
+  result: __engine_wall
+  steps:
+  - material: Metal
+    amount: 2
+    reverse:
+      tool: Welder
+      amount: 2
+
+  - tool: Wrench
+    reverse:
+      tool: Wrench
+
+  - material: Metal
+    amount: 2
+    reverse:
+      tool: Welder
+      amount: 2
+
+- type: construction
+  name: Table
+  category: Structures
+  icon: /Textures/Objects/worktop_single.png
+  result: __engine_worktop
+  steps:
+  - material: Metal
+    amount: 2
+    reverse:
+      tool: Wrench
+
+- type: construction
+  name: Crude Spear
+  category: Items/Weapons
+  keywords: [melee]
+  description: A crude spear for when you need to put holes in somebody.
+  icon: /Textures/Objects/spear.png
+  objecttype: Item
+  steps:
+  - material: Metal
+    amount: 1
+
+  - material: Cable
+    amount: 3
+
+  # Should probably use a shard but y'know.
+  - material: Glass
+    amount: 1

@@ -14,6 +14,7 @@ using SS14.Server.Interfaces.Player;
 using SS14.Shared.ContentPack;
 using System.Linq;
 using SS14.Shared.Serialization;
+using SS14.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects
 {
@@ -159,8 +160,8 @@ namespace Content.Server.GameObjects
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            var itemTransform = item.Owner.GetComponent<TransformComponent>();
-            itemTransform.LocalPosition = Owner.GetComponent<TransformComponent>().LocalPosition;
+            var itemTransform = item.Owner.GetComponent<ITransformComponent>();
+            itemTransform.LocalPosition = Owner.GetComponent<ITransformComponent>().LocalPosition;
             return true;
         }
 

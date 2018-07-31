@@ -1,5 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Power;
-using SS14.Shared.GameObjects.System;
+using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using System.Collections.Generic;

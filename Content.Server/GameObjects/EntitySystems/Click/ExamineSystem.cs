@@ -1,8 +1,9 @@
 ﻿using SS14.Server.Interfaces.Chat;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
-using SS14.Shared.GameObjects.System;
+using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using System;
@@ -33,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
 
             //Verify player has a transform component
-            if (!player.TryGetComponent<IServerTransformComponent>(out var playerTransform))
+            if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
             {
                 return;
             }

@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Power;
 using SS14.Shared.GameObjects;
-using SS14.Shared.GameObjects.System;
+using SS14.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

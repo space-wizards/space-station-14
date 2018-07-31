@@ -4,6 +4,7 @@ using SS14.Shared.Audio;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Physics;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.IoC;
@@ -22,11 +23,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
         protected override void Fire(IEntity user, GridLocalCoordinates clicklocation)
         {
-            var userposition = user.GetComponent<TransformComponent>().WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
+            var userposition = user.GetComponent<ITransformComponent>().WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clicklocation.Position - userposition);
 
             var ray = new Ray(userposition, angle.ToVec());
-            var raycastresults = IoCManager.Resolve<ICollisionManager>().IntersectRay(ray, 20, Owner.GetComponent<TransformComponent>().GetMapTransform().Owner);
+            var raycastresults = IoCManager.Resolve<ICollisionManager>().IntersectRay(ray, 20, Owner.GetComponent<ITransformComponent>().GetMapTransform().Owner);
 
             Hit(raycastresults);
             AfterEffects(user, raycastresults, angle);
@@ -51,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(1),
                 Size = new Vector2(ray.Distance, 1f),
-                Coordinates = user.GetComponent<TransformComponent>().LocalPosition.Translated(offset),
+                Coordinates = user.GetComponent<ITransformComponent>().LocalPosition.Translated(offset),
                 //Rotated from east facing
                 Rotation = (float)angle.Theta,
                 ColorDelta = new Vector4(0, 0, 0, -1500f),

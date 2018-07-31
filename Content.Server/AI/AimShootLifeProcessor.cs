@@ -25,7 +25,7 @@ namespace Content.Server.AI
 
         private readonly List<IEntity> _workList = new List<IEntity>();
 
-        private const float MaxAngSpeed = (float) (Math.PI / 2); // how fast our turret can rotate
+        private const float MaxAngSpeed = (float)(Math.PI / 2); // how fast our turret can rotate
         private const float ScanPeriod = 1.0f; // tweak this for performance and gameplay experience
         private float _lastScan;
 
@@ -56,7 +56,7 @@ namespace Content.Server.AI
             var curTime = _timeMan.CurTime.TotalSeconds;
             if (curTime - _lastScan > ScanPeriod)
             {
-                _lastScan = (float) curTime;
+                _lastScan = (float)curTime;
                 _curTarget = FindBestTarget();
             }
         }
@@ -72,9 +72,10 @@ namespace Content.Server.AI
 
             // point me at the target
             var tarPos = _curTarget.GetComponent<ITransformComponent>().WorldPosition;
-            var myPos = SelfEntity.GetComponent<ITransformComponent>().WorldPosition;
+            var selfTransform = SelfEntity.GetComponent<ITransformComponent>();
+            var myPos = selfTransform.WorldPosition;
 
-            var curDir = SelfEntity.GetComponent<IServerTransformComponent>().LocalRotation.ToVec();
+            var curDir = selfTransform.LocalRotation.ToVec();
             var tarDir = (tarPos - myPos).Normalized;
 
             var fwdAng = Vector2.Dot(curDir, tarDir);
@@ -92,7 +93,7 @@ namespace Content.Server.AI
                 newDir = MoveTowards(curDir, tarDir, MaxAngSpeed, frameTime);
             }
 
-            SelfEntity.GetComponent<IServerTransformComponent>().LocalRotation = new Angle(newDir);
+            selfTransform.LocalRotation = new Angle(newDir);
 
             if (fwdAng > -0.9999)
             {
@@ -105,7 +106,7 @@ namespace Content.Server.AI
             // "best" target is the closest one with LOS
 
             var ents = _entMan.GetEntitiesInRange(SelfEntity, VisionRadius);
-            var myTransform = SelfEntity.GetComponent<IServerTransformComponent>();
+            var myTransform = SelfEntity.GetComponent<ITransformComponent>();
             var maxRayLen = VisionRadius * 2.5f; // circle inscribed in square, square diagonal = 2*r*sqrt(2)
 
             _workList.Clear();
@@ -116,7 +117,7 @@ namespace Content.Server.AI
                     continue;
 
                 // build the ray
-                var dir = entity.GetComponent<TransformComponent>().WorldPosition - myTransform.WorldPosition;
+                var dir = entity.GetComponent<ITransformComponent>().WorldPosition - myTransform.WorldPosition;
                 var ray = new Ray(myTransform.WorldPosition, dir.Normalized);
 
                 // cast the ray

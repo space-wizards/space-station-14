@@ -1,0 +1,12 @@
+- type: entity
+  name: somebody-messed-up frame
+  id: constructionghost
+  components:
+  - type: Transform
+  - type: Sprite
+    color: '#3F38'
+  - type: ConstructionGhost
+  - type: BoundingBox
+  - type: Clickable
+    baseshader: unshaded
+    selectionshader: selection_outline_unshaded

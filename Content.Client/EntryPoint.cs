@@ -1,10 +1,12 @@
 ﻿using Content.Client.GameObjects;
+using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.Components.Power;
 using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Interfaces.GameObjects;
 using SS14.Shared.ContentPack;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
+using SS14.Shared.Prototypes;
 
 namespace Content.Client
 {
@@ -13,6 +15,7 @@ namespace Content.Client
         public override void Init()
         {
             var factory = IoCManager.Resolve<IComponentFactory>();
+            var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
             factory.RegisterIgnore("Item");
             factory.RegisterIgnore("Interactable");
@@ -40,11 +43,18 @@ namespace Content.Client
             factory.RegisterIgnore("Storeable");
             factory.RegisterIgnore("Clothing");
 
+            factory.RegisterIgnore("Material");
+            factory.RegisterIgnore("Stack");
+
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
             factory.Register<ClientStorageComponent>();
             factory.Register<ClientInventoryComponent>();
             factory.Register<PowerDebugTool>();
+            factory.Register<ConstructorComponent>();
+            factory.Register<ConstructionGhostComponent>();
+
+            prototypes.RegisterIgnore("material");
         }
     }
 }

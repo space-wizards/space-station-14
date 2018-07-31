@@ -3,6 +3,7 @@ using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.IoC;
 using SS14.Shared.Map;
 using SS14.Shared.Maths;
@@ -19,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         protected override void Fire(IEntity user, GridLocalCoordinates clicklocation)
         {
-            var userposition = user.GetComponent<TransformComponent>().LocalPosition; //Remember world positions are ephemeral and can only be used instantaneously
+            var userposition = user.GetComponent<ITransformComponent>().LocalPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clicklocation.Position - userposition.Position);
 
             var theta = angle.Theta;
@@ -34,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             projectile.GetComponent<PhysicsComponent>().LinearVelocity = angle.ToVec() * _velocity;
 
             //Rotate the bullets sprite to the correct direction, from north facing I guess
-            projectile.GetComponent<TransformComponent>().LocalRotation = angle.Theta;
+            projectile.GetComponent<ITransformComponent>().LocalRotation = angle.Theta;
 
             // Sound!
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play("/Audio/gunshot_c20.ogg");

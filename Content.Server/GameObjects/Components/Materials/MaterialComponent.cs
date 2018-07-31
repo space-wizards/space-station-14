@@ -67,8 +67,8 @@ namespace Content.Server.GameObjects.Components.Materials
                 }
 
                 var refl = IoCManager.Resolve<IReflectionManager>();
-                Value = serializer.ReadDataField("mat", "unobtanium");
-                var key = serializer.ReadDataField("key", string.Empty);
+                Value = serializer.ReadDataField<string>("mat");
+                var key = serializer.ReadDataField<string>("key");
                 if (refl.TryParseEnumReference(key, out var @enum))
                 {
                     Key = @enum;
@@ -77,5 +77,10 @@ namespace Content.Server.GameObjects.Components.Materials
                 Key = key;
             }
         }
+    }
+
+    public enum MaterialKeys
+    {
+        Stack,
     }
 }

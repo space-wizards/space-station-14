@@ -10,6 +10,7 @@ using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.Serialization;
+using SS14.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -32,13 +33,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         void IAfterAttack.Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked)
         {
-            var location = user.GetComponent<TransformComponent>().LocalPosition;
+            var location = user.GetComponent<ITransformComponent>().LocalPosition;
             var angle = new Angle(clicklocation.ToWorld().Position - location.ToWorld().Position);
-            var entities = IoCManager.Resolve<IServerEntityManager>().GetEntitiesInArc(user.GetComponent<TransformComponent>().LocalPosition, Range, angle, ArcWidth);
+            var entities = IoCManager.Resolve<IServerEntityManager>().GetEntitiesInArc(user.GetComponent<ITransformComponent>().LocalPosition, Range, angle, ArcWidth);
 
             foreach (var entity in entities)
             {
-                if (!entity.GetComponent<TransformComponent>().IsMapTransform || entity == user)
+                if (!entity.GetComponent<ITransformComponent>().IsMapTransform || entity == user)
                     continue;
 
                 if (entity.TryGetComponent(out DamageableComponent damagecomponent))

@@ -149,5 +149,7 @@
     <Compile Include="GameObjects\Components\Power\ApcComponent.cs" />
     <Compile Include="Materials\Material.cs" />
     <Compile Include="GameObjects\Components\Materials\MaterialComponent.cs" />
+    <Compile Include="GameObjects\Components\Stack\StackComponent.cs" />
+    <Compile Include="GameObjects\Components\Construction\ConstructorComponent.cs" />
   </ItemGroup>
 </Project>

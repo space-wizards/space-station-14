@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Power;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -49,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Power
                     builder.Append("    Providers:\n");
                     foreach (var provider in device.AvailableProviders)
                     {
-                        var providerTransform = provider.Owner.GetComponent<IServerTransformComponent>();
+                        var providerTransform = provider.Owner.GetComponent<ITransformComponent>();
                         builder.AppendFormat("      {0} ({1}) @ {2}", provider.Owner.Name, provider.Owner.Uid, providerTransform.LocalPosition);
                         if (device.Provider == provider)
                         {

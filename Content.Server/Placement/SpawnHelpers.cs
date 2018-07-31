@@ -1,4 +1,5 @@
 ﻿using SS14.Server.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Map;
 using SS14.Shared.IoC;
 using SS14.Shared.Map;
@@ -20,11 +21,12 @@ namespace Content.Server.Placement
         {
             var entMan = IoCManager.Resolve<IServerEntityManager>();
             var tBase = entMan.SpawnEntity("TurretBase");
-            tBase.GetComponent<IServerTransformComponent>().LocalPosition = new GridLocalCoordinates(localPosition, grid);
+            tBase.GetComponent<ITransformComponent>().LocalPosition = new GridLocalCoordinates(localPosition, grid);
 
             var tTop = entMan.SpawnEntity("TurretTopLight");
-            tTop.GetComponent<IServerTransformComponent>().LocalPosition = new GridLocalCoordinates(localPosition, grid);
-            tTop.GetComponent<IServerTransformComponent>().AttachParent(tBase);
+            var topTransform = tTop.GetComponent<ITransformComponent>();
+            topTransform.LocalPosition = new GridLocalCoordinates(localPosition, grid);
+            topTransform.AttachParent(tBase);
         }
     }
 }
