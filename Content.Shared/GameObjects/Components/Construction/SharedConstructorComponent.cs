@@ -1,6 +1,7 @@
 using System;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Map;
+using SS14.Shared.Maths;
 using SS14.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Construction
@@ -30,16 +31,19 @@ namespace Content.Shared.GameObjects.Components.Construction
             /// </summary>
             public readonly string PrototypeName;
 
+            public readonly Angle Angle;
+
             /// <summary>
             ///     Identifier to be sent back in the acknowledgement so that the client can clean up its ghost.
             /// </summary>
             public readonly int Ack;
 
-            public TryStartStructureConstructionMessage(GridLocalCoordinates loc, string prototypeName, int ack)
+            public TryStartStructureConstructionMessage(GridLocalCoordinates loc, string prototypeName, Angle angle, int ack)
             {
                 Directed = true;
                 Location = loc;
                 PrototypeName = prototypeName;
+                Angle = angle;
                 Ack = ack;
             }
         }

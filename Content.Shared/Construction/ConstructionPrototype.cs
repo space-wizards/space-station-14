@@ -13,13 +13,14 @@ namespace Content.Shared.Construction
     {
         private string _name;
         private string _description;
-        private string _icon;
+        private SpriteSpecifier _icon;
         private List<string> _keywords;
         private List<string> _categorySegments;
         private List<ConstructionStage> _stages = new List<ConstructionStage>();
         private ConstructionType _type;
         private string _id;
         private string _result;
+        private string _placementMode;
 
         /// <summary>
         ///     Friendly name displayed in the construction GUI.
@@ -34,7 +35,7 @@ namespace Content.Shared.Construction
         /// <summary>
         ///     Texture path inside the construction GUI.
         /// </summary>
-        public string Icon => _icon;
+        public SpriteSpecifier Icon => _icon;
 
         /// <summary>
         ///     A list of keywords that are used for searching.
@@ -67,6 +68,8 @@ namespace Content.Shared.Construction
         /// </summary>
         public string Result => _result;
 
+        public string PlacementMode => _placementMode;
+
         public void LoadFrom(YamlMappingNode mapping)
         {
             var ser = YamlObjectSerializer.NewReader(mapping);
@@ -74,9 +77,10 @@ namespace Content.Shared.Construction
 
             ser.DataField(ref _id, "id", string.Empty);
             ser.DataField(ref _description, "description", string.Empty);
-            ser.DataField(ref _icon, "icon", string.Empty);
+            ser.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
             ser.DataField(ref _type, "objecttype", ConstructionType.Structure);
             ser.DataField(ref _result, "result", null);
+            ser.DataField(ref _placementMode, "placementmode", "PlaceFree");
 
             _keywords = ser.ReadDataField<List<string>>("keywords", new List<string>());
             {
@@ -86,7 +90,7 @@ namespace Content.Shared.Construction
             }
 
             {
-                string nextIcon = null;
+                SpriteSpecifier nextIcon = null;
                 ConstructionStep nextBackward = null;
 
                 foreach (var stepMap in mapping.GetNode<YamlSequenceNode>("steps").Cast<YamlMappingNode>())
@@ -95,7 +99,7 @@ namespace Content.Shared.Construction
                     _stages.Add(new ConstructionStage(step, nextIcon, nextBackward));
                     if (stepMap.TryGetNode("icon", out var node))
                     {
-                        nextIcon = node.AsString();
+                        nextIcon = SpriteSpecifier.FromYaml(node);
                     }
 
                     if (stepMap.TryGetNode("reverse", out YamlMappingNode revMap))
@@ -111,18 +115,11 @@ namespace Content.Shared.Construction
         ConstructionStep ReadStepPrototype(YamlMappingNode step)
         {
             int amount = 1;
-            string icon = null;
 
             if (step.TryGetNode("amount", out var node))
             {
                 amount = node.AsInt();
             }
-
-            if (step.TryGetNode("icon", out node))
-            {
-                icon = node.AsString();
-            }
-
             if (step.TryGetNode("material", out node))
             {
                 return new ConstructionStepMaterial(
@@ -148,7 +145,7 @@ namespace Content.Shared.Construction
         /// <summary>
         ///     The icon of the construction frame at this stage.
         /// </summary>
-        public readonly string Icon;
+        public readonly SpriteSpecifier Icon;
 
         /// <summary>
         ///     The step that should be completed to move away from this stage to the next one.
@@ -160,7 +157,7 @@ namespace Content.Shared.Construction
         /// </summary>
         public readonly ConstructionStep Backward;
 
-        public ConstructionStage(ConstructionStep forward, string icon = null, ConstructionStep backward = null)
+        public ConstructionStage(ConstructionStep forward, SpriteSpecifier icon = null, ConstructionStep backward = null)
         {
             Icon = icon;
             Forward = forward;

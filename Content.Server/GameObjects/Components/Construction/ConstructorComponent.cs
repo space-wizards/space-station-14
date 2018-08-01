@@ -13,6 +13,7 @@ using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Map;
+using SS14.Shared.Maths;
 using SS14.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Construction
@@ -26,12 +27,12 @@ namespace Content.Server.GameObjects.Components.Construction
             switch (message)
             {
                 case TryStartStructureConstructionMessage tryStart:
-                    TryStartStructureConstruction(tryStart.Location, tryStart.PrototypeName, tryStart.Ack);
+                    TryStartStructureConstruction(tryStart.Location, tryStart.PrototypeName, tryStart.Angle, tryStart.Ack);
                     break;
             }
         }
 
-        void TryStartStructureConstruction(GridLocalCoordinates loc, string prototypeName, int ack)
+        void TryStartStructureConstruction(GridLocalCoordinates loc, string prototypeName, Angle angle, int ack)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
             var prototype = protoMan.Index<ConstructionPrototype>(prototypeName);
@@ -76,13 +77,15 @@ namespace Content.Server.GameObjects.Components.Construction
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
-                entMgr.ForceSpawnEntityAt(prototype.Result, loc);
+                var ent = entMgr.ForceSpawnEntityAt(prototype.Result, loc);
+                ent.GetComponent<ITransformComponent>().LocalRotation = angle;
             }
             else
             {
                 var frame = entMgr.ForceSpawnEntityAt("structureconstructionframe", loc);
                 var construction = frame.GetComponent<ConstructionComponent>();
                 construction.Init(prototype);
+                frame.GetComponent<ITransformComponent>().LocalRotation = angle;
             }
 
             var msg = new AckStructureConstructionMessage(ack);

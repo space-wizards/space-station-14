@@ -44,7 +44,8 @@ namespace Content.Server.GameObjects.Components.Construction
                 {
                     // Oh boy we get to finish construction!
                     var entMgr = IoCManager.Resolve<IServerEntityManager>();
-                    entMgr.ForceSpawnEntityAt(Prototype.Result, Transform.LocalPosition);
+                    var ent = entMgr.ForceSpawnEntityAt(Prototype.Result, Transform.LocalPosition);
+                    ent.GetComponent<ITransformComponent>().LocalRotation = Transform.LocalRotation;
                     Owner.Delete();
                     return true;
                 }
@@ -52,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 stage = Prototype.Stages[Stage];
                 if (stage.Icon != null)
                 {
-                    Sprite.LayerSetTexture(0, stage.Icon);
+                    Sprite.LayerSetSprite(0, stage.Icon);
                 }
             }
 
@@ -69,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 stage = Prototype.Stages[Stage];
                 if (stage.Icon != null)
                 {
-                    Sprite.LayerSetTexture(0, stage.Icon);
+                    Sprite.LayerSetSprite(0, stage.Icon);
                 }
             }
 
@@ -80,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             Prototype = prototype;
             Stage = 1;
-            Sprite.AddLayerWithTexture(prototype.Stages[1].Icon);
+            Sprite.AddLayerWithSprite(prototype.Stages[1].Icon);
         }
 
         bool TryProcessStep(ConstructionStep step, IEntity slapped)

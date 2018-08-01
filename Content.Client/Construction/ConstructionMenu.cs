@@ -6,11 +6,15 @@ using Content.Shared.Construction;
 using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
 using SS14.Client.Interfaces.GameObjects;
+using SS14.Client.Interfaces.Placement;
 using SS14.Client.Interfaces.ResourceManagement;
+using SS14.Client.Placement;
 using SS14.Client.ResourceManagement;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Client.UserInterface.CustomControls;
+using SS14.Client.Utility;
+using SS14.Shared.Enums;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
@@ -32,6 +36,7 @@ namespace Content.Client.Construction
 
         public ConstructorComponent Owner { get; set; }
         Button BuildButton;
+        Button EraseButton;
         LineEdit SearchBar;
         Tree RecipeList;
         TextureRect InfoIcon;
@@ -41,11 +46,14 @@ namespace Content.Client.Construction
         CategoryNode RootCategory;
         // This list is flattened in such a way that the top most deepest category is first.
         List<CategoryNode> FlattenedCategories;
+        PlacementManager Placement;
 
         protected override void Initialize()
         {
             base.Initialize();
             IoCManager.InjectDependencies(this);
+            Placement = (PlacementManager)IoCManager.Resolve<IPlacementManager>();
+            Placement.PlacementCanceled += OnPlacementCanceled;
 
             HideOnClose = true;
             Title = "Construction";
@@ -56,8 +64,11 @@ namespace Content.Client.Construction
             InfoIcon = info.GetChild<TextureRect>("TextureRect");
             InfoLabel = info.GetChild<Label>("Label");
             StepList = rightSide.GetChild<ItemList>("StepsList");
-            BuildButton = rightSide.GetChild<Button>("BuildButton");
+            var buttons = rightSide.GetChild("Buttons");
+            BuildButton = buttons.GetChild<Button>("BuildButton");
             BuildButton.OnPressed += OnBuildPressed;
+            EraseButton = buttons.GetChild<Button>("EraseButton");
+            EraseButton.OnToggled += OnEraseToggled;
 
             var leftSide = split.GetChild("Recipes");
             SearchBar = leftSide.GetChild<LineEdit>("Search");
@@ -69,6 +80,16 @@ namespace Content.Client.Construction
             PopulateTree();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                Placement.PlacementCanceled -= OnPlacementCanceled;
+            }
+        }
+
         void OnItemSelected()
         {
             var prototype = (ConstructionPrototype)RecipeList.Selected.Metadata;
@@ -78,18 +99,13 @@ namespace Content.Client.Construction
                 InfoLabel.Text = "";
                 InfoIcon.Texture = null;
                 StepList.Clear();
+                BuildButton.Disabled = true;
             }
             else
             {
+                BuildButton.Disabled = false;
                 InfoLabel.Text = prototype.Description;
-                if (!string.IsNullOrWhiteSpace(prototype.Icon))
-                {
-                    InfoIcon.Texture = ResourceCache.GetResource<TextureResource>(prototype.Icon);
-                }
-                else
-                {
-                    InfoIcon.Texture = null;
-                }
+                InfoIcon.Texture = prototype.Icon.Frame0();
 
                 StepList.Clear();
 
@@ -174,11 +190,25 @@ namespace Content.Client.Construction
 
             if (prototype.Type != ConstructionType.Structure)
             {
-                UserInterfaceManager.Popup("Nope");
+                UserInterfaceManager.Popup("Nope, not yet");
                 return;
             }
 
-            Owner.SpawnGhost(prototype, Owner.Owner.GetComponent<ITransformComponent>().LocalPosition);
+            var hijack = new ConstructionPlacementHijack(prototype, Owner);
+            var info = new PlacementInformation
+            {
+                IsTile = false,
+                PlacementOption = prototype.PlacementMode,
+            };
+
+
+            Placement.BeginHijackedPlacing(info, hijack);
+        }
+
+        private void OnEraseToggled(BaseButton.ButtonToggledEventArgs args)
+        {
+            var hijack = new ConstructionPlacementHijack(null, Owner);
+            Placement.ToggleEraserHijacked(hijack);
         }
 
         void PopulatePrototypeList()
@@ -281,6 +311,11 @@ namespace Content.Client.Construction
                     subItem.Metadata = prototype;
                 }
             }
+        }
+
+        private void OnPlacementCanceled(object sender, EventArgs e)
+        {
+            EraseButton.Pressed = false;
         }
 
         private static int ComparePrototype(ConstructionPrototype x, ConstructionPrototype y)

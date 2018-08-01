@@ -11,6 +11,7 @@ using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
+using SS14.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Construction
 {
@@ -49,11 +50,7 @@ namespace Content.Client.GameObjects.Components.Construction
                     break;
 
                 case AckStructureConstructionMessage ackMsg:
-                    if (Ghosts.TryGetValue(ackMsg.Ack, out var ghost))
-                    {
-                        ghost.Owner.Delete();
-                        Ghosts.Remove(ackMsg.Ack);
-                    }
+                    ClearGhost(ackMsg.Ack);
                     break;
             }
         }
@@ -63,27 +60,37 @@ namespace Content.Client.GameObjects.Components.Construction
             Button?.Dispose();
         }
 
-        public void SpawnGhost(ConstructionPrototype prototype, GridLocalCoordinates loc)
+        public void SpawnGhost(ConstructionPrototype prototype, GridLocalCoordinates loc, Direction dir)
         {
             var entMgr = IoCManager.Resolve<IClientEntityManager>();
-            var ghost = entMgr.ForceSpawnEntityAt("constructionghost", Transform.LocalPosition);
+            var ghost = entMgr.ForceSpawnEntityAt("constructionghost", loc);
             var comp = ghost.GetComponent<ConstructionGhostComponent>();
             comp.Prototype = prototype;
             comp.Master = this;
             comp.GhostID = nextId++;
+            var transform = ghost.GetComponent<ITransformComponent>().LocalRotation = dir.ToAngle();
             var sprite = ghost.GetComponent<SpriteComponent>();
-            sprite.LayerSetTexture(0, prototype.Icon);
+            sprite.LayerSetSprite(0, prototype.Icon);
             sprite.LayerSetShader(0, "unshaded");
 
             Ghosts.Add(comp.GhostID, comp);
-            Logger.Info(Ghosts.Count.ToString());
         }
 
         public void TryStartConstruction(int ghostId)
         {
             var ghost = Ghosts[ghostId];
-            var msg = new TryStartStructureConstructionMessage(ghost.Owner.GetComponent<ITransformComponent>().LocalPosition, ghost.Prototype.ID, ghostId);
+            var transform = ghost.Owner.GetComponent<ITransformComponent>();
+            var msg = new TryStartStructureConstructionMessage(transform.LocalPosition, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             SendNetworkMessage(msg);
+        }
+
+        public void ClearGhost(int ghostId)
+        {
+            if (Ghosts.TryGetValue(ghostId, out var ghost))
+            {
+                ghost.Owner.Delete();
+                Ghosts.Remove(ghostId);
+            }
         }
     }
 }
