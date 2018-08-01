@@ -20,14 +20,39 @@ namespace Content.Shared.GameObjects.Components.Construction
         [Serializable, NetSerializable]
         protected class TryStartStructureConstructionMessage : ComponentMessage
         {
+            /// <summary>
+            ///     Position to start building.
+            /// </summary>
             public readonly GridLocalCoordinates Location;
+
+            /// <summary>
+            ///     The construction prototype to start building.
+            /// </summary>
             public readonly string PrototypeName;
 
-            public TryStartStructureConstructionMessage(GridLocalCoordinates loc, string prototypeName)
+            /// <summary>
+            ///     Identifier to be sent back in the acknowledgement so that the client can clean up its ghost.
+            /// </summary>
+            public readonly int Ack;
+
+            public TryStartStructureConstructionMessage(GridLocalCoordinates loc, string prototypeName, int ack)
             {
                 Directed = true;
                 Location = loc;
                 PrototypeName = prototypeName;
+                Ack = ack;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        protected class AckStructureConstructionMessage : ComponentMessage
+        {
+            public readonly int Ack;
+
+            public AckStructureConstructionMessage(int ack)
+            {
+                Directed = true;
+                Ack = ack;
             }
         }
     }

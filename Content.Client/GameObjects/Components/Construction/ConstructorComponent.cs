@@ -9,6 +9,7 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
+using SS14.Shared.Log;
 using SS14.Shared.Map;
 
 namespace Content.Client.GameObjects.Components.Construction
@@ -46,6 +47,14 @@ namespace Content.Client.GameObjects.Components.Construction
                 case PlayerDetachedMsg _:
                     Button.RemoveFromScreen();
                     break;
+
+                case AckStructureConstructionMessage ackMsg:
+                    if (Ghosts.TryGetValue(ackMsg.Ack, out var ghost))
+                    {
+                        ghost.Owner.Delete();
+                        Ghosts.Remove(ackMsg.Ack);
+                    }
+                    break;
             }
         }
 
@@ -66,24 +75,15 @@ namespace Content.Client.GameObjects.Components.Construction
             sprite.LayerSetTexture(0, prototype.Icon);
             sprite.LayerSetShader(0, "unshaded");
 
-            Ghosts[comp.GhostID] = comp;
+            Ghosts.Add(comp.GhostID, comp);
+            Logger.Info(Ghosts.Count.ToString());
         }
 
         public void TryStartConstruction(int ghostId)
         {
             var ghost = Ghosts[ghostId];
-            var msg = new TryStartStructureConstructionMessage(ghost.Owner.GetComponent<ITransformComponent>().LocalPosition, ghost.Prototype.ID);
-
+            var msg = new TryStartStructureConstructionMessage(ghost.Owner.GetComponent<ITransformComponent>().LocalPosition, ghost.Prototype.ID, ghostId);
+            SendNetworkMessage(msg);
         }
-
-        /*
-                    var ent = IoCManager.Resolve<IClientEntityManager>();
-            var ghost = ent.ForceSpawnEntityAt("constructionghost", Owner.Owner.GetComponent<ITransformComponent>().LocalPosition);
-            var ghostComp = ghost.GetComponent<ConstructionGhostComponent>();
-            ghostComp.Prototype = prototype;
-            ghostComp.Master = Owner;
-            var sprite = ghost.GetComponent<SpriteComponent>();
-            sprite.LayerSetTexture(0, prototype.Icon);
-            sprite.LayerSetShader(0, "unshaded"); */
     }
 }

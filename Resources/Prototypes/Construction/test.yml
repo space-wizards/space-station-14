@@ -1,5 +1,6 @@
 - type: construction
   name: SMES
+  id: smes
   category: Machines/Power
   keywords: [battery, cell, storage]
   description: A SMES is a large battery capable of connecting directly to a power grid.
@@ -9,6 +10,7 @@
 
 - type: construction
   name: Generator
+  id: generator
   category: Machines/Power
   description: A portable generator capable of producing power from thin air.
   icon: /Textures/Objects/generator.png
@@ -17,6 +19,7 @@
 
 - type: construction
   name: APC
+  id: apc
   category: Machines/Power
   description: Provides power from the grid wirelessly to other machines in the area.
   icon: /Textures/Buildings/apc.rsi/apc0.png
@@ -25,6 +28,7 @@
 
 - type: construction
   name: Wall Light
+  id: wall_light
   keywords: [fixture, lamp]
   category: Machines
   description: A simple wall-mounted light fixture.
@@ -41,6 +45,7 @@
 
 - type: construction
   name: Wall
+  id: wall
   category: Structures
   description: Keeps the air in and the greytide out.
   icon: /Textures/Tiles/wall_texture.png
@@ -49,9 +54,9 @@
   steps:
   - material: Metal
     amount: 2
+    icon: "/Textures/Buildings/wall_girder.png"
     reverse:
       tool: Welder
-      amount: 2
 
   - tool: Wrench
     reverse:
@@ -61,21 +66,20 @@
     amount: 2
     reverse:
       tool: Welder
-      amount: 2
 
 - type: construction
   name: Table
+  id: table
   category: Structures
   icon: /Textures/Objects/worktop_single.png
   result: __engine_worktop
   steps:
   - material: Metal
     amount: 2
-    reverse:
-      tool: Wrench
 
 - type: construction
   name: Crude Spear
+  id: spear
   category: Items/Weapons
   keywords: [melee]
   description: A crude spear for when you need to put holes in somebody.

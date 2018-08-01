@@ -93,8 +93,12 @@ namespace Content.Client.Construction
 
                 StepList.Clear();
 
-                foreach (var (forward, _) in prototype.Steps)
+                foreach (var forward in prototype.Stages.Select(a => a.Forward))
                 {
+                    if (forward == null)
+                    {
+                        continue;
+                    }
                     Texture icon;
                     string text;
                     switch (forward)
@@ -174,14 +178,7 @@ namespace Content.Client.Construction
                 return;
             }
 
-            var ent = IoCManager.Resolve<IClientEntityManager>();
-            var ghost = ent.ForceSpawnEntityAt("constructionghost", Owner.Owner.GetComponent<ITransformComponent>().LocalPosition);
-            var ghostComp = ghost.GetComponent<ConstructionGhostComponent>();
-            ghostComp.Prototype = prototype;
-            ghostComp.Master = Owner;
-            var sprite = ghost.GetComponent<SpriteComponent>();
-            sprite.LayerSetTexture(0, prototype.Icon);
-            sprite.LayerSetShader(0, "unshaded");
+            Owner.SpawnGhost(prototype, Owner.Owner.GetComponent<ITransformComponent>().LocalPosition);
         }
 
         void PopulatePrototypeList()

@@ -85,6 +85,17 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             }
         }
 
+        public bool TryUse(float value)
+        {
+            if (!Activated || !CanUse(value))
+            {
+                return false;
+            }
+
+            Fuel -= value;
+            return true;
+        }
+
         public bool CanUse(float value)
         {
             return Fuel > value;

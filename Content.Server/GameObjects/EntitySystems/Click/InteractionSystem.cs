@@ -89,8 +89,8 @@ namespace Content.Server.GameObjects.EntitySystems
     /// </summary>
     public class InteractionSystem : EntitySystem
     {
-        private const float INTERACTION_RANGE = 2;
-        private const float INTERACTION_RANGE_SQUARED = INTERACTION_RANGE * INTERACTION_RANGE;
+        public const float INTERACTION_RANGE = 2;
+        public const float INTERACTION_RANGE_SQUARED = INTERACTION_RANGE * INTERACTION_RANGE;
 
         public void UserInteraction(ClickEventMessage msg, IEntity player)
         {
