@@ -18,7 +18,6 @@
   save: false
   description: Boo!
   components:
-  - type: Transform
   - type: Sprite
     sprite: Mob/observer.png
     scale: 2, 2

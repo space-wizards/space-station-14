@@ -2,7 +2,6 @@
   id: thing_that_heats_up_on_its_own_and_dies
   name: Thing that heats up on its own and dies
   components:
-  - type: Transform
   - type: Clickable
   - type: Sprite
     texture: Items/shoes.png

@@ -2,7 +2,6 @@
   name: Light
   id: poweredlight
   components:
-  - type: Transform
   - type: Clickable
   # So we can click on it for deletion.
   - type: BoundingBox

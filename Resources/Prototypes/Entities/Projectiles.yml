@@ -3,7 +3,6 @@
   name: ProjectileBullet
   description: If you can see this you're dead!
   components:
-  - type: Transform
   - type: Sprite
     directional: false
     texture: Objects/projectilebullet.png

@@ -3,7 +3,6 @@
   name: Wire
   description: Transfers power, avoid letting things come down it
   components:
-  - type: Transform
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
@@ -31,7 +30,6 @@
   name: Generator
   description: A portal to hell which summons power from the nether
   components:
-  - type: Transform
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
@@ -45,7 +43,6 @@
   name: WPPnobattery
   description: Supplies power directly to nearby objects
   components:
-  - type: Transform
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
@@ -90,7 +87,6 @@
   name: Smes
   description: Stores power in its super-magnetic cells
   components:
-  - type: Transform
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
@@ -126,7 +122,6 @@
   name: WiredMachine
   description: A monstrosity that does nothing but suck up power from the nearby wires
   components:
-  - type: Transform
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
@@ -143,7 +138,6 @@
   name: WirelessMachine
   description: A terrifying monstrosity that sucks up power from the wireless transmitters, Tesla would be proud
   components:
-  - type: Transform
   - type: Clickable
   - type: BoundingBox
   - type: Sprite

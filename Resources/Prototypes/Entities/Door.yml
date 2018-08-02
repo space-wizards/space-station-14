@@ -3,7 +3,6 @@
   name: Actual door
   description: It opens, it closes!
   components:
-  - type: Transform
   - type: Clickable
   - type: Sprite
     drawdepth: Mobs # They're on the same layer as mobs, perspective.

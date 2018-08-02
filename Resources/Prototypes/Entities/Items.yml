@@ -2,7 +2,6 @@
   name: "Item"
   id: BaseItem
   components:
-  - type: Transform
   - type: Item
     Size: 5
   - type: Clickable

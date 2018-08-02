@@ -2,7 +2,6 @@
   id: medkit_r
   name: Medkit
   components:
-  - type: Transform
   - type: Clickable
   - type: Sprite
     texture: Items/medkit_r.png

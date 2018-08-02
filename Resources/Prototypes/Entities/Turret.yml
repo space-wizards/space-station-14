@@ -2,7 +2,6 @@
   id: TurretBase
   name: Turret Base
   components:
-  - type: Transform
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
@@ -12,7 +11,6 @@
   id: TurretTopGun
   name: Turret (Gun)
   components:
-  - type: Transform
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
@@ -26,7 +24,6 @@
   id: TurretTopLight
   name: Turret (Light)
   components:
-  - type: Transform
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
