@@ -1,0 +1,27 @@
+- type: construction
+  name: Wall Light
+  id: wall_light
+  keywords: [fixture, lamp]
+  category: Machines
+  description: A simple wall-mounted light fixture.
+  placementmode: SnapgridBorder
+  icon:
+    sprite: Objects/lighting.rsi
+    state: on
+
+  result: poweredlight
+  steps:
+  - material: Metal
+    amount: 1
+    icon:
+      sprite: Objects/lighting.rsi
+      state: construct
+
+  - material: Cable
+    amount: 1
+    icon:
+      sprite: Objects/lighting.rsi
+      state: empty
+
+  - material: Glass
+    amount: 1

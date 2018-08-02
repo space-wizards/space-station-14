@@ -1,6 +1,7 @@
 ﻿using SS14.Server.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.IoC;
 using System;
 using System.Linq;
@@ -56,10 +57,10 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
             }
             var _emanager = IoCManager.Resolve<IServerEntityManager>();
-            var position = Owner.GetComponent<TransformComponent>().WorldPosition;
+            var position = Owner.GetComponent<ITransformComponent>().WorldPosition;
             var wires = _emanager.GetEntitiesIntersecting(Owner)
                         .Where(x => x.HasComponent<PowerTransferComponent>())
-                        .OrderByDescending(x => (x.GetComponent<TransformComponent>().WorldPosition - position).Length);
+                        .OrderByDescending(x => (x.GetComponent<ITransformComponent>().WorldPosition - position).Length);
             var choose = wires.FirstOrDefault();
             if (choose != null)
             {

@@ -26,3 +26,15 @@
   - type: Item
     Size: 24
 
+- type: entity
+  name: Spear
+  parent: BaseItem
+  id: Spear
+  components:
+  - type: Sprite
+    texture: Objects/spear.png
+  - type: Icon
+    texture: Objects/spear.png
+  - type: MeleeWeapon
+  - type: Item
+    Size: 24

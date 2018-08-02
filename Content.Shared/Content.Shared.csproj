@@ -58,6 +58,9 @@
     <Reference Include="YamlDotNet, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)packages\YamlDotNet.4.3.1\lib\net45\YamlDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>$(SolutionDir)packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
@@ -101,6 +104,8 @@
     <Compile Include="Utility\ContentHelpers.cs" />
     <Compile Include="GameObjects\Components\Power\SharedSmesComponent.cs" />
     <Compile Include="GameObjects\Components\Power\SharedApcComponent.cs" />
+    <Compile Include="GameObjects\Components\Construction\SharedConstructorComponent.cs" />
+    <Compile Include="Construction\ConstructionPrototype.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

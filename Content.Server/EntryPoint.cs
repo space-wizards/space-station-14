@@ -26,6 +26,8 @@ using Content.Server.GameObjects.Components.Weapon.Ranged.Projectile;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.Components.Materials;
+using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.Components.Construction;
 
 namespace Content.Server
 {
@@ -95,6 +97,11 @@ namespace Content.Server
             factory.Register<SmesComponent>();
             factory.Register<ApcComponent>();
             factory.Register<MaterialComponent>();
+            factory.Register<StackComponent>();
+
+            factory.Register<ConstructionComponent>();
+            factory.Register<ConstructorComponent>();
+            factory.RegisterIgnore("ConstructionGhost");
         }
 
         /// <inheritdoc />

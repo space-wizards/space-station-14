@@ -1,0 +1,60 @@
+- type: entity
+  name: Material Stack
+  id: MaterialStack
+  parent: BaseItem
+  components:
+  - type: Stack
+  - type: Material
+
+- type: entity
+  name: Steel Sheet
+  id: MetalStack
+  parent: MaterialStack
+  components:
+  - type: Material
+    materials:
+    - key: enum.MaterialKeys.Stack
+      mat: steel
+  - type: Stack
+    stacktype: enum.StackType.Metal
+  - type: Sprite
+    texture: Objects/sheet_metal.png
+  - type: Icon
+    texture: Objects/sheet_metal.png
+
+- type: entity
+  id: SteelSheet1
+  name: Steel Sheet 1
+  parent: MetalStack
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  name: Glass Sheet
+  id: GlassStack
+  parent: MaterialStack
+  components:
+  - type: Material
+    materials:
+    - key: enum.MaterialKeys.Stack
+      mat: glass
+  - type: Stack
+    stacktype: enum.StackType.Glass
+  - type: Sprite
+    texture: Objects/sheet_glass.png
+  - type: Icon
+    texture: Objects/sheet_glass.png
+
+- type: entity
+  name: Cable Coil
+  id: CableStack
+  parent: BaseItem
+  components:
+  - type: Stack
+    stacktype: enum.StackType.Cable
+  - type: Sprite
+    texture: Objects/cable_coil.png
+    color: red
+  - type: Icon
+    texture: Objects/cable_coil.png

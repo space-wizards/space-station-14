@@ -2,6 +2,7 @@
 using SS14.Server.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.IoC;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
@@ -240,18 +241,18 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
 
             //Get the starting value for our loop
-            var position = Owner.GetComponent<TransformComponent>().WorldPosition;
+            var position = Owner.GetComponent<ITransformComponent>().WorldPosition;
             var bestprovider = AvailableProviders[0];
 
             //If we are already connected to a power provider we need to do a loop to find the nearest one, otherwise skip it and use first entry
             if (Connected == DrawTypes.Provider)
             {
-                var bestdistance = (bestprovider.Owner.GetComponent<TransformComponent>().WorldPosition - position).LengthSquared;
+                var bestdistance = (bestprovider.Owner.GetComponent<ITransformComponent>().WorldPosition - position).LengthSquared;
 
                 foreach (var availprovider in AvailableProviders)
                 {
                     //Find distance to new provider
-                    var distance = (availprovider.Owner.GetComponent<TransformComponent>().WorldPosition - position).LengthSquared;
+                    var distance = (availprovider.Owner.GetComponent<ITransformComponent>().WorldPosition - position).LengthSquared;
 
                     //If new provider distance is shorter it becomes new best possible provider
                     if (distance < bestdistance)

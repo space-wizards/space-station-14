@@ -1,7 +1,7 @@
 ﻿using Content.Server.Interfaces.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
-using SS14.Shared.GameObjects.System;
+using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,8 @@ using SS14.Shared.Input;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Server.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.GameObjects.Components.BoundingBox;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -87,8 +89,8 @@ namespace Content.Server.GameObjects.EntitySystems
     /// </summary>
     public class InteractionSystem : EntitySystem
     {
-        private const float INTERACTION_RANGE = 2;
-        private const float INTERACTION_RANGE_SQUARED = INTERACTION_RANGE * INTERACTION_RANGE;
+        public const float INTERACTION_RANGE = 2;
+        public const float INTERACTION_RANGE_SQUARED = INTERACTION_RANGE * INTERACTION_RANGE;
 
         public void UserInteraction(ClickEventMessage msg, IEntity player)
         {
@@ -98,7 +100,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 attacked = EntityManager.GetEntity(msg.Uid);
 
             //Verify player has a transform component
-            if (!player.TryGetComponent<IServerTransformComponent>(out var playerTransform))
+            if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
             {
                 return;
             }
@@ -136,7 +138,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             //Verify attacked object is on the map if we managed to click on it somehow
-            if (!attacked.GetComponent<TransformComponent>().IsMapTransform)
+            if (!attacked.GetComponent<ITransformComponent>().IsMapTransform)
             {
                 Logger.Warning(string.Format("Player named {0} clicked on object {1} that isn't currently on the map somehow", player.Name, attacked.Name));
                 return;
@@ -154,7 +156,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             //RANGEDATTACK/AFTERATTACK: Check distance between user and clicked item, if too large parse it in the ranged function
             //TODO: have range based upon the item being used? or base it upon some variables of the player himself?
-            var distance = (playerTransform.WorldPosition - attacked.GetComponent<IServerTransformComponent>().WorldPosition).LengthSquared;
+            var distance = (playerTransform.WorldPosition - attacked.GetComponent<ITransformComponent>().WorldPosition).LengthSquared;
             if (distance > INTERACTION_RANGE_SQUARED)
             {
                 if (item != null)

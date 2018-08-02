@@ -1,0 +1,175 @@
+using System;
+using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Construction;
+using SS14.Server.GameObjects;
+using SS14.Server.GameObjects.EntitySystems;
+using SS14.Server.Interfaces.GameObjects;
+using SS14.Shared.GameObjects;
+using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.IoC;
+using static Content.Shared.Construction.ConstructionStepMaterial;
+using static Content.Shared.Construction.ConstructionStepTool;
+
+namespace Content.Server.GameObjects.Components.Construction
+{
+    public class ConstructionComponent : Component, IAttackby
+    {
+        public override string Name => "Construction";
+
+        public ConstructionPrototype Prototype { get; private set; }
+        public int Stage { get; private set; }
+
+        SpriteComponent Sprite;
+        ITransformComponent Transform;
+        AudioSystem AudioSystem;
+        Random random;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Sprite = Owner.GetComponent<SpriteComponent>();
+            Transform = Owner.GetComponent<ITransformComponent>();
+            var systemman = IoCManager.Resolve<IEntitySystemManager>();
+            AudioSystem = systemman.GetEntitySystem<AudioSystem>();
+            random = new Random();
+        }
+
+        public bool Attackby(IEntity user, IEntity attackwith)
+        {
+            var stage = Prototype.Stages[Stage];
+
+            if (TryProcessStep(stage.Forward, attackwith))
+            {
+                Stage++;
+                if (Stage == Prototype.Stages.Count - 1)
+                {
+                    // Oh boy we get to finish construction!
+                    var entMgr = IoCManager.Resolve<IServerEntityManager>();
+                    var ent = entMgr.ForceSpawnEntityAt(Prototype.Result, Transform.LocalPosition);
+                    ent.GetComponent<ITransformComponent>().LocalRotation = Transform.LocalRotation;
+                    Owner.Delete();
+                    return true;
+                }
+
+                stage = Prototype.Stages[Stage];
+                if (stage.Icon != null)
+                {
+                    Sprite.LayerSetSprite(0, stage.Icon);
+                }
+            }
+
+            else if (TryProcessStep(stage.Backward, attackwith))
+            {
+                Stage--;
+                if (Stage == 0)
+                {
+                    // Deconstruction complete.
+                    Owner.Delete();
+                    return true;
+                }
+
+                stage = Prototype.Stages[Stage];
+                if (stage.Icon != null)
+                {
+                    Sprite.LayerSetSprite(0, stage.Icon);
+                }
+            }
+
+            return true;
+        }
+
+        public void Init(ConstructionPrototype prototype)
+        {
+            Prototype = prototype;
+            Stage = 1;
+            Sprite.AddLayerWithSprite(prototype.Stages[1].Icon);
+        }
+
+        bool TryProcessStep(ConstructionStep step, IEntity slapped)
+        {
+            switch (step)
+            {
+                case ConstructionStepMaterial matStep:
+                    if (!slapped.TryGetComponent(out StackComponent stack)
+                     || !MaterialStackValidFor(matStep, stack)
+                     || !stack.Use(matStep.Amount))
+                    {
+                        return false;
+                    }
+                    if (matStep.Material == MaterialType.Cable)
+                        AudioSystem.Play("/Audio/items/zip.ogg", Transform.LocalPosition);
+                    else
+                        AudioSystem.Play("/Audio/items/deconstruct.ogg", Transform.LocalPosition);
+                    return true;
+                case ConstructionStepTool toolStep:
+                    switch (toolStep.Tool)
+                    {
+                        case ToolType.Crowbar:
+                            if (slapped.HasComponent<CrowbarComponent>())
+                            {
+                                AudioSystem.Play("/Audio/items/crowbar.ogg", Transform.LocalPosition);
+                                return true;
+                            }
+                            return false;
+                        case ToolType.Welder:
+                            if (slapped.TryGetComponent(out WelderComponent welder) && welder.TryUse(toolStep.Amount))
+                            {
+                                if (random.NextDouble() > 0.5)
+                                    AudioSystem.Play("/Audio/items/welder.ogg", Transform.LocalPosition);
+                                else
+                                    AudioSystem.Play("/Audio/items/welder2.ogg", Transform.LocalPosition);
+                                return true;
+                            }
+                            return false;
+                        case ToolType.Wrench:
+                            if (slapped.HasComponent<WrenchComponent>())
+                            {
+                                AudioSystem.Play("/Audio/items/ratchet.ogg", Transform.LocalPosition);
+                                return true;
+                            }
+                            return false;
+                        case ToolType.Screwdriver:
+                            if (slapped.HasComponent<ScrewdriverComponent>())
+                            {
+                                if (random.NextDouble() > 0.5)
+                                    AudioSystem.Play("/Audio/items/screwdriver.ogg", Transform.LocalPosition);
+                                else
+                                    AudioSystem.Play("/Audio/items/screwdriver2.ogg", Transform.LocalPosition);
+                                return true;
+                            }
+                            return false;
+                        case ToolType.Wirecutters:
+                            if (slapped.HasComponent<WirecutterComponent>())
+                            {
+                                AudioSystem.Play("/Audio/items/wirecutter.ogg", Transform.LocalPosition);
+                                return true;
+                            }
+                            return false;
+                        default:
+                            throw new NotImplementedException();
+                    }
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        private static Dictionary<StackType, ConstructionStepMaterial.MaterialType> StackTypeMap
+        = new Dictionary<StackType, ConstructionStepMaterial.MaterialType>
+        {
+            { StackType.Cable, MaterialType.Cable },
+            { StackType.Glass, MaterialType.Glass },
+            { StackType.Metal, MaterialType.Metal }
+        };
+
+        // Really this should check the actual materials at play..
+        public static bool MaterialStackValidFor(ConstructionStepMaterial step, StackComponent stack)
+        {
+            return StackTypeMap.TryGetValue((StackType)stack.StackType, out var should) && should == step.Material;
+        }
+    }
+}

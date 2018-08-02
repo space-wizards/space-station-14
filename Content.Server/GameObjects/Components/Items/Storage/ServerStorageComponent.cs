@@ -8,6 +8,7 @@ using SS14.Server.Player;
 using SS14.Shared.Enums;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
@@ -214,8 +215,8 @@ namespace Content.Server.GameObjects
                     var session = playerMan.GetSessionByChannel(netChannel);
                     var playerentity = session.AttachedEntity;
 
-                    var ourtransform = Owner.GetComponent<TransformComponent>();
-                    var playertransform = playerentity.GetComponent<TransformComponent>();
+                    var ourtransform = Owner.GetComponent<ITransformComponent>();
+                    var playertransform = playerentity.GetComponent<ITransformComponent>();
 
                     if (playertransform.LocalPosition.InRange(ourtransform.LocalPosition, 2)
                         && (ourtransform.IsMapTransform || playertransform.ContainsEntity(ourtransform)))
@@ -233,7 +234,7 @@ namespace Content.Server.GameObjects
                                     return;
                             }
 
-                            entity.GetComponent<TransformComponent>().WorldPosition = Owner.GetComponent<TransformComponent>().WorldPosition;
+                            entity.GetComponent<ITransformComponent>().WorldPosition = ourtransform.WorldPosition;
                         }
                     }
                     break;

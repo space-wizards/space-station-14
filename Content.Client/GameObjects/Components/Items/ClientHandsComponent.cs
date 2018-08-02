@@ -60,7 +60,7 @@ namespace Content.Client.GameObjects
 
         public void UseActiveHand()
         {
-            if(GetEntity(ActiveIndex) != null)
+            if (GetEntity(ActiveIndex) != null)
             {
                 SendNetworkMessage(new ActivateInhandMsg());
             }

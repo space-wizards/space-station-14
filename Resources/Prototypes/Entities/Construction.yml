@@ -1,0 +1,22 @@
+- type: entity
+  name: spooky ghost
+  id: constructionghost
+  components:
+  - type: Transform
+  - type: Sprite
+    color: '#3F38'
+  - type: ConstructionGhost
+  - type: BoundingBox
+  - type: Clickable
+    baseshader: unshaded
+    selectionshader: selection_outline_unshaded
+
+- type: entity
+  name: somebody-messed-up frame
+  id: structureconstructionframe
+  components:
+  - type: Transform
+  - type: Sprite
+  - type: Construction
+  - type: BoundingBox
+  - type: Clickable

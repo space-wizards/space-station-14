@@ -1,0 +1,31 @@
+- type: construction
+  name: Wall
+  id: wall
+  category: Structures
+  description: Keeps the air in and the greytide out.
+  icon: Tiles/wall_texture.png
+  objecttype: Structure
+  result: __engine_wall
+  placementmode: SnapgridBorder
+  steps:
+  - material: Metal
+    amount: 2
+    icon: Buildings/wall_girder.png
+    reverse:
+      tool: Wrench
+
+  - material: Metal
+    amount: 2
+    reverse:
+      tool: Welder
+
+- type: construction
+  name: Table
+  id: table
+  category: Structures
+  icon: Objects/worktop_single.png
+  result: __engine_worktop
+  placementmode: SnapgridCenter
+  steps:
+  - material: Metal
+    amount: 2

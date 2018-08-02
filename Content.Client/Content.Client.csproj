@@ -63,6 +63,9 @@
     <Reference Include="YamlDotNet, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)packages\YamlDotNet.4.3.1\lib\net45\YamlDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>$(SolutionDir)packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
@@ -107,5 +110,10 @@
     <None Include="packages.config" />
     <Compile Include="GameObjects\Components\Power\SmesVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\Power\ApcVisualizer2D.cs" />
+    <Compile Include="Construction\ConstructionMenu.cs" />
+    <Compile Include="Construction\ConstructionButton.cs" />
+    <Compile Include="GameObjects\Components\Construction\ConstructorComponent.cs" />
+    <Compile Include="GameObjects\Components\Construction\ConstructionGhostComponent.cs" />
+    <Compile Include="Construction\ConstructionPlacementHijack.cs" />
   </ItemGroup>
 </Project>

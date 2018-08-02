@@ -6,6 +6,7 @@ using SS14.Shared.IoC;
 using System.Linq;
 using SS14.Shared.Interfaces.GameObjects;
 using Content.Server.GameObjects.Components.Interactable.Tools;
+using SS14.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -44,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Power
         public void SpreadPowernet()
         {
             var _emanager = IoCManager.Resolve<IServerEntityManager>();
-            var position = Owner.GetComponent<TransformComponent>().WorldPosition;
+            var position = Owner.GetComponent<ITransformComponent>().WorldPosition;
             var wires = _emanager.GetEntitiesInRange(Owner, 1.1f) //arbitrarily low, just scrape things //wip
                         .Where(x => x.HasComponent<PowerTransferComponent>());
 

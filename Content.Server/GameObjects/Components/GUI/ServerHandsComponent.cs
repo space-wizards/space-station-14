@@ -10,6 +10,7 @@ using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Input;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Serialization;
@@ -162,8 +163,8 @@ namespace Content.Server.GameObjects
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            var itemTransform = item.Owner.GetComponent<TransformComponent>();
-            itemTransform.LocalPosition = Owner.GetComponent<TransformComponent>().LocalPosition;
+            var itemTransform = item.Owner.GetComponent<ITransformComponent>();
+            itemTransform.LocalPosition = Owner.GetComponent<ITransformComponent>().LocalPosition;
             Dirty();
             return true;
         }
