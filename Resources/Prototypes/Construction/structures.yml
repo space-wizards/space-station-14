@@ -12,10 +12,6 @@
     amount: 2
     icon: Buildings/wall_girder.png
     reverse:
-      tool: Welder
-
-  - tool: Wrench
-    reverse:
       tool: Wrench
 
   - material: Metal
@@ -29,6 +25,7 @@
   category: Structures
   icon: Objects/worktop_single.png
   result: __engine_worktop
+  placementmode: SnapgridCenter
   steps:
   - material: Metal
     amount: 2

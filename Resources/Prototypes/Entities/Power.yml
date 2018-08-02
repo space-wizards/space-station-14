@@ -115,6 +115,13 @@
     - type: SmesVisualizer2D
 
 - type: entity
+  id: smes_dry
+  parent: SMES
+  components:
+  - type: PowerStorage
+    charge: 0
+
+- type: entity
   id: WiredMachine
   name: WiredMachine
   description: A monstrosity that does nothing but suck up power from the nearby wires

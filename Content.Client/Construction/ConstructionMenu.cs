@@ -18,6 +18,7 @@ using SS14.Shared.Enums;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
+using SS14.Shared.Maths;
 using SS14.Shared.Prototypes;
 using SS14.Shared.Utility;
 
@@ -190,7 +191,9 @@ namespace Content.Client.Construction
 
             if (prototype.Type != ConstructionType.Structure)
             {
-                UserInterfaceManager.Popup("Nope, not yet");
+                // In-hand attackby doesn't exist so this is the best alternative.
+                var loc = Owner.Owner.GetComponent<ITransformComponent>().LocalPosition;
+                Owner.SpawnGhost(prototype, loc, Direction.North);
                 return;
             }
 

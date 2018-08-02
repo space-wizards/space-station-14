@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
 using SS14.Server.GameObjects;
+using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
@@ -24,6 +25,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
         SpriteComponent Sprite;
         ITransformComponent Transform;
+        AudioSystem AudioSystem;
+        Random random;
 
         public override void Initialize()
         {
@@ -31,6 +34,9 @@ namespace Content.Server.GameObjects.Components.Construction
 
             Sprite = Owner.GetComponent<SpriteComponent>();
             Transform = Owner.GetComponent<ITransformComponent>();
+            var systemman = IoCManager.Resolve<IEntitySystemManager>();
+            AudioSystem = systemman.GetEntitySystem<AudioSystem>();
+            random = new Random();
         }
 
         public bool Attackby(IEntity user, IEntity attackwith)
@@ -95,20 +101,55 @@ namespace Content.Server.GameObjects.Components.Construction
                     {
                         return false;
                     }
+                    if (matStep.Material == MaterialType.Cable)
+                        AudioSystem.Play("/Audio/items/zip.ogg", Transform.LocalPosition);
+                    else
+                        AudioSystem.Play("/Audio/items/deconstruct.ogg", Transform.LocalPosition);
                     return true;
                 case ConstructionStepTool toolStep:
                     switch (toolStep.Tool)
                     {
                         case ToolType.Crowbar:
-                            return slapped.HasComponent<CrowbarComponent>();
+                            if (slapped.HasComponent<CrowbarComponent>())
+                            {
+                                AudioSystem.Play("/Audio/items/crowbar.ogg", Transform.LocalPosition);
+                                return true;
+                            }
+                            return false;
                         case ToolType.Welder:
-                            return slapped.TryGetComponent(out WelderComponent welder) && welder.TryUse(toolStep.Amount);
+                            if (slapped.TryGetComponent(out WelderComponent welder) && welder.TryUse(toolStep.Amount))
+                            {
+                                if (random.NextDouble() > 0.5)
+                                    AudioSystem.Play("/Audio/items/welder.ogg", Transform.LocalPosition);
+                                else
+                                    AudioSystem.Play("/Audio/items/welder2.ogg", Transform.LocalPosition);
+                                return true;
+                            }
+                            return false;
                         case ToolType.Wrench:
-                            return slapped.HasComponent<WrenchComponent>();
+                            if (slapped.HasComponent<WrenchComponent>())
+                            {
+                                AudioSystem.Play("/Audio/items/ratchet.ogg", Transform.LocalPosition);
+                                return true;
+                            }
+                            return false;
                         case ToolType.Screwdriver:
-                            return slapped.HasComponent<ScrewdriverComponent>();
+                            if (slapped.HasComponent<ScrewdriverComponent>())
+                            {
+                                if (random.NextDouble() > 0.5)
+                                    AudioSystem.Play("/Audio/items/screwdriver.ogg", Transform.LocalPosition);
+                                else
+                                    AudioSystem.Play("/Audio/items/screwdriver2.ogg", Transform.LocalPosition);
+                                return true;
+                            }
+                            return false;
                         case ToolType.Wirecutters:
-                            return slapped.HasComponent<WirecutterComponent>();
+                            if (slapped.HasComponent<WirecutterComponent>())
+                            {
+                                AudioSystem.Play("/Audio/items/wirecutter.ogg", Transform.LocalPosition);
+                                return true;
+                            }
+                            return false;
                         default:
                             throw new NotImplementedException();
                     }

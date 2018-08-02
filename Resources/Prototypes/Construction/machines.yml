@@ -4,6 +4,7 @@
   keywords: [fixture, lamp]
   category: Machines
   description: A simple wall-mounted light fixture.
+  placementmode: SnapgridBorder
   icon:
     sprite: Objects/lighting.rsi
     state: on

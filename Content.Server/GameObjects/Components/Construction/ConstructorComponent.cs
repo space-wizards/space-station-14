@@ -6,6 +6,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Construction;
 using SS14.Server.GameObjects;
+using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
@@ -74,6 +75,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
             var entMgr = IoCManager.Resolve<IServerEntityManager>();
+            var AudioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            AudioSystem.Play("/Audio/items/deconstruct.ogg", loc);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
