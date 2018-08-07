@@ -58,9 +58,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 case ClickType.Left:
                     EntitySystemManager.GetEntitySystem<InteractionSystem>().UserInteraction(message, player);
                     break;
-                case (ClickType.Left | ClickType.Shift):
-                    EntitySystemManager.GetEntitySystem<ExamineSystem>().Examine(message, player);
-                    break;
                 case ClickType.Right:
                     //Verb System
                     break;
