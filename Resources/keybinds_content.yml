@@ -12,3 +12,7 @@ binds:
 - function: OpenCharacterMenu
   key: C
   type: State
+- function: ExamineEntity
+  key: MouseLeft
+  mod1: Shift
+  type: State
