@@ -16,3 +16,6 @@ binds:
   key: MouseLeft
   mod1: Shift
   type: State
+- function: UseItemInHand
+  key: MouseLeft
+  type: state

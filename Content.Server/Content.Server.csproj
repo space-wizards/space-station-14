@@ -91,7 +91,6 @@
     <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\ProjectileWeapon.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\RangedWeapon.cs" />
     <Compile Include="GameObjects\ContainerSlot.cs" />
-    <Compile Include="GameObjects\EntitySystems\Click\ClickParser.cs" />
     <Compile Include="GameObjects\EntitySystems\Click\ExamineSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\Click\InteractionSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\DoorSystem.cs" />
