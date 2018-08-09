@@ -1,4 +1,4 @@
-using SS14.Shared.Input;
+﻿using SS14.Shared.Input;
 
 namespace Content.Shared.Input
 {
@@ -9,5 +9,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Drop = "Drop";
         public static readonly BoundKeyFunction ActivateItemInHand = "ActivateItemInHand";
         public static readonly BoundKeyFunction OpenCharacterMenu = "OpenCharacterMenu";
+        public static readonly BoundKeyFunction ExamineEntity = "ExamineEntity";
     }
 }

@@ -13,6 +13,7 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
+using SS14.Shared.Players;
 using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
@@ -42,9 +43,9 @@ namespace Content.Server.GameObjects
         // Mostly arbitrary.
         public const float PICKUP_RANGE = 2;
 
-        private InputCommand SwapHandsCommand;
-        private InputCommand DropCommand;
-        private InputCommand ActivateItemInHandCommand;
+        private InputCmdHandler _swapHandsCmdHandler;
+        private InputCmdHandler _dropCmdHandler;
+        private InputCmdHandler _activateItemInHandCmdHandler;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -250,7 +251,7 @@ namespace Content.Server.GameObjects
             return new HandsComponentState(dict, ActiveIndex);
         }
 
-        private void SwapHands()
+        private void SwapHands(ICommonSession channel)
         {
             var index = orderedHands.FindIndex(x => x == ActiveIndex);
             index++;
@@ -298,9 +299,9 @@ namespace Content.Server.GameObjects
                 case PlayerAttachedMsg msg:
                     InitInputCommands();
                     input = msg.NewPlayer.Input;
-                    input.SetCommand(ContentKeyFunctions.SwapHands, SwapHandsCommand);
-                    input.SetCommand(ContentKeyFunctions.Drop, DropCommand);
-                    input.SetCommand(ContentKeyFunctions.ActivateItemInHand, ActivateItemInHandCommand);
+                    input.SetCommand(ContentKeyFunctions.SwapHands, _swapHandsCmdHandler);
+                    input.SetCommand(ContentKeyFunctions.Drop, _dropCmdHandler);
+                    input.SetCommand(ContentKeyFunctions.ActivateItemInHand, _activateItemInHandCmdHandler);
                     break;
 
                 case PlayerDetachedMsg msg:
@@ -314,14 +315,14 @@ namespace Content.Server.GameObjects
 
         private void InitInputCommands()
         {
-            if (SwapHandsCommand != null)
+            if (_swapHandsCmdHandler != null)
             {
                 return;
             }
 
-            SwapHandsCommand = InputCommand.FromDelegate(SwapHands);
-            DropCommand = InputCommand.FromDelegate(() => Drop(ActiveIndex));
-            ActivateItemInHandCommand = InputCommand.FromDelegate(() =>
+            _swapHandsCmdHandler = InputCmdHandler.FromDelegate(SwapHands);
+            _dropCmdHandler = InputCmdHandler.FromDelegate(session => Drop(ActiveIndex));
+            _activateItemInHandCmdHandler = InputCmdHandler.FromDelegate(session =>
             {
                 var used = GetActiveHand?.Owner;
                 if (used != null)

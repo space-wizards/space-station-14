@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects
         private InventoryWindow Window;
         private string TemplateName = "HumanInventory"; //stored for serialization purposes
 
-        private InputCommand OpenMenuCommand;
+        private InputCmdHandler _openMenuCmdHandler;
 
         public override void OnRemove()
         {
@@ -42,7 +42,7 @@ namespace Content.Client.GameObjects
             base.ExposeData(serializer);
 
             Window = new InventoryWindow(this);
-            OpenMenuCommand = InputCommand.FromDelegate(() => { Window.AddToScreen(); Window.Open(); });
+            _openMenuCmdHandler = InputCmdHandler.FromDelegate(session => { Window.AddToScreen(); Window.Open(); });
             serializer.DataField(ref TemplateName, "Template", "HumanInventory");
             Window.CreateInventory(TemplateName);
         }
@@ -65,7 +65,7 @@ namespace Content.Client.GameObjects
                     break;
 
                 case PlayerAttachedMsg _:
-                    inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, OpenMenuCommand);
+                    inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, _openMenuCmdHandler);
                     break;
 
                 case PlayerDetachedMsg _:
