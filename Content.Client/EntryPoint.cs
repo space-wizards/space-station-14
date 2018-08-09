@@ -56,6 +56,12 @@ namespace Content.Client
             factory.Register<ConstructionGhostComponent>();
             factory.Register<IconSmoothComponent>();
 
+            factory.RegisterIgnore("Construction");
+            factory.RegisterIgnore("Apc");
+            factory.RegisterIgnore("Door");
+            factory.RegisterIgnore("PoweredLight");
+            factory.RegisterIgnore("Smes");
+
             prototypes.RegisterIgnore("material");
         }
     }
