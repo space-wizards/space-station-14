@@ -15,6 +15,14 @@ namespace Content.Client.GameObjects.Components.SmoothWalling
     // TODO: Potential improvements:
     //  Defer updating of these.
     //  Get told by somebody to use a loop.
+    /// <summary>
+    ///     Makes sprites of other grid-aligned entities like us connect.
+    /// </summary>
+    /// <remarks>
+    ///     The system is based on Baystation12's smoothwalling, and thus will work with those.
+    ///     To use, set <c>base</c> equal to the prefix of the corner states in the sprite base RSI.
+    ///     Any objects with the same <c>key</c> will connect.
+    /// </remarks>
     public class IconSmoothComponent : Component, IComponentDebug
     {
         public override string Name => "IconSmooth";
