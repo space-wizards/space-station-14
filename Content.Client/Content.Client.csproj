@@ -115,5 +115,6 @@
     <Compile Include="GameObjects\Components\Construction\ConstructorComponent.cs" />
     <Compile Include="GameObjects\Components\Construction\ConstructionGhostComponent.cs" />
     <Compile Include="Construction\ConstructionPlacementHijack.cs" />
+    <Compile Include="GameObjects\Components\IconSmoothing\IconSmoothComponent.cs" />
   </ItemGroup>
 </Project>

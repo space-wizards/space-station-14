@@ -1,6 +1,7 @@
 ﻿using Content.Client.GameObjects;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.Components.Power;
+using Content.Client.GameObjects.Components.SmoothWalling;
 using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Interfaces.GameObjects;
 using SS14.Shared.ContentPack;
@@ -53,6 +54,7 @@ namespace Content.Client
             factory.Register<PowerDebugTool>();
             factory.Register<ConstructorComponent>();
             factory.Register<ConstructionGhostComponent>();
+            factory.Register<IconSmoothComponent>();
 
             prototypes.RegisterIgnore("material");
         }
