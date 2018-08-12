@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using SS14.Client.Interfaces.GameObjects.Components;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Components.Transform;
@@ -220,7 +220,7 @@ namespace Content.Client.GameObjects.Components.SmoothWalling
         }
 
         [Flags]
-        enum CornerFill : sbyte
+        enum CornerFill : byte
         {
             // These values are pulled from Baystation12.
             // I'm too lazy to convert the state names.
