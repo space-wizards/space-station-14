@@ -2,7 +2,9 @@
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.Components.Power;
 using Content.Client.GameObjects.Components.Storage;
+using Content.Client.Input;
 using Content.Client.Interfaces.GameObjects;
+using SS14.Client.Interfaces.Input;
 using SS14.Shared.ContentPack;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
@@ -55,6 +57,16 @@ namespace Content.Client
             factory.Register<ConstructionGhostComponent>();
 
             prototypes.RegisterIgnore("material");
+
+        }
+
+        public override void PostInit()
+        {
+            base.PostInit();
+
+            // Setup key contexts
+            var inputMan = IoCManager.Resolve<IInputManager>();
+            ContentContexts.SetupContexts(inputMan.Contexts);
         }
     }
 }
