@@ -10,5 +10,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ActivateItemInHand = "ActivateItemInHand";
         public static readonly BoundKeyFunction OpenCharacterMenu = "OpenCharacterMenu";
         public static readonly BoundKeyFunction ExamineEntity = "ExamineEntity";
+        public static readonly BoundKeyFunction UseItemInHand = "UseItemInHand";
     }
 }

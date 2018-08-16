@@ -1,16 +1,21 @@
-﻿using Content.Server.Interfaces.GameObjects;
+﻿using System;
+using Content.Server.Interfaces.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Input;
 using SS14.Shared.Input;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Server.GameObjects;
+using SS14.Server.GameObjects.EntitySystems;
+using SS14.Server.Interfaces.Player;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.GameObjects.Components.BoundingBox;
+using SS14.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -92,12 +97,22 @@ namespace Content.Server.GameObjects.EntitySystems
         public const float INTERACTION_RANGE = 2;
         public const float INTERACTION_RANGE_SQUARED = INTERACTION_RANGE * INTERACTION_RANGE;
 
-        public void UserInteraction(ClickEventMessage msg, IEntity player)
+        public override void Initialize()
+        {
+            var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.UseItemInHand, new PointerInputCmdHandler(HandleUseItemInHand));
+        }
+
+        private void HandleUseItemInHand(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
+        {
+            UserInteraction(((IPlayerSession)session).AttachedEntity, coords, uid);
+        }
+
+        private void UserInteraction(IEntity player, GridLocalCoordinates coordinates, EntityUid clickedUid)
         {
             //Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
-            IEntity attacked = null;
-            if (msg.Uid.IsValid())
-                attacked = EntityManager.GetEntity(msg.Uid);
+            if (!EntityManager.TryGetEntity(clickedUid, out var attacked))
+                return;
 
             //Verify player has a transform component
             if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
@@ -105,7 +120,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
             //Verify player is on the same map as the entity he clicked on
-            else if (msg.Coordinates.MapID != playerTransform.MapID)
+            else if (coordinates.MapID != playerTransform.MapID)
             {
                 Logger.Warning(string.Format("Player named {0} clicked on a map he isn't located on", player.Name));
                 return;
@@ -129,7 +144,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (attacked == null && item != null)
             {
                 //AFTERATTACK: Check if we clicked on an empty location, if so the only interaction we can do is afterattack
-                InteractAfterattack(player, item, msg.Coordinates);
+                InteractAfterattack(player, item, coordinates);
                 return;
             }
             else if (attacked == null)
@@ -147,7 +162,7 @@ namespace Content.Server.GameObjects.EntitySystems
             //Check if ClickLocation is in object bounds here, if not lets log as warning and see why
             if (attacked.TryGetComponent(out BoundingBoxComponent boundingbox))
             {
-                if (!boundingbox.WorldAABB.Contains(msg.Coordinates.Position))
+                if (!boundingbox.WorldAABB.Contains(coordinates.Position))
                 {
                     Logger.Warning(string.Format("Player {0} clicked {1} outside of its bounding box component somehow", player.Name, attacked.Name));
                     return;
@@ -161,7 +176,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (item != null)
                 {
-                    RangedInteraction(player, item, attacked, msg.Coordinates);
+                    RangedInteraction(player, item, attacked, coordinates);
                     return;
                 }
                 return; //Add some form of ranged attackhand here if you need it someday, or perhaps just ways to modify the range of attackhand
@@ -171,7 +186,7 @@ namespace Content.Server.GameObjects.EntitySystems
             //ATTACKBY/AFTERATTACK: We will either use the item on the nearby object
             if (item != null)
             {
-                Interaction(player, item, attacked, msg.Coordinates);
+                Interaction(player, item, attacked, coordinates);
             }
             //ATTACKHAND: Since our hand is empty we will use attackhand
             else
