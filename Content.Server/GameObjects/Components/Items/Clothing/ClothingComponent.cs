@@ -12,7 +12,6 @@ namespace Content.Server.GameObjects
     {
         public override string Name => "Clothing";
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
-        private List<string> slotstrings = new List<string>(); //serialization
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -21,7 +20,7 @@ namespace Content.Server.GameObjects
             // TODO: Writing.
             serializer.DataReadFunction("Slots", new List<string>(0), list =>
             {
-                foreach (var slotflagsloaded in slotstrings)
+                foreach (var slotflagsloaded in list)
                 {
                     SlotFlags |= (SlotFlags)Enum.Parse(typeof(SlotFlags), slotflagsloaded.ToUpper());
                 }
