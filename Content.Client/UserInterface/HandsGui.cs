@@ -4,6 +4,7 @@ using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
 using SS14.Client.Graphics.Drawing;
 using SS14.Client.Input;
+using SS14.Client.Interfaces.GameObjects.Components;
 using SS14.Client.Interfaces.Player;
 using SS14.Client.Interfaces.ResourceManagement;
 using SS14.Client.Interfaces.UserInterface;
@@ -73,6 +74,7 @@ namespace Content.Client.UserInterface
             handle.DrawStyleBox(handBox, leftActive ? handL : handR);
             handle.DrawStyleBox(inactiveHandBox, leftActive ? handR : handL);
 
+            /*
             if (LeftHand.Entity != null && LeftHand.HeldSprite != null)
             {
                 var bounds = LeftHand.HeldSprite.Size;
@@ -90,6 +92,7 @@ namespace Content.Client.UserInterface
                                     handR.Top + (int)(handR.Height / 2f - bounds.Y / 2f),
                                     (int)bounds.X, (int)bounds.Y), tile: false);
             }
+            */
         }
 
         /// <summary>
@@ -124,18 +127,26 @@ namespace Content.Client.UserInterface
             var left = hands.GetEntity("left");
             var right = hands.GetEntity("right");
 
+            // I'm naively gonna assume all items are 32x32.
+            //const float HalfSize = 16;
+
             if (left != null)
             {
                 if (left != LeftHand.Entity)
                 {
                     LeftHand.Entity = left;
-                    LeftHand.HeldSprite = GetIconSprite(left);
+                    LeftHand.MirrorHandle?.Dispose();
+                    LeftHand.MirrorHandle = GetSpriteMirror(left);
+                    LeftHand.MirrorHandle.AttachToControl(this);
+                    LeftHand.MirrorHandle.Offset = new Vector2(handL.Left + (int)(handL.Width / 2f),
+                                    handL.Top + (int)(handL.Height / 2f));
                 }
             }
             else
             {
                 LeftHand.Entity = null;
-                LeftHand.HeldSprite = null;
+                LeftHand.MirrorHandle?.Dispose();
+                LeftHand.MirrorHandle = null;
             }
 
             if (right != null)
@@ -143,13 +154,18 @@ namespace Content.Client.UserInterface
                 if (right != RightHand.Entity)
                 {
                     RightHand.Entity = right;
-                    RightHand.HeldSprite = GetIconSprite(right);
+                    RightHand.MirrorHandle?.Dispose();
+                    RightHand.MirrorHandle = GetSpriteMirror(right);
+                    RightHand.MirrorHandle.AttachToControl(this);
+                    RightHand.MirrorHandle.Offset = new Vector2(handR.Left + (int)(handR.Width / 2f),
+                                    handR.Top + (int)(handR.Height / 2f));
                 }
             }
             else
             {
                 RightHand.Entity = null;
-                RightHand.HeldSprite = null;
+                RightHand.MirrorHandle?.Dispose();
+                RightHand.MirrorHandle = null;
             }
         }
 
@@ -204,19 +220,19 @@ namespace Content.Client.UserInterface
             }
         }
 
-        private static Texture GetIconSprite(IEntity entity)
+        private static ISpriteProxy GetSpriteMirror(IEntity entity)
         {
-            if (entity.TryGetComponent<IconComponent>(out var component) && component.Icon != null)
+            if (entity.TryGetComponent(out ISpriteComponent component))
             {
-                return component.Icon.Default;
+                return component.CreateProxy();
             }
-            return IoCManager.Resolve<IResourceCache>().GetFallback<TextureResource>();
+            return null;
         }
 
         private struct UiHandInfo
         {
             public IEntity Entity { get; set; }
-            public Texture HeldSprite { get; set; }
+            public ISpriteProxy MirrorHandle { get; set;  }
         }
     }
 }

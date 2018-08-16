@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects;
 using Content.Shared.Input;
 using SS14.Client.GameObjects;
+using SS14.Client.Interfaces.GameObjects.Components;
 using SS14.Client.Interfaces.Input;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
@@ -162,12 +163,14 @@ namespace Content.Client.GameObjects
                 button.GetChild<Button>("Button").OnPressed -= AddToInventory;
 
                 //Gets entity sprite and assigns it to button texture
-                if (entity.TryGetComponent(out IconComponent sprite))
+                if (entity.TryGetComponent(out ISpriteComponent sprite))
                 {
-                    var tex = sprite.Icon.Default;
+                    //var tex = sprite.Icon.Default;
 
-                    var rect = button.GetChild("CenterContainer").GetChild<TextureRect>("TextureRect");
+                    var view = button.GetChild<SpriteView>("SpriteView");
+                    view.Sprite = sprite;
 
+                    /*
                     if (tex != null)
                     {
                         rect.Texture = tex;
@@ -177,6 +180,7 @@ namespace Content.Client.GameObjects
                     {
                         throw new NotImplementedException();
                     }
+                    */
                 }
             }
 
@@ -187,7 +191,7 @@ namespace Content.Client.GameObjects
             public void RemoveFromSlot(ServerInventoryMessage message)
             {
                 InventoryButton button = InventorySlots[message.Inventoryslot];
-                button.GetChild("CenterContainer").GetChild<TextureRect>("TextureRect").Texture = null;
+                button.GetChild<SpriteView>("SpriteView").Sprite = null;
                 button.EntityUid = EntityUid.Invalid;
                 button.GetChild<Button>("Button").OnPressed -= RemoveFromInventory;
                 button.GetChild<Button>("Button").OnPressed += AddToInventory;

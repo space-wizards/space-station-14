@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Storage;
 using SS14.Client.GameObjects;
+using SS14.Client.Interfaces.GameObjects.Components;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Client.UserInterface.CustomControls;
@@ -136,22 +137,10 @@ namespace Content.Client.GameObjects.Components.Storage
                     container.GetChild<Control>("Control").GetChild<Label>("Size").Text = string.Format("{0}", entityuid.Value);
 
                     //Gets entity sprite and assigns it to button texture
-                    if (entity.TryGetComponent(out IconComponent icon))
+                    if (entity.TryGetComponent(out ISpriteComponent sprite))
                     {
-                        var tex = icon.Icon.Default;
-                        var rect = container.GetChild("TextureWrap").GetChild<TextureRect>("TextureRect");
-
-                        if (tex != null)
-                        {
-                            rect.Texture = tex;
-                            // Copypasted but replaced with 32 dunno if good
-                            var scale = (float)32 / tex.Height;
-                            rect.Scale = new Vector2(scale, scale);
-                        }
-                        else
-                        {
-                            rect.Dispose();
-                        }
+                        var view = container.GetChild<SpriteView>("SpriteView");
+                        view.Sprite = sprite;
                     }
 
                     EntityList.AddChild(button);

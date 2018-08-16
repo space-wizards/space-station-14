@@ -1,0 +1,29 @@
+- type: entity
+  id: wall
+  name: Wall
+  components:
+  - type: Clickable
+  - type: Sprite
+    netsync: false
+    color: "#636769"
+    drawdepth: Walls
+    sprite: Buildings/wall.rsi
+
+  - type: Icon
+    texture: Tiles/wall_texture.png
+
+  - type: BoundingBox
+  - type: Collidable
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+  - type: SnapGrid
+    offset: Edge
+
+  - type: IconSmooth
+    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    base: solid
+
+  placement:
+    snap:
+    - Wall

@@ -1,6 +1,7 @@
 ﻿using Content.Client.GameObjects;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.Components.Power;
+using Content.Client.GameObjects.Components.SmoothWalling;
 using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Input;
 using Content.Client.Interfaces.GameObjects;
@@ -55,6 +56,13 @@ namespace Content.Client
             factory.Register<PowerDebugTool>();
             factory.Register<ConstructorComponent>();
             factory.Register<ConstructionGhostComponent>();
+            factory.Register<IconSmoothComponent>();
+
+            factory.RegisterIgnore("Construction");
+            factory.RegisterIgnore("Apc");
+            factory.RegisterIgnore("Door");
+            factory.RegisterIgnore("PoweredLight");
+            factory.RegisterIgnore("Smes");
 
             prototypes.RegisterIgnore("material");
 
