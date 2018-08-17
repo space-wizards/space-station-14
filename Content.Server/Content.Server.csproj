@@ -94,11 +94,12 @@
     <Compile Include="GameObjects\EntitySystems\Click\ExamineSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\Click\InteractionSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\DoorSystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\HandsSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerApcSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSmesSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\WelderSystem.cs" />
-    <Compile Include="GameObjects\TemperatureSystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\TemperatureSystem.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="GameObjects\Components\GUI\ServerHandsComponent.cs" />
     <Compile Include="GameObjects\Components\GUI\InventoryComponent.cs" />
