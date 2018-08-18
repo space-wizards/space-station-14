@@ -1,7 +1,7 @@
 ﻿using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Systems;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.EntitySystems
 {
     class TemperatureSystem : EntitySystem
     {

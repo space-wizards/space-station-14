@@ -13,7 +13,6 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
-using SS14.Shared.Players;
 using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
@@ -42,10 +41,6 @@ namespace Content.Server.GameObjects
 
         // Mostly arbitrary.
         public const float PICKUP_RANGE = 2;
-
-        private InputCmdHandler _swapHandsCmdHandler;
-        private InputCmdHandler _dropCmdHandler;
-        private InputCmdHandler _activateItemInHandCmdHandler;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -251,7 +246,7 @@ namespace Content.Server.GameObjects
             return new HandsComponentState(dict, ActiveIndex);
         }
 
-        private void SwapHands(ICommonSession channel)
+        public void SwapHands()
         {
             var index = orderedHands.FindIndex(x => x == ActiveIndex);
             index++;
@@ -261,6 +256,15 @@ namespace Content.Server.GameObjects
             }
 
             ActiveIndex = orderedHands[index];
+        }
+
+        public void ActivateItem()
+        {
+            var used = GetActiveHand?.Owner;
+            if (used != null)
+            {
+                InteractionSystem.TryUseInteraction(Owner, used);
+            }
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
@@ -294,42 +298,7 @@ namespace Content.Server.GameObjects
                         }
                         break;
                     }
-
-                //Boundkeychangedmsg only works for the player entity and doesn't need any extra verification
-                case PlayerAttachedMsg msg:
-                    InitInputCommands();
-                    input = msg.NewPlayer.Input;
-                    input.SetCommand(ContentKeyFunctions.SwapHands, _swapHandsCmdHandler);
-                    input.SetCommand(ContentKeyFunctions.Drop, _dropCmdHandler);
-                    input.SetCommand(ContentKeyFunctions.ActivateItemInHand, _activateItemInHandCmdHandler);
-                    break;
-
-                case PlayerDetachedMsg msg:
-                    input = msg.OldPlayer.Input;
-                    input.SetCommand(ContentKeyFunctions.SwapHands, null);
-                    input.SetCommand(ContentKeyFunctions.Drop, null);
-                    input.SetCommand(ContentKeyFunctions.ActivateItemInHand, null);
-                    break;
             }
-        }
-
-        private void InitInputCommands()
-        {
-            if (_swapHandsCmdHandler != null)
-            {
-                return;
-            }
-
-            _swapHandsCmdHandler = InputCmdHandler.FromDelegate(SwapHands);
-            _dropCmdHandler = InputCmdHandler.FromDelegate(session => Drop(ActiveIndex));
-            _activateItemInHandCmdHandler = InputCmdHandler.FromDelegate(session =>
-            {
-                var used = GetActiveHand?.Owner;
-                if (used != null)
-                {
-                    InteractionSystem.TryUseInteraction(Owner, used);
-                }
-            });
         }
     }
 }
