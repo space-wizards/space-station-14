@@ -19,3 +19,6 @@ binds:
 - function: UseItemInHand
   key: MouseLeft
   type: state
+- function: ActivateItemInWorld
+  key: E
+  type: state

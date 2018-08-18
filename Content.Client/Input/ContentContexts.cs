@@ -18,6 +18,7 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.OpenCharacterMenu);
             human.AddFunction(ContentKeyFunctions.ExamineEntity);
             human.AddFunction(ContentKeyFunctions.UseItemInHand);
+            human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
         }
     }
 }

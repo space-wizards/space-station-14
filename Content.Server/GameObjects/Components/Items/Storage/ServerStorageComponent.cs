@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects
     /// <summary>
     /// Storage component for containing entities within this one, matches a UI on the client which shows stored entities
     /// </summary>
-    public class ServerStorageComponent : SharedStorageComponent, IAttackby, IUse
+    public class ServerStorageComponent : SharedStorageComponent, IAttackby, IUse, IActivate
     {
         private Container storage;
 
@@ -239,6 +239,12 @@ namespace Content.Server.GameObjects
                     }
                     break;
             }
+        }
+
+        /// <inheritdoc />
+        void IActivate.Activate(IEntity user)
+        {
+            ((IUse) this).UseEntity(user);
         }
     }
 }

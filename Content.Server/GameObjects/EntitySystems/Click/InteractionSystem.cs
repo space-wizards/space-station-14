@@ -90,6 +90,18 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
+    ///     This interface gives components behavior when being activated in the world.
+    /// </summary>
+    public interface IActivate
+    {
+        /// <summary>
+        ///     Called when this component is activated by another entity.
+        /// </summary>
+        /// <param name="user">Entity that activated this component.</param>
+        void Activate(IEntity user);
+    }
+
+    /// <summary>
     /// Governs interactions during clicking on entities
     /// </summary>
     public class InteractionSystem : EntitySystem
@@ -101,6 +113,26 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
             inputSys.BindMap.BindFunction(ContentKeyFunctions.UseItemInHand, new PointerInputCmdHandler(HandleUseItemInHand));
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld, new PointerInputCmdHandler((HandleUseItemInWorld)));
+        }
+
+        private void HandleUseItemInWorld(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
+        {
+            if(!EntityManager.TryGetEntity(uid, out var used))
+                return;
+
+            if(!used.TryGetComponent(out IActivate activateComp))
+                return;
+
+            var playerEnt = ((IPlayerSession) session).AttachedEntity;
+
+            if(playerEnt == null || !playerEnt.IsValid())
+                return;
+
+            if (!playerEnt.Transform.LocalPosition.InRange(used.Transform.LocalPosition, INTERACTION_RANGE))
+                return;
+
+            activateComp.Activate(playerEnt);
         }
 
         private void HandleUseItemInHand(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
