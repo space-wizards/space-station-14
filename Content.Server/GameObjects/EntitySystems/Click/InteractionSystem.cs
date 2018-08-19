@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             //Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             if (!EntityManager.TryGetEntity(clickedUid, out var attacked))
-                return;
+                attacked = null;
 
             //Verify player has a transform component
             if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
