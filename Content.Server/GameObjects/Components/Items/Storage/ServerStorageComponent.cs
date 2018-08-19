@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects
             Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, user.Uid, attackwith.Uid);
             var hands = user.GetComponent<HandsComponent>();
             //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
-            if (hands.Drop(hands.ActiveIndex))
+            if (hands.Drop(hands.ActiveIndex, null))
             {
                 var inserted = Insert(attackwith);
                 if (inserted)

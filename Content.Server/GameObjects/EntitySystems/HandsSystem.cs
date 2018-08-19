@@ -4,6 +4,7 @@ using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
+using SS14.Shared.Map;
 using SS14.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -17,7 +18,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
             input.BindMap.BindFunction(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands));
-            input.BindMap.BindFunction(ContentKeyFunctions.Drop, InputCmdHandler.FromDelegate(HandleDrop));
+            input.BindMap.BindFunction(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop));
             input.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem));
         }
 
@@ -59,12 +60,25 @@ namespace Content.Server.GameObjects.EntitySystems
             handsComp.SwapHands();
         }
 
-        private static void HandleDrop(ICommonSession session)
+        private static void HandleDrop(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
         {
-            if (!TryGetAttachedComponent(session as IPlayerSession, out HandsComponent handsComp))
+            var ent = ((IPlayerSession) session).AttachedEntity;
+
+            if(ent == null || !ent.IsValid())
                 return;
 
-            handsComp.Drop(handsComp.ActiveIndex);
+            if (!ent.TryGetComponent(out HandsComponent handsComp))
+                return;
+
+            var transform = ent.Transform;
+
+            GridLocalCoordinates? dropPos = null;
+            if (transform.LocalPosition.InRange(coords, InteractionSystem.INTERACTION_RANGE))
+            {
+                dropPos = coords;
+            }
+
+            handsComp.Drop(handsComp.ActiveIndex, dropPos);
         }
 
         private static void HandleActivateItem(ICommonSession session)

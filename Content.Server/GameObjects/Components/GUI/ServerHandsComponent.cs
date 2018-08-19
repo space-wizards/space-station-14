@@ -13,6 +13,7 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
+using SS14.Shared.Map;
 using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
@@ -141,8 +142,9 @@ namespace Content.Server.GameObjects
         ///     Drops the item in a slot.
         /// </summary>
         /// <param name="slot">The slot to drop the item from.</param>
+        /// <param name="coords"></param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        public bool Drop(string slot)
+        public bool Drop(string slot, GridLocalCoordinates? coords)
         {
             if (!CanDrop(slot))
             {
@@ -160,7 +162,9 @@ namespace Content.Server.GameObjects
 
             // TODO: The item should be dropped to the container our owner is in, if any.
             var itemTransform = item.Owner.GetComponent<ITransformComponent>();
-            itemTransform.LocalPosition = Owner.GetComponent<ITransformComponent>().LocalPosition;
+
+            itemTransform.LocalPosition = coords ?? Owner.GetComponent<ITransformComponent>().LocalPosition;
+
             Dirty();
             return true;
         }
