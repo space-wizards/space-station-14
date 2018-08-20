@@ -78,6 +78,7 @@
     <Compile Include="GameObjects\Components\Items\Storage\StoreableComponent.cs" />
     <Compile Include="GameObjects\Components\Items\Storage\ServerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Items\Storage\ItemComponent.cs" />
+    <Compile Include="GameObjects\Components\Mobs\MindComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerGeneratorComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDevice.cs" />
@@ -108,7 +109,12 @@
     <Compile Include="GameObjects\Components\Damage\ResistanceSet.cs" />
     <Compile Include="GameObjects\Components\Temperature\TemperatureComponent.cs" />
     <Compile Include="Interfaces\GameObjects\IOnDamageBehavior.cs" />
+    <Compile Include="Mobs\Commands.cs" />
+    <Compile Include="Mobs\Mind.cs" />
+    <Compile Include="Mobs\Role.cs" />
+    <Compile Include="Mobs\Roles\Traitor.cs" />
     <Compile Include="Placement\SpawnHelpers.cs" />
+    <Compile Include="Players\PlayerData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Temperature\ITemperatureComponent.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Damage\IDamageableComponent.cs" />
@@ -153,4 +159,5 @@
     <Compile Include="GameObjects\Components\Construction\ConstructorComponent.cs" />
     <Compile Include="GameObjects\Components\Construction\ConstructionComponent.cs" />
   </ItemGroup>
+  <ItemGroup />
 </Project>
