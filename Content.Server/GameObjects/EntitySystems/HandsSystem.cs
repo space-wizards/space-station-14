@@ -1,11 +1,14 @@
-﻿using Content.Server.GameObjects.Components.Projectiles;
+﻿using System;
+using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.Input;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects;
+using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
+using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Map;
 using SS14.Shared.Maths;
 using SS14.Shared.Players;
@@ -42,9 +45,28 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Shutdown();
         }
 
+        /// <inheritdoc />
         public override void SubscribeEvents()
         {
-            SubscribeEvent<>();
+            SubscribeEvent<EntParentChangedMessage>(HandleParented);
+        }
+
+        private static void HandleParented(object sender, EntitySystemMessage args)
+        {
+            var msg = (EntParentChangedMessage) args;
+
+            if (!msg.Entity.TryGetComponent(out ITransformComponent transform))
+                return;
+
+            // if item is in a container
+            if(transform.IsMapTransform)
+                return;
+
+            if(!msg.Entity.TryGetComponent(out PhysicsComponent physics))
+                return;
+
+            // set velocity to zero
+            physics.LinearVelocity = Vector2.Zero;
         }
 
         private static bool TryGetAttachedComponent<T>(IPlayerSession session, out T component)
