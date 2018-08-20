@@ -28,17 +28,24 @@ using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.Components.Materials;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.Components.Construction;
+using Content.Server.Players;
+using Content.Server.Mobs;
+using Content.Server.GameObjects.Components.Mobs;
 
 namespace Content.Server
 {
     public class EntryPoint : GameServer
     {
+        const string PlayerPrototypeName = "HumanMob_Content";
+
         private IBaseServer _server;
         private IPlayerManager _players;
         private IEntityManager entityManager;
         private IChatManager chatManager;
 
         private bool _countdownStarted;
+
+        private GridLocalCoordinates SpawnPoint;
 
         /// <inheritdoc />
         public override void Init()
@@ -52,7 +59,6 @@ namespace Content.Server
 
             _server.RunLevelChanged += HandleRunLevelChanged;
             _players.PlayerStatusChanged += HandlePlayerStatusChanged;
-            _players.PlayerPrototypeName = "HumanMob_Content";
 
             var factory = IoCManager.Resolve<IComponentFactory>();
 
@@ -106,6 +112,8 @@ namespace Content.Server
             factory.Register<ConstructionComponent>();
             factory.Register<ConstructorComponent>();
             factory.RegisterIgnore("ConstructionGhost");
+
+            factory.Register<MindComponent>();
         }
 
         /// <inheritdoc />
@@ -132,7 +140,7 @@ namespace Content.Server
                     var newMap = mapMan.CreateMap();
                     var grid = mapLoader.LoadBlueprint(newMap, "Maps/stationstation.yml");
 
-                    _players.FallbackSpawnPoint = new GridLocalCoordinates(Vector2.Zero, grid);
+                    SpawnPoint = new GridLocalCoordinates(Vector2.Zero, grid);
 
                     var startTime = timing.RealTime;
                     var timeSpan = timing.RealTime - startTime;
@@ -152,10 +160,16 @@ namespace Content.Server
 
         private void HandlePlayerStatusChanged(object sender, SessionStatusEventArgs args)
         {
+            var session = args.Session;
+
             switch (args.NewStatus)
             {
                 case SessionStatus.Connected:
                     {
+                        if (session.Data.ContentDataUncast == null)
+                        {
+                            session.Data.ContentDataUncast = new PlayerData(session.SessionId);
+                        }
                         // timer time must be > tick length
                         Timer.Spawn(250, args.Session.JoinLobby);
 
@@ -183,15 +197,22 @@ namespace Content.Server
                 case SessionStatus.InGame:
                     {
                         //TODO: Check for existing mob and re-attach
-                        var session = args.Session;
-                        if (session.Data.AttachedEntityUid.HasValue
-                        && entityManager.TryGetEntity(session.Data.AttachedEntityUid.Value, out var entity))
+                        var data = session.ContentData();
+                        if (data.Mind == null)
                         {
-                            session.AttachToEntity(entity);
+                            // No mind yet (new session), make a new one.
+                            data.Mind = new Mind(session.SessionId);
+                            var mob = SpawnPlayerMob();
+                            data.Mind.TransferTo(mob);
                         }
                         else
                         {
-                            _players.SpawnPlayerMob(args.Session);
+                            if (data.Mind.CurrentMob == null)
+                            {
+                                var mob = SpawnPlayerMob();
+                                data.Mind.TransferTo(mob);
+                            }
+                            session.AttachToEntity(data.Mind.CurrentEntity);
                         }
                         chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Game!", args.Session.SessionId);
                     }
@@ -203,6 +224,11 @@ namespace Content.Server
                     }
                     break;
             }
+        }
+
+        IEntity SpawnPlayerMob()
+        {
+            return entityManager.ForceSpawnEntityAt(PlayerPrototypeName, SpawnPoint);
         }
     }
 }
