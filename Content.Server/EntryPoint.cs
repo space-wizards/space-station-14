@@ -35,6 +35,8 @@ namespace Content.Server
     {
         private IBaseServer _server;
         private IPlayerManager _players;
+        private IEntityManager entityManager;
+        private IChatManager chatManager;
 
         private bool _countdownStarted;
 
@@ -45,6 +47,8 @@ namespace Content.Server
 
             _server = IoCManager.Resolve<IBaseServer>();
             _players = IoCManager.Resolve<IPlayerManager>();
+            entityManager = IoCManager.Resolve<IEntityManager>();
+            chatManager = IoCManager.Resolve<IChatManager>();
 
             _server.RunLevelChanged += HandleRunLevelChanged;
             _players.PlayerStatusChanged += HandlePlayerStatusChanged;
@@ -116,7 +120,7 @@ namespace Content.Server
             base.Dispose(disposing);
         }
 
-        private static void HandleRunLevelChanged(object sender, RunLevelChangedEventArgs args)
+        private void HandleRunLevelChanged(object sender, RunLevelChangedEventArgs args)
         {
             switch (args.NewLevel)
             {
@@ -128,20 +132,20 @@ namespace Content.Server
                     var newMap = mapMan.CreateMap();
                     var grid = mapLoader.LoadBlueprint(newMap, "Maps/stationstation.yml");
 
-                    IoCManager.Resolve<IPlayerManager>().FallbackSpawnPoint = new GridLocalCoordinates(Vector2.Zero, grid);
+                    _players.FallbackSpawnPoint = new GridLocalCoordinates(Vector2.Zero, grid);
 
                     var startTime = timing.RealTime;
                     var timeSpan = timing.RealTime - startTime;
                     Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
 
-                    IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Round loaded!");
+                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Round loaded!");
                     break;
                 case ServerRunLevel.Game:
-                    IoCManager.Resolve<IPlayerManager>().SendJoinGameToAll();
-                    IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Round started!");
+                    _players.SendJoinGameToAll();
+                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Round started!");
                     break;
                 case ServerRunLevel.PostGame:
-                    IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Round over!");
+                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Round over!");
                     break;
             }
         }
@@ -155,7 +159,7 @@ namespace Content.Server
                         // timer time must be > tick length
                         Timer.Spawn(250, args.Session.JoinLobby);
 
-                        IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Player joined server!", args.Session.Index);
+                        chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined server!", args.Session.SessionId);
                     }
                     break;
 
@@ -172,22 +176,30 @@ namespace Content.Server
                             });
                         }
 
-                        IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Lobby!", args.Session.Index);
+                        chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Lobby!", args.Session.SessionId);
                     }
                     break;
 
                 case SessionStatus.InGame:
                     {
                         //TODO: Check for existing mob and re-attach
-                        IoCManager.Resolve<IPlayerManager>().SpawnPlayerMob(args.Session);
-
-                        IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Game!", args.Session.Index);
+                        var session = args.Session;
+                        if (session.Data.AttachedEntityUid.HasValue
+                        && entityManager.TryGetEntity(session.Data.AttachedEntityUid.Value, out var entity))
+                        {
+                            session.AttachToEntity(entity);
+                        }
+                        else
+                        {
+                            _players.SpawnPlayerMob(args.Session);
+                        }
+                        chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Game!", args.Session.SessionId);
                     }
                     break;
 
                 case SessionStatus.Disconnected:
                     {
-                        IoCManager.Resolve<IChatManager>().DispatchMessage(ChatChannel.Server, "Gamemode: Player left!", args.Session.Index);
+                        chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player left!", args.Session.SessionId);
                     }
                     break;
             }
