@@ -10,6 +10,8 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ActivateItemInHand = "ActivateItemInHand";
         public static readonly BoundKeyFunction OpenCharacterMenu = "OpenCharacterMenu";
         public static readonly BoundKeyFunction ExamineEntity = "ExamineEntity";
-        public static readonly BoundKeyFunction UseItemInHand = "UseItemInHand";
+        public static readonly BoundKeyFunction UseItemInHand = "UseItemInHand"; // use hand item on world entity
+        public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld"; // default action on world entity
+        public static readonly BoundKeyFunction ThrowItemInHand = "ThrowItemInHand";
     }
 }

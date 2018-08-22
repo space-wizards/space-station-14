@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
+using SS14.Shared.Map;
 
 namespace Content.Server.Interfaces.GameObjects
 {
@@ -65,8 +66,9 @@ namespace Content.Server.Interfaces.GameObjects
         ///     Drops an item on the ground, removing it from the hand.
         /// </summary>
         /// <param name="index">The hand to drop from.</param>
+        /// <param name="coords"></param>
         /// <returns>True if an item was successfully dropped, false otherwise.</returns>
-        bool Drop(string index);
+        bool Drop(string index, GridLocalCoordinates? coords);
 
         /// <summary>
         ///     Checks whether the item in the specified hand can be dropped.

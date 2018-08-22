@@ -28,9 +28,10 @@ using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.Components.Materials;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.Components.Construction;
-using Content.Server.Players;
-using Content.Server.Mobs;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Mobs;
+using Content.Server.Players;
 
 namespace Content.Server
 {
@@ -101,6 +102,7 @@ namespace Content.Server
             factory.Register<MeleeWeaponComponent>();
 
             factory.Register<ServerStorageComponent>();
+            factory.RegisterReference<ServerStorageComponent, IActivate>();
 
             factory.Register<PowerDebugTool>();
             factory.Register<PoweredLightComponent>();
