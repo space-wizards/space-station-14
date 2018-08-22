@@ -2,7 +2,6 @@
   save: false
   name: Urist McHands
   id: HumanMob_Content
-  parent: __engine_human
   description: A miserable pile of secrets
   components:
   - type: Hands
@@ -11,6 +10,28 @@
     - right
   - type: Inventory
   - type: Constructor
+  - type: Clickable
+  - type: Sprite
+    sprite: Mob/greyshirt.rsi
+    state: greyshirt
+    scale: 2, 2
+    drawdepth: Mobs
+
+  - type: Icon
+    sprite: Mob/greyshirt.rsi
+    state: greyshirt
+
+  - type: BoundingBox
+    aabb: "0.15,-0.45,1.05,0.45"
+
+  - type: Physics
+    mass: 5
+
+  - type: Collidable
+    DebugColor: "#0000FF"
+
+  - type: Input
+    context: "human"
 
 - type: entity
   id: MobObserver

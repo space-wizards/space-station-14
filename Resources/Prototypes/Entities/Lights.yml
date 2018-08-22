@@ -3,13 +3,15 @@
   name: "Unpowered Light"
   components:
   - type: Clickable
+  # So we can click on it for deletion.
+  - type: BoundingBox
   - type: Sprite
-    texture: Objects/wall_light.png
+    sprite: Objects/lighting.rsi
+    state: on
 
   - type: Icon
-    texture: Objects/wall_light.png
-
-  - type: BoundingBox
+    sprite: Objects/lighting.rsi
+    state: on
 
   - type: PointLight
     radius: 8
@@ -20,3 +22,25 @@
   placement:
     snap:
     - Wallmount
+
+- type: entity
+  name: Light
+  id: poweredlight
+  parent: wall_light
+  components:
+  - type: Sprite
+    sprite: Objects/lighting.rsi
+    state: off
+
+  - type: Icon
+    sprite: Objects/lighting.rsi
+    state: off
+
+  - type: PointLight
+    state: Off
+
+  - type: PowerDevice
+    load: 50
+    priority: Low
+
+  - type: PoweredLight
