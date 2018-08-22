@@ -42,7 +42,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SS14.Client.Godot", "engine
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Tests", "Content.Tests\Content.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SS14.Shared.Math", "engine\SS14.Shared.Math\SS14.Shared.Math.csproj", "{93F23A82-00C5-4572-964E-E7C9457726D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SS14.Shared.Maths", "engine\SS14.Shared.Maths\SS14.Shared.Maths.csproj", "{93F23A82-00C5-4572-964E-E7C9457726D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
