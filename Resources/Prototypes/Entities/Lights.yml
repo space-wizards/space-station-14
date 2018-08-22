@@ -1,0 +1,22 @@
+- type: entity
+  id: wall_light
+  name: "Unpowered Light"
+  components:
+  - type: Clickable
+  - type: Sprite
+    texture: Objects/wall_light.png
+
+  - type: Icon
+    texture: Objects/wall_light.png
+
+  - type: BoundingBox
+
+  - type: PointLight
+    radius: 8
+    energy: 1.2
+    offset: "0, -16"
+    color: "#DCDCC6"
+
+  placement:
+    snap:
+    - Wallmount
