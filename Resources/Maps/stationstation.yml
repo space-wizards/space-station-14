@@ -228,7 +228,7 @@ entities:
     pos: 4.5,-0.5
     rot: -1.570796
     type: Transform
-- type: __engine_worktop
+- type: table
   components:
   - grid: 0
     pos: -2.5,4.5
@@ -270,13 +270,13 @@ entities:
     pos: 3,4
     rot: -1.570796
     type: Transform
-- type: __engine_worktop
+- type: table
   components:
   - grid: 0
     pos: -0.5,4.5
     rot: -1.570796
     type: Transform
-- type: __engine_worktop
+- type: table
   components:
   - grid: 0
     pos: 1.5,4.5
@@ -360,7 +360,7 @@ entities:
     pos: 1.546875,4.484375
     rot: -1.570796
     type: Transform
-- type: __engine_worktop
+- type: table
   components:
   - grid: 0
     pos: 1.5,7.5
@@ -516,13 +516,13 @@ entities:
     pos: 6,-7
     rot: -1.570796
     type: Transform
-- type: __engine_worktop
+- type: table
   components:
   - grid: 0
     pos: -2.5,7.5
     rot: -1.570796
     type: Transform
-- type: __engine_worktop
+- type: table
   components:
   - grid: 0
     pos: -0.5,7.5

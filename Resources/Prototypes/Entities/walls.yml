@@ -10,7 +10,8 @@
     sprite: Buildings/wall.rsi
 
   - type: Icon
-    texture: Tiles/wall_texture.png
+    sprite: Buildings/wall.rsi
+    state: full
 
   - type: BoundingBox
   - type: Collidable

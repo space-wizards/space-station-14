@@ -13,10 +13,10 @@
   description: Don't take them off at your office Christmas party
   components:
   - type: Sprite
-    texture: Items/shoes.png
+    texture: Objects/shoes.png
 
   - type: Icon
-    texture: Items/shoes.png
+    texture: Objects/shoes.png
 
   - type: Clothing
     Slots:
@@ -29,10 +29,10 @@
   description: The jumpsuit for the poor sop with a mop
   components:
   - type: Sprite
-    texture: Items/janitorsuit.png
+    texture: Objects/janitorsuit.png
 
   - type: Icon
-    texture: Items/janitorsuit.png
+    texture: Objects/janitorsuit.png
 
   - type: Clothing
     Slots:

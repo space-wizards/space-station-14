@@ -1,0 +1,4 @@
+- type: tile
+  name: Floor
+  texture: "floor_steel"
+  id: 1
