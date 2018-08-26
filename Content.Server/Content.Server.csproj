@@ -67,6 +67,7 @@
     <Compile Include="AI\AimShootLifeProcessor.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
+    <Compile Include="GameObjects\Components\Interactable\HandheldLightComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\Tools\BaseTool.cs" />
     <Compile Include="GameObjects\Components\Interactable\Tools\CrowbarComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\Tools\MultitoolComponent.cs" />

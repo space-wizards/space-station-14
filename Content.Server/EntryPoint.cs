@@ -32,6 +32,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
 using Content.Server.Players;
+using Content.Server.GameObjects.Components.Interactable;
 
 namespace Content.Server
 {
@@ -100,6 +101,8 @@ namespace Content.Server
             factory.Register<ProjectileWeaponComponent>();
             factory.Register<ProjectileComponent>();
             factory.Register<MeleeWeaponComponent>();
+
+            factory.Register<HandheldLightComponent>();
 
             factory.Register<ServerStorageComponent>();
             factory.RegisterReference<ServerStorageComponent, IActivate>();
