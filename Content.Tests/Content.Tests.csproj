@@ -106,6 +106,10 @@
       <Project>{b04aae71-0000-0000-0000-000000000000}</Project>
       <Name>SS14.Server</Name>
     </ProjectReference>
+    <ProjectReference Include="..\engine\SS14.Shared.Maths\SS14.Shared.Maths.csproj">
+      <Project>{93f23a82-00c5-4572-964e-e7c9457726d4}</Project>
+      <Name>SS14.Shared.Maths</Name>
+    </ProjectReference>
     <ProjectReference Include="..\engine\SS14.Shared\SS14.Shared.csproj">
       <Project>{0529f740-0000-0000-0000-000000000000}</Project>
       <Name>SS14.Shared</Name>
