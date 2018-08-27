@@ -4,8 +4,8 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Items/medkit_r.png
+    texture: Objects/medkit_r.png
 
   - type: Icon
-    texture: Items/medkit_r.png
+    texture: Objects/medkit_r.png
 

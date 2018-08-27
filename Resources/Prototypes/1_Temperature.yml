@@ -4,10 +4,10 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Items/shoes.png
+    texture: Objects/shoes.png
 
   - type: Icon
-    texture: Items/shoes.png
+    texture: Objects/shoes.png
 
   - type: Damageable
     resistanceset: Standard

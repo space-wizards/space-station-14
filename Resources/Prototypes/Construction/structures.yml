@@ -5,7 +5,7 @@
   description: Keeps the air in and the greytide out.
   icon: Tiles/wall_texture.png
   objecttype: Structure
-  result: __engine_wall
+  result: wall
   placementmode: SnapgridBorder
   steps:
   - material: Metal
@@ -24,7 +24,7 @@
   id: table
   category: Structures
   icon: Objects/worktop_single.png
-  result: __engine_worktop
+  result: table
   placementmode: SnapgridCenter
   steps:
   - material: Metal

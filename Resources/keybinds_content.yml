@@ -19,3 +19,10 @@ binds:
 - function: UseItemInHand
   key: MouseLeft
   type: state
+- function: ActivateItemInWorld
+  key: E
+  type: state
+- function: ThrowItemInHand
+  key: MouseLeft
+  mod1: Control
+  type: state

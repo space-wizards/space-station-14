@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects
     /// <summary>
     /// Storage component for containing entities within this one, matches a UI on the client which shows stored entities
     /// </summary>
-    public class ServerStorageComponent : SharedStorageComponent, IAttackby, IUse
+    public class ServerStorageComponent : SharedStorageComponent, IAttackby, IUse, IActivate
     {
         private Container storage;
 
@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects
             Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, user.Uid, attackwith.Uid);
             var hands = user.GetComponent<HandsComponent>();
             //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
-            if (hands.Drop(hands.ActiveIndex))
+            if (hands.Drop(hands.ActiveIndex, null))
             {
                 var inserted = Insert(attackwith);
                 if (inserted)
@@ -239,6 +239,12 @@ namespace Content.Server.GameObjects
                     }
                     break;
             }
+        }
+
+        /// <inheritdoc />
+        void IActivate.Activate(IEntity user)
+        {
+            ((IUse) this).UseEntity(user);
         }
     }
 }
