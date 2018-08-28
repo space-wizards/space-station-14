@@ -41,9 +41,8 @@ namespace Content.Server.GameObjects
                 serializer.DataReadFunction("thresholdtype", DamageType.Total, type => damageType = type);
                 serializer.DataReadFunction("thresholdvalue", 0, val => damageValue = val);
 
-                Threshold = new DamageThreshold(damageType, damageValue);
+                Threshold = new DamageThreshold(damageType, damageValue, ThresholdTypes.Destruction);
             }
-            Threshold = new DamageThreshold(damageType, damageValue, ThresholdTypes.Destruction);
         }
 
         /// <inheritdoc />
