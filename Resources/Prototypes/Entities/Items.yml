@@ -79,10 +79,7 @@
   - type: HandheldLight
   - type: Sprite
     sprite: Objects/lantern.rsi
-    layers:
-    - state: lantern_off
-    - state: lantern_on
-      visible: false
+    state: lantern_off
   - type: Icon
     sprite: Objects/lantern.rsi
     state: lantern_off

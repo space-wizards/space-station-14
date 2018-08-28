@@ -49,18 +49,15 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Update the activation state.
             Activated = !Activated;
 
+            // Update sprite and light states to match the activation.
             if (Activated)
             {
-                // Update the sprite to layer 1 and light to on.
-                spriteComponent.LayerSetVisible(0, false);
-                spriteComponent.LayerSetVisible(1, true);
+                spriteComponent.LayerSetState(0, "lantern_on");
                 pointLight.State = LightState.On;
             }
             else
             {
-                // Update the sprite to layer 0 and light to off.
-                spriteComponent.LayerSetVisible(0, true);
-                spriteComponent.LayerSetVisible(1, false);
+                spriteComponent.LayerSetState(0, "lantern_off");
                 pointLight.State = LightState.Off;
             }
 
