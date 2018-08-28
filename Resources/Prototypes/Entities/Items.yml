@@ -76,8 +76,12 @@
   id: FlashlightLantern
   description: They light the way to freedom
   components:
+  - type: HandheldLight
   - type: Sprite
-    texture: Objects/Flashlight.png
+    sprite: Objects/lantern.rsi
+    state: lantern_off
   - type: Icon
-    texture: Objects/Flashlight.png
+    sprite: Objects/lantern.rsi
+    state: lantern_off
   - type: PointLight
+    state: Off
