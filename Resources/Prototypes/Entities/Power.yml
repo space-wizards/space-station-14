@@ -81,6 +81,10 @@
   - type: Appearance
     visuals:
     - type: ApcVisualizer2D
+  - type: UserInterface
+    interfaces:
+    - key: enum.ApcUiKey.Key
+      type: ApcBoundUserInterface
 
 - type: entity
   id: SMES

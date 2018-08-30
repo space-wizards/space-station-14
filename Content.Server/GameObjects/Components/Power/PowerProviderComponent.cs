@@ -31,12 +31,14 @@ namespace Content.Server.GameObjects.Components.Power
             get => _range;
             private set => _range = value;
         }
+
         private int _range = 0;
 
         /// <summary>
         /// List storing all the power devices that we are currently providing power to
         /// </summary>
-        public SortedSet<PowerDeviceComponent> DeviceLoadList = new SortedSet<PowerDeviceComponent>(new Powernet.DevicePriorityCompare());
+        public SortedSet<PowerDeviceComponent> DeviceLoadList =
+            new SortedSet<PowerDeviceComponent>(new Powernet.DevicePriorityCompare());
 
         /// <summary>
         ///     List of devices in range that we "advertised" to.
@@ -46,6 +48,46 @@ namespace Content.Server.GameObjects.Components.Power
         public List<PowerDeviceComponent> DepoweredDevices = new List<PowerDeviceComponent>();
 
         public override Powernet.Priority Priority { get; protected set; } = Powernet.Priority.Provider;
+
+        private bool _mainBreaker = true;
+
+        public bool MainBreaker
+        {
+            get => _mainBreaker;
+            set
+            {
+                if (_mainBreaker == value)
+                {
+                    return;
+                }
+
+                _mainBreaker = value;
+                if (!value)
+                {
+                    DepowerAllDevices();
+                    Load = 0;
+                }
+                else
+                {
+                    Load = TheoreticalLoad;
+                }
+            }
+        }
+
+        private float _theoreticalLoad = 0f;
+
+        public float TheoreticalLoad
+        {
+            get => _theoreticalLoad;
+            set
+            {
+                _theoreticalLoad = value;
+                if (MainBreaker)
+                {
+                    Load = value;
+                }
+            }
+        }
 
         public PowerProviderComponent()
         {
@@ -60,6 +102,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 device.RemoveProvider(this);
             }
+
             AdvertisedDevices.Clear();
         }
 
@@ -79,17 +122,21 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
             }
 
+            if (!MainBreaker)
+            {
+                return;
+            }
+
             if (ExternalPowered)
             {
                 PowerAllDevices();
                 return;
             }
 
-
-            if (storage.CanDeductCharge(Load * frametime))
+            if (storage.CanDeductCharge(TheoreticalLoad * frametime))
             {
                 PowerAllDevices();
-                storage.DeductCharge(Load * frametime);
+                storage.DeductCharge(TheoreticalLoad * frametime);
                 return;
             }
 
@@ -110,6 +157,7 @@ namespace Content.Server.GameObjects.Components.Power
                         DepoweredDevices.Remove(device);
                         device.ExternalPowered = true;
                     }
+
                     usedEnergy += deviceLoad;
                     remainingEnergy -= deviceLoad;
                 }
@@ -117,12 +165,14 @@ namespace Content.Server.GameObjects.Components.Power
 
             storage.DeductCharge(usedEnergy);
         }
+
         private void PowerAllDevices()
         {
             foreach (var device in DepoweredDevices)
             {
                 device.ExternalPowered = true;
             }
+
             DepoweredDevices.Clear();
         }
 
@@ -131,6 +181,7 @@ namespace Content.Server.GameObjects.Components.Power
             foreach (var device in DeviceLoadList)
             {
                 device.ExternalPowered = false;
+                DepoweredDevices.Add(device);
             }
         }
 
@@ -142,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Power
             var _emanager = IoCManager.Resolve<IServerEntityManager>();
             var position = Owner.GetComponent<ITransformComponent>().WorldPosition;
             var entities = _emanager.GetEntitiesInRange(Owner, PowerRange)
-                        .Where(x => x.HasComponent<PowerDeviceComponent>());
+                .Where(x => x.HasComponent<PowerDeviceComponent>());
 
 
             foreach (var entity in entities)
@@ -171,6 +222,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 device.RemoveProvider(this);
             }
+
             AdvertisedDevices.Clear();
         }
 
@@ -180,7 +232,7 @@ namespace Content.Server.GameObjects.Components.Power
         public void AddDevice(PowerDeviceComponent device)
         {
             DeviceLoadList.Add(device);
-            Load += device.Load;
+            TheoreticalLoad += device.Load;
             if (!device.Powered)
                 DepoweredDevices.Add(device);
         }
@@ -192,8 +244,8 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (DeviceLoadList.Contains(device))
             {
-                Load -= oldLoad;
-                Load += device.Load;
+                TheoreticalLoad -= oldLoad;
+                TheoreticalLoad += device.Load;
             }
         }
 
@@ -204,14 +256,15 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (DeviceLoadList.Contains(device))
             {
-                Load -= device.Load;
+                TheoreticalLoad -= device.Load;
                 DeviceLoadList.Remove(device);
                 if (DepoweredDevices.Contains(device))
                     DepoweredDevices.Remove(device);
             }
             else
             {
-                Logger.WarningS("power", "We tried to remove device {0} twice from the same {1}, somehow.", device.Owner, Owner);
+                Logger.WarningS("power", "We tried to remove device {0} twice from the same {1}, somehow.",
+                    device.Owner, Owner);
             }
         }
     }
