@@ -275,7 +275,6 @@ namespace Content.Server.GameObjects
         {
             base.HandleMessage(message, netChannel, component);
 
-            IPlayerInput input;
             switch (message)
             {
                 case ClientChangedHandMsg msg:
