@@ -6,6 +6,7 @@ using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Input;
 using Content.Client.Interfaces.GameObjects;
 using SS14.Client.Interfaces.Input;
+using SS14.Client.Utility;
 using SS14.Shared.ContentPack;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
@@ -17,6 +18,9 @@ namespace Content.Client
     {
         public override void Init()
         {
+#if DEBUG
+            GodotResourceCopy.DoDirCopy("../../Resources", "Content");
+#endif
             var factory = IoCManager.Resolve<IComponentFactory>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
