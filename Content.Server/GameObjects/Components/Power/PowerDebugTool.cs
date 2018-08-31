@@ -3,7 +3,6 @@ using System.Text;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
 using SS14.Server.Interfaces.GameObjects;
-using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Map;
@@ -32,7 +31,22 @@ namespace Content.Server.GameObjects.Components.Power
                 }
                 else
                 {
-                    builder.AppendFormat("  Powernet: {0}\n", node.Parent.Uid);
+                    var net = node.Parent;
+                    builder.AppendFormat(@"  Powernet: {0}
+  Wires: {1}, Nodes: {2}
+  Generators: {3}, Loaders: {4},
+  StorageS: {5}, StorageC: {6},
+  Load: {7}, Supply: {8},
+  LAvail: {9}, LDraw: {10},
+  LDemand: {11}, LDemandWS: {12},
+",
+                        net.Uid,
+                        net.NodeList.Count, net.WireList.Count,
+                        net.GeneratorCount, net.DeviceCount,
+                        net.PowerStorageSupplierCount, net.PowerStorageConsumerCount,
+                        net.Load, net.Supply,
+                        net.LastTotalAvailable, net.LastTotalDraw,
+                        net.LastTotalDemand, net.LastTotalDemandWithSuppliers);
                 }
             }
 

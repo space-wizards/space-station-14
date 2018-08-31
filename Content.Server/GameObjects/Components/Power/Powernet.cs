@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Content.Server.GameObjects.Components.Power
 {
     /// <summary>
-    /// Master class for group of powertransfercomponents, takes in and distributes power via nodes
+    /// Master class for group of <see cref="PowerTransferComponent"/>, takes in and distributes power via nodes
     /// </summary>
     public class Powernet
     {
@@ -38,12 +38,18 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         ///     Subset of nodelist that adds a continuous power supply to the network
         /// </summary>
-        private readonly Dictionary<PowerGeneratorComponent, float> GeneratorList = new Dictionary<PowerGeneratorComponent, float>();
+        private readonly Dictionary<PowerGeneratorComponent, float> GeneratorList =
+            new Dictionary<PowerGeneratorComponent, float>();
+
+        public int GeneratorCount => GeneratorList.Count;
 
         /// <summary>
         ///     Subset of nodelist that draw power, stores information on current continuous powernet load
         /// </summary>
-        private readonly SortedSet<PowerDeviceComponent> DeviceLoadList = new SortedSet<PowerDeviceComponent>(new DevicePriorityCompare());
+        private readonly SortedSet<PowerDeviceComponent> DeviceLoadList =
+            new SortedSet<PowerDeviceComponent>(new DevicePriorityCompare());
+
+        public int DeviceCount => DeviceLoadList.Count;
 
         /// <summary>
         ///     All the devices that have been depowered by this powernet or depowered prior to being absorted into this powernet
@@ -55,10 +61,14 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         private readonly List<PowerStorageComponent> PowerStorageSupplierList = new List<PowerStorageComponent>();
 
+        public int PowerStorageSupplierCount => PowerStorageSupplierList.Count;
+
         /// <summary>
         ///     A list of energy storage components that will never feed the powernet, will try to draw energy to feed themselves if possible
         /// </summary>
         private readonly List<PowerStorageComponent> PowerStorageConsumerList = new List<PowerStorageComponent>();
+
+        public int PowerStorageConsumerCount => PowerStorageConsumerList.Count;
 
         /// <summary>
         ///     Static counter of all continuous load placed from devices on this power network.
@@ -67,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Power
         public float Load { get; private set; } = 0;
 
         /// <summary>
-        ///     Static counter of all continiuous supply from generators on this power network.
+        ///     Static counter of all continuous supply from generators on this power network.
         ///     In Watts.
         /// </summary>
         public float Supply { get; private set; } = 0;
@@ -77,47 +87,108 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public bool Dirty { get; set; } = false;
 
+        // These are stats for power monitoring equipment such as APCs.
+
+        /// <summary>
+        ///     The total supply that was available to us last tick.
+        ///     This does not mean it was used.
+        /// </summary>
+        public float LastTotalAvailable { get; private set; }
+
+        /// <summary>
+        ///     The total power drawn last tick.
+        ///     This is how much power was actually, in practice, drawn.
+        ///     Not how much SHOULD have been drawn.
+        ///     If avail &lt; demand, this will be just &lt;= than the actual avail
+        ///     (e.g. if all machines need 100 W but there's 20 W excess, the 20 W will be avail but not drawn.)
+        /// </summary>
+        public float LastTotalDraw { get; private set; }
+
+        /// <summary>
+        ///     The amount of power that was demanded last tick.
+        ///     This does not mean it was full filled in practice.
+        ///     This does not include the demand from storage suppliers until the suppliers are actually capable of drawing power.
+        ///     As such, this will quite abruptly shoot up if available rises to cover supplier charge demand too.
+        /// </summary>
+        /// <seealso cref="LastTotalDemandWithSuppliers"/>
+        public float LastTotalDemand { get; private set; }
+
+        /// <summary>
+        ///     The amount of power that was demanded last tick, ALWAYS including storage supplier draw.
+        ///     This does not mean it was full filled in practice.
+        ///     See <see cref="LastTotalDemand"/> for the difference.
+        /// </summary>
+        public float LastTotalDemandWithSuppliers { get; private set; }
+
+        /// <summary>
+        ///     The amount of power that we are lacking to properly power everything (excluding storage supplier charging).
+        /// </summary>
+        public float Lack => Math.Max(0, LastTotalDemand - LastTotalAvailable);
+
+        /// <summary>
+        ///     The total amount of power that wasn't used last tick.
+        ///     This does not necessarily mean it went to waste, unused supply from storage is also counted.
+        ///     It is ALSO not implied that if this is &gt; 0, that we have sufficient power for everything.
+        ///     See the doc comment on <see cref="LastTotalDraw"/>.
+        /// </summary>
+        public float Excess => Math.Max(0, LastTotalAvailable - LastTotalDraw);
+
         public void Update(float frameTime)
         {
-            float activesupply = Supply * frameTime;
-            float activeload = Load * frameTime;
+            // The amount of energy that is supplied from generators that do not care if it's used or not.
+            var activeSupply = Supply * frameTime;
+            // The total load we need to fill for machines.
+            var activeLoad = Load * frameTime;
 
-            float storageconsumerdemand = 0;
-
+            // The total load from storage consumers (batteries that do not supply like an SMES)
+            float storageConsumerDemand = 0;
             foreach (var supply in PowerStorageConsumerList)
             {
-                storageconsumerdemand += supply.RequestCharge(frameTime);
+                storageConsumerDemand += supply.RequestCharge(frameTime);
             }
 
-            float storagesupply = 0;
-            float storagesupplierdemand = 0;
-
+            // The total supply from storage suppliers.
+            float storageSupply = 0;
+            // The total load from storage suppliers (batteries that DO supply like an SMES)
+            float storageSupplierDemand = 0;
             foreach (var supply in PowerStorageSupplierList)
             {
-                storagesupply += supply.AvailableCharge(frameTime);
-                storagesupplierdemand += supply.RequestCharge(frameTime);
+                storageSupply += supply.AvailableCharge(frameTime);
+                storageSupplierDemand += supply.RequestCharge(frameTime);
             }
 
+            LastTotalAvailable = (storageSupply + activeSupply) / frameTime;
+            LastTotalDemandWithSuppliers = (activeLoad + storageConsumerDemand + storageSupplierDemand) / frameTime;
 
-            //If we have enough power to feed all load and storage demand, then feed everything
-            if (activesupply > activeload + storageconsumerdemand + storagesupplierdemand)
+            // The happy case.
+            // If we have enough power to feed all load and storage demand, then feed everything
+            if (activeSupply > activeLoad + storageConsumerDemand + storageSupplierDemand)
             {
                 PowerAllDevices();
                 ChargeStorageConsumers(frameTime);
                 ChargeStorageSuppliers(frameTime);
+                LastTotalDraw = LastTotalDemand = LastTotalDemandWithSuppliers;
                 return;
             }
-            //We don't have enough power for the storage powernet suppliers, ignore powering them
-            else if (activesupply > activeload + storageconsumerdemand)
+
+            LastTotalDemand = (activeLoad + storageConsumerDemand) / frameTime;
+
+            // We don't have enough power for the storage powernet suppliers, ignore powering them
+            // TODO: This is technically incorrect, it's totally possible to power *some* suppliers here,
+            // just not all.
+            if (activeSupply > activeLoad + storageConsumerDemand)
             {
                 PowerAllDevices();
                 ChargeStorageConsumers(frameTime);
+                LastTotalDraw = LastTotalDemand;
                 return;
             }
 
+            // The complex case: There is too little power to power everything without using storage suppliers (SMES).
+            // We have to keep track of power draw as to not incorrectly detract too much from storage suppliers.
 
-            float totalRemaining = activesupply + storagesupply;
-
+            // Calculate the total potential supply, then go through every normal load and detract.
+            var totalRemaining = activeSupply + storageSupply;
             foreach (var device in DeviceLoadList)
             {
                 var deviceLoad = device.Load * frameTime;
@@ -137,25 +208,35 @@ namespace Content.Server.GameObjects.Components.Power
                 }
             }
 
-            // What we have left goes into storage consumers.
-            foreach (var consumer in PowerStorageConsumerList)
+            if (totalRemaining > 0)
             {
-                if (totalRemaining < 0)
+                // What we have left (if any) goes into storage consumers.
+                foreach (var consumer in PowerStorageConsumerList)
                 {
-                    break;
+                    if (totalRemaining < 0)
+                    {
+                        break;
+                    }
+
+                    var demand = consumer.RequestCharge(frameTime);
+                    if (demand == 0)
+                    {
+                        continue;
+                    }
+
+                    var taken = Math.Min(demand, totalRemaining);
+                    totalRemaining -= taken;
+                    consumer.AddCharge(taken);
                 }
-                var demand = consumer.RequestCharge(frameTime);
-                if (demand == 0)
-                {
-                    continue;
-                }
-                var taken = Math.Min(demand, totalRemaining);
-                totalRemaining -= taken;
-                consumer.AddCharge(taken);
             }
 
-            var supplierUsed = storagesupply - totalRemaining;
+            LastTotalDraw = (activeSupply + storageSupply - totalRemaining) / frameTime;
 
+            // activeSupply is free to use, but storageSupply is not.
+            // Calculate how much of storageSupply, and deduct it from the storage suppliers.
+            var supplierUsed = storageSupply - totalRemaining;
+
+            // And deduct!
             foreach (var supplier in PowerStorageSupplierList)
             {
                 var load = supplier.AvailableCharge(frameTime);
@@ -163,6 +244,7 @@ namespace Content.Server.GameObjects.Components.Power
                 {
                     continue;
                 }
+
                 var added = Math.Min(load, supplierUsed);
                 supplierUsed -= added;
                 supplier.DeductCharge(added);
@@ -179,6 +261,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 device.ExternalPowered = true;
             }
+
             DepoweredDevices.Clear();
         }
 
@@ -208,6 +291,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 NodeList[0].DisconnectFromPowernet();
             }
+
             GeneratorList.Clear();
             DeviceLoadList.Clear();
             DepoweredDevices.Clear();
@@ -228,6 +312,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 wire.Parent = this;
             }
+
             WireList.AddRange(toMerge.WireList);
             toMerge.WireList.Clear();
 
@@ -235,6 +320,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 node.Parent = this;
             }
+
             NodeList.AddRange(toMerge.NodeList);
             toMerge.NodeList.Clear();
 
@@ -242,6 +328,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 GeneratorList.Add(generator.Key, generator.Value);
             }
+
             Supply += toMerge.Supply;
             toMerge.Supply = 0;
             toMerge.GeneratorList.Clear();
@@ -250,6 +337,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 DeviceLoadList.Add(device);
             }
+
             Load += toMerge.Load;
             toMerge.Load = 0;
             toMerge.DeviceLoadList.Clear();
@@ -362,7 +450,8 @@ namespace Content.Server.GameObjects.Components.Power
             }
             else
             {
-                Logger.WarningS("power", "We tried to remove generator {0} twice from {1}, somehow.", generator.Owner, this);
+                Logger.WarningS("power", "We tried to remove generator {0} twice from {1}, somehow.", generator.Owner,
+                    this);
             }
         }
 
@@ -402,11 +491,13 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 PowerStorageSupplierList.Remove(storage);
             }
+
             if (PowerStorageConsumerList.Contains(storage))
             {
                 PowerStorageSupplierList.Remove(storage);
             }
         }
+
         #endregion Registration
 
         public override string ToString()
@@ -441,6 +532,7 @@ namespace Content.Server.GameObjects.Components.Power
                 {
                     return y.Owner.Uid.CompareTo(x.Owner.Uid);
                 }
+
                 return compare;
             }
         }
