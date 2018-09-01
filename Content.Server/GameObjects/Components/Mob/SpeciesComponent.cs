@@ -5,7 +5,7 @@ using Content.Server.Interfaces;
 using SS14.Server.GameObjects;
 using SS14.Shared.ContentPack;
 using SS14.Shared.GameObjects;
-using SS14.Shared.GameObjects.Serialization;
+using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects
         /// </summary>
         private string templatename;
 
-        public override void ExposeData(EntitySerializer serializer)
+        public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 

@@ -17,13 +17,10 @@ namespace Content.Server.GameObjects
     /// A component that handles receiving damage and healing,
     /// as well as informing other components of it.
     /// </summary>
-    public class DamageableComponent : Component, IDamageableComponent
+    public class DamageableComponent : SharedDamageableComponent, IDamageableComponent
     {
         /// <inheritdoc />
         public override string Name => "Damageable";
-
-        /// <inheritdoc />
-        public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
         /// <summary>
         /// The resistance set of this object.
