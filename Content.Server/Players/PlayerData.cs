@@ -1,6 +1,7 @@
 ﻿using Content.Server.Mobs;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.Network;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.Players
 {
@@ -13,11 +14,13 @@ namespace Content.Server.Players
         /// <summary>
         ///     The session ID of the player owning this data.
         /// </summary>
+        [ViewVariables]
         public NetSessionId SessionId { get; }
 
         /// <summary>
         ///     The currently occupied mind of the player owning this data.
         /// </summary>
+        [ViewVariables]
         public Mind Mind { get; set; }
 
         public PlayerData(NetSessionId sessionId)

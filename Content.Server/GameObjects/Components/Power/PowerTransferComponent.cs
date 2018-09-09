@@ -7,6 +7,7 @@ using System.Linq;
 using SS14.Shared.Interfaces.GameObjects;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -20,8 +21,10 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// The powernet this component is connected to
         /// </summary>
-        public Powernet Parent;
+        [ViewVariables]
+        public Powernet Parent { get; set; }
 
+        [ViewVariables]
         public bool Regenerating { get; set; } = false;
 
         public override void Initialize()

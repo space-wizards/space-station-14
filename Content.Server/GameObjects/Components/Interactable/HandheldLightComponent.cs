@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -25,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         /// Status of light, whether or not it is emitting light.
         /// </summary>
+        [ViewVariables]
         public bool Activated { get; private set; } = false;
 
         public override void Initialize()

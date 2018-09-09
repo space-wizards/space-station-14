@@ -5,6 +5,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
 using System;
+using SS14.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -23,6 +24,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     Maximum amount of energy the internal battery can store.
         ///     In Joules.
         /// </summary>
+        [ViewVariables]
         public float Capacity => _capacity;
         private float _capacity = 10000; // Arbitrary value, replace.
 
@@ -30,6 +32,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     Energy the battery is currently storing.
         ///     In Joules.
         /// </summary>
+        [ViewVariables]
         public float Charge => _charge;
         private float _charge = 0;
 
@@ -37,6 +40,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     Rate at which energy will be taken to charge internal battery.
         ///     In Watts.
         /// </summary>
+        [ViewVariables]
         public float ChargeRate => _chargeRate;
         private float _chargeRate = 1000;
 
@@ -44,9 +48,11 @@ namespace Content.Server.GameObjects.Components.Power
         ///     Rate at which energy will be distributed to the powernet if needed.
         ///     In Watts.
         /// </summary>
+        [ViewVariables]
         public float DistributionRate => _distributionRate;
         private float _distributionRate = 1000;
 
+        [ViewVariables]
         public bool Full => Charge >= Capacity;
 
         private bool _chargepowernet = false;
@@ -54,6 +60,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Do we distribute power into the powernet from our stores if the powernet requires it?
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool ChargePowernet
         {
             get => _chargepowernet;

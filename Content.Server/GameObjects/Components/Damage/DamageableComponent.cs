@@ -8,6 +8,7 @@ using YamlDotNet.RepresentationModel;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using SS14.Shared.Serialization;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
@@ -29,6 +30,7 @@ namespace Content.Server.GameObjects
         /// The resistance set of this object.
         /// Affects receiving damage of various types.
         /// </summary>
+        [ViewVariables]
         public ResistanceSet Resistances { get; private set; }
 
         Dictionary<DamageType, int> CurrentDamage = new Dictionary<DamageType, int>();

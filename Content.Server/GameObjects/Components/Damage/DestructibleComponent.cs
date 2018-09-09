@@ -7,6 +7,7 @@ using YamlDotNet.RepresentationModel;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using SS14.Shared.Serialization;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
@@ -25,6 +26,7 @@ namespace Content.Server.GameObjects
         /// Damage threshold calculated from the values
         /// given in the prototype declaration.
         /// </summary>
+        [ViewVariables]
         public DamageThreshold Threshold { get; private set; }
 
 

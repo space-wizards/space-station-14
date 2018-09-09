@@ -1,6 +1,7 @@
 ﻿using SS14.Shared.GameObjects;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
+using SS14.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Interactable.Tools
@@ -10,6 +11,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         /// <summary>
         /// For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public float SpeedModifier
         {
             get => _speedModifier;

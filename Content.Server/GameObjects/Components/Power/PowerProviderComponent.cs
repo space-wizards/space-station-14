@@ -9,6 +9,7 @@ using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SS14.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -26,6 +27,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Variable that determines the range that the power provider will try to supply power to
         /// </summary>
+        [ViewVariables]
         public int PowerRange
         {
             get => _range;
@@ -51,6 +53,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private bool _mainBreaker = true;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool MainBreaker
         {
             get => _mainBreaker;
@@ -76,6 +79,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private float _theoreticalLoad = 0f;
 
+        [ViewVariables]
         public float TheoreticalLoad
         {
             get => _theoreticalLoad;

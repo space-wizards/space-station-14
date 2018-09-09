@@ -5,6 +5,7 @@ using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.IoC;
 using System;
 using System.Linq;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -18,7 +19,8 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// The powernet this node is connected to
         /// </summary>
-        public Powernet Parent;
+        [ViewVariables]
+        public Powernet Parent { get; set; }
 
         /// <summary>
         /// An event handling when this node connects to a powernet

@@ -15,6 +15,7 @@ using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Map;
 using SS14.Shared.Serialization;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
@@ -22,6 +23,7 @@ namespace Content.Server.GameObjects
     {
         private string activeIndex;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public string ActiveIndex
         {
             get => activeIndex;

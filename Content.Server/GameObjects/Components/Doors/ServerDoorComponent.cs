@@ -11,12 +11,14 @@ using SS14.Shared.IoC;
 using Content.Server.GameObjects.EntitySystems;
 using SS14.Shared.Serialization;
 using SS14.Shared.Interfaces.Network;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
     public class ServerDoorComponent : Component, IAttackHand
     {
         public override string Name => "Door";
+        [ViewVariables]
         public bool Opened { get; private set; }
 
         private float OpenTimeCounter;

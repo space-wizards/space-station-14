@@ -5,6 +5,7 @@ using SS14.Server.Interfaces.Player;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Network;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.Mobs
 {
@@ -14,7 +15,7 @@ namespace Content.Server.Mobs
     /// <remarks>
     ///     Think of it like this: if a player is supposed to have their memories,
     ///     their mind follows along.
-    ///     
+    ///
     ///     Things such as respawning do not follow, because you're a new character.
     ///     Getting borged, cloned, turned into a catbeast, etc... will keep it following you.
     /// </remarks>
@@ -184,7 +185,7 @@ namespace Content.Server.Mobs
                     throw new ArgumentException("That entity already has a mind.", nameof(entity));
                 }
             }
-            
+
             CurrentMob?.InternalEjectMind();
             CurrentMob = component;
             CurrentMob?.InternalAssignMind(this);

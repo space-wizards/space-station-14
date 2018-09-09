@@ -6,12 +6,14 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using System.Collections.Generic;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects
 {
     public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
         private readonly Dictionary<string, IEntity> hands = new Dictionary<string, IEntity>();
+        [ViewVariables]
         public string ActiveIndex { get; private set; }
 
         public IEntity GetEntity(string index)

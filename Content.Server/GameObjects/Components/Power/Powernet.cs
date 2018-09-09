@@ -4,6 +4,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using System;
 using System.Collections.Generic;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -23,6 +24,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         ///     Unique identifier per powernet, used for debugging mostly.
         /// </summary>
+        [ViewVariables]
         public int Uid { get; }
 
         /// <summary>
@@ -41,6 +43,7 @@ namespace Content.Server.GameObjects.Components.Power
         private readonly Dictionary<PowerGeneratorComponent, float> GeneratorList =
             new Dictionary<PowerGeneratorComponent, float>();
 
+        [ViewVariables]
         public int GeneratorCount => GeneratorList.Count;
 
         /// <summary>
@@ -49,6 +52,7 @@ namespace Content.Server.GameObjects.Components.Power
         private readonly SortedSet<PowerDeviceComponent> DeviceLoadList =
             new SortedSet<PowerDeviceComponent>(new DevicePriorityCompare());
 
+        [ViewVariables]
         public int DeviceCount => DeviceLoadList.Count;
 
         /// <summary>
@@ -61,6 +65,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         private readonly List<PowerStorageComponent> PowerStorageSupplierList = new List<PowerStorageComponent>();
 
+        [ViewVariables]
         public int PowerStorageSupplierCount => PowerStorageSupplierList.Count;
 
         /// <summary>
@@ -68,23 +73,27 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         private readonly List<PowerStorageComponent> PowerStorageConsumerList = new List<PowerStorageComponent>();
 
+        [ViewVariables]
         public int PowerStorageConsumerCount => PowerStorageConsumerList.Count;
 
         /// <summary>
         ///     Static counter of all continuous load placed from devices on this power network.
         ///     In Watts.
         /// </summary>
+        [ViewVariables]
         public float Load { get; private set; } = 0;
 
         /// <summary>
         ///     Static counter of all continuous supply from generators on this power network.
         ///     In Watts.
         /// </summary>
+        [ViewVariables]
         public float Supply { get; private set; } = 0;
 
         /// <summary>
         ///     Variable that causes powernet to be regenerated from its wires during the next update cycle.
         /// </summary>
+        [ViewVariables]
         public bool Dirty { get; set; } = false;
 
         // These are stats for power monitoring equipment such as APCs.
@@ -93,6 +102,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     The total supply that was available to us last tick.
         ///     This does not mean it was used.
         /// </summary>
+        [ViewVariables]
         public float LastTotalAvailable { get; private set; }
 
         /// <summary>
@@ -102,6 +112,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     If avail &lt; demand, this will be just &lt;= than the actual avail
         ///     (e.g. if all machines need 100 W but there's 20 W excess, the 20 W will be avail but not drawn.)
         /// </summary>
+        [ViewVariables]
         public float LastTotalDraw { get; private set; }
 
         /// <summary>
@@ -111,6 +122,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     As such, this will quite abruptly shoot up if available rises to cover supplier charge demand too.
         /// </summary>
         /// <seealso cref="LastTotalDemandWithSuppliers"/>
+        [ViewVariables]
         public float LastTotalDemand { get; private set; }
 
         /// <summary>
@@ -118,11 +130,13 @@ namespace Content.Server.GameObjects.Components.Power
         ///     This does not mean it was full filled in practice.
         ///     See <see cref="LastTotalDemand"/> for the difference.
         /// </summary>
+        [ViewVariables]
         public float LastTotalDemandWithSuppliers { get; private set; }
 
         /// <summary>
         ///     The amount of power that we are lacking to properly power everything (excluding storage supplier charging).
         /// </summary>
+        [ViewVariables]
         public float Lack => Math.Max(0, LastTotalDemand - LastTotalAvailable);
 
         /// <summary>
@@ -131,6 +145,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     It is ALSO not implied that if this is &gt; 0, that we have sufficient power for everything.
         ///     See the doc comment on <see cref="LastTotalDraw"/>.
         /// </summary>
+        [ViewVariables]
         public float Excess => Math.Max(0, LastTotalAvailable - LastTotalDraw);
 
         public void Update(float frameTime)
