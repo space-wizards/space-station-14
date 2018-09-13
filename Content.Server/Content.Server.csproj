@@ -14,6 +14,7 @@
     <ContentAssemblyTarget>..\engine\bin\Server\Resources\Assemblies\</ContentAssemblyTarget>
     <OutputPath>..\bin\Content.Server\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
+    <LangVersion>7.2</LangVersion>
     <CodeAnalysisRuleSet Condition="'$(ActualOS)' == 'Windows'">MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -48,6 +49,10 @@
     <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="YamlDotNet" Version="5.0.1" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,12 +61,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="YamlDotNet, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\YamlDotNet.4.3.1\lib\net45\YamlDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple">
-      <HintPath>$(SolutionDir)packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\AimShootLifeProcessor.cs" />
@@ -155,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
     <Compile Include="GameObjects\Components\Power\SmesComponent.cs" />
     <Compile Include="GameObjects\Components\Power\ApcComponent.cs" />
     <Compile Include="Materials\Material.cs" />

@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private static bool TryGetAttachedComponent<T>(IPlayerSession session, out T component)
             where T : Component
         {
-            component = default(T);
+            component = default;
 
             var ent = session.AttachedEntity;
 

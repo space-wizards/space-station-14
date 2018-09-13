@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ContentAssemblyTarget>..\engine\bin\Client\Resources\Assemblies\</ContentAssemblyTarget>
+    <LangVersion>7.2</LangVersion>
     <!--
     This copies all dependencies,
     but on the plus side it's automatically located in the right place.
@@ -52,6 +53,10 @@
     <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="YamlDotNet" Version="5.0.1" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -60,12 +65,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="YamlDotNet, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\YamlDotNet.4.3.1\lib\net45\YamlDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple">
-      <HintPath>$(SolutionDir)packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
@@ -113,7 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
     <Compile Include="GameObjects\Components\Power\SmesVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\Power\ApcVisualizer2D.cs" />
     <Compile Include="Construction\ConstructionMenu.cs" />
