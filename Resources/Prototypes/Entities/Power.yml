@@ -85,6 +85,8 @@
     interfaces:
     - key: enum.ApcUiKey.Key
       type: ApcBoundUserInterface
+  - type: BoundingBox
+    aabb: -0.25, -0.25, 0.25, 0.3
 
 - type: entity
   id: SMES
