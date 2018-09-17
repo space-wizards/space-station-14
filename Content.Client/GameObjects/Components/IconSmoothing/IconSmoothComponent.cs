@@ -56,16 +56,14 @@ namespace Content.Client.GameObjects.Components.SmoothWalling
             var state0 = $"{StateBase}0";
             SnapGrid = Owner.GetComponent<SnapGridComponent>();
             Sprite = Owner.GetComponent<ISpriteComponent>();
-            // BIG NOTE: Y axis is fucked. Double fucked. Triple super-mega-ultra-turbo-fucked.
-            // so, the DirectionOffsets here are incorrect (flipped).
             Sprite.LayerMapSet(CornerLayers.SE, Sprite.AddLayerState(state0));
-            Sprite.LayerSetDirOffset(CornerLayers.SE, DirectionOffset.Flip);
+            Sprite.LayerSetDirOffset(CornerLayers.SE, DirectionOffset.None);
             Sprite.LayerMapSet(CornerLayers.NE, Sprite.AddLayerState(state0));
-            Sprite.LayerSetDirOffset(CornerLayers.NE, DirectionOffset.Clockwise);
+            Sprite.LayerSetDirOffset(CornerLayers.NE, DirectionOffset.CounterClockwise);
             Sprite.LayerMapSet(CornerLayers.NW, Sprite.AddLayerState(state0));
-            Sprite.LayerSetDirOffset(CornerLayers.NW, DirectionOffset.None);
+            Sprite.LayerSetDirOffset(CornerLayers.NW, DirectionOffset.Flip);
             Sprite.LayerMapSet(CornerLayers.SW, Sprite.AddLayerState(state0));
-            Sprite.LayerSetDirOffset(CornerLayers.SW, DirectionOffset.CounterClockwise);
+            Sprite.LayerSetDirOffset(CornerLayers.SW, DirectionOffset.Clockwise);
         }
 
         public override void ExposeData(ObjectSerializer serializer)

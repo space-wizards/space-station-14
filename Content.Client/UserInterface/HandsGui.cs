@@ -32,8 +32,8 @@ namespace Content.Client.UserInterface
 
         private UiHandInfo LeftHand;
         private UiHandInfo RightHand;
-        private Box2i handL;
-        private Box2i handR;
+        private UIBox2i handL;
+        private UIBox2i handR;
 
         protected override void Initialize()
         {
@@ -53,7 +53,7 @@ namespace Content.Client.UserInterface
             SetMarginsPreset(LayoutPreset.CenterBottom);
             SetAnchorPreset(LayoutPreset.CenterBottom);
 
-            handL = new Box2i(0, 0, BOX_SIZE, BOX_SIZE);
+            handL = new UIBox2i(0, 0, BOX_SIZE, BOX_SIZE);
             handR = handL.Translated(new Vector2i(BOX_SIZE + BOX_SPACING, 0));
             SS14.Shared.Log.Logger.Debug($"{handL}, {handR}");
             MouseFilter = MouseFilterMode.Stop;
@@ -64,7 +64,7 @@ namespace Content.Client.UserInterface
             return new Vector2(BOX_SIZE * 2 + 1, BOX_SIZE);
         }
 
-        protected override void Draw(DrawingHandle handle)
+        protected override void Draw(DrawingHandleScreen handle)
         {
             if (!TryGetHands(out IHandsComponent hands))
                 return;
@@ -79,7 +79,7 @@ namespace Content.Client.UserInterface
             {
                 var bounds = LeftHand.HeldSprite.Size;
                 handle.DrawTextureRect(LeftHand.HeldSprite,
-                    Box2i.FromDimensions(handL.Left + (int)(handL.Width / 2f - bounds.X / 2f),
+                    UIBox2i.FromDimensions(handL.Left + (int)(handL.Width / 2f - bounds.X / 2f),
                                     handL.Top + (int)(handL.Height / 2f - bounds.Y / 2f),
                                     (int)bounds.X, (int)bounds.Y), tile: false);
             }
@@ -88,7 +88,7 @@ namespace Content.Client.UserInterface
             {
                 var bounds = RightHand.HeldSprite.Size;
                 handle.DrawTextureRect(RightHand.HeldSprite,
-                    Box2i.FromDimensions(handR.Left + (int)(handR.Width / 2f - bounds.Y / 2f),
+                    UIBox2i.FromDimensions(handR.Left + (int)(handR.Width / 2f - bounds.Y / 2f),
                                     handR.Top + (int)(handR.Height / 2f - bounds.Y / 2f),
                                     (int)bounds.X, (int)bounds.Y), tile: false);
             }
