@@ -21,7 +21,7 @@
     state: greyshirt
 
   - type: BoundingBox
-    aabb: "-1,-0.45,-0.15,0.45"
+    aabb: "-0.5,-0.25,-0.05,0.25"
 
   - type: Physics
     mass: 5
