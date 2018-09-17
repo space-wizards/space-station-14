@@ -1,7 +1,5 @@
-﻿using SS14.Server.GameObjects;
-using SS14.Server.GameObjects.EntitySystems;
+﻿using SS14.Server.GameObjects.EntitySystems;
 using SS14.Shared.Audio;
-using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
@@ -17,20 +15,22 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
     public class HitscanWeaponComponent : RangedWeaponComponent
     {
+        private const float MaxLength = 20;
         public override string Name => "HitscanWeapon";
 
-        string spritename = "Objects/laser.png";
+        private const string SpriteName = "Objects/laser.png";
 
         protected override void Fire(IEntity user, GridLocalCoordinates clicklocation)
         {
-            var userposition = user.GetComponent<ITransformComponent>().WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
-            var angle = new Angle(clicklocation.Position - userposition);
+            var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
+            var angle = new Angle(clicklocation.Position - userPosition);
 
-            var ray = new Ray(userposition, angle.ToVec());
-            var raycastresults = IoCManager.Resolve<ICollisionManager>().IntersectRay(ray, 20, Owner.GetComponent<ITransformComponent>().GetMapTransform().Owner);
+            var ray = new Ray(userPosition, angle.ToVec());
+            var rayCastResults = IoCManager.Resolve<ICollisionManager>().IntersectRay(ray, MaxLength,
+                Owner.Transform.GetMapTransform().Owner);
 
-            Hit(raycastresults);
-            AfterEffects(user, raycastresults, angle);
+            Hit(rayCastResults);
+            AfterEffects(user, rayCastResults, angle);
         }
 
         protected virtual void Hit(RayCastResults ray)
@@ -44,17 +44,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
         protected virtual void AfterEffects(IEntity user, RayCastResults ray, Angle angle)
         {
             var time = IoCManager.Resolve<IGameTiming>().CurTime;
-            var offset = angle.ToVec() * ray.Distance / 2;
-
-            EffectSystemMessage message = new EffectSystemMessage
+            var dist = ray.DidHitObject ? ray.Distance : MaxLength;
+            var offset = angle.ToVec() * dist / 2;
+            var message = new EffectSystemMessage
             {
-                EffectSprite = spritename,
+                EffectSprite = SpriteName,
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(1),
-                Size = new Vector2(ray.Distance, 1f),
-                Coordinates = user.GetComponent<ITransformComponent>().LocalPosition.Translated(offset),
+                Size = new Vector2(dist, 1f),
+                Coordinates = user.Transform.LocalPosition.Translated(offset),
                 //Rotated from east facing
-                Rotation = (float)angle.Theta,
+                Rotation = (float) angle.Theta,
                 ColorDelta = new Vector4(0, 0, 0, -1500f),
                 Color = new Vector4(255, 255, 255, 750),
                 Shaded = false

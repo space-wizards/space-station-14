@@ -21,6 +21,7 @@
   - whisper
   - me
   - ooc
+  - showtime
 
 - Index: 100
   Name: Administrator
@@ -32,4 +33,5 @@
   - whisper
   - me
   - ooc
+  - showtime
   CanViewVar: true
