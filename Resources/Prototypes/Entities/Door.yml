@@ -12,7 +12,7 @@
     texture: Objects/door_ew.png
 
   - type: BoundingBox
-    aabb: "1,-0.75,2,0.75"
+    aabb: "-2,-0.75,-1,0.75"
     sizeX: 1.9
     offsetY: 1.5
   - type: Collidable

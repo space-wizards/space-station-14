@@ -10,60 +10,52 @@ grids:
     worldpos: 0,0
   chunks:
   - ind: "-1,0"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-1,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAA==
-  - ind: "0,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAA==
+  - ind: "-1,1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "0,0"
-    tiles: AQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "0,-1"
+    tiles: AAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,3.5
+    pos: 4.5,-3.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,0.5
+    pos: 4.5,-0.5
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,-6
+    pos: -7,6
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,4
+    pos: -7,-4
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,3
+    pos: -7,-3
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,2
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -7,1
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -7,0
+    pos: -7,-2
     rot: -1.570796
     type: Transform
 - type: wall
@@ -75,37 +67,37 @@ entities:
 - type: wall
   components:
   - grid: 0
-    pos: 6,7
+    pos: -7,0
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,8
+    pos: -7,1
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,9
+    pos: 6,-7
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,-5
+    pos: 6,-8
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,-6
+    pos: 6,-9
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,-5
+    pos: -7,5
     rot: -1.570796
     type: Transform
 - type: wall
@@ -123,19 +115,19 @@ entities:
 - type: wall
   components:
   - grid: 0
-    pos: -7,9
+    pos: 6,-6
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,-1
+    pos: 6,-5
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,0
+    pos: -7,-9
     rot: -1.570796
     type: Transform
 - type: wall
@@ -147,277 +139,247 @@ entities:
 - type: wall
   components:
   - grid: 0
-    pos: 6,2
+    pos: 6,0
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,3
+    pos: 6,-1
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,4
+    pos: 6,-2
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 6,-3
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 6,-4
     rot: -1.570796
     type: Transform
 - type: DoorContent
   components:
   - grid: 0
-    pos: -5.5,4.5
+    pos: -5.5,-4.5
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,5
+    pos: -7,-5
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,6
+    pos: -7,-6
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -4,6
+    pos: -4,-6
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -4,5
+    pos: -4,-5
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -4,4
+    pos: -4,-4
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -3,6
+    pos: -3,-6
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -2,6
+    pos: -2,-6
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -1,6
+    pos: -1,-6
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 0,6
+    pos: 0,-6
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,-0.5
+    pos: 4.5,0.5
     rot: -1.570796
     type: Transform
 - type: table
   components:
   - grid: 0
-    pos: -2.5,4.5
+    pos: -2.5,-4.5
     rot: -1.570796
     type: Transform
 - type: DoorContent
   components:
   - grid: 0
-    pos: 4.5,4.5
+    pos: 4.5,-4.5
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 1,6
+    pos: 1,-6
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 2,6
+    pos: 2,-6
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 3,6
+    pos: 3,-6
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 3,5
+    pos: 3,-5
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 3,4
+    pos: 3,-4
     rot: -1.570796
     type: Transform
 - type: table
   components:
   - grid: 0
-    pos: -0.5,4.5
+    pos: -0.5,-4.5
     rot: -1.570796
     type: Transform
 - type: table
   components:
   - grid: 0
-    pos: 1.5,4.5
+    pos: 1.5,-4.5
     rot: -1.570796
     type: Transform
 - type: LaserItem
   components:
   - grid: 0
-    pos: -3.015625,3.890625
+    pos: -3.015625,-3.890625
     rot: -1.570796
     type: Transform
 - type: LaserItem
   components:
   - grid: 0
-    pos: -2.015625,3.859375
+    pos: -2.015625,-3.859375
     rot: -1.570796
     type: Transform
 - type: GUNITEM
   components:
   - grid: 0
-    pos: -2.890625,4.484375
+    pos: -2.890625,-4.484375
     rot: -1.570796
     type: Transform
 - type: GUNITEM
   components:
   - grid: 0
-    pos: -1.984375,4.484375
+    pos: -1.984375,-4.484375
     rot: -1.570796
     type: Transform
 - type: medkit_r
   components:
   - grid: 0
-    pos: -0.859375,3.921875
+    pos: -0.859375,-3.921875
     rot: -1.570796
     type: Transform
 - type: medkit_r
   components:
   - grid: 0
-    pos: -0.921875,4.640625
+    pos: -0.921875,-4.640625
     rot: -1.570796
     type: Transform
 - type: MopItem
   components:
   - grid: 0
-    pos: 0.015625,3.921875
+    pos: 0.015625,-3.921875
     rot: -1.570796
     type: Transform
 - type: FlashlightLantern
   components:
   - grid: 0
-    pos: 0.046875,4.609375
+    pos: 0.046875,-4.609375
     rot: -1.570796
     type: Transform
 - type: IDCardStandard
   components:
   - grid: 0
-    pos: 0.890625,3.921875
+    pos: 0.890625,-3.921875
     rot: -1.570796
     type: Transform
 - type: RadioHeadsetEars
   components:
   - grid: 0
-    pos: 0.984375,4.640625
+    pos: 0.984375,-4.640625
     rot: -1.570796
     type: Transform
 - type: BackpackClothing
   components:
   - grid: 0
-    pos: 1.890625,3.796875
+    pos: 1.890625,-3.796875
     rot: -1.570796
     type: Transform
 - type: JanitorUniform
   components:
   - grid: 0
-    pos: 2.109375,4.546875
+    pos: 2.109375,-4.546875
     rot: -1.570796
     type: Transform
 - type: ShoesItem
   components:
   - grid: 0
-    pos: 1.546875,4.484375
+    pos: 1.546875,-4.484375
     rot: -1.570796
     type: Transform
 - type: table
   components:
   - grid: 0
-    pos: 1.5,7.5
+    pos: 1.5,-7.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,5.5
+    pos: 4.5,-5.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,4.5
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -7,7
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -7,8
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 4.5,2.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 4.5,1.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 4.5,7.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 4.5,6.5
-    rot: -1.570796
-    type: Transform
-- type: WirelessMachine
-  components:
-  - grid: 0
-    pos: 3,3
+    pos: 4.5,-4.5
     rot: -1.570796
     type: Transform
 - type: wall
@@ -432,324 +394,364 @@ entities:
     pos: -7,-8
     rot: -1.570796
     type: Transform
-- type: wall
+- type: Wire
   components:
   - grid: 0
-    pos: -6,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -5,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -4,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -3,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -2,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -1,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 0,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 1,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 2,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 3,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 4,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 5,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 6,-8
-    rot: -1.570796
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 6,-7
-    rot: -1.570796
-    type: Transform
-- type: table
-  components:
-  - grid: 0
-    pos: -2.5,7.5
-    rot: -1.570796
-    type: Transform
-- type: table
-  components:
-  - grid: 0
-    pos: -0.5,7.5
+    pos: 4.5,-2.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,8.5
+    pos: 4.5,-1.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 4.5,-7.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 4.5,-6.5
+    rot: -1.570796
+    type: Transform
+- type: WirelessMachine
+  components:
+  - grid: 0
+    pos: 3,-3
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -7,7
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -7,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -6,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -5,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -4,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -3,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -2,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -1,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 0,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 1,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 2,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 3,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 5,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 6,8
+    rot: -1.570796
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 6,7
+    rot: -1.570796
+    type: Transform
+- type: table
+  components:
+  - grid: 0
+    pos: -2.5,-7.5
+    rot: -1.570796
+    type: Transform
+- type: table
+  components:
+  - grid: 0
+    pos: -0.5,-7.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 4.5,-8.5
     rot: -1.570796
     type: Transform
 - type: YellowGloves
   components:
   - grid: 0
-    pos: -3.015625,6.796875
+    pos: -3.015625,-6.796875
     rot: -1.570796
     type: Transform
 - type: MesonGlasses
   components:
   - grid: 0
-    pos: -3.046875,7.484375
+    pos: -3.046875,-7.484375
     rot: -1.570796
     type: Transform
 - type: UtilityBeltClothing
   components:
   - grid: 0
-    pos: -2.109375,6.765625
+    pos: -2.109375,-6.765625
     rot: -1.570796
     type: Transform
 - type: GasMaskClothing
   components:
   - grid: 0
-    pos: -2.234375,7.390625
+    pos: -2.234375,-7.390625
     rot: -1.570796
     type: Transform
 - type: BlueToolboxItem
   components:
   - grid: 0
-    pos: -1.109375,6.796875
+    pos: -1.109375,-6.796875
     rot: -1.570796
     type: Transform
 - type: YellowToolboxItem
   components:
   - grid: 0
-    pos: -1.078125,7.578125
+    pos: -1.078125,-7.578125
     rot: -1.570796
     type: Transform
 - type: Wirecutter
   components:
   - grid: 0
-    pos: -0.234375,6.640625
+    pos: -0.234375,-6.640625
     rot: -1.570796
     type: Transform
 - type: Welder
   components:
   - grid: 0
-    pos: -0.234375,7.515625
+    pos: -0.234375,-7.515625
     rot: -1.570796
     type: Transform
 - type: Screwdriver
   components:
   - grid: 0
-    pos: 0.703125,6.609375
+    pos: 0.703125,-6.609375
     rot: -1.570796
     type: Transform
 - type: Crowbar
   components:
   - grid: 0
-    pos: 0.578125,7.484375
+    pos: 0.578125,-7.484375
     rot: -1.570796
     type: Transform
 - type: Multitool
   components:
   - grid: 0
-    pos: 1.515625,6.921875
+    pos: 1.515625,-6.921875
     rot: -1.570796
     type: Transform
 - type: Wrench
   components:
   - grid: 0
-    pos: 1.421875,7.484375
+    pos: 1.421875,-7.484375
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,10
+    pos: -7,-10
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,11
+    pos: -7,-11
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,12
+    pos: -7,-12
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,13
+    pos: -7,-13
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,10
+    pos: 6,-10
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,11
+    pos: 6,-11
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,12
+    pos: 6,-12
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,13
+    pos: 6,-13
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7,14
+    pos: -7,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -6,14
+    pos: -6,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -5,14
+    pos: -5,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -4,14
+    pos: -4,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -3,14
+    pos: -3,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -2,14
+    pos: -2,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -1,14
+    pos: -1,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 0,14
+    pos: 0,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 1,14
+    pos: 1,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 2,14
+    pos: 2,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 3,14
+    pos: 3,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 4,14
+    pos: 4,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 5,14
+    pos: 5,-14
     rot: -1.570796
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: 6,14
+    pos: 6,-14
     rot: -1.570796
     type: Transform
 - type: SMES
-  name: Smes
   components:
   - grid: 0
-    pos: -2.5,12.5
+    pos: -2.5,-12.5
     rot: -1.570796
     type: Transform
 - type: SMES
-  name: Smes
   components:
   - grid: 0
-    pos: 1.5,12.5
+    pos: 1.5,-12.5
     rot: -1.570796
     type: Transform
   - charge: 438.3279
@@ -757,300 +759,91 @@ entities:
 - type: BlueWire
   components:
   - grid: 0
-    pos: -2.5,12.5
+    pos: -2.5,-12.5
     rot: -1.570796
     type: Transform
 - type: BlueWire
   components:
   - grid: 0
-    pos: -1.5,12.5
+    pos: -1.5,-12.5
     rot: -1.570796
     type: Transform
 - type: BlueWire
   components:
   - grid: 0
-    pos: -0.5,12.5
+    pos: -0.5,-12.5
     rot: -1.570796
     type: Transform
 - type: BlueWire
   components:
   - grid: 0
-    pos: 0.5,12.5
+    pos: 0.5,-12.5
     rot: -1.570796
     type: Transform
 - type: BlueWire
   components:
   - grid: 0
-    pos: 1.5,12.5
+    pos: 1.5,-12.5
     rot: -1.570796
     type: Transform
 - type: Generator
   components:
   - grid: 0
-    pos: -0.5,12.5
+    pos: -0.5,-12.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: -3.5,12.5
+    pos: -3.5,-12.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: -4.5,12.5
+    pos: -4.5,-12.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: -5.5,12.5
+    pos: -5.5,-12.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: -5.5,11.5
+    pos: -5.5,-11.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: -5.5,10.5
+    pos: -5.5,-10.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: -5.5,9.5
+    pos: -5.5,-9.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: -5.5,8.5
+    pos: -5.5,-8.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: -5.5,7.5
+    pos: -5.5,-7.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: -5.5,6.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: -5.5,5.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: -5.5,4.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: -5.5,3.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: -5.5,2.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: -5.5,1.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: -5.5,0.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: -5.5,-0.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 2.5,12.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 3.5,12.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 4.5,12.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 4.5,11.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 4.5,10.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 4.5,9.5
-    rot: -1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: -4,7
-    rot: 1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: 3,7
-    rot: 1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: 3,13
-    rot: -1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: -4,13
-    rot: -1.570796
-    type: Transform
-- type: APC
-  components:
-  - grid: 0
-    pos: -4,7
-    rot: -1.570796
-    type: Transform
-- type: APC
-  components:
-  - grid: 0
-    pos: 3,7
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: -4.5,7.5
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 3.5,7.5
-    rot: -1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: -6,2
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: 5,2
-    rot: -1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: 2,4
-    rot: -1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: -3,4
-    type: Transform
-- type: APC
-  components:
-  - grid: 0
-    pos: -4,3
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: -4.5,2.5
-    type: Transform
-- type: APC
-  components:
-  - grid: 0
-    pos: 3,3
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: 3.5,2.5
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: -10.5,-1.5
-    rot: -1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: -10.5,-4.5
-    rot: 1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: 9.5,-4.5
-    rot: 1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: 9.5,-1.5
-    rot: -1.570796
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: -6,-6
-    type: Transform
-- type: poweredlight
-  components:
-  - grid: 0
-    pos: 5,-6
-    rot: -1.570796
-    type: Transform
-- type: Wire
-  components:
-  - grid: 0
-    pos: -5.5,-1.5
+    pos: -5.5,-6.5
     rot: -1.570796
     type: Transform
 - type: Wire
@@ -1080,25 +873,238 @@ entities:
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,-5.5
+    pos: -5.5,-1.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,-3.5
+    pos: -5.5,-0.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,-4.5
+    pos: -5.5,0.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 2.5,-12.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 3.5,-12.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 4.5,-12.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 4.5,-11.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 4.5,-10.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 4.5,-9.5
+    rot: -1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: -4,-7
+    rot: 1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: 3,-7
+    rot: 1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: 3,-13
+    rot: -1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: -4,-13
     rot: -1.570796
     type: Transform
 - type: APC
   components:
   - grid: 0
-    pos: -6,-6
+    pos: -4,-7
+    rot: -1.570796
+    type: Transform
+  - load: 50
+    type: PowerProvider
+- type: APC
+  components:
+  - grid: 0
+    pos: 3,-7
+    rot: -1.570796
+    type: Transform
+  - load: 50
+    type: PowerProvider
+- type: Wire
+  components:
+  - grid: 0
+    pos: -4.5,-7.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 3.5,-7.5
+    rot: -1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: -6,-2
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: 5,-2
+    rot: -1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: 2,-4
+    rot: -1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: -3,-4
+    type: Transform
+- type: APC
+  components:
+  - grid: 0
+    pos: -4,-3
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: -4.5,-2.5
+    type: Transform
+- type: APC
+  components:
+  - grid: 0
+    pos: 3,-3
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 3.5,-2.5
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: -10.5,1.5
+    rot: -1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: -10.5,4.5
+    rot: 1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: 9.5,4.5
+    rot: 1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: 9.5,1.5
+    rot: -1.570796
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: -6,6
+    type: Transform
+- type: poweredlight
+  components:
+  - grid: 0
+    pos: 5,6
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: -5.5,1.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: -5.5,5.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: -5.5,4.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: -5.5,3.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: -5.5,2.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 4.5,5.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 4.5,3.5
+    rot: -1.570796
+    type: Transform
+- type: Wire
+  components:
+  - grid: 0
+    pos: 4.5,4.5
+    rot: -1.570796
+    type: Transform
+- type: APC
+  components:
+  - grid: 0
+    pos: -6,6
     rot: -1.570796
     type: Transform
   - load: 150
@@ -1106,7 +1112,7 @@ entities:
 - type: APC
   components:
   - grid: 0
-    pos: 5,-6
+    pos: 5,6
     rot: -1.570796
     type: Transform
   - load: 150
@@ -1114,25 +1120,25 @@ entities:
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,-1.5
+    pos: 4.5,1.5
     rot: -1.570796
     type: Transform
 - type: Wire
   components:
   - grid: 0
-    pos: 4.5,-2.5
+    pos: 4.5,2.5
     rot: -1.570796
     type: Transform
 - type: WiredMachine
   components:
   - grid: 0
-    pos: -5.5,12.5
+    pos: -5.5,-12.5
     rot: -1.570796
     type: Transform
 - type: WiredMachine
   components:
   - grid: 0
-    pos: 4.5,12.5
+    pos: 4.5,-12.5
     rot: -1.570796
     type: Transform
 ...
