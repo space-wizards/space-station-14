@@ -14,7 +14,6 @@
   - type: Sprite
     sprite: Mob/greyshirt.rsi
     state: greyshirt
-    scale: 2, 2
     drawdepth: Mobs
 
   - type: Icon
@@ -33,6 +32,9 @@
   - type: Input
     context: "human"
 
+  - type: Eye
+    zoom: 0.5, 0.5
+
 - type: entity
   id: MobObserver
   name: Observer
@@ -41,9 +43,10 @@
   components:
   - type: Sprite
     sprite: Mob/observer.png
-    scale: 2, 2
     drawdepth: Mobs
   - type: Icon
     icon: Mob/observer.png
   - type: Physics
     mass: 5
+  - type: Eye
+    zoom: 0.5, 0.5
