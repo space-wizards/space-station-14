@@ -1,6 +1,7 @@
 ﻿using SS14.Shared.GameObjects;
 using SS14.Shared.Serialization;
 using System;
+using System.Collections.Generic;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.GameObjects
@@ -8,26 +9,17 @@ namespace Content.Shared.GameObjects
     public abstract class SharedInventoryComponent : Component
     {
         public sealed override string Name => "Inventory";
-
-        public override uint? NetID => ContentNetIDs.STORAGE;
-
+        public sealed override uint? NetID => ContentNetIDs.STORAGE;
+        public sealed override Type StateType => typeof(InventoryComponentState);
 
         [Serializable, NetSerializable]
-        public class ServerInventoryMessage : ComponentMessage
+        protected class InventoryComponentState : ComponentState
         {
-            public Slots Inventoryslot;
-            public EntityUid EntityUid;
-            public ServerInventoryUpdate Updatetype;
+            public List<KeyValuePair<Slots, EntityUid>> Entities { get; }
 
-            public ServerInventoryMessage()
+            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities) : base(ContentNetIDs.STORAGE)
             {
-                Directed = true;
-            }
-
-            public enum ServerInventoryUpdate
-            {
-                Removal = 0,
-                Addition = 1
+                Entities = entities;
             }
         }
 

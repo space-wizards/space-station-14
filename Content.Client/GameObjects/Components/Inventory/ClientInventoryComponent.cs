@@ -6,30 +6,27 @@ using SS14.Client.Interfaces.Input;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Client.UserInterface.CustomControls;
-using SS14.Shared.ContentPack;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Input;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
-using SS14.Shared.Log;
-using SS14.Shared.Maths;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
-using Content.Shared.GameObjects.Components.Inventory;
 using SS14.Shared.Interfaces.Reflection;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
-using static Content.Shared.GameObjects.SharedInventoryComponent.ServerInventoryMessage;
 
 namespace Content.Client.GameObjects
 {
     public class ClientInventoryComponent : SharedInventoryComponent
     {
+        private Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
+
         private InventoryWindow _window;
         private string _templateName = "HumanInventory"; //stored for serialization purposes
 
@@ -71,6 +68,12 @@ namespace Content.Client.GameObjects
                     _sprite.LayerMapSet(mask, _sprite.AddBlankLayer());
                 }
             }
+
+            // Component state already came in but we couldn't set anything visually because, well, we didn't initialize yet.
+            foreach (var (slot, entity) in _slots)
+            {
+                _setSlot(slot, entity);
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -80,23 +83,44 @@ namespace Content.Client.GameObjects
             serializer.DataField(ref _templateName, "Template", "HumanInventory");
         }
 
+        public override void HandleComponentState(ComponentState state)
+        {
+            base.HandleComponentState(state);
+            var cast = (InventoryComponentState) state;
+
+            var doneSlots = new HashSet<Slots>();
+
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            foreach (var (slot, entityUid) in cast.Entities)
+            {
+                if (_slots.ContainsKey(slot))
+                {
+                    _slots.Remove(slot);
+                    _clearSlot(slot);
+                }
+
+                var entity = entityManager.GetEntity(entityUid);
+                _slots[slot] = entity;
+                _setSlot(slot, entity);
+                doneSlots.Add(slot);
+            }
+
+            foreach (var slot in _slots.Keys.ToList())
+            {
+                if (!doneSlots.Contains(slot))
+                {
+                    _clearSlot(slot);
+                    _slots.Remove(slot);
+                }
+            }
+        }
+
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             var inputMgr = IoCManager.Resolve<IInputManager>();
             switch (message)
             {
-                //Updates what we are storing in UI slots
-                case ServerInventoryMessage msg:
-                    if (msg.Updatetype == ServerInventoryUpdate.Addition)
-                    {
-                        _additionMsg(msg);
-                    }
-                    else if (msg.Updatetype == ServerInventoryUpdate.Removal)
-                    {
-                        _removalMsg(msg);
-                    }
-                    break;
-
                 case PlayerAttachedMsg _:
                     inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, _openMenuCmdHandler);
                     break;
@@ -107,34 +131,32 @@ namespace Content.Client.GameObjects
             }
         }
 
-        private void _additionMsg(ServerInventoryMessage msg)
+        private void _setSlot(Slots slot, IEntity entity)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var entity = entityManager.GetEntity(msg.EntityUid);
             if (_sprite != null && entity.TryGetComponent(out ClothingComponent clothing))
             {
-                var flag = SlotMasks[msg.Inventoryslot];
+                var flag = SlotMasks[slot];
                 var data = clothing.GetEquippedStateInfo(flag);
                 if (data == null)
                 {
-                    _sprite.LayerSetVisible(msg.Inventoryslot, false);
+                    _sprite.LayerSetVisible(slot, false);
                 }
                 else
                 {
                     var (rsi, state) = data.Value;
-                    _sprite.LayerSetVisible(msg.Inventoryslot, true);
-                    _sprite.LayerSetRSI(msg.Inventoryslot, rsi);
-                    _sprite.LayerSetState(msg.Inventoryslot, state);
+                    _sprite.LayerSetVisible(slot, true);
+                    _sprite.LayerSetRSI(slot, rsi);
+                    _sprite.LayerSetState(slot, state);
                 }
             }
 
-            _window.AddToSlot(msg);
+            _window?.AddToSlot(slot, entity);
         }
 
-        private void _removalMsg(ServerInventoryMessage msg)
+        private void _clearSlot(Slots slot)
         {
-            _window.RemoveFromSlot(msg);
-            _sprite.LayerSetVisible(msg.Inventoryslot, false);
+            _window?.RemoveFromSlot(slot);
+            _sprite?.LayerSetVisible(slot, false);
         }
 
         public void SendUnequipMessage(Slots slot)
@@ -209,13 +231,11 @@ namespace Content.Client.GameObjects
             /// <summary>
             /// Adds the item we have equipped to the slot texture and prepares the slot button for removal
             /// </summary>
-            /// <param name="message"></param>
-            public void AddToSlot(ServerInventoryMessage message)
+            public void AddToSlot(Slots slot, IEntity entity)
             {
-                var button = InventorySlots[message.Inventoryslot];
-                var entity = IoCManager.Resolve<IEntityManager>().GetEntity(message.EntityUid);
+                var button = InventorySlots[slot];
 
-                button.EntityUid = message.EntityUid;
+                button.EntityUid = entity.Uid;
                 button.GetChild<Button>("Button").OnPressed += RemoveFromInventory;
                 button.GetChild<Button>("Button").OnPressed -= AddToInventory;
 
@@ -244,10 +264,9 @@ namespace Content.Client.GameObjects
             /// <summary>
             /// Remove element from the UI and update its button to blank texture and prepare for insertion again
             /// </summary>
-            /// <param name="message"></param>
-            public void RemoveFromSlot(ServerInventoryMessage message)
+            public void RemoveFromSlot(Slots slot)
             {
-                InventoryButton button = InventorySlots[message.Inventoryslot];
+                var button = InventorySlots[slot];
                 button.GetChild<SpriteView>("SpriteView").Sprite = null;
                 button.EntityUid = EntityUid.Invalid;
                 button.GetChild<Button>("Button").OnPressed -= RemoveFromInventory;

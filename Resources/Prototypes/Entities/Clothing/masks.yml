@@ -1,0 +1,35 @@
+- type: entity
+  parent: Clothing
+  id: MasksBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots: [mask]
+
+
+- type: entity
+  parent: MasksBase
+  id: GasMaskClothing
+  name: Gas Mask
+  description: Regulations require these to be stocked after the fourth coolant leak
+  components:
+  - type: Sprite
+    texture: Clothing/gasmask.png
+  - type: Icon
+    texture: Clothing/gasmask.png
+
+
+- type: entity
+  parent: MasksBase
+  id: BreathMaskClothing
+  name: Breath Mask
+  description: Might as well keep this on 24/7
+  components:
+  - type: Sprite
+    sprite: Clothing/mask_breath.rsi
+    state: breath
+  - type: Icon
+    sprite: Clothing/mask_breath.rsi
+    state: breath
+  - type: Clothing
+    sprite: Clothing/mask_breath.rsi

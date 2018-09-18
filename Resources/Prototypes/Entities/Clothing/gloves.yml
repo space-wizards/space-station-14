@@ -1,0 +1,39 @@
+- type: entity
+  parent: Clothing
+  id: GlovesBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots: [gloves]
+
+
+- type: entity
+  parent: GlovesBase
+  id: YellowGloves
+  name: Insulated Gloves
+  description: Electrical gloves that keep you from frying
+  components:
+  - type: Sprite
+    sprite: Clothing/gloves_yellow.rsi
+    state: yellow
+  - type: Icon
+    sprite: Clothing/gloves_yellow.rsi
+    state: yellow
+  - type: Clothing
+    sprite: Clothing/gloves_yellow.rsi
+
+
+- type: entity
+  parent: GlovesBase
+  id: BlackGloves
+  name: Insulated Gloves
+  description: Regular gloves that do not keep you from frying
+  components:
+  - type: Sprite
+    sprite: Clothing/gloves_black.rsi
+    state: black
+  - type: Icon
+    sprite: Clothing/gloves_black.rsi
+    state: black
+  - type: Clothing
+    sprite: Clothing/gloves_black.rsi

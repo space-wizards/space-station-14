@@ -7,13 +7,13 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
-using static Content.Shared.GameObjects.SharedInventoryComponent.ServerInventoryMessage;
 using SS14.Shared.IoC;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.ContentPack;
 using System.Linq;
 using SS14.Shared.Serialization;
 using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.Utility;
 using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects
             {
                 if (slotnames != Slots.NONE)
                 {
-                    var newslot = AddSlot(slotnames);
+                    AddSlot(slotnames);
                 }
             }
         }
@@ -113,15 +113,7 @@ namespace Content.Server.GameObjects
 
             clothing.EquippedToSlot(inventorySlot);
 
-            var UIupdatemessage = new ServerInventoryMessage()
-            {
-                Inventoryslot = slot,
-                EntityUid = clothing.Owner.Uid,
-                Updatetype = ServerInventoryUpdate.Addition
-            };
-
-            SendNetworkMessage(UIupdatemessage);
-
+            Dirty();
             return true;
         }
 
@@ -155,19 +147,12 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            var UIupdatemessage = new ServerInventoryMessage()
-            {
-                Inventoryslot = slot,
-                EntityUid = item.Owner.Uid,
-                Updatetype = ServerInventoryUpdate.Removal
-            };
-            SendNetworkMessage(UIupdatemessage);
-
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
             var itemTransform = item.Owner.GetComponent<ITransformComponent>();
             itemTransform.LocalPosition = Owner.GetComponent<ITransformComponent>().LocalPosition;
+            Dirty();
             return true;
         }
 
@@ -198,6 +183,7 @@ namespace Content.Server.GameObjects
                 throw new InvalidOperationException($"Slot '{slot}' already exists.");
             }
 
+            Dirty();
             return SlotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
         }
 
@@ -223,6 +209,7 @@ namespace Content.Server.GameObjects
             }
 
             SlotContainers.Remove(slot);
+            Dirty();
         }
 
         /// <summary>
@@ -282,6 +269,19 @@ namespace Content.Server.GameObjects
                         HandleInventoryMessage(msg);
                     break;
             }
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            var list = new List<KeyValuePair<Slots, EntityUid>>();
+            foreach (var (slot, container) in SlotContainers)
+            {
+                if (container.ContainedEntity != null)
+                {
+                    list.Add(new KeyValuePair<Slots, EntityUid>(slot, container.ContainedEntity.Uid));
+                }
+            }
+            return new InventoryComponentState(list);
         }
     }
 }

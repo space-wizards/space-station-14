@@ -1,0 +1,19 @@
+- type: entity
+  parent: Clothing
+  id: BackpackClothing
+  name: Backpack
+  description: A convenient storage pack
+  components:
+  - type: Sprite
+    sprite: Clothing/backpack.rsi
+    state: backpack
+  - type: Icon
+    sprite: Clothing/backpack.rsi
+    state: backpack
+  - type: Clothing
+    Size: 9999
+    Slots:
+    - back
+    sprite: Clothing/backpack.rsi
+  - type: Storage
+    Capacity: 100
