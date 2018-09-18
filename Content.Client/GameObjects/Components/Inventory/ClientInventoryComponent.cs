@@ -18,6 +18,8 @@ using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using SS14.Shared.Interfaces.Reflection;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ServerInventoryMessage;
@@ -26,26 +28,47 @@ namespace Content.Client.GameObjects
 {
     public class ClientInventoryComponent : SharedInventoryComponent
     {
-        private InventoryWindow Window;
-        private string TemplateName = "HumanInventory"; //stored for serialization purposes
+        private InventoryWindow _window;
+        private string _templateName = "HumanInventory"; //stored for serialization purposes
 
         private InputCmdHandler _openMenuCmdHandler;
+        private Inventory _inventory;
 
         public override void OnRemove()
         {
             base.OnRemove();
 
-            Window.Dispose();
+            _window.Dispose();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _openMenuCmdHandler = InputCmdHandler.FromDelegate(session => { _window.AddToScreen(); _window.Open(); });
+
+            var reflectionManager = IoCManager.Resolve<IReflectionManager>();
+            var type = reflectionManager.LooseGetType(_templateName);
+            DebugTools.Assert(type != null);
+            _inventory = (Inventory)Activator.CreateInstance(type);
+
+            _window = new InventoryWindow(this);
+            _window.CreateInventory(_inventory);
+
+            if (Owner.TryGetComponent(out ISpriteComponent sprite))
+            {
+                foreach (var mask in _inventory.SlotMasks.OrderBy(s => _inventory.SlotDrawingOrder(s)))
+                {
+                    sprite.LayerMapSet(mask, sprite.AddBlankLayer());
+                }
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            Window = new InventoryWindow(this);
-            _openMenuCmdHandler = InputCmdHandler.FromDelegate(session => { Window.AddToScreen(); Window.Open(); });
-            serializer.DataField(ref TemplateName, "Template", "HumanInventory");
-            Window.CreateInventory(TemplateName);
+            serializer.DataField(ref _templateName, "Template", "HumanInventory");
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
@@ -57,11 +80,11 @@ namespace Content.Client.GameObjects
                 case ServerInventoryMessage msg:
                     if (msg.Updatetype == ServerInventoryUpdate.Addition)
                     {
-                        Window.AddToSlot(msg);
+                        _additionMsg(msg);
                     }
                     else if (msg.Updatetype == ServerInventoryUpdate.Removal)
                     {
-                        Window.RemoveFromSlot(msg);
+                        _removalMsg(msg);
                     }
                     break;
 
@@ -73,6 +96,20 @@ namespace Content.Client.GameObjects
                     inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
                     break;
             }
+        }
+
+        private void _additionMsg(ServerInventoryMessage msg)
+        {
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var entity = entityManager.GetEntity(msg.EntityUid);
+
+
+            _window.AddToSlot(msg);
+        }
+
+        private void _removalMsg(ServerInventoryMessage msg)
+        {
+            _window.RemoveFromSlot(msg);
         }
 
         public void SendUnequipMessage(Slots slot)
@@ -109,14 +146,10 @@ namespace Content.Client.GameObjects
             }
 
             /// <summary>
-            /// Creates a grid container filled with slot buttons loaded from an inventory template
+            ///     Creates a grid container filled with slot buttons loaded from an inventory template
             /// </summary>
-            /// <param name="TemplateName"></param>
-            public void CreateInventory(string TemplateName)
+            public void CreateInventory(Inventory inventory)
             {
-                Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Shared").GetType("Content.Shared.GameObjects." + TemplateName);
-                Inventory inventory = (Inventory)Activator.CreateInstance(type);
-
                 elements_x = inventory.Columns;
 
                 GridContainer = (GridContainer)Contents.GetChild("PanelContainer").GetChild("CenterContainer").GetChild("GridContainer");

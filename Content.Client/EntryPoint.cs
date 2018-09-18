@@ -48,7 +48,6 @@ namespace Content.Client
             factory.RegisterIgnore("MeleeWeapon");
 
             factory.RegisterIgnore("Storeable");
-            factory.RegisterIgnore("Clothing");
 
             factory.RegisterIgnore("Material");
             factory.RegisterIgnore("Stack");
@@ -61,6 +60,7 @@ namespace Content.Client
             factory.Register<ConstructorComponent>();
             factory.Register<ConstructionGhostComponent>();
             factory.Register<IconSmoothComponent>();
+            factory.Register<ClothingComponent>();
 
             factory.RegisterIgnore("Construction");
             factory.RegisterIgnore("Apc");

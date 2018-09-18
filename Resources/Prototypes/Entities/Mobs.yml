@@ -12,6 +12,7 @@
   - type: Constructor
   - type: Clickable
   - type: Sprite
+    netsync: false
     sprite: Mob/greyshirt.rsi
     state: greyshirt
     drawdepth: Mobs

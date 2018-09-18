@@ -13,13 +13,16 @@ using SS14.Shared.IoC;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.ContentPack;
 using System.Linq;
+using Content.Shared.GameObjects.Components.Clothing;
 using SS14.Shared.Serialization;
 using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
     public class InventoryComponent : SharedInventoryComponent
     {
+        [ViewVariables]
         private Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
         string TemplateName = "HumanInventory"; //stored for serialization purposes
 
