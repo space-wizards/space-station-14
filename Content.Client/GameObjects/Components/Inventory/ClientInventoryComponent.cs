@@ -19,6 +19,8 @@ using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Client.GameObjects.Components.Clothing;
+using Content.Shared.GameObjects.Components.Inventory;
 using SS14.Shared.Interfaces.Reflection;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
@@ -34,6 +36,8 @@ namespace Content.Client.GameObjects
         private InputCmdHandler _openMenuCmdHandler;
         private Inventory _inventory;
 
+        private ISpriteComponent _sprite;
+
         public override void OnRemove()
         {
             base.OnRemove();
@@ -41,11 +45,16 @@ namespace Content.Client.GameObjects
             _window.Dispose();
         }
 
+        public override void OnAdd()
+        {
+            base.OnAdd();
+
+            _openMenuCmdHandler = InputCmdHandler.FromDelegate(session => { _window.AddToScreen(); _window.Open(); });
+        }
+
         public override void Initialize()
         {
             base.Initialize();
-
-            _openMenuCmdHandler = InputCmdHandler.FromDelegate(session => { _window.AddToScreen(); _window.Open(); });
 
             var reflectionManager = IoCManager.Resolve<IReflectionManager>();
             var type = reflectionManager.LooseGetType(_templateName);
@@ -55,11 +64,11 @@ namespace Content.Client.GameObjects
             _window = new InventoryWindow(this);
             _window.CreateInventory(_inventory);
 
-            if (Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (Owner.TryGetComponent(out _sprite))
             {
                 foreach (var mask in _inventory.SlotMasks.OrderBy(s => _inventory.SlotDrawingOrder(s)))
                 {
-                    sprite.LayerMapSet(mask, sprite.AddBlankLayer());
+                    _sprite.LayerMapSet(mask, _sprite.AddBlankLayer());
                 }
             }
         }
@@ -102,7 +111,22 @@ namespace Content.Client.GameObjects
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var entity = entityManager.GetEntity(msg.EntityUid);
-
+            if (_sprite != null && entity.TryGetComponent(out ClothingComponent clothing))
+            {
+                var flag = SlotMasks[msg.Inventoryslot];
+                var data = clothing.GetEquippedStateInfo(flag);
+                if (data == null)
+                {
+                    _sprite.LayerSetVisible(msg.Inventoryslot, false);
+                }
+                else
+                {
+                    var (rsi, state) = data.Value;
+                    _sprite.LayerSetVisible(msg.Inventoryslot, true);
+                    _sprite.LayerSetRSI(msg.Inventoryslot, rsi);
+                    _sprite.LayerSetState(msg.Inventoryslot, state);
+                }
+            }
 
             _window.AddToSlot(msg);
         }
@@ -110,6 +134,7 @@ namespace Content.Client.GameObjects
         private void _removalMsg(ServerInventoryMessage msg)
         {
             _window.RemoveFromSlot(msg);
+            _sprite.LayerSetVisible(msg.Inventoryslot, false);
         }
 
         public void SendUnequipMessage(Slots slot)
@@ -187,11 +212,10 @@ namespace Content.Client.GameObjects
             /// <param name="message"></param>
             public void AddToSlot(ServerInventoryMessage message)
             {
-                InventoryButton button = InventorySlots[message.Inventoryslot];
+                var button = InventorySlots[message.Inventoryslot];
                 var entity = IoCManager.Resolve<IEntityManager>().GetEntity(message.EntityUid);
 
                 button.EntityUid = message.EntityUid;
-                var container = button.GetChild("CenterContainer");
                 button.GetChild<Button>("Button").OnPressed += RemoveFromInventory;
                 button.GetChild<Button>("Button").OnPressed -= AddToInventory;
 

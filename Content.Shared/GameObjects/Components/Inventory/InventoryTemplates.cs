@@ -48,7 +48,7 @@ namespace Content.Shared.GameObjects
 
         public override int SlotDrawingOrder(Slots slot)
         {
-            return _slotDrawingOrder[slot];
+            return _slotDrawingOrder.TryGetValue(slot, out var val) ? val : 0;
         }
     }
 }

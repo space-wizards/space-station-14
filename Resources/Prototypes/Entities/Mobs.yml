@@ -13,13 +13,13 @@
   - type: Clickable
   - type: Sprite
     netsync: false
-    sprite: Mob/greyshirt.rsi
-    state: greyshirt
+    sprite: Mob/human.rsi
+    state: male
     drawdepth: Mobs
 
   - type: Icon
-    sprite: Mob/greyshirt.rsi
-    state: greyshirt
+    sprite: Mob/human.rsi
+    state: male
 
   - type: BoundingBox
     aabb: "-0.5,-0.25,-0.05,0.25"

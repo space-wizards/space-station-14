@@ -1,5 +1,4 @@
-﻿using SS14.Server.GameObjects;
-using SS14.Server.GameObjects.Components.Container;
+﻿using SS14.Server.GameObjects.Components.Container;
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects;
@@ -13,7 +12,6 @@ using SS14.Shared.IoC;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.ContentPack;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Clothing;
 using SS14.Shared.Serialization;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.ViewVariables;
@@ -24,6 +22,7 @@ namespace Content.Server.GameObjects
     {
         [ViewVariables]
         private Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
+
         string TemplateName = "HumanInventory"; //stored for serialization purposes
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -39,8 +38,9 @@ namespace Content.Server.GameObjects
 
         private void CreateInventory(string TemplateName)
         {
-            Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Shared").GetType("Content.Shared.GameObjects." + TemplateName);
-            Inventory inventory = (Inventory)Activator.CreateInstance(type);
+            Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Shared")
+                .GetType("Content.Shared.GameObjects." + TemplateName);
+            Inventory inventory = (Inventory) Activator.CreateInstance(type);
             foreach (Slots slotnames in inventory.SlotMasks)
             {
                 if (slotnames != Slots.NONE)
@@ -57,6 +57,7 @@ namespace Content.Server.GameObjects
             {
                 RemoveSlot(slot);
             }
+
             base.OnRemove();
         }
 
@@ -93,11 +94,13 @@ namespace Content.Server.GameObjects
         {
             if (clothing == null)
             {
-                throw new ArgumentNullException(nameof(clothing), "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
+                throw new ArgumentNullException(nameof(clothing),
+                    "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
             }
 
             if (clothing.SlotFlags == SlotFlags.PREVENTEQUIP //Flag to prevent equipping at all
-                || (clothing.SlotFlags & SlotMasks[slot]) == 0) //Does the clothing flag have any of our requested slot flags
+                || (clothing.SlotFlags & SlotMasks[slot]) == 0
+            ) //Does the clothing flag have any of our requested slot flags
             {
                 return false;
             }
@@ -215,7 +218,8 @@ namespace Content.Server.GameObjects
             if (GetSlotItem(slot) != null && !Unequip(slot))
             {
                 // TODO: Handle this potential failiure better.
-                throw new InvalidOperationException("Unable to remove slot as the contained clothing could not be dropped");
+                throw new InvalidOperationException(
+                    "Unable to remove slot as the contained clothing could not be dropped");
             }
 
             SlotContainers.Remove(slot);
@@ -262,7 +266,8 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
+            IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
 

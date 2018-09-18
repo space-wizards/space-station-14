@@ -23,20 +23,42 @@
     - shoes
 
 - type: entity
+  id: ShoesBlack
+  parent: ShoesItem
+  name: Black Shoes
+  components:
+  - type: Sprite
+    sprite: Clothing/shoes_black.rsi
+    texture: ""
+    state: black
+
+  - type: Icon
+    sprite: Clothing/shoes_black.rsi
+    texture: ""
+    state: black
+
+  - type: Clothing
+    sprite: Clothing/shoes_black.rsi
+
+
+- type: entity
   parent: Clothing
   id: JanitorUniform
   name: Janitor Jumpsuit
   description: The jumpsuit for the poor sop with a mop
   components:
   - type: Sprite
-    texture: Objects/janitorsuit.png
+    sprite: Clothing/uniform_janitor.rsi
+    state: janitor
 
   - type: Icon
-    texture: Objects/janitorsuit.png
+    sprite: Clothing/uniform_janitor.rsi
+    state: janitor
 
   - type: Clothing
     Slots:
     - innerclothing
+    sprite: Clothing/uniform_janitor.rsi
 
 - type: entity
   parent: Clothing
@@ -45,12 +67,36 @@
   description: Bulletproof vest, more or less
   components:
   - type: Sprite
-    texture: Clothing/armorvest.png
+    sprite: Clothing/armor.rsi
+    state: armor
+
   - type: Icon
-    texture: Clothing/armorvest.png
+    sprite: Clothing/armor.rsi
+    state: armor
+
   - type: Clothing
     Slots:
     - outerclothing
+    sprite: Clothing/armor.rsi
+
+- type: entity
+  parent: Clothing
+  id: HazardVestClothing
+  name: Hazard Vest
+  description: Prevents accidents
+  components:
+  - type: Sprite
+    sprite: Clothing/vest_hazard.rsi
+    state: hazard
+
+  - type: Icon
+    sprite: Clothing/vest_hazard.rsi
+    state: hazard
+
+  - type: Clothing
+    Slots:
+    - outerclothing
+    sprite: Clothing/vest_hazard.rsi
 
 - type: entity
   parent: Clothing
@@ -59,13 +105,16 @@
   description: Belt for holding all your usual tools
   components:
   - type: Sprite
-    texture: Clothing/belt_utility.png
+    sprite: Clothing/belt_utility.rsi
+    state: utilitybelt
   - type: Icon
-    texture: Clothing/belt_utility.png
-    Size: 30
+    sprite: Clothing/belt_utility.rsi
+    state: utilitybelt
   - type: Clothing
+    Size: 30
     Slots:
     - belt
+    sprite: Clothing/belt_utility.rsi
   - type: Storage
     Capacity: 30
 
@@ -76,13 +125,16 @@
   description: A convenient storage pack
   components:
   - type: Sprite
-    texture: Clothing/backpack.png
+    sprite: Clothing/backpack.rsi
+    state: backpack
   - type: Icon
-    texture: Clothing/backpack.png
-    Size: 9999
+    sprite: Clothing/backpack.rsi
+    state: backpack
   - type: Clothing
+    Size: 9999
     Slots:
     - back
+    sprite: Clothing/backpack.rsi
   - type: Storage
     Capacity: 100
 
@@ -93,12 +145,15 @@
   description: The pinnacle of modern science, wallhacks in real life
   components:
   - type: Sprite
-    texture: Clothing/glasses_meson.png
+    sprite: Clothing/meson_scanners.rsi
+    state: meson
   - type: Icon
-    texture: Clothing/glasses_meson.png
+    sprite: Clothing/meson_scanners.rsi
+    state: meson
   - type: Clothing
     Slots:
     - eyes
+    sprite: Clothing/meson_scanners.rsi
 
 - type: entity
   parent: Clothing

@@ -1,4 +1,5 @@
 ﻿using Content.Client.GameObjects;
+using Content.Client.GameObjects.Components.Clothing;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.Components.Power;
 using Content.Client.GameObjects.Components.SmoothWalling;
