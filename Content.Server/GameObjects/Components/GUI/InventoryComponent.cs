@@ -1,5 +1,4 @@
-﻿using SS14.Server.GameObjects;
-using SS14.Server.GameObjects.Components.Container;
+﻿using SS14.Server.GameObjects.Components.Container;
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects;
@@ -8,19 +7,22 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
-using static Content.Shared.GameObjects.SharedInventoryComponent.ServerInventoryMessage;
 using SS14.Shared.IoC;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.ContentPack;
 using System.Linq;
 using SS14.Shared.Serialization;
 using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.Utility;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
     public class InventoryComponent : SharedInventoryComponent
     {
+        [ViewVariables]
         private Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
+
         string TemplateName = "HumanInventory"; //stored for serialization purposes
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -36,13 +38,14 @@ namespace Content.Server.GameObjects
 
         private void CreateInventory(string TemplateName)
         {
-            Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Shared").GetType("Content.Shared.GameObjects." + TemplateName);
-            Inventory inventory = (Inventory)Activator.CreateInstance(type);
+            Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Shared")
+                .GetType("Content.Shared.GameObjects." + TemplateName);
+            Inventory inventory = (Inventory) Activator.CreateInstance(type);
             foreach (Slots slotnames in inventory.SlotMasks)
             {
                 if (slotnames != Slots.NONE)
                 {
-                    var newslot = AddSlot(slotnames);
+                    AddSlot(slotnames);
                 }
             }
         }
@@ -54,6 +57,7 @@ namespace Content.Server.GameObjects
             {
                 RemoveSlot(slot);
             }
+
             base.OnRemove();
         }
 
@@ -90,11 +94,13 @@ namespace Content.Server.GameObjects
         {
             if (clothing == null)
             {
-                throw new ArgumentNullException(nameof(clothing), "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
+                throw new ArgumentNullException(nameof(clothing),
+                    "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
             }
 
             if (clothing.SlotFlags == SlotFlags.PREVENTEQUIP //Flag to prevent equipping at all
-                || (clothing.SlotFlags & SlotMasks[slot]) == 0) //Does the clothing flag have any of our requested slot flags
+                || (clothing.SlotFlags & SlotMasks[slot]) == 0
+            ) //Does the clothing flag have any of our requested slot flags
             {
                 return false;
             }
@@ -107,15 +113,7 @@ namespace Content.Server.GameObjects
 
             clothing.EquippedToSlot(inventorySlot);
 
-            var UIupdatemessage = new ServerInventoryMessage()
-            {
-                Inventoryslot = slot,
-                EntityUid = clothing.Owner.Uid,
-                Updatetype = ServerInventoryUpdate.Addition
-            };
-
-            SendNetworkMessage(UIupdatemessage);
-
+            Dirty();
             return true;
         }
 
@@ -149,19 +147,12 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            var UIupdatemessage = new ServerInventoryMessage()
-            {
-                Inventoryslot = slot,
-                EntityUid = item.Owner.Uid,
-                Updatetype = ServerInventoryUpdate.Removal
-            };
-            SendNetworkMessage(UIupdatemessage);
-
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
             var itemTransform = item.Owner.GetComponent<ITransformComponent>();
             itemTransform.LocalPosition = Owner.GetComponent<ITransformComponent>().LocalPosition;
+            Dirty();
             return true;
         }
 
@@ -192,6 +183,7 @@ namespace Content.Server.GameObjects
                 throw new InvalidOperationException($"Slot '{slot}' already exists.");
             }
 
+            Dirty();
             return SlotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
         }
 
@@ -212,10 +204,12 @@ namespace Content.Server.GameObjects
             if (GetSlotItem(slot) != null && !Unequip(slot))
             {
                 // TODO: Handle this potential failiure better.
-                throw new InvalidOperationException("Unable to remove slot as the contained clothing could not be dropped");
+                throw new InvalidOperationException(
+                    "Unable to remove slot as the contained clothing could not be dropped");
             }
 
             SlotContainers.Remove(slot);
+            Dirty();
         }
 
         /// <summary>
@@ -259,7 +253,8 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
+            IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
 
@@ -274,6 +269,19 @@ namespace Content.Server.GameObjects
                         HandleInventoryMessage(msg);
                     break;
             }
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            var list = new List<KeyValuePair<Slots, EntityUid>>();
+            foreach (var (slot, container) in SlotContainers)
+            {
+                if (container.ContainedEntity != null)
+                {
+                    list.Add(new KeyValuePair<Slots, EntityUid>(slot, container.ContainedEntity.Uid));
+                }
+            }
+            return new InventoryComponentState(list);
         }
     }
 }

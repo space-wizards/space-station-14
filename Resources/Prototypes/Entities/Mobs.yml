@@ -12,13 +12,29 @@
   - type: Constructor
   - type: Clickable
   - type: Sprite
-    sprite: Mob/greyshirt.rsi
-    state: greyshirt
+    netsync: false
     drawdepth: Mobs
 
+    layers:
+    - sprite: Mob/human.rsi
+      state: male
+    - map: ["enum.Slots.INNERCLOTHING"]
+    - map: ["enum.Slots.IDCARD"]
+    - map: ["enum.Slots.SHOES"]
+    - map: ["enum.Slots.GLOVES"]
+    - map: ["enum.Slots.BELT"]
+    - map: ["enum.Slots.OUTERCLOTHING"]
+    - map: ["enum.Slots.EYES"]
+    - map: ["enum.Slots.BACKPACK"]
+    - map: ["enum.Slots.EARS"]
+    - map: ["enum.Slots.MASK"]
+    - map: ["enum.Slots.HEAD"]
+    - map: ["hand-left"]
+    - map: ["hand-right"]
+
   - type: Icon
-    sprite: Mob/greyshirt.rsi
-    state: greyshirt
+    sprite: Mob/human.rsi
+    state: male
 
   - type: BoundingBox
     aabb: "-0.5,-0.25,-0.05,0.25"

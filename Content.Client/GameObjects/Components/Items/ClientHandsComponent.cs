@@ -6,19 +6,60 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using System.Collections.Generic;
+using System.Linq;
+using SS14.Client.GameObjects;
+using SS14.Client.Interfaces.GameObjects.Components;
+using SS14.Shared.Interfaces.Network;
+using SS14.Shared.Serialization;
+using SS14.Shared.Utility;
 using SS14.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects
 {
     public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
-        private readonly Dictionary<string, IEntity> hands = new Dictionary<string, IEntity>();
-        [ViewVariables]
-        public string ActiveIndex { get; private set; }
+        private HandsGui _gui;
+        private IUserInterfaceManager _userInterfaceManager;
+
+        [ViewVariables] private readonly Dictionary<string, IEntity> _hands = new Dictionary<string, IEntity>();
+
+        [ViewVariables] public string ActiveIndex { get; private set; }
+
+        [ViewVariables] private ISpriteComponent _sprite;
+
+        public override void OnAdd()
+        {
+            base.OnAdd();
+
+            _userInterfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            _gui?.Dispose();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _userInterfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
+
+            if (Owner.TryGetComponent(out _sprite))
+            {
+                foreach (var slot in _hands.Keys)
+                {
+                    _sprite.LayerMapReserveBlank($"hand-{slot}");
+                    _setHand(slot, _hands[slot]);
+                }
+            }
+        }
 
         public IEntity GetEntity(string index)
         {
-            if (hands.TryGetValue(index, out var entity))
+            if (_hands.TryGetValue(index, out var entity))
             {
                 return entity;
             }
@@ -28,31 +69,104 @@ namespace Content.Client.GameObjects
 
         public override void HandleComponentState(ComponentState state)
         {
-            var cast = (HandsComponentState)state;
-            hands.Clear();
-            foreach (var hand in cast.Hands)
+            var cast = (HandsComponentState) state;
+            foreach (var (slot, uid) in cast.Hands)
             {
                 IEntity entity = null;
                 try
                 {
-                    entity = Owner.EntityManager.GetEntity(hand.Value);
+                    entity = Owner.EntityManager.GetEntity(uid);
                 }
                 catch
                 {
                     // Nothing.
                 }
-                hands[hand.Key] = entity;
+
+                _hands[slot] = entity;
+                _setHand(slot, entity);
+            }
+
+            foreach (var slot in _hands.Keys.ToList())
+            {
+                if (!cast.Hands.ContainsKey(slot))
+                {
+                    _hands[slot] = null;
+                    _setHand(slot, null);
+                }
             }
 
             ActiveIndex = cast.ActiveIndex;
-            // Tell UI to update.
-            var uiMgr = IoCManager.Resolve<IUserInterfaceManager>();
-            if (!uiMgr.StateRoot.TryGetChild<HandsGui>("HandsGui", out var control))
+
+            _gui?.UpdateHandIcons();
+        }
+
+        private void _setHand(string hand, IEntity entity)
+        {
+            if (_sprite == null)
             {
-                control = new HandsGui();
-                uiMgr.StateRoot.AddChild(control);
+                return;
             }
-            control.UpdateHandIcons();
+
+            if (entity == null)
+            {
+                _sprite.LayerSetVisible($"hand-{hand}", false);
+                return;
+            }
+
+            var item = entity.GetComponent<ItemComponent>();
+            var maybeInhands = item.GetInHandStateInfo(hand);
+            if (!maybeInhands.HasValue)
+            {
+                _sprite.LayerSetVisible($"hand-{hand}", false);
+            }
+            else
+            {
+                var (rsi, state) = maybeInhands.Value;
+                _sprite.LayerSetVisible($"hand-{hand}", true);
+                _sprite.LayerSetState($"hand-{hand}", state, rsi);
+            }
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            if (!serializer.Reading)
+            {
+                return;
+            }
+
+            foreach (var slot in serializer.ReadDataFieldCached("hands", new List<string>()))
+            {
+                _hands.Add(slot, null);
+            }
+        }
+
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
+            IComponent component = null)
+        {
+            base.HandleMessage(message, netChannel, component);
+
+            switch (message)
+            {
+                case PlayerAttachedMsg _:
+                    if (_gui == null)
+                    {
+                        _gui = new HandsGui();
+                    }
+                    else
+                    {
+                        _gui.Parent?.RemoveChild(_gui);
+                    }
+
+                    _userInterfaceManager.StateRoot.AddChild(_gui);
+                    _gui.UpdateHandIcons();
+                    break;
+
+                case PlayerDetachedMsg _:
+                    _gui.Parent?.RemoveChild(_gui);
+                    break;
+            }
         }
 
         public void SendChangeHand(string index)

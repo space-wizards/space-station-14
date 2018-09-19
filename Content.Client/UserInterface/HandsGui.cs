@@ -119,6 +119,10 @@ namespace Content.Client.UserInterface
 
         public void UpdateHandIcons()
         {
+            if (Parent == null)
+            {
+                return;
+            }
             UpdateDraw();
 
             if (!TryGetHands(out IHandsComponent hands))

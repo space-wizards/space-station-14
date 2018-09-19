@@ -1,0 +1,43 @@
+- type: entity
+  parent: Clothing
+  id: ShoesBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots: [shoes]
+
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesItem
+  name: Black Shoes
+  description: Don't take them off at your office Christmas party
+  components:
+  - type: Sprite
+    sprite: Clothing/shoes_black.rsi
+    state: black
+
+  - type: Icon
+    sprite: Clothing/shoes_black.rsi
+    state: black
+
+  - type: Clothing
+    sprite: Clothing/shoes_black.rsi
+
+
+- type: entity
+  parent: ShoesBase
+  id: WhiteShoes
+  name: White Shoes
+  description: Don't take them off at your office Christmas party
+  components:
+  - type: Sprite
+    sprite: Clothing/shoes_white.rsi
+    state: white
+
+  - type: Icon
+    sprite: Clothing/shoes_white.rsi
+    state: white
+
+  - type: Clothing
+    sprite: Clothing/shoes_white.rsi

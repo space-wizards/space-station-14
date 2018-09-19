@@ -1,0 +1,76 @@
+- type: entity
+  parent: Clothing
+  id: UniformBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots: [innerclothing]
+
+
+- type: entity
+  parent: UniformBase
+  id: JanitorUniform
+  name: Janitor Jumpsuit
+  description: The jumpsuit for the poor sop with a mop
+  components:
+  - type: Sprite
+    sprite: Clothing/uniform_janitor.rsi
+    state: janitor
+
+  - type: Icon
+    sprite: Clothing/uniform_janitor.rsi
+    state: janitor
+
+  - type: Clothing
+    sprite: Clothing/uniform_janitor.rsi
+
+- type: entity
+  parent: UniformBase
+  id: UniformGrey
+  name: Grey Jumpsuit
+  description: Greytide. Worldwide.
+  components:
+  - type: Sprite
+    sprite: Clothing/uniform_grey.rsi
+    state: grey
+
+  - type: Icon
+    sprite: Clothing/uniform_grey.rsi
+    state: grey
+
+  - type: Clothing
+    sprite: Clothing/uniform_grey.rsi
+
+
+- type: entity
+  parent: UniformBase
+  id: UniformEngineering
+  name: Engineering Jumpsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/uniform_engineering.rsi
+    state: engine
+
+  - type: Icon
+    sprite: Clothing/uniform_engineering.rsi
+    state: engine
+
+  - type: Clothing
+    sprite: Clothing/uniform_engineering.rsi
+
+
+- type: entity
+  parent: UniformBase
+  id: UniformAssistant
+  name: Assistant Jumpsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/uniform_assistant.rsi
+    state: assistant
+
+  - type: Icon
+    sprite: Clothing/uniform_assistant.rsi
+    state: assistant
+
+  - type: Clothing
+    sprite: Clothing/uniform_assistant.rsi
