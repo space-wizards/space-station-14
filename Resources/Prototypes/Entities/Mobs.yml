@@ -13,9 +13,24 @@
   - type: Clickable
   - type: Sprite
     netsync: false
-    sprite: Mob/human.rsi
-    state: male
     drawdepth: Mobs
+
+    layers:
+    - sprite: Mob/human.rsi
+      state: male
+    - map: ["enum.Slots.INNERCLOTHING"]
+    - map: ["enum.Slots.IDCARD"]
+    - map: ["enum.Slots.SHOES"]
+    - map: ["enum.Slots.GLOVES"]
+    - map: ["enum.Slots.BELT"]
+    - map: ["enum.Slots.OUTERCLOTHING"]
+    - map: ["enum.Slots.EYES"]
+    - map: ["enum.Slots.BACKPACK"]
+    - map: ["enum.Slots.EARS"]
+    - map: ["enum.Slots.MASK"]
+    - map: ["enum.Slots.HEAD"]
+    - map: ["hand-left"]
+    - map: ["hand-right"]
 
   - type: Icon
     sprite: Mob/human.rsi

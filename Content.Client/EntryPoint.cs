@@ -25,7 +25,6 @@ namespace Content.Client
             var factory = IoCManager.Resolve<IComponentFactory>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
-            factory.RegisterIgnore("Item");
             factory.RegisterIgnore("Interactable");
             factory.RegisterIgnore("Damageable");
             factory.RegisterIgnore("Destructible");
@@ -62,6 +61,8 @@ namespace Content.Client
             factory.Register<ConstructionGhostComponent>();
             factory.Register<IconSmoothComponent>();
             factory.Register<ClothingComponent>();
+            factory.Register<ItemComponent>();
+            factory.RegisterReference<ClothingComponent, ItemComponent>();
 
             factory.RegisterIgnore("Construction");
             factory.RegisterIgnore("Apc");

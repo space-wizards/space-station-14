@@ -57,3 +57,20 @@
 
   - type: Clothing
     sprite: Clothing/uniform_engineering.rsi
+
+
+- type: entity
+  parent: UniformBase
+  id: UniformAssistant
+  name: Assistant Jumpsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/uniform_assistant.rsi
+    state: assistant
+
+  - type: Icon
+    sprite: Clothing/uniform_assistant.rsi
+    state: assistant
+
+  - type: Clothing
+    sprite: Clothing/uniform_assistant.rsi

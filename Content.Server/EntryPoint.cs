@@ -33,6 +33,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.Components.Inventory;
 
 namespace Content.Server
 {
@@ -233,7 +234,15 @@ namespace Content.Server
 
         IEntity SpawnPlayerMob()
         {
-            return entityManager.ForceSpawnEntityAt(PlayerPrototypeName, SpawnPoint);
+            var entity = entityManager.ForceSpawnEntityAt(PlayerPrototypeName, SpawnPoint);
+            var shoes = entityManager.SpawnEntity("ShoesItem");
+            var uniform = entityManager.SpawnEntity("UniformAssistant");
+            if (entity.TryGetComponent(out InventoryComponent inventory))
+            {
+                inventory.Equip(EquipmentSlotDefines.Slots.INNERCLOTHING, uniform.GetComponent<ClothingComponent>());
+                inventory.Equip(EquipmentSlotDefines.Slots.SHOES, shoes.GetComponent<ClothingComponent>());
+            }
+            return entity;
         }
     }
 }

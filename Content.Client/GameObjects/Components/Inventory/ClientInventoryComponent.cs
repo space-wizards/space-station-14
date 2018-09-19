@@ -65,7 +65,11 @@ namespace Content.Client.GameObjects
             {
                 foreach (var mask in _inventory.SlotMasks.OrderBy(s => _inventory.SlotDrawingOrder(s)))
                 {
-                    _sprite.LayerMapSet(mask, _sprite.AddBlankLayer());
+                    if (mask == Slots.NONE)
+                    {
+                        continue;
+                    }
+                    _sprite.LayerMapReserveBlank(mask);
                 }
             }
 
