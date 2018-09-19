@@ -26,7 +26,7 @@
 - type: entity
   parent: GlovesBase
   id: BlackGloves
-  name: Insulated Gloves
+  name: Black Gloves
   description: Regular gloves that do not keep you from frying
   components:
   - type: Sprite
