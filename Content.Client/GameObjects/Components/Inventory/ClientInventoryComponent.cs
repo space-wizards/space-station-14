@@ -225,7 +225,8 @@ namespace Content.Client.GameObjects
 
                     if (SlotNames.ContainsKey(slot))
                     {
-                        newbutton.GetChild<Button>("Button").Text = SlotNames[slot];
+                        var button = newbutton.GetChild<Button>("Button");
+                        button.Text = button.ToolTip = SlotNames[slot];
                     }
 
                     GridContainer.AddChild(newbutton);
@@ -240,8 +241,10 @@ namespace Content.Client.GameObjects
                 var button = InventorySlots[slot];
 
                 button.EntityUid = entity.Uid;
-                button.GetChild<Button>("Button").OnPressed += RemoveFromInventory;
-                button.GetChild<Button>("Button").OnPressed -= AddToInventory;
+                var theButton = button.GetChild<Button>("Button");
+                theButton.OnPressed += RemoveFromInventory;
+                theButton.OnPressed -= AddToInventory;
+                theButton.Text = "";
 
                 //Gets entity sprite and assigns it to button texture
                 if (entity.TryGetComponent(out ISpriteComponent sprite))
@@ -273,8 +276,10 @@ namespace Content.Client.GameObjects
                 var button = InventorySlots[slot];
                 button.GetChild<SpriteView>("SpriteView").Sprite = null;
                 button.EntityUid = EntityUid.Invalid;
-                button.GetChild<Button>("Button").OnPressed -= RemoveFromInventory;
-                button.GetChild<Button>("Button").OnPressed += AddToInventory;
+                var theButton = button.GetChild<Button>("Button");
+                theButton.OnPressed -= RemoveFromInventory;
+                theButton.OnPressed += AddToInventory;
+                theButton.Text = SlotNames[slot];
             }
 
             private void RemoveFromInventory(BaseButton.ButtonEventArgs args)
