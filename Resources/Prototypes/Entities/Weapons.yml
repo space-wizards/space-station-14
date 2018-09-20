@@ -1,30 +1,39 @@
 - type: entity
-  name: "LASER"
+  name: Laser Gun
   parent: BaseItem
   id: LaserItem
   description: A weapon using light amplified by the stimulated emission of radiation
   components:
   - type: Sprite
-    texture: Objects/gun.png
+    sprite: Objects/laser_retro.rsi
+    state: 100
   - type: Icon
-    texture: Objects/gun.png
+    sprite: Objects/laser_retro.rsi
+    state: 100
   - type: HitscanWeapon
   - type: Item
     Size: 24
+    sprite: Objects/laser_retro.rsi
+    prefix: 100
+
 
 - type: entity
-  name: GUN
+  name: C-20r Sub Machine Gun
   parent: BaseItem
   id: GUNITEM
   description: A rooty tooty point and shooty
   components:
   - type: Sprite
-    texture: Objects/projectileweapon.png
+    sprite: Objects/c20r.rsi
+    state: c20r-20
   - type: Icon
-    texture: Objects/projectileweapon.png
+    sprite: Objects/c20r.rsi
+    state: c20r-20
   - type: ProjectileWeapon
   - type: Item
     Size: 24
+    sprite: Objects/c20r.rsi
+
 
 - type: entity
   name: Spear
