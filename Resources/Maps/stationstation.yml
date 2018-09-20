@@ -928,25 +928,25 @@ entities:
   components:
   - grid: 0
     pos: -4,-7
-    rot: 1.570796 rad
+    rot: -1.5707963267949 rad
     type: Transform
 - type: poweredlight
   components:
   - grid: 0
     pos: 3,-7
-    rot: 1.570796 rad
+    rot: -1.5707963267949 rad
     type: Transform
 - type: poweredlight
   components:
   - grid: 0
     pos: 3,-13
-    rot: -1.570796 rad
+    rot: 1.5707963267949 rad
     type: Transform
 - type: poweredlight
   components:
   - grid: 0
     pos: -4,-13
-    rot: -1.570796 rad
+    rot: 1.5707963267949 rad
     type: Transform
 - type: APC
   components:
@@ -985,13 +985,13 @@ entities:
   components:
   - grid: 0
     pos: 5,-2
-    rot: -1.570796 rad
+    rot: 3.14159265358979 rad
     type: Transform
 - type: poweredlight
   components:
   - grid: 0
     pos: 2,-4
-    rot: -1.570796 rad
+    rot: 3.14159265358979 rad
     type: Transform
 - type: poweredlight
   components:
@@ -1022,25 +1022,25 @@ entities:
   components:
   - grid: 0
     pos: -10.5,1.5
-    rot: -1.570796 rad
+    rot: 1.5707963267949 rad
     type: Transform
 - type: poweredlight
   components:
   - grid: 0
     pos: -10.5,4.5
-    rot: 1.570796 rad
+    rot: -1.5707963267949 rad
     type: Transform
 - type: poweredlight
   components:
   - grid: 0
     pos: 9.5,4.5
-    rot: 1.570796 rad
+    rot: -1.5707963267949 rad
     type: Transform
 - type: poweredlight
   components:
   - grid: 0
     pos: 9.5,1.5
-    rot: -1.570796 rad
+    rot: 1.5707963267949 rad
     type: Transform
 - type: poweredlight
   components:
@@ -1051,7 +1051,7 @@ entities:
   components:
   - grid: 0
     pos: 5,6
-    rot: -1.570796 rad
+    rot: 3.14159265358979 rad
     type: Transform
 - type: Wire
   components:
