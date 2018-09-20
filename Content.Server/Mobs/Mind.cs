@@ -36,29 +36,42 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     The session ID of the player owning this mind.
         /// </summary>
+        [ViewVariables]
         public NetSessionId SessionId { get; }
+
+        [ViewVariables]
+        public bool IsVisitingEntity => VisitingEntity != null;
+
+        [ViewVariables]
+        public IEntity VisitingEntity { get; private set; }
+
+        [ViewVariables] public IEntity CurrentEntity => VisitingEntity ?? OwnedEntity;
 
         /// <summary>
         ///     The component currently owned by this mind.
         ///     Can be null.
         /// </summary>
-        public MindComponent CurrentMob { get; private set; }
+        [ViewVariables]
+        public MindComponent OwnedMob { get; private set; }
 
         /// <summary>
         ///     The entity currently owned by this mind.
         ///     Can be null.
         /// </summary>
-        public IEntity CurrentEntity => CurrentMob?.Owner;
+        [ViewVariables]
+        public IEntity OwnedEntity => OwnedMob?.Owner;
 
         /// <summary>
         ///     An enumerable over all the roles this mind has.
         /// </summary>
+        [ViewVariables]
         public IEnumerable<Role> AllRoles => _roles.Values;
 
         /// <summary>
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
+        [ViewVariables]
         public IPlayerSession Session
         {
             get
@@ -186,15 +199,34 @@ namespace Content.Server.Mobs
                 }
             }
 
-            CurrentMob?.InternalEjectMind();
-            CurrentMob = component;
-            CurrentMob?.InternalAssignMind(this);
+            OwnedMob?.InternalEjectMind();
+            OwnedMob = component;
+            OwnedMob?.InternalAssignMind(this);
 
             // Player is CURRENTLY connected.
-            if (Session != null && CurrentMob != null)
+            if (Session != null && OwnedMob != null)
             {
                 Session.AttachToEntity(entity);
             }
+
+            VisitingEntity = null;
+        }
+
+        public void Visit(IEntity entity)
+        {
+            Session?.AttachToEntity(entity);
+            VisitingEntity = entity;
+        }
+
+        public void UnVisit()
+        {
+            if (!IsVisitingEntity)
+            {
+                return;
+            }
+
+            Session?.AttachToEntity(OwnedEntity);
+            VisitingEntity = null;
         }
     }
 }

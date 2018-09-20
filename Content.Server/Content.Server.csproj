@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administration\AGhost.cs" />
     <Compile Include="AI\AimShootLifeProcessor.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
@@ -162,5 +163,4 @@
     <Compile Include="GameObjects\Components\Construction\ConstructorComponent.cs" />
     <Compile Include="GameObjects\Components\Construction\ConstructionComponent.cs" />
   </ItemGroup>
-  <ItemGroup />
 </Project>

@@ -4,7 +4,7 @@ using SS14.Shared.Input;
 namespace Content.Client.Input
 {
     /// <summary>
-    ///     Contains a helper function for setting up all content 
+    ///     Contains a helper function for setting up all content
     ///     contexts, and modifying existing engine ones.
     /// </summary>
     public static class ContentContexts
@@ -20,6 +20,13 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.UseItemInHand);
             human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);
+
+            var ghost = contexts.New("ghost", "common");
+            ghost.AddFunction(EngineKeyFunctions.MoveUp);
+            ghost.AddFunction(EngineKeyFunctions.MoveDown);
+            ghost.AddFunction(EngineKeyFunctions.MoveLeft);
+            ghost.AddFunction(EngineKeyFunctions.MoveRight);
+            ghost.AddFunction(EngineKeyFunctions.Run);
         }
     }
 }

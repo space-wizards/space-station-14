@@ -213,7 +213,7 @@ namespace Content.Server
                         }
                         else
                         {
-                            if (data.Mind.CurrentMob == null)
+                            if (data.Mind.CurrentEntity == null)
                             {
                                 var mob = SpawnPlayerMob();
                                 data.Mind.TransferTo(mob);
