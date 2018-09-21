@@ -35,6 +35,9 @@ namespace Content.Server.GameObjects
             get => _open;
             set
             {
+                if (_open == value)
+                    return;
+
                 _open = value;
                 Dirty();
             }
@@ -173,6 +176,7 @@ namespace Content.Server.GameObjects
                 Logger.DebugS("Storage", "Storage (UID {0}) subscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
                 session.PlayerStatusChanged += HandlePlayerSessionChangeEvent;
                 SubscribedSessions.Add(session);
+                UpdateDoorState();
             }
         }
 
@@ -185,6 +189,12 @@ namespace Content.Server.GameObjects
             Logger.DebugS("Storage", "Storage (UID {0}) unsubscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
             SubscribedSessions.Remove(session);
             SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
+            UpdateDoorState();
+        }
+
+        private void UpdateDoorState()
+        {
+            Open = SubscribedSessions.Count != 0;
         }
 
         public void HandlePlayerSessionChangeEvent(object obj, SessionStatusEventArgs SSEA)
