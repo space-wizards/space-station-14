@@ -80,12 +80,14 @@
     <Compile Include="GameObjects\Components\Items\Storage\ServerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Items\Storage\ItemComponent.cs" />
     <Compile Include="GameObjects\Components\Mobs\MindComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerCellComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerGeneratorComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDevice.cs" />
     <Compile Include="GameObjects\Components\Power\Powernet.cs" />
     <Compile Include="GameObjects\Components\Power\PowerNodeComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerProviderComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerStorageNetComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerTransferComponent.cs" />
     <Compile Include="GameObjects\Components\Projectiles\ProjectileComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Melee\MeleeWeaponComponent.cs" />

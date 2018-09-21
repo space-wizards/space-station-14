@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Power
                 }
             }
 
-            if (attacked.TryGetComponent<PowerStorageComponent>(out var storage))
+            if (attacked.TryGetComponent<PowerStorageNetComponent>(out var storage))
             {
                 var stateSeconds = (DateTime.Now - storage.LastChargeStateChange).TotalSeconds;
                 builder.AppendFormat(@"Power Storage:

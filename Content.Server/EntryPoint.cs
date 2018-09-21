@@ -86,7 +86,10 @@ namespace Content.Server
             factory.Register<PowerProviderComponent>();
             factory.RegisterReference<PowerProviderComponent, PowerDeviceComponent>();
             factory.Register<PowerNodeComponent>();
-            factory.Register<PowerStorageComponent>();
+            factory.Register<PowerStorageNetComponent>();
+            factory.RegisterReference<PowerStorageNetComponent, PowerStorageComponent>();
+            factory.Register<PowerCellComponent>();
+            factory.RegisterReference<PowerCellComponent, PowerStorageComponent>();
             factory.Register<PowerDeviceComponent>();
             factory.Register<PowerGeneratorComponent>();
 

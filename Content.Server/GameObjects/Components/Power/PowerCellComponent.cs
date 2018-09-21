@@ -1,0 +1,48 @@
+using Content.Shared.GameObjects.Components.Power;
+using SS14.Server.GameObjects;
+
+namespace Content.Server.GameObjects.Components.Power
+{
+    public class PowerCellComponent : PowerStorageComponent
+    {
+        public override string Name => "PowerCell";
+
+        private AppearanceComponent _appearance;
+
+        public override float Charge
+        {
+            get => base.Charge;
+            set
+            {
+                base.Charge = value;
+                _updateAppearance();
+            }
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Owner.TryGetComponent(out _appearance);
+        }
+
+        public override void DeductCharge(float toDeduct)
+        {
+            base.DeductCharge(toDeduct);
+
+            _updateAppearance();
+        }
+
+        public override void AddCharge(float charge)
+        {
+            base.AddCharge(charge);
+
+            _updateAppearance();
+        }
+
+        private void _updateAppearance()
+        {
+            _appearance?.SetData(PowerCellVisuals.ChargeLevel, Charge / Capacity);
+        }
+    }
+}

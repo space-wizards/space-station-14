@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         ///     A list of the energy storage components that will feed the powernet if necessary, and if there is enough power feed itself
         /// </summary>
-        private readonly List<PowerStorageComponent> PowerStorageSupplierList = new List<PowerStorageComponent>();
+        private readonly List<PowerStorageNetComponent> PowerStorageSupplierList = new List<PowerStorageNetComponent>();
 
         [ViewVariables]
         public int PowerStorageSupplierCount => PowerStorageSupplierList.Count;
@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         ///     A list of energy storage components that will never feed the powernet, will try to draw energy to feed themselves if possible
         /// </summary>
-        private readonly List<PowerStorageComponent> PowerStorageConsumerList = new List<PowerStorageComponent>();
+        private readonly List<PowerStorageNetComponent> PowerStorageConsumerList = new List<PowerStorageNetComponent>();
 
         [ViewVariables]
         public int PowerStorageConsumerCount => PowerStorageConsumerList.Count;
@@ -473,7 +473,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Register a power supply from a generator connected to the powernet
         /// </summary>
-        public void AddPowerStorage(PowerStorageComponent storage)
+        public void AddPowerStorage(PowerStorageNetComponent storage)
         {
             if (storage.ChargePowernet)
                 PowerStorageSupplierList.Add(storage);
@@ -482,7 +482,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         //How do I even call this? TODO: fix
-        public void UpdateStorageType(PowerStorageComponent storage)
+        public void UpdateStorageType(PowerStorageNetComponent storage)
         {
             //If our chargepowernet settings change we need to tell the powernet of this new setting and remove traces of our old setting
             if (PowerStorageSupplierList.Contains(storage))
@@ -500,7 +500,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Remove a power supply from a generator connected to the powernet
         /// </summary>
-        public void RemovePowerStorage(PowerStorageComponent storage)
+        public void RemovePowerStorage(PowerStorageNetComponent storage)
         {
             if (PowerStorageSupplierList.Contains(storage))
             {

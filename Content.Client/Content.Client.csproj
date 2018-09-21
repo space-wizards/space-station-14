@@ -72,6 +72,7 @@
     <Compile Include="GameObjects\Components\Inventory\ClientInventoryComponent.cs" />
     <Compile Include="GameObjects\Components\Items\ItemComponent.cs" />
     <Compile Include="GameObjects\Components\Power\ApcBoundUserInterface.cs" />
+    <Compile Include="GameObjects\Components\Power\PowerCellVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\Storage\ClientStorageComponent.cs" />
     <Compile Include="Input\ContentContexts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
