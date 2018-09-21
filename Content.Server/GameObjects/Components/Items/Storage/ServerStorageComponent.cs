@@ -14,6 +14,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Serialization;
 using System.Collections.Generic;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
@@ -28,6 +29,17 @@ namespace Content.Server.GameObjects
         private int StorageCapacityMax = 10000;
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Open
+        {
+            get => _open;
+            set
+            {
+                _open = value;
+                Dirty();
+            }
+        }
+
         public override void OnAdd()
         {
             base.OnAdd();
@@ -35,6 +47,12 @@ namespace Content.Server.GameObjects
             storage = ContainerManagerComponent.Create<Container>("storagebase", Owner);
         }
         
+        /// <inheritdoc />
+        public override ComponentState GetComponentState()
+        {
+            return new StorageComponentState(_open);
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);

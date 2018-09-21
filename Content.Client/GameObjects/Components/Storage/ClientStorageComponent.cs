@@ -27,6 +27,16 @@ namespace Content.Client.GameObjects.Components.Storage
         private int StorageCapacityMax;
         private StorageWindow Window;
 
+        public bool Open
+        {
+            get => _open;
+            set
+            {
+                _open = value;
+                SetDoorSprite(_open);
+            }
+        }
+
         public override void OnAdd()
         {
             base.OnAdd();
@@ -40,7 +50,18 @@ namespace Content.Client.GameObjects.Components.Storage
             Window.Dispose();
             base.OnRemove();
         }
-        
+
+        /// <inheritdoc />
+        public override void HandleComponentState(ComponentState state)
+        {
+            base.HandleComponentState(state);
+
+            if (!(state is StorageComponentState storageState))
+                return;
+
+            Open = storageState.Open;
+        }
+
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             switch (message)
@@ -87,6 +108,22 @@ namespace Content.Client.GameObjects.Components.Storage
         private void Interact(EntityUid entityuid)
         {
             SendNetworkMessage(new RemoveEntityMessage(entityuid));
+        }
+
+        private void SetDoorSprite(bool open)
+        {
+            if(!Owner.TryGetComponent<ISpriteComponent>(out var spriteComp))
+                return;
+
+            if(!spriteComp.Running)
+                return;
+
+            var baseName = spriteComp.LayerGetState(0).Name;
+
+            var stateId = open ? $"{baseName}_open" : $"{baseName}_door";
+
+            if (spriteComp.BaseRSI.TryGetState(stateId, out _))
+                spriteComp.LayerSetState(1, stateId);
         }
 
         /// <summary>

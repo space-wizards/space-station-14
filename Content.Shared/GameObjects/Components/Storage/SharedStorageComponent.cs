@@ -2,7 +2,6 @@
 using SS14.Shared.Serialization;
 using System;
 using System.Collections.Generic;
-using SS14.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Storage
 {
@@ -12,18 +11,7 @@ namespace Content.Shared.GameObjects.Components.Storage
         public override uint? NetID => ContentNetIDs.INVENTORY;
         public override Type StateType => typeof(StorageComponentState);
 
-        private bool _open;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Open
-        {
-            get => _open;
-            set
-            {
-                _open = value;
-                Dirty();
-            }
-        }
+        protected bool _open;
 
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
@@ -31,23 +19,6 @@ namespace Content.Shared.GameObjects.Components.Storage
             base.ExposeData(serializer);
 
             serializer.DataField(ref _open, "open", false);
-        }
-
-        /// <inheritdoc />
-        public override ComponentState GetComponentState()
-        {
-            return new StorageComponentState(_open);
-        }
-
-        /// <inheritdoc />
-        public override void HandleComponentState(ComponentState state)
-        {
-            base.HandleComponentState(state);
-
-            if (!(state is StorageComponentState storageState))
-                return;
-
-            _open = storageState.Open;
         }
     }
 
