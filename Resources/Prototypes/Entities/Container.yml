@@ -1,0 +1,26 @@
+- type: entity
+  id: crate
+  name: Crate
+  description: A large container for items.
+  components:
+  - type: Sprite
+    sprite: Buildings/crate.rsi
+    layers:
+    - state: crate
+    - state: crate_door
+
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    layers:
+    - state: crate
+    - state: crate_door
+
+  - type: Clickable
+  - type: BoundingBox
+  - type: Collidable
+  - type: Storage
+    Capacity: 60
+
+  placement:
+    snap:
+    - Wall

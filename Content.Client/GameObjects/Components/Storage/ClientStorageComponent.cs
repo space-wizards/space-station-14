@@ -40,7 +40,7 @@ namespace Content.Client.GameObjects.Components.Storage
             Window.Dispose();
             base.OnRemove();
         }
-
+        
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             switch (message)

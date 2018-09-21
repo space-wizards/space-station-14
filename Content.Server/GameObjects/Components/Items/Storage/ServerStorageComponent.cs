@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects
 
             storage = ContainerManagerComponent.Create<Container>("storagebase", Owner);
         }
-
+        
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
