@@ -11,9 +11,7 @@
 
   - type: Icon
     sprite: Buildings/crate.rsi
-    layers:
-    - state: crate
-    - state: crate_door
+    state: crate
 
   - type: Clickable
   - type: BoundingBox
