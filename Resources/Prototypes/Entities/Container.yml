@@ -1,5 +1,5 @@
 - type: entity
-  id: crate
+  id: crate_generic
   name: Crate
   description: A large container for items.
   components:
