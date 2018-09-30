@@ -9,6 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Power;
+using Content.Shared.GameObjects;
+using SS14.Server.GameObjects.Components.Container;
+using SS14.Server.Interfaces.Chat;
+using SS14.Shared.IoC;
+using SS14.Shared.Log;
+using SS14.Shared.Players;
 using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
@@ -75,6 +82,51 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             return null;
+        }
+
+        public void OnUpdate(float frameTime)
+        {
+            if (!Activated)
+            {
+                return;
+            }
+
+            var cell = Cell;
+            if (cell == null || !cell.TryDeductWattage(Wattage, frameTime))
+            {
+                TurnOff();
+            }
+        }
+
+        private void EjectCell(IEntity user)
+        {
+            if (Cell == null)
+            {
+                return;
+            }
+
+            Cell.Owner.Transform
+        }
+
+        public class EjectCellVerb : Verb
+        {
+            public override string GetName(IEntity user, IComponent component)
+            {
+                var flashlight = (HandheldLightComponent) component;
+                return flashlight.Cell == null ? "Eject cell (cell missing)" : "Eject cell";
+            }
+
+            public override bool IsDisabled(IEntity user, IComponent component)
+            {
+                var flashlight = (HandheldLightComponent) component;
+                return flashlight.Cell == null;
+            }
+
+            public override void Activate(IEntity user, IComponent component)
+            {
+                var flashlight = (HandheldLightComponent) component;
+                flashlight.EjectCell(user);
+            }
         }
     }
 }
