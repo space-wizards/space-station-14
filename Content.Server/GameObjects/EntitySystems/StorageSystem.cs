@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
 
                 var storagePos = entity.Transform.WorldPosition;
+                var storageMap = entity.Transform.MapID;
 
                 foreach (var session in _sessionCache)
                 {
@@ -38,7 +39,10 @@ namespace Content.Server.GameObjects.EntitySystems
                     // The component manages the set of sessions, so this invalid session should be removed soon.
                     if (attachedEntity == null || !attachedEntity.IsValid())
                         continue;
-                    
+
+                    if(storageMap != attachedEntity.Transform.MapID)
+                        continue;
+
                     var distanceSquared = (storagePos - attachedEntity.Transform.WorldPosition).LengthSquared;
                     if (distanceSquared > InteractionSystem.INTERACTION_RANGE_SQUARED)
                     {
