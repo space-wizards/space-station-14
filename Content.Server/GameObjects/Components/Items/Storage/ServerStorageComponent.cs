@@ -186,10 +186,13 @@ namespace Content.Server.GameObjects
         /// <param name="channel"></param>
         public void UnsubscribeSession(IPlayerSession session)
         {
-            Logger.DebugS("Storage", "Storage (UID {0}) unsubscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
-            SubscribedSessions.Remove(session);
-            SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
-            UpdateDoorState();
+            if(SubscribedSessions.Contains(session))
+            {
+                Logger.DebugS("Storage", "Storage (UID {0}) unsubscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
+                SubscribedSessions.Remove(session);
+                SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
+                UpdateDoorState();
+            }
         }
 
         private void UpdateDoorState()
@@ -238,7 +241,8 @@ namespace Content.Server.GameObjects
 
             switch (message)
             {
-                case RemoveEntityMessage msg:
+                case RemoveEntityMessage _:
+                {
                     var playerMan = IoCManager.Resolve<IPlayerManager>();
                     var session = playerMan.GetSessionByChannel(netChannel);
                     var playerentity = session.AttachedEntity;
@@ -265,6 +269,16 @@ namespace Content.Server.GameObjects
                             entity.GetComponent<ITransformComponent>().WorldPosition = ourtransform.WorldPosition;
                         }
                     }
+                }
+                    break;
+
+                case CloseStorageUIMessage _:
+                {
+                    var playerMan = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMan.GetSessionByChannel(netChannel);
+
+                    UnsubscribeSession(session);
+                }
                     break;
             }
         }

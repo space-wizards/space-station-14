@@ -75,7 +75,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     OpenUI();
                     break;
                 case CloseStorageUIMessage msg:
-                    // todo: close window/grey it out
+                    CloseUI();
                     break;
             }
         }
@@ -99,6 +99,11 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             Window.AddToScreen();
             Window.Open();
+        }
+
+        private void CloseUI()
+        {
+            Window.Close();
         }
 
         /// <summary>
@@ -148,6 +153,12 @@ namespace Content.Client.GameObjects.Components.Storage
                 VSplitContainer = Contents.GetChild("VSplitContainer");
                 EntityList = VSplitContainer.GetChild("ListScrollContainer").GetChild<VBoxContainer>("EntityList");
                 Information = VSplitContainer.GetChild<Label>("Information");
+            }
+
+            public override void Close()
+            {
+                StorageEntity.SendNetworkMessage(new CloseStorageUIMessage());
+                base.Close();
             }
 
             /// <summary>
