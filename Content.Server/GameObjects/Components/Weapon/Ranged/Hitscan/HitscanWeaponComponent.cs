@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var angle = new Angle(clicklocation.Position - userPosition);
 
             var ray = new Ray(userPosition, angle.ToVec());
-            var rayCastResults = IoCManager.Resolve<ICollisionManager>().IntersectRay(ray, MaxLength,
+            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ray, MaxLength,
                 Owner.Transform.GetMapTransform().Owner);
 
             Hit(rayCastResults);
