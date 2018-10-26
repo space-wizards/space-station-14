@@ -69,6 +69,19 @@
   - type: Item
     Size: 10
 
+- type: entity
+  name: "Fire Extinguisher"
+  parent: BaseItem
+  id: fire_extinguisher
+  description: Extinguishes fires.
+  components:
+  - type: Sprite
+    texture: Objects/fire_extinguisher.png
+  - type: Icon
+    texture: Objects/fire_extinguisher.png
+  - type: Item
+    Size: 10
+    
 #handheld lights
 - type: entity
   name: "Lantern"
