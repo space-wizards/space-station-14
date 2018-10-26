@@ -14,7 +14,6 @@ using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.Interfaces.GameObjects.Components;
-using SS14.Shared.GameObjects.Components.BoundingBox;
 using SS14.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
