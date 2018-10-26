@@ -19,7 +19,7 @@ namespace Content.Server.AI
     [AiLogicProcessor("AimShootLife")]
     class AimShootLifeProcessor : AiLogicProcessor
     {
-        private readonly ICollisionManager _physMan;
+        private readonly IPhysicsManager _physMan;
         private readonly IServerEntityManager _entMan;
         private readonly IGameTiming _timeMan;
 
@@ -36,7 +36,7 @@ namespace Content.Server.AI
         /// </summary>
         public AimShootLifeProcessor()
         {
-            _physMan = IoCManager.Resolve<ICollisionManager>();
+            _physMan = IoCManager.Resolve<IPhysicsManager>();
             _entMan = IoCManager.Resolve<IServerEntityManager>();
             _timeMan = IoCManager.Resolve<IGameTiming>();
         }

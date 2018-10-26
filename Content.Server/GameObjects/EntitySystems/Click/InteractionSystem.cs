@@ -137,6 +137,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void HandleUseItemInHand(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
         {
+            // client sanitization
+            if(!coords.IsValidLocation())
+            {
+                Logger.InfoS("interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return;
+            }
+
             UserInteraction(((IPlayerSession)session).AttachedEntity, coords, uid);
         }
 
