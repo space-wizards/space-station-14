@@ -1,0 +1,24 @@
+- type: entity
+  id: locker_generic
+  name: Locker
+  description: A standard-issue Nanotrasen storage unit.
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: generic
+    - state: generic_door
+
+  - type: Icon
+    sprite: Buildings/closet.rsi
+    state: generic
+
+  - type: Clickable
+  - type: BoundingBox
+  - type: Collidable
+  - type: Storage
+    Capacity: 80
+
+  placement:
+    snap:
+    - Wall

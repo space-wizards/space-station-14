@@ -27,6 +27,16 @@ namespace Content.Client.GameObjects.Components.Storage
         private int StorageCapacityMax;
         private StorageWindow Window;
 
+        public bool Open
+        {
+            get => _open;
+            set
+            {
+                _open = value;
+                SetDoorSprite(_open);
+            }
+        }
+
         public override void OnAdd()
         {
             base.OnAdd();
@@ -39,6 +49,17 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             Window.Dispose();
             base.OnRemove();
+        }
+
+        /// <inheritdoc />
+        public override void HandleComponentState(ComponentState state)
+        {
+            base.HandleComponentState(state);
+
+            if (!(state is StorageComponentState storageState))
+                return;
+
+            Open = storageState.Open;
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
@@ -54,7 +75,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     OpenUI();
                     break;
                 case CloseStorageUIMessage msg:
-                    // todo: close window/grey it out
+                    CloseUI();
                     break;
             }
         }
@@ -80,6 +101,11 @@ namespace Content.Client.GameObjects.Components.Storage
             Window.Open();
         }
 
+        private void CloseUI()
+        {
+            Window.Close();
+        }
+
         /// <summary>
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
@@ -87,6 +113,22 @@ namespace Content.Client.GameObjects.Components.Storage
         private void Interact(EntityUid entityuid)
         {
             SendNetworkMessage(new RemoveEntityMessage(entityuid));
+        }
+
+        private void SetDoorSprite(bool open)
+        {
+            if(!Owner.TryGetComponent<ISpriteComponent>(out var spriteComp))
+                return;
+
+            if(!spriteComp.Running)
+                return;
+
+            var baseName = spriteComp.LayerGetState(0).Name;
+
+            var stateId = open ? $"{baseName}_open" : $"{baseName}_door";
+
+            if (spriteComp.BaseRSI.TryGetState(stateId, out _))
+                spriteComp.LayerSetState(1, stateId);
         }
 
         /// <summary>
@@ -111,6 +153,12 @@ namespace Content.Client.GameObjects.Components.Storage
                 VSplitContainer = Contents.GetChild("VSplitContainer");
                 EntityList = VSplitContainer.GetChild("ListScrollContainer").GetChild<VBoxContainer>("EntityList");
                 Information = VSplitContainer.GetChild<Label>("Information");
+            }
+
+            public override void Close()
+            {
+                StorageEntity.SendNetworkMessage(new CloseStorageUIMessage());
+                base.Close();
             }
 
             /// <summary>
