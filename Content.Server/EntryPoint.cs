@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.Interfaces.GameObjects;
@@ -104,6 +105,7 @@ namespace Content.Server
             factory.Register<HitscanWeaponComponent>();
             factory.Register<ProjectileWeaponComponent>();
             factory.Register<ProjectileComponent>();
+            factory.Register<ThrownItemComponent>();
             factory.Register<MeleeWeaponComponent>();
 
             factory.Register<HandheldLightComponent>();

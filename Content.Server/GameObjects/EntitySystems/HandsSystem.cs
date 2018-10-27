@@ -1,6 +1,9 @@
 ﻿using System;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Input;
+using Content.Shared.Physics;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Player;
@@ -8,6 +11,7 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
+using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.IoC;
@@ -139,11 +143,36 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
 
             var throwEnt = handsComp.GetHand(handsComp.ActiveIndex).Owner;
-            handsComp.Drop(handsComp.ActiveIndex, null);
 
-            if (!throwEnt.TryGetComponent(out ProjectileComponent projComp))
+            // pop off an item, or throw the single item in hand.
+            if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2)
             {
-                projComp = throwEnt.AddComponent<ProjectileComponent>();
+                handsComp.Drop(handsComp.ActiveIndex, null);
+            }
+            else
+            {
+                stackComp.Use(1);
+                throwEnt = throwEnt.EntityManager.ForceSpawnEntityAt(throwEnt.Prototype.ID, plyEnt.Transform.LocalPosition);
+            }
+            
+            if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
+            {
+                colComp = throwEnt.AddComponent<CollidableComponent>();
+
+                if(!colComp.Running)
+                    colComp.Startup();
+            }
+
+            colComp.CollisionEnabled = true;
+            colComp.CollisionLayer |= (int)CollisionGroup.Items;
+            colComp.CollisionMask |= (int)CollisionGroup.Grid;
+
+            // I can now collide with player, so that i can do damage.
+            colComp.CollisionMask |= (int) CollisionGroup.Mob;
+
+            if (!throwEnt.TryGetComponent(out ThrownItemComponent projComp))
+            {
+                projComp = throwEnt.AddComponent<ThrownItemComponent>();
             }
             
             projComp.IgnoreEntity(plyEnt);
