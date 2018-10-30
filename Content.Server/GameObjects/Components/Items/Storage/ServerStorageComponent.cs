@@ -14,6 +14,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Serialization;
 using System.Collections.Generic;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
@@ -29,11 +30,31 @@ namespace Content.Server.GameObjects
         private int StorageCapacityMax = 10000;
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Open
+        {
+            get => _open;
+            set
+            {
+                if (_open == value)
+                    return;
+
+                _open = value;
+                Dirty();
+            }
+        }
+
         public override void Initialize()
         {
             base.Initialize();
 
             storage = ContainerManagerComponent.Ensure<Container>("storagebase", Owner);
+        }
+
+        /// <inheritdoc />
+        public override ComponentState GetComponentState()
+        {
+            return new StorageComponentState(_open);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -162,6 +183,7 @@ namespace Content.Server.GameObjects
                 Logger.DebugS("Storage", "Storage (UID {0}) subscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
                 session.PlayerStatusChanged += HandlePlayerSessionChangeEvent;
                 SubscribedSessions.Add(session);
+                UpdateDoorState();
             }
         }
 
@@ -171,9 +193,18 @@ namespace Content.Server.GameObjects
         /// <param name="channel"></param>
         public void UnsubscribeSession(IPlayerSession session)
         {
-            Logger.DebugS("Storage", "Storage (UID {0}) unsubscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
-            SubscribedSessions.Remove(session);
-            SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
+            if(SubscribedSessions.Contains(session))
+            {
+                Logger.DebugS("Storage", "Storage (UID {0}) unsubscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
+                SubscribedSessions.Remove(session);
+                SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
+                UpdateDoorState();
+            }
+        }
+
+        private void UpdateDoorState()
+        {
+            Open = SubscribedSessions.Count != 0;
         }
 
         public void HandlePlayerSessionChangeEvent(object obj, SessionStatusEventArgs SSEA)
@@ -217,7 +248,8 @@ namespace Content.Server.GameObjects
 
             switch (message)
             {
-                case RemoveEntityMessage msg:
+                case RemoveEntityMessage _:
+                {
                     _ensureInitialCalculated();
                     var playerMan = IoCManager.Resolve<IPlayerManager>();
                     var session = playerMan.GetSessionByChannel(netChannel);
@@ -245,6 +277,16 @@ namespace Content.Server.GameObjects
                             entity.GetComponent<ITransformComponent>().WorldPosition = ourtransform.WorldPosition;
                         }
                     }
+                }
+                    break;
+
+                case CloseStorageUIMessage _:
+                {
+                    var playerMan = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMan.GetSessionByChannel(netChannel);
+
+                    UnsubscribeSession(session);
+                }
                     break;
             }
         }
