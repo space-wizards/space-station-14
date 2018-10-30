@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects;
+using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.GameObjects.Systems;
+using SS14.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -16,41 +18,71 @@ namespace Content.Server.GameObjects.EntitySystems
         }
 
         /// <inheritdoc />
+        public override void SubscribeEvents()
+        {
+            base.SubscribeEvents();
+
+            SubscribeEvent<EntParentChangedMessage>(HandleParentChanged);
+        }
+
+        /// <inheritdoc />
         public override void Update(float frameTime)
         {
             foreach (var entity in RelevantEntities)
             {
-                var storageComp = entity.GetComponent<ServerStorageComponent>();
+                CheckSubscribedEntities(entity);
+            }
+        }
 
-                // We have to cache the set of sessions because Unsubscribe modifies the original.
-                _sessionCache.Clear();
-                _sessionCache.AddRange(storageComp.SubscribedSessions);
+        private static void HandleParentChanged(object sender, EntitySystemMessage message)
+        {
+            if(!(sender is IEntity childEntity))
+                return;
 
-                if (_sessionCache.Count == 0)
+            if(!(message is EntParentChangedMessage msg))
+                return;
+
+            var oldParentEntity = msg.OldParent;
+
+            if(oldParentEntity == null || !oldParentEntity.IsValid())
+                return;
+
+            if (oldParentEntity.TryGetComponent(out ServerStorageComponent storageComp))
+            {
+                storageComp.Remove(childEntity);
+            }
+        }
+
+        private void CheckSubscribedEntities(IEntity entity)
+        {
+            var storageComp = entity.GetComponent<ServerStorageComponent>();
+
+            // We have to cache the set of sessions because Unsubscribe modifies the original.
+            _sessionCache.Clear();
+            _sessionCache.AddRange(storageComp.SubscribedSessions);
+
+            if (_sessionCache.Count == 0)
+                return;
+
+            var storagePos = entity.Transform.WorldPosition;
+            var storageMap = entity.Transform.MapID;
+
+            foreach (var session in _sessionCache)
+            {
+                var attachedEntity = session.AttachedEntity;
+
+                // The component manages the set of sessions, so this invalid session should be removed soon.
+                if (attachedEntity == null || !attachedEntity.IsValid())
                     continue;
 
-                var storagePos = entity.Transform.WorldPosition;
-                var storageMap = entity.Transform.MapID;
+                if (storageMap != attachedEntity.Transform.MapID)
+                    continue;
 
-                foreach (var session in _sessionCache)
+                var distanceSquared = (storagePos - attachedEntity.Transform.WorldPosition).LengthSquared;
+                if (distanceSquared > InteractionSystem.INTERACTION_RANGE_SQUARED)
                 {
-                    var attachedEntity = session.AttachedEntity;
-
-                    // The component manages the set of sessions, so this invalid session should be removed soon.
-                    if (attachedEntity == null || !attachedEntity.IsValid())
-                        continue;
-
-                    if(storageMap != attachedEntity.Transform.MapID)
-                        continue;
-
-                    var distanceSquared = (storagePos - attachedEntity.Transform.WorldPosition).LengthSquared;
-                    if (distanceSquared > InteractionSystem.INTERACTION_RANGE_SQUARED)
-                    {
-                        storageComp.UnsubscribeSession(session);
-                    }
+                    storageComp.UnsubscribeSession(session);
                 }
-
-
             }
         }
     }

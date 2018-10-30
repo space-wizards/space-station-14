@@ -14,6 +14,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Serialization;
 using System.Collections.Generic;
+using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
@@ -68,7 +69,7 @@ namespace Content.Server.GameObjects
         /// </summary>
         /// <param name="toremove"></param>
         /// <returns></returns>
-        bool Remove(IEntity toremove)
+        public bool Remove(IEntity toremove)
         {
             if (storage.Remove(toremove))
             {
@@ -85,7 +86,7 @@ namespace Content.Server.GameObjects
         /// </summary>
         /// <param name="toinsert"></param>
         /// <returns></returns>
-        bool Insert(IEntity toinsert)
+        public bool Insert(IEntity toinsert)
         {
             if (CanInsert(toinsert) && storage.Insert(toinsert))
             {
@@ -102,7 +103,7 @@ namespace Content.Server.GameObjects
         /// </summary>
         /// <param name="toinsert"></param>
         /// <returns></returns>
-        bool CanInsert(IEntity toinsert)
+        public bool CanInsert(IEntity toinsert)
         {
             if (toinsert.TryGetComponent(out StoreableComponent store))
             {

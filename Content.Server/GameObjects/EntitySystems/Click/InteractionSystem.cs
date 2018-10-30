@@ -169,8 +169,8 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return;
             }
-            var item = hands.GetActiveHand?.Owner;
 
+            var item = hands.GetActiveHand?.Owner;
 
             if (!MobCanInteract(player))
                 return;

@@ -25,6 +25,12 @@ namespace Content.Server.Interfaces.GameObjects
         ItemComponent GetHand(string index);
 
         /// <summary>
+        ///     If any hands are holding this entity, immediately remove the entity without dropping it.
+        /// </summary>
+        /// <param name="entity">Entity to be removed.</param>
+        void RemoveHandEntity(IEntity entity);
+
+        /// <summary>
         /// Gets item held by the current active hand
         /// </summary>
         ItemComponent GetActiveHand { get; }
