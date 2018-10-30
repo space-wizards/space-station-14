@@ -1,18 +1,15 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using SS14.Server.GameObjects;
 using SS14.Shared.Enums;
+using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Serialization;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Power;
-using SS14.Server.GameObjects.Components.Container;
 using SS14.Shared.ViewVariables;
-using Component = SS14.Shared.GameObjects.Component;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -21,23 +18,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     /// </summary>
     class HandheldLightComponent : Component, EntitySystems.IUse, EntitySystems.IExamine
     {
-        private PointLightComponent _pointLight;
-        private SpriteComponent _spriteComponent;
-        [ViewVariables] private ContainerSlot _cellContainer;
-
-        private PowerCellComponent Cell
-        {
-            get
-            {
-                if (_cellContainer.ContainedEntity == null)
-                {
-                    return null;
-                }
-
-                _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent cell);
-                return cell;
-            }
-        }
+        PointLightComponent pointLight;
+        SpriteComponent spriteComponent;
 
         public override string Name => "HandheldLight";
 
@@ -47,22 +29,12 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; } = false;
 
-        public const float Wattage = 10;
-
         public override void Initialize()
         {
             base.Initialize();
 
-            _pointLight = Owner.GetComponent<PointLightComponent>();
-            _spriteComponent = Owner.GetComponent<SpriteComponent>();
-            _cellContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out var existed);
-
-            if (!existed)
-            {
-                var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper");
-                _cellContainer.Insert(cell);
-            }
+            pointLight = Owner.GetComponent<PointLightComponent>();
+            spriteComponent = Owner.GetComponent<SpriteComponent>();
         }
 
         bool IUse.UseEntity(IEntity user)
@@ -82,54 +54,17 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Update sprite and light states to match the activation.
             if (Activated)
             {
-                _spriteComponent.LayerSetState(0, "lantern_on");
-                _pointLight.State = LightState.On;
+                spriteComponent.LayerSetState(0, "lantern_on");
+                pointLight.State = LightState.On;
             }
             else
             {
-                _spriteComponent.LayerSetState(0, "lantern_off");
-                _pointLight.State = LightState.Off;
+                spriteComponent.LayerSetState(0, "lantern_off");
+                pointLight.State = LightState.Off;
             }
 
             // Toggle always succeeds.
             return true;
-        }
-
-        public void TurnOff()
-        {
-            if (!Activated)
-            {
-                return;
-            }
-
-            _spriteComponent.LayerSetState(0, "lantern_off");
-            _pointLight.State = LightState.Off;
-            Activated = false;
-        }
-
-        public void TurnOn()
-        {
-            if (Activated)
-            {
-                return;
-            }
-
-            var cell = Cell;
-            if (cell == null)
-            {
-                return;
-            }
-
-            // To prevent having to worry about frame time in here.
-            // Let's just say you need a whole second of charge before you can turn it on.
-            // Simple enough.
-            if (cell.AvailableCharge(1) < Wattage)
-            {
-                return;
-            }
-
-            _spriteComponent.LayerSetState(0, "lantern_on");
-            _pointLight.State = LightState.On;
         }
 
         string IExamine.Examine()
@@ -140,20 +75,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             return null;
-        }
-
-        public void OnUpdate(float frameTime)
-        {
-            if (!Activated)
-            {
-                return;
-            }
-
-            var cell = Cell;
-            if (cell == null || !cell.TryDeductWattage(Wattage, frameTime))
-            {
-                TurnOff();
-            }
         }
     }
 }
