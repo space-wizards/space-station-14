@@ -1,5 +1,4 @@
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Interactable.Tools;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Systems;
 

@@ -1,25 +1,18 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Power;
 using SS14.Server.GameObjects;
+using SS14.Server.GameObjects.Components.Container;
 using SS14.Shared.Enums;
 using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Power;
-using SS14.Server.GameObjects.Components.Container;
+using SS14.Shared.GameObjects;
 using SS14.Shared.ViewVariables;
-using Component = SS14.Shared.GameObjects.Component;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
     /// <summary>
     /// Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
-    class HandheldLightComponent : Component, EntitySystems.IUse, EntitySystems.IExamine
+    class HandheldLightComponent : Component, IUse, IExamine
     {
         private PointLightComponent _pointLight;
         private SpriteComponent _spriteComponent;
