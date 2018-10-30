@@ -71,6 +71,7 @@
     <Compile Include="GameObjects\Components\Storage\SharedStorageComponent.cs" />
     <Compile Include="GameObjects\ContentNetIDs.cs" />
     <Compile Include="GameObjects\PhysicalConstants.cs" />
+    <Compile Include="Physics\CollisionGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\Components\Items\SharedHandsComponent.cs" />
     <Compile Include="GameObjects\Components\Power\SharedPowerDebugTool.cs" />

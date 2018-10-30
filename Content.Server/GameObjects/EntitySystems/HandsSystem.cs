@@ -1,6 +1,9 @@
 ﻿using System;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Input;
+using Content.Shared.Physics;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Player;
@@ -8,7 +11,10 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
+using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.Interfaces.Timing;
+using SS14.Shared.IoC;
 using SS14.Shared.Map;
 using SS14.Shared.Maths;
 using SS14.Shared.Players;
@@ -17,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     internal class HandsSystem : EntitySystem
     {
-        private const float ThrowSpeed = 1.0f;
+        private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
 
         /// <inheritdoc />
         public override void Initialize()
@@ -133,42 +139,66 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!plyEnt.TryGetComponent(out HandsComponent handsComp))
                 return;
 
-            if (handsComp.CanDrop(handsComp.ActiveIndex))
+            if (!handsComp.CanDrop(handsComp.ActiveIndex))
+                return;
+
+            var throwEnt = handsComp.GetHand(handsComp.ActiveIndex).Owner;
+
+            // pop off an item, or throw the single item in hand.
+            if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2)
             {
-                var throwEnt = handsComp.GetHand(handsComp.ActiveIndex).Owner;
                 handsComp.Drop(handsComp.ActiveIndex, null);
-
-                if (!throwEnt.TryGetComponent(out ProjectileComponent projComp))
-                {
-                    projComp = throwEnt.AddComponent<ProjectileComponent>();
-                }
-            
-                projComp.IgnoreEntity(plyEnt);
-
-                var transform = plyEnt.Transform;
-                var dirVec = (coords.ToWorld().Position - transform.WorldPosition).Normalized;
-
-                if (!throwEnt.TryGetComponent(out PhysicsComponent physComp))
-                {
-                    physComp = throwEnt.AddComponent<PhysicsComponent>();
-                }
-
-                physComp.LinearVelocity = dirVec * ThrowSpeed;
-
-
-                var wHomoDir = Vector3.UnitX;
-
-                transform.InvWorldMatrix.Transform(ref wHomoDir, out var lHomoDir);
-
-                lHomoDir.Normalize();
-                var angle = new Angle(lHomoDir.Xy);
-
-                transform.LocalRotation = angle;
             }
             else
             {
-                return;
+                stackComp.Use(1);
+                throwEnt = throwEnt.EntityManager.ForceSpawnEntityAt(throwEnt.Prototype.ID, plyEnt.Transform.LocalPosition);
             }
+            
+            if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
+            {
+                colComp = throwEnt.AddComponent<CollidableComponent>();
+
+                if(!colComp.Running)
+                    colComp.Startup();
+            }
+
+            colComp.CollisionEnabled = true;
+            colComp.CollisionLayer |= (int)CollisionGroup.Items;
+            colComp.CollisionMask |= (int)CollisionGroup.Grid;
+
+            // I can now collide with player, so that i can do damage.
+            colComp.CollisionMask |= (int) CollisionGroup.Mob;
+
+            if (!throwEnt.TryGetComponent(out ThrownItemComponent projComp))
+            {
+                projComp = throwEnt.AddComponent<ThrownItemComponent>();
+            }
+            
+            projComp.IgnoreEntity(plyEnt);
+
+            var transform = plyEnt.Transform;
+            var dirVec = (coords.ToWorld().Position - transform.WorldPosition).Normalized;
+
+            if (!throwEnt.TryGetComponent(out PhysicsComponent physComp))
+            {
+                physComp = throwEnt.AddComponent<PhysicsComponent>();
+            }
+
+            // TODO: Move this into PhysicsSystem, we need an ApplyForce function.
+            var a = ThrowForce / (float) Math.Max(0.001, physComp.Mass); // a = f / m
+
+            var timing = IoCManager.Resolve<IGameTiming>();
+            var spd = a / (1f / timing.TickRate); // acceleration is applied in 1 tick instead of 1 second, scale appropriately
+
+            physComp.LinearVelocity = dirVec * spd;
+
+            var wHomoDir = Vector3.UnitX;
+
+            transform.InvWorldMatrix.Transform(ref wHomoDir, out var lHomoDir);
+
+            lHomoDir.Normalize();
+            transform.LocalRotation = new Angle(lHomoDir.Xy);
         }
     }
 }
