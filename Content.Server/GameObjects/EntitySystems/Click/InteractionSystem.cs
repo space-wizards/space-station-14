@@ -139,7 +139,13 @@ namespace Content.Server.GameObjects.EntitySystems
             // client sanitization
             if(!coords.IsValidLocation())
             {
-                Logger.InfoS("interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction", $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
                 return;
             }
 
