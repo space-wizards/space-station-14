@@ -3,7 +3,9 @@
   id: wall
   category: Structures
   description: Keeps the air in and the greytide out.
-  icon: Tiles/wall_texture.png
+  icon:
+    sprite: Buildings/wall.rsi
+    state: full
   objecttype: Structure
   result: wall
   placementmode: SnapgridBorder

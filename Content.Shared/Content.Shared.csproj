@@ -74,6 +74,7 @@
     <Compile Include="GameObjects\IVerbProvider.cs" />
     <Compile Include="GameObjects\PhysicalConstants.cs" />
     <Compile Include="GameObjects\Verb.cs" />
+    <Compile Include="Physics\CollisionGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\Components\Items\SharedHandsComponent.cs" />
     <Compile Include="GameObjects\Components\Power\SharedPowerDebugTool.cs" />

@@ -71,6 +71,21 @@ namespace Content.Server.GameObjects
             }
         }
 
+        /// <inheritdoc />
+        public void RemoveHandEntity(IEntity entity)
+        {
+            if(entity == null)
+                return;
+
+            foreach (var slot in hands.Values)
+            {
+                if (slot.ContainedEntity == entity)
+                {
+                    slot.Remove(entity);
+                }
+            }
+        }
+
         public ItemComponent GetHand(string index)
         {
             var slot = hands[index];

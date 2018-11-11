@@ -14,7 +14,6 @@ using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.Interfaces.GameObjects.Components;
-using SS14.Shared.GameObjects.Components.BoundingBox;
 using SS14.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -137,6 +136,19 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void HandleUseItemInHand(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
         {
+            // client sanitization
+            if(!coords.IsValidLocation())
+            {
+                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction", $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
+                return;
+            }
+
             UserInteraction(((IPlayerSession)session).AttachedEntity, coords, uid);
         }
 
@@ -163,8 +175,8 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return;
             }
-            var item = hands.GetActiveHand?.Owner;
 
+            var item = hands.GetActiveHand?.Owner;
 
             if (!MobCanInteract(player))
                 return;
