@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.Construction;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Construction;
@@ -68,10 +68,10 @@ namespace Content.Client.GameObjects.Components.Construction
             comp.Prototype = prototype;
             comp.Master = this;
             comp.GhostID = nextId++;
-            var transform = ghost.GetComponent<ITransformComponent>().LocalRotation = dir.ToAngle();
+            ghost.GetComponent<ITransformComponent>().LocalRotation = dir.ToAngle();
             var sprite = ghost.GetComponent<SpriteComponent>();
             sprite.LayerSetSprite(0, prototype.Icon);
-            sprite.LayerSetShader(0, "unshaded");
+            sprite.LayerSetVisible(0, true);
 
             Ghosts.Add(comp.GhostID, comp);
         }

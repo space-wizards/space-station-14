@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public void EquippedToSlot(ContainerSlot slot)
+        public void EquippedToSlot()
         {
             foreach (var component in Owner.GetAllComponents<ISpriteRenderableComponent>())
             {

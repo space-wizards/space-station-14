@@ -1,7 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Input;
 using Content.Shared.Physics;
 using SS14.Server.GameObjects;
@@ -11,7 +11,6 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
-using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.IoC;
@@ -61,11 +60,18 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var msg = (EntParentChangedMessage) args;
 
+            // entity is no longer a child of OldParent, therefore it cannot be in the hand of the parent
+            if (msg.OldParent != null && msg.OldParent.IsValid() && msg.OldParent.TryGetComponent(out IHandsComponent handsComp))
+            {
+                handsComp.RemoveHandEntity(msg.Entity);
+            }
+
+            // deleted entities will not pass this test
             if (!msg.Entity.TryGetComponent(out ITransformComponent transform))
                 return;
 
             // if item is in a container
-            if(transform.IsMapTransform)
+            if (transform.IsMapTransform)
                 return;
 
             if(!msg.Entity.TryGetComponent(out PhysicsComponent physics))

@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            clothing.EquippedToSlot(inventorySlot);
+            clothing.EquippedToSlot();
 
             Dirty();
             return true;
