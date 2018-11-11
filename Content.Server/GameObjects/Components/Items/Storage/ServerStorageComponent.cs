@@ -25,6 +25,7 @@ namespace Content.Server.GameObjects
     {
         private Container storage;
 
+        private bool _storageInitialCalculated = false;
         private int StorageUsed = 0;
         private int StorageCapacityMax = 10000;
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
@@ -43,13 +44,13 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public override void OnAdd()
+        public override void Initialize()
         {
-            base.OnAdd();
+            base.Initialize();
 
-            storage = ContainerManagerComponent.Create<Container>("storagebase", Owner);
+            storage = ContainerManagerComponent.Ensure<Container>("storagebase", Owner);
         }
-        
+
         /// <inheritdoc />
         public override ComponentState GetComponentState()
         {
@@ -61,6 +62,7 @@ namespace Content.Server.GameObjects
             base.ExposeData(serializer);
 
             serializer.DataField(ref StorageCapacityMax, "Capacity", 10000);
+            serializer.DataField(ref StorageUsed, "used", 0);
         }
 
         /// <summary>
@@ -70,6 +72,7 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool Remove(IEntity toremove)
         {
+            _ensureInitialCalculated();
             if (storage.Remove(toremove))
             {
                 Logger.InfoS("Storage", "Storage (UID {0}) had entity (UID {1}) removed from it.", Owner.Uid, toremove.Uid);
@@ -104,6 +107,7 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool CanInsert(IEntity toinsert)
         {
+            _ensureInitialCalculated();
             if (toinsert.TryGetComponent(out StoreableComponent store))
             {
                 if (store.ObjectSize <= (StorageCapacityMax - StorageUsed))
@@ -120,6 +124,7 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool IAttackby.Attackby(IEntity user, IEntity attackwith)
         {
+            _ensureInitialCalculated();
             Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, user.Uid, attackwith.Uid);
             var hands = user.GetComponent<HandsComponent>();
             //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
@@ -146,6 +151,7 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         bool IUse.UseEntity(IEntity user)
         {
+            _ensureInitialCalculated();
             var user_session = user.GetComponent<BasicActorComponent>().playerSession;
             Logger.DebugS("Storage", "Storage (UID {0}) \"used\" by player session (UID {1}).", Owner.Uid, user_session.AttachedEntityUid);
             SubscribeSession(user_session);
@@ -171,6 +177,7 @@ namespace Content.Server.GameObjects
         /// <param name="actor"></param>
         public void SubscribeSession(IPlayerSession session)
         {
+            _ensureInitialCalculated();
             if (!SubscribedSessions.Contains(session))
             {
                 Logger.DebugS("Storage", "Storage (UID {0}) subscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
@@ -243,6 +250,7 @@ namespace Content.Server.GameObjects
             {
                 case RemoveEntityMessage _:
                 {
+                    _ensureInitialCalculated();
                     var playerMan = IoCManager.Resolve<IPlayerManager>();
                     var session = playerMan.GetSessionByChannel(netChannel);
                     var playerentity = session.AttachedEntity;
@@ -287,6 +295,24 @@ namespace Content.Server.GameObjects
         void IActivate.Activate(IEntity user)
         {
             ((IUse) this).UseEntity(user);
+        }
+
+        private void _ensureInitialCalculated()
+        {
+            if (_storageInitialCalculated)
+            {
+                return;
+            }
+
+            StorageUsed = 0;
+
+            foreach (var entity in storage.ContainedEntities)
+            {
+                var item = entity.GetComponent<ItemComponent>();
+                StorageUsed += item.ObjectSize;
+            }
+
+            _storageInitialCalculated = true;
         }
     }
 }
