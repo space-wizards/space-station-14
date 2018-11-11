@@ -99,6 +99,7 @@
     <Compile Include="GameObjects\EntitySystems\Click\ExamineSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\Click\InteractionSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\DoorSystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\HandHeldLightSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\HandsSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerApcSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSmesSystem.cs" />
