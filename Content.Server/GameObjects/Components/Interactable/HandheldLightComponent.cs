@@ -1,44 +1,31 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Shared.Enums;
-using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Power;
-using Content.Shared.GameObjects;
-using SS14.Server.GameObjects.Components.Container;
-using SS14.Server.Interfaces.Chat;
-using SS14.Shared.IoC;
-using SS14.Shared.Log;
-using SS14.Shared.Players;
 using SS14.Shared.GameObjects;
+using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
     /// <summary>
-    /// Component that represents a handheld lightsource which can be toggled on and off.
+    ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
-    class HandheldLightComponent : Component, IUse, IExamine
+    internal class HandheldLightComponent : Component, IUse, IExamine, IVerbProviderComponent
     {
+        public const float Wattage = 10;
+        [ViewVariables] private ContainerSlot _cellContainer;
         private PointLightComponent _pointLight;
         private SpriteComponent _spriteComponent;
-        [ViewVariables] private ContainerSlot _cellContainer;
 
         private PowerCellComponent Cell
         {
             get
             {
-                if (_cellContainer.ContainedEntity == null)
-                {
-                    return null;
-                }
+                if (_cellContainer.ContainedEntity == null) return null;
 
                 _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent cell);
                 return cell;
@@ -48,12 +35,22 @@ namespace Content.Server.GameObjects.Components.Interactable
         public override string Name => "HandheldLight";
 
         /// <summary>
-        /// Status of light, whether or not it is emitting light.
+        ///     Status of light, whether or not it is emitting light.
         /// </summary>
         [ViewVariables]
-        public bool Activated { get; private set; } = false;
+        public bool Activated { get; private set; }
 
-        public const float Wattage = 10;
+        string IExamine.Examine()
+        {
+            if (Activated) return "The light is currently on.";
+
+            return null;
+        }
+
+        bool IUse.UseEntity(IEntity user)
+        {
+            return ToggleStatus();
+        }
 
         public override void Initialize()
         {
@@ -71,13 +68,8 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
-        bool IUse.UseEntity(IEntity user)
-        {
-            return ToggleStatus();
-        }
-
         /// <summary>
-        /// Illuminates the light if it is not active, extinguishes it if it is active.
+        ///     Illuminates the light if it is not active, extinguishes it if it is active.
         /// </summary>
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         public bool ToggleStatus()
@@ -103,10 +95,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void TurnOff()
         {
-            if (!Activated)
-            {
-                return;
-            }
+            if (!Activated) return;
 
             _spriteComponent.LayerSetState(0, "lantern_off");
             _pointLight.State = LightState.Off;
@@ -115,51 +104,26 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void TurnOn()
         {
-            if (Activated)
-            {
-                return;
-            }
+            if (Activated) return;
 
             var cell = Cell;
-            if (cell == null)
-            {
-                return;
-            }
+            if (cell == null) return;
 
             // To prevent having to worry about frame time in here.
             // Let's just say you need a whole second of charge before you can turn it on.
             // Simple enough.
-            if (cell.AvailableCharge(1) < Wattage)
-            {
-                return;
-            }
+            if (cell.AvailableCharge(1) < Wattage) return;
 
             _spriteComponent.LayerSetState(0, "lantern_on");
             _pointLight.State = LightState.On;
         }
 
-        string IExamine.Examine()
-        {
-            if (Activated)
-            {
-                return "The light is currently on.";
-            }
-
-            return null;
-        }
-
         public void OnUpdate(float frameTime)
         {
-            if (!Activated)
-            {
-                return;
-            }
+            if (!Activated) return;
 
             var cell = Cell;
-            if (cell == null || !cell.TryDeductWattage(Wattage, frameTime))
-            {
-                TurnOff();
-            }
+            if (cell == null || !cell.TryDeductWattage(Wattage, frameTime)) TurnOff();
         }
 
         private void EjectCell(IEntity user)
@@ -169,7 +133,18 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            Cell.Owner.Transform
+            var cell = Cell;
+
+            if (!_cellContainer.Remove(cell.Owner))
+            {
+                return;
+            }
+
+            if (!user.TryGetComponent(out HandsComponent hands)
+                || !hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
+            {
+                cell.Owner.Transform.LocalPosition = user.Transform.LocalPosition;
+            }
         }
 
         public class EjectCellVerb : Verb
@@ -191,6 +166,11 @@ namespace Content.Server.GameObjects.Components.Interactable
                 var flashlight = (HandheldLightComponent) component;
                 flashlight.EjectCell(user);
             }
+        }
+
+        public IEnumerable<Verb> GetVerbs(IEntity userEntity)
+        {
+            yield return new EjectCellVerb();
         }
     }
 }

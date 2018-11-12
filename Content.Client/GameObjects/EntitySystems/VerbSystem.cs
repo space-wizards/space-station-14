@@ -1,15 +1,20 @@
+using System;
 using System.Linq;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Input;
 using SS14.Client.GameObjects.EntitySystems;
 using SS14.Client.Interfaces.State;
+using SS14.Client.Player;
 using SS14.Client.State.States;
 using SS14.Client.UserInterface.Controls;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
+using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Shared.Maths;
 using SS14.Shared.Players;
@@ -19,12 +24,14 @@ namespace Content.Client.GameObjects.EntitySystems
 {
     public class VerbSystem : EntitySystem
     {
-        [Dependency]
 #pragma warning disable 649
-        private readonly IStateManager _stateManager;
+        [Dependency] private readonly IStateManager _stateManager;
+        [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly IPlayerManager _playerManager;
 #pragma warning restore 649
 
         private Popup _currentPopup;
+        private EntityUid _currentEntity;
 
         public override void Initialize()
         {
@@ -40,6 +47,8 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void RegisterMessageTypes()
         {
             base.RegisterMessageTypes();
+
+            RegisterMessageType<VerbSystemMessages.VerbsResponseMessage>();
         }
 
         private void OnOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -77,23 +86,76 @@ namespace Content.Client.GameObjects.EntitySystems
         private void OnContextButtonPressed(IEntity entity)
         {
             DebugTools.AssertNotNull(_currentPopup);
+            _currentEntity = entity.Uid;
 
             var vBox = _currentPopup.GetChild<VBoxContainer>("ButtonBox");
             vBox.DisposeAllChildren();
 
-            foreach (var verb in entity.GetAllComponents<IVerbProvider>().SelectMany(p => p.GetVerbs(null)))
-            {
-                var button = new Button {Text = verb.Text, Disabled = !verb.Available};
-                if (verb.Available)
-                {
-                    button.OnPressed += _ =>
-                    {
-                        _closeContextMenu();
-                        verb.Callback();
-                    };
-                }
+            RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
 
-                vBox.AddChild(button);
+            var user = GetUserEntity();
+            foreach (var component in entity.GetAllComponents<IVerbProviderComponent>())
+            {
+                foreach (var verb in component.GetVerbs(GetUserEntity()))
+                {
+                    var disabled = verb.IsDisabled(user, component);
+                    var button = new Button
+                    {
+                        Text = verb.GetName(user, component),
+                        Disabled = disabled
+                    };
+                    if (!disabled)
+                    {
+                        button.OnPressed += _ =>
+                        {
+                            _closeContextMenu();
+                            try
+                            {
+                                verb.Activate(user, component);
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verb, entity, e);
+                            }
+                        };
+                    }
+
+                    vBox.AddChild(button);
+                }
+            }
+        }
+
+        public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
+        {
+            base.HandleNetMessage(channel, message);
+
+            switch (message)
+            {
+                case VerbSystemMessages.VerbsResponseMessage resp:
+                    if (_currentEntity != resp.Entity)
+                    {
+                        return;
+                    }
+
+                    DebugTools.AssertNotNull(_currentPopup);
+
+                    var vBox = _currentPopup.GetChild<VBoxContainer>("ButtonBox");
+                    foreach (var data in resp.Verbs)
+                    {
+                        var button = new Button {Text = data.Text, Disabled = !data.Available};
+                        if (data.Available)
+                        {
+                            button.OnPressed += _ =>
+                            {
+                                RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(_currentEntity, data.Key));
+                                _closeContextMenu();
+                            };
+                        }
+
+                        vBox.AddChild(button);
+                    }
+
+                    break;
             }
         }
 
@@ -101,6 +163,12 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             _currentPopup?.Dispose();
             _currentPopup = null;
+            _currentEntity = EntityUid.Invalid;
+        }
+
+        private IEntity GetUserEntity()
+        {
+            return _playerManager.LocalPlayer.ControlledEntity;
         }
     }
 }

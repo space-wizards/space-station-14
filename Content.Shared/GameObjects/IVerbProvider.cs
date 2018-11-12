@@ -8,4 +8,8 @@ namespace Content.Shared.GameObjects
     {
         IEnumerable<Verb> GetVerbs(IEntity userEntity);
     }
+
+    public interface IVerbProviderComponent : IComponent, IVerbProvider
+    {
+    }
 }
