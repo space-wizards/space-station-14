@@ -94,34 +94,31 @@ namespace Content.Client.GameObjects.EntitySystems
             RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
 
             var user = GetUserEntity();
-            foreach (var component in entity.GetAllComponents<IVerbProviderComponent>())
+            foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
-                foreach (var verb in component.GetVerbs(GetUserEntity()))
+                var disabled = verb.IsDisabled(user, component);
+                var button = new Button
                 {
-                    var disabled = verb.IsDisabled(user, component);
-                    var button = new Button
+                    Text = verb.GetText(user, component),
+                    Disabled = disabled
+                };
+                if (!disabled)
+                {
+                    button.OnPressed += _ =>
                     {
-                        Text = verb.GetName(user, component),
-                        Disabled = disabled
-                    };
-                    if (!disabled)
-                    {
-                        button.OnPressed += _ =>
+                        _closeContextMenu();
+                        try
                         {
-                            _closeContextMenu();
-                            try
-                            {
-                                verb.Activate(user, component);
-                            }
-                            catch (Exception e)
-                            {
-                                Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verb, entity, e);
-                            }
-                        };
-                    }
-
-                    vBox.AddChild(button);
+                            verb.Activate(user, component);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verb, entity, e);
+                        }
+                    };
                 }
+
+                vBox.AddChild(button);
             }
         }
 

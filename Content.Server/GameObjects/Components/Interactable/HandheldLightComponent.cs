@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Power;
+﻿using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
@@ -14,13 +14,14 @@ namespace Content.Server.GameObjects.Components.Interactable
     /// <summary>
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
-    internal class HandheldLightComponent : Component, IUse, IExamine, IVerbProviderComponent
+    internal class HandheldLightComponent : Component, IUse, IExamine, IAttackby
     {
         public const float Wattage = 10;
         [ViewVariables] private ContainerSlot _cellContainer;
         private PointLightComponent _pointLight;
         private SpriteComponent _spriteComponent;
 
+        [ViewVariables]
         private PowerCellComponent Cell
         {
             get
@@ -39,6 +40,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// </summary>
         [ViewVariables]
         public bool Activated { get; private set; }
+
+        bool IAttackby.Attackby(IEntity user, IEntity attackwith)
+        {
+            if (!attackwith.HasComponent<PowerCellComponent>()) return false;
+
+            if (Cell != null) return false;
+
+            user.GetComponent<IHandsComponent>().Drop(attackwith, _cellContainer);
+
+            return _cellContainer.Insert(attackwith);
+        }
 
         string IExamine.Examine()
         {
@@ -128,49 +140,34 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private void EjectCell(IEntity user)
         {
-            if (Cell == null)
-            {
-                return;
-            }
+            if (Cell == null) return;
 
             var cell = Cell;
 
-            if (!_cellContainer.Remove(cell.Owner))
-            {
-                return;
-            }
+            if (!_cellContainer.Remove(cell.Owner)) return;
 
             if (!user.TryGetComponent(out HandsComponent hands)
                 || !hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
-            {
                 cell.Owner.Transform.LocalPosition = user.Transform.LocalPosition;
-            }
         }
 
-        public class EjectCellVerb : Verb
+        [Verb]
+        public sealed class EjectCellVerb : Verb<HandheldLightComponent>
         {
-            public override string GetName(IEntity user, IComponent component)
+            protected override string GetText(IEntity user, HandheldLightComponent component)
             {
-                var flashlight = (HandheldLightComponent) component;
-                return flashlight.Cell == null ? "Eject cell (cell missing)" : "Eject cell";
+                return component.Cell == null ? "Eject cell (cell missing)" : "Eject cell";
             }
 
-            public override bool IsDisabled(IEntity user, IComponent component)
+            protected override bool IsDisabled(IEntity user, HandheldLightComponent component)
             {
-                var flashlight = (HandheldLightComponent) component;
-                return flashlight.Cell == null;
+                return component.Cell == null;
             }
 
-            public override void Activate(IEntity user, IComponent component)
+            protected override void Activate(IEntity user, HandheldLightComponent component)
             {
-                var flashlight = (HandheldLightComponent) component;
-                flashlight.EjectCell(user);
+                component.EjectCell(user);
             }
-        }
-
-        public IEnumerable<Verb> GetVerbs(IEntity userEntity)
-        {
-            yield return new EjectCellVerb();
         }
     }
 }

@@ -50,14 +50,12 @@ namespace Content.Server.GameObjects.EntitySystems
                     var userEntity = session.AttachedEntity;
 
                     var data = new List<VerbsResponseMessage.VerbData>();
-                    foreach (var provider in entity.GetAllComponents<IVerbProviderComponent>())
+                    foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
                     {
-                        foreach (var verb in provider.GetVerbs(userEntity))
-                        {
-                            data.Add(new VerbsResponseMessage.VerbData(verb.GetName(userEntity, provider),
-                                verb.GetType().AssemblyQualifiedName,
-                                !verb.IsDisabled(userEntity, provider)));
-                        }
+                        // TODO: These keys being giant strings is inefficient as hell.
+                        data.Add(new VerbsResponseMessage.VerbData(verb.GetText(userEntity, component),
+                            $"{component.GetType()}:{verb.GetType()}",
+                            !verb.IsDisabled(userEntity, component)));
                     }
 
                     var response = new VerbsResponseMessage(data, req.EntityUid);
@@ -76,15 +74,12 @@ namespace Content.Server.GameObjects.EntitySystems
                     var session = _playerManager.GetSessionByChannel(channel);
                     var userEntity = session.AttachedEntity;
 
-                    foreach (var provider in entity.GetAllComponents<IVerbProviderComponent>())
+                    foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
                     {
-                        foreach (var verb in provider.GetVerbs(userEntity))
+                        if ($"{component.GetType()}:{verb.GetType()}" == use.VerbKey)
                         {
-                            if (verb.GetType().AssemblyQualifiedName == use.VerbKey)
-                            {
-                                verb.Activate(userEntity, provider);
-                                break;
-                            }
+                            verb.Activate(userEntity, component);
+                            break;
                         }
                     }
 

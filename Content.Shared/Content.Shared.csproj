@@ -71,7 +71,6 @@
     <Compile Include="GameObjects\Components\Storage\SharedStorageComponent.cs" />
     <Compile Include="GameObjects\ContentNetIDs.cs" />
     <Compile Include="GameObjects\EntitySystemMessages\VerbSystemMessages.cs" />
-    <Compile Include="GameObjects\IVerbProvider.cs" />
     <Compile Include="GameObjects\PhysicalConstants.cs" />
     <Compile Include="GameObjects\Verb.cs" />
     <Compile Include="Physics\CollisionGroup.cs" />
