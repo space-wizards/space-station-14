@@ -67,6 +67,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var entities = gameScreen.GetEntitiesUnderPosition(args.Coordinates);
 
             _currentPopup = new Popup();
+            _currentPopup.OnPopupHide += _closeContextMenu;
             var vBox = new VBoxContainer("ButtonBox");
             _currentPopup.AddChild(vBox);
             foreach (var entity in entities)
@@ -79,7 +80,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _currentPopup.UserInterfaceManager.StateRoot.AddChild(_currentPopup);
 
             var size = vBox.CombinedMinimumSize;
-            var box = UIBox2.FromDimensions(args.ScreenCoordinates.Position - size / 2, size);
+            var box = UIBox2.FromDimensions(args.ScreenCoordinates.Position, size);
             _currentPopup.Open(box);
         }
 
@@ -96,6 +97,15 @@ namespace Content.Client.GameObjects.EntitySystems
             var user = GetUserEntity();
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
+                if (verb.RequireInteractionRange)
+                {
+                    var distanceSquared = (user.Transform.WorldPosition - entity.Transform.WorldPosition)
+                        .LengthSquared;
+                    if (distanceSquared > Verb.InteractionRangeSquared)
+                    {
+                        continue;
+                    }
+                }
                 var disabled = verb.IsDisabled(user, component);
                 var button = new Button
                 {

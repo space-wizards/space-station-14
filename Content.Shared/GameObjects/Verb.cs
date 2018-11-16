@@ -8,6 +8,10 @@ namespace Content.Shared.GameObjects
     [UsedImplicitly]
     public abstract class Verb
     {
+        public virtual bool RequireInteractionRange => true;
+        public const float InteractionRange = 2;
+        public const float InteractionRangeSquared = InteractionRange * InteractionRange;
+
         public abstract string GetText(IEntity user, IComponent component);
         public abstract bool IsDisabled(IEntity user, IComponent component);
         public abstract void Activate(IEntity user, IComponent component);

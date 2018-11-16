@@ -52,6 +52,16 @@ namespace Content.Server.GameObjects.EntitySystems
                     var data = new List<VerbsResponseMessage.VerbData>();
                     foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
                     {
+                        if (verb.RequireInteractionRange)
+                        {
+                            var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
+                                .LengthSquared;
+                            if (distanceSquared > Verb.InteractionRangeSquared)
+                            {
+                                continue;
+                            }
+                        }
+
                         // TODO: These keys being giant strings is inefficient as hell.
                         data.Add(new VerbsResponseMessage.VerbData(verb.GetText(userEntity, component),
                             $"{component.GetType()}:{verb.GetType()}",
@@ -76,11 +86,23 @@ namespace Content.Server.GameObjects.EntitySystems
 
                     foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
                     {
-                        if ($"{component.GetType()}:{verb.GetType()}" == use.VerbKey)
+                        if ($"{component.GetType()}:{verb.GetType()}" != use.VerbKey)
                         {
-                            verb.Activate(userEntity, component);
-                            break;
+                            continue;
                         }
+
+                        if (verb.RequireInteractionRange)
+                        {
+                            var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
+                                .LengthSquared;
+                            if (distanceSquared > Verb.InteractionRangeSquared)
+                            {
+                                break;
+                            }
+                        }
+
+                        verb.Activate(userEntity, component);
+                        break;
                     }
 
                     break;
