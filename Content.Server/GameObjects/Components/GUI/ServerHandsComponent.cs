@@ -14,6 +14,7 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
+using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
@@ -41,10 +42,8 @@ namespace Content.Server.GameObjects
             }
         }
 
-        [ViewVariables]
-        private Dictionary<string, ContainerSlot> hands = new Dictionary<string, ContainerSlot>();
-        [ViewVariables]
-        private List<string> orderedHands = new List<string>();
+        [ViewVariables] private Dictionary<string, ContainerSlot> hands = new Dictionary<string, ContainerSlot>();
+        [ViewVariables] private List<string> orderedHands = new List<string>();
 
         // Mostly arbitrary.
         public const float PICKUP_RANGE = 2;
@@ -78,7 +77,7 @@ namespace Content.Server.GameObjects
         /// <inheritdoc />
         public void RemoveHandEntity(IEntity entity)
         {
-            if(entity == null)
+            if (entity == null)
                 return;
 
             foreach (var slot in hands.Values)
@@ -328,10 +327,12 @@ namespace Content.Server.GameObjects
             {
                 orderedHands.Add(index);
             }
+
             if (ActiveIndex == null)
             {
                 ActiveIndex = index;
             }
+
             Dirty();
         }
 
@@ -357,6 +358,7 @@ namespace Content.Server.GameObjects
                     activeIndex = orderedHands[0];
                 }
             }
+
             Dirty();
         }
 
@@ -380,6 +382,7 @@ namespace Content.Server.GameObjects
                     dict[hand.Key] = hand.Value.ContainedEntity.Uid;
                 }
             }
+
             return new HandsComponentState(dict, ActiveIndex);
         }
 
@@ -404,36 +407,61 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
+            IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
 
             switch (message)
             {
                 case ClientChangedHandMsg msg:
-                    {
-                        var playerMan = IoCManager.Resolve<IPlayerManager>();
-                        var session = playerMan.GetSessionByChannel(netChannel);
-                        var playerEntity = session.AttachedEntity;
+                {
+                    var playerMan = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMan.GetSessionByChannel(netChannel);
+                    var playerEntity = session.AttachedEntity;
 
-                        if (playerEntity == Owner && HasHand(msg.Index))
-                            ActiveIndex = msg.Index;
-                        break;
+                    if (playerEntity == Owner && HasHand(msg.Index))
+                        ActiveIndex = msg.Index;
+                    break;
+                }
+
+                case ClientAttackByInHandMsg msg:
+                {
+                    if (!hands.TryGetValue(msg.Index, out var slot))
+                    {
+                        Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand index '{0}'",
+                            msg.Index);
+                        return;
                     }
+
+                    var playerMan = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMan.GetSessionByChannel(netChannel);
+                    var playerEntity = session.AttachedEntity;
+                    var used = GetActiveHand?.Owner;
+
+                    if (playerEntity == Owner && used != null)
+                    {
+                        InteractionSystem.Interaction(Owner, used, slot.ContainedEntity,
+                            GridLocalCoordinates.Nullspace);
+                    }
+
+                    break;
+                }
 
                 case ActivateInhandMsg msg:
-                    {
-                        var playerMan = IoCManager.Resolve<IPlayerManager>();
-                        var session = playerMan.GetSessionByChannel(netChannel);
-                        var playerEntity = session.AttachedEntity;
-                        var used = GetActiveHand?.Owner;
+                {
+                    var playerMan = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMan.GetSessionByChannel(netChannel);
+                    var playerEntity = session.AttachedEntity;
+                    var used = GetActiveHand?.Owner;
 
-                        if (playerEntity == Owner && used != null)
-                        {
-                            InteractionSystem.TryUseInteraction(Owner, used);
-                        }
-                        break;
+                    if (playerEntity == Owner && used != null)
+                    {
+                        InteractionSystem.TryUseInteraction(Owner, used);
                     }
+
+                    break;
+                }
             }
         }
     }

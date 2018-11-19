@@ -174,6 +174,11 @@ namespace Content.Client.GameObjects
             SendNetworkMessage(new ClientChangedHandMsg(index));
         }
 
+        public void AttackByInHand(string index)
+        {
+            SendNetworkMessage(new ClientAttackByInHandMsg(index));
+        }
+
         public void UseActiveHand()
         {
             if (GetEntity(ActiveIndex) != null)
