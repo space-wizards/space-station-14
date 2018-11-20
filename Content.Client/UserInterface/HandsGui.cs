@@ -1,4 +1,5 @@
 ﻿using Content.Client.GameObjects;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces.GameObjects;
 using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
@@ -14,6 +15,7 @@ using SS14.Client.UserInterface.Controls;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
+using SS14.Shared.Map;
 using SS14.Shared.Maths;
 
 namespace Content.Client.UserInterface
@@ -213,24 +215,25 @@ namespace Content.Client.UserInterface
             var leftHandContains = handL.Contains((Vector2i) args.RelativePosition);
             var rightHandContains = handR.Contains((Vector2i) args.RelativePosition);
 
+            string handIndex;
+            if (leftHandContains)
+            {
+                handIndex = "left";
+            }
+            else if (rightHandContains)
+            {
+                handIndex = "right";
+            }
+            else
+            {
+                return;
+            }
+
             if (args.Button == Mouse.Button.Left)
             {
                 if (!TryGetHands(out var hands))
                     return;
 
-                string handIndex;
-                if (leftHandContains)
-                {
-                    handIndex = "left";
-                }
-                else if (rightHandContains)
-                {
-                    handIndex = "right";
-                }
-                else
-                {
-                    return;
-                }
 
                 if (hands.ActiveIndex == handIndex)
                 {
@@ -244,14 +247,24 @@ namespace Content.Client.UserInterface
 
             else if (args.Button == Mouse.Button.Middle)
             {
-                if (leftHandContains)
+                SendSwitchHandTo(handIndex);
+            }
+
+            else if (args.Button == Mouse.Button.Right)
+            {
+                if (!TryGetHands(out var hands))
                 {
-                    SendSwitchHandTo("left");
+                    return;
                 }
-                if (rightHandContains)
+
+                var entity = hands.GetEntity(handIndex);
+                if (entity == null)
                 {
-                    SendSwitchHandTo("right");
+                    return;
                 }
+
+                var esm = IoCManager.Resolve<IEntitySystemManager>();
+                esm.GetEntitySystem<VerbSystem>().OpenContextMenu(entity, new ScreenCoordinates(args.GlobalPosition));
             }
         }
 
