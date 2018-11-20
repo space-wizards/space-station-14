@@ -193,11 +193,20 @@ namespace Content.Client.GameObjects.EntitySystems
                 buttons.Add(button);
             }
 
-            buttons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
-
-            foreach (var button in buttons)
+            if (buttons.Count > 0)
             {
-                vBox.AddChild(button);
+                buttons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
+
+                foreach (var button in buttons)
+                {
+                    vBox.AddChild(button);
+                }
+            }
+            else
+            {
+                var panel = new PanelContainer();
+                panel.AddChild(new Label {Text = "No verbs!"});
+                vBox.AddChild(panel);
             }
 
             _currentPopup.Size = vBox.CombinedMinimumSize;
