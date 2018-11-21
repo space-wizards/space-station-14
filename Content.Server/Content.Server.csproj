@@ -116,6 +116,7 @@
     <Compile Include="GameObjects\Components\Damage\ResistanceSet.cs" />
     <Compile Include="GameObjects\Components\Temperature\TemperatureComponent.cs" />
     <Compile Include="Interfaces\GameObjects\IOnDamageBehavior.cs" />
+    <Compile Include="Interfaces\IServerNotifyManager.cs" />
     <Compile Include="Mobs\Commands.cs" />
     <Compile Include="Mobs\Mind.cs" />
     <Compile Include="Mobs\Role.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Interfaces\GameObjects\Components\Damage\IDamageableComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PoweredLightComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
+    <Compile Include="ServerNotifyManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">

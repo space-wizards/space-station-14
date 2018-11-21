@@ -5,7 +5,10 @@ using Content.Client.GameObjects.Components.Power;
 using Content.Client.GameObjects.Components.SmoothWalling;
 using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Input;
+using Content.Client.Interfaces;
 using Content.Client.Interfaces.GameObjects;
+using Content.Shared.Interfaces;
+using SS14.Client;
 using SS14.Client.Interfaces.Input;
 using SS14.Client.Utility;
 using SS14.Shared.ContentPack;
@@ -72,6 +75,9 @@ namespace Content.Client
 
             prototypes.RegisterIgnore("material");
 
+            IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
+            IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
+            IoCManager.BuildGraph();
         }
 
         public override void PostInit()
@@ -81,6 +87,20 @@ namespace Content.Client
             // Setup key contexts
             var inputMan = IoCManager.Resolve<IInputManager>();
             ContentContexts.SetupContexts(inputMan.Contexts);
+
+            IoCManager.Resolve<IClientNotifyManager>().Initialize();
+        }
+
+        public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)
+        {
+            base.Update(level, frameTime);
+
+            switch (level)
+            {
+                case AssemblyLoader.UpdateLevel.FramePreEngine:
+                    IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(new RenderFrameEventArgs(frameTime));
+                    break;
+            }
         }
     }
 }

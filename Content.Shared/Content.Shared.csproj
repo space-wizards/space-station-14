@@ -72,6 +72,7 @@
     <Compile Include="GameObjects\ContentNetIDs.cs" />
     <Compile Include="GameObjects\EntitySystemMessages\VerbSystemMessages.cs" />
     <Compile Include="GameObjects\PhysicalConstants.cs" />
+    <Compile Include="Interfaces\ISharedNotifyManager.cs" />
     <Compile Include="GameObjects\Verb.cs" />
     <Compile Include="Physics\CollisionGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,6 +108,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <Compile Include="Input\ContentKeyFunctions.cs" />
+    <Compile Include="SharedNotifyManager.cs" />
     <Compile Include="Utility\ContentHelpers.cs" />
     <Compile Include="GameObjects\Components\Power\SharedSmesComponent.cs" />
     <Compile Include="GameObjects\Components\Power\SharedApcComponent.cs" />

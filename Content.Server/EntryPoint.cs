@@ -34,7 +34,9 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.Interfaces;
 
 namespace Content.Server
 {
@@ -125,6 +127,12 @@ namespace Content.Server
             factory.RegisterIgnore("ConstructionGhost");
 
             factory.Register<MindComponent>();
+
+            IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
+            IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
+            IoCManager.BuildGraph();
+
+            IoCManager.Resolve<IServerNotifyManager>().Initialize();
         }
 
         /// <inheritdoc />
