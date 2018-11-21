@@ -6,19 +6,12 @@ namespace Content.Shared.Interfaces
 {
     public interface ISharedNotifyManager
     {
-        void PopupMessage(IEntity source, string message);
         void PopupMessage(IEntity source, IEntity viewer, string message);
-        void PopupMessage(GridLocalCoordinates coordinates, string message);
         void PopupMessage(GridLocalCoordinates coordinates, IEntity viewer, string message);
     }
 
     public static class NotifyManagerExt
     {
-        public static void PopupMessage(this IEntity source, string message)
-        {
-            IoCManager.Resolve<ISharedNotifyManager>().PopupMessage(source, message);
-        }
-
         public static void PopupMessage(this IEntity source, IEntity viewer, string message)
         {
             IoCManager.Resolve<ISharedNotifyManager>().PopupMessage(source, viewer, message);

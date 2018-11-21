@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Client.Interfaces;
+using Content.Shared;
 using SS14.Client;
 using SS14.Client.Interfaces.Console;
 using SS14.Client.Interfaces.Graphics.ClientEye;
@@ -9,48 +10,49 @@ using SS14.Client.Interfaces.UserInterface;
 using SS14.Client.Player;
 using SS14.Client.UserInterface.Controls;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Map;
 using SS14.Shared.Maths;
-using SS14.Shared.Players;
 using SS14.Shared.Utility;
 
 namespace Content.Client
 {
-    public class ClientNotifyManager : IClientNotifyManager
+    public class ClientNotifyManager : SharedNotifyManager, IClientNotifyManager
     {
 #pragma warning disable 649
         [Dependency] private IPlayerManager _playerManager;
         [Dependency] private IUserInterfaceManager _userInterfaceManager;
         [Dependency] private IInputManager _inputManager;
         [Dependency] private IEyeManager _eyeManager;
+        [Dependency] private IClientNetManager _netManager;
 #pragma warning restore 649
 
         private readonly List<PopupLabel> _aliveLabels = new List<PopupLabel>();
+        private bool _initialized;
 
-        public void PopupMessage(IEntity source, string message)
+        public void Initialize()
         {
-            PopupMessage(source.Transform.LocalPosition, message);
-        }
-5
-        public void PopupMessage(IEntity source, IEntity viewer, string message)
-        {
-            PopupMessage(source.Transform.LocalPosition, viewer, message);
-        }
+            DebugTools.Assert(!_initialized);
 
-        public void PopupMessage(GridLocalCoordinates coordinates, string message)
-        {
-            PopupMessage(_eyeManager.WorldToScreen(coordinates), message);
+            _netManager.RegisterNetMessage<MsgDoNotify>(nameof(MsgDoNotify), DoNotifyMessage);
+
+            _initialized = true;
         }
 
-        public void PopupMessage(GridLocalCoordinates coordinates, IEntity viewer, string message)
+        private void DoNotifyMessage(MsgDoNotify message)
+        {
+            PopupMessage(_eyeManager.WorldToScreen(message.Coordinates), message.Message);
+        }
+
+        public override void PopupMessage(GridLocalCoordinates coordinates, IEntity viewer, string message)
         {
             if (viewer != _playerManager.LocalPlayer.ControlledEntity)
             {
                 return;
             }
 
-            PopupMessage(coordinates, message);
+            PopupMessage(_eyeManager.WorldToScreen(coordinates), message);
         }
 
         public void PopupMessage(ScreenCoordinates coordinates, string message)
@@ -79,18 +81,27 @@ namespace Content.Client
 
         private class PopupLabel : Label
         {
-            private float _timeLeft = 0;
-            private const float Lifetime = 3f;
+            private float _timeLeft;
             public Vector2 InitialPos { get; set; }
+
+            protected override void Initialize()
+            {
+                base.Initialize();
+
+                ShadowOffsetXOverride = 1;
+                ShadowOffsetYOverride = 1;
+                FontColorShadowOverride = Color.Black;
+
+            }
 
             public void Update(RenderFrameEventArgs eventArgs)
             {
                 _timeLeft += eventArgs.Elapsed;
                 Position = InitialPos - new Vector2(0, 20 * (_timeLeft * _timeLeft + _timeLeft));
-                if (_timeLeft > Lifetime / 2)
+                if (_timeLeft > 0.5f)
                 {
                     Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(_timeLeft - 0.5f, 3f));
-                    if (_timeLeft > Lifetime)
+                    if (_timeLeft > 3f)
                     {
                         Dispose();
                     }

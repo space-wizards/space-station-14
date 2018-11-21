@@ -87,6 +87,8 @@ namespace Content.Client
             // Setup key contexts
             var inputMan = IoCManager.Resolve<IInputManager>();
             ContentContexts.SetupContexts(inputMan.Contexts);
+
+            IoCManager.Resolve<IClientNotifyManager>().Initialize();
         }
 
         public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)
