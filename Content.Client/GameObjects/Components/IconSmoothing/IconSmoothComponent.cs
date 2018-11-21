@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Content.Shared.GameObjects;
 using SS14.Client.Interfaces.GameObjects.Components;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Components.Transform;

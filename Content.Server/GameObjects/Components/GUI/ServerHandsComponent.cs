@@ -4,6 +4,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.Input;
+using JetBrains.Annotations;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Server.Interfaces.Player;
@@ -13,8 +14,10 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
+using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Shared.Serialization;
+using SS14.Shared.Utility;
 using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
@@ -39,8 +42,8 @@ namespace Content.Server.GameObjects
             }
         }
 
-        private Dictionary<string, ContainerSlot> hands = new Dictionary<string, ContainerSlot>();
-        private List<string> orderedHands = new List<string>();
+        [ViewVariables] private Dictionary<string, ContainerSlot> hands = new Dictionary<string, ContainerSlot>();
+        [ViewVariables] private List<string> orderedHands = new List<string>();
 
         // Mostly arbitrary.
         public const float PICKUP_RANGE = 2;
@@ -74,7 +77,7 @@ namespace Content.Server.GameObjects
         /// <inheritdoc />
         public void RemoveHandEntity(IEntity entity)
         {
-            if(entity == null)
+            if (entity == null)
                 return;
 
             foreach (var slot in hands.Values)
@@ -155,13 +158,20 @@ namespace Content.Server.GameObjects
             return slot.CanInsert(item.Owner);
         }
 
-        /// <summary>
-        ///     Drops the item in a slot.
-        /// </summary>
-        /// <param name="slot">The slot to drop the item from.</param>
-        /// <param name="coords"></param>
-        /// <returns>True if an item was dropped, false otherwise.</returns>
-        public bool Drop(string slot, GridLocalCoordinates? coords)
+        public string FindHand(IEntity entity)
+        {
+            foreach (var (index, slot) in hands)
+            {
+                if (slot.ContainedEntity == entity)
+                {
+                    return index;
+                }
+            }
+
+            return null;
+        }
+
+        public bool Drop(string slot, GridLocalCoordinates coords)
         {
             if (!CanDrop(slot))
             {
@@ -178,12 +188,117 @@ namespace Content.Server.GameObjects
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            var itemTransform = item.Owner.GetComponent<ITransformComponent>();
-
-            itemTransform.LocalPosition = coords ?? Owner.GetComponent<ITransformComponent>().LocalPosition;
+            item.Owner.Transform.LocalPosition = coords;
 
             Dirty();
             return true;
+        }
+
+        public bool Drop(IEntity entity, GridLocalCoordinates coords)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            var slot = FindHand(entity);
+            if (slot == null)
+            {
+                throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
+            }
+
+            return Drop(slot, coords);
+        }
+
+        public bool Drop(string slot)
+        {
+            if (!CanDrop(slot))
+            {
+                return false;
+            }
+
+            var inventorySlot = hands[slot];
+            var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+            if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
+            {
+                return false;
+            }
+
+            item.RemovedFromSlot();
+
+            // TODO: The item should be dropped to the container our owner is in, if any.
+            item.Owner.Transform.LocalPosition = Owner.Transform.LocalPosition;
+
+            Dirty();
+            return true;
+        }
+
+
+        public bool Drop(IEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            var slot = FindHand(entity);
+            if (slot == null)
+            {
+                throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
+            }
+
+            return Drop(slot);
+        }
+
+        public bool Drop(string slot, BaseContainer targetContainer)
+        {
+            if (!CanDrop(slot))
+            {
+                return false;
+            }
+
+            var inventorySlot = hands[slot];
+            var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+            if (!inventorySlot.CanRemove(inventorySlot.ContainedEntity))
+            {
+                return false;
+            }
+
+            if (!targetContainer.CanInsert(inventorySlot.ContainedEntity))
+            {
+                return false;
+            }
+
+            if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
+            {
+                throw new InvalidOperationException();
+            }
+
+            item.RemovedFromSlot();
+
+            if (!targetContainer.Insert(item.Owner))
+            {
+                throw new InvalidOperationException();
+            }
+
+            Dirty();
+            return true;
+        }
+
+        public bool Drop(IEntity entity, BaseContainer targetContainer)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            var slot = FindHand(entity);
+            if (slot == null)
+            {
+                throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
+            }
+
+            return Drop(slot, targetContainer);
         }
 
         /// <summary>
@@ -212,10 +327,12 @@ namespace Content.Server.GameObjects
             {
                 orderedHands.Add(index);
             }
+
             if (ActiveIndex == null)
             {
                 ActiveIndex = index;
             }
+
             Dirty();
         }
 
@@ -241,6 +358,7 @@ namespace Content.Server.GameObjects
                     activeIndex = orderedHands[0];
                 }
             }
+
             Dirty();
         }
 
@@ -264,6 +382,7 @@ namespace Content.Server.GameObjects
                     dict[hand.Key] = hand.Value.ContainedEntity.Uid;
                 }
             }
+
             return new HandsComponentState(dict, ActiveIndex);
         }
 
@@ -288,36 +407,61 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
+            IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
 
             switch (message)
             {
                 case ClientChangedHandMsg msg:
-                    {
-                        var playerMan = IoCManager.Resolve<IPlayerManager>();
-                        var session = playerMan.GetSessionByChannel(netChannel);
-                        var playerentity = session.AttachedEntity;
+                {
+                    var playerMan = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMan.GetSessionByChannel(netChannel);
+                    var playerEntity = session.AttachedEntity;
 
-                        if (playerentity == Owner && HasHand(msg.Index))
-                            ActiveIndex = msg.Index;
-                        break;
+                    if (playerEntity == Owner && HasHand(msg.Index))
+                        ActiveIndex = msg.Index;
+                    break;
+                }
+
+                case ClientAttackByInHandMsg msg:
+                {
+                    if (!hands.TryGetValue(msg.Index, out var slot))
+                    {
+                        Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand index '{0}'",
+                            msg.Index);
+                        return;
                     }
+
+                    var playerMan = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMan.GetSessionByChannel(netChannel);
+                    var playerEntity = session.AttachedEntity;
+                    var used = GetActiveHand?.Owner;
+
+                    if (playerEntity == Owner && used != null)
+                    {
+                        InteractionSystem.Interaction(Owner, used, slot.ContainedEntity,
+                            GridLocalCoordinates.Nullspace);
+                    }
+
+                    break;
+                }
 
                 case ActivateInhandMsg msg:
-                    {
-                        var playerMan = IoCManager.Resolve<IPlayerManager>();
-                        var session = playerMan.GetSessionByChannel(netChannel);
-                        var playerentity = session.AttachedEntity;
-                        var used = GetActiveHand?.Owner;
+                {
+                    var playerMan = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMan.GetSessionByChannel(netChannel);
+                    var playerEntity = session.AttachedEntity;
+                    var used = GetActiveHand?.Owner;
 
-                        if (playerentity == Owner && used != null)
-                        {
-                            InteractionSystem.TryUseInteraction(Owner, used);
-                        }
-                        break;
+                    if (playerEntity == Owner && used != null)
+                    {
+                        InteractionSystem.TryUseInteraction(Owner, used);
                     }
+
+                    break;
+                }
             }
         }
     }

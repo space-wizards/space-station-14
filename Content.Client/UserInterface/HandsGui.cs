@@ -1,4 +1,5 @@
 ﻿using Content.Client.GameObjects;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces.GameObjects;
 using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
@@ -14,6 +15,7 @@ using SS14.Client.UserInterface.Controls;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
+using SS14.Shared.Map;
 using SS14.Shared.Maths;
 
 namespace Content.Client.UserInterface
@@ -21,7 +23,9 @@ namespace Content.Client.UserInterface
     public class HandsGui : Control
     {
         private static readonly Color _inactiveColor = new Color(90, 90, 90);
+
         private const int BOX_SPACING = 1;
+
         // The boxes are square so that's both width and height.
         private const int BOX_SIZE = 50;
 
@@ -123,6 +127,7 @@ namespace Content.Client.UserInterface
             {
                 return;
             }
+
             UpdateDraw();
 
             if (!TryGetHands(out IHandsComponent hands))
@@ -142,8 +147,8 @@ namespace Content.Client.UserInterface
                     LeftHand.MirrorHandle?.Dispose();
                     LeftHand.MirrorHandle = GetSpriteMirror(left);
                     LeftHand.MirrorHandle.AttachToControl(this);
-                    LeftHand.MirrorHandle.Offset = new Vector2(handL.Left + (int)(handL.Width / 2f),
-                                    handL.Top + (int)(handL.Height / 2f));
+                    LeftHand.MirrorHandle.Offset = new Vector2(handL.Left + (int) (handL.Width / 2f),
+                        handL.Top + (int) (handL.Height / 2f));
                 }
             }
             else
@@ -161,8 +166,8 @@ namespace Content.Client.UserInterface
                     RightHand.MirrorHandle?.Dispose();
                     RightHand.MirrorHandle = GetSpriteMirror(right);
                     RightHand.MirrorHandle.AttachToControl(this);
-                    RightHand.MirrorHandle.Offset = new Vector2(handR.Left + (int)(handR.Width / 2f),
-                                    handR.Top + (int)(handR.Height / 2f));
+                    RightHand.MirrorHandle.Offset = new Vector2(handR.Left + (int) (handR.Width / 2f),
+                        handR.Top + (int) (handR.Height / 2f));
                 }
             }
             else
@@ -187,40 +192,79 @@ namespace Content.Client.UserInterface
                 return;
 
             //Todo: remove hands interface, so weird
-            ((HandsComponent)hands).UseActiveHand();
+            ((HandsComponent) hands).UseActiveHand();
+        }
+
+        private void AttackByInHand(string hand)
+        {
+            if (!TryGetHands(out var hands))
+                return;
+
+            hands.AttackByInHand(hand);
         }
 
         protected override bool HasPoint(Vector2 point)
         {
-            return handL.Contains((Vector2i)point) || handR.Contains((Vector2i)point);
+            return handL.Contains((Vector2i) point) || handR.Contains((Vector2i) point);
         }
 
         protected override void MouseDown(GUIMouseButtonEventArgs args)
         {
             base.MouseDown(args);
 
-            var lefthandcontains = handL.Contains((Vector2i)args.RelativePosition);
-            var righthandcontains = handR.Contains((Vector2i)args.RelativePosition);
+            var leftHandContains = handL.Contains((Vector2i) args.RelativePosition);
+            var rightHandContains = handR.Contains((Vector2i) args.RelativePosition);
+
+            string handIndex;
+            if (leftHandContains)
+            {
+                handIndex = "left";
+            }
+            else if (rightHandContains)
+            {
+                handIndex = "right";
+            }
+            else
+            {
+                return;
+            }
 
             if (args.Button == Mouse.Button.Left)
             {
-                if (!TryGetHands(out IHandsComponent hands))
+                if (!TryGetHands(out var hands))
                     return;
 
-                if ((hands.ActiveIndex == "left" && lefthandcontains)
-                    || (hands.ActiveIndex == "right" && righthandcontains))
+
+                if (hands.ActiveIndex == handIndex)
+                {
                     UseActiveHand();
+                }
+                else
+                {
+                    AttackByInHand(handIndex);
+                }
             }
+
+            else if (args.Button == Mouse.Button.Middle)
+            {
+                SendSwitchHandTo(handIndex);
+            }
+
             else if (args.Button == Mouse.Button.Right)
             {
-                if (lefthandcontains)
+                if (!TryGetHands(out var hands))
                 {
-                    SendSwitchHandTo("left");
+                    return;
                 }
-                if (righthandcontains)
+
+                var entity = hands.GetEntity(handIndex);
+                if (entity == null)
                 {
-                    SendSwitchHandTo("right");
+                    return;
                 }
+
+                var esm = IoCManager.Resolve<IEntitySystemManager>();
+                esm.GetEntitySystem<VerbSystem>().OpenContextMenu(entity, new ScreenCoordinates(args.GlobalPosition));
             }
         }
 
@@ -230,13 +274,14 @@ namespace Content.Client.UserInterface
             {
                 return component.CreateProxy();
             }
+
             return null;
         }
 
         private struct UiHandInfo
         {
             public IEntity Entity { get; set; }
-            public ISpriteProxy MirrorHandle { get; set;  }
+            public ISpriteProxy MirrorHandle { get; set; }
         }
     }
 }

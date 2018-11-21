@@ -10,5 +10,6 @@ namespace Content.Client.Interfaces.GameObjects
         string ActiveIndex { get; }
 
         void SendChangeHand(string index);
+        void AttackByInHand(string index);
     }
 }
