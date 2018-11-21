@@ -176,7 +176,7 @@ namespace Content.Server
                             session.Data.ContentDataUncast = new PlayerData(session.SessionId);
                         }
                         // timer time must be > tick length
-                        Timer.Spawn(250, args.Session.JoinLobby);
+                        Timer.Spawn(0, args.Session.JoinLobby);
 
                         chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined server!", args.Session.SessionId);
                     }
