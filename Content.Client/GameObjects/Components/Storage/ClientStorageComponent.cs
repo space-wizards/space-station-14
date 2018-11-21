@@ -123,6 +123,11 @@ namespace Content.Client.GameObjects.Components.Storage
             if(!spriteComp.Running)
                 return;
 
+            if (spriteComp.BaseRSI == null)
+            {
+                return;
+            }
+
             var baseName = spriteComp.LayerGetState(0).Name;
 
             var stateId = open ? $"{baseName}_open" : $"{baseName}_door";
