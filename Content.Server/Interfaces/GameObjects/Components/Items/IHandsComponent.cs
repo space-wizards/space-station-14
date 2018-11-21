@@ -1,6 +1,8 @@
-﻿using Content.Server.GameObjects;
+﻿using System;
+using Content.Server.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
+using SS14.Server.GameObjects.Components.Container;
 using SS14.Shared.Map;
 
 namespace Content.Server.Interfaces.GameObjects
@@ -69,12 +71,96 @@ namespace Content.Server.Interfaces.GameObjects
         bool CanPutInHand(ItemComponent item, string index);
 
         /// <summary>
-        ///     Drops an item on the ground, removing it from the hand.
+        ///     Finds the hand slot holding the specified entity, if any.
         /// </summary>
-        /// <param name="index">The hand to drop from.</param>
+        /// <param name="entity">
+        ///     The entity to look for in our hands.
+        /// </param>
+        /// <returns>
+        ///     The index of the hand slot if the entity is indeed held, <see langword="null" /> otherwise.
+        /// </returns>
+        string FindHand(IEntity entity);
+
+        /// <summary>
+        ///     Drops the item contained in the slot to the same position as our entity.
+        /// </summary>
+        /// <param name="slot">The slot of which to drop to drop the item.</param>
+        /// <returns>True on success, false if something blocked the drop.</returns>
+        bool Drop(string slot);
+
+        /// <summary>
+        ///     Drops an item held by one of our hand slots to the same position as our owning entity.
+        /// </summary>
+        /// <param name="entity">The item to drop.</param>
+        /// <returns>True on success, false if something blocked the drop.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <see cref="entity"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     Thrown if <see cref="entity"/> is not actually held in any hand.
+        /// </exception>
+        bool Drop(IEntity entity);
+
+        /// <summary>
+        ///     Drops the item in a slot.
+        /// </summary>
+        /// <param name="slot">The slot to drop the item from.</param>
         /// <param name="coords"></param>
-        /// <returns>True if an item was successfully dropped, false otherwise.</returns>
-        bool Drop(string index, GridLocalCoordinates? coords);
+        /// <returns>True if an item was dropped, false otherwise.</returns>
+        bool Drop(string slot, GridLocalCoordinates coords);
+
+        /// <summary>
+        ///     Drop the specified entity in our hands to a certain position.
+        /// </summary>
+        /// <remarks>
+        ///     There are no checks whether or not the user is within interaction range of the drop location
+        ///     or whether the drop location is occupied.
+        /// </remarks>
+        /// <param name="entity">The entity to drop, must be held in one of the hands.</param>
+        /// <param name="coords">The coordinates to drop the entity at.</param>
+        /// <returns>
+        ///     True if the drop succeeded,
+        ///     false if it failed (due to failing to eject from our hand slot, etc...)
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <see cref="entity"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     Thrown if <see cref="entity"/> is not actually held in any hand.
+        /// </exception>
+        bool Drop(IEntity entity, GridLocalCoordinates coords);
+
+        /// <summary>
+        ///     Drop the item contained in a slot into another container.
+        /// </summary>
+        /// <param name="slot">The slot of which to drop the entity.</param>
+        /// <param name="targetContainer">The container to drop into.</param>
+        /// <returns>True on success, false if something was blocked (insertion or removal).</returns>
+        /// <exception cref="InvalidOperationException">
+        ///     Thrown if dry-run checks reported OK to remove and insert,
+        ///     but practical remove or insert returned false anyways.
+        ///     This is an edge-case that is currently unhandled.
+        /// </exception>
+        bool Drop(string slot, BaseContainer targetContainer);
+
+        /// <summary>
+        ///     Drops an item in one of the hands into a container.
+        /// </summary>
+        /// <param name="entity">The item to drop.</param>
+        /// <param name="targetContainer">The container to drop into.</param>
+        /// <returns>True on success, false if something was blocked (insertion or removal).</returns>
+        /// <exception cref="InvalidOperationException">
+        ///     Thrown if dry-run checks reported OK to remove and insert,
+        ///     but practical remove or insert returned false anyways.
+        ///     This is an edge-case that is currently unhandled.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <see cref="entity"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     Thrown if <see cref="entity"/> is not actually held in any hand.
+        /// </exception>
+        bool Drop(IEntity entity, BaseContainer targetContainer);
 
         /// <summary>
         ///     Checks whether the item in the specified hand can be dropped.

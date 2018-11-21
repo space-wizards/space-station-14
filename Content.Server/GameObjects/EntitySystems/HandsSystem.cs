@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.EntitySystems
             input.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem));
             input.BindMap.BindFunction(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem));
         }
-        
+
         /// <inheritdoc />
         public override void Shutdown()
         {
@@ -118,13 +118,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var transform = ent.Transform;
 
-            GridLocalCoordinates? dropPos = null;
             if (transform.LocalPosition.InRange(coords, InteractionSystem.INTERACTION_RANGE))
             {
-                dropPos = coords;
+                handsComp.Drop(handsComp.ActiveIndex, coords);
             }
-
-            handsComp.Drop(handsComp.ActiveIndex, dropPos);
+            else
+            {
+                handsComp.Drop(handsComp.ActiveIndex);
+            }
         }
 
         private static void HandleActivateItem(ICommonSession session)
@@ -160,7 +161,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 stackComp.Use(1);
                 throwEnt = throwEnt.EntityManager.ForceSpawnEntityAt(throwEnt.Prototype.ID, plyEnt.Transform.LocalPosition);
             }
-            
+
             if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
             {
                 colComp = throwEnt.AddComponent<CollidableComponent>();
@@ -180,7 +181,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 projComp = throwEnt.AddComponent<ThrownItemComponent>();
             }
-            
+
             projComp.IgnoreEntity(plyEnt);
 
             var transform = plyEnt.Transform;

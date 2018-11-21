@@ -104,6 +104,7 @@
     <Compile Include="GameObjects\EntitySystems\PowerApcSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSmesSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\VerbSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\StorageSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\WelderSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\TemperatureSystem.cs" />

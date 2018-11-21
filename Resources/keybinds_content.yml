@@ -26,3 +26,6 @@ binds:
   key: MouseLeft
   mod1: Control
   type: state
+- function: OpenContextMenu
+  key: MouseRight
+  type: state
