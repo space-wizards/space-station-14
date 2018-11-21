@@ -63,7 +63,6 @@ namespace Content.Server
             entityManager = IoCManager.Resolve<IEntityManager>();
             chatManager = IoCManager.Resolve<IChatManager>();
 
-            _server.RunLevelChanged += HandleRunLevelChanged;
             _players.PlayerStatusChanged += HandlePlayerStatusChanged;
 
             var factory = IoCManager.Resolve<IComponentFactory>();
@@ -135,46 +134,33 @@ namespace Content.Server
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
         }
 
+        public override void PostInit()
+        {
+            base.PostInit();
+
+            var timing = IoCManager.Resolve<IGameTiming>();
+            var mapLoader = IoCManager.Resolve<IMapLoader>();
+            var mapMan = IoCManager.Resolve<IMapManager>();
+
+            var newMap = mapMan.CreateMap();
+            var grid = mapLoader.LoadBlueprint(newMap, "Maps/stationstation.yml");
+
+            SpawnPoint = new GridLocalCoordinates(Vector2.Zero, grid);
+
+            var startTime = timing.RealTime;
+            var timeSpan = timing.RealTime - startTime;
+            Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
+        }
+
         /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _server.RunLevelChanged -= HandleRunLevelChanged;
                 _players.PlayerStatusChanged -= HandlePlayerStatusChanged;
             }
 
             base.Dispose(disposing);
-        }
-
-        private void HandleRunLevelChanged(object sender, RunLevelChangedEventArgs args)
-        {
-            switch (args.NewLevel)
-            {
-                case ServerRunLevel.PreGame:
-                    var timing = IoCManager.Resolve<IGameTiming>();
-                    var mapLoader = IoCManager.Resolve<IMapLoader>();
-                    var mapMan = IoCManager.Resolve<IMapManager>();
-
-                    var newMap = mapMan.CreateMap();
-                    var grid = mapLoader.LoadBlueprint(newMap, "Maps/stationstation.yml");
-
-                    SpawnPoint = new GridLocalCoordinates(Vector2.Zero, grid);
-
-                    var startTime = timing.RealTime;
-                    var timeSpan = timing.RealTime - startTime;
-                    Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
-
-                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Round loaded!");
-                    break;
-                case ServerRunLevel.Game:
-                    _players.SendJoinGameToAll();
-                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Round started!");
-                    break;
-                case ServerRunLevel.PostGame:
-                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Round over!");
-                    break;
-            }
         }
 
         private void HandlePlayerStatusChanged(object sender, SessionStatusEventArgs args)
@@ -198,17 +184,6 @@ namespace Content.Server
 
                 case SessionStatus.InLobby:
                     {
-                        // auto start game when first player joins
-                        if (_server.RunLevel == ServerRunLevel.PreGame && !_countdownStarted)
-                        {
-                            _countdownStarted = true;
-                            Timer.Spawn(2000, () =>
-                            {
-                                _server.RunLevel = ServerRunLevel.Game;
-                                _countdownStarted = false;
-                            });
-                        }
-
                         chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Lobby!", args.Session.SessionId);
                     }
                     break;
