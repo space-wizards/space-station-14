@@ -170,21 +170,12 @@ namespace Content.Server
                     {
                         session.Data.ContentDataUncast = new PlayerData(session.SessionId);
                     }
-
                     // timer time must be > tick length
-                    Timer.Spawn(0, args.Session.JoinLobby);
+                    Timer.Spawn(0, args.Session.JoinGame);
 
-                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined server!",
-                        args.Session.SessionId);
+                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined server!", args.Session.SessionId);
                 }
-                    break;
-
-                case SessionStatus.InLobby:
-                {
-                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Lobby!",
-                        args.Session.SessionId);
-                }
-                    break;
+                break;
 
                 case SessionStatus.InGame:
                 {
