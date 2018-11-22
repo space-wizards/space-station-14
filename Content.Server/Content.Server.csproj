@@ -108,6 +108,9 @@
     <Compile Include="GameObjects\EntitySystems\StorageSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\WelderSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\TemperatureSystem.cs" />
+    <Compile Include="GameTicking\GamePreset.cs" />
+    <Compile Include="GameTicking\GamePresets\PresetTraitor.cs" />
+    <Compile Include="GameTicking\GameTicker.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="GameObjects\Components\GUI\ServerHandsComponent.cs" />
     <Compile Include="GameObjects\Components\GUI\InventoryComponent.cs" />
@@ -116,6 +119,7 @@
     <Compile Include="GameObjects\Components\Damage\ResistanceSet.cs" />
     <Compile Include="GameObjects\Components\Temperature\TemperatureComponent.cs" />
     <Compile Include="Interfaces\GameObjects\IOnDamageBehavior.cs" />
+    <Compile Include="Interfaces\GameTicking\IGameTicker.cs" />
     <Compile Include="Interfaces\IServerNotifyManager.cs" />
     <Compile Include="Mobs\Commands.cs" />
     <Compile Include="Mobs\Mind.cs" />

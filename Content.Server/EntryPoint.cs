@@ -34,24 +34,21 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameTicking;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Interfaces;
+using SS14.Shared.Timing;
 
 namespace Content.Server
 {
     public class EntryPoint : GameServer
     {
-        const string PlayerPrototypeName = "HumanMob_Content";
-
         private IBaseServer _server;
         private IPlayerManager _players;
-        private IEntityManager entityManager;
         private IChatManager chatManager;
-
-        private bool _countdownStarted;
-
-        private GridLocalCoordinates SpawnPoint;
+        private IGameTicker _gameTicker;
 
         /// <inheritdoc />
         public override void Init()
@@ -60,7 +57,6 @@ namespace Content.Server
 
             _server = IoCManager.Resolve<IBaseServer>();
             _players = IoCManager.Resolve<IPlayerManager>();
-            entityManager = IoCManager.Resolve<IEntityManager>();
             chatManager = IoCManager.Resolve<IChatManager>();
 
             _players.PlayerStatusChanged += HandlePlayerStatusChanged;
@@ -129,7 +125,10 @@ namespace Content.Server
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
+            IoCManager.Register<IGameTicker, GameTicker>();
             IoCManager.BuildGraph();
+
+            _gameTicker = IoCManager.Resolve<IGameTicker>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
         }
@@ -138,18 +137,7 @@ namespace Content.Server
         {
             base.PostInit();
 
-            var timing = IoCManager.Resolve<IGameTiming>();
-            var mapLoader = IoCManager.Resolve<IMapLoader>();
-            var mapMan = IoCManager.Resolve<IMapManager>();
-
-            var newMap = mapMan.CreateMap();
-            var grid = mapLoader.LoadBlueprint(newMap, "Maps/stationstation.yml");
-
-            SpawnPoint = new GridLocalCoordinates(Vector2.Zero, grid);
-
-            var startTime = timing.RealTime;
-            var timeSpan = timing.RealTime - startTime;
-            Logger.Info($"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
+            _gameTicker.Initialize();
         }
 
         /// <inheritdoc />
@@ -163,6 +151,13 @@ namespace Content.Server
             base.Dispose(disposing);
         }
 
+        public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)
+        {
+            base.Update(level, frameTime);
+
+            _gameTicker.Update(new FrameEventArgs(frameTime));
+        }
+
         private void HandlePlayerStatusChanged(object sender, SessionStatusEventArgs args)
         {
             var session = args.Session;
@@ -170,67 +165,60 @@ namespace Content.Server
             switch (args.NewStatus)
             {
                 case SessionStatus.Connected:
+                {
+                    if (session.Data.ContentDataUncast == null)
                     {
-                        if (session.Data.ContentDataUncast == null)
-                        {
-                            session.Data.ContentDataUncast = new PlayerData(session.SessionId);
-                        }
-                        // timer time must be > tick length
-                        Timer.Spawn(0, args.Session.JoinLobby);
-
-                        chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined server!", args.Session.SessionId);
+                        session.Data.ContentDataUncast = new PlayerData(session.SessionId);
                     }
+
+                    // timer time must be > tick length
+                    Timer.Spawn(0, args.Session.JoinLobby);
+
+                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined server!",
+                        args.Session.SessionId);
+                }
                     break;
 
                 case SessionStatus.InLobby:
-                    {
-                        chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Lobby!", args.Session.SessionId);
-                    }
+                {
+                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Lobby!",
+                        args.Session.SessionId);
+                }
                     break;
 
                 case SessionStatus.InGame:
+                {
+                    //TODO: Check for existing mob and re-attach
+                    var data = session.ContentData();
+                    if (data.Mind == null)
                     {
-                        //TODO: Check for existing mob and re-attach
-                        var data = session.ContentData();
-                        if (data.Mind == null)
+                        // No mind yet (new session), make a new one.
+                        data.Mind = new Mind(session.SessionId);
+                        var mob = _gameTicker.SpawnPlayerMob();
+                        data.Mind.TransferTo(mob);
+                    }
+                    else
+                    {
+                        if (data.Mind.CurrentEntity == null)
                         {
-                            // No mind yet (new session), make a new one.
-                            data.Mind = new Mind(session.SessionId);
-                            var mob = SpawnPlayerMob();
+                            var mob = _gameTicker.SpawnPlayerMob();
                             data.Mind.TransferTo(mob);
                         }
-                        else
-                        {
-                            if (data.Mind.CurrentEntity == null)
-                            {
-                                var mob = SpawnPlayerMob();
-                                data.Mind.TransferTo(mob);
-                            }
-                            session.AttachToEntity(data.Mind.CurrentEntity);
-                        }
-                        chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Game!", args.Session.SessionId);
+
+                        session.AttachToEntity(data.Mind.CurrentEntity);
                     }
+
+                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Game!",
+                        args.Session.SessionId);
+                }
                     break;
 
                 case SessionStatus.Disconnected:
-                    {
-                        chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player left!", args.Session.SessionId);
-                    }
+                {
+                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player left!", args.Session.SessionId);
+                }
                     break;
             }
-        }
-
-        IEntity SpawnPlayerMob()
-        {
-            var entity = entityManager.ForceSpawnEntityAt(PlayerPrototypeName, SpawnPoint);
-            var shoes = entityManager.SpawnEntity("ShoesItem");
-            var uniform = entityManager.SpawnEntity("UniformAssistant");
-            if (entity.TryGetComponent(out InventoryComponent inventory))
-            {
-                inventory.Equip(EquipmentSlotDefines.Slots.INNERCLOTHING, uniform.GetComponent<ClothingComponent>());
-                inventory.Equip(EquipmentSlotDefines.Slots.SHOES, shoes.GetComponent<ClothingComponent>());
-            }
-            return entity;
         }
     }
 }
