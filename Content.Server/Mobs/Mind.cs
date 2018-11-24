@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Players;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
@@ -37,7 +38,7 @@ namespace Content.Server.Mobs
         ///     The session ID of the player owning this mind.
         /// </summary>
         [ViewVariables]
-        public NetSessionId SessionId { get; }
+        public NetSessionId? SessionId { get; private set; }
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
@@ -76,8 +77,12 @@ namespace Content.Server.Mobs
         {
             get
             {
+                if (!SessionId.HasValue)
+                {
+                    return null;
+                }
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
-                playerMgr.TryGetSessionById(SessionId, out var ret);
+                playerMgr.TryGetSessionById(SessionId.Value, out var ret);
                 return ret;
             }
         }
@@ -210,6 +215,44 @@ namespace Content.Server.Mobs
             }
 
             VisitingEntity = null;
+        }
+
+        public void ChangeOwningPlayer(NetSessionId? newOwner)
+        {
+            var playerMgr = IoCManager.Resolve<IPlayerManager>();
+            PlayerData newOwnerData = null;
+            if (newOwner.HasValue)
+            {
+                if (!playerMgr.TryGetPlayerData(newOwner.Value, out var uncast))
+                {
+                    // This restriction is because I'm too lazy to initialize the player data
+                    // for a client that hasn't logged in yet.
+                    // Go ahead and remove it if you need.
+                    throw new ArgumentException("new owner must have previously logged into the server.");
+                }
+
+                newOwnerData = uncast.ContentData();
+            }
+
+            // Make sure to remove control from our old owner if they're logged in.
+            var oldSession = Session;
+            oldSession?.AttachToEntity(null);
+
+            if (SessionId.HasValue)
+            {
+                playerMgr.GetPlayerData(SessionId.Value).ContentData().Mind = null;
+            }
+
+            SessionId = newOwner;
+            if (!newOwner.HasValue)
+            {
+                return;
+            }
+
+            // Yank new owner out of their old mind too.
+            // Can I mention how much I love the word yank?
+            newOwnerData.Mind?.ChangeOwningPlayer(null);
+            newOwnerData.Mind = this;
         }
 
         public void Visit(IEntity entity)
