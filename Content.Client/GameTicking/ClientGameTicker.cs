@@ -42,7 +42,23 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame), _joinGame);
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), _lobbyStatus);
 
+            _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
+            
             _initialized = true;
+        }
+
+        private void BaseClientOnRunLevelChanged(object sender, RunLevelChangedEventArgs e)
+        {
+            if (e.NewLevel != ClientRunLevel.Initialize)
+            {
+                return;
+            }
+
+            _tickerState = TickerState.Unset;
+            _lobby?.Dispose();
+            _lobby = null;
+            _gameChat?.Dispose();
+            _gameChat = null;
         }
 
         public void FrameUpdate(RenderFrameEventArgs renderFrameEventArgs)
