@@ -1,4 +1,6 @@
 using Content.Server.GameTicking;
+using SS14.Server.Interfaces.Player;
+using SS14.Server.Player;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Timing;
 
@@ -18,6 +20,9 @@ namespace Content.Server.Interfaces.GameTicking
         void StartRound();
         void EndRound();
 
-        IEntity SpawnPlayerMob();
+        void Respawn(IPlayerSession targetPlayer);
+        void MakeObserve(IPlayerSession player);
+        void MakeJoinGame(IPlayerSession player);
+        void ToggleReady(IPlayerSession player, bool ready);
     }
 }

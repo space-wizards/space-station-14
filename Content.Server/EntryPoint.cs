@@ -45,21 +45,12 @@ namespace Content.Server
 {
     public class EntryPoint : GameServer
     {
-        private IBaseServer _server;
-        private IPlayerManager _players;
-        private IChatManager chatManager;
         private IGameTicker _gameTicker;
 
         /// <inheritdoc />
         public override void Init()
         {
             base.Init();
-
-            _server = IoCManager.Resolve<IBaseServer>();
-            _players = IoCManager.Resolve<IPlayerManager>();
-            chatManager = IoCManager.Resolve<IChatManager>();
-
-            _players.PlayerStatusChanged += HandlePlayerStatusChanged;
 
             var factory = IoCManager.Resolve<IComponentFactory>();
 
@@ -140,76 +131,11 @@ namespace Content.Server
             _gameTicker.Initialize();
         }
 
-        /// <inheritdoc />
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _players.PlayerStatusChanged -= HandlePlayerStatusChanged;
-            }
-
-            base.Dispose(disposing);
-        }
-
         public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)
         {
             base.Update(level, frameTime);
 
             _gameTicker.Update(new FrameEventArgs(frameTime));
-        }
-
-        private void HandlePlayerStatusChanged(object sender, SessionStatusEventArgs args)
-        {
-            var session = args.Session;
-
-            switch (args.NewStatus)
-            {
-                case SessionStatus.Connected:
-                {
-                    if (session.Data.ContentDataUncast == null)
-                    {
-                        session.Data.ContentDataUncast = new PlayerData(session.SessionId);
-                    }
-                    // timer time must be > tick length
-                    Timer.Spawn(0, args.Session.JoinGame);
-
-                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined server!", args.Session.SessionId);
-                }
-                break;
-
-                case SessionStatus.InGame:
-                {
-                    //TODO: Check for existing mob and re-attach
-                    var data = session.ContentData();
-                    if (data.Mind == null)
-                    {
-                        // No mind yet (new session), make a new one.
-                        data.Mind = new Mind(session.SessionId);
-                        var mob = _gameTicker.SpawnPlayerMob();
-                        data.Mind.TransferTo(mob);
-                    }
-                    else
-                    {
-                        if (data.Mind.CurrentEntity == null)
-                        {
-                            var mob = _gameTicker.SpawnPlayerMob();
-                            data.Mind.TransferTo(mob);
-                        }
-
-                        session.AttachToEntity(data.Mind.CurrentEntity);
-                    }
-
-                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player joined Game!",
-                        args.Session.SessionId);
-                }
-                    break;
-
-                case SessionStatus.Disconnected:
-                {
-                    chatManager.DispatchMessage(ChatChannel.Server, "Gamemode: Player left!", args.Session.SessionId);
-                }
-                    break;
-            }
         }
     }
 }

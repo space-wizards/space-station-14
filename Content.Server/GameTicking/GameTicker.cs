@@ -1,30 +1,39 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces.GameTicking;
+using Content.Server.Mobs;
+using Content.Server.Players;
+using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
-using JetBrains.Annotations;
-using SS14.Server.Interfaces;
+using SS14.Server.Interfaces.Chat;
 using SS14.Server.Interfaces.Console;
 using SS14.Server.Interfaces.Maps;
 using SS14.Server.Interfaces.Player;
+using SS14.Server.Player;
 using SS14.Shared.Configuration;
+using SS14.Shared.Console;
+using SS14.Shared.Enums;
 using SS14.Shared.Interfaces.Configuration;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Map;
+using SS14.Shared.Interfaces.Network;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Shared.Maths;
+using SS14.Shared.Network;
+using SS14.Shared.Timers;
 using SS14.Shared.Timing;
 using SS14.Shared.Utility;
 using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public class GameTicker : IGameTicker
+    public class GameTicker : SharedGameTicker, IGameTicker
     {
         [ViewVariables]
         public GameRunLevel RunLevel
@@ -44,11 +53,27 @@ namespace Content.Server.GameTicking
             }
         }
 
+        public Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
+
         private const string PlayerPrototypeName = "HumanMob_Content";
+        private const string ObserverPrototypeName = "MobObserver";
         private const string MapFile = "Maps/stationstation.yml";
 
-        private bool _initialized;
+        // Seconds.
+        private const float LobbyDuration = 20;
+
+        [ViewVariables] private bool _initialized;
         [ViewVariables(VVAccess.ReadWrite)] private GridLocalCoordinates _spawnPoint;
+        [ViewVariables] private GameRunLevel _runLevel;
+
+        [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar<bool>("game.lobbyenabled");
+
+        // Value is whether they're ready.
+        [ViewVariables]
+        private readonly Dictionary<IPlayerSession, bool> _playersInLobby = new Dictionary<IPlayerSession, bool>();
+
+        [ViewVariables] private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
+        private DateTime _roundStartTimeUtc;
 
 #pragma warning disable 649
         [Dependency] private IEntityManager _entityManager;
@@ -56,16 +81,21 @@ namespace Content.Server.GameTicking
         [Dependency] private IMapLoader _mapLoader;
         [Dependency] private IGameTiming _gameTiming;
         [Dependency] private IConfigurationManager _configurationManager;
+        [Dependency] private IPlayerManager _playerManager;
+        [Dependency] private IChatManager _chatManager;
+        [Dependency] private IServerNetManager _netManager;
 #pragma warning restore 649
-
-        public Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
-        private GameRunLevel _runLevel;
 
         public void Initialize()
         {
             DebugTools.Assert(!_initialized);
 
             _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
+            _playerManager.PlayerStatusChanged += _handlePlayerStatusChanged;
+
+            _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
+            _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
+            _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
 
             RestartRound();
 
@@ -74,6 +104,13 @@ namespace Content.Server.GameTicking
 
         public void Update(FrameEventArgs frameEventArgs)
         {
+            if (RunLevel != GameRunLevel.PreRoundLobby || _roundStartTimeUtc > DateTime.UtcNow ||
+                _roundStartCountdownHasNotStartedYetDueToNoPlayers)
+            {
+                return;
+            }
+
+            StartRound();
         }
 
         public void RestartRound()
@@ -84,12 +121,21 @@ namespace Content.Server.GameTicking
             _resettingCleanup();
             _preRoundSetup();
 
-            if (_configurationManager.GetCVar<bool>("game.lobbyenabled"))
+            if (!LobbyEnabled)
             {
-                throw new NotImplementedException();
+                StartRound();
             }
-
-            StartRound();
+            else
+            {
+                if (_playerManager.PlayerCount == 0)
+                {
+                    _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
+                }
+                else
+                {
+                    _roundStartTimeUtc = DateTime.UtcNow + TimeSpan.FromSeconds(LobbyDuration);
+                }
+            }
         }
 
         public void StartRound()
@@ -102,6 +148,18 @@ namespace Content.Server.GameTicking
             // TODO: Allow other presets to be selected.
             var preset = new PresetTraitor();
             preset.Start();
+
+            foreach (var (playerSession, ready) in _playersInLobby.ToList())
+            {
+                if (!ready)
+                {
+                    continue;
+                }
+
+                _spawnPlayer(playerSession);
+            }
+
+            _sendStatusToAll();
         }
 
         public void EndRound()
@@ -112,7 +170,52 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PostRound;
         }
 
-        public IEntity SpawnPlayerMob()
+        public void Respawn(IPlayerSession targetPlayer)
+        {
+            targetPlayer.ContentData().WipeMind();
+
+            if (LobbyEnabled)
+            {
+                _playerJoinLobby(targetPlayer);
+            }
+            else
+            {
+                _spawnPlayer(targetPlayer);
+            }
+        }
+
+        public void MakeObserve(IPlayerSession player)
+        {
+            if (!_playersInLobby.ContainsKey(player))
+            {
+                return;
+            }
+
+            _spawnObserver(player);
+        }
+
+        public void MakeJoinGame(IPlayerSession player)
+        {
+            if (!_playersInLobby.ContainsKey(player))
+            {
+                return;
+            }
+
+            _spawnPlayer(player);
+        }
+
+        public void ToggleReady(IPlayerSession player, bool ready)
+        {
+            if (!_playersInLobby.ContainsKey(player))
+            {
+                return;
+            }
+
+            _playersInLobby[player] = ready;
+            _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
+        }
+
+        private IEntity _spawnPlayerMob()
         {
             var entity = _entityManager.ForceSpawnEntityAt(PlayerPrototypeName, _spawnPoint);
             var shoes = _entityManager.SpawnEntity("ShoesItem");
@@ -124,6 +227,11 @@ namespace Content.Server.GameTicking
             }
 
             return entity;
+        }
+
+        private IEntity _spawnObserverMob()
+        {
+            return _entityManager.ForceSpawnEntityAt(ObserverPrototypeName, _spawnPoint);
         }
 
         /// <summary>
@@ -149,6 +257,13 @@ namespace Content.Server.GameTicking
                     _mapManager.DeleteMap(map.Index);
                 }
             }
+
+            // Delete the minds of everybody.
+            // TODO: Maybe move this into a separate manager?
+            foreach (var unCastData in _playerManager.GetAllPlayerData())
+            {
+                unCastData.ContentData().WipeMind();
+            }
         }
 
         private void _preRoundSetup()
@@ -161,6 +276,138 @@ namespace Content.Server.GameTicking
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
+        }
+
+        private void _handlePlayerStatusChanged(object sender, SessionStatusEventArgs args)
+        {
+            var session = args.Session;
+
+            switch (args.NewStatus)
+            {
+                case SessionStatus.Connected:
+                {
+                    // Always make sure the client has player data. Mind gets assigned on spawn.
+                    if (session.Data.ContentDataUncast == null)
+                    {
+                        session.Data.ContentDataUncast = new PlayerData(session.SessionId);
+                    }
+
+                    // timer time must be > tick length
+                    Timer.Spawn(0, args.Session.JoinGame);
+
+                    _chatManager.DispatchMessage(ChatChannel.Server, "Game: Player joined server!",
+                        args.Session.SessionId);
+
+                    if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
+                    {
+                        _roundStartCountdownHasNotStartedYetDueToNoPlayers = false;
+                        _roundStartTimeUtc = DateTime.UtcNow + TimeSpan.FromSeconds(LobbyDuration);
+                    }
+
+                    break;
+                }
+
+                case SessionStatus.InGame:
+                {
+                    //TODO: Check for existing mob and re-attach
+                    var data = session.ContentData();
+                    if (data.Mind == null)
+                    {
+                        if (LobbyEnabled)
+                        {
+                            _playerJoinLobby(session);
+                            return;
+                        }
+
+                        _spawnPlayer(session);
+                    }
+                    else
+                    {
+                        if (data.Mind.CurrentEntity == null)
+                        {
+                            _spawnPlayer(session);
+                        }
+                        else
+                        {
+                            session.AttachToEntity(data.Mind.CurrentEntity);
+                            _playerJoinGame(session);
+                        }
+                    }
+
+                    _chatManager.DispatchMessage(ChatChannel.Server, "Game: Player joined Game!",
+                        args.Session.SessionId);
+                    break;
+                }
+
+                case SessionStatus.Disconnected:
+                {
+                    if (_playersInLobby.ContainsKey(session))
+                    {
+                        _playersInLobby.Remove(session);
+                    }
+
+                    _chatManager.DispatchMessage(ChatChannel.Server, "Game: Player left!", args.Session.SessionId);
+                    break;
+                }
+            }
+        }
+
+        private void _spawnPlayer(IPlayerSession session)
+        {
+            _playerJoinGame(session);
+            var data = session.ContentData();
+            data.WipeMind();
+            data.Mind = new Mind(session.SessionId);
+
+            var mob = _spawnPlayerMob();
+            data.Mind.TransferTo(mob);
+        }
+
+        private void _spawnObserver(IPlayerSession session)
+        {
+            _playerJoinGame(session);
+            var data = session.ContentData();
+            data.WipeMind();
+            data.Mind = new Mind(session.SessionId);
+
+            var mob = _spawnObserverMob();
+            data.Mind.TransferTo(mob);
+        }
+
+        private void _playerJoinLobby(IPlayerSession session)
+        {
+            _playersInLobby.Add(session, false);
+
+            _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
+            _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
+        }
+
+        private void _playerJoinGame(IPlayerSession session)
+        {
+            if (_playersInLobby.ContainsKey(session))
+            {
+                _playersInLobby.Remove(session);
+            }
+
+            _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinGame>(), session.ConnectedClient);
+        }
+
+        private MsgTickerLobbyStatus _getStatusMsg(IPlayerSession session)
+        {
+            _playersInLobby.TryGetValue(session, out var ready);
+            var msg = _netManager.CreateNetMessage<MsgTickerLobbyStatus>();
+            msg.IsRoundStarted = RunLevel != GameRunLevel.PreRoundLobby;
+            msg.StartTime = _roundStartTimeUtc;
+            msg.YouAreReady = ready;
+            return msg;
+        }
+
+        private void _sendStatusToAll()
+        {
+            foreach (var player in _playersInLobby.Keys)
+            {
+                _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
+            }
         }
     }
 
@@ -233,6 +480,96 @@ namespace Content.Server.GameTicking
         {
             var ticker = IoCManager.Resolve<IGameTicker>();
             ticker.RestartRound();
+        }
+    }
+
+    class RespawnCommand : IClientCommand
+    {
+        public string Command => "respawn";
+        public string Description => "Respawns a player, kicking them back to the lobby.";
+        public string Help => "respawn <player>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "Must provide exactly one argument.");
+                return;
+            }
+
+            var playerMgr = IoCManager.Resolve<IPlayerManager>();
+            var ticker = IoCManager.Resolve<IGameTicker>();
+
+            var arg = new NetSessionId(args[0]);
+            if (!playerMgr.TryGetSessionById(arg, out var targetPlayer))
+            {
+                if (!playerMgr.TryGetPlayerData(arg, out var data))
+                {
+                    shell.SendText(player, "Unknown player");
+                    return;
+                }
+
+                data.ContentData().WipeMind();
+                shell.SendText(player,
+                    "Player is not currently online, but they will respawn if they come back online");
+                return;
+            }
+
+            ticker.Respawn(targetPlayer);
+        }
+    }
+
+    class ObserveCommand : IClientCommand
+    {
+        public string Command => "observe";
+        public string Description => "";
+        public string Help => "";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (player == null)
+            {
+                return;
+            }
+
+            var ticker = IoCManager.Resolve<IGameTicker>();
+            ticker.MakeObserve(player);
+        }
+    }
+
+    class JoinGameCommand : IClientCommand
+    {
+        public string Command => "joingame";
+        public string Description => "";
+        public string Help => "";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (player == null)
+            {
+                return;
+            }
+
+            var ticker = IoCManager.Resolve<IGameTicker>();
+            ticker.MakeJoinGame(player);
+        }
+    }
+
+    class ToggleReadyCommand : IClientCommand
+    {
+        public string Command => "toggleready";
+        public string Description => "";
+        public string Help => "";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (player == null)
+            {
+                return;
+            }
+
+            var ticker = IoCManager.Resolve<IGameTicker>();
+            ticker.ToggleReady(player, bool.Parse(args[0]));
         }
     }
 }

@@ -4,6 +4,7 @@ using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.Components.Power;
 using Content.Client.GameObjects.Components.SmoothWalling;
 using Content.Client.GameObjects.Components.Storage;
+using Content.Client.GameTicking;
 using Content.Client.Input;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.GameObjects;
@@ -77,6 +78,7 @@ namespace Content.Client
 
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
+            IoCManager.Register<IClientGameTicker, ClientGameTicker>();
             IoCManager.BuildGraph();
         }
 
@@ -89,6 +91,7 @@ namespace Content.Client
             ContentContexts.SetupContexts(inputMan.Contexts);
 
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
+            IoCManager.Resolve<IClientGameTicker>().Initialize();
         }
 
         public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)
@@ -98,7 +101,9 @@ namespace Content.Client
             switch (level)
             {
                 case AssemblyLoader.UpdateLevel.FramePreEngine:
-                    IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(new RenderFrameEventArgs(frameTime));
+                    var renderFrameEventArgs = new RenderFrameEventArgs(frameTime);
+                    IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(renderFrameEventArgs);
+                    IoCManager.Resolve<IClientGameTicker>().FrameUpdate(renderFrameEventArgs);
                     break;
             }
         }
