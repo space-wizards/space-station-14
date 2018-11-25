@@ -73,7 +73,7 @@ namespace Content.Server.GameTicking
         private readonly Dictionary<IPlayerSession, bool> _playersInLobby = new Dictionary<IPlayerSession, bool>();
 
         [ViewVariables] private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
-        [ViewVariables] private DateTime _roundStartTimeUtc;
+        private DateTime _roundStartTimeUtc;
 
 #pragma warning disable 649
         [Dependency] private IEntityManager _entityManager;
