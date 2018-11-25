@@ -1,4 +1,5 @@
-﻿using SS14.Server.GameObjects.EntitySystems;
+﻿using Content.Shared.GameObjects;
+using SS14.Server.GameObjects.EntitySystems;
 using SS14.Shared.Audio;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.Interfaces.GameObjects;

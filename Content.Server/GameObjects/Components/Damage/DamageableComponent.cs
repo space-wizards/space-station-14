@@ -33,6 +33,10 @@ namespace Content.Server.GameObjects
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
 
+        public override ComponentState GetComponentState()
+        {
+            return new DamageComponentState(CurrentDamage);
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {

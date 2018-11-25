@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Content.Shared.GameObjects;
+using System;
 using System.Collections.Generic;
 
 namespace Content.Server.GameObjects
@@ -7,16 +8,16 @@ namespace Content.Server.GameObjects
     /// Damage types used in-game.
     /// Total should never be used directly - it's a derived value.
     /// </summary>
-    public enum DamageType
-    {
-        Total,
-        Brute,
-        Heat,
-        Cold,
-        Acid,
-        Toxic,
-        Electric
-    }
+    //public enum DamageType
+    //{
+    //    Total,
+    //    Brute,
+    //    Heat,
+    //    Cold,
+    //    Acid,
+    //    Toxic,
+    //    Electric
+    //}
 
     /// <summary>
     /// Resistance set used by damageable objects.

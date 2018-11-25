@@ -11,6 +11,7 @@ using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.Serialization;
 using SS14.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {

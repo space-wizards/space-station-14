@@ -72,6 +72,7 @@
     <Compile Include="GameObjects\Components\DamageableComponent.cs" />
     <Compile Include="GameObjects\Components\HUD\Health\hi.cs" />
     <Compile Include="GameObjects\Components\HUD\Inventory\ClientInventoryComponent.cs" />
+    <Compile Include="GameObjects\Components\Mobs\SpeciesUI.cs" />
     <Compile Include="GameObjects\Components\Storage\ClientStorageComponent.cs" />
     <Compile Include="Input\ContentContexts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,4 +125,5 @@
     <Compile Include="Construction\ConstructionPlacementHijack.cs" />
     <Compile Include="GameObjects\Components\IconSmoothing\IconSmoothComponent.cs" />
   </ItemGroup>
+  <ItemGroup />
 </Project>

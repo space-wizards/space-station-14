@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using YamlDotNet.RepresentationModel;
 using SS14.Shared.Utility;
+using Content.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {

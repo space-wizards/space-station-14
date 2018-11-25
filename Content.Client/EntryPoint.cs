@@ -22,7 +22,6 @@ namespace Content.Client
 
             factory.RegisterIgnore("Item");
             factory.RegisterIgnore("Interactable");
-            factory.RegisterIgnore("Damageable");
             factory.RegisterIgnore("Destructible");
             factory.RegisterIgnore("Temperature");
             factory.RegisterIgnore("PowerTransfer");
@@ -59,6 +58,7 @@ namespace Content.Client
             factory.Register<ConstructorComponent>();
             factory.Register<ConstructionGhostComponent>();
             factory.Register<IconSmoothComponent>();
+            factory.Register<DamageableComponent>();
 
             factory.RegisterIgnore("Construction");
             factory.RegisterIgnore("Apc");
