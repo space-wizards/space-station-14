@@ -27,7 +27,8 @@ namespace Content.Server.Players
 
         public void WipeMind()
         {
-            Mind.ChangeOwningPlayer(null);
+            Mind?.ChangeOwningPlayer(null);
+            Mind = null;
         }
 
         public PlayerData(NetSessionId sessionId)
