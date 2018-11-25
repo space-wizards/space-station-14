@@ -43,7 +43,7 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), _lobbyStatus);
 
             _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
-            
+
             _initialized = true;
         }
 
@@ -178,6 +178,8 @@ namespace Content.Client.GameTicking
 
                 _chatConsole.ProcessCommand($"toggleready {args.Pressed}");
             };
+
+            _lobby.LeaveButton.OnPressed += args => _chatConsole.ProcessCommand("disconnect");
         }
 
         private void _joinGame(MsgTickerJoinGame message)

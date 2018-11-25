@@ -18,6 +18,8 @@ namespace Content.Client.UserInterface
         public Button ObserveButton =>
             GetChild<Button>("Panel/VBoxContainer/HBoxContainer/LeftVBox/ReadyButtons/ObserveButton");
 
+        public Button LeaveButton => GetChild<Button>("Panel/VBoxContainer/TitleContainer/LeaveButton");
+
         public Chatbox Chat { get; private set; }
 
         protected override void Initialize()
