@@ -76,7 +76,9 @@
     <Compile Include="GameObjects\Components\Storage\ClientStorageComponent.cs" />
     <Compile Include="GameObjects\EntitySystems\ClientNotifySystem.cs" />
     <Compile Include="GameObjects\EntitySystems\VerbSystem.cs" />
+    <Compile Include="GameTicking\ClientGameTicker.cs" />
     <Compile Include="Input\ContentContexts.cs" />
+    <Compile Include="Interfaces\IClientGameTicker.cs" />
     <Compile Include="Interfaces\IClientNotifyManager.cs" />
     <Compile Include="ClientNotifyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="UserInterface\HandsGui.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
+    <Compile Include="UserInterface\LobbyGui.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">

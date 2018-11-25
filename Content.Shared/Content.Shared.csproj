@@ -108,6 +108,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <Compile Include="Input\ContentKeyFunctions.cs" />
+    <Compile Include="SharedGameTicker.cs" />
     <Compile Include="SharedNotifyManager.cs" />
     <Compile Include="Utility\ContentHelpers.cs" />
     <Compile Include="GameObjects\Components\Power\SharedSmesComponent.cs" />
