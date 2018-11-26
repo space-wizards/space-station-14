@@ -39,6 +39,7 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Interfaces;
+using SS14.Server.Interfaces.ServerStatus;
 using SS14.Shared.Timing;
 
 namespace Content.Server
@@ -46,6 +47,7 @@ namespace Content.Server
     public class EntryPoint : GameServer
     {
         private IGameTicker _gameTicker;
+        private StatusShell _statusShell;
 
         /// <inheritdoc />
         public override void Init()
@@ -122,6 +124,10 @@ namespace Content.Server
             _gameTicker = IoCManager.Resolve<IGameTicker>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
+
+            var playerManager = IoCManager.Resolve<IPlayerManager>();
+
+            _statusShell = new StatusShell();
         }
 
         public override void PostInit()

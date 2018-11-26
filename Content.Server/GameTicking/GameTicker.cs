@@ -53,7 +53,7 @@ namespace Content.Server.GameTicking
             }
         }
 
-        public Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
+        public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
 
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
@@ -414,8 +414,8 @@ namespace Content.Server.GameTicking
     public enum GameRunLevel
     {
         PreRoundLobby = 0,
-        InRound,
-        PostRound
+        InRound = 1,
+        PostRound = 2
     }
 
     public class GameRunLevelChangedEventArgs : EventArgs

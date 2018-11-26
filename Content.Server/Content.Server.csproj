@@ -133,6 +133,7 @@
     <Compile Include="GameObjects\Components\Power\PoweredLightComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
     <Compile Include="ServerNotifyManager.cs" />
+    <Compile Include="StatusShell.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">
