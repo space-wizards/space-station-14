@@ -69,7 +69,6 @@
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\DamageableComponent.cs" />
-    <Compile Include="GameObjects\Components\HUD\Health\hi.cs" />
     <Compile Include="GameObjects\Components\HUD\Inventory\ClientInventoryComponent.cs" />
     <Compile Include="GameObjects\Components\Mobs\SpeciesUI.cs" />
     <Compile Include="GameObjects\Components\Clothing\ClothingComponent.cs" />
@@ -134,5 +133,7 @@
     <Compile Include="Construction\ConstructionPlacementHijack.cs" />
     <Compile Include="GameObjects\Components\IconSmoothing\IconSmoothComponent.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="GameObjects\Components\HUD\Health\" />
+  </ItemGroup>
 </Project>
