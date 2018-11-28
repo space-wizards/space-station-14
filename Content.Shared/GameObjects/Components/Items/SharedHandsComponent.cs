@@ -37,4 +37,16 @@ namespace Content.Shared.GameObjects
             Directed = true;
         }
     }
+
+    [Serializable, NetSerializable]
+    public class ClientAttackByInHandMsg : ComponentMessage
+    {
+        public string Index { get; }
+
+        public ClientAttackByInHandMsg(string index)
+        {
+            Directed = true;
+            Index = index;
+        }
+    }
 }

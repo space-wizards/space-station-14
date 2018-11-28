@@ -9,6 +9,7 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.Log;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -23,11 +24,13 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// <summary>
         ///     The mind controlling this mob. Can be null.
         /// </summary>
+        [ViewVariables]
         public Mind Mind { get; private set; }
 
         /// <summary>
         ///     True if we have a mind, false otherwise.
         /// </summary>
+        [ViewVariables]
         public bool HasMind => Mind != null;
 
         /// <summary>

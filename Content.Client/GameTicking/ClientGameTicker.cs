@@ -1,0 +1,228 @@
+using System;
+using Content.Client.Interfaces;
+using Content.Client.UserInterface;
+using Content.Shared;
+using SS14.Client;
+using SS14.Client.Console;
+using SS14.Client.Interfaces;
+using SS14.Client.Interfaces.Input;
+using SS14.Client.Interfaces.UserInterface;
+using SS14.Client.UserInterface.CustomControls;
+using SS14.Shared.Input;
+using SS14.Shared.Interfaces.Network;
+using SS14.Shared.IoC;
+using SS14.Shared.Utility;
+using SS14.Shared.ViewVariables;
+
+namespace Content.Client.GameTicking
+{
+    public class ClientGameTicker : SharedGameTicker, IClientGameTicker
+    {
+#pragma warning disable 649
+        [Dependency] private IClientNetManager _netManager;
+        [Dependency] private IUserInterfaceManager _userInterfaceManager;
+        [Dependency] private IClientChatConsole _chatConsole;
+        [Dependency] private IInputManager _inputManager;
+        [Dependency] private IBaseClient _baseClient;
+#pragma warning restore 649
+
+        [ViewVariables] private bool _areWeReady;
+        [ViewVariables] private bool _initialized;
+        [ViewVariables] private TickerState _tickerState;
+        [ViewVariables] private Chatbox _gameChat;
+        [ViewVariables] private LobbyGui _lobby;
+        [ViewVariables] private bool _gameStarted;
+        [ViewVariables] private DateTime _startTime;
+
+        public void Initialize()
+        {
+            DebugTools.Assert(!_initialized);
+
+            _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby), _joinLobby);
+            _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame), _joinGame);
+            _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), _lobbyStatus);
+
+            _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
+
+            _initialized = true;
+        }
+
+        private void BaseClientOnRunLevelChanged(object sender, RunLevelChangedEventArgs e)
+        {
+            if (e.NewLevel != ClientRunLevel.Initialize)
+            {
+                return;
+            }
+
+            _tickerState = TickerState.Unset;
+            _lobby?.Dispose();
+            _lobby = null;
+            _gameChat?.Dispose();
+            _gameChat = null;
+        }
+
+        public void FrameUpdate(RenderFrameEventArgs renderFrameEventArgs)
+        {
+            if (_lobby == null)
+            {
+                return;
+            }
+
+            if (_gameStarted)
+            {
+                _lobby.StartTime.Text = "";
+                return;
+            }
+
+            string text;
+            var difference = _startTime - DateTime.UtcNow;
+            if (difference.Ticks < 0)
+            {
+                if (difference.TotalSeconds < -5)
+                {
+                    text = "Right Now?";
+                }
+                else
+                {
+                    text = "Right Now";
+                }
+            }
+            else
+            {
+                text = $"{(int) Math.Floor(difference.TotalMinutes)}:{difference.Seconds:D2}";
+            }
+
+            _lobby.StartTime.Text = "Round Starts In: " + text;
+        }
+
+        private void _lobbyStatus(MsgTickerLobbyStatus message)
+        {
+            _startTime = message.StartTime;
+            _gameStarted = message.IsRoundStarted;
+            _areWeReady = message.YouAreReady;
+
+            _updateLobbyUi();
+        }
+
+        private void _updateLobbyUi()
+        {
+            if (_lobby == null)
+            {
+                return;
+            }
+
+            if (_gameStarted)
+            {
+                _lobby.ReadyButton.Text = "Join";
+                _lobby.ReadyButton.ToggleMode = false;
+                _lobby.ReadyButton.Pressed = false;
+            }
+            else
+            {
+                _lobby.StartTime.Text = "";
+                _lobby.ReadyButton.Text = "Ready Up";
+                _lobby.ReadyButton.ToggleMode = true;
+                _lobby.ReadyButton.Pressed = _areWeReady;
+            }
+        }
+
+        private void _joinLobby(MsgTickerJoinLobby message)
+        {
+            if (_tickerState == TickerState.InLobby)
+            {
+                return;
+            }
+
+            if (_gameChat != null)
+            {
+                _gameChat.TextSubmitted -= _chatConsole.ParseChatMessage;
+                _chatConsole.AddString -= _gameChat.AddLine;
+                _gameChat.Dispose();
+                _gameChat = null;
+            }
+
+            _tickerState = TickerState.InLobby;
+
+            _lobby = new LobbyGui();
+            _userInterfaceManager.StateRoot.AddChild(_lobby);
+
+            _lobby.Chat.TextSubmitted += _chatConsole.ParseChatMessage;
+            _chatConsole.AddString += _lobby.Chat.AddLine;
+            _lobby.Chat.DefaultChatFormat = "ooc \"{0}\"";
+
+            _lobby.ServerName.Text = _baseClient.GameInfo.ServerName;
+
+            _inputManager.SetInputCommand(EngineKeyFunctions.FocusChat,
+                InputCmdHandler.FromDelegate(session => { _lobby.Chat.Input.GrabFocus(); }));
+
+            _updateLobbyUi();
+
+            _lobby.ObserveButton.OnPressed += args => { _chatConsole.ProcessCommand("observe"); };
+
+            _lobby.ReadyButton.OnPressed += args =>
+            {
+                if (!_gameStarted)
+                {
+                    return;
+                }
+
+                _chatConsole.ProcessCommand("joingame");
+            };
+
+            _lobby.ReadyButton.OnToggled += args =>
+            {
+                if (_gameStarted)
+                {
+                    return;
+                }
+
+                _chatConsole.ProcessCommand($"toggleready {args.Pressed}");
+            };
+
+            _lobby.LeaveButton.OnPressed += args => _chatConsole.ProcessCommand("disconnect");
+        }
+
+        private void _joinGame(MsgTickerJoinGame message)
+        {
+            if (_tickerState == TickerState.InGame)
+            {
+                return;
+            }
+
+            _tickerState = TickerState.InGame;
+
+            if (_lobby != null)
+            {
+                _lobby.Chat.TextSubmitted -= _chatConsole.ParseChatMessage;
+                _chatConsole.AddString -= _lobby.Chat.AddLine;
+                _lobby.Dispose();
+                _lobby = null;
+            }
+
+            _inputManager.SetInputCommand(EngineKeyFunctions.FocusChat,
+                InputCmdHandler.FromDelegate(session => { _gameChat.Input.GrabFocus(); }));
+
+            _gameChat = new Chatbox();
+            _userInterfaceManager.StateRoot.AddChild(_gameChat);
+            _gameChat.TextSubmitted += _chatConsole.ParseChatMessage;
+            _chatConsole.AddString += _gameChat.AddLine;
+            _gameChat.DefaultChatFormat = "say \"{0}\"";
+        }
+
+        private enum TickerState
+        {
+            Unset = 0,
+
+            /// <summary>
+            ///     The client is in the lobby.
+            /// </summary>
+            InLobby = 1,
+
+            /// <summary>
+            ///     The client is NOT in the lobby.
+            ///     Do not confuse this with the client session status.
+            /// </summary>
+            InGame = 2
+        }
+    }
+}

@@ -9,6 +9,8 @@
   - whisper
   - me
   - ooc
+  - observe
+  - toggleready
 
 - Index: 50
   Name: Moderator
@@ -21,6 +23,9 @@
   - whisper
   - me
   - ooc
+  - showtime
+  - observe
+  - toggleready
 
 - Index: 100
   Name: Administrator
@@ -32,3 +37,8 @@
   - whisper
   - me
   - ooc
+  - showtime
+  - aghost
+  - observe
+  - toggleready
+  CanViewVar: true

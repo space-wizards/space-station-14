@@ -27,16 +27,7 @@ namespace Content.Client.Construction
         {
             if (Prototype != null)
             {
-                // Stupid god damn Y AXIS.
                 var dir = Manager.Direction;
-                if (dir == Direction.South)
-                {
-                    dir = Direction.North;
-                }
-                else if (dir == Direction.North)
-                {
-                    dir = Direction.South;
-                }
                 Owner.SpawnGhost(Prototype, coords, dir);
             }
             return true;

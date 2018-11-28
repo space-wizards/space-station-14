@@ -5,6 +5,7 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Reflection;
 using SS14.Shared.IoC;
 using SS14.Shared.Serialization;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Stack
 {
@@ -17,6 +18,7 @@ namespace Content.Server.GameObjects.Components.Stack
 
         public override string Name => "Stack";
 
+        [ViewVariables]
         public int Count
         {
             get => _count;
@@ -29,9 +31,14 @@ namespace Content.Server.GameObjects.Components.Stack
                 }
             }
         }
+
+        [ViewVariables]
         public int MaxCount { get => _maxCount; private set => _maxCount = value; }
+
+        [ViewVariables]
         public int AvailableSpace => MaxCount - Count;
 
+        [ViewVariables]
         public object StackType { get; private set; }
 
         public void Add(int amount)

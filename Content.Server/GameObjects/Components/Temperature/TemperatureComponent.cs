@@ -6,6 +6,7 @@ using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using Content.Shared.GameObjects;
 using SS14.Shared.Serialization;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
@@ -23,6 +24,7 @@ namespace Content.Server.GameObjects
         public override uint? NetID => ContentNetIDs.TEMPERATURE;
 
         //TODO: should be programmatic instead of how it currently is
+        [ViewVariables]
         public float CurrentTemperature { get; private set; } = PhysicalConstants.ZERO_CELCIUS;
 
         float _fireDamageThreshold = 0;

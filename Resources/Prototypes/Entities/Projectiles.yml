@@ -6,7 +6,7 @@
   - type: Sprite
     directional: false
     texture: Objects/projectilebullet.png
-    rotation: 180
+    #rotation: -180
 
   - type: Icon
     texture: Objects/projectilebullet.png

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SS14.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Inventory
 {
     public static class EquipmentSlotDefines
     {
+        [Serializable, NetSerializable]
         public enum Slots
         {
             NONE,
@@ -30,6 +32,7 @@ namespace Content.Shared.GameObjects.Components.Inventory
             EXOSUITSLOT2
         }
 
+        [Serializable, NetSerializable]
         [Flags]
         public enum SlotFlags
         {

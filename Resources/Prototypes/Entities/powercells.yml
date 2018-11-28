@@ -1,0 +1,94 @@
+- type: entity
+  id: PowerCellSmallBase
+  abstract: true
+  parent: BaseItem
+  components:
+  - type: BoundingBox
+    aabb: -0.15,-0.3,0.2,0.3
+  - type: PowerCell
+  - type: Appearance
+  - type: Sprite
+    netsync: false
+
+- type: entity
+  name: Small Standard Power Cell
+  id: PowerCellSmallStandard
+  parent: PowerCellSmallBase
+  components:
+  - type: Sprite
+    sprite: Objects/PowerCells/power_cell_small_st.rsi
+    layers:
+    - state: s_st
+  - type: Icon
+    sprite: Objects/PowerCells/power_cell_small_st.rsi
+    state: s_st
+  - type: PowerCell
+    capacity: 1500
+    charge: 1500
+  - type: Appearance
+    visuals:
+    - type: PowerCellVisualizer2D
+      prefix: s_st
+
+
+- type: entity
+  name: Small High-Capacity Power Cell
+  id: PowerCellSmallHigh
+  parent: PowerCellSmallBase
+  components:
+  - type: Sprite
+    sprite: Objects/PowerCells/power_cell_small_hi.rsi
+    layers:
+    - state: s_hi
+  - type: Icon
+    sprite: Objects/PowerCells/power_cell_small_hi.rsi
+    state: s_hi
+  - type: PowerCell
+    capacity: 3000
+    charge: 3000
+  - type: Appearance
+    visuals:
+    - type: PowerCellVisualizer2D
+      prefix: s_hi
+
+
+- type: entity
+  name: Small Super-Capacity Power Cell
+  id: PowerCellSmallSuper
+  parent: PowerCellSmallBase
+  components:
+  - type: Sprite
+    sprite: Objects/PowerCells/power_cell_small_sup.rsi
+    layers:
+    - state: s_sup
+  - type: Icon
+    sprite: Objects/PowerCells/power_cell_small_sup.rsi
+    state: s_sup
+  - type: PowerCell
+    capacity: 6000
+    charge: 6000
+  - type: Appearance
+    visuals:
+    - type: PowerCellVisualizer2D
+      prefix: s_sup
+
+
+- type: entity
+  name: Small Hyper-Capacity Power Cell
+  id: PowerCellSmallHyper
+  parent: PowerCellSmallBase
+  components:
+  - type: Sprite
+    sprite: Objects/PowerCells/power_cell_small_hy.rsi
+    layers:
+    - state: s_hy
+  - type: Icon
+    sprite: Objects/PowerCells/power_cell_small_hy.rsi
+    state: s_hy
+  - type: PowerCell
+    capacity: 10000
+    charge: 10000
+  - type: Appearance
+    visuals:
+    - type: PowerCellVisualizer2D
+      prefix: s_hy

@@ -1,19 +1,21 @@
 ﻿using Content.Client.GameObjects;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces.GameObjects;
 using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
 using SS14.Client.Graphics.Drawing;
 using SS14.Client.Input;
 using SS14.Client.Interfaces.GameObjects.Components;
-using SS14.Client.Interfaces.Player;
 using SS14.Client.Interfaces.ResourceManagement;
 using SS14.Client.Interfaces.UserInterface;
+using SS14.Client.Player;
 using SS14.Client.ResourceManagement;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
+using SS14.Shared.Map;
 using SS14.Shared.Maths;
 
 namespace Content.Client.UserInterface
@@ -21,7 +23,9 @@ namespace Content.Client.UserInterface
     public class HandsGui : Control
     {
         private static readonly Color _inactiveColor = new Color(90, 90, 90);
+
         private const int BOX_SPACING = 1;
+
         // The boxes are square so that's both width and height.
         private const int BOX_SIZE = 50;
 
@@ -32,8 +36,8 @@ namespace Content.Client.UserInterface
 
         private UiHandInfo LeftHand;
         private UiHandInfo RightHand;
-        private Box2i handL;
-        private Box2i handR;
+        private UIBox2i handL;
+        private UIBox2i handR;
 
         protected override void Initialize()
         {
@@ -53,7 +57,7 @@ namespace Content.Client.UserInterface
             SetMarginsPreset(LayoutPreset.CenterBottom);
             SetAnchorPreset(LayoutPreset.CenterBottom);
 
-            handL = new Box2i(0, 0, BOX_SIZE, BOX_SIZE);
+            handL = new UIBox2i(0, 0, BOX_SIZE, BOX_SIZE);
             handR = handL.Translated(new Vector2i(BOX_SIZE + BOX_SPACING, 0));
             SS14.Shared.Log.Logger.Debug($"{handL}, {handR}");
             MouseFilter = MouseFilterMode.Stop;
@@ -64,7 +68,7 @@ namespace Content.Client.UserInterface
             return new Vector2(BOX_SIZE * 2 + 1, BOX_SIZE);
         }
 
-        protected override void Draw(DrawingHandle handle)
+        protected override void Draw(DrawingHandleScreen handle)
         {
             if (!TryGetHands(out IHandsComponent hands))
                 return;
@@ -79,7 +83,7 @@ namespace Content.Client.UserInterface
             {
                 var bounds = LeftHand.HeldSprite.Size;
                 handle.DrawTextureRect(LeftHand.HeldSprite,
-                    Box2i.FromDimensions(handL.Left + (int)(handL.Width / 2f - bounds.X / 2f),
+                    UIBox2i.FromDimensions(handL.Left + (int)(handL.Width / 2f - bounds.X / 2f),
                                     handL.Top + (int)(handL.Height / 2f - bounds.Y / 2f),
                                     (int)bounds.X, (int)bounds.Y), tile: false);
             }
@@ -88,7 +92,7 @@ namespace Content.Client.UserInterface
             {
                 var bounds = RightHand.HeldSprite.Size;
                 handle.DrawTextureRect(RightHand.HeldSprite,
-                    Box2i.FromDimensions(handR.Left + (int)(handR.Width / 2f - bounds.Y / 2f),
+                    UIBox2i.FromDimensions(handR.Left + (int)(handR.Width / 2f - bounds.Y / 2f),
                                     handR.Top + (int)(handR.Height / 2f - bounds.Y / 2f),
                                     (int)bounds.X, (int)bounds.Y), tile: false);
             }
@@ -119,6 +123,11 @@ namespace Content.Client.UserInterface
 
         public void UpdateHandIcons()
         {
+            if (Parent == null)
+            {
+                return;
+            }
+
             UpdateDraw();
 
             if (!TryGetHands(out IHandsComponent hands))
@@ -138,8 +147,8 @@ namespace Content.Client.UserInterface
                     LeftHand.MirrorHandle?.Dispose();
                     LeftHand.MirrorHandle = GetSpriteMirror(left);
                     LeftHand.MirrorHandle.AttachToControl(this);
-                    LeftHand.MirrorHandle.Offset = new Vector2(handL.Left + (int)(handL.Width / 2f),
-                                    handL.Top + (int)(handL.Height / 2f));
+                    LeftHand.MirrorHandle.Offset = new Vector2(handL.Left + (int) (handL.Width / 2f),
+                        handL.Top + (int) (handL.Height / 2f));
                 }
             }
             else
@@ -157,8 +166,8 @@ namespace Content.Client.UserInterface
                     RightHand.MirrorHandle?.Dispose();
                     RightHand.MirrorHandle = GetSpriteMirror(right);
                     RightHand.MirrorHandle.AttachToControl(this);
-                    RightHand.MirrorHandle.Offset = new Vector2(handR.Left + (int)(handR.Width / 2f),
-                                    handR.Top + (int)(handR.Height / 2f));
+                    RightHand.MirrorHandle.Offset = new Vector2(handR.Left + (int) (handR.Width / 2f),
+                        handR.Top + (int) (handR.Height / 2f));
                 }
             }
             else
@@ -183,40 +192,79 @@ namespace Content.Client.UserInterface
                 return;
 
             //Todo: remove hands interface, so weird
-            ((HandsComponent)hands).UseActiveHand();
+            ((HandsComponent) hands).UseActiveHand();
+        }
+
+        private void AttackByInHand(string hand)
+        {
+            if (!TryGetHands(out var hands))
+                return;
+
+            hands.AttackByInHand(hand);
         }
 
         protected override bool HasPoint(Vector2 point)
         {
-            return handL.Contains((Vector2i)point) || handR.Contains((Vector2i)point);
+            return handL.Contains((Vector2i) point) || handR.Contains((Vector2i) point);
         }
 
         protected override void MouseDown(GUIMouseButtonEventArgs args)
         {
             base.MouseDown(args);
 
-            var lefthandcontains = handL.Contains((Vector2i)args.RelativePosition);
-            var righthandcontains = handR.Contains((Vector2i)args.RelativePosition);
+            var leftHandContains = handL.Contains((Vector2i) args.RelativePosition);
+            var rightHandContains = handR.Contains((Vector2i) args.RelativePosition);
+
+            string handIndex;
+            if (leftHandContains)
+            {
+                handIndex = "left";
+            }
+            else if (rightHandContains)
+            {
+                handIndex = "right";
+            }
+            else
+            {
+                return;
+            }
 
             if (args.Button == Mouse.Button.Left)
             {
-                if (!TryGetHands(out IHandsComponent hands))
+                if (!TryGetHands(out var hands))
                     return;
 
-                if ((hands.ActiveIndex == "left" && lefthandcontains)
-                    || (hands.ActiveIndex == "right" && righthandcontains))
+
+                if (hands.ActiveIndex == handIndex)
+                {
                     UseActiveHand();
+                }
+                else
+                {
+                    AttackByInHand(handIndex);
+                }
             }
+
+            else if (args.Button == Mouse.Button.Middle)
+            {
+                SendSwitchHandTo(handIndex);
+            }
+
             else if (args.Button == Mouse.Button.Right)
             {
-                if (lefthandcontains)
+                if (!TryGetHands(out var hands))
                 {
-                    SendSwitchHandTo("left");
+                    return;
                 }
-                if (righthandcontains)
+
+                var entity = hands.GetEntity(handIndex);
+                if (entity == null)
                 {
-                    SendSwitchHandTo("right");
+                    return;
                 }
+
+                var esm = IoCManager.Resolve<IEntitySystemManager>();
+                esm.GetEntitySystem<VerbSystem>().OpenContextMenu(entity, new ScreenCoordinates(args.GlobalPosition));
             }
         }
 
@@ -226,13 +274,14 @@ namespace Content.Client.UserInterface
             {
                 return component.CreateProxy();
             }
+
             return null;
         }
 
         private struct UiHandInfo
         {
             public IEntity Entity { get; set; }
-            public ISpriteProxy MirrorHandle { get; set;  }
+            public ISpriteProxy MirrorHandle { get; set; }
         }
     }
 }

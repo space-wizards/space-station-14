@@ -11,5 +11,10 @@ namespace Content.Shared.GameObjects
     public class HudStateChange : ComponentMessage
     {
         public string StateSprite;
+
+        public HudStateChange()
+        {
+            Directed = true;
+        }
     }
 }

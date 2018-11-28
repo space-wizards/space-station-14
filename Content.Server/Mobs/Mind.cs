@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Players;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Network;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.Mobs
 {
@@ -14,7 +16,7 @@ namespace Content.Server.Mobs
     /// <remarks>
     ///     Think of it like this: if a player is supposed to have their memories,
     ///     their mind follows along.
-    ///     
+    ///
     ///     Things such as respawning do not follow, because you're a new character.
     ///     Getting borged, cloned, turned into a catbeast, etc... will keep it following you.
     /// </remarks>
@@ -35,35 +37,52 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     The session ID of the player owning this mind.
         /// </summary>
-        public NetSessionId SessionId { get; }
+        [ViewVariables]
+        public NetSessionId? SessionId { get; private set; }
+
+        [ViewVariables]
+        public bool IsVisitingEntity => VisitingEntity != null;
+
+        [ViewVariables]
+        public IEntity VisitingEntity { get; private set; }
+
+        [ViewVariables] public IEntity CurrentEntity => VisitingEntity ?? OwnedEntity;
 
         /// <summary>
         ///     The component currently owned by this mind.
         ///     Can be null.
         /// </summary>
-        public MindComponent CurrentMob { get; private set; }
+        [ViewVariables]
+        public MindComponent OwnedMob { get; private set; }
 
         /// <summary>
         ///     The entity currently owned by this mind.
         ///     Can be null.
         /// </summary>
-        public IEntity CurrentEntity => CurrentMob?.Owner;
+        [ViewVariables]
+        public IEntity OwnedEntity => OwnedMob?.Owner;
 
         /// <summary>
         ///     An enumerable over all the roles this mind has.
         /// </summary>
+        [ViewVariables]
         public IEnumerable<Role> AllRoles => _roles.Values;
 
         /// <summary>
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>
+        [ViewVariables]
         public IPlayerSession Session
         {
             get
             {
+                if (!SessionId.HasValue)
+                {
+                    return null;
+                }
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
-                playerMgr.TryGetSessionById(SessionId, out var ret);
+                playerMgr.TryGetSessionById(SessionId.Value, out var ret);
                 return ret;
             }
         }
@@ -184,16 +203,73 @@ namespace Content.Server.Mobs
                     throw new ArgumentException("That entity already has a mind.", nameof(entity));
                 }
             }
-            
-            CurrentMob?.InternalEjectMind();
-            CurrentMob = component;
-            CurrentMob?.InternalAssignMind(this);
+
+            OwnedMob?.InternalEjectMind();
+            OwnedMob = component;
+            OwnedMob?.InternalAssignMind(this);
 
             // Player is CURRENTLY connected.
-            if (Session != null && CurrentMob != null)
+            if (Session != null && OwnedMob != null)
             {
                 Session.AttachToEntity(entity);
             }
+
+            VisitingEntity = null;
+        }
+
+        public void ChangeOwningPlayer(NetSessionId? newOwner)
+        {
+            var playerMgr = IoCManager.Resolve<IPlayerManager>();
+            PlayerData newOwnerData = null;
+            if (newOwner.HasValue)
+            {
+                if (!playerMgr.TryGetPlayerData(newOwner.Value, out var uncast))
+                {
+                    // This restriction is because I'm too lazy to initialize the player data
+                    // for a client that hasn't logged in yet.
+                    // Go ahead and remove it if you need.
+                    throw new ArgumentException("new owner must have previously logged into the server.");
+                }
+
+                newOwnerData = uncast.ContentData();
+            }
+
+            // Make sure to remove control from our old owner if they're logged in.
+            var oldSession = Session;
+            oldSession?.AttachToEntity(null);
+
+            if (SessionId.HasValue)
+            {
+                playerMgr.GetPlayerData(SessionId.Value).ContentData().Mind = null;
+            }
+
+            SessionId = newOwner;
+            if (!newOwner.HasValue)
+            {
+                return;
+            }
+
+            // Yank new owner out of their old mind too.
+            // Can I mention how much I love the word yank?
+            newOwnerData.Mind?.ChangeOwningPlayer(null);
+            newOwnerData.Mind = this;
+        }
+
+        public void Visit(IEntity entity)
+        {
+            Session?.AttachToEntity(entity);
+            VisitingEntity = entity;
+        }
+
+        public void UnVisit()
+        {
+            if (!IsVisitingEntity)
+            {
+                return;
+            }
+
+            Session?.AttachToEntity(OwnedEntity);
+            VisitingEntity = null;
         }
     }
 }

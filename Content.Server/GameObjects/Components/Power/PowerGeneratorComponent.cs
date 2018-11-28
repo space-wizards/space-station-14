@@ -5,6 +5,7 @@ using SS14.Shared.Log;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
 using System;
+using SS14.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -20,6 +21,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// Power supply from this entity
         /// </summary>
         private float _supply = 1000; //arbitrary initial magic number to start
+        [ViewVariables]
         public float Supply
         {
             get => _supply;

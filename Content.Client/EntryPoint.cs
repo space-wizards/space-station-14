@@ -1,11 +1,17 @@
 ﻿using Content.Client.GameObjects;
+using Content.Client.GameObjects.Components.Clothing;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.Components.Power;
 using Content.Client.GameObjects.Components.SmoothWalling;
 using Content.Client.GameObjects.Components.Storage;
+using Content.Client.GameTicking;
 using Content.Client.Input;
+using Content.Client.Interfaces;
 using Content.Client.Interfaces.GameObjects;
+using Content.Shared.Interfaces;
+using SS14.Client;
 using SS14.Client.Interfaces.Input;
+using SS14.Client.Utility;
 using SS14.Shared.ContentPack;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
@@ -17,10 +23,12 @@ namespace Content.Client
     {
         public override void Init()
         {
+#if DEBUG
+            GodotResourceCopy.DoDirCopy("../../Resources", "Content");
+#endif
             var factory = IoCManager.Resolve<IComponentFactory>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
-            factory.RegisterIgnore("Item");
             factory.RegisterIgnore("Interactable");
             factory.RegisterIgnore("Destructible");
             factory.RegisterIgnore("Temperature");
@@ -43,12 +51,9 @@ namespace Content.Client
             factory.RegisterIgnore("MeleeWeapon");
 
             factory.RegisterIgnore("Storeable");
-            factory.RegisterIgnore("Clothing");
 
             factory.RegisterIgnore("Material");
             factory.RegisterIgnore("Stack");
-
-            factory.RegisterIgnore("Species");
 
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
@@ -59,15 +64,26 @@ namespace Content.Client
             factory.Register<ConstructionGhostComponent>();
             factory.Register<IconSmoothComponent>();
             factory.Register<DamageableComponent>();
+            factory.Register<ClothingComponent>();
+            factory.Register<ItemComponent>();
+            factory.RegisterReference<ClothingComponent, ItemComponent>();
+
+            factory.Register<SpeciesUI>();
 
             factory.RegisterIgnore("Construction");
             factory.RegisterIgnore("Apc");
             factory.RegisterIgnore("Door");
             factory.RegisterIgnore("PoweredLight");
             factory.RegisterIgnore("Smes");
+            factory.RegisterIgnore("Powercell");
+            factory.RegisterIgnore("HandheldLight");
 
             prototypes.RegisterIgnore("material");
 
+            IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
+            IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
+            IoCManager.Register<IClientGameTicker, ClientGameTicker>();
+            IoCManager.BuildGraph();
         }
 
         public override void PostInit()
@@ -77,6 +93,23 @@ namespace Content.Client
             // Setup key contexts
             var inputMan = IoCManager.Resolve<IInputManager>();
             ContentContexts.SetupContexts(inputMan.Contexts);
+
+            IoCManager.Resolve<IClientNotifyManager>().Initialize();
+            IoCManager.Resolve<IClientGameTicker>().Initialize();
+        }
+
+        public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)
+        {
+            base.Update(level, frameTime);
+
+            switch (level)
+            {
+                case AssemblyLoader.UpdateLevel.FramePreEngine:
+                    var renderFrameEventArgs = new RenderFrameEventArgs(frameTime);
+                    IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(renderFrameEventArgs);
+                    IoCManager.Resolve<IClientGameTicker>().FrameUpdate(renderFrameEventArgs);
+                    break;
+            }
         }
     }
 }

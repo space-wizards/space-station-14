@@ -1,8 +1,15 @@
 using System;
+using SS14.Shared.GameObjects;
+using SS14.Shared.GameObjects.Components.UserInterface;
 using SS14.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Power
 {
+    public abstract class SharedApcComponent : Component
+    {
+        public sealed override string Name => "Apc";
+    }
+
     [Serializable, NetSerializable]
     public enum ApcVisuals
     {
@@ -26,5 +33,38 @@ namespace Content.Shared.GameObjects.Components.Power
         ///     APC battery is full and has enough power.
         /// </summary>
         Full,
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ApcBoundInterfaceState : BoundUserInterfaceState
+    {
+        public readonly bool MainBreaker;
+        public readonly ApcExternalPowerState ApcExternalPower;
+        public readonly float Charge;
+
+        public ApcBoundInterfaceState(bool mainBreaker, ApcExternalPowerState apcExternalPower, float charge)
+        {
+            MainBreaker = mainBreaker;
+            ApcExternalPower = apcExternalPower;
+            Charge = charge;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
+    {
+    }
+
+    public enum ApcExternalPowerState
+    {
+        None,
+        Low,
+        Good,
+    }
+
+    [NetSerializable, Serializable]
+    public enum ApcUiKey
+    {
+        Key,
     }
 }

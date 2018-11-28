@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems
             bool canmove = true;
             foreach(var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
             {
-                canmove &= actionblockercomponents.CanMove(); //if false, sets var to false
+                canmove &= actionblockercomponents.CanMove(); //sets var to false if false
             }
             return canmove;
         }
@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.EntitySystems
             bool caninteract = true;
             foreach (var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
             {
-                caninteract &= actionblockercomponents.CanInteract(); //if false, sets var to false
+                caninteract &= actionblockercomponents.CanInteract();
             }
             return caninteract;
         }
@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems
             bool canuse = true;
             foreach (var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
             {
-                canuse &= actionblockercomponents.CanUse(); //if false, sets var to false
+                canuse &= actionblockercomponents.CanUse();
             }
             return canuse;
         }

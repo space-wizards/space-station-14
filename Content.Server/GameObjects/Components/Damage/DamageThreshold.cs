@@ -10,9 +10,9 @@ namespace Content.Server.GameObjects
     {
         public DamageType DamageType { get; }
         public int Value { get; }
-        public ThresholdTypes ThresholdType { get; }
+        public ThresholdType ThresholdType { get; }
 
-        public DamageThreshold(DamageType damageType, int value, ThresholdTypes thresholdType)
+        public DamageThreshold(DamageType damageType, int value, ThresholdType thresholdType)
         {
             DamageType = damageType;
             Value = value;
@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects
         }
     }
 
-    public enum ThresholdTypes
+    public enum ThresholdType
     {
         None,
         Destruction,

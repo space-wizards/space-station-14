@@ -5,6 +5,7 @@ using YamlDotNet.RepresentationModel;
 using SS14.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
 using SS14.Shared.Serialization;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable.Tools
 {
@@ -20,6 +21,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         /// <summary>
         /// Maximum fuel capacity the welder can hold
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public float FuelCapacity
         {
             get => _fuelCapacity;
@@ -30,6 +32,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         /// <summary>
         /// Fuel the welder has to do tasks
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public float Fuel
         {
             get => _fuel;
@@ -50,6 +53,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         /// <summary>
         /// Status of welder, whether it is ignited
         /// </summary>
+        [ViewVariables]
         public bool Activated { get; private set; } = false;
 
         //private string OnSprite { get; set; }

@@ -9,6 +9,7 @@ using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SS14.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -23,6 +24,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         ///     The method of draw we will try to use to place our load set via component parameter, defaults to using power providers
         /// </summary>
+        [ViewVariables]
         public virtual DrawTypes DrawType
         {
             get => _drawType;
@@ -33,14 +35,17 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         ///     The power draw method we are currently connected to and using
         /// </summary>
+        [ViewVariables]
         public DrawTypes Connected { get; protected set; } = DrawTypes.None;
 
+        [ViewVariables]
         public bool Powered { get; private set; } = false;
 
 
         /// <summary>
         ///     Is an external power source currently available?
         /// </summary>
+        [ViewVariables]
         public bool ExternalPowered
         {
             get => _externalPowered;
@@ -55,6 +60,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         ///     Is an internal power source currently available?
         /// </summary>
+        [ViewVariables]
         public bool InternalPowered
         {
             get => _internalPowered;
@@ -69,6 +75,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Priority for powernet draw, lower will draw first, defined in powernet.cs
         /// </summary>
+        [ViewVariables]
         public virtual Powernet.Priority Priority
         {
             get => _priority;
@@ -81,6 +88,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     Power load from this entity.
         ///     In Watts.
         /// </summary>
+        [ViewVariables]
         public float Load
         {
             get => _load;
@@ -98,6 +106,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// A power provider that will handle our load, if we are linked to any
         /// </summary>
+        [ViewVariables]
         public PowerProviderComponent Provider
         {
             get => _provider;

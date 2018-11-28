@@ -1,0 +1,13 @@
+- type: entity
+  parent: Clothing
+  id: IDCardStandard
+  name: Identification Card
+  description: A card necessary to access various areas aboard the station
+  components:
+  - type: Sprite
+    texture: Clothing/idcard_standard.png
+  - type: Icon
+    texture: Clothing/idcard_standard.png
+  - type: Clothing
+    Slots:
+    - idcard

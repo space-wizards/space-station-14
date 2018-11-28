@@ -1,0 +1,39 @@
+- type: entity
+  parent: Clothing
+  id: GlassesBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots: [eyes]
+
+
+- type: entity
+  parent: GlassesBase
+  id: MesonGlasses
+  name: Optical Meson Scanners
+  description: The pinnacle of modern science, wallhacks in real life
+  components:
+  - type: Sprite
+    sprite: Clothing/meson_scanners.rsi
+    state: meson
+  - type: Icon
+    sprite: Clothing/meson_scanners.rsi
+    state: meson
+  - type: Clothing
+    sprite: Clothing/meson_scanners.rsi
+
+
+- type: entity
+  parent: GlassesBase
+  id: SunGlasses
+  name: Sun Glasses
+  description: Useful both for security and cargonia
+  components:
+  - type: Sprite
+    sprite: Clothing/sunglasses.rsi
+    state: sunglasses
+  - type: Icon
+    sprite: Clothing/sunglasses.rsi
+    state: sunglasses
+  - type: Clothing
+    sprite: Clothing/sunglasses.rsi

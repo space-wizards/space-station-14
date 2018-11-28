@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
     public class ContainerSlot : BaseContainer
     {
+        [ViewVariables]
         public IEntity ContainedEntity { get; private set; } = null;
 
         /// <inheritdoc />
