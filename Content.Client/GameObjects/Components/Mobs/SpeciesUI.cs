@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects
         private InputCmdHandler _openMenuCmdHandler;
         private ScreenEffects _currentEffect = ScreenEffects.None;
 
-        [Dependency] readonly IOverlayManager _overlayManager;
+        [Dependency] private readonly IOverlayManager _overlayManager;
         [Dependency] private readonly IPlayerManager _playerManager;
 
         private bool CurrentlyControlled => _playerManager.LocalPlayer.ControlledEntity == Owner;
@@ -46,8 +46,15 @@ namespace Content.Client.GameObjects
         {
             base.OnAdd();
 
+            IoCManager.InjectDependencies(this);
             _window = new SpeciesWindow();
             _openMenuCmdHandler = InputCmdHandler.FromDelegate(session => { _window.AddToScreen(); _window.Open(); });
+
+            EffectsDictionary = new Dictionary<ScreenEffects, IOverlay>()
+            {
+                { ScreenEffects.CircleMask, new CircleMaskOverlay() },
+                { ScreenEffects.GradientCircleMask, new GradientCircleMask() }
+            };
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
@@ -108,11 +115,7 @@ namespace Content.Client.GameObjects
             }
         }
 
-        private static Dictionary<ScreenEffects, IOverlay> EffectsDictionary = new Dictionary<ScreenEffects, IOverlay>
-        {
-            { ScreenEffects.CircleMask, new CircleMaskOverlay() },
-            { ScreenEffects.GradientCircleMask, new GradientCircleMask() }
-        };
+        private Dictionary<ScreenEffects, IOverlay> EffectsDictionary;
 
         private class SpeciesWindow : SS14Window
         {
