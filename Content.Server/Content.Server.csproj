@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Content.Server</RootNamespace>
     <AssemblyName>Content.Server</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ContentAssemblyTarget>..\engine\bin\Server\Resources\Assemblies\</ContentAssemblyTarget>
     <OutputPath>..\bin\Content.Server\</OutputPath>
@@ -159,7 +159,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\SS14.Content.targets" />
-  <Target Name="AfterBuild" DependsOnTargets="CopyContentAssemblies" />
+  <!--<Target Name="AfterBuild" DependsOnTargets="CopyContentAssemblies" />-->
   <ItemGroup>
     <ContentAssemblies Include="$(OutputPath)Content.Server.dll" />
     <ContentAssemblies Include="$(OutputPath)Content.Shared.dll" />
