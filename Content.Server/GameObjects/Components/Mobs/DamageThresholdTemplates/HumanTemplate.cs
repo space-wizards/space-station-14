@@ -43,17 +43,20 @@ namespace Content.Server.GameObjects
                     var modifier = totaldamage / (critvalue / normalstates); //integer division floors towards zero
                     return new HudStateChange()
                     {
-                        StateSprite = "/Mob/UI/Human/human" + modifier.ToString(),
+                        StateSprite = "Mob/UI/Human/human" + modifier.ToString() + ".png",
+                        effect = ScreenEffects.None
                     };
                 case ThresholdType.Critical:
                     return new HudStateChange()
                     {
-                        StateSprite = "/Mob/UI/Human/humancrit",
+                        StateSprite = "Mob/UI/Human/humancrit-0.png", //TODO: display as gif or alternate with -0 and -1 as frames
+                        effect = ScreenEffects.GradientCircleMask
                     };
                 case ThresholdType.Death:
                     return new HudStateChange()
                     {
-                        StateSprite = "/Mob/UI/Human/humandead"
+                        StateSprite = "Mob/UI/Human/humandead.png",
+                        effect = ScreenEffects.CircleMask
                     };
                 default:
                     throw new System.InvalidOperationException();

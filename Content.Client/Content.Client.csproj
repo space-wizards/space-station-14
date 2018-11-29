@@ -79,6 +79,8 @@
     <Compile Include="GameObjects\EntitySystems\ClientNotifySystem.cs" />
     <Compile Include="GameObjects\EntitySystems\VerbSystem.cs" />
     <Compile Include="GameTicking\ClientGameTicker.cs" />
+    <Compile Include="Graphics\Overlays\CircleMaskOverlay.cs" />
+    <Compile Include="Graphics\Overlays\GradientCircleMask.cs" />
     <Compile Include="Input\ContentContexts.cs" />
     <Compile Include="Interfaces\IClientGameTicker.cs" />
     <Compile Include="Interfaces\IClientNotifyManager.cs" />
