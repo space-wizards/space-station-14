@@ -58,7 +58,7 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="YamlDotNet" Version="5.0.1" />
-    <PackageReference Include="ICSharpCode.SharpZipLib" Version="1.0.0" />
+    <PackageReference Include="SharpZipLib" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
