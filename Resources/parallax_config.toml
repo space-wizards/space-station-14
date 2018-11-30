@@ -8,7 +8,7 @@ noise_type = "ridged"
 frequency = "4"
 octaves = 8
 power = "0.25"
-threshold = "0.5"
+threshold = "0.40"
 
 # Mask background nebula.
 [[layers]]
@@ -28,8 +28,8 @@ threshold = "0.0"
 [[layers]]
 type = "points"
 seed = 3909
-closecolor = "#414562"
-count = 750
+closecolor = "#4B5072"
+count = 1500
 mask = true
 masknoise_type = "fbm"
 maskoctaves = 4
@@ -44,7 +44,7 @@ maskseed = 3551
 [[layers]]
 type = "points"
 closecolor = "#7E86BF"
-count = 750
+count = 1000
 seed = 3472
 mask = true
 masknoise_type = "fbm"
@@ -60,8 +60,8 @@ maskseed = 3551
 [[layers]]
 type = "points"
 closecolor = "#3D415C"
-size = 2
-count = 750
+pointsize = 2
+count = 1000
 seed = 3472
 mask = true
 masknoise_type = "fbm"
@@ -72,3 +72,18 @@ masklacunarity = "1.5"
 maskfrequency = "3"
 maskthreshold = "0.37"
 maskseed = 3551
+
+# Couple of odd bright yellow-ish stars.
+[[layers]]
+type = "points"
+closecolor = "#FFD363"
+count = 100
+seed = 6454
+
+# And their dim edge.
+[[layers]]
+type = "points"
+closecolor = "#43371A"
+pointsize = 2
+count = 100
+seed = 6454
