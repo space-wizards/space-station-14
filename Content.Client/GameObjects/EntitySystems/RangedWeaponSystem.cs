@@ -22,6 +22,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private InputSystem _inputSystem;
         private bool _isFirstShot;
+        private bool _blocked;
 
         public override void Initialize()
         {
@@ -40,6 +41,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (state != BoundKeyState.Down)
             {
                 _isFirstShot = true;
+                _blocked = false;
                 return;
             }
 
@@ -53,6 +55,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var held = hands.ActiveHand;
             if (held == null || !held.TryGetComponent(out ClientRangedWeaponComponent weapon))
+            {
+                _blocked = true;
+                return;
+            }
+
+            if (_blocked)
             {
                 return;
             }
