@@ -34,6 +34,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Weapon.Ranged;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameTicking;
@@ -93,6 +94,7 @@ namespace Content.Server
             factory.Register<CrowbarComponent>();
 
             factory.Register<HitscanWeaponComponent>();
+            factory.Register<RangedWeaponComponent>();
             factory.Register<ProjectileWeaponComponent>();
             factory.Register<ProjectileComponent>();
             factory.Register<ThrownItemComponent>();

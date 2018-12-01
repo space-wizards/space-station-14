@@ -2,6 +2,7 @@
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.GameObjects;
+using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.IoC;
@@ -11,7 +12,7 @@ using SS14.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
-    public class ProjectileWeaponComponent : RangedWeaponComponent
+    public class ProjectileWeaponComponent : Component
     {
         public override string Name => "ProjectileWeapon";
 
@@ -19,10 +20,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         private float _velocity = 20f;
 
-        protected override void Fire(IEntity user, GridLocalCoordinates clicklocation)
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            var rangedWeapon = Owner.GetComponent<RangedWeaponComponent>();
+            rangedWeapon.FireHandler = Fire;
+        }
+
+        private void Fire(IEntity user, GridLocalCoordinates clickLocation)
         {
             var userposition = user.GetComponent<ITransformComponent>().LocalPosition; //Remember world positions are ephemeral and can only be used instantaneously
-            var angle = new Angle(clicklocation.Position - userposition.Position);
+            var angle = new Angle(clickLocation.Position - userposition.Position);
 
             var theta = angle.Theta;
 

@@ -1,35 +1,72 @@
-﻿using SS14.Shared.GameObjects;
+﻿using System;
+using SS14.Shared.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Weapons.Ranged;
+using SS14.Server.Interfaces.Player;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.Network;
+using SS14.Shared.IoC;
+using SS14.Shared.Log;
 using SS14.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
 {
-    public class RangedWeaponComponent : Component, IAfterAttack
+    public sealed class RangedWeaponComponent : SharedRangedWeaponComponent
     {
-        public override string Name => "RangedWeapon";
+        private DateTime _lastFireTime;
 
-        void IAfterAttack.Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked)
+        public Func<bool> WeaponCanFireHandler;
+        public Func<IEntity, bool> UserCanFireHandler;
+        public Action<IEntity, GridLocalCoordinates> FireHandler;
+
+        private bool WeaponCanFire()
         {
-            if (UserCanFire(user) && WeaponCanFire())
+            if (WeaponCanFireHandler != null && !WeaponCanFireHandler())
             {
-                Fire(user, clicklocation);
+                return false;
             }
+            var span = DateTime.Now - _lastFireTime;
+            return span.TotalSeconds * 1.05 >= 1 / FireRate;
         }
 
-        protected virtual bool WeaponCanFire()
+        private bool UserCanFire(IEntity user)
         {
-            return true;
+            return WeaponCanFireHandler == null || UserCanFireHandler(user);
         }
 
-        protected virtual bool UserCanFire(IEntity user)
+        private void Fire(IEntity user, GridLocalCoordinates clickLocation)
         {
-            return true;
+            _lastFireTime = DateTime.Now;
+            FireHandler?.Invoke(user, clickLocation);
         }
 
-        protected virtual void Fire(IEntity user, GridLocalCoordinates clicklocation)
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
-            return;
+            base.HandleMessage(message, netChannel, component);
+
+            switch (message)
+            {
+                case FireMessage msg:
+                    var playerMgr = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMgr.GetSessionByChannel(netChannel);
+                    var user = session.AttachedEntity;
+                    if (user == null || !user.TryGetComponent(out HandsComponent hands))
+                    {
+                        return;
+                    }
+
+                    if (hands.GetActiveHand.Owner != Owner)
+                    {
+                        return;
+                    }
+
+                    if (UserCanFire(user) && WeaponCanFire())
+                    {
+                        Fire(user, msg.Target);
+                    }
+
+                    break;
+            }
         }
     }
 }
