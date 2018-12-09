@@ -1,4 +1,5 @@
-﻿using Content.Client.Graphics.Overlays;
+﻿using Content.Client.GameObjects.Components.Mobs;
+using Content.Client.Graphics.Overlays;
 using Content.Shared.GameObjects;
 using Content.Shared.Input;
 using SS14.Client.GameObjects;
@@ -7,6 +8,7 @@ using SS14.Client.Interfaces.Input;
 using SS14.Client.Interfaces.ResourceManagement;
 using SS14.Client.Player;
 using SS14.Client.ResourceManagement;
+using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Client.UserInterface.CustomControls;
 using SS14.Shared.GameObjects;
@@ -20,18 +22,19 @@ using System.Collections.Generic;
 
 namespace Content.Client.GameObjects
 {
-    public class SpeciesUI : Component
+    public class SpeciesUI : Component, ICharacterUI
     {
         public override string Name => "Species";
 
         public override uint? NetID => ContentNetIDs.SPECIES;
 
         private SpeciesWindow _window;
-        private InputCmdHandler _openMenuCmdHandler;
         private ScreenEffects _currentEffect = ScreenEffects.None;
 
         [Dependency] private readonly IOverlayManager _overlayManager;
         [Dependency] private readonly IPlayerManager _playerManager;
+
+        public Control Scene => _window;
 
         private bool CurrentlyControlled => _playerManager.LocalPlayer.ControlledEntity == Owner;
 
@@ -48,7 +51,6 @@ namespace Content.Client.GameObjects
 
             IoCManager.InjectDependencies(this);
             _window = new SpeciesWindow();
-            _openMenuCmdHandler = InputCmdHandler.FromDelegate(session => { _window.AddToScreen(); _window.Open(); });
 
             EffectsDictionary = new Dictionary<ScreenEffects, IOverlay>()
             {
@@ -59,7 +61,6 @@ namespace Content.Client.GameObjects
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
-            var inputMgr = IoCManager.Resolve<IInputManager>();
             switch (message)
             {
                 case HudStateChange msg:
@@ -70,12 +71,10 @@ namespace Content.Client.GameObjects
                     break;
 
                 case PlayerAttachedMsg _:
-                    inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, _openMenuCmdHandler);
                     ApplyOverlay();
                     break;
 
                 case PlayerDetachedMsg _:
-                    inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
                     RemoveOverlay();
                     break;
             }
@@ -117,7 +116,7 @@ namespace Content.Client.GameObjects
 
         private Dictionary<ScreenEffects, IOverlay> EffectsDictionary;
 
-        private class SpeciesWindow : SS14Window
+        private class SpeciesWindow : Control
         {
             private TextureRect _textureRect;
 
@@ -127,7 +126,7 @@ namespace Content.Client.GameObjects
             {
                 base.Initialize();
 
-                _textureRect = (TextureRect)Contents.GetChild("Control").GetChild("TextureRect");
+                _textureRect = (TextureRect)GetChild("TextureRect");
             }
 
             public void SetIcon(HudStateChange changemessage)

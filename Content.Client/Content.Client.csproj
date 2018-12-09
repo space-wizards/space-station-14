@@ -68,8 +68,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="GameObjects\Components\Actor\KeybindMaster.cs" />
     <Compile Include="GameObjects\Components\DamageableComponent.cs" />
     <Compile Include="GameObjects\Components\HUD\Inventory\ClientInventoryComponent.cs" />
+    <Compile Include="GameObjects\Components\Mobs\ICharacterUI.cs" />
     <Compile Include="GameObjects\Components\Mobs\SpeciesUI.cs" />
     <Compile Include="GameObjects\Components\Clothing\ClothingComponent.cs" />
     <Compile Include="GameObjects\Components\Items\ItemComponent.cs" />

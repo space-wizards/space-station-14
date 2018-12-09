@@ -1,4 +1,5 @@
 ﻿using Content.Client.GameObjects;
+using Content.Client.GameObjects.Components.Actor;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.Components.Power;
@@ -11,11 +12,13 @@ using Content.Client.Interfaces.GameObjects;
 using Content.Shared.Interfaces;
 using SS14.Client;
 using SS14.Client.Interfaces.Input;
+using SS14.Client.Player;
 using SS14.Client.Utility;
 using SS14.Shared.ContentPack;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Prototypes;
+using System;
 
 namespace Content.Client
 {
@@ -86,6 +89,19 @@ namespace Content.Client
             IoCManager.BuildGraph();
         }
 
+        public void AttachPlayerToEntity(object sender, EventArgs args)
+        {
+            var localplayer = (LocalPlayer)sender;
+            localplayer.ControlledEntity.AddComponent<KeybindMaster>();
+        }
+
+        public void DetachPlayerFromEntity(object sender, EventArgs args)
+        {
+            var localplayer = (LocalPlayer)sender;
+            //Wont work atm, controlled entity gets nulled before this event fires
+            localplayer.ControlledEntity.RemoveComponent<KeybindMaster>();
+        }
+
         public override void PostInit()
         {
             base.PostInit();
@@ -96,6 +112,8 @@ namespace Content.Client
 
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
             IoCManager.Resolve<IClientGameTicker>().Initialize();
+            IoCManager.Resolve<IPlayerManager>().LocalPlayer.EntityAttached += AttachPlayerToEntity;
+            IoCManager.Resolve<IPlayerManager>().LocalPlayer.EntityDetached += DetachPlayerFromEntity;
         }
 
         public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)
