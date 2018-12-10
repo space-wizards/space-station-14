@@ -137,7 +137,4 @@
     <Compile Include="Construction\ConstructionPlacementHijack.cs" />
     <Compile Include="GameObjects\Components\IconSmoothing\IconSmoothComponent.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameObjects\Components\HUD\Health\" />
-  </ItemGroup>
 </Project>
