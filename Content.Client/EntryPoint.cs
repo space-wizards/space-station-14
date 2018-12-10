@@ -9,9 +9,12 @@ using Content.Client.GameTicking;
 using Content.Client.Input;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.GameObjects;
+using Content.Client.Interfaces.Parallax;
+using Content.Client.Parallax;
 using Content.Shared.Interfaces;
 using SS14.Client;
 using SS14.Client.Interfaces;
+using SS14.Client.Interfaces.Graphics.Overlays;
 using SS14.Client.Interfaces.Input;
 using SS14.Client.Player;
 using SS14.Client.Utility;
@@ -89,8 +92,10 @@ namespace Content.Client
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
             IoCManager.Register<IClientGameTicker, ClientGameTicker>();
+            IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.BuildGraph();
 
+            IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
         }
 
@@ -140,6 +145,7 @@ namespace Content.Client
 
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
             IoCManager.Resolve<IClientGameTicker>().Initialize();
+            IoCManager.Resolve<IOverlayManager>().AddOverlay(new ParallaxOverlay());
         }
 
         public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)

@@ -1,3 +1,4 @@
+using System;
 using Content.Server.GameTicking;
 using SS14.Server.Interfaces.Player;
 using SS14.Server.Player;
@@ -12,6 +13,8 @@ namespace Content.Server.Interfaces.GameTicking
     public interface IGameTicker
     {
         GameRunLevel RunLevel { get; }
+
+        event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
 
         void Initialize();
         void Update(FrameEventArgs frameEventArgs);
