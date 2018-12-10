@@ -30,14 +30,16 @@ namespace Content.Server.GameObjects
         [ViewVariables]
         public ResistanceSet Resistances { get; private set; }
 
-        public Dictionary<DamageType, int> CurrentDamage = new Dictionary<DamageType, int>();
+        public IReadOnlyDictionary<DamageType, int> CurrentDamage => _currentDamage;
+        private Dictionary<DamageType, int> _currentDamage = new Dictionary<DamageType, int>();
+
         Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
 
         public override ComponentState GetComponentState()
         {
-            return new DamageComponentState(CurrentDamage);
+            return new DamageComponentState(_currentDamage);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -74,7 +76,7 @@ namespace Content.Server.GameObjects
             }
             InitializeDamageType(damageType);
 
-            int oldValue = CurrentDamage[damageType];
+            int oldValue = _currentDamage[damageType];
             int oldTotalValue = -1;
 
             if (amount == 0)
@@ -83,13 +85,13 @@ namespace Content.Server.GameObjects
             }
 
             amount = Resistances.CalculateDamage(damageType, amount);
-            CurrentDamage[damageType] = Math.Max(0, CurrentDamage[damageType] + amount);
+            _currentDamage[damageType] = Math.Max(0, _currentDamage[damageType] + amount);
             UpdateForDamageType(damageType, oldValue);
 
             if (Resistances.AppliesToTotal(damageType))
             {
-                oldTotalValue = CurrentDamage[DamageType.Total];
-                CurrentDamage[DamageType.Total] = Math.Max(0, CurrentDamage[DamageType.Total] + amount);
+                oldTotalValue = _currentDamage[DamageType.Total];
+                _currentDamage[DamageType.Total] = Math.Max(0, _currentDamage[DamageType.Total] + amount);
                 UpdateForDamageType(DamageType.Total, oldTotalValue);
             }
         }
@@ -106,7 +108,7 @@ namespace Content.Server.GameObjects
 
         void UpdateForDamageType(DamageType damageType, int oldValue)
         {
-            int change = CurrentDamage[damageType] - oldValue;
+            int change = _currentDamage[damageType] - oldValue;
 
             if (change == 0)
             {
@@ -118,7 +120,7 @@ namespace Content.Server.GameObjects
             foreach (var threshold in Thresholds[damageType])
             {
                 var value = threshold.Value;
-                if (((value * changeSign) > (oldValue * changeSign)) && ((value * changeSign) <= (CurrentDamage[damageType] * changeSign)))
+                if (((value * changeSign) > (oldValue * changeSign)) && ((value * changeSign) <= (_currentDamage[damageType] * changeSign)))
                 {
                     var args = new DamageThresholdPassedEventArgs(threshold, (changeSign > 0));
                     DamageThresholdPassed?.Invoke(this, args);
@@ -156,9 +158,9 @@ namespace Content.Server.GameObjects
 
         void InitializeDamageType(DamageType damageType)
         {
-            if (!CurrentDamage.ContainsKey(damageType))
+            if (!_currentDamage.ContainsKey(damageType))
             {
-                CurrentDamage.Add(damageType, 0);
+                _currentDamage.Add(damageType, 0);
                 Thresholds.Add(damageType, new List<DamageThreshold>());
             }
         }
