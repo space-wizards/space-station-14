@@ -1,6 +1,6 @@
 [gd_scene format=2]
 
-[node name="PanelContainer" type="PanelContainer" index="0"]
+[node name="PanelContainer" type="PanelContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0

@@ -1,15 +1,9 @@
 ﻿using Content.Shared.GameObjects;
-using Content.Shared.Input;
-using SS14.Client.GameObjects;
 using SS14.Client.Interfaces.GameObjects.Components;
-using SS14.Client.Interfaces.Input;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
-using SS14.Client.UserInterface.CustomControls;
 using SS14.Shared.GameObjects;
-using SS14.Shared.Input;
 using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
@@ -21,21 +15,34 @@ using SS14.Shared.Interfaces.Reflection;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
 using Content.Client.GameObjects.Components.Mobs;
+using Content.Client.GameObjects.Components.Actor;
 
 namespace Content.Client.GameObjects
 {
+    /// <summary>
+    /// A character UI which shows items the user has equipped within his inventory
+    /// </summary>
     public class ClientInventoryComponent : SharedInventoryComponent, ICharacterUI
     {
         private Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
 
+        /// <summary>
+        /// Holds the godot control for the inventory window 
+        /// </summary>
         private InventoryWindow _window;
+
         private string _templateName = "HumanInventory"; //stored for serialization purposes
 
+        /// <summary>
+        /// Inventory template after being loaded from instance creator and string name
+        /// </summary>
         private Inventory _inventory;
 
         private ISpriteComponent _sprite;
 
+        //Relevant interface implementation for the character UI controller
         public Control Scene => _window;
+        public UIPriority Priority => UIPriority.Inventory;
 
         public override void OnRemove()
         {
@@ -44,21 +51,17 @@ namespace Content.Client.GameObjects
             _window.Dispose();
         }
 
-        public override void OnAdd()
-        {
-            base.OnAdd();
-
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
+            //Loads inventory template
             var reflectionManager = IoCManager.Resolve<IReflectionManager>();
             var type = reflectionManager.LooseGetType(_templateName);
             DebugTools.Assert(type != null);
             _inventory = (Inventory)Activator.CreateInstance(type);
 
+            //Creates godot control class for inventory
             _window = new InventoryWindow(this);
             _window.CreateInventory(_inventory);
 

@@ -11,6 +11,7 @@ using Content.Client.Interfaces;
 using Content.Client.Interfaces.GameObjects;
 using Content.Shared.Interfaces;
 using SS14.Client;
+using SS14.Client.Interfaces;
 using SS14.Client.Interfaces.Input;
 using SS14.Client.Player;
 using SS14.Client.Utility;
@@ -69,9 +70,11 @@ namespace Content.Client
             factory.Register<DamageableComponent>();
             factory.Register<ClothingComponent>();
             factory.Register<ItemComponent>();
+
             factory.RegisterReference<ClothingComponent, ItemComponent>();
 
             factory.Register<SpeciesUI>();
+            factory.Register<CharacterInterface>();
 
             factory.RegisterIgnore("Construction");
             factory.RegisterIgnore("Apc");
@@ -87,19 +90,44 @@ namespace Content.Client
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
             IoCManager.Register<IClientGameTicker, ClientGameTicker>();
             IoCManager.BuildGraph();
+
+            IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
         }
 
+        /// <summary>
+        /// Subscribe events to the player manager after the player manager is set up
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        public void SubscribePlayerAttachmentEvents(object sender, EventArgs args)
+        {
+            IoCManager.Resolve<IPlayerManager>().LocalPlayer.EntityAttached += AttachPlayerToEntity;
+            IoCManager.Resolve<IPlayerManager>().LocalPlayer.EntityDetached += DetachPlayerFromEntity;
+            AttachPlayerToEntity(IoCManager.Resolve<IPlayerManager>().LocalPlayer, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Add the character interface master which combines all character interfaces into one window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void AttachPlayerToEntity(object sender, EventArgs args)
         {
             var localplayer = (LocalPlayer)sender;
-            localplayer.ControlledEntity.AddComponent<KeybindMaster>();
+
+            localplayer.ControlledEntity?.AddComponent<CharacterInterface>();
         }
 
+        /// <summary>
+        /// Remove the character interface master from this entity now that we have detached ourselves from it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void DetachPlayerFromEntity(object sender, EventArgs args)
         {
             var localplayer = (LocalPlayer)sender;
             //Wont work atm, controlled entity gets nulled before this event fires
-            localplayer.ControlledEntity.RemoveComponent<KeybindMaster>();
+            localplayer.ControlledEntity?.RemoveComponent<CharacterInterface>();
         }
 
         public override void PostInit()
@@ -112,8 +140,6 @@ namespace Content.Client
 
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
             IoCManager.Resolve<IClientGameTicker>().Initialize();
-            IoCManager.Resolve<IPlayerManager>().LocalPlayer.EntityAttached += AttachPlayerToEntity;
-            IoCManager.Resolve<IPlayerManager>().LocalPlayer.EntityDetached += DetachPlayerFromEntity;
         }
 
         public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)

@@ -1,18 +1,15 @@
-﻿using Content.Client.GameObjects.Components.Mobs;
+﻿using Content.Client.GameObjects.Components.Actor;
+using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Graphics.Overlays;
 using Content.Shared.GameObjects;
-using Content.Shared.Input;
 using SS14.Client.GameObjects;
 using SS14.Client.Interfaces.Graphics.Overlays;
-using SS14.Client.Interfaces.Input;
 using SS14.Client.Interfaces.ResourceManagement;
 using SS14.Client.Player;
 using SS14.Client.ResourceManagement;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
-using SS14.Client.UserInterface.CustomControls;
 using SS14.Shared.GameObjects;
-using SS14.Shared.Input;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
@@ -22,21 +19,42 @@ using System.Collections.Generic;
 
 namespace Content.Client.GameObjects
 {
+    /// <summary>
+    /// A character UI component which shows the current damage state of the mob (living/dead)
+    /// </summary>
     public class SpeciesUI : Component, ICharacterUI
     {
         public override string Name => "Species";
 
         public override uint? NetID => ContentNetIDs.SPECIES;
 
+        /// <summary>
+        /// Holds the godot control for the species window 
+        /// </summary>
         private SpeciesWindow _window;
+
+        /// <summary>
+        /// An enum representing the current state being applied to the user
+        /// </summary>
         private ScreenEffects _currentEffect = ScreenEffects.None;
 
+        // Required dependencies
         [Dependency] private readonly IOverlayManager _overlayManager;
         [Dependency] private readonly IPlayerManager _playerManager;
 
+        //Relevant interface implementation for the character UI controller
         public Control Scene => _window;
+        public UIPriority Priority => UIPriority.Species;
 
+        /// <summary>
+        /// Allows calculating if we need to act due to this component being controlled by the current mob
+        /// </summary>
         private bool CurrentlyControlled => _playerManager.LocalPlayer.ControlledEntity == Owner;
+
+        /// <summary>
+        /// Holds the screen effects that can be applied mapped ot their relevant overlay
+        /// </summary>
+        private Dictionary<ScreenEffects, IOverlay> EffectsDictionary;
 
         public override void OnRemove()
         {
@@ -113,8 +131,6 @@ namespace Content.Client.GameObjects
                 _overlayManager.AddOverlay(EffectsDictionary[_currentEffect]);
             }
         }
-
-        private Dictionary<ScreenEffects, IOverlay> EffectsDictionary;
 
         private class SpeciesWindow : Control
         {
