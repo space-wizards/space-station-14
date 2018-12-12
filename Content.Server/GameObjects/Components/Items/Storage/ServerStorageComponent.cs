@@ -127,19 +127,16 @@ namespace Content.Server.GameObjects
         {
             _ensureInitialCalculated();
             Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, user.Uid, attackwith.Uid);
-            var hands = user.GetComponent<HandsComponent>();
+
+            if (!user.TryGetComponent(out HandsComponent hands))
+                return false;
+            
             //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
-            if (hands.Drop(hands.ActiveIndex, null))
+            if (hands.Drop(hands.ActiveIndex))
             {
-                var inserted = Insert(attackwith);
-                if (inserted)
+                if (Insert(attackwith))
                 {
                     return true;
-                }
-                else
-                {
-                    //Return the object to the hand since its too big or something like that
-                    hands.PutInHand(attackwith.GetComponent<ItemComponent>());
                 }
             }
             return false;
