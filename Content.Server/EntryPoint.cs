@@ -115,6 +115,7 @@ namespace Content.Server
             factory.RegisterIgnore("ConstructionGhost");
 
             factory.Register<MindComponent>();
+            factory.Register<SpeciesComponent>();
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();

@@ -47,6 +47,10 @@
 
   - type: Input
     context: "human"
+    
+  - type: Species
+    Template: Human
+  - type: Damageable
 
   - type: Eye
     zoom: 0.5, 0.5

@@ -11,6 +11,8 @@
     sprite: Objects/laser_retro.rsi
     state: 100
   - type: HitscanWeapon
+    damage: 30
+    sprite: "Objects/laser.png"
   - type: Item
     Size: 24
     sprite: Objects/laser_retro.rsi

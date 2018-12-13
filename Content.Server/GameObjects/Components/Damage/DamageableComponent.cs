@@ -18,13 +18,10 @@ namespace Content.Server.GameObjects
     /// A component that handles receiving damage and healing,
     /// as well as informing other components of it.
     /// </summary>
-    public class DamageableComponent : Component, IDamageableComponent
+    public class DamageableComponent : SharedDamageableComponent, IDamageableComponent
     {
         /// <inheritdoc />
         public override string Name => "Damageable";
-
-        /// <inheritdoc />
-        public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
         /// <summary>
         /// The resistance set of this object.
@@ -33,11 +30,17 @@ namespace Content.Server.GameObjects
         [ViewVariables]
         public ResistanceSet Resistances { get; private set; }
 
-        Dictionary<DamageType, int> CurrentDamage = new Dictionary<DamageType, int>();
-        Dictionary<DamageType, List<int>> Thresholds = new Dictionary<DamageType, List<int>>();
+        public IReadOnlyDictionary<DamageType, int> CurrentDamage => _currentDamage;
+        private Dictionary<DamageType, int> _currentDamage = new Dictionary<DamageType, int>();
+
+        Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
 
+        public override ComponentState GetComponentState()
+        {
+            return new DamageComponentState(_currentDamage);
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -55,9 +58,10 @@ namespace Content.Server.GameObjects
         {
             base.Initialize();
             InitializeDamageType(DamageType.Total);
-            if (Owner is IOnDamageBehavior damageBehavior)
+
+            foreach (var damagebehavior in Owner.GetAllComponents<IOnDamageBehavior>())
             {
-                AddThresholdsFrom(damageBehavior);
+                AddThresholdsFrom(damagebehavior);
             }
 
             RecalculateComponentThresholds();
@@ -72,7 +76,7 @@ namespace Content.Server.GameObjects
             }
             InitializeDamageType(damageType);
 
-            int oldValue = CurrentDamage[damageType];
+            int oldValue = _currentDamage[damageType];
             int oldTotalValue = -1;
 
             if (amount == 0)
@@ -81,13 +85,13 @@ namespace Content.Server.GameObjects
             }
 
             amount = Resistances.CalculateDamage(damageType, amount);
-            CurrentDamage[damageType] = Math.Max(0, CurrentDamage[damageType] + amount);
+            _currentDamage[damageType] = Math.Max(0, _currentDamage[damageType] + amount);
             UpdateForDamageType(damageType, oldValue);
 
             if (Resistances.AppliesToTotal(damageType))
             {
-                oldTotalValue = CurrentDamage[DamageType.Total];
-                CurrentDamage[DamageType.Total] = Math.Max(0, CurrentDamage[DamageType.Total] + amount);
+                oldTotalValue = _currentDamage[DamageType.Total];
+                _currentDamage[DamageType.Total] = Math.Max(0, _currentDamage[DamageType.Total] + amount);
                 UpdateForDamageType(DamageType.Total, oldTotalValue);
             }
         }
@@ -104,7 +108,7 @@ namespace Content.Server.GameObjects
 
         void UpdateForDamageType(DamageType damageType, int oldValue)
         {
-            int change = CurrentDamage[damageType] - oldValue;
+            int change = _currentDamage[damageType] - oldValue;
 
             if (change == 0)
             {
@@ -113,11 +117,12 @@ namespace Content.Server.GameObjects
 
             int changeSign = Math.Sign(change);
 
-            foreach (int value in Thresholds[damageType])
+            foreach (var threshold in Thresholds[damageType])
             {
-                if (((value * changeSign) > (oldValue * changeSign)) && ((value * changeSign) <= (CurrentDamage[damageType] * changeSign)))
+                var value = threshold.Value;
+                if (((value * changeSign) > (oldValue * changeSign)) && ((value * changeSign) <= (_currentDamage[damageType] * changeSign)))
                 {
-                    var args = new DamageThresholdPassedEventArgs(new DamageThreshold(damageType, value), (changeSign > 0));
+                    var args = new DamageThresholdPassedEventArgs(threshold, (changeSign > 0));
                     DamageThresholdPassed?.Invoke(this, args);
                 }
             }
@@ -142,61 +147,22 @@ namespace Content.Server.GameObjects
 
             foreach (DamageThreshold threshold in thresholds)
             {
-                if (!Thresholds[threshold.DamageType].Contains(threshold.Value))
+                if (!Thresholds[threshold.DamageType].Contains(threshold))
                 {
-                    Thresholds[threshold.DamageType].Add(threshold.Value);
+                    Thresholds[threshold.DamageType].Add(threshold);
                 }
             }
+
+            DamageThresholdPassed += onDamageBehavior.OnDamageThresholdPassed;
         }
 
         void InitializeDamageType(DamageType damageType)
         {
-            if (!CurrentDamage.ContainsKey(damageType))
+            if (!_currentDamage.ContainsKey(damageType))
             {
-                CurrentDamage.Add(damageType, 0);
-                Thresholds.Add(damageType, new List<int>());
+                _currentDamage.Add(damageType, 0);
+                Thresholds.Add(damageType, new List<DamageThreshold>());
             }
-        }
-    }
-
-    public struct DamageThreshold
-    {
-        public DamageType DamageType { get; }
-        public int Value { get; }
-
-        public DamageThreshold(DamageType damageType, int value)
-        {
-            DamageType = damageType;
-            Value = value;
-        }
-
-        public override bool Equals(Object obj)
-        {
-            return obj is DamageThreshold && this == (DamageThreshold)obj;
-        }
-        public override int GetHashCode()
-        {
-            return DamageType.GetHashCode() ^ Value.GetHashCode();
-        }
-        public static bool operator ==(DamageThreshold x, DamageThreshold y)
-        {
-            return x.DamageType == y.DamageType && x.Value == y.Value;
-        }
-        public static bool operator !=(DamageThreshold x, DamageThreshold y)
-        {
-            return !(x == y);
-        }
-    }
-
-    public class DamageThresholdPassedEventArgs : EventArgs
-    {
-        public DamageThreshold DamageThreshold { get; }
-        public bool Passed { get; }
-
-        public DamageThresholdPassedEventArgs(DamageThreshold threshold, bool passed)
-        {
-            DamageThreshold = threshold;
-            Passed = passed;
         }
     }
 }

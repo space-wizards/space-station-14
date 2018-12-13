@@ -1,15 +1,9 @@
 ﻿using Content.Shared.GameObjects;
-using Content.Shared.Input;
-using SS14.Client.GameObjects;
 using SS14.Client.Interfaces.GameObjects.Components;
-using SS14.Client.Interfaces.Input;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
-using SS14.Client.UserInterface.CustomControls;
 using SS14.Shared.GameObjects;
-using SS14.Shared.Input;
 using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
@@ -20,20 +14,35 @@ using Content.Client.GameObjects.Components.Clothing;
 using SS14.Shared.Interfaces.Reflection;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
+using Content.Client.GameObjects.Components.Mobs;
+using Content.Client.GameObjects.Components.Actor;
 
 namespace Content.Client.GameObjects
 {
-    public class ClientInventoryComponent : SharedInventoryComponent
+    /// <summary>
+    /// A character UI which shows items the user has equipped within his inventory
+    /// </summary>
+    public class ClientInventoryComponent : SharedInventoryComponent, ICharacterUI
     {
         private Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
 
+        /// <summary>
+        /// Holds the godot control for the inventory window 
+        /// </summary>
         private InventoryWindow _window;
+
         private string _templateName = "HumanInventory"; //stored for serialization purposes
 
-        private InputCmdHandler _openMenuCmdHandler;
+        /// <summary>
+        /// Inventory template after being loaded from instance creator and string name
+        /// </summary>
         private Inventory _inventory;
 
         private ISpriteComponent _sprite;
+
+        //Relevant interface implementation for the character UI controller
+        public Control Scene => _window;
+        public UIPriority Priority => UIPriority.Inventory;
 
         public override void OnRemove()
         {
@@ -42,22 +51,17 @@ namespace Content.Client.GameObjects
             _window.Dispose();
         }
 
-        public override void OnAdd()
-        {
-            base.OnAdd();
-
-            _openMenuCmdHandler = InputCmdHandler.FromDelegate(session => { _window.AddToScreen(); _window.Open(); });
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
+            //Loads inventory template
             var reflectionManager = IoCManager.Resolve<IReflectionManager>();
             var type = reflectionManager.LooseGetType(_templateName);
             DebugTools.Assert(type != null);
             _inventory = (Inventory)Activator.CreateInstance(type);
 
+            //Creates godot control class for inventory
             _window = new InventoryWindow(this);
             _window.CreateInventory(_inventory);
 
@@ -120,21 +124,6 @@ namespace Content.Client.GameObjects
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
-        {
-            var inputMgr = IoCManager.Resolve<IInputManager>();
-            switch (message)
-            {
-                case PlayerAttachedMsg _:
-                    inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, _openMenuCmdHandler);
-                    break;
-
-                case PlayerDetachedMsg _:
-                    inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
-                    break;
-            }
-        }
-
         private void _setSlot(Slots slot, IEntity entity)
         {
             if (_sprite != null && entity.TryGetComponent(out ClothingComponent clothing))
@@ -178,7 +167,7 @@ namespace Content.Client.GameObjects
         /// <summary>
         /// Temporary window to hold the basis for inventory hud
         /// </summary>
-        private class InventoryWindow : SS14Window
+        private class InventoryWindow : Control
         {
             private int elements_x;
 
@@ -187,13 +176,11 @@ namespace Content.Client.GameObjects
             private Dictionary<Slots, InventoryButton> InventorySlots = new Dictionary<Slots, InventoryButton>(); //ordered dictionary?
             private ClientInventoryComponent InventoryComponent;
 
-            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Inventory/HumanInventory.tscn");
+            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Mobs/HumanInventory.tscn");
 
             public InventoryWindow(ClientInventoryComponent inventory)
             {
                 InventoryComponent = inventory;
-
-                HideOnClose = true;
             }
 
             /// <summary>
@@ -203,7 +190,7 @@ namespace Content.Client.GameObjects
             {
                 elements_x = inventory.Columns;
 
-                GridContainer = (GridContainer)Contents.GetChild("PanelContainer").GetChild("CenterContainer").GetChild("GridContainer");
+                GridContainer = (GridContainer)GetChild("CenterContainer").GetChild("GridContainer");
                 GridContainer.Columns = elements_x;
                 IndexedSlots = new List<Slots>(inventory.SlotMasks);
 
@@ -304,7 +291,7 @@ namespace Content.Client.GameObjects
             public Slots Slot;
             public EntityUid EntityUid;
 
-            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Inventory/StorageSlot.tscn");
+            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Mobs/StorageSlot.tscn");
 
             public InventoryButton(Slots slot)
             {

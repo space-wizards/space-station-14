@@ -72,8 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="GameObjects\Components\Actor\CharacterInterface.cs" />
+    <Compile Include="GameObjects\Components\DamageableComponent.cs" />
+    <Compile Include="GameObjects\Components\HUD\Inventory\ClientInventoryComponent.cs" />
+    <Compile Include="GameObjects\Components\Mobs\ICharacterUI.cs" />
+    <Compile Include="GameObjects\Components\Mobs\SpeciesUI.cs" />
     <Compile Include="GameObjects\Components\Clothing\ClothingComponent.cs" />
-    <Compile Include="GameObjects\Components\Inventory\ClientInventoryComponent.cs" />
     <Compile Include="GameObjects\Components\Items\ItemComponent.cs" />
     <Compile Include="GameObjects\Components\Power\ApcBoundUserInterface.cs" />
     <Compile Include="GameObjects\Components\Power\PowerCellVisualizer2D.cs" />
@@ -81,6 +85,8 @@
     <Compile Include="GameObjects\EntitySystems\ClientNotifySystem.cs" />
     <Compile Include="GameObjects\EntitySystems\VerbSystem.cs" />
     <Compile Include="GameTicking\ClientGameTicker.cs" />
+    <Compile Include="Graphics\Overlays\CircleMaskOverlay.cs" />
+    <Compile Include="Graphics\Overlays\GradientCircleMask.cs" />
     <Compile Include="Input\ContentContexts.cs" />
     <Compile Include="Interfaces\IClientGameTicker.cs" />
     <Compile Include="Interfaces\IClientNotifyManager.cs" />

@@ -1,0 +1,10 @@
+shader_type canvas_item;
+uniform float percentagedistanceshow = 0.1;
+uniform float gradientfalloffwidth = 0.2;
+
+void fragment() {
+    float dist = distance(UV, vec2(0.5, 0.5));
+    float fromdiskdist = dist - percentagedistanceshow;
+    COLOR.a = max(0, min(1.0, 2.0*dist/percentagedistanceshow - 2.0));
+    COLOR.rgb = vec3(1,1,1) - vec3(fromdiskdist,fromdiskdist,fromdiskdist)/gradientfalloffwidth;
+}

@@ -66,6 +66,7 @@
     <Compile Include="Administration\AGhost.cs" />
     <Compile Include="AI\AimShootLifeProcessor.cs" />
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="GameObjects\Components\Damage\DamageThreshold.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\HandheldLightComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\Tools\BaseTool.cs" />
@@ -79,7 +80,11 @@
     <Compile Include="GameObjects\Components\Items\Storage\StoreableComponent.cs" />
     <Compile Include="GameObjects\Components\Items\Storage\ServerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Items\Storage\ItemComponent.cs" />
+    <Compile Include="GameObjects\Components\Mobs\DamageStates.cs" />
+    <Compile Include="GameObjects\Components\Mobs\DamageThresholdTemplates\DamageThresholdTemplates.cs" />
+    <Compile Include="GameObjects\Components\Mobs\DamageThresholdTemplates\HumanTemplate.cs" />
     <Compile Include="GameObjects\Components\Mobs\MindComponent.cs" />
+    <Compile Include="GameObjects\Components\Mobs\SpeciesComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerCellComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerGeneratorComponent.cs" />
@@ -96,6 +101,7 @@
     <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\ProjectileWeapon.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\RangedWeapon.cs" />
     <Compile Include="GameObjects\ContainerSlot.cs" />
+    <Compile Include="GameObjects\EntitySystems\ActionBlockerSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\Click\ExamineSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\Click\InteractionSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\DoorSystem.cs" />
