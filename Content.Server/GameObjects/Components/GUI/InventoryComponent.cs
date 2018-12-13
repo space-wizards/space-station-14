@@ -234,7 +234,7 @@ namespace Content.Server.GameObjects
                 var activehand = hands.GetActiveHand;
                 if (activehand != null && activehand.Owner.TryGetComponent(out ClothingComponent clothing))
                 {
-                    hands.Drop(hands.ActiveIndex, null);
+                    hands.Drop(hands.ActiveIndex);
                     if (!Equip(msg.Inventoryslot, clothing))
                     {
                         hands.PutInHand(clothing);

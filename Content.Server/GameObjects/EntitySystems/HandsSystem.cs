@@ -154,7 +154,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // pop off an item, or throw the single item in hand.
             if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2)
             {
-                handsComp.Drop(handsComp.ActiveIndex, null);
+                handsComp.Drop(handsComp.ActiveIndex);
             }
             else
             {
