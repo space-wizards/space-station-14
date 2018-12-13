@@ -27,6 +27,8 @@ namespace Content.Client.GameObjects
 
         [ViewVariables] private ISpriteComponent _sprite;
 
+        [ViewVariables] public IEntity ActiveHand => GetEntity(ActiveIndex);
+
         public override void OnAdd()
         {
             base.OnAdd();

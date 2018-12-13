@@ -12,10 +12,11 @@ using SS14.Shared.Maths;
 using SS14.Shared.Physics;
 using SS14.Shared.Serialization;
 using System;
+using SS14.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
-    public class HitscanWeaponComponent : RangedWeaponComponent
+    public class HitscanWeaponComponent : Component
     {
         private const float MaxLength = 20;
         public override string Name => "HitscanWeapon";
@@ -31,10 +32,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             serializer.DataField(ref Damage, "damage", 10);
         }
 
-        protected override void Fire(IEntity user, GridLocalCoordinates clicklocation)
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            var rangedWeapon = Owner.GetComponent<RangedWeaponComponent>();
+            rangedWeapon.FireHandler = Fire;
+        }
+
+        private void Fire(IEntity user, GridLocalCoordinates clickLocation)
         {
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
-            var angle = new Angle(clicklocation.Position - userPosition);
+            var angle = new Angle(clickLocation.Position - userPosition);
 
             var ray = new Ray(userPosition, angle.ToVec());
             var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ray, MaxLength,

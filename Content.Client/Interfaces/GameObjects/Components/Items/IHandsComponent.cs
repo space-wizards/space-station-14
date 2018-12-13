@@ -8,6 +8,7 @@ namespace Content.Client.Interfaces.GameObjects
     {
         IEntity GetEntity(string index);
         string ActiveIndex { get; }
+        IEntity ActiveHand { get; }
 
         void SendChangeHand(string index);
         void AttackByInHand(string index);

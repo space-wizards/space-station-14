@@ -11,6 +11,7 @@
         public const uint INVENTORY = 1006;
         public const uint POWER_DEBUG_TOOL = 1007;
         public const uint CONSTRUCTOR = 1008;
+        public const uint RANGED_WEAPON = 1010;
         public const uint SPECIES = 1009;
     }
 }

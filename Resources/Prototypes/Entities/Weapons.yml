@@ -10,6 +10,7 @@
   - type: Icon
     sprite: Objects/laser_retro.rsi
     state: 100
+  - type: RangedWeapon
   - type: HitscanWeapon
     damage: 30
     sprite: "Objects/laser.png"
@@ -31,6 +32,9 @@
   - type: Icon
     sprite: Objects/c20r.rsi
     state: c20r-20
+  - type: RangedWeapon
+    automatic: true
+    firerate: 8
   - type: ProjectileWeapon
   - type: Item
     Size: 24
