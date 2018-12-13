@@ -25,7 +25,7 @@ namespace Content.Client.Parallax
 
         // Both of these below are in the user directory.
         private static readonly ResourcePath ParallaxPath = new ResourcePath("/parallax_cache.png");
-        private static readonly ResourcePath ParallaxConfigCrcPath = new ResourcePath("/parallax_config_crc");
+        private static readonly ResourcePath ParallaxConfigOld = new ResourcePath("/parallax_config_old");
 
         public event Action<Texture> OnTextureLoaded;
         public Texture ParallaxTexture { get; private set; }
@@ -34,6 +34,7 @@ namespace Content.Client.Parallax
         {
             MemoryStream configStream = null;
             long crcValue;
+            string contents;
             TomlTable table;
             try
             {
@@ -44,22 +45,20 @@ namespace Content.Client.Parallax
                     return;
                 }
 
-                // Calculate CRC32 of the config file.
-                var crc = new Crc32();
-                crc.Update(configStream.ToArray());
-                crcValue = crc.Value;
+                using (var reader = new StreamReader(configStream, Encoding.UTF8))
+                {
+                    contents = reader.ReadToEnd();
+                }
 
-                // See if we we have a previous CRC stored.
-                if (_resourceCache.UserData.Exists(ParallaxConfigCrcPath))
+                if (_resourceCache.UserData.Exists(ParallaxConfigOld))
                 {
                     bool match;
-                    using (var data = _resourceCache.UserData.Open(ParallaxConfigCrcPath, FileMode.Open))
-                    using (var binaryReader = new BinaryReader(data))
+                    using (var data = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Open))
+                    using (var reader = new StreamReader(data, Encoding.UTF8))
                     {
-                        match = binaryReader.ReadInt64() == crcValue;
+                        match = reader.ReadToEnd() == contents;
                     }
 
-                    // If the previous CRC matches, just load the old texture.
                     if (match)
                     {
                         using (var stream = _resourceCache.UserData.Open(ParallaxPath, FileMode.Open))
@@ -72,12 +71,7 @@ namespace Content.Client.Parallax
                     }
                 }
 
-                // Well turns out the CRC does not match so the config changed.
-                // Read the new config and get rid of the config memory stream.
-                using (var reader = new StreamReader(configStream, Encoding.UTF8))
-                {
-                    table = Toml.ReadString(reader.ReadToEnd());
-                }
+                table = Toml.ReadString(contents);
             }
             finally
             {
@@ -95,10 +89,10 @@ namespace Content.Client.Parallax
                 image.SaveAsPng(stream);
             }
 
-            using (var stream = _resourceCache.UserData.Open(ParallaxConfigCrcPath, FileMode.Create))
-            using (var writer = new BinaryWriter(stream))
+            using (var stream = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Create))
+            using (var writer = new StreamWriter(stream, Encoding.UTF8))
             {
-                writer.Write(crcValue);
+                writer.Write(contents);
             }
 
             OnTextureLoaded?.Invoke(ParallaxTexture);

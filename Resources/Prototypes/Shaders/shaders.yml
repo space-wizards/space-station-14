@@ -1,0 +1,9 @@
+- type: shader
+  id: circlemask
+  kind: source
+  path: "/Shaders/circlemask.gdsl"
+
+- type: shader
+  id: gradientcirclemask
+  kind: source
+  path: "/Shaders/gradientcirclemask.gdsl"

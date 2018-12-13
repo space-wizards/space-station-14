@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="GameObjects\Components\Damage\DamageableComponent.cs" />
     <Compile Include="GameObjects\Components\Inventory\EquipmentSlotDefinitions.cs" />
     <Compile Include="GameObjects\Components\Inventory\InventoryTemplates.cs" />
     <Compile Include="GameObjects\Components\Inventory\SharedInventoryComponent.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="GameObjects\Components\Weapons\Ranged\SharedRangedWeaponComponent.cs" />
     <Compile Include="GameObjects\ContentNetIDs.cs" />
     <Compile Include="GameObjects\EntitySystemMessages\VerbSystemMessages.cs" />
+    <Compile Include="GameObjects\Messages\Mob\HealthHud.cs" />
     <Compile Include="GameObjects\PhysicalConstants.cs" />
     <Compile Include="Interfaces\ISharedNotifyManager.cs" />
     <Compile Include="GameObjects\Verb.cs" />

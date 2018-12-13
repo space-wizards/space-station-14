@@ -233,7 +233,6 @@ namespace Content.Server.GameObjects
             return true;
         }
 
-
         public bool Drop(IEntity entity)
         {
             if (entity == null)
@@ -252,6 +251,16 @@ namespace Content.Server.GameObjects
 
         public bool Drop(string slot, BaseContainer targetContainer)
         {
+            if (slot == null)
+            {
+                throw new ArgumentNullException(nameof(slot));
+            }
+
+            if (targetContainer == null)
+            {
+                throw new ArgumentNullException(nameof(targetContainer));
+            }
+
             if (!CanDrop(slot))
             {
                 return false;
