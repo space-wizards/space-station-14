@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.EntitySystems
             handsComp.SwapHands();
         }
 
-        private static void HandleDrop(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
+        private static void HandleDrop(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             var ent = ((IPlayerSession) session).AttachedEntity;
 
@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.EntitySystems
             handsComp.ActivateItem();
         }
 
-        private static void HandleThrowItem(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
+        private static void HandleThrowItem(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             var plyEnt = ((IPlayerSession)session).AttachedEntity;
 

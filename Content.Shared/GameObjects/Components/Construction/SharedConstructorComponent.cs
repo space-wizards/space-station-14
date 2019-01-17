@@ -24,7 +24,7 @@ namespace Content.Shared.GameObjects.Components.Construction
             /// <summary>
             ///     Position to start building.
             /// </summary>
-            public readonly GridLocalCoordinates Location;
+            public readonly GridCoordinates Location;
 
             /// <summary>
             ///     The construction prototype to start building.
@@ -38,7 +38,7 @@ namespace Content.Shared.GameObjects.Components.Construction
             /// </summary>
             public readonly int Ack;
 
-            public TryStartStructureConstructionMessage(GridLocalCoordinates loc, string prototypeName, Angle angle, int ack)
+            public TryStartStructureConstructionMessage(GridCoordinates loc, string prototypeName, Angle angle, int ack)
             {
                 Directed = true;
                 Location = loc;

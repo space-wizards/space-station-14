@@ -73,7 +73,7 @@ namespace Content.Client.GameObjects.EntitySystems
             RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
 
             var size = vBox.CombinedMinimumSize;
-            var box = UIBox2.FromDimensions(screenCoordinates.AsVector, size);
+            var box = UIBox2.FromDimensions(screenCoordinates.Position, size);
             _currentPopup.Open(box);
         }
 

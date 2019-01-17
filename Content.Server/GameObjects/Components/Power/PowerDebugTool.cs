@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Power
 {
     public class PowerDebugTool : SharedPowerDebugTool, IAfterAttack
     {
-        void IAfterAttack.Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked)
+        void IAfterAttack.Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked)
         {
             if (attacked == null)
             {

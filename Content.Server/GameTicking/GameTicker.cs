@@ -63,7 +63,7 @@ namespace Content.Server.GameTicking
         private const float LobbyDuration = 20;
 
         [ViewVariables] private bool _initialized;
-        [ViewVariables(VVAccess.ReadWrite)] private GridLocalCoordinates _spawnPoint;
+        [ViewVariables(VVAccess.ReadWrite)] private GridCoordinates _spawnPoint;
         [ViewVariables] private GameRunLevel _runLevel;
 
         [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar<bool>("game.lobbyenabled");
@@ -272,7 +272,7 @@ namespace Content.Server.GameTicking
             var startTime = _gameTiming.RealTime;
             var grid = _mapLoader.LoadBlueprint(newMap, MapFile);
 
-            _spawnPoint = new GridLocalCoordinates(Vector2.Zero, grid);
+            _spawnPoint = new GridCoordinates(Vector2.Zero, grid);
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");

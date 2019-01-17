@@ -21,11 +21,11 @@ namespace Content.Server.Placement
         {
             var entMan = IoCManager.Resolve<IServerEntityManager>();
             var tBase = entMan.SpawnEntity("TurretBase");
-            tBase.GetComponent<ITransformComponent>().LocalPosition = new GridLocalCoordinates(localPosition, grid);
+            tBase.GetComponent<ITransformComponent>().LocalPosition = new GridCoordinates(localPosition, grid);
 
             var tTop = entMan.SpawnEntity("TurretTopLight");
             var topTransform = tTop.GetComponent<ITransformComponent>();
-            topTransform.LocalPosition = new GridLocalCoordinates(localPosition, grid);
+            topTransform.LocalPosition = new GridCoordinates(localPosition, grid);
             topTransform.AttachParent(tBase);
         }
     }

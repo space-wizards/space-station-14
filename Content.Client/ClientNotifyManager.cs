@@ -45,7 +45,7 @@ namespace Content.Client
             PopupMessage(_eyeManager.WorldToScreen(message.Coordinates), message.Message);
         }
 
-        public override void PopupMessage(GridLocalCoordinates coordinates, IEntity viewer, string message)
+        public override void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message)
         {
             if (viewer != _playerManager.LocalPlayer.ControlledEntity)
             {
@@ -59,7 +59,7 @@ namespace Content.Client
         {
             var label = new PopupLabel {Text = message};
             var minimumSize = label.CombinedMinimumSize;
-            label.InitialPos = label.Position = coordinates.AsVector - minimumSize / 2;
+            label.InitialPos = label.Position = coordinates.Position - minimumSize / 2;
             _userInterfaceManager.StateRoot.AddChild(label);
             _aliveLabels.Add(label);
         }

@@ -171,7 +171,7 @@ namespace Content.Server.GameObjects
             return null;
         }
 
-        public bool Drop(string slot, GridLocalCoordinates coords)
+        public bool Drop(string slot, GridCoordinates coords)
         {
             if (!CanDrop(slot))
             {
@@ -194,7 +194,7 @@ namespace Content.Server.GameObjects
             return true;
         }
 
-        public bool Drop(IEntity entity, GridLocalCoordinates coords)
+        public bool Drop(IEntity entity, GridCoordinates coords)
         {
             if (entity == null)
             {
@@ -451,7 +451,7 @@ namespace Content.Server.GameObjects
                     if (playerEntity == Owner && used != null)
                     {
                         InteractionSystem.Interaction(Owner, used, slot.ContainedEntity,
-                            GridLocalCoordinates.Nullspace);
+                            GridCoordinates.Nullspace);
                     }
 
                     break;

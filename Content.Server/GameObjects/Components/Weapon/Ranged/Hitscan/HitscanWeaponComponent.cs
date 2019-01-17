@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             rangedWeapon.FireHandler = Fire;
         }
 
-        private void Fire(IEntity user, GridLocalCoordinates clickLocation)
+        private void Fire(IEntity user, GridCoordinates clickLocation)
         {
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);

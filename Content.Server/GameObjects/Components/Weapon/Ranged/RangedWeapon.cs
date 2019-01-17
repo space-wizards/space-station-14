@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
         public Func<bool> WeaponCanFireHandler;
         public Func<IEntity, bool> UserCanFireHandler;
-        public Action<IEntity, GridLocalCoordinates> FireHandler;
+        public Action<IEntity, GridCoordinates> FireHandler;
 
         private const int MaxFireDelayAttempts = 2;
 
@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             return UserCanFireHandler == null || UserCanFireHandler(user);
         }
 
-        private void Fire(IEntity user, GridLocalCoordinates clickLocation)
+        private void Fire(IEntity user, GridCoordinates clickLocation)
         {
             _lastFireTime = IoCManager.Resolve<IGameTiming>().CurTime;
             FireHandler?.Invoke(user, clickLocation);
@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             }
         }
 
-        private void _tryFire(IEntity user, GridLocalCoordinates coordinates, int attemptCount)
+        private void _tryFire(IEntity user, GridCoordinates coordinates, int attemptCount)
         {
             if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand.Owner != Owner)
             {

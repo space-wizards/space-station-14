@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine));
         }
 
-        private void HandleExamine(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
+        private void HandleExamine(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             if (!(session is IPlayerSession svSession))
                 return;

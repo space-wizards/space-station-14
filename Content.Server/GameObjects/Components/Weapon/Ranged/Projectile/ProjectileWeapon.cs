@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             serializer.DataField(ref _spreadStdDev, "spreadstddev", 3);
         }
 
-        private void Fire(IEntity user, GridLocalCoordinates clickLocation)
+        private void Fire(IEntity user, GridCoordinates clickLocation)
         {
             var userPosition = user.Transform.LocalPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition.Position);

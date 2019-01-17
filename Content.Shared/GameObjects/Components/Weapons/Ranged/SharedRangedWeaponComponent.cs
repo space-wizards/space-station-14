@@ -33,10 +33,10 @@ namespace Content.Shared.GameObjects.Components.Weapons.Ranged
         [Serializable, NetSerializable]
         protected class FireMessage : ComponentMessage
         {
-            public readonly GridLocalCoordinates Target;
+            public readonly GridCoordinates Target;
             public readonly int Tick;
 
-            public FireMessage(GridLocalCoordinates target, int tick)
+            public FireMessage(GridCoordinates target, int tick)
             {
                 Target = target;
                 Tick = tick;

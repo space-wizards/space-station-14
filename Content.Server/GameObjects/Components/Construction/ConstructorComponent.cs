@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Construction
             }
         }
 
-        void TryStartStructureConstruction(GridLocalCoordinates loc, string prototypeName, Angle angle, int ack)
+        void TryStartStructureConstruction(GridCoordinates loc, string prototypeName, Angle angle, int ack)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
             var prototype = protoMan.Index<ConstructionPrototype>(prototypeName);

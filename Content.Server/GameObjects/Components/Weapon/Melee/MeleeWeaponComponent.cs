@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref ArcWidth, "arcwidth", 90);
         }
 
-        void IAfterAttack.Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked)
+        void IAfterAttack.Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked)
         {
             var location = user.GetComponent<ITransformComponent>().LocalPosition;
             var angle = new Angle(clicklocation.ToWorld().Position - location.ToWorld().Position);
