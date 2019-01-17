@@ -118,7 +118,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var transform = ent.Transform;
 
-            if (transform.LocalPosition.InRange(coords, InteractionSystem.INTERACTION_RANGE))
+            if (transform.GridPosition.InRange(coords, InteractionSystem.INTERACTION_RANGE))
             {
                 handsComp.Drop(handsComp.ActiveIndex, coords);
             }
@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 stackComp.Use(1);
-                throwEnt = throwEnt.EntityManager.ForceSpawnEntityAt(throwEnt.Prototype.ID, plyEnt.Transform.LocalPosition);
+                throwEnt = throwEnt.EntityManager.ForceSpawnEntityAt(throwEnt.Prototype.ID, plyEnt.Transform.GridPosition);
             }
 
             if (!throwEnt.TryGetComponent(out CollidableComponent colComp))

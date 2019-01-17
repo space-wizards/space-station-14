@@ -80,7 +80,7 @@ namespace Content.Client.GameObjects.Components.Construction
         {
             var ghost = Ghosts[ghostId];
             var transform = ghost.Owner.GetComponent<ITransformComponent>();
-            var msg = new TryStartStructureConstructionMessage(transform.LocalPosition, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var msg = new TryStartStructureConstructionMessage(transform.GridPosition, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             SendNetworkMessage(msg);
         }
 

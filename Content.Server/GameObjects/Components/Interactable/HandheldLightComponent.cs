@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (!user.TryGetComponent(out HandsComponent hands)
                 || !hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
-                cell.Owner.Transform.LocalPosition = user.Transform.LocalPosition;
+                cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
         }
 
         [Verb]

@@ -34,9 +34,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         void IAfterAttack.Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked)
         {
-            var location = user.GetComponent<ITransformComponent>().LocalPosition;
+            var location = user.GetComponent<ITransformComponent>().GridPosition;
             var angle = new Angle(clicklocation.ToWorld().Position - location.ToWorld().Position);
-            var entities = IoCManager.Resolve<IServerEntityManager>().GetEntitiesInArc(user.GetComponent<ITransformComponent>().LocalPosition, Range, angle, ArcWidth);
+            var entities = IoCManager.Resolve<IServerEntityManager>().GetEntitiesInArc(user.GetComponent<ITransformComponent>().GridPosition, Range, angle, ArcWidth);
 
             foreach (var entity in entities)
             {

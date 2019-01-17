@@ -14,7 +14,7 @@ namespace Content.Shared
         {
             // TODO: we might eventually want for this to pass the actual entity,
             // so the notify could track the entity movement visually.
-            PopupMessage(source.Transform.LocalPosition, viewer, message);
+            PopupMessage(source.Transform.GridPosition, viewer, message);
         }
 
         public abstract void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message);

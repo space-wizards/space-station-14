@@ -188,7 +188,7 @@ namespace Content.Server.GameObjects
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            item.Owner.Transform.LocalPosition = coords;
+            item.Owner.Transform.GridPosition = coords;
 
             Dirty();
             return true;
@@ -227,7 +227,7 @@ namespace Content.Server.GameObjects
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            item.Owner.Transform.LocalPosition = Owner.Transform.LocalPosition;
+            item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
 
             Dirty();
             return true;

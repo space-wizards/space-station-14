@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects
 
             // TODO: The item should be dropped to the container our owner is in, if any.
             var itemTransform = item.Owner.GetComponent<ITransformComponent>();
-            itemTransform.LocalPosition = Owner.GetComponent<ITransformComponent>().LocalPosition;
+            itemTransform.GridPosition = Owner.GetComponent<ITransformComponent>().GridPosition;
             Dirty();
             return true;
         }

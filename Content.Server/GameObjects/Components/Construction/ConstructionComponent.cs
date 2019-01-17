@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 {
                     // Oh boy we get to finish construction!
                     var entMgr = IoCManager.Resolve<IServerEntityManager>();
-                    var ent = entMgr.ForceSpawnEntityAt(Prototype.Result, Transform.LocalPosition);
+                    var ent = entMgr.ForceSpawnEntityAt(Prototype.Result, Transform.GridPosition);
                     ent.GetComponent<ITransformComponent>().LocalRotation = Transform.LocalRotation;
                     Owner.Delete();
                     return true;
@@ -105,9 +105,9 @@ namespace Content.Server.GameObjects.Components.Construction
                         return false;
                     }
                     if (matStep.Material == MaterialType.Cable)
-                        AudioSystem.Play("/Audio/items/zip.ogg", Transform.LocalPosition);
+                        AudioSystem.Play("/Audio/items/zip.ogg", Transform.GridPosition);
                     else
-                        AudioSystem.Play("/Audio/items/deconstruct.ogg", Transform.LocalPosition);
+                        AudioSystem.Play("/Audio/items/deconstruct.ogg", Transform.GridPosition);
                     return true;
                 case ConstructionStepTool toolStep:
                     switch (toolStep.Tool)
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Construction
                         case ToolType.Crowbar:
                             if (slapped.HasComponent<CrowbarComponent>())
                             {
-                                AudioSystem.Play("/Audio/items/crowbar.ogg", Transform.LocalPosition);
+                                AudioSystem.Play("/Audio/items/crowbar.ogg", Transform.GridPosition);
                                 return true;
                             }
                             return false;
@@ -123,16 +123,16 @@ namespace Content.Server.GameObjects.Components.Construction
                             if (slapped.TryGetComponent(out WelderComponent welder) && welder.TryUse(toolStep.Amount))
                             {
                                 if (random.NextDouble() > 0.5)
-                                    AudioSystem.Play("/Audio/items/welder.ogg", Transform.LocalPosition);
+                                    AudioSystem.Play("/Audio/items/welder.ogg", Transform.GridPosition);
                                 else
-                                    AudioSystem.Play("/Audio/items/welder2.ogg", Transform.LocalPosition);
+                                    AudioSystem.Play("/Audio/items/welder2.ogg", Transform.GridPosition);
                                 return true;
                             }
                             return false;
                         case ToolType.Wrench:
                             if (slapped.HasComponent<WrenchComponent>())
                             {
-                                AudioSystem.Play("/Audio/items/ratchet.ogg", Transform.LocalPosition);
+                                AudioSystem.Play("/Audio/items/ratchet.ogg", Transform.GridPosition);
                                 return true;
                             }
                             return false;
@@ -140,16 +140,16 @@ namespace Content.Server.GameObjects.Components.Construction
                             if (slapped.HasComponent<ScrewdriverComponent>())
                             {
                                 if (random.NextDouble() > 0.5)
-                                    AudioSystem.Play("/Audio/items/screwdriver.ogg", Transform.LocalPosition);
+                                    AudioSystem.Play("/Audio/items/screwdriver.ogg", Transform.GridPosition);
                                 else
-                                    AudioSystem.Play("/Audio/items/screwdriver2.ogg", Transform.LocalPosition);
+                                    AudioSystem.Play("/Audio/items/screwdriver2.ogg", Transform.GridPosition);
                                 return true;
                             }
                             return false;
                         case ToolType.Wirecutters:
                             if (slapped.HasComponent<WirecutterComponent>())
                             {
-                                AudioSystem.Play("/Audio/items/wirecutter.ogg", Transform.LocalPosition);
+                                AudioSystem.Play("/Audio/items/wirecutter.ogg", Transform.GridPosition);
                                 return true;
                             }
                             return false;

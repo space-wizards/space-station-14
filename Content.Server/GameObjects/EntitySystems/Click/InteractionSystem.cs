@@ -128,7 +128,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if(playerEnt == null || !playerEnt.IsValid())
                 return;
 
-            if (!playerEnt.Transform.LocalPosition.InRange(used.Transform.LocalPosition, INTERACTION_RANGE))
+            if (!playerEnt.Transform.GridPosition.InRange(used.Transform.GridPosition, INTERACTION_RANGE))
                 return;
 
             activateComp.Activate(playerEnt);

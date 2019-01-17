@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Construction
             var prototype = protoMan.Index<ConstructionPrototype>(prototypeName);
 
             var transform = Owner.GetComponent<ITransformComponent>();
-            if (!loc.InRange(transform.LocalPosition, InteractionSystem.INTERACTION_RANGE))
+            if (!loc.InRange(transform.GridPosition, InteractionSystem.INTERACTION_RANGE))
             {
                 return;
             }

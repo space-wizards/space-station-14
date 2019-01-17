@@ -31,7 +31,7 @@ namespace Content.Server.Administration
             {
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var ghost = entityManager.ForceSpawnEntityAt("AdminObserver",
-                    player.AttachedEntity.Transform.LocalPosition);
+                    player.AttachedEntity.Transform.GridPosition);
 
                 mind.Visit(ghost);
             }
