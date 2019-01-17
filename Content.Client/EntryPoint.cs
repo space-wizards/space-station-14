@@ -92,6 +92,8 @@ namespace Content.Client
 
             prototypes.RegisterIgnore("material");
 
+            factory.RegisterIgnore("PowerCell");
+
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
             IoCManager.Register<IClientGameTicker, ClientGameTicker>();
