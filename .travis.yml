@@ -9,11 +9,12 @@ os:
 
 addons:
   apt:
-    sources:
-    - deadsnakes
+    #sources:
+    #- deadsnakes
 
     packages:
-    - python3.6
+    - python3.5
+    - python3-pip
 
 cache:
   directories:
@@ -25,15 +26,15 @@ cache:
 #  - if [ $TRAVIS_OS_NAME = osx ]; then brew update && brew upgrade python; fi
 
 before_script:
-- "if [ $TRAVIS_OS_NAME = linux ]; then pyenv shell 3.6; fi"
-- "pip3 install --user requests"
+#- "if [ $TRAVIS_OS_NAME = linux ]; then pyenv shell 3.6; fi"
+- "python3.5 -m pip install --user requests"
 - "nuget restore SpaceStation14Content.sln"
-- "python3.6 RUN_THIS.py --no-prompt"
+- "python3.5 RUN_THIS.py --no-prompt"
 - "engine/Tools/download_godotsharp.py"
 
 script:
   # Prevent people from putting in textures/ (lowercase).
 - "if [ -d Resources/textures ]; then exit 1; fi"
-- "msbuild /p:Configuration=Debug /p:Platform=x64 /p:HEADLESS=1 /p:Configuratio=Debug /nologo /m /p:AllowMissingMacNatives=yes SpaceStation14Content.sln /p:Python=python3.6"
+- "msbuild /p:Configuration=Debug /p:Platform=x64 /p:HEADLESS=1 /p:Configuratio=Debug /nologo /m /p:AllowMissingMacNatives=yes SpaceStation14Content.sln /p:Python=python3.5"
 
 
