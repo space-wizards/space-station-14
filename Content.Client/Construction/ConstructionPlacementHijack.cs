@@ -23,7 +23,7 @@ namespace Content.Client.Construction
             Owner = owner;
         }
 
-        public override bool HijackPlacementRequest(GridLocalCoordinates coords)
+        public override bool HijackPlacementRequest(GridCoordinates coords)
         {
             if (Prototype != null)
             {

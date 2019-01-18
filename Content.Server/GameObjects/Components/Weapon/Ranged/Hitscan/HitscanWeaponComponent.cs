@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             rangedWeapon.FireHandler = Fire;
         }
 
-        private void Fire(IEntity user, GridLocalCoordinates clickLocation)
+        private void Fire(IEntity user, GridCoordinates clickLocation)
         {
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(1),
                 Size = new Vector2(dist, 1f),
-                Coordinates = user.Transform.LocalPosition.Translated(offset),
+                Coordinates = user.Transform.GridPosition.Translated(offset),
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
                 ColorDelta = new Vector4(0, 0, 0, -1500f),

@@ -171,7 +171,7 @@ namespace Content.Server.GameObjects
             return null;
         }
 
-        public bool Drop(string slot, GridLocalCoordinates coords)
+        public bool Drop(string slot, GridCoordinates coords)
         {
             if (!CanDrop(slot))
             {
@@ -188,13 +188,13 @@ namespace Content.Server.GameObjects
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            item.Owner.Transform.LocalPosition = coords;
+            item.Owner.Transform.GridPosition = coords;
 
             Dirty();
             return true;
         }
 
-        public bool Drop(IEntity entity, GridLocalCoordinates coords)
+        public bool Drop(IEntity entity, GridCoordinates coords)
         {
             if (entity == null)
             {
@@ -227,7 +227,7 @@ namespace Content.Server.GameObjects
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            item.Owner.Transform.LocalPosition = Owner.Transform.LocalPosition;
+            item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
 
             Dirty();
             return true;
@@ -451,7 +451,7 @@ namespace Content.Server.GameObjects
                     if (playerEntity == Owner && used != null)
                     {
                         InteractionSystem.Interaction(Owner, used, slot.ContainedEntity,
-                            GridLocalCoordinates.Nullspace);
+                            GridCoordinates.Nullspace);
                     }
 
                     break;

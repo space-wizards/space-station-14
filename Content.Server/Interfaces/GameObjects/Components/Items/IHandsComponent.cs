@@ -107,7 +107,7 @@ namespace Content.Server.Interfaces.GameObjects
         /// <param name="slot">The slot to drop the item from.</param>
         /// <param name="coords"></param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        bool Drop(string slot, GridLocalCoordinates coords);
+        bool Drop(string slot, GridCoordinates coords);
 
         /// <summary>
         ///     Drop the specified entity in our hands to a certain position.
@@ -128,7 +128,7 @@ namespace Content.Server.Interfaces.GameObjects
         /// <exception cref="ArgumentException">
         ///     Thrown if <see cref="entity"/> is not actually held in any hand.
         /// </exception>
-        bool Drop(IEntity entity, GridLocalCoordinates coords);
+        bool Drop(IEntity entity, GridCoordinates coords);
 
         /// <summary>
         ///     Drop the item contained in a slot into another container.

@@ -7,7 +7,7 @@ namespace Content.Shared.Interfaces
     public interface ISharedNotifyManager
     {
         void PopupMessage(IEntity source, IEntity viewer, string message);
-        void PopupMessage(GridLocalCoordinates coordinates, IEntity viewer, string message);
+        void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message);
     }
 
     public static class NotifyManagerExt

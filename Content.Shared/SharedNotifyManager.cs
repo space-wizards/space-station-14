@@ -14,10 +14,10 @@ namespace Content.Shared
         {
             // TODO: we might eventually want for this to pass the actual entity,
             // so the notify could track the entity movement visually.
-            PopupMessage(source.Transform.LocalPosition, viewer, message);
+            PopupMessage(source.Transform.GridPosition, viewer, message);
         }
 
-        public abstract void PopupMessage(GridLocalCoordinates coordinates, IEntity viewer, string message);
+        public abstract void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message);
 
         protected class MsgDoNotify : NetMessage
         {
@@ -30,7 +30,7 @@ namespace Content.Shared
             #endregion
 
             public string Message { get; set; }
-            public GridLocalCoordinates Coordinates;
+            public GridCoordinates Coordinates;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {

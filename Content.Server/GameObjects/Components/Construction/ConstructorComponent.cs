@@ -33,13 +33,13 @@ namespace Content.Server.GameObjects.Components.Construction
             }
         }
 
-        void TryStartStructureConstruction(GridLocalCoordinates loc, string prototypeName, Angle angle, int ack)
+        void TryStartStructureConstruction(GridCoordinates loc, string prototypeName, Angle angle, int ack)
         {
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
             var prototype = protoMan.Index<ConstructionPrototype>(prototypeName);
 
             var transform = Owner.GetComponent<ITransformComponent>();
-            if (!loc.InRange(transform.LocalPosition, InteractionSystem.INTERACTION_RANGE))
+            if (!loc.InRange(transform.GridPosition, InteractionSystem.INTERACTION_RANGE))
             {
                 return;
             }

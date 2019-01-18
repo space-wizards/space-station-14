@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attackwith"></param>
         /// <param name="clicklocation"></param>
         /// <returns></returns>
-        bool RangedAttackby(IEntity user, IEntity attackwith, GridLocalCoordinates clicklocation);
+        bool RangedAttackby(IEntity user, IEntity attackwith, GridCoordinates clicklocation);
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="clicklocation"></param>
         /// <param name="attacked">The entity that was clicked on out of range. May be null if no entity was clicked on.true</param>
-        void Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked);
+        void Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked);
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.EntitySystems
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld, new PointerInputCmdHandler((HandleUseItemInWorld)));
         }
 
-        private void HandleUseItemInWorld(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
+        private void HandleUseItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             if(!EntityManager.TryGetEntity(uid, out var used))
                 return;
@@ -128,13 +128,13 @@ namespace Content.Server.GameObjects.EntitySystems
             if(playerEnt == null || !playerEnt.IsValid())
                 return;
 
-            if (!playerEnt.Transform.LocalPosition.InRange(used.Transform.LocalPosition, INTERACTION_RANGE))
+            if (!playerEnt.Transform.GridPosition.InRange(used.Transform.GridPosition, INTERACTION_RANGE))
                 return;
 
             activateComp.Activate(playerEnt);
         }
 
-        private void HandleUseItemInHand(ICommonSession session, GridLocalCoordinates coords, EntityUid uid)
+        private void HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if(!coords.IsValidLocation())
@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.EntitySystems
             UserInteraction(((IPlayerSession)session).AttachedEntity, coords, uid);
         }
 
-        private void UserInteraction(IEntity player, GridLocalCoordinates coordinates, EntityUid clickedUid)
+        private void UserInteraction(IEntity player, GridCoordinates coordinates, EntityUid clickedUid)
         {
             //Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             if (!EntityManager.TryGetEntity(clickedUid, out var attacked))
@@ -244,7 +244,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="weapon"></param>
         /// <param name="clicklocation"></param>
-        public static void InteractAfterattack(IEntity user, IEntity weapon, GridLocalCoordinates clicklocation)
+        public static void InteractAfterattack(IEntity user, IEntity weapon, GridCoordinates clicklocation)
         {
             List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
 
@@ -261,7 +261,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="weapon"></param>
         /// <param name="attacked"></param>
-        public static void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridLocalCoordinates clicklocation)
+        public static void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clicklocation)
         {
             List<IAttackby> interactables = attacked.GetAllComponents<IAttackby>().ToList();
 
@@ -347,7 +347,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="weapon"></param>
         /// <param name="attacked"></param>
-        public static void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridLocalCoordinates clicklocation)
+        public static void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clicklocation)
         {
             List<IRangedAttackby> rangedusables = attacked.GetAllComponents<IRangedAttackby>().ToList();
 

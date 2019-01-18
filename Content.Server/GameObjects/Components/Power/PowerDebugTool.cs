@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Power
 {
     public class PowerDebugTool : SharedPowerDebugTool, IAfterAttack
     {
-        void IAfterAttack.Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked)
+        void IAfterAttack.Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked)
         {
             if (attacked == null)
             {
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Power
                     foreach (var provider in device.AvailableProviders)
                     {
                         var providerTransform = provider.Owner.GetComponent<ITransformComponent>();
-                        builder.AppendFormat("      {0} ({1}) @ {2}", provider.Owner.Name, provider.Owner.Uid, providerTransform.LocalPosition);
+                        builder.AppendFormat("      {0} ({1}) @ {2}", provider.Owner.Name, provider.Owner.Uid, providerTransform.GridPosition);
                         if (device.Provider == provider)
                         {
                             builder.Append(" (CURRENT)");

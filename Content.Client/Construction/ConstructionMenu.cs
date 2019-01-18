@@ -192,7 +192,7 @@ namespace Content.Client.Construction
             if (prototype.Type != ConstructionType.Structure)
             {
                 // In-hand attackby doesn't exist so this is the best alternative.
-                var loc = Owner.Owner.GetComponent<ITransformComponent>().LocalPosition;
+                var loc = Owner.Owner.GetComponent<ITransformComponent>().GridPosition;
                 Owner.SpawnGhost(prototype, loc, Direction.North);
                 return;
             }

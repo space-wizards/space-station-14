@@ -12,7 +12,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
         private TimeSpan _lastFireTime;
         private int _tick;
 
-        public void TryFire(GridLocalCoordinates worldPos)
+        public void TryFire(GridCoordinates worldPos)
         {
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
             var span = curTime - _lastFireTime;

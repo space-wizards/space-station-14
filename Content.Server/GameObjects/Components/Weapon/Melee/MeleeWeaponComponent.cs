@@ -32,11 +32,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref ArcWidth, "arcwidth", 90);
         }
 
-        void IAfterAttack.Afterattack(IEntity user, GridLocalCoordinates clicklocation, IEntity attacked)
+        void IAfterAttack.Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked)
         {
-            var location = user.GetComponent<ITransformComponent>().LocalPosition;
+            var location = user.GetComponent<ITransformComponent>().GridPosition;
             var angle = new Angle(clicklocation.ToWorld().Position - location.ToWorld().Position);
-            var entities = IoCManager.Resolve<IServerEntityManager>().GetEntitiesInArc(user.GetComponent<ITransformComponent>().LocalPosition, Range, angle, ArcWidth);
+            var entities = IoCManager.Resolve<IServerEntityManager>().GetEntitiesInArc(user.GetComponent<ITransformComponent>().GridPosition, Range, angle, ArcWidth);
 
             foreach (var entity in entities)
             {

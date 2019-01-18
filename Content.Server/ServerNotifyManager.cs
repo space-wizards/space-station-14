@@ -29,7 +29,7 @@ namespace Content.Server
             _initialized = true;
         }
 
-        public override void PopupMessage(GridLocalCoordinates coordinates, IEntity viewer, string message)
+        public override void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message)
         {
             if (!viewer.TryGetComponent(out IActorComponent actor))
             {

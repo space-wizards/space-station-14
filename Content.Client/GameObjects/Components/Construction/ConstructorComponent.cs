@@ -60,7 +60,7 @@ namespace Content.Client.GameObjects.Components.Construction
             Button?.Dispose();
         }
 
-        public void SpawnGhost(ConstructionPrototype prototype, GridLocalCoordinates loc, Direction dir)
+        public void SpawnGhost(ConstructionPrototype prototype, GridCoordinates loc, Direction dir)
         {
             var entMgr = IoCManager.Resolve<IClientEntityManager>();
             var ghost = entMgr.ForceSpawnEntityAt("constructionghost", loc);
@@ -80,7 +80,7 @@ namespace Content.Client.GameObjects.Components.Construction
         {
             var ghost = Ghosts[ghostId];
             var transform = ghost.Owner.GetComponent<ITransformComponent>();
-            var msg = new TryStartStructureConstructionMessage(transform.LocalPosition, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var msg = new TryStartStructureConstructionMessage(transform.GridPosition, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             SendNetworkMessage(msg);
         }
 
