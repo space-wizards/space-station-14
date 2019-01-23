@@ -16,6 +16,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Utility;
 using System.Collections.Generic;
+using SS14.Client.Graphics.Overlays;
 
 namespace Content.Client.GameObjects
 {
@@ -54,7 +55,7 @@ namespace Content.Client.GameObjects
         /// <summary>
         /// Holds the screen effects that can be applied mapped ot their relevant overlay
         /// </summary>
-        private Dictionary<ScreenEffects, IOverlay> EffectsDictionary;
+        private Dictionary<ScreenEffects, Overlay> EffectsDictionary;
 
         public override void OnRemove()
         {
@@ -70,7 +71,7 @@ namespace Content.Client.GameObjects
             IoCManager.InjectDependencies(this);
             _window = new SpeciesWindow();
 
-            EffectsDictionary = new Dictionary<ScreenEffects, IOverlay>()
+            EffectsDictionary = new Dictionary<ScreenEffects, Overlay>()
             {
                 { ScreenEffects.CircleMask, new CircleMaskOverlay() },
                 { ScreenEffects.GradientCircleMask, new GradientCircleMask() }
