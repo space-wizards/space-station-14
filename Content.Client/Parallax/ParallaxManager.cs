@@ -63,7 +63,7 @@ namespace Content.Client.Parallax
                     {
                         using (var stream = _resourceCache.UserData.Open(ParallaxPath, FileMode.Open))
                         {
-                            ParallaxTexture = Texture.LoadFromPNGStream(stream);
+                            ParallaxTexture = Texture.LoadFromPNGStream(stream, "Parallax");
                         }
 
                         OnTextureLoaded?.Invoke(ParallaxTexture);
@@ -81,7 +81,7 @@ namespace Content.Client.Parallax
             // Generate the parallax in the thread pool.
             var image = await Task.Run(() => ParallaxGenerator.GenerateParallax(table, new Size(1920, 1080)));
             // And load it in the main thread for safety reasons.
-            ParallaxTexture = Texture.LoadFromImage(image);
+            ParallaxTexture = Texture.LoadFromImage(image, "Parallax");
 
             // Store it and CRC so further game starts don't need to regenerate it.
             using (var stream = _resourceCache.UserData.Open(ParallaxPath, FileMode.Create))
