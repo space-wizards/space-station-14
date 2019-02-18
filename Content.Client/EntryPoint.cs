@@ -25,6 +25,9 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Prototypes;
 using System;
+using Content.Client.UserInterface;
+using SS14.Client.Interfaces.UserInterface;
+using SS14.Shared.Log;
 
 namespace Content.Client
 {
@@ -102,6 +105,10 @@ namespace Content.Client
 
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
+
+            var stylesheet = new NanoStyle();
+
+            IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
         }
 
         /// <summary>
