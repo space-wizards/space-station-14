@@ -38,7 +38,7 @@ namespace Content.Client.UserInterface
             {
                 Texture =  windowBackgroundTex,
             };
-            windowBackground.SetMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
+            windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
 
             var buttonNormalTex = resCache.GetResource<TextureResource>("/Nano/button_normal.png").Texture;
@@ -46,7 +46,7 @@ namespace Content.Client.UserInterface
             {
                 Texture = buttonNormalTex,
             };
-            buttonNormal.SetMargin(StyleBox.Margin.All, 2);
+            buttonNormal.SetPatchMargin(StyleBox.Margin.All, 2);
             buttonNormal.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
 
             var buttonHoverTex = resCache.GetResource<TextureResource>("/Nano/button_hover.png").Texture;
@@ -54,7 +54,7 @@ namespace Content.Client.UserInterface
             {
                 Texture = buttonHoverTex,
             };
-            buttonHover.SetMargin(StyleBox.Margin.All, 2);
+            buttonHover.SetPatchMargin(StyleBox.Margin.All, 2);
             buttonHover.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
 
             var buttonPressedTex = resCache.GetResource<TextureResource>("/Nano/button_pressed.png").Texture;
@@ -62,7 +62,7 @@ namespace Content.Client.UserInterface
             {
                 Texture = buttonPressedTex,
             };
-            buttonPressed.SetMargin(StyleBox.Margin.All, 2);
+            buttonPressed.SetPatchMargin(StyleBox.Margin.All, 2);
             buttonPressed.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
 
             var buttonDisabledTex = resCache.GetResource<TextureResource>("/Nano/button_disabled.png").Texture;
@@ -70,7 +70,7 @@ namespace Content.Client.UserInterface
             {
                 Texture = buttonDisabledTex,
             };
-            buttonDisabled.SetMargin(StyleBox.Margin.All, 2);
+            buttonDisabled.SetPatchMargin(StyleBox.Margin.All, 2);
             buttonDisabled.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
 
 

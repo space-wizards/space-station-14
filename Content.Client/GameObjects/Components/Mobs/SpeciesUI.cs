@@ -40,8 +40,10 @@ namespace Content.Client.GameObjects
         private ScreenEffects _currentEffect = ScreenEffects.None;
 
         // Required dependencies
+#pragma warning disable 649
         [Dependency] private readonly IOverlayManager _overlayManager;
         [Dependency] private readonly IPlayerManager _playerManager;
+#pragma warning restore 649
 
         //Relevant interface implementation for the character UI controller
         public Control Scene => _window;

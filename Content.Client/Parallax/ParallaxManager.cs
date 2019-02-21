@@ -33,7 +33,6 @@ namespace Content.Client.Parallax
         public async void LoadParallax()
         {
             MemoryStream configStream = null;
-            long crcValue;
             string contents;
             TomlTable table;
             try

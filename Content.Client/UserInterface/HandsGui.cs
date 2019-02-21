@@ -43,13 +43,13 @@ namespace Content.Client.UserInterface
         {
             base.Initialize();
 
-            var _resMgr = IoCManager.Resolve<IResourceCache>();
-            var handsBoxTexture = _resMgr.GetResource<TextureResource>("/Textures/UserInterface/handsbox.png");
+            var resMgr = IoCManager.Resolve<IResourceCache>();
+            var handsBoxTexture = resMgr.GetResource<TextureResource>("/Textures/UserInterface/handsbox.png");
             handBox = new StyleBoxTexture()
             {
                 Texture = handsBoxTexture,
             };
-            handBox.SetMargin(StyleBox.Margin.All, 6);
+            handBox.SetPatchMargin(StyleBox.Margin.All, 6);
             inactiveHandBox = new StyleBoxTexture(handBox)
             {
                 Modulate = _inactiveColor,

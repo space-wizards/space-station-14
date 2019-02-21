@@ -11,8 +11,10 @@ namespace Content.Client.Graphics.Overlays
 {
     public class CircleMaskOverlay : Overlay
     {
+#pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IEyeManager _eyeManager;
+#pragma warning restore 649
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
