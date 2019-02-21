@@ -14,9 +14,6 @@ namespace Content.Client.UserInterface
     {
         private static readonly Color NanoGold = Color.FromHex("#A88B5E");
 
-        private static readonly StyleBox WindowBackground = new StyleBoxFlat
-            {BackgroundColor = Color.FromHex("#25252A")};
-
         public Stylesheet Stylesheet { get; }
 
         public NanoStyle()
@@ -36,6 +33,14 @@ namespace Content.Client.UserInterface
                 PatchMarginBottom = 3,
                 ExpandMarginBottom = 3,
             };
+            var windowBackgroundTex = resCache.GetResource<TextureResource>("/Nano/window_background.png").Texture;
+            var windowBackground = new StyleBoxTexture
+            {
+                Texture =  windowBackgroundTex,
+            };
+            windowBackground.SetMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
+            windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
+
             var buttonNormalTex = resCache.GetResource<TextureResource>("/Nano/button_normal.png").Texture;
             var buttonNormal = new StyleBoxTexture
             {
@@ -92,7 +97,7 @@ namespace Content.Client.UserInterface
                     new SelectorElement(null, new[] {SS14Window.StyleClassWindowPanel}, null, null),
                     new[]
                     {
-                        new StyleProperty(Panel.StylePropertyPanel, WindowBackground),
+                        new StyleProperty(Panel.StylePropertyPanel, windowBackground),
                     }),
                 // Window header.
                 new StyleRule(

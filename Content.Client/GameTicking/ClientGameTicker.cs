@@ -153,7 +153,7 @@ namespace Content.Client.GameTicking
             _lobby.ServerName.Text = _baseClient.GameInfo.ServerName;
 
             _inputManager.SetInputCommand(EngineKeyFunctions.FocusChat,
-                InputCmdHandler.FromDelegate(session => { _lobby.Chat.Input.GrabFocus(); }));
+                InputCmdHandler.FromDelegate(session => { _lobby.Chat.Input.GrabKeyboardFocus(); }));
 
             _updateLobbyUi();
 
@@ -200,7 +200,7 @@ namespace Content.Client.GameTicking
             }
 
             _inputManager.SetInputCommand(EngineKeyFunctions.FocusChat,
-                InputCmdHandler.FromDelegate(session => { _gameChat.Input.GrabFocus(); }));
+                InputCmdHandler.FromDelegate(session => { _gameChat.Input.GrabKeyboardFocus(); }));
 
             _gameChat = new Chatbox();
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
