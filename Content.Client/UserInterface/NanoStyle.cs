@@ -73,6 +73,13 @@ namespace Content.Client.UserInterface
             buttonDisabled.SetPatchMargin(StyleBox.Margin.All, 2);
             buttonDisabled.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
 
+            var lineEditTex = resCache.GetResource<TextureResource>("/Nano/lineedit.png").Texture;
+            var lineEdit = new StyleBoxTexture
+            {
+                Texture = lineEditTex,
+            };
+            lineEdit.SetPatchMargin(StyleBox.Margin.All, 3);
+            lineEdit.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             Stylesheet = new Stylesheet(new[]
             {
@@ -174,6 +181,13 @@ namespace Content.Client.UserInterface
                     new[]
                     {
                         new StyleProperty(BoxContainer.StylePropertySeparation, 2),
+                    }),
+
+                // Fancy LineEdit
+                new StyleRule(new SelectorElement(typeof(LineEdit), null, null, null),
+                    new[]
+                    {
+                        new StyleProperty(LineEdit.StylePropertyStyleBox, lineEdit),
                     }),
             });
         }
