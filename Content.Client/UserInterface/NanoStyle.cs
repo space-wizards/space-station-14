@@ -19,8 +19,8 @@ namespace Content.Client.UserInterface
         public NanoStyle()
         {
             var resCache = IoCManager.Resolve<IResourceCache>();
-            var notoSans14 = new VectorFont(resCache.GetResource<FontResource>("/Nano/NotoSans/NotoSans-Regular.ttf"),
-                14);
+            var notoSans12 = new VectorFont(resCache.GetResource<FontResource>("/Nano/NotoSans/NotoSans-Regular.ttf"),
+                12);
             var notoSans28 = new VectorFont(resCache.GetResource<FontResource>("/Nano/NotoSans/NotoSans-Regular.ttf"),
                 28);
             var notoSansBold16 =
@@ -88,7 +88,7 @@ namespace Content.Client.UserInterface
                     new SelectorElement(null, null, null, null),
                     new[]
                     {
-                        new StyleProperty("font", notoSans14),
+                        new StyleProperty("font", notoSans12),
                     }),
 
                 // Window title.
