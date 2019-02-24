@@ -1,7 +1,6 @@
-using SS14.Client.Graphics;
+using Content.Client.Utility;
 using SS14.Client.Graphics.Drawing;
 using SS14.Client.Interfaces.ResourceManagement;
-using SS14.Client.ResourceManagement;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Client.UserInterface.CustomControls;
@@ -19,21 +18,18 @@ namespace Content.Client.UserInterface
         public NanoStyle()
         {
             var resCache = IoCManager.Resolve<IResourceCache>();
-            var notoSans12 = new VectorFont(resCache.GetResource<FontResource>("/Nano/NotoSans/NotoSans-Regular.ttf"),
-                12);
-            var notoSans28 = new VectorFont(resCache.GetResource<FontResource>("/Nano/NotoSans/NotoSans-Regular.ttf"),
-                28);
-            var notoSansBold16 =
-                new VectorFont(resCache.GetResource<FontResource>("/Nano/NotoSans/NotoSans-Bold.ttf"), 16);
-            var textureCloseButton = resCache.GetResource<TextureResource>("/Nano/cross.svg.png").Texture;
-            var windowHeaderTex = resCache.GetResource<TextureResource>("/Nano/window_header.png").Texture;
+            var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
+            var animalSilence40 = resCache.GetFont("/Fonts/Animal Silence.otf", 40);
+            var textureCloseButton = resCache.GetTexture("/Nano/cross.svg.png");
+            var windowHeaderTex = resCache.GetTexture("/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
                 Texture = windowHeaderTex,
                 PatchMarginBottom = 3,
                 ExpandMarginBottom = 3,
             };
-            var windowBackgroundTex = resCache.GetResource<TextureResource>("/Nano/window_background.png").Texture;
+            var windowBackgroundTex = resCache.GetTexture("/Nano/window_background.png");
             var windowBackground = new StyleBoxTexture
             {
                 Texture =  windowBackgroundTex,
@@ -41,7 +37,7 @@ namespace Content.Client.UserInterface
             windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
 
-            var buttonNormalTex = resCache.GetResource<TextureResource>("/Nano/button_normal.png").Texture;
+            var buttonNormalTex = resCache.GetTexture("/Nano/button_normal.png");
             var buttonNormal = new StyleBoxTexture
             {
                 Texture = buttonNormalTex,
@@ -49,7 +45,7 @@ namespace Content.Client.UserInterface
             buttonNormal.SetPatchMargin(StyleBox.Margin.All, 2);
             buttonNormal.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
 
-            var buttonHoverTex = resCache.GetResource<TextureResource>("/Nano/button_hover.png").Texture;
+            var buttonHoverTex = resCache.GetTexture("/Nano/button_hover.png");
             var buttonHover = new StyleBoxTexture
             {
                 Texture = buttonHoverTex,
@@ -57,7 +53,7 @@ namespace Content.Client.UserInterface
             buttonHover.SetPatchMargin(StyleBox.Margin.All, 2);
             buttonHover.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
 
-            var buttonPressedTex = resCache.GetResource<TextureResource>("/Nano/button_pressed.png").Texture;
+            var buttonPressedTex = resCache.GetTexture("/Nano/button_pressed.png");
             var buttonPressed = new StyleBoxTexture
             {
                 Texture = buttonPressedTex,
@@ -65,7 +61,7 @@ namespace Content.Client.UserInterface
             buttonPressed.SetPatchMargin(StyleBox.Margin.All, 2);
             buttonPressed.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
 
-            var buttonDisabledTex = resCache.GetResource<TextureResource>("/Nano/button_disabled.png").Texture;
+            var buttonDisabledTex = resCache.GetTexture("/Nano/button_disabled.png");
             var buttonDisabled = new StyleBoxTexture
             {
                 Texture = buttonDisabledTex,
@@ -73,7 +69,7 @@ namespace Content.Client.UserInterface
             buttonDisabled.SetPatchMargin(StyleBox.Margin.All, 2);
             buttonDisabled.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
 
-            var lineEditTex = resCache.GetResource<TextureResource>("/Nano/lineedit.png").Texture;
+            var lineEditTex = resCache.GetTexture("/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
             {
                 Texture = lineEditTex,
@@ -173,7 +169,7 @@ namespace Content.Client.UserInterface
                         new SelectorElement(typeof(Button), null, null, null)),
                     new[]
                     {
-                        new StyleProperty("font", notoSans28),
+                        new StyleProperty("font", animalSilence40),
                     }),
 
                 // Main menu: also make those buttons slightly more separated.
