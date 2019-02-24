@@ -104,6 +104,7 @@
     <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
     <Compile Include="UserInterface\LobbyGui.cs" />
     <Compile Include="UserInterface\NanoStyle.cs" />
+    <Compile Include="Utility\ResourceCacheExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">
