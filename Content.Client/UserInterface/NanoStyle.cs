@@ -32,7 +32,7 @@ namespace Content.Client.UserInterface
             var windowBackgroundTex = resCache.GetTexture("/Nano/window_background.png");
             var windowBackground = new StyleBoxTexture
             {
-                Texture =  windowBackgroundTex,
+                Texture = windowBackgroundTex,
             };
             windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
@@ -76,6 +76,44 @@ namespace Content.Client.UserInterface
             };
             lineEdit.SetPatchMargin(StyleBox.Margin.All, 3);
             lineEdit.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
+
+            var tabContainerPanelTex = resCache.GetTexture("/Nano/tabcontainer_panel.png");
+            var tabContainerPanel = new StyleBoxTexture
+            {
+                Texture = tabContainerPanelTex,
+            };
+            tabContainerPanel.SetPatchMargin(StyleBox.Margin.All, 2);
+
+            var tabContainerBoxActive = new StyleBoxFlat {BackgroundColor = new Color(64, 64, 64)};
+            tabContainerBoxActive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 3);
+            var tabContainerBoxInactive = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 32)};
+            tabContainerBoxInactive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 3);
+
+            var vScrollBarGrabberNormal = new StyleBoxFlat
+            {
+                BackgroundColor = Color.Gray, ContentMarginLeftOverride = 10
+            };
+            var vScrollBarGrabberHover = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(140, 140, 140), ContentMarginLeftOverride = 10
+            };
+            var vScrollBarGrabberGrabbed = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(160, 160, 160), ContentMarginLeftOverride = 10
+            };
+
+            var hScrollBarGrabberNormal = new StyleBoxFlat
+            {
+                BackgroundColor = Color.Gray, ContentMarginTopOverride = 10
+            };
+            var hScrollBarGrabberHover = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(140, 140, 140), ContentMarginTopOverride = 10
+            };
+            var hScrollBarGrabberGrabbed = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(160, 160, 160), ContentMarginTopOverride = 10
+            };
 
             Stylesheet = new Stylesheet(new[]
             {
@@ -184,6 +222,71 @@ namespace Content.Client.UserInterface
                     new[]
                     {
                         new StyleProperty(LineEdit.StylePropertyStyleBox, lineEdit),
+                    }),
+
+                new StyleRule(
+                    new SelectorElement(typeof(LineEdit), new[] {LineEdit.StyleClassLineEditNotEditable}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font-color", new Color(192, 192, 192)),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(LineEdit), null, null, LineEdit.StylePseudoClassPlaceholder),
+                    new[]
+                    {
+                        new StyleProperty("font-color", Color.Gray),
+                    }),
+
+                // TabContainer
+                new StyleRule(new SelectorElement(typeof(TabContainer), null, null, null),
+                    new[]
+                    {
+                        new StyleProperty(TabContainer.StylePropertyPanelStyleBox, tabContainerPanel),
+                        new StyleProperty(TabContainer.StylePropertyTabStyleBox, tabContainerBoxActive),
+                        new StyleProperty(TabContainer.StylePropertyTabStyleBoxInactive, tabContainerBoxInactive),
+                    }),
+
+                // Scroll bars
+                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, null),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber,
+                            vScrollBarGrabberNormal),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, ScrollBar.StylePseudoClassHover),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber,
+                            vScrollBarGrabberHover),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, ScrollBar.StylePseudoClassGrabbed),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber,
+                            vScrollBarGrabberGrabbed),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, null),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber,
+                            hScrollBarGrabberNormal),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, ScrollBar.StylePseudoClassHover),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber,
+                            hScrollBarGrabberHover),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, ScrollBar.StylePseudoClassGrabbed),
+                    new[]
+                    {
+                        new StyleProperty(ScrollBar.StylePropertyGrabber,
+                            hScrollBarGrabberGrabbed),
                     }),
             });
         }
