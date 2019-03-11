@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   style="enable-background:new"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 6.3499993 6.3499995"
+   height="23.999998"
+   width="24">
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path7862" />
+    </marker>
+    <filter
+       id="filter9714"
+       style="color-interpolation-filters:sRGB">
+      <feBlend
+         id="feBlend9716"
+         in2="BackgroundImage"
+         mode="normal" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     style="filter:url(#filter9714)"
+     transform="translate(-77.570066,-141.68268)"
+     id="layer1">
+    <rect
+       ry="0.5931561"
+       style="display:inline;fill:#3d4059;fill-opacity:1;fill-rule:nonzero;stroke:#3d4059;stroke-width:1.15454543;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       y="142.25995"
+       x="78.147339"
+       height="5.1954541"
+       width="5.1954546"
+       id="rect7098" />
+  </g>
+  <g
+     transform="translate(-3.1749961,-13.758345)"
+     style="opacity:1"
+     id="layer2">
+    <g
+       style="fill:#a88b5e;fill-opacity:1"
+       transform="matrix(0.25712973,0.25712973,-0.25712973,0.25712973,12.687721,15.603163)"
+       id="g9680">
+      <rect
+         rx="0.52916664"
+         style="fill:#a88b5e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17499995;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+         id="rect9671"
+         width="1.8520833"
+         height="10.583333"
+         x="-9.5863533"
+         y="8.996666" />
+      <rect
+         rx="0.52916664"
+         style="fill:#a88b5e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17499971;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+         id="rect9673"
+         width="5.2916665"
+         height="1.8520832"
+         x="-13.025936"
+         y="17.727915" />
+    </g>
+  </g>
+</svg>
