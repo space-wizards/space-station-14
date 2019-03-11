@@ -5,33 +5,33 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   style="enable-background:new"
-   id="svg8"
+   width="20"
+   height="19.999998"
+   viewBox="0 0 5.2916661 5.2916662"
    version="1.1"
-   viewBox="0 0 6.3499993 6.3499995"
-   height="23.999998"
-   width="24">
+   id="svg8"
+   style="enable-background:new">
   <defs
      id="defs2">
     <marker
-       style="overflow:visible"
-       id="Arrow1Lstart"
-       refX="0"
+       orient="auto"
        refY="0"
-       orient="auto">
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
       <path
-         transform="matrix(0.8,0,0,0.8,10,0)"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt"
+         id="path7862"
          d="M 0,0 5,-5 -12.5,0 5,5 Z"
-         id="path7862" />
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
     </marker>
     <filter
-       id="filter9714"
-       style="color-interpolation-filters:sRGB">
+       style="color-interpolation-filters:sRGB"
+       id="filter9714">
       <feBlend
-         id="feBlend9716"
+         mode="normal"
          in2="BackgroundImage"
-         mode="normal" />
+         id="feBlend9716" />
     </filter>
   </defs>
   <metadata
@@ -47,42 +47,42 @@
     </rdf:RDF>
   </metadata>
   <g
-     style="filter:url(#filter9714)"
-     transform="translate(-77.570066,-141.68268)"
-     id="layer1">
+     id="layer1"
+     transform="matrix(0.84876535,0,0,0.84876535,-65.887781,-120.30434)"
+     style="filter:url(#filter9714)">
     <rect
-       ry="0.5931561"
-       style="display:inline;fill:#3d4059;fill-opacity:1;fill-rule:nonzero;stroke:#3d4059;stroke-width:1.15454543;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
-       y="142.25995"
-       x="78.147339"
-       height="5.1954541"
+       id="rect7098"
        width="5.1954546"
-       id="rect7098" />
+       height="5.1954541"
+       x="78.147339"
+       y="142.25995"
+       style="display:inline;fill:#3d4059;fill-opacity:1;fill-rule:nonzero;stroke:#3d4059;stroke-width:1.15454543;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       ry="0.5931561" />
   </g>
   <g
-     transform="translate(-3.1749961,-13.758345)"
+     id="layer2"
      style="opacity:1"
-     id="layer2">
+     transform="matrix(0.84876535,0,0,0.84876535,-2.7438235,-11.726601)">
     <g
-       style="fill:#a88b5e;fill-opacity:1"
+       id="g9680"
        transform="matrix(0.25712973,0.25712973,-0.25712973,0.25712973,12.687721,15.603163)"
-       id="g9680">
+       style="fill:#a88b5e;fill-opacity:1">
       <rect
-         rx="0.52916664"
-         style="fill:#a88b5e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17499995;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
-         id="rect9671"
-         width="1.8520833"
-         height="10.583333"
+         y="8.996666"
          x="-9.5863533"
-         y="8.996666" />
+         height="10.583333"
+         width="1.8520833"
+         id="rect9671"
+         style="fill:#a88b5e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17499995;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+         rx="0.52916664" />
       <rect
-         rx="0.52916664"
-         style="fill:#a88b5e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17499971;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
-         id="rect9673"
-         width="5.2916665"
-         height="1.8520832"
+         y="17.727915"
          x="-13.025936"
-         y="17.727915" />
+         height="1.8520832"
+         width="5.2916665"
+         id="rect9673"
+         style="fill:#a88b5e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.17499971;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+         rx="0.52916664" />
     </g>
   </g>
 </svg>

@@ -127,6 +127,10 @@ namespace Content.Client.UserInterface
             };
             progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
 
+            // CheckBox
+            var checkBoxTextureChecked = resCache.GetTexture("/Nano/checkbox_checked.svg.96dpi.png");
+            var checkBoxTextureUnchecked = resCache.GetTexture("/Nano/checkbox_unchecked.svg.96dpi.png");
+
             Stylesheet = new Stylesheet(new[]
             {
                 // Default font.
@@ -313,6 +317,22 @@ namespace Content.Client.UserInterface
                     {
                         new StyleProperty(ProgressBar.StylePropertyForeground, progressBarForeground)
                     }),
+
+                // CheckBox
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new []
+                {
+                    new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureUnchecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, Button.StylePseudoClassPressed), new []
+                {
+                    new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureChecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new []
+                {
+                    new StyleProperty(CheckBox.StylePropertyHSeparation, 3),
+                }),
             });
         }
     }
