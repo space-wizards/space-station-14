@@ -115,6 +115,18 @@ namespace Content.Client.UserInterface
                 BackgroundColor = new Color(160, 160, 160), ContentMarginTopOverride = 10
             };
 
+            var progressBarBackground = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(0.25f, 0.25f, 0.25f)
+            };
+            progressBarBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+
+            var progressBarForeground = new StyleBoxFlat
+            {
+                BackgroundColor = new Color(0.25f, 0.50f, 0.25f)
+            };
+            progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+
             Stylesheet = new Stylesheet(new[]
             {
                 // Default font.
@@ -287,6 +299,19 @@ namespace Content.Client.UserInterface
                     {
                         new StyleProperty(ScrollBar.StylePropertyGrabber,
                             hScrollBarGrabberGrabbed),
+                    }),
+
+                // ProgressBar
+                new StyleRule(new SelectorElement(typeof(ProgressBar), null, null, null),
+                    new[]
+                    {
+                        new StyleProperty(ProgressBar.StylePropertyBackground, progressBarBackground)
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(ProgressBar), null, null, null),
+                    new[]
+                    {
+                        new StyleProperty(ProgressBar.StylePropertyForeground, progressBarForeground)
                     }),
             });
         }
