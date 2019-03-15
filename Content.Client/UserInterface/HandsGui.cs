@@ -34,10 +34,13 @@ namespace Content.Client.UserInterface
         private StyleBoxTexture handBox;
         private StyleBoxTexture inactiveHandBox;
 
-        private UiHandInfo LeftHand;
-        private UiHandInfo RightHand;
+        private IEntity LeftHand;
+        private IEntity RightHand;
         private UIBox2i handL;
         private UIBox2i handR;
+
+        private SpriteView LeftSpriteView;
+        private SpriteView RightSpriteView;
 
         protected override void Initialize()
         {
@@ -59,8 +62,17 @@ namespace Content.Client.UserInterface
 
             handL = new UIBox2i(0, 0, BOX_SIZE, BOX_SIZE);
             handR = handL.Translated(new Vector2i(BOX_SIZE + BOX_SPACING, 0));
-            SS14.Shared.Log.Logger.Debug($"{handL}, {handR}");
             MouseFilter = MouseFilterMode.Stop;
+
+            LeftSpriteView = new SpriteView();
+            AddChild(LeftSpriteView);
+            LeftSpriteView.Size = handL.Size;
+            LeftSpriteView.Position = handL.TopLeft;
+
+            RightSpriteView = new SpriteView();
+            AddChild(RightSpriteView);
+            RightSpriteView.Size = handR.Size;
+            RightSpriteView.Position = handR.TopLeft;
         }
 
         protected override Vector2 CalculateMinimumSize()
@@ -77,26 +89,6 @@ namespace Content.Client.UserInterface
 
             handle.DrawStyleBox(handBox, leftActive ? handL : handR);
             handle.DrawStyleBox(inactiveHandBox, leftActive ? handR : handL);
-
-            /*
-            if (LeftHand.Entity != null && LeftHand.HeldSprite != null)
-            {
-                var bounds = LeftHand.HeldSprite.Size;
-                handle.DrawTextureRect(LeftHand.HeldSprite,
-                    UIBox2i.FromDimensions(handL.Left + (int)(handL.Width / 2f - bounds.X / 2f),
-                                    handL.Top + (int)(handL.Height / 2f - bounds.Y / 2f),
-                                    (int)bounds.X, (int)bounds.Y), tile: false);
-            }
-
-            if (RightHand.Entity != null && RightHand.HeldSprite != null)
-            {
-                var bounds = RightHand.HeldSprite.Size;
-                handle.DrawTextureRect(RightHand.HeldSprite,
-                    UIBox2i.FromDimensions(handR.Left + (int)(handR.Width / 2f - bounds.Y / 2f),
-                                    handR.Top + (int)(handR.Height / 2f - bounds.Y / 2f),
-                                    (int)bounds.X, (int)bounds.Y), tile: false);
-            }
-            */
         }
 
         /// <summary>
@@ -130,51 +122,41 @@ namespace Content.Client.UserInterface
 
             UpdateDraw();
 
-            if (!TryGetHands(out IHandsComponent hands))
+            if (!TryGetHands(out var hands))
                 return;
 
             var left = hands.GetEntity("left");
             var right = hands.GetEntity("right");
 
-            // I'm naively gonna assume all items are 32x32.
-            //const float HalfSize = 16;
-
             if (left != null)
             {
-                if (left != LeftHand.Entity)
+                if (left != LeftHand)
                 {
-                    LeftHand.Entity = left;
-                    LeftHand.MirrorHandle?.Dispose();
-                    LeftHand.MirrorHandle = GetSpriteMirror(left);
-                    LeftHand.MirrorHandle.AttachToControl(this);
-                    LeftHand.MirrorHandle.Offset = new Vector2(handL.Left + (int) (handL.Width / 2f),
-                        handL.Top + (int) (handL.Height / 2f));
+                    LeftHand = left;
+                    if (LeftHand.TryGetComponent(out ISpriteComponent sprite))
+                    {
+                        LeftSpriteView.Sprite = sprite;
+                    }
                 }
             }
             else
             {
-                LeftHand.Entity = null;
-                LeftHand.MirrorHandle?.Dispose();
-                LeftHand.MirrorHandle = null;
+                LeftHand = null;
+                LeftSpriteView.Sprite = null;
             }
 
             if (right != null)
             {
-                if (right != RightHand.Entity)
+                RightHand = right;
+                if (RightHand.TryGetComponent(out ISpriteComponent sprite))
                 {
-                    RightHand.Entity = right;
-                    RightHand.MirrorHandle?.Dispose();
-                    RightHand.MirrorHandle = GetSpriteMirror(right);
-                    RightHand.MirrorHandle.AttachToControl(this);
-                    RightHand.MirrorHandle.Offset = new Vector2(handR.Left + (int) (handR.Width / 2f),
-                        handR.Top + (int) (handR.Height / 2f));
+                    RightSpriteView.Sprite = sprite;
                 }
             }
             else
             {
-                RightHand.Entity = null;
-                RightHand.MirrorHandle?.Dispose();
-                RightHand.MirrorHandle = null;
+                RightHand = null;
+                RightSpriteView.Sprite = null;
             }
         }
 
@@ -276,12 +258,6 @@ namespace Content.Client.UserInterface
             }
 
             return null;
-        }
-
-        private struct UiHandInfo
-        {
-            public IEntity Entity { get; set; }
-            public ISpriteProxy MirrorHandle { get; set; }
         }
     }
 }
