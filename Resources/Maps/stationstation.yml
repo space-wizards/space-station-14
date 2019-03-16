@@ -1160,32 +1160,64 @@ entities:
   - parent: 49
     grid: 0
     type: Transform
-- type: airlock
-  components:
-  - grid: 0
-    pos: -6,-6
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: airlock
+- type: airlock_engineering
   components:
   - grid: 0
     pos: -5,-6
     rot: -1.5707963267949 rad
     type: Transform
-- type: airlock
+- type: airlock_engineering
   components:
   - grid: 0
-    pos: 4,-6
+    pos: -6,-6
     rot: -1.5707963267949 rad
     type: Transform
-  - hard: False
-    type: Collidable
-- type: airlock
+- type: airlock_engineering
   components:
   - grid: 0
     pos: 5,-6
     rot: -1.5707963267949 rad
     type: Transform
-  - hard: False
-    type: Collidable
+- type: airlock_engineering
+  components:
+  - grid: 0
+    pos: 4,-6
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_external
+  components:
+  - grid: 0
+    pos: -7,2
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_external
+  components:
+  - grid: 0
+    pos: -7,3
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_external
+  components:
+  - grid: 0
+    pos: -7,4
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_external
+  components:
+  - grid: 0
+    pos: 6,2
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_external
+  components:
+  - grid: 0
+    pos: 6,3
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_external
+  components:
+  - grid: 0
+    pos: 6,4
+    rot: -1.5707963267949 rad
+    type: Transform
 ...
