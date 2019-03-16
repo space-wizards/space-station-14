@@ -9,6 +9,7 @@ using SS14.Shared.Log;
 using SS14.Shared.Maths;
 using SS14.Shared.IoC;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Doors;
 using SS14.Shared.Serialization;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.ViewVariables;
@@ -24,31 +25,20 @@ namespace Content.Server.GameObjects
         private float OpenTimeCounter;
 
         private CollidableComponent collidableComponent;
-        private SpriteComponent spriteComponent;
-
-        private string OpenSprite;
-        private string CloseSprite;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref OpenSprite, "openstate", "Objects/door_ewo.png");
-            serializer.DataField(ref CloseSprite, "closestate", "Objects/door_ew.png");
-        }
+        private AppearanceComponent _appearance;
 
         public override void Initialize()
         {
             base.Initialize();
 
             collidableComponent = Owner.GetComponent<CollidableComponent>();
-            spriteComponent = Owner.GetComponent<SpriteComponent>();
+            _appearance = Owner.GetComponent<AppearanceComponent>();
         }
 
         public override void OnRemove()
         {
             collidableComponent = null;
-            spriteComponent = null;
+            _appearance = null;
 
             base.OnRemove();
         }
@@ -87,7 +77,7 @@ namespace Content.Server.GameObjects
         {
             Opened = true;
             collidableComponent.IsHardCollidable = false;
-            spriteComponent.LayerSetTexture(0, OpenSprite);
+            _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Open);
         }
 
         public bool Close()
@@ -100,7 +90,7 @@ namespace Content.Server.GameObjects
             Opened = false;
             OpenTimeCounter = 0;
             collidableComponent.IsHardCollidable = true;
-            spriteComponent.LayerSetTexture(0, CloseSprite);
+            _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
             return true;
         }
 

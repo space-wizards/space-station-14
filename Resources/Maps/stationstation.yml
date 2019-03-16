@@ -166,7 +166,7 @@ entities:
     pos: 6,-4
     rot: -1.570796 rad
     type: Transform
-- type: DoorContent
+- type: airlock
   components:
   - grid: 0
     pos: -5.5,-4.5
@@ -238,7 +238,7 @@ entities:
     pos: -2.5,-4.5
     rot: -1.570796 rad
     type: Transform
-- type: DoorContent
+- type: airlock
   components:
   - grid: 0
     pos: 4.5,-4.5

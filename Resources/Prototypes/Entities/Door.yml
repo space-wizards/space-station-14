@@ -1,23 +1,24 @@
 - type: entity
-  id: DoorContent
-  name: Actual door
-  description: It opens, it closes!
+  id: airlock
+  name: Airlock
+  description: It opens, it closes, and maybe crushes you.
   components:
   - type: Clickable
   - type: Sprite
+
     drawdepth: Mobs # They're on the same layer as mobs, perspective.
-    texture: Objects/door_ew.png
+    sprite: Buildings/airlock_basic.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
 
   - type: Icon
-    texture: Objects/door_ew.png
+    sprite: Buildings/airlock_basic.rsi
+    state: closed
 
   - type: BoundingBox
-    aabb: "-2,-0.75,-1,0.75"
-    sizeX: 1.9
-    offsetY: 1.5
   - type: Collidable
   - type: Door
-
-  placement:
-    snap:
-    - Wall
+  - type: Appearance
+    visuals:
+    - type: AirlockVisualizer2D

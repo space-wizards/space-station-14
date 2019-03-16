@@ -74,6 +74,7 @@
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Actor\CharacterInterface.cs" />
     <Compile Include="GameObjects\Components\DamageableComponent.cs" />
+    <Compile Include="GameObjects\Components\Doors\AirlockVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\HUD\Inventory\ClientInventoryComponent.cs" />
     <Compile Include="GameObjects\Components\Mobs\ICharacterUI.cs" />
     <Compile Include="GameObjects\Components\Mobs\SpeciesUI.cs" />
