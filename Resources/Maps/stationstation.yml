@@ -166,12 +166,6 @@ entities:
     pos: 6,-4
     rot: -1.570796 rad
     type: Transform
-- type: airlock
-  components:
-  - grid: 0
-    pos: -5.5,-4.5
-    rot: -1.570796 rad
-    type: Transform
 - type: wall
   components:
   - grid: 0
@@ -236,12 +230,6 @@ entities:
   components:
   - grid: 0
     pos: -2.5,-4.5
-    rot: -1.570796 rad
-    type: Transform
-- type: airlock
-  components:
-  - grid: 0
-    pos: 4.5,-4.5
     rot: -1.570796 rad
     type: Transform
 - type: wall
@@ -334,6 +322,12 @@ entities:
     pos: 0.046875,-4.609375
     rot: -1.570796 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities:
+        - 184
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: IDCardStandard
   components:
   - grid: 0
@@ -352,6 +346,11 @@ entities:
     pos: 1.890625,-3.796875
     rot: -1.570796 rad
     type: Transform
+  - containers:
+      storagebase:
+        entities: []
+        type: SS14.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - type: JanitorUniform
   components:
   - grid: 0
@@ -556,6 +555,11 @@ entities:
     pos: -2.109375,-6.765625
     rot: -1.570796 rad
     type: Transform
+  - containers:
+      storagebase:
+        entities: []
+        type: SS14.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - type: GasMaskClothing
   components:
   - grid: 0
@@ -568,12 +572,22 @@ entities:
     pos: -1.109375,-6.796875
     rot: -1.570796 rad
     type: Transform
+  - containers:
+      storagebase:
+        entities: []
+        type: SS14.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - type: YellowToolboxItem
   components:
   - grid: 0
     pos: -1.078125,-7.578125
     rot: -1.570796 rad
     type: Transform
+  - containers:
+      storagebase:
+        entities: []
+        type: SS14.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - type: Wirecutter
   components:
   - grid: 0
@@ -1141,4 +1155,37 @@ entities:
     pos: 4.5,-12.5
     rot: -1.570796 rad
     type: Transform
+- type: PowerCellSmallHyper
+  components:
+  - parent: 49
+    grid: 0
+    type: Transform
+- type: airlock
+  components:
+  - grid: 0
+    pos: -6,-6
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock
+  components:
+  - grid: 0
+    pos: -5,-6
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock
+  components:
+  - grid: 0
+    pos: 4,-6
+    rot: -1.5707963267949 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+- type: airlock
+  components:
+  - grid: 0
+    pos: 5,-6
+    rot: -1.5707963267949 rad
+    type: Transform
+  - hard: False
+    type: Collidable
 ...
