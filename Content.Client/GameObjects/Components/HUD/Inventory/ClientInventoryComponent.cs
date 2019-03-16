@@ -167,7 +167,7 @@ namespace Content.Client.GameObjects
         /// <summary>
         /// Temporary window to hold the basis for inventory hud
         /// </summary>
-        private class InventoryWindow : Control
+        private class InventoryWindow : PanelContainer
         {
             private int elements_x;
 
@@ -286,7 +286,7 @@ namespace Content.Client.GameObjects
             }
         }
 
-        private class InventoryButton : Control
+        private class InventoryButton : PanelContainer
         {
             public Slots Slot;
             public EntityUid EntityUid;
