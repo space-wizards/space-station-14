@@ -3,30 +3,11 @@
 [ext_resource path="res://Engine/Scenes/SS14Window/SS14Window.tscn" type="PackedScene" id=1]
 
 [node name="SS14Window" index="0" instance=ExtResource( 1 )]
-
-anchor_bottom = 1.0
 margin_left = 0.0
 margin_top = 0.0
 margin_right = 240.0
-margin_bottom = 0.0
-rect_clip_content = false
-_sections_unfolded = [ "Anchor", "Margin" ]
-
-[node name="Contents" parent="." index="0"]
-
-rect_clip_content = false
-
-[node name="Header" parent="." index="1"]
-
-rect_clip_content = false
+margin_bottom = 522.0
 
 [node name="Header Text" parent="Header" index="0"]
-
-rect_clip_content = false
 text = "Character Info"
-
-[node name="CloseButton" parent="Header" index="1"]
-
-rect_clip_content = false
-
 
