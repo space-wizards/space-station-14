@@ -41,4 +41,6 @@
   - aghost
   - observe
   - toggleready
+  - spawn
+  - delete
   CanViewVar: true
