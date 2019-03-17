@@ -1220,4 +1220,52 @@ entities:
     pos: 6,4
     rot: -1.5707963267949 rad
     type: Transform
+- type: spawn_point_latejoin
+  components:
+  - grid: 0
+    pos: -1.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: spawn_point_latejoin
+  components:
+  - grid: 0
+    pos: -0.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: spawn_point_latejoin
+  components:
+  - grid: 0
+    pos: 0.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: spawn_point_latejoin
+  components:
+  - grid: 0
+    pos: 0.5,2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: spawn_point_latejoin
+  components:
+  - grid: 0
+    pos: 0.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: spawn_point_latejoin
+  components:
+  - grid: 0
+    pos: -0.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: spawn_point_latejoin
+  components:
+  - grid: 0
+    pos: -1.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: spawn_point_latejoin
+  components:
+  - grid: 0
+    pos: -1.5,2.5
+    rot: -1.5707963267949 rad
+    type: Transform
 ...
