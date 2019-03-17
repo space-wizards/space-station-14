@@ -26,6 +26,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Prototypes;
 using System;
 using Content.Client.UserInterface;
+using Content.Shared.GameObjects.Components.Markers;
 using SS14.Client.Interfaces.UserInterface;
 using SS14.Shared.Log;
 
@@ -96,6 +97,8 @@ namespace Content.Client
             prototypes.RegisterIgnore("material");
 
             factory.RegisterIgnore("PowerCell");
+
+            factory.Register<SharedSpawnPointComponent>();
 
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();

@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\DebugCommands.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Actor\CharacterInterface.cs" />
     <Compile Include="GameObjects\Components\DamageableComponent.cs" />

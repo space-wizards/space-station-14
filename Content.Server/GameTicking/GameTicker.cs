@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
@@ -16,6 +17,7 @@ using SS14.Server.Player;
 using SS14.Shared.Configuration;
 using SS14.Shared.Console;
 using SS14.Shared.Enums;
+using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.Configuration;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Map;
@@ -74,6 +76,8 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
         private DateTime _roundStartTimeUtc;
+
+        private readonly Random _spawnRandom = new Random();
 
 #pragma warning disable 649
         [Dependency] private IEntityManager _entityManager;
@@ -217,7 +221,7 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnPlayerMob()
         {
-            var entity = _entityManager.ForceSpawnEntityAt(PlayerPrototypeName, _spawnPoint);
+            var entity = _entityManager.ForceSpawnEntityAt(PlayerPrototypeName, _getLateJoinSpawnPoint());
             var shoes = _entityManager.SpawnEntity("ShoesItem");
             var uniform = _entityManager.SpawnEntity("UniformAssistant");
             if (entity.TryGetComponent(out InventoryComponent inventory))
@@ -231,7 +235,29 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnObserverMob()
         {
-            return _entityManager.ForceSpawnEntityAt(ObserverPrototypeName, _spawnPoint);
+            return _entityManager.ForceSpawnEntityAt(ObserverPrototypeName, _getLateJoinSpawnPoint());
+        }
+
+        private GridCoordinates _getLateJoinSpawnPoint()
+        {
+            var location = _spawnPoint;
+
+            var possiblePoints = new List<GridCoordinates>();
+            foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
+            {
+                var point = entity.GetComponent<SpawnPointComponent>();
+                if (point.SpawnType == SpawnPointType.LateJoin)
+                {
+                    possiblePoints.Add(entity.Transform.GridPosition);
+                }
+            }
+
+            if (possiblePoints.Count != 0)
+            {
+                location = _spawnRandom.Pick(possiblePoints);
+            }
+
+            return location;
         }
 
         /// <summary>

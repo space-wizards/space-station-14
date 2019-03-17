@@ -34,11 +34,13 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Weapon.Ranged;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.Interfaces;
 using SS14.Server.Interfaces.ServerStatus;
 using SS14.Shared.Timing;
@@ -118,6 +120,9 @@ namespace Content.Server
 
             factory.Register<MindComponent>();
             factory.Register<SpeciesComponent>();
+
+            factory.Register<SpawnPointComponent>();
+            factory.RegisterReference<SpawnPointComponent, SharedSpawnPointComponent>();
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
