@@ -21,7 +21,6 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
                 return;
             }
 
-            Logger.Debug("Delay: {0}", span.TotalSeconds);
             _lastFireTime = curTime;
             SendNetworkMessage(new FireMessage(worldPos, _tick++));
         }
