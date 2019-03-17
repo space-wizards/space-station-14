@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
         private void _tryFire(IEntity user, GridCoordinates coordinates, int attemptCount)
         {
-            if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand.Owner != Owner)
+            if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand?.Owner != Owner)
             {
                 return;
             }
