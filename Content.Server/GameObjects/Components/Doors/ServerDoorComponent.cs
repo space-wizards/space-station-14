@@ -1,31 +1,29 @@
 ﻿using System;
-using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Doors;
 using SS14.Server.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.GameObjects.Components;
-using SS14.Shared.Log;
-using SS14.Shared.Maths;
-using SS14.Shared.IoC;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Doors;
-using SS14.Shared.Serialization;
 using SS14.Shared.Interfaces.Network;
-using SS14.Shared.ViewVariables;
+using SS14.Shared.Maths;
+using SS14.Shared.Timers;
 
 namespace Content.Server.GameObjects
 {
     public class ServerDoorComponent : Component, IAttackHand
     {
         public override string Name => "Door";
-        [ViewVariables]
-        public bool Opened { get; private set; }
+
+        private DoorState _state = DoorState.Closed;
 
         private float OpenTimeCounter;
 
         private CollidableComponent collidableComponent;
         private AppearanceComponent _appearance;
+
+        private static readonly TimeSpan CloseTime = TimeSpan.FromSeconds(1.2f);
+        private static readonly TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.3f);
+        private static readonly TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.9f);
 
         public override void Initialize()
         {
@@ -45,11 +43,11 @@ namespace Content.Server.GameObjects
 
         public bool Attackhand(IEntity user)
         {
-            if (Opened)
+            if (_state == DoorState.Open)
             {
                 Close();
             }
-            else
+            else if (_state == DoorState.Closed)
             {
                 Open();
             }
@@ -63,7 +61,7 @@ namespace Content.Server.GameObjects
             switch (message)
             {
                 case BumpedEntMsg msg:
-                    if (Opened)
+                    if (_state != DoorState.Closed)
                     {
                         return;
                     }
@@ -75,9 +73,23 @@ namespace Content.Server.GameObjects
 
         public void Open()
         {
-            Opened = true;
-            collidableComponent.IsHardCollidable = false;
-            _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Open);
+            if (_state != DoorState.Closed)
+            {
+                return;
+            }
+
+            _state = DoorState.Opening;
+            _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Opening);
+
+            Timer.Spawn(OpenTimeOne, async () =>
+            {
+                collidableComponent.IsHardCollidable = false;
+
+                await Timer.Delay(OpenTimeTwo);
+
+                _state = DoorState.Open;
+                _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Open);
+            });
         }
 
         public bool Close()
@@ -87,17 +99,24 @@ namespace Content.Server.GameObjects
                 // Do nothing, somebody's in the door.
                 return false;
             }
-            Opened = false;
-            OpenTimeCounter = 0;
+
+            _state = DoorState.Closing;
             collidableComponent.IsHardCollidable = true;
-            _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
+            OpenTimeCounter = 0;
+            _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closing);
+
+            Timer.Spawn(CloseTime, () =>
+            {
+                _state = DoorState.Closed;
+                _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
+            });
             return true;
         }
 
         private const float AUTO_CLOSE_DELAY = 5;
         public void OnUpdate(float frameTime)
         {
-            if (!Opened)
+            if (_state != DoorState.Open)
             {
                 return;
             }
@@ -111,6 +130,14 @@ namespace Content.Server.GameObjects
                     OpenTimeCounter -= 2;
                 }
             }
+        }
+
+        private enum DoorState
+        {
+            Closed,
+            Open,
+            Closing,
+            Opening,
         }
     }
 }
