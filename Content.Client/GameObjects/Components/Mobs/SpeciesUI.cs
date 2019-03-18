@@ -131,7 +131,12 @@ namespace Content.Client.GameObjects
         {
             if (_currentEffect != ScreenEffects.None)
             {
-                _overlayManager.AddOverlay(EffectsDictionary[_currentEffect]);
+                var overlay = EffectsDictionary[_currentEffect];
+                if (_overlayManager.HasOverlay(overlay.ID))
+                {
+                    return;
+                }
+                _overlayManager.AddOverlay(overlay);
             }
         }
 

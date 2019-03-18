@@ -1,5 +1,3 @@
-shader_type canvas_item;
-
 float circle(in vec2 _st, in float _radius){
     vec2 dist = _st-vec2(0.5);
 	return smoothstep(_radius-(_radius*0.01),
@@ -10,7 +8,6 @@ float circle(in vec2 _st, in float _radius){
 void fragment(){
 	vec2 st = FRAGCOORD.xy*SCREEN_PIXEL_SIZE.xy;
 
-	COLOR = texture(TEXTURE, UV);
 	COLOR.rgb = vec3(0);
     COLOR.a = circle(st,0.05);
 }
