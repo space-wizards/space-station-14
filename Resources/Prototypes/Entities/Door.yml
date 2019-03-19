@@ -27,6 +27,8 @@
   - type: Appearance
     visuals:
     - type: AirlockVisualizer2D
+      open_sound: /Audio/machines/airlock_open.ogg
+      close_sound: /Audio/machines/airlock_close.ogg
 
   placement:
     mode: SnapgridBorder
@@ -41,6 +43,12 @@
 
   - type: Icon
     sprite: Buildings/airlock_external.rsi
+
+  - type: Appearance
+    visuals:
+    - type: AirlockVisualizer2D
+      open_sound: /Audio/machines/airlock_ext_open.ogg
+      close_sound: /Audio/machines/airlock_ext_close.ogg
 
 - type: entity
   parent: airlock

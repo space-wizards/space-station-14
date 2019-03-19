@@ -5,12 +5,49 @@ using SS14.Client.GameObjects;
 using SS14.Client.GameObjects.Components.Animations;
 using SS14.Client.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Doors
 {
     public class AirlockVisualizer2D : AppearanceVisualizer
     {
         private const string AnimationKey = "airlock_animation";
+
+        private Animation CloseAnimation;
+        private Animation OpenAnimation;
+
+        public override void LoadData(YamlMappingNode node)
+        {
+            base.LoadData(node);
+
+            var openSound = node.GetNode("open_sound").AsString();
+            var closeSound = node.GetNode("close_sound").AsString();
+
+            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
+            {
+                var flick = new AnimationTrackSpriteFlick();
+                CloseAnimation.AnimationTracks.Add(flick);
+                flick.LayerKey = DoorVisualLayers.Base;
+                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("closing", 0f));
+
+                var sound = new AnimationTrackPlaySound();
+                CloseAnimation.AnimationTracks.Add(sound);
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(closeSound, 0));
+            }
+
+            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
+            {
+                var flick = new AnimationTrackSpriteFlick();
+                OpenAnimation.AnimationTracks.Add(flick);
+                flick.LayerKey = DoorVisualLayers.Base;
+                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("opening", 0f));
+
+                var sound = new AnimationTrackPlaySound();
+                OpenAnimation.AnimationTracks.Add(sound);
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(openSound, 0));
+            }
+        }
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -29,47 +66,29 @@ namespace Content.Client.GameObjects.Components.Doors
                 state = DoorVisualState.Closed;
             }
 
-            // TODO: need some sorta state to prevent resetting the animation if it's already playing.
-            // Because right now that could happen.
-            animPlayer.Stop(AnimationKey);
             switch (state)
             {
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     break;
                 case DoorVisualState.Closing:
-                    animPlayer.Play(CloseAnimation, AnimationKey);
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(CloseAnimation, AnimationKey);
+                    }
                     break;
                 case DoorVisualState.Opening:
-                    animPlayer.Play(OpenAnimation, AnimationKey);
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(OpenAnimation, AnimationKey);
+                    }
+
                     break;
                 case DoorVisualState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private static readonly Animation CloseAnimation;
-        private static readonly Animation OpenAnimation;
-
-        static AirlockVisualizer2D()
-        {
-            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
-            {
-                var flick = new AnimationTrackSpriteFlick();
-                CloseAnimation.AnimationTracks.Add(flick);
-                flick.LayerKey = DoorVisualLayers.Base;
-                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("closing", 0f));
-            }
-
-            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
-            {
-                var flick = new AnimationTrackSpriteFlick();
-                OpenAnimation.AnimationTracks.Add(flick);
-                flick.LayerKey = DoorVisualLayers.Base;
-                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("opening", 0f));
             }
         }
     }
