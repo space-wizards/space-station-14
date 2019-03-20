@@ -11,6 +11,7 @@
   - type: Icon
     texture: Objects/projectilebullet.png
   - type: BoundingBox
+    aabb: -0.2,-0.2,0.2,0.2
   - type: Physics
     edgeslide: false
   - type: Projectile
