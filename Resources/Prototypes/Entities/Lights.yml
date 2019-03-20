@@ -6,11 +6,11 @@
   # So we can click on it for deletion.
   - type: BoundingBox
   - type: Sprite
-    sprite: Objects/lighting.rsi
+    sprite: Buildings/light_tube.rsi
     state: on
 
   - type: Icon
-    sprite: Objects/lighting.rsi
+    sprite: uildings/light_tube.rsi
     state: on
 
   - type: PointLight
@@ -29,11 +29,11 @@
   parent: wall_light
   components:
   - type: Sprite
-    sprite: Objects/lighting.rsi
+    sprite: Buildings/light_tube.rsi
     state: off
 
   - type: Icon
-    sprite: Objects/lighting.rsi
+    sprite: Buildings/light_tube.rsi
     state: off
 
   - type: PointLight
