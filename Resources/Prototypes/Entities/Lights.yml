@@ -10,7 +10,7 @@
     state: on
 
   - type: Icon
-    sprite: uildings/light_tube.rsi
+    sprite: Buildings/light_tube.rsi
     state: on
 
   - type: PointLight
