@@ -298,13 +298,13 @@ entities:
     pos: -1.984375,-4.484375
     rot: -1.570796 rad
     type: Transform
-- type: medkit_r
+- type: Medkit
   components:
   - grid: 0
     pos: -0.859375,-3.921875
     rot: -1.570796 rad
     type: Transform
-- type: medkit_r
+- type: Medkit
   components:
   - grid: 0
     pos: -0.921875,-4.640625

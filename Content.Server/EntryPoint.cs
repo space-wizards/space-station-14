@@ -102,6 +102,8 @@ namespace Content.Server
             factory.Register<ThrownItemComponent>();
             factory.Register<MeleeWeaponComponent>();
 
+            factory.Register<HealingComponent>();
+
             factory.Register<HandheldLightComponent>();
 
             factory.Register<ServerStorageComponent>();

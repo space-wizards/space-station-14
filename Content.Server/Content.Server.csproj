@@ -141,6 +141,7 @@
     <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
     <Compile Include="ServerNotifyManager.cs" />
     <Compile Include="StatusShell.cs" />
+    <Compile Include="GameObjects\Components\Healing\HealingComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">
@@ -182,5 +183,8 @@
     <Compile Include="GameObjects\Components\Stack\StackComponent.cs" />
     <Compile Include="GameObjects\Components\Construction\ConstructorComponent.cs" />
     <Compile Include="GameObjects\Components\Construction\ConstructionComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameObjects\Components\Healing\" />
   </ItemGroup>
 </Project>
