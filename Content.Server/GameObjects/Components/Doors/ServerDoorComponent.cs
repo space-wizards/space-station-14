@@ -66,6 +66,12 @@ namespace Content.Server.GameObjects
                         return;
                     }
 
+                    // Only open when bumped by mobs.
+                    if (!msg.Entity.HasComponent(typeof(SpeciesComponent)))
+                    {
+                        return;
+                    }
+
                     Open();
                     break;
             }
