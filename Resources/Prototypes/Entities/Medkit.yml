@@ -9,5 +9,6 @@
     texture: Objects/medkit_r.png
   - type: Healing
     heal: 100
+    damage: Brute
   - type: Item
     Size: 24

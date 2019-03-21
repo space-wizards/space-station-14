@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using SS14.Shared.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
 using SS14.Shared.Interfaces.GameObjects;
@@ -20,12 +20,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public override string Name => "Healing";
 
         public int Heal = 100;
+        public DamageType Damage = DamageType.Brute;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref Heal, "heal", 100);
+            serializer.DataField(ref Damage, "damage", DamageType.Brute);
         }
 
         void IAfterAttack.Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked)
@@ -36,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
             if (attacked.TryGetComponent(out DamageableComponent damagecomponent))
             {
-                damagecomponent.TakeHealing(DamageType.Brute, Heal);
+                damagecomponent.TakeHealing(Damage, Heal);
                 Owner.Delete();
             }
         }
@@ -45,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (user.TryGetComponent(out DamageableComponent damagecomponent))
             {
-                damagecomponent.TakeHealing(DamageType.Brute, Heal);
+                damagecomponent.TakeHealing(Damage, Heal);
                 Owner.Delete();
                 return false;
             }
