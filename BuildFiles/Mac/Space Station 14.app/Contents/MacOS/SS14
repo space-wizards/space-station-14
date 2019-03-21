@@ -5,4 +5,4 @@ BASEDIR=$(dirname "$0")
 echo "$BASEDIR"
 cd "$BASEDIR"
 
-./Godot --path ./SS14.Client.Godot
+mono ../Resources/SS14.Client.exe
