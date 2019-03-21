@@ -1,3 +1,4 @@
+using Content.Client.Interfaces;
 using Content.Shared.GameObjects.Components.Markers;
 using SS14.Client.Interfaces.Console;
 using SS14.Client.Interfaces.GameObjects.Components;
@@ -32,6 +33,23 @@ namespace Content.Client.Commands
 
                 sprite.Visible = whichToSet.Value;
             }
+
+            return false;
+        }
+    }
+
+    internal sealed class NotifyCommand : IConsoleCommand
+    {
+        public string Command => "notify";
+        public string Description => "Send a notify client side.";
+        public string Help => "notify <message>";
+
+        public bool Execute(IDebugConsole console, params string[] args)
+        {
+            var message = args[0];
+
+            var notifyManager = IoCManager.Resolve<IClientNotifyManager>();
+            notifyManager.PopupMessage(message);
 
             return false;
         }
