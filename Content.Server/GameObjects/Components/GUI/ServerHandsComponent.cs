@@ -87,6 +87,7 @@ namespace Content.Server.GameObjects
                     slot.Remove(entity);
                 }
             }
+            Dirty();
         }
 
         public ItemComponent GetHand(string index)
