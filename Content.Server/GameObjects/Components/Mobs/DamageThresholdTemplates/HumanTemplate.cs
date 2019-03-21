@@ -11,6 +11,7 @@ namespace Content.Server.GameObjects
 
         public override List<(DamageType, int, ThresholdType)> AllowedStates => new List<(DamageType, int, ThresholdType)>()
         {
+            (DamageType.Total, critvalue-1, ThresholdType.None),
             (DamageType.Total, critvalue, ThresholdType.Critical),
             (DamageType.Total, 300, ThresholdType.Death),
         };
