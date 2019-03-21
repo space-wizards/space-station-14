@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (attacked.TryGetComponent(out DamageableComponent damagecomponent))
             {
                 damagecomponent.TakeHealing(DamageType.Brute, Heal);
-                DropAndDelete(user);
+                Owner.Delete();
             }
         }
 
@@ -46,19 +46,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (user.TryGetComponent(out DamageableComponent damagecomponent))
             {
                 damagecomponent.TakeHealing(DamageType.Brute, Heal);
-                DropAndDelete(user);
+                Owner.Delete();
                 return false;
             }
             return false;
-        }
-
-        void DropAndDelete(IEntity user)
-        {
-            if(user.TryGetComponent(out HandsComponent handscomponent))
-            {
-                handscomponent.Drop(Owner);
-                Owner.Delete();
-            }
         }
     }
 }
