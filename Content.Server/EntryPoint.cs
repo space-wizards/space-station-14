@@ -86,6 +86,7 @@ namespace Content.Server
             factory.RegisterReference<PowerCellComponent, PowerStorageComponent>();
             factory.Register<PowerDeviceComponent>();
             factory.Register<PowerGeneratorComponent>();
+            factory.Register<LightBulbComponent>();
 
             //Tools
             factory.Register<MultitoolComponent>();

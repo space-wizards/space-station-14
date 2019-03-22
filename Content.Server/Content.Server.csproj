@@ -86,6 +86,7 @@
     <Compile Include="GameObjects\Components\Mobs\DamageThresholdTemplates\HumanTemplate.cs" />
     <Compile Include="GameObjects\Components\Mobs\MindComponent.cs" />
     <Compile Include="GameObjects\Components\Mobs\SpeciesComponent.cs" />
+    <Compile Include="GameObjects\Components\Power\LightBulbComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerCellComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerGeneratorComponent.cs" />
