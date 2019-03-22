@@ -19,6 +19,9 @@ using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {
+    /// <summary>
+    ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
+    /// </summary>
     public class PoweredLightComponent : Component, IAttackHand, IAttackby
     {
         public override string Name => "PoweredLight";
@@ -29,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private LightBulbType BulbType = LightBulbType.Tube;
 
-        private float Load = 40;
+        [ViewVariables] private float Load = 40;
 
         [ViewVariables] private ContainerSlot LightBulbContainer;
 
@@ -80,6 +83,9 @@ namespace Content.Server.GameObjects.Components.Power
             return false;
         }
 
+        /// <summary>
+        ///     Ejects the bulb to a mob's hand if possible.
+        /// </summary>
         private void EjectBulb(IEntity user)
         {
             if (LightBulb == null) return;
@@ -99,17 +105,23 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
         }
 
+        /// <summary>
+        ///     For attaching UpdateLight() to events.
+        /// </summary>
         public void UpdateLight(object sender, EventArgs e)
         {
             UpdateLight();
         }
 
+        /// <summary>
+        ///     Updates the light's power drain, sprite and actual light state.
+        /// </summary>
         public void UpdateLight()
         {
             var device = Owner.GetComponent<PowerDeviceComponent>();
             var sprite = Owner.GetComponent<SpriteComponent>();
             var light = Owner.GetComponent<PointLightComponent>();
-            if (LightBulb == null)
+            if (LightBulb == null) // No light bulb.
             {
                 device.Load = 0;
                 sprite.LayerSetState(0, "empty");
@@ -162,7 +174,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             LightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner, out var existed);
 
-            if (!existed)
+            if (!existed) // Insert a light tube if there wasn't any.
             {
                 LightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightTube"));
             }

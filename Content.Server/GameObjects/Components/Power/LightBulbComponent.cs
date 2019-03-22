@@ -18,15 +18,25 @@ namespace Content.Server.GameObjects.Components.Power
         Tube,
     }
 
+    /// <summary>
+    ///     Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
+    /// </summary>
     public class LightBulbComponent : Component
     {
 
+        /// <summary>
+        ///     Invoked whenever the state of the light bulb changes.
+        /// </summary>
         public event EventHandler<EventArgs> OnLightBulbStateChange;
 
         public override string Name => "LightBulb";
 
         public LightBulbType Type = LightBulbType.Tube;
 
+        /// <summary>
+        ///     The current state of the light bulb. Invokes the OnLightBulbStateChange event when set.
+        ///     It also updates the bulb's sprite accordingly.
+        /// </summary>
         public LightBulbState State
         {
             get { return _state; }
