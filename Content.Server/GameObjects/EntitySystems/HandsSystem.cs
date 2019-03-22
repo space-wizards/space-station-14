@@ -61,20 +61,19 @@ namespace Content.Server.GameObjects.EntitySystems
             var msg = (EntParentChangedMessage) args;
 
             // entity is no longer a child of OldParent, therefore it cannot be in the hand of the parent
-            if (msg.OldParent != null && msg.OldParent.IsValid() && msg.OldParent.TryGetComponent(out IHandsComponent handsComp))
+            if (msg.OldParent != null && msg.OldParent.IsValid() && msg.OldParent.Transform != msg.Entity.Transform.Parent && msg.OldParent.TryGetComponent(out IHandsComponent handsComp))
             {
                 handsComp.RemoveHandEntity(msg.Entity);
             }
 
-            // deleted entities will not pass this test
-            if (!msg.Entity.TryGetComponent(out ITransformComponent transform))
+            if (msg.Entity.Deleted)
                 return;
 
             // if item is in a container
-            if (transform.IsMapTransform)
+            if (msg.Entity.Transform.IsMapTransform)
                 return;
 
-            if(!msg.Entity.TryGetComponent(out PhysicsComponent physics))
+            if (!msg.Entity.TryGetComponent(out PhysicsComponent physics))
                 return;
 
             // set velocity to zero
