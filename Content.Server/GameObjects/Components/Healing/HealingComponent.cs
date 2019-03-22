@@ -1,4 +1,5 @@
 using System;
+using Content.Server.GameObjects.Components.Stack;
 using SS14.Shared.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
 using SS14.Shared.Interfaces.GameObjects;
@@ -36,21 +37,39 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 return;
             }
-            if (attacked.TryGetComponent(out DamageableComponent damagecomponent))
+
+            if (!attacked.TryGetComponent(out DamageableComponent damagecomponent)) return;
+            if (Owner.TryGetComponent(out StackComponent stackComponent))
             {
+                if (!stackComponent.Use(1))
+                {
+                    Owner.Delete();
+                    return;
+                }
+
                 damagecomponent.TakeHealing(Damage, Heal);
-                Owner.Delete();
+                return;
             }
+            damagecomponent.TakeHealing(Damage, Heal);
+            Owner.Delete();
         }
 
         bool IUse.UseEntity(IEntity user)
         {
-            if (user.TryGetComponent(out DamageableComponent damagecomponent))
+            if (!user.TryGetComponent(out DamageableComponent damagecomponent)) return false;
+            if (Owner.TryGetComponent(out StackComponent stackComponent))
             {
+                if (!stackComponent.Use(1))
+                {
+                    Owner.Delete();
+                    return false;
+                }
+
                 damagecomponent.TakeHealing(Damage, Heal);
-                Owner.Delete();
                 return false;
             }
+            damagecomponent.TakeHealing(Damage, Heal);
+            Owner.Delete();
             return false;
         }
     }
