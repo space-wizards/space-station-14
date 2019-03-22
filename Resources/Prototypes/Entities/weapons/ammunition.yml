@@ -7,13 +7,18 @@
     caliber: A12mm
     magazine: A12mm
     capacity: 20
-    base_state: 12mm-
   - type: Icon
     sprite: Objects/items/magazine_12mm.rsi
     state: 12mm-0
   - type: Sprite
+    netsync: false
     sprite: Objects/items/magazine_12mm.rsi
     state: 12mm-0
+  - type: Appearance
+    visuals:
+    - type: BallisticMagazineVisualizer2D
+      base_state: 12mm
+      steps: 11
 
 - type: entity
   id: magazine_12mm_filled

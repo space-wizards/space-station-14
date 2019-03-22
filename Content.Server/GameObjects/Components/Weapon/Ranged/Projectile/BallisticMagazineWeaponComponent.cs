@@ -1,7 +1,9 @@
 using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
+using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Shared.Audio;
@@ -25,11 +27,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         public BallisticMagazineType MagazineType => _magazineType;
         private IEntity Magazine => _magazineSlot.ContainedEntity;
 
-        private Random _bulletRotationRandom;
+        private Random _bulletDropRandom;
         private string _magInSound;
         private string _magOutSound;
         private string _autoEjectSound;
         private bool _autoEjectMagazine;
+        private AppearanceComponent _appearance;
 
         private static readonly Direction[] _randomBulletDirs = {
             Direction.North,
@@ -56,17 +59,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         {
             base.Initialize();
 
+            _appearance = Owner.GetComponent<AppearanceComponent>();
+
             _magazineSlot =
                 ContainerManagerComponent.Ensure<ContainerSlot>("ballistic_gun_magazine", Owner,
                     out var alreadyExisted);
 
-            _bulletRotationRandom = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
+            _bulletDropRandom = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
 
             if (!alreadyExisted && _defaultMagazine != null)
             {
                 var magazine = Owner.EntityManager.SpawnEntity(_defaultMagazine);
                 InsertMagazine(magazine, false);
             }
+            _updateAppearance();
         }
 
         public bool InsertMagazine(IEntity magazine, bool playSound=true)
@@ -107,6 +113,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 }
             }
 
+            _updateAppearance();
             return true;
         }
 
@@ -126,9 +133,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                     var audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
                     audioSystem.Play(_magOutSound, Owner);
                 }
+                _updateAppearance();
                 return true;
             }
 
+            _updateAppearance();
             return false;
         }
 
@@ -136,9 +145,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         {
             DebugTools.Assert(chamber == 0);
 
+            // Eject chambered bullet.
             var entity = RemoveFromChamber(chamber);
             entity.Transform.GridPosition = Owner.Transform.GridPosition;
-            entity.Transform.LocalRotation = _bulletRotationRandom.Pick(_randomBulletDirs).ToAngle();
+            entity.Transform.LocalRotation = _bulletDropRandom.Pick(_randomBulletDirs).ToAngle();
+            var audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            var effect = $"/Audio/items/weapons/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
+            audioSystem.Play(effect, entity, AudioParams.Default.WithVolume(-3));
 
             if (Magazine != null)
             {
@@ -154,11 +167,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                     EjectMagazine();
                     if (_autoEjectSound != null)
                     {
-                        var audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
                         audioSystem.Play(_autoEjectSound, Owner, AudioParams.Default.WithVolume(-5));
                     }
                 }
             }
+
+            _updateAppearance();
         }
 
         public bool UseEntity(IEntity user)
@@ -196,6 +210,23 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
 
             return InsertMagazine(attackwith);
+        }
+
+        private void _updateAppearance()
+        {
+            if (Magazine != null)
+            {
+                var comp = Magazine.GetComponent<BallisticMagazineComponent>();
+                _appearance.SetData(BallisticMagazineWeaponVisuals.AmmoLeft, comp.CountLoaded);
+                _appearance.SetData(BallisticMagazineWeaponVisuals.AmmoCapacity, comp.Capacity);
+                _appearance.SetData(BallisticMagazineWeaponVisuals.MagazineLoaded, true);
+            }
+            else
+            {
+                _appearance.SetData(BallisticMagazineWeaponVisuals.AmmoLeft, 0);
+                _appearance.SetData(BallisticMagazineWeaponVisuals.AmmoLeft, 0);
+                _appearance.SetData(BallisticMagazineWeaponVisuals.MagazineLoaded, false);
+            }
         }
 
         [Verb]

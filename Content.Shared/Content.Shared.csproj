@@ -72,6 +72,8 @@
     <Compile Include="GameObjects\Components\Power\PowerShared.cs" />
     <Compile Include="GameObjects\Components\Power\SharedPowerCellComponent.cs" />
     <Compile Include="GameObjects\Components\Storage\SharedStorageComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapons\Ranged\SharedBallisticMagazineComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapons\Ranged\SharedBallisticMagazineWeaponComponent.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\SharedRangedWeaponComponent.cs" />
     <Compile Include="GameObjects\ContentNetIDs.cs" />
     <Compile Include="GameObjects\EntitySystemMessages\VerbSystemMessages.cs" />

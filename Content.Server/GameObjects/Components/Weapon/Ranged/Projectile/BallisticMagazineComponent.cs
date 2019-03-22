@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Content.Shared.Utility;
+using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Shared.GameObjects;
@@ -16,9 +16,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         // Stack of loaded bullets.
         private readonly Stack<IEntity> _loadedBullets = new Stack<IEntity>();
         private string _fillType;
-        private string _baseState;
 
         private Container _bulletContainer;
+        private AppearanceComponent _appearance;
 
         private BallisticMagazineType _magazineType;
         private BallisticCaliber _caliber;
@@ -38,12 +38,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _fillType, "fill", null);
             serializer.DataField(ref _capacity, "capacity", 20);
-            serializer.DataField(ref _baseState, "base_state", null);
         }
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _appearance = Owner.GetComponent<AppearanceComponent>();
 
             _bulletContainer =
                 ContainerManagerComponent.Ensure<Container>("magazine_bullet_container", Owner, out var existed);
@@ -57,6 +58,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                     AddBullet(bullet);
                 }
             }
+
+            _appearance.SetData(BallisticMagazineVisuals.AmmoCapacity, Capacity);
         }
 
         public void AddBullet(IEntity bullet)
@@ -73,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
             _bulletContainer.Insert(bullet);
             _loadedBullets.Push(bullet);
-            _updateSpriteState();
+            _updateAppearance();
         }
 
         public IEntity TakeBullet()
@@ -84,20 +87,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
 
             var bullet = _loadedBullets.Pop();
-            _updateSpriteState();
+            _updateAppearance();
             return bullet;
         }
 
-        private void _updateSpriteState()
+        private void _updateAppearance()
         {
-            if (_baseState == null)
-            {
-                return;
-            }
-
-            var sprite = Owner.GetComponent<SpriteComponent>();
-            var level = ContentHelpers.RoundToLevels(CountLoaded, 20, 11);
-            sprite.LayerSetState(0, _baseState + level.ToString());
+            _appearance.SetData(BallisticMagazineVisuals.AmmoLeft, CountLoaded);
         }
     }
 
