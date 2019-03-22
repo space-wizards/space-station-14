@@ -64,12 +64,12 @@ namespace Content.Client.UserInterface
             handR = handL.Translated(new Vector2i(BOX_SIZE + BOX_SPACING, 0));
             MouseFilter = MouseFilterMode.Stop;
 
-            LeftSpriteView = new SpriteView();
+            LeftSpriteView = new SpriteView {MouseFilter = MouseFilterMode.Ignore};
             AddChild(LeftSpriteView);
             LeftSpriteView.Size = handL.Size;
             LeftSpriteView.Position = handL.TopLeft;
 
-            RightSpriteView = new SpriteView();
+            RightSpriteView = new SpriteView {MouseFilter = MouseFilterMode.Ignore};
             AddChild(RightSpriteView);
             RightSpriteView.Size = handR.Size;
             RightSpriteView.Position = handR.TopLeft;
