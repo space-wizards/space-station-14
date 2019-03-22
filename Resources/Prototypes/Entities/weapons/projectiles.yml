@@ -1,0 +1,19 @@
+- type: entity
+  id: ProjectileBullet
+  name: ProjectileBullet
+  description: If you can see this you're dead!
+  components:
+  - type: Sprite
+    directional: false
+    texture: Objects/projectilebullet.png
+    #rotation: -180
+
+  - type: Icon
+    texture: Objects/projectilebullet.png
+  - type: BoundingBox
+    aabb: -0.2,-0.2,0.2,0.2
+  - type: Physics
+    edgeslide: false
+  - type: Projectile
+  - type: Collidable
+    hard: false

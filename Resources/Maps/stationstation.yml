@@ -286,13 +286,13 @@ entities:
     pos: -2.015625,-3.859375
     rot: -1.570796 rad
     type: Transform
-- type: GUNITEM
+- type: smg_c20r
   components:
   - grid: 0
     pos: -2.890625,-4.484375
     rot: -1.570796 rad
     type: Transform
-- type: GUNITEM
+- type: smg_c20r
   components:
   - grid: 0
     pos: -1.984375,-4.484375

@@ -98,7 +98,7 @@ namespace Content.Server
 
             factory.Register<HitscanWeaponComponent>();
             factory.Register<RangedWeaponComponent>();
-            factory.Register<ProjectileWeaponComponent>();
+            factory.Register<BallisticMagazineWeaponComponent>();
             factory.Register<ProjectileComponent>();
             factory.Register<ThrownItemComponent>();
             factory.Register<MeleeWeaponComponent>();
@@ -126,6 +126,9 @@ namespace Content.Server
 
             factory.Register<SpawnPointComponent>();
             factory.RegisterReference<SpawnPointComponent, SharedSpawnPointComponent>();
+
+            factory.Register<BallisticBulletComponent>();
+            factory.Register<BallisticMagazineComponent>();
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
