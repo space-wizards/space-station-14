@@ -298,6 +298,18 @@ entities:
     pos: -1.984375,-4.484375
     rot: -1.570796 rad
     type: Transform
+- type: Ointment
+  components:
+  - grid: 0
+    pos: 0.779375,-3.7521875
+    rot: -1.570796 rad
+    type: Transform
+- type: Brutepack
+  components:
+  - grid: 0
+    pos: 1.509375,-3.7521875
+    rot: -1.570796 rad
+    type: Transform
 - type: Medkit
   components:
   - grid: 0

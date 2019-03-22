@@ -125,5 +125,7 @@ namespace Content.Server.GameObjects.Components.Stack
         Metal,
         Glass,
         Cable,
+        Ointment,
+        Brutepack,
     }
 }
