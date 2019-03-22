@@ -3,7 +3,6 @@
   name: "Unpowered Light"
   components:
   - type: Clickable
-  # So we can click on it for deletion.
   - type: BoundingBox
   - type: Sprite
     sprite: Buildings/light_tube.rsi
@@ -28,6 +27,8 @@
   id: poweredlight
   parent: wall_light
   components:
+  - type: Clickable
+  - type: BoundingBox
   - type: Sprite
     sprite: Buildings/light_tube.rsi
     state: off
@@ -40,7 +41,31 @@
     state: Off
 
   - type: PowerDevice
-    load: 50
     priority: Low
 
   - type: PoweredLight
+    load: 40
+    bulb: Tube
+
+- type: entity
+  parent: BaseItem
+  name: BaseLightbulb
+  id: BaseLightbulb
+  components:
+  - type: LightBulb
+  
+- type: entity
+  parent: BaseLightbulb
+  name: Light Tube
+  id: LightTube
+  components:
+  - type: LightBulb
+    bulb: Tube
+    
+  - type: Sprite
+    sprite: Objects/light_tube.rsi
+    state: normal
+    
+  - type: Icon
+    sprite: Objects/light_tube.rsi
+    state: normal
