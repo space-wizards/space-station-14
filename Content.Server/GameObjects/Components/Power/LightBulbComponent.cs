@@ -1,4 +1,5 @@
 using System;
+using SS14.Server.GameObjects;
 using SS14.Shared.Enums;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Serialization;
@@ -31,8 +32,21 @@ namespace Content.Server.GameObjects.Components.Power
             get { return _state; }
             set
             {
+                var sprite = Owner.GetComponent<SpriteComponent>();
                 OnLightBulbStateChange?.Invoke(this, EventArgs.Empty);
                 _state = value;
+                switch (value)
+                {
+                    case LightBulbState.Normal:
+                        sprite.LayerSetState(0, "normal");
+                        break;
+                    case LightBulbState.Broken:
+                        sprite.LayerSetState(0, "broken");
+                        break;
+                    case LightBulbState.Burned:
+                        sprite.LayerSetState(0, "burned");
+                        break;
+                }
             }
         }
 
