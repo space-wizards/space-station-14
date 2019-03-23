@@ -1,0 +1,7 @@
+gun_empty.ogg: https://github.com/discordia-space/CEV-Eris/blob/fbde37a8647a82587d363da999a94cf02c2e128c/sound/weapons/guns/misc/gun_empty.ogg
+smg_magin.ogg: https://github.com/discordia-space/CEV-Eris/blob/fbde37a8647a82587d363da999a94cf02c2e128c/sound/weapons/guns/interact/smg_magin.ogg
+smg_magout.ogg: https://github.com/discordia-space/CEV-Eris/blob/fbde37a8647a82587d363da999a94cf02c2e128c/sound/weapons/guns/interact/smg_magout.ogg
+smg_empty_alarm.ogg: https://github.com/discordia-space/CEV-Eris/blob/fbde37a8647a82587d363da999a94cf02c2e128c/sound/weapons/smg_empty_alarm.ogg
+casingfall1.ogg: https://github.com/discordia-space/CEV-Eris/blob/fbde37a8647a82587d363da999a94cf02c2e128c/sound/weapons/guns/misc/casingfall1.ogg
+casingfall2.ogg: https://github.com/discordia-space/CEV-Eris/blob/fbde37a8647a82587d363da999a94cf02c2e128c/sound/weapons/guns/misc/casingfall2.ogg
+casingfall3.ogg: https://github.com/discordia-space/CEV-Eris/blob/fbde37a8647a82587d363da999a94cf02c2e128c/sound/weapons/guns/misc/casingfall3.ogg

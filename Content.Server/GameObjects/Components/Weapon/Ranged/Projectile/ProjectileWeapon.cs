@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
@@ -15,12 +16,8 @@ using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
-    public class ProjectileWeaponComponent : Component
+    public abstract class ProjectileWeaponComponent : Component
     {
-        public override string Name => "ProjectileWeapon";
-
-        private string _ProjectilePrototype = "ProjectileBullet";
-
         private float _velocity = 20f;
         private float _spreadStdDev = 3;
         private bool _spread = true;
@@ -61,16 +58,27 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         private void Fire(IEntity user, GridCoordinates clickLocation)
         {
+            var projectile = GetFiredProjectile();
+            if (projectile == null)
+            {
+                return;
+            }
+
             var userPosition = user.Transform.GridPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition.Position);
+
+            if (user.TryGetComponent(out CameraRecoilComponent recoil))
+            {
+                var recoilVec = angle.ToVec() * -0.15f;
+                recoil.Kick(recoilVec);
+            }
 
             if (Spread)
             {
                 angle += Angle.FromDegrees(_spreadRandom.NextGaussian(0, SpreadStdDev));
             }
 
-            //Spawn the projectilePrototype
-            var projectile = IoCManager.Resolve<IServerEntityManager>().ForceSpawnEntityAt(_ProjectilePrototype, userPosition);
+            projectile.Transform.GridPosition = userPosition;
 
             //Give it the velocity we fire from this weapon, and make sure it doesn't shoot our character
             projectile.GetComponent<ProjectileComponent>().IgnoreEntity(user);
@@ -84,5 +92,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             // Sound!
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play("/Audio/gunshot_c20.ogg", user);
         }
+
+        /// <summary>
+        ///     Try to get a projectile for firing. If null, nothing will be fired.
+        /// </summary>
+        protected abstract IEntity GetFiredProjectile();
+    }
+
+    public enum BallisticCaliber
+    {
+        Unspecified = 0,
+        A12mm,
     }
 }

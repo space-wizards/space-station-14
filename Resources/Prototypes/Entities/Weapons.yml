@@ -19,28 +19,6 @@
     sprite: Objects/laser_retro.rsi
     prefix: 100
 
-
-- type: entity
-  name: C-20r Sub Machine Gun
-  parent: BaseItem
-  id: GUNITEM
-  description: A rooty tooty point and shooty
-  components:
-  - type: Sprite
-    sprite: Objects/c20r.rsi
-    state: c20r-20
-  - type: Icon
-    sprite: Objects/c20r.rsi
-    state: c20r-20
-  - type: RangedWeapon
-    automatic: true
-    firerate: 8
-  - type: ProjectileWeapon
-  - type: Item
-    Size: 24
-    sprite: Objects/c20r.rsi
-
-
 - type: entity
   name: Spear
   parent: BaseItem

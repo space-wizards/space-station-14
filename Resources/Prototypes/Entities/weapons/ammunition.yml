@@ -1,0 +1,50 @@
+- type: entity
+  id: magazine_12mm
+  name: "12mm magazine"
+  parent: BaseItem
+  components:
+  - type: BallisticMagazine
+    caliber: A12mm
+    magazine: A12mm
+    capacity: 20
+  - type: Icon
+    sprite: Objects/items/magazine_12mm.rsi
+    state: 12mm-0
+  - type: Sprite
+    netsync: false
+    sprite: Objects/items/magazine_12mm.rsi
+    state: 12mm-0
+  - type: Appearance
+    visuals:
+    - type: BallisticMagazineVisualizer2D
+      base_state: 12mm
+      steps: 11
+
+- type: entity
+  id: magazine_12mm_filled
+  name: "12mm magazine"
+  parent: magazine_12mm
+  components:
+  - type: BallisticMagazine
+    fill: ammo_casing_12mm
+  - type: Icon
+    state: 12mm-10
+  - type: Sprite
+    state: 12mm-10
+
+- type: entity
+  id: ammo_casing_12mm
+  name: "12mm bullet"
+  parent: BaseItem
+  components:
+  - type: BallisticBullet
+    caliber: A12mm
+    projectile: ProjectileBullet
+  - type: Sprite
+    sprite: Objects/items/ammo_casing.rsi
+    state: s-casing
+    drawdepth: FloorObjects
+  - type: Icon
+    sprite: Objects/items/ammo_casing.rsi
+    state: s-casing
+

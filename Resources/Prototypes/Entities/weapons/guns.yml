@@ -1,0 +1,35 @@
+- type: entity
+  name: C-20r Sub Machine Gun
+  parent: BaseItem
+  id: smg_c20r
+  description: A rooty tooty point and shooty.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/c20r.rsi
+    state: c20r-5
+  - type: Icon
+    sprite: Objects/c20r.rsi
+    state: c20r-5
+  - type: RangedWeapon
+    automatic: true
+    firerate: 8
+  - type: BallisticMagazineWeapon
+    caliber: A12mm
+    magazine: A12mm
+    default_magazine: magazine_12mm_filled
+    auto_eject_magazine: true
+    sound_auto_eject: /Audio/items/weapons/smg_empty_alarm.ogg
+    sound_magazine_in: /Audio/items/weapons/smg_magin.ogg
+    sound_magazine_out: /Audio/items/weapons/smg_magout.ogg
+    sound_empty: /Audio/items/weapons/gun_empty.ogg
+
+  - type: Appearance
+    visuals:
+    - type: BallisticMagazineWeaponVisualizer2D
+      base_state: c20r
+      steps: 6
+
+  - type: Item
+    Size: 24
+    sprite: Objects/c20r.rsi

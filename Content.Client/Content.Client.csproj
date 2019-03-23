@@ -77,6 +77,7 @@
     <Compile Include="GameObjects\Components\DamageableComponent.cs" />
     <Compile Include="GameObjects\Components\Doors\AirlockVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\HUD\Inventory\ClientInventoryComponent.cs" />
+    <Compile Include="GameObjects\Components\Mobs\CameraRecoilComponent.cs" />
     <Compile Include="GameObjects\Components\Mobs\ICharacterUI.cs" />
     <Compile Include="GameObjects\Components\Mobs\SpeciesUI.cs" />
     <Compile Include="GameObjects\Components\Clothing\ClothingComponent.cs" />
@@ -84,7 +85,10 @@
     <Compile Include="GameObjects\Components\Power\ApcBoundUserInterface.cs" />
     <Compile Include="GameObjects\Components\Power\PowerCellVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\Storage\ClientStorageComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapons\Ranged\BallisticMagazineVisualizer2D.cs" />
+    <Compile Include="GameObjects\Components\Weapons\Ranged\BallisticMagazineWeaponVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\ClientRangedWeaponComponent.cs" />
+    <Compile Include="GameObjects\EntitySystems\CameraRecoilSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\ClientNotifySystem.cs" />
     <Compile Include="GameObjects\EntitySystems\RangedWeaponSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\VerbSystem.cs" />

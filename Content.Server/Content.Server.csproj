@@ -81,6 +81,7 @@
     <Compile Include="GameObjects\Components\Items\Storage\ServerStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Items\Storage\ItemComponent.cs" />
     <Compile Include="GameObjects\Components\Markers\SpawnPointComponent.cs" />
+    <Compile Include="GameObjects\Components\Mobs\CameraRecoilComponent.cs" />
     <Compile Include="GameObjects\Components\Mobs\DamageStates.cs" />
     <Compile Include="GameObjects\Components\Mobs\DamageThresholdTemplates\DamageThresholdTemplates.cs" />
     <Compile Include="GameObjects\Components\Mobs\DamageThresholdTemplates\HumanTemplate.cs" />
@@ -100,6 +101,10 @@
     <Compile Include="GameObjects\Components\Projectiles\ThrownItemComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Melee\MeleeWeaponComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\Hitscan\HitscanWeaponComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\BallisticBulletComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\BallisticMagazineComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\BallisticMagazineWeaponComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\BallisticWeaponComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\ProjectileWeapon.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\RangedWeapon.cs" />
     <Compile Include="GameObjects\ContainerSlot.cs" />
