@@ -34,16 +34,16 @@ namespace Content.Server.GameObjects.Components.Power
 
         [ViewVariables] private float Load = 40;
 
-        [ViewVariables] private ContainerSlot LightBulbContainer;
+        [ViewVariables] private ContainerSlot _lightBulbContainer;
 
         [ViewVariables]
         private LightBulbComponent LightBulb
         {
             get
             {
-                if (LightBulbContainer.ContainedEntity == null) return null;
+                if (_lightBulbContainer.ContainedEntity == null) return null;
 
-                LightBulbContainer.ContainedEntity.TryGetComponent(out LightBulbComponent bulb);
+                _lightBulbContainer.ContainedEntity.TryGetComponent(out LightBulbComponent bulb);
 
                 return bulb;
             }
@@ -186,11 +186,11 @@ namespace Content.Server.GameObjects.Components.Power
             var device = Owner.GetComponent<PowerDeviceComponent>();
             device.OnPowerStateChanged += UpdateLight;
 
-            LightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner, out var existed);
+            _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner, out var existed);
 
             if (!existed) // Insert a light tube if there wasn't any.
             {
-                LightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightTube"));
+                _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightTube"));
             }
         }
     }
