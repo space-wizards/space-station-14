@@ -62,13 +62,10 @@ namespace Content.Server.GameObjects.Components.Power
                 UpdateLight();
                 return true;
             }
-            else
-            {
-                if (!user.TryGetComponent(out DamageableComponent damageableComponent)) return false;
-                damageableComponent.TakeDamage(DamageType.Heat, 20);
-            }
 
-            UpdateLight();
+            if (!user.TryGetComponent(out DamageableComponent damageableComponent)) return false;
+            damageableComponent.TakeDamage(DamageType.Heat, 20);
+            return true;
 
             return false;
         }
