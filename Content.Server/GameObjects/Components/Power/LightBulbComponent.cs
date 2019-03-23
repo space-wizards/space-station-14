@@ -1,8 +1,9 @@
 using System;
-using SS14.Server.GameObjects;
-using SS14.Shared.Enums;
 using SS14.Shared.GameObjects;
+using SS14.Shared.Maths;
 using SS14.Shared.Serialization;
+using SS14.Shared.ViewVariables;
+using SpriteComponent = SS14.Server.GameObjects.SpriteComponent;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -28,6 +29,20 @@ namespace Content.Server.GameObjects.Components.Power
         ///     Invoked whenever the state of the light bulb changes.
         /// </summary>
         public event EventHandler<EventArgs> OnLightBulbStateChange;
+        public event EventHandler<EventArgs> OnLightColorChange;
+
+        private Color _color = Color.White;
+
+        [ViewVariables(VVAccess.ReadWrite)] public Color Color
+        {
+            get { return _color; }
+            set
+            {
+                _color = value;
+                OnLightColorChange?.Invoke(this, null);
+                UpdateColor();
+            }
+        }
 
         public override string Name => "LightBulb";
 
@@ -37,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     The current state of the light bulb. Invokes the OnLightBulbStateChange event when set.
         ///     It also updates the bulb's sprite accordingly.
         /// </summary>
-        public LightBulbState State
+        [ViewVariables(VVAccess.ReadWrite)] public LightBulbState State
         {
             get { return _state; }
             set
@@ -65,7 +80,19 @@ namespace Content.Server.GameObjects.Components.Power
         public override void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref Type, "bulb", LightBulbType.Tube);
+            serializer.DataField(ref _color, "color", Color.White);
         }
 
+        public void UpdateColor()
+        {
+            var sprite = Owner.GetComponent<SpriteComponent>();
+            sprite.Color = Color;
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            UpdateColor();
+        }
     }
 }

@@ -34,16 +34,16 @@ namespace Content.Server.GameObjects.Components.Power
 
         [ViewVariables] private float Load = 40;
 
-        [ViewVariables] private ContainerSlot LightBulbContainer;
+        [ViewVariables] private ContainerSlot _lightBulbContainer;
 
         [ViewVariables]
         private LightBulbComponent LightBulb
         {
             get
             {
-                if (LightBulbContainer.ContainedEntity == null) return null;
+                if (_lightBulbContainer.ContainedEntity == null) return null;
 
-                LightBulbContainer.ContainedEntity.TryGetComponent(out LightBulbComponent bulb);
+                _lightBulbContainer.ContainedEntity.TryGetComponent(out LightBulbComponent bulb);
 
                 return bulb;
             }
@@ -51,17 +51,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         bool IAttackby.Attackby(IEntity user, IEntity attackwith)
         {
-            if (!attackwith.HasComponent<LightBulbComponent>()) return false;
-
-            if (LightBulb != null) return false;
-
-            user.GetComponent<IHandsComponent>().Drop(attackwith, LightBulbContainer);
-
-            var inserted = LightBulbContainer.Insert(attackwith);
-
-            UpdateLight();
-
-            return inserted;
+            return InsertBulb(attackwith);
         }
 
         bool IAttackHand.Attackhand(IEntity user)
@@ -84,6 +74,26 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <summary>
+        ///     Inserts the bulb if possible.
+        /// </summary>
+        /// <returns>True if it could insert it, false if it couldn't.</returns>
+        private bool InsertBulb(IEntity bulb)
+        {
+            if (LightBulb != null) return false;
+            if (!bulb.TryGetComponent(out LightBulbComponent lightBulb)) return false;
+            if (lightBulb.Type != BulbType) return false;
+
+            var inserted = _lightBulbContainer.Insert(bulb);
+
+            lightBulb.OnLightBulbStateChange += UpdateLight;
+            lightBulb.OnLightColorChange += UpdateLight;
+
+            UpdateLight();
+
+            return inserted;
+        }
+
+        /// <summary>
         ///     Ejects the bulb to a mob's hand if possible.
         /// </summary>
         private void EjectBulb(IEntity user)
@@ -92,7 +102,10 @@ namespace Content.Server.GameObjects.Components.Power
 
             var bulb = LightBulb;
 
-            if (!LightBulbContainer.Remove(bulb.Owner)) return;
+            bulb.OnLightBulbStateChange -= UpdateLight;
+            bulb.OnLightColorChange -= UpdateLight;
+
+            if (!_lightBulbContainer.Remove(bulb.Owner)) return;
 
             if (!user.TryGetComponent(out HandsComponent hands)
                 || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
@@ -137,6 +150,7 @@ namespace Content.Server.GameObjects.Components.Power
                         device.Load = Load;
                         sprite.LayerSetState(0, "on");
                         light.State = LightState.On;
+                        light.Color = LightBulb.Color;
                         var time = IoCManager.Resolve<IGameTiming>().CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
@@ -172,11 +186,11 @@ namespace Content.Server.GameObjects.Components.Power
             var device = Owner.GetComponent<PowerDeviceComponent>();
             device.OnPowerStateChanged += UpdateLight;
 
-            LightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner, out var existed);
+            _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner, out var existed);
 
             if (!existed) // Insert a light tube if there wasn't any.
             {
-                LightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightTube"));
+                _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightTube"));
             }
         }
     }
