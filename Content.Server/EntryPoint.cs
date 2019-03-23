@@ -41,6 +41,7 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Markers;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Interfaces;
 using SS14.Server.Interfaces.ServerStatus;
 using SS14.Shared.Timing;
@@ -129,6 +130,9 @@ namespace Content.Server
 
             factory.Register<BallisticBulletComponent>();
             factory.Register<BallisticMagazineComponent>();
+
+            factory.Register<CameraRecoilComponent>();
+            factory.RegisterReference<CameraRecoilComponent, SharedCameraRecoilComponent>();
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();

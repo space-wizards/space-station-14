@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
@@ -65,6 +66,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
             var userPosition = user.Transform.GridPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition.Position);
+
+            if (user.TryGetComponent(out CameraRecoilComponent recoil))
+            {
+                var recoilVec = angle.ToVec() * -0.15f;
+                recoil.Kick(recoilVec);
+            }
 
             if (Spread)
             {

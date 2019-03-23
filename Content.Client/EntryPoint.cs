@@ -25,8 +25,10 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Prototypes;
 using System;
+using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Markers;
+using Content.Shared.GameObjects.Components.Mobs;
 using SS14.Client.Interfaces.UserInterface;
 using SS14.Shared.Log;
 
@@ -99,6 +101,9 @@ namespace Content.Client
             factory.RegisterIgnore("PowerCell");
 
             factory.Register<SharedSpawnPointComponent>();
+
+            factory.Register<CameraRecoilComponent>();
+            factory.RegisterReference<CameraRecoilComponent, SharedCameraRecoilComponent>();
 
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
