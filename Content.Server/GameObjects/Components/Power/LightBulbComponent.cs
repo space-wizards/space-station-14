@@ -1,6 +1,4 @@
 using System;
-using SS14.Client.GameObjects;
-using SS14.Shared.Enums;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Maths;
 using SS14.Shared.Serialization;
