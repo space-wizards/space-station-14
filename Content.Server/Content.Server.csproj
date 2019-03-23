@@ -158,6 +158,10 @@
       <Project>{59250baf-0000-0000-0000-000000000000}</Project>
       <Name>Lidgren.Network</Name>
     </ProjectReference>
+    <ProjectReference Include="..\engine\SS14.Client\SS14.Client.csproj">
+      <Project>{83429bd6-6358-4b18-be51-401df8ea2673}</Project>
+      <Name>SS14.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\engine\SS14.Server\SS14.Server.csproj">
       <Project>{b04aae71-0000-0000-0000-000000000000}</Project>
       <Name>SS14.Server</Name>
