@@ -950,17 +950,17 @@ entities:
     pos: 4.5,-9.5
     rot: -1.570796 rad
     type: Transform
-- type: poweredlight
+- type: poweredsmalllight
   components:
   - grid: 0
     pos: -4,-7
-    rot: -1.5707963267949 rad
+    rot: 1.5707963267949 rad
     type: Transform
-- type: poweredlight
+- type: poweredsmalllight
   components:
   - grid: 0
     pos: 3,-7
-    rot: -1.5707963267949 rad
+    rot: 1.5707963267949 rad
     type: Transform
 - type: poweredlight
   components:
