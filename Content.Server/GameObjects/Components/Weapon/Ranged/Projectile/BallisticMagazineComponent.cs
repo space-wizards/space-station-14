@@ -30,6 +30,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         public int CountLoaded => _loadedBullets.Count;
 
+        public event Action OnAmmoCountChanged;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -45,11 +47,24 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             base.Initialize();
 
             _appearance = Owner.GetComponent<AppearanceComponent>();
+        }
+
+        public override void Startup()
+        {
+            base.Startup();
 
             _bulletContainer =
                 ContainerManagerComponent.Ensure<Container>("magazine_bullet_container", Owner, out var existed);
 
-            if (!existed && _fillType != null)
+            if (existed)
+            {
+                foreach (var entity in _bulletContainer.ContainedEntities)
+                {
+                    _loadedBullets.Push(entity);
+                }
+                _updateAppearance();
+            }
+            else if (_fillType != null)
             {
                 // Load up bullets from fill.
                 for (var i = 0; i < Capacity; i++)
@@ -59,6 +74,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 }
             }
 
+            OnAmmoCountChanged?.Invoke();
             _appearance.SetData(BallisticMagazineVisuals.AmmoCapacity, Capacity);
         }
 
@@ -77,6 +93,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             _bulletContainer.Insert(bullet);
             _loadedBullets.Push(bullet);
             _updateAppearance();
+            OnAmmoCountChanged?.Invoke();
         }
 
         public IEntity TakeBullet()
@@ -88,6 +105,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
             var bullet = _loadedBullets.Pop();
             _updateAppearance();
+            OnAmmoCountChanged?.Invoke();
             return bullet;
         }
 

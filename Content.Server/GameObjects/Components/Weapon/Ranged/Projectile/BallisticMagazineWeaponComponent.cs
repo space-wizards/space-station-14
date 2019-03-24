@@ -34,7 +34,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         private bool _autoEjectMagazine;
         private AppearanceComponent _appearance;
 
-        private static readonly Direction[] _randomBulletDirs = {
+        private static readonly Direction[] _randomBulletDirs =
+        {
             Direction.North,
             Direction.East,
             Direction.South,
@@ -60,22 +61,32 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             base.Initialize();
 
             _appearance = Owner.GetComponent<AppearanceComponent>();
+            _bulletDropRandom = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
+        }
+
+        public override void Startup()
+        {
+            base.Startup();
 
             _magazineSlot =
                 ContainerManagerComponent.Ensure<ContainerSlot>("ballistic_gun_magazine", Owner,
                     out var alreadyExisted);
-
-            _bulletDropRandom = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
 
             if (!alreadyExisted && _defaultMagazine != null)
             {
                 var magazine = Owner.EntityManager.SpawnEntity(_defaultMagazine);
                 InsertMagazine(magazine, false);
             }
+            else if (Magazine != null)
+            {
+                // Already got magazine from loading a container.
+                Magazine.GetComponent<BallisticMagazineComponent>().OnAmmoCountChanged += _magazineAmmoCountChanged;
+            }
+
             _updateAppearance();
         }
 
-        public bool InsertMagazine(IEntity magazine, bool playSound=true)
+        public bool InsertMagazine(IEntity magazine, bool playSound = true)
         {
             if (!magazine.TryGetComponent(out BallisticMagazineComponent component))
             {
@@ -103,6 +114,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 audioSystem.Play(_magInSound, Owner);
             }
 
+            component.OnAmmoCountChanged += _magazineAmmoCountChanged;
             if (GetChambered(0) == null)
             {
                 // No bullet in chamber, load one from magazine.
@@ -117,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return true;
         }
 
-        public bool EjectMagazine(bool playSound=true)
+        public bool EjectMagazine(bool playSound = true)
         {
             var entity = Magazine;
             if (entity == null)
@@ -133,7 +145,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                     var audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
                     audioSystem.Play(_magOutSound, Owner);
                 }
+
                 _updateAppearance();
+                entity.GetComponent<BallisticMagazineComponent>().OnAmmoCountChanged -= _magazineAmmoCountChanged;
                 return true;
             }
 
@@ -210,6 +224,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
 
             return InsertMagazine(attackwith);
+        }
+
+        private void _magazineAmmoCountChanged()
+        {
+            _updateAppearance();
         }
 
         private void _updateAppearance()
