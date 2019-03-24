@@ -46,6 +46,32 @@
   - type: PoweredLight
     load: 40
     bulb: Tube
+    
+- type: entity
+  name: Small Light
+  id: poweredsmalllight
+  parent: wall_light
+  components:
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    sprite: Buildings/light_small.rsi
+    state: off
+
+  - type: Icon
+    sprite: Buildings/light_small.rsi
+    state: off
+
+  - type: PointLight
+    energy: 1.0
+    state: Off
+
+  - type: PowerDevice
+    priority: Low
+
+  - type: PoweredLight
+    load: 40
+    bulb: Bulb
 
 - type: entity
   parent: BaseItem
@@ -68,4 +94,20 @@
     
   - type: Icon
     sprite: Objects/light_tube.rsi
+    state: normal
+    
+- type: entity
+  parent: BaseLightbulb
+  name: Light Bulb
+  id: LightBulb
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    
+  - type: Sprite
+    sprite: Objects/light_bulb.rsi
+    state: normal
+    
+  - type: Icon
+    sprite: Objects/light_bulb.rsi
     state: normal

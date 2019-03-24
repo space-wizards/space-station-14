@@ -16,6 +16,7 @@ namespace Content.Server.GameObjects.Components.Power
 
     public enum LightBulbType
     {
+        Bulb,
         Tube,
     }
 

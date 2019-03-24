@@ -187,7 +187,15 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (!existed) // Insert a light tube if there wasn't any.
             {
-                _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightTube"));
+                switch (BulbType)
+                {
+                    case LightBulbType.Tube:
+                        _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightTube"));
+                        break;
+                    case LightBulbType.Bulb:
+                        _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightBulb"));
+                        break;
+                }
             }
         }
     }
