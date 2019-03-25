@@ -99,6 +99,7 @@
     <Compile Include="GameObjects\Components\Power\PowerTransferComponent.cs" />
     <Compile Include="GameObjects\Components\Projectiles\ProjectileComponent.cs" />
     <Compile Include="GameObjects\Components\Projectiles\ThrownItemComponent.cs" />
+    <Compile Include="GameObjects\Components\Sound\SoundComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Melee\MeleeWeaponComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\Hitscan\HitscanWeaponComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\BallisticBulletComponent.cs" />
@@ -157,6 +158,10 @@
     <ProjectReference Include="..\engine\Lidgren.Network\Lidgren.Network.csproj">
       <Project>{59250baf-0000-0000-0000-000000000000}</Project>
       <Name>Lidgren.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\engine\SS14.Client\SS14.Client.csproj">
+      <Project>{83429bd6-6358-4b18-be51-401df8ea2673}</Project>
+      <Name>SS14.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\engine\SS14.Server\SS14.Server.csproj">
       <Project>{b04aae71-0000-0000-0000-000000000000}</Project>
