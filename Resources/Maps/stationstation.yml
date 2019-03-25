@@ -34,19 +34,19 @@ entities:
     pos: 4.5,-0.5
     rot: -1.570796 rad
     type: Transform
-- type: wall
+- type: girder
   components:
   - grid: 0
     pos: -7,6
     rot: -1.570796 rad
     type: Transform
-- type: wall
+- type: girder
   components:
   - grid: 0
     pos: -7,-4
     rot: -1.570796 rad
     type: Transform
-- type: wall
+- type: girder
   components:
   - grid: 0
     pos: -7,-3
@@ -178,13 +178,13 @@ entities:
     pos: -7,-6
     rot: -1.570796 rad
     type: Transform
-- type: wall
+- type: girder
   components:
   - grid: 0
     pos: -4,-6
     rot: -1.570796 rad
     type: Transform
-- type: wall
+- type: girder
   components:
   - grid: 0
     pos: -4,-5
