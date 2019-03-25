@@ -1,0 +1,4 @@
+- type: tile
+  name: Plating
+  texture: plating
+  id: 2
