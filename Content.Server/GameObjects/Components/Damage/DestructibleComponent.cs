@@ -9,7 +9,7 @@ using Content.Shared.GameObjects;
 using SS14.Shared.Serialization;
 using SS14.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Destructible
 {
     /// <summary>
     /// Deletes the entity once a certain damage threshold has been reached.
@@ -19,9 +19,6 @@ namespace Content.Server.GameObjects
         /// <inheritdoc />
         public override string Name => "Destructible";
 
-        /// <inheritdoc />
-        public override uint? NetID => ContentNetIDs.DESTRUCTIBLE;
-
         /// <summary>
         /// Damage threshold calculated from the values
         /// given in the prototype declaration.
@@ -29,35 +26,35 @@ namespace Content.Server.GameObjects
         [ViewVariables]
         public DamageThreshold Threshold { get; private set; }
 
+        public DamageType damageType = DamageType.Total;
+        public int damageValue = 0;
+        public string spawnOnDestroy = "SteelSheet";
+        public bool destroyed = false;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            // TODO: Writing
-            if (serializer.Reading)
-            {
-                DamageType damageType = DamageType.Total;
-                int damageValue = 0;
-
-                serializer.DataReadFunction("thresholdtype", DamageType.Total, type => damageType = type);
-                serializer.DataReadFunction("thresholdvalue", 0, val => damageValue = val);
-
-                Threshold = new DamageThreshold(damageType, damageValue, ThresholdType.Destruction);
-            }
+            serializer.DataField(ref damageValue, "thresholdvalue", 100);
+            serializer.DataField(ref damageType, "thresholdtype", DamageType.Total);
+            serializer.DataField(ref spawnOnDestroy, "spawnondestroy", "SteelSheet");
         }
 
         /// <inheritdoc />
-        public List<DamageThreshold> GetAllDamageThresholds()
+        List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
         {
+            Threshold = new DamageThreshold(damageType, damageValue, ThresholdType.Destruction);
             return new List<DamageThreshold>() { Threshold };
         }
 
         /// <inheritdoc />
-        public void OnDamageThresholdPassed(object obj, DamageThresholdPassedEventArgs e)
+        void IOnDamageBehavior.OnDamageThresholdPassed(object obj, DamageThresholdPassedEventArgs e)
         {
-            if (e.Passed && e.DamageThreshold == Threshold)
+            if (e.Passed && e.DamageThreshold == Threshold && destroyed == false)
             {
+                destroyed = true;
+                var wreck = Owner.EntityManager.SpawnEntity(spawnOnDestroy);
+                wreck.Transform.GridPosition = Owner.Transform.GridPosition;
                 Owner.EntityManager.DeleteEntity(Owner);
             }
         }

@@ -15,6 +15,10 @@
 
   - type: BoundingBox
   - type: Collidable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: girder
   - type: Occluder
     sizeX: 32
     sizeY: 32
