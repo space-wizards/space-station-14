@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using SS14.Client.GameObjects.EntitySystems;
 using SS14.Shared.Audio;
 using SS14.Shared.GameObjects;
@@ -9,6 +11,12 @@ using SS14.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Sound
 {
+    public enum SoundType
+    {
+        Normal,
+        Global,
+        Positional,
+    }
     public struct SoundSchedule
     {
         public string Filename;
@@ -19,10 +27,16 @@ namespace Content.Server.GameObjects.Components.Sound
         public AudioParams? AudioParams;
 
         /// <summary>
-        /// Delay before playing the sound,
+        /// Delay in milliseconds before playing the sound,
         /// and delay between repetitions if Times is not 0.
         /// </summary>
-        public float Delay;
+        public int Delay;
+
+        /// <summary>
+        /// Maximum number of milliseconds to add or subtract
+        /// from the delay randomly. Useful for random ambience noises.
+        /// </summary>
+        public int RandomDelay;
 
         /// <summary>
         /// How many times to repeat the sound. If it's 0, it will play the sound once.
@@ -30,13 +44,39 @@ namespace Content.Server.GameObjects.Components.Sound
         /// If it's greater than 0, it will play the sound n+1 times.
         /// </summary>
         public int Times;
+
+        /// <summary>
+        /// How to play the sound.
+        /// Normal plays the sound following the entity.
+        /// Global plays the sound globally, without position.
+        /// Positional plays the sound at a static position.
+        /// </summary>
+        public SoundType SoundType;
+
+        /// <summary>
+        /// If SoundType is Positional, this will be the
+        /// position where the sound plays.
+        /// </summary>
+        public GridCoordinates SoundPosition;
     }
 
     public class SoundComponent : Component
     {
         public override string Name => "Sound";
 
+        private List<SoundSchedule> _schedules;
         private AudioSystem _audioSystem;
+
+        public void Clear()
+        {
+            _schedules.Clear();
+        }
+
+        public void AddSchedule(SoundSchedule schedule)
+        {
+            _schedules.Add(schedule);
+
+        }
 
         public void Play(string filename, AudioParams? audioParams = null)
         {
