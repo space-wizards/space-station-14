@@ -140,9 +140,9 @@ namespace Content.Server.GameObjects.Components.Power
             switch (LightBulb.State)
             {
                 case LightBulbState.Normal:
+                    device.Load = Load;
                     if (device.Powered)
                     {
-                        device.Load = Load;
                         sprite.LayerSetState(0, "on");
                         light.State = LightState.On;
                         light.Color = LightBulb.Color;
@@ -156,7 +156,6 @@ namespace Content.Server.GameObjects.Components.Power
                     }
                     else
                     {
-                        device.Load = 0;
                         sprite.LayerSetState(0, "off");
                         light.State = LightState.Off;
                     }
