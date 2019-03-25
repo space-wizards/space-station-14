@@ -66,8 +66,6 @@ namespace Content.Server.GameObjects.Components.Power
             if (!user.TryGetComponent(out DamageableComponent damageableComponent)) return false;
             damageableComponent.TakeDamage(DamageType.Heat, 20);
             return true;
-
-            return false;
         }
 
         /// <summary>
@@ -151,6 +149,7 @@ namespace Content.Server.GameObjects.Components.Power
                         var time = IoCManager.Resolve<IGameTiming>().CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
+                            _lastThunk = time;
                             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
                                 .Play("/Audio/machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
                         }
