@@ -292,24 +292,32 @@ entities:
     pos: -2.890625,-4.484375
     rot: -1.570796 rad
     type: Transform
+  - containers:
+      ballistics_chamber_0:
+        entities:
+        - 221
+        type: Content.Server.GameObjects.ContainerSlot
+      ballistic_gun_magazine:
+        entities:
+        - 201
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: smg_c20r
   components:
   - grid: 0
     pos: -1.984375,-4.484375
     rot: -1.570796 rad
     type: Transform
-- type: Ointment
-  components:
-  - grid: 0
-    pos: 0.779375,-3.7521875
-    rot: -1.570796 rad
-    type: Transform
-- type: Brutepack
-  components:
-  - grid: 0
-    pos: 1.509375,-3.7521875
-    rot: -1.570796 rad
-    type: Transform
+  - containers:
+      ballistics_chamber_0:
+        entities:
+        - 242
+        type: Content.Server.GameObjects.ContainerSlot
+      ballistic_gun_magazine:
+        entities:
+        - 222
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: Medkit
   components:
   - grid: 0
@@ -337,7 +345,7 @@ entities:
   - containers:
       flashlight_cell_container:
         entities:
-        - 184
+        - 182
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: IDCardStandard
@@ -774,13 +782,15 @@ entities:
     pos: -2.5,-12.5
     rot: -1.570796 rad
     type: Transform
+  - charge: 996.6667
+    type: PowerStorage
 - type: SMES
   components:
   - grid: 0
     pos: 1.5,-12.5
     rot: -1.570796 rad
     type: Transform
-  - charge: 438.3279
+  - charge: 431.6613
     type: PowerStorage
 - type: BlueWire
   components:
@@ -950,46 +960,42 @@ entities:
     pos: 4.5,-9.5
     rot: -1.570796 rad
     type: Transform
-- type: poweredsmalllight
-  components:
-  - grid: 0
-    pos: -4,-7
-    rot: 1.5707963267949 rad
-    type: Transform
-- type: poweredsmalllight
-  components:
-  - grid: 0
-    pos: 3,-7
-    rot: 1.5707963267949 rad
-    type: Transform
 - type: poweredlight
   components:
   - grid: 0
     pos: 3,-13
     rot: 1.5707963267949 rad
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 243
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: poweredlight
   components:
   - grid: 0
     pos: -4,-13
     rot: 1.5707963267949 rad
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 244
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: APC
   components:
   - grid: 0
     pos: -4,-7
     rot: -1.570796 rad
     type: Transform
-  - load: 50
-    type: PowerProvider
 - type: APC
   components:
   - grid: 0
     pos: 3,-7
     rot: -1.570796 rad
     type: Transform
-  - load: 50
-    type: PowerProvider
 - type: Wire
   components:
   - grid: 0
@@ -1007,28 +1013,70 @@ entities:
   - grid: 0
     pos: -6,-2
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 245
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
 - type: poweredlight
   components:
   - grid: 0
     pos: 5,-2
     rot: 3.14159265358979 rad
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 246
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
 - type: poweredlight
   components:
   - grid: 0
     pos: 2,-4
     rot: 3.14159265358979 rad
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 247
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
 - type: poweredlight
   components:
   - grid: 0
     pos: -3,-4
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 248
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
 - type: APC
   components:
   - grid: 0
     pos: -4,-3
     type: Transform
+  - load: 80
+    type: PowerProvider
 - type: Wire
   components:
   - grid: 0
@@ -1039,6 +1087,8 @@ entities:
   - grid: 0
     pos: 3,-3
     type: Transform
+  - load: 80
+    type: PowerProvider
 - type: Wire
   components:
   - grid: 0
@@ -1050,35 +1100,95 @@ entities:
     pos: -10.5,1.5
     rot: 1.5707963267949 rad
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 249
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
 - type: poweredlight
   components:
   - grid: 0
     pos: -10.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 250
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
 - type: poweredlight
   components:
   - grid: 0
     pos: 9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 251
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
 - type: poweredlight
   components:
   - grid: 0
     pos: 9.5,1.5
     rot: 1.5707963267949 rad
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 252
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
 - type: poweredlight
   components:
   - grid: 0
     pos: -6,6
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 253
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
 - type: poweredlight
   components:
   - grid: 0
     pos: 5,6
     rot: 3.14159265358979 rad
     type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 254
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
 - type: Wire
   components:
   - grid: 0
@@ -1133,7 +1243,7 @@ entities:
     pos: -6,6
     rot: -1.570796 rad
     type: Transform
-  - load: 150
+  - load: 120
     type: PowerProvider
 - type: APC
   components:
@@ -1141,7 +1251,7 @@ entities:
     pos: 5,6
     rot: -1.570796 rad
     type: Transform
-  - load: 150
+  - load: 120
     type: PowerProvider
 - type: Wire
   components:
@@ -1279,5 +1389,409 @@ entities:
   - grid: 0
     pos: -1.5,2.5
     rot: -1.5707963267949 rad
+    type: Transform
+- type: magazine_12mm_filled
+  components:
+  - parent: 44
+    grid: 0
+    type: Transform
+  - containers:
+      magazine_bullet_container:
+        entities:
+        - 202
+        - 203
+        - 204
+        - 205
+        - 206
+        - 207
+        - 208
+        - 209
+        - 210
+        - 211
+        - 212
+        - 213
+        - 214
+        - 215
+        - 216
+        - 217
+        - 218
+        - 219
+        - 220
+        type: SS14.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 201
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 44
+    grid: 0
+    type: Transform
+- type: magazine_12mm_filled
+  components:
+  - parent: 45
+    grid: 0
+    type: Transform
+  - containers:
+      magazine_bullet_container:
+        entities:
+        - 223
+        - 224
+        - 225
+        - 226
+        - 227
+        - 228
+        - 229
+        - 230
+        - 231
+        - 232
+        - 233
+        - 234
+        - 235
+        - 236
+        - 237
+        - 238
+        - 239
+        - 240
+        - 241
+        type: SS14.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 222
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 45
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 148
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 149
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 154
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 155
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 156
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 157
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 162
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 163
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 164
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 165
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 166
+    grid: 0
+    type: Transform
+- type: LightTube
+  components:
+  - parent: 167
+    grid: 0
+    type: Transform
+- type: Ointment
+  components:
+  - grid: 0
+    pos: -0.2548907,-3.790073
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Ointment
+  components:
+  - grid: 0
+    pos: 0.07323429,-3.711948
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Brutepack
+  components:
+  - grid: 0
+    pos: 0.1826093,-4.305698
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Brutepack
+  components:
+  - grid: 0
+    pos: 0.3857343,-3.961948
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: LightTube
+  components:
+  - grid: 0
+    pos: 1.897601,-6.964574
+    rot: -1.5707963267949 rad
+    type: Transform
+  - color: '#FF0000FF'
+    type: Sprite
+  - color: '#FF0000FF'
+    type: LightBulb
+- type: LightTube
+  components:
+  - grid: 0
+    pos: 2.163226,-7.027074
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: LightBulb
+  components:
+  - grid: 0
+    pos: 1.975726,-7.652074
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: LightBulb
+  components:
+  - grid: 0
+    pos: 2.288226,-7.683324
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: poweredsmalllight
+  components:
+  - grid: 0
+    pos: -4,-7
+    rot: 1.5707963267949 rad
+    type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 264
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: LightBulb
+  components:
+  - parent: 263
+    grid: 0
+    type: Transform
+- type: poweredsmalllight
+  components:
+  - grid: 0
+    pos: 3,-7
+    rot: 1.5707963267949 rad
+    type: Transform
+  - containers:
+      light_bulb:
+        entities:
+        - 266
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: LightBulb
+  components:
+  - parent: 265
+    grid: 0
     type: Transform
 ...
