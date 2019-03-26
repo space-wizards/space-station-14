@@ -6,7 +6,6 @@
   - type: Sprite
     netsync: false
     sprite: Buildings/table_solid.rsi
-    state: plain_preview
 
   - type: Icon
     sprite: Buildings/table_solid.rsi
