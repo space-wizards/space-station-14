@@ -2,3 +2,8 @@
   name: Plating
   texture: plating
   id: 2
+
+- type: tile
+  name: Underplating
+  texture: underplating
+  id: 3
