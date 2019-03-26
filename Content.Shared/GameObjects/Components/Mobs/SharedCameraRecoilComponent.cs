@@ -9,7 +9,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         public sealed override string Name => "CameraRecoil";
 
-        public override uint? NetID => ContentNetIDs.CAMERA_RECOIL;
+        public override uint? NetID => ContentNetIDs.MOB_TRANSFORM;
 
         public abstract void Kick(Vector2 recoil);
 

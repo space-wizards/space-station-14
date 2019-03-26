@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Shared", "Content.Shared\Content.Shared.csproj", "{26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0529F740-0000-0000-0000-000000000000} = {0529F740-0000-0000-0000-000000000000}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SS14.Shared", "engine\SS14.Shared\SS14.Shared.csproj", "{0529F740-0000-0000-0000-000000000000}"
 EndProject
@@ -22,11 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Server", "Content.S
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Client", "Content.Client\Content.Client.csproj", "{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0529F740-0000-0000-0000-000000000000} = {0529F740-0000-0000-0000-000000000000}
-		{26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5} = {26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5}
-		{83429BD6-6358-4B18-BE51-401DF8EA2673} = {83429BD6-6358-4B18-BE51-401DF8EA2673}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lidgren.Network", "engine\Lidgren.Network\Lidgren.Network.csproj", "{59250BAF-0000-0000-0000-000000000000}"
 EndProject

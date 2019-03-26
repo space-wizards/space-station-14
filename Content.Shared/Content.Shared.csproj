@@ -87,6 +87,7 @@
     <Compile Include="GameObjects\Components\Items\SharedHandsComponent.cs" />
     <Compile Include="GameObjects\Components\Power\SharedPowerDebugTool.cs" />
     <Compile Include="Maths\PhysicalConstants.cs" />
+    <Compile Include="GameObjects\Components\Mobs\SharedSpeciesComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\engine\Lidgren.Network\Lidgren.Network.csproj">

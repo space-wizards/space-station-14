@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Mobs;
 using SS14.Server.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Maths;
@@ -9,10 +10,10 @@ namespace Content.Server.GameObjects
     /// Defines the blocking effect of each damage state, and what effects to apply upon entering or exiting the state
     /// </summary>
     public interface DamageState : IActionBlocker
-    {
-        void EnterState(IEntity entity);
+    { 
+        void EnterState(IEntity entity, AppearanceComponent appearance);
 
-        void ExitState(IEntity entity);
+        void ExitState(IEntity entity, AppearanceComponent appearance);
     }
 
     /// <summary>
@@ -20,9 +21,9 @@ namespace Content.Server.GameObjects
     /// </summary>
     public struct NormalState : DamageState
     {
-        public void EnterState(IEntity entity){}
+        public void EnterState(IEntity entity, AppearanceComponent appearance) {}
 
-        public void ExitState(IEntity entity){}
+        public void ExitState(IEntity entity, AppearanceComponent appearance) {}
 
         bool IActionBlocker.CanInteract()
         {
@@ -45,9 +46,9 @@ namespace Content.Server.GameObjects
     /// </summary>
     public struct CriticalState : DamageState
     {
-        public void EnterState(IEntity entity) { }
+        public void EnterState(IEntity entity, AppearanceComponent appearance) { }
 
-        public void ExitState(IEntity entity) { }
+        public void ExitState(IEntity entity, AppearanceComponent appearance) { }
 
         bool IActionBlocker.CanInteract()
         {
@@ -70,20 +71,16 @@ namespace Content.Server.GameObjects
     /// </summary>
     public struct DeadState : DamageState
     {
-        public void EnterState(IEntity entity)
+        public void EnterState(IEntity entity, AppearanceComponent appearance)
         {
-            if(entity.TryGetComponent(out SpriteComponent sprite))
-            {
-                sprite.Rotation = sprite.Rotation + Angle.FromDegrees(90);
-            }
+            var newstate = SpeciesComponent.MobState.Down;
+            appearance.SetData(SpeciesComponent.MobVisuals.RotationState, newstate);
         }
 
-        public void ExitState(IEntity entity)
+        public void ExitState(IEntity entity, AppearanceComponent appearance)
         {
-            if (entity.TryGetComponent(out SpriteComponent sprite))
-            {
-                sprite.Rotation = sprite.Rotation - Angle.FromDegrees(90);
-            }
+            var newstate = SpeciesComponent.MobState.Stand;
+            appearance.SetData(SpeciesComponent.MobVisuals.RotationState, newstate);
         }
 
         bool IActionBlocker.CanInteract()
