@@ -14,5 +14,6 @@
         public const uint SPECIES = 1009;
         public const uint RANGED_WEAPON = 1010;
         public const uint CAMERA_RECOIL = 1011;
+        public const uint SOUND = 1012;
     }
 }
