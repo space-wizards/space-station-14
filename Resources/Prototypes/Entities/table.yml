@@ -1,16 +1,23 @@
 - type: entity
   id: table
-  name: "[engine] worktop"
+  name: "worktop"
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/worktop_single.png
+    netsync: false
+    sprite: Buildings/table_solid.rsi
+    state: plain_preview
 
   - type: Icon
-    texture: Objects/worktop_single.png
+    sprite: Buildings/table_solid.rsi
+    state: plain_preview
 
   - type: BoundingBox
-    aabb: "-0.45,-1,0.95,1"
-    DebugColor: "#0000FF"
-
   - type: Collidable
+
+  - type: SnapGrid
+    offset: Center
+
+  - type: IconSmooth
+    key: tables
+    base: solid_
