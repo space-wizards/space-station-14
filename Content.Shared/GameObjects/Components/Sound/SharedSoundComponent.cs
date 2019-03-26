@@ -81,9 +81,8 @@ namespace Content.Shared.GameObjects.Components.Sound
         public uint Delay = 0;
 
         /// <summary>
-        /// Maximum number of milliseconds to add or subtract
-        /// from the delay randomly. Useful for random ambience noises.
-        /// Generated value might differ from client to client.
+        /// Maximum number of milliseconds to add from the delay randomly.
+        /// Useful for random ambience noises. Generated value might differ from client to client.
         /// </summary>
         public uint RandomDelay = 0;
 

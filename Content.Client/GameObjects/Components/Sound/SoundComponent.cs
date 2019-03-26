@@ -7,7 +7,6 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.Interfaces.Timers;
 using SS14.Shared.IoC;
-using SS14.Shared.Log;
 using SS14.Shared.Timers;
 
 namespace Content.Client.GameObjects.Components.Sound
@@ -48,8 +47,7 @@ namespace Content.Client.GameObjects.Components.Sound
         {
             if (!schedule.Play) return;
 
-            Timer.Delay((int) schedule.Delay + Random.Next((int) schedule.RandomDelay))
-                .ContinueWith((task) =>
+            Timer.Spawn((int) schedule.Delay + (Random.Next((int) schedule.RandomDelay)),() =>
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
                     if (_audioSystem == null) IoCManager.Resolve<IEntitySystemManager>().TryGetEntitySystem(out _audioSystem);
@@ -65,18 +63,18 @@ namespace Content.Client.GameObjects.Components.Sound
                             _audioSystem?.Play(schedule.Filename, schedule.SoundPosition, schedule.AudioParams);
                             break;
                     }
+
+                    if (schedule.Times == 0)
+                    {
+                        _schedules.Remove(schedule);
+                        return;
+                    }
+
+                    if (schedule.Times > 0)
+                        schedule.Times--;
+
+                    Play(schedule);
                 });
-
-            if (schedule.Times == 0)
-            {
-                _schedules.Remove(schedule);
-                return;
-            }
-
-            if (schedule.Times > 0)
-                schedule.Times--;
-
-            Play(schedule);
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
