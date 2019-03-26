@@ -7,9 +7,10 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.Interfaces.Timers;
 using SS14.Shared.IoC;
+using SS14.Shared.Log;
 using SS14.Shared.Timers;
 
-namespace Content.Client.GameObjects.Sound
+namespace Content.Client.GameObjects.Components.Sound
 {
     public class SoundComponent : SharedSoundComponent
     {
@@ -51,17 +52,17 @@ namespace Content.Client.GameObjects.Sound
                 .ContinueWith((task) =>
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
-
+                    if (_audioSystem == null) IoCManager.Resolve<IEntitySystemManager>().TryGetEntitySystem(out _audioSystem);
                     switch (schedule.SoundType)
                     {
                         case SoundType.Normal:
-                            _audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams);
+                            _audioSystem?.Play(schedule.Filename, Owner, schedule.AudioParams);
                             break;
                         case SoundType.Global:
-                            _audioSystem.Play(schedule.Filename, schedule.AudioParams);
+                            _audioSystem?.Play(schedule.Filename, schedule.AudioParams);
                             break;
                         case SoundType.Positional:
-                            _audioSystem.Play(schedule.Filename, schedule.SoundPosition, schedule.AudioParams);
+                            _audioSystem?.Play(schedule.Filename, schedule.SoundPosition, schedule.AudioParams);
                             break;
                     }
                 });
@@ -81,6 +82,7 @@ namespace Content.Client.GameObjects.Sound
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
+            Logger.Info(message.GetType().ToString());
             switch (message)
             {
                 case SoundScheduleMessage msg:
@@ -102,7 +104,7 @@ namespace Content.Client.GameObjects.Sound
             base.Initialize();
             Random = new Random();
             _timerManager = IoCManager.Resolve<ITimerManager>();
-            _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            IoCManager.Resolve<IEntitySystemManager>().TryGetEntitySystem(out _audioSystem);
         }
     }
 }

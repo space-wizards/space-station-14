@@ -15,8 +15,11 @@ namespace Content.Shared.GameObjects.Components.Sound
     {
         public override string Name => "Sound";
         public override uint? NetID => ContentNetIDs.SOUND;
+
+        public override bool NetworkSynchronizeExistence => true;
     }
 
+    [NetSerializable, Serializable]
     public class SoundScheduleMessage : ComponentMessage
     {
         public SoundSchedule Schedule;
@@ -26,6 +29,7 @@ namespace Content.Shared.GameObjects.Components.Sound
         }
     }
 
+    [NetSerializable, Serializable]
     public class StopSoundScheduleMessage : ComponentMessage
     {
         public string Filename;
@@ -35,6 +39,7 @@ namespace Content.Shared.GameObjects.Components.Sound
         }
     }
 
+    [NetSerializable, Serializable]
     public class StopAllSoundsMessage : ComponentMessage
     {
         public StopAllSoundsMessage()
