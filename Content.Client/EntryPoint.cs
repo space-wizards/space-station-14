@@ -31,6 +31,7 @@ using Content.Client.GameObjects.Components.Research;
 using Content.Client.GameObjects.Components.Sound;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -115,6 +116,7 @@ namespace Content.Client
             factory.Register<ClothingComponent>();
             factory.Register<ItemComponent>();
             factory.Register<MaterialComponent>();
+            factory.Register<SolutionComponent>();
             factory.Register<SoundComponent>();
             factory.Register<MaterialStorageComponent>();
             factory.RegisterReference<MaterialStorageComponent, SharedMaterialStorageComponent>();
