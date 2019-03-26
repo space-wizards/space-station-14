@@ -113,7 +113,7 @@ namespace Content.Shared.GameObjects
         // This works for now though.
         public static IEnumerable<(IComponent, Verb)> GetVerbs(IEntity entity)
         {
-            foreach (var component in entity.GetAllComponents())
+            foreach (var component in entity.GetComponentInstances())
             {
                 var type = component.GetType();
                 foreach (var nestedType in type.GetNestedTypes())
