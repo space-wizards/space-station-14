@@ -46,9 +46,21 @@ namespace Content.Server.GameObjects
     /// </summary>
     public struct CriticalState : DamageState
     {
-        public void EnterState(IEntity entity, AppearanceComponent appearance) { }
+        public void EnterState(IEntity entity, AppearanceComponent appearance) {
+            if (!entity.TryGetComponent<PlayerInputMoverComponent>(out var mover))
+            {
+                return;
+            }
+            mover.Disabled = true;
+        }
 
-        public void ExitState(IEntity entity, AppearanceComponent appearance) { }
+        public void ExitState(IEntity entity, AppearanceComponent appearance) {
+            if (!entity.TryGetComponent<PlayerInputMoverComponent>(out var mover))
+            {
+                return;
+            }
+            mover.Disabled = false;
+        }
 
         bool IActionBlocker.CanInteract()
         {
@@ -75,12 +87,22 @@ namespace Content.Server.GameObjects
         {
             var newstate = SpeciesComponent.MobState.Down;
             appearance.SetData(SpeciesComponent.MobVisuals.RotationState, newstate);
+            if (!entity.TryGetComponent<PlayerInputMoverComponent>(out var mover))
+            {
+                return;
+            }
+            mover.Disabled = true;
         }
 
         public void ExitState(IEntity entity, AppearanceComponent appearance)
         {
             var newstate = SpeciesComponent.MobState.Stand;
             appearance.SetData(SpeciesComponent.MobVisuals.RotationState, newstate);
+            if (!entity.TryGetComponent<PlayerInputMoverComponent>(out var mover))
+            {
+                return;
+            }
+            mover.Disabled = false;
         }
 
         bool IActionBlocker.CanInteract()
