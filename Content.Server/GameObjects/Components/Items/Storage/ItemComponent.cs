@@ -38,17 +38,25 @@ namespace Content.Server.GameObjects
         {
             protected override string GetText(IEntity user, ItemComponent component)
             {
+                if (user.TryGetComponent(out HandsComponent hands) && hands.IsHolding(component.Owner))
+                {
+                    return "Pick Up (Already Holding)";
+                }
                 return "Pick Up";
             }
 
             protected override bool IsDisabled(IEntity user, ItemComponent component)
             {
+                if (user.TryGetComponent(out HandsComponent hands) && hands.IsHolding(component.Owner))
+                {
+                    return true;
+                }
                 return false;
             }
 
             protected override void Activate(IEntity user, ItemComponent component)
             {
-                if (user.TryGetComponent(out HandsComponent hands))
+                if (user.TryGetComponent(out HandsComponent hands) && !hands.IsHolding(component.Owner))
                 {
                     hands.PutInHand(component);
                 }

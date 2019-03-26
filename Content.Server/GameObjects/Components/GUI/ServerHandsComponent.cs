@@ -75,6 +75,18 @@ namespace Content.Server.GameObjects
             }
         }
 
+        public bool IsHolding(IEntity entity)
+        {
+            foreach (var slot in hands.Values)
+            {
+                if (slot.ContainedEntity == entity)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <inheritdoc />
         public void RemoveHandEntity(IEntity entity)
         {
