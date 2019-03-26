@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.Sound
 {
     public class SoundComponent : SharedSoundComponent
     {
-        private List<SoundSchedule> _schedules = new List<SoundSchedule>();
+        private List<ScheduledSound> _schedules = new List<ScheduledSound>();
         private ITimerManager _timerManager;
         private AudioSystem _audioSystem;
         public Random Random;
@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Sound
             _schedules.Clear();
         }
 
-        public void StopSoundSchedule(string filename)
+        public void StopScheduledSound(string filename)
         {
             foreach (var schedule in _schedules)
             {
@@ -37,13 +37,13 @@ namespace Content.Client.GameObjects.Components.Sound
             }
         }
 
-        public void AddSoundSchedule(SoundSchedule schedule)
+        public void AddScheduledSound(ScheduledSound schedule)
         {
             _schedules.Add(schedule);
             Play(schedule);
         }
 
-        public void Play(SoundSchedule schedule)
+        public void Play(ScheduledSound schedule)
         {
             if (!schedule.Play) return;
 
@@ -82,12 +82,12 @@ namespace Content.Client.GameObjects.Components.Sound
             base.HandleMessage(message, netChannel, component);
             switch (message)
             {
-                case SoundScheduleMessage msg:
-                    AddSoundSchedule(msg.Schedule);
+                case ScheduledSoundMessage msg:
+                    AddScheduledSound(msg.Schedule);
                     break;
 
                 case StopSoundScheduleMessage msg:
-                    StopSoundSchedule(msg.Filename);
+                    StopScheduledSound(msg.Filename);
                     break;
 
                 case StopAllSoundsMessage msg:

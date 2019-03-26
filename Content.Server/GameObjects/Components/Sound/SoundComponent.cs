@@ -19,9 +19,9 @@ namespace Content.Server.GameObjects.Components.Sound
             SendNetworkMessage(new StopSoundScheduleMessage(){Filename = filename}, channel);
         }
 
-        public void AddSoundSchedule(SoundSchedule schedule, INetChannel channel = null)
+        public void AddSoundSchedule(ScheduledSound schedule, INetChannel channel = null)
         {
-            SendNetworkMessage(new SoundScheduleMessage() { Schedule = schedule}, channel);
+            SendNetworkMessage(new ScheduledSoundMessage() { Schedule = schedule}, channel);
         }
 
         public override void Initialize()
