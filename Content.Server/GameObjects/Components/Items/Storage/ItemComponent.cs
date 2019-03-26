@@ -1,6 +1,6 @@
 ﻿using Content.Server.Interfaces.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
-using System;
+using Content.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects
@@ -31,6 +31,28 @@ namespace Content.Server.GameObjects
             var hands = user.GetComponent<IHandsComponent>();
             hands.PutInHand(this, hands.ActiveIndex, fallback: false);
             return true;
+        }
+
+        [Verb]
+        public sealed class PickUpVerb : Verb<ItemComponent>
+        {
+            protected override string GetText(IEntity user, ItemComponent component)
+            {
+                return "Pick Up";
+            }
+
+            protected override bool IsDisabled(IEntity user, ItemComponent component)
+            {
+                return false;
+            }
+
+            protected override void Activate(IEntity user, ItemComponent component)
+            {
+                if (user.TryGetComponent(out HandsComponent hands))
+                {
+                    hands.PutInHand(component);
+                }
+            }
         }
     }
 }
