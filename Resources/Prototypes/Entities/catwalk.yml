@@ -1,0 +1,20 @@
+- type: entity
+  id: catwalk
+  name: Catwalk
+  components:
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    netsync: false
+    sprite: Buildings/catwalk.rsi
+    drawdepth: FloorTiles
+  - type: Icon
+    sprite: Buildings/catwalk.rsi
+    state: catwalk_preview
+
+  - type: SnapGrid
+    offset: Center
+
+  - type: IconSmooth
+    key: catwalk
+    base: catwalk_

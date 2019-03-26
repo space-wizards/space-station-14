@@ -49,5 +49,12 @@ namespace Content.Server.GameObjects
         {
             ContainedEntity = null;
         }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            ContainedEntity?.Delete();
+        }
     }
 }
