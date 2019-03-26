@@ -11,7 +11,6 @@ namespace Content.Server.GameObjects.Components.Sound
         private IEntityNetworkManager _networkManager;
         public void StopAllSounds(INetChannel channel = null)
         {
-            Logger.Info("Sent stopall");
             SendNetworkMessage(new StopAllSoundsMessage(), channel);
         }
 
@@ -22,7 +21,6 @@ namespace Content.Server.GameObjects.Components.Sound
 
         public void AddSoundSchedule(SoundSchedule schedule, INetChannel channel = null)
         {
-            Logger.Info("Sent add");
             SendNetworkMessage(new SoundScheduleMessage() { Schedule = schedule}, channel);
         }
 

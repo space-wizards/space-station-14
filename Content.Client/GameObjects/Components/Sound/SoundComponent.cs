@@ -82,7 +82,6 @@ namespace Content.Client.GameObjects.Components.Sound
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
-            Logger.Info(message.GetType().ToString());
             switch (message)
             {
                 case SoundScheduleMessage msg:
