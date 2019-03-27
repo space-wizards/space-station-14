@@ -17,6 +17,45 @@ namespace Content.Shared.GameObjects.Components.Sound
     {
         public override string Name => "Sound";
         public override uint? NetID => ContentNetIDs.SOUND;
+
+        public virtual void StopAllSounds()
+        {}
+        public virtual void StopScheduledSound(string filename)
+        {}
+        public virtual void AddScheduledSound(ScheduledSound scheduledSound)
+        {}
+
+        public void Play(string filename, AudioParams? audioParams = null)
+        {
+            AddScheduledSound(new ScheduledSound()
+            {
+                Filename = filename,
+                AudioParams = audioParams,
+                SoundType = SoundType.Global
+            });
+        }
+
+        public void Play(string filename, IEntity entity, AudioParams? audioParams = null)
+        {
+            AddScheduledSound(new ScheduledSound()
+            {
+                Filename = filename,
+                AudioParams = audioParams,
+                SoundType = SoundType.Normal,
+                Entity = entity
+            });
+        }
+
+        public void Play(string filename, GridCoordinates coordinates, AudioParams? audioParams = null)
+        {
+            AddScheduledSound(new ScheduledSound()
+            {
+                Filename = filename,
+                AudioParams = audioParams,
+                SoundType = SoundType.Positional,
+                SoundPosition = coordinates
+            });
+        }
     }
 
     [NetSerializable, Serializable]

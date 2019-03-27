@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.Components.Sound
         private AudioSystem _audioSystem;
         private readonly Random Random = new Random();
 
-        public void StopAllSounds()
+        public override void StopAllSounds()
         {
             foreach (var schedule in _schedules)
             {
@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Sound
             _schedules.Clear();
         }
 
-        public void StopScheduledSound(string filename)
+        public override void StopScheduledSound(string filename)
         {
             foreach (var schedule in _schedules)
             {
@@ -38,7 +38,7 @@ namespace Content.Client.GameObjects.Components.Sound
             }
         }
 
-        public void AddScheduledSound(ScheduledSound schedule)
+        public override void AddScheduledSound(ScheduledSound schedule)
         {
             _schedules.Add(schedule);
             Play(schedule);
