@@ -16,6 +16,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Utility;
 using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Mobs;
 using SS14.Client.Graphics.Overlays;
 
 namespace Content.Client.GameObjects
@@ -23,12 +24,8 @@ namespace Content.Client.GameObjects
     /// <summary>
     /// A character UI component which shows the current damage state of the mob (living/dead)
     /// </summary>
-    public class SpeciesUI : Component, ICharacterUI
+    public class SpeciesUI : SharedSpeciesComponent, ICharacterUI
     {
-        public override string Name => "Species";
-
-        public override uint? NetID => ContentNetIDs.SPECIES;
-
         /// <summary>
         /// Holds the godot control for the species window 
         /// </summary>
