@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void _clickSound()
         {
-            Owner.GetComponent<SoundComponent>().Play("/Audio/machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            Owner.GetComponent<SoundComponent>().Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
         }
     }
 }

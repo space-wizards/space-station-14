@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Power
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            Owner.GetComponent<SoundComponent>().Play("/Audio/machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
+                            Owner.GetComponent<SoundComponent>().Play("/Audio/machines/light_tube_on.ogg", AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else

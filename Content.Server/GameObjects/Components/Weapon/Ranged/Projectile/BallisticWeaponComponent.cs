@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             {
                 if (_soundGunEmpty != null)
                 {
-                    Owner.GetComponent<SoundComponent>().Play(_soundGunEmpty, Owner);
+                    Owner.GetComponent<SoundComponent>().Play(_soundGunEmpty);
                 }
             }
             var chambered = GetChambered(0);

@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
             if (_magInSound != null)
             {
-                Owner.GetComponent<SoundComponent>().Play(_magInSound, Owner);
+                Owner.GetComponent<SoundComponent>().Play(_magInSound);
             }
 
             component.OnAmmoCountChanged += _magazineAmmoCountChanged;
@@ -142,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 entity.Transform.GridPosition = Owner.Transform.GridPosition;
                 if (_magOutSound != null)
                 {
-                    Owner.GetComponent<SoundComponent>().Play(_magOutSound, Owner);
+                    Owner.GetComponent<SoundComponent>().Play(_magOutSound);
                 }
 
                 _updateAppearance();
@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             entity.Transform.GridPosition = Owner.Transform.GridPosition;
             entity.Transform.LocalRotation = _bulletDropRandom.Pick(_randomBulletDirs).ToAngle();
             var effect = $"/Audio/items/weapons/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
-            Owner.GetComponent<SoundComponent>().Play(effect, entity, AudioParams.Default.WithVolume(-3));
+            Owner.GetComponent<SoundComponent>().Play(effect, AudioParams.Default.WithVolume(-3));
 
             if (Magazine != null)
             {
@@ -179,7 +179,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                     EjectMagazine();
                     if (_autoEjectSound != null)
                     {
-                        Owner.GetComponent<SoundComponent>().Play(_autoEjectSound, Owner, AudioParams.Default.WithVolume(-5));
+                        Owner.GetComponent<SoundComponent>().Play(_autoEjectSound, AudioParams.Default.WithVolume(-5));
                     }
                 }
             }

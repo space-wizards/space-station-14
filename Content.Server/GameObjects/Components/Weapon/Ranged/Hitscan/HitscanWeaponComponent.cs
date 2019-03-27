@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             };
             var mgr = IoCManager.Resolve<IEntitySystemManager>();
             mgr.GetEntitySystem<EffectSystem>().CreateParticle(message);
-            Owner.GetComponent<SoundComponent>().Play("/Audio/laser.ogg", Owner, AudioParams.Default.WithVolume(-5));
+            Owner.GetComponent<SoundComponent>().Play("/Audio/laser.ogg", AudioParams.Default.WithVolume(-5));
         }
     }
 }

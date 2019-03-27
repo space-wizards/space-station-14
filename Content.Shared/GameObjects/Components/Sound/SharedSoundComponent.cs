@@ -37,32 +37,17 @@ namespace Content.Shared.GameObjects.Components.Sound
         {}
 
         /// <summary>
-        ///     Play an audio file globally, without position.
+        ///     Play an audio file.
         /// </summary>
         /// <param name="filename">The resource path to the OGG Vorbis file to play.</param>
-        public void Play(string filename, AudioParams? audioParams = null)
+        /// <param name="isGlobal">Whether the audio should be played without position or following the entity.</param>
+        public void Play(string filename, AudioParams? audioParams = null, bool isGlobal = false)
         {
             AddScheduledSound(new ScheduledSound()
             {
                 Filename = filename,
                 AudioParams = audioParams,
-                SoundType = SoundType.Global
-            });
-        }
-
-        /// <summary>
-        ///     Play an audio file following an entity.
-        /// </summary>
-        /// <param name="filename">The resource path to the OGG Vorbis file to play.</param>
-        /// <param name="entity">The entity "emitting" the audio.</param>
-        public void Play(string filename, IEntity entity, AudioParams? audioParams = null)
-        {
-            AddScheduledSound(new ScheduledSound()
-            {
-                Filename = filename,
-                AudioParams = audioParams,
-                SoundType = SoundType.Entity,
-                EntityUid = entity.Uid
+                SoundType = isGlobal ? SoundType.Global : SoundType.Entity,
             });
         }
 
