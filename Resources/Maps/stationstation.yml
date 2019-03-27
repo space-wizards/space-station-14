@@ -877,16 +877,16 @@ entities:
     pos: 1.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: spawn_point_latejoin
   components:
   - grid: 0
-    pos: -7.5,6.5
+    pos: -1.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: spawn_point_latejoin
   components:
   - grid: 0
-    pos: -7.5,5.5
+    pos: 0.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
@@ -916,86 +916,91 @@ entities:
 - type: wall
   components:
   - grid: 0
-    pos: -7.5,7.5
+    pos: -7.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
+  components:
+  - parent: 379
+    grid: 0
+    type: Transform
+- type: spawn_point_latejoin
   components:
   - grid: 0
-    pos: 0.5,8.5
+    pos: -3.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: SecurityVestClothing
   components:
   - grid: 0
-    pos: -7.5,8.5
+    pos: 0.5223687,7.507263
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: HelmetSecurity
   components:
   - grid: 0
-    pos: -6.5,8.5
+    pos: -0.1807563,7.585388
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: locker_generic
   components:
   - grid: 0
-    pos: -5.5,8.5
+    pos: 1.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+  - containers:
+      storagebase:
+        entities: []
+        type: SS14.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: HelmetSecurity
   components:
   - grid: 0
-    pos: -1.5,8.5
+    pos: -0.7432563,7.601013
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: Medkit
   components:
   - grid: 0
-    pos: -4.5,8.5
+    pos: -3.209215,-1.486604
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: Medkit
   components:
   - grid: 0
-    pos: -3.5,8.5
+    pos: -4.146715,-1.408479
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: locker_generic
   components:
   - grid: 0
-    pos: -2.5,8.5
+    pos: 0.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+  - containers:
+      storagebase:
+        entities: []
+        type: SS14.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: -0.5,8.5
-    rot: -1.5707963267949 rad
+  - parent: 380
+    grid: 0
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: 4.5,-3.5
-    rot: -1.5707963267949 rad
+  - parent: 380
+    grid: 0
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: 4.5,-2.5
-    rot: -1.5707963267949 rad
+  - parent: 380
+    grid: 0
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: 4.5,-1.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 4.5,-0.5
-    rot: -1.5707963267949 rad
+  - parent: 380
+    grid: 0
     type: Transform
 - type: fire_extinguisher
   components:
@@ -1003,71 +1008,62 @@ entities:
     pos: -1.297692,-5.396082
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
+  components:
+  - parent: 380
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 380
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 380
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 380
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 380
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 380
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 380
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  components:
+  - parent: 380
+    grid: 0
+    type: Transform
+- type: spawn_point_latejoin
   components:
   - grid: 0
-    pos: 4.5,1.5
+    pos: -0.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: spawn_point_latejoin
   components:
   - grid: 0
-    pos: 4.5,2.5
+    pos: -5.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: 4.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 4.5,4.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 4.5,5.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 4.5,6.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 4.5,7.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 4.5,8.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -8.5,4.5
-    rot: 1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -9.5,4.5
-    rot: 1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: 1.5,8.5
-    rot: -1.5707963267949 rad
+  - parent: 380
+    grid: 0
     type: Transform
 - type: poweredsmalllight
   components:
@@ -1095,23 +1091,20 @@ entities:
   - parent: 169
     grid: 0
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: -5.5,1.5
-    rot: -1.5707963267949 rad
+  - parent: 380
+    grid: 0
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: -6.5,1.5
-    rot: -1.5707963267949 rad
+  - parent: 380
+    grid: 0
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: -7.5,1.5
-    rot: -1.5707963267949 rad
+  - parent: 380
+    grid: 0
     type: Transform
 - type: table
   components:
@@ -1233,53 +1226,35 @@ entities:
         - 190
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- type: wall
+- type: spawn_point_latejoin
   components:
   - grid: 0
-    pos: 1.5,0.5
-    rot: 1.5707963267949 rad
+    pos: -9.5,-5.5
+    rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: spawn_point_latejoin
   components:
   - grid: 0
-    pos: 1.5,1.5
-    rot: 1.5707963267949 rad
+    pos: -0.5,5.5
+    rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: spawn_point_latejoin
   components:
   - grid: 0
-    pos: 1.5,-3.5
-    rot: 1.5707963267949 rad
+    pos: -5.5,5.5
+    rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: spawn_point_latejoin
   components:
   - grid: 0
-    pos: 0.5,1.5
-    rot: 1.5707963267949 rad
+    pos: -0.5,-2.5
+    rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: spawn_point_latejoin
   components:
   - grid: 0
-    pos: -0.5,1.5
-    rot: 1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -7.5,4.5
-    rot: 1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -11.5,4.5
-    rot: 1.5707963267949 rad
-    type: Transform
-- type: wall
-  components:
-  - grid: 0
-    pos: -10.5,4.5
-    rot: 1.5707963267949 rad
+    pos: -5.5,-2.5
+    rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
   components:
@@ -1485,17 +1460,15 @@ entities:
     pos: -10.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: -10.5,1.5
-    rot: -1.5707963267949 rad
+  - parent: 380
+    grid: 0
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: -8.5,1.5
-    rot: -1.5707963267949 rad
+  - parent: 380
+    grid: 0
     type: Transform
 - type: airlock
   components:
@@ -1516,12 +1489,12 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 238
+        - 235
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightBulb
   components:
-  - parent: 237
+  - parent: 234
     grid: 0
     type: Transform
 - type: poweredlight
@@ -1537,12 +1510,12 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 240
+        - 237
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
   components:
-  - parent: 239
+  - parent: 236
     grid: 0
     type: Transform
 - type: poweredlight
@@ -1558,12 +1531,12 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 242
+        - 239
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
   components:
-  - parent: 241
+  - parent: 238
     grid: 0
     type: Transform
 - type: poweredlight
@@ -1578,12 +1551,12 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 244
+        - 241
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
   components:
-  - parent: 243
+  - parent: 240
     grid: 0
     type: Transform
 - type: poweredlight
@@ -1599,12 +1572,12 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 246
+        - 243
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
   components:
-  - parent: 245
+  - parent: 242
     grid: 0
     type: Transform
 - type: poweredlight
@@ -1620,12 +1593,12 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 248
+        - 245
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
   components:
-  - parent: 247
+  - parent: 244
     grid: 0
     type: Transform
 - type: APC
@@ -1813,12 +1786,12 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 278
+        - 275
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightBulb
   components:
-  - parent: 277
+  - parent: 274
     grid: 0
     type: Transform
 - type: APC
@@ -1866,12 +1839,12 @@ entities:
   - containers:
       flashlight_cell_container:
         entities:
-        - 284
+        - 281
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: PowerCellSmallHyper
   components:
-  - parent: 283
+  - parent: 280
     grid: 0
     type: Transform
 - type: FlashlightLantern
@@ -1883,19 +1856,18 @@ entities:
   - containers:
       flashlight_cell_container:
         entities:
-        - 286
+        - 283
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: PowerCellSmallHyper
   components:
-  - parent: 285
+  - parent: 282
     grid: 0
     type: Transform
-- type: wall
+- type: ammo_casing_12mm
   components:
-  - grid: 0
-    pos: 4.5,0.5
-    rot: 3.14159265358979 rad
+  - parent: 380
+    grid: 0
     type: Transform
 - type: Crowbar
   components:
@@ -1952,6 +1924,9 @@ entities:
   - containers:
       magazine_bullet_container:
         entities:
+        - 292
+        - 293
+        - 294
         - 295
         - 296
         - 297
@@ -1969,109 +1944,106 @@ entities:
         - 309
         - 310
         - 311
-        - 312
-        - 313
-        - 314
         type: SS14.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 294
+  - parent: 291
     grid: 0
     type: Transform
 - type: magazine_12mm_filled
@@ -2083,6 +2055,9 @@ entities:
   - containers:
       magazine_bullet_container:
         entities:
+        - 313
+        - 314
+        - 315
         - 316
         - 317
         - 318
@@ -2100,109 +2075,106 @@ entities:
         - 330
         - 331
         - 332
-        - 333
-        - 334
-        - 335
         type: SS14.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 315
+  - parent: 312
     grid: 0
     type: Transform
 - type: magazine_12mm_filled
@@ -2214,6 +2186,9 @@ entities:
   - containers:
       magazine_bullet_container:
         entities:
+        - 334
+        - 335
+        - 336
         - 337
         - 338
         - 339
@@ -2231,109 +2206,106 @@ entities:
         - 351
         - 352
         - 353
-        - 354
-        - 355
-        - 356
         type: SS14.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 336
+  - parent: 333
     grid: 0
     type: Transform
 - type: BackpackClothing
@@ -2373,21 +2345,24 @@ entities:
   - containers:
       ballistics_chamber_0:
         entities:
-        - 381
+        - 378
         type: Content.Server.GameObjects.ContainerSlot
       ballistic_gun_magazine:
         entities:
-        - 361
+        - 358
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: magazine_12mm_filled
   components:
-  - parent: 360
+  - parent: 357
     grid: 0
     type: Transform
   - containers:
       magazine_bullet_container:
         entities:
+        - 359
+        - 360
+        - 361
         - 362
         - 363
         - 364
@@ -2404,109 +2379,106 @@ entities:
         - 375
         - 376
         - 377
-        - 378
-        - 379
-        - 380
         type: SS14.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 361
+  - parent: 358
     grid: 0
     type: Transform
 - type: ammo_casing_12mm
   components:
-  - parent: 360
+  - parent: 357
     grid: 0
     type: Transform
 - type: smg_c20r
@@ -2518,259 +2490,286 @@ entities:
   - containers:
       ballistics_chamber_0:
         entities:
-        - 403
+        - 144
         type: Content.Server.GameObjects.ContainerSlot
       ballistic_gun_magazine:
         entities:
-        - 383
+        - 380
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: magazine_12mm_filled
   components:
-  - parent: 382
+  - parent: 379
     grid: 0
-    pos: 1.218644,0.5816917
     type: Transform
   - containers:
       magazine_bullet_container:
         entities:
-        - 384
-        - 385
-        - 386
-        - 387
-        - 388
-        - 389
-        - 390
-        - 391
-        - 392
-        - 393
-        - 394
-        - 395
-        - 396
-        - 397
-        - 398
-        - 399
-        - 400
-        - 401
-        - 402
+        - 231
+        - 232
+        - 174
+        - 173
+        - 172
+        - 153
+        - 154
+        - 155
+        - 156
+        - 284
+        - 158
+        - 159
+        - 160
+        - 161
+        - 162
+        - 163
+        - 164
+        - 165
+        - 168
         type: SS14.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 383
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  components:
-  - parent: 382
-    grid: 0
-    type: Transform
-- type: locker_generic
+- type: wall
   components:
   - grid: 0
-    pos: 0.5,-10.5
-    rot: -1.5707963267949 rad
-    type: Transform
-  - containers:
-      storagebase:
-        entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
-- type: locker_generic
-  components:
-  - grid: 0
-    pos: 1.5,-10.5
-    rot: -1.5707963267949 rad
-    type: Transform
-  - containers:
-      storagebase:
-        entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
-- type: Medkit
-  components:
-  - grid: 0
-    pos: -4.146715,-1.408479
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Medkit
-  components:
-  - grid: 0
-    pos: -3.209215,-1.486604
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: HelmetSecurity
-  components:
-  - grid: 0
-    pos: -0.7432563,7.601013
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: HelmetSecurity
-  components:
-  - grid: 0
-    pos: -0.1807563,7.585388
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: SecurityVestClothing
-  components:
-  - grid: 0
-    pos: 0.5223687,7.507263
+    pos: -10.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
   components:
   - grid: 0
-    pos: -7.5,-4.5
+    pos: -11.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: spawn_point_latejoin
+- type: wall
   components:
   - grid: 0
-    pos: -3.5,-8.5
+    pos: -10.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: spawn_point_latejoin
+- type: wall
   components:
   - grid: 0
-    pos: -1.5,-8.5
+    pos: -9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: spawn_point_latejoin
+- type: wall
   components:
   - grid: 0
-    pos: 0.5,-8.5
+    pos: -8.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: spawn_point_latejoin
+- type: wall
   components:
   - grid: 0
-    pos: -0.5,-2.5
+    pos: -7.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: spawn_point_latejoin
+- type: wall
   components:
   - grid: 0
-    pos: -5.5,-2.5
+    pos: -8.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: spawn_point_latejoin
+- type: wall
   components:
   - grid: 0
-    pos: -5.5,-0.5
+    pos: -5.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: spawn_point_latejoin
+- type: wall
   components:
   - grid: 0
-    pos: -0.5,-0.5
+    pos: -6.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: spawn_point_latejoin
+- type: wall
   components:
   - grid: 0
-    pos: -5.5,5.5
+    pos: -7.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: spawn_point_latejoin
+- type: wall
   components:
   - grid: 0
-    pos: -0.5,5.5
+    pos: -0.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: spawn_point_latejoin
+- type: wall
   components:
   - grid: 0
-    pos: -9.5,-5.5
+    pos: 0.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 1.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 1.5,0.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 1.5,-3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,-3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,-2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,-1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,-0.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,0.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,4.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,5.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,6.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,7.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 4.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 1.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: 0.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -0.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -1.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -2.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -3.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -4.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -5.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -6.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -7.5,8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -7.5,7.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -7.5,6.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  components:
+  - grid: 0
+    pos: -7.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 ...
