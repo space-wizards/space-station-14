@@ -4,18 +4,5 @@
   name: "Reagent Item"
   abstract: true
   components:
-  - type: reagent
-    volume: 5
-
-- type: entity
-  parent: ReagentItem
-  id: chem.Beaker
-  name: Beaker
-  description: This kills the wire.
-  components:
-  - type: Wirecutter
-  - type: Sprite
-    texture: Objects/wirecutter.png
-  - type: Icon
-    texture: Objects/wirecutter.png
-  - type: MeleeWeapon
+  - type: solution
+    maxVol: 5
