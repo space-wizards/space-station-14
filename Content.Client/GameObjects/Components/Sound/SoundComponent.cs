@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Sound
     {
         private readonly List<ScheduledSound> _schedules = new List<ScheduledSound>();
         private AudioSystem _audioSystem;
-        private readonly Random Random = new Random();
+        private Random Random;
 
         public override void StopAllSounds()
         {
@@ -47,6 +47,7 @@ namespace Content.Client.GameObjects.Components.Sound
         public void Play(ScheduledSound schedule)
         {
             if (!schedule.Play) return;
+            if (Random == null) Random = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
 
             Timer.Spawn((int) schedule.Delay + (Random.Next((int) schedule.RandomDelay)),() =>
                 {
