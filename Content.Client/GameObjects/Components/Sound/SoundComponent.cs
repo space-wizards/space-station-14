@@ -7,16 +7,17 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.Interfaces.Timers;
 using SS14.Shared.IoC;
+using SS14.Shared.Log;
+using SS14.Shared.Serialization;
 using SS14.Shared.Timers;
 
 namespace Content.Client.GameObjects.Components.Sound
 {
     public class SoundComponent : SharedSoundComponent
     {
-        private List<ScheduledSound> _schedules = new List<ScheduledSound>();
-        private ITimerManager _timerManager;
+        private readonly List<ScheduledSound> _schedules = new List<ScheduledSound>();
         private AudioSystem _audioSystem;
-        public Random Random;
+        private readonly Random Random = new Random();
 
         public void StopAllSounds()
         {
@@ -50,18 +51,20 @@ namespace Content.Client.GameObjects.Components.Sound
             Timer.Spawn((int) schedule.Delay + (Random.Next((int) schedule.RandomDelay)),() =>
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
-                    if (_audioSystem == null) IoCManager.Resolve<IEntitySystemManager>().TryGetEntitySystem(out _audioSystem);
+                    if (_audioSystem == null) _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
                     switch (schedule.SoundType)
                     {
                         case SoundType.Normal:
-                            _audioSystem?.Play(schedule.Filename, Owner, schedule.AudioParams);
+                            _audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams);
                             break;
                         case SoundType.Global:
-                            _audioSystem?.Play(schedule.Filename, schedule.AudioParams);
+                            _audioSystem.Play(schedule.Filename, schedule.AudioParams);
                             break;
                         case SoundType.Positional:
-                            _audioSystem?.Play(schedule.Filename, schedule.SoundPosition, schedule.AudioParams);
+                            _audioSystem.Play(schedule.Filename, schedule.SoundPosition, schedule.AudioParams);
                             break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
 
                     if (schedule.Times == 0)
@@ -99,9 +102,20 @@ namespace Content.Client.GameObjects.Components.Sound
         public override void Initialize()
         {
             base.Initialize();
-            Random = new Random();
-            _timerManager = IoCManager.Resolve<ITimerManager>();
             IoCManager.Resolve<IEntitySystemManager>().TryGetEntitySystem(out _audioSystem);
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            if (serializer.Writing) return;
+            serializer.TryReadDataField("schedules", out List<ScheduledSound> schedules);
+            if (schedules == null) return;
+            foreach (var schedule in schedules)
+            {
+                if (schedule == null) continue;
+                AddScheduledSound(schedule);
+            }
         }
     }
 }

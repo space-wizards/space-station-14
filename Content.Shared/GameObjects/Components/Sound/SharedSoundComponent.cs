@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Content.Shared.GameObjects;
 using SS14.Shared.Audio;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Interfaces.Serialization;
 using SS14.Shared.IoC;
 using SS14.Shared.Map;
 using SS14.Shared.Serialization;
@@ -15,8 +17,6 @@ namespace Content.Shared.GameObjects.Components.Sound
     {
         public override string Name => "Sound";
         public override uint? NetID => ContentNetIDs.SOUND;
-
-        public override bool NetworkSynchronizeExistence => true;
     }
 
     [NetSerializable, Serializable]
@@ -65,9 +65,9 @@ namespace Content.Shared.GameObjects.Components.Sound
     }
 
     [Serializable, NetSerializable]
-    public class ScheduledSound
+    public class ScheduledSound : IExposeData
     {
-        public string Filename;
+        public string Filename = "";
 
         /// <summary>
         /// The parameters to play the sound with.
@@ -81,8 +81,8 @@ namespace Content.Shared.GameObjects.Components.Sound
         public uint Delay = 0;
 
         /// <summary>
-        /// Maximum number of milliseconds to add from the delay randomly.
-        /// Useful for random ambience noises. Generated value might differ from client to client.
+        /// Maximum number of milliseconds to add to the delay randomly.
+        /// Useful for random ambience noises. Generated value differs from client to client.
         /// </summary>
         public uint RandomDelay = 0;
 
@@ -111,5 +111,16 @@ namespace Content.Shared.GameObjects.Components.Sound
         /// Whether the sound will play or not.
         /// </summary>
         public bool Play = true;
+
+        public void ExposeData(ObjectSerializer serializer)
+        {
+            Filename = serializer.ReadDataField("filename", "");
+            Delay = serializer.ReadDataField("delay", 0u);
+            RandomDelay = serializer.ReadDataField("randomdelay", 0u);
+            Times = serializer.ReadDataField("times", 0);
+            SoundType = serializer.ReadDataField<SoundType>("soundtype", SoundType.Normal);
+            SoundPosition = serializer.ReadDataField("soundposition", GridCoordinates.Nullspace);
+            AudioParams = serializer.ReadDataField("audioparams", SS14.Shared.Audio.AudioParams.Default);
+        }
     }
 }
