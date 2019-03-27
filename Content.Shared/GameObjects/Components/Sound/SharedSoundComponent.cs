@@ -62,7 +62,7 @@ namespace Content.Shared.GameObjects.Components.Sound
                 Filename = filename,
                 AudioParams = audioParams,
                 SoundType = SoundType.Normal,
-                Entity = entity
+                EntityUid = entity.Uid
             });
         }
 
@@ -176,7 +176,7 @@ namespace Content.Shared.GameObjects.Components.Sound
         /// entity the sound follows. If this is null,
         /// it will choose the SoundComponent's owner.
         /// </summary>
-        [NonSerialized] public IEntity Entity = null;
+        public EntityUid? EntityUid = null;
 
         /// <summary>
         /// Whether the sound will play or not.

@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Sound
                 Filename = filename,
                 AudioParams = audioParams,
                 SoundType = SoundType.Normal,
-                Entity = entity
+                EntityUid = entity.Uid
             }, channel);
         }
 
