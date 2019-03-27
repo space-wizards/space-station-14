@@ -55,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Sound
                     if (_audioSystem == null) _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
                     switch (schedule.SoundType)
                     {
-                        case SoundType.Normal:
+                        case SoundType.Entity:
                             _audioSystem.Play(schedule.Filename,
                                 schedule.EntityUid != null ? Owner.EntityManager.GetEntity((EntityUid) schedule.EntityUid)
                                     : Owner, schedule.AudioParams);

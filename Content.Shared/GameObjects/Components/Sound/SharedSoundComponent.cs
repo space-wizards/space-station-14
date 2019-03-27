@@ -61,7 +61,7 @@ namespace Content.Shared.GameObjects.Components.Sound
             {
                 Filename = filename,
                 AudioParams = audioParams,
-                SoundType = SoundType.Normal,
+                SoundType = SoundType.Entity,
                 EntityUid = entity.Uid
             });
         }
@@ -117,7 +117,7 @@ namespace Content.Shared.GameObjects.Components.Sound
         /// <summary>
         /// Sound follows the entity.
         /// </summary>
-        Normal,
+        Entity,
         /// <summary>
         /// Sound is played without position.
         /// </summary>
@@ -159,11 +159,11 @@ namespace Content.Shared.GameObjects.Components.Sound
 
         /// <summary>
         /// How to play the sound.
-        /// Normal plays the sound following the entity.
+        /// Entity plays the sound following the entity.
         /// Global plays the sound globally, without position.
         /// Positional plays the sound at a static position.
         /// </summary>
-        public SoundType SoundType = SoundType.Normal;
+        public SoundType SoundType = SoundType.Entity;
 
         /// <summary>
         /// If SoundType is Positional, this will be the
@@ -172,7 +172,7 @@ namespace Content.Shared.GameObjects.Components.Sound
         public GridCoordinates SoundPosition;
 
         /// <summary>
-        /// If SoundType is Normal, this will be the
+        /// If SoundType is Entity, this will be the
         /// entity the sound follows. If this is null,
         /// it will choose the SoundComponent's owner.
         /// </summary>
@@ -189,7 +189,7 @@ namespace Content.Shared.GameObjects.Components.Sound
             Delay = serializer.ReadDataField("delay", 0u);
             RandomDelay = serializer.ReadDataField("randomdelay", 0u);
             Times = serializer.ReadDataField("times", 0);
-            SoundType = serializer.ReadDataField<SoundType>("soundtype", SoundType.Normal);
+            SoundType = serializer.ReadDataField<SoundType>("soundtype", SoundType.Entity);
             SoundPosition = serializer.ReadDataField("soundposition", GridCoordinates.Nullspace);
             AudioParams = serializer.ReadDataField("audioparams", SS14.Shared.Audio.AudioParams.Default);
         }
