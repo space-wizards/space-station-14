@@ -176,7 +176,7 @@ namespace Content.Shared.GameObjects.Components.Sound
         /// entity the sound follows. If this is null,
         /// it will choose the SoundComponent's owner.
         /// </summary>
-        public IEntity Entity = null;
+        [NonSerialized] public IEntity Entity = null;
 
         /// <summary>
         /// Whether the sound will play or not.
