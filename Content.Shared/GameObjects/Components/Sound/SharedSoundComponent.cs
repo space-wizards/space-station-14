@@ -18,13 +18,28 @@ namespace Content.Shared.GameObjects.Components.Sound
         public override string Name => "Sound";
         public override uint? NetID => ContentNetIDs.SOUND;
 
+        /// <summary>
+        /// Stops all sounds.
+        /// </summary>
         public virtual void StopAllSounds()
         {}
+
+        /// <summary>
+        /// Stops a certain scheduled sound from playing.
+        /// </summary>
         public virtual void StopScheduledSound(string filename)
         {}
+
+        /// <summary>
+        /// Adds an scheduled sound to be played.
+        /// </summary>
         public virtual void AddScheduledSound(ScheduledSound scheduledSound)
         {}
 
+        /// <summary>
+        ///     Play an audio file globally, without position.
+        /// </summary>
+        /// <param name="filename">The resource path to the OGG Vorbis file to play.</param>
         public void Play(string filename, AudioParams? audioParams = null)
         {
             AddScheduledSound(new ScheduledSound()
@@ -35,6 +50,11 @@ namespace Content.Shared.GameObjects.Components.Sound
             });
         }
 
+        /// <summary>
+        ///     Play an audio file following an entity.
+        /// </summary>
+        /// <param name="filename">The resource path to the OGG Vorbis file to play.</param>
+        /// <param name="entity">The entity "emitting" the audio.</param>
         public void Play(string filename, IEntity entity, AudioParams? audioParams = null)
         {
             AddScheduledSound(new ScheduledSound()
@@ -46,6 +66,11 @@ namespace Content.Shared.GameObjects.Components.Sound
             });
         }
 
+        /// <summary>
+        ///     Play an audio file at a static position.
+        /// </summary>
+        /// <param name="filename">The resource path to the OGG Vorbis file to play.</param>
+        /// <param name="coordinates">The coordinates at which to play the audio.</param>
         public void Play(string filename, GridCoordinates coordinates, AudioParams? audioParams = null)
         {
             AddScheduledSound(new ScheduledSound()
