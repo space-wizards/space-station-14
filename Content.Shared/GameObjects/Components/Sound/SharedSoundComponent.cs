@@ -108,6 +108,13 @@ namespace Content.Shared.GameObjects.Components.Sound
         public GridCoordinates SoundPosition;
 
         /// <summary>
+        /// If SoundType is Normal, this will be the
+        /// entity the sound follows. If this is null,
+        /// it will choose the SoundComponent's owner.
+        /// </summary>
+        public IEntity Entity = null;
+
+        /// <summary>
         /// Whether the sound will play or not.
         /// </summary>
         public bool Play = true;
