@@ -56,9 +56,7 @@ namespace Content.Client.GameObjects.Components.Sound
                     switch (schedule.SoundType)
                     {
                         case SoundType.Entity:
-                            _audioSystem.Play(schedule.Filename,
-                                schedule.EntityUid != null ? Owner.EntityManager.GetEntity((EntityUid) schedule.EntityUid)
-                                    : Owner, schedule.AudioParams);
+                            _audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams);
                             break;
                         case SoundType.Global:
                             _audioSystem.Play(schedule.Filename, schedule.AudioParams);
