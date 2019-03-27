@@ -18,6 +18,7 @@
     Size: 24
     sprite: Objects/laser_retro.rsi
     prefix: 100
+  - type: Sound
 
 - type: entity
   name: Spear
