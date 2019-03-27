@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Sound
 
         public override void StopScheduledSound(string filename)
         {
-            foreach (var schedule in _schedules)
+            foreach (var schedule in _schedules.ToArray())
             {
                 if (schedule.Filename != filename) continue;
                 schedule.Play = false;
