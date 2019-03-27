@@ -60,6 +60,7 @@ using Content.Server.GameObjects.Components.Explosive;
 using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Triggers;
 using Content.Shared.GameObjects.Components.Movement;
+using SolutionComponent = Content.Server.GameObjects.Components.Chemistry.SolutionComponent;
 
 namespace Content.Server
 {

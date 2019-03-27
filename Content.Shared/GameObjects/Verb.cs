@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -116,7 +117,7 @@ namespace Content.Shared.GameObjects
             foreach (var component in entity.GetComponentInstances())
             {
                 var type = component.GetType();
-                foreach (var nestedType in type.GetNestedTypes())
+                foreach (var nestedType in type.GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static))
                 {
                     if (!typeof(Verb).IsAssignableFrom(nestedType) || nestedType.IsAbstract)
                     {
