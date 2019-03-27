@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Mobs;
 using SS14.Server.GameObjects;
 using SS14.Shared.ContentPack;
 using SS14.Shared.GameObjects;
@@ -12,12 +12,8 @@ using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
-    public class SpeciesComponent : Component, IActionBlocker, IOnDamageBehavior
+    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior
     {
-        public override string Name => "Species";
-
-        public override uint? NetID => ContentNetIDs.SPECIES;
-
         /// <summary>
         /// Damagestates are reached by reaching a certain damage threshold, they will block actions after being reached
         /// </summary>
@@ -33,10 +29,18 @@ namespace Content.Server.GameObjects
         /// </summary>
         private DamageTemplates DamageTemplate;
 
+        AppearanceComponent Appearance;
+
         /// <summary>
         /// Variable for serialization
         /// </summary>
         private string templatename;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            Appearance = Owner.GetComponent<AppearanceComponent>();
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -104,9 +108,9 @@ namespace Content.Server.GameObjects
                 return;
             }
 
-            CurrentDamageState.ExitState(Owner);
+            CurrentDamageState.ExitState(Owner, Appearance);
             CurrentDamageState = DamageTemplates.StateThresholdMap[threshold];
-            CurrentDamageState.EnterState(Owner);
+            CurrentDamageState.EnterState(Owner, Appearance);
 
             currentstate = threshold;
         }
