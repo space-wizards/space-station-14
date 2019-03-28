@@ -14,6 +14,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Serialization;
 using System.Collections.Generic;
+using Content.Shared.Interfaces;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.ViewVariables;
 
@@ -132,12 +133,16 @@ namespace Content.Server.GameObjects
                 return false;
             
             //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
-            if (hands.Drop(hands.ActiveIndex))
+            if (CanInsert(hands.GetActiveHand.Owner) &&  hands.Drop(hands.ActiveIndex))
             {
                 if (Insert(attackwith))
                 {
                     return true;
                 }
+            }
+            else
+            {
+                Owner.PopupMessage(user, "Can't insert.");
             }
             return false;
         }
