@@ -10,6 +10,9 @@
     texture: Objects/mop.png
   - type: Item
     Size: 10
+  - type: Solution
+    maxVol: 10
+    caps: 1
 
 - type: entity
   parent: ReagentItem
@@ -23,3 +26,21 @@
     texture: Objects/mopbucket.png
   - type: Clickable
   - type: BoundingBox
+  - type: Solution
+    maxVol: 500
+    caps: 3
+    
+- type: entity
+  parent: BaseItem
+  name: Bucket
+  id: Bucket
+  description: "It's a bucket."
+  components:
+  - type: Sprite
+    texture: Objects/bucket.png
+  - type: Icon
+    texture: Objects/bucket.png
+  - type: Solution
+    maxVol: 500
+    caps: 3
+    

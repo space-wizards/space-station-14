@@ -96,7 +96,7 @@ namespace Content.Server
             factory.Register<ServerDoorComponent>();
             factory.RegisterReference<ServerDoorComponent, IActivate>();
 
-            factory.Register<SolutionComponent>();
+            factory.Register<Content.Server.GameObjects.Components.Chemistry.SolutionComponent>();
 
             //Power Components
             factory.Register<PowerTransferComponent>();
