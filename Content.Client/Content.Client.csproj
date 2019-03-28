@@ -84,6 +84,7 @@
     <Compile Include="GameObjects\Components\Items\ItemComponent.cs" />
     <Compile Include="GameObjects\Components\Power\ApcBoundUserInterface.cs" />
     <Compile Include="GameObjects\Components\Power\PowerCellVisualizer2D.cs" />
+    <Compile Include="GameObjects\Components\Sound\SoundComponent.cs" />
     <Compile Include="GameObjects\Components\Storage\ClientStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\BallisticMagazineVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\BallisticMagazineWeaponVisualizer2D.cs" />

@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.Components.Sound;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.UserInterface;
@@ -118,8 +119,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void _clickSound()
         {
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
-                .Play("/Audio/machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            Owner.GetComponent<SoundComponent>().Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
         }
     }
 }

@@ -35,6 +35,7 @@ using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Markers;
+using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Ranged;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
@@ -107,6 +108,7 @@ namespace Content.Server
             factory.Register<MeleeWeaponComponent>();
 
             factory.Register<HealingComponent>();
+            factory.Register<SoundComponent>();
 
             factory.Register<HandheldLightComponent>();
 

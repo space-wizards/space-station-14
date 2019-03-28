@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Materials;
+using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
@@ -75,8 +76,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
             var entMgr = IoCManager.Resolve<IServerEntityManager>();
-            var AudioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-            AudioSystem.Play("/Audio/items/deconstruct.ogg", loc);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", loc);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.

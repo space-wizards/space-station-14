@@ -99,6 +99,7 @@
     <Compile Include="GameObjects\Components\Power\PowerTransferComponent.cs" />
     <Compile Include="GameObjects\Components\Projectiles\ProjectileComponent.cs" />
     <Compile Include="GameObjects\Components\Projectiles\ThrownItemComponent.cs" />
+    <Compile Include="GameObjects\Components\Sound\SoundComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Melee\MeleeWeaponComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\Hitscan\HitscanWeaponComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\BallisticBulletComponent.cs" />

@@ -1,4 +1,5 @@
 using System;
+using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
@@ -150,8 +151,7 @@ namespace Content.Server.GameObjects.Components.Power
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
-                                .Play("/Audio/machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
+                            Owner.GetComponent<SoundComponent>().Play("/Audio/machines/light_tube_on.ogg", AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else

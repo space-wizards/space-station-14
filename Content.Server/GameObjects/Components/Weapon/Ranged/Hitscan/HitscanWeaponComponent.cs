@@ -12,7 +12,8 @@ using SS14.Shared.Maths;
 using SS14.Shared.Physics;
 using SS14.Shared.Serialization;
 using System;
-using SS14.Shared.GameObjects;
+ using Content.Server.GameObjects.Components.Sound;
+ using SS14.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
@@ -81,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             };
             var mgr = IoCManager.Resolve<IEntitySystemManager>();
             mgr.GetEntitySystem<EffectSystem>().CreateParticle(message);
-            mgr.GetEntitySystem<AudioSystem>().Play("/Audio/laser.ogg", Owner, AudioParams.Default.WithVolume(-5));
+            Owner.GetComponent<SoundComponent>().Play("/Audio/laser.ogg", AudioParams.Default.WithVolume(-5));
         }
     }
 }

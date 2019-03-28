@@ -1,5 +1,6 @@
 using System;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects;
 using SS14.Server.Chat;
 using SS14.Server.GameObjects.Components.Container;
@@ -69,8 +70,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             {
                 if (_soundGunEmpty != null)
                 {
-                    var audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    audioSystem.Play(_soundGunEmpty, Owner);
+                    Owner.GetComponent<SoundComponent>().Play(_soundGunEmpty);
                 }
             }
             var chambered = GetChambered(0);

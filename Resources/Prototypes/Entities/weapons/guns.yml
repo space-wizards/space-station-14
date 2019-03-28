@@ -11,6 +11,7 @@
   - type: Icon
     sprite: Objects/c20r.rsi
     state: c20r-5
+  - type: Sound
   - type: RangedWeapon
     automatic: true
     firerate: 8

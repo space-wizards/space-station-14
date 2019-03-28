@@ -4,6 +4,7 @@
   components:
   - type: Clickable
   - type: BoundingBox
+  - type: Sound
   - type: Sprite
     sprite: Buildings/light_tube.rsi
     state: on

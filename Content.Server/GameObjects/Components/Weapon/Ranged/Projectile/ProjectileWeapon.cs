@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.GameObjects.Components.Sound;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.GameObjects;
@@ -90,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             projectile.Transform.LocalRotation = angle.Theta;
 
             // Sound!
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play("/Audio/gunshot_c20.ogg", user);
+            Owner.GetComponent<SoundComponent>().Play("/Audio/gunshot_c20.ogg");
         }
 
         /// <summary>

@@ -95,6 +95,7 @@
       type: ApcBoundUserInterface
   - type: BoundingBox
     aabb: -0.25, -0.25, 0.25, 0.3
+  - type: Sound
 
 - type: entity
   id: SMES
