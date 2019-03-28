@@ -6,12 +6,20 @@
   - type: Clickable
   - type: BoundingBox
   - type: Sprite
+    netsync: false
     drawdepth: BelowFloor
     color: Red
-    texture: Objects/eightdirwire.png
+    sprite: Objects/power_cable.rsi
+    state: cable_0
   - type: Icon
     texture: Objects/eightdirwire.png
   - type: PowerTransfer
+  - type: SnapGrid
+    offset: Center
+  - type: IconSmooth
+    base: cable_
+    key: power_cables
+    mode: CardinalFlags
 
   snap:
   - Wire

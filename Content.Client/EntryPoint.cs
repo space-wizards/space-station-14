@@ -3,7 +3,7 @@ using Content.Client.GameObjects.Components.Actor;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.GameObjects.Components.Power;
-using Content.Client.GameObjects.Components.SmoothWalling;
+using Content.Client.GameObjects.Components.IconSmoothing;
 using Content.Client.GameObjects.Components.Storage;
 using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Client.GameTicking;
