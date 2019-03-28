@@ -53,20 +53,7 @@ namespace Content.Client.GameObjects.Components.Sound
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
                     if (_audioSystem == null) _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    switch (schedule.SoundType)
-                    {
-                        case SoundType.Entity:
-                            _audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams);
-                            break;
-                        case SoundType.Global:
-                            _audioSystem.Play(schedule.Filename, schedule.AudioParams);
-                            break;
-                        case SoundType.Positional:
-                            _audioSystem.Play(schedule.Filename, schedule.SoundPosition, schedule.AudioParams);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                    _audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams);
 
                     if (schedule.Times == 0)
                     {

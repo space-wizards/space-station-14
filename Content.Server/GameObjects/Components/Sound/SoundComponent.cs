@@ -56,34 +56,16 @@ namespace Content.Server.GameObjects.Components.Sound
         }
 
         /// <summary>
-        ///     Play an audio file.
+        ///     Play an audio file following the entity.
         /// </summary>
         /// <param name="filename">The resource path to the OGG Vorbis file to play.</param>
-        /// <param name="isGlobal">Whether the audio should be played without position or following the entity.</param>
-        public void Play(string filename, AudioParams? audioParams = null, bool isGlobal = false, INetChannel channel = null)
-        {
-            AddScheduledSound(new ScheduledSound()
-            {
-                Filename = filename,
-                AudioParams = audioParams,
-                SoundType = isGlobal ? SoundType.Global : SoundType.Entity,
-            }, channel);
-        }
-
-        /// <summary>
-        ///     Play an audio file at a static position.
-        /// </summary>
-        /// <param name="filename">The resource path to the OGG Vorbis file to play.</param>
-        /// <param name="coordinates">The coordinates at which to play the audio.</param>
         /// <param name="channel">User that will be affected.</param>
-        public void Play(string filename, GridCoordinates coordinates, AudioParams? audioParams = null, INetChannel channel = null)
+        public void Play(string filename, AudioParams? audioParams = null, INetChannel channel = null)
         {
             AddScheduledSound(new ScheduledSound()
             {
                 Filename = filename,
                 AudioParams = audioParams,
-                SoundType = SoundType.Positional,
-                SoundPosition = coordinates
             }, channel);
         }
     }

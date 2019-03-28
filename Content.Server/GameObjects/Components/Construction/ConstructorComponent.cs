@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
             var entMgr = IoCManager.Resolve<IServerEntityManager>();
-            Owner.GetComponent<SoundComponent>().Play("/Audio/items/deconstruct.ogg", loc);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", loc);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.

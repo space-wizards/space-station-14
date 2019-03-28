@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         bool TryProcessStep(ConstructionStep step, IEntity slapped)
         {
-            var sound = Owner.GetComponent<SoundComponent>();
+            var sound = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
 
             switch (step)
             {

@@ -37,33 +37,15 @@ namespace Content.Shared.GameObjects.Components.Sound
         {}
 
         /// <summary>
-        ///     Play an audio file.
+        ///     Play an audio file following the entity.
         /// </summary>
         /// <param name="filename">The resource path to the OGG Vorbis file to play.</param>
-        /// <param name="isGlobal">Whether the audio should be played without position or following the entity.</param>
-        public void Play(string filename, AudioParams? audioParams = null, bool isGlobal = false)
+        public void Play(string filename, AudioParams? audioParams = null)
         {
             AddScheduledSound(new ScheduledSound()
             {
                 Filename = filename,
                 AudioParams = audioParams,
-                SoundType = isGlobal ? SoundType.Global : SoundType.Entity,
-            });
-        }
-
-        /// <summary>
-        ///     Play an audio file at a static position.
-        /// </summary>
-        /// <param name="filename">The resource path to the OGG Vorbis file to play.</param>
-        /// <param name="coordinates">The coordinates at which to play the audio.</param>
-        public void Play(string filename, GridCoordinates coordinates, AudioParams? audioParams = null)
-        {
-            AddScheduledSound(new ScheduledSound()
-            {
-                Filename = filename,
-                AudioParams = audioParams,
-                SoundType = SoundType.Positional,
-                SoundPosition = coordinates
             });
         }
     }
@@ -97,22 +79,6 @@ namespace Content.Shared.GameObjects.Components.Sound
         }
     }
 
-    public enum SoundType
-    {
-        /// <summary>
-        /// Sound follows the entity.
-        /// </summary>
-        Entity,
-        /// <summary>
-        /// Sound is played without position.
-        /// </summary>
-        Global,
-        /// <summary>
-        /// Sound is static in a given position.
-        /// </summary>
-        Positional,
-    }
-
     [Serializable, NetSerializable]
     public class ScheduledSound : IExposeData
     {
@@ -143,20 +109,6 @@ namespace Content.Shared.GameObjects.Components.Sound
         public int Times = 0;
 
         /// <summary>
-        /// How to play the sound.
-        /// Entity plays the sound following the entity.
-        /// Global plays the sound globally, without position.
-        /// Positional plays the sound at a static position.
-        /// </summary>
-        public SoundType SoundType = SoundType.Entity;
-
-        /// <summary>
-        /// If SoundType is Positional, this will be the
-        /// position where the sound plays.
-        /// </summary>
-        public GridCoordinates SoundPosition;
-
-        /// <summary>
         /// Whether the sound will play or not.
         /// </summary>
         public bool Play = true;
@@ -167,8 +119,6 @@ namespace Content.Shared.GameObjects.Components.Sound
             Delay = serializer.ReadDataField("delay", 0u);
             RandomDelay = serializer.ReadDataField("randomdelay", 0u);
             Times = serializer.ReadDataField("times", 0);
-            SoundType = serializer.ReadDataField<SoundType>("soundtype", SoundType.Entity);
-            SoundPosition = serializer.ReadDataField("soundposition", GridCoordinates.Nullspace);
             AudioParams = serializer.ReadDataField("audioparams", SS14.Shared.Audio.AudioParams.Default);
         }
     }
