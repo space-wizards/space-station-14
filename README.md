@@ -21,7 +21,7 @@ The IRC is setup to relay back and forth to the Discord server so [IRC nerds](ht
 We have various documentation articles about various systems on the GitHub wikis of this repo and the engine.
 
 * [RobustToolbox Wiki](https://github.com/space-wizards/RobustToolbox/wiki)
-* [Content Wiki](https://github.com/space-wizards/space-station-14/wiki)
+* [Space-Station-14 Wiki](https://github.com/space-wizards/space-station-14/wiki)
 
 ## Contributing
 
