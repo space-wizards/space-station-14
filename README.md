@@ -1,10 +1,10 @@
-# Space Station 14: Content Repo [![Build Status](https://travis-ci.org/space-wizards/space-station-14-content.svg?branch=master)](https://travis-ci.org/space-wizards/space-station-14-content)
+# Space Station 14: Repo [![Build Status](https://travis-ci.org/space-wizards/space-station-14-content.svg?branch=master)](https://travis-ci.org/space-wizards/space-station-14-content)
 
 Space Station 14 is a revived attempt at an SS13 remake.
 
-This is the primary content repo for Space Station 14. To prevent people forking the engine, a "content" pack is loaded by the client and server. This content contains everything needed to play the game on one specific server.
+This is the primary repo for Space Station 14. To prevent people forking RobustToolbox, a "content" pack is loaded by the client and server. This content contains everything needed to play the game on one specific server.
 
-If you want to develop SS14, this is the repo you need. Both for engine and content development.
+If you want to host or create content for SS14, this is the repo you need. Contains both RobustToolbox and the content pack for development.
 
 ## Getting in Touch
 
@@ -20,8 +20,8 @@ The IRC is setup to relay back and forth to the Discord server so [IRC nerds](ht
 
 We have various documentation articles about various systems on the GitHub wikis of this repo and the engine.
 
-* [Engine Wiki](https://github.com/space-wizards/space-station-14/wiki)
-* [Content Wiki](https://github.com/space-wizards/space-station-14-content/wiki)
+* [RobustToolbox Wiki](https://github.com/space-wizards/RobustToolbox/wiki)
+* [Content Wiki](https://github.com/space-wizards/space-station-14/wiki)
 
 ## Contributing
 
@@ -29,4 +29,4 @@ We are happy to accept contributions from anybody. Get in Discord or IRC if you 
 
 ## Building
 
-[See the relevant wiki page](https://github.com/space-wizards/space-station-14-content/wiki/Getting-Started)
+[See the relevant wiki page](https://github.com/space-wizards/space-station-14/wiki/Getting-Started)
