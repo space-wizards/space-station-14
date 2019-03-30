@@ -91,31 +91,6 @@
     <Compile Include="GameObjects\Components\Mobs\SharedSpeciesComponent.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\engine\Lidgren.Network\Lidgren.Network.csproj">
-      <Project>{59250baf-0000-0000-0000-000000000000}</Project>
-      <Name>Lidgren.Network</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\SS14.Shared.Maths\SS14.Shared.Maths.csproj">
-      <Project>{93f23a82-00c5-4572-964e-e7c9457726d4}</Project>
-      <Name>SS14.Shared.Maths</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\SS14.Shared\SS14.Shared.csproj">
-      <Project>{0529f740-0000-0000-0000-000000000000}</Project>
-      <Name>SS14.Shared</Name>
-    </ProjectReference>
-    <!-- Ensure these get built first to prevent sync issues with resoure copying. -->
-    <ProjectReference Include="..\engine\SS14.Client\SS14.Client.csproj">
-      <Name>SS14.Client</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Project>{83429BD6-6358-4B18-BE51-401DF8EA2673}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\SS14.Server\SS14.Server.csproj">
-      <Name>SS14.Server</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Project>{B04AAE71-0000-0000-0000-000000000000}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <Compile Include="Input\ContentKeyFunctions.cs" />
     <Compile Include="SharedGameTicker.cs" />
@@ -125,6 +100,20 @@
     <Compile Include="GameObjects\Components\Power\SharedApcComponent.cs" />
     <Compile Include="GameObjects\Components\Construction\SharedConstructorComponent.cs" />
     <Compile Include="Construction\ConstructionPrototype.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj">
+      <Project>{D63D377C-242B-4FC5-8337-35CB87E6C537}</Project>
+      <Name>Lidgren.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RobustToolbox\SS14.Shared.Maths\SS14.Shared.Maths.csproj">
+      <Project>{7DC961F2-A45B-4193-BE7F-77622A231943}</Project>
+      <Name>SS14.Shared.Maths</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RobustToolbox\SS14.Shared\SS14.Shared.csproj">
+      <Project>{5F161008-6C48-4596-A2DE-5E7B0CEB2AA1}</Project>
+      <Name>SS14.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

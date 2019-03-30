@@ -87,34 +87,6 @@
       <Project>{26aeebb3-dde7-443a-9f43-7bc7f4acf6b5}</Project>
       <Name>Content.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\engine\Lidgren.Network\Lidgren.Network.csproj">
-      <Project>{59250baf-0000-0000-0000-000000000000}</Project>
-      <Name>Lidgren.Network</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\SS14.Client.Godot\SS14.Client.Godot.csproj">
-      <Project>{8af31169-49b1-4a12-b8f4-2a0674a9e7cb}</Project>
-      <Name>SS14.Client.Godot</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\SS14.Client\SS14.Client.csproj">
-      <Project>{83429bd6-6358-4b18-be51-401df8ea2673}</Project>
-      <Name>SS14.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\SS14.Server\SS14.Server.csproj">
-      <Project>{b04aae71-0000-0000-0000-000000000000}</Project>
-      <Name>SS14.Server</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\SS14.Shared.Maths\SS14.Shared.Maths.csproj">
-      <Project>{93f23a82-00c5-4572-964e-e7c9457726d4}</Project>
-      <Name>SS14.Shared.Maths</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\SS14.Shared\SS14.Shared.csproj">
-      <Project>{0529f740-0000-0000-0000-000000000000}</Project>
-      <Name>SS14.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\engine\SS14.UnitTesting\SS14.UnitTesting.csproj">
-      <Project>{f0ada779-40b8-4f7e-ba6c-cdb19f3065d9}</Project>
-      <Name>SS14.UnitTesting</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
