@@ -11,7 +11,7 @@
     <AssemblyName>Content.Server</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ContentAssemblyTarget>..\engine\bin\Server\Resources\Assemblies\</ContentAssemblyTarget>
+    <ContentAssemblyTarget>..\RobustToolbox\bin\Server\Resources\Assemblies\</ContentAssemblyTarget>
     <OutputPath>..\bin\Content.Server\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <LangVersion>7.2</LangVersion>
