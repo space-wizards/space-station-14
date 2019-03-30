@@ -6,7 +6,7 @@ pipeline {
             steps {
                 sh 'git submodule update --init --recursive'
                 sh 'TMP=~/.cache/NuGet/ nuget restore'
-                sh 'engine/Tools/download_godotsharp.py'
+                sh 'RobustToolbox/Tools/download_godotsharp.py'
             }
         }
         stage('Build') {

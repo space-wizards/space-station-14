@@ -19,8 +19,8 @@ addons:
 cache:
   directories:
   - packages/
-  - engine/Dependencies/
-  - engine/SS14.Client.Godot/.mono/assemblies/
+  - RobustToolbox/Dependencies/
+  - RobustToolbox/SS14.Client.Godot/.mono/assemblies/
 
 #before_install:
 #  - if [ $TRAVIS_OS_NAME = osx ]; then brew update && brew upgrade python; fi
@@ -30,7 +30,7 @@ before_script:
 - "python3.5 -m pip install --user requests"
 - "nuget restore SpaceStation14Content.sln"
 - "python3.5 RUN_THIS.py --no-prompt"
-- "engine/Tools/download_godotsharp.py"
+- "RobustToolbox/Tools/download_godotsharp.py"
 
 script:
   # Prevent people from putting in textures/ (lowercase).
