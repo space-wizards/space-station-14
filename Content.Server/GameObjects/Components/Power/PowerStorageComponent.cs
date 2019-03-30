@@ -60,6 +60,7 @@ namespace Content.Server.GameObjects.Components.Power
         [ViewVariables]
         public bool Full => Charge >= Capacity;
 
+        public event Action OnChargeChanged;
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -68,6 +69,14 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref _charge, "charge", 0);
             serializer.DataField(ref _chargeRate, "chargerate", 1000);
             serializer.DataField(ref _distributionRate, "distributionrate", 1000);
+        }
+
+        protected virtual void ChargeChanged()
+        {
+            if (OnChargeChanged != null)
+            { //Only fire this event if anyone actually subscribes to it
+                OnChargeChanged.Invoke();
+            }
         }
 
         /// <summary>
@@ -88,6 +97,7 @@ namespace Content.Server.GameObjects.Components.Power
             _charge = Math.Max(0, Charge - toDeduct);
             LastChargeState = ChargeState.Discharging;
             LastChargeStateChange = DateTime.Now;
+            ChargeChanged();
         }
 
         public virtual void AddCharge(float charge)
@@ -95,6 +105,7 @@ namespace Content.Server.GameObjects.Components.Power
             _charge = Math.Min(Capacity, Charge + charge);
             LastChargeState = ChargeState.Charging;
             LastChargeStateChange = DateTime.Now;
+            ChargeChanged();
         }
 
         /// <summary>

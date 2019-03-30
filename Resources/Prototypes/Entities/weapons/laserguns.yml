@@ -14,8 +14,9 @@
   - type: HitscanWeapon
     damage: 30
     sprite: "Objects/laser.png"
-    internalCapacity: 1000
-    baseFireCost: 300
+    lowerDischargeLimit: 10
+  - type: HitscanWeaponCapacitor
+    capacity: 1000
   - type: Item
     Size: 24
     sprite: Objects/laser_retro.rsi

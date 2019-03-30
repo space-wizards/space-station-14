@@ -14,24 +14,33 @@ using SS14.Shared.Serialization;
 using System;
  using Content.Server.GameObjects.Components.Sound;
  using SS14.Shared.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Power;
+using Content.Shared.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
-    public class HitscanWeaponComponent : Component
+    public class HitscanWeaponComponent : Component, IAttackby
     {
         private const float MaxLength = 20;
         public override string Name => "HitscanWeapon";
 
         string _spritename;
         private int _damage;
-        private int _internalCapacity;
-        private int _currentInternalCharge; //this functionality should probably be delegated to a magazine component
         private int _baseFireCost;
+        private float _lowerChargeLimit;
+
+        //As this is a component that sits on the weapon rather than a static value
+        //we just declare the field and then use GetComponent later to actually get it.
+        //Do remember to add it in both the .yaml prototype and the factory in EntryPoint.cs
+        //Otherwise you will get errors
+        private HitscanWeaponCapacitorComponent capacitorComponent;
 
         public int Damage => _damage;
-        public int InternalCapacity => _internalCapacity;
-        public int CurrentInternalCharge => _currentInternalCharge;
+
         public int BaseFireCost => _baseFireCost;
+
+        public HitscanWeaponCapacitorComponent CapacitorComponent => capacitorComponent;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -39,35 +48,40 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
             serializer.DataField(ref _spritename, "sprite", "Objects/laser.png");
             serializer.DataField(ref _damage, "damage", 10);
-            serializer.DataField(ref _internalCapacity, "internalCapacity", 1500);
             serializer.DataField(ref _baseFireCost, "baseFireCost", 300);
+            serializer.DataField(ref _lowerChargeLimit, "lowerChargeLimit", 10);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-
-            _currentInternalCharge = _internalCapacity;
             var rangedWeapon = Owner.GetComponent<RangedWeaponComponent>();
+            capacitorComponent = Owner.GetComponent<HitscanWeaponCapacitorComponent>();
             rangedWeapon.FireHandler = Fire;
+        }
+
+        public bool Attackby(IEntity user, IEntity attackwith)
+        {
+            if (!attackwith.TryGetComponent(out PowerStorageComponent component))
+            {
+                return false;
+            }
+            if (capacitorComponent.Full)
+            {
+                Owner.PopupMessage(user, "Capacitor at max charge");
+                return false;
+            }
+            capacitorComponent.FillFrom(component);
+            return true;
         }
 
         private void Fire(IEntity user, GridCoordinates clickLocation)
         {
-            double energyModifier = 1;
-            if (_currentInternalCharge == 0)
-            {
+            if (capacitorComponent.Charge < _lowerChargeLimit)
+            {//If capacitor has less energy than the lower limit, do nothing
                 return;
             }
-            else if(_currentInternalCharge < _baseFireCost)
-            {
-                energyModifier = (double)_currentInternalCharge / (double)_baseFireCost;
-                _currentInternalCharge = 0;
-            }
-            else
-            {
-                _currentInternalCharge = _currentInternalCharge - _baseFireCost;
-            }
+            float energyModifier = capacitorComponent.GetChargeFrom(_baseFireCost) / _baseFireCost;
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 
@@ -79,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             AfterEffects(user, rayCastResults, angle, energyModifier);
         }
 
-        protected virtual void Hit(RayCastResults ray, double damageModifier)
+        protected virtual void Hit(RayCastResults ray, float damageModifier)
         {
             if (ray.HitEntity != null && ray.HitEntity.TryGetComponent(out DamageableComponent damage))
             {
@@ -89,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             }
         }
 
-        protected virtual void AfterEffects(IEntity user, RayCastResults ray, Angle angle, double energyModifier)
+        protected virtual void AfterEffects(IEntity user, RayCastResults ray, Angle angle, float energyModifier)
         {
             var time = IoCManager.Resolve<IGameTiming>().CurTime;
             var dist = ray.DidHitObject ? ray.Distance : MaxLength;
@@ -104,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
                 ColorDelta = new Vector4(0, 0, 0, -1500f),
-                Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), (float)energyModifier),
+                Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), energyModifier),
 
                 Shaded = false
             };

@@ -135,6 +135,8 @@ namespace Content.Server
             factory.Register<BallisticBulletComponent>();
             factory.Register<BallisticMagazineComponent>();
 
+            factory.Register<HitscanWeaponCapacitorComponent>();
+
             factory.Register<CameraRecoilComponent>();
             factory.RegisterReference<CameraRecoilComponent, SharedCameraRecoilComponent>();
 
