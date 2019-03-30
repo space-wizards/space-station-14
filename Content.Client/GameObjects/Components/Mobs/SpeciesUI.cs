@@ -118,7 +118,7 @@ namespace Content.Client.GameObjects
             if (_currentEffect != ScreenEffects.None)
             {
                 var appliedeffect = EffectsDictionary[_currentEffect];
-                _overlayManager.RemoveOverlay(nameof(appliedeffect));
+                _overlayManager.RemoveOverlay(appliedeffect.ID);
             }
 
             _currentEffect = ScreenEffects.None;
