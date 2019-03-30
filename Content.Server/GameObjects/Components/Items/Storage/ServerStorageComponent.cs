@@ -110,12 +110,19 @@ namespace Content.Server.GameObjects
         public bool CanInsert(IEntity toinsert)
         {
             _ensureInitialCalculated();
+
+            if (toinsert.TryGetComponent(out ServerStorageComponent storage))
+            {
+                if (storage.StorageCapacityMax >= StorageCapacityMax)
+                    return false;
+            }
+
             if (toinsert.TryGetComponent(out StoreableComponent store))
             {
-                if (store.ObjectSize <= (StorageCapacityMax - StorageUsed))
-                    return true;
+                if (store.ObjectSize > (StorageCapacityMax - StorageUsed))
+                    return false;
             }
-            return false;
+            return true;
         }
 
         /// <summary>
