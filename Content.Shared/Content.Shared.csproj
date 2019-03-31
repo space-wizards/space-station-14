@@ -77,6 +77,7 @@
     <Compile Include="GameObjects\Components\Mobs\SharedCameraRecoilComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerShared.cs" />
     <Compile Include="GameObjects\Components\Power\SharedPowerCellComponent.cs" />
+    <Compile Include="GameObjects\Components\Research\SharedLatheComponent.cs" />
     <Compile Include="GameObjects\Components\Sound\SharedSoundComponent.cs" />
     <Compile Include="GameObjects\Components\Storage\SharedStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\SharedBallisticMagazineComponent.cs" />
@@ -100,7 +101,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <Compile Include="Input\ContentKeyFunctions.cs" />
-    <Compile Include="Research\RecipePrototype.cs" />
+    <Compile Include="Research\LatheRecipePrototype.cs" />
     <Compile Include="SharedGameTicker.cs" />
     <Compile Include="SharedNotifyManager.cs" />
     <Compile Include="Utility\ContentHelpers.cs" />

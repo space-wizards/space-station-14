@@ -18,5 +18,6 @@
         public const uint ITEM = 1013;
         public const uint CLOTHING = 1014;
         public const uint ENTITYSTORAGE = 1015;
+        public const uint LATHE = 1016;
     }
 }

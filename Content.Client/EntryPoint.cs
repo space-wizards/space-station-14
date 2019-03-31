@@ -30,9 +30,11 @@ using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Sound;
 using Content.Client.Interfaces.Chat;
+using Content.Client.Research;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Research;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Shared.Log;
 
@@ -113,6 +115,8 @@ namespace Content.Client
             factory.RegisterIgnore("PowerCell");
 
             factory.Register<SharedSpawnPointComponent>();
+
+            factory.Register<LatheComponent>();
 
             factory.Register<CameraRecoilComponent>();
             factory.RegisterReference<CameraRecoilComponent, SharedCameraRecoilComponent>();

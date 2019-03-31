@@ -1,3 +1,4 @@
+using Content.Shared.GameObjects.Components.Research;
 using SS14.Shared.Prototypes;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
@@ -14,7 +15,8 @@ namespace Content.Shared.Research
         private string _description;
         private string _result;
         private bool _hacked;
-        private string _latheType;
+        private LatheType _latheType;
+        private uint _completeTime;
 
         public string ID => _id;
 
@@ -47,7 +49,13 @@ namespace Content.Shared.Research
         ///     The type of lathe that'll print this recipe.
         ///     TODO: Replace with an enum before merging, henk!
         /// </summary>
-        public string LatheType => _latheType;
+        public LatheType LatheType => _latheType;
+
+        /// <summary>
+        ///     How many milliseconds it'll take for the lathe to finish this recipe.
+        ///     Might lower depending on the lathe's upgrade level.
+        /// </summary>
+        public uint CompleteTime => _completeTime;
 
         public void LoadFrom(YamlMappingNode mapping)
         {
@@ -59,7 +67,8 @@ namespace Content.Shared.Research
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
             serializer.DataField(ref _result, "result", null);
             serializer.DataField(ref _hacked, "hacked", false);
-            serializer.DataField(ref _latheType, "lathetype", "default");
+            serializer.DataField(ref _latheType, "lathetype", LatheType.Autolathe);
+            serializer.DataField(ref _completeTime, "completetime", 2500u);
         }
     }
 }

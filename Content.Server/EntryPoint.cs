@@ -50,6 +50,7 @@ using Content.Server.GameObjects.Components.Destructible;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Server.GameObjects.Components.Research;
 
 namespace Content.Server
 {
@@ -138,6 +139,8 @@ namespace Content.Server
 
             factory.Register<SpawnPointComponent>();
             factory.RegisterReference<SpawnPointComponent, SharedSpawnPointComponent>();
+
+            factory.Register<LatheComponent>();
 
             factory.Register<BallisticBulletComponent>();
             factory.Register<BallisticMagazineComponent>();

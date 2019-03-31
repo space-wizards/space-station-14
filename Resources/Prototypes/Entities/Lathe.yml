@@ -1,0 +1,20 @@
+- type: entity
+  id: lathe
+  name: "lathe"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Buildings/smes.rsi
+    state: smes
+
+  - type: Icon
+    sprite: Buildings/smes.rsi
+    state: smes
+
+  - type: BoundingBox
+  - type: Collidable
+
+  - type: SnapGrid
+    offset: Center
+
+  - type: Lathe
