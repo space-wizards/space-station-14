@@ -85,8 +85,8 @@ def main():
 def wipe_bin():
     print(Fore.BLUE + Style.DIM +
           "Clearing old build artifacts (if any)..." + Style.RESET_ALL)
-    if os.path.exists(p("engine", "bin")):
-        shutil.rmtree(p("engine", "bin"))
+    if os.path.exists(p("RobustToolbox", "bin")):
+        shutil.rmtree(p("RobustToolbox", "bin"))
 
     if os.path.exists("bin"):
         shutil.rmtree("bin")
@@ -112,7 +112,7 @@ def build_windows():
         p("release", "SS14.Client_Windows_x64.zip"), "w",
         compression=zipfile.ZIP_DEFLATED)
 
-    copy_dir_into_zip(p("engine", "bin", "Client"), "", client_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Client"), "", client_zip)
     copy_resources("Resources", client_zip, server=False)
     copy_content_assemblies(p("Resources", "Assemblies"), client_zip, server=False)
     # Cool we're done.
@@ -121,7 +121,7 @@ def build_windows():
     print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_Windows_x64.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("engine", "bin", "Server"), "", server_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Server"), "", server_zip)
     copy_resources(p("Resources"), server_zip, server=True)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
@@ -147,7 +147,7 @@ def build_macos():
 
     contents = p("Space Station 14.app", "Contents", "Resources")
     copy_dir_into_zip(p("BuildFiles", "Mac", "Space Station 14.app"), "Space Station 14.app", client_zip)
-    copy_dir_into_zip(p("engine", "bin", "Client"), contents, client_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Client"), contents, client_zip)
 
     copy_resources(p(contents, "Resources"), client_zip, server=False)
     copy_content_assemblies(p(contents, "Resources", "Assemblies"), client_zip, server=False)
@@ -156,7 +156,7 @@ def build_macos():
     print(Fore.GREEN + "Packaging macOS x64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_macOS_x64.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("engine", "bin", "Server"), "", server_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Server"), "", server_zip)
     copy_resources(p("Resources"), server_zip, server=True)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
@@ -182,7 +182,7 @@ def build_linux():
         p("release", "SS14.Client_Linux_x64.zip"), "w",
         compression=zipfile.ZIP_DEFLATED)
 
-    copy_dir_into_zip(p("engine", "bin", "Client"), "", client_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Client"), "", client_zip)
     copy_resources("Resources", client_zip, server=False)
     copy_content_assemblies(p("Resources", "Assemblies"), client_zip, server=False)
     # Cool we're done.
@@ -191,7 +191,7 @@ def build_linux():
     print(Fore.GREEN + "Packaging Linux x64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_x64.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("engine", "bin", "Server"), "", server_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Server"), "", server_zip)
     copy_resources(p("Resources"), server_zip, server=True)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
@@ -200,7 +200,7 @@ def build_linux():
 def copy_resources(target, zipf, server):
     # Content repo goes FIRST so that it won't override engine files as that's forbidden.
     do_resource_copy(target, "Resources", zipf, server)
-    do_resource_copy(target, p("engine", "Resources"), zipf, server)
+    do_resource_copy(target, p("RobustToolbox", "Resources"), zipf, server)
 
 
 def do_resource_copy(target, source, zipf, server):
@@ -273,7 +273,7 @@ def copy_content_assemblies(target, zipf, server):
 
 
 def copy_godot_scenes():
-    target_dir = p("engine", "SS14.Client.Godot", "Scenes")
+    target_dir = p("RobustToolbox", "SS14.Client.Godot", "Scenes")
     from_dir = p("Resources", "Scenes")
     for path in os.listdir(from_dir):
         if path.startswith("."):

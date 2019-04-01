@@ -25,6 +25,9 @@ https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
   <Target Name="Build">
     <Exec Command="$(Python) git_helper.py" CustomErrorRegularExpression="^Error" />
   </Target>
