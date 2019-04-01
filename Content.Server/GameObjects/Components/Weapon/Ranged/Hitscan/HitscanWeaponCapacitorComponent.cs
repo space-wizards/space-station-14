@@ -26,9 +26,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             //Use this function when you want to shoot even though you don't have enough energy for basecost
             ChargeChanged();
             var chargeChangedBy = Math.Min(this.Charge, toDeduct);
-            Console.Error.WriteLine("Charge should be changed by... " + chargeChangedBy);
             this.DeductCharge(chargeChangedBy);
-            Console.Error.WriteLine("Charge is now: " + this.Charge);
             return chargeChangedBy;
         }
 
