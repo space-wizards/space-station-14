@@ -149,6 +149,7 @@
     <Compile Include="ServerNotifyManager.cs" />
     <Compile Include="StatusShell.cs" />
     <Compile Include="GameObjects\Components\Healing\HealingComponent.cs" />
+    <Compile Include="GameObjects\Components\Weapon\Ranged\Hitscan\HitscanWeaponCapacitorComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">
@@ -156,15 +157,15 @@
       <Name>Content.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\RobustToolbox\SS14.Server\SS14.Server.csproj">
-      <Project>{916C5BF0-74BF-485D-A233-C1AC30007119}</Project>
+      <Project>{B04AAE71-0000-0000-0000-000000000000}</Project>
       <Name>SS14.Server</Name>
     </ProjectReference>
     <ProjectReference Include="..\RobustToolbox\SS14.Shared.Maths\SS14.Shared.Maths.csproj">
-      <Project>{7DC961F2-A45B-4193-BE7F-77622A231943}</Project>
+      <Project>{93F23A82-00C5-4572-964E-E7C9457726D4}</Project>
       <Name>SS14.Shared.Maths</Name>
     </ProjectReference>
     <ProjectReference Include="..\RobustToolbox\SS14.Shared\SS14.Shared.csproj">
-      <Project>{5F161008-6C48-4596-A2DE-5E7B0CEB2AA1}</Project>
+      <Project>{0529F740-0000-0000-0000-000000000000}</Project>
       <Name>SS14.Shared</Name>
     </ProjectReference>
   </ItemGroup>

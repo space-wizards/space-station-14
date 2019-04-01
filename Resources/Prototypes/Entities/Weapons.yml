@@ -1,26 +1,4 @@
 - type: entity
-  name: Laser Gun
-  parent: BaseItem
-  id: LaserItem
-  description: A weapon using light amplified by the stimulated emission of radiation
-  components:
-  - type: Sprite
-    sprite: Objects/laser_retro.rsi
-    state: 100
-  - type: Icon
-    sprite: Objects/laser_retro.rsi
-    state: 100
-  - type: RangedWeapon
-  - type: HitscanWeapon
-    damage: 30
-    sprite: "Objects/laser.png"
-  - type: Item
-    Size: 24
-    sprite: Objects/laser_retro.rsi
-    prefix: 100
-  - type: Sound
-
-- type: entity
   name: Spear
   parent: BaseItem
   id: Spear

@@ -31,6 +31,7 @@ namespace Content.Server.GameObjects.Components.Power
             base.DeductCharge(toDeduct);
 
             _updateAppearance();
+            ChargeChanged();
         }
 
         public override void AddCharge(float charge)
@@ -38,6 +39,7 @@ namespace Content.Server.GameObjects.Components.Power
             base.AddCharge(charge);
 
             _updateAppearance();
+            ChargeChanged();
         }
 
         private void _updateAppearance()
