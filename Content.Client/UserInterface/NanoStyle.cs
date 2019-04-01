@@ -223,7 +223,7 @@ namespace Content.Client.UserInterface
                         new SelectorElement(typeof(Button), null, null, null)),
                     new[]
                     {
-                        new StyleProperty("font", animalSilence40),
+                        new StyleProperty("font", notoSansBold16),
                     }),
 
                 // Main menu: also make those buttons slightly more separated.
