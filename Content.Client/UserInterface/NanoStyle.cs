@@ -333,6 +333,12 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty(CheckBox.StylePropertyHSeparation, 3),
                 }),
+
+                // Tooltip
+                new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new []
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = new Color(21, 21, 26)})
+                }),
             });
         }
     }
