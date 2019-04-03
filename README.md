@@ -1,4 +1,6 @@
-# Space Station 14 [![Build Status](https://travis-ci.org/space-wizards/space-station-14.svg?branch=master)](https://travis-ci.org/space-wizards/space-station-14)
+![Space Station 14](https://i.imgur.com/DKXu8kw.png)
+
+[![Build Status](https://travis-ci.org/space-wizards/space-station-14.svg?branch=master)](https://travis-ci.org/space-wizards/space-station-14)
 
 Space Station 14 is a revived attempt at an SS13 remake.
 
