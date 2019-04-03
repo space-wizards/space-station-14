@@ -1,4 +1,4 @@
 - type: tile
-  name: Space
+  name: space
+  display_name: Space
   texture: ""
-  id: 0

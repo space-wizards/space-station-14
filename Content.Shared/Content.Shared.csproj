@@ -83,6 +83,7 @@
     <Compile Include="GameObjects\PhysicalConstants.cs" />
     <Compile Include="Interfaces\ISharedNotifyManager.cs" />
     <Compile Include="GameObjects\Verb.cs" />
+    <Compile Include="Maps\ContentTileDefinition.cs" />
     <Compile Include="Physics\CollisionGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\Components\Items\SharedHandsComponent.cs" />

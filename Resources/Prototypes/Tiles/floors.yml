@@ -1,14 +1,14 @@
 - type: tile
-  name: Floor
+  name: floor
+  display_name: Floor
   texture: "floor_steel"
-  id: 1
 
 - type: tile
-  name: White Floor
+  name: floor_white
+  display_name: White Floor
   texture: "floor_white"
-  id: 4
 
 - type: tile
-  name: Techmaint Floor
+  name: floor_techmaint
+  display_name: Techmaint Floor
   texture: "floor_techmaint"
-  id: 5

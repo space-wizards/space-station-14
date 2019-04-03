@@ -1,9 +1,9 @@
 - type: tile
-  name: Plating
+  name: plating
+  display_name: Plating
   texture: plating
-  id: 2
 
 - type: tile
-  name: Underplating
+  name: underplating
+  display_name: Underplating
   texture: underplating
-  id: 3

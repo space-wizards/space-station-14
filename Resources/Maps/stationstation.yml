@@ -2,6 +2,13 @@ meta:
   format: 2
   name: DemoStation
   author: Space-Wizards
+tilemap:
+  0: space
+  1: floor
+  2: plating
+  3: underplating
+  4: floor_white
+  5: floor_techmaint
 grids:
 - settings:
     chunksize: 16
