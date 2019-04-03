@@ -2,8 +2,10 @@
   name: plating
   display_name: Plating
   texture: plating
+  is_subfloor: true
 
 - type: tile
   name: underplating
   display_name: Underplating
   texture: underplating
+  is_subfloor: true

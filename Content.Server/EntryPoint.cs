@@ -140,6 +140,9 @@ namespace Content.Server
             factory.Register<CameraRecoilComponent>();
             factory.RegisterReference<CameraRecoilComponent, SharedCameraRecoilComponent>();
 
+            factory.RegisterIgnore("IconSmooth");
+            factory.RegisterIgnore("SubFloorHide");
+
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IGameTicker, GameTicker>();

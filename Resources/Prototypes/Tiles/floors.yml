@@ -2,13 +2,19 @@
   name: floor
   display_name: Floor
   texture: "floor_steel"
+  is_subfloor: false
+  can_crowbar: true
 
 - type: tile
   name: floor_white
   display_name: White Floor
   texture: "floor_white"
+  is_subfloor: false
+  can_crowbar: true
 
 - type: tile
   name: floor_techmaint
   display_name: Techmaint Floor
   texture: "floor_techmaint"
+  is_subfloor: false
+  can_crowbar: true

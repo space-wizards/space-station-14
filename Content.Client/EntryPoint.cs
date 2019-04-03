@@ -25,6 +25,7 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Prototypes;
 using System;
+using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Sound;
 using Content.Client.UserInterface;
@@ -106,6 +107,8 @@ namespace Content.Client
 
             factory.Register<CameraRecoilComponent>();
             factory.RegisterReference<CameraRecoilComponent, SharedCameraRecoilComponent>();
+
+            factory.Register<SubFloorHideComponent>();
 
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
