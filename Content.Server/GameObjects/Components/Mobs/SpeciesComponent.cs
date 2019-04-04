@@ -29,18 +29,10 @@ namespace Content.Server.GameObjects
         /// </summary>
         private DamageTemplates DamageTemplate;
 
-        AppearanceComponent Appearance;
-
         /// <summary>
         /// Variable for serialization
         /// </summary>
         private string templatename;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Appearance = Owner.GetComponent<AppearanceComponent>();
-        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -48,11 +40,13 @@ namespace Content.Server.GameObjects
 
             serializer.DataField(ref templatename, "Template", "Human");
 
-            Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Server").GetType("Content.Server.GameObjects." + templatename);
-            DamageTemplate = (DamageTemplates)Activator.CreateInstance(type);
+            Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Server")
+                .GetType("Content.Server.GameObjects." + templatename);
+            DamageTemplate = (DamageTemplates) Activator.CreateInstance(type);
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
+            IComponent component = null)
         {
             switch (message)
             {
@@ -87,14 +81,15 @@ namespace Content.Server.GameObjects
 
         void IOnDamageBehavior.OnDamageThresholdPassed(object damageable, DamageThresholdPassedEventArgs e)
         {
-            DamageableComponent damage = (DamageableComponent)damageable;
+            DamageableComponent damage = (DamageableComponent) damageable;
 
-            if(e.DamageThreshold.ThresholdType != ThresholdType.HUDUpdate)
+            if (e.DamageThreshold.ThresholdType != ThresholdType.HUDUpdate)
             {
                 ChangeDamageState(DamageTemplate.CalculateDamageState(damage));
             }
 
-            if (Owner.TryGetComponent(out BasicActorComponent actor)) //specifies if we have a client to update the hud for
+            if (Owner.TryGetComponent(out BasicActorComponent actor)
+            ) //specifies if we have a client to update the hud for
             {
                 var hudstatechange = DamageTemplate.ChangeHudState(damage);
                 SendNetworkMessage(hudstatechange);
@@ -103,14 +98,14 @@ namespace Content.Server.GameObjects
 
         private void ChangeDamageState(ThresholdType threshold)
         {
-            if(threshold == currentstate)
+            if (threshold == currentstate)
             {
                 return;
             }
 
-            CurrentDamageState.ExitState(Owner, Appearance);
+            CurrentDamageState.ExitState(Owner);
             CurrentDamageState = DamageTemplates.StateThresholdMap[threshold];
-            CurrentDamageState.EnterState(Owner, Appearance);
+            CurrentDamageState.EnterState(Owner);
 
             currentstate = threshold;
         }

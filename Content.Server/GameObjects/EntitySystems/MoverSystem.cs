@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void UpdateKinematics(ITransformComponent transform, PlayerInputMoverComponent mover, PhysicsComponent physics)
         {
-            if (mover.VelocityDir.LengthSquared < 0.001 || mover.Disabled)
+            if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
             {
                 if (physics.LinearVelocity != Vector2.Zero)
                     physics.LinearVelocity = Vector2.Zero;

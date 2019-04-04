@@ -1,9 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Mobs;
 using SS14.Server.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Maths;
 
 namespace Content.Server.GameObjects
 {
@@ -11,10 +9,10 @@ namespace Content.Server.GameObjects
     /// Defines the blocking effect of each damage state, and what effects to apply upon entering or exiting the state
     /// </summary>
     public interface DamageState : IActionBlocker
-    { 
-        void EnterState(IEntity entity, AppearanceComponent appearance);
+    {
+        void EnterState(IEntity entity);
 
-        void ExitState(IEntity entity, AppearanceComponent appearance);
+        void ExitState(IEntity entity);
     }
 
     /// <summary>
@@ -22,9 +20,13 @@ namespace Content.Server.GameObjects
     /// </summary>
     public struct NormalState : DamageState
     {
-        public void EnterState(IEntity entity, AppearanceComponent appearance) {}
+        public void EnterState(IEntity entity)
+        {
+        }
 
-        public void ExitState(IEntity entity, AppearanceComponent appearance) {}
+        public void ExitState(IEntity entity)
+        {
+        }
 
         bool IActionBlocker.CanInteract()
         {
@@ -47,20 +49,12 @@ namespace Content.Server.GameObjects
     /// </summary>
     public struct CriticalState : DamageState
     {
-        public void EnterState(IEntity entity, AppearanceComponent appearance) {
-            if (!entity.TryGetComponent<PlayerInputMoverComponent>(out var mover))
-            {
-                return;
-            }
-            mover.Disabled = true;
+        public void EnterState(IEntity entity)
+        {
         }
 
-        public void ExitState(IEntity entity, AppearanceComponent appearance) {
-            if (!entity.TryGetComponent<PlayerInputMoverComponent>(out var mover))
-            {
-                return;
-            }
-            mover.Disabled = false;
+        public void ExitState(IEntity entity)
+        {
         }
 
         bool IActionBlocker.CanInteract()
@@ -84,26 +78,22 @@ namespace Content.Server.GameObjects
     /// </summary>
     public struct DeadState : DamageState
     {
-        public void EnterState(IEntity entity, AppearanceComponent appearance)
+        public void EnterState(IEntity entity)
         {
-            var newstate = SpeciesComponent.MobState.Down;
-            appearance.SetData(SpeciesComponent.MobVisuals.RotationState, newstate);
-            if (!entity.TryGetComponent<PlayerInputMoverComponent>(out var mover))
+            if (entity.TryGetComponent(out AppearanceComponent appearance))
             {
-                return;
+                var newState = SharedSpeciesComponent.MobState.Down;
+                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
             }
-            mover.Disabled = true;
         }
 
-        public void ExitState(IEntity entity, AppearanceComponent appearance)
+        public void ExitState(IEntity entity)
         {
-            var newstate = SpeciesComponent.MobState.Stand;
-            appearance.SetData(SpeciesComponent.MobVisuals.RotationState, newstate);
-            if (!entity.TryGetComponent<PlayerInputMoverComponent>(out var mover))
+            if (entity.TryGetComponent(out AppearanceComponent appearance))
             {
-                return;
+                var newState = SharedSpeciesComponent.MobState.Stand;
+                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
             }
-            mover.Disabled = false;
         }
 
         bool IActionBlocker.CanInteract()
