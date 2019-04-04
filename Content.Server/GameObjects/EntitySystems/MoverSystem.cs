@@ -1,17 +1,25 @@
-﻿using Content.Server.GameObjects.Components.Movement;
+﻿using System;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Shared.Audio;
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Player;
 using SS14.Server.Interfaces.Timing;
+using SS14.Shared.Audio;
 using SS14.Shared.GameObjects;
+using SS14.Shared.GameObjects.Components.Transform;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.IoC;
+using SS14.Shared.Map;
 using SS14.Shared.Maths;
 using SS14.Shared.Players;
+using SS14.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -21,7 +29,15 @@ namespace Content.Server.GameObjects.EntitySystems
 #pragma warning disable 649
         [Dependency]
         private IPauseManager _pauseManager;
+        [Dependency]
+        private IPrototypeManager _prototypeManager;
 #pragma warning restore 649
+
+        private AudioSystem _audioSystem;
+        private Random _footstepRandom;
+
+        private const float StepSoundMoveDistanceRunning = 2;
+        private const float StepSoundMoveDistanceWalking = 1.5f;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -56,6 +72,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
             SubscribeEvent<PlayerAttachSystemMessage>(PlayerAttached);
             SubscribeEvent<PlayerDetachedSystemMessage>(PlayerDetached);
+
+            _footstepRandom = new Random();
+            _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
         }
 
         private static void PlayerAttached(object sender, PlayerAttachSystemMessage ev)
@@ -103,7 +122,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void UpdateKinematics(ITransformComponent transform, PlayerInputMoverComponent mover, PhysicsComponent physics)
+        private void UpdateKinematics(ITransformComponent transform, PlayerInputMoverComponent mover, PhysicsComponent physics)
         {
             if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
             {
@@ -114,6 +133,25 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.SprintMoveSpeed : mover.WalkMoveSpeed);
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
+
+                // Handle footsteps.
+                var distance = transform.GridPosition.Distance(mover.LastPosition);
+                mover.StepSoundDistance += distance;
+                mover.LastPosition = transform.GridPosition;
+                float distanceNeeded;
+                if (mover.Sprinting)
+                {
+                    distanceNeeded = StepSoundMoveDistanceRunning;
+                }
+                else
+                {
+                    distanceNeeded = StepSoundMoveDistanceWalking;
+                }
+                if (mover.StepSoundDistance > distanceNeeded)
+                {
+                    mover.StepSoundDistance = 0;
+                    PlayFootstepSound(transform.GridPosition);
+                }
             }
         }
 
@@ -148,6 +186,47 @@ namespace Content.Server.GameObjects.EntitySystems
 
             component = comp;
             return true;
+        }
+
+        private void PlayFootstepSound(GridCoordinates coordinates)
+        {
+            // Step one: figure out sound collection prototype.
+            var grid = coordinates.Grid;
+            var tile = grid.GetTile(coordinates);
+
+            // If the coordinates have a catwalk, it's always catwalk.
+            string soundCollectionName;
+            var catwalk = false;
+            foreach (var maybeCatwalk in grid.GetSnapGridCell(tile.GridTile, SnapGridOffset.Center))
+            {
+                if (maybeCatwalk.Owner.HasComponent<CatwalkComponent>())
+                {
+                    catwalk = true;
+                    break;
+                }
+            }
+
+            if (catwalk)
+            {
+                // Catwalk overrides tile sound.s
+                soundCollectionName = "footstep_catwalk";
+            }
+            else
+            {
+                // Walking on a tile.
+                var def = (ContentTileDefinition)tile.TileDef;
+                if (def.FootstepSounds == null)
+                {
+                    // Nothing to play, oh well.
+                    return;
+                }
+                soundCollectionName = def.FootstepSounds;
+            }
+
+            // Ok well we know the position of the
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
+            var file = _footstepRandom.Pick(soundCollection.PickFiles);
+            _audioSystem.Play(file, coordinates);
         }
     }
 }

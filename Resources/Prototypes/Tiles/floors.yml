@@ -4,6 +4,7 @@
   texture: "floor_steel"
   is_subfloor: false
   can_crowbar: true
+  footstep_sounds: footstep_floor
 
 - type: tile
   name: floor_white
@@ -11,6 +12,7 @@
   texture: "floor_white"
   is_subfloor: false
   can_crowbar: true
+  footstep_sounds: footstep_floor
 
 - type: tile
   name: floor_techmaint
@@ -18,3 +20,4 @@
   texture: "floor_techmaint"
   is_subfloor: false
   can_crowbar: true
+  footstep_sounds: footstep_floor

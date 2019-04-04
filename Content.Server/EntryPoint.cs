@@ -150,6 +150,8 @@ namespace Content.Server
 
             factory.Register<AiControllerComponent>();
 
+            factory.Register<CatwalkComponent>();
+
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IGameTicker, GameTicker>();
