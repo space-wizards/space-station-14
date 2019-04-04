@@ -110,6 +110,9 @@ namespace Content.Client
 
             factory.Register<SubFloorHideComponent>();
 
+            factory.RegisterIgnore("AiController");
+            factory.RegisterIgnore("PlayerInputMover");
+
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
             IoCManager.Register<IClientGameTicker, ClientGameTicker>();

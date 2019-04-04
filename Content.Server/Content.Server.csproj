@@ -87,6 +87,8 @@
     <Compile Include="GameObjects\Components\Mobs\DamageThresholdTemplates\HumanTemplate.cs" />
     <Compile Include="GameObjects\Components\Mobs\MindComponent.cs" />
     <Compile Include="GameObjects\Components\Mobs\SpeciesComponent.cs" />
+    <Compile Include="GameObjects\Components\Movement\AiControllerComponent.cs" />
+    <Compile Include="GameObjects\Components\Movement\PlayerInputMoverComponent.cs" />
     <Compile Include="GameObjects\Components\Power\LightBulbComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerCellComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
@@ -110,11 +112,13 @@
     <Compile Include="GameObjects\Components\Weapon\Ranged\RangedWeapon.cs" />
     <Compile Include="GameObjects\ContainerSlot.cs" />
     <Compile Include="GameObjects\EntitySystems\ActionBlockerSystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\AiSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\Click\ExamineSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\Click\InteractionSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\DoorSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\HandHeldLightSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\HandsSystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\MoverSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerApcSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSmesSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSystem.cs" />
@@ -132,6 +136,7 @@
     <Compile Include="GameObjects\Components\Damage\DestructibleComponent.cs" />
     <Compile Include="GameObjects\Components\Damage\ResistanceSet.cs" />
     <Compile Include="GameObjects\Components\Temperature\TemperatureComponent.cs" />
+    <Compile Include="Interfaces\GameObjects\Components\Movement\IMoverComponent.cs" />
     <Compile Include="Interfaces\GameObjects\IOnDamageBehavior.cs" />
     <Compile Include="Interfaces\GameTicking\IGameTicker.cs" />
     <Compile Include="Interfaces\IServerNotifyManager.cs" />
@@ -188,5 +193,4 @@
     <Compile Include="GameObjects\Components\Construction\ConstructorComponent.cs" />
     <Compile Include="GameObjects\Components\Construction\ConstructionComponent.cs" />
   </ItemGroup>
-  <ItemGroup />
 </Project>

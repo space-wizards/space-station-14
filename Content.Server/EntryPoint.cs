@@ -47,6 +47,8 @@ using Content.Shared.Interfaces;
 using SS14.Server.Interfaces.ServerStatus;
 using SS14.Shared.Timing;
 using Content.Server.GameObjects.Components.Destructible;
+using Content.Server.GameObjects.Components.Movement;
+using Content.Server.Interfaces.GameObjects.Components.Movement;
 
 namespace Content.Server
 {
@@ -142,6 +144,11 @@ namespace Content.Server
 
             factory.RegisterIgnore("IconSmooth");
             factory.RegisterIgnore("SubFloorHide");
+
+            factory.Register<PlayerInputMoverComponent>();
+            factory.RegisterReference<PlayerInputMoverComponent, IMoverComponent>();
+
+            factory.Register<AiControllerComponent>();
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
