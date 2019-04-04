@@ -1,4 +1,4 @@
-![Space Station 14](https://i.imgur.com/DKXu8kw.png)
+![Space Station 14](https://raw.githubusercontent.com/space-wizards/asset-dump/master/ss14.png)
 
 [![Build Status](https://travis-ci.org/space-wizards/space-station-14.svg?branch=master)](https://travis-ci.org/space-wizards/space-station-14)
 
