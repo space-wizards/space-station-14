@@ -16,6 +16,8 @@ namespace Content.Shared.Maps
         public ushort TileId { get; private set; }
         public string DisplayName { get; private set; }
         public string SpriteName { get; private set; }
+        public bool IsSubFloor { get; private set; }
+        public bool CanCrowbar { get; private set; }
 
         public void AssignTileId(ushort id)
         {
@@ -27,6 +29,16 @@ namespace Content.Shared.Maps
             Name = mapping.GetNode("name").ToString();
             DisplayName = mapping.GetNode("display_name").ToString();
             SpriteName = mapping.GetNode("texture").ToString();
+
+            if (mapping.TryGetNode("is_subfloor", out var node))
+            {
+                IsSubFloor = node.AsBool();
+            }
+
+            if (mapping.TryGetNode("can_crowbar", out node))
+            {
+                CanCrowbar = node.AsBool();
+            }
         }
     }
 }

@@ -86,6 +86,7 @@
     <Compile Include="GameObjects\Components\Power\PowerCellVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\Sound\SoundComponent.cs" />
     <Compile Include="GameObjects\Components\Storage\ClientStorageComponent.cs" />
+    <Compile Include="GameObjects\Components\SubFloorHideComponent.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\BallisticMagazineVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\BallisticMagazineWeaponVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\ClientRangedWeaponComponent.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="GameObjects\EntitySystems\ClientNotifySystem.cs" />
     <Compile Include="GameObjects\EntitySystems\IconSmoothSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\RangedWeaponSystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\SubFloorHideSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\VerbSystem.cs" />
     <Compile Include="GameTicking\ClientGameTicker.cs" />
     <Compile Include="Graphics\Overlays\CircleMaskOverlay.cs" />
