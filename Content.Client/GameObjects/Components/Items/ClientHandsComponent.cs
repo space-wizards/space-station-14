@@ -69,9 +69,9 @@ namespace Content.Client.GameObjects
             return null;
         }
 
-        public override void HandleComponentState(ComponentState state)
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cast = (HandsComponentState) state;
+            var cast = (HandsComponentState) curState;
             foreach (var (slot, uid) in cast.Hands)
             {
                 IEntity entity = null;

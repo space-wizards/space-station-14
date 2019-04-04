@@ -1,7 +1,5 @@
 ﻿using Content.Shared.GameObjects;
 using SS14.Shared.GameObjects;
-using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.Network;
 using System.Collections.Generic;
 
 namespace Content.Client.GameObjects
@@ -17,13 +15,13 @@ namespace Content.Client.GameObjects
 
         public Dictionary<DamageType, int> CurrentDamage = new Dictionary<DamageType, int>();
 
-        public override void HandleComponentState(ComponentState state)
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            base.HandleComponentState(state);
+            base.HandleComponentState(curState, nextState);
 
-            if(state is DamageComponentState)
+            if(curState is DamageComponentState)
             {
-                var damagestate = (DamageComponentState)state;
+                var damagestate = (DamageComponentState)curState;
                 CurrentDamage = damagestate.CurrentDamage;
             }
         }
