@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             return Fuel > 0;
         }
 
-        public bool UseEntity(IEntity user)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             return ToggleStatus();
         }

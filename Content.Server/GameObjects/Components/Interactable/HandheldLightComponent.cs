@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return null;
         }
 
-        bool IUse.UseEntity(IEntity user)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             return ToggleStatus();
         }

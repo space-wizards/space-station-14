@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Stack;
 using SS14.Shared.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
@@ -54,9 +54,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             Owner.Delete();
         }
 
-        bool IUse.UseEntity(IEntity user)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!user.TryGetComponent(out DamageableComponent damagecomponent)) return false;
+            if (!eventArgs.User.TryGetComponent(out DamageableComponent damagecomponent)) return false;
             if (Owner.TryGetComponent(out StackComponent stackComponent))
             {
                 if (!stackComponent.Use(1))

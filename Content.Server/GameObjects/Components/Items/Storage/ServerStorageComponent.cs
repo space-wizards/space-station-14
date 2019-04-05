@@ -159,10 +159,10 @@ namespace Content.Server.GameObjects
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        bool IUse.UseEntity(IEntity user)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             _ensureInitialCalculated();
-            var user_session = user.GetComponent<BasicActorComponent>().playerSession;
+            var user_session = eventArgs.User.GetComponent<BasicActorComponent>().playerSession;
             Logger.DebugS("Storage", "Storage (UID {0}) \"used\" by player session (UID {1}).", Owner.Uid, user_session.AttachedEntityUid);
             SubscribeSession(user_session);
             SendNetworkMessage(new OpenStorageUIMessage(), user_session.ConnectedClient);
@@ -304,7 +304,7 @@ namespace Content.Server.GameObjects
         /// <inheritdoc />
         void IActivate.Activate(IEntity user)
         {
-            ((IUse) this).UseEntity(user);
+            ((IUse) this).UseEntity(new UseEntityEventArgs { User = user });
         }
 
         private void _ensureInitialCalculated()

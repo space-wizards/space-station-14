@@ -108,7 +108,12 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        bool UseEntity(IEntity user);
+        bool UseEntity(UseEntityEventArgs eventArgs);
+    }
+
+    public class UseEntityEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
     }
 
     /// <summary>
@@ -356,7 +361,7 @@ namespace Content.Server.GameObjects.EntitySystems
             //Try to use item on any components which have the interface
             for (var i = 0; i < usables.Count; i++)
             {
-                if (usables[i].UseEntity(user)) //If an attackby returns a status completion we finish our attack
+                if (usables[i].UseEntity(new UseEntityEventArgs { User = user })) //If an attackby returns a status completion we finish our attack
                 {
                     return;
                 }

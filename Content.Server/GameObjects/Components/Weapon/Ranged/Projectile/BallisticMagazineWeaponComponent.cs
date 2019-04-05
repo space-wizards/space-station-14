@@ -185,16 +185,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             _updateAppearance();
         }
 
-        public bool UseEntity(IEntity user)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             var ret = EjectMagazine();
             if (ret)
             {
-                Owner.PopupMessage(user, "Magazine ejected");
+                Owner.PopupMessage(eventArgs.User, "Magazine ejected");
             }
             else
             {
-                Owner.PopupMessage(user, "No magazine");
+                Owner.PopupMessage(eventArgs.User, "No magazine");
             }
 
             return true;
