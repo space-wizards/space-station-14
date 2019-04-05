@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
-    public class PoweredLightComponent : Component, IAttackHand, IAttackby
+    public class PoweredLightComponent : Component, IAttackHand, IAttackBy
     {
         public override string Name => "PoweredLight";
 
@@ -50,9 +50,9 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        bool IAttackby.Attackby(IEntity user, IEntity attackwith)
+        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            return InsertBulb(attackwith);
+            return InsertBulb(eventArgs.AttackWith);
         }
 
         bool IAttackHand.Attackhand(IEntity user)

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
@@ -6,17 +6,15 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
-using SS14.Server.GameObjects.EntitySystems;
 using SS14.Shared.Audio;
 using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.IoC;
 using SS14.Shared.Maths;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
-    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackby
+    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackBy
     {
         public override string Name => "BallisticMagazineWeapon";
 
@@ -202,26 +200,26 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return true;
         }
 
-        public bool Attackby(IEntity user, IEntity attackwith)
+        public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!attackwith.TryGetComponent(out BallisticMagazineComponent component))
+            if (!eventArgs.AttackWith.TryGetComponent(out BallisticMagazineComponent component))
             {
                 return false;
             }
 
             if (Magazine != null)
             {
-                Owner.PopupMessage(user, "Already got a magazine.");
+                Owner.PopupMessage(eventArgs.User, "Already got a magazine.");
                 return false;
             }
 
             if (component.MagazineType != MagazineType || component.Caliber != Caliber)
             {
-                Owner.PopupMessage(user, "Magazine doesn't fit.");
+                Owner.PopupMessage(eventArgs.User, "Magazine doesn't fit.");
                 return false;
             }
 
-            return InsertMagazine(attackwith);
+            return InsertMagazine(eventArgs.AttackWith);
         }
 
         private void _magazineAmmoCountChanged()

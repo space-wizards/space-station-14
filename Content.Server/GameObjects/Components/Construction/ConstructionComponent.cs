@@ -1,7 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Interactable.Tools;
-using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
@@ -18,7 +17,7 @@ using static Content.Shared.Construction.ConstructionStepTool;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
-    public class ConstructionComponent : Component, IAttackby
+    public class ConstructionComponent : Component, IAttackBy
     {
         public override string Name => "Construction";
 
@@ -41,11 +40,11 @@ namespace Content.Server.GameObjects.Components.Construction
             random = new Random();
         }
 
-        public bool Attackby(IEntity user, IEntity attackwith)
+        public bool AttackBy(AttackByEventArgs eventArgs)
         {
             var stage = Prototype.Stages[Stage];
 
-            if (TryProcessStep(stage.Forward, attackwith))
+            if (TryProcessStep(stage.Forward, eventArgs.AttackWith))
             {
                 Stage++;
                 if (Stage == Prototype.Stages.Count - 1)
@@ -65,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            else if (TryProcessStep(stage.Backward, attackwith))
+            else if (TryProcessStep(stage.Backward, eventArgs.AttackWith))
             {
                 Stage--;
                 if (Stage == 0)

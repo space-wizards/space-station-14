@@ -1,6 +1,5 @@
 ﻿using System;
 using Content.Server.Interfaces.GameObjects;
-using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Interfaces.GameObjects;
@@ -10,7 +9,6 @@ using Content.Shared.Input;
 using SS14.Shared.Input;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
-using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.Interfaces.GameObjects.Components;
@@ -21,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     /// This interface gives components behavior when being clicked on or "attacked" by a user with an object in their hand
     /// </summary>
-    public interface IAttackby
+    public interface IAttackBy
     {
         /// <summary>
         /// Called when using one object on another
@@ -29,7 +27,13 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="attackwith"></param>
         /// <returns></returns>
-        bool Attackby(IEntity user, IEntity attackwith);
+        bool AttackBy(AttackByEventArgs eventArgs);
+    }
+
+    public class AttackByEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
+        public IEntity AttackWith { get; set; }
     }
 
     /// <summary>
@@ -263,11 +267,11 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attacked"></param>
         public static void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clicklocation)
         {
-            List<IAttackby> interactables = attacked.GetAllComponents<IAttackby>().ToList();
+            List<IAttackBy> interactables = attacked.GetAllComponents<IAttackBy>().ToList();
 
             for (var i = 0; i < interactables.Count; i++)
             {
-                if (interactables[i].Attackby(user, weapon)) //If an attackby returns a status completion we finish our attack
+                if (interactables[i].AttackBy(new AttackByEventArgs { User = user, AttackWith = weapon })) //If an attackby returns a status completion we finish our attack
                 {
                     return;
                 }

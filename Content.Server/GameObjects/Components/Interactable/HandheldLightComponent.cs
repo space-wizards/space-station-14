@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     /// <summary>
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
-    internal class HandheldLightComponent : Component, IUse, IExamine, IAttackby
+    internal class HandheldLightComponent : Component, IUse, IExamine, IAttackBy
     {
         public const float Wattage = 10;
         [ViewVariables] private ContainerSlot _cellContainer;
@@ -41,15 +41,15 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
-        bool IAttackby.Attackby(IEntity user, IEntity attackwith)
+        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!attackwith.HasComponent<PowerCellComponent>()) return false;
+            if (!eventArgs.AttackWith.HasComponent<PowerCellComponent>()) return false;
 
             if (Cell != null) return false;
 
-            user.GetComponent<IHandsComponent>().Drop(attackwith, _cellContainer);
+            eventArgs.User.GetComponent<IHandsComponent>().Drop(eventArgs.AttackWith, _cellContainer);
 
-            return _cellContainer.Insert(attackwith);
+            return _cellContainer.Insert(eventArgs.AttackWith);
         }
 
         string IExamine.Examine()

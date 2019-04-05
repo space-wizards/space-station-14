@@ -1,9 +1,8 @@
-﻿﻿using Content.Shared.GameObjects;
+﻿using Content.Shared.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Shared.Audio;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Physics;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.IoC;
@@ -12,15 +11,15 @@ using SS14.Shared.Maths;
 using SS14.Shared.Physics;
 using SS14.Shared.Serialization;
 using System;
- using Content.Server.GameObjects.Components.Sound;
- using SS14.Shared.GameObjects;
+using Content.Server.GameObjects.Components.Sound;
+using SS14.Shared.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
-    public class HitscanWeaponComponent : Component, IAttackby
+    public class HitscanWeaponComponent : Component, IAttackBy
     {
         private const float MaxLength = 20;
         public override string Name => "HitscanWeapon";
@@ -60,15 +59,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             rangedWeapon.FireHandler = Fire;
         }
 
-        public bool Attackby(IEntity user, IEntity attackwith)
+        public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!attackwith.TryGetComponent(out PowerStorageComponent component))
+            if (!eventArgs.AttackWith.TryGetComponent(out PowerStorageComponent component))
             {
                 return false;
             }
             if (capacitorComponent.Full)
             {
-                Owner.PopupMessage(user, "Capacitor at max charge");
+                Owner.PopupMessage(eventArgs.User, "Capacitor at max charge");
                 return false;
             }
             capacitorComponent.FillFrom(component);
