@@ -44,7 +44,7 @@ namespace Content.Client.Parallax
                     return;
                 }
 
-                using (var reader = new StreamReader(configStream, Encoding.UTF8))
+                using (var reader = new StreamReader(configStream, EncodingHelpers.UTF8))
                 {
                     contents = reader.ReadToEnd();
                 }
@@ -53,7 +53,7 @@ namespace Content.Client.Parallax
                 {
                     bool match;
                     using (var data = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Open))
-                    using (var reader = new StreamReader(data, Encoding.UTF8))
+                    using (var reader = new StreamReader(data, EncodingHelpers.UTF8))
                     {
                         match = reader.ReadToEnd() == contents;
                     }
@@ -89,7 +89,7 @@ namespace Content.Client.Parallax
             }
 
             using (var stream = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Create))
-            using (var writer = new StreamWriter(stream, Encoding.UTF8))
+            using (var writer = new StreamWriter(stream, EncodingHelpers.UTF8))
             {
                 writer.Write(contents);
             }
