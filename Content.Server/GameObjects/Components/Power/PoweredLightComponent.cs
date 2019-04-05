@@ -55,16 +55,16 @@ namespace Content.Server.GameObjects.Components.Power
             return InsertBulb(eventArgs.AttackWith);
         }
 
-        bool IAttackHand.Attackhand(IEntity user)
+        bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
         {
-            if (user.GetComponent<InventoryComponent>().GetSlotItem(EquipmentSlotDefines.Slots.GLOVES) != null)
+            if (eventArgs.User.GetComponent<InventoryComponent>().GetSlotItem(EquipmentSlotDefines.Slots.GLOVES) != null)
             {
-                EjectBulb(user);
+                EjectBulb(eventArgs.User);
                 UpdateLight();
                 return true;
             }
 
-            if (!user.TryGetComponent(out DamageableComponent damageableComponent)) return false;
+            if (!eventArgs.User.TryGetComponent(out DamageableComponent damageableComponent)) return false;
             damageableComponent.TakeDamage(DamageType.Heat, 20);
             return true;
         }

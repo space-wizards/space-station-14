@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects
             base.OnRemove();
         }
 
-        public bool Attackhand(IEntity user)
+        public bool AttackHand(AttackHandEventArgs eventArgs)
         {
             if (_state == DoorState.Open)
             {

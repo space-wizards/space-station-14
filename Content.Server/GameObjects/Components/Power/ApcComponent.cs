@@ -106,9 +106,9 @@ namespace Content.Server.GameObjects.Components.Power
             return net.Lack > 0 ? ApcExternalPowerState.Low : ApcExternalPowerState.Good;
         }
 
-        bool IAttackHand.Attackhand(IEntity user)
+        bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
         {
-            if (!user.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
                 return false;
             }

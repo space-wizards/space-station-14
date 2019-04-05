@@ -30,9 +30,8 @@ namespace Content.Server.GameObjects.EntitySystems
         bool AttackBy(AttackByEventArgs eventArgs);
     }
 
-    public class AttackByEventArgs : EventArgs
+    public class AttackByEventArgs : AttackHandEventArgs
     {
-        public IEntity User { get; set; }
         public IEntity AttackWith { get; set; }
     }
 
@@ -46,7 +45,12 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        bool Attackhand(IEntity user);
+        bool AttackHand(AttackHandEventArgs eventArgs);
+    }
+
+    public class AttackHandEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
     }
 
     /// <summary>
@@ -301,7 +305,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             for (var i = 0; i < interactables.Count; i++)
             {
-                if (interactables[i].Attackhand(user)) //If an attackby returns a status completion we finish our attack
+                if (interactables[i].AttackHand(new AttackHandEventArgs { User = user})) //If an attackby returns a status completion we finish our attack
                 {
                     return;
                 }
