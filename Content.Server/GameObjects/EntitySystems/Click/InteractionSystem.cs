@@ -125,7 +125,12 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     Called when this component is activated by another entity.
         /// </summary>
         /// <param name="user">Entity that activated this component.</param>
-        void Activate(IEntity user);
+        void Activate(ActivateEventArgs eventArgs);
+    }
+
+    public class ActivateEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
     }
 
     /// <summary>
@@ -159,7 +164,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!playerEnt.Transform.GridPosition.InRange(used.Transform.GridPosition, INTERACTION_RANGE))
                 return;
 
-            activateComp.Activate(playerEnt);
+            activateComp.Activate(new ActivateEventArgs { User = playerEnt });
         }
 
         private void HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)

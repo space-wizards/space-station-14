@@ -302,9 +302,9 @@ namespace Content.Server.GameObjects
         }
 
         /// <inheritdoc />
-        void IActivate.Activate(IEntity user)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            ((IUse) this).UseEntity(new UseEntityEventArgs { User = user });
+            ((IUse) this).UseEntity(new UseEntityEventArgs { User = eventArgs.User });
         }
 
         private void _ensureInitialCalculated()
