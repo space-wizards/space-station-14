@@ -41,11 +41,11 @@ namespace Content.Client.Research
 
             Contents.AddChild(hbox);
 
-            hbox.SetAnchorPreset(LayoutPreset.Wide);
+            hbox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             Items = new ItemList()
             {
-                SizeFlagsHorizontal = SizeFlags.Expand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -61,10 +61,16 @@ namespace Content.Client.Research
             Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
             Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
             Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
+            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
+            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
+            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
+            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
+            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
+            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
 
             var spacer = new Control()
             {
-                SizeFlagsHorizontal = SizeFlags.Expand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1
             };
 
