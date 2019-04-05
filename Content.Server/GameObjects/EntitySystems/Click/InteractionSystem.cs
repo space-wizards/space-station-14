@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     /// This interface gives components behavior when being clicked by objects outside the range of direct use
     /// </summary>
-    public interface IRangedAttackby
+    public interface IRangedAttackBy
     {
         /// <summary>
         /// Called when we try to interact with an entity out of range
@@ -66,7 +66,14 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attackwith"></param>
         /// <param name="clicklocation"></param>
         /// <returns></returns>
-        bool RangedAttackby(IEntity user, IEntity attackwith, GridCoordinates clicklocation);
+        bool RangedAttackBy(RangedAttackByEventArgs eventArgs);
+    }
+
+    public class RangedAttackByEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
+        public IEntity Weapon { get; set; }
+        public GridCoordinates ClickLocation { get; set; }
     }
 
     /// <summary>
@@ -358,12 +365,12 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attacked"></param>
         public static void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clicklocation)
         {
-            List<IRangedAttackby> rangedusables = attacked.GetAllComponents<IRangedAttackby>().ToList();
+            List<IRangedAttackBy> rangedusables = attacked.GetAllComponents<IRangedAttackBy>().ToList();
 
             //See if we have a ranged attack interaction
             for (var i = 0; i < rangedusables.Count; i++)
             {
-                if (rangedusables[i].RangedAttackby(user, weapon, clicklocation)) //If an attackby returns a status completion we finish our attack
+                if (rangedusables[i].RangedAttackBy(new RangedAttackByEventArgs { User = user, Weapon = weapon, ClickLocation = clicklocation })) //If an attackby returns a status completion we finish our attack
                 {
                     return;
                 }
