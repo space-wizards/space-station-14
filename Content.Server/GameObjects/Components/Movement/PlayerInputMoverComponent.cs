@@ -2,6 +2,7 @@
 using SS14.Server.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Log;
+using SS14.Shared.Map;
 using SS14.Shared.Maths;
 using SS14.Shared.Serialization;
 using SS14.Shared.ViewVariables;
@@ -44,6 +45,10 @@ namespace Content.Server.GameObjects.Components.Movement
         /// </summary>
         [ViewVariables]
         public Vector2 VelocityDir { get; private set; }
+
+        public GridCoordinates LastPosition { get; set; }
+
+        public float StepSoundDistance { get; set; }
 
         /// <inheritdoc />
         public override void OnAdd()

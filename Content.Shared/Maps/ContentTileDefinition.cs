@@ -18,6 +18,7 @@ namespace Content.Shared.Maps
         public string SpriteName { get; private set; }
         public bool IsSubFloor { get; private set; }
         public bool CanCrowbar { get; private set; }
+        public string FootstepSounds { get; private set; }
 
         public void AssignTileId(ushort id)
         {
@@ -38,6 +39,11 @@ namespace Content.Shared.Maps
             if (mapping.TryGetNode("can_crowbar", out node))
             {
                 CanCrowbar = node.AsBool();
+            }
+
+            if (mapping.TryGetNode("footstep_sounds", out node))
+            {
+                FootstepSounds = node.AsString();
             }
         }
     }

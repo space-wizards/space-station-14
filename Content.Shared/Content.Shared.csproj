@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\SoundCollectionPrototype.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Damage\DamageableComponent.cs" />
     <Compile Include="GameObjects\Components\Doors\SharedDoorComponent.cs" />

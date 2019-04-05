@@ -1,0 +1,27 @@
+- type: sound_collection
+  id: footstep_catwalk
+  files:
+  - /Audio/effects/footsteps/catwalk1.ogg
+  - /Audio/effects/footsteps/catwalk2.ogg
+  - /Audio/effects/footsteps/catwalk3.ogg
+  - /Audio/effects/footsteps/catwalk4.ogg
+  - /Audio/effects/footsteps/catwalk5.ogg
+
+- type: sound_collection
+  id: footstep_floor
+  files:
+  - /Audio/effects/footsteps/floor1.ogg
+  - /Audio/effects/footsteps/floor2.ogg
+  - /Audio/effects/footsteps/floor3.ogg
+  - /Audio/effects/footsteps/floor4.ogg
+  - /Audio/effects/footsteps/floor5.ogg
+
+- type: sound_collection
+  id: footstep_plating
+  files:
+  - /Audio/effects/footsteps/plating1.ogg
+  - /Audio/effects/footsteps/plating2.ogg
+  - /Audio/effects/footsteps/plating3.ogg
+  - /Audio/effects/footsteps/plating4.ogg
+  - /Audio/effects/footsteps/plating5.ogg
+

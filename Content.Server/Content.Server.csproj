@@ -66,6 +66,7 @@
     <Compile Include="Administration\AGhost.cs" />
     <Compile Include="AI\AimShootLifeProcessor.cs" />
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="GameObjects\Components\CatwalkComponent.cs" />
     <Compile Include="GameObjects\Components\Damage\DamageThreshold.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\HandheldLightComponent.cs" />

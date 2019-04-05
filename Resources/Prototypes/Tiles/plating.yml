@@ -3,9 +3,11 @@
   display_name: Plating
   texture: plating
   is_subfloor: true
+  footstep_sounds: footstep_plating
 
 - type: tile
   name: underplating
   display_name: Underplating
   texture: underplating
   is_subfloor: true
+  footstep_sounds: footstep_plating
