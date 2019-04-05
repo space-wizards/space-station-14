@@ -30,8 +30,9 @@ namespace Content.Server.GameObjects.EntitySystems
         bool AttackBy(AttackByEventArgs eventArgs);
     }
 
-    public class AttackByEventArgs : AttackHandEventArgs
+    public class AttackByEventArgs : EventArgs
     {
+        public IEntity User { get; set; }
         public IEntity AttackWith { get; set; }
     }
 
