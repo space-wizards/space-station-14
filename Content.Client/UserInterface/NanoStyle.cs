@@ -339,6 +339,24 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = new Color(21, 21, 26)})
                 }),
+
+                // ItemList
+                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
+                {
+                    new StyleProperty(ItemList.StylePropertyBackground, new StyleBoxFlat { BackgroundColor = new Color(32, 32, 40)})
+                }),
+                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
+                {
+                    new StyleProperty(ItemList.StylePropertyItemBackground, new StyleBoxFlat { BackgroundColor = new Color(55, 55, 68)})
+                }),
+                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
+                {
+                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground, new StyleBoxFlat { BackgroundColor = new Color(10, 10, 12)})
+                }),
+                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
+                {
+                    new StyleProperty(ItemList.StylePropertySelectedItemBackground, new StyleBoxFlat { BackgroundColor = new Color(75, 75, 86)})
+                }),
             });
         }
     }
