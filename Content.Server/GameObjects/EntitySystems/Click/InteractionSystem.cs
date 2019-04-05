@@ -88,7 +88,14 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="clicklocation"></param>
         /// <param name="attacked">The entity that was clicked on out of range. May be null if no entity was clicked on.true</param>
-        void Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked);
+        void AfterAttack(AfterAttackEventArgs eventArgs);
+    }
+
+    public class AfterAttackEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
+        public GridCoordinates ClickLocation { get; set; }
+        public IEntity Attacked { get; set; }
     }
 
     /// <summary>
@@ -266,7 +273,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             for (var i = 0; i < afterattacks.Count; i++)
             {
-                afterattacks[i].Afterattack(user, clicklocation, null);
+                afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clicklocation });
             }
         }
 
@@ -297,7 +304,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             for (var i = 0; i < afterattacks.Count; i++)
             {
-                afterattacks[i].Afterattack(user, clicklocation, attacked);
+                afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clicklocation, Attacked = attacked });
             }
         }
 
@@ -383,7 +390,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 //See if we have a ranged attack interaction
                 for (var i = 0; i < afterattacks.Count; i++)
                 {
-                    afterattacks[i].Afterattack(user, clicklocation, attacked);
+                    afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clicklocation, Attacked = attacked });
                 }
             }
         }

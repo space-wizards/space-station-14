@@ -31,14 +31,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref Damage, "damage", DamageType.Brute);
         }
 
-        void IAfterAttack.Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked)
+        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
-            if (attacked == null)
+            if (eventArgs.Attacked == null)
             {
                 return;
             }
 
-            if (!attacked.TryGetComponent(out DamageableComponent damagecomponent)) return;
+            if (!eventArgs.Attacked.TryGetComponent(out DamageableComponent damagecomponent)) return;
             if (Owner.TryGetComponent(out StackComponent stackComponent))
             {
                 if (!stackComponent.Use(1))

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Text;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
@@ -11,18 +11,18 @@ namespace Content.Server.GameObjects.Components.Power
 {
     public class PowerDebugTool : SharedPowerDebugTool, IAfterAttack
     {
-        void IAfterAttack.Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked)
+        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
-            if (attacked == null)
+            if (eventArgs.Attacked == null)
             {
                 return;
             }
 
             var builder = new StringBuilder();
 
-            builder.AppendFormat("Entity: {0} ({1})\n", attacked.Name, attacked.Uid);
+            builder.AppendFormat("Entity: {0} ({1})\n", eventArgs.Attacked.Name, eventArgs.Attacked.Uid);
 
-            if (attacked.TryGetComponent<PowerNodeComponent>(out var node))
+            if (eventArgs.Attacked.TryGetComponent<PowerNodeComponent>(out var node))
             {
                 builder.AppendFormat("Power Node:\n");
                 if (node.Parent == null)
@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Power
                 }
             }
 
-            if (attacked.TryGetComponent<PowerDeviceComponent>(out var device))
+            if (eventArgs.Attacked.TryGetComponent<PowerDeviceComponent>(out var device))
             {
                 builder.AppendFormat(@"Power Device:
   Load: {0} W
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Power
                 }
             }
 
-            if (attacked.TryGetComponent<PowerStorageNetComponent>(out var storage))
+            if (eventArgs.Attacked.TryGetComponent<PowerStorageNetComponent>(out var storage))
             {
                 var stateSeconds = (DateTime.Now - storage.LastChargeStateChange).TotalSeconds;
                 builder.AppendFormat(@"Power Storage:
@@ -84,14 +84,14 @@ namespace Content.Server.GameObjects.Components.Power
 ", storage.Capacity, storage.Charge, storage.ChargeRate, storage.DistributionRate, storage.ChargePowernet, storage.LastChargeState, storage.GetChargeState(), stateSeconds);
             }
 
-            if (attacked.TryGetComponent<PowerTransferComponent>(out var transfer))
+            if (eventArgs.Attacked.TryGetComponent<PowerTransferComponent>(out var transfer))
             {
                 builder.AppendFormat(@"Power Transfer:
   Powernet: {0}
 ", transfer.Parent.Uid);
             }
 
-            OpenDataWindowClientSide(user, builder.ToString());
+            OpenDataWindowClientSide(eventArgs.User, builder.ToString());
         }
 
         private void OpenDataWindowClientSide(IEntity user, string data)
