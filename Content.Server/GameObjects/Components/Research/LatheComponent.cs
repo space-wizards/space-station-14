@@ -11,14 +11,14 @@ using SS14.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Research
 {
-    public class LatheComponent : SharedLatheComponent, IAttackHand, IAttackby
+    public class LatheComponent : SharedLatheComponent, IAttackHand, IAttackBy
     {
         public Dictionary<StackType, uint> MaterialStorage;
         public List<StackType> AcceptedMaterials = new List<StackType>() {StackType.Metal, StackType.Glass};
 
-        bool IAttackHand.Attackhand(IEntity user)
+        bool IAttackHand.AttackHand(AttackHandEventArgs args)
         {
-            user.TryGetComponent(out BasicActorComponent actor);
+            args.User.TryGetComponent(out BasicActorComponent actor);
 
             if (actor == null) return false;
 
@@ -27,9 +27,9 @@ namespace Content.Server.GameObjects.Components.Research
             return false;
         }
 
-        bool IAttackby.Attackby(IEntity user, IEntity attackwith)
+        bool IAttackBy.AttackBy(AttackByEventArgs args)
         {
-            return InsertMaterial(attackwith);
+            return InsertMaterial(args.AttackWith);
         }
 
         bool InsertMaterial(IEntity entity)
