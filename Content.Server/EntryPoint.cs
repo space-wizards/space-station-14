@@ -130,6 +130,7 @@ namespace Content.Server
 
             factory.Register<MindComponent>();
             factory.Register<SpeciesComponent>();
+            factory.Register<HeatResistanceComponent>();
 
             factory.Register<SpawnPointComponent>();
             factory.RegisterReference<SpawnPointComponent, SharedSpawnPointComponent>();

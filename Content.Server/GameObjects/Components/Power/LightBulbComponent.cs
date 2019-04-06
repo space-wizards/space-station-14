@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Maths;
 using SS14.Shared.Serialization;
@@ -49,6 +49,9 @@ namespace Content.Server.GameObjects.Components.Power
 
         public LightBulbType Type = LightBulbType.Tube;
 
+        private int _burningTemperature;
+        public int BurningTemperature => _burningTemperature;
+
         /// <summary>
         ///     The current state of the light bulb. Invokes the OnLightBulbStateChange event when set.
         ///     It also updates the bulb's sprite accordingly.
@@ -82,6 +85,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             serializer.DataField(ref Type, "bulb", LightBulbType.Tube);
             serializer.DataField(ref _color, "color", Color.White);
+            serializer.DataFieldCached(ref _burningTemperature, "BurningTemperature", 1400);
         }
 
         public void UpdateColor()

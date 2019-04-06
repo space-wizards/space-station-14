@@ -34,6 +34,9 @@ namespace Content.Server.GameObjects
         /// </summary>
         private string templatename;
 
+        private int _heatResistance;
+        public int HeatResistance => _heatResistance;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -43,6 +46,7 @@ namespace Content.Server.GameObjects
             Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Server")
                 .GetType("Content.Server.GameObjects." + templatename);
             DamageTemplate = (DamageTemplates) Activator.CreateInstance(type);
+            serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,

@@ -99,6 +99,22 @@
     
 - type: entity
   parent: BaseLightbulb
+  name: LED Light Tube
+  id: LedLightTube
+  components:
+  - type: LightBulb
+    bulb: Tube
+    color: "#EEEEFF"
+    BurningTemperature: 350
+  - type: Sprite
+    sprite: Objects/light_tube.rsi
+    state: normal
+  - type: Icon
+    sprite: Objects/light_tube.rsi
+    state: normal
+    
+- type: entity
+  parent: BaseLightbulb
   name: Light Bulb
   id: LightBulb
   components:

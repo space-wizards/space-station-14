@@ -1,20 +1,15 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Inventory;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
-using SS14.Server.GameObjects.EntitySystems;
 using SS14.Shared.Audio;
 using SS14.Shared.Enums;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.IoC;
-using SS14.Shared.Log;
-using SS14.Shared.Map;
 using SS14.Shared.Serialization;
 using SS14.Shared.ViewVariables;
 
@@ -50,23 +45,39 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        public bool AttackBy(AttackByEventArgs eventArgs)
         {
             return InsertBulb(eventArgs.AttackWith);
         }
 
-        bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
+        public bool AttackHand(AttackHandEventArgs eventArgs)
         {
-            if (eventArgs.User.GetComponent<InventoryComponent>().GetSlotItem(EquipmentSlotDefines.Slots.GLOVES) != null)
+            if (!eventArgs.User.TryGetComponent(out DamageableComponent damageableComponent))
             {
-                EjectBulb(eventArgs.User);
-                UpdateLight();
-                return true;
+                return false;
+            }
+            if(eventArgs.User.TryGetComponent(out HeatResistanceComponent heatResistanceComponent))
+            {
+                if(CanBurn(heatResistanceComponent.GetHeatResistance()))
+                {
+                    Burn();
+                    return true;
+                }
             }
 
-            if (!eventArgs.User.TryGetComponent(out DamageableComponent damageableComponent)) return false;
-            damageableComponent.TakeDamage(DamageType.Heat, 20);
+            EjectBulb(eventArgs.User);
+            UpdateLight();
             return true;
+
+            bool CanBurn(int heatResistance)
+            {
+                return _lightState == LightState.On && heatResistance < LightBulb.BurningTemperature;
+            }
+
+            void Burn()
+            {
+                damageableComponent.TakeDamage(DamageType.Heat, 20);
+            }
         }
 
         /// <summary>
@@ -122,6 +133,8 @@ namespace Content.Server.GameObjects.Components.Power
             UpdateLight();
         }
 
+        private LightState _lightState => Owner.GetComponent<PointLightComponent>().State;
+            
         /// <summary>
         ///     Updates the light's power drain, sprite and actual light state.
         /// </summary>
@@ -141,9 +154,9 @@ namespace Content.Server.GameObjects.Components.Power
             switch (LightBulb.State)
             {
                 case LightBulbState.Normal:
-                    device.Load = Load;
                     if (device.Powered)
                     {
+                        device.Load = Load;
                         sprite.LayerSetState(0, "on");
                         light.State = LightState.On;
                         light.Color = LightBulb.Color;
@@ -156,10 +169,10 @@ namespace Content.Server.GameObjects.Components.Power
                     }
                     else
                     {
+                        device.Load = 0;
                         sprite.LayerSetState(0, "off");
                         light.State = LightState.Off;
                     }
-
                     break;
                 case LightBulbState.Broken:
                     device.Load = 0;
