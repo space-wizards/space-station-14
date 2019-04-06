@@ -8,13 +8,14 @@ using SS14.Shared.Interfaces.GameObjects;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.ViewVariables;
+using System;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     /// <summary>
     /// Component to transfer power to nearby components, can create powernets and connect to nodes
     /// </summary>
-    public class PowerTransferComponent : Component, IAttackby
+    public class PowerTransferComponent : Component, IAttackBy
     {
         public override string Name => "PowerTransfer";
 
@@ -133,9 +134,9 @@ namespace Content.Server.GameObjects.Components.Power
             return Parent != null && Parent.Dirty == false && !Regenerating;
         }
 
-        public bool Attackby(IEntity user, IEntity attackwith)
+        public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (attackwith.TryGetComponent(out WirecutterComponent wirecutter))
+            if (eventArgs.AttackWith.TryGetComponent(out WirecutterComponent wirecutter))
             {
                 Owner.Delete();
                 return true;

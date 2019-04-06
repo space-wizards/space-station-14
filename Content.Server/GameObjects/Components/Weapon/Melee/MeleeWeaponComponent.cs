@@ -32,15 +32,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref ArcWidth, "arcwidth", 90);
         }
 
-        void IAfterAttack.Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked)
+        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
-            var location = user.GetComponent<ITransformComponent>().GridPosition;
-            var angle = new Angle(clicklocation.ToWorld().Position - location.ToWorld().Position);
-            var entities = IoCManager.Resolve<IServerEntityManager>().GetEntitiesInArc(user.GetComponent<ITransformComponent>().GridPosition, Range, angle, ArcWidth);
+            var location = eventArgs.User.GetComponent<ITransformComponent>().GridPosition;
+            var angle = new Angle(eventArgs.ClickLocation.ToWorld().Position - location.ToWorld().Position);
+            var entities = IoCManager.Resolve<IServerEntityManager>().GetEntitiesInArc(eventArgs.User.GetComponent<ITransformComponent>().GridPosition, Range, angle, ArcWidth);
 
             foreach (var entity in entities)
             {
-                if (!entity.GetComponent<ITransformComponent>().IsMapTransform || entity == user)
+                if (!entity.GetComponent<ITransformComponent>().IsMapTransform || entity == eventArgs.User)
                     continue;
 
                 if (entity.TryGetComponent(out DamageableComponent damagecomponent))

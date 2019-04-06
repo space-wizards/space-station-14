@@ -1,7 +1,6 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.EntitySystems;
 using SS14.Shared.GameObjects;
-using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Reflection;
 using SS14.Shared.IoC;
 using SS14.Shared.Serialization;
@@ -10,7 +9,7 @@ using SS14.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Stack
 {
     // TODO: Naming and presentation and such could use some improvement.
-    public class StackComponent : Component, IAttackby, IExamine
+    public class StackComponent : Component, IAttackBy, IExamine
     {
         private const string SerializationCache = "stack";
         private int _count = 50;
@@ -97,9 +96,9 @@ namespace Content.Server.GameObjects.Components.Stack
             StackType = stackType;
         }
 
-        public bool Attackby(IEntity user, IEntity attackwith)
+        public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (attackwith.TryGetComponent<StackComponent>(out var stack))
+            if (eventArgs.AttackWith.TryGetComponent<StackComponent>(out var stack))
             {
                 if (!stack.StackType.Equals(StackType))
                 {

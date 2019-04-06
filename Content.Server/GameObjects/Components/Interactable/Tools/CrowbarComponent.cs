@@ -25,14 +25,14 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             IoCManager.InjectDependencies(this);
         }
 
-        public void Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked)
+        public void AfterAttack(AfterAttackEventArgs eventArgs)
         {
-            var tile = clicklocation.Grid.GetTile(clicklocation);
+            var tile = eventArgs.ClickLocation.Grid.GetTile(eventArgs.ClickLocation);
             var tileDef = (ContentTileDefinition) tile.TileDef;
             if (tileDef.CanCrowbar)
             {
                 var underplating = _tileDefinitionManager["underplating"];
-                clicklocation.Grid.SetTile(clicklocation, underplating.TileId);
+                eventArgs.ClickLocation.Grid.SetTile(eventArgs.ClickLocation, underplating.TileId);
                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/crowbar.ogg", Owner);
             }
         }

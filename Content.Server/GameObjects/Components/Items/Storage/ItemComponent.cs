@@ -2,10 +2,11 @@
 using SS14.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects
 {
-    public class ItemComponent : StoreableComponent, EntitySystems.IAttackHand
+    public class ItemComponent : StoreableComponent, IAttackHand
     {
         public override string Name => "Item";
 
@@ -26,9 +27,9 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public bool Attackhand(IEntity user)
+        public bool AttackHand(AttackHandEventArgs eventArgs)
         {
-            var hands = user.GetComponent<IHandsComponent>();
+            var hands = eventArgs.User.GetComponent<IHandsComponent>();
             hands.PutInHand(this, hands.ActiveIndex, fallback: false);
             return true;
         }

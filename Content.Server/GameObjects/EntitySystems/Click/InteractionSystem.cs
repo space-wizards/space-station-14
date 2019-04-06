@@ -1,6 +1,5 @@
 ﻿using System;
 using Content.Server.Interfaces.GameObjects;
-using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Interfaces.GameObjects;
@@ -10,7 +9,6 @@ using Content.Shared.Input;
 using SS14.Shared.Input;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
-using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.Interfaces.GameObjects.Components;
@@ -21,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     /// This interface gives components behavior when being clicked on or "attacked" by a user with an object in their hand
     /// </summary>
-    public interface IAttackby
+    public interface IAttackBy
     {
         /// <summary>
         /// Called when using one object on another
@@ -29,7 +27,13 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="attackwith"></param>
         /// <returns></returns>
-        bool Attackby(IEntity user, IEntity attackwith);
+        bool AttackBy(AttackByEventArgs eventArgs);
+    }
+
+    public class AttackByEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
+        public IEntity AttackWith { get; set; }
     }
 
     /// <summary>
@@ -42,13 +46,18 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        bool Attackhand(IEntity user);
+        bool AttackHand(AttackHandEventArgs eventArgs);
+    }
+
+    public class AttackHandEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
     }
 
     /// <summary>
     /// This interface gives components behavior when being clicked by objects outside the range of direct use
     /// </summary>
-    public interface IRangedAttackby
+    public interface IRangedAttackBy
     {
         /// <summary>
         /// Called when we try to interact with an entity out of range
@@ -57,7 +66,14 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attackwith"></param>
         /// <param name="clicklocation"></param>
         /// <returns></returns>
-        bool RangedAttackby(IEntity user, IEntity attackwith, GridCoordinates clicklocation);
+        bool RangedAttackBy(RangedAttackByEventArgs eventArgs);
+    }
+
+    public class RangedAttackByEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
+        public IEntity Weapon { get; set; }
+        public GridCoordinates ClickLocation { get; set; }
     }
 
     /// <summary>
@@ -72,7 +88,14 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="clicklocation"></param>
         /// <param name="attacked">The entity that was clicked on out of range. May be null if no entity was clicked on.true</param>
-        void Afterattack(IEntity user, GridCoordinates clicklocation, IEntity attacked);
+        void AfterAttack(AfterAttackEventArgs eventArgs);
+    }
+
+    public class AfterAttackEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
+        public GridCoordinates ClickLocation { get; set; }
+        public IEntity Attacked { get; set; }
     }
 
     /// <summary>
@@ -85,7 +108,12 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        bool UseEntity(IEntity user);
+        bool UseEntity(UseEntityEventArgs eventArgs);
+    }
+
+    public class UseEntityEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
     }
 
     /// <summary>
@@ -97,7 +125,12 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     Called when this component is activated by another entity.
         /// </summary>
         /// <param name="user">Entity that activated this component.</param>
-        void Activate(IEntity user);
+        void Activate(ActivateEventArgs eventArgs);
+    }
+
+    public class ActivateEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
     }
 
     /// <summary>
@@ -131,7 +164,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!playerEnt.Transform.GridPosition.InRange(used.Transform.GridPosition, INTERACTION_RANGE))
                 return;
 
-            activateComp.Activate(playerEnt);
+            activateComp.Activate(new ActivateEventArgs { User = playerEnt });
         }
 
         private void HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
@@ -250,7 +283,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             for (var i = 0; i < afterattacks.Count; i++)
             {
-                afterattacks[i].Afterattack(user, clicklocation, null);
+                afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clicklocation });
             }
         }
 
@@ -263,11 +296,11 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attacked"></param>
         public static void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clicklocation)
         {
-            List<IAttackby> interactables = attacked.GetAllComponents<IAttackby>().ToList();
+            List<IAttackBy> interactables = attacked.GetAllComponents<IAttackBy>().ToList();
 
             for (var i = 0; i < interactables.Count; i++)
             {
-                if (interactables[i].Attackby(user, weapon)) //If an attackby returns a status completion we finish our attack
+                if (interactables[i].AttackBy(new AttackByEventArgs { User = user, AttackWith = weapon })) //If an attackby returns a status completion we finish our attack
                 {
                     return;
                 }
@@ -281,7 +314,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             for (var i = 0; i < afterattacks.Count; i++)
             {
-                afterattacks[i].Afterattack(user, clicklocation, attacked);
+                afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clicklocation, Attacked = attacked });
             }
         }
 
@@ -297,7 +330,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             for (var i = 0; i < interactables.Count; i++)
             {
-                if (interactables[i].Attackhand(user)) //If an attackby returns a status completion we finish our attack
+                if (interactables[i].AttackHand(new AttackHandEventArgs { User = user})) //If an attackby returns a status completion we finish our attack
                 {
                     return;
                 }
@@ -333,7 +366,7 @@ namespace Content.Server.GameObjects.EntitySystems
             //Try to use item on any components which have the interface
             for (var i = 0; i < usables.Count; i++)
             {
-                if (usables[i].UseEntity(user)) //If an attackby returns a status completion we finish our attack
+                if (usables[i].UseEntity(new UseEntityEventArgs { User = user })) //If an attackby returns a status completion we finish our attack
                 {
                     return;
                 }
@@ -349,12 +382,12 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="attacked"></param>
         public static void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clicklocation)
         {
-            List<IRangedAttackby> rangedusables = attacked.GetAllComponents<IRangedAttackby>().ToList();
+            List<IRangedAttackBy> rangedusables = attacked.GetAllComponents<IRangedAttackBy>().ToList();
 
             //See if we have a ranged attack interaction
             for (var i = 0; i < rangedusables.Count; i++)
             {
-                if (rangedusables[i].RangedAttackby(user, weapon, clicklocation)) //If an attackby returns a status completion we finish our attack
+                if (rangedusables[i].RangedAttackBy(new RangedAttackByEventArgs { User = user, Weapon = weapon, ClickLocation = clicklocation })) //If an attackby returns a status completion we finish our attack
                 {
                     return;
                 }
@@ -367,7 +400,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 //See if we have a ranged attack interaction
                 for (var i = 0; i < afterattacks.Count; i++)
                 {
-                    afterattacks[i].Afterattack(user, clicklocation, attacked);
+                    afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clicklocation, Attacked = attacked });
                 }
             }
         }

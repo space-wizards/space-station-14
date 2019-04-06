@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects
     /// <summary>
     /// Storage component for containing entities within this one, matches a UI on the client which shows stored entities
     /// </summary>
-    public class ServerStorageComponent : SharedStorageComponent, IAttackby, IUse, IActivate
+    public class ServerStorageComponent : SharedStorageComponent, IAttackBy, IUse, IActivate
     {
         private Container storage;
 
@@ -131,25 +131,25 @@ namespace Content.Server.GameObjects
         /// <param name="user"></param>
         /// <param name="attackwith"></param>
         /// <returns></returns>
-        bool IAttackby.Attackby(IEntity user, IEntity attackwith)
+        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
             _ensureInitialCalculated();
-            Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, user.Uid, attackwith.Uid);
+            Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, eventArgs.User.Uid, eventArgs.AttackWith.Uid);
 
-            if (!user.TryGetComponent(out HandsComponent hands))
+            if (!eventArgs.User.TryGetComponent(out HandsComponent hands))
                 return false;
             
             //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
             if (CanInsert(hands.GetActiveHand.Owner) &&  hands.Drop(hands.ActiveIndex))
             {
-                if (Insert(attackwith))
+                if (Insert(eventArgs.AttackWith))
                 {
                     return true;
                 }
             }
             else
             {
-                Owner.PopupMessage(user, "Can't insert.");
+                Owner.PopupMessage(eventArgs.User, "Can't insert.");
             }
             return false;
         }
@@ -159,10 +159,10 @@ namespace Content.Server.GameObjects
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        bool IUse.UseEntity(IEntity user)
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             _ensureInitialCalculated();
-            var user_session = user.GetComponent<BasicActorComponent>().playerSession;
+            var user_session = eventArgs.User.GetComponent<BasicActorComponent>().playerSession;
             Logger.DebugS("Storage", "Storage (UID {0}) \"used\" by player session (UID {1}).", Owner.Uid, user_session.AttachedEntityUid);
             SubscribeSession(user_session);
             SendNetworkMessage(new OpenStorageUIMessage(), user_session.ConnectedClient);
@@ -302,9 +302,9 @@ namespace Content.Server.GameObjects
         }
 
         /// <inheritdoc />
-        void IActivate.Activate(IEntity user)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            ((IUse) this).UseEntity(user);
+            ((IUse) this).UseEntity(new UseEntityEventArgs { User = eventArgs.User });
         }
 
         private void _ensureInitialCalculated()
@@ -323,6 +323,11 @@ namespace Content.Server.GameObjects
             }
 
             _storageInitialCalculated = true;
+        }
+
+        public bool Attackby(AttackByEventArgs eventArgs)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
