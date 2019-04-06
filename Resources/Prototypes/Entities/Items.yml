@@ -94,7 +94,7 @@
     sprite: Objects/lantern.rsi
     layers:
     - state: lantern_off
-    - state: HandheldLightOn
+    - state: HandheldLightOnOverlay
       shader: unshaded
       visible: false
   - type: Icon

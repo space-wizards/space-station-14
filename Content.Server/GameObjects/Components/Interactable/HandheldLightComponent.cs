@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             _pointLight = Owner.GetComponent<PointLightComponent>();
             _spriteComponent = Owner.GetComponent<SpriteComponent>();
-            _clothingComponent = Owner.GetComponent<ClothingComponent>();
+            Owner.TryGetComponent(out _clothingComponent);
             _cellContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out var existed);
 

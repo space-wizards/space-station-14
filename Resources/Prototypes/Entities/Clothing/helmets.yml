@@ -21,11 +21,14 @@
   name: Hard hat
   description: A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
+  - type: HandheldLight
+  - type: PointLight
+    state: Off
   - type: Sprite
     sprite: Clothing/helmet_engineering.rsi
     layers:
     - state: HelmetEngineering
-    - state: HandheldLightOn
+    - state: HandheldLightOnOverlay
       shader: unshaded
       visible: false
   - type: Icon
