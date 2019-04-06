@@ -78,7 +78,17 @@ namespace Content.Server.GameObjects
         /// <returns>Null if the slot is empty, otherwise the item.</returns>
         public ItemComponent GetSlotItem(Slots slot)
         {
-            return SlotContainers[slot].ContainedEntity?.GetComponent<ItemComponent>();
+            return GetSlotItem<ItemComponent>(slot);
+        }
+        public T GetSlotItem<T>(Slots slot) where T : ItemComponent
+        {
+            return SlotContainers[slot].ContainedEntity?.GetComponent<T>();
+        }
+
+        public bool TryGetSlotItem<T>(Slots slot, out T itemComponent) where T : ItemComponent
+        {
+            itemComponent = GetSlotItem<T>(slot);
+            return itemComponent != null;
         }
 
         /// <summary>
