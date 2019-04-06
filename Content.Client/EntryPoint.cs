@@ -98,6 +98,13 @@ namespace Content.Client
             factory.RegisterIgnore("Smes");
             factory.RegisterIgnore("Powercell");
             factory.RegisterIgnore("HandheldLight");
+            factory.RegisterIgnore("LightBulb");
+            factory.RegisterIgnore("Healing");
+            factory.RegisterIgnore("Catwalk");
+            factory.RegisterIgnore("BallisticMagazine");
+            factory.RegisterIgnore("BallisticMagazineWeapon");
+            factory.RegisterIgnore("BallisticBullet");
+            factory.RegisterIgnore("HitscanWeaponCapacitor");
 
             prototypes.RegisterIgnore("material");
 
