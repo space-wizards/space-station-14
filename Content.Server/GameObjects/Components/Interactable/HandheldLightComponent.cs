@@ -132,8 +132,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             _spriteComponent.LayerSetVisible(1, newState == LightState.On);
             _pointLight.State = newState;
-            _clothingComponent.ClothingEquippedPrefix = newState.ToString();
-            _clothingComponent.Dirty();
+            if (_clothingComponent != null)
+            {
+                _clothingComponent.ClothingEquippedPrefix = newState.ToString();
+                _clothingComponent.Dirty();
+            }
         }
 
         public void OnUpdate(float frameTime)
