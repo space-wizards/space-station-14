@@ -1,5 +1,49 @@
 version: 1 # Not used right now, whatever.
 binds:
+- function: ShowDebugMonitors
+  key: F3
+  type: Toggle
+- function: HideUI
+  key: F4
+  type: Toggle
+- function: MoveUp
+  key: W
+  type: State
+- function: MoveLeft
+  key: A
+  type: State
+- function: MoveRight
+  key: D
+  type: State
+- function: MoveDown
+  key: S
+  type: State
+- function: Run
+  key: Shift
+  type: State
+- function: ShowEscapeMenu
+  key: Escape
+  type: State
+- function: FocusChatWindow
+  key: T
+  type: State
+- function: EditorLinePlace
+  key: MouseLeft
+  mod1: Shift
+  type: State
+- function: EditorGridPlace
+  key: MouseLeft
+  mod1: Control
+  type: State
+- function: EditorPlaceObject
+  key: MouseLeft
+  type: State
+- function: EditorCancelPlace
+  key: MouseRight
+  type: State
+- function: EditorRotateObject
+  key: MouseMiddle
+  type: State
 - function: SwapHands
   key: Tab
   type: State
