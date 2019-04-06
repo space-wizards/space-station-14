@@ -45,7 +45,6 @@
     priority: Low
 
   - type: PoweredLight
-    load: 40
     bulb: Tube
     
 - type: entity
@@ -71,7 +70,6 @@
     priority: Low
 
   - type: PoweredLight
-    load: 40
     bulb: Bulb
 
 - type: entity
@@ -106,6 +104,7 @@
     bulb: Tube
     color: "#EEEEFF"
     BurningTemperature: 350
+    PowerUse: 9
   - type: Sprite
     sprite: Objects/light_tube.rsi
     state: normal

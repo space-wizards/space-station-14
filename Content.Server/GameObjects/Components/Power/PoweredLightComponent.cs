@@ -28,8 +28,6 @@ namespace Content.Server.GameObjects.Components.Power
 
         private LightBulbType BulbType = LightBulbType.Tube;
 
-        [ViewVariables] private float Load = 40;
-
         [ViewVariables] private ContainerSlot _lightBulbContainer;
 
         [ViewVariables]
@@ -121,7 +119,6 @@ namespace Content.Server.GameObjects.Components.Power
 
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref Load, "load", 40);
             serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
         }
 
@@ -154,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Power
             switch (LightBulb.State)
             {
                 case LightBulbState.Normal:
-                    device.Load = Load;
+                    device.Load = LightBulb.PowerUse;
                     if (device.Powered)
                     {
                         sprite.LayerSetState(0, "on");

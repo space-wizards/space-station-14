@@ -52,6 +52,9 @@ namespace Content.Server.GameObjects.Components.Power
         private int _burningTemperature;
         public int BurningTemperature => _burningTemperature;
 
+        private float _powerUse;
+        public float PowerUse => _powerUse;
+
         /// <summary>
         ///     The current state of the light bulb. Invokes the OnLightBulbStateChange event when set.
         ///     It also updates the bulb's sprite accordingly.
@@ -86,6 +89,7 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref Type, "bulb", LightBulbType.Tube);
             serializer.DataField(ref _color, "color", Color.White);
             serializer.DataFieldCached(ref _burningTemperature, "BurningTemperature", 1400);
+            serializer.DataFieldCached(ref _powerUse, "PowerUse", 40);
         }
 
         public void UpdateColor()
