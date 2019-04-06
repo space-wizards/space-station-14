@@ -135,7 +135,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (_clothingComponent != null)
             {
                 _clothingComponent.ClothingEquippedPrefix = newState.ToString();
-                _clothingComponent.Dirty();
             }
         }
 

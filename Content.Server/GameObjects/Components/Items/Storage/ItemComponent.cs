@@ -15,7 +15,20 @@ namespace Content.Server.GameObjects
         public override uint? NetID => ContentNetIDs.ITEM;
         public override Type StateType => typeof(ItemComponentState);
 
-        public string EquippedPrefix { get; set; }
+        private string _equippedPrefix;
+
+        public string EquippedPrefix
+        {
+            get
+            {
+                return _equippedPrefix;
+            }
+            set
+            {
+                Dirty();
+                _equippedPrefix = value;
+            }
+        }
 
         public void RemovedFromSlot()
         {
