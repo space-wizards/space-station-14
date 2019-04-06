@@ -52,6 +52,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (!eventArgs.User.TryGetComponent(out DamageableComponent damageableComponent))
             {
+                Eject();
                 return false;
             }
             if(eventArgs.User.TryGetComponent(out HeatResistanceComponent heatResistanceComponent))
@@ -62,9 +63,7 @@ namespace Content.Server.GameObjects.Components.Power
                     return true;
                 }
             }
-
-            EjectBulb(eventArgs.User);
-            UpdateLight();
+            Eject();
             return true;
 
             bool CanBurn(int heatResistance)
@@ -75,6 +74,12 @@ namespace Content.Server.GameObjects.Components.Power
             void Burn()
             {
                 damageableComponent.TakeDamage(DamageType.Heat, 20);
+            }
+
+            void Eject()
+            {
+                EjectBulb(eventArgs.User);
+                UpdateLight();
             }
         }
 
