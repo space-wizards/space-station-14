@@ -3,13 +3,19 @@ using SS14.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
+using SS14.Shared.GameObjects;
+using System;
+using Content.Shared.GameObjects.Components.Items;
 
 namespace Content.Server.GameObjects
 {
     public class ItemComponent : StoreableComponent, IAttackHand
     {
         public override string Name => "Item";
+        public override uint? NetID => ContentNetIDs.ITEM;
+        public override Type StateType => typeof(ItemComponentState);
 
+        public string EquippedPrefix { get; set; }
 
         public void RemovedFromSlot()
         {
@@ -62,6 +68,11 @@ namespace Content.Server.GameObjects
                     hands.PutInHand(component);
                 }
             }
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new ItemComponentState(EquippedPrefix);
         }
     }
 }

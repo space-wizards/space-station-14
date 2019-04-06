@@ -69,6 +69,8 @@
     <Compile Include="GameObjects\Components\Inventory\EquipmentSlotDefinitions.cs" />
     <Compile Include="GameObjects\Components\Inventory\InventoryTemplates.cs" />
     <Compile Include="GameObjects\Components\Inventory\SharedInventoryComponent.cs" />
+    <Compile Include="GameObjects\Components\Items\ClothingComponentState.cs" />
+    <Compile Include="GameObjects\Components\Items\ItemComponentState.cs" />
     <Compile Include="GameObjects\Components\Markers\SharedSpawnPointComponent.cs" />
     <Compile Include="GameObjects\Components\Mobs\SharedCameraRecoilComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerShared.cs" />

@@ -1,4 +1,5 @@
-using Content.Shared.GameObjects.Components.Inventory;
+﻿using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Items;
 using SS14.Client.Graphics;
 using SS14.Client.Interfaces.ResourceManagement;
 using SS14.Client.ResourceManagement;
@@ -8,12 +9,15 @@ using SS14.Shared.IoC;
 using SS14.Shared.Serialization;
 using SS14.Shared.Utility;
 using SS14.Shared.ViewVariables;
+using System;
 
 namespace Content.Client.GameObjects
 {
     public class ItemComponent : Component
     {
         public override string Name => "Item";
+        public override uint? NetID => ContentNetIDs.ITEM;
+        public override Type StateType => typeof(ItemComponentState);
 
         [ViewVariables] protected ResourcePath RsiPath;
 
@@ -55,6 +59,12 @@ namespace Content.Client.GameObjects
         {
             var resourceCache = IoCManager.Resolve<IResourceCache>();
             return resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
+        }
+
+        public override void HandleComponentState(ComponentState state)
+        {
+            var itemComponentState = (ItemComponentState)state;
+            EquippedPrefix = itemComponentState.EquippedPrefix;
         }
     }
 }
