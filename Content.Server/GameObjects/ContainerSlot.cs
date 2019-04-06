@@ -1,11 +1,7 @@
 ﻿using SS14.Server.GameObjects.Components.Container;
 using SS14.Server.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects

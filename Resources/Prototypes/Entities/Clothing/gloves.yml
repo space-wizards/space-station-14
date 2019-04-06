@@ -14,10 +14,10 @@
   description: Electrical gloves that keep you from frying
   components:
   - type: Sprite
-    sprite: Clothing/gloves_yellow.rsi
+    sprite: Clothing/glove_icons.rsi
     state: yellow
   - type: Icon
-    sprite: Clothing/gloves_yellow.rsi
+    sprite: Clothing/glove_icons.rsi
     state: yellow
   - type: Clothing
     sprite: Clothing/gloves_yellow.rsi
@@ -30,10 +30,27 @@
   description: Regular gloves that do not keep you from frying
   components:
   - type: Sprite
-    sprite: Clothing/gloves_black.rsi
+    sprite: Clothing/glove_icons.rsi
     state: black
   - type: Icon
-    sprite: Clothing/gloves_black.rsi
+    sprite: Clothing/glove_icons.rsi
     state: black
   - type: Clothing
     sprite: Clothing/gloves_black.rsi
+    HeatResistance: 500
+    
+- type: entity
+  parent: GlovesBase
+  id: LeatherGloves
+  name: Botanist's leather gloves
+  description: These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/glove_icons.rsi
+    state: leather
+  - type: Icon
+    sprite: Clothing/glove_icons.rsi
+    state: leather
+  - type: Clothing
+    sprite: Clothing/gloves_leather.rsi
+    HeatResistance: 1500

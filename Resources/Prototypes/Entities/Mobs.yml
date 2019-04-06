@@ -50,6 +50,8 @@
     
   - type: Species
     Template: Human
+    HeatResistance: 323
+  - type: HeatResistance
   - type: Damageable
 
   - type: Eye

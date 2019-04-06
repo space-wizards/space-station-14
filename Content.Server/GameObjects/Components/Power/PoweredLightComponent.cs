@@ -1,20 +1,15 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Inventory;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.Components.Container;
-using SS14.Server.GameObjects.EntitySystems;
 using SS14.Shared.Audio;
 using SS14.Shared.Enums;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.IoC;
-using SS14.Shared.Log;
-using SS14.Shared.Map;
 using SS14.Shared.Serialization;
 using SS14.Shared.ViewVariables;
 
@@ -33,8 +28,6 @@ namespace Content.Server.GameObjects.Components.Power
 
         private LightBulbType BulbType = LightBulbType.Tube;
 
-        [ViewVariables] private float Load = 40;
-
         [ViewVariables] private ContainerSlot _lightBulbContainer;
 
         [ViewVariables]
@@ -50,23 +43,44 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        public bool AttackBy(AttackByEventArgs eventArgs)
         {
             return InsertBulb(eventArgs.AttackWith);
         }
 
-        bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
+        public bool AttackHand(AttackHandEventArgs eventArgs)
         {
-            if (eventArgs.User.GetComponent<InventoryComponent>().GetSlotItem(EquipmentSlotDefines.Slots.GLOVES) != null)
+            if (!eventArgs.User.TryGetComponent(out DamageableComponent damageableComponent))
+            {
+                Eject();
+                return false;
+            }
+            if(eventArgs.User.TryGetComponent(out HeatResistanceComponent heatResistanceComponent))
+            {
+                if(CanBurn(heatResistanceComponent.GetHeatResistance()))
+                {
+                    Burn();
+                    return true;
+                }
+            }
+            Eject();
+            return true;
+
+            bool CanBurn(int heatResistance)
+            {
+                return _lightState == LightState.On && heatResistance < LightBulb.BurningTemperature;
+            }
+
+            void Burn()
+            {
+                damageableComponent.TakeDamage(DamageType.Heat, 20);
+            }
+
+            void Eject()
             {
                 EjectBulb(eventArgs.User);
                 UpdateLight();
-                return true;
             }
-
-            if (!eventArgs.User.TryGetComponent(out DamageableComponent damageableComponent)) return false;
-            damageableComponent.TakeDamage(DamageType.Heat, 20);
-            return true;
         }
 
         /// <summary>
@@ -110,7 +124,6 @@ namespace Content.Server.GameObjects.Components.Power
 
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref Load, "load", 40);
             serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
         }
 
@@ -122,6 +135,8 @@ namespace Content.Server.GameObjects.Components.Power
             UpdateLight();
         }
 
+        private LightState _lightState => Owner.GetComponent<PointLightComponent>().State;
+            
         /// <summary>
         ///     Updates the light's power drain, sprite and actual light state.
         /// </summary>
@@ -141,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Power
             switch (LightBulb.State)
             {
                 case LightBulbState.Normal:
-                    device.Load = Load;
+                    device.Load = LightBulb.PowerUse;
                     if (device.Powered)
                     {
                         sprite.LayerSetState(0, "on");
@@ -159,7 +174,6 @@ namespace Content.Server.GameObjects.Components.Power
                         sprite.LayerSetState(0, "off");
                         light.State = LightState.Off;
                     }
-
                     break;
                 case LightBulbState.Broken:
                     device.Load = 0;

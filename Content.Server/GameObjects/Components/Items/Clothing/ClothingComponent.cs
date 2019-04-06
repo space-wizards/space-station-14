@@ -16,6 +16,9 @@ namespace Content.Server.GameObjects
 
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
+        private int _heatResistance;
+        
+        public int HeatResistance => _heatResistance;
         public string ClothingEquippedPrefix { get; set; }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -30,6 +33,8 @@ namespace Content.Server.GameObjects
                     SlotFlags |= (SlotFlags)Enum.Parse(typeof(SlotFlags), slotflagsloaded.ToUpper());
                 }
             });
+
+            serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
         public override ComponentState GetComponentState()

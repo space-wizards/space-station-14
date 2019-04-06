@@ -69,6 +69,7 @@
     <Compile Include="GameObjects\Components\CatwalkComponent.cs" />
     <Compile Include="GameObjects\Components\Damage\DamageThreshold.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
+    <Compile Include="GameObjects\Components\Mobs\HeatResistanceComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\HandheldLightComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\Tools\BaseTool.cs" />
     <Compile Include="GameObjects\Components\Interactable\Tools\CrowbarComponent.cs" />
