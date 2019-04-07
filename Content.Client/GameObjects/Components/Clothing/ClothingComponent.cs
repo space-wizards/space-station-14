@@ -39,6 +39,7 @@ namespace Content.Client.GameObjects.Components.Clothing
         {
             var clothingComponentState = (ClothingComponentState)state;
             ClothingEquippedPrefix = clothingComponentState.ClothingEquippedPrefix;
+            EquippedPrefix = clothingComponentState.EquippedPrefix;
         }
     }
 }

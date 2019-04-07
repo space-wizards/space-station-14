@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects
 
         public override ComponentState GetComponentState()
         {
-            return new ClothingComponentState(ClothingEquippedPrefix);
+            return new ClothingComponentState(ClothingEquippedPrefix, EquippedPrefix);
         }
     }
 }
