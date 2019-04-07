@@ -94,6 +94,10 @@ namespace Content.Client.GameObjects
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
+
+            if (curState == null)
+                return;
+
             var cast = (InventoryComponentState) curState;
 
             var doneSlots = new HashSet<Slots>();

@@ -71,6 +71,9 @@ namespace Content.Client.GameObjects
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
+            if (curState == null)
+                return;
+
             var cast = (HandsComponentState) curState;
             foreach (var (slot, uid) in cast.Hands)
             {
