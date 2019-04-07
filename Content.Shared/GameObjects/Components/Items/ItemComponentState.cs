@@ -14,8 +14,9 @@ namespace Content.Shared.GameObjects.Components.Items
             EquippedPrefix = equippedPrefix;
         }
 
-        protected ItemComponentState(uint netId) : base(netId)
+        protected ItemComponentState(string equippedPrefix, uint netId) : base(netId)
         {
+            EquippedPrefix = equippedPrefix;
         }
     }
 }

@@ -9,10 +9,9 @@ namespace Content.Shared.GameObjects.Components.Items
     {
         public string ClothingEquippedPrefix { get; set; }
 
-        public ClothingComponentState(string clothingEquippedPrefix, string equippedPrefix) : base(ContentNetIDs.CLOTHING)
+        public ClothingComponentState(string clothingEquippedPrefix, string equippedPrefix) : base(equippedPrefix, ContentNetIDs.CLOTHING)
         {
             ClothingEquippedPrefix = clothingEquippedPrefix;
-            EquippedPrefix = equippedPrefix;
         }
     }
 }
