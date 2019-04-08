@@ -357,6 +357,20 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty(ItemList.StylePropertySelectedItemBackground, new StyleBoxFlat { BackgroundColor = new Color(75, 75, 86)})
                 }),
+
+                // Tree
+                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new []
+                {
+                    new StyleProperty(Tree.StylePropertyBackground, new StyleBoxFlat { BackgroundColor = new Color(32, 32, 40)})
+                }),
+                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new []
+                {
+                    new StyleProperty(Tree.StylePropertyItemBoxSelected, new StyleBoxFlat
+                    {
+                        BackgroundColor = new Color(55, 55, 68),
+                        ContentMarginLeftOverride = 4
+                    })
+                }),
             });
         }
     }
