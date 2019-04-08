@@ -1,4 +1,4 @@
-{
+﻿{
     "version": 1,
     "size": {
         "x": 32,
@@ -17,7 +17,7 @@
             ]
         },
         {
-            "name": "lantern_on",
+            "name": "HandheldLightOnOverlay",
             "select": [],
             "flags": {},
             "directions": 1,

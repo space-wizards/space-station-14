@@ -14,3 +14,27 @@
     Slots:
     - head
     sprite: Clothing/helmet_sec.rsi
+
+- type: entity
+  parent: Clothing
+  id: HelmetEngineering
+  name: Hard hat
+  description: A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  components:
+  - type: HandheldLight
+  - type: PointLight
+    state: Off
+  - type: Sprite
+    sprite: Clothing/helmet_engineering.rsi
+    layers:
+    - state: HelmetEngineering
+    - state: HandheldLightOnOverlay
+      shader: unshaded
+      visible: false
+  - type: Icon
+    sprite: Clothing/helmet_engineering.rsi
+    state: HelmetEngineering
+  - type: Clothing
+    Slots:
+    - head
+    sprite: Clothing/helmet_engineering.rsi

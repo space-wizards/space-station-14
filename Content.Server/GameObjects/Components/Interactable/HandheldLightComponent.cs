@@ -20,6 +20,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables] private ContainerSlot _cellContainer;
         private PointLightComponent _pointLight;
         private SpriteComponent _spriteComponent;
+        private ClothingComponent _clothingComponent;
 
         [ViewVariables]
         private PowerCellComponent Cell
@@ -70,6 +71,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             _pointLight = Owner.GetComponent<PointLightComponent>();
             _spriteComponent = Owner.GetComponent<SpriteComponent>();
+            Owner.TryGetComponent(out _clothingComponent);
             _cellContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out var existed);
 
@@ -92,13 +94,11 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Update sprite and light states to match the activation.
             if (Activated)
             {
-                _spriteComponent.LayerSetState(0, "lantern_on");
-                _pointLight.State = LightState.On;
+                SetState(LightState.On);
             }
             else
             {
-                _spriteComponent.LayerSetState(0, "lantern_off");
-                _pointLight.State = LightState.Off;
+                SetState(LightState.Off);
             }
 
             // Toggle always succeeds.
@@ -109,8 +109,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             if (!Activated) return;
 
-            _spriteComponent.LayerSetState(0, "lantern_off");
-            _pointLight.State = LightState.Off;
+            SetState(LightState.Off);
             Activated = false;
         }
 
@@ -126,8 +125,17 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Simple enough.
             if (cell.AvailableCharge(1) < Wattage) return;
 
-            _spriteComponent.LayerSetState(0, "lantern_on");
-            _pointLight.State = LightState.On;
+            SetState(LightState.On);
+        }
+
+        private void SetState(LightState newState)
+        {
+            _spriteComponent.LayerSetVisible(1, newState == LightState.On);
+            _pointLight.State = newState;
+            if (_clothingComponent != null)
+            {
+                _clothingComponent.ClothingEquippedPrefix = newState.ToString();
+            }
         }
 
         public void OnUpdate(float frameTime)
