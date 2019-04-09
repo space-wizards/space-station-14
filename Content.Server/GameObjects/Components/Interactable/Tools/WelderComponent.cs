@@ -5,6 +5,7 @@ using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 using SS14.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
+using SS14.Shared.Maths;
 using SS14.Shared.Serialization;
 using SS14.Shared.ViewVariables;
 
@@ -146,13 +147,22 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             }
         }
 
-        string IExamine.Examine()
+        void IExamine.Examine(FormattedMessage message)
         {
             if (Activated)
             {
-                return $"Fuel: {Fuel}/FuelCapacity\nLit";
+                message.PushColor(Color.Orange);
+                message.AddText("Lit\n");
+                message.Pop();
             }
-            return $"Fuel: {Fuel}/FuelCapacity\nNot lit";
+            else
+            {
+                message.AddText("Not lit\n");
+            }
+            message.AddText("Fuel: ");
+            message.PushColor(Fuel < FuelCapacity / 4f ? Color.DarkOrange : Color.Orange);
+            message.AddText($"{Math.Round(Fuel)}/{FuelCapacity}");
+            message.Pop();
         }
     }
 }

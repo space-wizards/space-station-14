@@ -14,7 +14,9 @@ using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
+using SS14.Shared.Maths;
 using SS14.Shared.Players;
+using SS14.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -23,8 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Returns an status examine value for components appended to the end of the description of the entity
         /// </summary>
-        /// <returns></returns>
-        string Examine();
+        void Examine(FormattedMessage message);
     }
 
     public class ExamineSystem : EntitySystem
@@ -33,6 +34,13 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private IEntityManager _entityManager;
 #pragma warning restore 649
 
+        private static readonly FormattedMessage _entityNotFoundMessage;
+
+        static ExamineSystem()
+        {
+            _entityNotFoundMessage = new FormattedMessage();
+            _entityNotFoundMessage.AddText("That entity doesn't exist");
+        }
 
         public override void Initialize()
         {
@@ -48,29 +56,40 @@ namespace Content.Server.GameObjects.EntitySystems
             RegisterMessageType<ExamineSystemMessages.RequestExamineInfoMessage>();
         }
 
-        private string GetExamineText(IEntity entity)
+        private FormattedMessage GetExamineText(IEntity entity)
         {
-            //Start a StringBuilder since we have no idea how many times this could be appended to
-            var fullExamineText = new StringBuilder();
+            var message = new FormattedMessage();
+
+            var doNewline = false;
 
             //Add an entity description if one is declared
             if (!string.IsNullOrEmpty(entity.Description))
             {
-                fullExamineText.Append(entity.Description);
+                message.AddText(entity.Description);
+                doNewline = true;
             }
 
+            message.PushColor(Color.DarkGray);
+
+            var subMessage = new FormattedMessage();
             //Add component statuses from components that report one
             foreach (var examineComponents in entity.GetAllComponents<IExamine>())
             {
-                var componentDescription = examineComponents.Examine();
-                if (string.IsNullOrWhiteSpace(componentDescription))
+                examineComponents.Examine(subMessage);
+                if (subMessage.Tags.Count == 0)
                     continue;
 
-                fullExamineText.Append("\n");
-                fullExamineText.Append(componentDescription);
+                if (doNewline)
+                {
+                    message.AddText("\n");
+                    doNewline = false;
+                }
+                message.AddMessage(subMessage);
             }
 
-            return fullExamineText.ToString();
+            message.Pop();
+
+            return message;
         }
 
         public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
@@ -82,7 +101,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (!_entityManager.TryGetEntity(request.EntityUid, out var entity))
                 {
                     RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                        request.EntityUid, "That entity doesn't exist"));
+                        request.EntityUid, _entityNotFoundMessage));
                     return;
                 }
 

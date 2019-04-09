@@ -14,7 +14,6 @@ using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
-using SS14.Shared.Log;
 using SS14.Shared.Map;
 using SS14.Shared.Maths;
 using SS14.Shared.Players;
@@ -72,6 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var panel = new PanelContainer();
             panel.AddStyleClass(StyleClassEntityTooltip);
             _examineTooltipOpen.AddChild(panel);
+            panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
             var vBox = new VBoxContainer();
             panel.AddChild(vBox);
             var hBox = new HBoxContainer();
@@ -81,8 +81,15 @@ namespace Content.Client.GameObjects.EntitySystems
                 hBox.AddChild(new SpriteView {Sprite = sprite});
             }
 
-            hBox.AddChild(new Label {Text = entity.Name, SizeFlagsHorizontal = Control.SizeFlags.FillExpand});
-            _examineTooltipOpen.Open(UIBox2.FromDimensions(mousePos, panel.CombinedMinimumSize));
+            hBox.AddChild(new Label
+            {
+                Text = entity.Name,
+                SizeFlagsHorizontal = Control.SizeFlags.FillExpand,
+            });
+
+            const float minWidth = 300;
+            var size = Vector2.ComponentMax((minWidth, 0), panel.CombinedMinimumSize);
+            _examineTooltipOpen.Open(UIBox2.FromDimensions(mousePos, size));
 
             if (entity.Uid.IsClientSide())
             {
@@ -109,12 +116,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 _requestCancelTokenSource = null;
             }
 
-            if (string.IsNullOrWhiteSpace(response.ExamineText))
-            {
-                return;
-            }
-
-            vBox.AddChild(new Label {Text = response.ExamineText.Trim()});
+            var richLabel = new RichTextLabel();
+            richLabel.SetMessage(response.Message);
+            vBox.AddChild(richLabel);
         }
 
         public void CloseTooltip()
