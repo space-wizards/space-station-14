@@ -81,6 +81,7 @@
     <Compile Include="GameObjects\Components\Weapons\Ranged\SharedBallisticMagazineWeaponComponent.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\SharedRangedWeaponComponent.cs" />
     <Compile Include="GameObjects\ContentNetIDs.cs" />
+    <Compile Include="GameObjects\EntitySystemMessages\ExamineSystemMessages.cs" />
     <Compile Include="GameObjects\EntitySystemMessages\VerbSystemMessages.cs" />
     <Compile Include="GameObjects\Messages\Mob\HealthHud.cs" />
     <Compile Include="GameObjects\PhysicalConstants.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -149,9 +150,9 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         {
             if (Activated)
             {
-                return "The welding tool is currently lit";
+                return $"Fuel: {Fuel}/FuelCapacity\nLit";
             }
-            return null;
+            return $"Fuel: {Fuel}/FuelCapacity\nNot lit";
         }
     }
 }

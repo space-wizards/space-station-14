@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Input;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Chat;
@@ -7,7 +8,9 @@ using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
+using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
@@ -26,57 +29,66 @@ namespace Content.Server.GameObjects.EntitySystems
 
     public class ExamineSystem : EntitySystem
     {
-        /// <inheritdoc />
+#pragma warning disable 649
+        [Dependency] private IEntityManager _entityManager;
+#pragma warning restore 649
+
+
         public override void Initialize()
         {
-            var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine));
+            base.Initialize();
+
+            IoCManager.InjectDependencies(this);
         }
 
-        private void HandleExamine(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        public override void RegisterMessageTypes()
         {
-            if (!(session is IPlayerSession svSession))
-                return;
+            base.RegisterMessageTypes();
 
-            var playerEnt = svSession.AttachedEntity;
-            if (!EntityManager.TryGetEntity(uid, out var examined))
-                return;
+            RegisterMessageType<ExamineSystemMessages.RequestExamineInfoMessage>();
+        }
 
-            //Verify player has a transform component
-            if (!playerEnt.TryGetComponent<ITransformComponent>(out var playerTransform))
-            {
-                return;
-            }
-
-            //Verify player is on the same map as the entity he clicked on
-            if (coords.MapID != playerTransform.MapID)
-            {
-                Logger.WarningS("sys.examine", $"Player named {session.Name} clicked on a map he isn't located on");
-                return;
-            }
-
+        private string GetExamineText(IEntity entity)
+        {
             //Start a StringBuilder since we have no idea how many times this could be appended to
-            var fullExamineText = new StringBuilder("This is " + examined.Name);
+            var fullExamineText = new StringBuilder();
 
             //Add an entity description if one is declared
-            if (!string.IsNullOrEmpty(examined.Description))
+            if (!string.IsNullOrEmpty(entity.Description))
             {
-                fullExamineText.Append(Environment.NewLine + examined.Description);
+                fullExamineText.Append(entity.Description);
             }
 
             //Add component statuses from components that report one
-            foreach (var examineComponents in examined.GetAllComponents<IExamine>())
+            foreach (var examineComponents in entity.GetAllComponents<IExamine>())
             {
                 var componentDescription = examineComponents.Examine();
-                if (string.IsNullOrEmpty(componentDescription))
+                if (string.IsNullOrWhiteSpace(componentDescription))
                     continue;
 
-                fullExamineText.Append(Environment.NewLine);
+                fullExamineText.Append("\n");
                 fullExamineText.Append(componentDescription);
             }
 
-            //Send to client chat channel
-            IoCManager.Resolve<IChatManager>().DispatchMessage(svSession.ConnectedClient, SS14.Shared.Console.ChatChannel.Visual, fullExamineText.ToString(), session.SessionId);
+            return fullExamineText.ToString();
+        }
+
+        public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
+        {
+            base.HandleNetMessage(channel, message);
+
+            if (message is ExamineSystemMessages.RequestExamineInfoMessage request)
+            {
+                if (!_entityManager.TryGetEntity(request.EntityUid, out var entity))
+                {
+                    RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
+                        request.EntityUid, "That entity doesn't exist"));
+                    return;
+                }
+
+                var text = GetExamineText(entity);
+                RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text));
+            }
         }
     }
 }
