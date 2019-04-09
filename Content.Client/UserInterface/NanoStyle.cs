@@ -133,11 +133,13 @@ namespace Content.Client.UserInterface
             var checkBoxTextureUnchecked = resCache.GetTexture("/Nano/checkbox_unchecked.svg.96dpi.png");
 
             // Tooltip box
-            var tooltipBox = new StyleBoxFlat
+            var tooltipTexture = resCache.GetTexture("/Nano/tooltip.png");
+            var tooltipBox = new StyleBoxTexture
             {
-                BackgroundColor = new Color(21, 21, 26)
+                Texture = tooltipTexture,
             };
-            tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 3);
+            tooltipBox.SetPatchMargin(StyleBox.Margin.All, 2);
+            tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             Stylesheet = new Stylesheet(new[]
             {

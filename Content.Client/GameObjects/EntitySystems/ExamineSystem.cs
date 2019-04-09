@@ -74,7 +74,7 @@ namespace Content.Client.GameObjects.EntitySystems
             panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
             var vBox = new VBoxContainer();
             panel.AddChild(vBox);
-            var hBox = new HBoxContainer();
+            var hBox = new HBoxContainer { SeparationOverride = 5};
             vBox.AddChild(hBox);
             if (entity.TryGetComponent(out ISpriteComponent sprite))
             {
