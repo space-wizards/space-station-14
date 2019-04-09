@@ -4,6 +4,7 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.Reflection;
 using SS14.Shared.IoC;
 using SS14.Shared.Serialization;
+using SS14.Shared.Utility;
 using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Stack
@@ -113,9 +114,9 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        public string Examine()
+        void IExamine.Examine(FormattedMessage message)
         {
-            return $"There are {Count} things in the stack.";
+            message.AddText($"There are {Count} things in the stack.");
         }
     }
 
