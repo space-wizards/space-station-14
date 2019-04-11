@@ -1,5 +1,5 @@
-using Content.Client.GameObjects.Components.Construction;
-using SS14.Client.UserInterface;
+﻿using Content.Client.GameObjects.Components.Construction;
+using SS14.Client.Interfaces.Graphics;
 using SS14.Client.UserInterface.Controls;
 using SS14.Shared.Utility;
 
@@ -7,6 +7,7 @@ namespace Content.Client.Construction
 {
     public class ConstructionButton : Button
     {
+        private readonly IDisplayManager _displayManager;
         protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Construction/ConstructionButton.tscn");
 
         public ConstructorComponent Owner
@@ -16,12 +17,22 @@ namespace Content.Client.Construction
         }
         ConstructionMenu Menu;
 
+        public ConstructionButton(IDisplayManager displayManager)
+        {
+            _displayManager = displayManager;
+            PerformLayout();
+        }
+
         protected override void Initialize()
         {
             base.Initialize();
 
             OnPressed += IWasPressed;
-            Menu = new ConstructionMenu();
+        }
+
+        private void PerformLayout()
+        {
+            Menu = new ConstructionMenu(_displayManager);
             Menu.AddToScreen();
         }
 
