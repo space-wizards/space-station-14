@@ -117,6 +117,7 @@ namespace Content.Server
 
             factory.Register<ServerStorageComponent>();
             factory.RegisterReference<ServerStorageComponent, IActivate>();
+            factory.Register<EntityStorageComponent>();
 
             factory.Register<PowerDebugTool>();
             factory.Register<PoweredLightComponent>();

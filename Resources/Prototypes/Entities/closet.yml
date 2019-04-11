@@ -16,8 +16,8 @@
   - type: Clickable
   - type: BoundingBox
   - type: Collidable
-  - type: Storage
-    Capacity: 80
+  - type: EntityStorage
+  - type: PlaceableSurface
 
   placement:
     snap:
