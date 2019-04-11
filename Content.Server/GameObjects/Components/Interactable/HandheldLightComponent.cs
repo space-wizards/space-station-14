@@ -7,6 +7,7 @@ using SS14.Server.GameObjects.Components.Container;
 using SS14.Shared.Enums;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
+using SS14.Shared.Utility;
 using SS14.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
@@ -53,11 +54,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             return _cellContainer.Insert(eventArgs.AttackWith);
         }
 
-        string IExamine.Examine()
+        void IExamine.Examine(FormattedMessage message)
         {
-            if (Activated) return "The light is currently on.";
-
-            return null;
+            if (Activated)
+            {
+                message.AddText("The light is currently on.");
+            }
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

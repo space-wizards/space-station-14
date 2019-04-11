@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Input;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Chat;
@@ -7,11 +8,15 @@ using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
+using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Map;
+using SS14.Shared.Maths;
 using SS14.Shared.Players;
+using SS14.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -20,63 +25,89 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Returns an status examine value for components appended to the end of the description of the entity
         /// </summary>
-        /// <returns></returns>
-        string Examine();
+        void Examine(FormattedMessage message);
     }
 
     public class ExamineSystem : EntitySystem
     {
-        /// <inheritdoc />
-        public override void Initialize()
+#pragma warning disable 649
+        [Dependency] private IEntityManager _entityManager;
+#pragma warning restore 649
+
+        private static readonly FormattedMessage _entityNotFoundMessage;
+
+        static ExamineSystem()
         {
-            var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine));
+            _entityNotFoundMessage = new FormattedMessage();
+            _entityNotFoundMessage.AddText("That entity doesn't exist");
         }
 
-        private void HandleExamine(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        public override void Initialize()
         {
-            if (!(session is IPlayerSession svSession))
-                return;
+            base.Initialize();
 
-            var playerEnt = svSession.AttachedEntity;
-            if (!EntityManager.TryGetEntity(uid, out var examined))
-                return;
+            IoCManager.InjectDependencies(this);
+        }
 
-            //Verify player has a transform component
-            if (!playerEnt.TryGetComponent<ITransformComponent>(out var playerTransform))
-            {
-                return;
-            }
+        public override void RegisterMessageTypes()
+        {
+            base.RegisterMessageTypes();
 
-            //Verify player is on the same map as the entity he clicked on
-            if (coords.MapID != playerTransform.MapID)
-            {
-                Logger.WarningS("sys.examine", $"Player named {session.Name} clicked on a map he isn't located on");
-                return;
-            }
+            RegisterMessageType<ExamineSystemMessages.RequestExamineInfoMessage>();
+        }
 
-            //Start a StringBuilder since we have no idea how many times this could be appended to
-            var fullExamineText = new StringBuilder("This is " + examined.Name);
+        private FormattedMessage GetExamineText(IEntity entity)
+        {
+            var message = new FormattedMessage();
+
+            var doNewline = false;
 
             //Add an entity description if one is declared
-            if (!string.IsNullOrEmpty(examined.Description))
+            if (!string.IsNullOrEmpty(entity.Description))
             {
-                fullExamineText.Append(Environment.NewLine + examined.Description);
+                message.AddText(entity.Description);
+                doNewline = true;
             }
 
+            message.PushColor(Color.DarkGray);
+
+            var subMessage = new FormattedMessage();
             //Add component statuses from components that report one
-            foreach (var examineComponents in examined.GetAllComponents<IExamine>())
+            foreach (var examineComponents in entity.GetAllComponents<IExamine>())
             {
-                var componentDescription = examineComponents.Examine();
-                if (string.IsNullOrEmpty(componentDescription))
+                examineComponents.Examine(subMessage);
+                if (subMessage.Tags.Count == 0)
                     continue;
 
-                fullExamineText.Append(Environment.NewLine);
-                fullExamineText.Append(componentDescription);
+                if (doNewline)
+                {
+                    message.AddText("\n");
+                    doNewline = false;
+                }
+                message.AddMessage(subMessage);
             }
 
-            //Send to client chat channel
-            IoCManager.Resolve<IChatManager>().DispatchMessage(svSession.ConnectedClient, SS14.Shared.Console.ChatChannel.Visual, fullExamineText.ToString(), session.SessionId);
+            message.Pop();
+
+            return message;
+        }
+
+        public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
+        {
+            base.HandleNetMessage(channel, message);
+
+            if (message is ExamineSystemMessages.RequestExamineInfoMessage request)
+            {
+                if (!_entityManager.TryGetEntity(request.EntityUid, out var entity))
+                {
+                    RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
+                        request.EntityUid, _entityNotFoundMessage));
+                    return;
+                }
+
+                var text = GetExamineText(entity);
+                RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text));
+            }
         }
     }
 }

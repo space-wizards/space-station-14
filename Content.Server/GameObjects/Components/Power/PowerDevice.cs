@@ -181,13 +181,12 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref _priority, "priority", Powernet.Priority.Medium);
         }
 
-        string IExamine.Examine()
+        void IExamine.Examine(FormattedMessage message)
         {
             if (!Powered)
             {
-                return "The device is not powered";
+                message.AddText("The device is not powered");
             }
-            return null;
         }
 
         private void UpdateLoad(float value)
