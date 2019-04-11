@@ -247,10 +247,20 @@ namespace Content.Server.GameObjects
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+            item.Owner.Transform.GridPosition = Owner.Transform.GridPosition.Translated(RandomOffset());
 
             Dirty();
             return true;
+        }
+
+        private Vector2 RandomOffset()
+        {
+            return new Vector2(RandomOffset(), RandomOffset());
+            float RandomOffset()
+            {
+                var size = 0.5F;
+                return (new Random().NextFloat() * size) - size / 2;
+            }
         }
 
         public bool Drop(IEntity entity)

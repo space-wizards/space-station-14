@@ -109,22 +109,16 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var ent = ((IPlayerSession) session).AttachedEntity;
 
-            if(ent == null || !ent.IsValid())
+            if (ent == null || !ent.IsValid())
+            {
                 return;
+            }
 
             if (!ent.TryGetComponent(out HandsComponent handsComp))
+            {
                 return;
-
-            var transform = ent.Transform;
-
-            if (transform.GridPosition.InRange(coords, InteractionSystem.INTERACTION_RANGE))
-            {
-                handsComp.Drop(handsComp.ActiveIndex, coords);
             }
-            else
-            {
-                handsComp.Drop(handsComp.ActiveIndex);
-            }
+            handsComp.Drop(handsComp.ActiveIndex);
         }
 
         private static void HandleActivateItem(ICommonSession session)

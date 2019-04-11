@@ -75,6 +75,7 @@ namespace Content.Server
             factory.Register<ClothingComponent>();
             factory.RegisterReference<ClothingComponent, ItemComponent>();
             factory.RegisterReference<ClothingComponent, StoreableComponent>();
+            factory.Register<PlaceableSurfaceComponent>();
 
             factory.Register<DamageableComponent>();
             factory.Register<DestructibleComponent>();

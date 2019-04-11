@@ -91,6 +91,7 @@
     <Compile Include="GameObjects\Components\Mobs\SpeciesComponent.cs" />
     <Compile Include="GameObjects\Components\Movement\AiControllerComponent.cs" />
     <Compile Include="GameObjects\Components\Movement\PlayerInputMoverComponent.cs" />
+    <Compile Include="GameObjects\Components\PlaceableSurfaceComponent.cs" />
     <Compile Include="GameObjects\Components\Power\LightBulbComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerCellComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
