@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using SS14.Shared.Interfaces.Map;
 using SS14.Shared.Prototypes;
 using SS14.Shared.Utility;
@@ -19,6 +19,7 @@ namespace Content.Shared.Maps
         public bool IsSubFloor { get; private set; }
         public bool CanCrowbar { get; private set; }
         public string FootstepSounds { get; private set; }
+        public float Friction { get; set; }
 
         public void AssignTileId(ushort id)
         {
@@ -44,6 +45,15 @@ namespace Content.Shared.Maps
             if (mapping.TryGetNode("footstep_sounds", out node))
             {
                 FootstepSounds = node.AsString();
+            }
+
+            if (mapping.TryGetNode("friction", out node))
+            {
+                Friction = node.AsFloat();
+            }
+            else
+            {
+                Friction = 0;
             }
         }
     }

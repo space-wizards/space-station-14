@@ -4,6 +4,7 @@
   texture: plating
   is_subfloor: true
   footstep_sounds: footstep_plating
+  friction: 0.5
 
 - type: tile
   name: underplating
@@ -11,3 +12,4 @@
   texture: underplating
   is_subfloor: true
   footstep_sounds: footstep_plating
+  friction: 0.5
