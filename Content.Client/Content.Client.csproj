@@ -92,6 +92,7 @@
     <Compile Include="GameObjects\Components\Weapons\Ranged\ClientRangedWeaponComponent.cs" />
     <Compile Include="GameObjects\EntitySystems\CameraRecoilSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\ClientNotifySystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\ExamineSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\IconSmoothSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\RangedWeaponSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\SubFloorHideSystem.cs" />

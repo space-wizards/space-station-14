@@ -1,3 +1,4 @@
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using SS14.Client.Graphics.Drawing;
 using SS14.Client.Interfaces.ResourceManagement;
@@ -130,6 +131,15 @@ namespace Content.Client.UserInterface
             // CheckBox
             var checkBoxTextureChecked = resCache.GetTexture("/Nano/checkbox_checked.svg.96dpi.png");
             var checkBoxTextureUnchecked = resCache.GetTexture("/Nano/checkbox_unchecked.svg.96dpi.png");
+
+            // Tooltip box
+            var tooltipTexture = resCache.GetTexture("/Nano/tooltip.png");
+            var tooltipBox = new StyleBoxTexture
+            {
+                Texture = tooltipTexture,
+            };
+            tooltipBox.SetPatchMargin(StyleBox.Margin.All, 2);
+            tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             Stylesheet = new Stylesheet(new[]
             {
@@ -337,7 +347,13 @@ namespace Content.Client.UserInterface
                 // Tooltip
                 new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new []
                 {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = new Color(21, 21, 26)})
+                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                }),
+
+                // Entity tooltip
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ExamineSystem.StyleClassEntityTooltip}, null, null), new []
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
 
                 // ItemList
@@ -356,6 +372,20 @@ namespace Content.Client.UserInterface
                 new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
                 {
                     new StyleProperty(ItemList.StylePropertySelectedItemBackground, new StyleBoxFlat { BackgroundColor = new Color(75, 75, 86)})
+                }),
+
+                // Tree
+                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new []
+                {
+                    new StyleProperty(Tree.StylePropertyBackground, new StyleBoxFlat { BackgroundColor = new Color(32, 32, 40)})
+                }),
+                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new []
+                {
+                    new StyleProperty(Tree.StylePropertyItemBoxSelected, new StyleBoxFlat
+                    {
+                        BackgroundColor = new Color(55, 55, 68),
+                        ContentMarginLeftOverride = 4
+                    })
                 }),
             });
         }
