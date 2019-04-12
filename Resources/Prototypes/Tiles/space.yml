@@ -2,3 +2,4 @@
   name: space
   display_name: Space
   texture: ""
+  friction: 0
