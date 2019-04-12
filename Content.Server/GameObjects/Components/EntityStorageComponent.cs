@@ -5,6 +5,7 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.Map;
+using SS14.Shared.Maths;
 using SS14.Shared.Serialization;
 using SS14.Shared.ViewVariables;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace Content.Server.GameObjects.Components
             int count = 0;
             foreach (var entity in entities)
             {
-                if (!AddToContents(entity, count))
+                if (!AddToContents(entity))
                 {
                     continue;
                 }
@@ -98,9 +99,35 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
-    private bool AddToContents(IEntity entity, int index)
+    private bool AddToContents(IEntity entity)
         {
-            if(Contents.CanInsert(entity))
+            var collidableComponent = Owner.GetComponent<ICollidableComponent>();
+            if(entity.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
+            {
+                if(collidableComponent.WorldAABB.Size.X < entityCollidableComponent.WorldAABB.Size.X
+                    || collidableComponent.WorldAABB.Size.Y < entityCollidableComponent.WorldAABB.Size.Y)
+                {
+                    return false;
+                }
+
+                if (collidableComponent.WorldAABB.Left > entityCollidableComponent.WorldAABB.Left)
+                {
+                    entity.Transform.WorldPosition += new Vector2(collidableComponent.WorldAABB.Left - entityCollidableComponent.WorldAABB.Left, 0);
+                }
+                else if (collidableComponent.WorldAABB.Right < entityCollidableComponent.WorldAABB.Right)
+                {
+                    entity.Transform.WorldPosition += new Vector2(collidableComponent.WorldAABB.Right - entityCollidableComponent.WorldAABB.Right, 0);
+                }
+                if (collidableComponent.WorldAABB.Bottom > entityCollidableComponent.WorldAABB.Bottom)
+                {
+                    entity.Transform.WorldPosition += new Vector2(0, collidableComponent.WorldAABB.Bottom - entityCollidableComponent.WorldAABB.Bottom);
+                }
+                else if (collidableComponent.WorldAABB.Top < entityCollidableComponent.WorldAABB.Top)
+                {
+                    entity.Transform.WorldPosition += new Vector2(0, collidableComponent.WorldAABB.Top - entityCollidableComponent.WorldAABB.Top);
+                }
+            }
+            if (Contents.CanInsert(entity))
             {
                 Contents.Insert(entity);
                 return true;

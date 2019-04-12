@@ -6,6 +6,10 @@
     Size: 5
   - type: Clickable
   - type: BoundingBox
+    aabb: "-0.15,-0.15,0.15,0.15"
+  - type: Collidable
+    mask: 21
+    layer: 8
   - type: Physics
     mass: 5
   - type: Sprite

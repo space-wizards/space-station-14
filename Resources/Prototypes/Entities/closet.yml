@@ -17,7 +17,7 @@
   - type: BoundingBox
     aabb: "-0.5,-0.25,0.5,0.25"
   - type: Collidable
-    IsInteractingWithFloor: true
+    mask: 17
   - type: Physics
     mass: 25
     Anchored: false

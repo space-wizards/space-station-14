@@ -88,7 +88,6 @@
     <Compile Include="Interfaces\ISharedNotifyManager.cs" />
     <Compile Include="GameObjects\Verb.cs" />
     <Compile Include="Maps\ContentTileDefinition.cs" />
-    <Compile Include="Physics\CollisionGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\Components\Items\SharedHandsComponent.cs" />
     <Compile Include="GameObjects\Components\Power\SharedPowerDebugTool.cs" />
@@ -119,6 +118,9 @@
       <Project>{5F161008-6C48-4596-A2DE-5E7B0CEB2AA1}</Project>
       <Name>SS14.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Physics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

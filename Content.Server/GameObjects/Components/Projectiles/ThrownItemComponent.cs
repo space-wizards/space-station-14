@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.GameObjects;
-using Content.Shared.Physics;
+using SS14.Server.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
+using SS14.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -25,9 +26,10 @@ namespace Content.Server.GameObjects.Components
             // after impacting the first object.
             // For realism this should actually be changed when the velocity of the object is less than a threshold.
             // This would allow ricochets off walls, and weird gravity effects from slowing the object.
-            if (collidedwith.Count > 0 && Owner.TryGetComponent(out ICollidableComponent body))
+            if (collidedwith.Count > 0 && Owner.TryGetComponent(out CollidableComponent body))
             {
-                body.CollisionMask &= (int) ~CollisionGroup.Mob;
+                body.CollisionMask &= ~CollisionGroup.Mob;
+                body.CollisionMask |= CollisionGroup.Floor;
 
                 // KYS, your job is finished.
                 Owner.RemoveComponent<ThrownItemComponent>();

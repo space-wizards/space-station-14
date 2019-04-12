@@ -43,6 +43,8 @@
     mass: 85
 
   - type: Collidable
+    mask: 3
+    layer: 2
     DebugColor: "#0000FF"
 
   - type: Input

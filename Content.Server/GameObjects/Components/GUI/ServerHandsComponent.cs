@@ -247,8 +247,13 @@ namespace Content.Server.GameObjects
             item.RemovedFromSlot();
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            item.Owner.Transform.GridPosition = Owner.Transform.GridPosition.Translated(RandomOffset());
-            if(item.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+            item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+            if (item.Owner.TryGetComponent<PhysicsComponent>(out var physicsComponent))
+            {
+                physicsComponent.LinearVelocity += RandomOffset();
+            }
+
+            if (item.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
                 spriteComponent.RenderOrder = item.Owner.EntityManager.CurrentTick;
             }
@@ -262,7 +267,7 @@ namespace Content.Server.GameObjects
             return new Vector2(RandomOffset(), RandomOffset());
             float RandomOffset()
             {
-                var size = 0.5F;
+                var size = 15.0F;
                 return (new Random().NextFloat() * size) - size / 2;
             }
         }

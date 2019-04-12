@@ -3,7 +3,6 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Input;
-using Content.Shared.Physics;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Player;
@@ -11,11 +10,11 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.EntitySystemMessages;
 using SS14.Shared.GameObjects.Systems;
 using SS14.Shared.Input;
-using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.IoC;
 using SS14.Shared.Map;
 using SS14.Shared.Maths;
+using SS14.Shared.Physics;
 using SS14.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -157,22 +156,17 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
             {
-                colComp = throwEnt.AddComponent<CollidableComponent>();
-
-                if(!colComp.Running)
-                    colComp.Startup();
+                return;
             }
 
             colComp.CollisionEnabled = true;
-            colComp.CollisionLayer |= (int)CollisionGroup.Items;
-            colComp.CollisionMask |= (int)CollisionGroup.Grid;
-
             // I can now collide with player, so that i can do damage.
-            colComp.CollisionMask |= (int) CollisionGroup.Mob;
 
             if (!throwEnt.TryGetComponent(out ThrownItemComponent projComp))
             {
                 projComp = throwEnt.AddComponent<ThrownItemComponent>();
+                colComp.CollisionMask |= CollisionGroup.Mob;
+                colComp.CollisionMask &= ~CollisionGroup.Floor;
             }
 
             projComp.IgnoreEntity(plyEnt);
