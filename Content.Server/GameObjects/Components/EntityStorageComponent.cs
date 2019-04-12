@@ -21,7 +21,6 @@ namespace Content.Server.GameObjects.Components
         private bool IsCollidableWhenOpen;
         private Container Contents;
         private IEntityQuery entityQuery;
-        private Dictionary<EntityUid, GridCoordinates> EntityPositionOnEntry;
 
         public override void Initialize()
         {
@@ -30,7 +29,6 @@ namespace Content.Server.GameObjects.Components
             StorageComponent = Owner.AddComponent<ServerStorageComponent>();
             StorageComponent.Initialize();
             entityQuery = new IntersectingEntityQuery(Owner);
-            EntityPositionOnEntry = new Dictionary<EntityUid, GridCoordinates>();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -104,7 +102,6 @@ namespace Content.Server.GameObjects.Components
         {
             if(Contents.CanInsert(entity))
             {
-                EntityPositionOnEntry[entity.Uid] = entity.Transform.GridPosition;
                 Contents.Insert(entity);
                 return true;
             }
@@ -116,12 +113,8 @@ namespace Content.Server.GameObjects.Components
             while (Contents.ContainedEntities.Count > 0 )
             {
                 var containedEntity = Contents.ContainedEntities.First();
-                if (Contents.Remove(containedEntity))
-                {
-                    containedEntity.Transform.GridPosition = EntityPositionOnEntry[containedEntity.Uid];
-                }
+                Contents.Remove(containedEntity);
             }
-            EntityPositionOnEntry.Clear();
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
