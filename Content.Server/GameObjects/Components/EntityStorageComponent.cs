@@ -1,15 +1,14 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Storage;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
 using SS14.Shared.Interfaces.Network;
+using SS14.Shared.Map;
 using SS14.Shared.Serialization;
 using SS14.Shared.ViewVariables;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -20,20 +19,18 @@ namespace Content.Server.GameObjects.Components
         private ServerStorageComponent StorageComponent;
         private int StorageCapacityMax;
         private bool IsCollidableWhenOpen;
-        private List<ContainerSlot> Contents;
+        private Container Contents;
         private IEntityQuery entityQuery;
+        private Dictionary<EntityUid, GridCoordinates> EntityPositionOnEntry;
 
         public override void Initialize()
         {
             base.Initialize();
-            Contents = new List<ContainerSlot>();
-            for (int i = 0; i < StorageCapacityMax; i++)
-            {
-                Contents.Add(ContainerManagerComponent.Ensure<ContainerSlot>($"{typeof(EntityStorageComponent).FullName}{i}{Owner.Uid.ToString()}", Owner));
-            }
+            Contents = ContainerManagerComponent.Ensure<Container>($"{typeof(EntityStorageComponent).FullName}{Owner.Uid.ToString()}", Owner);
             StorageComponent = Owner.AddComponent<ServerStorageComponent>();
             StorageComponent.Initialize();
             entityQuery = new IntersectingEntityQuery(Owner);
+            EntityPositionOnEntry = new Dictionary<EntityUid, GridCoordinates>();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -105,9 +102,10 @@ namespace Content.Server.GameObjects.Components
 
     private bool AddToContents(IEntity entity, int index)
         {
-            if(Contents[index].CanInsert(entity))
+            if(Contents.CanInsert(entity))
             {
-                Contents[index].Insert(entity);
+                EntityPositionOnEntry[entity.Uid] = entity.Transform.GridPosition;
+                Contents.Insert(entity);
                 return true;
             }
             return false;
@@ -115,10 +113,15 @@ namespace Content.Server.GameObjects.Components
 
         private void EmptyContents()
         {
-            foreach (var containerSlot in Contents)
+            while (Contents.ContainedEntities.Count > 0 )
             {
-                containerSlot.Remove(containerSlot.ContainedEntity);
+                var containedEntity = Contents.ContainedEntities.First();
+                if (Contents.Remove(containedEntity))
+                {
+                    containedEntity.Transform.GridPosition = EntityPositionOnEntry[containedEntity.Uid];
+                }
             }
+            EntityPositionOnEntry.Clear();
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
