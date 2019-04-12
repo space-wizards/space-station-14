@@ -4,12 +4,12 @@ using System.Linq;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameTicking.GamePresets;
+using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
-using SS14.Server.Interfaces.Chat;
 using SS14.Server.Interfaces.Console;
 using SS14.Server.Interfaces.Maps;
 using SS14.Server.Interfaces.Player;
@@ -321,8 +321,7 @@ namespace Content.Server.GameTicking
                     // timer time must be > tick length
                     Timer.Spawn(0, args.Session.JoinGame);
 
-                    _chatManager.DispatchMessage(ChatChannel.Server, "Game: Player joined server!",
-                        args.Session.SessionId);
+                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} joined server!");
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
@@ -360,8 +359,7 @@ namespace Content.Server.GameTicking
                         }
                     }
 
-                    _chatManager.DispatchMessage(ChatChannel.Server, "Game: Player joined Game!",
-                        args.Session.SessionId);
+                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} joined game!");
                     break;
                 }
 
@@ -372,7 +370,7 @@ namespace Content.Server.GameTicking
                         _playersInLobby.Remove(session);
                     }
 
-                    _chatManager.DispatchMessage(ChatChannel.Server, "Game: Player left!", args.Session.SessionId);
+                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} left server!");
                     break;
                 }
             }

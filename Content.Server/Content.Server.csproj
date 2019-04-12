@@ -65,6 +65,8 @@
   <ItemGroup>
     <Compile Include="Administration\AGhost.cs" />
     <Compile Include="AI\AimShootLifeProcessor.cs" />
+    <Compile Include="Chat\ChatCommands.cs" />
+    <Compile Include="Chat\ChatManager.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\CatwalkComponent.cs" />
     <Compile Include="GameObjects\Components\Damage\DamageThreshold.cs" />
@@ -131,6 +133,8 @@
     <Compile Include="GameTicking\GamePreset.cs" />
     <Compile Include="GameTicking\GamePresets\PresetTraitor.cs" />
     <Compile Include="GameTicking\GameTicker.cs" />
+    <Compile Include="Interfaces\Chat\IChatCommand.cs" />
+    <Compile Include="Interfaces\Chat\IChatManager.cs" />
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="GameObjects\Components\GUI\ServerHandsComponent.cs" />
     <Compile Include="GameObjects\Components\GUI\InventoryComponent.cs" />

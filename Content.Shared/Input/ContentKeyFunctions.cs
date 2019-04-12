@@ -14,5 +14,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld"; // default action on world entity
         public static readonly BoundKeyFunction ThrowItemInHand = "ThrowItemInHand";
         public static readonly BoundKeyFunction OpenContextMenu = "OpenContextMenu";
+        public static readonly BoundKeyFunction FocusChat = "FocusChatWindow";
     }
 }

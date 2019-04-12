@@ -2,7 +2,6 @@ using System;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects;
-using SS14.Server.Chat;
 using SS14.Server.GameObjects.Components.Container;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Shared.Interfaces.GameObjects;

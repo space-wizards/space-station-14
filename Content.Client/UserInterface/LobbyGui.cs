@@ -1,3 +1,4 @@
+using Content.Client.Chat;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Client.UserInterface.CustomControls;
@@ -20,14 +21,14 @@ namespace Content.Client.UserInterface
 
         public Button LeaveButton => GetChild<Button>("Panel/VBoxContainer/TitleContainer/LeaveButton");
 
-        public Chatbox Chat { get; private set; }
+        public ChatBox Chat { get; private set; }
 
         protected override void Initialize()
         {
             base.Initialize();
 
             var chatContainer = GetChild("Panel/VBoxContainer/HBoxContainer/LeftVBox");
-            Chat = new Chatbox();
+            Chat = new ChatBox();
             chatContainer.AddChild(Chat);
             Chat.SizeFlagsVertical = SizeFlags.FillExpand;
         }
