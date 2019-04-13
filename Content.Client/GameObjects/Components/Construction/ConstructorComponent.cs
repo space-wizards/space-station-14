@@ -4,6 +4,7 @@ using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Construction;
 using SS14.Client.GameObjects;
 using SS14.Client.Interfaces.GameObjects;
+using SS14.Client.Interfaces.Graphics;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
@@ -39,7 +40,7 @@ namespace Content.Client.GameObjects.Components.Construction
                 case PlayerAttachedMsg _:
                     if (Button == null)
                     {
-                        Button = new ConstructionButton();
+                        Button = new ConstructionButton(IoCManager.Resolve<IDisplayManager>());
                         Button.Owner = this;
                     }
                     Button.AddToScreen();

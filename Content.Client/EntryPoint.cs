@@ -25,9 +25,11 @@ using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.IoC;
 using SS14.Shared.Prototypes;
 using System;
+using Content.Client.Chat;
 using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Sound;
+using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -124,6 +126,7 @@ namespace Content.Client
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
             IoCManager.Register<IClientGameTicker, ClientGameTicker>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
+            IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.BuildGraph();
 
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
@@ -181,6 +184,7 @@ namespace Content.Client
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
             IoCManager.Resolve<IClientGameTicker>().Initialize();
             IoCManager.Resolve<IOverlayManager>().AddOverlay(new ParallaxOverlay());
+            IoCManager.Resolve<IChatManager>().Initialize();
         }
 
         public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)

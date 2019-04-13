@@ -1,6 +1,4 @@
-﻿using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Storage;
-using SS14.Client.GameObjects;
+﻿using Content.Shared.GameObjects.Components.Storage;
 using SS14.Client.Interfaces.GameObjects.Components;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
@@ -9,11 +7,10 @@ using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
-using SS14.Shared.Log;
-using SS14.Shared.Maths;
 using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using SS14.Client.Interfaces.Graphics;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -41,7 +38,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.OnAdd();
 
-            Window = new StorageWindow()
+            Window = new StorageWindow(IoCManager.Resolve<IDisplayManager>())
             { StorageEntity = this };
         }
 
@@ -52,11 +49,11 @@ namespace Content.Client.GameObjects.Components.Storage
         }
 
         /// <inheritdoc />
-        public override void HandleComponentState(ComponentState state)
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            base.HandleComponentState(state);
+            base.HandleComponentState(curState, nextState);
 
-            if (!(state is StorageComponentState storageState))
+            if (!(curState is StorageComponentState storageState))
                 return;
 
             Open = storageState.Open;
@@ -147,6 +144,8 @@ namespace Content.Client.GameObjects.Components.Storage
             public ClientStorageComponent StorageEntity;
 
             protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Storage/Storage.tscn");
+
+            public StorageWindow(IDisplayManager displayMan) : base(displayMan) { }
 
             protected override void Initialize()
             {

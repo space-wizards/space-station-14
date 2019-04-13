@@ -61,9 +61,12 @@ namespace Content.Client.GameObjects
             return resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
         }
 
-        public override void HandleComponentState(ComponentState state)
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var itemComponentState = (ItemComponentState)state;
+            if(curState == null)
+                return;
+
+            var itemComponentState = (ItemComponentState)curState;
             EquippedPrefix = itemComponentState.EquippedPrefix;
         }
     }
