@@ -1,4 +1,4 @@
-﻿using SS14.Server.Interfaces.Chat;
+﻿using Content.Server.Interfaces.Chat;
 using SS14.Shared.Console;
 using SS14.Shared.IoC;
 
@@ -17,8 +17,9 @@ namespace Content.Server.Mobs.Roles
             base.Greet();
 
             var chat = IoCManager.Resolve<IChatManager>();
-            chat.DispatchMessage(Mind.Session.ConnectedClient, ChatChannel.Server,
-                                 "You're a traitor. Go fuck something up. Or something. I don't care to be honest.");
+            chat.DispatchServerMessage(
+                Mind.Session,
+                "You're a traitor. Go fuck something up. Or something. I don't care to be honest.");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects;
+﻿using Content.Server.Chat;
+using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Interactable.Tools;
@@ -6,7 +7,6 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Placement;
 using SS14.Server;
 using SS14.Server.Interfaces;
-using SS14.Server.Interfaces.Chat;
 using SS14.Server.Interfaces.Maps;
 using SS14.Server.Interfaces.Player;
 using SS14.Server.Player;
@@ -48,6 +48,7 @@ using SS14.Server.Interfaces.ServerStatus;
 using SS14.Shared.Timing;
 using Content.Server.GameObjects.Components.Destructible;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 
 namespace Content.Server
@@ -156,11 +157,13 @@ namespace Content.Server
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IGameTicker, GameTicker>();
+            IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.BuildGraph();
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
+            IoCManager.Resolve<IChatManager>().Initialize();
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 

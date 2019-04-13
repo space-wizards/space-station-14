@@ -3,7 +3,6 @@ using System.Text;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Input;
 using SS14.Server.GameObjects.EntitySystems;
-using SS14.Server.Interfaces.Chat;
 using SS14.Server.Interfaces.Player;
 using SS14.Shared.GameObjects;
 using SS14.Shared.GameObjects.Systems;
