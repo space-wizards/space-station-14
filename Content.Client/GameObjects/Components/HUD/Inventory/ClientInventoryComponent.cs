@@ -91,10 +91,14 @@ namespace Content.Client.GameObjects
             serializer.DataField(ref _templateName, "Template", "HumanInventory");
         }
 
-        public override void HandleComponentState(ComponentState state)
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            base.HandleComponentState(state);
-            var cast = (InventoryComponentState) state;
+            base.HandleComponentState(curState, nextState);
+
+            if (curState == null)
+                return;
+
+            var cast = (InventoryComponentState) curState;
 
             var doneSlots = new HashSet<Slots>();
 

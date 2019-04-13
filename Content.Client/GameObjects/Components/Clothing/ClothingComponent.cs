@@ -35,9 +35,12 @@ namespace Content.Client.GameObjects.Components.Clothing
             return null;
         }
 
-        public override void HandleComponentState(ComponentState state)
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var clothingComponentState = (ClothingComponentState)state;
+            if (curState == null)
+                return;
+
+            var clothingComponentState = (ClothingComponentState)curState;
             ClothingEquippedPrefix = clothingComponentState.ClothingEquippedPrefix;
             EquippedPrefix = clothingComponentState.EquippedPrefix;
         }
