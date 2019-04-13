@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -27,10 +28,9 @@ namespace Content.Server.GameObjects.EntitySystems
     internal class MoverSystem : EntitySystem
     {
 #pragma warning disable 649
-        [Dependency]
-        private IPauseManager _pauseManager;
-        [Dependency]
-        private IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IPauseManager _pauseManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
 #pragma warning restore 649
 
         private AudioSystem _audioSystem;
@@ -42,8 +42,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
-            IoCManager.InjectDependencies(this);
-
             EntityQuery = new TypeEntityQuery(typeof(PlayerInputMoverComponent));
             
             var moveUpCmdHandler = InputCmdHandler.FromDelegate(
@@ -214,7 +212,7 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 // Walking on a tile.
-                var def = (ContentTileDefinition)tile.TileDef;
+                var def = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TileId];
                 if (def.FootstepSounds == null)
                 {
                     // Nothing to play, oh well.
