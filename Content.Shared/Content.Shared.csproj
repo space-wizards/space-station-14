@@ -63,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio\SoundCollectionPrototype.cs" />
+    <Compile Include="Chat\ChatChannel.cs" />
+    <Compile Include="Chat\MsgChatMessage.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Damage\DamageableComponent.cs" />
     <Compile Include="GameObjects\Components\Doors\SharedDoorComponent.cs" />

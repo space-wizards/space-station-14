@@ -71,6 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chat\ChatBox.cs" />
+    <Compile Include="Chat\ChatManager.cs" />
     <Compile Include="Commands\DebugCommands.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Actor\CharacterInterface.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="Graphics\Overlays\CircleMaskOverlay.cs" />
     <Compile Include="Graphics\Overlays\GradientCircleMask.cs" />
     <Compile Include="Input\ContentContexts.cs" />
+    <Compile Include="Interfaces\Chat\IChatManager.cs" />
     <Compile Include="Interfaces\IClientGameTicker.cs" />
     <Compile Include="Interfaces\IClientNotifyManager.cs" />
     <Compile Include="ClientNotifyManager.cs" />

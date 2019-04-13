@@ -11,6 +11,9 @@ namespace Content.Client.Input
     {
         public static void SetupContexts(IInputContextContainer contexts)
         {
+            var common = contexts.GetContext("common");
+            common.AddFunction(ContentKeyFunctions.FocusChat);
+
             var human = contexts.GetContext("human");
             human.AddFunction(ContentKeyFunctions.SwapHands);
             human.AddFunction(ContentKeyFunctions.Drop);

@@ -1,13 +1,15 @@
 using System;
+using Content.Client.Chat;
 using Content.Client.Interfaces;
+using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Shared;
+using Content.Shared.Input;
 using SS14.Client;
 using SS14.Client.Console;
 using SS14.Client.Interfaces;
 using SS14.Client.Interfaces.Input;
 using SS14.Client.Interfaces.UserInterface;
-using SS14.Client.UserInterface.CustomControls;
 using SS14.Shared.Input;
 using SS14.Shared.Interfaces.Network;
 using SS14.Shared.IoC;
@@ -21,15 +23,16 @@ namespace Content.Client.GameTicking
 #pragma warning disable 649
         [Dependency] private IClientNetManager _netManager;
         [Dependency] private IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private IClientChatConsole _chatConsole;
         [Dependency] private IInputManager _inputManager;
         [Dependency] private IBaseClient _baseClient;
+        [Dependency] private IChatManager _chatManager;
+        [Dependency] private IClientConsole _console;
 #pragma warning restore 649
 
         [ViewVariables] private bool _areWeReady;
         [ViewVariables] private bool _initialized;
         [ViewVariables] private TickerState _tickerState;
-        [ViewVariables] private Chatbox _gameChat;
+        [ViewVariables] private ChatBox _gameChat;
         [ViewVariables] private LobbyGui _lobby;
         [ViewVariables] private bool _gameStarted;
         [ViewVariables] private DateTime _startTime;
@@ -135,8 +138,6 @@ namespace Content.Client.GameTicking
 
             if (_gameChat != null)
             {
-                _gameChat.TextSubmitted -= _chatConsole.ParseChatMessage;
-                _chatConsole.AddString -= _gameChat.AddLine;
                 _gameChat.Dispose();
                 _gameChat = null;
             }
@@ -146,19 +147,21 @@ namespace Content.Client.GameTicking
             _lobby = new LobbyGui();
             _userInterfaceManager.StateRoot.AddChild(_lobby);
 
-            _lobby.Chat.TextSubmitted += _chatConsole.ParseChatMessage;
-            _chatConsole.AddString += _lobby.Chat.AddLine;
+            _chatManager.SetChatBox(_lobby.Chat);
             _lobby.Chat.DefaultChatFormat = "ooc \"{0}\"";
 
             _lobby.ServerName.Text = _baseClient.GameInfo.ServerName;
 
-            _inputManager.SetInputCommand(EngineKeyFunctions.FocusChat,
-                InputCmdHandler.FromDelegate(session => { _lobby.Chat.Input.GrabKeyboardFocus(); }));
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
+                InputCmdHandler.FromDelegate(session =>
+                {
+                    _lobby.Chat.Input.IgnoreNext = true;
+                    _lobby.Chat.Input.GrabKeyboardFocus();
+                }));
 
             _updateLobbyUi();
 
-            _lobby.ObserveButton.OnPressed += args => { _chatConsole.ProcessCommand("observe"); };
-
+            _lobby.ObserveButton.OnPressed += args => _console.ProcessCommand("observe");
             _lobby.ReadyButton.OnPressed += args =>
             {
                 if (!_gameStarted)
@@ -166,7 +169,7 @@ namespace Content.Client.GameTicking
                     return;
                 }
 
-                _chatConsole.ProcessCommand("joingame");
+                _console.ProcessCommand("joingame");
             };
 
             _lobby.ReadyButton.OnToggled += args =>
@@ -176,10 +179,10 @@ namespace Content.Client.GameTicking
                     return;
                 }
 
-                _chatConsole.ProcessCommand($"toggleready {args.Pressed}");
+                _console.ProcessCommand($"toggleready {args.Pressed}");
             };
 
-            _lobby.LeaveButton.OnPressed += args => _chatConsole.ProcessCommand("disconnect");
+            _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
         }
 
         private void _joinGame(MsgTickerJoinGame message)
@@ -193,19 +196,20 @@ namespace Content.Client.GameTicking
 
             if (_lobby != null)
             {
-                _lobby.Chat.TextSubmitted -= _chatConsole.ParseChatMessage;
-                _chatConsole.AddString -= _lobby.Chat.AddLine;
                 _lobby.Dispose();
                 _lobby = null;
             }
 
-            _inputManager.SetInputCommand(EngineKeyFunctions.FocusChat,
-                InputCmdHandler.FromDelegate(session => { _gameChat.Input.GrabKeyboardFocus(); }));
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
+                InputCmdHandler.FromDelegate(session =>
+                {
+                    _lobby.Chat.Input.IgnoreNext = true;
+                    _gameChat.Input.GrabKeyboardFocus();
+                }));
 
-            _gameChat = new Chatbox();
+            _gameChat = new ChatBox();
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
-            _gameChat.TextSubmitted += _chatConsole.ParseChatMessage;
-            _chatConsole.AddString += _gameChat.AddLine;
+            _chatManager.SetChatBox(_gameChat);
             _gameChat.DefaultChatFormat = "say \"{0}\"";
         }
 
