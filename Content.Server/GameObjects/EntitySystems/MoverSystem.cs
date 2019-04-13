@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // If the coordinates have a catwalk, it's always catwalk.
             string soundCollectionName;
             var catwalk = false;
-            foreach (var maybeCatwalk in grid.GetSnapGridCell(tile.GridTile, SnapGridOffset.Center))
+            foreach (var maybeCatwalk in grid.GetSnapGridCell(tile.GridIndices, SnapGridOffset.Center))
             {
                 if (maybeCatwalk.Owner.HasComponent<CatwalkComponent>())
                 {
@@ -212,7 +212,7 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 // Walking on a tile.
-                var def = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TileId];
+                var def = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
                 if (def.FootstepSounds == null)
                 {
                     // Nothing to play, oh well.

@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         public void AfterAttack(AfterAttackEventArgs eventArgs)
         {
             var tile = eventArgs.ClickLocation.Grid.GetTile(eventArgs.ClickLocation);
-            var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TileId];
+            var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
             if (tileDef.CanCrowbar)
             {
                 var underplating = _tileDefinitionManager["underplating"];
