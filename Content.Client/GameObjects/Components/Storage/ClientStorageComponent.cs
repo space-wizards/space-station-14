@@ -14,6 +14,7 @@ using SS14.Shared.Maths;
 using SS14.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using SS14.Client.Interfaces.Graphics;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -41,7 +42,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.OnAdd();
 
-            Window = new StorageWindow()
+            Window = new StorageWindow(IoCManager.Resolve<IDisplayManager>())
             { StorageEntity = this };
         }
 
@@ -147,6 +148,8 @@ namespace Content.Client.GameObjects.Components.Storage
             public ClientStorageComponent StorageEntity;
 
             protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Storage/Storage.tscn");
+
+            public StorageWindow(IDisplayManager displayMan) : base(displayMan) { }
 
             protected override void Initialize()
             {

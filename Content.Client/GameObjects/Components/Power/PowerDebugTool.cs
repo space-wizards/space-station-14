@@ -1,10 +1,11 @@
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Power;
+﻿using Content.Shared.GameObjects.Components.Power;
+using SS14.Client.Interfaces.Graphics;
 using SS14.Client.UserInterface.Controls;
 using SS14.Client.UserInterface.CustomControls;
 using SS14.Shared.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.Network;
+using SS14.Shared.IoC;
 
 namespace Content.Client.GameObjects.Components.Power
 {
@@ -22,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Power
                     {
                         LastWindow.Dispose();
                     }
-                    LastWindow = new SS14Window
+                    LastWindow = new SS14Window(IoCManager.Resolve<IDisplayManager>())
                     {
                         Title = "Power Debug Tool",
                     };

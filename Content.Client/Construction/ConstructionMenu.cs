@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Construction;
@@ -6,6 +6,7 @@ using Content.Shared.Construction;
 using SS14.Client.GameObjects;
 using SS14.Client.Graphics;
 using SS14.Client.Interfaces.GameObjects;
+using SS14.Client.Interfaces.Graphics;
 using SS14.Client.Interfaces.Placement;
 using SS14.Client.Interfaces.ResourceManagement;
 using SS14.Client.Placement;
@@ -48,6 +49,7 @@ namespace Content.Client.Construction
         // This list is flattened in such a way that the top most deepest category is first.
         List<CategoryNode> FlattenedCategories;
         PlacementManager Placement;
+        public ConstructionMenu(IDisplayManager displayMan) : base(displayMan) { }
 
         protected override void Initialize()
         {
