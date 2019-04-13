@@ -12,6 +12,8 @@ using Robust.Shared.Map;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -138,6 +140,8 @@ namespace Content.Server.GameObjects.EntitySystems
     /// </summary>
     public class InteractionSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager;
+
         public const float INTERACTION_RANGE = 2;
         public const float INTERACTION_RANGE_SQUARED = INTERACTION_RANGE * INTERACTION_RANGE;
 
@@ -170,7 +174,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private void HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if(!coords.IsValidLocation())
+            if(!_mapManager.GridExists(coords.GridID))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return;
