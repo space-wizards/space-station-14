@@ -8,6 +8,7 @@ using SS14.Shared.IoC;
 using SS14.Shared.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using SS14.Client.Interfaces.Graphics;
 
 namespace Content.Client.GameObjects.Components.Actor
 {
@@ -82,7 +83,7 @@ namespace Content.Client.GameObjects.Components.Actor
         {
             protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Mobs/CharacterWindow.tscn");
 
-            public CharacterWindow(IEnumerable<ICharacterUI> windowcomponents)
+            public CharacterWindow(IEnumerable<ICharacterUI> windowcomponents) : base(IoCManager.Resolve<IDisplayManager>())
             {
                 //TODO: sort window components by priority of window component
                 foreach(var element in windowcomponents.OrderByDescending(x => x.Priority))

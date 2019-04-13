@@ -1,9 +1,11 @@
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components.Power;
 using SS14.Client.GameObjects.Components.UserInterface;
+using SS14.Client.Interfaces.Graphics;
 using SS14.Client.UserInterface.Controls;
 using SS14.Client.UserInterface.CustomControls;
 using SS14.Shared.GameObjects.Components.UserInterface;
+using SS14.Shared.IoC;
 using SS14.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.Power
@@ -19,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Power
         {
             base.Open();
 
-            _window = new ApcWindow();
+            _window = new ApcWindow(IoCManager.Resolve<IDisplayManager>());
             _window.OnClose += Close;
             _breakerButton = _window.Contents.GetChild<BaseButton>("Rows/Breaker/Breaker");
             _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());
@@ -70,6 +72,8 @@ namespace Content.Client.GameObjects.Components.Power
         private class ApcWindow : SS14Window
         {
             protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Power/Apc.tscn");
+
+            public ApcWindow(IDisplayManager displayMan) : base(displayMan) { }
         }
     }
 }
