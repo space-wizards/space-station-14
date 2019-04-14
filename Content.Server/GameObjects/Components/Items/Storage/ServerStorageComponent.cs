@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Storage;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -16,6 +15,7 @@ using Robust.Shared.Serialization;
 using System.Collections.Generic;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components;
 
@@ -26,6 +26,12 @@ namespace Content.Server.GameObjects
     /// </summary>
     public class ServerStorageComponent : SharedStorageComponent, IAttackBy, IUse, IActivate
     {
+#pragma warning disable 649
+        [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IEntityManager _entityManager;
+#pragma warning restore 649
+
         private Container storage;
 
         private bool _storageInitialCalculated = false;
@@ -269,18 +275,17 @@ namespace Content.Server.GameObjects
                 case RemoveEntityMessage _:
                 {
                     _ensureInitialCalculated();
-                    var playerMan = IoCManager.Resolve<IPlayerManager>();
-                    var session = playerMan.GetSessionByChannel(netChannel);
+                    var session = _playerManager.GetSessionByChannel(netChannel);
                     var playerentity = session.AttachedEntity;
 
                     var ourtransform = Owner.GetComponent<ITransformComponent>();
                     var playertransform = playerentity.GetComponent<ITransformComponent>();
 
-                    if (playertransform.GridPosition.InRange(ourtransform.GridPosition, 2)
+                    if (playertransform.GridPosition.InRange(_mapManager, ourtransform.GridPosition, 2)
                         && (ourtransform.IsMapTransform || playertransform.ContainsEntity(ourtransform)))
                     {
                         var remove = (RemoveEntityMessage)message;
-                        var entity = IoCManager.Resolve<IEntityManager>().GetEntity(remove.EntityUid);
+                        var entity = _entityManager.GetEntity(remove.EntityUid);
                         if (entity != null && storage.Contains(entity))
                         {
                             Remove(entity);
@@ -300,8 +305,7 @@ namespace Content.Server.GameObjects
 
                 case CloseStorageUIMessage _:
                 {
-                    var playerMan = IoCManager.Resolve<IPlayerManager>();
-                    var session = playerMan.GetSessionByChannel(netChannel);
+                    var session = _playerManager.GetSessionByChannel(netChannel);
 
                     UnsubscribeSession(session);
                 }

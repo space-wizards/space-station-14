@@ -140,7 +140,9 @@ namespace Content.Server.GameObjects.EntitySystems
     /// </summary>
     public class InteractionSystem : EntitySystem
     {
+#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
+#pragma warning restore 649
 
         public const float INTERACTION_RANGE = 2;
         public const float INTERACTION_RANGE_SQUARED = INTERACTION_RANGE * INTERACTION_RANGE;
@@ -165,7 +167,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if(playerEnt == null || !playerEnt.IsValid())
                 return;
 
-            if (!playerEnt.Transform.GridPosition.InRange(used.Transform.GridPosition, INTERACTION_RANGE))
+            if (!playerEnt.Transform.GridPosition.InRange(_mapManager, used.Transform.GridPosition, INTERACTION_RANGE))
                 return;
 
             activateComp.Activate(new ActivateEventArgs { User = playerEnt });

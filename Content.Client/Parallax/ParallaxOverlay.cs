@@ -5,6 +5,7 @@ using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Graphics.Overlays;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -17,6 +18,7 @@ namespace Content.Client.Parallax
         [Dependency] private readonly IParallaxManager _parallaxManager;
         [Dependency] private readonly IEyeManager _eyeManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
         public override bool AlwaysDirty => true;
@@ -49,7 +51,7 @@ namespace Content.Client.Parallax
             }
 
             var (sizeX, sizeY) = _parallaxTexture.Size;
-            var (posX, posY) = _eyeManager.ScreenToWorld(Vector2.Zero).ToWorld().Position;
+            var (posX, posY) = _eyeManager.ScreenToWorld(Vector2.Zero).ToWorld(_mapManager).Position;
             var (ox, oy) = (Vector2i) new Vector2(-posX / Slowness, posY / Slowness);
             ox = MathHelper.Mod(ox, sizeX);
             oy = MathHelper.Mod(oy, sizeY);

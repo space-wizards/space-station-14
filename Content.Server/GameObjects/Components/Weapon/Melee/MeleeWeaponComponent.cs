@@ -1,5 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
@@ -12,11 +11,17 @@ using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Serialization;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects;
+using SS14.Shared.Interfaces.Map;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     public class MeleeWeaponComponent : Component, IAfterAttack
     {
+#pragma warning disable 649
+        [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IServerEntityManager _serverEntityManager;
+#pragma warning restore 649
+
         public override string Name => "MeleeWeapon";
 
         public int Damage = 1;
@@ -34,13 +39,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
-            var location = eventArgs.User.GetComponent<ITransformComponent>().GridPosition;
-            var angle = new Angle(eventArgs.ClickLocation.ToWorld().Position - location.ToWorld().Position);
-            var entities = IoCManager.Resolve<IServerEntityManager>().GetEntitiesInArc(eventArgs.User.GetComponent<ITransformComponent>().GridPosition, Range, angle, ArcWidth);
+            var location = eventArgs.User.Transform.GridPosition;
+            var angle = new Angle(eventArgs.ClickLocation.ToWorld(_mapManager).Position - location.ToWorld(_mapManager).Position);
+            var entities = _serverEntityManager.GetEntitiesInArc(eventArgs.User.Transform.GridPosition, Range, angle, ArcWidth);
 
             foreach (var entity in entities)
             {
-                if (!entity.GetComponent<ITransformComponent>().IsMapTransform || entity == eventArgs.User)
+                if (!entity.Transform.IsMapTransform || entity == eventArgs.User)
                     continue;
 
                 if (entity.TryGetComponent(out DamageableComponent damagecomponent))
