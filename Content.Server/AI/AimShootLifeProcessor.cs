@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Shared.Physics;
 using SS14.Server.AI;
 using SS14.Server.GameObjects;
 using SS14.Server.Interfaces.GameObjects;
@@ -119,7 +120,7 @@ namespace Content.Server.AI
 
                 // build the ray
                 var dir = entity.GetComponent<ITransformComponent>().WorldPosition - myTransform.WorldPosition;
-                var ray = new Ray(myTransform.WorldPosition, dir.Normalized);
+                var ray = new Ray(myTransform.WorldPosition, dir.Normalized, (int)CollisionGroup.Mob);
 
                 // cast the ray
                 var result = _physMan.IntersectRay(ray, maxRayLen);
