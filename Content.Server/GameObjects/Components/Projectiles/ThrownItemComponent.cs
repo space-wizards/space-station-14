@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.GameObjects;
+using Content.Shared.Physics;
 using SS14.Server.GameObjects;
 using SS14.Shared.Interfaces.GameObjects;
 using SS14.Shared.Interfaces.GameObjects.Components;
-using SS14.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -28,8 +28,8 @@ namespace Content.Server.GameObjects.Components
             // This would allow ricochets off walls, and weird gravity effects from slowing the object.
             if (collidedwith.Count > 0 && Owner.TryGetComponent(out CollidableComponent body))
             {
-                body.CollisionMask &= ~CollisionGroup.Mob;
-                body.CollisionMask |= CollisionGroup.Floor;
+                body.CollisionMask &= (int)~CollisionGroup.Mob;
+                body.IsScrapingFloor = true;
 
                 // KYS, your job is finished.
                 Owner.RemoveComponent<ThrownItemComponent>();

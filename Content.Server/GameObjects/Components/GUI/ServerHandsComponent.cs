@@ -255,7 +255,7 @@ namespace Content.Server.GameObjects
 
             if (item.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
-                spriteComponent.RenderOrder = item.Owner.EntityManager.CurrentTick;
+                spriteComponent.RenderOrder = item.Owner.EntityManager.CurrentTick.Value;
             }
 
             Dirty();

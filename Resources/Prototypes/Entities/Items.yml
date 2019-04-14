@@ -8,8 +8,9 @@
   - type: BoundingBox
     aabb: "-0.15,-0.15,0.15,0.15"
   - type: Collidable
-    mask: 21
+    mask: 5
     layer: 8
+    IsScrapingFloor: true
   - type: Physics
     mass: 5
   - type: Sprite

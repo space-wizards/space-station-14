@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Input;
+using Content.Shared.Physics;
 using SS14.Server.GameObjects;
 using SS14.Server.GameObjects.EntitySystems;
 using SS14.Server.Interfaces.Player;
@@ -14,7 +15,6 @@ using SS14.Shared.Interfaces.Timing;
 using SS14.Shared.IoC;
 using SS14.Shared.Map;
 using SS14.Shared.Maths;
-using SS14.Shared.Physics;
 using SS14.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -165,8 +165,8 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!throwEnt.TryGetComponent(out ThrownItemComponent projComp))
             {
                 projComp = throwEnt.AddComponent<ThrownItemComponent>();
-                colComp.CollisionMask |= CollisionGroup.Mob;
-                colComp.CollisionMask &= ~CollisionGroup.Floor;
+                colComp.CollisionMask |= (int)CollisionGroup.Mob;
+                colComp.IsScrapingFloor = false;
             }
 
             projComp.IgnoreEntity(plyEnt);
