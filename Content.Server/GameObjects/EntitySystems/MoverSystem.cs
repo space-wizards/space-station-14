@@ -31,6 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPauseManager _pauseManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
+        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
         private AudioSystem _audioSystem;
@@ -189,7 +190,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private void PlayFootstepSound(GridCoordinates coordinates)
         {
             // Step one: figure out sound collection prototype.
-            var grid = coordinates.Grid;
+            var grid = _mapManager.GetGrid(coordinates.GridID);
             var tile = grid.GetTile(coordinates);
 
             // If the coordinates have a catwalk, it's always catwalk.
