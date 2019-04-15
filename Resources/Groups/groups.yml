@@ -43,4 +43,6 @@
   - toggleready
   - spawn
   - delete
+  - tp
+  - tpgrid
   CanViewVar: true
