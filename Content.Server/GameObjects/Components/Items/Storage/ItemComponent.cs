@@ -7,6 +7,8 @@ using SS14.Shared.GameObjects;
 using System;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components;
+using SS14.Server.GameObjects;
+using SS14.Shared.Maths;
 
 namespace Content.Server.GameObjects
 {
@@ -95,10 +97,6 @@ namespace Content.Server.GameObjects
             {
                 return;
             }
-            if (Owner != handComponent.GetActiveHand.Owner)
-            {
-                return;
-            }
             if (!eventArgs.Attacked.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
                 return;
@@ -106,6 +104,24 @@ namespace Content.Server.GameObjects
             handComponent.Drop(handComponent.ActiveIndex);
             Owner.Transform.WorldPosition = eventArgs.ClickLocation.Position;
             return;
+        }
+
+        public void Fumble()
+        {
+            if (Owner.TryGetComponent<PhysicsComponent>(out var physicsComponent))
+            {
+                physicsComponent.LinearVelocity += RandomOffset();
+            }
+        }
+
+        private Vector2 RandomOffset()
+        {
+            return new Vector2(RandomOffset(), RandomOffset());
+            float RandomOffset()
+            {
+                var size = 15.0F;
+                return (new Random().NextFloat() * size) - size / 2;
+            }
         }
     }
 }
