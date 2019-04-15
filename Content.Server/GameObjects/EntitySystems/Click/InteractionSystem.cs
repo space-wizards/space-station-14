@@ -203,7 +203,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
             //Verify player is on the same map as the entity he clicked on
-            else if (_mapManager.GetGrid(coordinates.GridID).Map.Index != playerTransform.MapID)
+            else if (_mapManager.GetGrid(coordinates.GridID).ParentMap.Index != playerTransform.MapID)
             {
                 Logger.Warning(string.Format("Player named {0} clicked on a map he isn't located on", player.Name));
                 return;
