@@ -4,7 +4,7 @@ using SS14.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components
 {
-    public class PlaceableSurfaceComponent : Component, IAttackBy
+    public class PlaceableSurfaceComponent : Component, IAfterAttack
     {
         public override string Name => "PlaceableSurface";
 
@@ -18,19 +18,19 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public void AfterAttack(AfterAttackEventArgs eventArgs)
         {
             if(!eventArgs.User.TryGetComponent<HandsComponent>(out var handComponent))
             {
-                return false;
+                return;
             }
-            if(eventArgs.AttackWith != handComponent.GetActiveHand.Owner)
+            if(eventArgs.Attacked != handComponent.GetActiveHand.Owner)
             {
-                return false;
+                return;
             }
             handComponent.Drop(handComponent.ActiveIndex);
-            eventArgs.AttackWith.Transform.WorldPosition = eventArgs.ClickLocation.Position;
-            return true;
+            eventArgs.User.Transform.WorldPosition = eventArgs.ClickLocation.Position;
+            return;
         }
     }
 }

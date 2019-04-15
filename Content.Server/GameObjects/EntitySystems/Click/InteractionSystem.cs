@@ -34,7 +34,6 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public IEntity User { get; set; }
         public IEntity AttackWith { get; set; }
-        public GridCoordinates ClickLocation { get; set; }
     }
 
     /// <summary>
@@ -301,7 +300,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             for (var i = 0; i < interactables.Count; i++)
             {
-                if (interactables[i].AttackBy(new AttackByEventArgs { User = user, AttackWith = weapon, ClickLocation = clicklocation })) //If an attackby returns a status completion we finish our attack
+                if (interactables[i].AttackBy(new AttackByEventArgs { User = user, AttackWith = weapon })) //If an attackby returns a status completion we finish our attack
                 {
                     return;
                 }

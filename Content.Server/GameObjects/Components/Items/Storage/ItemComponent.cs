@@ -6,10 +6,11 @@ using Content.Server.GameObjects.EntitySystems;
 using SS14.Shared.GameObjects;
 using System;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Server.GameObjects.Components;
 
 namespace Content.Server.GameObjects
 {
-    public class ItemComponent : StoreableComponent, IAttackHand
+    public class ItemComponent : StoreableComponent, IAttackHand, IAfterAttack
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -86,6 +87,25 @@ namespace Content.Server.GameObjects
         public override ComponentState GetComponentState()
         {
             return new ItemComponentState(EquippedPrefix);
+        }
+
+        public void AfterAttack(AfterAttackEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent<HandsComponent>(out var handComponent))
+            {
+                return;
+            }
+            if (Owner != handComponent.GetActiveHand.Owner)
+            {
+                return;
+            }
+            if (!eventArgs.Attacked.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
+            {
+                return;
+            }
+            handComponent.Drop(handComponent.ActiveIndex);
+            Owner.Transform.WorldPosition = eventArgs.ClickLocation.Position;
+            return;
         }
     }
 }
