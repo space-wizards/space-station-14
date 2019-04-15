@@ -120,7 +120,7 @@ namespace Content.Server.AI
 
                 // build the ray
                 var dir = entity.GetComponent<ITransformComponent>().WorldPosition - myTransform.WorldPosition;
-                var ray = new Ray(myTransform.WorldPosition, dir.Normalized, (int)CollisionGroup.Mob);
+                var ray = new Ray(myTransform.WorldPosition, dir.Normalized, (int)(CollisionGroup.Mob | CollisionGroup.Grid));
 
                 // cast the ray
                 var result = _physMan.IntersectRay(ray, maxRayLen);
