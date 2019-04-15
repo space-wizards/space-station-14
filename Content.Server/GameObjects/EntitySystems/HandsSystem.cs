@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.EntitySystems
     internal class HandsSystem : EntitySystem
     {
 #pragma warning disable 649
-        [Dependency] private static readonly IMapManager _mapManager;
+        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.EntitySystems
             handsComp.SwapHands();
         }
 
-        private static void HandleDrop(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private void HandleDrop(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             var ent = ((IPlayerSession) session).AttachedEntity;
 
@@ -134,7 +134,7 @@ namespace Content.Server.GameObjects.EntitySystems
             handsComp.ActivateItem();
         }
 
-        private static void HandleThrowItem(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private void HandleThrowItem(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             var plyEnt = ((IPlayerSession)session).AttachedEntity;
 
