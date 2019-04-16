@@ -604,7 +604,7 @@ entities:
   - containers:
       storagebase:
         entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: Wire
   components:
@@ -962,7 +962,7 @@ entities:
   - containers:
       storagebase:
         entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: HelmetSecurity
   components:
@@ -991,7 +991,7 @@ entities:
   - containers:
       storagebase:
         entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: ammo_casing_12mm
   components:
@@ -1828,7 +1828,7 @@ entities:
   - containers:
       storagebase:
         entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: YellowToolboxItem
   components:
@@ -1839,7 +1839,7 @@ entities:
   - containers:
       storagebase:
         entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: FlashlightLantern
   components:
@@ -1913,7 +1913,7 @@ entities:
   - containers:
       storagebase:
         entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: UtilityBeltClothing
   components:
@@ -1924,7 +1924,7 @@ entities:
   - containers:
       storagebase:
         entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: magazine_12mm_filled
   components:
@@ -1955,7 +1955,7 @@ entities:
         - 309
         - 310
         - 311
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: ammo_casing_12mm
   components:
@@ -2086,7 +2086,7 @@ entities:
         - 330
         - 331
         - 332
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: ammo_casing_12mm
   components:
@@ -2217,7 +2217,7 @@ entities:
         - 351
         - 352
         - 353
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: ammo_casing_12mm
   components:
@@ -2328,7 +2328,7 @@ entities:
   - containers:
       storagebase:
         entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: BackpackClothing
   components:
@@ -2339,7 +2339,7 @@ entities:
   - containers:
       storagebase:
         entities: []
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: BlackGloves
   components:
@@ -2390,7 +2390,7 @@ entities:
         - 375
         - 376
         - 377
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: ammo_casing_12mm
   components:
@@ -2535,7 +2535,7 @@ entities:
         - 164
         - 165
         - 168
-        type: SS14.Server.GameObjects.Components.Container.Container
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: wall
   components:
