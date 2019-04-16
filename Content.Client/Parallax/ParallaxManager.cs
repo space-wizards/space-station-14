@@ -7,11 +7,11 @@ using ICSharpCode.SharpZipLib.Checksum;
 using Nett;
 using SixLabors.ImageSharp;
 using SixLabors.Primitives;
-using SS14.Client.Graphics;
-using SS14.Client.Interfaces.ResourceManagement;
-using SS14.Shared.IoC;
-using SS14.Shared.Log;
-using SS14.Shared.Utility;
+using Robust.Client.Graphics;
+using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax
 {

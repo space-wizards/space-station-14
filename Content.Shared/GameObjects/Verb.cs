@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using SS14.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects
 {

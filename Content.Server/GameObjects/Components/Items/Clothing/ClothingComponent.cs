@@ -1,7 +1,7 @@
 ﻿using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
-using SS14.Shared.GameObjects;
-using SS14.Shared.Serialization;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 using System;
 using System.Collections.Generic;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;

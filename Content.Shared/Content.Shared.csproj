@@ -113,13 +113,13 @@
       <Project>{D63D377C-242B-4FC5-8337-35CB87E6C537}</Project>
       <Name>Lidgren.Network</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\SS14.Shared.Maths\SS14.Shared.Maths.csproj">
-      <Project>{7DC961F2-A45B-4193-BE7F-77622A231943}</Project>
-      <Name>SS14.Shared.Maths</Name>
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj">
+      <Project>{93f23a82-00c5-4572-964e-e7c9457726d4}</Project>
+      <Name>Robust.Shared.Maths</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\SS14.Shared\SS14.Shared.csproj">
-      <Project>{5F161008-6C48-4596-A2DE-5E7B0CEB2AA1}</Project>
-      <Name>SS14.Shared</Name>
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj">
+      <Project>{0529f740-0000-0000-0000-000000000000}</Project>
+      <Name>Robust.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

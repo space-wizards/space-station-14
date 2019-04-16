@@ -1,13 +1,13 @@
 using System;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Chat;
-using SS14.Client.Console;
-using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.Network;
-using SS14.Shared.IoC;
-using SS14.Shared.Log;
-using SS14.Shared.Maths;
-using SS14.Shared.Utility;
+using Robust.Client.Console;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Chat
 {

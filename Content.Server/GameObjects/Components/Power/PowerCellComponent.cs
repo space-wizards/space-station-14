@@ -1,5 +1,5 @@
 using Content.Shared.GameObjects.Components.Power;
-using SS14.Server.GameObjects;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Power
 {

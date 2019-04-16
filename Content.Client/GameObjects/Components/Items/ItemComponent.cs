@@ -1,14 +1,14 @@
 ﻿using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
-using SS14.Client.Graphics;
-using SS14.Client.Interfaces.ResourceManagement;
-using SS14.Client.ResourceManagement;
-using SS14.Shared.GameObjects;
-using SS14.Shared.GameObjects.Components.Renderable;
-using SS14.Shared.IoC;
-using SS14.Shared.Serialization;
-using SS14.Shared.Utility;
-using SS14.Shared.ViewVariables;
+using Robust.Client.Graphics;
+using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Renderable;
+using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using System;
 
 namespace Content.Client.GameObjects

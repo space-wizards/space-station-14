@@ -167,17 +167,17 @@
       <Project>{26aeebb3-dde7-443a-9f43-7bc7f4acf6b5}</Project>
       <Name>Content.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\SS14.Server\SS14.Server.csproj">
-      <Project>{B04AAE71-0000-0000-0000-000000000000}</Project>
-      <Name>SS14.Server</Name>
+    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj">
+      <Project>{b04aae71-0000-0000-0000-000000000000}</Project>
+      <Name>Robust.Server</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\SS14.Shared.Maths\SS14.Shared.Maths.csproj">
-      <Project>{93F23A82-00C5-4572-964E-E7C9457726D4}</Project>
-      <Name>SS14.Shared.Maths</Name>
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj">
+      <Project>{93f23a82-00c5-4572-964e-e7c9457726d4}</Project>
+      <Name>Robust.Shared.Maths</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\SS14.Shared\SS14.Shared.csproj">
-      <Project>{0529F740-0000-0000-0000-000000000000}</Project>
-      <Name>SS14.Shared</Name>
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj">
+      <Project>{0529f740-0000-0000-0000-000000000000}</Project>
+      <Name>Robust.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

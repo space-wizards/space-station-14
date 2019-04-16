@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
-using SS14.Server.AI;
-using SS14.Server.GameObjects;
-using SS14.Server.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.GameObjects.Components;
-using SS14.Shared.Interfaces.Physics;
-using SS14.Shared.Interfaces.Timing;
-using SS14.Shared.IoC;
-using SS14.Shared.Maths;
+using Robust.Server.AI;
+using Robust.Server.GameObjects;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Physics;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 
 namespace Content.Server.AI
 {
@@ -119,7 +119,7 @@ namespace Content.Server.AI
 
                 // build the ray
                 var dir = entity.GetComponent<ITransformComponent>().WorldPosition - myTransform.WorldPosition;
-                var ray = new Ray(myTransform.WorldPosition, dir.Normalized);
+                var ray = new Ray(myTransform.WorldPosition, dir.Normalized,0); //TODO verify if 0 is the correct Collision Mask
 
                 // cast the ray
                 var result = _physMan.IntersectRay(ray, maxRayLen);

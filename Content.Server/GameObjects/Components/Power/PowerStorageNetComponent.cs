@@ -1,5 +1,5 @@
-using SS14.Shared.Serialization;
-using SS14.Shared.ViewVariables;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {

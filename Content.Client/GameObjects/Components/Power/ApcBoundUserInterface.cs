@@ -1,12 +1,12 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Power;
-using SS14.Client.GameObjects.Components.UserInterface;
-using SS14.Client.Interfaces.Graphics;
-using SS14.Client.UserInterface.Controls;
-using SS14.Client.UserInterface.CustomControls;
-using SS14.Shared.GameObjects.Components.UserInterface;
-using SS14.Shared.IoC;
-using SS14.Shared.Utility;
+using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.Interfaces.Graphics;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.Power
 {

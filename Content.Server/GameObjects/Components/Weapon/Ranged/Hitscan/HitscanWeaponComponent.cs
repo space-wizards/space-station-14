@@ -1,18 +1,18 @@
 ﻿using Content.Shared.GameObjects;
-using SS14.Server.GameObjects.EntitySystems;
-using SS14.Shared.Audio;
-using SS14.Shared.GameObjects.EntitySystemMessages;
-using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.Physics;
-using SS14.Shared.Interfaces.Timing;
-using SS14.Shared.IoC;
-using SS14.Shared.Map;
-using SS14.Shared.Maths;
-using SS14.Shared.Physics;
-using SS14.Shared.Serialization;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
+using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Physics;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics;
+using Robust.Shared.Serialization;
 using System;
 using Content.Server.GameObjects.Components.Sound;
-using SS14.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 
-            var ray = new Ray(userPosition, angle.ToVec());
+            var ray = new Ray(userPosition, angle.ToVec(), 0); //TODO set the CollsionMask for this ray.
             var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ray, MaxLength,
                 Owner.Transform.GetMapTransform().Owner);
 

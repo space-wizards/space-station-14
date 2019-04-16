@@ -1,9 +1,9 @@
 ﻿using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
-using SS14.Client.Graphics;
-using SS14.Shared.GameObjects;
-using SS14.Shared.ViewVariables;
+using Robust.Client.Graphics;
+using Robust.Shared.GameObjects;
+using Robust.Shared.ViewVariables;
 using System;
 
 namespace Content.Client.GameObjects.Components.Clothing

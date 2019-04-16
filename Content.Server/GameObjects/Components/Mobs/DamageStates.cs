@@ -1,7 +1,7 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Mobs;
-using SS14.Server.GameObjects;
-using SS14.Shared.Interfaces.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects
 {
