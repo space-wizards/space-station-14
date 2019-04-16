@@ -1,8 +1,8 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Utility;
-using SS14.Server.GameObjects;
-using SS14.Shared.GameObjects;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Power
 {

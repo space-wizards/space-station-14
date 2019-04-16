@@ -1,15 +1,15 @@
-﻿using SS14.Server.GameObjects;
-using SS14.Server.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.GameObjects.Components;
-using SS14.Shared.IoC;
-using SS14.Shared.Log;
-using SS14.Shared.Serialization;
-using SS14.Shared.Utility;
+﻿using Robust.Server.GameObjects;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SS14.Shared.ViewVariables;
+using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power

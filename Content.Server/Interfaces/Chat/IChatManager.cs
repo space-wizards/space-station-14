@@ -1,5 +1,5 @@
-using SS14.Server.Interfaces.Player;
-using SS14.Shared.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.Interfaces.Chat
 {

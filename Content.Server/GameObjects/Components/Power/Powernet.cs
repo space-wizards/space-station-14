@@ -1,10 +1,10 @@
 ﻿using Content.Shared.GameObjects.EntitySystems;
-using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.IoC;
-using SS14.Shared.Log;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using System;
 using System.Collections.Generic;
-using SS14.Shared.ViewVariables;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
 {

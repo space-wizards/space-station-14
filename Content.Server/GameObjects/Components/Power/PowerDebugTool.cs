@@ -2,10 +2,10 @@
 using System.Text;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
-using SS14.Server.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.GameObjects.Components;
-using SS14.Shared.Map;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Power
 {

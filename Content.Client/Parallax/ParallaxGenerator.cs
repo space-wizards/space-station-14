@@ -5,11 +5,11 @@ using Nett;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.Primitives;
-using SS14.Client.Utility;
-using SS14.Shared.Log;
-using SS14.Shared.Maths;
-using SS14.Shared.Noise;
-using BlendFactor = SS14.Shared.Maths.Color.BlendFactor;
+using Robust.Client.Utility;
+using Robust.Shared.Log;
+using Robust.Shared.Maths;
+using Robust.Shared.Noise;
+using BlendFactor = Robust.Shared.Maths.Color.BlendFactor;
 
 namespace Content.Client.Parallax
 {

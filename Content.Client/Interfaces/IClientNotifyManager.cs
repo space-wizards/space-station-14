@@ -1,6 +1,6 @@
 using Content.Shared.Interfaces;
-using SS14.Client;
-using SS14.Shared.Map;
+using Robust.Client;
+using Robust.Shared.Map;
 
 namespace Content.Client.Interfaces
 {

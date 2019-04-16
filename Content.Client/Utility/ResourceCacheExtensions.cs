@@ -1,8 +1,8 @@
 using JetBrains.Annotations;
-using SS14.Client.Graphics;
-using SS14.Client.Interfaces.ResourceManagement;
-using SS14.Client.ResourceManagement;
-using SS14.Shared.Utility;
+using Robust.Client.Graphics;
+using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Utility
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Power;
-using SS14.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {

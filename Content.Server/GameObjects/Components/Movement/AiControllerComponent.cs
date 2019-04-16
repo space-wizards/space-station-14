@@ -1,7 +1,7 @@
 ﻿using Content.Server.Interfaces.GameObjects.Components.Movement;
-using SS14.Server.AI;
-using SS14.Shared.GameObjects;
-using SS14.Shared.Serialization;
+using Robust.Server.AI;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Movement
 {

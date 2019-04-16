@@ -1,12 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Shared.Chat;
-using SS14.Client.Console;
-using SS14.Client.Graphics.Drawing;
-using SS14.Client.Input;
-using SS14.Client.UserInterface;
-using SS14.Client.UserInterface.Controls;
-using SS14.Shared.Maths;
-using SS14.Shared.Utility;
+using Robust.Client.Console;
+using Robust.Client.Graphics.Drawing;
+using Robust.Client.Input;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Chat
 {

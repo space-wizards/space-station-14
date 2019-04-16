@@ -1,9 +1,9 @@
 ﻿using System;
-using SS14.Shared.GameObjects;
-using SS14.Shared.Maths;
-using SS14.Shared.Serialization;
-using SS14.Shared.ViewVariables;
-using SpriteComponent = SS14.Server.GameObjects.SpriteComponent;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
+using SpriteComponent = Robust.Server.GameObjects.SpriteComponent;
 
 namespace Content.Server.GameObjects.Components.Power
 {

@@ -1,5 +1,5 @@
 using System;
-using SS14.Client.Graphics;
+using Robust.Client.Graphics;
 
 namespace Content.Client.Interfaces.Parallax
 {

@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
-using SS14.Shared.Interfaces.Map;
-using SS14.Shared.Prototypes;
-using SS14.Shared.Utility;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Maps

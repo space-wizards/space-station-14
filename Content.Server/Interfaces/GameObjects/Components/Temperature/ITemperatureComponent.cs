@@ -1,4 +1,4 @@
-using SS14.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.Interfaces.GameObjects
 {

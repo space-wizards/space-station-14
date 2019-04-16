@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Input;
-using SS14.Shared.Input;
+using Robust.Shared.Input;
 
 namespace Content.Client.Input
 {
