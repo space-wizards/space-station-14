@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -17,6 +18,7 @@ namespace Content.Shared.Research
         private bool _hacked;
         private LatheType _latheType;
         private uint _completeTime;
+        private Dictionary<LatheMaterial, uint> _requiredMaterials;
 
         public string ID => _id;
 
@@ -52,6 +54,16 @@ namespace Content.Shared.Research
         public LatheType LatheType => _latheType;
 
         /// <summary>
+        ///     The materials required to produce this recipe.
+        /// </summary>
+        public Dictionary<LatheMaterial, uint> RequiredMaterials
+        {
+            get => _requiredMaterials;
+            private set => _requiredMaterials = value;
+        }
+
+
+    /// <summary>
         ///     How many milliseconds it'll take for the lathe to finish this recipe.
         ///     Might lower depending on the lathe's upgrade level.
         /// </summary>
@@ -69,6 +81,7 @@ namespace Content.Shared.Research
             serializer.DataField(ref _hacked, "hacked", false);
             serializer.DataField(ref _latheType, "lathetype", LatheType.Autolathe);
             serializer.DataField(ref _completeTime, "completetime", 2500u);
+            // TODO: Take materials.
         }
     }
 }

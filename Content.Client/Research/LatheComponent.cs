@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Shared.GameObjects;
@@ -9,6 +10,7 @@ namespace Content.Client.Research
 {
     public class LatheComponent : SharedLatheComponent
     {
+
         private LatheMenu menu;
 
         public override void Initialize()
@@ -24,6 +26,9 @@ namespace Content.Client.Research
             {
                 case LatheMenuOpenMessage msg:
                     menu.OpenCentered();
+                    break;
+                case LatheMaterialsUpdateMessage msg:
+                    _materialStorage = msg.MaterialStorage;
                     break;
             }
         }
