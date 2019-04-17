@@ -96,7 +96,7 @@ def build_windows():
     # Run a full build.
     print(Fore.GREEN + "Building project for Windows x64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
-                    "SpaceStation14Content.sln",
+                    "SpaceStation14.sln",
                     "/m",
                     "/p:Configuration=Release",
                     "/p:Platform=x64",
@@ -130,7 +130,7 @@ def build_windows():
 def build_macos():
     print(Fore.GREEN + "Building project for macOS x64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
-                    "SpaceStation14Content.sln",
+                    "SpaceStation14.sln",
                     "/m",
                     "/p:Configuration=Release",
                     "/p:Platform=x64",
@@ -166,7 +166,7 @@ def build_linux():
     # Run a full build.
     print(Fore.GREEN + "Building project for Linux x64..." + Style.RESET_ALL)
     subprocess.run(["msbuild",
-                    "SpaceStation14Content.sln",
+                    "SpaceStation14.sln",
                     "/m",
                     "/p:Configuration=Release",
                     "/p:Platform=x64",
