@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
+using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 

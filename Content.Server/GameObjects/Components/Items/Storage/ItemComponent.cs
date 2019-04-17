@@ -7,8 +7,8 @@ using Robust.Shared.GameObjects;
 using System;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components;
-using SS14.Server.GameObjects;
-using SS14.Shared.Maths;
+using Robust.Server.GameObjects;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects
 {

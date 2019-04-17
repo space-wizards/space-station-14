@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Shared.Physics;
 using Robust.Server.AI;
-using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
