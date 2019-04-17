@@ -1,7 +1,10 @@
 ﻿using System.Linq;
+using System.Net.Http;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Chat;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Resources;
@@ -19,6 +22,7 @@ namespace Content.Server.Chat
 #pragma warning disable 649
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IMoMMILink _mommiLink;
 #pragma warning restore 649
 
         public void Initialize()
@@ -62,6 +66,17 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
             msg.MessageWrap = $"OOC: {player.SessionId}: {{0}}";
+            _netManager.ServerSendToAll(msg);
+
+            _mommiLink.SendOOCMessage(player.SessionId.ToString(), message);
+        }
+
+        public void SendHookOOC(string sender, string message)
+        {
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.OOC;
+            msg.Message = message;
+            msg.MessageWrap = $"OOC: (D){sender}: {{0}}";
             _netManager.ServerSendToAll(msg);
         }
     }

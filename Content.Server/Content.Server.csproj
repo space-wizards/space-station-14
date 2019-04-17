@@ -148,11 +148,13 @@
     <Compile Include="Interfaces\GameObjects\Components\Movement\IMoverComponent.cs" />
     <Compile Include="Interfaces\GameObjects\IOnDamageBehavior.cs" />
     <Compile Include="Interfaces\GameTicking\IGameTicker.cs" />
+    <Compile Include="Interfaces\IMoMMILink.cs" />
     <Compile Include="Interfaces\IServerNotifyManager.cs" />
     <Compile Include="Mobs\Commands.cs" />
     <Compile Include="Mobs\Mind.cs" />
     <Compile Include="Mobs\Role.cs" />
     <Compile Include="Mobs\Roles\Traitor.cs" />
+    <Compile Include="MoMMILink.cs" />
     <Compile Include="Placement\SpawnHelpers.cs" />
     <Compile Include="Players\PlayerData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -56,6 +56,7 @@ namespace Content.Server
     public class EntryPoint : GameServer
     {
         private IGameTicker _gameTicker;
+        private IMoMMILink _mommiLink;
         private StatusShell _statusShell;
 
         /// <inheritdoc />
@@ -160,12 +161,15 @@ namespace Content.Server
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IGameTicker, GameTicker>();
             IoCManager.Register<IChatManager, ChatManager>();
+            IoCManager.Register<IMoMMILink, MoMMILink>();
             IoCManager.BuildGraph();
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
+
+            _mommiLink = IoCManager.Resolve<IMoMMILink>();
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 
@@ -184,6 +188,7 @@ namespace Content.Server
             base.Update(level, frameTime);
 
             _gameTicker.Update(new FrameEventArgs(frameTime));
+
         }
     }
 }
