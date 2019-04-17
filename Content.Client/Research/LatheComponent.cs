@@ -1,7 +1,9 @@
 using Content.Shared.GameObjects.Components.Research;
-using SS14.Shared.GameObjects;
-using SS14.Shared.Interfaces.GameObjects;
-using SS14.Shared.Interfaces.Network;
+using Robust.Client.Interfaces.Graphics;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Research
 {
@@ -12,7 +14,7 @@ namespace Content.Client.Research
         public override void Initialize()
         {
             base.Initialize();
-            menu = new LatheMenu {Owner = this};
+            menu = new LatheMenu(IoCManager.Resolve<IDisplayManager>()) {Owner = this};
             menu.AddToScreen();
         }
 

@@ -1,18 +1,13 @@
 using System.Collections.Generic;
 using Content.Shared.Research;
-using Microsoft.SqlServer.Server;
-using Mono.Cecil;
-using SS14.Client.Graphics;
-using SS14.Client.Interfaces.ResourceManagement;
-using SS14.Client.ResourceManagement;
-using SS14.Client.UserInterface;
-using SS14.Client.UserInterface.Controls;
-using SS14.Client.UserInterface.CustomControls;
-using SS14.Client.Utility;
-using SS14.Shared.IoC;
-using SS14.Shared.Log;
-using SS14.Shared.Maths;
-using SS14.Shared.Prototypes;
+using Robust.Client.Interfaces.Graphics;
+using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.Utility;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Research
 {
@@ -34,6 +29,14 @@ namespace Content.Client.Research
 
         public LatheComponent Owner { get; set; }
         public readonly List<LatheRecipePrototype> Recipes = new List<LatheRecipePrototype>();
+
+        public LatheMenu(IDisplayManager displayMan) : base(displayMan)
+        {
+        }
+
+        public LatheMenu(IDisplayManager displayMan, string name) : base(displayMan, name)
+        {
+        }
 
         protected override void Initialize()
         {
@@ -131,10 +134,9 @@ namespace Content.Client.Research
             {
                 get;
                 set;
-            };
+            }
 
 
         }
-
     }
 }
