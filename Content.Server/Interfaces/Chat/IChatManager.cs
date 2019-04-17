@@ -17,5 +17,7 @@ namespace Content.Server.Interfaces.Chat
         void EntitySay(IEntity source, string message);
 
         void SendOOC(IPlayerSession player, string message);
+
+        void SendHookOOC(string sender, string message);
     }
 }
