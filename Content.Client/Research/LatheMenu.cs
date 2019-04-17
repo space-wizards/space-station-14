@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Shared.Research;
 using Microsoft.SqlServer.Server;
 using Mono.Cecil;
@@ -7,6 +8,7 @@ using SS14.Client.ResourceManagement;
 using SS14.Client.UserInterface;
 using SS14.Client.UserInterface.Controls;
 using SS14.Client.UserInterface.CustomControls;
+using SS14.Client.Utility;
 using SS14.Shared.IoC;
 using SS14.Shared.Log;
 using SS14.Shared.Maths;
@@ -18,15 +20,20 @@ namespace Content.Client.Research
     {
 #pragma warning disable CS0649
         [Dependency]
-        readonly IPrototypeManager PrototypeManager;
+        private readonly IPrototypeManager PrototypeManager;
         [Dependency]
-        readonly IResourceCache ResourceCache;
+        private readonly IResourceCache ResourceCache;
 #pragma warning restore
 
         private ItemList Items;
+        private Label RecipeName;
+        private Label RecipeDescription;
+        private TextureRect RecipeIcon;
+        private Button ProduceButton;
         protected override Vector2? CustomSize => (758, 431);
 
         public LatheComponent Owner { get; set; }
+        public readonly List<LatheRecipePrototype> Recipes = new List<LatheRecipePrototype>();
 
         protected override void Initialize()
         {
@@ -43,64 +50,90 @@ namespace Content.Client.Research
 
             hbox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
-            Items = new ItemList()
+            var scroll = new ScrollContainer()
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
             };
 
-            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
-            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
-            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
-            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
-            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
-            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
-            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
-            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
-            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
-            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
-            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
-            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
-            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
-            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
-            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
-            Items.AddItem("henkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenkhenk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png"));
-            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
-            Items.AddItem("honkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonkhonk", ResourceCache.GetResource<TextureResource>("/Textures/Objects/Flashlight.png"));
+            hbox.AddChild(scroll);
 
-            var spacer = new Control()
+            Items = new ItemList()
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsStretchRatio = 1
             };
 
-            var label = new Label() { Text = "mecmecmecm" };
+            Items.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+            Items.OnItemSelected += ItemSelected;
+            Items.OnItemDeselected += ItemDeselected;
 
-            spacer.AddChild(label);
+            scroll.AddChild(Items);
 
-            hbox.AddChild(Items);
-            hbox.AddChild(spacer);
+            var vbox = new VBoxContainer()
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 2,
+            };
 
-            Items.SetAnchorPreset(LayoutPreset.Wide);
+            RecipeName = new Label()
+            {
+                Align = Label.AlignMode.Center,
+            };
 
-            Logger.Info("Test: " + label.Rect + Items.Rect + Items.Size);
+            RecipeIcon = new TextureRect();
 
-            //spacer.SetAnchorPreset(LayoutPreset.Wide);
+            vbox.AddChild(RecipeName);
 
+            RecipeDescription = new Label();
 
+            vbox.AddChild(RecipeDescription);
 
-
-
+            hbox.AddChild(vbox);
 
             AddToScreen();
         }
 
+        public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
+        {
+            var recipe = Recipes[args.ItemIndex];
+            RecipeName.Text = recipe.Name;
+            RecipeDescription.Text = recipe.Description;
+            RecipeIcon.Texture = recipe.Icon.Frame0();
+            ProduceButton.Disabled = false;
+        }
+
+
+
+        public void ItemDeselected(ItemList.ItemListDeselectedEventArgs args)
+        {
+            RecipeName.Text = "";
+            RecipeDescription.Text = "";
+            RecipeIcon.Texture = null;
+            ProduceButton.Disabled = true;
+        }
+
         public void Populate()
         {
+            Recipes.Clear();
+
             foreach (var prototype in PrototypeManager.EnumeratePrototypes<LatheRecipePrototype>())
             {
+                // Here it should check if the prototype is unlocked...
 
             }
+        }
+
+        public class RecipeButton
+        {
+            public LatheRecipePrototype Recipe;
+
+            public LatheMenu Menu
+            {
+                get;
+                set;
+            };
+
+
         }
 
     }
