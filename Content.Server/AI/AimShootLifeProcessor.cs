@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Shared.Physics;
 using Robust.Server.AI;
-using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -119,7 +119,7 @@ namespace Content.Server.AI
 
                 // build the ray
                 var dir = entity.GetComponent<ITransformComponent>().WorldPosition - myTransform.WorldPosition;
-                var ray = new Ray(myTransform.WorldPosition, dir.Normalized,0); //TODO verify if 0 is the correct Collision Mask
+                var ray = new Ray(myTransform.WorldPosition, dir.Normalized, (int)(CollisionGroup.Mob | CollisionGroup.Grid));
 
                 // cast the ray
                 var result = _physMan.IntersectRay(ray, maxRayLen);

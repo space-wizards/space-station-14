@@ -8,10 +8,10 @@ namespace Content.Shared.Physics
     [Flags]
     public enum CollisionGroup
     {
-        None = 0x0000,
-        Grid = 0x0001, // Walls
-        Mob = 0x0002, // Mobs, like the player or NPCs
-        Fixture = 0x0004, // wall fixtures, like APC or posters
-        Items = 0x008, // Items on the ground
+        None = 0,
+        Grid = 1, // Walls
+        Mob = 2, // Mobs, like the player or NPCs
+        Fixture = 4, // wall fixtures, like APC or posters
+        Items = 8 // Items on the ground
     }
 }

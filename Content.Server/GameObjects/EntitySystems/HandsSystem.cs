@@ -109,22 +109,16 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var ent = ((IPlayerSession) session).AttachedEntity;
 
-            if(ent == null || !ent.IsValid())
+            if (ent == null || !ent.IsValid())
+            {
                 return;
+            }
 
             if (!ent.TryGetComponent(out HandsComponent handsComp))
+            {
                 return;
-
-            var transform = ent.Transform;
-
-            if (transform.GridPosition.InRange(coords, InteractionSystem.INTERACTION_RANGE))
-            {
-                handsComp.Drop(handsComp.ActiveIndex, coords);
             }
-            else
-            {
-                handsComp.Drop(handsComp.ActiveIndex);
-            }
+            handsComp.Drop(handsComp.ActiveIndex);
         }
 
         private static void HandleActivateItem(ICommonSession session)
@@ -163,22 +157,17 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
             {
-                colComp = throwEnt.AddComponent<CollidableComponent>();
-
-                if(!colComp.Running)
-                    colComp.Startup();
+                return;
             }
 
             colComp.CollisionEnabled = true;
-            colComp.CollisionLayer |= (int)CollisionGroup.Items;
-            colComp.CollisionMask |= (int)CollisionGroup.Grid;
-
             // I can now collide with player, so that i can do damage.
-            colComp.CollisionMask |= (int) CollisionGroup.Mob;
 
             if (!throwEnt.TryGetComponent(out ThrownItemComponent projComp))
             {
                 projComp = throwEnt.AddComponent<ThrownItemComponent>();
+                colComp.CollisionMask |= (int)CollisionGroup.Mob;
+                colComp.IsScrapingFloor = false;
             }
 
             projComp.IgnoreEntity(plyEnt);

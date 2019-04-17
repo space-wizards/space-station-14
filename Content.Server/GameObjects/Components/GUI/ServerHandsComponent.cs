@@ -248,6 +248,10 @@ namespace Content.Server.GameObjects
 
             // TODO: The item should be dropped to the container our owner is in, if any.
             item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+            if (item.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+            {
+                spriteComponent.RenderOrder = item.Owner.EntityManager.CurrentTick.Value;
+            }
 
             Dirty();
             return true;

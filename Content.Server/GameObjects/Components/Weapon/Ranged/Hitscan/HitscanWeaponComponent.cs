@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
+using Content.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
@@ -84,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 
-            var ray = new Ray(userPosition, angle.ToVec(), 0); //TODO set the CollsionMask for this ray.
+            var ray = new Ray(userPosition, angle.ToVec(), (int)(CollisionGroup.Grid | CollisionGroup.Mob));
             var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ray, MaxLength,
                 Owner.Transform.GetMapTransform().Owner);
 

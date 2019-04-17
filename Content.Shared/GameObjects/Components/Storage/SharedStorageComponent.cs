@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components.Storage
 {
     public abstract class SharedStorageComponent : Component
     {
-        public sealed override string Name => "Storage";
+        public override string Name => "Storage";
         public override uint? NetID => ContentNetIDs.INVENTORY;
         public override Type StateType => typeof(StorageComponentState);
 

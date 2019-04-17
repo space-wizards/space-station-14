@@ -76,6 +76,7 @@ namespace Content.Server
             factory.Register<ClothingComponent>();
             factory.RegisterReference<ClothingComponent, ItemComponent>();
             factory.RegisterReference<ClothingComponent, StoreableComponent>();
+            factory.Register<PlaceableSurfaceComponent>();
 
             factory.Register<DamageableComponent>();
             factory.Register<DestructibleComponent>();
@@ -117,6 +118,7 @@ namespace Content.Server
 
             factory.Register<ServerStorageComponent>();
             factory.RegisterReference<ServerStorageComponent, IActivate>();
+            factory.Register<EntityStorageComponent>();
 
             factory.Register<PowerDebugTool>();
             factory.Register<PoweredLightComponent>();

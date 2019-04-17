@@ -17,5 +17,6 @@
         public const uint SOUND = 1012;
         public const uint ITEM = 1013;
         public const uint CLOTHING = 1014;
+        public const uint ENTITYSTORAGE = 1015;
     }
 }

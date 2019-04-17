@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.ViewVariables;
+using Content.Server.GameObjects.Components;
 
 namespace Content.Server.GameObjects
 {
@@ -131,13 +132,20 @@ namespace Content.Server.GameObjects
         /// <param name="user"></param>
         /// <param name="attackwith"></param>
         /// <returns></returns>
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        public bool AttackBy(AttackByEventArgs eventArgs)
         {
             _ensureInitialCalculated();
             Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, eventArgs.User.Uid, eventArgs.AttackWith.Uid);
 
-            if (!eventArgs.User.TryGetComponent(out HandsComponent hands))
+            if(Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
+            {
                 return false;
+            }
+
+            if (!eventArgs.User.TryGetComponent(out HandsComponent hands))
+            {
+                return false;
+            }
             
             //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
             if (CanInsert(hands.GetActiveHand.Owner) &&  hands.Drop(hands.ActiveIndex))
@@ -323,11 +331,6 @@ namespace Content.Server.GameObjects
             }
 
             _storageInitialCalculated = true;
-        }
-
-        public bool Attackby(AttackByEventArgs eventArgs)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
