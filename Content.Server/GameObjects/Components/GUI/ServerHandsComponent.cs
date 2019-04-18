@@ -25,6 +25,8 @@ namespace Content.Server.GameObjects
 {
     public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+
         private string activeIndex;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -436,7 +438,8 @@ namespace Content.Server.GameObjects
             var used = GetActiveHand?.Owner;
             if (used != null)
             {
-                InteractionSystem.TryUseInteraction(Owner, used);
+                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                interactionSystem.TryUseInteraction(Owner, used);
             }
         }
 
@@ -474,7 +477,8 @@ namespace Content.Server.GameObjects
 
                     if (playerEntity == Owner && used != null)
                     {
-                        InteractionSystem.Interaction(Owner, used, slot.ContainedEntity,
+                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                        interactionSystem.Interaction(Owner, used, slot.ContainedEntity,
                             GridCoordinates.Nullspace);
                     }
 
@@ -490,7 +494,8 @@ namespace Content.Server.GameObjects
 
                     if (playerEntity == Owner && used != null)
                     {
-                        InteractionSystem.TryUseInteraction(Owner, used);
+                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                        interactionSystem.TryUseInteraction(Owner, used);
                     }
 
                     break;
