@@ -275,8 +275,8 @@ namespace Content.Client.Construction
                 }
 
                 var item = RecipeList.CreateItem(ItemForNode(node.Parent));
-                item.SetText(0, node.Name);
-                item.SetSelectable(0, false);
+                item.Text = node.Name;
+                item.Selectable = false;
                 categoryItems[node.FlattenedIndex] = item;
                 return item;
             }
@@ -312,7 +312,7 @@ namespace Content.Client.Construction
                         }
                     }
                     var subItem = RecipeList.CreateItem(ItemForNode(node));
-                    subItem.SetText(0, prototype.Name);
+                    subItem.Text = prototype.Name;
                     subItem.Metadata = prototype;
                 }
             }

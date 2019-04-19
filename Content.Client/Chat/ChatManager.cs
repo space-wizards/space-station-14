@@ -2,7 +2,6 @@ using System;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Chat;
 using Robust.Client.Console;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -20,7 +19,6 @@ namespace Content.Client.Chat
 #pragma warning disable 649
         [Dependency] private readonly IClientNetManager _netManager;
         [Dependency] private readonly IClientConsole _console;
-        [Dependency] private readonly IEntityManager _entityManager;
 #pragma warning restore 649
 
         private ChatBox _currentChatBox;

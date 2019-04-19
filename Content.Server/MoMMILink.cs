@@ -144,11 +144,13 @@ namespace Content.Server
         [JsonObject(MemberSerialization.Fields, ItemRequired = Required.Always)]
         private class OOCPostMessage
         {
+            #pragma warning disable CS0649
             [JsonProperty("password")] public string Password;
 
             [JsonProperty("sender")] public string Sender;
 
             [JsonProperty("contents")] public string Contents;
+            #pragma warning restore CS0649
         }
     }
 }
