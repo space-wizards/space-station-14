@@ -62,14 +62,14 @@ namespace Content.Server.Materials
         ///     Multiplier that determines damage on sharpness-based weapons like knives.
         ///     Higher means more damage is done.
         /// </summary>
-        public double SharpDamage { get; } = 1;
+        public double SharpDamage => _sharpDamage;
         private double _sharpDamage = 1;
 
         /// <summary>
         ///     Multiplier that determines damage on blunt-based weapons like clubs.
         ///     Higher means more damage is done.
         /// </summary>
-        public double BluntDamage { get; } = 1;
+        public double BluntDamage => _bluntDamage;
         private double _bluntDamage = 1;
 
         public void ExposeData(ObjectSerializer serializer)
