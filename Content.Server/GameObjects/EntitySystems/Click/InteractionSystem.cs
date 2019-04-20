@@ -163,7 +163,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var activateMsg = new ActivateInWorldMessage(playerEnt, used);
             RaiseEvent(activateMsg);
-            if(activateMsg.Handled) return;
+            if(activateMsg.Handled)
+                return;
 
             if (!used.TryGetComponent(out IActivate activateComp))
                 return;
@@ -285,7 +286,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var message = new AfterAttackMessage(user, weapon, null, clicklocation);
             RaiseEvent(message);
-            if(message.Handled) return;
+            if(message.Handled)
+                return;
 
             List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
 
@@ -306,7 +308,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var attackMsg = new AttackByMessage(user, weapon, attacked, clicklocation);
             RaiseEvent(attackMsg);
-            if(attackMsg.Handled) return;
+            if(attackMsg.Handled)
+                return;
 
             List<IAttackBy> interactables = attacked.GetAllComponents<IAttackBy>().ToList();
 
@@ -322,7 +325,8 @@ namespace Content.Server.GameObjects.EntitySystems
             
             var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clicklocation);
             RaiseEvent(afterAtkMsg);
-            if (afterAtkMsg.Handled) return;
+            if (afterAtkMsg.Handled)
+                return;
 
             //If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
             List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
@@ -343,7 +347,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var message = new AttackHandMessage(user, attacked);
             RaiseEvent(message);
-            if(message.Handled) return;
+            if(message.Handled)
+                return;
 
             List<IAttackHand> interactables = attacked.GetAllComponents<IAttackHand>().ToList();
 
@@ -382,7 +387,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var useMsg = new UseInHandMessage(user, used);
             RaiseEvent(useMsg);
-            if(useMsg.Handled) return;
+            if(useMsg.Handled)
+                return;
 
             List<IUse> usables = used.GetAllComponents<IUse>().ToList();
 
@@ -407,7 +413,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var rangedMsg = new RangedAttackMessage(user, weapon, attacked, clickLocation);
             RaiseEvent(rangedMsg);
-            if(rangedMsg.Handled) return;
+            if(rangedMsg.Handled)
+                return;
 
             List<IRangedAttackBy> rangedusables = attacked.GetAllComponents<IRangedAttackBy>().ToList();
 
@@ -424,7 +431,8 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
                 RaiseEvent(afterAtkMsg);
-                if (afterAtkMsg.Handled) return;
+                if (afterAtkMsg.Handled)
+                    return;
 
                 List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
 
