@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.Prototypes;
@@ -7,7 +8,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Research
 {
-    [Prototype("latheRecipe")]
+    [NetSerializable, Serializable, Prototype("latheRecipe")]
     public class LatheRecipePrototype : IPrototype, IIndexedPrototype
     {
         private string _name;
@@ -17,8 +18,8 @@ namespace Content.Shared.Research
         private string _result;
         private bool _hacked;
         private LatheType _latheType;
-        private uint _completeTime;
-        private Dictionary<LatheMaterial, uint> _requiredMaterials;
+        private int _completeTime;
+        private Dictionary<string, int> _requiredMaterials;
 
         public string ID => _id;
 
@@ -55,8 +56,9 @@ namespace Content.Shared.Research
 
         /// <summary>
         ///     The materials required to produce this recipe.
+        ///     Takes a material ID as string.
         /// </summary>
-        public Dictionary<LatheMaterial, uint> RequiredMaterials
+        public Dictionary<string, int> RequiredMaterials
         {
             get => _requiredMaterials;
             private set => _requiredMaterials = value;
@@ -67,7 +69,7 @@ namespace Content.Shared.Research
         ///     How many milliseconds it'll take for the lathe to finish this recipe.
         ///     Might lower depending on the lathe's upgrade level.
         /// </summary>
-        public uint CompleteTime => _completeTime;
+        public int CompleteTime => _completeTime;
 
         public void LoadFrom(YamlMappingNode mapping)
         {
@@ -80,8 +82,8 @@ namespace Content.Shared.Research
             serializer.DataField(ref _result, "result", null);
             serializer.DataField(ref _hacked, "hacked", false);
             serializer.DataField(ref _latheType, "lathetype", LatheType.Autolathe);
-            serializer.DataField(ref _completeTime, "completetime", 2500u);
-            // TODO: Take materials.
+            serializer.DataField(ref _completeTime, "completetime", 2500);
+            serializer.DataField(ref _requiredMaterials, "materials", new Dictionary<string, int>());
         }
     }
 }

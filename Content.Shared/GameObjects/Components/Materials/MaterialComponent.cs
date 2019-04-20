@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Content.Server.Materials;
+using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Serialization;
@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Materials
+namespace Content.Shared.GameObjects.Components.Materials
 {
     /// <summary>
     ///     Component to store data such as "this object is made out of steel".
@@ -19,7 +19,8 @@ namespace Content.Server.GameObjects.Components.Materials
         public const string SerializationCache = "mat";
         public override string Name => "Material";
 
-        Dictionary<object, Material> MaterialTypes;
+        public Dictionary<object, Material> MaterialTypes => _materialTypes;
+        private Dictionary<object, Material> _materialTypes;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -33,11 +34,11 @@ namespace Content.Server.GameObjects.Components.Materials
 
             if (serializer.TryGetCacheData(SerializationCache, out Dictionary<object, Material> cached))
             {
-                MaterialTypes = cached.ShallowClone();
+                _materialTypes = cached.ShallowClone();
                 return;
             }
 
-            MaterialTypes = new Dictionary<object, Material>();
+            _materialTypes = new Dictionary<object, Material>();
 
             if (serializer.TryReadDataField("materials", out List<MaterialDataEntry> list))
             {
@@ -46,12 +47,12 @@ namespace Content.Server.GameObjects.Components.Materials
                 foreach (var entry in list)
                 {
                     var proto = protoMan.Index<MaterialPrototype>(entry.Value);
-                    MaterialTypes[entry.Key] = proto.Material;
+                    _materialTypes[entry.Key] = proto.Material;
                     index++;
                 }
             }
 
-            serializer.SetCacheData(SerializationCache, MaterialTypes.ShallowClone());
+            serializer.SetCacheData(SerializationCache, _materialTypes.ShallowClone());
         }
 
         class MaterialDataEntry : IExposeData

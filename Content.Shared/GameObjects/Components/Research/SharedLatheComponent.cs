@@ -1,7 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Content.Shared.Materials;
 using Content.Shared.Research;
+using Mono.Cecil;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -13,45 +18,43 @@ namespace Content.Shared.GameObjects.Components.Research
         Protolathe,
     }
 
-    public enum LatheMaterial
-    {
-        Metal,
-        Glass,
-    }
-
     public class SharedLatheComponent : Component
     {
-        protected Dictionary<LatheMaterial, uint> _materialStorage;
-        private List<LatheMaterial> _acceptedMaterials = new List<LatheMaterial>() {LatheMaterial.Metal, LatheMaterial.Glass};
         public override string Name => "Lathe";
         public override uint? NetID => ContentNetIDs.LATHE;
         public LatheType LatheType = LatheType.Autolathe;
 
-        public bool CanProduce(LatheRecipePrototype recipe, uint quantity = 1)
+        public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
+            Owner.TryGetComponent(out SharedMaterialStorageComponent storage);
 
-            foreach (var (material, materialQuantity) in recipe.RequiredMaterials)
+            if (storage == null) return false;
+
+            foreach (var (material, amount) in recipe.RequiredMaterials)
             {
-                if (!HasMaterial(material, materialQuantity * quantity)) return false;
+                if (storage[material] <= (amount * quantity)) return false;
             }
+
             return true;
         }
 
-        public bool AcceptsMaterial(LatheMaterial material)
+        public bool CanProduce(string ID, int quantity = 1)
         {
-            return _acceptedMaterials.Contains(material);
-        }
+            Owner.TryGetComponent(out SharedMaterialStorageComponent storage);
 
-        public bool HasMaterial(LatheMaterial material, uint quantity)
-        {
-            if (!AcceptsMaterial(material)) return false;
-            if (_materialStorage[material] >= quantity) return true;
-        }
+            if (storage == null) return false;
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _acceptedMaterials, "AcceptedMaterials", new List<LatheMaterial>() {LatheMaterial.Metal, LatheMaterial.Glass});
+            var protMan = IoCManager.Resolve<IPrototypeManager>();
+            protMan.TryIndex(ID, out LatheRecipePrototype recipe);
+
+            if (recipe == null) return false;
+
+            foreach (var (material, amount) in recipe.RequiredMaterials)
+            {
+                if (storage[material] <= (amount * quantity)) return false;
+            }
+
+            return true;
         }
 
         [Serializable, NetSerializable]
@@ -64,13 +67,46 @@ namespace Content.Shared.GameObjects.Components.Research
         }
 
         [Serializable, NetSerializable]
-        public class LatheMaterialsUpdateMessage : ComponentMessage
+        public class LatheProducingRecipeMessage : ComponentMessage
         {
-            public readonly Dictionary<LatheMaterial, uint> MaterialStorage;
-            public LatheMaterialsUpdateMessage(Dictionary<LatheMaterial, uint> storage)
+            public readonly string ID;
+            public LatheProducingRecipeMessage(string id)
             {
                 Directed = true;
-                MaterialStorage = storage;
+                ID = id;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class LatheStoppedProducingRecipeMessage : ComponentMessage
+        {
+            public LatheStoppedProducingRecipeMessage()
+            {
+                Directed = true;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class LatheFullQueueMessage : ComponentMessage
+        {
+            public readonly Queue<string> Recipes;
+            public LatheFullQueueMessage(Queue<string> recipes)
+            {
+                Directed = true;
+                Recipes = recipes;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class LatheQueueRecipeMessage : ComponentMessage
+        {
+            public readonly string ID;
+            public readonly int Quantity;
+            public LatheQueueRecipeMessage(string id, int quantity)
+            {
+                Directed = true;
+                ID = id;
+                Quantity = quantity;
             }
         }
     }

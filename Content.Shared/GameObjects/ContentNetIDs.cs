@@ -19,5 +19,6 @@
         public const uint CLOTHING = 1014;
         public const uint ENTITYSTORAGE = 1015;
         public const uint LATHE = 1016;
+        public const uint MATERIAL_STORAGE = 1017;
     }
 }

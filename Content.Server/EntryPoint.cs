@@ -26,7 +26,6 @@ using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Projectile;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Melee;
-using Content.Server.GameObjects.Components.Materials;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Mobs;
@@ -40,6 +39,7 @@ using Content.Server.GameObjects.Components.Weapon.Ranged;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -51,6 +51,7 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Research;
+using Content.Shared.GameObjects.Components.Research;
 
 namespace Content.Server
 {
@@ -128,6 +129,8 @@ namespace Content.Server
             factory.Register<ApcComponent>();
             factory.Register<MaterialComponent>();
             factory.Register<StackComponent>();
+            factory.Register<MaterialStorageComponent>();
+            factory.RegisterReference<MaterialStorageComponent, SharedMaterialStorageComponent>();
 
             factory.Register<ConstructionComponent>();
             factory.Register<ConstructorComponent>();

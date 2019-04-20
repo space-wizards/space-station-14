@@ -1,0 +1,146 @@
+using Content.Client.GameObjects.Components.Research;
+using Content.Shared.Research;
+using Robust.Client.Graphics;
+using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces.Graphics;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.Utility;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Maths;
+
+namespace Content.Client.Research
+{
+    public class LatheQueueMenu : SS14Window
+    {
+        protected override Vector2? CustomSize => (300, 450);
+
+        public LatheComponent Owner { get; set; }
+
+        private ItemList QueueList;
+        private Label Name;
+        private Label Description;
+        private TextureRect Icon;
+
+        public LatheQueueMenu(IDisplayManager displayManager) : base(displayManager)
+        {
+
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            HideOnClose = true;
+            Title = "Lathe Queue";
+            Visible = false;
+
+            var margin = new MarginContainer()
+            {
+                MarginTop = 5f,
+                MarginLeft = 5f,
+                MarginRight = -5f,
+                MarginBottom = -5f,
+            };
+
+            margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+
+            var vbox = new VBoxContainer();
+
+            vbox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+
+            var descMargin = new MarginContainer()
+            {
+                MarginTop = 5f,
+                MarginLeft = 5f,
+                MarginRight = -5f,
+                MarginBottom = -5f,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 2,
+            };
+
+            var hbox = new HBoxContainer()
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand
+            };
+
+            Icon = new TextureRect()
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 2,
+            };
+
+            var vboxInfo = new VBoxContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 3,
+            };
+
+            Name = new Label();
+            Description = new Label()
+            {
+                RectClipContent = true,
+                SizeFlagsVertical = SizeFlags.Fill,
+
+            };
+
+            var scrollContainer = new ScrollContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 3
+            };
+
+            QueueList = new ItemList()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SelectMode = ItemList.ItemListSelectMode.None
+            };
+
+            vboxInfo.AddChild(Name);
+            vboxInfo.AddChild(Description);
+
+            hbox.AddChild(Icon);
+            hbox.AddChild(vboxInfo);
+
+            descMargin.AddChild(hbox);
+
+            scrollContainer.AddChild(QueueList);
+
+            vbox.AddChild(descMargin);
+            vbox.AddChild(scrollContainer);
+
+            margin.AddChild(vbox);
+
+            Contents.AddChild(margin);
+
+            ClearInfo();
+        }
+
+        public void SetInfo(LatheRecipePrototype recipe)
+        {
+            Icon.Texture = recipe.Icon.Frame0();
+            Name.Text = recipe.Name;
+            Description.Text = recipe.Description;
+        }
+
+        public void ClearInfo()
+        {
+            Icon.Texture = Texture.White;
+            Name.Text = "-------";
+            Description.Text = "Not producing anything.";
+        }
+
+        public void PopulateList()
+        {
+            Logger.Info("hey I do something!");
+            QueueList.Clear();
+            var idx = 1;
+            foreach (var recipe in Owner.QueuedRecipes)
+            {
+                QueueList.AddItem($"{idx}. {recipe.Name}", recipe.Icon.Frame0(), false);
+                idx++;
+            }
+        }
+    }
+}

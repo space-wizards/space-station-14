@@ -1,13 +1,21 @@
+using System;
 using System.Collections.Generic;
+using Content.Client.GameObjects.Components.Research;
+using Content.Shared.Construction;
+using Content.Shared.Materials;
 using Content.Shared.Research;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timers;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Research
 {
@@ -15,20 +23,22 @@ namespace Content.Client.Research
     {
 #pragma warning disable CS0649
         [Dependency]
-        private readonly IPrototypeManager PrototypeManager;
+        private IPrototypeManager PrototypeManager;
         [Dependency]
-        private readonly IResourceCache ResourceCache;
+        private IResourceCache ResourceCache;
 #pragma warning restore
 
         private ItemList Items;
-        private Label RecipeName;
-        private Label RecipeDescription;
-        private TextureRect RecipeIcon;
-        private Button ProduceButton;
-        protected override Vector2? CustomSize => (758, 431);
+        private ItemList Materials;
+        private LineEdit AmountLineEdit;
+        private LineEdit SearchBar;
+        public Button QueueButton;
+        protected override Vector2? CustomSize => (300, 450);
 
         public LatheComponent Owner { get; set; }
-        public readonly List<LatheRecipePrototype> Recipes = new List<LatheRecipePrototype>();
+
+        private List<LatheRecipePrototype> _recipes = new List<LatheRecipePrototype>();
+        private List<LatheRecipePrototype> _shownRecipes = new List<LatheRecipePrototype>();
 
         public LatheMenu(IDisplayManager displayMan) : base(displayMan)
         {
@@ -47,96 +57,243 @@ namespace Content.Client.Research
             Title = "Lathe Menu";
             Visible = false;
 
-            var hbox = new HBoxContainer();
-
-            Contents.AddChild(hbox);
-
-            hbox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
-
-            var scroll = new ScrollContainer()
+            var margin = new MarginContainer()
             {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                MarginTop = 5f,
+                MarginLeft = 5f,
+                MarginRight = -5f,
+                MarginBottom = -5f,
+            };
+
+            margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+
+            var vbox = new VBoxContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SeparationOverride = 5,
+            };
+
+            vbox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+
+            var hboxButtons = new HBoxContainer()
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 1
+            };
+
+            QueueButton = new Button()
+            {
+                Text = "Queue",
+                TextAlign = Button.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
             };
 
-            hbox.AddChild(scroll);
-
-            Items = new ItemList()
-            {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-            };
-
-            Items.SetAnchorAndMarginPreset(LayoutPreset.Wide);
-            Items.OnItemSelected += ItemSelected;
-            Items.OnItemDeselected += ItemDeselected;
-
-            scroll.AddChild(Items);
-
-            var vbox = new VBoxContainer()
+            var spacer = new Control()
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 2,
             };
 
-            RecipeName = new Label()
+            spacer.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+
+            var materialButton = new Button()
             {
-                Align = Label.AlignMode.Center,
+                Text = "Materials",
+                TextAlign = Button.AlignMode.Center,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 1,
+                Disabled = true,
             };
 
-            RecipeIcon = new TextureRect();
+            var hboxFilter = new HBoxContainer()
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 1
+            };
 
-            vbox.AddChild(RecipeName);
+            SearchBar = new LineEdit()
+            {
+                PlaceHolder = "Search Designs",
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 3
+            };
 
-            RecipeDescription = new Label();
+            SearchBar.OnTextChanged += PopulateFilter;
 
-            vbox.AddChild(RecipeDescription);
+            var filterButton = new Button()
+            {
+                Text = "Filter",
+                TextAlign = Button.AlignMode.Center,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 1,
+                Disabled = true,
+            };
 
-            hbox.AddChild(vbox);
+            var scrollContainer = new ScrollContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 8
+            };
 
-            AddToScreen();
+            Items = new ItemList()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+            };
+
+
+
+            Items.OnItemSelected += ItemSelected;
+
+            AmountLineEdit = new LineEdit()
+            {
+                PlaceHolder = "Amount",
+                Text = "1",
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+            };
+
+            AmountLineEdit.OnTextChanged += PopulateDisabled;
+
+            var scrollMaterialContainer = new ScrollContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 3
+            };
+
+            Materials = new ItemList()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+            };
+
+            hboxButtons.AddChild(QueueButton);
+            hboxButtons.AddChild(spacer);
+            hboxButtons.AddChild(materialButton);
+
+            hboxFilter.AddChild(SearchBar);
+            hboxFilter.AddChild(filterButton);
+
+            scrollContainer.AddChild(Items);
+            scrollMaterialContainer.AddChild(Materials);
+
+            vbox.AddChild(hboxButtons);
+            vbox.AddChild(hboxFilter);
+            vbox.AddChild(scrollContainer);
+            vbox.AddChild(AmountLineEdit);
+            vbox.AddChild(scrollMaterialContainer);
+
+            margin.AddChild(vbox);
+
+            Contents.AddChild(margin);
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
-            var recipe = Recipes[args.ItemIndex];
-            RecipeName.Text = recipe.Name;
-            RecipeDescription.Text = recipe.Description;
-            RecipeIcon.Texture = recipe.Icon.Frame0();
-            ProduceButton.Disabled = false;
+            int.TryParse(AmountLineEdit.Text, out var quantity);
+            if (quantity <= 0) quantity = 1;
+            Owner.Queue(_shownRecipes[args.ItemIndex], quantity);
+            Items.SelectMode = ItemList.ItemListSelectMode.None;
+            Timer.Spawn(100, () => {Items.Unselect(args.ItemIndex);});
+            Timer.Spawn(100, () => {Items.SelectMode = ItemList.ItemListSelectMode.Single;});
         }
 
-
-
-        public void ItemDeselected(ItemList.ItemListDeselectedEventArgs args)
+        public void PopulateMaterials()
         {
-            RecipeName.Text = "";
-            RecipeDescription.Text = "";
-            RecipeIcon.Texture = null;
-            ProduceButton.Disabled = true;
+            Materials.Clear();
+            Owner.Owner.TryGetComponent(out MaterialStorageComponent storage);
+
+            if (storage == null) return;
+
+            foreach (var (id, amount) in storage)
+            {
+                Material.TryGetMaterial(id, out var material);
+                Materials.AddItem($"{material.Name} {amount} cm3", material.Icon.Frame0(), false);
+            }
         }
 
-        public void Populate()
+        /// <summary>
+        ///     Disables or enables shown recipes depending on whether there are enough materials for it or not.
+        /// </summary>
+        public void PopulateDisabled()
         {
-            Recipes.Clear();
+            int.TryParse(AmountLineEdit.Text, out var quantity);
+            if (quantity <= 0) quantity = 1;
+            for (var i = 0; i < _shownRecipes.Count; i++)
+            {
+                var prototype = _shownRecipes[i];
+                Items.SetItemDisabled(i, !Owner.CanProduce(prototype, quantity));
+            }
+        }
+
+        /// <inheritdoc cref="PopulateDisabled()"/>
+        public void PopulateDisabled(LineEdit.LineEditEventArgs args)
+        {
+            PopulateDisabled();
+        }
+
+        /// <summary>
+        ///     Adds shown recipes to the ItemList control.
+        /// </summary>
+        public void PopulateList()
+        {
+            Items.Clear();
+            for (var i = 0; i < _shownRecipes.Count; i++)
+            {
+                var prototype = _shownRecipes[i];
+                Items.AddItem(prototype.Name, prototype.Icon.Frame0());
+            }
+
+            PopulateDisabled();
+        }
+
+        /// <summary>
+        ///     Populates the list of recipes that will actually be shown, using the current filters.
+        /// </summary>
+        public void PopulateFilter()
+        {
+            _shownRecipes.Clear();
+
+            foreach (var prototype in _recipes)
+            {
+                if (SearchBar.Text.Trim().Length != 0)
+                {
+                    if (prototype.Name.ToLowerInvariant().Contains(SearchBar.Text.Trim().ToLowerInvariant()))
+                        _shownRecipes.Add(prototype);
+                    continue;
+                }
+
+                _shownRecipes.Add(prototype);
+            }
+
+            PopulateList();
+        }
+
+        /// <inheritdoc cref="PopulateFilter()"/>
+        public void PopulateFilter(LineEdit.LineEditEventArgs args)
+        {
+            PopulateFilter();
+        }
+
+        /// <summary>
+        ///     Populates the recipe list with recipes this lathe has unlocked
+        /// </summary>
+        public void PopulateRecipes()
+        {
+            _recipes.Clear();
+
+            if (PrototypeManager == null)
+                PrototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             foreach (var prototype in PrototypeManager.EnumeratePrototypes<LatheRecipePrototype>())
             {
-                // Here it should check if the prototype is unlocked...
-
+                // TODO: Check if the prototype is unlocked...
+                if (prototype.LatheType == Owner.LatheType)
+                    _recipes.Add(prototype);
             }
-        }
-
-        public class RecipeButton
-        {
-            public LatheRecipePrototype Recipe;
-
-            public LatheMenu Menu
-            {
-                get;
-                set;
-            }
-
-
+            PopulateFilter();
         }
     }
 }

@@ -1,0 +1,33 @@
+- type: latheRecipe
+  id: wirecutter
+  name: Wirecutter
+  icon: Objects/wirecutter.png
+  description: This kills the wire.
+  result: Wirecutter
+  lathetype: Autolathe
+  completetime: 250
+  materials:
+    steel: 500
+
+- type: latheRecipe
+  id: screwdriver
+  name: Screwdriver
+  icon: Objects/screwdriver.png
+  description: Industrial grade torque in a small screwdriving package.
+  result: Screwdriver
+  lathetype: Autolathe
+  completetime: 250
+  materials:
+    steel: 500
+
+
+- type: latheRecipe
+  id: welder
+  name: Welder
+  icon: Objects/welder.png
+  description: Melts anything as long as its fueled, don't forget your eye protection.
+  result: Welder
+  lathetype: Autolathe
+  completetime: 250
+  materials:
+    steel: 500
