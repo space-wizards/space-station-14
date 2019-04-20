@@ -1,17 +1,11 @@
 ﻿using Robust.Shared.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.IoC;
-using Robust.Server.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Serialization;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects;
-using SS14.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Map;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
