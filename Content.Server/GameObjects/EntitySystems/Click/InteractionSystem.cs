@@ -153,15 +153,20 @@ namespace Content.Server.GameObjects.EntitySystems
             if(!EntityManager.TryGetEntity(uid, out var used))
                 return;
 
-            if(!used.TryGetComponent(out IActivate activateComp))
-                return;
-
             var playerEnt = ((IPlayerSession) session).AttachedEntity;
 
             if(playerEnt == null || !playerEnt.IsValid())
                 return;
 
             if (!playerEnt.Transform.GridPosition.InRange(used.Transform.GridPosition, INTERACTION_RANGE))
+                return;
+
+            var activateMsg = new ActivateInWorldMessage(playerEnt, used);
+            RaiseEvent(activateMsg);
+            if(activateMsg.Handled)
+                return;
+
+            if (!used.TryGetComponent(out IActivate activateComp))
                 return;
 
             activateComp.Activate(new ActivateEventArgs { User = playerEnt });
@@ -277,8 +282,13 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="weapon"></param>
         /// <param name="clicklocation"></param>
-        public static void InteractAfterattack(IEntity user, IEntity weapon, GridCoordinates clicklocation)
+        public void InteractAfterattack(IEntity user, IEntity weapon, GridCoordinates clicklocation)
         {
+            var message = new AfterAttackMessage(user, weapon, null, clicklocation);
+            RaiseEvent(message);
+            if(message.Handled)
+                return;
+
             List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
 
             for (var i = 0; i < afterattacks.Count; i++)
@@ -294,8 +304,13 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="weapon"></param>
         /// <param name="attacked"></param>
-        public static void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clicklocation)
+        public void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clicklocation)
         {
+            var attackMsg = new AttackByMessage(user, weapon, attacked, clicklocation);
+            RaiseEvent(attackMsg);
+            if(attackMsg.Handled)
+                return;
+
             List<IAttackBy> interactables = attacked.GetAllComponents<IAttackBy>().ToList();
 
             for (var i = 0; i < interactables.Count; i++)
@@ -307,7 +322,11 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             //Else check damage component to see if we damage if not attackby, and if so can we attack object
-
+            
+            var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clicklocation);
+            RaiseEvent(afterAtkMsg);
+            if (afterAtkMsg.Handled)
+                return;
 
             //If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
             List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
@@ -324,8 +343,13 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         /// <param name="user"></param>
         /// <param name="attacked"></param>
-        public static void Interaction(IEntity user, IEntity attacked)
+        public void Interaction(IEntity user, IEntity attacked)
         {
+            var message = new AttackHandMessage(user, attacked);
+            RaiseEvent(message);
+            if(message.Handled)
+                return;
+
             List<IAttackHand> interactables = attacked.GetAllComponents<IAttackHand>().ToList();
 
             for (var i = 0; i < interactables.Count; i++)
@@ -345,7 +369,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         /// <param name="user"></param>
         /// <param name="used"></param>
-        public static void TryUseInteraction(IEntity user, IEntity used)
+        public void TryUseInteraction(IEntity user, IEntity used)
         {
             if (user != null && used != null && ActionBlockerSystem.CanUse(user))
             {
@@ -359,8 +383,13 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         /// <param name="user"></param>
         /// <param name="attacked"></param>
-        public static void UseInteraction(IEntity user, IEntity used)
+        public void UseInteraction(IEntity user, IEntity used)
         {
+            var useMsg = new UseInHandMessage(user, used);
+            RaiseEvent(useMsg);
+            if(useMsg.Handled)
+                return;
+
             List<IUse> usables = used.GetAllComponents<IUse>().ToList();
 
             //Try to use item on any components which have the interface
@@ -380,14 +409,19 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="user"></param>
         /// <param name="weapon"></param>
         /// <param name="attacked"></param>
-        public static void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clicklocation)
+        public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
+            var rangedMsg = new RangedAttackMessage(user, weapon, attacked, clickLocation);
+            RaiseEvent(rangedMsg);
+            if(rangedMsg.Handled)
+                return;
+
             List<IRangedAttackBy> rangedusables = attacked.GetAllComponents<IRangedAttackBy>().ToList();
 
             //See if we have a ranged attack interaction
             for (var i = 0; i < rangedusables.Count; i++)
             {
-                if (rangedusables[i].RangedAttackBy(new RangedAttackByEventArgs { User = user, Weapon = weapon, ClickLocation = clicklocation })) //If an attackby returns a status completion we finish our attack
+                if (rangedusables[i].RangedAttackBy(new RangedAttackByEventArgs { User = user, Weapon = weapon, ClickLocation = clickLocation })) //If an attackby returns a status completion we finish our attack
                 {
                     return;
                 }
@@ -395,14 +429,217 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (weapon != null)
             {
+                var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
+                RaiseEvent(afterAtkMsg);
+                if (afterAtkMsg.Handled)
+                    return;
+
                 List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
 
                 //See if we have a ranged attack interaction
                 for (var i = 0; i < afterattacks.Count; i++)
                 {
-                    afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clicklocation, Attacked = attacked });
+                    afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clickLocation, Attacked = attacked });
                 }
             }
+        }
+    }
+
+    /// <summary>
+    ///     Raised when being clicked on or "attacked" by a user with an object in their hand
+    /// </summary>
+    public class AttackByMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that triggered the attack.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Entity that the User attacked with.
+        /// </summary>
+        public IEntity ItemInHand { get; }
+        
+        /// <summary>
+        ///     Entity that was attacked.
+        /// </summary>
+        public IEntity Attacked { get; }
+
+        /// <summary>
+        ///     The original location that was clicked by the user.
+        /// </summary>
+        public GridCoordinates ClickLocation { get; }
+
+        public AttackByMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
+        {
+            User = user;
+            ItemInHand = itemInHand;
+            Attacked = attacked;
+            ClickLocation = clickLocation;
+        }
+    }
+
+    /// <summary>
+    ///      Raised when being clicked on or "attacked" by a user with an empty hand.
+    /// </summary>
+    public class AttackHandMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that triggered the attack.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Entity that was attacked.
+        /// </summary>
+        public IEntity Attacked { get; }
+
+        public AttackHandMessage(IEntity user, IEntity attacked)
+        {
+            User = user;
+            Attacked = attacked;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when being clicked by objects outside the range of direct use.
+    /// </summary>
+    public class RangedAttackMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that triggered the attack.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Entity that the User attacked with.
+        /// </summary>
+        public IEntity ItemInHand { get; set; }
+
+        /// <summary>
+        ///     Entity that was attacked.
+        /// </summary>
+        public IEntity Attacked { get; }
+
+        /// <summary>
+        ///     Location that the user clicked outside of their interaction range.
+        /// </summary>
+        public GridCoordinates ClickLocation { get; }
+
+        public RangedAttackMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
+        {
+            User = user;
+            ItemInHand = itemInHand;
+            ClickLocation = clickLocation;
+            Attacked = attacked;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when clicking on another object and no attack event was handled.
+    /// </summary>
+    public class AfterAttackMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that triggered the attack.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Entity that the User attacked with.
+        /// </summary>
+        public IEntity ItemInHand { get; set; }
+
+        /// <summary>
+        ///     Entity that was attacked. This can be null if the attack did not click on an entity.
+        /// </summary>
+        public IEntity Attacked { get; }
+
+        /// <summary>
+        ///     Location that the user clicked outside of their interaction range.
+        /// </summary>
+        public GridCoordinates ClickLocation { get; }
+
+        public AfterAttackMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
+        {
+            User = user;
+            Attacked = attacked;
+            ClickLocation = clickLocation;
+            ItemInHand = itemInHand;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when using the entity in your hands.
+    /// </summary>
+    public class UseInHandMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity holding the item in their hand.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was used.
+        /// </summary>
+        public IEntity Used { get; }
+
+        public UseInHandMessage(IEntity user, IEntity used)
+        {
+            User = user;
+            Used = used;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an entity is activated in the world.
+    /// </summary>
+    public class ActivateInWorldMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that activated the world entity.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Entity that was activated in the world.
+        /// </summary>
+        public IEntity Activated { get; }
+
+        public ActivateInWorldMessage(IEntity user, IEntity activated)
+        {
+            User = user;
+            Activated = activated;
         }
     }
 }
