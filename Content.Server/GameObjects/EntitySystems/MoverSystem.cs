@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -27,10 +28,10 @@ namespace Content.Server.GameObjects.EntitySystems
     internal class MoverSystem : EntitySystem
     {
 #pragma warning disable 649
-        [Dependency]
-        private IPauseManager _pauseManager;
-        [Dependency]
-        private IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IPauseManager _pauseManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
+        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
         private AudioSystem _audioSystem;
@@ -42,8 +43,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
-            IoCManager.InjectDependencies(this);
-
             EntityQuery = new TypeEntityQuery(typeof(PlayerInputMoverComponent));
             
             var moveUpCmdHandler = InputCmdHandler.FromDelegate(
@@ -135,7 +134,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
 
                 // Handle footsteps.
-                var distance = transform.GridPosition.Distance(mover.LastPosition);
+                var distance = transform.GridPosition.Distance(_mapManager, mover.LastPosition);
                 mover.StepSoundDistance += distance;
                 mover.LastPosition = transform.GridPosition;
                 float distanceNeeded;
@@ -191,13 +190,13 @@ namespace Content.Server.GameObjects.EntitySystems
         private void PlayFootstepSound(GridCoordinates coordinates)
         {
             // Step one: figure out sound collection prototype.
-            var grid = coordinates.Grid;
+            var grid = _mapManager.GetGrid(coordinates.GridID);
             var tile = grid.GetTile(coordinates);
 
             // If the coordinates have a catwalk, it's always catwalk.
             string soundCollectionName;
             var catwalk = false;
-            foreach (var maybeCatwalk in grid.GetSnapGridCell(tile.GridTile, SnapGridOffset.Center))
+            foreach (var maybeCatwalk in grid.GetSnapGridCell(tile.GridIndices, SnapGridOffset.Center))
             {
                 if (maybeCatwalk.Owner.HasComponent<CatwalkComponent>())
                 {
@@ -214,7 +213,7 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 // Walking on a tile.
-                var def = (ContentTileDefinition)tile.TileDef;
+                var def = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
                 if (def.FootstepSounds == null)
                 {
                     // Nothing to play, oh well.

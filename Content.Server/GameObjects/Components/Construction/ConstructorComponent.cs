@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Materials;
-using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
@@ -10,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
@@ -22,6 +20,13 @@ namespace Content.Server.GameObjects.Components.Construction
 {
     public class ConstructorComponent : SharedConstructorComponent
     {
+#pragma warning disable 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IServerEntityManager _serverEntityManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
+
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
@@ -36,11 +41,10 @@ namespace Content.Server.GameObjects.Components.Construction
 
         void TryStartStructureConstruction(GridCoordinates loc, string prototypeName, Angle angle, int ack)
         {
-            var protoMan = IoCManager.Resolve<IPrototypeManager>();
-            var prototype = protoMan.Index<ConstructionPrototype>(prototypeName);
+            var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
-            var transform = Owner.GetComponent<ITransformComponent>();
-            if (!loc.InRange(transform.GridPosition, InteractionSystem.INTERACTION_RANGE))
+            var transform = Owner.Transform;
+            if (!loc.InRange(_mapManager, transform.GridPosition, InteractionSystem.INTERACTION_RANGE))
             {
                 return;
             }
@@ -75,20 +79,19 @@ namespace Content.Server.GameObjects.Components.Construction
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            var entMgr = IoCManager.Resolve<IServerEntityManager>();
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", loc);
+            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", loc);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
-                var ent = entMgr.ForceSpawnEntityAt(prototype.Result, loc);
-                ent.GetComponent<ITransformComponent>().LocalRotation = angle;
+                var ent = _serverEntityManager.ForceSpawnEntityAt(prototype.Result, loc);
+                ent.Transform.LocalRotation = angle;
             }
             else
             {
-                var frame = entMgr.ForceSpawnEntityAt("structureconstructionframe", loc);
+                var frame = _serverEntityManager.ForceSpawnEntityAt("structureconstructionframe", loc);
                 var construction = frame.GetComponent<ConstructionComponent>();
                 construction.Init(prototype);
-                frame.GetComponent<ITransformComponent>().LocalRotation = angle;
+                frame.Transform.LocalRotation = angle;
             }
 
             var msg = new AckStructureConstructionMessage(ack);

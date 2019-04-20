@@ -13,6 +13,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
 #pragma warning disable 649
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
         /// <summary>
@@ -20,19 +21,15 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         /// </summary>
         public override string Name => "Crowbar";
 
-        public CrowbarComponent()
-        {
-            IoCManager.InjectDependencies(this);
-        }
-
         public void AfterAttack(AfterAttackEventArgs eventArgs)
         {
-            var tile = eventArgs.ClickLocation.Grid.GetTile(eventArgs.ClickLocation);
-            var tileDef = (ContentTileDefinition) tile.TileDef;
+            var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
+            var tile = mapGrid.GetTile(eventArgs.ClickLocation);
+            var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
             if (tileDef.CanCrowbar)
             {
                 var underplating = _tileDefinitionManager["underplating"];
-                eventArgs.ClickLocation.Grid.SetTile(eventArgs.ClickLocation, underplating.TileId);
+                mapGrid.SetTile(eventArgs.ClickLocation, underplating.TileId);
                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/crowbar.ogg", Owner);
             }
         }

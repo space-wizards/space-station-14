@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -22,6 +23,10 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     internal class HandsSystem : EntitySystem
     {
+#pragma warning disable 649
+        [Dependency] private readonly IMapManager _mapManager;
+#pragma warning restore 649
+
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
 
         /// <inheritdoc />
@@ -105,7 +110,7 @@ namespace Content.Server.GameObjects.EntitySystems
             handsComp.SwapHands();
         }
 
-        private static void HandleDrop(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private void HandleDrop(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             var ent = ((IPlayerSession) session).AttachedEntity;
 
@@ -129,7 +134,7 @@ namespace Content.Server.GameObjects.EntitySystems
             handsComp.ActivateItem();
         }
 
-        private static void HandleThrowItem(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private void HandleThrowItem(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             var plyEnt = ((IPlayerSession)session).AttachedEntity;
 
@@ -173,7 +178,7 @@ namespace Content.Server.GameObjects.EntitySystems
             projComp.IgnoreEntity(plyEnt);
 
             var transform = plyEnt.Transform;
-            var dirVec = (coords.ToWorld().Position - transform.WorldPosition).Normalized;
+            var dirVec = (coords.ToWorld(_mapManager).Position - transform.WorldPosition).Normalized;
 
             if (!throwEnt.TryGetComponent(out PhysicsComponent physComp))
             {
