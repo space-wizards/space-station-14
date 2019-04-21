@@ -5,4 +5,4 @@ BASEDIR=$(dirname "$0")
 echo "$BASEDIR"
 cd "$BASEDIR"
 
-/Library/Frameworks/Mono.framework/Versions/Current/Commands/mono ../Resources/SS14.Client.exe
+exec /Library/Frameworks/Mono.framework/Versions/Current/Commands/mono ../Resources/Robust.Client.exe
