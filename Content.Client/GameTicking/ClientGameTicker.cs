@@ -203,7 +203,7 @@ namespace Content.Client.GameTicking
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
                 InputCmdHandler.FromDelegate(session =>
                 {
-                    _lobby.Chat.Input.IgnoreNext = true;
+                    _gameChat.Input.IgnoreNext = true;
                     _gameChat.Input.GrabKeyboardFocus();
                 }));
 
