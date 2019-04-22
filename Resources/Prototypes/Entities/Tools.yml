@@ -28,7 +28,7 @@
   name: Welder
   parent: BaseItem
   id: Welder
-  description: Melts anything as long as its fueled, don't forget your eye protection
+  description: Melts anything as long as it's fueled, don't forget your eye protection!
   components:
   - type: Welder
   - type: Sprite
