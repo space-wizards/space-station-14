@@ -125,16 +125,9 @@ namespace Content.Client.Research
                 Disabled = true,
             };
 
-            var scrollContainer = new ScrollContainer()
-            {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsStretchRatio = 8,
-                VScrollEnabled = true,
-                HScrollEnabled = false,
-            };
-
             Items = new ItemList()
             {
+                SizeFlagsStretchRatio = 8,
                 SizeFlagsVertical = SizeFlags.FillExpand,
             };
 
@@ -151,15 +144,10 @@ namespace Content.Client.Research
 
             AmountLineEdit.OnTextChanged += PopulateDisabled;
 
-            var scrollMaterialContainer = new ScrollContainer()
-            {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsStretchRatio = 3
-            };
-
             Materials = new ItemList()
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 3
             };
 
             hboxButtons.AddChild(spacer);
@@ -168,14 +156,11 @@ namespace Content.Client.Research
             hboxFilter.AddChild(SearchBar);
             hboxFilter.AddChild(filterButton);
 
-            scrollContainer.AddChild(Items);
-            scrollMaterialContainer.AddChild(Materials);
-
             vbox.AddChild(hboxButtons);
             vbox.AddChild(hboxFilter);
-            vbox.AddChild(scrollContainer);
+            vbox.AddChild(Items);
             vbox.AddChild(AmountLineEdit);
-            vbox.AddChild(scrollMaterialContainer);
+            vbox.AddChild(Materials);
 
             margin.AddChild(vbox);
 

@@ -93,21 +93,11 @@ namespace Content.Client.Research
 
             };
 
-            var scrollContainer = new ScrollContainer()
-            {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsStretchRatio = 3,
-                VScrollEnabled = true,
-                HScrollEnabled = false,
-
-            };
-
-            scrollContainer.SetAnchorAndMarginPreset(LayoutPreset.Wide);
-
             QueueList = new ItemList()
             {
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 3,
                 SelectMode = ItemList.ItemListSelectMode.None
             };
 
@@ -119,10 +109,8 @@ namespace Content.Client.Research
 
             descMargin.AddChild(hbox);
 
-            scrollContainer.AddChild(QueueList);
-
             vbox.AddChild(descMargin);
-            vbox.AddChild(scrollContainer);
+            vbox.AddChild(QueueList);
 
             margin.AddChild(vbox);
 
