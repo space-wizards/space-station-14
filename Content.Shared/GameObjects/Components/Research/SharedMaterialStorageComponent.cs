@@ -6,11 +6,13 @@ using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
     public class SharedMaterialStorageComponent : Component, IEnumerable<KeyValuePair<string, int>>
     {
+        [ViewVariables]
         protected virtual Dictionary<string, int> Storage { get; set; }
         public override string Name => "MaterialStorage";
         public override uint? NetID => ContentNetIDs.MATERIAL_STORAGE;
@@ -39,7 +41,7 @@ namespace Content.Shared.GameObjects.Components.Research
         /// <summary>
         ///     The total volume of material stored currently.
         /// </summary>
-        public int CurrentAmount
+        [ViewVariables] public int CurrentAmount
         {
             get
             {

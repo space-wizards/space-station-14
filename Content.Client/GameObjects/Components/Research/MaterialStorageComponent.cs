@@ -4,13 +4,14 @@ using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Research
 {
     public class MaterialStorageComponent : SharedMaterialStorageComponent
     {
-        private Dictionary<string, int> _storage = new Dictionary<string, int>();
         protected override Dictionary<string, int> Storage => _storage;
+        private Dictionary<string, int> _storage = new Dictionary<string, int>();
 
         public event Action OnMaterialStorageChanged;
 

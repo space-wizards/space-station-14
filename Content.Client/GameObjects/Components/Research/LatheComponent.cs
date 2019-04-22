@@ -9,6 +9,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Research
 {
@@ -18,9 +19,12 @@ namespace Content.Client.GameObjects.Components.Research
         private IDisplayManager _displayManager;
         [Dependency]
         private IPrototypeManager _prototypeManager;
+        [ViewVariables]
         private LatheMenu menu;
+        [ViewVariables]
         private LatheQueueMenu queueMenu;
 
+        [ViewVariables]
         public Queue<LatheRecipePrototype> QueuedRecipes => _queuedRecipes;
         private Queue<LatheRecipePrototype> _queuedRecipes = new Queue<LatheRecipePrototype>();
 
@@ -43,6 +47,8 @@ namespace Content.Client.GameObjects.Components.Research
                 storage.OnMaterialStorageChanged += menu.PopulateDisabled;
                 storage.OnMaterialStorageChanged += menu.PopulateMaterials;
             }
+
+            SendNetworkMessage(new LatheSyncRequestMessage());
 
         }
 

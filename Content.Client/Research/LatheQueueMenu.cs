@@ -9,6 +9,7 @@ using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Research
 {
@@ -18,6 +19,7 @@ namespace Content.Client.Research
 
         public LatheComponent Owner { get; set; }
 
+        [ViewVariables]
         private ItemList QueueList;
         private Label Name;
         private Label Description;
@@ -62,7 +64,7 @@ namespace Content.Client.Research
 
             var hbox = new HBoxContainer()
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
             };
 
             Icon = new TextureRect()
@@ -77,22 +79,34 @@ namespace Content.Client.Research
                 SizeFlagsStretchRatio = 3,
             };
 
-            Name = new Label();
+            Name = new Label()
+            {
+                RectClipContent = true,
+                SizeFlagsHorizontal = SizeFlags.Fill,
+            };
+
             Description = new Label()
             {
                 RectClipContent = true,
-                SizeFlagsVertical = SizeFlags.Fill,
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.Fill,
 
             };
 
             var scrollContainer = new ScrollContainer()
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsStretchRatio = 3
+                SizeFlagsStretchRatio = 3,
+                VScrollEnabled = true,
+                HScrollEnabled = false,
+
             };
+
+            scrollContainer.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             QueueList = new ItemList()
             {
+                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SelectMode = ItemList.ItemListSelectMode.None
             };
@@ -126,14 +140,13 @@ namespace Content.Client.Research
 
         public void ClearInfo()
         {
-            Icon.Texture = Texture.White;
+            Icon.Texture = Texture.Transparent;
             Name.Text = "-------";
             Description.Text = "Not producing anything.";
         }
 
         public void PopulateList()
         {
-            Logger.Info("hey I do something!");
             QueueList.Clear();
             var idx = 1;
             foreach (var recipe in Owner.QueuedRecipes)

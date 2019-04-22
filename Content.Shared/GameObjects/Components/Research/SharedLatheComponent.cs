@@ -9,6 +9,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
@@ -22,6 +23,7 @@ namespace Content.Shared.GameObjects.Components.Research
     {
         public override string Name => "Lathe";
         public override uint? NetID => ContentNetIDs.LATHE;
+        [ViewVariables]
         public LatheType LatheType = LatheType.Autolathe;
 
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
@@ -61,6 +63,15 @@ namespace Content.Shared.GameObjects.Components.Research
         public class LatheMenuOpenMessage : ComponentMessage
         {
             public LatheMenuOpenMessage()
+            {
+                Directed = true;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class LatheSyncRequestMessage : ComponentMessage
+        {
+            public LatheSyncRequestMessage()
             {
                 Directed = true;
             }

@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Research
 
             _storage[ID] += amount;
 
-            SendNetworkMessage(new MaterialStorageUpdateMessage(Storage));
+            Update();
 
             return true;
         }
@@ -33,6 +33,11 @@ namespace Content.Server.GameObjects.Components.Research
         public bool RemoveMaterial(string ID, int amount)
         {
             return InsertMaterial(ID, -amount);
+        }
+
+        public void Update()
+        {
+            SendNetworkMessage(new MaterialStorageUpdateMessage(Storage));
         }
 
         public override void ExposeData(ObjectSerializer serializer)

@@ -81,7 +81,7 @@ namespace Content.Client.Research
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsStretchRatio = 1
+                SizeFlagsStretchRatio = 1,
             };
 
             QueueButton = new Button()
@@ -95,19 +95,10 @@ namespace Content.Client.Research
             var spacer = new Control()
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsStretchRatio = 2,
+                SizeFlagsStretchRatio = 3,
             };
 
             spacer.SetAnchorAndMarginPreset(LayoutPreset.Wide);
-
-            var materialButton = new Button()
-            {
-                Text = "Materials",
-                TextAlign = Button.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SizeFlagsStretchRatio = 1,
-                Disabled = true,
-            };
 
             var hboxFilter = new HBoxContainer()
             {
@@ -137,7 +128,9 @@ namespace Content.Client.Research
             var scrollContainer = new ScrollContainer()
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsStretchRatio = 8
+                SizeFlagsStretchRatio = 8,
+                VScrollEnabled = true,
+                HScrollEnabled = false,
             };
 
             Items = new ItemList()
@@ -169,9 +162,8 @@ namespace Content.Client.Research
                 SizeFlagsVertical = SizeFlags.FillExpand,
             };
 
-            hboxButtons.AddChild(QueueButton);
             hboxButtons.AddChild(spacer);
-            hboxButtons.AddChild(materialButton);
+            hboxButtons.AddChild(QueueButton);
 
             hboxFilter.AddChild(SearchBar);
             hboxFilter.AddChild(filterButton);

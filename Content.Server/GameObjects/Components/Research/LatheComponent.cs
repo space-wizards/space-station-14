@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
 {
@@ -22,9 +23,11 @@ namespace Content.Server.GameObjects.Components.Research
         [Dependency]
         private IPrototypeManager _prototypeManager;
 
+        [ViewVariables]
         public Queue<LatheRecipePrototype> Queue => _queue;
         private readonly Queue<LatheRecipePrototype> _queue = new Queue<LatheRecipePrototype>();
 
+        [ViewVariables]
         public bool Producing => _producing;
         private bool _producing = false;
 
@@ -124,6 +127,12 @@ namespace Content.Server.GameObjects.Components.Research
                             _queue.Enqueue(recipe);
                             SendNetworkMessage(new LatheFullQueueMessage(GetIDQueue()));
                         }
+                    break;
+                case LatheSyncRequestMessage msg:
+                    Owner.TryGetComponent(out MaterialStorageComponent storage);
+
+                    SendNetworkMessage(new LatheFullQueueMessage(GetIDQueue()));
+                    storage.Update();
                     break;
             }
         }
