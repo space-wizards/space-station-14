@@ -45,6 +45,14 @@
     texture: Objects/sheet_glass.png
   - type: Icon
     texture: Objects/sheet_glass.png
+    
+- type: entity
+  id: GlassSheet1
+  name: Glass Sheet 1
+  parent: GlassStack
+  components:
+  - type: Stack
+    count: 1
 
 - type: entity
   name: Cable Coil

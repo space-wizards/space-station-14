@@ -1,33 +1,66 @@
 - type: latheRecipe
-  id: wirecutter
-  name: Wirecutter
+  id: Wirecutter
   icon: Objects/wirecutter.png
-  description: This kills the wire.
   result: Wirecutter
   lathetype: Autolathe
-  completetime: 250
+  completetime: 500
   materials:
-    steel: 500
+    steel: 80
 
 - type: latheRecipe
-  id: screwdriver
-  name: Screwdriver
+  id: Screwdriver
   icon: Objects/screwdriver.png
-  description: Industrial grade torque in a small screwdriving package.
   result: Screwdriver
   lathetype: Autolathe
-  completetime: 250
+  completetime: 500
   materials:
-    steel: 500
-
+    steel: 75
 
 - type: latheRecipe
-  id: welder
-  name: Welder
+  id: Welder
   icon: Objects/welder.png
-  description: Melts anything as long as its fueled, don't forget your eye protection.
   result: Welder
   lathetype: Autolathe
-  completetime: 250
+  completetime: 500
   materials:
-    steel: 500
+    steel: 70
+    glass: 30
+    
+- type: latheRecipe
+  id: Wrench
+  icon: Objects/wrench.png
+  result: Wrench
+  lathetype: Autolathe
+  completetime: 500
+  materials:
+    steel: 70
+    glass: 30
+    
+- type: latheRecipe
+  id: CableStack
+  icon: Objects/cable_coil.png
+  result: CableStack
+  lathetype: Autolathe
+  completetime: 500
+  materials:
+    steel: 50
+    glass: 50
+    
+- type: latheRecipe
+  id: Crowbar
+  icon: Objects/crowbar.png
+  result: Crowbar
+  lathetype: Autolathe
+  completetime: 500
+  materials:
+    steel: 50
+        
+- type: latheRecipe
+  id: Multitool
+  icon: Objects/multitool.png
+  result: Multitool
+  lathetype: Autolathe
+  completetime: 500
+  materials:
+    steel: 50
+    glass: 20

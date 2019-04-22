@@ -24,9 +24,10 @@ namespace Content.Shared.GameObjects.Components.Research
         public override string Name => "Lathe";
         public override uint? NetID => ContentNetIDs.LATHE;
         [ViewVariables]
-        public LatheType LatheType = LatheType.Autolathe;
+        public LatheType LatheType => _latheType;
+        private LatheType _latheType = LatheType.Autolathe;
 
-        public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
+        public bool  CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
             Owner.TryGetComponent(out SharedMaterialStorageComponent storage);
 
@@ -59,6 +60,16 @@ namespace Content.Shared.GameObjects.Components.Research
             return true;
         }
 
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _latheType, "lathetype", LatheType.Autolathe);
+        }
+
+        /// <summary>
+        ///     Sent to the client to open the Lathe Menu GUI.
+        /// </summary>
         [Serializable, NetSerializable]
         public class LatheMenuOpenMessage : ComponentMessage
         {
@@ -68,6 +79,9 @@ namespace Content.Shared.GameObjects.Components.Research
             }
         }
 
+        /// <summary>
+        ///     Sent to the server to sync material storage and the recipe queue.
+        /// </summary>
         [Serializable, NetSerializable]
         public class LatheSyncRequestMessage : ComponentMessage
         {
@@ -77,6 +91,9 @@ namespace Content.Shared.GameObjects.Components.Research
             }
         }
 
+        /// <summary>
+        ///     Sent to the client when the lathe is producing a recipe.
+        /// </summary>
         [Serializable, NetSerializable]
         public class LatheProducingRecipeMessage : ComponentMessage
         {
@@ -88,6 +105,9 @@ namespace Content.Shared.GameObjects.Components.Research
             }
         }
 
+        /// <summary>
+        ///     Sent to the client when the lathe stopped/finished producing a recipe.
+        /// </summary>
         [Serializable, NetSerializable]
         public class LatheStoppedProducingRecipeMessage : ComponentMessage
         {
@@ -97,6 +117,9 @@ namespace Content.Shared.GameObjects.Components.Research
             }
         }
 
+        /// <summary>
+        ///     Sent to the client to let it know about the recipe queue.
+        /// </summary>
         [Serializable, NetSerializable]
         public class LatheFullQueueMessage : ComponentMessage
         {
@@ -108,6 +131,9 @@ namespace Content.Shared.GameObjects.Components.Research
             }
         }
 
+        /// <summary>
+        ///     Sent to the server when a client queues a new recipe.
+        /// </summary>
         [Serializable, NetSerializable]
         public class LatheQueueRecipeMessage : ComponentMessage
         {

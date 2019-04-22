@@ -134,8 +134,10 @@ namespace Content.Client.Research
         public void SetInfo(LatheRecipePrototype recipe)
         {
             Icon.Texture = recipe.Icon.Frame0();
-            Name.Text = recipe.Name;
-            Description.Text = recipe.Description;
+            if (recipe.Name != null)
+                Name.Text = recipe.Name;
+            if (recipe.Description != null)
+                Description.Text = recipe.Description;
         }
 
         public void ClearInfo()

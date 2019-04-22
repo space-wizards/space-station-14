@@ -15,10 +15,12 @@ namespace Content.Client.GameObjects.Components.Research
 {
     public class LatheComponent : SharedLatheComponent
     {
+#pragma warning disable CS0649
         [Dependency]
         private IDisplayManager _displayManager;
         [Dependency]
         private IPrototypeManager _prototypeManager;
+#pragma warning restore
         [ViewVariables]
         private LatheMenu menu;
         [ViewVariables]
@@ -78,7 +80,6 @@ namespace Content.Client.GameObjects.Components.Research
                     _queuedRecipes.Clear();
                     foreach (var id in msg.Recipes)
                     {
-                        Logger.Info($"{id} {_prototypeManager == null}");
                         _prototypeManager.TryIndex(id, out LatheRecipePrototype recipePrototype);
                         if (recipePrototype != null)
                             _queuedRecipes.Enqueue(recipePrototype);

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Research;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -26,12 +29,36 @@ namespace Content.Shared.Research
         /// <summary>
         ///     Name displayed in the lathe GUI.
         /// </summary>
-        public string Name => _name;
+        public string Name
+        {
+            get
+            {
+                if (_name.Trim().Length != 0) return _name;
+                var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                if (protoMan == null) return _description;
+                protoMan.TryIndex(_result, out EntityPrototype prototype);
+                if (prototype?.Name != null)
+                    _name = prototype.Name;
+                return _name;
+            }
+        }
 
         /// <summary>
         ///     Short description displayed in the lathe GUI.
         /// </summary>
-        public string Description => _description;
+        public string Description
+        {
+            get
+            {
+                if (_description.Trim().Length != 0) return _description;
+                var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                if (protoMan == null) return _description;
+                protoMan.TryIndex(_result, out EntityPrototype prototype);
+                if (prototype?.Description != null)
+                    _description = prototype.Description;
+                return _description;
+            }
+        }
 
         /// <summary>
         ///     Texture path used in the lathe GUI.
@@ -74,8 +101,8 @@ namespace Content.Shared.Research
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
-            _name = serializer.ReadDataField<string>("name");
 
+            serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _description, "description", string.Empty);
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);

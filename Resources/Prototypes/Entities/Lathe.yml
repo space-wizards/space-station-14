@@ -1,15 +1,15 @@
 - type: entity
-  id: lathe
-  name: "lathe"
+  id: autolathe
+  name: "Autolathe"
   components:
   - type: Clickable
   - type: Sprite
-    sprite: Buildings/smes.rsi
-    state: smes
+    sprite: Buildings/autolathe.rsi
+    state: idle
 
   - type: Icon
-    sprite: Buildings/smes.rsi
-    state: smes
+    sprite: Buildings/autolathe.rsi
+    state: idle
 
   - type: BoundingBox
   - type: Collidable
@@ -18,4 +18,5 @@
     offset: Center
 
   - type: Lathe
+    lathetype: Autolathe
   - type: MaterialStorage

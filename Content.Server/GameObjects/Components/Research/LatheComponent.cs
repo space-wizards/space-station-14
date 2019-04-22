@@ -20,8 +20,12 @@ namespace Content.Server.GameObjects.Components.Research
 {
     public class LatheComponent : SharedLatheComponent, IAttackHand, IAttackBy, IActivate
     {
+        public const int VolumePerSheet = 3750;
+
         [Dependency]
+#pragma warning disable CS0649
         private IPrototypeManager _prototypeManager;
+#pragma warning restore
 
         [ViewVariables]
         public Queue<LatheRecipePrototype> Queue => _queue;
@@ -31,6 +35,7 @@ namespace Content.Server.GameObjects.Components.Research
         public bool Producing => _producing;
         private bool _producing = false;
 
+        private LatheRecipePrototype _producingRecipe = null;
 
         internal bool Produce(LatheRecipePrototype recipe)
         {
@@ -41,6 +46,7 @@ namespace Content.Server.GameObjects.Components.Research
             if (storage == null) return false;
 
             _producing = true;
+            _producingRecipe = recipe;
 
             foreach (var (material, amount) in recipe.RequiredMaterials)
             {
@@ -53,6 +59,7 @@ namespace Content.Server.GameObjects.Components.Research
             Timer.Spawn(recipe.CompleteTime, () =>
             {
                 _producing = false;
+                _producingRecipe = null;
                 var transform = Owner.GetComponent<ITransformComponent>();
                 Owner.EntityManager.TrySpawnEntityAt(recipe.Result, transform.GridPosition, out var entity);
                 SendNetworkMessage(new LatheStoppedProducingRecipeMessage());
@@ -93,10 +100,24 @@ namespace Content.Server.GameObjects.Components.Research
 
             if (stack != null) mult = stack.Count;
 
+            int totalAmount = 0;
+
+            // Check if it can insert all materials.
+            foreach (var mat in material.MaterialTypes.Values)
+            {
+                // 1000cm3 per material.
+                // TODO: Change how MaterialComponent works so this is not hard-coded.
+                if (!storage.CanInsertMaterial(mat.ID, VolumePerSheet * mult)) return false;
+                totalAmount += VolumePerSheet * mult;
+            }
+
+            // Check if it can take ALL of the material's volume.
+            if (storage.CanTakeAmount(totalAmount)) return false;
+
             foreach (var mat in material.MaterialTypes.Values)
             {
 
-                storage.InsertMaterial(mat.ID, 1000 * mult);
+                storage.InsertMaterial(mat.ID, VolumePerSheet * mult);
             }
 
             eventArgs.AttackWith.Delete();
@@ -129,10 +150,12 @@ namespace Content.Server.GameObjects.Components.Research
                         }
                     break;
                 case LatheSyncRequestMessage msg:
+                    if (netChannel == null) break;
                     Owner.TryGetComponent(out MaterialStorageComponent storage);
-
-                    SendNetworkMessage(new LatheFullQueueMessage(GetIDQueue()));
-                    storage.Update();
+                    SendNetworkMessage(new LatheFullQueueMessage(GetIDQueue()), netChannel);
+                    if (_producingRecipe != null)
+                        SendNetworkMessage(new LatheProducingRecipeMessage(_producingRecipe.ID), netChannel);
+                    storage.Update(netChannel);
                     break;
             }
         }
