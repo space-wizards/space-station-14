@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects
             {
                 return;
             }
-            if (!eventArgs.Attacked.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
+            if (eventArgs.Attacked == null || !eventArgs.Attacked.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
                 return;
             }
