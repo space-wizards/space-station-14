@@ -10,8 +10,7 @@ namespace Content.Client.GameObjects.Components.Research
 {
     public class MaterialStorageComponent : SharedMaterialStorageComponent
     {
-        protected override Dictionary<string, int> Storage => _storage;
-        private Dictionary<string, int> _storage = new Dictionary<string, int>();
+        protected override Dictionary<string, int> Storage { get; set; } = new Dictionary<string, int>();
 
         public event Action OnMaterialStorageChanged;
 
@@ -22,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Research
             switch (message)
             {
                 case MaterialStorageUpdateMessage msg:
-                    _storage = msg.Storage;
+                    Storage = msg.Storage;
                     OnMaterialStorageChanged?.Invoke();
                     break;
 

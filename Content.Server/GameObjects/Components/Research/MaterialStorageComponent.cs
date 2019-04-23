@@ -8,8 +8,7 @@ namespace Content.Server.GameObjects.Components.Research
 {
     public class MaterialStorageComponent : SharedMaterialStorageComponent
     {
-        private Dictionary<string, int> _storage = new Dictionary<string, int>();
-        protected override Dictionary<string, int> Storage => _storage;
+        protected override Dictionary<string, int> Storage { get; set; } = new Dictionary<string, int>();
 
         /// <summary>
         ///     How much material the storage can store in total.
@@ -49,9 +48,9 @@ namespace Content.Server.GameObjects.Components.Research
             if (!CanInsertMaterial(ID, amount)) return false;
 
             if (!Storage.ContainsKey(ID))
-                _storage.Add(ID, 0);
+                Storage.Add(ID, 0);
 
-            _storage[ID] += amount;
+            Storage[ID] += amount;
 
             Update();
 

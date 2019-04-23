@@ -32,12 +32,10 @@ namespace Content.Server.GameObjects.Components.Research
 #pragma warning restore
 
         [ViewVariables]
-        public Queue<LatheRecipePrototype> Queue => _queue;
-        private readonly Queue<LatheRecipePrototype> _queue = new Queue<LatheRecipePrototype>();
+        public Queue<LatheRecipePrototype> Queue { get; } = new Queue<LatheRecipePrototype>();
 
         [ViewVariables]
-        public bool Producing => _producing;
-        private bool _producing = false;
+        public bool Producing { get; private set; } = false;
 
         private LatheRecipePrototype _producingRecipe = null;
 
@@ -57,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Research
                     if (recipe != null)
                         for (var i = 0; i < msg.Quantity; i++)
                         {
-                            _queue.Enqueue(recipe);
+                            Queue.Enqueue(recipe);
                             _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
                         }
                     break;
@@ -77,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Research
 
             _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
 
-            _producing = true;
+            Producing = true;
             _producingRecipe = recipe;
 
             foreach (var (material, amount) in recipe.RequiredMaterials)
@@ -90,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Research
 
             Timer.Spawn(recipe.CompleteTime, () =>
             {
-                _producing = false;
+                Producing = false;
                 _producingRecipe = null;
                 Owner.EntityManager.TrySpawnEntityAt(recipe.Result, Owner.Transform.GridPosition, out var entity);
                 _userInterface.SendMessage(new LatheStoppedProducingRecipeMessage());
@@ -154,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Research
         private Queue<string> GetIDQueue()
         {
             var queue = new Queue<string>();
-            foreach (var recipePrototype in _queue)
+            foreach (var recipePrototype in Queue)
             {
                 queue.Enqueue(recipePrototype.ID);
             }
