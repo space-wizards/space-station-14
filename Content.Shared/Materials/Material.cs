@@ -112,26 +112,6 @@ public class Material : IExposeData
             serializer.DataField(ref _bluntDamage, "bluntdamage", 1, alwaysWrite: true);
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid, alwaysWrite: true);
         }
-
-        public static Material GetMaterial(string ID)
-        {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            return ((MaterialPrototype)prototypeManager.Index(typeof(MaterialPrototype), ID)).Material;
-        }
-
-        public static void TryGetMaterial(string ID, out Material material)
-        {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            material = null;
-            try
-            {
-                material = ((MaterialPrototype)prototypeManager.Index(typeof(MaterialPrototype), ID)).Material;
-            }
-            catch (KeyNotFoundException e)
-            {
-                return;
-            }
-        }
     }
 
     [Prototype("material")]

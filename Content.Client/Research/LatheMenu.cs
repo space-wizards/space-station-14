@@ -186,7 +186,8 @@ namespace Content.Client.Research
 
             foreach (var (id, amount) in Owner.Storage)
             {
-                Material.TryGetMaterial(id, out var material);
+                if (!PrototypeManager.TryIndex(id, out MaterialPrototype materialPrototype)) continue;
+                var material = materialPrototype.Material;
                 Materials.AddItem($"{material.Name} {amount} cm3", material.Icon.Frame0(), false);
             }
         }
