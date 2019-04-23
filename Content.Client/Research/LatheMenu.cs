@@ -173,8 +173,11 @@ namespace Content.Client.Research
             if (quantity <= 0) quantity = 1;
             Owner.Queue(_shownRecipes[args.ItemIndex], quantity);
             Items.SelectMode = ItemList.ItemListSelectMode.None;
-            Timer.Spawn(100, () => {Items.Unselect(args.ItemIndex);});
-            Timer.Spawn(100, () => {Items.SelectMode = ItemList.ItemListSelectMode.Single;});
+            Timer.Spawn(100, () =>
+            {
+                Items.Unselect(args.ItemIndex);
+                Items.SelectMode = ItemList.ItemListSelectMode.Single;
+            });
         }
 
         public void PopulateMaterials()
