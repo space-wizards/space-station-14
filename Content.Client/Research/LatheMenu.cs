@@ -35,7 +35,7 @@ namespace Content.Client.Research
         public Button QueueButton;
         protected override Vector2? CustomSize => (300, 450);
 
-        public LatheComponent Owner { get; set; }
+        public LatheBoundUserInterface Owner { get; set; }
 
         private List<LatheRecipePrototype> _recipes = new List<LatheRecipePrototype>();
         private List<LatheRecipePrototype> _shownRecipes = new List<LatheRecipePrototype>();
@@ -183,11 +183,8 @@ namespace Content.Client.Research
         public void PopulateMaterials()
         {
             Materials.Clear();
-            Owner.Owner.TryGetComponent(out MaterialStorageComponent storage);
 
-            if (storage == null) return;
-
-            foreach (var (id, amount) in storage)
+            foreach (var (id, amount) in Owner.Storage)
             {
                 Material.TryGetMaterial(id, out var material);
                 Materials.AddItem($"{material.Name} {amount} cm3", material.Icon.Frame0(), false);
@@ -204,7 +201,7 @@ namespace Content.Client.Research
             for (var i = 0; i < _shownRecipes.Count; i++)
             {
                 var prototype = _shownRecipes[i];
-                Items.SetItemDisabled(i, !Owner.CanProduce(prototype, quantity));
+                Items.SetItemDisabled(i, !Owner.Lathe.CanProduce(prototype, quantity));
             }
         }
 
@@ -270,7 +267,7 @@ namespace Content.Client.Research
             foreach (var prototype in PrototypeManager.EnumeratePrototypes<LatheRecipePrototype>())
             {
                 // TODO: Check if the prototype is unlocked...
-                if (prototype.LatheType == Owner.LatheType)
+                if (prototype.LatheType == Owner.Lathe.LatheType)
                     _recipes.Add(prototype);
             }
             PopulateFilter();

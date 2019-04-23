@@ -17,7 +17,7 @@ namespace Content.Client.Research
     {
         protected override Vector2? CustomSize => (300, 450);
 
-        public LatheComponent Owner { get; set; }
+        public LatheBoundUserInterface Owner { get; set; }
 
         [ViewVariables]
         private ItemList QueueList;

@@ -120,7 +120,7 @@ namespace Content.Client
 
             factory.Register<SharedSpawnPointComponent>();
 
-            factory.Register<LatheComponent>();
+            factory.Register<SharedLatheComponent>();
 
             factory.Register<CameraRecoilComponent>();
             factory.RegisterReference<CameraRecoilComponent, SharedCameraRecoilComponent>();

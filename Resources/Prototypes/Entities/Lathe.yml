@@ -6,17 +6,17 @@
   - type: Sprite
     sprite: Buildings/autolathe.rsi
     state: idle
-
   - type: Icon
     sprite: Buildings/autolathe.rsi
     state: idle
-
   - type: BoundingBox
   - type: Collidable
-
   - type: SnapGrid
     offset: Center
-
   - type: Lathe
     lathetype: Autolathe
   - type: MaterialStorage
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface

@@ -2,8 +2,11 @@ using System.Collections.Generic;
 using Content.Client.Research;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -13,7 +16,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Research
 {
-    public class LatheComponent : SharedLatheComponent
+    public class LatheBoundUserInterface : BoundUserInterface
     {
 #pragma warning disable CS0649
         [Dependency]
@@ -26,14 +29,25 @@ namespace Content.Client.GameObjects.Components.Research
         [ViewVariables]
         private LatheQueueMenu queueMenu;
 
+        public MaterialStorageComponent Storage;
+        public SharedLatheComponent Lathe;
+
         [ViewVariables]
         public Queue<LatheRecipePrototype> QueuedRecipes => _queuedRecipes;
         private Queue<LatheRecipePrototype> _queuedRecipes = new Queue<LatheRecipePrototype>();
 
-        public override void Initialize()
+        public LatheBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            base.Initialize();
+            SendMessage(new SharedLatheComponent.LatheSyncRequestMessage());
+        }
+
+        protected override void Open()
+        {
+            base.Open();
             IoCManager.InjectDependencies(this);
+
+            if (!Owner.Owner.TryGetComponent(out Storage)) return;
+            if (!Owner.Owner.TryGetComponent(out Lathe)) return;
 
             menu = new LatheMenu(_displayManager) {Owner = this};
             queueMenu = new LatheQueueMenu(_displayManager) { Owner = this };
@@ -43,40 +57,33 @@ namespace Content.Client.GameObjects.Components.Research
 
             menu.QueueButton.OnPressed += (args) => { queueMenu.OpenCentered(); };
 
-            Owner.TryGetComponent(out MaterialStorageComponent storage);
-            if (storage != null)
-            {
-                storage.OnMaterialStorageChanged += menu.PopulateDisabled;
-                storage.OnMaterialStorageChanged += menu.PopulateMaterials;
-            }
+            if (!Owner.Owner.TryGetComponent(out MaterialStorageComponent storage)) return;
+            storage.OnMaterialStorageChanged += menu.PopulateDisabled;
+            storage.OnMaterialStorageChanged += menu.PopulateMaterials;
 
-            SendNetworkMessage(new LatheSyncRequestMessage());
-
+            menu.OpenCentered();
         }
 
         public void Queue(LatheRecipePrototype recipe, int quantity = 1)
         {
-            SendNetworkMessage(new LatheQueueRecipeMessage(recipe.ID, quantity));
+            SendMessage(new SharedLatheComponent.LatheQueueRecipeMessage(recipe.ID, quantity));
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
             switch (message)
             {
-                case LatheMenuOpenMessage msg:
-                    menu.OpenCentered();
-                    break;
-                case LatheProducingRecipeMessage msg:
+                case SharedLatheComponent.LatheProducingRecipeMessage msg:
                     _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
                     if (recipe != null)
                     {
                         queueMenu.SetInfo(recipe);
                     }
                     break;
-                case LatheStoppedProducingRecipeMessage msg:
+                case SharedLatheComponent.LatheStoppedProducingRecipeMessage msg:
                     queueMenu.ClearInfo();
                     break;
-                case LatheFullQueueMessage msg:
+                case SharedLatheComponent.LatheFullQueueMessage msg:
                     _queuedRecipes.Clear();
                     foreach (var id in msg.Recipes)
                     {
@@ -89,9 +96,12 @@ namespace Content.Client.GameObjects.Components.Research
             }
         }
 
-        public override void OnRemove()
+        protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
+            if (!disposing) return;
             menu?.Dispose();
+            queueMenu?.Dispose();
         }
     }
 }

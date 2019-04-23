@@ -2,14 +2,16 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Materials;
+using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Timers;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timers;
@@ -22,8 +24,10 @@ namespace Content.Server.GameObjects.Components.Research
     {
         public const int VolumePerSheet = 3750;
 
-        [Dependency]
+        private BoundUserInterface _userInterface;
+
 #pragma warning disable CS0649
+        [Dependency]
         private IPrototypeManager _prototypeManager;
 #pragma warning restore
 
@@ -37,13 +41,41 @@ namespace Content.Server.GameObjects.Components.Research
 
         private LatheRecipePrototype _producingRecipe = null;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(LatheUiKey.Key);
+            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+        }
+
+        private void UserInterfaceOnOnReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            switch (message)
+            {
+                case LatheQueueRecipeMessage msg:
+                    _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
+                    if (recipe != null)
+                        for (var i = 0; i < msg.Quantity; i++)
+                        {
+                            _queue.Enqueue(recipe);
+                            _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
+                        }
+                    break;
+                case LatheSyncRequestMessage msg:
+                    if (!Owner.TryGetComponent(out MaterialStorageComponent storage)) return;
+                    _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
+                    if (_producingRecipe != null)
+                        _userInterface.SendMessage(new LatheProducingRecipeMessage(_producingRecipe.ID));
+                    storage.Update();
+                    break;
+            }
+        }
+
         internal bool Produce(LatheRecipePrototype recipe)
         {
-            SendNetworkMessage(new LatheFullQueueMessage(GetIDQueue()));
-            if (!CanProduce(recipe)) return false;
-            Owner.TryGetComponent(out MaterialStorageComponent storage);
+            if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent storage)) return false;
 
-            if (storage == null) return false;
+            _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
 
             _producing = true;
             _producingRecipe = recipe;
@@ -54,15 +86,14 @@ namespace Content.Server.GameObjects.Components.Research
                 storage.RemoveMaterial(material, amount);
             }
 
-            SendNetworkMessage(new LatheProducingRecipeMessage(recipe.ID));
+            _userInterface.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
 
             Timer.Spawn(recipe.CompleteTime, () =>
             {
                 _producing = false;
                 _producingRecipe = null;
-                var transform = Owner.GetComponent<ITransformComponent>();
-                Owner.EntityManager.TrySpawnEntityAt(recipe.Result, transform.GridPosition, out var entity);
-                SendNetworkMessage(new LatheStoppedProducingRecipeMessage());
+                Owner.EntityManager.TrySpawnEntityAt(recipe.Result, Owner.Transform.GridPosition, out var entity);
+                _userInterface.SendMessage(new LatheStoppedProducingRecipeMessage());
             });
 
             return true;
@@ -70,45 +101,40 @@ namespace Content.Server.GameObjects.Components.Research
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            eventArgs.User.TryGetComponent(out BasicActorComponent actor);
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+                return;
 
-            if (actor == null) return;
-
-            SendNetworkMessage(new LatheMenuOpenMessage(), actor.playerSession?.ConnectedClient);
+            _userInterface.Open(actor.playerSession);
+            return;
         }
 
         bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
         {
-            eventArgs.User.TryGetComponent(out BasicActorComponent actor);
 
-            if (actor == null) return false;
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+                return false;
 
-            SendNetworkMessage(new LatheMenuOpenMessage(), actor.playerSession?.ConnectedClient);
-
-            return false;
+            _userInterface.Open(actor.playerSession);
+            return true;
         }
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            Owner.TryGetComponent(out MaterialStorageComponent storage);
-            eventArgs.AttackWith.TryGetComponent(out MaterialComponent material);
-            eventArgs.AttackWith.TryGetComponent(out StackComponent stack);
+            if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
+            ||  !eventArgs.AttackWith.TryGetComponent(out MaterialComponent material)) return false;
 
-            if (storage == null || material == null) return false;
+            var multiplier = 1;
 
-            var mult = 1;
+            if (eventArgs.AttackWith.TryGetComponent(out StackComponent stack)) multiplier = stack.Count;
 
-            if (stack != null) mult = stack.Count;
-
-            int totalAmount = 0;
+            var totalAmount = 0;
 
             // Check if it can insert all materials.
             foreach (var mat in material.MaterialTypes.Values)
             {
-                // 1000cm3 per material.
                 // TODO: Change how MaterialComponent works so this is not hard-coded.
-                if (!storage.CanInsertMaterial(mat.ID, VolumePerSheet * mult)) return false;
-                totalAmount += VolumePerSheet * mult;
+                if (!storage.CanInsertMaterial(mat.ID, VolumePerSheet * multiplier)) return false;
+                totalAmount += VolumePerSheet * multiplier;
             }
 
             // Check if it can take ALL of the material's volume.
@@ -117,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Research
             foreach (var mat in material.MaterialTypes.Values)
             {
 
-                storage.InsertMaterial(mat.ID, VolumePerSheet * mult);
+                storage.InsertMaterial(mat.ID, VolumePerSheet * multiplier);
             }
 
             eventArgs.AttackWith.Delete();
@@ -134,30 +160,6 @@ namespace Content.Server.GameObjects.Components.Research
             }
 
             return queue;
-        }
-
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
-        {
-            switch (message)
-            {
-                case LatheQueueRecipeMessage msg:
-                    _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
-                    if (recipe != null)
-                        for (var i = 0; i < msg.Quantity; i++)
-                        {
-                            _queue.Enqueue(recipe);
-                            SendNetworkMessage(new LatheFullQueueMessage(GetIDQueue()));
-                        }
-                    break;
-                case LatheSyncRequestMessage msg:
-                    if (netChannel == null) break;
-                    Owner.TryGetComponent(out MaterialStorageComponent storage);
-                    SendNetworkMessage(new LatheFullQueueMessage(GetIDQueue()), netChannel);
-                    if (_producingRecipe != null)
-                        SendNetworkMessage(new LatheProducingRecipeMessage(_producingRecipe.ID), netChannel);
-                    storage.Update(netChannel);
-                    break;
-            }
         }
     }
 }

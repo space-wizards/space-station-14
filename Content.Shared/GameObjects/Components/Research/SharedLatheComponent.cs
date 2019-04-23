@@ -4,6 +4,7 @@ using Content.Shared.Materials;
 using Content.Shared.Research;
 using Mono.Cecil;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
@@ -27,7 +28,7 @@ namespace Content.Shared.GameObjects.Components.Research
         public LatheType LatheType => _latheType;
         private LatheType _latheType = LatheType.Autolathe;
 
-        public bool  CanProduce(LatheRecipePrototype recipe, int quantity = 1)
+        public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
             Owner.TryGetComponent(out SharedMaterialStorageComponent storage);
 
@@ -68,26 +69,13 @@ namespace Content.Shared.GameObjects.Components.Research
         }
 
         /// <summary>
-        ///     Sent to the client to open the Lathe Menu GUI.
-        /// </summary>
-        [Serializable, NetSerializable]
-        public class LatheMenuOpenMessage : ComponentMessage
-        {
-            public LatheMenuOpenMessage()
-            {
-                Directed = true;
-            }
-        }
-
-        /// <summary>
         ///     Sent to the server to sync material storage and the recipe queue.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheSyncRequestMessage : ComponentMessage
+        public class LatheSyncRequestMessage : BoundUserInterfaceMessage
         {
             public LatheSyncRequestMessage()
             {
-                Directed = true;
             }
         }
 
@@ -95,12 +83,11 @@ namespace Content.Shared.GameObjects.Components.Research
         ///     Sent to the client when the lathe is producing a recipe.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheProducingRecipeMessage : ComponentMessage
+        public class LatheProducingRecipeMessage : BoundUserInterfaceMessage
         {
             public readonly string ID;
             public LatheProducingRecipeMessage(string id)
             {
-                Directed = true;
                 ID = id;
             }
         }
@@ -109,11 +96,10 @@ namespace Content.Shared.GameObjects.Components.Research
         ///     Sent to the client when the lathe stopped/finished producing a recipe.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheStoppedProducingRecipeMessage : ComponentMessage
+        public class LatheStoppedProducingRecipeMessage : BoundUserInterfaceMessage
         {
             public LatheStoppedProducingRecipeMessage()
             {
-                Directed = true;
             }
         }
 
@@ -121,12 +107,11 @@ namespace Content.Shared.GameObjects.Components.Research
         ///     Sent to the client to let it know about the recipe queue.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheFullQueueMessage : ComponentMessage
+        public class LatheFullQueueMessage : BoundUserInterfaceMessage
         {
             public readonly Queue<string> Recipes;
             public LatheFullQueueMessage(Queue<string> recipes)
             {
-                Directed = true;
                 Recipes = recipes;
             }
         }
@@ -135,16 +120,21 @@ namespace Content.Shared.GameObjects.Components.Research
         ///     Sent to the server when a client queues a new recipe.
         /// </summary>
         [Serializable, NetSerializable]
-        public class LatheQueueRecipeMessage : ComponentMessage
+        public class LatheQueueRecipeMessage : BoundUserInterfaceMessage
         {
             public readonly string ID;
             public readonly int Quantity;
             public LatheQueueRecipeMessage(string id, int quantity)
             {
-                Directed = true;
                 ID = id;
                 Quantity = quantity;
             }
+        }
+
+        [NetSerializable, Serializable]
+        public enum LatheUiKey
+        {
+            Key,
         }
     }
 }
