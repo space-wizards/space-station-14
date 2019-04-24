@@ -1,6 +1,5 @@
 - type: latheRecipe
   id: Brutepack
-  lathetype: Autolathe
   icon: Objects/brutepack.png
   result: Brutepack
   completetime: 500
@@ -10,7 +9,6 @@
     
 - type: latheRecipe
   id: Ointment
-  lathetype: Autolathe
   icon: Objects/ointment.png
   result: Ointment
   completetime: 500

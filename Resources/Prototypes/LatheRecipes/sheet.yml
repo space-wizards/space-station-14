@@ -2,7 +2,6 @@
   id: MetalStack
   icon: Objects/sheet_metal.png
   result: SteelSheet1
-  lathetype: Autolathe
   completetime: 500
   materials:
     steel: 3750
@@ -11,7 +10,6 @@
   id: GlassStack
   icon: Objects/sheet_glass.png
   result: GlassSheet1
-  lathetype: Autolathe
   completetime: 500
   materials:
     glass: 3750

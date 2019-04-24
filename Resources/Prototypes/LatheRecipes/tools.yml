@@ -2,7 +2,6 @@
   id: Wirecutter
   icon: Objects/wirecutter.png
   result: Wirecutter
-  lathetype: Autolathe
   completetime: 500
   materials:
     steel: 80
@@ -11,7 +10,6 @@
   id: Screwdriver
   icon: Objects/screwdriver.png
   result: Screwdriver
-  lathetype: Autolathe
   completetime: 500
   materials:
     steel: 75
@@ -20,7 +18,6 @@
   id: Welder
   icon: Objects/welder.png
   result: Welder
-  lathetype: Autolathe
   completetime: 500
   materials:
     steel: 70
@@ -30,7 +27,6 @@
   id: Wrench
   icon: Objects/wrench.png
   result: Wrench
-  lathetype: Autolathe
   completetime: 500
   materials:
     steel: 70
@@ -40,7 +36,6 @@
   id: CableStack
   icon: Objects/cable_coil.png
   result: CableStack
-  lathetype: Autolathe
   completetime: 500
   materials:
     steel: 50
@@ -50,7 +45,6 @@
   id: Crowbar
   icon: Objects/crowbar.png
   result: Crowbar
-  lathetype: Autolathe
   completetime: 500
   materials:
     steel: 50
@@ -59,7 +53,6 @@
   id: Multitool
   icon: Objects/multitool.png
   result: Multitool
-  lathetype: Autolathe
   completetime: 500
   materials:
     steel: 50
