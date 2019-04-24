@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Serialization;
 

@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Research
@@ -56,6 +54,16 @@ namespace Content.Shared.GameObjects.Components.Research
             }
         }
 
+        public IEnumerator<KeyValuePair<string, int>> GetEnumerator()
+        {
+            return Storage.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
         [NetSerializable, Serializable]
         public class MaterialStorageUpdateMessage : ComponentMessage
         {
@@ -66,16 +74,6 @@ namespace Content.Shared.GameObjects.Components.Research
                 Directed = true;
                 Storage = storage;
             }
-        }
-
-        public IEnumerator<KeyValuePair<string, int>> GetEnumerator()
-        {
-            return Storage.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }

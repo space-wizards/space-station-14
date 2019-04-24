@@ -79,6 +79,7 @@
     <Compile Include="GameObjects\Components\Power\PowerShared.cs" />
     <Compile Include="GameObjects\Components\Power\SharedPowerCellComponent.cs" />
     <Compile Include="GameObjects\Components\Research\SharedLatheComponent.cs" />
+    <Compile Include="GameObjects\Components\Research\SharedLatheDatabaseComponent.cs" />
     <Compile Include="GameObjects\Components\Research\SharedMaterialStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Sound\SharedSoundComponent.cs" />
     <Compile Include="GameObjects\Components\Storage\SharedStorageComponent.cs" />

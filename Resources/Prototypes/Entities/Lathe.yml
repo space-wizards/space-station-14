@@ -14,7 +14,22 @@
   - type: SnapGrid
     offset: Center
   - type: Lathe
-    lathetype: Autolathe
+  - type: LatheDatabase
+    static: true
+    recipes:
+      - Brutepack
+      - Ointment
+      - LightTube
+      - LightBulb
+      - MetalStack
+      - GlassStack
+      - Wirecutter
+      - Screwdriver
+      - Welder
+      - Wrench
+      - CableStack
+      - Crowbar
+      - Multitool
   - type: MaterialStorage
   - type: UserInterface
     interfaces:

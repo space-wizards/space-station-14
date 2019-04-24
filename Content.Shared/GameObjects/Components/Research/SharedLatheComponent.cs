@@ -14,25 +14,28 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Research
 {
-    public enum LatheType
-    {
-        Autolathe,
-        Protolathe,
-    }
-
     public class SharedLatheComponent : Component
     {
         public override string Name => "Lathe";
         public override uint? NetID => ContentNetIDs.LATHE;
-        [ViewVariables]
-        public LatheType LatheType => _latheType;
-        private LatheType _latheType = LatheType.Autolathe;
+
+#pragma warning disable CS0649
+        [Dependency]
+        protected IPrototypeManager _prototypeManager;
+#pragma warning restore
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            IoCManager.InjectDependencies(this);
+        }
 
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
-            Owner.TryGetComponent(out SharedMaterialStorageComponent storage);
+            if (!Owner.TryGetComponent(out SharedMaterialStorageComponent storage)
+            ||  !Owner.TryGetComponent(out SharedLatheDatabaseComponent database)) return false;
 
-            if (storage == null) return false;
+            if (!database.Contains(recipe)) return false;
 
             foreach (var (material, amount) in recipe.RequiredMaterials)
             {
@@ -44,28 +47,7 @@ namespace Content.Shared.GameObjects.Components.Research
 
         public bool CanProduce(string ID, int quantity = 1)
         {
-            Owner.TryGetComponent(out SharedMaterialStorageComponent storage);
-
-            if (storage == null) return false;
-
-            var protMan = IoCManager.Resolve<IPrototypeManager>();
-            protMan.TryIndex(ID, out LatheRecipePrototype recipe);
-
-            if (recipe == null) return false;
-
-            foreach (var (material, amount) in recipe.RequiredMaterials)
-            {
-                if (storage[material] <= (amount * quantity)) return false;
-            }
-
-            return true;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _latheType, "lathetype", LatheType.Autolathe);
+            return _prototypeManager.TryIndex(ID, out LatheRecipePrototype recipe) && CanProduce(recipe, quantity);
         }
 
         /// <summary>

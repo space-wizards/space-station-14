@@ -144,6 +144,9 @@ namespace Content.Server
             factory.RegisterReference<SpawnPointComponent, SharedSpawnPointComponent>();
 
             factory.Register<LatheComponent>();
+            factory.Register<LatheDatabaseComponent>();
+
+            factory.RegisterReference<LatheDatabaseComponent, SharedLatheDatabaseComponent>();
 
             factory.Register<BallisticBulletComponent>();
             factory.Register<BallisticMagazineComponent>();

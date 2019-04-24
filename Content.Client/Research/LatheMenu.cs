@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Research;
-using Content.Shared.Construction;
 using Content.Shared.Materials;
 using Content.Shared.Research;
 using Robust.Client.Interfaces.Graphics;
@@ -11,7 +9,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timers;
@@ -114,7 +111,7 @@ namespace Content.Client.Research
                 SizeFlagsStretchRatio = 3
             };
 
-            SearchBar.OnTextChanged += PopulateFilter;
+            SearchBar.OnTextChanged += Populate;
 
             var filterButton = new Button()
             {
@@ -230,11 +227,11 @@ namespace Content.Client.Research
         /// <summary>
         ///     Populates the list of recipes that will actually be shown, using the current filters.
         /// </summary>
-        public void PopulateFilter()
+        public void Populate()
         {
             _shownRecipes.Clear();
 
-            foreach (var prototype in _recipes)
+            foreach (var prototype in Owner.Database)
             {
                 if (SearchBar.Text.Trim().Length != 0)
                 {
@@ -249,29 +246,10 @@ namespace Content.Client.Research
             PopulateList();
         }
 
-        /// <inheritdoc cref="PopulateFilter()"/>
-        public void PopulateFilter(LineEdit.LineEditEventArgs args)
+        /// <inheritdoc cref="Populate"/>
+        public void Populate(LineEdit.LineEditEventArgs args)
         {
-            PopulateFilter();
-        }
-
-        /// <summary>
-        ///     Populates the recipe list with recipes this lathe has unlocked
-        /// </summary>
-        public void PopulateRecipes()
-        {
-            _recipes.Clear();
-
-            if (PrototypeManager == null)
-                PrototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            foreach (var prototype in PrototypeManager.EnumeratePrototypes<LatheRecipePrototype>())
-            {
-                // TODO: Check if the prototype is unlocked...
-                if (prototype.LatheType == Owner.Lathe.LatheType)
-                    _recipes.Add(prototype);
-            }
-            PopulateFilter();
+            Populate();
         }
     }
 }

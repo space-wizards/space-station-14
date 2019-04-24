@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -20,7 +19,6 @@ namespace Content.Shared.Research
         private string _description;
         private string _result;
         private bool _hacked;
-        private LatheType _latheType;
         private int _completeTime;
         private Dictionary<string, int> _requiredMaterials;
 
@@ -76,12 +74,6 @@ namespace Content.Shared.Research
         public bool Hacked => _hacked;
 
         /// <summary>
-        ///     The type of lathe that'll print this recipe.
-        ///     TODO: Replace with an enum before merging, henk!
-        /// </summary>
-        public LatheType LatheType => _latheType;
-
-        /// <summary>
         ///     The materials required to produce this recipe.
         ///     Takes a material ID as string.
         /// </summary>
@@ -108,7 +100,6 @@ namespace Content.Shared.Research
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
             serializer.DataField(ref _result, "result", null);
             serializer.DataField(ref _hacked, "hacked", false);
-            serializer.DataField(ref _latheType, "lathetype", LatheType.Autolathe);
             serializer.DataField(ref _completeTime, "completetime", 2500);
             serializer.DataField(ref _requiredMaterials, "materials", new Dictionary<string, int>());
         }

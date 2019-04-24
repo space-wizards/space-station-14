@@ -2,15 +2,10 @@ using System.Collections.Generic;
 using Content.Client.Research;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
-using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Interfaces.Graphics;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 
@@ -31,6 +26,7 @@ namespace Content.Client.GameObjects.Components.Research
 
         public MaterialStorageComponent Storage;
         public SharedLatheComponent Lathe;
+        public LatheDatabaseComponent Database;
 
         [ViewVariables]
         public Queue<LatheRecipePrototype> QueuedRecipes => _queuedRecipes;
@@ -46,13 +42,14 @@ namespace Content.Client.GameObjects.Components.Research
             base.Open();
             IoCManager.InjectDependencies(this);
 
-            if (!Owner.Owner.TryGetComponent(out Storage)) return;
-            if (!Owner.Owner.TryGetComponent(out Lathe)) return;
+            if (!Owner.Owner.TryGetComponent(out Storage)
+            ||  !Owner.Owner.TryGetComponent(out Lathe)
+            ||  !Owner.Owner.TryGetComponent(out Database)) return;
 
             menu = new LatheMenu(_displayManager) {Owner = this};
             queueMenu = new LatheQueueMenu(_displayManager) { Owner = this };
             menu.AddToScreen();
-            menu.PopulateRecipes();
+            menu.Populate();
             queueMenu.AddToScreen();
 
             menu.QueueButton.OnPressed += (args) => { queueMenu.OpenCentered(); };
@@ -74,11 +71,8 @@ namespace Content.Client.GameObjects.Components.Research
             switch (message)
             {
                 case SharedLatheComponent.LatheProducingRecipeMessage msg:
-                    _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
-                    if (recipe != null)
-                    {
-                        queueMenu.SetInfo(recipe);
-                    }
+                    if (!_prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe)) break;
+                    queueMenu.SetInfo(recipe);
                     break;
                 case SharedLatheComponent.LatheStoppedProducingRecipeMessage msg:
                     queueMenu.ClearInfo();
@@ -87,9 +81,8 @@ namespace Content.Client.GameObjects.Components.Research
                     _queuedRecipes.Clear();
                     foreach (var id in msg.Recipes)
                     {
-                        _prototypeManager.TryIndex(id, out LatheRecipePrototype recipePrototype);
-                        if (recipePrototype != null)
-                            _queuedRecipes.Enqueue(recipePrototype);
+                        if (!_prototypeManager.TryIndex(id, out LatheRecipePrototype recipePrototype)) break;
+                        _queuedRecipes.Enqueue(recipePrototype);
                     }
                     queueMenu.PopulateList();
                     break;
