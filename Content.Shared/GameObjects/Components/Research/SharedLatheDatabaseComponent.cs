@@ -91,7 +91,6 @@ namespace Content.Shared.GameObjects.Components.Research
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             foreach (var id in recipes)
             {
-                Logger.Info(id);
                 if (!prototypeManager.TryIndex(id, out LatheRecipePrototype recipe)) continue;
                 _recipes.Add(recipe);
             }
