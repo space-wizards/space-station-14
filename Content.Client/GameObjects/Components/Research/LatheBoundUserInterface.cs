@@ -24,9 +24,9 @@ namespace Content.Client.GameObjects.Components.Research
         [ViewVariables]
         private LatheQueueMenu queueMenu;
 
-        public MaterialStorageComponent Storage;
-        public SharedLatheComponent Lathe;
-        public LatheDatabaseComponent Database;
+        public MaterialStorageComponent Storage { get; private set; }
+        public SharedLatheComponent Lathe { get; private set; }
+        public LatheDatabaseComponent Database { get; private set; }
 
         [ViewVariables]
         public Queue<LatheRecipePrototype> QueuedRecipes => _queuedRecipes;
@@ -42,9 +42,13 @@ namespace Content.Client.GameObjects.Components.Research
             base.Open();
             IoCManager.InjectDependencies(this);
 
-            if (!Owner.Owner.TryGetComponent(out Storage)
-            ||  !Owner.Owner.TryGetComponent(out Lathe)
-            ||  !Owner.Owner.TryGetComponent(out Database)) return;
+            if (!Owner.Owner.TryGetComponent(out MaterialStorageComponent storage)
+            ||  !Owner.Owner.TryGetComponent(out SharedLatheComponent lathe)
+            ||  !Owner.Owner.TryGetComponent(out LatheDatabaseComponent database)) return;
+
+            Storage = storage;
+            Lathe = lathe;
+            Database = database;
 
             menu = new LatheMenu(_displayManager) {Owner = this};
             queueMenu = new LatheQueueMenu(_displayManager) { Owner = this };
@@ -54,7 +58,6 @@ namespace Content.Client.GameObjects.Components.Research
 
             menu.QueueButton.OnPressed += (args) => { queueMenu.OpenCentered(); };
 
-            if (!Owner.Owner.TryGetComponent(out MaterialStorageComponent storage)) return;
             storage.OnMaterialStorageChanged += menu.PopulateDisabled;
             storage.OnMaterialStorageChanged += menu.PopulateMaterials;
 
