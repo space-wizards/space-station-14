@@ -12,7 +12,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects
 {
-    public class ItemComponent : StoreableComponent, IAttackHand, IAfterAttack
+    public class ItemComponent : StoreableComponent, IAttackHand
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -89,21 +89,6 @@ namespace Content.Server.GameObjects
         public override ComponentState GetComponentState()
         {
             return new ItemComponentState(EquippedPrefix);
-        }
-
-        public void AfterAttack(AfterAttackEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent<HandsComponent>(out var handComponent))
-            {
-                return;
-            }
-            if (eventArgs.Attacked == null || !eventArgs.Attacked.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
-            {
-                return;
-            }
-            handComponent.Drop(handComponent.ActiveIndex);
-            Owner.Transform.WorldPosition = eventArgs.ClickLocation.Position;
-            return;
         }
 
         public void Fumble()
