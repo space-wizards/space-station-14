@@ -15,37 +15,15 @@ namespace Content.Client.GameObjects.Components.Research
         private IPrototypeManager _prototypeManager;
 #pragma warning restore
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            base.HandleMessage(message, netChannel, component);
-            switch (message)
+            base.HandleComponentState(curState, nextState);
+            if (!(curState is LatheDatabaseState state)) return;
+            Clear();
+            foreach (var ID in state.Recipes)
             {
-                case LatheDatabaseSyncMessage msg:
-                    if (Static) return;
-                    Clear();
-                    foreach (var recipeID in msg.Recipes)
-                    {
-                        if(!_prototypeManager.TryIndex(recipeID, out LatheRecipePrototype recipe)) continue;
-                        AddRecipe(recipe);
-                    }
-                    break;
-
-                case LatheDatabaseRecipeAddMessage msg:
-                    if (Static) return;
-                    if(!_prototypeManager.TryIndex(msg.Recipe, out LatheRecipePrototype addedRecipe)) break;
-                    AddRecipe(addedRecipe);
-                    break;
-
-                case LatheDatabaseRecipeRemoveMessage msg:
-                    if (Static) return;
-                    if(!_prototypeManager.TryIndex(msg.Recipe, out LatheRecipePrototype removedRecipe)) break;
-                    RemoveRecipe(removedRecipe);
-                    break;
-
-                case LatheDatabaseClearMessage msg:
-                    if (Static) return;
-                    Clear();
-                    break;
+                if(!_prototypeManager.TryIndex(ID, out LatheRecipePrototype recipe)) continue;
+                AddRecipe(recipe);
             }
         }
     }

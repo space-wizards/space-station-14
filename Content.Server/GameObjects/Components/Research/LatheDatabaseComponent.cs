@@ -1,29 +1,60 @@
+using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Research
 {
     public class LatheDatabaseComponent : SharedLatheDatabaseComponent
     {
-        public override bool Clear()
+        /// <summary>
+        ///     Whether new recipes can be added to this database or not.
+        /// </summary>
+        public bool Static => _static;
+        private bool _static = false;
+
+        public override ComponentState GetComponentState()
         {
-            if (!base.Clear()) return false;
-            SendNetworkMessage(new LatheDatabaseClearMessage());
-            return true;
+            return new LatheDatabaseState(GetRecipeIdList());
         }
 
-        public override bool AddRecipe(LatheRecipePrototype recipe)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (!base.AddRecipe(recipe)) return false;
-            SendNetworkMessage(new LatheDatabaseRecipeAddMessage(recipe.ID));
-            return true;
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _static, "static", false);
+        }
+
+        public override void Clear()
+        {
+            if (Static) return;
+            Dirty();
+        }
+
+        public override void AddRecipe(LatheRecipePrototype recipe)
+        {
+            if (Static) return;
+            Dirty();
         }
 
         public override bool RemoveRecipe(LatheRecipePrototype recipe)
         {
-            if (!base.RemoveRecipe(recipe)) return false;
-            SendNetworkMessage(new LatheDatabaseRecipeRemoveMessage(recipe.ID));
+            if (Static || !base.RemoveRecipe(recipe)) return false;
+            Dirty();
             return true;
+        }
+
+        private List<string> GetRecipeIdList()
+        {
+            var list = new List<string>();
+
+            foreach (var recipe in this)
+            {
+                list.Add(recipe.ID);
+            }
+
+            return list;
         }
     }
 }

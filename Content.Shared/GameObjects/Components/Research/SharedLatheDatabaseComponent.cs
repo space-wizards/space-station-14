@@ -13,13 +13,8 @@ namespace Content.Shared.GameObjects.Components.Research
     public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>
     {
         public override string Name => "LatheDatabase";
-        public override uint? NetID => ContentNetIDs.LATHE_DATABASE;
-
-        /// <summary>
-        ///     Whether new recipes can be added to this database or not.
-        /// </summary>
-        public bool Static => _static;
-        private bool _static = false;
+        public sealed override uint? NetID => ContentNetIDs.LATHE_DATABASE;
+        public sealed override Type StateType => typeof(LatheDatabaseState);
 
         private List<LatheRecipePrototype> _recipes = new List<LatheRecipePrototype>();
 
@@ -27,12 +22,9 @@ namespace Content.Shared.GameObjects.Components.Research
         ///     Removes all recipes from the database if it's not static.
         /// </summary>
         /// <returns>Whether it could clear the database or not.</returns>
-        public virtual bool Clear()
+        public virtual void Clear()
         {
-            if (Static) return false;
-
             _recipes.Clear();
-            return true;
         }
 
         /// <summary>
@@ -40,12 +32,9 @@ namespace Content.Shared.GameObjects.Components.Research
         /// </summary>
         /// <param name="recipe">The recipe to be added.</param>
         /// <returns>Whether it could be added or not</returns>
-        public virtual bool AddRecipe(LatheRecipePrototype recipe)
+        public virtual void AddRecipe(LatheRecipePrototype recipe)
         {
-            if (Static) return false;
-
             _recipes.Add(recipe);
-            return true;
         }
 
         /// <summary>
@@ -55,7 +44,7 @@ namespace Content.Shared.GameObjects.Components.Research
         /// <returns>Whether it could be removed or not</returns>
         public virtual bool RemoveRecipe(LatheRecipePrototype recipe)
         {
-            return !Static && _recipes.Remove(recipe);
+            return _recipes.Remove(recipe);
         }
 
         /// <summary>
@@ -86,7 +75,6 @@ namespace Content.Shared.GameObjects.Components.Research
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _static, "static", false);
             var recipes = serializer.ReadDataField("recipes", new List<string>());
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             foreach (var id in recipes)
@@ -105,47 +93,14 @@ namespace Content.Shared.GameObjects.Components.Research
         {
             return GetEnumerator();
         }
+    }
 
-        [NetSerializable, Serializable]
-        public class LatheDatabaseSyncMessage : ComponentMessage
+    public class LatheDatabaseState : ComponentState
+    {
+        public readonly List<string> Recipes;
+        public LatheDatabaseState(List<string> recipes) : base(ContentNetIDs.LATHE_DATABASE)
         {
-            public readonly List<string> Recipes;
-            public LatheDatabaseSyncMessage(List<string> recipes)
-            {
-                Directed = true;
-                Recipes = recipes;
-            }
-        }
-
-        [NetSerializable, Serializable]
-        public class LatheDatabaseRecipeAddMessage : ComponentMessage
-        {
-            public readonly string Recipe;
-            public LatheDatabaseRecipeAddMessage(string recipe)
-            {
-                Directed = true;
-                Recipe = recipe;
-            }
-        }
-
-        [NetSerializable, Serializable]
-        public class LatheDatabaseRecipeRemoveMessage : ComponentMessage
-        {
-            public readonly string Recipe;
-            public LatheDatabaseRecipeRemoveMessage(string recipe)
-            {
-                Directed = true;
-                Recipe = recipe;
-            }
-        }
-
-        [NetSerializable, Serializable]
-        public class LatheDatabaseClearMessage : ComponentMessage
-        {
-            public LatheDatabaseClearMessage()
-            {
-                Directed = true;
-            }
+            Recipes = recipes;
         }
     }
 }
