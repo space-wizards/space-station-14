@@ -69,11 +69,6 @@ namespace Content.Shared.Research
         public string Result => _result;
 
         /// <summary>
-        ///     Whether the lathe should be hacked to unlock this recipe.
-        /// </summary>
-        public bool Hacked => _hacked;
-
-        /// <summary>
         ///     The materials required to produce this recipe.
         ///     Takes a material ID as string.
         /// </summary>
@@ -99,7 +94,6 @@ namespace Content.Shared.Research
             serializer.DataField(ref _description, "description", string.Empty);
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
             serializer.DataField(ref _result, "result", null);
-            serializer.DataField(ref _hacked, "hacked", false);
             serializer.DataField(ref _completeTime, "completetime", 2500);
             serializer.DataField(ref _requiredMaterials, "materials", new Dictionary<string, int>());
         }
