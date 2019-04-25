@@ -15,12 +15,6 @@ namespace Content.Client.GameObjects.Components.Research
         private IPrototypeManager _prototypeManager;
 #pragma warning restore
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            IoCManager.InjectDependencies(this);
-        }
-
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);

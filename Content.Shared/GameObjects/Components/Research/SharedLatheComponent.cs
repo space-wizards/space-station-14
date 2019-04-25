@@ -24,12 +24,6 @@ namespace Content.Shared.GameObjects.Components.Research
         protected IPrototypeManager _prototypeManager;
 #pragma warning restore
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            IoCManager.InjectDependencies(this);
-        }
-
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
             if (!Owner.TryGetComponent(out SharedMaterialStorageComponent storage)
