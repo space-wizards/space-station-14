@@ -52,6 +52,9 @@ namespace Content.Client.GameObjects.Components.Research
 
             menu = new LatheMenu(_displayManager) {Owner = this};
             queueMenu = new LatheQueueMenu(_displayManager) { Owner = this };
+
+            menu.OnClose += Close;
+
             menu.AddToScreen();
             menu.Populate();
             menu.PopulateMaterials();
