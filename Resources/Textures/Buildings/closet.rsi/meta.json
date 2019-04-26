@@ -24,6 +24,42 @@
             "select": [],
             "flags": {},
             "directions": 1
+        },
+        {
+            "name": "eng",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "eng_open",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "eng_tool_door",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "eng_rad_door",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "eng_elec_door",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "eng_weld_door",
+            "select": [],
+            "flags": {},
+            "directions": 1
         }
     ]
 }
