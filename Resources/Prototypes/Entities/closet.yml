@@ -11,7 +11,7 @@
 
   - type: Icon
     sprite: Buildings/closet.rsi
-    state: generic
+    state: generic_door
 
   - type: Clickable
   - type: BoundingBox
@@ -23,8 +23,83 @@
     mass: 25
     Anchored: false
   - type: EntityStorage
+  - type: Storage
+    state_door_open: generic_open
+    state_door_closed: generic_door
   - type: PlaceableSurface
 
   placement:
     snap:
     - Wall
+
+- type: entity
+  id: locker_tool
+  name: Tool Locker
+  parent: locker_generic
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+      - state: eng
+      - state: eng_tool_door
+
+  - type: Storage
+    state_door_closed: eng_tool_door
+    state_door_open: eng_open
+
+  - type: Icon
+    state: eng_tool_door
+
+- type: entity
+  id: locker_electrical_supplies
+  name: Electrical Supplies Locker
+  parent: locker_generic
+  components:
+    - type: Sprite
+      sprite: Buildings/closet.rsi
+      layers:
+        - state: eng
+        - state: eng_elec_door
+
+    - type: Storage
+      state_door_closed: eng_elec_door
+      state_door_open: eng_open
+
+    - type: Icon
+      state: eng_elec_door
+
+- type: entity
+  id: locker_welding_supplies
+  name: Welding Supplies Locker
+  parent: locker_generic
+  components:
+    - type: Sprite
+      sprite: Buildings/closet.rsi
+      layers:
+        - state: eng
+        - state: eng_weld_door
+
+    - type: Storage
+      state_door_closed: eng_weld_door
+      state_door_open: eng_open
+
+    - type: Icon
+      state: eng_weld_door
+
+- type: entity
+  id: locker_radiation_suit
+  name: Radiation Suit Locker
+  parent: locker_generic
+  components:
+    - type: Sprite
+      sprite: Buildings/closet.rsi
+      layers:
+        - state: eng
+        - state: eng_rad_door
+
+    - type: Storage
+      state_door_closed: eng_rad_door
+      state_door_open: eng_open
+
+    - type: Icon
+      state: eng_rad_door
