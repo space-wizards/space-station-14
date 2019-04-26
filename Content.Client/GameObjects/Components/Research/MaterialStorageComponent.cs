@@ -13,18 +13,12 @@ namespace Content.Client.GameObjects.Components.Research
 
         public event Action OnMaterialStorageChanged;
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            base.HandleMessage(message, netChannel, component);
-
-            switch (message)
-            {
-                case MaterialStorageUpdateMessage msg:
-                    Storage = msg.Storage;
-                    OnMaterialStorageChanged?.Invoke();
-                    break;
-
-            }
+            base.HandleComponentState(curState, nextState);
+            if (!(curState is MaterialStorageState state)) return;
+            Storage = state.Storage;
+            OnMaterialStorageChanged?.Invoke();
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Content.Shared.GameObjects.Components.Research
         [ViewVariables]
         protected virtual Dictionary<string, int> Storage { get; set; }
         public override string Name => "MaterialStorage";
-        public override uint? NetID => ContentNetIDs.MATERIAL_STORAGE;
+        public sealed override uint? NetID => ContentNetIDs.MATERIAL_STORAGE;
+        public sealed override Type StateType => typeof(MaterialStorageState);
 
         public int this[string ID]
         {
@@ -63,17 +64,15 @@ namespace Content.Shared.GameObjects.Components.Research
         {
             return GetEnumerator();
         }
+    }
 
-        [NetSerializable, Serializable]
-        public class MaterialStorageUpdateMessage : ComponentMessage
+    [NetSerializable, Serializable]
+    public class MaterialStorageState : ComponentState
+    {
+        public readonly Dictionary<string, int> Storage;
+        public MaterialStorageState(Dictionary<string, int> storage) : base(ContentNetIDs.MATERIAL_STORAGE)
         {
-            public readonly Dictionary<string, int> Storage;
-
-            public MaterialStorageUpdateMessage(Dictionary<string, int> storage)
-            {
-                Directed = true;
-                Storage = storage;
-            }
+            Storage = storage;
         }
     }
 }

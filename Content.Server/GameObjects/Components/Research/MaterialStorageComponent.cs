@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Serialization;
 
@@ -14,6 +15,11 @@ namespace Content.Server.GameObjects.Components.Research
         /// </summary>
         public int StorageLimit => _storageLimit;
         private int _storageLimit;
+
+        public override ComponentState GetComponentState()
+        {
+            return new MaterialStorageState(Storage);
+        }
 
         /// <summary>
         ///     Checks if the storage can take a volume of material without surpassing its own limits.
@@ -51,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Research
 
             Storage[ID] += amount;
 
-            Update();
+            Dirty();
 
             return true;
         }
@@ -65,15 +71,6 @@ namespace Content.Server.GameObjects.Components.Research
         public bool RemoveMaterial(string ID, int amount)
         {
             return InsertMaterial(ID, -amount);
-        }
-
-        /// <summary>
-        ///     Updates the storage on remote components.
-        /// </summary>
-        /// <param name="netChannel">The channel to send the update to.</param>
-        public void Update(INetChannel netChannel = null)
-        {
-            SendNetworkMessage(new MaterialStorageUpdateMessage(Storage), netChannel);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
