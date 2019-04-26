@@ -18,7 +18,6 @@ namespace Content.Shared.Research
         private SpriteSpecifier _icon;
         private string _description;
         private string _result;
-        private bool _hacked;
         private int _completeTime;
         private Dictionary<string, int> _requiredMaterials;
 
