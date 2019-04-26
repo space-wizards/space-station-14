@@ -54,7 +54,6 @@ namespace Content.Server.GameObjects.Components.Research
                     _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
                     if (_producingRecipe != null)
                         _userInterface.SendMessage(new LatheProducingRecipeMessage(_producingRecipe.ID));
-                    storage.Update();
                     break;
             }
         }
