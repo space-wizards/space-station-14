@@ -95,6 +95,7 @@ namespace Content.Shared.GameObjects.Components.Research
         }
     }
 
+    [NetSerializable, Serializable]
     public class LatheDatabaseState : ComponentState
     {
         public readonly List<string> Recipes;

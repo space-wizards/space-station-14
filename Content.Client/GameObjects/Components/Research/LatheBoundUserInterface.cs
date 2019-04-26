@@ -54,6 +54,7 @@ namespace Content.Client.GameObjects.Components.Research
             queueMenu = new LatheQueueMenu(_displayManager) { Owner = this };
             menu.AddToScreen();
             menu.Populate();
+            menu.PopulateMaterials();
             queueMenu.AddToScreen();
 
             menu.QueueButton.OnPressed += (args) => { queueMenu.OpenCentered(); };
