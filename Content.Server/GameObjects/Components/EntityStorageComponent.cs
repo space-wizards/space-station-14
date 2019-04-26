@@ -25,8 +25,13 @@ namespace Content.Server.GameObjects.Components
         {
             base.Initialize();
             Contents = ContainerManagerComponent.Ensure<Container>($"{typeof(EntityStorageComponent).FullName}{Owner.Uid.ToString()}", Owner);
-            StorageComponent = Owner.AddComponent<ServerStorageComponent>();
-            StorageComponent.Initialize();
+            if (!Owner.TryGetComponent(out StorageComponent))
+            {
+                StorageComponent = Owner.AddComponent<ServerStorageComponent>();
+                // TODO: This is a terrible hack.
+                // Components should not need to be manually initialized in Initialize().
+                StorageComponent.Initialize();
+            }
             entityQuery = new IntersectingEntityQuery(Owner);
         }
 
