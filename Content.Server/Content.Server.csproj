@@ -108,6 +108,9 @@
     <Compile Include="GameObjects\Components\Power\PowerTransferComponent.cs" />
     <Compile Include="GameObjects\Components\Projectiles\ProjectileComponent.cs" />
     <Compile Include="GameObjects\Components\Projectiles\ThrownItemComponent.cs" />
+    <Compile Include="GameObjects\Components\Research\LatheComponent.cs" />
+    <Compile Include="GameObjects\Components\Research\LatheDatabaseComponent.cs" />
+    <Compile Include="GameObjects\Components\Research\MaterialStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Sound\SoundComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Melee\MeleeWeaponComponent.cs" />
     <Compile Include="GameObjects\Components\Weapon\Ranged\Hitscan\HitscanWeaponComponent.cs" />
@@ -125,6 +128,7 @@
     <Compile Include="GameObjects\EntitySystems\DoorSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\HandHeldLightSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\HandsSystem.cs" />
+    <Compile Include="GameObjects\EntitySystems\LatheSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\MoverSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerApcSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\PowerSmesSystem.cs" />
@@ -198,8 +202,6 @@
     <None Include="app.config" />
     <Compile Include="GameObjects\Components\Power\SmesComponent.cs" />
     <Compile Include="GameObjects\Components\Power\ApcComponent.cs" />
-    <Compile Include="Materials\Material.cs" />
-    <Compile Include="GameObjects\Components\Materials\MaterialComponent.cs" />
     <Compile Include="GameObjects\Components\Stack\StackComponent.cs" />
     <Compile Include="GameObjects\Components\Construction\ConstructorComponent.cs" />
     <Compile Include="GameObjects\Components\Construction\ConstructionComponent.cs" />

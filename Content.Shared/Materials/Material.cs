@@ -1,17 +1,18 @@
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.Materials
+namespace Content.Shared.Materials
 {
     /// <summary>
     ///     Materials are read-only storage for the properties of specific materials.
     ///     Properties should be intrinsic (or at least as much is necessary for game purposes).
     /// </summary>
-    public class Material : IExposeData
+public class Material : IExposeData
     {
         public string Name => _name;
         private string _name = "unobtanium";
@@ -72,6 +73,26 @@ namespace Content.Server.Materials
         public double BluntDamage => _bluntDamage;
         private double _bluntDamage = 1;
 
+        /// <summary>
+        ///     An icon used to represent the material in graphic interfaces.
+        /// </summary>
+        public SpriteSpecifier Icon => _icon;
+        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
+
+        public string ID
+        {
+            get
+            {
+                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+                foreach (var prototype in prototypeManager.EnumeratePrototypes<MaterialPrototype>())
+                {
+                    if (prototype.Material == this) return prototype.ID;
+                }
+
+                return null;
+            }
+        }
+
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _name, "name", "unobtanium", alwaysWrite: true);
@@ -87,6 +108,7 @@ namespace Content.Server.Materials
             serializer.DataField(ref _hardness, "hardness", 1, alwaysWrite: true);
             serializer.DataField(ref _sharpDamage, "sharpdamage", 1, alwaysWrite: true);
             serializer.DataField(ref _bluntDamage, "bluntdamage", 1, alwaysWrite: true);
+            serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid, alwaysWrite: true);
         }
     }
 

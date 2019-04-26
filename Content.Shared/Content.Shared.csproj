@@ -74,9 +74,13 @@
     <Compile Include="GameObjects\Components\Items\ClothingComponentState.cs" />
     <Compile Include="GameObjects\Components\Items\ItemComponentState.cs" />
     <Compile Include="GameObjects\Components\Markers\SharedSpawnPointComponent.cs" />
+    <Compile Include="GameObjects\Components\Materials\MaterialComponent.cs" />
     <Compile Include="GameObjects\Components\Mobs\SharedCameraRecoilComponent.cs" />
     <Compile Include="GameObjects\Components\Power\PowerShared.cs" />
     <Compile Include="GameObjects\Components\Power\SharedPowerCellComponent.cs" />
+    <Compile Include="GameObjects\Components\Research\SharedLatheComponent.cs" />
+    <Compile Include="GameObjects\Components\Research\SharedLatheDatabaseComponent.cs" />
+    <Compile Include="GameObjects\Components\Research\SharedMaterialStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Sound\SharedSoundComponent.cs" />
     <Compile Include="GameObjects\Components\Storage\SharedStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\SharedBallisticMagazineComponent.cs" />
@@ -90,6 +94,7 @@
     <Compile Include="Interfaces\ISharedNotifyManager.cs" />
     <Compile Include="GameObjects\Verb.cs" />
     <Compile Include="Maps\ContentTileDefinition.cs" />
+    <Compile Include="Materials\Material.cs" />
     <Compile Include="Physics\CollisionGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\Components\Items\SharedHandsComponent.cs" />
@@ -100,6 +105,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <Compile Include="Input\ContentKeyFunctions.cs" />
+    <Compile Include="Research\LatheRecipePrototype.cs" />
     <Compile Include="SharedGameTicker.cs" />
     <Compile Include="SharedNotifyManager.cs" />
     <Compile Include="Utility\ContentHelpers.cs" />
