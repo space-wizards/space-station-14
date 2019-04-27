@@ -127,5 +127,7 @@ namespace Content.Server.GameObjects.Components.Stack
         Cable,
         Ointment,
         Brutepack,
+        Rockwool,
+        Sand
     }
 }
