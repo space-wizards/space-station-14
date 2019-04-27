@@ -1,0 +1,59 @@
+- type: latheRecipe
+  id: Wirecutter
+  icon: Objects/wirecutter.png
+  result: Wirecutter
+  completetime: 500
+  materials:
+    steel: 80
+
+- type: latheRecipe
+  id: Screwdriver
+  icon: Objects/screwdriver.png
+  result: Screwdriver
+  completetime: 500
+  materials:
+    steel: 75
+
+- type: latheRecipe
+  id: Welder
+  icon: Objects/welder.png
+  result: Welder
+  completetime: 500
+  materials:
+    steel: 70
+    glass: 30
+    
+- type: latheRecipe
+  id: Wrench
+  icon: Objects/wrench.png
+  result: Wrench
+  completetime: 500
+  materials:
+    steel: 70
+    glass: 30
+    
+- type: latheRecipe
+  id: CableStack
+  icon: Objects/cable_coil.png
+  result: CableStack
+  completetime: 500
+  materials:
+    steel: 50
+    glass: 50
+    
+- type: latheRecipe
+  id: Crowbar
+  icon: Objects/crowbar.png
+  result: Crowbar
+  completetime: 500
+  materials:
+    steel: 50
+        
+- type: latheRecipe
+  id: Multitool
+  icon: Objects/multitool.png
+  result: Multitool
+  completetime: 500
+  materials:
+    steel: 50
+    glass: 20

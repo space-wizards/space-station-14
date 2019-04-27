@@ -1,0 +1,37 @@
+- type: entity
+  id: autolathe
+  name: "Autolathe"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Buildings/autolathe.rsi
+    state: idle
+  - type: Icon
+    sprite: Buildings/autolathe.rsi
+    state: idle
+  - type: BoundingBox
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Lathe
+  - type: LatheDatabase
+    static: true
+    recipes:
+      - Brutepack
+      - Ointment
+      - LightTube
+      - LightBulb
+      - MetalStack
+      - GlassStack
+      - Wirecutter
+      - Screwdriver
+      - Welder
+      - Wrench
+      - CableStack
+      - Crowbar
+      - Multitool
+  - type: MaterialStorage
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface

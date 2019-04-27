@@ -28,11 +28,15 @@ using System;
 using Content.Client.Chat;
 using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.Components.Mobs;
+using Content.Client.GameObjects.Components.Research;
 using Content.Client.GameObjects.Components.Sound;
 using Content.Client.Interfaces.Chat;
+using Content.Client.Research;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Markers;
+using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Research;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Shared.Log;
 
@@ -72,7 +76,6 @@ namespace Content.Client
 
             factory.RegisterIgnore("Storeable");
 
-            factory.RegisterIgnore("Material");
             factory.RegisterIgnore("Stack");
 
             factory.Register<HandsComponent>();
@@ -86,7 +89,10 @@ namespace Content.Client
             factory.Register<DamageableComponent>();
             factory.Register<ClothingComponent>();
             factory.Register<ItemComponent>();
+            factory.Register<MaterialComponent>();
             factory.Register<SoundComponent>();
+            factory.Register<MaterialStorageComponent>();
+            factory.RegisterReference<MaterialStorageComponent, SharedMaterialStorageComponent>();
 
             factory.RegisterReference<ClothingComponent, ItemComponent>();
 
@@ -113,6 +119,11 @@ namespace Content.Client
             factory.RegisterIgnore("PowerCell");
 
             factory.Register<SharedSpawnPointComponent>();
+
+            factory.Register<SharedLatheComponent>();
+            factory.Register<LatheDatabaseComponent>();
+
+            factory.RegisterReference<LatheDatabaseComponent, SharedLatheDatabaseComponent>();
 
             factory.Register<CameraRecoilComponent>();
             factory.RegisterReference<CameraRecoilComponent, SharedCameraRecoilComponent>();

@@ -11,6 +11,8 @@ using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using Robust.Client.Interfaces.Graphics;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -23,6 +25,9 @@ namespace Content.Client.GameObjects.Components.Storage
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow Window;
+
+        [ViewVariables] private string _closedState;
+        [ViewVariables] private string _openState;
 
         public bool Open
         {
@@ -46,6 +51,14 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             Window.Dispose();
             base.OnRemove();
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _closedState, "state_door_closed", null);
+            serializer.DataField(ref _openState, "state_door_open", null);
         }
 
         /// <inheritdoc />
@@ -127,7 +140,7 @@ namespace Content.Client.GameObjects.Components.Storage
 
             var baseName = spriteComp.LayerGetState(0).Name;
 
-            var stateId = open ? $"{baseName}_open" : $"{baseName}_door";
+            var stateId = open ? _openState ?? $"{baseName}_open" : _closedState ?? $"{baseName}_door";
 
             if (spriteComp.BaseRSI.TryGetState(stateId, out _))
                 spriteComp.LayerSetState(1, stateId);
