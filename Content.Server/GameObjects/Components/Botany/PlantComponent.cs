@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;

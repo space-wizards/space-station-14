@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 Owner.GetComponent<SpriteComponent>().LayerSetSprite(0, emptySprite);
                 return true;
             }
-            // Todo: consider demanding reagent, not stack?
+            // Todo: consider demanding reagents rather than stacks?
             else if (eventArgs.AttackWith.TryGetComponent(out StackComponent stack))
             {
                 if (HeldSubstrate == Substrate.Empty)
