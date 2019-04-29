@@ -44,6 +44,8 @@ namespace Content.Client
 {
     public class EntryPoint : GameClient
     {
+        [Dependency] private readonly IPlayerManager _playerManager;
+
         public override void Init()
         {
 #if DEBUG
@@ -146,6 +148,8 @@ namespace Content.Client
             var stylesheet = new NanoStyle();
 
             IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
+
+            IoCManager.InjectDependencies(this);
         }
 
         /// <summary>
@@ -155,33 +159,24 @@ namespace Content.Client
         /// <param name="args"></param>
         public void SubscribePlayerAttachmentEvents(object sender, EventArgs args)
         {
-            IoCManager.Resolve<IPlayerManager>().LocalPlayer.EntityAttached += AttachPlayerToEntity;
-            IoCManager.Resolve<IPlayerManager>().LocalPlayer.EntityDetached += DetachPlayerFromEntity;
-            AttachPlayerToEntity(IoCManager.Resolve<IPlayerManager>().LocalPlayer, EventArgs.Empty);
+            _playerManager.LocalPlayer.EntityAttached += AttachPlayerToEntity;
+            _playerManager.LocalPlayer.EntityDetached += DetachPlayerFromEntity;
         }
 
         /// <summary>
         /// Add the character interface master which combines all character interfaces into one window
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        public void AttachPlayerToEntity(object sender, EventArgs args)
+        public static void AttachPlayerToEntity(EntityAttachedEventArgs eventArgs)
         {
-            var localplayer = (LocalPlayer)sender;
-
-            localplayer.ControlledEntity?.AddComponent<CharacterInterface>();
+            eventArgs.NewEntity.AddComponent<CharacterInterface>();
         }
 
         /// <summary>
         /// Remove the character interface master from this entity now that we have detached ourselves from it
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        public void DetachPlayerFromEntity(object sender, EventArgs args)
+        public static void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
         {
-            var localplayer = (LocalPlayer)sender;
-            //Wont work atm, controlled entity gets nulled before this event fires
-            localplayer.ControlledEntity?.RemoveComponent<CharacterInterface>();
+            eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
         }
 
         public override void PostInit()
