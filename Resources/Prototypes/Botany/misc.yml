@@ -1,0 +1,38 @@
+- type: entity
+  name: "Botany - Rockwool stack"
+  id: RockwoolStack
+  parent: BaseItem
+  components:
+  - type: Stack
+    stacktype: enum.StackType.Rockwool
+  - type: Sprite
+    texture: Objects/cable_coil.png
+    color: blue
+  - type: Icon
+    texture: Objects/cable_coil.png
+
+- type: entity
+  name: "Botany - Sand stack"
+  id: SandStack
+  parent: BaseItem
+  components:
+  - type: Stack
+    stacktype: enum.StackType.Sand
+  - type: Sprite
+    texture: Objects/cable_coil.png
+    color: yellow
+  - type: Icon
+    texture: Objects/cable_coil.png
+
+
+- type: entity
+  name: "Botany - Shovel"
+  parent: BaseItem
+  id: Shovel
+  components:
+  - type: Shovel
+  - type: Sprite
+    texture: Objects/crowbar.png
+  - type: Icon
+    texture: Objects/crowbar.png
+  - type: MeleeWeapon

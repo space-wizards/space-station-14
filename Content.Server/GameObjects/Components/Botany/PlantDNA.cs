@@ -1,6 +1,7 @@
 ﻿using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,21 @@ namespace Content.Server.GameObjects.Components.Botany
 {
     class PlantDNA : IExposeData, ICloneable
     {
+        [ViewVariables(VVAccess.ReadWrite)]
         public PlantLifecycle Lifecycle;
+        [ViewVariables(VVAccess.ReadWrite)]
         public double MaxAgeInSeconds;
+        [ViewVariables(VVAccess.ReadWrite)]
         public double YieldMultiplier;
 
         public object Clone()
         {
-            throw new NotImplementedException();
+            return new PlantDNA
+            {
+                Lifecycle = (PlantLifecycle)Lifecycle.Clone(),
+                MaxAgeInSeconds = MaxAgeInSeconds,
+                YieldMultiplier = YieldMultiplier
+            };
         }
 
         public void ExposeData(ObjectSerializer serializer)
@@ -30,14 +39,14 @@ namespace Content.Server.GameObjects.Components.Botany
 
     public class PlantLifecycle : IExposeData, ICloneable
     {
-        public string germinationNodeId;
-        public List<PlantLifecycleNode> LifecycleNodes;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public List<PlantStage> LifecycleNodes;
 
         public object Clone()
         {
             return new PlantLifecycle
             {
-                LifecycleNodes = (List<PlantLifecycleNode>)LifecycleNodes.Clone()
+                LifecycleNodes = (List<PlantStage>)LifecycleNodes.Clone()
             };
         }
 
@@ -50,57 +59,37 @@ namespace Content.Server.GameObjects.Components.Botany
     /// <summary>
     /// Rudimentary linked list nodes of plant stages for use in PlantLifecycle
     /// </summary>
-    public class PlantLifecycleNode : IExposeData, ICloneable
-    {
-        public string NodeID;
-        public string NextNodeID;
-        public PlantStage Stage;
-        public double ProgressRequiredForNextStage;
-
-        public void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref NodeID, "nodeID", null);
-            serializer.DataField(ref NextNodeID, "nextNodeID", null);
-            serializer.DataField(ref Stage, "stage", null);
-            serializer.DataField(ref ProgressRequiredForNextStage, "progressRequiredForNextStage", 15.0);
-        }
-
-        public object Clone()
-        {
-            return new PlantLifecycleNode
-            {
-                NodeID = NodeID,
-                NextNodeID = NextNodeID,
-                Stage = (PlantStage)Stage.Clone(),
-                ProgressRequiredForNextStage = ProgressRequiredForNextStage
-            };
-        }
-
-    }
-
-    /// <summary>
-    /// Plant sprites and their corresponding growns are the creative bottleneck to construction of plants,
-    /// so for maximum creative composeability PlantStage is the smallest unit of a plant lifecycle.
-    /// TODO: Make the above sentence legible
-    /// </summary>
     public class PlantStage : IExposeData, ICloneable
     {
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string NodeID;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public SpriteSpecifier Sprite;
-        public string GrownPrototype;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string HarvestPrototype;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public double lifeProgressRequiredInSeconds;
 
         public object Clone()
         {
             return new PlantStage
             {
+                NodeID = NodeID,
                 Sprite = Sprite,
-                GrownPrototype = GrownPrototype
+                HarvestPrototype = HarvestPrototype,
+                lifeProgressRequiredInSeconds = lifeProgressRequiredInSeconds
             };
         }
-
         public void ExposeData(ObjectSerializer serializer)
         {
+            serializer.DataField(ref NodeID, "stageID", null);
+
             serializer.DataField(ref Sprite, "spriteSpecifier", null);
-            serializer.DataField(ref GrownPrototype, "grownPrototype", null);
+            serializer.DataField(ref HarvestPrototype, "harvestPrototype", null);
+
+            serializer.DataField(ref lifeProgressRequiredInSeconds, "lifeProgressRequired", 0.0);
         }
     }
 }

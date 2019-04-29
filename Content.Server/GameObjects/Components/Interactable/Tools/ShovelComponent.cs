@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
     class ShovelComponent : ToolComponent
     {
         /// <summary>
-        /// Handheld tool used in bulk powder materials transfer
+        /// Two-handed tool used in bulk granular materials transfer
         /// </summary>
         public override string Name => "Shovel";
     }

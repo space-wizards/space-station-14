@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Botany;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -12,6 +13,8 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     class BotanySystem : EntitySystem
     {
+        private PlantUpdateState _plantUpdateState;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -32,41 +35,72 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     continue;
                 }
-
-                var plantUpdater = new PlantUpdater(entity);
-                plantUpdater.Update();
+                _plantUpdateState = new PlantUpdateState(entity);
+                ProcessSubstrate();
+                // process ... [light, food, water, pests, etc] implement these as the state of the game advances
+                ApplyAging();
+                ApplyGrowth();
+                plantComponent.TimeSinceLastUpdate = 0;
             }
         }
 
-        private class PlantUpdater
+        private void ProcessSubstrate()
         {
-            readonly float _frameTime;
-
-            private readonly IEntity _plantEntity;
-            private readonly PlantComponent _plantComponent;
-            private readonly Random _rand = new Random();
-
-            internal void Update()
+            if (_plantUpdateState.PlantComponent.Holder == null)
             {
-                ProcessSubstrate();
+                LimitLifeProgressDelta(0.0);
+                return;
             }
-
-            private void ProcessSubstrate()
+            else
             {
-                if (_plantComponent.Holder == null)
+                switch (_plantUpdateState.PlantComponent.Holder.HeldSubstrate)
                 {
-                    throw new NotImplementedException();
-                }
-                else
-                {
-                    switch (_plantComponent.Holder.Substrate)
-                    {
-                        case SubstrateType.Empty:
-                            LimitProgress(0.1);
-                            break;
-                    }
+                    case Substrate.Empty:
+                        LimitLifeProgressDelta(0.1);
+                        break;
+                    case Substrate.Rockwool:
+                        LimitLifeProgressDelta(0.5);
+                        break;
+                    case Substrate.Sand:
+                        LimitLifeProgressDelta(1.0);
+                        break;
                 }
             }
+        }
+
+        private void ApplyAging()
+        {
+            _plantUpdateState.PlantComponent.Effects.cellularAgeInSeconds += _plantUpdateState.PlantComponent.TimeSinceLastUpdate;
+        }
+
+        private void ApplyGrowth()
+        {
+            var lifeProgressDelta = _plantUpdateState.PlantComponent.TimeSinceLastUpdate * _plantUpdateState.baseLifeProgressDelta;
+            _plantUpdateState.PlantComponent.Effects.lifeProgressInSeconds += lifeProgressDelta;
+            _plantUpdateState.PlantComponent.UpdateCurrentStage();
+        }
+
+        private void LimitLifeProgressDelta(double maxProgressThisCycle)
+        {
+            _plantUpdateState.baseLifeProgressDelta = Math.Min(maxProgressThisCycle, _plantUpdateState.baseLifeProgressDelta);
+        }
+    }
+
+    /// <summary>
+    /// Temporary state management of plant related info in update loop
+    /// </summary>
+    class PlantUpdateState
+    {
+        public IEntity PlantEntity;
+        public PlantComponent PlantComponent;
+        public Random Rand = new Random();
+
+        public double baseLifeProgressDelta = 1.0;
+
+        public PlantUpdateState(IEntity plantEntity)
+        {
+            PlantEntity = plantEntity;
+            PlantComponent = plantEntity.GetComponent<PlantComponent>();
         }
     }
 }

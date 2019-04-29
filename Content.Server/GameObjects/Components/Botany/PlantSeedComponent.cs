@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -12,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Botany
 {
     class PlantSeedComponent : Component
     {
-        public override string Name => "PlantSeedComponent";
+        public override string Name => "PlantSeed";
 
         public PlantDNA DNA;
 
@@ -22,14 +23,19 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref DNA, "DNA", new PlantDNA());
         }
 
-        public IEntity CreatePlant()
+        public void PlantIntoHolder(PlantHolderComponent holder)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            entityManager.TrySpawnEntityAt("default_plant", Owner.Transform.Parent.GridPosition, out var plant);
+
+            //It might be better to construct an entity from scratch, but this method at least forces you to ensure that ExposeData works
+            entityManager.TrySpawnEntityAt("BasePlant", holder.Owner.Transform.GridPosition, out var plant);
+
             var plantComponent = plant.GetComponent<PlantComponent>();
             plantComponent.DNA = (PlantDNA)DNA.Clone();
-            plantComponent.UpdateSprite();
-            return plant;
+            holder.HeldPlant = plantComponent;
+            plantComponent.UpdateCurrentStage();
+            plant.GetComponent<SpriteComponent>().DrawDepth = DrawDepth.Objects;
+            Owner.Delete();
         }
     }
 }

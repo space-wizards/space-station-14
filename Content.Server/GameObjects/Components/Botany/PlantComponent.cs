@@ -22,17 +22,43 @@ namespace Content.Server.GameObjects.Components.Botany
 
         [ViewVariables(VVAccess.ReadWrite)]
         private PlantDNA _dna;
-        public PlantDNA DNA => _dna;
+        public PlantDNA DNA { //useless property rn
+            get { return _dna; }
+            set { _dna = value; }
+        }
 
         [ViewVariables(VVAccess.ReadWrite)]
         private PlantEffects _effects;
-        public PlantEffects Effects;
+        public PlantEffects Effects => _effects;
+
+        private PlantStage CurrentStage()
+        {
+            return DNA.Lifecycle.LifecycleNodes.Single(node => node.NodeID == Effects.currentLifecycleNodeID);
+        }
+
+        public void UpdateCurrentStage()
+        {
+            PlantStage minimalStage = null;
+            foreach (var stage in DNA.Lifecycle.LifecycleNodes)
+            {
+                if (minimalStage == null ||
+                    (stage.lifeProgressRequiredInSeconds < Effects.lifeProgressInSeconds && stage.lifeProgressRequiredInSeconds > minimalStage.lifeProgressRequiredInSeconds))
+                {
+                    minimalStage = stage;
+                }
+            }
+            if (minimalStage.NodeID != Effects.currentLifecycleNodeID)
+            {
+                Effects.currentLifecycleNodeID = minimalStage.NodeID;
+                UpdateSprite();
+            }
+        }
 
         public void UpdateSprite()
         {
-            if (!Owner.TryGetComponent<SpriteComponent>(out var sprite))
+            if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
             {
-                return;
+                sprite.LayerSetSprite(0, CurrentStage().Sprite);
             }
         }
 

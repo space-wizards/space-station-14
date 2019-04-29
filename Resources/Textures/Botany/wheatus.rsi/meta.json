@@ -1,0 +1,94 @@
+{"version": 1,
+ "size": {
+     "x": 32,
+     "y": 32},
+ "states": [
+     {
+         "name": "wheat-dead",
+         "select": [],
+         "flags": {},
+         "directions": 1,
+         "delays": [
+             [
+                 1.0
+             ]
+         ]
+     },
+     {
+         "name": "wheat-grow1",
+         "select": [],
+         "flags": {},
+         "directions": 1,
+         "delays": [
+             [
+                 1.0
+             ]
+         ]
+     },
+      {
+         "name": "wheat-grow2",
+         "select": [],
+         "flags": {},
+         "directions": 1,
+         "delays": [
+             [
+                 1.0
+             ]
+         ]
+      },
+      {
+         "name": "wheat-grow3",
+         "select": [],
+         "flags": {},
+         "directions": 1,
+         "delays": [
+             [
+                 1.0
+             ]
+         ]
+      },
+      {
+         "name": "wheat-grow4",
+         "select": [],
+         "flags": {},
+         "directions": 1,
+         "delays": [
+             [
+                 1.0
+             ]
+         ]
+      },
+      {
+         "name": "wheat-grow5",
+         "select": [],
+         "flags": {},
+         "directions": 1,
+         "delays": [
+             [
+                 1.0
+             ]
+         ]
+      },
+      {
+         "name": "wheat-grow6",
+         "select": [],
+         "flags": {},
+         "directions": 1,
+         "delays": [
+             [
+                 1.0
+             ]
+         ]
+      },
+      {
+         "name": "wheat-harvest",
+         "select": [],
+         "flags": {},
+         "directions": 1,
+         "delays": [
+             [
+                 1.0
+             ]
+         ]
+      }
+ ]}

@@ -1,0 +1,57 @@
+- type: entity
+  name: "Base Plant"
+  id: BasePlant
+  components:
+  - type: Clickable
+  - type: BoundingBox
+  - type: Physics
+    mass: 5
+  - type: Sprite
+    sprite: Botany/wheatus.rsi
+    state: wheat-grow1
+  - type: PlantComponent
+
+- type: entity
+  id: example_seed
+  name: "Botany - Sample Seed"
+  description: Do not attempt simultaneous ingestion and germination
+  parent: BaseItem
+  components:
+  - type: Sprite
+    texture: Botany/seeds/seed-wheat.png
+  - type: Icon
+    texture: Botany/seeds/seed-wheat.png
+  - type: Item
+    Size: 10
+  - type: PlantSeed
+    DNA:
+      maxAgeInSeconds: 600
+      yieldMultiplier: 1
+      lifecycle:
+        lifecycleNodes:
+          - stageID: wheaticus
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-grow1
+          - stageID: lilwheatus
+            lifeProgressRequired: 10.0
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-grow2
+          - stageID: wheatoddler
+            lifeProgressRequired: 25.0
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-grow3
+          - stageID: wheateen
+            lifeProgressRequired: 40.0
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-grow4
+          - stageID: elwheato
+            lifeProgressRequired: 45.0
+            harvestPrototype: example_seed #Full circle
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-grow5
+

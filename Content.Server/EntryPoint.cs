@@ -32,6 +32,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
 using Content.Server.Players;
+using Content.Server.GameObjects.Components.Botany;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Sound;
@@ -104,8 +105,14 @@ namespace Content.Server
             factory.Register<WirecutterComponent>();
             factory.Register<WrenchComponent>();
             factory.Register<WelderComponent>();
+            factory.Register<ShovelComponent>();
             factory.Register<ScrewdriverComponent>();
             factory.Register<CrowbarComponent>();
+
+            //Botany
+            factory.Register<PlantComponent>();
+            factory.Register<PlantHolderComponent>();
+            factory.Register<PlantSeedComponent>();
 
             factory.Register<HitscanWeaponComponent>();
             factory.Register<RangedWeaponComponent>();

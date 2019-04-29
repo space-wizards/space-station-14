@@ -68,6 +68,7 @@ namespace Content.Client
             factory.RegisterIgnore("Welder");
             factory.RegisterIgnore("Wrench");
             factory.RegisterIgnore("Crowbar");
+            factory.RegisterIgnore("Shovel");
             factory.Register<ClientRangedWeaponComponent>();
             factory.RegisterIgnore("HitscanWeapon");
             factory.RegisterIgnore("ProjectileWeapon");
@@ -77,6 +78,11 @@ namespace Content.Client
             factory.RegisterIgnore("Storeable");
 
             factory.RegisterIgnore("Stack");
+
+            //Botany
+            factory.RegisterIgnore("PlantComponent");
+            factory.RegisterIgnore("PlantHolder");
+            factory.RegisterIgnore("PlantSeed");
 
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();

@@ -26,40 +26,52 @@ namespace Content.Server.GameObjects.Components.Botany
     {
         public override string Name => "PlantHolder";
 
-        private PlantComponent _heldPlant;
+        [ViewVariables(VVAccess.ReadWrite)]
+        private PlantComponent _heldPlant = null;
         public PlantComponent HeldPlant
         {
             get => _heldPlant;
             set
             {
+                if (_heldPlant != null)
+                {
+                    throw new NotImplementedException();
+                }
+
+                _heldPlant = value;
                 _heldPlant.Holder = this;
+                _heldPlant.Owner.Transform.GridPosition = Owner.Transform.GridPosition.Offset(new Vector2(0, plantYOffset));
                 // todo: handle transform bullshit correctly
-                _heldPlant.Owner.Transform.LocalPosition = Owner.Transform.LocalPosition;
+                //_heldPlant.Owner.Transform.AttachParent(this.Owner);
+                //_heldPlant.Owner.Transform.LocalPosition = new Vector2(0,0);
             }
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public Substrate HeldSubstrate = Substrate.Empty;
+        public Substrate HeldSubstrate;
+
+        public float plantYOffset;
 
         private SpriteSpecifier emptySprite;
         private SpriteSpecifier sandSprite;
         private SpriteSpecifier rockwoolSprite;
 
-
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+            serializer.DataField(ref plantYOffset, "plantYOffset", 0.0f);
+            serializer.DataField(ref HeldSubstrate, "heldSubstrate", Substrate.Empty);
             serializer.DataField(ref emptySprite, "emptySprite", null);
             serializer.DataField(ref sandSprite, "sandSprite", null);
             serializer.DataField(ref rockwoolSprite, "rockwoolSprite", null);
+            //todo: serialize _heldPlant
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.TryGetComponent(out PlantSeedComponent seedComponent))
+            if (eventArgs.AttackWith.TryGetComponent(out PlantSeedComponent seedComponent) && _heldPlant == null)
             {
-                // plant the seed
+                seedComponent.PlantIntoHolder(this);
                 return true;
             }
             else if (eventArgs.AttackWith.TryGetComponent(out ShovelComponent shovel))
