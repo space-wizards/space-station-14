@@ -44,7 +44,9 @@ namespace Content.Client
 {
     public class EntryPoint : GameClient
     {
+#pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
+#pragma warning restore 649
 
         public override void Init()
         {

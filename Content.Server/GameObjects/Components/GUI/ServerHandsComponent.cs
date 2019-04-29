@@ -25,7 +25,9 @@ namespace Content.Server.GameObjects
 {
     public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
+#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
 
         private string activeIndex;
 

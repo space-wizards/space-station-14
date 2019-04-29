@@ -21,8 +21,6 @@ namespace Content.Client.Research
 #pragma warning disable CS0649
         [Dependency]
         private IPrototypeManager PrototypeManager;
-        [Dependency]
-        private IResourceCache ResourceCache;
 #pragma warning restore
 
         private ItemList Items;
