@@ -191,7 +191,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             // Step one: figure out sound collection prototype.
             var grid = _mapManager.GetGrid(coordinates.GridID);
-            var tile = grid.GetTile(coordinates);
+            var tile = grid.GetTileRef(coordinates);
 
             // If the coordinates have a catwalk, it's always catwalk.
             string soundCollectionName;
