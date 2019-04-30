@@ -21,14 +21,14 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)]
         public double lifeProgressInSeconds = 0.0;
         [ViewVariables(VVAccess.ReadWrite)]
-        public double yieldMultiplier = 1.0;
+        public double YieldMultiplier = 1.0;
 
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref currentLifecycleNodeID, "currentLifecycleNodeID", null);
             serializer.DataField(ref cellularAgeInSeconds, "cellularAgeInSeconds", 0.0);
             serializer.DataField(ref lifeProgressInSeconds, "lifeProgressInSeconds", 0.0);
-            serializer.DataField(ref yieldMultiplier, "yieldMultiplier", 1.0);
+            serializer.DataField(ref YieldMultiplier, "yieldMultiplier", 1.0);
         }
     }
 }

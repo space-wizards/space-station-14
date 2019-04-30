@@ -26,7 +26,7 @@
   - type: PlantSeed
     DNA:
       maxAgeInSeconds: 600
-      yieldMultiplier: 1
+      yieldMultiplier: 3
       lifecycle:
         lifecycleNodes:
           - stageID: wheatling
