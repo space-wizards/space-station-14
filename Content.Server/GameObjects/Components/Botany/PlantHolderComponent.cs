@@ -33,23 +33,28 @@ namespace Content.Server.GameObjects.Components.Botany
             get => _heldPlant;
             set
             {
-                if (_heldPlant != null)
+                if (_heldPlant != null && value != null)
                 {
                     throw new NotImplementedException();
                 }
 
                 _heldPlant = value;
-                _heldPlant.Holder = this;
-                _heldPlant.Owner.Transform.GridPosition = Owner.Transform.GridPosition.Offset(new Vector2(0, plantYOffset));
-                // todo: handle transform bullshit correctly
-                //_heldPlant.Owner.Transform.AttachParent(this.Owner);
-                //_heldPlant.Owner.Transform.LocalPosition = new Vector2(0,0);
+
+                if (_heldPlant != null)
+                {
+                    _heldPlant.Holder = this;
+                    _heldPlant.Owner.Transform.GridPosition = Owner.Transform.GridPosition.Offset(new Vector2(0, plantYOffset));
+                    // todo: handle transform bullshit correctly
+                    //_heldPlant.Owner.Transform.AttachParent(this.Owner);
+                    //_heldPlant.Owner.Transform.LocalPosition = new Vector2(0,0);
+                }
             }
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public Substrate HeldSubstrate;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public float plantYOffset;
 
         private SpriteSpecifier emptySprite;
@@ -65,6 +70,15 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref sandSprite, "sandSprite", null);
             serializer.DataField(ref rockwoolSprite, "rockwoolSprite", null);
             //todo: serialize _heldPlant
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            if (HeldPlant != null)
+            {
+                HeldPlant.Holder = null;
+            }
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)

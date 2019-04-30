@@ -29,29 +29,29 @@
       yieldMultiplier: 1
       lifecycle:
         lifecycleNodes:
-          - stageID: wheaticus
+          - stageID: wheatling
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow1
-          - stageID: lilwheatus
-            lifeProgressRequired: 10.0
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-grow2
-          - stageID: wheatoddler
-            lifeProgressRequired: 25.0
+          - stageID: wheatlet
+            lifeProgressRequired: 3.0
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow3
-          - stageID: wheateen
-            lifeProgressRequired: 40.0
+          - stageID: wheatus
+            lifeProgressRequired: 8.0
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow4
-          - stageID: elwheato
-            lifeProgressRequired: 45.0
-            harvestPrototype: example_seed #Full circle
+          - stageID: wheater
+            lifeProgressRequired: 12.0
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow5
+          - stageID: elwheato
+            lifeProgressRequired: 15.0
+            harvestPrototype: example_seed #Full circle
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-harvest
 

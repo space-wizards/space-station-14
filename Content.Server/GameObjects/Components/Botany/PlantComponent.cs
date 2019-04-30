@@ -1,5 +1,8 @@
-﻿using Robust.Server.GameObjects;
+﻿using Content.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Botany
 {
-    class PlantComponent : Component
+    class PlantComponent : Component, IAttackBy, IAttackHand
     {
         public override string Name => "PlantComponent";
 
@@ -69,6 +72,34 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref TimeSinceLastUpdate, "timeSinceLastUpdate", 0);
             serializer.DataField(ref _dna, "dna", new PlantDNA());
             serializer.DataField(ref _effects, "effects", new PlantEffects());
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Holder.HeldPlant = null;
+        }
+
+        public bool AttackBy(AttackByEventArgs eventArgs)
+        {
+            //using tools to create cuttings, harvest, heal, etc
+            return false;
+        }
+
+        public bool AttackHand(AttackHandEventArgs eventArgs)
+        {
+            var stage = CurrentStage();
+            var harvestPrototype = stage.HarvestPrototype;
+            if (harvestPrototype != null)
+            {
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+
+                //todo: add DNA to the harvested entity
+                entityManager.TrySpawnEntityAt(harvestPrototype, Owner.Transform.GridPosition, out var harvested);
+                Owner.Delete();
+                return true;
+            }
+            return false;
         }
     }
 }
