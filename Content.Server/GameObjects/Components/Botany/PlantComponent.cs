@@ -103,6 +103,12 @@ namespace Content.Server.GameObjects.Components.Botany
                     entityManager.TrySpawnEntityAt(harvestPrototype,
                         Owner.Transform.GridPosition.Offset(new Vector2((float)rand.NextDouble() -0.5f, (float)rand.NextDouble() -0.5f)),
                         out var harvested);
+                    if (!harvested.HasComponent<PlantSeedComponent>() && stage.HarvestSeedPrototype != null)
+                    {
+                        var seedContainer = harvested.AddComponent<PlantSeedContainerComponent>();
+                        seedContainer.seedPrototype = stage.HarvestSeedPrototype;
+                        seedContainer.DNA = (PlantDNA)DNA.Clone();
+                    }
                 }
                 Owner.Delete();
                 return true;

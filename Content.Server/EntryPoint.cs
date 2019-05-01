@@ -113,6 +113,7 @@ namespace Content.Server
             factory.Register<PlantComponent>();
             factory.Register<PlantHolderComponent>();
             factory.Register<PlantSeedComponent>();
+            factory.Register<PlantSeedContainerComponent>();
 
             factory.Register<HitscanWeaponComponent>();
             factory.Register<RangedWeaponComponent>();

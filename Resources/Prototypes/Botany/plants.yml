@@ -8,9 +8,9 @@
     mass: 5
   - type: Sprite
     sprite: Botany/wheatus.rsi
-    state: wheat-grow1
+    state: wheat-grow1  
   - type: PlantComponent
-
+  
 - type: entity
   id: example_seed
   name: "Botany - Sample Seed"
@@ -50,7 +50,8 @@
               state: wheat-grow5
           - stageID: elwheato
             lifeProgressRequired: 15.0
-            harvestPrototype: example_seed #Full circle
+            harvestPrototype: BaseHarvest
+            harvestSeedPrototype: example_seed
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-harvest

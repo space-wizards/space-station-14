@@ -83,6 +83,7 @@ namespace Content.Client
             factory.RegisterIgnore("PlantComponent");
             factory.RegisterIgnore("PlantHolder");
             factory.RegisterIgnore("PlantSeed");
+            factory.RegisterIgnore("PlantSeedContainer");
 
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();

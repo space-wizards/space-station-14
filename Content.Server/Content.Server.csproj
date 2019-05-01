@@ -71,6 +71,7 @@
     <Compile Include="EntryPoint.cs" />
     <Compile Include="GameObjects\Components\Botany\PlantComponent.cs" />
     <Compile Include="GameObjects\Components\Botany\PlantDNA.cs" />
+    <Compile Include="GameObjects\Components\Botany\PlantSeedContainerComponent.cs" />
     <Compile Include="GameObjects\Components\Botany\PlantEffects.cs" />
     <Compile Include="GameObjects\Components\Botany\PlantHolderComponent.cs" />
     <Compile Include="GameObjects\Components\Botany\PlantSeedComponent.cs" />

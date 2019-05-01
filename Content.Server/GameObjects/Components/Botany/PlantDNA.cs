@@ -68,6 +68,8 @@ namespace Content.Server.GameObjects.Components.Botany
         public SpriteSpecifier Sprite;
         [ViewVariables(VVAccess.ReadWrite)]
         public string HarvestPrototype;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string HarvestSeedPrototype; // null if harvest prototype has no seed generating capability
 
         [ViewVariables(VVAccess.ReadWrite)]
         public double lifeProgressRequiredInSeconds;
@@ -79,6 +81,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 NodeID = NodeID,
                 Sprite = Sprite,
                 HarvestPrototype = HarvestPrototype,
+                HarvestSeedPrototype = HarvestSeedPrototype,
                 lifeProgressRequiredInSeconds = lifeProgressRequiredInSeconds
             };
         }
@@ -88,6 +91,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
             serializer.DataField(ref Sprite, "spriteSpecifier", null);
             serializer.DataField(ref HarvestPrototype, "harvestPrototype", null);
+            serializer.DataField(ref HarvestSeedPrototype, "harvestSeedPrototype", null);
 
             serializer.DataField(ref lifeProgressRequiredInSeconds, "lifeProgressRequired", 0.0);
         }

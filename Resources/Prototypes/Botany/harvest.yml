@@ -1,0 +1,11 @@
+- type: entity
+  name: "Base Harvest"
+  description: Through forced experiments involving excrutiating amounts of pain, scientists have conclusively decided that this plant-derived object is, in fact, edible.
+  parent: BaseItem
+  id: BaseHarvest
+  components:
+  - type: Sprite
+    texture: Botany/growns/wheat.png
+  - type: Icon
+    texture: Botany/growns/wheat.png
+  - type: PlantSeedContainerComponent
