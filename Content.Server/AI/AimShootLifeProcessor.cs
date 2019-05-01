@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Shared.Physics;
+using JetBrains.Annotations;
 using Robust.Server.AI;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -20,9 +21,9 @@ namespace Content.Server.AI
     [AiLogicProcessor("AimShootLife")]
     class AimShootLifeProcessor : AiLogicProcessor
     {
-        private readonly IPhysicsManager _physMan;
-        private readonly IServerEntityManager _entMan;
-        private readonly IGameTiming _timeMan;
+        [Dependency, UsedImplicitly] private readonly IPhysicsManager _physMan;
+        [Dependency, UsedImplicitly] private readonly IServerEntityManager _entMan;
+        [Dependency, UsedImplicitly] private readonly IGameTiming _timeMan;
 
         private readonly List<IEntity> _workList = new List<IEntity>();
 
@@ -31,16 +32,6 @@ namespace Content.Server.AI
         private float _lastScan;
 
         private IEntity _curTarget;
-
-        /// <summary>
-        ///     Creates an instance of this LogicProcessor.
-        /// </summary>
-        public AimShootLifeProcessor()
-        {
-            _physMan = IoCManager.Resolve<IPhysicsManager>();
-            _entMan = IoCManager.Resolve<IServerEntityManager>();
-            _timeMan = IoCManager.Resolve<IGameTiming>();
-        }
 
         /// <inheritdoc />
         public override void Update(float frameTime)

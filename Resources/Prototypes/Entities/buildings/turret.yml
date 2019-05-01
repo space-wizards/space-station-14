@@ -16,6 +16,7 @@
   - type: Sprite
     drawdepth: WallMountedItems
     texture: Buildings/TurrTop.png
+    directional: false
   - type: AiController
     logic: AimShootLife
     vision: 6.0
@@ -29,6 +30,7 @@
   - type: Sprite
     drawdepth: WallMountedItems
     texture: Buildings/TurrLamp.png
+    directional: false
   - type: AiController
     logic: AimShootLife
     vision: 6.0

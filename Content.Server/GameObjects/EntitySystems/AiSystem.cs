@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Movement;
+using JetBrains.Annotations;
 using Robust.Server.AI;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
@@ -12,17 +13,21 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     internal class AiSystem : EntitySystem
     {
-        private readonly Dictionary<string, Type> _processorTypes = new Dictionary<string, Type>();
-        private IPauseManager _pauseManager;
+        [Dependency, UsedImplicitly] private readonly IPauseManager _pauseManager;
+        [Dependency, UsedImplicitly] private readonly IDynamicTypeFactory _typeFactory;
+        [Dependency, UsedImplicitly] private readonly IReflectionManager _reflectionManager;
 
-        public AiSystem()
+        private readonly Dictionary<string, Type> _processorTypes = new Dictionary<string, Type>();
+
+        /// <inheritdoc />
+        public override void Initialize()
         {
+            base.Initialize();
+
             // register entity query
             EntityQuery = new TypeEntityQuery(typeof(AiControllerComponent));
-            _pauseManager = IoCManager.Resolve<IPauseManager>();
 
-            var reflectionMan = IoCManager.Resolve<IReflectionManager>();
-            var processors = reflectionMan.GetAllChildren<AiLogicProcessor>();
+            var processors = _reflectionManager.GetAllChildren<AiLogicProcessor>();
             foreach (var processor in processors)
             {
                 var att = (AiLogicProcessorAttribute)Attribute.GetCustomAttribute(processor, typeof(AiLogicProcessorAttribute));
@@ -33,6 +38,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
+        /// <inheritdoc />
         public override void Update(float frameTime)
         {
             var entities = EntityManager.GetEntities(EntityQuery);
@@ -61,7 +67,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (_processorTypes.TryGetValue(name, out var type))
             {
-                return (AiLogicProcessor)Activator.CreateInstance(type);
+                return (AiLogicProcessor)_typeFactory.CreateInstance(type);
             }
 
             // processor needs to inherit AiLogicProcessor, and needs an AiLogicProcessorAttribute to define the YAML name
