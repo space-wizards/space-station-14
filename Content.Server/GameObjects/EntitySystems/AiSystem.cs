@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
+using Robust.Server.Interfaces.Console;
+using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 
@@ -72,6 +75,35 @@ namespace Content.Server.GameObjects.EntitySystems
 
             // processor needs to inherit AiLogicProcessor, and needs an AiLogicProcessorAttribute to define the YAML name
             throw new ArgumentException($"Processor type {name} could not be found.", nameof(name));
+        }
+
+        private class AddAiCommand : IClientCommand
+        {
+            public string Command => "addai";
+            public string Description => "Add an ai component with a given processor to an entity.";
+            public string Help => "addai <processorId> <entityId>";
+            public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+            {
+                if(args.Length != 2)
+                {
+                    shell.SendText(player, "Wrong number of args.");
+                    return;
+                }
+
+                var processorId = args[0];
+                var entId = new EntityUid(int.Parse(args[1]));
+                var ent = IoCManager.Resolve<IEntityManager>().GetEntity(entId);
+
+                if (ent.HasComponent<AiControllerComponent>())
+                {
+                    shell.SendText(player, "Entity already has an AI component.");
+                    return;
+                }
+
+                var comp = ent.AddComponent<AiControllerComponent>();
+                comp.LogicName = processorId;
+                shell.SendText(player, "AI component added.");
+            }
         }
     }
 }

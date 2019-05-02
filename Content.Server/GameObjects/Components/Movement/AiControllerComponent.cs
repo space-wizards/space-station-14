@@ -13,7 +13,16 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public override string Name => "AiController";
 
-        public string LogicName => _logicName;
+        public string LogicName
+        {
+            get => _logicName;
+            set
+            {
+                _logicName = value;
+                Processor = null;
+            }
+        }
+
         public AiLogicProcessor Processor { get; set; }
 
         public float VisionRadius
