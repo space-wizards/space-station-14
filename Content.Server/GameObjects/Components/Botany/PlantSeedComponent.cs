@@ -15,12 +15,9 @@ namespace Content.Server.GameObjects.Components.Botany
     {
         public override string Name => "PlantSeed";
 
-        public PlantDNA DNA;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref DNA, "DNA", new PlantDNA());
         }
 
         public void PlantIntoHolder(PlantHolderComponent holder)
@@ -30,8 +27,15 @@ namespace Content.Server.GameObjects.Components.Botany
             //It might be better to construct an entity from scratch, but this method at least forces you to ensure that ExposeData works
             entityManager.TrySpawnEntityAt("BasePlant", holder.Owner.Transform.GridPosition, out var plant);
 
+            if (plant.TryGetComponent<PlantDNAComponent>(out var dna))
+            {
+                dna.DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
+            }
+            else
+            {
+                plant.AddComponent<PlantDNAComponent>().DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
+            }
             var plantComponent = plant.GetComponent<PlantComponent>();
-            plantComponent.DNA = (PlantDNA)DNA.Clone();
             holder.HeldPlant = plantComponent;
             plantComponent.UpdateCurrentStage();
             plant.GetComponent<SpriteComponent>().DrawDepth = DrawDepth.Objects;

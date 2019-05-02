@@ -1,15 +1,27 @@
-﻿using Robust.Shared.Interfaces.Serialization;
+﻿using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Botany
 {
+    class PlantDNAComponent : Component
+    {
+        public override string Name => "PlantDNA";
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public PlantDNA DNA;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref DNA, "DNA", null);
+        }
+    }
+
     class PlantDNA : IExposeData, ICloneable
     {
         [ViewVariables(VVAccess.ReadWrite)]
@@ -67,9 +79,7 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)]
         public SpriteSpecifier Sprite;
         [ViewVariables(VVAccess.ReadWrite)]
-        public string HarvestPrototype;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string HarvestSeedPrototype; // null if harvest prototype has no seed generating capability
+        public HarvestDatum Harvest;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public double lifeProgressRequiredInSeconds;
@@ -80,8 +90,7 @@ namespace Content.Server.GameObjects.Components.Botany
             {
                 NodeID = NodeID,
                 Sprite = Sprite,
-                HarvestPrototype = HarvestPrototype,
-                HarvestSeedPrototype = HarvestSeedPrototype,
+                Harvest = Harvest,
                 lifeProgressRequiredInSeconds = lifeProgressRequiredInSeconds
             };
         }
@@ -90,10 +99,31 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref NodeID, "stageID", null);
 
             serializer.DataField(ref Sprite, "spriteSpecifier", null);
-            serializer.DataField(ref HarvestPrototype, "harvestPrototype", null);
-            serializer.DataField(ref HarvestSeedPrototype, "harvestSeedPrototype", null);
-
+            serializer.DataField(ref Harvest, "harvest", null);
             serializer.DataField(ref lifeProgressRequiredInSeconds, "lifeProgressRequired", 0.0);
         }
     }
+
+    /// <summary>
+    /// Barebones pointless class atm but we'll want to customize harvest data more later
+    /// </summary>
+    public class HarvestDatum : IExposeData, ICloneable
+    {
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string HarvestPrototype;
+
+        public object Clone()
+        {
+            return new HarvestDatum
+            {
+                HarvestPrototype = HarvestPrototype
+            };
+        }
+
+        public void ExposeData(ObjectSerializer serializer)
+        {
+            serializer.DataField(ref HarvestPrototype, "harvestPrototype", null);
+        }
+    }
 }
+

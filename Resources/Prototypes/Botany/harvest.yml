@@ -8,4 +8,5 @@
     texture: Botany/growns/wheat.png
   - type: Icon
     texture: Botany/growns/wheat.png
-  - type: PlantSeedContainerComponent
+  - type: ExtractableSeed
+    seedPrototype: example_seed

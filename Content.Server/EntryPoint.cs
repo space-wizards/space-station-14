@@ -111,9 +111,10 @@ namespace Content.Server
 
             //Botany
             factory.Register<PlantComponent>();
+            factory.Register<PlantDNAComponent>();
             factory.Register<PlantHolderComponent>();
             factory.Register<PlantSeedComponent>();
-            factory.Register<PlantSeedContainerComponent>();
+            factory.Register<ExtractableSeedComponent>();
 
             factory.Register<HitscanWeaponComponent>();
             factory.Register<RangedWeaponComponent>();

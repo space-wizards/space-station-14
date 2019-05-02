@@ -81,9 +81,10 @@ namespace Content.Client
 
             //Botany
             factory.RegisterIgnore("PlantComponent");
+            factory.RegisterIgnore("PlantDNA");
             factory.RegisterIgnore("PlantHolder");
             factory.RegisterIgnore("PlantSeed");
-            factory.RegisterIgnore("PlantSeedContainer");
+            factory.RegisterIgnore("ExtractableSeed");
 
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
