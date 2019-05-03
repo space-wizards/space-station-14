@@ -24,6 +24,9 @@
       maxAgeInSeconds: 300
       yieldMultiplier: 3
       lifecycle:
+        deathSprite: 
+          sprite: Botany/wheatus.rsi
+          state: wheat-dead
         lifecycleNodes:
           - stageID: wheatling
             spriteSpecifier: 
@@ -67,6 +70,9 @@
       maxAgeInSeconds: 1
       yieldMultiplier: 1
       lifecycle:
+        deathSprite: 
+          sprite: Botany/wheatus.rsi
+          state: wheat-dead
         lifecycleNodes:
           - stageID: wheatling
             spriteSpecifier: 

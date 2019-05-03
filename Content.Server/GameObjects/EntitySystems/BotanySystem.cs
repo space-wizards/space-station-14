@@ -80,9 +80,12 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void ApplyGrowth()
         {
-            var lifeProgressDelta = _plantUpdateState.PlantComponent.TimeSinceLastUpdate * _plantUpdateState.baseLifeProgressDelta;
-            _plantUpdateState.PlantComponent.Effects.lifeProgressInSeconds += lifeProgressDelta;
-            _plantUpdateState.PlantComponent.UpdateCurrentStage();
+            if (!_plantUpdateState.PlantComponent.Effects.dead)
+            {
+                var lifeProgressDelta = _plantUpdateState.PlantComponent.TimeSinceLastUpdate * _plantUpdateState.baseLifeProgressDelta;
+                _plantUpdateState.PlantComponent.Effects.lifeProgressInSeconds += lifeProgressDelta;
+                _plantUpdateState.PlantComponent.UpdateCurrentStage();
+            }
         }
 
         private void LimitLifeProgressDelta(double maxProgressThisCycle)

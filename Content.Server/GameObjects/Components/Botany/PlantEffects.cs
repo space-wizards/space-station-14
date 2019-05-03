@@ -22,6 +22,9 @@ namespace Content.Server.GameObjects.Components.Botany
         public double lifeProgressInSeconds = 0.0;
         [ViewVariables(VVAccess.ReadWrite)]
         public double YieldMultiplier = 1.0;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool dead;
+
 
         public void ExposeData(ObjectSerializer serializer)
         {
@@ -29,6 +32,7 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref cellularAgeInSeconds, "cellularAgeInSeconds", 0.0);
             serializer.DataField(ref lifeProgressInSeconds, "lifeProgressInSeconds", 0.0);
             serializer.DataField(ref YieldMultiplier, "yieldMultiplier", 1.0);
+            serializer.DataField(ref dead, "dead", false);
         }
     }
 }

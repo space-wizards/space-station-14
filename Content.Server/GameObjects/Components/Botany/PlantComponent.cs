@@ -35,6 +35,9 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadOnly)]
         public DamageThreshold DeathThreshold { get; private set; }
 
+        [ViewVariables(VVAccess.ReadOnly)]
+        public DamageThreshold DestructionThreshold { get; private set; }
+
 
         private PlantStage CurrentStage()
         {
@@ -63,7 +66,14 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
             {
-                sprite.LayerSetSprite(0, CurrentStage().Sprite);
+                if (Effects.dead)
+                {
+                    sprite.LayerSetSprite(0, DNA.Lifecycle.DeathSprite);
+                }
+                else
+                {
+                    sprite.LayerSetSprite(0, CurrentStage().Sprite);
+                }
             }
         }
 
@@ -119,13 +129,19 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public List<DamageThreshold> GetAllDamageThresholds()
         {
-            DeathThreshold = new DamageThreshold(Shared.GameObjects.DamageType.Total, 100, ThresholdType.Destruction);
-            return new List<DamageThreshold>() { DeathThreshold };
+            DeathThreshold = new DamageThreshold(Shared.GameObjects.DamageType.Total, 100, ThresholdType.Death);
+            DestructionThreshold = new DamageThreshold(Shared.GameObjects.DamageType.Total, 150, ThresholdType.Destruction);
+            return new List<DamageThreshold>() { DeathThreshold, DestructionThreshold };
         }
 
         public void OnDamageThresholdPassed(object obj, DamageThresholdPassedEventArgs e)
         {
             if (e.Passed && e.DamageThreshold == DeathThreshold)
+            {
+                Effects.dead = true;
+                UpdateSprite();
+            }
+            if (e.Passed && e.DamageThreshold == DestructionThreshold)
             {
                 Owner.Delete();
             }

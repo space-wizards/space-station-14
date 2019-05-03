@@ -49,22 +49,28 @@ namespace Content.Server.GameObjects.Components.Botany
         }
     }
 
+    /// <summary>
+    /// Data relating to the plant's life & death states
+    /// </summary>
     public class PlantLifecycle : IExposeData, ICloneable
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public List<PlantStage> LifecycleNodes;
+        public SpriteSpecifier DeathSprite;
 
         public object Clone()
         {
             return new PlantLifecycle
             {
-                LifecycleNodes = (List<PlantStage>)LifecycleNodes.Clone()
+                LifecycleNodes = (List<PlantStage>)LifecycleNodes.Clone(),
+                DeathSprite = DeathSprite
             };
         }
 
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref LifecycleNodes, "lifecycleNodes", null);
+            serializer.DataField(ref DeathSprite, "deathSprite", null);
         }
     }
 
