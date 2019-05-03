@@ -10,3 +10,4 @@
     sprite: Botany/wheatus.rsi
     state: wheat-grow1  
   - type: PlantComponent
+  - type: Damageable

@@ -9,4 +9,17 @@
   - type: Icon
     texture: Botany/growns/wheat.png
   - type: ExtractableSeed
-    seedPrototype: example_seed
+    seedPrototype: BaseSeed
+    
+- type: entity
+  name: "Wheat Stalks"
+  description: A bundle of harvested wheat plants.
+  parent: BaseItem
+  id: WheatHarvest
+  components:
+  - type: Sprite
+    texture: Botany/growns/wheat.png
+  - type: Icon
+    texture: Botany/growns/wheat.png
+  - type: ExtractableSeed
+    seedPrototype: WheatSeed

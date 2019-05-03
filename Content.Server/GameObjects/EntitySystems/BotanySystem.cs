@@ -71,6 +71,11 @@ namespace Content.Server.GameObjects.EntitySystems
         private void ApplyAging()
         {
             _plantUpdateState.PlantComponent.Effects.cellularAgeInSeconds += _plantUpdateState.PlantComponent.TimeSinceLastUpdate;
+
+            if (_plantUpdateState.PlantComponent.Effects.cellularAgeInSeconds > _plantUpdateState.PlantDNA.DNA.MaxAgeInSeconds)
+            {
+                _plantUpdateState.PlantDamage.TakeDamage(Shared.GameObjects.DamageType.Toxic, (int)(5 * _plantUpdateState.PlantComponent.TimeSinceLastUpdate));
+            }
         }
 
         private void ApplyGrowth()
@@ -92,7 +97,11 @@ namespace Content.Server.GameObjects.EntitySystems
     class PlantUpdateState
     {
         public IEntity PlantEntity;
+
         public PlantComponent PlantComponent;
+        public PlantDNAComponent PlantDNA;
+        public DamageableComponent PlantDamage;
+
         public Random Rand = new Random();
 
         public double baseLifeProgressDelta = 1.0;
@@ -101,6 +110,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             PlantEntity = plantEntity;
             PlantComponent = plantEntity.GetComponent<PlantComponent>();
+            PlantDNA = plantEntity.GetComponent<PlantDNAComponent>();
+            PlantDamage = PlantEntity.GetComponent<DamageableComponent>();
         }
     }
 }

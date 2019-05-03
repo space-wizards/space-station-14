@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Botany
 {
-    class PlantComponent : Component, IAttackBy, IAttackHand
+    class PlantComponent : Component, IAttackBy, IAttackHand, IOnDamageBehavior
     {
         public override string Name => "PlantComponent";
 
@@ -30,6 +31,10 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)]
         private PlantEffects _effects;
         public PlantEffects Effects => _effects;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public DamageThreshold DeathThreshold { get; private set; }
+
 
         private PlantStage CurrentStage()
         {
@@ -110,6 +115,20 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
             return false;
+        }
+
+        public List<DamageThreshold> GetAllDamageThresholds()
+        {
+            DeathThreshold = new DamageThreshold(Shared.GameObjects.DamageType.Total, 100, ThresholdType.Destruction);
+            return new List<DamageThreshold>() { DeathThreshold };
+        }
+
+        public void OnDamageThresholdPassed(object obj, DamageThresholdPassedEventArgs e)
+        {
+            if (e.Passed && e.DamageThreshold == DeathThreshold)
+            {
+                Owner.Delete();
+            }
         }
     }
 }

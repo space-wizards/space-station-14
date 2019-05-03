@@ -1,18 +1,27 @@
 - type: entity
-  id: example_seed
-  name: "Botany - Sample Seed"
-  description: Do not attempt simultaneous ingestion and germination
+  id: BaseSeed
+  name: "Base seed"
+  description: The blandest
   parent: BaseItem
+  components:
+  - type: Item
+    Size: 10
+  - type: PlantDNA
+  - type: PlantSeed
+
+- type: entity
+  id: WheatSeed
+  name: "Botany - Wheat Seed"
+  description: "Enriched with the finest bran and germ substitute."
+  parent: BaseSeed
   components:
   - type: Sprite
     texture: Botany/seeds/seed-wheat.png
   - type: Icon
     texture: Botany/seeds/seed-wheat.png
-  - type: Item
-    Size: 10
   - type: PlantDNA
     DNA: 
-      maxAgeInSeconds: 600
+      maxAgeInSeconds: 300
       yieldMultiplier: 3
       lifecycle:
         lifecycleNodes:
@@ -37,9 +46,34 @@
               state: wheat-grow5
           - stageID: elwheato
             lifeProgressRequired: 15.0
-            harvest:
-              harvestPrototype: BaseHarvest
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-harvest
-  - type: PlantSeed
+            harvest:
+              harvestPrototype: WheatHarvest
+  
+- type: entity
+  id: progeria-seed
+  name: "Botany - Progeria Seed"
+  description: "Live young, age fast"
+  parent: BaseSeed
+  components:
+  - type: Sprite
+    texture: Botany/seeds/seed-wheat.png
+  - type: Icon
+    texture: Botany/seeds/seed-wheat.png
+  - type: PlantDNA
+    DNA: 
+      maxAgeInSeconds: 1
+      yieldMultiplier: 1
+      lifecycle:
+        lifecycleNodes:
+          - stageID: wheatling
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-grow1
+          - stageID: wheatlet
+            lifeProgressRequired: 25.0
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-harvest
