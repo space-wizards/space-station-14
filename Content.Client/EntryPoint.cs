@@ -50,9 +50,6 @@ namespace Content.Client
 
         public override void Init()
         {
-#if DEBUG
-            GodotResourceCopy.DoDirCopy("../../Resources", "Content");
-#endif
             var factory = IoCManager.Resolve<IComponentFactory>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
