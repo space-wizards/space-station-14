@@ -6,10 +6,6 @@
 margin_left = 99.0
 margin_right = 583.0
 margin_bottom = 357.0
-rect_clip_content = false
-
-[node name="Contents" parent="." index="0"]
-rect_clip_content = false
 
 [node name="HSplitContainer" type="HSplitContainer" parent="Contents" index="0"]
 anchor_left = 0.0
@@ -21,7 +17,7 @@ rect_clip_content = false
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
-size_flags_vertical = 0
+size_flags_vertical = 1
 split_offset = 15
 collapsed = false
 dragger_visibility = 0
@@ -37,9 +33,10 @@ rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
-size_flags_horizontal = 3
+size_flags_horizontal = 1
 size_flags_vertical = 1
 size_flags_stretch_ratio = 0.5
+rect_min_size = Vector2( 150, 0 )
 alignment = 0
 _sections_unfolded = [ "Grow Direction", "Size Flags" ]
 
