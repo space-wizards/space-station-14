@@ -19,11 +19,6 @@ namespace Content.Shared
         public override void Init()
         {
             IoCManager.InjectDependencies(this);
-
-#if DEBUG
-            var resm = IoCManager.Resolve<IResourceManager>();
-            resm.MountContentDirectory(@"../../../Resources/");
-#endif
         }
 
         public override void PostInit()
