@@ -183,7 +183,7 @@ namespace Content.Client.Research
             {
                 if (!PrototypeManager.TryIndex(id, out MaterialPrototype materialPrototype)) continue;
                 var material = materialPrototype.Material;
-                Materials.AddItem($"{material.Name} {amount} cm3", material.Icon.Frame0(), false);
+                Materials.AddItem($"{material.Name} {amount} cm³", material.Icon.Frame0(), false);
             }
         }
 
