@@ -3,6 +3,7 @@ using Content.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Shared.Map;
 
 namespace Content.Server.Interfaces.GameObjects
@@ -25,12 +26,6 @@ namespace Content.Server.Interfaces.GameObjects
         /// <param name="index">The index of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
         ItemComponent GetHand(string index);
-
-        /// <summary>
-        ///     If any hands are holding this entity, immediately remove the entity without dropping it.
-        /// </summary>
-        /// <param name="entity">Entity to be removed.</param>
-        void RemoveHandEntity(IEntity entity);
 
         /// <summary>
         /// Gets item held by the current active hand
@@ -195,5 +190,7 @@ namespace Content.Server.Interfaces.GameObjects
         /// <param name="index">The hand name to check.</param>
         /// <returns>True if the hand exists, false otherwise.</returns>
         bool HasHand(string index);
+
+        void HandleSlotModifiedMaybe(ContainerModifiedMessage message);
     }
 }

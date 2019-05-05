@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -22,7 +22,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.SubscribeEvents();
 
-            SubscribeEvent<EntParentChangedMessage>(HandleParentChanged);
+            SubscribeEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
+            SubscribeEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
         }
 
         /// <inheritdoc />
@@ -34,22 +35,23 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void HandleParentChanged(object sender, EntitySystemMessage message)
+        private static void HandleEntityRemovedFromContainer(object sender, EntRemovedFromContainerMessage message)
         {
-            if(!(sender is IEntity childEntity))
-                return;
-
-            if(!(message is EntParentChangedMessage msg))
-                return;
-
-            var oldParentEntity = msg.OldParent;
-
-            if(oldParentEntity == null || !oldParentEntity.IsValid())
-                return;
+            var oldParentEntity = message.Container.Owner;
 
             if (oldParentEntity.TryGetComponent(out ServerStorageComponent storageComp))
             {
-                storageComp.Remove(childEntity);
+                storageComp.HandleEntityMaybeRemoved(message);
+            }
+        }
+
+        private static void HandleEntityInsertedIntoContainer(object sender, EntInsertedIntoContainerMessage message)
+        {
+            var oldParentEntity = message.Container.Owner;
+
+            if (oldParentEntity.TryGetComponent(out ServerStorageComponent storageComp))
+            {
+                storageComp.HandleEntityMaybeInserted(message);
             }
         }
 

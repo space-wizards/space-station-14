@@ -18,6 +18,7 @@ using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components;
+using Robust.Server.GameObjects.EntitySystemMessages;
 
 namespace Content.Server.GameObjects
 {
@@ -82,14 +83,21 @@ namespace Content.Server.GameObjects
         public bool Remove(IEntity toremove)
         {
             _ensureInitialCalculated();
-            if (storage.Remove(toremove))
+            return storage.Remove(toremove);
+        }
+
+        internal void HandleEntityMaybeRemoved(EntRemovedFromContainerMessage message)
+        {
+            if (message.Container != storage)
             {
-                Logger.InfoS("Storage", "Storage (UID {0}) had entity (UID {1}) removed from it.", Owner.Uid, toremove.Uid);
-                StorageUsed -= toremove.GetComponent<StoreableComponent>().ObjectSize;
-                UpdateClientInventories();
-                return true;
+                return;
             }
-            return false;
+
+            _ensureInitialCalculated();
+            Logger.DebugS("Storage", "Storage (UID {0}) had entity (UID {1}) removed from it.", Owner.Uid,
+                message.Entity.Uid);
+            StorageUsed -= message.Entity.GetComponent<StoreableComponent>().ObjectSize;
+            UpdateClientInventories();
         }
 
         /// <summary>
@@ -99,14 +107,21 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         public bool Insert(IEntity toinsert)
         {
-            if (CanInsert(toinsert) && storage.Insert(toinsert))
+            return CanInsert(toinsert) && storage.Insert(toinsert);
+        }
+
+        internal void HandleEntityMaybeInserted(EntInsertedIntoContainerMessage message)
+        {
+            if (message.Container != storage)
             {
-                Logger.InfoS("Storage", "Storage (UID {0}) had entity (UID {1}) inserted into it.", Owner.Uid, toinsert.Uid);
-                StorageUsed += toinsert.GetComponent<StoreableComponent>().ObjectSize;
-                UpdateClientInventories();
-                return true;
+                return;
             }
-            return false;
+
+            _ensureInitialCalculated();
+            Logger.DebugS("Storage", "Storage (UID {0}) had entity (UID {1}) inserted into it.", Owner.Uid,
+                message.Entity.Uid);
+            StorageUsed += message.Entity.GetComponent<StoreableComponent>().ObjectSize;
+            UpdateClientInventories();
         }
 
         /// <summary>
@@ -327,6 +342,11 @@ namespace Content.Server.GameObjects
             }
 
             StorageUsed = 0;
+
+            if (storage == null)
+            {
+                return;
+            }
 
             foreach (var entity in storage.ContainedEntities)
             {

@@ -4,14 +4,14 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Input;
 using Content.Shared.Physics;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -21,7 +21,8 @@ using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    internal class HandsSystem : EntitySystem
+    [UsedImplicitly]
+    internal sealed class HandsSystem : EntitySystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -58,31 +59,16 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void SubscribeEvents()
         {
-            SubscribeEvent<EntParentChangedMessage>(HandleParented);
+            SubscribeEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
+            SubscribeEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
         }
 
-        private static void HandleParented(object sender, EntitySystemMessage args)
+        private static void HandleContainerModified(object sender, ContainerModifiedMessage args)
         {
-            var msg = (EntParentChangedMessage) args;
-
-            // entity is no longer a child of OldParent, therefore it cannot be in the hand of the parent
-            if (msg.OldParent != null && msg.OldParent.IsValid() && msg.OldParent.Transform != msg.Entity.Transform.Parent && msg.OldParent.TryGetComponent(out IHandsComponent handsComp))
+            if (args.Container.Owner.TryGetComponent(out IHandsComponent handsComponent))
             {
-                handsComp.RemoveHandEntity(msg.Entity);
+                handsComponent.HandleSlotModifiedMaybe(args);
             }
-
-            if (msg.Entity.Deleted)
-                return;
-
-            // if item is in a container
-            if (msg.Entity.Transform.IsMapTransform)
-                return;
-
-            if (!msg.Entity.TryGetComponent(out PhysicsComponent physics))
-                return;
-
-            // set velocity to zero
-            physics.LinearVelocity = Vector2.Zero;
         }
 
         private static bool TryGetAttachedComponent<T>(IPlayerSession session, out T component)

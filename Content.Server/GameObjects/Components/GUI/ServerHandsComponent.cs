@@ -7,6 +7,7 @@ using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -89,22 +90,6 @@ namespace Content.Server.GameObjects
                 }
             }
             return false;
-        }
-
-        /// <inheritdoc />
-        public void RemoveHandEntity(IEntity entity)
-        {
-            if (entity == null)
-                return;
-
-            foreach (var slot in hands.Values)
-            {
-                if (slot.ContainedEntity == entity)
-                {
-                    slot.Remove(entity);
-                }
-            }
-            Dirty();
         }
 
         public ItemComponent GetHand(string index)
@@ -502,6 +487,27 @@ namespace Content.Server.GameObjects
 
                     break;
                 }
+            }
+        }
+
+        public void HandleSlotModifiedMaybe(ContainerModifiedMessage message)
+        {
+            foreach (var container in hands.Values)
+            {
+                if (container != message.Container)
+                {
+                    continue;
+                }
+
+                Dirty();
+                if (!message.Entity.TryGetComponent(out PhysicsComponent physics))
+                {
+                    return;
+                }
+
+                // set velocity to zero
+                physics.LinearVelocity = Vector2.Zero;
+                return;
             }
         }
     }
