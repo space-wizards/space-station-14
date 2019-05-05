@@ -171,16 +171,11 @@ namespace Content.Client.GameObjects
         /// <summary>
         /// Temporary window to hold the basis for inventory hud
         /// </summary>
-        private class InventoryWindow : PanelContainer
+        private class InventoryWindow : GridContainer
         {
-            private int elements_x;
-
-            private GridContainer GridContainer;
             private List<Slots> IndexedSlots;
             private Dictionary<Slots, InventoryButton> InventorySlots = new Dictionary<Slots, InventoryButton>(); //ordered dictionary?
-            private ClientInventoryComponent InventoryComponent;
-
-            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Mobs/HumanInventory.tscn");
+            private readonly ClientInventoryComponent InventoryComponent;
 
             public InventoryWindow(ClientInventoryComponent inventory)
             {
@@ -192,15 +187,13 @@ namespace Content.Client.GameObjects
             /// </summary>
             public void CreateInventory(Inventory inventory)
             {
-                elements_x = inventory.Columns;
+                Columns = inventory.Columns;
 
-                GridContainer = (GridContainer)GetChild("CenterContainer").GetChild("GridContainer");
-                GridContainer.Columns = elements_x;
                 IndexedSlots = new List<Slots>(inventory.SlotMasks);
 
-                foreach (Slots slot in IndexedSlots)
+                foreach (var slot in IndexedSlots)
                 {
-                    InventoryButton newbutton = new InventoryButton(slot);
+                    var newButton = new InventoryButton(slot);
 
                     if (slot == Slots.NONE)
                     {
@@ -209,18 +202,18 @@ namespace Content.Client.GameObjects
                     }
                     else
                     {
-                        //Store slot button and give it the default onpress behavior for empty elements
-                        newbutton.GetChild<Button>("Button").OnPressed += AddToInventory;
-                        InventorySlots.Add(slot, newbutton);
+                        // Store slot button and give it the default onpress behavior for empty elements
+                        newButton.GetChild<Button>("Button").OnPressed += AddToInventory;
+                        InventorySlots.Add(slot, newButton);
                     }
 
                     if (SlotNames.ContainsKey(slot))
                     {
-                        var button = newbutton.GetChild<Button>("Button");
+                        var button = newButton.GetChild<Button>("Button");
                         button.Text = button.ToolTip = SlotNames[slot];
                     }
 
-                    GridContainer.AddChild(newbutton);
+                    AddChild(newButton);
                 }
             }
 
@@ -240,22 +233,8 @@ namespace Content.Client.GameObjects
                 //Gets entity sprite and assigns it to button texture
                 if (entity.TryGetComponent(out ISpriteComponent sprite))
                 {
-                    //var tex = sprite.Icon.Default;
-
                     var view = button.GetChild<SpriteView>("SpriteView");
                     view.Sprite = sprite;
-
-                    /*
-                    if (tex != null)
-                    {
-                        rect.Texture = tex;
-                        rect.Scale = new Vector2(Math.Min(CalculateMinimumSize().X, 32) / tex.Height, Math.Min(CalculateMinimumSize().Y, 32) / tex.Height);
-                    }
-                    else
-                    {
-                        throw new NotImplementedException();
-                    }
-                    */
                 }
             }
 
@@ -290,16 +269,25 @@ namespace Content.Client.GameObjects
             }
         }
 
-        private class InventoryButton : PanelContainer
+        private sealed class InventoryButton : MarginContainer
         {
-            public Slots Slot;
-            public EntityUid EntityUid;
-
-            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Mobs/StorageSlot.tscn");
+            public Slots Slot { get; }
+            public EntityUid EntityUid { get; set; }
 
             public InventoryButton(Slots slot)
             {
                 Slot = slot;
+
+                CustomMinimumSize = (50, 50);
+
+                AddChild(new Button("Button")
+                {
+                    ClipText = true
+                });
+                AddChild(new SpriteView("SpriteView")
+                {
+                    MouseFilter = MouseFilterMode.Ignore
+                });
             }
         }
     }

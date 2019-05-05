@@ -137,28 +137,23 @@ namespace Content.Client.GameObjects
             }
         }
 
-        private class SpeciesWindow : Control
+        private class SpeciesWindow : TextureRect
         {
-            private TextureRect _textureRect;
-
-            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Mobs/Species.tscn");
-
-            protected override void Initialize()
+            public SpeciesWindow()
             {
-                base.Initialize();
-
-                _textureRect = (TextureRect)GetChild("TextureRect");
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+                SizeFlagsVertical = SizeFlags.None;
             }
 
-            public void SetIcon(HudStateChange changemessage)
+            public void SetIcon(HudStateChange changeMessage)
             {
-                if (!IoCManager.Resolve<IResourceCache>().TryGetResource<TextureResource>(new ResourcePath("/Textures") / changemessage.StateSprite, out var newtexture))
+                if (!IoCManager.Resolve<IResourceCache>().TryGetResource<TextureResource>(new ResourcePath("/Textures") / changeMessage.StateSprite, out var newtexture))
                 {
-                    Logger.Info("The Species Health Sprite {0} Does Not Exist", new ResourcePath("/Textures") / changemessage.StateSprite);
+                    Logger.Info("The Species Health Sprite {0} Does Not Exist", new ResourcePath("/Textures") / changeMessage.StateSprite);
                     return;
                 }
 
-                _textureRect.Texture = newtexture;
+                Texture = newtexture;
             }
         }
     }
