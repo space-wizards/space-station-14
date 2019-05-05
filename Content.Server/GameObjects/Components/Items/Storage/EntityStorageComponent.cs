@@ -8,14 +8,16 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Linq;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Shared.GameObjects.Components.Storage;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components
 {
-    public class EntityStorageComponent : Component, IAttackHand
+    public class EntityStorageComponent : Component, IAttackHand, IStorageComponent
     {
         public override string Name => "EntityStorage";
 
-        private ServerStorageComponent StorageComponent;
         private int StorageCapacityMax;
         private bool IsCollidableWhenOpen;
         private Container Contents;
@@ -24,14 +26,7 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            Contents = ContainerManagerComponent.Ensure<Container>($"{typeof(EntityStorageComponent).FullName}{Owner.Uid.ToString()}", Owner);
-            if (!Owner.TryGetComponent(out StorageComponent))
-            {
-                StorageComponent = Owner.AddComponent<ServerStorageComponent>();
-                // TODO: This is a terrible hack.
-                // Components should not need to be manually initialized in Initialize().
-                StorageComponent.Initialize();
-            }
+            Contents = ContainerManagerComponent.Ensure<Container>(nameof(EntityStorageComponent), Owner);
             entityQuery = new IntersectingEntityQuery(Owner);
         }
 
@@ -43,12 +38,8 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref IsCollidableWhenOpen, "IsCollidableWhenOpen", false);
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Open
-        {
-            get => StorageComponent.Open;
-            set => StorageComponent.Open = value;
-        }
+        [ViewVariables]
+        public bool Open { get; private set; }
 
         public bool AttackHand(AttackHandEventArgs eventArgs)
         {
@@ -67,7 +58,7 @@ namespace Content.Server.GameObjects.Components
         {
             Open = false;
             var entities = Owner.EntityManager.GetEntities(entityQuery);
-            int count = 0;
+            var count = 0;
             foreach (var entity in entities)
             {
                 if (!AddToContents(entity))
@@ -96,13 +87,19 @@ namespace Content.Server.GameObjects.Components
             {
                 collidableComponent.CollisionEnabled = IsCollidableWhenOpen || !Open;
             }
+
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
                 placeableSurfaceComponent.IsPlaceable = Open;
             }
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(StorageVisuals.Open, Open);
+            }
         }
 
-    private bool AddToContents(IEntity entity)
+        private bool AddToContents(IEntity entity)
         {
             var collidableComponent = Owner.GetComponent<ICollidableComponent>();
             if(entity.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
@@ -140,10 +137,10 @@ namespace Content.Server.GameObjects.Components
 
         private void EmptyContents()
         {
-            while (Contents.ContainedEntities.Count > 0 )
+            foreach (var contained in Contents.ContainedEntities.ToArray())
             {
-                var containedEntity = Contents.ContainedEntities.First();
-                Contents.Remove(containedEntity);
+                Contents.Remove(contained);
+                contained.Transform.WorldPosition = Owner.Transform.WorldPosition;
             }
         }
 
@@ -154,12 +151,44 @@ namespace Content.Server.GameObjects.Components
             switch (message)
             {
                 case RelayMovementEntityMessage msg:
-                    if(msg.Entity.TryGetComponent<HandsComponent>(out var handsComponent))
+                    if (msg.Entity.HasComponent<HandsComponent>())
                     {
                         OpenStorage();
                     }
                     break;
             }
+        }
+
+        public bool Remove(IEntity entity)
+        {
+            return Contents.CanRemove(entity);
+        }
+
+        public bool Insert(IEntity entity)
+        {
+            // Trying to add while open just dumps it on the ground below us.
+            if (Open)
+            {
+                entity.Transform.WorldPosition = Owner.Transform.WorldPosition;
+                return true;
+            }
+
+            return Contents.Insert(entity);
+        }
+
+        public bool CanInsert(IEntity entity)
+        {
+            if (Open)
+            {
+                return true;
+            }
+
+            if (Contents.ContainedEntities.Count >= StorageCapacityMax)
+            {
+                return false;
+            }
+
+            return Contents.CanInsert(entity);
         }
     }
 }

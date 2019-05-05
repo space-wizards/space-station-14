@@ -2,7 +2,7 @@ meta:
   format: 2
   name: DemoStation
   author: Space-Wizards
-  postmapinit: true
+  postmapinit: false
 tilemap:
   0: space
   1: floor
@@ -1075,12 +1075,6 @@ entities:
     pos: -7.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: ammo_casing_12mm
-  uid: 144
-  components:
-  - parent: 379
-    grid: 0
-    type: Transform
 - type: spawn_point_latejoin
   uid: 145
   components:
@@ -1153,84 +1147,12 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- type: ammo_casing_12mm
-  uid: 153
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 154
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 155
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 156
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
 - type: fire_extinguisher
   uid: 157
   components:
   - grid: 0
     pos: -1.297692,-5.396082
     rot: -1.5707963267949 rad
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 158
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 159
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 160
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 161
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 162
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 163
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 164
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 165
-  components:
-  - parent: 380
-    grid: 0
     type: Transform
 - type: spawn_point_latejoin
   uid: 166
@@ -1245,12 +1167,6 @@ entities:
   - grid: 0
     pos: -5.5,-0.5
     rot: -1.5707963267949 rad
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 168
-  components:
-  - parent: 380
-    grid: 0
     type: Transform
 - type: poweredsmalllight
   uid: 169
@@ -1279,24 +1195,6 @@ entities:
   uid: 171
   components:
   - parent: 169
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 172
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 173
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 174
-  components:
-  - parent: 380
     grid: 0
     type: Transform
 - type: table
@@ -1709,18 +1607,6 @@ entities:
     pos: -10.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: ammo_casing_12mm
-  uid: 231
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 232
-  components:
-  - parent: 380
-    grid: 0
-    type: Transform
 - type: airlock
   uid: 233
   components:
@@ -2104,7 +1990,7 @@ entities:
     pos: 7.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: YellowToolboxItem
+- type: YellowToolboxItemFilled
   uid: 278
   components:
   - grid: 0
@@ -2116,7 +2002,7 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- type: YellowToolboxItem
+- type: YellowToolboxItemFilled
   uid: 279
   components:
   - grid: 0
@@ -2135,42 +2021,12 @@ entities:
     pos: -1.934832,-5.154238
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      flashlight_cell_container:
-        entities:
-        - 281
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: PowerCellSmallHyper
-  uid: 281
-  components:
-  - parent: 280
-    grid: 0
-    type: Transform
 - type: FlashlightLantern
   uid: 282
   components:
   - grid: 0
     pos: -2.017696,-5.71715
     rot: -1.5707963267949 rad
-    type: Transform
-  - containers:
-      flashlight_cell_container:
-        entities:
-        - 283
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: PowerCellSmallHyper
-  uid: 283
-  components:
-  - parent: 282
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 284
-  components:
-  - parent: 380
-    grid: 0
     type: Transform
 - type: Crowbar
   uid: 285
@@ -2231,151 +2087,6 @@ entities:
     pos: -6.605512,7.638151
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities:
-        - 292
-        - 293
-        - 294
-        - 295
-        - 296
-        - 297
-        - 298
-        - 299
-        - 300
-        - 301
-        - 302
-        - 303
-        - 304
-        - 305
-        - 306
-        - 307
-        - 308
-        - 309
-        - 310
-        - 311
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
-- type: ammo_casing_12mm
-  uid: 292
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 293
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 294
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 295
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 296
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 297
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 298
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 299
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 300
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 301
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 302
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 303
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 304
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 305
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 306
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 307
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 308
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 309
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 310
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 311
-  components:
-  - parent: 291
-    grid: 0
-    type: Transform
 - type: magazine_12mm_filled
   uid: 312
   components:
@@ -2383,302 +2094,12 @@ entities:
     pos: -6.339887,7.669401
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities:
-        - 313
-        - 314
-        - 315
-        - 316
-        - 317
-        - 318
-        - 319
-        - 320
-        - 321
-        - 322
-        - 323
-        - 324
-        - 325
-        - 326
-        - 327
-        - 328
-        - 329
-        - 330
-        - 331
-        - 332
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
-- type: ammo_casing_12mm
-  uid: 313
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 314
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 315
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 316
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 317
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 318
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 319
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 320
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 321
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 322
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 323
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 324
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 325
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 326
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 327
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 328
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 329
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 330
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 331
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 332
-  components:
-  - parent: 312
-    grid: 0
-    type: Transform
 - type: magazine_12mm_filled
   uid: 333
   components:
   - grid: 0
     pos: -6.027387,7.622526
     rot: -1.5707963267949 rad
-    type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities:
-        - 334
-        - 335
-        - 336
-        - 337
-        - 338
-        - 339
-        - 340
-        - 341
-        - 342
-        - 343
-        - 344
-        - 345
-        - 346
-        - 347
-        - 348
-        - 349
-        - 350
-        - 351
-        - 352
-        - 353
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
-- type: ammo_casing_12mm
-  uid: 334
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 335
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 336
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 337
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 338
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 339
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 340
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 341
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 342
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 343
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 344
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 345
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 346
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 347
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 348
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 349
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 350
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 351
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 352
-  components:
-  - parent: 333
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 353
-  components:
-  - parent: 333
-    grid: 0
     type: Transform
 - type: BackpackClothing
   uid: 354
@@ -2718,166 +2139,6 @@ entities:
     pos: -2.524035,7.579326
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      ballistics_chamber_0:
-        entities:
-        - 378
-        type: Content.Server.GameObjects.ContainerSlot
-      ballistic_gun_magazine:
-        entities:
-        - 358
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: magazine_12mm_filled
-  uid: 358
-  components:
-  - parent: 357
-    grid: 0
-    type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities:
-        - 359
-        - 360
-        - 361
-        - 362
-        - 363
-        - 364
-        - 365
-        - 366
-        - 367
-        - 368
-        - 369
-        - 370
-        - 371
-        - 372
-        - 373
-        - 374
-        - 375
-        - 376
-        - 377
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
-- type: ammo_casing_12mm
-  uid: 359
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 360
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 361
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 362
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 363
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 364
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 365
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 366
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 367
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 368
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 369
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 370
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 371
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 372
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 373
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 374
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 375
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 376
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 377
-  components:
-  - parent: 358
-    grid: 0
-    type: Transform
-- type: ammo_casing_12mm
-  uid: 378
-  components:
-  - parent: 357
-    grid: 0
-    type: Transform
 - type: smg_c20r
   uid: 379
   components:
@@ -2885,46 +2146,6 @@ entities:
     pos: -1.94591,7.485576
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      ballistics_chamber_0:
-        entities:
-        - 144
-        type: Content.Server.GameObjects.ContainerSlot
-      ballistic_gun_magazine:
-        entities:
-        - 380
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: magazine_12mm_filled
-  uid: 380
-  components:
-  - parent: 379
-    grid: 0
-    type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities:
-        - 231
-        - 232
-        - 174
-        - 173
-        - 172
-        - 153
-        - 154
-        - 155
-        - 156
-        - 284
-        - 158
-        - 159
-        - 160
-        - 161
-        - 162
-        - 163
-        - 164
-        - 165
-        - 168
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - type: wall
   uid: 381
   components:

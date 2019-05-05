@@ -26,19 +26,6 @@ namespace Content.Client.GameObjects.Components.Storage
         private int StorageCapacityMax;
         private StorageWindow Window;
 
-        [ViewVariables] private string _closedState;
-        [ViewVariables] private string _openState;
-
-        public bool Open
-        {
-            get => _open;
-            set
-            {
-                _open = value;
-                SetDoorSprite(_open);
-            }
-        }
-
         public override void OnAdd()
         {
             base.OnAdd();
@@ -56,20 +43,6 @@ namespace Content.Client.GameObjects.Components.Storage
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            serializer.DataField(ref _closedState, "state_door_closed", null);
-            serializer.DataField(ref _openState, "state_door_open", null);
-        }
-
-        /// <inheritdoc />
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (!(curState is StorageComponentState storageState))
-                return;
-
-            Open = storageState.Open;
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
@@ -123,27 +96,6 @@ namespace Content.Client.GameObjects.Components.Storage
         private void Interact(EntityUid entityuid)
         {
             SendNetworkMessage(new RemoveEntityMessage(entityuid));
-        }
-
-        private void SetDoorSprite(bool open)
-        {
-            if(!Owner.TryGetComponent<ISpriteComponent>(out var spriteComp))
-                return;
-
-            if(!spriteComp.Running)
-                return;
-
-            if (spriteComp.BaseRSI == null)
-            {
-                return;
-            }
-
-            var baseName = spriteComp.LayerGetState(0).Name;
-
-            var stateId = open ? _openState ?? $"{baseName}_open" : _closedState ?? $"{baseName}_door";
-
-            if (spriteComp.BaseRSI.TryGetState(stateId, out _))
-                spriteComp.LayerSetState(1, stateId);
         }
 
         /// <summary>

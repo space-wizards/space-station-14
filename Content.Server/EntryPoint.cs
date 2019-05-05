@@ -47,6 +47,8 @@ using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.ServerStatus;
 using Robust.Shared.Timing;
 using Content.Server.GameObjects.Components.Destructible;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Items.Storage.Fill;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
@@ -120,8 +122,13 @@ namespace Content.Server
             factory.Register<HandheldLightComponent>();
 
             factory.Register<ServerStorageComponent>();
+            factory.RegisterReference<ServerStorageComponent, IStorageComponent>();
             factory.RegisterReference<ServerStorageComponent, IActivate>();
             factory.Register<EntityStorageComponent>();
+            factory.RegisterReference<EntityStorageComponent, IStorageComponent>();
+
+            factory.Register<ToolLockerFillComponent>();
+            factory.Register<ToolboxElectricalFillComponent>();
 
             factory.Register<PowerDebugTool>();
             factory.Register<PoweredLightComponent>();

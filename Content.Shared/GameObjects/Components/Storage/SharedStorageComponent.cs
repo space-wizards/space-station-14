@@ -9,29 +9,6 @@ namespace Content.Shared.GameObjects.Components.Storage
     {
         public override string Name => "Storage";
         public override uint? NetID => ContentNetIDs.INVENTORY;
-        public override Type StateType => typeof(StorageComponentState);
-
-        protected bool _open;
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _open, "open", false);
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class StorageComponentState : ComponentState
-    {
-        public bool Open { get; }
-
-        public StorageComponentState(bool open)
-            : base(ContentNetIDs.INVENTORY)
-        {
-            Open = open;
-        }
     }
 
     /// <summary>
@@ -91,5 +68,12 @@ namespace Content.Shared.GameObjects.Components.Storage
         {
             Directed = true;
         }
+    }
+
+    [NetSerializable]
+    [Serializable]
+    public enum StorageVisuals
+    {
+        Open
     }
 }

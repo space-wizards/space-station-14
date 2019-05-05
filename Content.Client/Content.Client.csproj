@@ -91,6 +91,7 @@
     <Compile Include="GameObjects\Components\Research\MaterialStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Sound\SoundComponent.cs" />
     <Compile Include="GameObjects\Components\Storage\ClientStorageComponent.cs" />
+    <Compile Include="GameObjects\Components\Storage\StorageVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\SubFloorHideComponent.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\BallisticMagazineVisualizer2D.cs" />
     <Compile Include="GameObjects\Components\Weapons\Ranged\BallisticMagazineWeaponVisualizer2D.cs" />
