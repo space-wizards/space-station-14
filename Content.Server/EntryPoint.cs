@@ -54,6 +54,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.Research;
+using Robust.Shared.Interfaces.Log;
 
 namespace Content.Server
 {
@@ -190,6 +191,9 @@ namespace Content.Server
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 
             _statusShell = new StatusShell();
+
+            var logManager = IoCManager.Resolve<ILogManager>();
+            logManager.GetSawmill("Storage").Level = LogLevel.Info;
         }
 
         public override void PostInit()
@@ -204,7 +208,6 @@ namespace Content.Server
             base.Update(level, frameTime);
 
             _gameTicker.Update(new FrameEventArgs(frameTime));
-
         }
     }
 }
