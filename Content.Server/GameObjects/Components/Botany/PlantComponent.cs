@@ -44,21 +44,35 @@ namespace Content.Server.GameObjects.Components.Botany
             return DNA.Lifecycle.LifecycleNodes.Single(node => node.NodeID == Effects.currentLifecycleNodeID);
         }
 
+        public void ChangeStage(string targetNodeID)
+        {
+            Effects.currentLifecycleNodeID = targetNodeID;
+            Effects.stageEffects = new PlantStageEffects();
+            UpdateSprite();
+        }
         public void UpdateCurrentStage()
         {
-            PlantStage minimalStage = null;
-            foreach (var stage in DNA.Lifecycle.LifecycleNodes)
+            foreach (var transition in CurrentStage().Transitions)
             {
-                if (minimalStage == null ||
-                    (stage.lifeProgressRequiredInSeconds < Effects.lifeProgressInSeconds && stage.lifeProgressRequiredInSeconds > minimalStage.lifeProgressRequiredInSeconds))
+                switch (transition.conditionType)
                 {
-                    minimalStage = stage;
+                    case PlantStageTransitionCondition.StageProgress:
+                        if (Effects.stageEffects.progressInSeconds > transition.conditionAmount)
+                        {
+                            ChangeStage(transition.targetNodeID);
+                            return;
+                        }
+                        break;
+                    case PlantStageTransitionCondition.TotalProgress:
+                        if (Effects.progressInSeconds > transition.conditionAmount)
+                        {
+                            ChangeStage(transition.targetNodeID);
+                            return;
+                        }
+                        break;
+                    default:
+                        throw new ArgumentException();
                 }
-            }
-            if (minimalStage.NodeID != Effects.currentLifecycleNodeID)
-            {
-                Effects.currentLifecycleNodeID = minimalStage.NodeID;
-                UpdateSprite();
             }
         }
 

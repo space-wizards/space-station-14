@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Botany
             }
             var plantComponent = plant.GetComponent<PlantComponent>();
             holder.HeldPlant = plantComponent;
-            plantComponent.UpdateCurrentStage();
+            plantComponent.ChangeStage(dna.DNA.Lifecycle.StartNodeID);
             plant.GetComponent<SpriteComponent>().DrawDepth = DrawDepth.Objects;
             Owner.Delete();
         }

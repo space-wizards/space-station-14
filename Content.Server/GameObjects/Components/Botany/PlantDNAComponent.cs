@@ -56,14 +56,18 @@ namespace Content.Server.GameObjects.Components.Botany
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public List<PlantStage> LifecycleNodes;
+        [ViewVariables(VVAccess.ReadWrite)]
         public SpriteSpecifier DeathSprite;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string StartNodeID;
 
         public object Clone()
         {
             return new PlantLifecycle
             {
                 LifecycleNodes = (List<PlantStage>)LifecycleNodes.Clone(),
-                DeathSprite = DeathSprite
+                DeathSprite = DeathSprite,
+                StartNodeID = StartNodeID
             };
         }
 
@@ -71,6 +75,7 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             serializer.DataField(ref LifecycleNodes, "lifecycleNodes", null);
             serializer.DataField(ref DeathSprite, "deathSprite", null);
+            serializer.DataField(ref StartNodeID, "startNodeID", null);
         }
     }
 
@@ -88,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Botany
         public HarvestDatum Harvest;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public double lifeProgressRequiredInSeconds;
+        public List<PlantStageTransition> Transitions;
 
         public object Clone()
         {
@@ -97,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 NodeID = NodeID,
                 Sprite = Sprite,
                 Harvest = Harvest,
-                lifeProgressRequiredInSeconds = lifeProgressRequiredInSeconds
+                Transitions = (List<PlantStageTransition>)Transitions.Clone()
             };
         }
         public void ExposeData(ObjectSerializer serializer)
@@ -106,7 +111,41 @@ namespace Content.Server.GameObjects.Components.Botany
 
             serializer.DataField(ref Sprite, "spriteSpecifier", null);
             serializer.DataField(ref Harvest, "harvest", null);
-            serializer.DataField(ref lifeProgressRequiredInSeconds, "lifeProgressRequired", 0.0);
+            serializer.DataField(ref Transitions, "transitions", null);
+        }
+    }
+
+    public enum PlantStageTransitionCondition
+    {
+        StageProgress,
+        TotalProgress
+    }
+
+    public class PlantStageTransition : IExposeData, ICloneable
+    {
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string targetNodeID;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public PlantStageTransitionCondition conditionType;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public double conditionAmount;
+
+        public object Clone()
+        {
+            return new PlantStageTransition
+            {
+                targetNodeID = targetNodeID,
+                conditionType = conditionType,
+                conditionAmount = conditionAmount
+            };
+        }
+
+        public void ExposeData(ObjectSerializer serializer)
+        {
+            serializer.DataField(ref targetNodeID, "targetNode", null);
+
+            serializer.DataField(ref conditionType, "conditionType", PlantStageTransitionCondition.StageProgress);
+            serializer.DataField(ref conditionAmount, "conditionAmount", 10.0);
         }
     }
 

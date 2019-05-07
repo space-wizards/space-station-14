@@ -19,20 +19,38 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)]
         public double cellularAgeInSeconds = 0.0;
         [ViewVariables(VVAccess.ReadWrite)]
-        public double lifeProgressInSeconds = 0.0;
+        public double progressInSeconds = 0.0;
         [ViewVariables(VVAccess.ReadWrite)]
         public double YieldMultiplier = 1.0;
         [ViewVariables(VVAccess.ReadWrite)]
         public bool dead;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public PlantStageEffects stageEffects;
 
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref currentLifecycleNodeID, "currentLifecycleNodeID", null);
             serializer.DataField(ref cellularAgeInSeconds, "cellularAgeInSeconds", 0.0);
-            serializer.DataField(ref lifeProgressInSeconds, "lifeProgressInSeconds", 0.0);
+            serializer.DataField(ref progressInSeconds, "lifeProgressInSeconds", 0.0);
             serializer.DataField(ref YieldMultiplier, "yieldMultiplier", 1.0);
+            serializer.DataField(ref stageEffects, "stageEffects", null);
             serializer.DataField(ref dead, "dead", false);
         }
+    }
+
+    /// <summary>
+    /// Counters that get wiped on state change
+    /// </summary>
+    class PlantStageEffects : IExposeData
+    {
+        [ViewVariables(VVAccess.ReadWrite)]
+        public double progressInSeconds = 0.0;
+
+        public void ExposeData(ObjectSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
