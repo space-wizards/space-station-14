@@ -13,6 +13,8 @@ namespace Content.Server.GameObjects
         void EnterState(IEntity entity);
 
         void ExitState(IEntity entity);
+
+        bool IsConscious { get; }
     }
 
     /// <summary>
@@ -27,6 +29,8 @@ namespace Content.Server.GameObjects
         public void ExitState(IEntity entity)
         {
         }
+
+        public bool IsConscious => true;
 
         bool IActionBlocker.CanInteract()
         {
@@ -56,6 +60,8 @@ namespace Content.Server.GameObjects
         public void ExitState(IEntity entity)
         {
         }
+
+        public bool IsConscious => false;
 
         bool IActionBlocker.CanInteract()
         {
@@ -95,6 +101,8 @@ namespace Content.Server.GameObjects
                 appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
             }
         }
+
+        public bool IsConscious => false;
 
         bool IActionBlocker.CanInteract()
         {

@@ -79,6 +79,8 @@ namespace Content.Server.GameTicking
 
         private readonly Random _spawnRandom = new Random();
 
+        [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
+
 #pragma warning disable 649
         [Dependency] private IEntityManager _entityManager;
         [Dependency] private IMapManager _mapManager;
@@ -88,6 +90,7 @@ namespace Content.Server.GameTicking
         [Dependency] private IPlayerManager _playerManager;
         [Dependency] private IChatManager _chatManager;
         [Dependency] private IServerNetManager _netManager;
+        [Dependency] private IDynamicTypeFactory _dynamicTypeFactory;
 #pragma warning restore 649
 
         public void Initialize()
@@ -150,7 +153,7 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.InRound;
 
             // TODO: Allow other presets to be selected.
-            var preset = new PresetTraitor();
+            var preset = _dynamicTypeFactory.CreateInstance<PresetTraitor>();
             preset.Start();
 
             foreach (var (playerSession, ready) in _playersInLobby.ToList())
@@ -218,6 +221,30 @@ namespace Content.Server.GameTicking
             _playersInLobby[player] = ready;
             _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
         }
+
+        public T AddGameRule<T>() where T : GameRule, new()
+        {
+            var instance = _dynamicTypeFactory.CreateInstance<T>();
+
+            _gameRules.Add(instance);
+            instance.Added();
+
+            return instance;
+        }
+
+        public void RemoveGameRule(GameRule rule)
+        {
+            if (_gameRules.Contains(rule))
+            {
+                return;
+            }
+
+            rule.Removed();
+
+            _gameRules.Remove(rule);
+        }
+
+        public IEnumerable<GameRule> ActiveGameRules => _gameRules;
 
         private IEntity _spawnPlayerMob()
         {
@@ -290,6 +317,14 @@ namespace Content.Server.GameTicking
             {
                 unCastData.ContentData().WipeMind();
             }
+
+            // Clear up any game rules.
+            foreach (var rule in _gameRules)
+            {
+                rule.Removed();
+            }
+
+            _gameRules.Clear();
         }
 
         private void _preRoundSetup()

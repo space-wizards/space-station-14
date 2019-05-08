@@ -67,7 +67,6 @@ namespace Content.Client.GameObjects
         {
             base.OnAdd();
 
-            IoCManager.InjectDependencies(this);
             _window = new SpeciesWindow();
 
             EffectsDictionary = new Dictionary<ScreenEffects, Overlay>()
