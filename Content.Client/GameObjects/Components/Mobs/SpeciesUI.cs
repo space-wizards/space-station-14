@@ -16,6 +16,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using System.Collections.Generic;
+using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.Graphics.Overlays;
 
@@ -142,6 +143,8 @@ namespace Content.Client.GameObjects
             {
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
                 SizeFlagsVertical = SizeFlags.None;
+
+                Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Mob/UI/Human/human0.png");
             }
 
             public void SetIcon(HudStateChange changeMessage)
