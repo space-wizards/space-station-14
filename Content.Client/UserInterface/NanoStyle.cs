@@ -21,7 +21,6 @@ namespace Content.Client.UserInterface
             var resCache = IoCManager.Resolve<IResourceCache>();
             var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
             var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
-            var animalSilence40 = resCache.GetFont("/Fonts/Animal Silence.otf", 40);
             var textureCloseButton = resCache.GetTexture("/Nano/cross.svg.png");
             var windowHeaderTex = resCache.GetTexture("/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
@@ -319,68 +318,58 @@ namespace Content.Client.UserInterface
                 new StyleRule(new SelectorElement(typeof(ProgressBar), null, null, null),
                     new[]
                     {
-                        new StyleProperty(ProgressBar.StylePropertyBackground, progressBarBackground)
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(ProgressBar), null, null, null),
-                    new[]
-                    {
+                        new StyleProperty(ProgressBar.StylePropertyBackground, progressBarBackground),
                         new StyleProperty(ProgressBar.StylePropertyForeground, progressBarForeground)
                     }),
 
                 // CheckBox
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new[]
                 {
                     new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureUnchecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, Button.StylePseudoClassPressed), new []
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, Button.StylePseudoClassPressed), new[]
                 {
                     new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureChecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new[]
                 {
                     new StyleProperty(CheckBox.StylePropertyHSeparation, 3),
                 }),
 
                 // Tooltip
-                new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
 
                 // Entity tooltip
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ExamineSystem.StyleClassEntityTooltip}, null, null), new []
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                }),
+                new StyleRule(
+                    new SelectorElement(typeof(PanelContainer), new[] {ExamineSystem.StyleClassEntityTooltip}, null,
+                        null), new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                    }),
 
                 // ItemList
-                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new[]
                 {
-                    new StyleProperty(ItemList.StylePropertyBackground, new StyleBoxFlat { BackgroundColor = new Color(32, 32, 40)})
-                }),
-                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
-                {
-                    new StyleProperty(ItemList.StylePropertyItemBackground, new StyleBoxFlat { BackgroundColor = new Color(55, 55, 68)})
-                }),
-                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
-                {
-                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground, new StyleBoxFlat { BackgroundColor = new Color(10, 10, 12)})
-                }),
-                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
-                {
-                    new StyleProperty(ItemList.StylePropertySelectedItemBackground, new StyleBoxFlat { BackgroundColor = new Color(75, 75, 86)})
+                    new StyleProperty(ItemList.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)}),
+                    new StyleProperty(ItemList.StylePropertyItemBackground,
+                        new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)}),
+                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
+                        new StyleBoxFlat {BackgroundColor = new Color(10, 10, 12)}),
+                    new StyleProperty(ItemList.StylePropertySelectedItemBackground,
+                        new StyleBoxFlat {BackgroundColor = new Color(75, 75, 86)})
                 }),
 
                 // Tree
-                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new[]
                 {
-                    new StyleProperty(Tree.StylePropertyBackground, new StyleBoxFlat { BackgroundColor = new Color(32, 32, 40)})
-                }),
-                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new []
-                {
+                    new StyleProperty(Tree.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)}),
                     new StyleProperty(Tree.StylePropertyItemBoxSelected, new StyleBoxFlat
                     {
                         BackgroundColor = new Color(55, 55, 68),
