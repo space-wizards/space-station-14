@@ -6,6 +6,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.Primitives;
 using Robust.Client.Utility;
+using Robust.Shared.Interfaces.Log;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Noise;
@@ -17,9 +18,9 @@ namespace Content.Client.Parallax
     {
         private readonly List<Layer> Layers = new List<Layer>();
 
-        public static Image<Rgba32> GenerateParallax(TomlTable config, Size size)
+        public static Image<Rgba32> GenerateParallax(TomlTable config, Size size, ISawmill sawmill)
         {
-            Logger.DebugS("parallax", "Generating parallax!");
+            sawmill.Debug("Generating parallax!");
             var generator = new ParallaxGenerator();
             generator._loadConfig(config);
 
@@ -28,7 +29,7 @@ namespace Content.Client.Parallax
             foreach (var layer in generator.Layers)
             {
                 layer.Apply(image);
-                Logger.DebugS("parallax", "Layer {0} done!", count++);
+                sawmill.Debug("Layer {0} done!", count++);
             }
 
             return image;

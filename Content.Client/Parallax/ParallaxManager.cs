@@ -9,6 +9,7 @@ using SixLabors.ImageSharp;
 using SixLabors.Primitives;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Shared.Interfaces.Log;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
@@ -19,6 +20,7 @@ namespace Content.Client.Parallax
     {
 #pragma warning disable 649
         [Dependency] private readonly IResourceCache _resourceCache;
+        [Dependency] private readonly ILogManager _logManager;
 #pragma warning restore 649
 
         private static readonly ResourcePath ParallaxConfigPath = new ResourcePath("/parallax_config.toml");
@@ -77,8 +79,9 @@ namespace Content.Client.Parallax
                 configStream?.Dispose();
             }
 
+            var sawmill = _logManager.GetSawmill("parallax");
             // Generate the parallax in the thread pool.
-            var image = await Task.Run(() => ParallaxGenerator.GenerateParallax(table, new Size(1920, 1080)));
+            var image = await Task.Run(() => ParallaxGenerator.GenerateParallax(table, new Size(1920, 1080), sawmill));
             // And load it in the main thread for safety reasons.
             ParallaxTexture = Texture.LoadFromImage(image, "Parallax");
 
