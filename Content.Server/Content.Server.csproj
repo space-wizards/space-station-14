@@ -141,7 +141,10 @@
     <Compile Include="GameObjects\EntitySystems\WelderSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\TemperatureSystem.cs" />
     <Compile Include="GameTicking\GamePreset.cs" />
+    <Compile Include="GameTicking\GamePresets\PresetDeathMatch.cs" />
     <Compile Include="GameTicking\GamePresets\PresetTraitor.cs" />
+    <Compile Include="GameTicking\GameRule.cs" />
+    <Compile Include="GameTicking\GameRules\RuleDeathMatch.cs" />
     <Compile Include="GameTicking\GameTicker.cs" />
     <Compile Include="Interfaces\Chat\IChatCommand.cs" />
     <Compile Include="Interfaces\Chat\IChatManager.cs" />

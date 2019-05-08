@@ -28,7 +28,7 @@ namespace Content.Client.UserInterface
             base.Initialize();
 
             var chatContainer = GetChild("Panel/VBoxContainer/HBoxContainer/LeftVBox");
-            Chat = new ChatBox();
+            Chat = new ChatBox {ReleaseFocusOnEnter = false};
             chatContainer.AddChild(Chat);
             Chat.SizeFlagsVertical = SizeFlags.FillExpand;
         }

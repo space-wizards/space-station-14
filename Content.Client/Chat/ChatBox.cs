@@ -38,6 +38,8 @@ namespace Content.Client.Chat
         /// </summary>
         public string DefaultChatFormat { get; set; }
 
+        public bool ReleaseFocusOnEnter { get; set; } = true;
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -151,7 +153,11 @@ namespace Content.Client.Chat
             _inputIndex = -1;
 
             Input.Clear();
-            Input.ReleaseKeyboardFocus();
+
+            if (ReleaseFocusOnEnter)
+            {
+                Input.ReleaseKeyboardFocus();
+            }
         }
     }
 }

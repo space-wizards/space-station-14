@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -27,5 +28,10 @@ namespace Content.Server.Interfaces.GameTicking
         void MakeObserve(IPlayerSession player);
         void MakeJoinGame(IPlayerSession player);
         void ToggleReady(IPlayerSession player, bool ready);
+
+        // GameRule system.
+        T AddGameRule<T>() where T : GameRule, new();
+        void RemoveGameRule(GameRule rule);
+        IEnumerable<GameRule> ActiveGameRules { get; }
     }
 }
