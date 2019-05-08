@@ -142,6 +142,8 @@ namespace Content.Server.GameTicking
                 {
                     _roundStartTimeUtc = DateTime.UtcNow + TimeSpan.FromSeconds(LobbyDuration);
                 }
+
+                _sendStatusToAll();
             }
         }
 
@@ -158,7 +160,7 @@ namespace Content.Server.GameTicking
 
             foreach (var (playerSession, ready) in _playersInLobby.ToList())
             {
-                if (!ready)
+                if (LobbyEnabled && !ready)
                 {
                     continue;
                 }
@@ -325,6 +327,17 @@ namespace Content.Server.GameTicking
             }
 
             _gameRules.Clear();
+
+            // Move everybody currently in the server to lobby.
+            foreach (var player in _playerManager.GetAllPlayers())
+            {
+                if (_playersInLobby.ContainsKey(player))
+                {
+                    continue;
+                }
+
+                _playerJoinLobby(player);
+            }
         }
 
         private void _preRoundSetup()
@@ -369,7 +382,6 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.InGame:
                 {
-                    //TODO: Check for existing mob and re-attach
                     var data = session.ContentData();
                     if (data.Mind == null)
                     {
