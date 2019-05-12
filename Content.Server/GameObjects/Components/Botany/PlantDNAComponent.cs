@@ -59,6 +59,10 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)]
         public SpriteSpecifier DeathSprite;
         [ViewVariables(VVAccess.ReadWrite)]
+        public string DeathName;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string DeathDescription;
+        [ViewVariables(VVAccess.ReadWrite)]
         public string StartNodeID;
 
         public object Clone()
@@ -67,6 +71,8 @@ namespace Content.Server.GameObjects.Components.Botany
             {
                 LifecycleNodes = (List<PlantStage>)LifecycleNodes.Clone(),
                 DeathSprite = DeathSprite,
+                DeathName = DeathName,
+                DeathDescription = DeathDescription,
                 StartNodeID = StartNodeID
             };
         }
@@ -75,6 +81,8 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             serializer.DataField(ref LifecycleNodes, "lifecycleNodes", null);
             serializer.DataField(ref DeathSprite, "deathSprite", null);
+            serializer.DataField(ref DeathName, "deathName", null);
+            serializer.DataField(ref DeathDescription, "deathName", null);
             serializer.DataField(ref StartNodeID, "startNodeID", null);
         }
     }
@@ -86,6 +94,11 @@ namespace Content.Server.GameObjects.Components.Botany
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public string NodeID;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string stageName;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string stageDescription;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public SpriteSpecifier Sprite;
@@ -100,6 +113,8 @@ namespace Content.Server.GameObjects.Components.Botany
             return new PlantStage
             {
                 NodeID = NodeID,
+                stageName = stageName,
+                stageDescription = stageDescription,
                 Sprite = Sprite,
                 Harvest = Harvest,
                 Transitions = (List<PlantStageTransition>)Transitions.Clone()
@@ -108,6 +123,9 @@ namespace Content.Server.GameObjects.Components.Botany
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref NodeID, "stageID", null);
+
+            serializer.DataField(ref stageName, "name", null);
+            serializer.DataField(ref stageDescription, "description", null);
 
             serializer.DataField(ref Sprite, "spriteSpecifier", null);
             serializer.DataField(ref Harvest, "harvest", null);

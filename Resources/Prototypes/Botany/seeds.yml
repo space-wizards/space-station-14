@@ -24,12 +24,16 @@
       maxAgeInSeconds: 300
       yieldMultiplier: 3
       lifecycle:
-        startNodeID: wheatling
+        startNodeID: sprout
         deathSprite: 
           sprite: Botany/wheatus.rsi
           state: wheat-dead
+        deathName: "Rotting stalks"
+        deathDescription: "This stalk-based plant has died recently."
         lifecycleNodes:
-          - stageID: wheatling
+          - stageID: sprout
+            name: "Grass sprouts"
+            description: "Freshly sprouted seeds. What will they grow into?"
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow1
@@ -38,6 +42,7 @@
                 conditionType: StageProgress
                 conditionAmount: 5.0
           - stageID: wheatlet
+            name: "Wheatgrass sprouts"
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow3
@@ -46,6 +51,7 @@
                 conditionType: StageProgress
                 conditionAmount: 3.0
           - stageID: wheatus
+            name: "Wheat Stalks"
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow4
@@ -54,6 +60,8 @@
                 conditionType: StageProgress
                 conditionAmount: 4.0
           - stageID: wheater
+            name: "Adolescent wheat stalks"
+            description: "The grains are beginning to ripen."
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow5
@@ -62,6 +70,8 @@
                 conditionType: StageProgress
                 conditionAmount: 5.0
           - stageID: elwheato
+            name: "Mature wheat stalks"
+            description: "The grains on this plant look ripe."
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-harvest
@@ -82,12 +92,16 @@
       maxAgeInSeconds: 300
       yieldMultiplier: 3
       lifecycle:
-        startNodeID: wheatling
+        startNodeID: sprout
         deathSprite: 
           sprite: Botany/wheatus.rsi
           state: wheat-dead
+        deathName: "Rotting stalks"
+        deathDescription: "This stalk-based plant has died recently."
         lifecycleNodes:
-          - stageID: wheatling
+          - stageID: sprout
+            name: "Grass sprouts"
+            description: "Freshly sprouted seeds. What will they grow into?"
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow1
@@ -96,6 +110,7 @@
                 conditionType: StageProgress
                 conditionAmount: 5.0
           - stageID: wheatlet
+            name: "Wheatgrass sprouts"
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow3
@@ -104,6 +119,7 @@
                 conditionType: StageProgress
                 conditionAmount: 3.0
           - stageID: wheatus
+            name: "Wheat Stalks"
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow4
@@ -112,6 +128,8 @@
                 conditionType: StageProgress
                 conditionAmount: 4.0
           - stageID: wheater
+            name: "Adolescent wheat stalks"
+            description: "The grains are beginning to ripen."
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow5
@@ -120,13 +138,14 @@
                 conditionType: StageProgress
                 conditionAmount: 5.0
           - stageID: elwheato
+            name: "Mature wheat stalks"
+            description: "The grains on this plant look ripe."
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-harvest
             harvest:
               harvestPrototype: WheatHarvest
               harvestTargetNode: wheatus
-
               
 - type: entity
   id: progeria-seed
@@ -143,15 +162,22 @@
       maxAgeInSeconds: 1
       yieldMultiplier: 1
       lifecycle:
+        startNodeID: sprout
         deathSprite: 
           sprite: Botany/wheatus.rsi
           state: wheat-dead
+        deathName: "Rotting stalks"
+        deathDescription: "This stalk-based plant has died recently."
         lifecycleNodes:
-          - stageID: wheatling
+          - stageID: sprout
+            name: "Grass sprouts"
+            description: "Freshly sprouted seeds. What will they grow into?"
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-grow1
           - stageID: wheatlet
+            name: "The plant is supposed to die before you see this"
+            description: "This is just a demo plant to show plants dying of old age"
             lifeProgressRequired: 25.0
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi

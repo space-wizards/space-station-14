@@ -48,6 +48,8 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             Effects.currentLifecycleNodeID = targetNodeID;
             Effects.stageEffects = new PlantStageEffects();
+            Owner.GetComponent<IMetaDataComponent>().EntityName = CurrentStage().stageName;
+            Owner.GetComponent<IMetaDataComponent>().EntityDescription = CurrentStage().stageDescription;
             UpdateSprite();
         }
         public void UpdateCurrentStage()
@@ -160,6 +162,8 @@ namespace Content.Server.GameObjects.Components.Botany
             if (e.Passed && e.DamageThreshold == DeathThreshold)
             {
                 Effects.dead = true;
+                Owner.GetComponent<IMetaDataComponent>().EntityName = DNA.Lifecycle.DeathName;
+                Owner.GetComponent<IMetaDataComponent>().EntityDescription = DNA.Lifecycle.DeathDescription;
                 UpdateSprite();
             }
             if (e.Passed && e.DamageThreshold == DestructionThreshold)
