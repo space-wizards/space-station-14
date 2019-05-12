@@ -84,6 +84,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 var lifeProgressDelta = _plantUpdateState.PlantComponent.TimeSinceLastUpdate * _plantUpdateState.baseLifeProgressDelta;
                 _plantUpdateState.PlantComponent.Effects.progressInSeconds += lifeProgressDelta;
+                _plantUpdateState.PlantComponent.Effects.stageEffects.progressInSeconds += lifeProgressDelta;
                 _plantUpdateState.PlantComponent.UpdateCurrentStage();
             }
         }

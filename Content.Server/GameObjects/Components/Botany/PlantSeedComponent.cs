@@ -27,14 +27,13 @@ namespace Content.Server.GameObjects.Components.Botany
             //It might be better to construct an entity from scratch, but this method at least forces you to ensure that ExposeData works
             entityManager.TrySpawnEntityAt("BasePlant", holder.Owner.Transform.GridPosition, out var plant);
 
-            if (plant.TryGetComponent<PlantDNAComponent>(out var dna))
+            if (!plant.HasComponent<PlantDNAComponent>())
             {
-                dna.DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
+                plant.AddComponent<PlantDNAComponent>();
             }
-            else
-            {
-                plant.AddComponent<PlantDNAComponent>().DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
-            }
+            var dna = plant.GetComponent<PlantDNAComponent>();
+            dna.DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
+
             var plantComponent = plant.GetComponent<PlantComponent>();
             holder.HeldPlant = plantComponent;
             plantComponent.ChangeStage(dna.DNA.Lifecycle.StartNodeID);

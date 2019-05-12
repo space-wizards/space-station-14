@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
             serializer.DataField(ref Sprite, "spriteSpecifier", null);
             serializer.DataField(ref Harvest, "harvest", null);
-            serializer.DataField(ref Transitions, "transitions", null);
+            serializer.DataField(ref Transitions, "transitions", new List<PlantStageTransition>());
         }
     }
 
@@ -156,18 +156,22 @@ namespace Content.Server.GameObjects.Components.Botany
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public string HarvestPrototype;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string HarvestTargetNode;
 
         public object Clone()
         {
             return new HarvestDatum
             {
-                HarvestPrototype = HarvestPrototype
+                HarvestPrototype = HarvestPrototype,
+                HarvestTargetNode = HarvestTargetNode
             };
         }
 
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref HarvestPrototype, "harvestPrototype", null);
+            serializer.DataField(ref HarvestTargetNode, "harvestTargetNode", null);
         }
     }
 }

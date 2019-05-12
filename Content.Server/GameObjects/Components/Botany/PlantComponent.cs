@@ -135,7 +135,14 @@ namespace Content.Server.GameObjects.Components.Botany
                         harvest.AddComponent<PlantDNAComponent>().DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
                     }
                 }
-                Owner.Delete();
+                if (stage.Harvest.HarvestTargetNode != null)
+                {
+                    ChangeStage(stage.Harvest.HarvestTargetNode);
+                }
+                else
+                {
+                    Owner.Delete();
+                }
                 return true;
             }
             return false;

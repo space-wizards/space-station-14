@@ -36,7 +36,7 @@
             transitions:
               - targetNode: wheatlet
                 conditionType: StageProgress
-                conditionAmount: 3.0
+                conditionAmount: 5.0
           - stageID: wheatlet
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
@@ -44,7 +44,7 @@
             transitions:
               - targetNode: wheatus
                 conditionType: StageProgress
-                conditionAmount: 4.0
+                conditionAmount: 3.0
           - stageID: wheatus
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
@@ -52,7 +52,7 @@
             transitions:
               - targetNode: wheater
                 conditionType: StageProgress
-                conditionAmount: 5.0
+                conditionAmount: 4.0
           - stageID: wheater
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
@@ -60,14 +60,74 @@
             transitions:
               - targetNode: elwheato
                 conditionType: StageProgress
-                conditionAmount: 6.0
+                conditionAmount: 5.0
           - stageID: elwheato
             spriteSpecifier: 
               sprite: Botany/wheatus.rsi
               state: wheat-harvest
             harvest:
               harvestPrototype: WheatHarvest
-  
+
+- type: entity
+  id: CyclicSeed
+  name: "Botany - Cyclic Seed"
+  parent: BaseSeed
+  components:
+  - type: Sprite
+    texture: Botany/seeds/seed-wheat.png
+  - type: Icon
+    texture: Botany/seeds/seed-wheat.png
+  - type: PlantDNA
+    DNA: 
+      maxAgeInSeconds: 300
+      yieldMultiplier: 3
+      lifecycle:
+        startNodeID: wheatling
+        deathSprite: 
+          sprite: Botany/wheatus.rsi
+          state: wheat-dead
+        lifecycleNodes:
+          - stageID: wheatling
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-grow1
+            transitions:
+              - targetNode: wheatlet
+                conditionType: StageProgress
+                conditionAmount: 5.0
+          - stageID: wheatlet
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-grow3
+            transitions:
+              - targetNode: wheatus
+                conditionType: StageProgress
+                conditionAmount: 3.0
+          - stageID: wheatus
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-grow4
+            transitions:
+              - targetNode: wheater
+                conditionType: StageProgress
+                conditionAmount: 4.0
+          - stageID: wheater
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-grow5
+            transitions:
+              - targetNode: elwheato
+                conditionType: StageProgress
+                conditionAmount: 5.0
+          - stageID: elwheato
+            spriteSpecifier: 
+              sprite: Botany/wheatus.rsi
+              state: wheat-harvest
+            harvest:
+              harvestPrototype: WheatHarvest
+              harvestTargetNode: wheatus
+
+              
 - type: entity
   id: progeria-seed
   name: "Botany - Progeria Seed"
