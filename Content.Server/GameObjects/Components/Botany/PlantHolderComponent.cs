@@ -88,6 +88,10 @@ namespace Content.Server.GameObjects.Components.Botany
                 seedComponent.PlantIntoHolder(this);
                 return true;
             }
+            else if (HeldPlant != null)
+            {
+                return false;
+            }
             else if (eventArgs.AttackWith.TryGetComponent(out ShovelComponent shovel))
             {
                 // you shovel out the substrate
