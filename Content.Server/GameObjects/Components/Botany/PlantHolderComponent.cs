@@ -83,7 +83,9 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.TryGetComponent(out PlantSeedComponent seedComponent) && _heldPlant == null)
+            if (eventArgs.AttackWith.TryGetComponent(out PlantSeedComponent seedComponent) &&
+                HeldPlant == null &&
+                HeldSubstrate != Substrate.Empty)
             {
                 seedComponent.PlantIntoHolder(this);
                 return true;
