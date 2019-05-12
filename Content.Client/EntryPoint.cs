@@ -80,7 +80,7 @@ namespace Content.Client
             factory.RegisterIgnore("Stack");
 
             //Botany
-            factory.RegisterIgnore("PlantComponent");
+            factory.RegisterIgnore("Plant");
             factory.RegisterIgnore("PlantDNA");
             factory.RegisterIgnore("PlantHolder");
             factory.RegisterIgnore("PlantSeed");

@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Botany
 {
     class PlantComponent : Component, IAttackBy, IAttackHand, IOnDamageBehavior
     {
-        public override string Name => "PlantComponent";
+        public override string Name => "Plant";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float TimeSinceLastUpdate = 0;
