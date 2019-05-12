@@ -22,6 +22,10 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public void PlantIntoHolder(PlantHolderComponent holder)
         {
+            if (!Owner.HasComponent<PlantDNAComponent>())
+            {
+                throw new NotImplementedException();
+            }
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
             //It might be better to construct an entity from scratch, but this method at least forces you to ensure that ExposeData works
