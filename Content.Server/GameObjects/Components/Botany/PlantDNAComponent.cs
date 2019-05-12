@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref LifecycleNodes, "lifecycleNodes", null);
             serializer.DataField(ref DeathSprite, "deathSprite", null);
             serializer.DataField(ref DeathName, "deathName", null);
-            serializer.DataField(ref DeathDescription, "deathName", null);
+            serializer.DataField(ref DeathDescription, "deathDescription", null);
             serializer.DataField(ref StartNodeID, "startNodeID", null);
         }
     }

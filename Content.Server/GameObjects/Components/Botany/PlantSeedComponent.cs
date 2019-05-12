@@ -42,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Botany
             holder.HeldPlant = plantComponent;
             plantComponent.ChangeStage(dna.DNA.Lifecycle.StartNodeID);
             plant.GetComponent<SpriteComponent>().DrawDepth = DrawDepth.Objects;
+            plantComponent.UpdateSprite();
             Owner.Delete();
         }
     }
