@@ -10,9 +10,11 @@ using Robust.Client.Console;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -27,6 +29,7 @@ namespace Content.Client.GameTicking
         [Dependency] private IBaseClient _baseClient;
         [Dependency] private IChatManager _chatManager;
         [Dependency] private IClientConsole _console;
+        [Dependency] private ILocalizationManager _localization;
 #pragma warning restore 649
 
         [ViewVariables] private bool _areWeReady;
@@ -83,11 +86,11 @@ namespace Content.Client.GameTicking
             {
                 if (difference.TotalSeconds < -5)
                 {
-                    text = "Right Now?";
+                    text = _localization.GetString("Right Now?");
                 }
                 else
                 {
-                    text = "Right Now";
+                    text = _localization.GetString("Right Now");
                 }
             }
             else
@@ -95,7 +98,7 @@ namespace Content.Client.GameTicking
                 text = $"{(int) Math.Floor(difference.TotalMinutes)}:{difference.Seconds:D2}";
             }
 
-            _lobby.StartTime.Text = "Round Starts In: " + text;
+            _lobby.StartTime.Text = _localization.GetString("Round Starts In: {0}", text);
         }
 
         private void _lobbyStatus(MsgTickerLobbyStatus message)
@@ -116,14 +119,14 @@ namespace Content.Client.GameTicking
 
             if (_gameStarted)
             {
-                _lobby.ReadyButton.Text = "Join";
+                _lobby.ReadyButton.Text = _localization.GetString("Join");
                 _lobby.ReadyButton.ToggleMode = false;
                 _lobby.ReadyButton.Pressed = false;
             }
             else
             {
                 _lobby.StartTime.Text = "";
-                _lobby.ReadyButton.Text = "Ready Up";
+                _lobby.ReadyButton.Text = _localization.GetString("Ready Up");
                 _lobby.ReadyButton.ToggleMode = true;
                 _lobby.ReadyButton.Pressed = _areWeReady;
             }
@@ -144,8 +147,10 @@ namespace Content.Client.GameTicking
 
             _tickerState = TickerState.InLobby;
 
-            _lobby = new LobbyGui();
+            _lobby = new LobbyGui(_localization);
             _userInterfaceManager.StateRoot.AddChild(_lobby);
+
+            _lobby.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide, margin: 20);
 
             _chatManager.SetChatBox(_lobby.Chat);
             _lobby.Chat.DefaultChatFormat = "ooc \"{0}\"";
