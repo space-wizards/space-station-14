@@ -124,6 +124,7 @@
     <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
     <Compile Include="UserInterface\LobbyGui.cs" />
     <Compile Include="UserInterface\NanoStyle.cs" />
+    <Compile Include="UserInterface\Placeholder.cs" />
     <Compile Include="Utility\ResourceCacheExtensions.cs" />
     <Compile Include="GameObjects\Components\Mobs\SpeciesVisualizer2D.cs" />
   </ItemGroup>

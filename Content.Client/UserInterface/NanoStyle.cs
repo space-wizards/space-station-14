@@ -20,6 +20,7 @@ namespace Content.Client.UserInterface
         {
             var resCache = IoCManager.Resolve<IResourceCache>();
             var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
             var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
             var textureCloseButton = resCache.GetTexture("/Nano/cross.svg.png");
             var windowHeaderTex = resCache.GetTexture("/Nano/window_header.png");
@@ -139,6 +140,12 @@ namespace Content.Client.UserInterface
             };
             tooltipBox.SetPatchMargin(StyleBox.Margin.All, 2);
             tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
+
+            // Placeholder
+            var placeholderTexture = resCache.GetTexture("/Nano/placeholder.png");
+            var placeholder = new StyleBoxTexture { Texture = placeholderTexture };
+            placeholder.SetPatchMargin(StyleBox.Margin.All, 24);
+            placeholder.SetExpandMargin(StyleBox.Margin.All, -5);
 
             Stylesheet = new Stylesheet(new[]
             {
@@ -375,6 +382,18 @@ namespace Content.Client.UserInterface
                         BackgroundColor = new Color(55, 55, 68),
                         ContentMarginLeftOverride = 4
                     })
+                }),
+
+                // Placeholder
+                new StyleRule(new SelectorElement(typeof(Placeholder), null, null, null), new []
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, placeholder),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new []{Placeholder.StyleClassPlaceholderText}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSans16),
+                    new StyleProperty(Label.StylePropertyFontColor, new Color(103, 103, 103, 128)),
                 }),
             });
         }
