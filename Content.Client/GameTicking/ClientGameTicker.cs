@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Content.Client.Chat;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
@@ -11,6 +12,7 @@ using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Network;
@@ -32,6 +34,7 @@ namespace Content.Client.GameTicking
         [Dependency] private IClientConsole _console;
         [Dependency] private ILocalizationManager _localization;
         [Dependency] private IResourceCache _resourceCache;
+        [Dependency] private IPlayerManager _playerManager;
 #pragma warning restore 649
 
         [ViewVariables] private bool _areWeReady;
@@ -51,8 +54,23 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), _lobbyStatus);
 
             _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
+            _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
 
             _initialized = true;
+        }
+
+        private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e)
+        {
+            if (_lobby == null)
+            {
+                return;
+            }
+
+            _lobby.OnlinePlayerItemList.Clear();
+            foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
+            {
+                _lobby.OnlinePlayerItemList.AddItem(session.Name);
+            }
         }
 
         private void BaseClientOnRunLevelChanged(object sender, RunLevelChangedEventArgs e)

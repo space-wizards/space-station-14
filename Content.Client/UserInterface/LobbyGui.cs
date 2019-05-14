@@ -14,11 +14,12 @@ namespace Content.Client.UserInterface
         public Button ReadyButton { get; }
         public Button ObserveButton { get; }
         public Button LeaveButton { get; }
-        public ChatBox Chat { get; set; }
+        public ChatBox Chat { get; }
+        public ItemList OnlinePlayerItemList { get; }
 
         public LobbyGui(ILocalizationManager localization, IResourceCache resourceCache)
         {
-            PanelOverride = new StyleBoxFlat { BackgroundColor = new Color(37, 37, 45)};
+            PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(37, 37, 45)};
             PanelOverride.SetContentMarginOverride(StyleBox.Margin.All, 4);
 
             var vBox = new VBoxContainer();
@@ -90,12 +91,24 @@ namespace Content.Client.UserInterface
                 Chat.Input.PlaceHolder = localization.GetString("Talk!");
             }
 
-            // Placeholder.
-            hBox.AddChild(new Placeholder(resourceCache)
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                PlaceholderText = localization.GetString("Server Info\nPlaceholder")
-            });
+                var rightVBox = new VBoxContainer {SizeFlagsHorizontal = SizeFlags.FillExpand};
+                hBox.AddChild(rightVBox);
+                rightVBox.AddChild(new Label
+                {
+                    Text = localization.GetString("Online Players:")
+                });
+                rightVBox.AddChild(OnlinePlayerItemList = new ItemList
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    //SelectMode = ItemList.ItemListSelectMode.None
+                });
+                rightVBox.AddChild(new Placeholder(resourceCache)
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    PlaceholderText = localization.GetString("Server Info\nPlaceholder")
+                });
+            }
         }
     }
 }

@@ -149,6 +149,16 @@ namespace Content.Client.UserInterface
             placeholder.SetPatchMargin(StyleBox.Margin.All, 24);
             placeholder.SetExpandMargin(StyleBox.Margin.All, -5);
 
+            var itemListBackgroundSelected = new StyleBoxFlat {BackgroundColor = new Color(75, 75, 86)};
+            itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
+            var itemListItemBackgroundDisabled = new StyleBoxFlat {BackgroundColor = new Color(10, 10, 12)};
+            itemListItemBackgroundDisabled.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            itemListItemBackgroundDisabled.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
+            var itemListItemBackground = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)};
+            itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
+
             Stylesheet = new Stylesheet(new[]
             {
                 // Default font.
@@ -367,11 +377,11 @@ namespace Content.Client.UserInterface
                     new StyleProperty(ItemList.StylePropertyBackground,
                         new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)}),
                     new StyleProperty(ItemList.StylePropertyItemBackground,
-                        new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)}),
+                        itemListItemBackground),
                     new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
-                        new StyleBoxFlat {BackgroundColor = new Color(10, 10, 12)}),
+                        itemListItemBackgroundDisabled),
                     new StyleProperty(ItemList.StylePropertySelectedItemBackground,
-                        new StyleBoxFlat {BackgroundColor = new Color(75, 75, 86)})
+                        itemListBackgroundSelected)
                 }),
 
                 // Tree
