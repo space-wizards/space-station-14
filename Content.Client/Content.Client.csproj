@@ -75,6 +75,7 @@
     <Compile Include="Chat\ChatManager.cs" />
     <Compile Include="Commands\DebugCommands.cs" />
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="EscapeMenuOwner.cs" />
     <Compile Include="GameObjects\Components\Actor\CharacterInterface.cs" />
     <Compile Include="GameObjects\Components\DamageableComponent.cs" />
     <Compile Include="GameObjects\Components\Doors\AirlockVisualizer2D.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="Research\LatheMenu.cs" />
     <Compile Include="Research\LatheQueueMenu.cs" />
+    <Compile Include="UserInterface\EscapeMenu.cs" />
     <Compile Include="UserInterface\HandsGui.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
     <Compile Include="UserInterface\LobbyGui.cs" />
