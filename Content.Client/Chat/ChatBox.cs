@@ -11,8 +11,6 @@ namespace Content.Client.Chat
 {
     public class ChatBox : PanelContainer
     {
-        protected override ResourcePath ScenePath => new ResourcePath("/Scenes/ChatBox/ChatBox.tscn");
-
         public delegate void TextSubmitHandler(ChatBox chatBox, string text);
 
         private const int MaxLinePixelLength = 500;
@@ -43,19 +41,28 @@ namespace Content.Client.Chat
         {
             base.Initialize();
 
-            Input = GetChild<LineEdit>("VBoxContainer/Input");
+            MarginLeft = -475.0f;
+            MarginTop = 10.0f;
+            MarginRight = -10.0f;
+            MarginBottom = 185.0f;
+
+            AnchorLeft = 1.0f;
+            AnchorRight = 1.0f;
+
+            VBoxContainer VBox = new VBoxContainer("VBoxContainer");
+
+            contents = new OutputPanel();
+            contents.SizeFlagsVertical = SizeFlags.FillExpand;
+            VBox.AddChild(contents);
+
+            Input = new LineEdit("Input");
             Input.OnKeyDown += InputKeyDown;
             Input.OnTextEntered += Input_OnTextEntered;
-            GetChild<Control>("VBoxContainer/Contents").Dispose();
+            VBox.AddChild(Input);
 
-            contents = new OutputPanel
-            {
-                SizeFlagsVertical = SizeFlags.FillExpand,
-            };
-            GetChild("VBoxContainer").AddChild(contents);
-            contents.SetPositionInParent(0);
+            AddChild(VBox);
 
-            PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Gray.WithAlpha(0.5f)};
+            PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Gray.WithAlpha(0.5f) };
         }
 
         protected override void MouseDown(GUIMouseButtonEventArgs e)
