@@ -12,14 +12,12 @@ using Content.Client.Interfaces;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
-using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
 using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Player;
-using Robust.Client.Utility;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -31,14 +29,14 @@ using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Research;
 using Content.Client.GameObjects.Components.Sound;
 using Content.Client.Interfaces.Chat;
-using Content.Client.Research;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Research;
+using Robust.Client.Interfaces.State;
 using Robust.Client.Interfaces.UserInterface;
-using Robust.Shared.Log;
+using Robust.Client.State.States;
 
 namespace Content.Client
 {
@@ -46,6 +44,7 @@ namespace Content.Client
     {
 #pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
 #pragma warning restore 649
 
         public override void Init()
@@ -139,6 +138,7 @@ namespace Content.Client
             IoCManager.Register<IClientGameTicker, ClientGameTicker>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
+            IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
             IoCManager.BuildGraph();
 
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
@@ -147,10 +147,12 @@ namespace Content.Client
             var stylesheet = new NanoStyle();
 
             IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
+            IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
 
             IoCManager.InjectDependencies(this);
-        }
 
+            _escapeMenuOwner.Initialize();
+        }
         /// <summary>
         /// Subscribe events to the player manager after the player manager is set up
         /// </summary>

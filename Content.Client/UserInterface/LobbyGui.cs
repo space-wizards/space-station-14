@@ -1,36 +1,114 @@
 using Content.Client.Chat;
-using Robust.Client.UserInterface;
+using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Utility;
+using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface
 {
-    public class LobbyGui : Control
+    internal sealed class LobbyGui : PanelContainer
     {
-        protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Lobby/Lobby.tscn");
+        public Label ServerName { get; }
+        public Label StartTime { get; }
+        public Button ReadyButton { get; }
+        public Button ObserveButton { get; }
+        public Button LeaveButton { get; }
+        public ChatBox Chat { get; }
+        public ItemList OnlinePlayerItemList { get; }
 
-        public Label ServerName => GetChild<Label>("Panel/VBoxContainer/TitleContainer/ServerName");
-        public Label StartTime => GetChild<Label>("Panel/VBoxContainer/HBoxContainer/LeftVBox/ReadyButtons/RoundStartText");
-
-        public Button ReadyButton =>
-            GetChild<Button>("Panel/VBoxContainer/HBoxContainer/LeftVBox/ReadyButtons/ReadyButton");
-
-        public Button ObserveButton =>
-            GetChild<Button>("Panel/VBoxContainer/HBoxContainer/LeftVBox/ReadyButtons/ObserveButton");
-
-        public Button LeaveButton => GetChild<Button>("Panel/VBoxContainer/TitleContainer/LeaveButton");
-
-        public ChatBox Chat { get; private set; }
-
-        protected override void Initialize()
+        public LobbyGui(ILocalizationManager localization, IResourceCache resourceCache)
         {
-            base.Initialize();
+            PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(37, 37, 45)};
+            PanelOverride.SetContentMarginOverride(StyleBox.Margin.All, 4);
 
-            var chatContainer = GetChild("Panel/VBoxContainer/HBoxContainer/LeftVBox");
-            Chat = new ChatBox {ReleaseFocusOnEnter = false};
-            chatContainer.AddChild(Chat);
-            Chat.SizeFlagsVertical = SizeFlags.FillExpand;
+            var vBox = new VBoxContainer();
+            AddChild(vBox);
+
+            {
+                // Title bar.
+                var titleContainer = new HBoxContainer();
+                vBox.AddChild(titleContainer);
+
+                var lobbyTitle = new Label
+                {
+                    Text = localization.GetString("Lobby"),
+                    SizeFlagsHorizontal = SizeFlags.None
+                };
+                lobbyTitle.AddStyleClass(NanoStyle.StyleClassLabelHeading);
+                titleContainer.AddChild(lobbyTitle);
+
+                titleContainer.AddChild(ServerName = new Label
+                {
+                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter | SizeFlags.Expand
+                });
+                ServerName.AddStyleClass(NanoStyle.StyleClassLabelHeading);
+
+                titleContainer.AddChild(LeaveButton = new Button
+                {
+                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                    Text = localization.GetString("Leave")
+                });
+                LeaveButton.AddStyleClass(NanoStyle.StyleClassButtonBig);
+            }
+
+            var hBox = new HBoxContainer {SizeFlagsVertical = SizeFlags.FillExpand};
+            vBox.AddChild(hBox);
+
+            {
+                var leftVBox = new VBoxContainer {SizeFlagsHorizontal = SizeFlags.FillExpand};
+                hBox.AddChild(leftVBox);
+
+                leftVBox.AddChild(new Placeholder(resourceCache)
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    PlaceholderText = localization.GetString("Character UI\nPlaceholder")
+                });
+
+                var readyButtons = new HBoxContainer();
+
+                leftVBox.AddChild(readyButtons);
+                readyButtons.AddChild(ObserveButton = new Button
+                {
+                    Text = localization.GetString("Observe")
+                });
+                ObserveButton.AddStyleClass(NanoStyle.StyleClassButtonBig);
+
+                readyButtons.AddChild(StartTime = new Label
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    Align = Label.AlignMode.Right
+                });
+
+                readyButtons.AddChild(ReadyButton = new Button
+                {
+                    ToggleMode = true,
+                    Text = localization.GetString("Ready Up")
+                });
+                ReadyButton.AddStyleClass(NanoStyle.StyleClassButtonBig);
+
+                leftVBox.AddChild(Chat = new ChatBox {SizeFlagsVertical = SizeFlags.FillExpand});
+                Chat.Input.PlaceHolder = localization.GetString("Talk!");
+            }
+
+            {
+                var rightVBox = new VBoxContainer {SizeFlagsHorizontal = SizeFlags.FillExpand};
+                hBox.AddChild(rightVBox);
+                rightVBox.AddChild(new Label
+                {
+                    Text = localization.GetString("Online Players:")
+                });
+                rightVBox.AddChild(OnlinePlayerItemList = new ItemList
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    //SelectMode = ItemList.ItemListSelectMode.None
+                });
+                rightVBox.AddChild(new Placeholder(resourceCache)
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    PlaceholderText = localization.GetString("Server Info\nPlaceholder")
+                });
+            }
         }
     }
 }

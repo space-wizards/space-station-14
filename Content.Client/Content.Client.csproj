@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Content.Client</RootNamespace>
     <AssemblyName>Content.Client</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ContentAssemblyTarget>..\RobustToolbox\bin\Client\Resources\Assemblies\</ContentAssemblyTarget>
     <LangVersion>7.2</LangVersion>
@@ -75,6 +75,7 @@
     <Compile Include="Chat\ChatManager.cs" />
     <Compile Include="Commands\DebugCommands.cs" />
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="EscapeMenuOwner.cs" />
     <Compile Include="GameObjects\Components\Actor\CharacterInterface.cs" />
     <Compile Include="GameObjects\Components\DamageableComponent.cs" />
     <Compile Include="GameObjects\Components\Doors\AirlockVisualizer2D.cs" />
@@ -120,10 +121,12 @@
     <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
     <Compile Include="Research\LatheMenu.cs" />
     <Compile Include="Research\LatheQueueMenu.cs" />
+    <Compile Include="UserInterface\EscapeMenu.cs" />
     <Compile Include="UserInterface\HandsGui.cs" />
     <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
     <Compile Include="UserInterface\LobbyGui.cs" />
     <Compile Include="UserInterface\NanoStyle.cs" />
+    <Compile Include="UserInterface\Placeholder.cs" />
     <Compile Include="Utility\ResourceCacheExtensions.cs" />
     <Compile Include="GameObjects\Components\Mobs\SpeciesVisualizer2D.cs" />
   </ItemGroup>

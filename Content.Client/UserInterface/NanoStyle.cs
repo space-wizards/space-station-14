@@ -12,6 +12,8 @@ namespace Content.Client.UserInterface
 {
     public sealed class NanoStyle
     {
+        public const string StyleClassLabelHeading = "LabelHeading";
+        public const string StyleClassButtonBig = "ButtonBig";
         private static readonly Color NanoGold = Color.FromHex("#A88B5E");
 
         public Stylesheet Stylesheet { get; }
@@ -20,8 +22,8 @@ namespace Content.Client.UserInterface
         {
             var resCache = IoCManager.Resolve<IResourceCache>();
             var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
             var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
-            var animalSilence40 = resCache.GetFont("/Fonts/Animal Silence.otf", 40);
             var textureCloseButton = resCache.GetTexture("/Nano/cross.svg.png");
             var windowHeaderTex = resCache.GetTexture("/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
@@ -44,7 +46,7 @@ namespace Content.Client.UserInterface
                 Texture = buttonNormalTex,
             };
             buttonNormal.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
+            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
             var buttonHoverTex = resCache.GetTexture("/Nano/button_hover.png");
             var buttonHover = new StyleBoxTexture
@@ -52,7 +54,7 @@ namespace Content.Client.UserInterface
                 Texture = buttonHoverTex,
             };
             buttonHover.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonHover.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
+            buttonHover.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
             var buttonPressedTex = resCache.GetTexture("/Nano/button_pressed.png");
             var buttonPressed = new StyleBoxTexture
@@ -60,7 +62,7 @@ namespace Content.Client.UserInterface
                 Texture = buttonPressedTex,
             };
             buttonPressed.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonPressed.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
+            buttonPressed.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
             var buttonDisabledTex = resCache.GetTexture("/Nano/button_disabled.png");
             var buttonDisabled = new StyleBoxTexture
@@ -68,7 +70,7 @@ namespace Content.Client.UserInterface
                 Texture = buttonDisabledTex,
             };
             buttonDisabled.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonDisabled.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
+            buttonDisabled.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
             var lineEditTex = resCache.GetTexture("/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
@@ -140,6 +142,22 @@ namespace Content.Client.UserInterface
             };
             tooltipBox.SetPatchMargin(StyleBox.Margin.All, 2);
             tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
+
+            // Placeholder
+            var placeholderTexture = resCache.GetTexture("/Nano/placeholder.png");
+            var placeholder = new StyleBoxTexture { Texture = placeholderTexture };
+            placeholder.SetPatchMargin(StyleBox.Margin.All, 24);
+            placeholder.SetExpandMargin(StyleBox.Margin.All, -5);
+
+            var itemListBackgroundSelected = new StyleBoxFlat {BackgroundColor = new Color(75, 75, 86)};
+            itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
+            var itemListItemBackgroundDisabled = new StyleBoxFlat {BackgroundColor = new Color(10, 10, 12)};
+            itemListItemBackgroundDisabled.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            itemListItemBackgroundDisabled.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
+            var itemListItemBackground = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)};
+            itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
             Stylesheet = new Stylesheet(new[]
             {
@@ -319,73 +337,88 @@ namespace Content.Client.UserInterface
                 new StyleRule(new SelectorElement(typeof(ProgressBar), null, null, null),
                     new[]
                     {
-                        new StyleProperty(ProgressBar.StylePropertyBackground, progressBarBackground)
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(ProgressBar), null, null, null),
-                    new[]
-                    {
+                        new StyleProperty(ProgressBar.StylePropertyBackground, progressBarBackground),
                         new StyleProperty(ProgressBar.StylePropertyForeground, progressBarForeground)
                     }),
 
                 // CheckBox
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new[]
                 {
                     new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureUnchecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, Button.StylePseudoClassPressed), new []
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, Button.StylePseudoClassPressed), new[]
                 {
                     new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureChecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new[]
                 {
                     new StyleProperty(CheckBox.StylePropertyHSeparation, 3),
                 }),
 
                 // Tooltip
-                new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Tooltip), null, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
 
                 // Entity tooltip
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ExamineSystem.StyleClassEntityTooltip}, null, null), new []
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                }),
+                new StyleRule(
+                    new SelectorElement(typeof(PanelContainer), new[] {ExamineSystem.StyleClassEntityTooltip}, null,
+                        null), new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                    }),
 
                 // ItemList
-                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new[]
                 {
-                    new StyleProperty(ItemList.StylePropertyBackground, new StyleBoxFlat { BackgroundColor = new Color(32, 32, 40)})
-                }),
-                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
-                {
-                    new StyleProperty(ItemList.StylePropertyItemBackground, new StyleBoxFlat { BackgroundColor = new Color(55, 55, 68)})
-                }),
-                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
-                {
-                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground, new StyleBoxFlat { BackgroundColor = new Color(10, 10, 12)})
-                }),
-                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new []
-                {
-                    new StyleProperty(ItemList.StylePropertySelectedItemBackground, new StyleBoxFlat { BackgroundColor = new Color(75, 75, 86)})
+                    new StyleProperty(ItemList.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)}),
+                    new StyleProperty(ItemList.StylePropertyItemBackground,
+                        itemListItemBackground),
+                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
+                        itemListItemBackgroundDisabled),
+                    new StyleProperty(ItemList.StylePropertySelectedItemBackground,
+                        itemListBackgroundSelected)
                 }),
 
                 // Tree
-                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new[]
                 {
-                    new StyleProperty(Tree.StylePropertyBackground, new StyleBoxFlat { BackgroundColor = new Color(32, 32, 40)})
-                }),
-                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new []
-                {
+                    new StyleProperty(Tree.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)}),
                     new StyleProperty(Tree.StylePropertyItemBoxSelected, new StyleBoxFlat
                     {
                         BackgroundColor = new Color(55, 55, 68),
                         ContentMarginLeftOverride = 4
                     })
+                }),
+
+                // Placeholder
+                new StyleRule(new SelectorElement(typeof(Placeholder), null, null, null), new []
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, placeholder),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new []{Placeholder.StyleClassPlaceholderText}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSans16),
+                    new StyleProperty(Label.StylePropertyFontColor, new Color(103, 103, 103, 128)),
+                }),
+
+                // Big Label
+                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassLabelHeading}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSansBold16),
+                    new StyleProperty(Label.StylePropertyFontColor, NanoGold),
+                } ),
+
+                // Big Button
+                new StyleRule(new SelectorElement(typeof(Button), new []{StyleClassButtonBig}, null, null), new []
+                {
+                    new StyleProperty("font", notoSans16)
                 }),
             });
         }
