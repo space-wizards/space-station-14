@@ -12,6 +12,8 @@ namespace Content.Client.UserInterface
 {
     public sealed class NanoStyle
     {
+        public const string StyleClassLabelHeading = "LabelHeading";
+        public const string StyleClassButtonBig = "ButtonBig";
         private static readonly Color NanoGold = Color.FromHex("#A88B5E");
 
         public Stylesheet Stylesheet { get; }
@@ -44,7 +46,7 @@ namespace Content.Client.UserInterface
                 Texture = buttonNormalTex,
             };
             buttonNormal.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
+            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
             var buttonHoverTex = resCache.GetTexture("/Nano/button_hover.png");
             var buttonHover = new StyleBoxTexture
@@ -52,7 +54,7 @@ namespace Content.Client.UserInterface
                 Texture = buttonHoverTex,
             };
             buttonHover.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonHover.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
+            buttonHover.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
             var buttonPressedTex = resCache.GetTexture("/Nano/button_pressed.png");
             var buttonPressed = new StyleBoxTexture
@@ -60,7 +62,7 @@ namespace Content.Client.UserInterface
                 Texture = buttonPressedTex,
             };
             buttonPressed.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonPressed.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
+            buttonPressed.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
             var buttonDisabledTex = resCache.GetTexture("/Nano/button_disabled.png");
             var buttonDisabled = new StyleBoxTexture
@@ -68,7 +70,7 @@ namespace Content.Client.UserInterface
                 Texture = buttonDisabledTex,
             };
             buttonDisabled.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonDisabled.SetContentMarginOverride(StyleBox.Margin.Left | StyleBox.Margin.Right, 4);
+            buttonDisabled.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
             var lineEditTex = resCache.GetTexture("/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
@@ -394,6 +396,19 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty(Label.StylePropertyFont, notoSans16),
                     new StyleProperty(Label.StylePropertyFontColor, new Color(103, 103, 103, 128)),
+                }),
+
+                // Big Label
+                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassLabelHeading}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSansBold16),
+                    new StyleProperty(Label.StylePropertyFontColor, NanoGold),
+                } ),
+
+                // Big Button
+                new StyleRule(new SelectorElement(typeof(Button), new []{StyleClassButtonBig}, null, null), new []
+                {
+                    new StyleProperty("font", notoSans16)
                 }),
             });
         }

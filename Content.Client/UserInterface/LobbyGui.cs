@@ -19,6 +19,7 @@ namespace Content.Client.UserInterface
         public LobbyGui(ILocalizationManager localization, IResourceCache resourceCache)
         {
             PanelOverride = new StyleBoxFlat { BackgroundColor = new Color(37, 37, 45)};
+            PanelOverride.SetContentMarginOverride(StyleBox.Margin.All, 4);
 
             var vBox = new VBoxContainer();
             AddChild(vBox);
@@ -28,22 +29,26 @@ namespace Content.Client.UserInterface
                 var titleContainer = new HBoxContainer();
                 vBox.AddChild(titleContainer);
 
-                titleContainer.AddChild(new Label
+                var lobbyTitle = new Label
                 {
                     Text = localization.GetString("Lobby"),
                     SizeFlagsHorizontal = SizeFlags.None
-                });
+                };
+                lobbyTitle.AddStyleClass(NanoStyle.StyleClassLabelHeading);
+                titleContainer.AddChild(lobbyTitle);
 
                 titleContainer.AddChild(ServerName = new Label
                 {
                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter | SizeFlags.Expand
                 });
+                ServerName.AddStyleClass(NanoStyle.StyleClassLabelHeading);
 
                 titleContainer.AddChild(LeaveButton = new Button
                 {
                     SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                     Text = localization.GetString("Leave")
                 });
+                LeaveButton.AddStyleClass(NanoStyle.StyleClassButtonBig);
             }
 
             var hBox = new HBoxContainer {SizeFlagsVertical = SizeFlags.FillExpand};
@@ -66,6 +71,7 @@ namespace Content.Client.UserInterface
                 {
                     Text = localization.GetString("Observe")
                 });
+                ObserveButton.AddStyleClass(NanoStyle.StyleClassButtonBig);
 
                 readyButtons.AddChild(StartTime = new Label
                 {
@@ -78,6 +84,7 @@ namespace Content.Client.UserInterface
                     ToggleMode = true,
                     Text = localization.GetString("Ready Up")
                 });
+                ReadyButton.AddStyleClass(NanoStyle.StyleClassButtonBig);
 
                 leftVBox.AddChild(Chat = new ChatBox {SizeFlagsVertical = SizeFlags.FillExpand});
                 Chat.Input.PlaceHolder = localization.GetString("Talk!");
