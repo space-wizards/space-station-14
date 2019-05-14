@@ -9,6 +9,7 @@ using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
@@ -30,6 +31,7 @@ namespace Content.Client.GameTicking
         [Dependency] private IChatManager _chatManager;
         [Dependency] private IClientConsole _console;
         [Dependency] private ILocalizationManager _localization;
+        [Dependency] private IResourceCache _resourceCache;
 #pragma warning restore 649
 
         [ViewVariables] private bool _areWeReady;
@@ -147,7 +149,7 @@ namespace Content.Client.GameTicking
 
             _tickerState = TickerState.InLobby;
 
-            _lobby = new LobbyGui(_localization);
+            _lobby = new LobbyGui(_localization, _resourceCache);
             _userInterfaceManager.StateRoot.AddChild(_lobby);
 
             _lobby.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide, margin: 20);

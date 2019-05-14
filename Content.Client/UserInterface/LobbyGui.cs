@@ -1,6 +1,6 @@
 using Content.Client.Chat;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.UserInterface;
+using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -16,7 +16,7 @@ namespace Content.Client.UserInterface
         public Button LeaveButton { get; }
         public ChatBox Chat { get; set; }
 
-        public LobbyGui(ILocalizationManager localization)
+        public LobbyGui(ILocalizationManager localization, IResourceCache resourceCache)
         {
             PanelOverride = new StyleBoxFlat { BackgroundColor = new Color(37, 37, 45)};
 
@@ -53,8 +53,11 @@ namespace Content.Client.UserInterface
                 var leftVBox = new VBoxContainer {SizeFlagsHorizontal = SizeFlags.FillExpand};
                 hBox.AddChild(leftVBox);
 
-                // Placeholder.
-                leftVBox.AddChild(new Control {SizeFlagsVertical = SizeFlags.FillExpand});
+                leftVBox.AddChild(new Placeholder(resourceCache)
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    PlaceholderText = localization.GetString("Character UI\nPlaceholder")
+                });
 
                 var readyButtons = new HBoxContainer();
 
@@ -77,10 +80,15 @@ namespace Content.Client.UserInterface
                 });
 
                 leftVBox.AddChild(Chat = new ChatBox {SizeFlagsVertical = SizeFlags.FillExpand});
+                Chat.Input.PlaceHolder = localization.GetString("Talk!");
             }
 
             // Placeholder.
-            hBox.AddChild(new Control {SizeFlagsHorizontal = SizeFlags.FillExpand});
+            hBox.AddChild(new Placeholder(resourceCache)
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                PlaceholderText = localization.GetString("Server Info\nPlaceholder")
+            });
         }
     }
 }
