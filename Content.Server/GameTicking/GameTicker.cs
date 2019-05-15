@@ -15,13 +15,13 @@ using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -80,6 +80,8 @@ namespace Content.Server.GameTicking
         private readonly Random _spawnRandom = new Random();
 
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
+
+        [ViewVariables] private Type _presetType;
 
 #pragma warning disable 649
         [Dependency] private IEntityManager _entityManager;
@@ -155,7 +157,7 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.InRound;
 
             // TODO: Allow other presets to be selected.
-            var preset = _dynamicTypeFactory.CreateInstance<PresetTraitor>();
+            var preset = (GamePreset)_dynamicTypeFactory.CreateInstance(_presetType);
             preset.Start();
 
             foreach (var (playerSession, ready) in _playersInLobby.ToList())
@@ -247,6 +249,15 @@ namespace Content.Server.GameTicking
         }
 
         public IEnumerable<GameRule> ActiveGameRules => _gameRules;
+
+        public void SetStartPreset(Type type)
+        {
+            if (!typeof(GamePreset).IsAssignableFrom(type))
+            {
+                throw new ArgumentException("type must inherit GamePreset");
+            }
+            _presetType = type;
+        }
 
         private IEntity _spawnPlayerMob()
         {
@@ -641,6 +652,40 @@ namespace Content.Server.GameTicking
 
             var ticker = IoCManager.Resolve<IGameTicker>();
             ticker.ToggleReady(player, bool.Parse(args[0]));
+        }
+    }
+
+    class SetGamePresetCommand : IClientCommand
+    {
+        public string Command => "setgamepreset";
+        public string Description => "";
+        public string Help => "";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "Need exactly one argument.");
+                return;
+            }
+
+            var ticker = IoCManager.Resolve<IGameTicker>();
+
+            Type presetType;
+            switch (args[0])
+            {
+                case "DeathMatch":
+                    presetType = typeof(PresetDeathMatch);
+                    break;
+                case "Sandbox":
+                    presetType = typeof(PresetSandbox);
+                    break;
+                default:
+                    shell.SendText(player, "That is not a valid game preset!");
+                    return;
+            }
+
+            ticker.SetStartPreset(presetType);
         }
     }
 }

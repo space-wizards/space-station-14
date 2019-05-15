@@ -142,7 +142,7 @@
     <Compile Include="GameObjects\EntitySystems\TemperatureSystem.cs" />
     <Compile Include="GameTicking\GamePreset.cs" />
     <Compile Include="GameTicking\GamePresets\PresetDeathMatch.cs" />
-    <Compile Include="GameTicking\GamePresets\PresetTraitor.cs" />
+    <Compile Include="GameTicking\GamePresets\PresetSandbox.cs" />
     <Compile Include="GameTicking\GameRule.cs" />
     <Compile Include="GameTicking\GameRules\RuleDeathMatch.cs" />
     <Compile Include="GameTicking\GameTicker.cs" />

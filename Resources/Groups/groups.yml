@@ -45,4 +45,5 @@
   - delete
   - tp
   - tpgrid
+  - setgamepreset
   CanViewVar: true
