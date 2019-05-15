@@ -23,48 +23,18 @@ namespace Content.Client.GameObjects.Components.Power
         {
             base.Open();
 
-            _window = new SS14Window(IoCManager.Resolve<IDisplayManager>())
+            _window = new ApcWindow(IoCManager.Resolve<IDisplayManager>())
             {
                 MarginRight = 426.0f, MarginBottom = 270.0f
             };
             _window.OnClose += Close;
-
-            var rows = new VBoxContainer("Rows");
-
-            var statusHeader = new Label("StatusHeader") {Text = "Power Status: "};
-            rows.AddChild(statusHeader);
-
-            var breaker = new HBoxContainer("Breaker");
-            var breakerLabel = new Label("Label") {Text = "Main Breaker: "};
-            _breakerButton = new CheckButton();
-            _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());
-            breaker.AddChild(breakerLabel);
-            breaker.AddChild(_breakerButton);
-            rows.AddChild(breaker);
-
-            var externalStatus = new HBoxContainer("ExternalStatus");
-            var externalStatusLabel = new Label("Label") {Text = "External Power: "};
-            _externalPowerStateLabel = new Label("Status") {Text = "Good"};
-            externalStatus.AddChild(externalStatusLabel);
-            externalStatus.AddChild(_externalPowerStateLabel);
-            rows.AddChild(externalStatus);
-
-            var charge = new HBoxContainer("Charge");
-            var chargeLabel = new Label("Label") {Text = "Charge:"};
-            _chargeBar = new ProgressBar("Charge")
-            {
-                SizeFlagsHorizontal = Control.SizeFlags.FillExpand,
-                MinValue = 0.0f,
-                MaxValue = 1.0f,
-                Page = 0.0f,
-                Value = 0.5f
-            };
-            charge.AddChild(chargeLabel);
-            charge.AddChild(_chargeBar);
-            rows.AddChild(charge);
-
-            _window.Contents.AddChild(rows);
             _window.AddToScreen();
+
+            _breakerButton = _window.Contents.GetChild<CheckButton>("Rows/Breaker/Breaker");
+            _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());
+
+            _externalPowerStateLabel = _window.Contents.GetChild<Label>("Rows/ExternalStatus/Status");
+            _chargeBar = _window.Contents.GetChild<ProgressBar>("Rows/Charge/Charge");
         }
 
         public ApcBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
@@ -108,9 +78,43 @@ namespace Content.Client.GameObjects.Components.Power
 
         private class ApcWindow : SS14Window
         {
-            //protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Power/Apc.tscn");
+            public ApcWindow(IDisplayManager displayMan) : base(displayMan)
+            {
+                var rows = new VBoxContainer("Rows");
 
-            public ApcWindow(IDisplayManager displayMan) : base(displayMan) { }
+                var statusHeader = new Label("StatusHeader") { Text = "Power Status: " };
+                rows.AddChild(statusHeader);
+
+                var breaker = new HBoxContainer("Breaker");
+                var breakerLabel = new Label("Label") { Text = "Main Breaker: " };
+                var breakerButton = new CheckButton {Name = "Breaker"};
+                breaker.AddChild(breakerLabel);
+                breaker.AddChild(breakerButton);
+                rows.AddChild(breaker);
+
+                var externalStatus = new HBoxContainer("ExternalStatus");
+                var externalStatusLabel = new Label("Label") { Text = "External Power: " };
+                var externalPowerStateLabel = new Label("Status") { Text = "Good" };
+                externalStatus.AddChild(externalStatusLabel);
+                externalStatus.AddChild(externalPowerStateLabel);
+                rows.AddChild(externalStatus);
+
+                var charge = new HBoxContainer("Charge");
+                var chargeLabel = new Label("Label") { Text = "Charge:" };
+                var chargeBar = new ProgressBar("Charge")
+                {
+                    SizeFlagsHorizontal = Control.SizeFlags.FillExpand,
+                    MinValue = 0.0f,
+                    MaxValue = 1.0f,
+                    Page = 0.0f,
+                    Value = 0.5f
+                };
+                charge.AddChild(chargeLabel);
+                charge.AddChild(chargeBar);
+                rows.AddChild(charge);
+
+                Contents.AddChild(rows);
+            }
         }
     }
 }
