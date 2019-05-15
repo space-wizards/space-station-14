@@ -8,7 +8,6 @@ namespace Content.Client.Construction
     public class ConstructionButton : Button
     {
         private readonly IDisplayManager _displayManager;
-        protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Construction/ConstructionButton.tscn");
 
         public ConstructorComponent Owner
         {
@@ -27,6 +26,15 @@ namespace Content.Client.Construction
         {
             base.Initialize();
 
+            AnchorLeft = 1.0f;
+            AnchorTop = 1.0f;
+            AnchorRight = 1.0f;
+            AnchorBottom = 1.0f;
+            MarginLeft = -110.0f;
+            MarginTop = -70.0f;
+            MarginRight = -50.0f;
+            MarginBottom = -50.0f;
+            Text = "Crafting";
             OnPressed += IWasPressed;
         }
 

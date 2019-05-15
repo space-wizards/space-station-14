@@ -27,7 +27,6 @@ namespace Content.Client.Construction
 {
     public class ConstructionMenu : SS14Window
     {
-        protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Construction/ConstructionMenu.tscn");
 
 #pragma warning disable CS0649
         [Dependency]
@@ -61,22 +60,66 @@ namespace Content.Client.Construction
             HideOnClose = true;
             Title = "Construction";
             Visible = false;
-            var split = Contents.GetChild("HSplitContainer");
-            var rightSide = split.GetChild("Guide");
-            var info = rightSide.GetChild("Info");
-            InfoIcon = info.GetChild<TextureRect>("TextureRect");
-            InfoLabel = info.GetChild<Label>("Label");
-            StepList = rightSide.GetChild<ItemList>("StepsList");
-            var buttons = rightSide.GetChild("Buttons");
-            BuildButton = buttons.GetChild<Button>("BuildButton");
-            BuildButton.OnPressed += OnBuildPressed;
-            EraseButton = buttons.GetChild<Button>("EraseButton");
-            EraseButton.OnToggled += OnEraseToggled;
 
-            var leftSide = split.GetChild("Recipes");
-            SearchBar = leftSide.GetChild<LineEdit>("Search");
+            var hSplitContainer = new HSplitContainer();
+
+            // Left side
+            var recipes = new VBoxContainer("Recipes") {CustomMinimumSize = new Vector2(150.0f, 0.0f)};
+            SearchBar = new LineEdit("Search") {PlaceHolder = "Search"};
+            RecipeList = new Tree("Tree") {SizeFlagsVertical = SizeFlags.FillExpand, HideRoot = true};
+            recipes.AddChild(SearchBar);
+            recipes.AddChild(RecipeList);
+            hSplitContainer.AddChild(recipes);
+
+            // Right side
+            var guide = new VBoxContainer("Guide");
+            var info = new HBoxContainer("Info");
+            InfoIcon = new TextureRect("TextureRect");
+            InfoLabel = new Label("Label")
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsVertical = SizeFlags.ShrinkCenter
+            };
+            info.AddChild(InfoIcon);
+            info.AddChild(InfoLabel);
+            guide.AddChild(info);
+
+            var stepsLabel = new Label("Label")
+            {
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                Text = "Steps"
+            };
+            guide.AddChild(stepsLabel);
+
+            StepList = new ItemList("StepsList")
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand, SelectMode = ItemList.ItemListSelectMode.None
+            };
+            guide.AddChild(StepList);
+
+            var buttonsContainer = new HBoxContainer("Buttons");
+            BuildButton = new Button("BuildButton")
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                TextAlign = Button.AlignMode.Center,
+                Text = "Build!",
+                Disabled = true,
+                ToggleMode = false
+            };
+            EraseButton = new Button("EraseButton")
+            {
+                TextAlign = Button.AlignMode.Center, Text = "Clear Ghosts", ToggleMode = true
+            };
+            buttonsContainer.AddChild(BuildButton);
+            buttonsContainer.AddChild(EraseButton);
+            guide.AddChild(buttonsContainer);
+
+            hSplitContainer.AddChild(guide);
+            Contents.AddChild(hSplitContainer);
+
+            BuildButton.OnPressed += OnBuildPressed;
+            EraseButton.OnToggled += OnEraseToggled;
             SearchBar.OnTextChanged += OnTextEntered;
-            RecipeList = leftSide.GetChild<Tree>("Tree");
             RecipeList.OnItemSelected += OnItemSelected;
 
             PopulatePrototypeList();
