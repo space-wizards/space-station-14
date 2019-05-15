@@ -68,13 +68,14 @@ namespace Content.Server.GameObjects
                 return "Pick Up";
             }
 
-            protected override bool IsDisabled(IEntity user, ItemComponent component)
+            protected override VerbVisibility GetVisibility(IEntity user, ItemComponent component)
             {
                 if (user.TryGetComponent(out HandsComponent hands) && hands.IsHolding(component.Owner))
                 {
-                    return true;
+                    return VerbVisibility.Disabled;
                 }
-                return false;
+
+                return VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, ItemComponent component)

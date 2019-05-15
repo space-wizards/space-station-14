@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
@@ -61,11 +61,15 @@ namespace Content.Server.GameObjects.EntitySystems
                                 continue;
                             }
                         }
+                        
+                        var vis = verb.GetVisibility(userEntity, component);
+                        if(vis == VerbVisibility.Invisible)
+                            continue;
 
                         // TODO: These keys being giant strings is inefficient as hell.
                         data.Add(new VerbsResponseMessage.VerbData(verb.GetText(userEntity, component),
                             $"{component.GetType()}:{verb.GetType()}",
-                            !verb.IsDisabled(userEntity, component)));
+                            vis == VerbVisibility.Visible));
                     }
 
                     var response = new VerbsResponseMessage(data, req.EntityUid);
