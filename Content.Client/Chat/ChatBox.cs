@@ -49,18 +49,17 @@ namespace Content.Client.Chat
             AnchorLeft = 1.0f;
             AnchorRight = 1.0f;
 
-            VBoxContainer VBox = new VBoxContainer("VBoxContainer");
+            var vBox = new VBoxContainer("VBoxContainer");
 
-            contents = new OutputPanel();
-            contents.SizeFlagsVertical = SizeFlags.FillExpand;
-            VBox.AddChild(contents);
+            contents = new OutputPanel {SizeFlagsVertical = SizeFlags.FillExpand};
+            vBox.AddChild(contents);
 
             Input = new LineEdit("Input");
             Input.OnKeyDown += InputKeyDown;
             Input.OnTextEntered += Input_OnTextEntered;
-            VBox.AddChild(Input);
+            vBox.AddChild(Input);
 
-            AddChild(VBox);
+            AddChild(vBox);
 
             PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Gray.WithAlpha(0.5f) };
         }
