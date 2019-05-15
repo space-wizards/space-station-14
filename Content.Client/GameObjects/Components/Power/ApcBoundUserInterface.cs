@@ -1,7 +1,9 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Power;
+using OpenTK.Graphics.OpenGL4;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Interfaces.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Components.UserInterface;
@@ -21,12 +23,47 @@ namespace Content.Client.GameObjects.Components.Power
         {
             base.Open();
 
-            _window = new ApcWindow(IoCManager.Resolve<IDisplayManager>());
+            _window = new SS14Window(IoCManager.Resolve<IDisplayManager>())
+            {
+                MarginRight = 426.0f, MarginBottom = 270.0f
+            };
             _window.OnClose += Close;
-            _breakerButton = _window.Contents.GetChild<BaseButton>("Rows/Breaker/Breaker");
+
+            var rows = new VBoxContainer("Rows");
+
+            var statusHeader = new Label("StatusHeader") {Text = "Power Status: "};
+            rows.AddChild(statusHeader);
+
+            var breaker = new HBoxContainer("Breaker");
+            var breakerLabel = new Label("Label") {Text = "Main Breaker: "};
+            _breakerButton = new CheckButton();
             _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());
-            _externalPowerStateLabel = _window.Contents.GetChild<Label>("Rows/ExternalStatus/Status");
-            _chargeBar = _window.Contents.GetChild<ProgressBar>("Rows/Charge/Charge");
+            breaker.AddChild(breakerLabel);
+            breaker.AddChild(_breakerButton);
+            rows.AddChild(breaker);
+
+            var externalStatus = new HBoxContainer("ExternalStatus");
+            var externalStatusLabel = new Label("Label") {Text = "External Power: "};
+            _externalPowerStateLabel = new Label("Status") {Text = "Good"};
+            externalStatus.AddChild(externalStatusLabel);
+            externalStatus.AddChild(_externalPowerStateLabel);
+            rows.AddChild(externalStatus);
+
+            var charge = new HBoxContainer("Charge");
+            var chargeLabel = new Label("Label") {Text = "Charge:"};
+            _chargeBar = new ProgressBar("Charge")
+            {
+                SizeFlagsHorizontal = Control.SizeFlags.FillExpand,
+                MinValue = 0.0f,
+                MaxValue = 1.0f,
+                Page = 0.0f,
+                Value = 0.5f
+            };
+            charge.AddChild(chargeLabel);
+            charge.AddChild(_chargeBar);
+            rows.AddChild(charge);
+
+            _window.Contents.AddChild(rows);
             _window.AddToScreen();
         }
 
@@ -71,7 +108,7 @@ namespace Content.Client.GameObjects.Components.Power
 
         private class ApcWindow : SS14Window
         {
-            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Power/Apc.tscn");
+            //protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Power/Apc.tscn");
 
             public ApcWindow(IDisplayManager displayMan) : base(displayMan) { }
         }
