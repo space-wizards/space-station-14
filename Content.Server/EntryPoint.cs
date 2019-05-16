@@ -88,6 +88,7 @@ namespace Content.Server
             factory.Register<DestructibleComponent>();
             factory.Register<TemperatureComponent>();
             factory.Register<ServerDoorComponent>();
+            factory.RegisterReference<ServerDoorComponent, IActivate>();
 
             //Power Components
             factory.Register<PowerTransferComponent>();
@@ -127,6 +128,7 @@ namespace Content.Server
             factory.RegisterReference<ServerStorageComponent, IActivate>();
             factory.Register<EntityStorageComponent>();
             factory.RegisterReference<EntityStorageComponent, IStorageComponent>();
+            factory.RegisterReference<EntityStorageComponent, IActivate>();
 
             factory.Register<ToolLockerFillComponent>();
             factory.Register<ToolboxElectricalFillComponent>();
@@ -135,6 +137,7 @@ namespace Content.Server
             factory.Register<PoweredLightComponent>();
             factory.Register<SmesComponent>();
             factory.Register<ApcComponent>();
+            factory.RegisterReference<ApcComponent, IActivate>();
             factory.Register<MaterialComponent>();
             factory.Register<StackComponent>();
             factory.Register<MaterialStorageComponent>();
@@ -152,6 +155,7 @@ namespace Content.Server
             factory.RegisterReference<SpawnPointComponent, SharedSpawnPointComponent>();
 
             factory.Register<LatheComponent>();
+            factory.RegisterReference<LatheComponent, IActivate>();
             factory.Register<LatheDatabaseComponent>();
 
             factory.RegisterReference<LatheDatabaseComponent, SharedLatheDatabaseComponent>();
