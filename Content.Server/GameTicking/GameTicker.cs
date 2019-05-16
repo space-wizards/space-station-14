@@ -157,7 +157,7 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.InRound;
 
             // TODO: Allow other presets to be selected.
-            var preset = (GamePreset)_dynamicTypeFactory.CreateInstance(_presetType);
+            var preset = (GamePreset)_dynamicTypeFactory.CreateInstance(_presetType ?? typeof(PresetSandbox));
             preset.Start();
 
             foreach (var (playerSession, ready) in _playersInLobby.ToList())
