@@ -46,4 +46,8 @@
   - tp
   - tpgrid
   - setgamepreset
+  - startround
+  - endround
+  - restartround
+  - respawn
   CanViewVar: true
