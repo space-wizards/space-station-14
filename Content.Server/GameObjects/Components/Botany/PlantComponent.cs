@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -52,6 +53,7 @@ namespace Content.Server.GameObjects.Components.Botany
             Owner.GetComponent<IMetaDataComponent>().EntityDescription = CurrentStage().stageDescription;
             UpdateSprite();
         }
+
         public void UpdateCurrentStage()
         {
             foreach (var transition in CurrentStage().Transitions)
@@ -147,6 +149,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 }
                 return true;
             }
+            Owner.PopupMessage(eventArgs.User, "Nothing to harvest.");
             return false;
         }
 

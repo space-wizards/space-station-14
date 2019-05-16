@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
@@ -83,28 +84,55 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.TryGetComponent(out PlantSeedComponent seedComponent) &&
-                HeldPlant == null &&
-                HeldSubstrate != Substrate.Empty)
+            if (eventArgs.AttackWith.TryGetComponent(out PlantSeedComponent seedComponent))
             {
+                if (HeldPlant != null)
+                {
+                    Owner.PopupMessage(eventArgs.User, "Can't plant this seed: there is already a plant there.");
+                    return false;
+                }
+                else if (HeldSubstrate == Substrate.Empty)
+                {
+                    Owner.PopupMessage(eventArgs.User, "Can't plant this seed: there is no substrate to plant into.");
+                    return false;
+                }
                 seedComponent.PlantIntoHolder(this);
                 return true;
             }
-            else if (HeldPlant != null)
-            {
-                return false;
-            }
             else if (eventArgs.AttackWith.TryGetComponent(out ShovelComponent shovel))
             {
-                // you shovel out the substrate
-                HeldSubstrate = Substrate.Empty;
-                Owner.GetComponent<SpriteComponent>().LayerSetSprite(0, emptySprite);
-                return true;
+                if (HeldPlant != null)
+                {
+                    Owner.PopupMessage(eventArgs.User, "Can't use this shovel: plant blocking the way.");
+                    return false;
+                }
+                else if (HeldSubstrate == Substrate.Empty)
+                {
+                    Owner.PopupMessage(eventArgs.User, "Can't use this shovel: no substrate to shovel out.");
+                    return false;
+                }
+                else
+                {
+                    HeldSubstrate = Substrate.Empty;
+                    Owner.GetComponent<SpriteComponent>().LayerSetSprite(0, emptySprite);
+                    return true;
+                }
             }
             // Todo: consider demanding reagents rather than stacks?
             else if (eventArgs.AttackWith.TryGetComponent(out StackComponent stack))
             {
-                if (HeldSubstrate == Substrate.Empty)
+                if (HeldSubstrate != Substrate.Empty)
+                {
+                    Owner.PopupMessage(eventArgs.User, "Can't fill with this substrate: there is already a substrate in this.");
+                    return false;
+                }
+                else if (HeldPlant != null)
+                {
+                    // This shouldn't be happening in the first place
+                    Owner.PopupMessage(eventArgs.User, "Can't fill with this substrate: the plant is blocking that.");
+                    return false;
+                }
+                else
                 {
                     if ((StackType)stack.StackType == StackType.Rockwool && stack.Use(10))
                     {
