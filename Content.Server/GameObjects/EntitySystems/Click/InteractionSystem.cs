@@ -1,19 +1,19 @@
 ﻿using System;
-using Content.Server.Interfaces.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Input;
-using Robust.Shared.Input;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Input;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -26,9 +26,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Called when using one object on another
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="attackwith"></param>
-        /// <returns></returns>
         bool AttackBy(AttackByEventArgs eventArgs);
     }
 
@@ -47,8 +44,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Called when a player directly interacts with an empty hand
         /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         bool AttackHand(AttackHandEventArgs eventArgs);
     }
 
@@ -65,13 +60,11 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Called when we try to interact with an entity out of range
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="attackwith"></param>
-        /// <param name="clicklocation"></param>
         /// <returns></returns>
         bool RangedAttackBy(RangedAttackByEventArgs eventArgs);
     }
 
+    [PublicAPI]
     public class RangedAttackByEventArgs : EventArgs
     {
         public IEntity User { get; set; }
@@ -88,9 +81,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Called when we interact with nothing, or when we interact with an entity out of range that has no behavior
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="clicklocation"></param>
-        /// <param name="attacked">The entity that was clicked on out of range. May be null if no entity was clicked on.true</param>
         void AfterAttack(AfterAttackEventArgs eventArgs);
     }
 
@@ -109,7 +99,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Called when we activate an object we are holding to use it
         /// </summary>
-        /// <param name="user"></param>
         /// <returns></returns>
         bool UseEntity(UseEntityEventArgs eventArgs);
     }
@@ -127,7 +116,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         ///     Called when this component is activated by another entity.
         /// </summary>
-        /// <param name="user">Entity that activated this component.</param>
         void Activate(ActivateEventArgs eventArgs);
     }
 
@@ -139,50 +127,66 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     /// Governs interactions during clicking on entities
     /// </summary>
-    public class InteractionSystem : EntitySystem
+    [UsedImplicitly]
+    public sealed class InteractionSystem : EntitySystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
-        public const float INTERACTION_RANGE = 2;
-        public const float INTERACTION_RANGE_SQUARED = INTERACTION_RANGE * INTERACTION_RANGE;
+        public const float InteractionRange = 2;
+        public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public override void Initialize()
         {
             var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.UseItemInHand, new PointerInputCmdHandler(HandleUseItemInHand));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld, new PointerInputCmdHandler((HandleUseItemInWorld)));
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.UseItemInHand,
+                new PointerInputCmdHandler(HandleUseItemInHand));
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
+                new PointerInputCmdHandler((HandleActivateItemInWorld)));
         }
 
-        private void HandleUseItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        public void HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
-            if(!EntityManager.TryGetEntity(uid, out var used))
+            if (!EntityManager.TryGetEntity(uid, out var used))
                 return;
 
             var playerEnt = ((IPlayerSession) session).AttachedEntity;
 
-            if(playerEnt == null || !playerEnt.IsValid())
+            if (playerEnt == null || !playerEnt.IsValid())
+            {
                 return;
+            }
 
-            if (!playerEnt.Transform.GridPosition.InRange(_mapManager, used.Transform.GridPosition, INTERACTION_RANGE))
+            if (!playerEnt.Transform.GridPosition.InRange(_mapManager, used.Transform.GridPosition, InteractionRange))
+            {
                 return;
+            }
 
-            var activateMsg = new ActivateInWorldMessage(playerEnt, used);
+            InteractionActivate(playerEnt, used);
+        }
+
+        private void InteractionActivate(IEntity user, IEntity used)
+        {
+            var activateMsg = new ActivateInWorldMessage(user, used);
             RaiseEvent(activateMsg);
-            if(activateMsg.Handled)
+            if (activateMsg.Handled)
+            {
                 return;
+            }
 
             if (!used.TryGetComponent(out IActivate activateComp))
+            {
                 return;
+            }
 
-            activateComp.Activate(new ActivateEventArgs { User = playerEnt });
+            activateComp.Activate(new ActivateEventArgs {User = user});
         }
 
         private void HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if(!_mapManager.GridExists(coords.GridID))
+            if (!_mapManager.GridExists(coords.GridID))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return;
@@ -190,32 +194,37 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (uid.IsClientSide())
             {
-                Logger.WarningS("system.interaction", $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
                 return;
             }
 
-            UserInteraction(((IPlayerSession)session).AttachedEntity, coords, uid);
+            UserInteraction(((IPlayerSession) session).AttachedEntity, coords, uid);
         }
 
         private void UserInteraction(IEntity player, GridCoordinates coordinates, EntityUid clickedUid)
         {
-            //Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
+            // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             if (!EntityManager.TryGetEntity(clickedUid, out var attacked))
+            {
                 attacked = null;
+            }
 
-            //Verify player has a transform component
+            // Verify player has a transform component
             if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
             {
                 return;
             }
-            //Verify player is on the same map as the entity he clicked on
-            else if (_mapManager.GetGrid(coordinates.GridID).ParentMap.Index != playerTransform.MapID)
+
+            // Verify player is on the same map as the entity he clicked on
+            if (_mapManager.GetGrid(coordinates.GridID).ParentMap.Index != playerTransform.MapID)
             {
-                Logger.Warning(string.Format("Player named {0} clicked on a map he isn't located on", player.Name));
+                Logger.WarningS("system.interaction",
+                    $"Player named {player.Name} clicked on a map he isn't located on");
                 return;
             }
 
-            //Verify player has a hand, and find what object he is currently holding in his active hand
+            // Verify player has a hand, and find what object he is currently holding in his active hand
             if (!player.TryGetComponent<IHandsComponent>(out var hands))
             {
                 return;
@@ -224,59 +233,64 @@ namespace Content.Server.GameObjects.EntitySystems
             var item = hands.GetActiveHand?.Owner;
 
             if (!ActionBlockerSystem.CanInteract(player))
-                return;
-            //TODO: Check if client should be able to see that object to click on it in the first place, prevent using locaters by firing a laser or something
-
-
-            //Clicked on empty space behavior, try using ranged attack
-            if (attacked == null && item != null)
-            {
-                //AFTERATTACK: Check if we clicked on an empty location, if so the only interaction we can do is afterattack
-                InteractAfterattack(player, item, coordinates);
-                return;
-            }
-            else if (attacked == null)
             {
                 return;
             }
 
-            //Verify attacked object is on the map if we managed to click on it somehow
-            if (!attacked.GetComponent<ITransformComponent>().IsMapTransform)
-            {
-                Logger.Warning(string.Format("Player named {0} clicked on object {1} that isn't currently on the map somehow", player.Name, attacked.Name));
-                return;
-            }
+            // TODO: Check if client should be able to see that object to click on it in the first place
 
-            //Check if ClickLocation is in object bounds here, if not lets log as warning and see why
-            if (attacked.TryGetComponent(out BoundingBoxComponent boundingbox))
+            // Clicked on empty space behavior, try using ranged attack
+            if (attacked == null)
             {
-                if (!boundingbox.WorldAABB.Contains(coordinates.Position))
+                if (item != null)
                 {
-                    Logger.Warning(string.Format("Player {0} clicked {1} outside of its bounding box component somehow", player.Name, attacked.Name));
+                    // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterAttack
+                    InteractAfterAttack(player, item, coordinates);
+                }
+
+                return;
+            }
+
+            // Verify attacked object is on the map if we managed to click on it somehow
+            if (!attacked.Transform.IsMapTransform)
+            {
+                Logger.WarningS("system.interaction",
+                    $"Player named {player.Name} clicked on object {attacked.Name} that isn't currently on the map somehow");
+                return;
+            }
+
+            // Check if ClickLocation is in object bounds here, if not lets log as warning and see why
+            if (attacked.TryGetComponent(out BoundingBoxComponent boundingBox))
+            {
+                if (!boundingBox.WorldAABB.Contains(coordinates.Position))
+                {
+                    Logger.WarningS("system.interaction",
+                        $"Player {player.Name} clicked {attacked.Name} outside of its bounding box component somehow");
                     return;
                 }
             }
 
-            //RANGEDATTACK/AFTERATTACK: Check distance between user and clicked item, if too large parse it in the ranged function
-            //TODO: have range based upon the item being used? or base it upon some variables of the player himself?
-            var distance = (playerTransform.WorldPosition - attacked.GetComponent<ITransformComponent>().WorldPosition).LengthSquared;
-            if (distance > INTERACTION_RANGE_SQUARED)
+            // RangedAttack/AfterAttack: Check distance between user and clicked item, if too large parse it in the ranged function
+            // TODO: have range based upon the item being used? or base it upon some variables of the player himself?
+            var distance = (playerTransform.WorldPosition - attacked.Transform.WorldPosition).LengthSquared;
+            if (distance > InteractionRangeSquared)
             {
                 if (item != null)
                 {
                     RangedInteraction(player, item, attacked, coordinates);
                     return;
                 }
-                return; //Add some form of ranged attackhand here if you need it someday, or perhaps just ways to modify the range of attackhand
+
+                return; // Add some form of ranged AttackHand here if you need it someday, or perhaps just ways to modify the range of AttackHand
             }
 
-            //We are close to the nearby object and the object isn't contained in our active hand
-            //ATTACKBY/AFTERATTACK: We will either use the item on the nearby object
+            // We are close to the nearby object and the object isn't contained in our active hand
+            // AttackBy/AfterAttack: We will either use the item on the nearby object
             if (item != null)
             {
                 Interaction(player, item, attacked, coordinates);
             }
-            //ATTACKHAND: Since our hand is empty we will use attackhand
+            // AttackHand/Activate: Since our hand is empty we will use AttackHand/Activate
             else
             {
                 Interaction(player, attacked);
@@ -284,90 +298,101 @@ namespace Content.Server.GameObjects.EntitySystems
         }
 
         /// <summary>
-        /// We didn't click on any entity, try doing an afterattack on the click location
+        ///     We didn't click on any entity, try doing an AfterAttack on the click location
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="weapon"></param>
-        /// <param name="clicklocation"></param>
-        public void InteractAfterattack(IEntity user, IEntity weapon, GridCoordinates clicklocation)
+        private void InteractAfterAttack(IEntity user, IEntity weapon, GridCoordinates clickLocation)
         {
-            var message = new AfterAttackMessage(user, weapon, null, clicklocation);
+            var message = new AfterAttackMessage(user, weapon, null, clickLocation);
             RaiseEvent(message);
-            if(message.Handled)
-                return;
-
-            List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
-
-            for (var i = 0; i < afterattacks.Count; i++)
+            if (message.Handled)
             {
-                afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clicklocation });
+                return;
+            }
+
+            var afterAttacks = weapon.GetAllComponents<IAfterAttack>().ToList();
+            var afterAttackEventArgs = new AfterAttackEventArgs {User = user, ClickLocation = clickLocation};
+
+            foreach (var afterAttack in afterAttacks)
+            {
+                afterAttack.AfterAttack(afterAttackEventArgs);
             }
         }
 
         /// <summary>
         /// Uses a weapon/object on an entity
-        /// Finds interactable components with the Attackby interface and calls their function
+        /// Finds components with the AttackBy interface and calls their function
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="weapon"></param>
-        /// <param name="attacked"></param>
-        public void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clicklocation)
+        public void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
-            var attackMsg = new AttackByMessage(user, weapon, attacked, clicklocation);
+            var attackMsg = new AttackByMessage(user, weapon, attacked, clickLocation);
             RaiseEvent(attackMsg);
-            if(attackMsg.Handled)
-                return;
-
-            List<IAttackBy> interactables = attacked.GetAllComponents<IAttackBy>().ToList();
-
-            for (var i = 0; i < interactables.Count; i++)
+            if (attackMsg.Handled)
             {
-                if (interactables[i].AttackBy(new AttackByEventArgs { User = user, ClickLocation = clicklocation, AttackWith = weapon })) //If an attackby returns a status completion we finish our attack
+                return;
+            }
+
+            var attackBys = attacked.GetAllComponents<IAttackBy>().ToList();
+            var attackByEventArgs = new AttackByEventArgs
+            {
+                User = user, ClickLocation = clickLocation, AttackWith = weapon
+            };
+
+            foreach (var attackBy in attackBys)
+            {
+                if (attackBy.AttackBy(attackByEventArgs))
                 {
+                    // If an AttackBy returns a status completion we finish our attack
                     return;
                 }
             }
 
-            //Else check damage component to see if we damage if not attackby, and if so can we attack object
-            
-            var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clicklocation);
+            var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
             RaiseEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
-                return;
-
-            //If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
-
-            for (var i = 0; i < afterattacks.Count; i++)
             {
-                afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clicklocation, Attacked = attacked });
+                return;
+            }
+
+            // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
+            var afterAttacks = weapon.GetAllComponents<IAfterAttack>().ToList();
+            var afterAttackEventArgs = new AfterAttackEventArgs
+            {
+                User = user, ClickLocation = clickLocation, Attacked = attacked
+            };
+
+            foreach (var afterAttack in afterAttacks)
+            {
+                afterAttack.AfterAttack(afterAttackEventArgs);
             }
         }
 
         /// <summary>
         /// Uses an empty hand on an entity
-        /// Finds interactable components with the Attackhand interface and calls their function
+        /// Finds components with the AttackHand interface and calls their function
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="attacked"></param>
         public void Interaction(IEntity user, IEntity attacked)
         {
             var message = new AttackHandMessage(user, attacked);
             RaiseEvent(message);
-            if(message.Handled)
-                return;
-
-            List<IAttackHand> interactables = attacked.GetAllComponents<IAttackHand>().ToList();
-
-            for (var i = 0; i < interactables.Count; i++)
+            if (message.Handled)
             {
-                if (interactables[i].AttackHand(new AttackHandEventArgs { User = user})) //If an attackby returns a status completion we finish our attack
+                return;
+            }
+
+            var attackHands = attacked.GetAllComponents<IAttackHand>().ToList();
+            var attackHandEventArgs = new AttackHandEventArgs {User = user};
+
+            foreach (var attackHand in attackHands)
+            {
+                if (attackHand.AttackHand(attackHandEventArgs))
                 {
+                    // If an AttackHand returns a status completion we finish our attack
                     return;
                 }
             }
 
-            //Else check damage component to see if we damage if not attackby, and if so can we attack object
+            // Else we run Activate.
+            InteractionActivate(user, attacked);
         }
 
         /// <summary>
@@ -388,22 +413,23 @@ namespace Content.Server.GameObjects.EntitySystems
         /// Activates/Uses an object in control/possession of a user
         /// If the item has the IUse interface on one of its components we use the object in our hand
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="attacked"></param>
         public void UseInteraction(IEntity user, IEntity used)
         {
             var useMsg = new UseInHandMessage(user, used);
             RaiseEvent(useMsg);
-            if(useMsg.Handled)
-                return;
-
-            List<IUse> usables = used.GetAllComponents<IUse>().ToList();
-
-            //Try to use item on any components which have the interface
-            for (var i = 0; i < usables.Count; i++)
+            if (useMsg.Handled)
             {
-                if (usables[i].UseEntity(new UseEntityEventArgs { User = user })) //If an attackby returns a status completion we finish our attack
+                return;
+            }
+
+            var uses = used.GetAllComponents<IUse>().ToList();
+
+            // Try to use item on any components which have the interface
+            foreach (var use in uses)
+            {
+                if (use.UseEntity(new UseEntityEventArgs {User = user}))
                 {
+                    // If a Use returns a status completion we finish our attack
                     return;
                 }
             }
@@ -413,41 +439,44 @@ namespace Content.Server.GameObjects.EntitySystems
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="weapon"></param>
-        /// <param name="attacked"></param>
         public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
             var rangedMsg = new RangedAttackMessage(user, weapon, attacked, clickLocation);
             RaiseEvent(rangedMsg);
-            if(rangedMsg.Handled)
+            if (rangedMsg.Handled)
                 return;
 
-            List<IRangedAttackBy> rangedusables = attacked.GetAllComponents<IRangedAttackBy>().ToList();
-
-            //See if we have a ranged attack interaction
-            for (var i = 0; i < rangedusables.Count; i++)
+            var rangedAttackBys = attacked.GetAllComponents<IRangedAttackBy>().ToList();
+            var rangedAttackByEventArgs = new RangedAttackByEventArgs
             {
-                if (rangedusables[i].RangedAttackBy(new RangedAttackByEventArgs { User = user, Weapon = weapon, ClickLocation = clickLocation })) //If an attackby returns a status completion we finish our attack
+                User = user, Weapon = weapon, ClickLocation = clickLocation
+            };
+
+            // See if we have a ranged attack interaction
+            foreach (var t in rangedAttackBys)
+            {
+                if (t.RangedAttackBy(rangedAttackByEventArgs))
                 {
+                    // If an AttackBy returns a status completion we finish our attack
                     return;
                 }
             }
 
-            if (weapon != null)
+            var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
+            RaiseEvent(afterAtkMsg);
+            if (afterAtkMsg.Handled)
+                return;
+
+            var afterAttacks = weapon.GetAllComponents<IAfterAttack>().ToList();
+            var afterAttackEventArgs = new AfterAttackEventArgs
             {
-                var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
-                RaiseEvent(afterAtkMsg);
-                if (afterAtkMsg.Handled)
-                    return;
+                User = user, ClickLocation = clickLocation, Attacked = attacked
+            };
 
-                List<IAfterAttack> afterattacks = weapon.GetAllComponents<IAfterAttack>().ToList();
-
-                //See if we have a ranged attack interaction
-                for (var i = 0; i < afterattacks.Count; i++)
-                {
-                    afterattacks[i].AfterAttack(new AfterAttackEventArgs { User = user, ClickLocation = clickLocation, Attacked = attacked });
-                }
+            //See if we have a ranged attack interaction
+            foreach (var afterAttack in afterAttacks)
+            {
+                afterAttack.AfterAttack(afterAttackEventArgs);
             }
         }
     }
@@ -455,6 +484,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     ///     Raised when being clicked on or "attacked" by a user with an object in their hand
     /// </summary>
+    [PublicAPI]
     public class AttackByMessage : EntitySystemMessage
     {
         /// <summary>
@@ -471,7 +501,7 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     Entity that the User attacked with.
         /// </summary>
         public IEntity ItemInHand { get; }
-        
+
         /// <summary>
         ///     Entity that was attacked.
         /// </summary>
@@ -494,6 +524,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     ///      Raised when being clicked on or "attacked" by a user with an empty hand.
     /// </summary>
+    [PublicAPI]
     public class AttackHandMessage : EntitySystemMessage
     {
         /// <summary>
@@ -521,6 +552,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     ///     Raised when being clicked by objects outside the range of direct use.
     /// </summary>
+    [PublicAPI]
     public class RangedAttackMessage : EntitySystemMessage
     {
         /// <summary>
@@ -560,6 +592,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     ///     Raised when clicking on another object and no attack event was handled.
     /// </summary>
+    [PublicAPI]
     public class AfterAttackMessage : EntitySystemMessage
     {
         /// <summary>
@@ -599,6 +632,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     ///     Raised when using the entity in your hands.
     /// </summary>
+    [PublicAPI]
     public class UseInHandMessage : EntitySystemMessage
     {
         /// <summary>
@@ -626,6 +660,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     ///     Raised when an entity is activated in the world.
     /// </summary>
+    [PublicAPI]
     public class ActivateInWorldMessage : EntitySystemMessage
     {
         /// <summary>

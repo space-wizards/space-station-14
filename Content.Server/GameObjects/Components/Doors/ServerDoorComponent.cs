@@ -10,7 +10,7 @@ using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects
 {
-    public class ServerDoorComponent : Component, IAttackHand
+    public class ServerDoorComponent : Component, IActivate
     {
         public override string Name => "Door";
 
@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects
             base.OnRemove();
         }
 
-        public bool AttackHand(AttackHandEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (_state == DoorState.Open)
             {
@@ -51,7 +51,6 @@ namespace Content.Server.GameObjects
             {
                 Open();
             }
-            return true;
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)

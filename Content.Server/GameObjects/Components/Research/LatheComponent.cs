@@ -15,7 +15,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
 {
-    public class LatheComponent : SharedLatheComponent, IAttackHand, IAttackBy, IActivate
+    public class LatheComponent : SharedLatheComponent, IAttackBy, IActivate
     {
         public const int VolumePerSheet = 3750;
 
@@ -94,17 +94,6 @@ namespace Content.Server.GameObjects.Components.Research
             _userInterface.Open(actor.playerSession);
             return;
         }
-
-        bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
-        {
-
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
-                return false;
-
-            _userInterface.Open(actor.playerSession);
-            return true;
-        }
-
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
