@@ -66,6 +66,11 @@ namespace Content.Client.GameTicking
                 return;
             }
 
+            _updatePlayerList();
+        }
+
+        private void _updatePlayerList()
+        {
             _lobby.OnlinePlayerItemList.Clear();
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
@@ -208,6 +213,8 @@ namespace Content.Client.GameTicking
             };
 
             _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
+
+            _updatePlayerList();
         }
 
         private void _joinGame(MsgTickerJoinGame message)
