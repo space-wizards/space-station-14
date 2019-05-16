@@ -18,7 +18,6 @@ namespace Content.Client.UserInterface
         private readonly IPlacementManager _placementManager;
         private readonly IPrototypeManager _prototypeManager;
         private readonly IResourceCache _resourceCache;
-        private readonly IDisplayManager _displayManager;
         private readonly IConfigurationManager _configSystem;
 
         private BaseButton QuitButton;
@@ -27,16 +26,14 @@ namespace Content.Client.UserInterface
         private BaseButton SpawnTilesButton;
         private OptionsMenu optionsMenu;
 
-        public EscapeMenu(IDisplayManager displayManager,
-            IClientConsole console,
+        public EscapeMenu(IClientConsole console,
             ITileDefinitionManager tileDefinitionManager,
             IPlacementManager placementManager,
             IPrototypeManager prototypeManager,
             IResourceCache resourceCache,
-            IConfigurationManager configSystem) : base(displayManager)
+            IConfigurationManager configSystem)
         {
             _configSystem = configSystem;
-            _displayManager = displayManager;
             _console = console;
             __tileDefinitionManager = tileDefinitionManager;
             _placementManager = placementManager;
@@ -48,7 +45,7 @@ namespace Content.Client.UserInterface
 
         private void PerformLayout()
         {
-            optionsMenu = new OptionsMenu(_displayManager, _configSystem)
+            optionsMenu = new OptionsMenu(_configSystem)
             {
                 Visible = false
             };
@@ -97,14 +94,14 @@ namespace Content.Client.UserInterface
 
         private void OnSpawnEntitiesButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            var window = new EntitySpawnWindow(_displayManager, _placementManager, _prototypeManager, _resourceCache);
+            var window = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
             window.AddToScreen();
             window.OpenToLeft();
         }
 
         private void OnSpawnTilesButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            var window = new TileSpawnWindow(__tileDefinitionManager, _placementManager, _displayManager, _resourceCache);
+            var window = new TileSpawnWindow(__tileDefinitionManager, _placementManager, _resourceCache);
             window.AddToScreen();
             window.OpenToLeft();
         }
