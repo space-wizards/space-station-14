@@ -29,8 +29,12 @@ namespace Content.Server.GameObjects.EntitySystems
 
     public class ExamineSystem : EntitySystem
     {
+        public const float ExamineRange = 1.5f;
+        public const float ExamineRangeSquared = ExamineRange * ExamineRange;
+
 #pragma warning disable 649
         [Dependency] private IEntityManager _entityManager;
+        [Dependency] private IPlayerManager _playerManager;
 #pragma warning restore 649
 
         private static readonly FormattedMessage _entityNotFoundMessage;
@@ -95,18 +99,24 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.HandleNetMessage(channel, message);
 
-            if (message is ExamineSystemMessages.RequestExamineInfoMessage request)
-            {
-                if (!_entityManager.TryGetEntity(request.EntityUid, out var entity))
-                {
-                    RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                        request.EntityUid, _entityNotFoundMessage));
-                    return;
-                }
+            if (!(message is ExamineSystemMessages.RequestExamineInfoMessage request))
+                return;
 
-                var text = GetExamineText(entity);
-                RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text));
+            var session = _playerManager.GetSessionByChannel(channel);
+            var playerEnt = session.AttachedEntity;
+
+            if((playerEnt == null) ||
+               (!_entityManager.TryGetEntity(request.EntityUid, out var entity)) ||
+               (entity.Transform.MapID != playerEnt.Transform.MapID) ||
+               ((entity.Transform.WorldPosition - playerEnt.Transform.WorldPosition).LengthSquared > ExamineRangeSquared))
+            {
+                RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
+                    request.EntityUid, _entityNotFoundMessage));
+                return;
             }
+
+            var text = GetExamineText(entity);
+            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text));
         }
     }
 }
