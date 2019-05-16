@@ -45,13 +45,13 @@ binds:
   key: MouseMiddle
   type: State
 - function: SwapHands
-  key: Tab
+  key: X
   type: State
 - function: Drop
   key: Q
   type: State
 - function: ActivateItemInHand
-  key: F
+  key: Z
   type: State
 - function: OpenCharacterMenu
   key: C
