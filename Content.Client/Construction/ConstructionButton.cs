@@ -1,6 +1,7 @@
 ﻿using Content.Client.GameObjects.Components.Construction;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Construction
@@ -40,7 +41,10 @@ namespace Content.Client.Construction
 
         private void PerformLayout()
         {
-            Menu = new ConstructionMenu(_displayManager);
+            Menu = new ConstructionMenu(_displayManager)
+            {
+                Size = new Vector2(500.0f, 350.0f)
+            };
             Menu.AddToScreen();
         }
 
