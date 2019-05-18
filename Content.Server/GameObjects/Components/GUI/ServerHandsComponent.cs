@@ -462,8 +462,8 @@ namespace Content.Server.GameObjects
                     var playerEntity = session.AttachedEntity;
                     var used = GetActiveHand?.Owner;
 
-                    if (playerEntity == Owner && used != null)
-                    {
+                    if (playerEntity == Owner && used != null && slot.ContainedEntity != null)
+                        {
                         var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
                         interactionSystem.Interaction(Owner, used, slot.ContainedEntity,
                             GridCoordinates.Nullspace);
