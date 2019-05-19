@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
 
                 var distanceSquared = (storagePos - attachedEntity.Transform.WorldPosition).LengthSquared;
-                if (distanceSquared > InteractionSystem.INTERACTION_RANGE_SQUARED)
+                if (distanceSquared > InteractionSystem.InteractionRangeSquared)
                 {
                     storageComp.UnsubscribeSession(session);
                 }

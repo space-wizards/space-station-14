@@ -14,7 +14,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components
 {
-    public class EntityStorageComponent : Component, IAttackHand, IStorageComponent
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent
     {
         public override string Name => "EntityStorage";
 
@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables]
         public bool Open { get; private set; }
 
-        public bool AttackHand(AttackHandEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (Open)
             {
@@ -51,7 +51,6 @@ namespace Content.Server.GameObjects.Components
             {
                 OpenStorage();
             }
-            return true;
         }
 
         private void CloseStorage()

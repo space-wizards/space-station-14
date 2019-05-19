@@ -1,12 +1,10 @@
 using Content.Client.UserInterface;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.State;
 using Robust.Client.State.States;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Map;
@@ -19,7 +17,6 @@ namespace Content.Client
     {
 #pragma warning disable 649
         [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly IDisplayManager _displayManager;
         [Dependency] private readonly IClientConsole _clientConsole;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
         [Dependency] private readonly IPlacementManager _placementManager;
@@ -41,7 +38,7 @@ namespace Content.Client
             if (obj.NewState is GameScreen)
             {
                 // Switched TO GameScreen.
-                _escapeMenu = new EscapeMenu(_displayManager, _clientConsole, _tileDefinitionManager, _placementManager,
+                _escapeMenu = new EscapeMenu(_clientConsole, _tileDefinitionManager, _placementManager,
                     _prototypeManager, _resourceCache, _configurationManager)
                 {
                     Visible = false

@@ -33,5 +33,7 @@ namespace Content.Server.Interfaces.GameTicking
         T AddGameRule<T>() where T : GameRule, new();
         void RemoveGameRule(GameRule rule);
         IEnumerable<GameRule> ActiveGameRules { get; }
+
+        void SetStartPreset(Type type);
     }
 }
