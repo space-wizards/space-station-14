@@ -4,6 +4,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     /// <summary>
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
-    internal class HandheldLightComponent : Component, IUse, IExamine, IAttackBy
+    internal class HandheldLightComponent : Component, IUse, IExamine, IAttackBy, IMapInit
     {
         public const float Wattage = 10;
         [ViewVariables] private ContainerSlot _cellContainer;
@@ -76,12 +77,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.TryGetComponent(out _clothingComponent);
             _cellContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out var existed);
-
-            if (!existed)
-            {
-                var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper");
-                _cellContainer.Insert(cell);
-            }
         }
 
         /// <summary>
@@ -178,6 +173,16 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 component.EjectCell(user);
             }
+        }
+
+        void IMapInit.MapInit()
+        {
+            if (_cellContainer.ContainedEntity != null)
+            {
+                return;
+            }
+            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper");
+            _cellContainer.Insert(cell);
         }
     }
 }

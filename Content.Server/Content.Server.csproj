@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Content.Server</RootNamespace>
     <AssemblyName>Content.Server</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ContentAssemblyTarget>..\RobustToolbox\bin\Server\Resources\Assemblies\</ContentAssemblyTarget>
     <OutputPath>..\bin\Content.Server\</OutputPath>
@@ -77,8 +77,11 @@
     <Compile Include="GameObjects\Components\CatwalkComponent.cs" />
     <Compile Include="GameObjects\Components\Damage\DamageThreshold.cs" />
     <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
-    <Compile Include="GameObjects\Components\EntityStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\Tools\ShovelComponent.cs" />
+    <Compile Include="GameObjects\Components\Items\Storage\EntityStorageComponent.cs" />
+    <Compile Include="GameObjects\Components\Items\Storage\Fill\ToolboxElectricalFillComponent.cs" />
+    <Compile Include="GameObjects\Components\Items\Storage\Fill\ToolLockerFillComponent.cs" />
+    <Compile Include="GameObjects\Components\Items\Storage\IStorageComponent.cs" />
     <Compile Include="GameObjects\Components\Mobs\HeatResistanceComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\HandheldLightComponent.cs" />
     <Compile Include="GameObjects\Components\Interactable\Tools\BaseTool.cs" />
@@ -145,7 +148,10 @@
     <Compile Include="GameObjects\EntitySystems\WelderSystem.cs" />
     <Compile Include="GameObjects\EntitySystems\TemperatureSystem.cs" />
     <Compile Include="GameTicking\GamePreset.cs" />
-    <Compile Include="GameTicking\GamePresets\PresetTraitor.cs" />
+    <Compile Include="GameTicking\GamePresets\PresetDeathMatch.cs" />
+    <Compile Include="GameTicking\GamePresets\PresetSandbox.cs" />
+    <Compile Include="GameTicking\GameRule.cs" />
+    <Compile Include="GameTicking\GameRules\RuleDeathMatch.cs" />
     <Compile Include="GameTicking\GameTicker.cs" />
     <Compile Include="Interfaces\Chat\IChatCommand.cs" />
     <Compile Include="Interfaces\Chat\IChatManager.cs" />

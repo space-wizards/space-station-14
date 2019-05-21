@@ -48,11 +48,14 @@ using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.ServerStatus;
 using Robust.Shared.Timing;
 using Content.Server.GameObjects.Components.Destructible;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Items.Storage.Fill;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.Research;
+using Robust.Shared.Interfaces.Log;
 
 namespace Content.Server
 {
@@ -86,6 +89,7 @@ namespace Content.Server
             factory.Register<DestructibleComponent>();
             factory.Register<TemperatureComponent>();
             factory.Register<ServerDoorComponent>();
+            factory.RegisterReference<ServerDoorComponent, IActivate>();
 
             //Power Components
             factory.Register<PowerTransferComponent>();
@@ -129,13 +133,20 @@ namespace Content.Server
             factory.Register<HandheldLightComponent>();
 
             factory.Register<ServerStorageComponent>();
+            factory.RegisterReference<ServerStorageComponent, IStorageComponent>();
             factory.RegisterReference<ServerStorageComponent, IActivate>();
             factory.Register<EntityStorageComponent>();
+            factory.RegisterReference<EntityStorageComponent, IStorageComponent>();
+            factory.RegisterReference<EntityStorageComponent, IActivate>();
+
+            factory.Register<ToolLockerFillComponent>();
+            factory.Register<ToolboxElectricalFillComponent>();
 
             factory.Register<PowerDebugTool>();
             factory.Register<PoweredLightComponent>();
             factory.Register<SmesComponent>();
             factory.Register<ApcComponent>();
+            factory.RegisterReference<ApcComponent, IActivate>();
             factory.Register<MaterialComponent>();
             factory.Register<StackComponent>();
             factory.Register<MaterialStorageComponent>();
@@ -153,6 +164,7 @@ namespace Content.Server
             factory.RegisterReference<SpawnPointComponent, SharedSpawnPointComponent>();
 
             factory.Register<LatheComponent>();
+            factory.RegisterReference<LatheComponent, IActivate>();
             factory.Register<LatheDatabaseComponent>();
 
             factory.RegisterReference<LatheDatabaseComponent, SharedLatheDatabaseComponent>();
@@ -192,6 +204,9 @@ namespace Content.Server
             var playerManager = IoCManager.Resolve<IPlayerManager>();
 
             _statusShell = new StatusShell();
+
+            var logManager = IoCManager.Resolve<ILogManager>();
+            logManager.GetSawmill("Storage").Level = LogLevel.Info;
         }
 
         public override void PostInit()
@@ -206,7 +221,6 @@ namespace Content.Server
             base.Update(level, frameTime);
 
             _gameTicker.Update(new FrameEventArgs(frameTime));
-
         }
     }
 }

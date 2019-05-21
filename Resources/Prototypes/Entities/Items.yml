@@ -47,7 +47,7 @@
     Size: 9999
 
 - type: entity
-  name: "Electrical Toolbox With Handle"
+  name: Electrical Toolbox
   parent: BaseItem
   id: YellowToolboxItem
   description: A toolbox typically stocked with electrical gear
@@ -60,6 +60,13 @@
     Capacity: 60
   - type: Item
     Size: 9999
+
+- type: entity
+  id: YellowToolboxItemFilled
+  name: Electrical Toolbox (Filled)
+  parent: YellowToolboxItem
+  components:
+  - type: ToolboxElectricalFill
 
 - type: entity
   name: "Extra-Grip™ Mop"

@@ -24,12 +24,12 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         public void AfterAttack(AfterAttackEventArgs eventArgs)
         {
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
-            var tile = mapGrid.GetTile(eventArgs.ClickLocation);
+            var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
             if (tileDef.CanCrowbar)
             {
                 var underplating = _tileDefinitionManager["underplating"];
-                mapGrid.SetTile(eventArgs.ClickLocation, underplating.TileId);
+                mapGrid.SetTile(eventArgs.ClickLocation, new Tile(underplating.TileId));
                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/crowbar.ogg", Owner);
             }
         }

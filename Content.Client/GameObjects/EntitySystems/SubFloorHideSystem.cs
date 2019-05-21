@@ -42,7 +42,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var sprite = senderEnt.GetComponent<ISpriteComponent>();
             var grid = _mapManager.GetGrid(senderEnt.Transform.GridID);
             var position = senderEnt.Transform.GridPosition;
-            var tileRef = grid.GetTile(position);
+            var tileRef = grid.GetTileRef(position);
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
             sprite.Visible = tileDef.IsSubFloor;
         }
@@ -62,7 +62,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void UpdateTile(IMapGrid grid, MapIndices position)
         {
-            var tile = grid.GetTile(position);
+            var tile = grid.GetTileRef(position);
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
             foreach (var snapGridComponent in grid.GetSnapGridCell(position, SnapGridOffset.Center))
             {

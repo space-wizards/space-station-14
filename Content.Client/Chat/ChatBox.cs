@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Chat;
-using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -37,6 +36,8 @@ namespace Content.Client.Chat
         ///     Default formatting string for the ClientChatConsole.
         /// </summary>
         public string DefaultChatFormat { get; set; }
+
+        public bool ReleaseFocusOnEnter { get; set; } = true;
 
         protected override void Initialize()
         {
@@ -151,7 +152,11 @@ namespace Content.Client.Chat
             _inputIndex = -1;
 
             Input.Clear();
-            Input.ReleaseKeyboardFocus();
+
+            if (ReleaseFocusOnEnter)
+            {
+                Input.ReleaseKeyboardFocus();
+            }
         }
     }
 }

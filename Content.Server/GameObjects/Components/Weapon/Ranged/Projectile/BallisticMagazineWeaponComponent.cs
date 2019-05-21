@@ -6,31 +6,43 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
-    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackBy
+    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackBy, IMapInit
     {
         public override string Name => "BallisticMagazineWeapon";
 
+        [ViewVariables]
         private string _defaultMagazine;
 
+        [ViewVariables]
         private ContainerSlot _magazineSlot;
         private BallisticMagazineType _magazineType;
 
+        [ViewVariables]
         public BallisticMagazineType MagazineType => _magazineType;
+        [ViewVariables]
         private IEntity Magazine => _magazineSlot.ContainedEntity;
 
+        [ViewVariables]
         private Random _bulletDropRandom;
+        [ViewVariables]
         private string _magInSound;
+        [ViewVariables]
         private string _magOutSound;
+        [ViewVariables]
         private string _autoEjectSound;
+        [ViewVariables]
         private bool _autoEjectMagazine;
+        [ViewVariables]
         private AppearanceComponent _appearance;
 
         private static readonly Direction[] _randomBulletDirs =
@@ -67,16 +79,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         {
             base.Startup();
 
-            _magazineSlot =
-                ContainerManagerComponent.Ensure<ContainerSlot>("ballistic_gun_magazine", Owner,
-                    out var alreadyExisted);
+            _magazineSlot = ContainerManagerComponent.Ensure<ContainerSlot>("ballistic_gun_magazine", Owner);
 
-            if (!alreadyExisted && _defaultMagazine != null)
-            {
-                var magazine = Owner.EntityManager.SpawnEntity(_defaultMagazine);
-                InsertMagazine(magazine, false);
-            }
-            else if (Magazine != null)
+            if (Magazine != null)
             {
                 // Already got magazine from loading a container.
                 Magazine.GetComponent<BallisticMagazineComponent>().OnAmmoCountChanged += _magazineAmmoCountChanged;
@@ -260,6 +265,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             protected override void Activate(IEntity user, BallisticMagazineWeaponComponent component)
             {
                 component.EjectMagazine();
+            }
+        }
+
+        void IMapInit.MapInit()
+        {
+            if (_defaultMagazine != null)
+            {
+                var magazine = Owner.EntityManager.SpawnEntity(_defaultMagazine);
+                InsertMagazine(magazine, false);
             }
         }
     }

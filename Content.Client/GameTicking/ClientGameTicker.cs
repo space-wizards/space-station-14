@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Content.Client.Chat;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
@@ -9,10 +10,14 @@ using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -27,6 +32,9 @@ namespace Content.Client.GameTicking
         [Dependency] private IBaseClient _baseClient;
         [Dependency] private IChatManager _chatManager;
         [Dependency] private IClientConsole _console;
+        [Dependency] private ILocalizationManager _localization;
+        [Dependency] private IResourceCache _resourceCache;
+        [Dependency] private IPlayerManager _playerManager;
 #pragma warning restore 649
 
         [ViewVariables] private bool _areWeReady;
@@ -36,6 +44,7 @@ namespace Content.Client.GameTicking
         [ViewVariables] private LobbyGui _lobby;
         [ViewVariables] private bool _gameStarted;
         [ViewVariables] private DateTime _startTime;
+        [ViewVariables] private TutorialButton _tutorialButton;
 
         public void Initialize()
         {
@@ -46,8 +55,28 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), _lobbyStatus);
 
             _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
+            _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
 
             _initialized = true;
+        }
+
+        private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e)
+        {
+            if (_lobby == null)
+            {
+                return;
+            }
+
+            _updatePlayerList();
+        }
+
+        private void _updatePlayerList()
+        {
+            _lobby.OnlinePlayerItemList.Clear();
+            foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
+            {
+                _lobby.OnlinePlayerItemList.AddItem(session.Name);
+            }
         }
 
         private void BaseClientOnRunLevelChanged(object sender, RunLevelChangedEventArgs e)
@@ -83,11 +112,11 @@ namespace Content.Client.GameTicking
             {
                 if (difference.TotalSeconds < -5)
                 {
-                    text = "Right Now?";
+                    text = _localization.GetString("Right Now?");
                 }
                 else
                 {
-                    text = "Right Now";
+                    text = _localization.GetString("Right Now");
                 }
             }
             else
@@ -95,7 +124,7 @@ namespace Content.Client.GameTicking
                 text = $"{(int) Math.Floor(difference.TotalMinutes)}:{difference.Seconds:D2}";
             }
 
-            _lobby.StartTime.Text = "Round Starts In: " + text;
+            _lobby.StartTime.Text = _localization.GetString("Round Starts In: {0}", text);
         }
 
         private void _lobbyStatus(MsgTickerLobbyStatus message)
@@ -116,14 +145,14 @@ namespace Content.Client.GameTicking
 
             if (_gameStarted)
             {
-                _lobby.ReadyButton.Text = "Join";
+                _lobby.ReadyButton.Text = _localization.GetString("Join");
                 _lobby.ReadyButton.ToggleMode = false;
                 _lobby.ReadyButton.Pressed = false;
             }
             else
             {
                 _lobby.StartTime.Text = "";
-                _lobby.ReadyButton.Text = "Ready Up";
+                _lobby.ReadyButton.Text = _localization.GetString("Ready Up");
                 _lobby.ReadyButton.ToggleMode = true;
                 _lobby.ReadyButton.Pressed = _areWeReady;
             }
@@ -142,10 +171,18 @@ namespace Content.Client.GameTicking
                 _gameChat = null;
             }
 
+            if (_tutorialButton != null)
+            {
+                _tutorialButton.Dispose();
+                _tutorialButton = null;
+            }
+
             _tickerState = TickerState.InLobby;
 
-            _lobby = new LobbyGui();
+            _lobby = new LobbyGui(_localization, _resourceCache);
             _userInterfaceManager.StateRoot.AddChild(_lobby);
+
+            _lobby.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide, margin: 20);
 
             _chatManager.SetChatBox(_lobby.Chat);
             _lobby.Chat.DefaultChatFormat = "ooc \"{0}\"";
@@ -183,6 +220,8 @@ namespace Content.Client.GameTicking
             };
 
             _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
+
+            _updatePlayerList();
         }
 
         private void _joinGame(MsgTickerJoinGame message)
@@ -210,6 +249,9 @@ namespace Content.Client.GameTicking
             _gameChat = new ChatBox();
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             _chatManager.SetChatBox(_gameChat);
+            _tutorialButton = new TutorialButton();
+            _userInterfaceManager.StateRoot.AddChild(_tutorialButton);
+            _tutorialButton.SetAnchorAndMarginPreset(Control.LayoutPreset.BottomLeft, Control.LayoutPresetMode.MinSize, 50);
             _gameChat.DefaultChatFormat = "say \"{0}\"";
         }
 

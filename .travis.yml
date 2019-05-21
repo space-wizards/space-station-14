@@ -30,7 +30,6 @@ before_script:
 - "python3.5 -m pip install --user requests"
 - "nuget restore SpaceStation14.sln"
 - "python3.5 RUN_THIS.py --no-prompt"
-- "RobustToolbox/Tools/download_godotsharp.py"
 
 script:
   # Prevent people from putting in textures/ (lowercase).

@@ -93,6 +93,10 @@ namespace Content.Server.GameObjects.Components.Construction
 
         bool TryProcessStep(ConstructionStep step, IEntity slapped)
         {
+            if (step == null)
+            {
+                return false;
+            }
             var sound = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
 
             switch (step)

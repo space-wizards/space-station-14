@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using Robust.Client.Interfaces.Graphics;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.GameObjects.Components.Actor
 {
@@ -41,9 +42,7 @@ namespace Content.Client.GameObjects.Components.Actor
             var UIcomponents = Owner.GetAllComponents<ICharacterUI>();
             _window = new CharacterWindow(UIcomponents);
 
-            //Add to screen the window and hide it
             _window.AddToScreen();
-            _window.Close();
 
             //Toggle window visible/invisible on keypress
             _openMenuCmdHandler = InputCmdHandler.FromDelegate(session => {
@@ -81,17 +80,24 @@ namespace Content.Client.GameObjects.Components.Actor
         /// </summary>
         public class CharacterWindow : SS14Window
         {
-            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Mobs/CharacterWindow.tscn");
+            private readonly VBoxContainer _contentsVBox;
 
-            public CharacterWindow(IEnumerable<ICharacterUI> windowcomponents) : base(IoCManager.Resolve<IDisplayManager>())
+            public CharacterWindow(IEnumerable<ICharacterUI> windowComponents) : base(IoCManager.Resolve<IDisplayManager>())
             {
-                //TODO: sort window components by priority of window component
-                foreach(var element in windowcomponents.OrderByDescending(x => x.Priority))
+                Title = "Character";
+                HideOnClose = true;
+                Visible = false;
+
+                _contentsVBox = new VBoxContainer();
+                Contents.AddChild(_contentsVBox);
+
+                // TODO: sort window components by priority of window component
+                foreach (var element in windowComponents.OrderBy(x => x.Priority))
                 {
-                    Contents.AddChild(element.Scene);
+                    _contentsVBox.AddChild(element.Scene);
                 }
 
-                HideOnClose = true;
+                Size = CombinedMinimumSize;
             }
         }
     }

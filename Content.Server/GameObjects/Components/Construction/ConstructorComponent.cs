@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Construction
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
             var transform = Owner.Transform;
-            if (!loc.InRange(_mapManager, transform.GridPosition, InteractionSystem.INTERACTION_RANGE))
+            if (!loc.InRange(_mapManager, transform.GridPosition, InteractionSystem.InteractionRange))
             {
                 return;
             }

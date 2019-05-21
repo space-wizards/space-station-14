@@ -12,14 +12,12 @@ using Content.Client.Interfaces;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
-using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
 using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Player;
-using Robust.Client.Utility;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -31,24 +29,26 @@ using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Research;
 using Content.Client.GameObjects.Components.Sound;
 using Content.Client.Interfaces.Chat;
-using Content.Client.Research;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Research;
+using Robust.Client.Interfaces.State;
 using Robust.Client.Interfaces.UserInterface;
-using Robust.Shared.Log;
+using Robust.Client.State.States;
 
 namespace Content.Client
 {
     public class EntryPoint : GameClient
     {
+#pragma warning disable 649
+        [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
+#pragma warning restore 649
+
         public override void Init()
         {
-#if DEBUG
-            GodotResourceCopy.DoDirCopy("../../Resources", "Content");
-#endif
             var factory = IoCManager.Resolve<IComponentFactory>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
@@ -146,6 +146,7 @@ namespace Content.Client
             IoCManager.Register<IClientGameTicker, ClientGameTicker>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
+            IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
             IoCManager.BuildGraph();
 
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
@@ -154,8 +155,12 @@ namespace Content.Client
             var stylesheet = new NanoStyle();
 
             IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
-        }
+            IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
 
+            IoCManager.InjectDependencies(this);
+
+            _escapeMenuOwner.Initialize();
+        }
         /// <summary>
         /// Subscribe events to the player manager after the player manager is set up
         /// </summary>
@@ -163,33 +168,24 @@ namespace Content.Client
         /// <param name="args"></param>
         public void SubscribePlayerAttachmentEvents(object sender, EventArgs args)
         {
-            IoCManager.Resolve<IPlayerManager>().LocalPlayer.EntityAttached += AttachPlayerToEntity;
-            IoCManager.Resolve<IPlayerManager>().LocalPlayer.EntityDetached += DetachPlayerFromEntity;
-            AttachPlayerToEntity(IoCManager.Resolve<IPlayerManager>().LocalPlayer, EventArgs.Empty);
+            _playerManager.LocalPlayer.EntityAttached += AttachPlayerToEntity;
+            _playerManager.LocalPlayer.EntityDetached += DetachPlayerFromEntity;
         }
 
         /// <summary>
         /// Add the character interface master which combines all character interfaces into one window
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        public void AttachPlayerToEntity(object sender, EventArgs args)
+        public static void AttachPlayerToEntity(EntityAttachedEventArgs eventArgs)
         {
-            var localplayer = (LocalPlayer)sender;
-
-            localplayer.ControlledEntity?.AddComponent<CharacterInterface>();
+            eventArgs.NewEntity.AddComponent<CharacterInterface>();
         }
 
         /// <summary>
         /// Remove the character interface master from this entity now that we have detached ourselves from it
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        public void DetachPlayerFromEntity(object sender, EventArgs args)
+        public static void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
         {
-            var localplayer = (LocalPlayer)sender;
-            //Wont work atm, controlled entity gets nulled before this event fires
-            localplayer.ControlledEntity?.RemoveComponent<CharacterInterface>();
+            eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
         }
 
         public override void PostInit()

@@ -15,13 +15,13 @@ using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -79,6 +79,10 @@ namespace Content.Server.GameTicking
 
         private readonly Random _spawnRandom = new Random();
 
+        [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
+
+        [ViewVariables] private Type _presetType;
+
 #pragma warning disable 649
         [Dependency] private IEntityManager _entityManager;
         [Dependency] private IMapManager _mapManager;
@@ -88,6 +92,7 @@ namespace Content.Server.GameTicking
         [Dependency] private IPlayerManager _playerManager;
         [Dependency] private IChatManager _chatManager;
         [Dependency] private IServerNetManager _netManager;
+        [Dependency] private IDynamicTypeFactory _dynamicTypeFactory;
 #pragma warning restore 649
 
         public void Initialize()
@@ -139,6 +144,8 @@ namespace Content.Server.GameTicking
                 {
                     _roundStartTimeUtc = DateTime.UtcNow + TimeSpan.FromSeconds(LobbyDuration);
                 }
+
+                _sendStatusToAll();
             }
         }
 
@@ -150,12 +157,12 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.InRound;
 
             // TODO: Allow other presets to be selected.
-            var preset = new PresetTraitor();
+            var preset = (GamePreset)_dynamicTypeFactory.CreateInstance(_presetType ?? typeof(PresetSandbox));
             preset.Start();
 
             foreach (var (playerSession, ready) in _playersInLobby.ToList())
             {
-                if (!ready)
+                if (LobbyEnabled && !ready)
                 {
                     continue;
                 }
@@ -217,6 +224,39 @@ namespace Content.Server.GameTicking
 
             _playersInLobby[player] = ready;
             _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
+        }
+
+        public T AddGameRule<T>() where T : GameRule, new()
+        {
+            var instance = _dynamicTypeFactory.CreateInstance<T>();
+
+            _gameRules.Add(instance);
+            instance.Added();
+
+            return instance;
+        }
+
+        public void RemoveGameRule(GameRule rule)
+        {
+            if (_gameRules.Contains(rule))
+            {
+                return;
+            }
+
+            rule.Removed();
+
+            _gameRules.Remove(rule);
+        }
+
+        public IEnumerable<GameRule> ActiveGameRules => _gameRules;
+
+        public void SetStartPreset(Type type)
+        {
+            if (!typeof(GamePreset).IsAssignableFrom(type))
+            {
+                throw new ArgumentException("type must inherit GamePreset");
+            }
+            _presetType = type;
         }
 
         private IEntity _spawnPlayerMob()
@@ -290,6 +330,25 @@ namespace Content.Server.GameTicking
             {
                 unCastData.ContentData().WipeMind();
             }
+
+            // Clear up any game rules.
+            foreach (var rule in _gameRules)
+            {
+                rule.Removed();
+            }
+
+            _gameRules.Clear();
+
+            // Move everybody currently in the server to lobby.
+            foreach (var player in _playerManager.GetAllPlayers())
+            {
+                if (_playersInLobby.ContainsKey(player))
+                {
+                    continue;
+                }
+
+                _playerJoinLobby(player);
+            }
         }
 
         private void _preRoundSetup()
@@ -334,7 +393,6 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.InGame:
                 {
-                    //TODO: Check for existing mob and re-attach
                     var data = session.ContentData();
                     if (data.Mind == null)
                     {
@@ -594,6 +652,40 @@ namespace Content.Server.GameTicking
 
             var ticker = IoCManager.Resolve<IGameTicker>();
             ticker.ToggleReady(player, bool.Parse(args[0]));
+        }
+    }
+
+    class SetGamePresetCommand : IClientCommand
+    {
+        public string Command => "setgamepreset";
+        public string Description => "";
+        public string Help => "";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "Need exactly one argument.");
+                return;
+            }
+
+            var ticker = IoCManager.Resolve<IGameTicker>();
+
+            Type presetType;
+            switch (args[0])
+            {
+                case "DeathMatch":
+                    presetType = typeof(PresetDeathMatch);
+                    break;
+                case "Sandbox":
+                    presetType = typeof(PresetSandbox);
+                    break;
+                default:
+                    shell.SendText(player, "That is not a valid game preset!");
+                    return;
+            }
+
+            ticker.SetStartPreset(presetType);
         }
     }
 }
