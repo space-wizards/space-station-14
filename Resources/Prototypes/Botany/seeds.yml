@@ -103,7 +103,7 @@
             state: wheat-harvest
           basicTransitions:
             - deltas:
-                - destruction: true
+                - destroy: true
               conditionType: Harvested
               
 - type: entity
@@ -216,7 +216,7 @@
             - deltaIDs:
                 - start
               deltas:
-                - destruction: true
+                - clearHarvests: true
               conditionType: Harvested
             
             - deltaIDs:
