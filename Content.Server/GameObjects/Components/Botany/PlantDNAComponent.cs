@@ -12,6 +12,7 @@ namespace Content.Server.GameObjects.Components.Botany
     {
         public override string Name => "PlantDNA";
 
+        // The actual DNA is contained in its own class only because my feeble mind can't come up with a way to allow for easy cloning of the component itself
         [ViewVariables(VVAccess.ReadWrite)]
         public PlantDNA DNA;
 

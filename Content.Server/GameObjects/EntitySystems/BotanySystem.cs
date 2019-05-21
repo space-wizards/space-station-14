@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (dmgType == Shared.GameObjects.DamageType.Toxic && _plantUpdateState.PlantComponent.dead)
                 {
                     // snowflake code to not make dead plants disappear super fast
-                    dps /= 20;
+                    dps = 1;
                 }
                 var damage = Math.Max(1, (int)(dps * timeSinceLastUpdate));
                 _plantUpdateState.PlantDamage.TakeDamage(dmgType, damage);

@@ -29,7 +29,7 @@
         - deltaID: deathTransition
           basicTransitions:
             - deltas: 
-              - death: true
+              - setDeath: true
                 setName: "Dead plant"
                 setDescription: "An unrecognizable, rotting mass of organic material. All you can discern is that it was once a plant."
                 setSprite:
@@ -105,3 +105,123 @@
             - deltas:
                 - destruction: true
               conditionType: Harvested
+              
+- type: entity
+  id: CyclicWheatSeed
+  name: "Botany - Cyclowheat POC seed"
+  description: "proof of concept for unique things that can be done with transitions"
+  parent: BaseSeed
+  components:
+  - type: Sprite
+    texture: Botany/seeds/seed-wheat.png
+  - type: Icon
+    texture: Botany/seeds/seed-wheat.png
+  - type: PlantDNA
+    DNA:
+      startingDeltaIDs:
+        - start
+        - deathTransition
+        - agingTransition
+      deltas:
+        - deltaID: death
+          setDeath: true
+          setName: "Dead plant"
+          setDescription: "An unrecognizable, rotting mass of organic material. All you can discern is that it was once a plant."
+          setSprite:
+            sprite: Botany/wheatus.rsi 
+            state: wheat-dead
+
+        - deltaID: deathTransition
+          basicTransitions:
+            - deltaIDs: 
+                - death 
+              conditionType: DeathThreshold
+        
+        - deltaID: agingTransition
+          basicTransitions:
+            - deltas:
+              - damageDeltas:
+                - type: "Toxic"
+                  amount: 10.0
+              conditionType: CellularAge
+              conditionAmount: 100.0
+            
+        - deltaID: start
+          setName: "Grass sprouts"
+          setDescription: "Freshly sprouted seeds. What will they grow into?"
+          setSprite: 
+            sprite: Botany/wheatus.rsi
+            state: wheat-grow1
+          basicTransitions:
+            - deltas:
+              - setSprite:
+                  sprite: Botany/wheatus.rsi
+                  state: wheat-grow2
+              conditionType: Progress
+              conditionAmount: 5.0
+            - deltaIDs: 
+                - shoots
+              conditionType: Progress
+              conditionAmount: 10.0
+              
+        - deltaID: shoots
+          setName: "Wheat shoots"
+          setDescription: "These are adolescent stalks of wheat, eager to rise above the chaff."
+          setSprite:
+            sprite: Botany/wheatus.rsi
+            state: wheat-grow3
+          basicTransitions:
+            - deltas: 
+              - setSprite:
+                  sprite: Botany/wheatus.rsi
+                  state: wheat-grow4
+              conditionType: Progress
+              conditionAmount: 5.0
+            
+            - deltaIDs: 
+                - "stalks"
+              conditionType: Progress
+              conditionAmount: 10.0
+              
+            - transitionID: dieOfExhaustionButOnlyWhenShoots
+              deltaIDs:
+                - death
+              conditionType: CellularAge
+              conditionAmount: 25
+              conditionIsAbsolute: true
+
+        - deltaID: stalks
+          setName: "Wheat stalks"
+          setDescription: "These stalks are nearly ready to ripen."
+          setSprite:
+            sprite: Botany/wheatus.rsi
+            state: wheat-grow5
+          basicTransitions:
+            - deltaIDs: 
+                - "harvest"
+              conditionType: Progress
+              conditionAmount: 5.0
+            
+            - transitionID: dieOfExhaustionButOnlyWhenShoots
+              operation: Remove
+            
+        - deltaID: harvest
+          setName: "Ripe wheat stalks"
+          setDescription: "These are ripe stalks of wheat."
+          setHarvestPrototype: WheatHarvest
+          setSprite:
+            sprite: Botany/wheatus.rsi
+            state: wheat-harvest
+          basicTransitions:
+            - deltaIDs:
+                - start
+              deltas:
+                - destruction: true
+              conditionType: Harvested
+            
+            - deltaIDs:
+                - start
+              deltas:
+                - clearHarvests: true
+              conditionType: CellularAge
+              conditionAmount: 5.0
