@@ -3,6 +3,11 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Log;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +42,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
                 _plantUpdateState = new PlantUpdateState(entity);
                 ProcessSubstrate();
+                ProcessLighting();
                 // process ... [light, food, water, pests, etc] implement these as the state of the game advances
                 ApplyAging();
                 ApplyGrowth();
@@ -67,6 +73,51 @@ namespace Content.Server.GameObjects.EntitySystems
                         LimitLifeProgressDelta(1.0);
                         break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// crappy off-brand lighting calculations because I can't be bothered to implement measurement of light at a point
+        /// </summary>
+        private void ProcessLighting()
+        {
+            var plantEntity = _plantUpdateState.PlantEntity;
+            var pred = new TypeEntityQuery(typeof(PointLightComponent));
+            var lights = EntityManager.GetEntities(pred);
+            double lightQuantity = 0.0;
+            foreach (var lightEntity in lights)
+            {
+                var distance = lightEntity.Transform.GridPosition.Distance(IoCManager.Resolve<IMapManager>(), plantEntity.Transform.GridPosition);
+                var light = lightEntity.GetComponent<PointLightComponent>();
+                if (light.Running == false)
+                {
+                    continue;
+                }
+                if (distance <= light.Radius)
+                {
+                    var plantPosition = plantEntity.Transform.MapPosition.Position;
+                    var lightPosition = lightEntity.Transform.MapPosition.Position;
+                    var ray = new Ray(plantPosition, lightPosition - plantPosition, 1);
+                    var castResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ray, distance, plantEntity);
+                    if (castResults.DidHitObject && castResults.HitEntity != lightEntity)
+                    {
+                        //for debugging:
+                        //IoCManager.Resolve<ILogManager>().GetSawmill("Botany").Log(Robust.Shared.Log.LogLevel.Debug, "distance: " + distance + ", radius: " + light.Radius + "light: " + lightEntity + ", hit: " + castResults.HitEntity);
+                        continue;
+                    }
+                }
+                if (distance < 5)
+                {
+                    lightQuantity = 1.0;
+                }
+            }
+            if (lightQuantity == 1.0)
+            {
+                LimitLifeProgressDelta(1.0);
+            }
+            else
+            {
+                LimitLifeProgressDelta(0.5);
             }
         }
 
