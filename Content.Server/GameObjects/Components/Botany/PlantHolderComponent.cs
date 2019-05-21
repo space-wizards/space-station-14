@@ -58,8 +58,11 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)]
         public float plantYOffset;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private SpriteSpecifier emptySprite;
+        [ViewVariables(VVAccess.ReadWrite)]
         private SpriteSpecifier sandSprite;
+        [ViewVariables(VVAccess.ReadWrite)]
         private SpriteSpecifier rockwoolSprite;
 
         public override void ExposeData(ObjectSerializer serializer)

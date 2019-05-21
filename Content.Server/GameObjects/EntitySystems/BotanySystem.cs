@@ -40,6 +40,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 // process ... [light, food, water, pests, etc] implement these as the state of the game advances
                 ApplyAging();
                 ApplyGrowth();
+                ApplyDamage();
+                plantComponent.CheckBasicTransitions();
                 plantComponent.TimeSinceLastUpdate = 0;
             }
         }
@@ -70,22 +72,32 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void ApplyAging()
         {
-            _plantUpdateState.PlantComponent.Effects.cellularAgeInSeconds += _plantUpdateState.PlantComponent.TimeSinceLastUpdate;
+            _plantUpdateState.PlantComponent.cellularAgeInSeconds += _plantUpdateState.PlantComponent.TimeSinceLastUpdate;
+        }
 
-            if (_plantUpdateState.PlantComponent.Effects.cellularAgeInSeconds > _plantUpdateState.PlantDNA.DNA.MaxAgeInSeconds)
+        private void ApplyDamage()
+        {
+            foreach (var damageDelta in _plantUpdateState.PlantComponent.damageDeltas)
             {
-                _plantUpdateState.PlantDamage.TakeDamage(Shared.GameObjects.DamageType.Toxic, (int)(5 * _plantUpdateState.PlantComponent.TimeSinceLastUpdate));
+                var timeSinceLastUpdate = _plantUpdateState.PlantComponent.TimeSinceLastUpdate;
+                var dps = damageDelta.amountPerSecond;
+                var dmgType = damageDelta.type;
+                if (dmgType == Shared.GameObjects.DamageType.Toxic && _plantUpdateState.PlantComponent.dead)
+                {
+                    // snowflake code to not make dead plants disappear super fast
+                    dps /= 20;
+                }
+                var damage = Math.Max(1, (int)(dps * timeSinceLastUpdate));
+                _plantUpdateState.PlantDamage.TakeDamage(dmgType, damage);
             }
         }
 
         private void ApplyGrowth()
         {
-            if (!_plantUpdateState.PlantComponent.Effects.dead)
+            if (!_plantUpdateState.PlantComponent.dead)
             {
                 var lifeProgressDelta = _plantUpdateState.PlantComponent.TimeSinceLastUpdate * _plantUpdateState.baseLifeProgressDelta;
-                _plantUpdateState.PlantComponent.Effects.progressInSeconds += lifeProgressDelta;
-                _plantUpdateState.PlantComponent.Effects.stageEffects.progressInSeconds += lifeProgressDelta;
-                _plantUpdateState.PlantComponent.UpdateCurrentStage();
+                _plantUpdateState.PlantComponent.progressInSeconds += lifeProgressDelta;
             }
         }
 

@@ -72,7 +72,6 @@
     <Compile Include="GameObjects\Components\Botany\PlantComponent.cs" />
     <Compile Include="GameObjects\Components\Botany\PlantDNAComponent.cs" />
     <Compile Include="GameObjects\Components\Botany\ExtractableSeedComponent.cs" />
-    <Compile Include="GameObjects\Components\Botany\PlantEffects.cs" />
     <Compile Include="GameObjects\Components\Botany\PlantHolderComponent.cs" />
     <Compile Include="GameObjects\Components\Botany\PlantSeedComponent.cs" />
     <Compile Include="GameObjects\Components\CatwalkComponent.cs" />

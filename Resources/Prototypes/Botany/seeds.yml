@@ -11,7 +11,7 @@
 
 - type: entity
   id: WheatSeed
-  name: "Botany - Wheat Seed"
+  name: "Botany - wheat seed"
   description: "Enriched with the finest bran and germ substitute."
   parent: BaseSeed
   components:
@@ -20,165 +20,88 @@
   - type: Icon
     texture: Botany/seeds/seed-wheat.png
   - type: PlantDNA
-    DNA: 
-      maxAgeInSeconds: 300
-      yieldMultiplier: 3
-      lifecycle:
-        startNodeID: sprout
-        deathSprite: 
-          sprite: Botany/wheatus.rsi
-          state: wheat-dead
-        deathName: "Rotting stalks"
-        deathDescription: "This stalk-based plant has died recently."
-        lifecycleNodes:
-          - stageID: sprout
-            name: "Grass sprouts"
-            description: "Freshly sprouted seeds. What will they grow into?"
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-grow1
-            transitions:
-              - targetNode: wheatlet
-                conditionType: StageProgress
-                conditionAmount: 5.0
-          - stageID: wheatlet
-            name: "Wheatgrass sprouts"
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-grow3
-            transitions:
-              - targetNode: wheatus
-                conditionType: StageProgress
-                conditionAmount: 3.0
-          - stageID: wheatus
-            name: "Wheat Stalks"
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-grow4
-            transitions:
-              - targetNode: wheater
-                conditionType: StageProgress
-                conditionAmount: 4.0
-          - stageID: wheater
-            name: "Adolescent wheat stalks"
-            description: "The grains are beginning to ripen."
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-grow5
-            transitions:
-              - targetNode: elwheato
-                conditionType: StageProgress
-                conditionAmount: 5.0
-          - stageID: elwheato
-            name: "Mature wheat stalks"
-            description: "The grains on this plant look ripe."
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-harvest
-            harvest:
-              harvestPrototype: WheatHarvest
-
-- type: entity
-  id: CyclicSeed
-  name: "Botany - Cyclic Seed"
-  parent: BaseSeed
-  components:
-  - type: Sprite
-    texture: Botany/seeds/seed-wheat.png
-  - type: Icon
-    texture: Botany/seeds/seed-wheat.png
-  - type: PlantDNA
-    DNA: 
-      maxAgeInSeconds: 300
-      yieldMultiplier: 3
-      lifecycle:
-        startNodeID: sprout
-        deathSprite: 
-          sprite: Botany/wheatus.rsi
-          state: wheat-dead
-        deathName: "Rotting stalks"
-        deathDescription: "This stalk-based plant has died recently."
-        lifecycleNodes:
-          - stageID: sprout
-            name: "Grass sprouts"
-            description: "Freshly sprouted seeds. What will they grow into?"
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-grow1
-            transitions:
-              - targetNode: wheatlet
-                conditionType: StageProgress
-                conditionAmount: 5.0
-          - stageID: wheatlet
-            name: "Wheatgrass sprouts"
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-grow3
-            transitions:
-              - targetNode: wheatus
-                conditionType: StageProgress
-                conditionAmount: 3.0
-          - stageID: wheatus
-            name: "Wheat Stalks"
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-grow4
-            transitions:
-              - targetNode: wheater
-                conditionType: StageProgress
-                conditionAmount: 4.0
-          - stageID: wheater
-            name: "Adolescent wheat stalks"
-            description: "The grains are beginning to ripen."
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-grow5
-            transitions:
-              - targetNode: elwheato
-                conditionType: StageProgress
-                conditionAmount: 5.0
-          - stageID: elwheato
-            name: "Mature wheat stalks"
-            description: "The grains on this plant look ripe."
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-harvest
-            harvest:
-              harvestPrototype: WheatHarvest
-              harvestTargetNode: wheatus
+    DNA:
+      startingDeltaIDs:
+        - start
+        - deathTransition
+        - agingTransition
+      deltas:
+        - deltaID: deathTransition
+          basicTransitions:
+            - deltas: 
+              - death: true
+                setName: "Dead plant"
+                setDescription: "An unrecognizable, rotting mass of organic material. All you can discern is that it was once a plant."
+                setSprite:
+                  sprite: Botany/wheatus.rsi 
+                  state: wheat-dead
+              conditionType: DeathThreshold
+        
+        - deltaID: agingTransition
+          basicTransitions:
+            - deltas:
+              - damageDeltas:
+                - type: "Toxic"
+                  amount: 10.0
+              conditionType: CellularAge
+              conditionAmount: 50.0
+            
+        - deltaID: start
+          setName: "Grass sprouts"
+          setDescription: "Freshly sprouted seeds. What will they grow into?"
+          setSprite: 
+            sprite: Botany/wheatus.rsi
+            state: wheat-grow1
+          basicTransitions:
+            - deltas:
+              - setSprite:
+                  sprite: Botany/wheatus.rsi
+                  state: wheat-grow2
+              conditionType: Progress
+              conditionAmount: 5.0
+            - deltaIDs: 
+                - shoots
+              conditionType: Progress
+              conditionAmount: 10.0
               
-- type: entity
-  id: progeria-seed
-  name: "Botany - Progeria Seed"
-  description: "Live young, age fast"
-  parent: BaseSeed
-  components:
-  - type: Sprite
-    texture: Botany/seeds/seed-wheat.png
-  - type: Icon
-    texture: Botany/seeds/seed-wheat.png
-  - type: PlantDNA
-    DNA: 
-      maxAgeInSeconds: 1
-      yieldMultiplier: 1
-      lifecycle:
-        startNodeID: sprout
-        deathSprite: 
-          sprite: Botany/wheatus.rsi
-          state: wheat-dead
-        deathName: "Rotting stalks"
-        deathDescription: "This stalk-based plant has died recently."
-        lifecycleNodes:
-          - stageID: sprout
-            name: "Grass sprouts"
-            description: "Freshly sprouted seeds. What will they grow into?"
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-grow1
-          - stageID: wheatlet
-            name: "The plant is supposed to die before you see this"
-            description: "This is just a demo plant to show plants dying of old age"
-            lifeProgressRequired: 25.0
-            spriteSpecifier: 
-              sprite: Botany/wheatus.rsi
-              state: wheat-harvest
+        - deltaID: shoots
+          setName: "Wheat shoots"
+          setDescription: "These are adolescent stalks of wheat, eager to rise above the chaff."
+          setSprite:
+            sprite: Botany/wheatus.rsi
+            state: wheat-grow3
+          basicTransitions:
+            - deltas: 
+              - setSprite:
+                  sprite: Botany/wheatus.rsi
+                  state: wheat-grow4
+              conditionType: Progress
+              conditionAmount: 5.0
+            - deltaIDs: 
+                - "stalks"
+              conditionType: Progress
+              conditionAmount: 10.0
+
+        - deltaID: stalks
+          setName: "Wheat stalks"
+          setDescription: "These stalks are nearly ready to ripen."
+          setSprite:
+            sprite: Botany/wheatus.rsi
+            state: wheat-grow5
+          basicTransitions:
+            - deltaIDs: 
+                - "harvest"
+              conditionType: Progress
+              conditionAmount: 5.0
+            
+        - deltaID: harvest
+          setName: "Ripe wheat stalks"
+          setDescription: "These are ripe stalks of wheat."
+          setHarvestPrototype: WheatHarvest
+          setSprite:
+            sprite: Botany/wheatus.rsi
+            state: wheat-harvest
+          basicTransitions:
+            - deltas:
+                - destruction: true
+              conditionType: Harvested

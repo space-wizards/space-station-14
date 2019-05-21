@@ -38,11 +38,11 @@ namespace Content.Server.GameObjects.Components.Botany
             var dna = plant.GetComponent<PlantDNAComponent>();
             dna.DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
 
+            plant.GetComponent<SpriteComponent>().DrawDepth = DrawDepth.Objects;
+
             var plantComponent = plant.GetComponent<PlantComponent>();
             holder.HeldPlant = plantComponent;
-            plantComponent.ChangeStage(dna.DNA.Lifecycle.StartNodeID);
-            plant.GetComponent<SpriteComponent>().DrawDepth = DrawDepth.Objects;
-            plantComponent.UpdateVisuals();
+            plantComponent.ApplyStartingDeltas();
             Owner.Delete();
         }
     }
