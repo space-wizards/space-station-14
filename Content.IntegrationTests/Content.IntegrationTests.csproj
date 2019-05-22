@@ -4,6 +4,7 @@
         <TargetFramework>net472</TargetFramework>
         <OutputPath>..\bin\Content.IntegrationTests\</OutputPath>
         <IsPackable>false</IsPackable>
+        <Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
