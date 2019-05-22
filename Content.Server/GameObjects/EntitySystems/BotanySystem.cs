@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     class BotanySystem : EntitySystem
     {
-        private PlantUpdateState _plantUpdateState;
+        private PlantUpdates plantUpdates;
 
         public override void Initialize()
         {
@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     continue;
                 }
-                _plantUpdateState = new PlantUpdateState(entity);
+                plantUpdates = new PlantUpdates(entity);
                 ProcessSubstrate();
                 ProcessLighting();
                 // process ... [light, food, water, pests, etc] implement these as the state of the game advances
@@ -54,14 +54,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void ProcessSubstrate()
         {
-            if (_plantUpdateState.PlantComponent.Holder == null)
+            if (plantUpdates.PlantComponent.Holder == null)
             {
                 LimitLifeProgressDelta(0.0);
                 return;
             }
             else
             {
-                switch (_plantUpdateState.PlantComponent.Holder.HeldSubstrate)
+                switch (plantUpdates.PlantComponent.Holder.HeldSubstrate)
                 {
                     case Substrate.Empty:
                         LimitLifeProgressDelta(0.1);
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         private void ProcessLighting()
         {
-            var plantEntity = _plantUpdateState.PlantEntity;
+            var plantEntity = plantUpdates.PlantEntity;
             var pred = new TypeEntityQuery(typeof(PointLightComponent));
             var lights = EntityManager.GetEntities(pred);
             double lightQuantity = 0.0;
@@ -123,45 +123,45 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void ApplyAging()
         {
-            _plantUpdateState.PlantComponent.cellularAgeInSeconds += _plantUpdateState.PlantComponent.TimeSinceLastUpdate;
+            plantUpdates.PlantComponent.cellularAgeInSeconds += plantUpdates.PlantComponent.TimeSinceLastUpdate;
         }
 
         private void ApplyDamage()
         {
-            foreach (var damageDelta in _plantUpdateState.PlantComponent.damageDeltas)
+            foreach (var damageDelta in plantUpdates.PlantComponent.damageDeltas)
             {
-                var timeSinceLastUpdate = _plantUpdateState.PlantComponent.TimeSinceLastUpdate;
+                var timeSinceLastUpdate = plantUpdates.PlantComponent.TimeSinceLastUpdate;
                 var dps = damageDelta.amountPerSecond;
                 var dmgType = damageDelta.type;
-                if (dmgType == Shared.GameObjects.DamageType.Toxic && _plantUpdateState.PlantComponent.dead)
+                if (dmgType == Shared.GameObjects.DamageType.Toxic && plantUpdates.PlantComponent.dead)
                 {
                     // snowflake code to not make dead plants disappear super fast
                     dps = 1;
                 }
                 var damage = Math.Max(1, (int)(dps * timeSinceLastUpdate));
-                _plantUpdateState.PlantDamage.TakeDamage(dmgType, damage);
+                plantUpdates.PlantDamage.TakeDamage(dmgType, damage);
             }
         }
 
         private void ApplyGrowth()
         {
-            if (!_plantUpdateState.PlantComponent.dead)
+            if (!plantUpdates.PlantComponent.dead)
             {
-                var lifeProgressDelta = _plantUpdateState.PlantComponent.TimeSinceLastUpdate * _plantUpdateState.baseLifeProgressDelta;
-                _plantUpdateState.PlantComponent.progressInSeconds += lifeProgressDelta;
+                var lifeProgressDelta = plantUpdates.PlantComponent.TimeSinceLastUpdate * plantUpdates.baseLifeProgressDelta;
+                plantUpdates.PlantComponent.progressInSeconds += lifeProgressDelta;
             }
         }
 
         private void LimitLifeProgressDelta(double maxProgressThisCycle)
         {
-            _plantUpdateState.baseLifeProgressDelta = Math.Min(maxProgressThisCycle, _plantUpdateState.baseLifeProgressDelta);
+            plantUpdates.baseLifeProgressDelta = Math.Min(maxProgressThisCycle, plantUpdates.baseLifeProgressDelta);
         }
     }
 
     /// <summary>
-    /// Temporary state management of plant related info in update loop
+    /// Holds plant update related variables for Update loop
     /// </summary>
-    class PlantUpdateState
+    class PlantUpdates
     {
         public IEntity PlantEntity;
 
@@ -173,7 +173,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public double baseLifeProgressDelta = 1.0;
 
-        public PlantUpdateState(IEntity plantEntity)
+        public PlantUpdates(IEntity plantEntity)
         {
             PlantEntity = plantEntity;
             PlantComponent = plantEntity.GetComponent<PlantComponent>();
