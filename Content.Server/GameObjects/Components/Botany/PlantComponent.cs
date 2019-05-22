@@ -4,8 +4,10 @@ using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Log;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -35,14 +37,12 @@ namespace Content.Server.GameObjects.Components.Botany
         public double progressInSeconds;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        public List<HarvestDelta> harvestDeltas;
+        [ViewVariables(VVAccess.ReadWrite)]
         public List<DamageDelta> damageDeltas;
         [ViewVariables(VVAccess.ReadWrite)]
         public bool dead;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string HarvestPrototype;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public double YieldMultiplier;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public List<BasicTransition> basicTransitions;
@@ -71,14 +71,6 @@ namespace Content.Server.GameObjects.Components.Botany
                 }
             }
 
-            if (delta.clearHarvests)
-            {
-                HarvestPrototype = null;
-            }
-            if (delta.setHarvestPrototype != null)
-            {
-                HarvestPrototype = delta.setHarvestPrototype;
-            }
             if (delta.setDeath)
             {
                 dead = true;
@@ -89,58 +81,62 @@ namespace Content.Server.GameObjects.Components.Botany
                 Owner.Delete();
             }
 
-            foreach (var damageDelta in delta.damageDeltas)
+            foreach (var harvestDelta in delta.harvestDeltas)
             {
-                // todo: removing, replacing, etc - could share this "meta" interface with transitions
-                damageDeltas.Add(damageDelta);
+                ApplyListDelta(harvestDelta, harvestDeltas, x => x.toolRequired == harvestDelta.toolRequired);
             }
 
-            if (delta.basicTransitions != null)
+            foreach (var damageDelta in delta.damageDeltas)
             {
-                foreach (var transition in (List<BasicTransition>)delta.basicTransitions.Clone())
-                {
-                    if (transition.conditionIsAbsolute != true)
-                    {
-                        switch (transition.conditionType)
-                        {
-                            case BasicTransitionCondition.Progress:
-                                transition.conditionAmount += progressInSeconds;
-                                break;
-                            case BasicTransitionCondition.CellularAge:
-                                transition.conditionAmount += cellularAgeInSeconds;
-                                break;
-                        }
-                    }
-                    switch (transition.operation)
-                    {
-                        case BasicTransitionOperation.Add:
-                            basicTransitions.Add(transition);
-                            break;
-                        case BasicTransitionOperation.Replace:
-                            RemoveTransitionById(transition.transitionID);
-                            basicTransitions.Add(transition);
-                            break;
-                        case BasicTransitionOperation.Remove:
-                            RemoveTransitionById(transition.transitionID);
-                            break;
-                        case BasicTransitionOperation.RemoveAll:
-                            basicTransitions.Clear();
-                            break;
-                        case BasicTransitionOperation.RemoveAllOfType:
-                            basicTransitions.RemoveAll(x => x.conditionType == transition.conditionType);
-                            break;
+                ApplyListDelta(damageDelta, damageDeltas, x => x.type == damageDelta.type);
+            }
 
+            foreach (var transition in (List<BasicTransition>)delta.basicTransitions.Clone())
+            {
+                if (transition.conditionIsAbsolute != true)
+                {
+                    switch (transition.conditionType)
+                    {
+                        case BasicTransitionCondition.Progress:
+                            transition.conditionAmount += progressInSeconds;
+                            break;
+                        case BasicTransitionCondition.CellularAge:
+                            transition.conditionAmount += cellularAgeInSeconds;
+                            break;
                     }
                 }
+                ApplyListDelta(transition, basicTransitions, x => x.conditionType == transition.conditionType);
             }
         }
 
-        public void RemoveTransitionById(string Id)
+        public void ApplyListDelta<T>(T entry, List<T> list, Predicate<T> pred) where T : IListDelta
         {
-            var found = basicTransitions.Find(x => x.transitionID == Id);
-            if (found != null)
+            switch (entry.GetOperation())
             {
-                basicTransitions.Remove(found);
+                case ListDeltaOperation.Add:
+                    list.Add(entry);
+                    break;
+                case ListDeltaOperation.Replace:
+                    var foundForReplacement = list.Find(x => x.GetID() == entry.GetID());
+                    if (foundForReplacement != null)
+                    {
+                        list.Remove(foundForReplacement);
+                    }
+                    list.Add(entry);
+                    break;
+                case ListDeltaOperation.Remove:
+                    var foundForRemoval = list.Find(x => x.GetID() == entry.GetID());
+                    if (foundForRemoval != null)
+                    {
+                        list.Remove(foundForRemoval);
+                    }
+                    break;
+                case ListDeltaOperation.RemoveAll:
+                    list.Clear();
+                    break;
+                case ListDeltaOperation.RemoveAllOfType: // I feel uneasy about this one, it could be tightened/removed
+                    list.RemoveAll(pred);
+                    break;
             }
         }
 
@@ -206,11 +202,9 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref cellularAgeInSeconds, "cellularAgeInSeconds", 0.0);
             serializer.DataField(ref progressInSeconds, "progressInSeconds", 0.0);
 
+            serializer.DataField(ref harvestDeltas, "harvestDeltas", new List<HarvestDelta>());
             serializer.DataField(ref damageDeltas, "damageDeltas", new List<DamageDelta>());
             serializer.DataField(ref dead, "dead", false);
-
-            serializer.DataField(ref HarvestPrototype, "harvestPrototype", null);
-            serializer.DataField(ref YieldMultiplier, "yieldMultiplier", 1.0);
 
             serializer.DataField(ref basicTransitions, "basicTransitions", new List<BasicTransition>());
         }
@@ -229,24 +223,31 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public bool AttackHand(AttackHandEventArgs eventArgs)
         {
-            if (HarvestPrototype != null)
+            foreach (var harvestDelta in harvestDeltas)
             {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-
-                var totalYield = YieldMultiplier;
-                var rand = new Random();
-                for (int i = 0; i <= totalYield; i++)
+                if (harvestDelta.toolRequired != HarvestTool.None)
                 {
-                    entityManager.TrySpawnEntityAt(HarvestPrototype,
+                    continue;
+                }
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                var yield = harvestDelta.yield;
+                var rand = new Random();
+
+                for (int i = 0; i <= yield; i++)
+                {
+                    entityManager.TrySpawnEntityAt(harvestDelta.prototype,
                         Owner.Transform.GridPosition.Offset(new Vector2((float)rand.NextDouble() - 0.5f, (float)rand.NextDouble() - 0.5f)),
                         out var harvest);
-                    if (harvest.TryGetComponent<PlantDNAComponent>(out var dna))
+                    if (!harvestDelta.sterile)
                     {
-                        dna.DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
-                    }
-                    else
-                    {
-                        harvest.AddComponent<PlantDNAComponent>().DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
+                        if (harvest.TryGetComponent<PlantDNAComponent>(out var dna))
+                        {
+                            dna.DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
+                        }
+                        else
+                        {
+                            harvest.AddComponent<PlantDNAComponent>().DNA = (PlantDNA)Owner.GetComponent<PlantDNAComponent>().DNA.Clone();
+                        }
                     }
                 }
                 foreach (var transition in basicTransitions.ToList())
@@ -260,11 +261,8 @@ namespace Content.Server.GameObjects.Components.Botany
                 }
                 return true;
             }
-            else
-            {
-                Owner.PopupMessage(eventArgs.User, "Nothing to harvest.");
-                return false;
-            }
+            Owner.PopupMessage(eventArgs.User, "Nothing to harvest.");
+            return false;
         }
 
         public List<DamageThreshold> GetAllDamageThresholds()

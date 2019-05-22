@@ -97,10 +97,12 @@
         - deltaID: harvest
           setName: "Ripe wheat stalks"
           setDescription: "These are ripe stalks of wheat."
-          setHarvestPrototype: WheatHarvest
           setSprite:
             sprite: Botany/wheatus.rsi
             state: wheat-harvest
+          harvestDeltas:
+            - prototype: WheatHarvest
+              yield: 2.0
           basicTransitions:
             - deltas:
                 - destroy: true
@@ -209,20 +211,24 @@
         - deltaID: harvest
           setName: "Ripe wheat stalks"
           setDescription: "These are ripe stalks of wheat."
-          setHarvestPrototype: WheatHarvest
           setSprite:
             sprite: Botany/wheatus.rsi
             state: wheat-harvest
+          harvestDeltas:
+            - prototype: WheatHarvest
+              yield: 2.0
           basicTransitions:
             - deltaIDs:
                 - start
               deltas:
-                - clearHarvests: true
+                - harvestDeltas:
+                  - operation: RemoveAll
               conditionType: Harvested
             
             - deltaIDs:
                 - start
               deltas:
-                - clearHarvests: true
+                - harvestDeltas:
+                  - operation: RemoveAll
               conditionType: CellularAge
               conditionAmount: 5.0

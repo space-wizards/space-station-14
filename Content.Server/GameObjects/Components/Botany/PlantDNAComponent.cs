@@ -62,17 +62,14 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)]
         public SpriteSpecifier setSprite;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool clearHarvests;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string setHarvestPrototype;
-
         //This kills the plant.
         [ViewVariables(VVAccess.ReadWrite)]
         public bool setDeath; // entity intact, but plant is dead
         [ViewVariables(VVAccess.ReadWrite)]
         public bool destroy; // entity deleted
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public List<HarvestDelta> harvestDeltas;
         [ViewVariables(VVAccess.ReadWrite)]
         public List<DamageDelta> damageDeltas;
 
@@ -87,12 +84,10 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref setDescription, "setDescription", null);
             serializer.DataField(ref setSprite, "setSprite", null);
 
-            serializer.DataField(ref clearHarvests, "clearHarvests", false);
-            serializer.DataField(ref setHarvestPrototype, "setHarvestPrototype", null);
-
             serializer.DataField(ref setDeath, "setDeath", false);
             serializer.DataField(ref destroy, "destroy", false);
 
+            serializer.DataField(ref harvestDeltas, "harvestDeltas", new List<HarvestDelta>());
             serializer.DataField(ref damageDeltas, "damageDeltas", new List<DamageDelta>());
 
             serializer.DataField(ref basicTransitions, "basicTransitions", new List<BasicTransition>());
@@ -116,12 +111,10 @@ namespace Content.Server.GameObjects.Components.Botany
                 setSprite = transition.setSprite;
             }
 
-            clearHarvests = transition.clearHarvests;
-            setHarvestPrototype = transition.setHarvestPrototype;
-
             setDeath = transition.setDeath;
             destroy = transition.destroy;
 
+            harvestDeltas = (List<HarvestDelta>)transition.harvestDeltas.Clone();
             damageDeltas = (List<DamageDelta>)transition.damageDeltas.Clone();
 
             basicTransitions = (List<BasicTransition>)transition.basicTransitions.Clone();
@@ -133,8 +126,67 @@ namespace Content.Server.GameObjects.Components.Botany
         }
     }
 
-    public class DamageDelta : ICloneable, IExposeData
+    public enum HarvestTool
     {
+        None,
+        Sharp,
+        Gloves
+    }
+
+    public class HarvestDelta : ICloneable, IExposeData, IListDelta
+    {
+        [ViewVariables(VVAccess.ReadWrite)]
+        private string id;
+        public string GetID() => id;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private ListDeltaOperation operation;
+        public ListDeltaOperation GetOperation() => operation;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string prototype;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public double yield;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool sterile;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public HarvestTool toolRequired;
+
+        public object Clone()
+        {
+            return new HarvestDelta
+            {
+                id = id,
+                operation = operation,
+                prototype = prototype,
+                yield = yield,
+                sterile = sterile,
+                toolRequired = toolRequired
+            };
+        }
+
+        public void ExposeData(ObjectSerializer serializer)
+        {
+            serializer.DataField(ref id, "id", null);
+            serializer.DataField(ref operation, "operation", ListDeltaOperation.Add);
+            serializer.DataField(ref prototype, "prototype", null);
+            serializer.DataField(ref yield, "yield", 1.0);
+            serializer.DataField(ref sterile, "sterile", false);
+            serializer.DataField(ref toolRequired, "toolRequired", HarvestTool.None);
+        }
+    }
+
+    public class DamageDelta : ICloneable, IExposeData, IListDelta
+    {
+        [ViewVariables(VVAccess.ReadWrite)]
+        private string id;
+        public string GetID() => id;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private ListDeltaOperation operation;
+        public ListDeltaOperation GetOperation() => operation;
+
+
         [ViewVariables(VVAccess.ReadWrite)]
         public Shared.GameObjects.DamageType type;
         [ViewVariables(VVAccess.ReadWrite)]
@@ -144,6 +196,8 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             return new DamageDelta
             {
+                id = id,
+                operation = operation,
                 type = type,
                 amountPerSecond = amountPerSecond
             };
@@ -151,18 +205,26 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public void ExposeData(ObjectSerializer serializer)
         {
+            serializer.DataField(ref id, "id", null);
+            serializer.DataField(ref operation, "operation", ListDeltaOperation.Add);
             serializer.DataField(ref type, "type", Shared.GameObjects.DamageType.Toxic);
             serializer.DataField(ref amountPerSecond, "amount", 5.0);
         }
     }
 
-    public enum BasicTransitionOperation
+    public enum ListDeltaOperation
     {
         Add,
         Replace,
         Remove,
         RemoveAllOfType,
         RemoveAll
+    }
+
+    public interface IListDelta
+    {
+        ListDeltaOperation GetOperation();
+        string GetID();
     }
 
     public enum BasicTransitionCondition
@@ -174,13 +236,15 @@ namespace Content.Server.GameObjects.Components.Botany
         Harvested
     }
 
-    public class BasicTransition : ICloneable, IExposeData
+    public class BasicTransition : ICloneable, IExposeData, IListDelta
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        public BasicTransitionOperation operation;
+        private ListDeltaOperation operation;
+        public ListDeltaOperation GetOperation() => operation;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string transitionID;
+        private string transitionID;
+        public string GetID() => transitionID;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public List<string> DeltaIDs;
@@ -213,7 +277,7 @@ namespace Content.Server.GameObjects.Components.Botany
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref transitionID, "transitionID", null);
-            serializer.DataField(ref operation, "operation", BasicTransitionOperation.Add);
+            serializer.DataField(ref operation, "operation", ListDeltaOperation.Add);
 
             serializer.DataField(ref DeltaIDs, "deltaIDs", new List<string>());
             serializer.DataField(ref Deltas, "deltas", new List<PlantDelta>());
