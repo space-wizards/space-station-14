@@ -9,6 +9,7 @@ using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -176,12 +177,33 @@ namespace Content.Server.GameObjects.Components.Botany
             }
         }
 
+        public void ApplyDeltaFromID(string deltaID)
+        {
+            var shadowingDelta = DNA.deltas.Find(x => x.ID == deltaID);
+            if (shadowingDelta != null)
+            {
+                ApplyDelta(shadowingDelta);
+            }
+            else
+            {
+                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
+                try
+                {
+                    var delta = prototypeMan.Index<PlantDelta>(deltaID);
+                    ApplyDelta(delta);
+                }
+                catch (KeyNotFoundException e)
+                {
+                    Logger.GetSawmill("Plant").Error("PlantComponent " + this + " failed to index PlantDelta: " + deltaID + ". Exception details: " + e.Message);
+                }
+            }
+        }
+
         public void ApplyDeltasFromIDs(List<string> deltaIDs)
         {
-            var deltas = DNA.deltas.FindAll(x => deltaIDs.Contains(x.deltaID));
-            foreach (var delta in deltas)
+            foreach (var ID in deltaIDs)
             {
-                ApplyDelta(delta);
+                ApplyDeltaFromID(ID);
             }
         }
 
@@ -331,6 +353,7 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             if (flavorText != null)
             {
+                message.PushColor(Color.Gray);
                 message.AddText(flavorText);
                 message.Pop();
             }

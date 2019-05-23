@@ -1,30 +1,58 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Botany
 {
     class PlantDNAComponent : Component
     {
-        public override string Name => "PlantDNA";
+        public override string Name => "PlantDNAComponent"; // changing this in case it conflicts with the prototype name
 
         // The actual DNA is contained in its own class only because my feeble mind can't come up with a way to allow for easy cloning of the component itself
         [ViewVariables(VVAccess.ReadWrite)]
         public PlantDNA DNA;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string prototypeDNA;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref DNA, "DNA", null);
+            serializer.DataField(ref prototypeDNA, "prototypeDNA", null);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            if (DNA == null && prototypeDNA != null)
+            {
+                var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                try
+                {
+                    DNA = protoMan.Index<PlantDNA>(prototypeDNA);
+                }
+                catch (KeyNotFoundException e)
+                {
+                    Logger.GetSawmill("Plant").Error("PlantDNAComponent " + this + " failed to index PlantDNA: " + prototypeDNA + ". Exception details: " + e.Message);
+                }
+            }
         }
     }
 
-    class PlantDNA : IExposeData, ICloneable
+    [Prototype("PlantDNA")]
+    class PlantDNA : IExposeData, ICloneable, IPrototype, IIndexedPrototype
     {
+        [ViewVariables(VVAccess.ReadWrite)]
+        private string _id;
+        public string ID => _id;
         [ViewVariables(VVAccess.ReadWrite)]
         public List<PlantDelta> deltas;
         [ViewVariables(VVAccess.ReadWrite)]
@@ -34,6 +62,7 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             return new PlantDNA
             {
+                _id = _id,
                 deltas = (List<PlantDelta>)deltas.Clone(),
                 startingDeltaIDs = startingDeltaIDs,
             };
@@ -41,8 +70,15 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public void ExposeData(ObjectSerializer serializer)
         {
+            serializer.DataField(ref _id, "ID", null);
             serializer.DataField(ref deltas, "deltas", new List<PlantDelta>());
             serializer.DataField(ref startingDeltaIDs, "startingDeltaIDs", null);
+        }
+
+        public void LoadFrom(YamlMappingNode mapping)
+        {
+            var serializer = YamlObjectSerializer.NewReader(mapping);
+            ExposeData(serializer);
         }
     }
 
@@ -50,10 +86,13 @@ namespace Content.Server.GameObjects.Components.Botany
     /// A package of changes to be applied to the plant.
     /// Todo: rename most fields X -> setX?
     /// </summary>
-    public class PlantDelta : IExposeData, ICloneable
+    [Prototype("plantDelta")]
+    public class PlantDelta : IExposeData, ICloneable, IPrototype, IIndexedPrototype
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        public string deltaID;
+        private string _id;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string ID => _id;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string setName;
@@ -81,9 +120,10 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)]
         public List<BasicTransition> basicTransitions;
 
+
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref deltaID, "deltaID", null);
+            serializer.DataField(ref _id, "ID", null);
 
             serializer.DataField(ref setName, "setName", null);
             serializer.DataField(ref setDescription, "setDescription", null);
@@ -110,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Botany
         /// <param name="transition"></param>
         public PlantDelta(PlantDelta transition)
         {
-            deltaID = transition.deltaID;
+            _id = transition._id;
             setName = transition.setName;
             setDescription = transition.setDescription;
 
@@ -134,6 +174,12 @@ namespace Content.Server.GameObjects.Components.Botany
         public object Clone()
         {
             return new PlantDelta(this);
+        }
+
+        public void LoadFrom(YamlMappingNode mapping)
+        {
+            var serializer = YamlObjectSerializer.NewReader(mapping);
+            ExposeData(serializer);
         }
     }
 

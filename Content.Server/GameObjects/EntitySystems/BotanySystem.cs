@@ -125,15 +125,18 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void ProcessTemperature()
         {
-            var tempComponent = plantUpdates.PlantEntity.GetComponent<TemperatureComponent>();
-            if (tempComponent.CurrentTemperature > PhysicalConstants.ZERO_CELCIUS + 50)
+            // temperature component currently crashes the client for some reason, add it to the prototypes when that's fixed
+            if (plantUpdates.PlantEntity.TryGetComponent<TemperatureComponent>(out var tempComponent))
             {
-                LimitLifeProgressDelta(0.3);
-            }
-            else if (tempComponent.CurrentTemperature < PhysicalConstants.ZERO_CELCIUS + 5)
-            {
-                // slow down cellular age?
-                LimitLifeProgressDelta(0.3);
+                if (tempComponent.CurrentTemperature > PhysicalConstants.ZERO_CELCIUS + 50)
+                {
+                    LimitLifeProgressDelta(0.3);
+                }
+                else if (tempComponent.CurrentTemperature < PhysicalConstants.ZERO_CELCIUS + 5)
+                {
+                    // slow down cellular age?
+                    LimitLifeProgressDelta(0.3);
+                }
             }
             return;
         }
