@@ -1,0 +1,91 @@
+- type: plantDelta
+  ID: grassDeathTransition
+  basicTransitions:
+    - deltas: 
+      - setDeath: true
+        setName: "Dead grassy plant"
+        setDescription: "An rotting, crumpled mass of grasses and stalks."
+        setSprite:
+          sprite: Botany/wheatus.rsi 
+          state: wheat-dead
+      conditionType: DeathThreshold
+
+- type: plantDelta
+  ID: standardAgingTransition
+  basicTransitions:
+    - deltas:
+      - damageDeltas:
+        - type: "Toxic"
+          amount: 10.0
+      conditionType: CellularAge
+      conditionAmount: 50.0
+    
+- type: plantDelta
+  ID: grassStart
+  setName: "Grass sprouts"
+  setDescription: "Freshly sprouted seeds. What will they grow into?"
+  setSprite: 
+    sprite: Botany/wheatus.rsi
+    state: wheat-grow1
+  basicTransitions:
+    - deltas:
+      - setSprite:
+          sprite: Botany/wheatus.rsi
+          state: wheat-grow2
+      conditionType: Progress
+      conditionAmount: 5.0
+
+- type: plantDelta
+  ID: wheatStart
+  basicTransitions:
+    - deltaIDs: 
+        - wheatShoots
+      conditionType: Progress
+      conditionAmount: 15.0
+      
+- type: plantDelta
+  ID: wheatShoots
+  setName: "Wheat shoots"
+  setDescription: "These are adolescent stalks of wheat, eager to rise above the chaff."
+  setSprite:
+    sprite: Botany/wheatus.rsi
+    state: wheat-grow3
+  basicTransitions:
+    - deltas: 
+      - setSprite:
+          sprite: Botany/wheatus.rsi
+          state: wheat-grow4
+      conditionType: Progress
+      conditionAmount: 5.0
+    - deltaIDs: 
+        - "wheatStalks"
+      conditionType: Progress
+      conditionAmount: 10.0
+
+- type: plantDelta
+  ID: wheatStalks
+  setName: "Wheat stalks"
+  setDescription: "These stalks are nearly ready to ripen."
+  setSprite:
+    sprite: Botany/wheatus.rsi
+    state: wheat-grow5
+  basicTransitions:
+    - deltaIDs: 
+        - "wheatHarvest"
+      conditionType: Progress
+      conditionAmount: 5.0
+    
+- type: plantDelta
+  ID: wheatHarvest
+  setName: "Ripe wheat stalks"
+  setDescription: "These are ripe stalks of wheat."
+  setSprite:
+    sprite: Botany/wheatus.rsi
+    state: wheat-harvest
+  harvestDeltas:
+    - prototype: WheatHarvest
+      yield: 2.0
+  basicTransitions:
+    - deltas:
+        - destroy: true
+      conditionType: Harvested

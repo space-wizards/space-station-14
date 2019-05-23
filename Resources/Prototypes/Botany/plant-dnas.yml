@@ -1,0 +1,19 @@
+- type: PlantDNA
+  ID: RegularWheat
+  startingDeltaIDs:
+    - grassStart
+    - wheatStart
+    - grassDeathTransition
+    - standardAgingTransition
+
+- type: PlantDNA
+  ID: AgelessWheat
+  startingDeltaIDs:
+    - grassStart
+    - wheatStart
+    - grassDeathTransition
+    
+- type: PlantDNA
+  ID: GrassForever
+  startingDeltaIDs:
+    - grassStart
