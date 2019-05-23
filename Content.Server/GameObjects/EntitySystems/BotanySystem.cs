@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Botany;
+using Content.Shared.Maths;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -43,6 +44,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 plantUpdates = new PlantUpdates(entity);
                 ProcessSubstrate();
                 ProcessLighting();
+                ProcessTemperature();
                 // process ... [light, food, water, pests, etc] implement these as the state of the game advances
                 ApplyAging();
                 ApplyGrowth();
@@ -119,6 +121,21 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 LimitLifeProgressDelta(0.5);
             }
+        }
+
+        private void ProcessTemperature()
+        {
+            var tempComponent = plantUpdates.PlantEntity.GetComponent<TemperatureComponent>();
+            if (tempComponent.CurrentTemperature > PhysicalConstants.ZERO_CELCIUS + 50)
+            {
+                LimitLifeProgressDelta(0.3);
+            }
+            else if (tempComponent.CurrentTemperature < PhysicalConstants.ZERO_CELCIUS + 5)
+            {
+                // slow down cellular age?
+                LimitLifeProgressDelta(0.3);
+            }
+            return;
         }
 
         private void ApplyAging()
