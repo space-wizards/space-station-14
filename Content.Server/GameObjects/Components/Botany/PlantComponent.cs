@@ -250,9 +250,13 @@ namespace Content.Server.GameObjects.Components.Botany
                         }
                     }
                 }
+                // We're potentially removing the harvestDelta after this, so let's copy its ID
+                var harvestID = harvestDelta.GetID();
                 foreach (var transition in basicTransitions.ToList())
                 {
-                    if (transition.conditionType == BasicTransitionCondition.Harvested)
+                    if (transition.conditionType == BasicTransitionCondition.Harvested &&
+                        (transition.conditionID == null ||
+                        transition.conditionID == harvestID))
                     {
                         basicTransitions.Remove(transition);
                         ApplyDeltas(transition.Deltas);

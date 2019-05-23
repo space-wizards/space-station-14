@@ -254,6 +254,8 @@ namespace Content.Server.GameObjects.Components.Botany
         [ViewVariables(VVAccess.ReadWrite)]
         public BasicTransitionCondition conditionType;
         [ViewVariables(VVAccess.ReadWrite)]
+        public string conditionID;
+        [ViewVariables(VVAccess.ReadWrite)]
         public double conditionAmount;
         [ViewVariables(VVAccess.ReadWrite)]
         public bool conditionIsAbsolute;
@@ -269,6 +271,7 @@ namespace Content.Server.GameObjects.Components.Botany
                 Deltas = (List<PlantDelta>)Deltas.Clone(),
 
                 conditionType = conditionType,
+                conditionID = conditionID,
                 conditionAmount = conditionAmount,
                 conditionIsAbsolute = conditionIsAbsolute
             };
@@ -283,6 +286,7 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref Deltas, "deltas", new List<PlantDelta>());
 
             serializer.DataField(ref conditionType, "conditionType", BasicTransitionCondition.Progress);
+            serializer.DataField(ref conditionID, "conditionID", null);
             serializer.DataField(ref conditionAmount, "conditionAmount", 0.0);
             serializer.DataField(ref conditionIsAbsolute, "conditionIsAbsolute", false);
         }
