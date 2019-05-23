@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref destroy, "destroy", false);
 
             serializer.DataField(ref mutationDelta, "mutationDelta", null);
-            serializer.DataField(ref speciationDeltas, "speciationDeltas", new List<SpeciationDelta>);
+            serializer.DataField(ref speciationDeltas, "speciationDeltas", new List<SpeciationDelta>());
 
             serializer.DataField(ref harvestDeltas, "harvestDeltas", new List<HarvestDelta>());
             serializer.DataField(ref damageDeltas, "damageDeltas", new List<DamageDelta>());

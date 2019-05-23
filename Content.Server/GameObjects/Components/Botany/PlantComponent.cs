@@ -231,7 +231,7 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref progressInSeconds, "progressInSeconds", 0.0);
 
             serializer.DataField(ref mutationProbability, "mutationProbability", 0.0);
-            serializer.DataField(ref speciationDeltas, "speciationDeltas", new List<string>());
+            serializer.DataField(ref speciationDeltas, "speciationDeltas", new List<SpeciationDelta>());
 
             serializer.DataField(ref harvestDeltas, "harvestDeltas", new List<HarvestDelta>());
             serializer.DataField(ref damageDeltas, "damageDeltas", new List<DamageDelta>());
