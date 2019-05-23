@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.Botany
 {
-    class PlantComponent : Component, IAttackBy, IAttackHand, IOnDamageBehavior
+    class PlantComponent : Component, IAttackBy, IAttackHand, IOnDamageBehavior, EntitySystems.IExamine
     {
         public override string Name => "Plant";
 
@@ -35,6 +35,9 @@ namespace Content.Server.GameObjects.Components.Botany
         public double cellularAgeInSeconds;
         [ViewVariables(VVAccess.ReadWrite)]
         public double progressInSeconds;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string flavorText;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public List<HarvestDelta> harvestDeltas;
@@ -61,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Botany
             }
             if (delta.setDescription != null)
             {
-                Owner.GetComponent<IMetaDataComponent>().EntityDescription = delta.setDescription;
+                flavorText = delta.setDescription;
             }
             if (delta.setSprite != null)
             {
@@ -293,6 +296,15 @@ namespace Content.Server.GameObjects.Components.Botany
             if (e.Passed && e.DamageThreshold == DestructionThreshold)
             {
                 Owner.Delete();
+            }
+        }
+
+        public void Examine(FormattedMessage message)
+        {
+            if (flavorText != null)
+            {
+                message.AddText(flavorText);
+                message.Pop();
             }
         }
     }
