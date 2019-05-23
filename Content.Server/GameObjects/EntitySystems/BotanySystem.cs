@@ -169,6 +169,35 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
+        private enum MutationType
+        {
+            None,
+            Damage,
+            Speciation,
+        }
+
+        private void ApplyMutation()
+        {
+            if (plantUpdates.PlantComponent.mutationProbability > plantUpdates.Rand.NextDouble())
+            {
+                plantUpdates.PlantComponent.mutationProbability = 0.0;
+                switch ((MutationType)plantUpdates.Rand.Next(Enum.GetNames(typeof(MutationType)).Length))
+                {
+                    case MutationType.None:
+                        break;
+                    case MutationType.Damage:
+                        var damageDelta = new DamageDelta();
+                        damageDelta.type = Shared.GameObjects.DamageType.Toxic;
+                        damageDelta.amountPerSecond = plantUpdates.Rand.NextDouble() * 5;
+                        plantUpdates.PlantComponent.damageDeltas.Add(damageDelta);
+                        break;  
+                    case MutationType.Speciation:
+                        // speciate into something else
+                        break;
+                }
+            }
+        }
+
         private void LimitLifeProgressDelta(double maxProgressThisCycle)
         {
             plantUpdates.baseLifeProgressDelta = Math.Min(maxProgressThisCycle, plantUpdates.baseLifeProgressDelta);

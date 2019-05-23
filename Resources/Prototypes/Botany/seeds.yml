@@ -1,6 +1,6 @@
 - type: entity
   id: BaseSeed
-  name: "Base seed"
+  name: "Botany - Base Seed DO NOT SPAWN"
   description: The blandest
   parent: BaseItem
   components:
@@ -10,8 +10,8 @@
   - type: PlantSeed
 
 - type: entity
-  id: WheatSeed
-  name: "Botany - wheat seed"
+  id: BaseWheatSeed
+  name: "Botany - Wheat Seed"
   description: "Enriched with the finest bran and germ substitute."
   parent: BaseSeed
   components:
@@ -19,6 +19,10 @@
     texture: Botany/seeds/seed-wheat.png
   - type: Icon
     texture: Botany/seeds/seed-wheat.png
+  
+- type: entity
+  id: WheatSeed
+  parent: BaseWheatSeed
   - type: PlantDNA
     DNA:
       startingDeltaIDs:
@@ -110,14 +114,10 @@
               
 - type: entity
   id: CyclicWheatSeed
-  name: "Botany - Cyclowheat POC seed"
-  description: "proof of concept for unique things that can be done with transitions"
-  parent: BaseSeed
+  name: "Botany - Cyclowheat seed"
+  description: "showcases various plant things"
+  parent: BaseWheatSeed
   components:
-  - type: Sprite
-    texture: Botany/seeds/seed-wheat.png
-  - type: Icon
-    texture: Botany/seeds/seed-wheat.png
   - type: PlantDNA
     DNA:
       startingDeltaIDs:

@@ -40,6 +40,11 @@ namespace Content.Server.GameObjects.Components.Botany
         public string flavorText;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        public double mutationProbability;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public List<SpeciationDelta> speciationDeltas;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public List<HarvestDelta> harvestDeltas;
         [ViewVariables(VVAccess.ReadWrite)]
         public List<DamageDelta> damageDeltas;
@@ -82,6 +87,26 @@ namespace Content.Server.GameObjects.Components.Botany
             if (delta.destroy)
             {
                 Owner.Delete();
+            }
+
+            if (delta.mutationDelta != null)
+            {
+                var mut = delta.mutationDelta;
+                switch (mut.operation)
+                {
+                    case NumericOperation.Add:
+                        mutationProbability = Math.Max(0.0, Math.Min(1.0, mutationProbability + mut.amount));
+                        break;
+                    case NumericOperation.Set:
+                        mutationProbability = Math.Max(0.0, Math.Min(1.0, mut.amount));
+                        break;
+                }
+            }
+
+            foreach (var speciationDelta in delta.speciationDeltas)
+            {
+                // todo: implement IListDelta
+                speciationDeltas.Add(speciationDelta);
             }
 
             foreach (var harvestDelta in delta.harvestDeltas)
@@ -204,6 +229,9 @@ namespace Content.Server.GameObjects.Components.Botany
             serializer.DataField(ref TimeSinceLastUpdate, "timeSinceLastUpdate", 0);
             serializer.DataField(ref cellularAgeInSeconds, "cellularAgeInSeconds", 0.0);
             serializer.DataField(ref progressInSeconds, "progressInSeconds", 0.0);
+
+            serializer.DataField(ref mutationProbability, "mutationProbability", 0.0);
+            serializer.DataField(ref speciationDeltas, "speciationDeltas", new List<string>());
 
             serializer.DataField(ref harvestDeltas, "harvestDeltas", new List<HarvestDelta>());
             serializer.DataField(ref damageDeltas, "damageDeltas", new List<DamageDelta>());

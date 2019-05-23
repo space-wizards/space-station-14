@@ -22,4 +22,4 @@
   - type: Icon
     texture: Botany/growns/wheat.png
   - type: ExtractableSeed
-    seedPrototype: WheatSeed
+    seedPrototype: BaseWheatSeed

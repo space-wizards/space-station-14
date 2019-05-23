@@ -69,6 +69,11 @@ namespace Content.Server.GameObjects.Components.Botany
         public bool destroy; // entity deleted
 
         [ViewVariables(VVAccess.ReadWrite)]
+        public MutationDelta mutationDelta;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public List<SpeciationDelta> speciationDeltas;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public List<HarvestDelta> harvestDeltas;
         [ViewVariables(VVAccess.ReadWrite)]
         public List<DamageDelta> damageDeltas;
@@ -86,6 +91,9 @@ namespace Content.Server.GameObjects.Components.Botany
 
             serializer.DataField(ref setDeath, "setDeath", false);
             serializer.DataField(ref destroy, "destroy", false);
+
+            serializer.DataField(ref mutationDelta, "mutationDelta", null);
+            serializer.DataField(ref speciationDeltas, "speciationDeltas", new List<SpeciationDelta>);
 
             serializer.DataField(ref harvestDeltas, "harvestDeltas", new List<HarvestDelta>());
             serializer.DataField(ref damageDeltas, "damageDeltas", new List<DamageDelta>());
@@ -114,6 +122,9 @@ namespace Content.Server.GameObjects.Components.Botany
             setDeath = transition.setDeath;
             destroy = transition.destroy;
 
+            mutationDelta = transition.mutationDelta;
+            speciationDeltas = (List<SpeciationDelta>)transition.speciationDeltas.Clone();
+
             harvestDeltas = (List<HarvestDelta>)transition.harvestDeltas.Clone();
             damageDeltas = (List<DamageDelta>)transition.damageDeltas.Clone();
 
@@ -123,6 +134,57 @@ namespace Content.Server.GameObjects.Components.Botany
         public object Clone()
         {
             return new PlantDelta(this);
+        }
+    }
+
+    public enum NumericOperation
+    {
+        Set,
+        Add
+        //Tetrate
+    }
+
+    public class MutationDelta : ICloneable, IExposeData
+    {
+        [ViewVariables(VVAccess.ReadWrite)]
+        public NumericOperation operation;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public double amount;
+
+        public object Clone()
+        {
+            return new MutationDelta
+            {
+                operation = operation,
+                amount = amount
+            };
+        }
+
+        public void ExposeData(ObjectSerializer serializer)
+        {
+            serializer.DataField(ref operation, "operation", NumericOperation.Set);
+            serializer.DataField(ref amount, "amount", 0.0);
+        }
+    }
+
+    public class SpeciationDelta : ICloneable, IExposeData
+    {
+        public string prototype; // currently we spawn a seed and extract its DNA just because I don't want to be bothered with doing it properly using the prototypes system
+        public double weight; //weight in species selection
+
+        public object Clone()
+        {
+            return new SpeciationDelta
+            {
+                prototype = prototype,
+                weight = weight
+            };
+        }
+
+        public void ExposeData(ObjectSerializer serializer)
+        {
+            serializer.DataField(ref prototype, "prototype", null);
+            serializer.DataField(ref weight, "weight", 1.0);
         }
     }
 
