@@ -23,6 +23,7 @@
 - type: entity
   id: WheatSeed
   parent: BaseWheatSeed
+  components:
   - type: PlantDNA
     DNA:
       startingDeltaIDs:
