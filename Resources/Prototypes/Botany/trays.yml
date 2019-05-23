@@ -1,6 +1,6 @@
 - type: entity
   id: example_plant_holder
-  name: "Botany - Example Plant Holder"
+  name: "Botany - Base Plant Holder"
   components:
   - type: Sprite
     texture: Botany/trays/tray-empty.png
@@ -11,6 +11,25 @@
   - type: BoundingBox
   - type: PlantHolder
     plantYOffset: 0.25
+    emptySprite: Botany/trays/tray-empty.png
+    sandSprite: Botany/trays/tray-sand.png
+    rockwoolSprite: Botany/trays/tray-rockwool.png
+
+    
+- type: entity
+  id: example_plant_holder
+  name: "Botany - Sand Plant Holder"
+  components:
+  - type: Sprite
+    texture: Botany/trays/tray-sand.png
+    drawdepth: Objects
+  - type: Icon
+    texture: Botany/trays/tray-sand.png
+  - type: Clickable
+  - type: BoundingBox
+  - type: PlantHolder
+    plantYOffset: 0.25
+    heldSubstrate: Sand
     emptySprite: Botany/trays/tray-empty.png
     sandSprite: Botany/trays/tray-sand.png
     rockwoolSprite: Botany/trays/tray-rockwool.png
