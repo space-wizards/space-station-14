@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
@@ -33,13 +33,12 @@ namespace Content.Shared.GameObjects
         public abstract string GetText(IEntity user, IComponent component);
 
         /// <summary>
-        ///     Gets whether this verb is "disabled" in the right click menu.
-        ///     The verb is still visible in disabled state, but greyed out.
+        ///     Gets the visibility level of this verb in the right click menu.
         /// </summary>
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="component">The component instance for which this verb is being loaded.</param>
-        /// <returns>True if the verb is disabled, false otherwise.</returns>
-        public abstract bool IsDisabled(IEntity user, IComponent component);
+        /// <returns>The visibility level of the verb in the client's right click menu.</returns>
+        public abstract VerbVisibility GetVisibility(IEntity user, IComponent component);
 
         /// <summary>
         ///     Invoked when this verb is activated from the right click menu.
@@ -66,13 +65,12 @@ namespace Content.Shared.GameObjects
         protected abstract string GetText(IEntity user, T component);
 
         /// <summary>
-        ///     Gets whether this verb is "disabled" in the right click menu.
-        ///     The verb is still visible in disabled state, but greyed out.
+        ///     Gets the visibility level of this verb in the right click menu.
         /// </summary>
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="component">The component instance for which this verb is being loaded.</param>
-        /// <returns>True if the verb is disabled, false otherwise.</returns>
-        protected abstract bool IsDisabled(IEntity user, T component);
+        /// <returns>The visibility level of the verb in the client's right click menu.</returns>
+        protected abstract VerbVisibility GetVisibility(IEntity user, T component);
 
         /// <summary>
         ///     Invoked when this verb is activated from the right click menu.
@@ -81,17 +79,19 @@ namespace Content.Shared.GameObjects
         /// <param name="component">The component instance for which this verb is being loaded.</param>
         protected abstract void Activate(IEntity user, T component);
 
-
+        /// <inheritdoc />
         public sealed override string GetText(IEntity user, IComponent component)
         {
             return GetText(user, (T) component);
         }
 
-        public sealed override bool IsDisabled(IEntity user, IComponent component)
+        /// <inheritdoc />
+        public sealed override VerbVisibility GetVisibility(IEntity user, IComponent component)
         {
-            return IsDisabled(user, (T) component);
+            return GetVisibility(user, (T) component);
         }
 
+        /// <inheritdoc />
         public sealed override void Activate(IEntity user, IComponent component)
         {
             Activate(user, (T) component);
@@ -128,5 +128,26 @@ namespace Content.Shared.GameObjects
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Possible states of visibility for the verb in the right click menu.
+    /// </summary>
+    public enum VerbVisibility
+    {
+        /// <summary>
+        /// The verb will be listed in the right click menu.
+        /// </summary>
+        Visible,
+
+        /// <summary>
+        /// The verb will be listed, but it will be grayed out and unable to be clicked on.
+        /// </summary>
+        Disabled,
+
+        /// <summary>
+        /// The verb will not be listed in the right click menu.
+        /// </summary>
+        Invisible
     }
 }

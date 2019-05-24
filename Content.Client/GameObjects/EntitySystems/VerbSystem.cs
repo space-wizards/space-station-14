@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects;
@@ -168,7 +168,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     }
                 }
 
-                var disabled = verb.IsDisabled(user, component);
+                var disabled = verb.GetVisibility(user, component) != VerbVisibility.Visible;
                 var button = new Button
                 {
                     Text = verb.GetText(user, component),
