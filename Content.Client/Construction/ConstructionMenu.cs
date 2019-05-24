@@ -48,7 +48,11 @@ namespace Content.Client.Construction
         // This list is flattened in such a way that the top most deepest category is first.
         List<CategoryNode> FlattenedCategories;
         PlacementManager Placement;
-        public ConstructionMenu(IDisplayManager displayMan) : base(displayMan) { }
+
+        public ConstructionMenu(IDisplayManager displayMan) : base(displayMan)
+        {
+            Size = new Vector2(500.0f, 350.0f);
+        }
 
         protected override void Initialize()
         {
