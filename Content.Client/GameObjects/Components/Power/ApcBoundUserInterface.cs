@@ -85,6 +85,7 @@ namespace Content.Client.GameObjects.Components.Power
 
             public ApcWindow(IDisplayManager displayMan) : base(displayMan)
             {
+                Title = "APC";
                 var rows = new VBoxContainer("Rows");
 
                 var statusHeader = new Label("StatusHeader") { Text = "Power Status: " };
@@ -92,7 +93,7 @@ namespace Content.Client.GameObjects.Components.Power
 
                 var breaker = new HBoxContainer("Breaker");
                 var breakerLabel = new Label("Label") { Text = "Main Breaker: " };
-                BreakerButton = new CheckButton {Name = "Breaker"};
+                BreakerButton = new CheckButton {Name = "Breaker", Text = "Toggle"};
                 breaker.AddChild(breakerLabel);
                 breaker.AddChild(BreakerButton);
                 rows.AddChild(breaker);
