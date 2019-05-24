@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.UnitTesting", "Robus
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared", "RobustToolbox\Robust.Shared\Robust.Shared.csproj", "{0529F740-0000-0000-0000-000000000000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.IntegrationTests", "Content.IntegrationTests\Content.IntegrationTests.csproj", "{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.IntegrationTests", "Content.IntegrationTests\Content.IntegrationTests.csproj", "{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,8 +181,8 @@ Global
 		{0529F740-0000-0000-0000-000000000000}.Release|x86.Build.0 = Release|x86
 		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|x64.Build.0 = Debug|Any CPU
+		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|x64.ActiveCfg = Debug|x64
+		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|x64.Build.0 = Debug|x64
 		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|x86.Build.0 = Debug|Any CPU
 		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Release|Any CPU.ActiveCfg = Release|Any CPU
