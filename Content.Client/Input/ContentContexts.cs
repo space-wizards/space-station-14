@@ -13,13 +13,13 @@ namespace Content.Client.Input
         {
             var common = contexts.GetContext("common");
             common.AddFunction(ContentKeyFunctions.FocusChat);
+            common.AddFunction(ContentKeyFunctions.ExamineEntity);
 
             var human = contexts.GetContext("human");
             human.AddFunction(ContentKeyFunctions.SwapHands);
             human.AddFunction(ContentKeyFunctions.Drop);
             human.AddFunction(ContentKeyFunctions.ActivateItemInHand);
             human.AddFunction(ContentKeyFunctions.OpenCharacterMenu);
-            human.AddFunction(ContentKeyFunctions.ExamineEntity);
             human.AddFunction(ContentKeyFunctions.UseItemInHand);
             human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);

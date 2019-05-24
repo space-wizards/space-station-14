@@ -1,4 +1,4 @@
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Input;
@@ -7,6 +7,7 @@ using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -25,10 +26,14 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
+        public const float ExamineRange = 1.5f;
+        public const float ExamineRangeSquared = ExamineRange * ExamineRange;
+
 #pragma warning disable 649
         [Dependency] private IInputManager _inputManager;
         [Dependency] private IUserInterfaceManager _userInterfaceManager;
         [Dependency] private IEntityManager _entityManager;
+        [Dependency] private IPlayerManager _playerManager;
 #pragma warning restore 649
 
         private Popup _examineTooltipOpen;
@@ -56,6 +61,13 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
+            var playerEntity = _playerManager.LocalPlayer.ControlledEntity;
+            if(playerEntity == null)
+                return;
+            
+            if((entity.Transform.WorldPosition - playerEntity.Transform.WorldPosition).LengthSquared > ExamineRangeSquared)
+                return;
+
             DoExamine(entity);
         }
 
@@ -70,6 +82,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _userInterfaceManager.StateRoot.AddChild(_examineTooltipOpen);
             var panel = new PanelContainer();
             panel.AddStyleClass(StyleClassEntityTooltip);
+            panel.ModulateSelfOverride = Color.LightGray.WithAlpha(0.90f);
             _examineTooltipOpen.AddChild(panel);
             panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
             var vBox = new VBoxContainer();

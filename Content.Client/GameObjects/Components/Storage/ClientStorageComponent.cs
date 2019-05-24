@@ -11,6 +11,7 @@ using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using Robust.Client.Interfaces.Graphics;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -31,7 +32,7 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnAdd();
 
             Window = new StorageWindow(IoCManager.Resolve<IDisplayManager>())
-            { StorageEntity = this };
+            { StorageEntity = this};
         }
 
         public override void OnRemove()
@@ -108,20 +109,42 @@ namespace Content.Client.GameObjects.Components.Storage
             private Label Information;
             public ClientStorageComponent StorageEntity;
 
-            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Storage/Storage.tscn");
-
-            public StorageWindow(IDisplayManager displayMan) : base(displayMan) { }
+            public StorageWindow(IDisplayManager displayMan) : base(displayMan)
+            {
+                Size = new Vector2(180.0f, 320.0f);
+            }
 
             protected override void Initialize()
             {
                 base.Initialize();
 
+                Title = "Storage Item";
                 HideOnClose = true;
+                Visible = false;
+                RectClipContent = true;
 
-                // Get all the controls.
-                VSplitContainer = Contents.GetChild("VSplitContainer");
-                EntityList = VSplitContainer.GetChild("ListScrollContainer").GetChild<VBoxContainer>("EntityList");
-                Information = VSplitContainer.GetChild<Label>("Information");
+                VSplitContainer = new VBoxContainer("VSplitContainer");
+                Information = new Label("Information")
+                {
+                    Text = "Items: 0 Volume: 0/0 Stuff",
+                    SizeFlagsVertical = SizeFlags.ShrinkCenter
+                };
+                VSplitContainer.AddChild(Information);
+
+                var listScrollContainer = new ScrollContainer("ListScrollContainer")
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    HScrollEnabled = true,
+                    VScrollEnabled = true
+                };
+                EntityList = new VBoxContainer("EntityList")
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                };
+                listScrollContainer.AddChild(EntityList);
+                VSplitContainer.AddChild(listScrollContainer);
+                Contents.AddChild(VSplitContainer);
             }
 
             public override void Close()
@@ -147,17 +170,15 @@ namespace Content.Client.GameObjects.Components.Storage
                     {
                         EntityuID = entityuid.Key
                     };
-                    var container = button.GetChild("HBoxContainer");
                     button.ActualButton.OnToggled += OnItemButtonToggled;
                     //Name and Size labels set
-                    container.GetChild<Label>("Name").Text = entity.Name;
-                    container.GetChild<Control>("Control").GetChild<Label>("Size").Text = string.Format("{0}", entityuid.Value);
+                    button.EntityName.Text = entity.Name;
+                    button.EntitySize.Text = string.Format("{0}", entityuid.Value);
 
                     //Gets entity sprite and assigns it to button texture
                     if (entity.TryGetComponent(out ISpriteComponent sprite))
                     {
-                        var view = container.GetChild<SpriteView>("SpriteView");
-                        view.Sprite = sprite;
+                        button.EntitySpriteView.Sprite = sprite;
                     }
 
                     EntityList.AddChild(button);
@@ -193,13 +214,60 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             public EntityUid EntityuID { get; set; }
             public Button ActualButton { get; private set; }
-
-            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Storage/StorageEntity.tscn");
+            public SpriteView EntitySpriteView { get; private set; }
+            public Control EntityControl { get; private set; }
+            public Label EntityName { get; private set; }
+            public Label EntitySize { get; private set; }
 
             protected override void Initialize()
             {
                 base.Initialize();
-                ActualButton = GetChild<Button>("Button");
+
+                ActualButton = new Button("Button")
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    ToggleMode = true,
+                    MouseFilter = MouseFilterMode.Stop
+                };
+                AddChild(ActualButton);
+
+                var hBoxContainer = new HBoxContainer("HBoxContainer") {MouseFilter = MouseFilterMode.Ignore};
+                EntitySpriteView = new SpriteView("SpriteView")
+                {
+                    CustomMinimumSize = new Vector2(32.0f, 32.0f), MouseFilter = MouseFilterMode.Ignore
+                };
+                EntityName = new Label("Name")
+                {
+                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    Text = "Backpack",
+                    MouseFilter = MouseFilterMode.Ignore
+                };
+                hBoxContainer.AddChild(EntitySpriteView);
+                hBoxContainer.AddChild(EntityName);
+
+                EntityControl = new Control("Control")
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand, MouseFilter = MouseFilterMode.Ignore
+                };
+                EntitySize = new Label("Size")
+                {
+                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                    Text = "Size 6",
+                    Align = Label.AlignMode.Right,
+                    AnchorLeft = 1.0f,
+                    AnchorRight = 1.0f,
+                    AnchorBottom = 0.5f,
+                    AnchorTop = 0.5f,
+                    MarginLeft = -38.0f,
+                    MarginTop = -7.0f,
+                    MarginRight = -5.0f,
+                    MarginBottom = 7.0f
+                };
+
+                EntityControl.AddChild(EntitySize);
+                hBoxContainer.AddChild(EntityControl);
+                AddChild(hBoxContainer);
             }
         }
     }
