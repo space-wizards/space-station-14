@@ -67,8 +67,6 @@ def main():
 
     os.mkdir("release")
 
-    copy_godot_scenes()
-
     if "windows" in platforms:
         wipe_bin()
         build_windows()
@@ -270,30 +268,6 @@ def copy_content_assemblies(target, zipf, server):
 
     for x in files:
         zipf.write(p(source_dir, x), p(target, x))
-
-
-def copy_godot_scenes():
-    target_dir = p("RobustToolbox", "SS14.Client.Godot", "Scenes")
-    from_dir = p("Resources", "Scenes")
-    for path in os.listdir(from_dir):
-        if path.startswith("."):
-            continue
-
-        frompath = p(from_dir, path)
-        targetpath = p(target_dir, path)
-        if os.path.exists(targetpath):
-            if os.path.isfile(targetpath):
-                os.remove(targetpath)
-
-            elif os.path.isdir(targetpath):
-                shutil.rmtree(targetpath)
-
-            else:
-                print("So, what the hell is {} exactly and how did it get there?"
-                      .format(targetpath))
-                exit(1)
-
-        copy_dir_or_file(frompath, targetpath)
 
 
 def copy_dir_or_file(src, dst):
