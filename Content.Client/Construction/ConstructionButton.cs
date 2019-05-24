@@ -1,4 +1,4 @@
-using Content.Client.GameObjects.Components.Construction;
+﻿using Content.Client.GameObjects.Components.Construction;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
@@ -27,10 +27,7 @@ namespace Content.Client.Construction
         {
             base.Initialize();
 
-            AnchorLeft = 1.0f;
-            AnchorTop = 1.0f;
-            AnchorRight = 1.0f;
-            AnchorBottom = 1.0f;
+            SetAnchorPreset(LayoutPreset.BottomRight);
             MarginLeft = -110.0f;
             MarginTop = -70.0f;
             MarginRight = -50.0f;
