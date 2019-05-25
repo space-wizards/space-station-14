@@ -75,10 +75,10 @@ namespace Content.Client.GameObjects.Components.Power
             float normalizedCharge = charge / _chargeBar.MaxValue;
 
             float leftHue = 0.0f;// Red
-            float middleHue = 0.08f;// Orange
+            float middleHue = 0.066f;// Orange
             float rightHue = 0.33f;// Green
             float saturation = 1.0f;// Uniform saturation
-            float value = 0.65f;// Uniform value / brightness
+            float value = 0.8f;// Uniform value / brightness
             float alpha = 1.0f;// Uniform alpha
 
             // These should add up to 1.0 or your transition won't be smooth
