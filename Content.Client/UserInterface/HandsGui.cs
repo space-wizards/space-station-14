@@ -36,8 +36,8 @@ namespace Content.Client.UserInterface
 
         private IEntity LeftHand;
         private IEntity RightHand;
-        private UIBox2i handL;
-        private UIBox2i handR;
+        private UIBox2i _handL;
+        private UIBox2i _handR;
 
         private SpriteView LeftSpriteView;
         private SpriteView RightSpriteView;
@@ -60,24 +60,24 @@ namespace Content.Client.UserInterface
             SetMarginsPreset(LayoutPreset.CenterBottom);
             SetAnchorPreset(LayoutPreset.CenterBottom);
 
-            handL = new UIBox2i(0, 0, BOX_SIZE, BOX_SIZE);
-            handR = handL.Translated(new Vector2i(BOX_SIZE + BOX_SPACING, 0));
+            _handL = new UIBox2i(0, 0, BOX_SIZE, BOX_SIZE);
+            _handR = _handL.Translated(new Vector2i(BOX_SIZE + BOX_SPACING, 0));
             MouseFilter = MouseFilterMode.Stop;
 
             LeftSpriteView = new SpriteView {MouseFilter = MouseFilterMode.Ignore};
             AddChild(LeftSpriteView);
-            LeftSpriteView.Size = handL.Size;
-            LeftSpriteView.Position = handL.TopLeft;
+            LeftSpriteView.Size = _handL.Size;
+            LeftSpriteView.Position = _handL.TopLeft;
 
             RightSpriteView = new SpriteView {MouseFilter = MouseFilterMode.Ignore};
             AddChild(RightSpriteView);
-            RightSpriteView.Size = handR.Size;
-            RightSpriteView.Position = handR.TopLeft;
+            RightSpriteView.Size = _handR.Size;
+            RightSpriteView.Position = _handR.TopLeft;
         }
 
         protected override Vector2 CalculateMinimumSize()
         {
-            return new Vector2(BOX_SIZE * 2 + 1, BOX_SIZE);
+            return new Vector2(BOX_SIZE * 2 + 1, BOX_SIZE) * UIScale;
         }
 
         protected override void Draw(DrawingHandleScreen handle)
@@ -86,6 +86,9 @@ namespace Content.Client.UserInterface
                 return;
 
             var leftActive = hands.ActiveIndex == "left";
+
+            var handL = new UIBox2(_handL.TopLeft * UIScale, _handL.BottomRight * UIScale);
+            var handR = new UIBox2(_handR.TopLeft * UIScale, _handR.BottomRight * UIScale);
 
             handle.DrawStyleBox(handBox, leftActive ? handL : handR);
             handle.DrawStyleBox(inactiveHandBox, leftActive ? handR : handL);
@@ -187,15 +190,15 @@ namespace Content.Client.UserInterface
 
         protected override bool HasPoint(Vector2 point)
         {
-            return handL.Contains((Vector2i) point) || handR.Contains((Vector2i) point);
+            return _handL.Contains((Vector2i) point) || _handR.Contains((Vector2i) point);
         }
 
         protected override void MouseDown(GUIMouseButtonEventArgs args)
         {
             base.MouseDown(args);
 
-            var leftHandContains = handL.Contains((Vector2i) args.RelativePosition);
-            var rightHandContains = handR.Contains((Vector2i) args.RelativePosition);
+            var leftHandContains = _handL.Contains((Vector2i) args.RelativePosition);
+            var rightHandContains = _handR.Contains((Vector2i) args.RelativePosition);
 
             string handIndex;
             if (leftHandContains)

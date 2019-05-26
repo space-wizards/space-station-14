@@ -112,6 +112,24 @@ namespace Content.Server.GameObjects
             CurrentDamageState.EnterState(Owner);
 
             currentstate = threshold;
+
+            Owner.RaiseEvent(new MobDamageStateChangedMessage(this));
         }
+    }
+
+    /// <summary>
+    ///     Fired when <see cref="SpeciesComponent.CurrentDamageState"/> changes.
+    /// </summary>
+    public sealed class MobDamageStateChangedMessage : EntitySystemMessage
+    {
+        public MobDamageStateChangedMessage(SpeciesComponent species)
+        {
+            Species = species;
+        }
+
+        /// <summary>
+        ///     The species component that was changed.
+        /// </summary>
+        public SpeciesComponent Species { get; }
     }
 }

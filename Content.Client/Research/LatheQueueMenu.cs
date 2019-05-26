@@ -21,7 +21,7 @@ namespace Content.Client.Research
 
         [ViewVariables]
         private ItemList QueueList;
-        private Label Name;
+        private Label NameLabel;
         private Label Description;
         private TextureRect Icon;
 
@@ -79,7 +79,7 @@ namespace Content.Client.Research
                 SizeFlagsStretchRatio = 3,
             };
 
-            Name = new Label()
+            NameLabel = new Label()
             {
                 RectClipContent = true,
                 SizeFlagsHorizontal = SizeFlags.Fill,
@@ -101,7 +101,7 @@ namespace Content.Client.Research
                 SelectMode = ItemList.ItemListSelectMode.None
             };
 
-            vboxInfo.AddChild(Name);
+            vboxInfo.AddChild(NameLabel);
             vboxInfo.AddChild(Description);
 
             hbox.AddChild(Icon);
@@ -123,7 +123,7 @@ namespace Content.Client.Research
         {
             Icon.Texture = recipe.Icon.Frame0();
             if (recipe.Name != null)
-                Name.Text = recipe.Name;
+                NameLabel.Text = recipe.Name;
             if (recipe.Description != null)
                 Description.Text = recipe.Description;
         }
@@ -131,7 +131,7 @@ namespace Content.Client.Research
         public void ClearInfo()
         {
             Icon.Texture = Texture.Transparent;
-            Name.Text = "-------";
+            NameLabel.Text = "-------";
             Description.Text = "Not producing anything.";
         }
 

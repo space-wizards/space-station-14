@@ -38,12 +38,14 @@ namespace Content.Server.GameObjects
         protected override void InternalInsert(IEntity toinsert)
         {
             ContainedEntity = toinsert;
+            base.InternalInsert(toinsert);
         }
 
         /// <inheritdoc />
         protected override void InternalRemove(IEntity toremove)
         {
             ContainedEntity = null;
+            base.InternalRemove(toremove);
         }
 
         public override void Shutdown()

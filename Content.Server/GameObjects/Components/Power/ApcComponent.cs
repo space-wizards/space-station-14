@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Power
 {
-    public sealed class ApcComponent : SharedApcComponent, IAttackHand
+    public sealed class ApcComponent : SharedApcComponent, IActivate
     {
         PowerStorageComponent Storage;
         AppearanceComponent Appearance;
@@ -106,15 +106,14 @@ namespace Content.Server.GameObjects.Components.Power
             return net.Lack > 0 ? ApcExternalPowerState.Low : ApcExternalPowerState.Good;
         }
 
-        bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
-                return false;
+                return;
             }
 
             _userInterface.Open(actor.playerSession);
-            return true;
         }
 
         private void _clickSound()

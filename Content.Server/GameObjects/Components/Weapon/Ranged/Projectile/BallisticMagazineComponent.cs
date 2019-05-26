@@ -3,31 +3,41 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
-    public class BallisticMagazineComponent : Component
+    public class BallisticMagazineComponent : Component, IMapInit
     {
         public override string Name => "BallisticMagazine";
 
         // Stack of loaded bullets.
+        [ViewVariables]
         private readonly Stack<IEntity> _loadedBullets = new Stack<IEntity>();
+        [ViewVariables]
         private string _fillType;
 
+        [ViewVariables]
         private Container _bulletContainer;
+        [ViewVariables]
         private AppearanceComponent _appearance;
 
         private BallisticMagazineType _magazineType;
         private BallisticCaliber _caliber;
         private int _capacity;
 
+        [ViewVariables]
         public BallisticMagazineType MagazineType => _magazineType;
+        [ViewVariables]
         public BallisticCaliber Caliber => _caliber;
+        [ViewVariables]
         public int Capacity => _capacity;
 
+        [ViewVariables]
         public int CountLoaded => _loadedBullets.Count;
 
         public event Action OnAmmoCountChanged;
@@ -62,17 +72,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 {
                     _loadedBullets.Push(entity);
                 }
-                _updateAppearance();
             }
-            else if (_fillType != null)
-            {
-                // Load up bullets from fill.
-                for (var i = 0; i < Capacity; i++)
-                {
-                    var bullet = Owner.EntityManager.SpawnEntity(_fillType);
-                    AddBullet(bullet);
-                }
-            }
+
+            _updateAppearance();
 
             OnAmmoCountChanged?.Invoke();
             _appearance.SetData(BallisticMagazineVisuals.AmmoCapacity, Capacity);
@@ -112,6 +114,21 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         private void _updateAppearance()
         {
             _appearance.SetData(BallisticMagazineVisuals.AmmoLeft, CountLoaded);
+        }
+
+        void IMapInit.MapInit()
+        {
+            if (_fillType == null)
+            {
+                return;
+            }
+
+            // Load up bullets from fill.
+            for (var i = 0; i < Capacity; i++)
+            {
+                var bullet = Owner.EntityManager.SpawnEntity(_fillType);
+                AddBullet(bullet);
+            }
         }
     }
 

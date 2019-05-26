@@ -1,6 +1,7 @@
 ﻿using Content.Client.GameObjects.Components.Construction;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Construction
@@ -8,7 +9,6 @@ namespace Content.Client.Construction
     public class ConstructionButton : Button
     {
         private readonly IDisplayManager _displayManager;
-        protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Construction/ConstructionButton.tscn");
 
         public ConstructorComponent Owner
         {
@@ -27,6 +27,12 @@ namespace Content.Client.Construction
         {
             base.Initialize();
 
+            SetAnchorPreset(LayoutPreset.BottomRight);
+            MarginLeft = -110.0f;
+            MarginTop = -70.0f;
+            MarginRight = -50.0f;
+            MarginBottom = -50.0f;
+            Text = "Crafting";
             OnPressed += IWasPressed;
         }
 

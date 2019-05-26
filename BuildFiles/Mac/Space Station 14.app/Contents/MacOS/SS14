@@ -1,4 +1,4 @@
-#!/usr/bin/env -i bash
+#!/bin/sh
 
 # cd to file containing script or something?
 BASEDIR=$(dirname "$0")

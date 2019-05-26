@@ -16,6 +16,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using System.Collections.Generic;
+using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.Graphics.Overlays;
 
@@ -67,7 +68,6 @@ namespace Content.Client.GameObjects
         {
             base.OnAdd();
 
-            IoCManager.InjectDependencies(this);
             _window = new SpeciesWindow();
 
             EffectsDictionary = new Dictionary<ScreenEffects, Overlay>()
@@ -137,28 +137,25 @@ namespace Content.Client.GameObjects
             }
         }
 
-        private class SpeciesWindow : Control
+        private class SpeciesWindow : TextureRect
         {
-            private TextureRect _textureRect;
-
-            protected override ResourcePath ScenePath => new ResourcePath("/Scenes/Mobs/Species.tscn");
-
-            protected override void Initialize()
+            public SpeciesWindow()
             {
-                base.Initialize();
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+                SizeFlagsVertical = SizeFlags.None;
 
-                _textureRect = (TextureRect)GetChild("TextureRect");
+                Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Mob/UI/Human/human0.png");
             }
 
-            public void SetIcon(HudStateChange changemessage)
+            public void SetIcon(HudStateChange changeMessage)
             {
-                if (!IoCManager.Resolve<IResourceCache>().TryGetResource<TextureResource>(new ResourcePath("/Textures") / changemessage.StateSprite, out var newtexture))
+                if (!IoCManager.Resolve<IResourceCache>().TryGetResource<TextureResource>(new ResourcePath("/Textures") / changeMessage.StateSprite, out var newtexture))
                 {
-                    Logger.Info("The Species Health Sprite {0} Does Not Exist", new ResourcePath("/Textures") / changemessage.StateSprite);
+                    Logger.Info("The Species Health Sprite {0} Does Not Exist", new ResourcePath("/Textures") / changeMessage.StateSprite);
                     return;
                 }
 
-                _textureRect.Texture = newtexture;
+                Texture = newtexture;
             }
         }
     }

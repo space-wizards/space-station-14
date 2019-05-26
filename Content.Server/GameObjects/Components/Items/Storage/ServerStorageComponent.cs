@@ -18,13 +18,15 @@ using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Robust.Server.GameObjects.EntitySystemMessages;
 
 namespace Content.Server.GameObjects
 {
     /// <summary>
     /// Storage component for containing entities within this one, matches a UI on the client which shows stored entities
     /// </summary>
-    public class ServerStorageComponent : SharedStorageComponent, IAttackBy, IUse, IActivate
+    public class ServerStorageComponent : SharedStorageComponent, IAttackBy, IUse, IActivate, IStorageComponent
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -39,31 +41,11 @@ namespace Content.Server.GameObjects
         private int StorageCapacityMax = 10000;
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Open
-        {
-            get => _open;
-            set
-            {
-                if (_open == value)
-                    return;
-
-                _open = value;
-                Dirty();
-            }
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
             storage = ContainerManagerComponent.Ensure<Container>("storagebase", Owner);
-        }
-
-        /// <inheritdoc />
-        public override ComponentState GetComponentState()
-        {
-            return new StorageComponentState(_open);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -82,14 +64,21 @@ namespace Content.Server.GameObjects
         public bool Remove(IEntity toremove)
         {
             _ensureInitialCalculated();
-            if (storage.Remove(toremove))
+            return storage.Remove(toremove);
+        }
+
+        internal void HandleEntityMaybeRemoved(EntRemovedFromContainerMessage message)
+        {
+            if (message.Container != storage)
             {
-                Logger.InfoS("Storage", "Storage (UID {0}) had entity (UID {1}) removed from it.", Owner.Uid, toremove.Uid);
-                StorageUsed -= toremove.GetComponent<StoreableComponent>().ObjectSize;
-                UpdateClientInventories();
-                return true;
+                return;
             }
-            return false;
+
+            _ensureInitialCalculated();
+            Logger.DebugS("Storage", "Storage (UID {0}) had entity (UID {1}) removed from it.", Owner.Uid,
+                message.Entity.Uid);
+            StorageUsed -= message.Entity.GetComponent<StoreableComponent>().ObjectSize;
+            UpdateClientInventories();
         }
 
         /// <summary>
@@ -99,14 +88,21 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         public bool Insert(IEntity toinsert)
         {
-            if (CanInsert(toinsert) && storage.Insert(toinsert))
+            return CanInsert(toinsert) && storage.Insert(toinsert);
+        }
+
+        internal void HandleEntityMaybeInserted(EntInsertedIntoContainerMessage message)
+        {
+            if (message.Container != storage)
             {
-                Logger.InfoS("Storage", "Storage (UID {0}) had entity (UID {1}) inserted into it.", Owner.Uid, toinsert.Uid);
-                StorageUsed += toinsert.GetComponent<StoreableComponent>().ObjectSize;
-                UpdateClientInventories();
-                return true;
+                return;
             }
-            return false;
+
+            _ensureInitialCalculated();
+            Logger.DebugS("Storage", "Storage (UID {0}) had entity (UID {1}) inserted into it.", Owner.Uid,
+                message.Entity.Uid);
+            StorageUsed += message.Entity.GetComponent<StoreableComponent>().ObjectSize;
+            UpdateClientInventories();
         }
 
         /// <summary>
@@ -228,7 +224,10 @@ namespace Content.Server.GameObjects
 
         private void UpdateDoorState()
         {
-            Open = SubscribedSessions.Count != 0;
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(StorageVisuals.Open, SubscribedSessions.Count != 0);
+            }
         }
 
         public void HandlePlayerSessionChangeEvent(object obj, SessionStatusEventArgs SSEA)
@@ -327,6 +326,11 @@ namespace Content.Server.GameObjects
             }
 
             StorageUsed = 0;
+
+            if (storage == null)
+            {
+                return;
+            }
 
             foreach (var entity in storage.ContainedEntities)
             {
