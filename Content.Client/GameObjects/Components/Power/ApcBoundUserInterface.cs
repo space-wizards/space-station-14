@@ -55,12 +55,15 @@ namespace Content.Client.GameObjects.Components.Power
             {
                 case ApcExternalPowerState.None:
                     _externalPowerStateLabel.Text = "None";
+                    _externalPowerStateLabel.FontColorOverride = new Color(0.8f, 0.0f, 0.0f);
                     break;
                 case ApcExternalPowerState.Low:
                     _externalPowerStateLabel.Text = "Low";
+                    _externalPowerStateLabel.FontColorOverride = new Color(0.9f, 0.36f, 0.0f);
                     break;
                 case ApcExternalPowerState.Good:
                     _externalPowerStateLabel.Text = "Good";
+                    _externalPowerStateLabel.FontColorOverride = new Color(0.024f, 0.8f, 0.0f);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
