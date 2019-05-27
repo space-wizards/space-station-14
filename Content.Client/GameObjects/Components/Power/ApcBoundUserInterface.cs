@@ -26,7 +26,7 @@ namespace Content.Client.GameObjects.Components.Power
         {
             base.Open();
 
-            _window = new ApcWindow(IoCManager.Resolve<IDisplayManager>())
+            _window = new ApcWindow()
             {
                 MarginRight = 426.0f, MarginBottom = 270.0f
             };
@@ -124,7 +124,7 @@ namespace Content.Client.GameObjects.Components.Power
             public Label ExternalPowerStateLabel { get; set; }
             public ProgressBar ChargeBar { get; set; }
 
-            public ApcWindow(IDisplayManager displayMan) : base(displayMan)
+            public ApcWindow()
             {
                 Title = "APC";
                 var rows = new VBoxContainer("Rows");

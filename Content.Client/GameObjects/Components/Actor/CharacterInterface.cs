@@ -82,7 +82,7 @@ namespace Content.Client.GameObjects.Components.Actor
         {
             private readonly VBoxContainer _contentsVBox;
 
-            public CharacterWindow(IEnumerable<ICharacterUI> windowComponents) : base(IoCManager.Resolve<IDisplayManager>())
+            public CharacterWindow(IEnumerable<ICharacterUI> windowComponents)
             {
                 Title = "Character";
                 HideOnClose = true;

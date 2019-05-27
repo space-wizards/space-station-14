@@ -40,8 +40,7 @@ namespace Content.Client.GameObjects.Components.Construction
                 case PlayerAttachedMsg _:
                     if (Button == null)
                     {
-                        Button = new ConstructionButton(IoCManager.Resolve<IDisplayManager>());
-                        Button.Owner = this;
+                        Button = new ConstructionButton {Owner = this};
                     }
                     Button.AddToScreen();
                     break;

@@ -8,8 +8,6 @@ namespace Content.Client.Construction
 {
     public class ConstructionButton : Button
     {
-        private readonly IDisplayManager _displayManager;
-
         public ConstructorComponent Owner
         {
             get => Menu.Owner;
@@ -17,9 +15,8 @@ namespace Content.Client.Construction
         }
         ConstructionMenu Menu;
 
-        public ConstructionButton(IDisplayManager displayManager)
+        public ConstructionButton()
         {
-            _displayManager = displayManager;
             PerformLayout();
         }
 
@@ -38,7 +35,7 @@ namespace Content.Client.Construction
 
         private void PerformLayout()
         {
-            Menu = new ConstructionMenu(_displayManager);
+            Menu = new ConstructionMenu();
             Menu.AddToScreen();
         }
 

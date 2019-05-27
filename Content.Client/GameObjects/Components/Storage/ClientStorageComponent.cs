@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.OnAdd();
 
-            Window = new StorageWindow(IoCManager.Resolve<IDisplayManager>())
+            Window = new StorageWindow()
             { StorageEntity = this};
         }
 
@@ -109,7 +109,7 @@ namespace Content.Client.GameObjects.Components.Storage
             private Label Information;
             public ClientStorageComponent StorageEntity;
 
-            public StorageWindow(IDisplayManager displayMan) : base(displayMan)
+            public StorageWindow()
             {
                 Size = new Vector2(180.0f, 320.0f);
             }

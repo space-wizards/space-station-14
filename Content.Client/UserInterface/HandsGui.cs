@@ -252,15 +252,5 @@ namespace Content.Client.UserInterface
                 esm.GetEntitySystem<VerbSystem>().OpenContextMenu(entity, new ScreenCoordinates(args.GlobalPosition));
             }
         }
-
-        private static ISpriteProxy GetSpriteMirror(IEntity entity)
-        {
-            if (entity.TryGetComponent(out ISpriteComponent component))
-            {
-                return component.CreateProxy();
-            }
-
-            return null;
-        }
     }
 }
