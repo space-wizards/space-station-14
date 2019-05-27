@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Research
 
         public MaterialStorageComponent Storage { get; private set; }
         public SharedLatheComponent Lathe { get; private set; }
-        public LatheDatabaseComponent Database { get; private set; }
+        public SharedLatheDatabaseComponent Database { get; private set; }
 
         [ViewVariables]
         public Queue<LatheRecipePrototype> QueuedRecipes => _queuedRecipes;
@@ -41,13 +41,15 @@ namespace Content.Client.GameObjects.Components.Research
 
             if (!Owner.Owner.TryGetComponent(out MaterialStorageComponent storage)
             ||  !Owner.Owner.TryGetComponent(out SharedLatheComponent lathe)
-            ||  !Owner.Owner.TryGetComponent(out LatheDatabaseComponent database)) return;
+            ||  !Owner.Owner.TryGetComponent(out SharedLatheDatabaseComponent database)) return;
+
+
 
             Storage = storage;
             Lathe = lathe;
             Database = database;
 
-            menu = new LatheMenu {Owner = this};
+            menu = new LatheMenu { Owner = this };
             queueMenu = new LatheQueueMenu { Owner = this };
 
             menu.OnClose += Close;
@@ -74,10 +76,10 @@ namespace Content.Client.GameObjects.Components.Research
             {
                 case SharedLatheComponent.LatheProducingRecipeMessage msg:
                     if (!_prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe)) break;
-                    queueMenu.SetInfo(recipe);
+                    queueMenu?.SetInfo(recipe);
                     break;
                 case SharedLatheComponent.LatheStoppedProducingRecipeMessage msg:
-                    queueMenu.ClearInfo();
+                    queueMenu?.ClearInfo();
                     break;
                 case SharedLatheComponent.LatheFullQueueMessage msg:
                     _queuedRecipes.Clear();
@@ -86,7 +88,7 @@ namespace Content.Client.GameObjects.Components.Research
                         if (!_prototypeManager.TryIndex(id, out LatheRecipePrototype recipePrototype)) break;
                         _queuedRecipes.Enqueue(recipePrototype);
                     }
-                    queueMenu.PopulateList();
+                    queueMenu?.PopulateList();
                     break;
             }
         }

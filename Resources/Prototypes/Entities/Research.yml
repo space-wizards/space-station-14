@@ -1,0 +1,40 @@
+- type: entity
+  id: RDServer
+  name: "RD Server"
+  components:
+  - type: Sprite
+    sprite: Buildings/smes.rsi
+    state: smes
+  - type: Icon
+    sprite: Buildings/smes.rsi
+    state: smes
+  - type: Clickable
+  - type: BoundingBox
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: ResearchServer
+  - type: TechnologyDatabase
+  
+- type: entity
+  id: BaseRDPointSource
+  name: "RD Point Source"
+  components:
+  - type: Sprite
+    sprite: Buildings/crate.rsi
+    state: crate
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: crate
+  - type: Clickable
+  - type: BoundingBox
+  - type: Collidable
+  - type: Snapgrid
+    offset: Center
+  - type: ResearchPointSource
+    pointspersecond: 1000
+    active: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface

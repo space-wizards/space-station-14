@@ -24,5 +24,7 @@
         public const uint MATERIAL_STORAGE = 1018;
         public const uint HAND_TELEPORTER = 1019;
         public const uint VENDING_MACHINE = 1020;
+        public const uint PROTOLATHE_DATABASE = 1021;
+        public const uint MATERIAL_STORAGE = 1022;
     }
 }

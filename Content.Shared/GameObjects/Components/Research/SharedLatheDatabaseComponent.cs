@@ -13,8 +13,8 @@ namespace Content.Shared.GameObjects.Components.Research
     public class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>
     {
         public override string Name => "LatheDatabase";
-        public sealed override uint? NetID => ContentNetIDs.LATHE_DATABASE;
-        public sealed override Type StateType => typeof(LatheDatabaseState);
+        public override uint? NetID => ContentNetIDs.LATHE_DATABASE;
+        public override Type StateType => typeof(LatheDatabaseState);
 
         private List<LatheRecipePrototype> _recipes = new List<LatheRecipePrototype>();
 

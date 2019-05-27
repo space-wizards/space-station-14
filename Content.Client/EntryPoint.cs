@@ -105,9 +105,18 @@ namespace Content.Client
                 factory.RegisterIgnore(ignoreName);
             }
 
+            factory.Register<SharedResearchConsoleComponent>();
             factory.Register<SharedLatheComponent>();
             factory.Register<SharedSpawnPointComponent>();
-            factory.Register<SolutionComponent>();
+
+            factory.Register<SharedLatheComponent>();
+            factory.Register<LatheDatabaseComponent>();
+            factory.Register<ProtolatheDatabaseComponent>();
+			factory.Register<SolutionComponent>();
+            factory.RegisterReference<LatheDatabaseComponent, SharedLatheDatabaseComponent>();
+            factory.RegisterReference<ProtolatheDatabaseComponent, SharedLatheDatabaseComponent>();
+            factory.Register<CameraRecoilComponent>();
+            factory.RegisterReference<CameraRecoilComponent, SharedCameraRecoilComponent>();
 
             factory.Register<SharedVendingMachineComponent>();
 

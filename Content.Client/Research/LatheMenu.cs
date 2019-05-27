@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Research;
+using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Materials;
 using Content.Shared.Research;
 using Robust.Client.UserInterface;
@@ -25,6 +26,8 @@ namespace Content.Client.Research
         private LineEdit AmountLineEdit;
         private LineEdit SearchBar;
         public Button QueueButton;
+        public Button ServerConnectButton;
+        public Button ServerSyncButton;
         protected override Vector2? CustomSize => (300, 450);
 
         public LatheBoundUserInterface Owner { get; set; }
@@ -68,6 +71,22 @@ namespace Content.Client.Research
             QueueButton = new Button()
             {
                 Text = "Queue",
+                TextAlign = Button.AlignMode.Center,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 1,
+            };
+
+            ServerConnectButton = new Button()
+            {
+                Text = "Server list",
+                TextAlign = Button.AlignMode.Center,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 1,
+            };
+
+            ServerSyncButton  = new Button()
+            {
+                Text = "Sync",
                 TextAlign = Button.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
@@ -131,6 +150,11 @@ namespace Content.Client.Research
 
             hBoxButtons.AddChild(spacer);
             hBoxButtons.AddChild(QueueButton);
+            if (Owner.Database is SharedProtolatheDatabaseComponent)
+            {
+                hBoxButtons.AddChild(ServerConnectButton);
+                hBoxButtons.AddChild(ServerSyncButton);
+            }
 
             hBoxFilter.AddChild(SearchBar);
             hBoxFilter.AddChild(filterButton);

@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Timers;
@@ -57,6 +58,12 @@ namespace Content.Server.GameObjects.Components.Research
                     if (_producingRecipe != null)
                         _userInterface.SendMessage(new LatheProducingRecipeMessage(_producingRecipe.ID));
                     break;
+
+                case LatheServerSelectionMessage msg:
+                    if (!Owner.TryGetComponent(out ResearchClientComponent researchClient)) return;
+                    researchClient.OpenUserInterface(null);
+                    // TODO: Use actual user session. Requires Damian's PR
+                    break;
             }
         }
 
@@ -88,12 +95,17 @@ namespace Content.Server.GameObjects.Components.Research
             return true;
         }
 
+        public void OpenUserInterface(IPlayerSession session)
+        {
+            _userInterface.Open(session);
+        }
+
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return;
 
-            _userInterface.Open(actor.playerSession);
+            OpenUserInterface(actor.playerSession);
             return;
         }
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)

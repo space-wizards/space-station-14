@@ -56,6 +56,17 @@ namespace Content.Shared.GameObjects.Components.Research
         }
 
         /// <summary>
+        ///     Sent to the server to open the ResearchClient UI.
+        /// </summary>
+        [Serializable, NetSerializable]
+        public class LatheServerSelectionMessage : BoundUserInterfaceMessage
+        {
+            public LatheServerSelectionMessage()
+            {
+            }
+        }
+
+        /// <summary>
         ///     Sent to the client when the lathe is producing a recipe.
         /// </summary>
         [Serializable, NetSerializable]
