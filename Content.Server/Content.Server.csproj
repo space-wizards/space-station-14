@@ -1,215 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
-    <ProjectGuid>{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Content.Server</RootNamespace>
-    <AssemblyName>Content.Server</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ContentAssemblyTarget>..\RobustToolbox\bin\Server\Resources\Assemblies\</ContentAssemblyTarget>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <IsPackable>false</IsPackable>
+    <Platforms>x64;x86</Platforms>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\Content.Server\</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <LangVersion>7.2</LangVersion>
-    <CodeAnalysisRuleSet Condition="'$(ActualOS)' == 'Windows'">MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>portable</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DefineConstants>TRACE;RELEASE</DefineConstants>
-    <Optimize>true</Optimize>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>portable</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineConstants>TRACE;RELEASE</DefineConstants>
-    <Optimize>true</Optimize>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DefineConstants>TRACE;RELEASE</DefineConstants>
-    <Optimize>true</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
+  <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="YamlDotNet" Version="5.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
+    <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj" />
+    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Administration\AGhost.cs" />
-    <Compile Include="AI\AimShootLifeProcessor.cs" />
-    <Compile Include="Chat\ChatCommands.cs" />
-    <Compile Include="Chat\ChatManager.cs" />
-    <Compile Include="EntryPoint.cs" />
-    <Compile Include="GameObjects\Components\CatwalkComponent.cs" />
-    <Compile Include="GameObjects\Components\Damage\DamageThreshold.cs" />
-    <Compile Include="GameObjects\Components\Doors\ServerDoorComponent.cs" />
-    <Compile Include="GameObjects\Components\Items\Storage\EntityStorageComponent.cs" />
-    <Compile Include="GameObjects\Components\Items\Storage\Fill\ToolboxElectricalFillComponent.cs" />
-    <Compile Include="GameObjects\Components\Items\Storage\Fill\ToolLockerFillComponent.cs" />
-    <Compile Include="GameObjects\Components\Items\Storage\IStorageComponent.cs" />
-    <Compile Include="GameObjects\Components\Mobs\HeatResistanceComponent.cs" />
-    <Compile Include="GameObjects\Components\Interactable\HandheldLightComponent.cs" />
-    <Compile Include="GameObjects\Components\Interactable\Tools\BaseTool.cs" />
-    <Compile Include="GameObjects\Components\Interactable\Tools\CrowbarComponent.cs" />
-    <Compile Include="GameObjects\Components\Interactable\Tools\MultitoolComponent.cs" />
-    <Compile Include="GameObjects\Components\Interactable\Tools\ScrewdriverComponent.cs" />
-    <Compile Include="GameObjects\Components\Interactable\Tools\WelderComponent.cs" />
-    <Compile Include="GameObjects\Components\Interactable\Tools\WirecutterComponent.cs" />
-    <Compile Include="GameObjects\Components\Interactable\Tools\WrenchComponent.cs" />
-    <Compile Include="GameObjects\Components\Items\Clothing\ClothingComponent.cs" />
-    <Compile Include="GameObjects\Components\Items\Storage\StoreableComponent.cs" />
-    <Compile Include="GameObjects\Components\Items\Storage\ServerStorageComponent.cs" />
-    <Compile Include="GameObjects\Components\Items\Storage\ItemComponent.cs" />
-    <Compile Include="GameObjects\Components\Markers\SpawnPointComponent.cs" />
-    <Compile Include="GameObjects\Components\Mobs\CameraRecoilComponent.cs" />
-    <Compile Include="GameObjects\Components\Mobs\DamageStates.cs" />
-    <Compile Include="GameObjects\Components\Mobs\DamageThresholdTemplates\DamageThresholdTemplates.cs" />
-    <Compile Include="GameObjects\Components\Mobs\DamageThresholdTemplates\HumanTemplate.cs" />
-    <Compile Include="GameObjects\Components\Mobs\MindComponent.cs" />
-    <Compile Include="GameObjects\Components\Mobs\SpeciesComponent.cs" />
-    <Compile Include="GameObjects\Components\Movement\AiControllerComponent.cs" />
-    <Compile Include="GameObjects\Components\Movement\PlayerInputMoverComponent.cs" />
-    <Compile Include="GameObjects\Components\PlaceableSurfaceComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\LightBulbComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerCellComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerStorageComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerGeneratorComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerDevice.cs" />
-    <Compile Include="GameObjects\Components\Power\Powernet.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerNodeComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerProviderComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerStorageNetComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerTransferComponent.cs" />
-    <Compile Include="GameObjects\Components\Projectiles\ProjectileComponent.cs" />
-    <Compile Include="GameObjects\Components\Projectiles\ThrownItemComponent.cs" />
-    <Compile Include="GameObjects\Components\Research\LatheComponent.cs" />
-    <Compile Include="GameObjects\Components\Research\LatheDatabaseComponent.cs" />
-    <Compile Include="GameObjects\Components\Research\MaterialStorageComponent.cs" />
-    <Compile Include="GameObjects\Components\Sound\SoundComponent.cs" />
-    <Compile Include="GameObjects\Components\Weapon\Melee\MeleeWeaponComponent.cs" />
-    <Compile Include="GameObjects\Components\Weapon\Ranged\Hitscan\HitscanWeaponComponent.cs" />
-    <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\BallisticBulletComponent.cs" />
-    <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\BallisticMagazineComponent.cs" />
-    <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\BallisticMagazineWeaponComponent.cs" />
-    <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\BallisticWeaponComponent.cs" />
-    <Compile Include="GameObjects\Components\Weapon\Ranged\Projectile\ProjectileWeapon.cs" />
-    <Compile Include="GameObjects\Components\Weapon\Ranged\RangedWeapon.cs" />
-    <Compile Include="GameObjects\ContainerSlot.cs" />
-    <Compile Include="GameObjects\EntitySystems\ActionBlockerSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\AiSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\Click\ExamineSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\Click\InteractionSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\DoorSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\HandHeldLightSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\HandsSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\LatheSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\MoverSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\PowerApcSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\PowerSmesSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\PowerSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\VerbSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\StorageSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\WelderSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\TemperatureSystem.cs" />
-    <Compile Include="GameTicking\GamePreset.cs" />
-    <Compile Include="GameTicking\GamePresets\PresetDeathMatch.cs" />
-    <Compile Include="GameTicking\GamePresets\PresetSandbox.cs" />
-    <Compile Include="GameTicking\GameRule.cs" />
-    <Compile Include="GameTicking\GameRules\RuleDeathMatch.cs" />
-    <Compile Include="GameTicking\GameTicker.cs" />
-    <Compile Include="Interfaces\Chat\IChatCommand.cs" />
-    <Compile Include="Interfaces\Chat\IChatManager.cs" />
-    <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
-    <Compile Include="GameObjects\Components\GUI\ServerHandsComponent.cs" />
-    <Compile Include="GameObjects\Components\GUI\InventoryComponent.cs" />
-    <Compile Include="GameObjects\Components\Damage\DamageableComponent.cs" />
-    <Compile Include="GameObjects\Components\Damage\DestructibleComponent.cs" />
-    <Compile Include="GameObjects\Components\Damage\ResistanceSet.cs" />
-    <Compile Include="GameObjects\Components\Temperature\TemperatureComponent.cs" />
-    <Compile Include="Interfaces\GameObjects\Components\Movement\IMoverComponent.cs" />
-    <Compile Include="Interfaces\GameObjects\IOnDamageBehavior.cs" />
-    <Compile Include="Interfaces\GameTicking\IGameTicker.cs" />
-    <Compile Include="Interfaces\IMoMMILink.cs" />
-    <Compile Include="Interfaces\IServerNotifyManager.cs" />
-    <Compile Include="Mobs\Commands.cs" />
-    <Compile Include="Mobs\Mind.cs" />
-    <Compile Include="Mobs\Role.cs" />
-    <Compile Include="Mobs\Roles\Traitor.cs" />
-    <Compile Include="MoMMILink.cs" />
-    <Compile Include="Placement\SpawnHelpers.cs" />
-    <Compile Include="Players\PlayerData.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interfaces\GameObjects\Components\Temperature\ITemperatureComponent.cs" />
-    <Compile Include="Interfaces\GameObjects\Components\Damage\IDamageableComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\PoweredLightComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
-    <Compile Include="ServerNotifyManager.cs" />
-    <Compile Include="StatusShell.cs" />
-    <Compile Include="GameObjects\Components\Healing\HealingComponent.cs" />
-    <Compile Include="GameObjects\Components\Weapon\Ranged\Hitscan\HitscanWeaponCapacitorComponent.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">
-      <Project>{26aeebb3-dde7-443a-9f43-7bc7f4acf6b5}</Project>
-      <Name>Content.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj">
-      <Project>{b04aae71-0000-0000-0000-000000000000}</Project>
-      <Name>Robust.Server</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj">
-      <Project>{93f23a82-00c5-4572-964e-e7c9457726d4}</Project>
-      <Name>Robust.Shared.Maths</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj">
-      <Project>{0529f740-0000-0000-0000-000000000000}</Project>
-      <Name>Robust.Shared</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\SS14.Content.targets" />
-  <!--<Target Name="AfterBuild" DependsOnTargets="CopyContentAssemblies" />-->
-  <ItemGroup>
-    <ContentAssemblies Include="$(OutputPath)Content.Server.dll" />
-    <ContentAssemblies Include="$(OutputPath)Content.Shared.dll" />
-    <ContentAssemblies Include="$(OutputPath)Content.Server.pdb" Condition="'$(Configuration)' == 'Debug'" />
-    <ContentAssemblies Include="$(OutputPath)Content.Shared.pdb" Condition="'$(Configuration)' == 'Debug'" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <Compile Include="GameObjects\Components\Power\SmesComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\ApcComponent.cs" />
-    <Compile Include="GameObjects\Components\Stack\StackComponent.cs" />
-    <Compile Include="GameObjects\Components\Construction\ConstructorComponent.cs" />
-    <Compile Include="GameObjects\Components\Construction\ConstructionComponent.cs" />
   </ItemGroup>
 </Project>

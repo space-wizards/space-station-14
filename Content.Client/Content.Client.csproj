@@ -1,57 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
-    <ProjectGuid>{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Content.Client</RootNamespace>
-    <AssemblyName>Content.Client</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ContentAssemblyTarget>..\RobustToolbox\bin\Client\Resources\Assemblies\</ContentAssemblyTarget>
-    <LangVersion>7.2</LangVersion>
-    <!--
-    This copies all dependencies,
-    but on the plus side it's automatically located in the right place.
-    -->
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <IsPackable>false</IsPackable>
+    <Platforms>x64;x86</Platforms>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\Content.Client\</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet Condition="'$(ActualOS)' == 'Windows'">MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>portable</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DefineConstants>TRACE;RELEASE</DefineConstants>
-    <Optimize>true</Optimize>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>portable</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineConstants>TRACE;RELEASE</DefineConstants>
-    <Optimize>true</Optimize>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DefineConstants>TRACE;RELEASE</DefineConstants>
-    <Optimize>true</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
+  <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
     <PackageReference Include="Nett" Version="0.9.0" />
     <PackageReference Include="SixLabors.Core" Version="1.0.0-beta0007" />
@@ -61,113 +18,10 @@
     <PackageReference Include="SharpZipLib" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Chat\ChatBox.cs" />
-    <Compile Include="Chat\ChatManager.cs" />
-    <Compile Include="Commands\DebugCommands.cs" />
-    <Compile Include="EntryPoint.cs" />
-    <Compile Include="EscapeMenuOwner.cs" />
-    <Compile Include="GameObjects\Components\Actor\CharacterInterface.cs" />
-    <Compile Include="GameObjects\Components\DamageableComponent.cs" />
-    <Compile Include="GameObjects\Components\Doors\AirlockVisualizer2D.cs" />
-    <Compile Include="GameObjects\Components\HUD\Inventory\ClientInventoryComponent.cs" />
-    <Compile Include="GameObjects\Components\Mobs\CameraRecoilComponent.cs" />
-    <Compile Include="GameObjects\Components\Mobs\ICharacterUI.cs" />
-    <Compile Include="GameObjects\Components\Mobs\SpeciesUI.cs" />
-    <Compile Include="GameObjects\Components\Clothing\ClothingComponent.cs" />
-    <Compile Include="GameObjects\Components\Items\ItemComponent.cs" />
-    <Compile Include="GameObjects\Components\Power\ApcBoundUserInterface.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerCellVisualizer2D.cs" />
-    <Compile Include="GameObjects\Components\Research\LatheBoundUserInterface.cs" />
-    <Compile Include="GameObjects\Components\Research\LatheDatabaseComponent.cs" />
-    <Compile Include="GameObjects\Components\Research\MaterialStorageComponent.cs" />
-    <Compile Include="GameObjects\Components\Sound\SoundComponent.cs" />
-    <Compile Include="GameObjects\Components\Storage\ClientStorageComponent.cs" />
-    <Compile Include="GameObjects\Components\Storage\StorageVisualizer2D.cs" />
-    <Compile Include="GameObjects\Components\SubFloorHideComponent.cs" />
-    <Compile Include="GameObjects\Components\Weapons\Ranged\BallisticMagazineVisualizer2D.cs" />
-    <Compile Include="GameObjects\Components\Weapons\Ranged\BallisticMagazineWeaponVisualizer2D.cs" />
-    <Compile Include="GameObjects\Components\Weapons\Ranged\ClientRangedWeaponComponent.cs" />
-    <Compile Include="GameObjects\EntitySystems\CameraRecoilSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\ClientNotifySystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\ExamineSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\IconSmoothSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\RangedWeaponSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\SubFloorHideSystem.cs" />
-    <Compile Include="GameObjects\EntitySystems\VerbSystem.cs" />
-    <Compile Include="GameTicking\ClientGameTicker.cs" />
-    <Compile Include="Graphics\Overlays\CircleMaskOverlay.cs" />
-    <Compile Include="Graphics\Overlays\GradientCircleMask.cs" />
-    <Compile Include="Input\ContentContexts.cs" />
-    <Compile Include="Interfaces\Chat\IChatManager.cs" />
-    <Compile Include="Interfaces\IClientGameTicker.cs" />
-    <Compile Include="Interfaces\IClientNotifyManager.cs" />
-    <Compile Include="ClientNotifyManager.cs" />
-    <Compile Include="Interfaces\Parallax\IParallaxManager.cs" />
-    <Compile Include="Parallax\ParallaxGenerator.cs" />
-    <Compile Include="Parallax\ParallaxManager.cs" />
-    <Compile Include="Parallax\ParallaxOverlay.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GameObjects\Components\Items\ClientHandsComponent.cs" />
-    <Compile Include="Interfaces\GameObjects\Components\Items\IHandsComponent.cs" />
-    <Compile Include="Research\LatheMenu.cs" />
-    <Compile Include="Research\LatheQueueMenu.cs" />
-    <Compile Include="UserInterface\EscapeMenu.cs" />
-    <Compile Include="UserInterface\HandsGui.cs" />
-    <Compile Include="GameObjects\Components\Power\PowerDebugTool.cs" />
-    <Compile Include="UserInterface\LobbyGui.cs" />
-    <Compile Include="UserInterface\NanoStyle.cs" />
-    <Compile Include="UserInterface\Placeholder.cs" />
-    <Compile Include="UserInterface\TutorialButton.cs" />
-    <Compile Include="Utility\ResourceCacheExtensions.cs" />
-    <Compile Include="GameObjects\Components\Mobs\SpeciesVisualizer2D.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">
-      <Project>{26aeebb3-dde7-443a-9f43-7bc7f4acf6b5}</Project>
-      <Name>Content.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj">
-      <Project>{83429bd6-6358-4b18-be51-401df8ea2673}</Project>
-      <Name>Robust.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj">
-      <Project>{93f23a82-00c5-4572-964e-e7c9457726d4}</Project>
-      <Name>Robust.Shared.Maths</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj">
-      <Project>{0529f740-0000-0000-0000-000000000000}</Project>
-      <Name>Robust.Shared</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\SS14.Content.targets" />
-  <!--<Target Name="AfterBuild" DependsOnTargets="CopyContentAssemblies" />-->
-  <ItemGroup>
-    <!-- Files to be copied into Client/Assemblies -->
-    <ContentAssemblies Include="$(OutputPath)Content.Client.dll" />
-    <ContentAssemblies Include="$(OutputPath)Content.Shared.dll" />
-    <ContentAssemblies Include="$(OutputPath)Content.Client.pdb" Condition="'$(Configuration)' == 'Debug'" />
-    <ContentAssemblies Include="$(OutputPath)Content.Shared.pdb" Condition="'$(Configuration)' == 'Debug'" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <Compile Include="GameObjects\Components\Power\SmesVisualizer2D.cs" />
-    <Compile Include="GameObjects\Components\Power\ApcVisualizer2D.cs" />
-    <Compile Include="Construction\ConstructionMenu.cs" />
-    <Compile Include="Construction\ConstructionButton.cs" />
-    <Compile Include="GameObjects\Components\Construction\ConstructorComponent.cs" />
-    <Compile Include="GameObjects\Components\Construction\ConstructionGhostComponent.cs" />
-    <Compile Include="Construction\ConstructionPlacementHijack.cs" />
-    <Compile Include="GameObjects\Components\IconSmoothing\IconSmoothComponent.cs" />
+    <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
+    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
 </Project>

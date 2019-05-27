@@ -101,7 +101,8 @@ def build_windows():
                     "/nologo",
                     "/v:m",
                     "/p:TargetOS=Windows",
-                    "/t:Rebuild"
+                    "/t:Rebuild",
+                    "/p:FullRelease=True"
                     ], check=True)
 
     print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
@@ -135,7 +136,8 @@ def build_macos():
                     "/nologo",
                     "/v:m",
                     "/p:TargetOS=MacOS",
-                    "/t:Rebuild"
+                    "/t:Rebuild",
+                    "/p:FullRelease=True"
                     ], check=True)
 
     print(Fore.GREEN + "Packaging macOS x64 client..." + Style.RESET_ALL)
@@ -171,7 +173,8 @@ def build_linux():
                     "/nologo",
                     "/v:m",
                     "/p:TargetOS=Linux",
-                    "/t:Rebuild"
+                    "/t:Rebuild",
+                    "/p:FullRelease=True"
                     ], check=True)
 
     print(Fore.GREEN + "Packaging Linux x64 client..." + Style.RESET_ALL)
