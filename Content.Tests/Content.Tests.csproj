@@ -1,66 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="$(SolutionDir)packages\NUnit.3.10.1\build\NUnit.props" Condition="Exists('$(SolutionDir)packages\NUnit.3.10.1\build\NUnit.props')" />
-  <Import Project="$(SolutionDir)packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('$(SolutionDir)packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8EDF4429-251A-416D-BB68-93F227191BCF}</ProjectGuid>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Content.Tests</RootNamespace>
-    <AssemblyName>Content.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TestProjectType>UnitTest</TestProjectType>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <IsPackable>false</IsPackable>
+    <Platforms>x64;x86</Platforms>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\Content.Tests\</OutputPath>
-    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
+  <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.11.0" />
     <PackageReference Include="NUnit.ConsoleRunner" Version="3.10.0" />
@@ -68,52 +16,13 @@
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <ProjectReference Include="..\Content.Client\Content.Client.csproj" />
+    <ProjectReference Include="..\Content.Server\Content.Server.csproj" />
+    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Shared\Utility\ContentHelpers_Test.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Content.Client\Content.Client.csproj">
-      <Project>{a2e5f175-78af-4ddd-8f97-e2d2552372ed}</Project>
-      <Name>Content.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Content.Server\Content.Server.csproj">
-      <Project>{b38dbbd0-04c2-4d1a-84e2-b3446f6adf2a}</Project>
-      <Name>Content.Server</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj">
-      <Project>{26aeebb3-dde7-443a-9f43-7bc7f4acf6b5}</Project>
-      <Name>Content.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj">
-      <Project>{83429bd6-6358-4b18-be51-401df8ea2673}</Project>
-      <Name>Robust.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj">
-      <Project>{b04aae71-0000-0000-0000-000000000000}</Project>
-      <Name>Robust.Server</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj">
-      <Project>{93f23a82-00c5-4572-964e-e7c9457726d4}</Project>
-      <Name>Robust.Shared.Maths</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj">
-      <Project>{0529f740-0000-0000-0000-000000000000}</Project>
-      <Name>Robust.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj">
-      <Project>{f0ada779-40b8-4f7e-ba6c-cdb19f3065d9}</Project>
-      <Name>Robust.UnitTesting</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
