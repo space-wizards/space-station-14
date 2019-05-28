@@ -49,7 +49,7 @@ namespace Content.Client.Construction
         List<CategoryNode> FlattenedCategories;
         PlacementManager Placement;
 
-        public ConstructionMenu(IDisplayManager displayMan) : base(displayMan)
+        public ConstructionMenu()
         {
             Size = new Vector2(500.0f, 350.0f);
         }

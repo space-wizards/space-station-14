@@ -3,7 +3,6 @@ using Content.Client.Research;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -14,8 +13,6 @@ namespace Content.Client.GameObjects.Components.Research
     public class LatheBoundUserInterface : BoundUserInterface
     {
 #pragma warning disable CS0649
-        [Dependency]
-        private IDisplayManager _displayManager;
         [Dependency]
         private IPrototypeManager _prototypeManager;
 #pragma warning restore
@@ -50,8 +47,8 @@ namespace Content.Client.GameObjects.Components.Research
             Lathe = lathe;
             Database = database;
 
-            menu = new LatheMenu(_displayManager) {Owner = this};
-            queueMenu = new LatheQueueMenu(_displayManager) { Owner = this };
+            menu = new LatheMenu {Owner = this};
+            queueMenu = new LatheQueueMenu { Owner = this };
 
             menu.OnClose += Close;
 

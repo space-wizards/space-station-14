@@ -35,11 +35,11 @@ namespace Content.Client.Research
         private List<LatheRecipePrototype> _recipes = new List<LatheRecipePrototype>();
         private List<LatheRecipePrototype> _shownRecipes = new List<LatheRecipePrototype>();
 
-        public LatheMenu(IDisplayManager displayMan) : base(displayMan)
+        public LatheMenu()
         {
         }
 
-        public LatheMenu(IDisplayManager displayMan, string name) : base(displayMan, name)
+        public LatheMenu(string name) : base(name)
         {
         }
 

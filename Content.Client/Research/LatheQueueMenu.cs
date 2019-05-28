@@ -25,11 +25,6 @@ namespace Content.Client.Research
         private Label Description;
         private TextureRect Icon;
 
-        public LatheQueueMenu(IDisplayManager displayManager) : base(displayManager)
-        {
-
-        }
-
         protected override void Initialize()
         {
             base.Initialize();

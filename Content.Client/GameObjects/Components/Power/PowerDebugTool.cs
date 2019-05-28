@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Power
                     {
                         LastWindow.Dispose();
                     }
-                    LastWindow = new SS14Window(IoCManager.Resolve<IDisplayManager>())
+                    LastWindow = new SS14Window()
                     {
                         Title = "Power Debug Tool",
                     };
