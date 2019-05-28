@@ -1,11 +1,10 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System.Collections.Generic;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.GameObjects.Components;
-using System;
-using System.Collections.Generic;
-using YamlDotNet.RepresentationModel;
-using Robust.Shared.Utility;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -47,16 +46,25 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <param name="collidedwith"></param>
         void ICollideBehavior.CollideWith(List<IEntity> collidedwith)
         {
-            foreach(var entity in collidedwith)
+            foreach (var entity in collidedwith)
             {
-                if(entity.TryGetComponent(out DamageableComponent damage))
+                if (entity.TryGetComponent(out DamageableComponent damage))
                 {
                     damage.TakeDamage(DamageType.Brute, 10);
+                }
+
+                if (entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
+                    && Owner.TryGetComponent(out PhysicsComponent physicsComponent))
+                {
+                    var direction = physicsComponent.LinearVelocity.Normalized;
+                    recoilComponent.Kick(direction);
                 }
             }
 
             if (collidedwith.Count > 0)
+            {
                 Owner.Delete();
+            }
         }
     }
 }
