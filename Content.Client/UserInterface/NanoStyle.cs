@@ -1,4 +1,4 @@
-using Content.Client.GameObjects.EntitySystems;
+﻿using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -15,6 +15,11 @@ namespace Content.Client.UserInterface
         public const string StyleClassLabelHeading = "LabelHeading";
         public const string StyleClassButtonBig = "ButtonBig";
         private static readonly Color NanoGold = Color.FromHex("#A88B5E");
+
+        //Used by the APC and SMES menus
+        public const string StyleClassPowerStateNone = "PowerStateNone";
+        public const string StyleClassPowerStateLow = "PowerStateLow";
+        public const string StyleClassPowerStateGood = "PowerStateGood";
 
         public Stylesheet Stylesheet { get; }
 
@@ -420,6 +425,22 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty("font", notoSans16)
                 }),
+
+                //APC and SMES power state label colors
+                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassPowerStateNone}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFontColor, new Color(0.8f, 0.0f, 0.0f))
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassPowerStateLow}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFontColor, new Color(0.9f, 0.36f, 0.0f))
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassPowerStateGood}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFontColor, new Color(0.024f, 0.8f, 0.0f))
+                }), 
             });
         }
     }
