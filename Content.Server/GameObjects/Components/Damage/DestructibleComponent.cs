@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Destructible
                 var coord = Owner.Transform.GridPosition;
                 var entMgr = Owner.EntityManager;
                 Owner.Delete();
-                if (spawnOnDestroy.Length > 0) {
+                if (string.IsNullOrWhiteSpace(spawnOnDestroy)) {
                     Timer.Spawn(1, () =>
                     {
                         entMgr.TrySpawnEntityAt(spawnOnDestroy, coord, out var created);
