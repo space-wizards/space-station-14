@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Destructible
 
         public DamageType damageType = DamageType.Total;
         public int damageValue = 0;
-        public string spawnOnDestroy = "SteelSheet";
+        public string spawnOnDestroy = "";
         public bool destroyed = false;
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Destructible
 
             serializer.DataField(ref damageValue, "thresholdvalue", 100);
             serializer.DataField(ref damageType, "thresholdtype", DamageType.Total);
-            serializer.DataField(ref spawnOnDestroy, "spawnondestroy", "SteelSheet");
+            serializer.DataField(ref spawnOnDestroy, "spawnondestroy", "");
         }
 
         /// <inheritdoc />
@@ -57,10 +57,12 @@ namespace Content.Server.GameObjects.Components.Destructible
                 var coord = Owner.Transform.GridPosition;
                 var entMgr = Owner.EntityManager;
                 Owner.Delete();
-                Timer.Spawn(1, () =>
-                {
-                    entMgr.TrySpawnEntityAt(spawnOnDestroy, coord, out var created);
-                });
+                if (spawnOnDestroy.Length > 0) {
+                    Timer.Spawn(1, () =>
+                    {
+                        entMgr.TrySpawnEntityAt(spawnOnDestroy, coord, out var created);
+                    });
+                }
             }
         }
     }
