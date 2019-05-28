@@ -8,6 +8,7 @@ using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Destructible
 {
@@ -53,9 +54,13 @@ namespace Content.Server.GameObjects.Components.Destructible
             if (e.Passed && e.DamageThreshold == Threshold && destroyed == false)
             {
                 destroyed = true;
-                var wreck = Owner.EntityManager.SpawnEntity(spawnOnDestroy);
-                wreck.Transform.GridPosition = Owner.Transform.GridPosition;
-                Owner.EntityManager.DeleteEntity(Owner);
+                var coord = Owner.Transform.GridPosition;
+                var entMgr = Owner.EntityManager;
+                Owner.Delete();
+                Timer.Spawn(1, () =>
+                {
+                    entMgr.TrySpawnEntityAt(spawnOnDestroy, coord, out var created);
+                });
             }
         }
     }
