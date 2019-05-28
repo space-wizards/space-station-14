@@ -68,6 +68,8 @@ namespace Content.Client.GameObjects.Components.Power
 
             _chargeBar.Value = castState.Charge;
             UpdateChargeBarColor(castState.Charge);
+            float ChargePercentage = (castState.Charge / _chargeBar.MaxValue) * 100.0f;
+            _window.ChargePercentage.Text = " " + ChargePercentage.ToString("0.00") + "%";
         }
 
         private void UpdateChargeBarColor(float charge)
@@ -123,6 +125,7 @@ namespace Content.Client.GameObjects.Components.Power
             public Button BreakerButton { get; set; }
             public Label ExternalPowerStateLabel { get; set; }
             public ProgressBar ChargeBar { get; set; }
+            public Label ChargePercentage { get; set; }
 
             public ApcWindow()
             {
@@ -156,8 +159,10 @@ namespace Content.Client.GameObjects.Components.Power
                     Page = 0.0f,
                     Value = 0.5f
                 };
+                ChargePercentage = new Label("ChargePercentage");
                 charge.AddChild(chargeLabel);
                 charge.AddChild(ChargeBar);
+                charge.AddChild(ChargePercentage);
                 rows.AddChild(charge);
 
                 Contents.AddChild(rows);
