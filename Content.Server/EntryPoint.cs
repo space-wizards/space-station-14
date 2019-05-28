@@ -136,6 +136,7 @@ namespace Content.Server
             factory.Register<PowerDebugTool>();
             factory.Register<PoweredLightComponent>();
             factory.Register<SmesComponent>();
+            factory.RegisterReference<SmesComponent, IActivate>();
             factory.Register<ApcComponent>();
             factory.RegisterReference<ApcComponent, IActivate>();
             factory.Register<MaterialComponent>();

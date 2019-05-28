@@ -129,6 +129,11 @@
   - type: Appearance
     visuals:
     - type: SmesVisualizer2D
+  - type: UserInterface
+    interfaces:
+    - key: enum.SmesUiKey.Key
+      type: SmesBoundUserInterface
+  - type: Sound
 
 - type: entity
   id: smes_dry
