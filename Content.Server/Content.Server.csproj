@@ -23,4 +23,10 @@
   <ItemGroup>
     <Reference Include="System.Net.Http" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameObjects\Components\Explosion\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="GameObjects\Components\Damage\ExplosiveDamageComponent.cs" />
+  </ItemGroup>
 </Project>

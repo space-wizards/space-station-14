@@ -55,6 +55,7 @@ using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.Interfaces.Log;
+using Content.Server.GameObjects.Components.Explosive;
 
 namespace Content.Server
 {
@@ -177,6 +178,8 @@ namespace Content.Server
             factory.Register<AiControllerComponent>();
 
             factory.Register<CatwalkComponent>();
+
+            factory.Register<ExplosiveComponent>();
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
