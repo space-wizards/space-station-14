@@ -26,7 +26,4 @@
   <ItemGroup>
     <Folder Include="GameObjects\Components\Explosion\" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="GameObjects\Components\Damage\ExplosiveDamageComponent.cs" />
-  </ItemGroup>
 </Project>
