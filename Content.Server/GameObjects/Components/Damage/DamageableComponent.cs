@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects
         [ViewVariables]
         public ResistanceSet Resistances { get; private set; }
 
+        [ViewVariables]
         public IReadOnlyDictionary<DamageType, int> CurrentDamage => _currentDamage;
         private Dictionary<DamageType, int> _currentDamage = new Dictionary<DamageType, int>();
 
