@@ -8,42 +8,42 @@
 	"copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at commit 125c975f1b3bf9826b37029e9ab5a5f89e975a7e", 
 	"states": [
 		{
-			"name": "laser_retro",
+			"name": "laser_cannon",
 			"directions": 1, 
 			"delays": [
 				[1.0]
 			]
 		}, 
 		{
-			"name": "laser_retro_100", 
+			"name": "laser_cannon_100", 
 			"directions": 1,
 			"delays": [
 				[1.0]
 			]
 		},
 		{
-			"name": "laser_retro_75", 
+			"name": "laser_cannon_75", 
 			"directions": 1, 
 			"delays": [
 				[1.0]
 			]
 		}, 
 		{
-			"name": "laser_retro_50", 
+			"name": "laser_cannon_50", 
 			"directions": 1, 
 			"delays": [
 				[1.0]
 			]
 		}, 
 		{
-		 	"name": "laser_retro_25",
+		 	"name": "laser_cannon_25",
 		 	 "directions": 1,
 		 	 "delays": [
 		 	 	 [1.0]
 		 	]
 		}, 
 		{
-		 	"name": "laser_retro_0",
+		 	"name": "laser_cannon_0",
 		 	 "directions": 1,
 		 	 "delays": [
 		 	 	 [1.0]
