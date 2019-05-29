@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Power;
 using NJsonSchema.Validation;
 using OpenTK.Graphics.OpenGL4;
@@ -55,12 +56,15 @@ namespace Content.Client.GameObjects.Components.Power
             {
                 case ApcExternalPowerState.None:
                     _externalPowerStateLabel.Text = "None";
+                    _externalPowerStateLabel.SetOnlyStyleClass(NanoStyle.StyleClassPowerStateNone);
                     break;
                 case ApcExternalPowerState.Low:
                     _externalPowerStateLabel.Text = "Low";
+                    _externalPowerStateLabel.SetOnlyStyleClass(NanoStyle.StyleClassPowerStateLow);
                     break;
                 case ApcExternalPowerState.Good:
                     _externalPowerStateLabel.Text = "Good";
+                    _externalPowerStateLabel.SetOnlyStyleClass(NanoStyle.StyleClassPowerStateGood);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -145,10 +149,11 @@ namespace Content.Client.GameObjects.Components.Power
                 var externalStatus = new HBoxContainer("ExternalStatus");
                 var externalStatusLabel = new Label("Label") { Text = "External Power: " };
                 ExternalPowerStateLabel = new Label("Status") { Text = "Good" };
+                ExternalPowerStateLabel.SetOnlyStyleClass(NanoStyle.StyleClassPowerStateGood);
                 externalStatus.AddChild(externalStatusLabel);
                 externalStatus.AddChild(ExternalPowerStateLabel);
                 rows.AddChild(externalStatus);
-
+                
                 var charge = new HBoxContainer("Charge");
                 var chargeLabel = new Label("Label") { Text = "Charge:" };
                 ChargeBar = new ProgressBar("Charge")
