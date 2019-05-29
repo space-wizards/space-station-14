@@ -10,12 +10,12 @@
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
-    <PackageReference Include="Nett" Version="0.9.0" />
+    <PackageReference Include="Nett" Version="0.11.0" />
     <PackageReference Include="SixLabors.Core" Version="1.0.0-beta0007" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="YamlDotNet" Version="5.0.1" />
-    <PackageReference Include="SharpZipLib" Version="1.0.0" />
+    <PackageReference Include="YamlDotNet" Version="6.0.0" />
+    <PackageReference Include="SharpZipLib" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj" />
