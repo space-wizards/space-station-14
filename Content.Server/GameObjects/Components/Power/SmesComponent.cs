@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Interfaces.Log;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -24,31 +25,22 @@ namespace Content.Server.GameObjects.Components.Power
     {
         PowerStorageComponent Storage;
         AppearanceComponent Appearance;
+        PowerStorageNetComponent _storageNet;
 
         int LastChargeLevel = 0;
         ChargeState LastChargeState;
 
-        //New stuff
-        //ApcChargeState LastChargeState;
         private float _lastCharge = 0f;
         private SmesExternalPowerState _lastExternalPowerState;
         private BoundUserInterface _userInterface;
         private bool _uiDirty = true;
-
-        //Non copied new stuff
-        private PowerNodeComponent _powerNode;
-        private PowerDeviceComponent _device;
-        private PowerStorageNetComponent _storageNet;
 
         public override void Initialize()
         {
             base.Initialize();
             Storage = Owner.GetComponent<PowerStorageComponent>();
             Appearance = Owner.GetComponent<AppearanceComponent>();
-            //_provider = Owner.GetComponent<PowerProviderComponent>();
 
-            _powerNode = Owner.GetComponent<PowerNodeComponent>();
-            //_device = Owner.GetComponent<PowerDeviceComponent>();
             _storageNet = Owner.GetComponent<PowerStorageNetComponent>();
 
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(SmesUiKey.Key);
@@ -72,8 +64,6 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 LastChargeLevel = newLevel;
                 Appearance.SetData(SmesVisuals.LastChargeLevel, newLevel);
-                _uiDirty = true;
-
             }
 
             var newState = Storage.GetChargeState();
@@ -83,11 +73,11 @@ namespace Content.Server.GameObjects.Components.Power
                 Appearance.SetData(SmesVisuals.LastChargeState, newState);
             }
 
-
             var newCharge = Storage.Charge;
             if (newCharge != _lastCharge)
             {
                 _lastCharge = newCharge;
+                _uiDirty = true;
             }
 
             var extPowerState = CalcExtPowerState();
@@ -128,8 +118,6 @@ namespace Content.Server.GameObjects.Components.Power
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            //Logger.DebugS("SMES", "SMES clicked!");
-
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
                 return;
