@@ -23,6 +23,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Linq;
+using Content.Shared.GameObjects.Components.Inventory;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -156,18 +157,24 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (mover.StepSoundDistance > distanceNeeded)
                 {
                     mover.StepSoundDistance = 0;
-                    var footstepmods = mover.Owner.GetAllComponents<IOnMove>().ToList();
-                    if (footstepmods.Count > 0)
+                    var isFootstepModified = false;
+                    if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
+                        && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item))
                     {
-                        foreach (var footstepmod in footstepmods)
+                        var footstepmods = item.Owner.GetAllComponents<IOnMove>().ToList();
+                        if (footstepmods.Count > 0)
                         {
-                            if (footstepmod.OnMove())
+                            isFootstepModified = true;
+                            foreach (var footstepmod in footstepmods)
                             {
-                                return;
+                                if (footstepmod.OnMove())
+                                {
+                                    return;
+                                }
                             }
                         }
                     }
-                    else
+                    if(!isFootstepModified)
                     {
                         PlayFootstepSound(transform.GridPosition);
                     }

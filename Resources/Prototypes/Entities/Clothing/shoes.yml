@@ -59,6 +59,10 @@
   - type: Clothing
     sprite: Clothing/shoes_clown.rsi
 
+  - type: Sound
+  - type: FootstepModifier
+    footstepSoundCollection: footstep_clown
+
 - type: entity
   parent: ShoesBase
   id: JackbootShoes
@@ -75,3 +79,7 @@
 
   - type: Clothing
     sprite: Clothing/shoes_jackboots.rsi
+
+  - type: Sound
+  - type: FootstepModifier
+    footstepSoundCollection: footstep_heavy

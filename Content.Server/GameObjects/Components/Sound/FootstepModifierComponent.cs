@@ -13,10 +13,10 @@ using Robust.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.IoC;
-using Content.Server.GameObjects.Components.Sound;
 using Robust.Shared.Maths;
+using Robust.Shared.Audio;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.GameObjects.Components.Sound
 {
     /// <summary>
     /// Changes footstep sound
@@ -48,10 +48,14 @@ namespace Content.Server.GameObjects.Components
 
         bool IOnMove.OnMove()
         {
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
-            var file = _footstepRandom.Pick(soundCollection.PickFiles);
-            Owner.GetComponent<SoundComponent>().Play(file);
-            return true;
+            if (!string.IsNullOrWhiteSpace(_soundCollectionName))
+            {
+                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
+                var file = _footstepRandom.Pick(soundCollection.PickFiles);
+                Owner.GetComponent<SoundComponent>().Play(file, AudioParams.Default.WithVolume(-2f));
+                return true;
+            }
+            return false;
         }
     }
 }
