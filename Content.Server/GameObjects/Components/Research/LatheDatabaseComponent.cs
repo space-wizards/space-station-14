@@ -44,17 +44,5 @@ namespace Content.Server.GameObjects.Components.Research
             Dirty();
             return true;
         }
-
-        private List<string> GetRecipeIdList()
-        {
-            var list = new List<string>();
-
-            foreach (var recipe in this)
-            {
-                list.Add(recipe.ID);
-            }
-
-            return list;
-        }
     }
 }
