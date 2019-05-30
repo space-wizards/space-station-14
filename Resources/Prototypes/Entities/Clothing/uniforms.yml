@@ -74,3 +74,37 @@
 
   - type: Clothing
     sprite: Clothing/uniform_assistant.rsi
+
+- type: entity
+  parent: UniformBase
+  id: UniformClown
+  name: Clown Suit
+  description: HONK!
+  components:
+  - type: Sprite
+    sprite: Clothing/uniform_clown.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Clothing/uniform_clown.rsi
+    state: icon
+
+  - type: Clothing
+    sprite: Clothing/uniform_clown.rsi
+
+- type: entity
+  parent: UniformBase
+  id: UniformSec
+  name: Security Jumpsuit
+  description: A jumpsuit made of strong material, providing robust protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/uniform_sec.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Clothing/uniform_sec.rsi
+    state: icon
+
+  - type: Clothing
+    sprite: Clothing/uniform_sec.rsi

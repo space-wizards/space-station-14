@@ -178,6 +178,8 @@ namespace Content.Server
 
             factory.Register<CatwalkComponent>();
 
+            factory.Register<FootstepModifierComponent>();
+
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IGameTicker, GameTicker>();

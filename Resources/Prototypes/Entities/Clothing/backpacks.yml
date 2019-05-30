@@ -17,3 +17,37 @@
     sprite: Clothing/backpack.rsi
   - type: Storage
     Capacity: 100
+
+- type: entity
+  parent: BackpackClothing
+  id: ClownPack
+  name: Giggles Von Honkerton
+  description: It's a backpack made by Honk! Co.
+  components:
+  - type: Sprite
+    sprite: Clothing/backpack_clown.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Clothing/backpack_clown.rsi
+    state: icon
+
+  - type: Clothing
+    sprite: Clothing/backpack_clown.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: SecPack
+  name: Security Backpack
+  description: It's a very robust backpack.
+  components:
+  - type: Sprite
+    sprite: Clothing/backpack_sec.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Clothing/backpack_sec.rsi
+    state: icon
+
+  - type: Clothing
+    sprite: Clothing/backpack_sec.rsi
