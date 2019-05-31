@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Explosive
                 Shaded = false
             };
             _entitySystemManager.GetEntitySystem<EffectSystem>().CreateParticle(message);
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/effects/explosion.ogg", Owner);
+            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/effects/explosion.ogg", eventArgs.Source);
 
             Owner.Delete();
             return true;

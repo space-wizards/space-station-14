@@ -54,8 +54,8 @@
     delay: 5
 
   - type: Explosive
-    damageMax: 135
-    damageFalloff: 10
+    damageMax: 500
+    damageFalloff: 200
     rangeDamageMax: 3
     range: 5
 
