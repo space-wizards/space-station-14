@@ -130,7 +130,7 @@
     state: icon
 
   - type: Item
-    Size: 10
+    Size: 5
     sprite: Objects/bikehorn.rsi
 
   - type: Sound
