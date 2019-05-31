@@ -8,7 +8,7 @@
     state: full
   objecttype: Structure
   result: wall
-  placementmode: SnapgridBorder
+  placementmode: SnapgridCenter
   steps:
   - material: Metal
     amount: 2
