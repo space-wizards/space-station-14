@@ -56,6 +56,7 @@ using Content.Server.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.Interfaces.Log;
 using Content.Server.GameObjects.Components.Explosive;
+using Content.Server.GameObjects.Components.Triggers;
 
 namespace Content.Server
 {
@@ -180,6 +181,8 @@ namespace Content.Server
             factory.Register<CatwalkComponent>();
 
             factory.Register<ExplosiveComponent>();
+            factory.Register<OnUseTimerTriggerComponent>();
+
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();

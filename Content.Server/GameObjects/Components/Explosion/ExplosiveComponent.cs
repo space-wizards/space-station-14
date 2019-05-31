@@ -18,7 +18,7 @@ using Content.Shared.Maps;
 
 namespace Content.Server.GameObjects.Components.Explosive
 {
-    public class ExplosiveComponent : Component, IUse
+    public class ExplosiveComponent : Component, ITimerTrigger
     {
 #pragma warning disable 649        
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
@@ -43,12 +43,11 @@ namespace Content.Server.GameObjects.Components.Explosive
             serializer.DataField(ref DamageFalloff, "damageFalloff", 1);
             serializer.DataField(ref RangeDamageMax, "rangeDamageMax", 1);
             serializer.DataField(ref Range, "range", 1);
-            serializer.DataField(ref Delay, "delay", 0);
         }
 
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        bool ITimerTrigger.Trigger(TimerTriggerEventArgs eventArgs)
         {
-            var location = eventArgs.User.Transform.GridPosition;
+            var location = eventArgs.Source.Transform.GridPosition;
 
             var entitiesAll = _serverEntityManager.GetEntitiesInRange(location, Range);
 
@@ -57,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Explosive
             foreach (var entity in entitiesAll)
             {
                 var distance = (int)entity.Transform.GridPosition.Distance(_mapManager, location);
-                if (!entity.Transform.IsMapTransform || entity == eventArgs.User || distance > RangeDamageMax)
+                if (!entity.Transform.IsMapTransform || distance > RangeDamageMax)
                     continue;
                 if (entity.TryGetComponent(out DamageableComponent damagecomponent))
                 {
@@ -68,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Explosive
             foreach (var entity in entities)
             {
                 var distance = (int)entity.Transform.GridPosition.Distance(_mapManager, location);
-                if (!entity.Transform.IsMapTransform || entity == eventArgs.User || distance <= RangeDamageMax)
+                if (!entity.Transform.IsMapTransform || distance <= RangeDamageMax)
                     continue;
 
                 if (entity.TryGetComponent(out DamageableComponent damagecomponent))
@@ -83,6 +82,7 @@ namespace Content.Server.GameObjects.Components.Explosive
             }
 
             var mapGrid = _mapManager.GetGrid(location.GridID);
+            //var circle = new Circle(location.Position, Range);
             var aabb = new Box2(location.Position - new Vector2(Range / 2, Range / 2), location.Position + new Vector2(Range / 2, Range / 2));
             var tiles = mapGrid.GetTilesIntersecting(aabb);
             foreach (var tile in tiles)

@@ -25,5 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GameObjects\Components\Explosion\" />
+    <Folder Include="GameObjects\Components\Trigger\" />
+    <Folder Include="GameObjects\Components\Trigger\TimerTrigger\" />
   </ItemGroup>
 </Project>
