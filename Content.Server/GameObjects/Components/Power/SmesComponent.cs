@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Power
     {
         PowerStorageComponent Storage;
         AppearanceComponent Appearance;
-        PowerStorageNetComponent _storageNet;
+        PowerStorageNetComponent StorageNet;
 
         int LastChargeLevel = 0;
         ChargeState LastChargeState;
@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Power
             Storage = Owner.GetComponent<PowerStorageComponent>();
             Appearance = Owner.GetComponent<AppearanceComponent>();
 
-            _storageNet = Owner.GetComponent<PowerStorageNetComponent>();
+            StorageNet = Owner.GetComponent<PowerStorageNetComponent>();
 
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(SmesUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (obj is SmesToggleMainBreakerMessage)
             {
-                _storageNet.ChargePowernet = !_storageNet.ChargePowernet;
+                StorageNet.ChargePowernet = !StorageNet.ChargePowernet;
                 _uiDirty = true;
                 _clickSound();
             }
@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Power
                 LastChargeState = newState;
                 Appearance.SetData(SmesVisuals.LastChargeState, newState);
             }
-
+            
             var newCharge = Storage.Charge;
             if (newCharge != _lastCharge)
             {
@@ -89,8 +89,8 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (_uiDirty)
             {
-                _userInterface.SetState(new SmesBoundInterfaceState(_storageNet.ChargePowernet, extPowerState,
-                    newCharge / Storage.Capacity, _storageNet.ChargeRate, _storageNet.DistributionRate));
+                _userInterface.SetState(new SmesBoundInterfaceState(StorageNet.ChargePowernet, extPowerState,
+                    newCharge / Storage.Capacity, StorageNet.ChargeRate, StorageNet.DistributionRate));
                 _uiDirty = false;
             }
         }
