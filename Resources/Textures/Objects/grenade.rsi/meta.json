@@ -8,26 +8,17 @@
     "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/icons/obj/grenade.dmi at commit 8c96d52deed1eeea28a16334eea549369d7f9974",
     "states": [
         {
-            "name": "grenade",
-            "select": [],
-            "flags": {},
+            "name": "icon",
             "directions": 1,
             "delays": [
-                [
-                    1.0
-                ]
+                [1.0]
             ]
         },
         {
-            "name": "grenade_primed",
-            "select": [],
-            "flags": {},
+            "name": "primed",
             "directions": 1,
             "delays": [
-                [
-                    0.2,
-                    0.2
-                ]
+                [0.2, 0.2]
             ]
         }
     ]

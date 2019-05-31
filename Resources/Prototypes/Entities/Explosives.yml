@@ -1,0 +1,24 @@
+- type: entity
+  name: Bomb
+  parent: BaseItem
+  id: TestBomb
+  components:
+  - type: Sprite
+    sprite: Objects/syndgrenade.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Objects/syndgrenade.rsi
+    state: icon
+
+  - type: Item
+    Size: 12
+
+  - type: Explosive
+    damageMax: 350
+    damageFalloff: 50
+    rangeDamageMax: 3
+    range: 14
+    delay: 5
+
+
