@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <OutputPath>..\bin\Content.Benchmarks\</OutputPath>
+    <IsPackable>false</IsPackable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Platforms>x86;x64</Platforms>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Content.Client\Content.Client.csproj" />
+    <ProjectReference Include="..\Content.Server\Content.Server.csproj" />
+    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
+    <ProjectReference Include="..\Content.Tests\Content.Tests.csproj" />
+    <ProjectReference Include="..\Content.IntegrationTests\Content.IntegrationTests.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
+  </ItemGroup>
+</Project>
