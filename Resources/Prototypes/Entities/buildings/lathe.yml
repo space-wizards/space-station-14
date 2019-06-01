@@ -9,7 +9,6 @@
   - type: Icon
     sprite: Buildings/autolathe.rsi
     state: idle
-  - type: BoundingBox
   - type: Collidable
   - type: SnapGrid
     offset: Center

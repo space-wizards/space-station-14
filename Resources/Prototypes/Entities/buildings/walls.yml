@@ -8,7 +8,6 @@
     drawdepth: Walls
   - type: Icon
     state: full
-  - type: BoundingBox
   - type: Collidable
   - type: Damageable
   - type: Destructible

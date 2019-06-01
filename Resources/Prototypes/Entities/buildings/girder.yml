@@ -8,7 +8,6 @@
   - type: Icon
     texture: Buildings/wall_girder.png
 
-  - type: BoundingBox
   - type: Collidable
   - type: Damageable
   - type: Destructible

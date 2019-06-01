@@ -3,7 +3,7 @@
   name: Turret Base
   components:
   - type: Clickable
-  - type: BoundingBox
+  - type: Collidable
   - type: Sprite
     texture: Buildings/TurrBase.png
 
@@ -12,7 +12,7 @@
   name: Turret (Gun)
   components:
   - type: Clickable
-  - type: BoundingBox
+  - type: Collidable
   - type: Sprite
     drawdepth: WallMountedItems
     texture: Buildings/TurrTop.png
@@ -26,7 +26,7 @@
   name: Turret (Light)
   components:
   - type: Clickable
-  - type: BoundingBox
+  - type: Collidable
   - type: Sprite
     drawdepth: WallMountedItems
     texture: Buildings/TurrLamp.png

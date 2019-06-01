@@ -13,7 +13,6 @@
     sprite: Buildings/window.rsi
     state: window0
 
-  - type: BoundingBox
   - type: Collidable
   - type: Damageable
   - type: Destructible

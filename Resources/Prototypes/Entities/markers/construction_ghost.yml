@@ -7,7 +7,7 @@
     layers:
     - shader: unshaded
   - type: ConstructionGhost
-  - type: BoundingBox
+  - type: Collidable
   - type: Clickable
     baseshader: unshaded
     selectionshader: selection_outline_unshaded
@@ -18,5 +18,5 @@
   components:
   - type: Sprite
   - type: Construction
-  - type: BoundingBox
+  - type: Collidable
   - type: Clickable
