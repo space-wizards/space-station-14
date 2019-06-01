@@ -10,6 +10,8 @@
   - type: Collidable
     mask: 5
     layer: 8
+    shape:
+      bounds: "-0.25,-0.25,0.25,0.25"
     IsScrapingFloor: true
   - type: Physics
     mass: 5
