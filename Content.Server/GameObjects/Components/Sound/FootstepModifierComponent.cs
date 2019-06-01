@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Sound
         public override void Initialize()
         {
             base.Initialize();
-            _footstepRandom = new Random();
+            _footstepRandom = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
         bool IOnMove.OnMove()
