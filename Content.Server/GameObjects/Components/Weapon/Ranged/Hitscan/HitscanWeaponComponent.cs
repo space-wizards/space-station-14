@@ -29,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
         private int _damage;
         private int _baseFireCost;
         private float _lowerChargeLimit;
+        private string _fireSound;
 
         //As this is a component that sits on the weapon rather than a static value
         //we just declare the field and then use GetComponent later to actually get it.
@@ -46,10 +47,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _spritename, "sprite", "Objects/laser.png");
+            serializer.DataField(ref _spritename, "fireSprite", "Objects/laser.png");
             serializer.DataField(ref _damage, "damage", 10);
             serializer.DataField(ref _baseFireCost, "baseFireCost", 300);
             serializer.DataField(ref _lowerChargeLimit, "lowerChargeLimit", 10);
+            serializer.DataField(ref _fireSound, "fireSound", "/Audio/laser.ogg");
         }
 
         public override void Initialize()
@@ -58,6 +60,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var rangedWeapon = Owner.GetComponent<RangedWeaponComponent>();
             capacitorComponent = Owner.GetComponent<HitscanWeaponCapacitorComponent>();
             rangedWeapon.FireHandler = Fire;
+
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)
@@ -124,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             };
             var mgr = IoCManager.Resolve<IEntitySystemManager>();
             mgr.GetEntitySystem<EffectSystem>().CreateParticle(message);
-            Owner.GetComponent<SoundComponent>().Play("/Audio/laser.ogg", AudioParams.Default.WithVolume(-5));
+            Owner.GetComponent<SoundComponent>().Play(_fireSound, AudioParams.Default.WithVolume(-5));
         }
     }
 }
