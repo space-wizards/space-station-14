@@ -2,7 +2,7 @@ meta:
   format: 2
   name: DemoStation
   author: Space-Wizards
-  postmapinit: false
+  postmapinit: true
 tilemap:
   0: space
   1: floor
@@ -18,9 +18,9 @@ grids:
     worldpos: 0,0
   chunks:
   - ind: "-1,0"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAIAAAAFAAAABQAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAUAAAAFAAAABQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AQAAAAEAAAABAAAAAQAAAAEAAAAFAAAABQAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAQAAAAEAAAAAAAAABQAAAAIAAAAFAAAABQAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAUAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAQAAAAAAAAAFAAAABQAAAAUAAAAFAAAABQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-1,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAABQAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAUAAAACAAAAAgAAAAUAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAUAAAAFAAAABQAAAAUAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAACAAAABQAAAAUAAAAFAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAgAAAAUAAAACAAAABQAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAIAAAAFAAAABQAAAAUAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAACAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAgAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAIAAAAFAAAABQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAACAAAABQAAAAUAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAgAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAABQAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAUAAAACAAAAAgAAAAUAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAEAAAABAAAAAQAAAAEAAAABAAAABQAAAAUAAAAFAAAABQAAAAUAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAABAAAAAQAAAAEAAAABAAAAAQAAAAUAAAACAAAABQAAAAUAAAAFAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAFAAAAAgAAAAUAAAACAAAABQAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAEAAAABAAAAAQAAAAEAAAABAAAABQAAAAIAAAAFAAAABQAAAAUAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAABAAAAAQAAAAEAAAABAAAAAQAAAAUAAAACAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAFAAAAAgAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAABQAAAAIAAAAFAAAABQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAUAAAACAAAABQAAAAUAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAFAAAAAgAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAA==
   - ind: "-1,1"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "0,1"
@@ -31,6 +31,10 @@ grids:
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAUAAAACAAAAAgAAAAUAAAAFAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAgAAAAIAAAAFAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAAAgAAAAUAAAAFAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAIAAAACAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAUAAAABAAAAAQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "1,-1"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "-2,0"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "-2,-1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA==
 entities:
 - type: LaserItem
   uid: 0
@@ -39,7 +43,7 @@ entities:
     pos: -1.47174,4.550247
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1000
+  - charge: 1200
     type: HitscanWeaponCapacitor
 - type: LaserItem
   uid: 1
@@ -48,7 +52,7 @@ entities:
     pos: -0.6748645,4.487747
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1000
+  - charge: 1200
     type: HitscanWeaponCapacitor
 - type: Brutepack
   uid: 2
@@ -289,7 +293,7 @@ entities:
   uid: 33
   components:
   - grid: 0
-    pos: -10.5,-6.5
+    pos: -15.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
@@ -1076,28 +1080,28 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 145
+  uid: 144
   components:
   - grid: 0
     pos: -3.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: SecurityVestClothing
-  uid: 146
+  uid: 145
   components:
   - grid: 0
     pos: 0.5223687,7.507263
     rot: -1.5707963267949 rad
     type: Transform
 - type: HelmetSecurity
-  uid: 147
+  uid: 146
   components:
   - grid: 0
     pos: -0.1807563,7.585388
     rot: -1.5707963267949 rad
     type: Transform
 - type: locker_generic
-  uid: 148
+  uid: 147
   components:
   - grid: 0
     pos: 1.5,-10.5
@@ -1110,30 +1114,33 @@ entities:
       Content.Server.GameObjects.Components.EntityStorageComponent149:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
+      EntityStorageComponent:
+        entities: []
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: HelmetSecurity
-  uid: 149
+  uid: 148
   components:
   - grid: 0
     pos: -0.7432563,7.601013
     rot: -1.5707963267949 rad
     type: Transform
 - type: Medkit
-  uid: 150
+  uid: 149
   components:
   - grid: 0
     pos: -3.209215,-1.486604
     rot: -1.5707963267949 rad
     type: Transform
 - type: Medkit
-  uid: 151
+  uid: 150
   components:
   - grid: 0
     pos: -4.146715,-1.408479
     rot: -1.5707963267949 rad
     type: Transform
 - type: locker_generic
-  uid: 152
+  uid: 151
   components:
   - grid: 0
     pos: 0.5,-10.5
@@ -1146,30 +1153,35 @@ entities:
       Content.Server.GameObjects.Components.EntityStorageComponent153:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
+      EntityStorageComponent:
+        entities: []
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
+  - IsPlaceable: False
+    type: PlaceableSurface
 - type: fire_extinguisher
-  uid: 157
+  uid: 152
   components:
   - grid: 0
     pos: -1.297692,-5.396082
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 166
+  uid: 153
   components:
   - grid: 0
     pos: -0.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 167
+  uid: 154
   components:
   - grid: 0
     pos: -5.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: poweredsmalllight
-  uid: 169
+  uid: 155
   components:
   - grid: 0
     pos: 0.5,-5.5
@@ -1182,121 +1194,121 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 171
+        - 157
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
-  uid: 170
+  uid: 156
   components:
-  - parent: 189
+  - parent: 172
     grid: 0
     type: Transform
 - type: LightBulb
-  uid: 171
+  uid: 157
   components:
-  - parent: 169
+  - parent: 155
     grid: 0
     type: Transform
 - type: table
-  uid: 175
+  uid: 158
   components:
   - grid: 0
     pos: -4.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 176
+  uid: 159
   components:
   - grid: 0
     pos: -1.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 177
+  uid: 160
   components:
   - grid: 0
     pos: -2.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 178
+  uid: 161
   components:
   - grid: 0
     pos: -3.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: WirelessMachine
-  uid: 179
+  uid: 162
   components:
   - grid: 0
     pos: -6.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 180
+  uid: 163
   components:
   - grid: 0
     pos: 4.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 181
+  uid: 164
   components:
   - grid: 0
     pos: -5.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 182
+  uid: 165
   components:
   - grid: 0
     pos: -6.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 183
+  uid: 166
   components:
   - grid: 0
     pos: -6.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 184
+  uid: 167
   components:
   - grid: 0
     pos: 5.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 185
+  uid: 168
   components:
   - grid: 0
     pos: 5.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 186
+  uid: 169
   components:
   - grid: 0
     pos: 5.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: WiredMachine
-  uid: 187
+  uid: 170
   components:
   - grid: 0
     pos: 5.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: WiredMachine
-  uid: 188
+  uid: 171
   components:
   - grid: 0
     pos: -6.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: poweredlight
-  uid: 189
+  uid: 172
   components:
   - grid: 0
     pos: -6.5,-9.5
@@ -1308,17 +1320,17 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 170
+        - 156
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightBulb
-  uid: 190
+  uid: 173
   components:
-  - parent: 191
+  - parent: 174
     grid: 0
     type: Transform
 - type: poweredsmalllight
-  uid: 191
+  uid: 174
   components:
   - grid: 0
     pos: -4.5,-5.5
@@ -1331,294 +1343,303 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 190
+        - 173
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: spawn_point_latejoin
-  uid: 192
+  uid: 175
   components:
   - grid: 0
     pos: -9.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 193
+  uid: 176
   components:
   - grid: 0
     pos: -0.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 194
+  uid: 177
   components:
   - grid: 0
     pos: -5.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 195
+  uid: 178
   components:
   - grid: 0
     pos: -0.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 196
+  uid: 179
   components:
   - grid: 0
     pos: -5.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 197
+  uid: 180
   components:
   - grid: 0
     pos: 9.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 198
+  uid: 181
   components:
   - grid: 0
     pos: 9.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 199
+  uid: 182
   components:
   - grid: 0
     pos: 9.5,2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 200
+  uid: 183
   components:
   - grid: 0
     pos: 9.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 201
+  uid: 184
   components:
   - grid: 0
     pos: 9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 202
+  uid: 185
   components:
   - grid: 0
     pos: 9.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 203
+  uid: 186
   components:
   - grid: 0
     pos: 9.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 204
+  uid: 187
   components:
   - grid: 0
     pos: 9.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 205
+  uid: 188
   components:
   - grid: 0
     pos: 9.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 206
+  uid: 189
   components:
   - grid: 0
     pos: 9.5,9.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 207
+  uid: 190
   components:
   - grid: 0
     pos: 9.5,10.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 208
+  uid: 191
   components:
   - grid: 0
     pos: -6.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 209
+  uid: 192
   components:
   - grid: 0
     pos: -5.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 210
+  uid: 193
   components:
   - grid: 0
     pos: -4.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 211
+  uid: 194
   components:
   - grid: 0
     pos: -3.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 212
+  uid: 195
   components:
   - grid: 0
     pos: -2.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 213
+  uid: 196
   components:
   - grid: 0
     pos: -1.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 214
+  uid: 197
   components:
   - grid: 0
     pos: -0.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 215
+  uid: 198
   components:
   - grid: 0
     pos: 0.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 216
+  uid: 199
   components:
   - grid: 0
     pos: 1.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 217
+  uid: 200
   components:
   - grid: 0
     pos: -4.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 218
+  uid: 201
   components:
   - grid: 0
     pos: -3.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 219
+  uid: 202
   components:
   - grid: 0
     pos: -2.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 220
+  uid: 203
   components:
   - grid: 0
     pos: -1.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 221
+  uid: 204
   components:
   - grid: 0
     pos: -0.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: airlock
-  uid: 222
+  uid: 205
   components:
   - grid: 0
     pos: 2.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: airlock
-  uid: 223
+  uid: 206
   components:
   - grid: 0
     pos: 3.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 224
+  uid: 207
   components:
   - grid: 0
     pos: -9.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 225
+  uid: 208
   components:
   - grid: 0
     pos: -8.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 226
+  uid: 209
   components:
   - grid: 0
     pos: -8.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 227
+  uid: 210
   components:
   - grid: 0
     pos: -9.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 228
+  uid: 211
   components:
   - grid: 0
     pos: -9.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 229
+  uid: 212
   components:
   - grid: 0
     pos: -10.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 230
+  uid: 213
   components:
   - grid: 0
     pos: -10.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: airlock
-  uid: 233
+  uid: 214
   components:
   - grid: 0
     pos: -9.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: poweredsmalllight
-  uid: 234
+- type: APC
+  uid: 215
   components:
   - grid: 0
-    pos: -9.5,-6.5
+    pos: -6.5,-7.5
+    rot: 3.14159265358979 rad
+    type: Transform
+  - load: 120
+    type: PowerProvider
+- type: poweredsmalllight
+  uid: 216
+  components:
+  - grid: 0
+    pos: -9.5,-5.5
     rot: 3.14159265358979 rad
     type: Transform
   - color: '#FFFFFFFF'
@@ -1628,17 +1649,11 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 235
+        - 228
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- type: LightBulb
-  uid: 235
-  components:
-  - parent: 234
-    grid: 0
-    type: Transform
 - type: poweredlight
-  uid: 236
+  uid: 217
   components:
   - grid: 0
     pos: -0.5,0.5
@@ -1651,17 +1666,17 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 237
+        - 218
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
-  uid: 237
+  uid: 218
   components:
-  - parent: 236
+  - parent: 217
     grid: 0
     type: Transform
 - type: poweredlight
-  uid: 238
+  uid: 219
   components:
   - grid: 0
     pos: -5.5,0.5
@@ -1674,17 +1689,17 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 239
+        - 220
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
-  uid: 239
+  uid: 220
   components:
-  - parent: 238
+  - parent: 219
     grid: 0
     type: Transform
 - type: poweredlight
-  uid: 240
+  uid: 221
   components:
   - grid: 0
     pos: -6.5,5.5
@@ -1696,17 +1711,17 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 241
+        - 222
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
-  uid: 241
+  uid: 222
   components:
-  - parent: 240
+  - parent: 221
     grid: 0
     type: Transform
 - type: poweredlight
-  uid: 242
+  uid: 223
   components:
   - grid: 0
     pos: 3.5,5.5
@@ -1719,17 +1734,17 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 243
+        - 224
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
-  uid: 243
+  uid: 224
   components:
-  - parent: 242
+  - parent: 223
     grid: 0
     type: Transform
 - type: poweredlight
-  uid: 244
+  uid: 225
   components:
   - grid: 0
     pos: -1.5,7.5
@@ -1742,17 +1757,17 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 245
+        - 226
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
-  uid: 245
+  uid: 226
   components:
-  - parent: 244
+  - parent: 225
     grid: 0
     type: Transform
 - type: APC
-  uid: 246
+  uid: 227
   components:
   - grid: 0
     pos: 4.5,-10.5
@@ -1760,199 +1775,199 @@ entities:
     type: Transform
   - load: 360
     type: PowerProvider
-- type: APC
-  uid: 247
+- type: LightBulb
+  uid: 228
   components:
-  - grid: 0
-    pos: -6.5,-7.5
-    rot: -1.5707963267949 rad
+  - parent: 216
+    grid: 0
+    pos: 9.5,5.5
     type: Transform
-  - load: 120
-    type: PowerProvider
 - type: Wire
-  uid: 248
+  uid: 229
   components:
   - grid: 0
     pos: -9.5,2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 249
+  uid: 230
   components:
   - grid: 0
     pos: -9.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 250
+  uid: 231
   components:
   - grid: 0
     pos: -8.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: Wire
-  uid: 251
+- type: APC
+  uid: 232
   components:
   - grid: 0
-    pos: -7.5,3.5
+    pos: -9.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - load: 400
+    type: PowerProvider
 - type: Wire
-  uid: 252
+  uid: 233
   components:
   - grid: 0
     pos: -6.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 253
+  uid: 234
   components:
   - grid: 0
     pos: -5.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 254
+  uid: 235
   components:
   - grid: 0
     pos: -4.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 255
+  uid: 236
   components:
   - grid: 0
     pos: -3.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 256
+  uid: 237
   components:
   - grid: 0
     pos: -2.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 257
+  uid: 238
   components:
   - grid: 0
     pos: -1.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 258
+  uid: 239
   components:
   - grid: 0
     pos: -0.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 259
+  uid: 240
   components:
   - grid: 0
     pos: 0.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 260
+  uid: 241
   components:
   - grid: 0
     pos: 1.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 261
+  uid: 242
   components:
   - grid: 0
     pos: 9.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 262
+  uid: 243
   components:
   - grid: 0
     pos: 9.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 263
+  uid: 244
   components:
   - grid: 0
     pos: 9.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 264
+  uid: 245
   components:
   - grid: 0
     pos: 9.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 265
+  uid: 246
   components:
   - grid: 0
     pos: 9.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 266
+  uid: 247
   components:
   - grid: 0
     pos: 9.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 267
+  uid: 248
   components:
   - grid: 0
     pos: 9.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 268
+  uid: 249
   components:
   - grid: 0
     pos: 9.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 269
+  uid: 250
   components:
   - grid: 0
     pos: 9.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 270
+  uid: 251
   components:
   - grid: 0
     pos: 9.5,-9.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 271
+  uid: 252
   components:
   - grid: 0
     pos: 9.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 272
+  uid: 253
   components:
   - grid: 0
     pos: 9.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 273
+  uid: 254
   components:
   - grid: 0
     pos: 8.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: poweredsmalllight
-  uid: 274
+  uid: 255
   components:
   - grid: 0
     pos: 8.5,-7.5
@@ -1965,33 +1980,31 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 275
+        - 256
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightBulb
-  uid: 275
+  uid: 256
   components:
-  - parent: 274
+  - parent: 255
     grid: 0
     type: Transform
-- type: APC
-  uid: 276
+- type: LightBulb
+  uid: 257
   components:
-  - grid: 0
-    pos: -7.5,3.5
-    rot: -1.5707963267949 rad
+  - parent: 454
+    grid: 0
+    pos: 14.5,-7.5
     type: Transform
-  - load: 280
-    type: PowerProvider
 - type: wall
-  uid: 277
+  uid: 258
   components:
   - grid: 0
     pos: 7.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: YellowToolboxItemFilled
-  uid: 278
+  uid: 259
   components:
   - grid: 0
     pos: -0.8099712,-5.21454
@@ -1999,65 +2012,86 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
+        entities:
+        - 318
+        - 319
+        - 320
+        - 321
+        - 322
+        - 323
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
+  - used: 30
+    type: Storage
 - type: YellowToolboxItemFilled
-  uid: 279
+  uid: 260
   components:
   - grid: 0
-    pos: -0.5597038,-5.679647
+    pos: -0.5179414,-5.557174
     rot: -1.5707963267949 rad
     type: Transform
   - containers:
       storagebase:
-        entities: []
+        entities:
+        - 324
+        - 325
+        - 326
+        - 327
+        - 328
+        - 329
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
+  - used: 30
+    type: Storage
 - type: FlashlightLantern
-  uid: 280
+  uid: 261
   components:
   - grid: 0
     pos: -1.934832,-5.154238
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities:
+        - 330
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: FlashlightLantern
-  uid: 282
+  uid: 262
   components:
   - grid: 0
     pos: -2.017696,-5.71715
     rot: -1.5707963267949 rad
     type: Transform
-- type: Crowbar
-  uid: 285
-  components:
-  - grid: 0
-    pos: -2.861032,-5.524786
-    rot: -1.5707963267949 rad
-    type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities:
+        - 331
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: UniformEngineering
-  uid: 286
+  uid: 263
   components:
   - grid: 0
     pos: -0.6474335,-10.27245
     rot: -1.5707963267949 rad
     type: Transform
 - type: GasMaskClothing
-  uid: 287
+  uid: 264
   components:
   - grid: 0
     pos: -0.2880585,-10.69432
     rot: -1.5707963267949 rad
     type: Transform
 - type: HazardVestClothing
-  uid: 288
+  uid: 265
   components:
   - grid: 0
     pos: -0.9130585,-10.66307
     rot: -1.5707963267949 rad
     type: Transform
 - type: UtilityBeltClothing
-  uid: 289
+  uid: 266
   components:
   - grid: 0
     pos: -1.895102,-10.33495
@@ -2069,7 +2103,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: UtilityBeltClothing
-  uid: 290
+  uid: 267
   components:
   - grid: 0
     pos: -1.770102,-10.63182
@@ -2081,28 +2115,103 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: magazine_12mm_filled
-  uid: 291
+  uid: 268
   components:
   - grid: 0
     pos: -6.605512,7.638151
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      magazine_bullet_container:
+        entities:
+        - 332
+        - 333
+        - 334
+        - 335
+        - 336
+        - 337
+        - 338
+        - 339
+        - 340
+        - 341
+        - 342
+        - 343
+        - 344
+        - 345
+        - 346
+        - 347
+        - 348
+        - 349
+        - 350
+        - 351
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - type: magazine_12mm_filled
-  uid: 312
+  uid: 269
   components:
   - grid: 0
     pos: -6.339887,7.669401
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      magazine_bullet_container:
+        entities:
+        - 352
+        - 353
+        - 354
+        - 355
+        - 356
+        - 357
+        - 358
+        - 359
+        - 360
+        - 361
+        - 362
+        - 363
+        - 364
+        - 365
+        - 366
+        - 367
+        - 368
+        - 369
+        - 370
+        - 371
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - type: magazine_12mm_filled
-  uid: 333
+  uid: 270
   components:
   - grid: 0
     pos: -6.027387,7.622526
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      magazine_bullet_container:
+        entities:
+        - 372
+        - 373
+        - 374
+        - 375
+        - 376
+        - 377
+        - 378
+        - 379
+        - 380
+        - 381
+        - 382
+        - 383
+        - 384
+        - 385
+        - 386
+        - 387
+        - 388
+        - 389
+        - 390
+        - 391
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - type: BackpackClothing
-  uid: 354
+  uid: 271
   components:
   - grid: 0
     pos: -5.089887,7.591276
@@ -2114,7 +2223,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: BackpackClothing
-  uid: 355
+  uid: 272
   components:
   - grid: 0
     pos: -4.683637,7.606901
@@ -2126,336 +2235,335 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: BlackGloves
-  uid: 356
+  uid: 273
   components:
   - grid: 0
     pos: -3.386762,7.466276
     rot: -1.5707963267949 rad
     type: Transform
 - type: smg_c20r
-  uid: 357
+  uid: 274
   components:
   - grid: 0
     pos: -2.524035,7.579326
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      ballistics_chamber_0:
+        entities:
+        - 412
+        type: Content.Server.GameObjects.ContainerSlot
+      ballistic_gun_magazine:
+        entities:
+        - 392
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: smg_c20r
-  uid: 379
+  uid: 275
   components:
   - grid: 0
     pos: -1.94591,7.485576
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      ballistics_chamber_0:
+        entities:
+        - 433
+        type: Content.Server.GameObjects.ContainerSlot
+      ballistic_gun_magazine:
+        entities:
+        - 413
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: wall
-  uid: 381
+  uid: 276
   components:
   - grid: 0
     pos: -10.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 382
+  uid: 277
   components:
   - grid: 0
     pos: -11.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 383
+  uid: 278
   components:
   - grid: 0
     pos: -10.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 384
+  uid: 279
   components:
   - grid: 0
     pos: -9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 385
+  uid: 280
   components:
   - grid: 0
     pos: -8.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 386
+  uid: 281
   components:
   - grid: 0
     pos: -7.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 387
+  uid: 282
   components:
   - grid: 0
     pos: -8.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 388
+  uid: 283
   components:
   - grid: 0
     pos: -5.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 389
+  uid: 284
   components:
   - grid: 0
     pos: -6.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 390
+  uid: 285
   components:
   - grid: 0
     pos: -7.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 391
+  uid: 286
   components:
   - grid: 0
     pos: -0.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 392
+  uid: 287
   components:
   - grid: 0
     pos: 0.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 393
+  uid: 288
   components:
   - grid: 0
     pos: 1.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 394
+  uid: 289
   components:
   - grid: 0
     pos: 1.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 395
+  uid: 290
   components:
   - grid: 0
     pos: 1.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 396
+  uid: 291
   components:
   - grid: 0
     pos: 4.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 397
+  uid: 292
   components:
   - grid: 0
     pos: 4.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 398
+  uid: 293
   components:
   - grid: 0
     pos: 4.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 399
+  uid: 294
   components:
   - grid: 0
     pos: 4.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 400
+  uid: 295
   components:
   - grid: 0
     pos: 4.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 401
+  uid: 296
   components:
   - grid: 0
     pos: 4.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 402
-  components:
-  - grid: 0
-    pos: 4.5,2.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: wall
-  uid: 403
-  components:
-  - grid: 0
-    pos: 4.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: wall
-  uid: 404
-  components:
-  - grid: 0
-    pos: 4.5,4.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: wall
-  uid: 405
+  uid: 297
   components:
   - grid: 0
     pos: 4.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 406
+  uid: 298
   components:
   - grid: 0
     pos: 4.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 407
+  uid: 299
   components:
   - grid: 0
     pos: 4.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 408
+  uid: 300
   components:
   - grid: 0
     pos: 4.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 409
+  uid: 301
   components:
   - grid: 0
     pos: 1.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 410
+  uid: 302
   components:
   - grid: 0
     pos: 0.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 411
+  uid: 303
   components:
   - grid: 0
     pos: -0.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 412
+  uid: 304
   components:
   - grid: 0
     pos: -1.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 413
+  uid: 305
   components:
   - grid: 0
     pos: -2.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 414
+  uid: 306
   components:
   - grid: 0
     pos: -3.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 415
+  uid: 307
   components:
   - grid: 0
     pos: -4.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 416
+  uid: 308
   components:
   - grid: 0
     pos: -5.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 417
+  uid: 309
   components:
   - grid: 0
     pos: -6.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 418
+  uid: 310
   components:
   - grid: 0
     pos: -7.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 419
+  uid: 311
   components:
   - grid: 0
     pos: -7.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 420
+  uid: 312
   components:
   - grid: 0
     pos: -7.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: wall
-  uid: 421
+  uid: 313
   components:
   - grid: 0
     pos: -7.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: LeatherGloves
-  uid: 422
+  uid: 314
   components:
   - grid: 0
     pos: -4.332221,4.64238
     rot: -1.5707963267949 rad
     type: Transform
 - type: LeatherGloves
-  uid: 423
+  uid: 315
   components:
   - grid: 0
     pos: -3.519721,4.64238
     rot: -1.5707963267949 rad
     type: Transform
 - type: LeatherGloves
-  uid: 424
+  uid: 316
   components:
   - grid: 0
     pos: -2.597846,4.61113
     rot: -1.5707963267949 rad
     type: Transform
 - type: LedLightTube
-  uid: 425
+  uid: 317
   components:
   - grid: 0
     pos: -3.511025,-10.35149
@@ -2463,4 +2571,1832 @@ entities:
     type: Transform
   - color: '#EEEEFFFF'
     type: Sprite
+- type: Screwdriver
+  uid: 318
+  components:
+  - parent: 259
+    grid: 0
+    pos: -5.21454,0.809971
+    type: Transform
+- type: Crowbar
+  uid: 319
+  components:
+  - parent: 259
+    grid: 0
+    pos: -5.21454,0.809971
+    type: Transform
+- type: Wirecutter
+  uid: 320
+  components:
+  - parent: 259
+    grid: 0
+    pos: -5.21454,0.809971
+    type: Transform
+- type: CableStack
+  uid: 321
+  components:
+  - parent: 259
+    grid: 0
+    pos: -5.21454,0.809971
+    type: Transform
+- type: CableStack
+  uid: 322
+  components:
+  - parent: 259
+    grid: 0
+    pos: -5.21454,0.809971
+    type: Transform
+- type: CableStack
+  uid: 323
+  components:
+  - parent: 259
+    grid: 0
+    pos: -5.21454,0.809971
+    type: Transform
+- type: Screwdriver
+  uid: 324
+  components:
+  - parent: 260
+    grid: 0
+    pos: -5.679647,0.5597036
+    type: Transform
+- type: Crowbar
+  uid: 325
+  components:
+  - parent: 260
+    grid: 0
+    pos: -5.679647,0.5597036
+    type: Transform
+- type: Wirecutter
+  uid: 326
+  components:
+  - parent: 260
+    grid: 0
+    pos: -5.679647,0.5597036
+    type: Transform
+- type: CableStack
+  uid: 327
+  components:
+  - parent: 260
+    grid: 0
+    pos: -5.679647,0.5597036
+    type: Transform
+- type: CableStack
+  uid: 328
+  components:
+  - parent: 260
+    grid: 0
+    pos: -5.679647,0.5597036
+    type: Transform
+- type: CableStack
+  uid: 329
+  components:
+  - parent: 260
+    grid: 0
+    pos: -5.679647,0.5597036
+    type: Transform
+- type: PowerCellSmallHyper
+  uid: 330
+  components:
+  - parent: 261
+    grid: 0
+    pos: -5.154238,1.934832
+    type: Transform
+- type: PowerCellSmallHyper
+  uid: 331
+  components:
+  - parent: 262
+    grid: 0
+    pos: -5.71715,2.017696
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 332
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 333
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 334
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 335
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 336
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 337
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 338
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 339
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 340
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 341
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 342
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 343
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 344
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 345
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 346
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 347
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 348
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 349
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 350
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 351
+  components:
+  - parent: 268
+    grid: 0
+    pos: 7.638151,6.605513
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 352
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 353
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 354
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 355
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 356
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 357
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 358
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 359
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 360
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 361
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 362
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 363
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 364
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 365
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 366
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 367
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 368
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 369
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 370
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 371
+  components:
+  - parent: 269
+    grid: 0
+    pos: 7.669401,6.339888
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 372
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 373
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 374
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 375
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 376
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 377
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 378
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 379
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 380
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 381
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 382
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 383
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 384
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 385
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 386
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 387
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 388
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 389
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 390
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 391
+  components:
+  - parent: 270
+    grid: 0
+    pos: 7.622526,6.027388
+    type: Transform
+- type: magazine_12mm_filled
+  uid: 392
+  components:
+  - parent: 274
+    grid: 0
+    pos: 7.579326,2.524035
+    type: Transform
+  - containers:
+      magazine_bullet_container:
+        entities:
+        - 393
+        - 394
+        - 395
+        - 396
+        - 397
+        - 398
+        - 399
+        - 400
+        - 401
+        - 402
+        - 403
+        - 404
+        - 405
+        - 406
+        - 407
+        - 408
+        - 409
+        - 410
+        - 411
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: ammo_casing_12mm
+  uid: 393
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 394
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 395
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 396
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 397
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 398
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 399
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 400
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 401
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 402
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 403
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 404
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 405
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 406
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 407
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 408
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 409
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 410
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 411
+  components:
+  - parent: 392
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 412
+  components:
+  - parent: 274
+    grid: 0
+    pos: 7.579326,2.524035
+    type: Transform
+- type: magazine_12mm_filled
+  uid: 413
+  components:
+  - parent: 275
+    grid: 0
+    pos: 7.485576,1.94591
+    type: Transform
+  - containers:
+      magazine_bullet_container:
+        entities:
+        - 414
+        - 415
+        - 416
+        - 417
+        - 418
+        - 419
+        - 420
+        - 421
+        - 422
+        - 423
+        - 424
+        - 425
+        - 426
+        - 427
+        - 428
+        - 429
+        - 430
+        - 431
+        - 432
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: ammo_casing_12mm
+  uid: 414
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 415
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 416
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 417
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 418
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 419
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 420
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 421
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 422
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 423
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 424
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 425
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 426
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 427
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 428
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 429
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 430
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 431
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 432
+  components:
+  - parent: 413
+    grid: 0
+    type: Transform
+- type: ammo_casing_12mm
+  uid: 433
+  components:
+  - parent: 275
+    grid: 0
+    pos: 7.485576,1.94591
+    type: Transform
+- type: wall
+  uid: 434
+  components:
+  - grid: 0
+    pos: -11.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 435
+  components:
+  - grid: 0
+    pos: -12.5,4.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: GlassStack
+  uid: 436
+  components:
+  - grid: 0
+    pos: -15.5,-2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 437
+  components:
+  - grid: 0
+    pos: -16.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 438
+  components:
+  - grid: 0
+    pos: -14.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 439
+  components:
+  - grid: 0
+    pos: -7.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 440
+  components:
+  - grid: 0
+    pos: -12.5,7.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 441
+  components:
+  - grid: 0
+    pos: -13.5,7.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 442
+  components:
+  - grid: 0
+    pos: -14.5,7.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 443
+  components:
+  - grid: 0
+    pos: -14.5,4.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 444
+  components:
+  - grid: 0
+    pos: -14.5,5.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 445
+  components:
+  - grid: 0
+    pos: -12.5,5.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 446
+  components:
+  - grid: 0
+    pos: -12.5,6.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 447
+  components:
+  - grid: 0
+    pos: -14.5,6.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_external
+  uid: 448
+  components:
+  - grid: 0
+    pos: -13.5,4.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_external
+  uid: 449
+  components:
+  - grid: 0
+    pos: -13.5,6.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: poweredlight
+  uid: 450
+  components:
+  - grid: 0
+    pos: -14.5,3.5
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
+  - containers:
+      light_bulb:
+        entities:
+        - 451
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: LightTube
+  uid: 451
+  components:
+  - parent: 450
+    grid: 0
+    pos: 0.4028816,-0.2560518
+    type: Transform
+- type: poweredlight
+  uid: 452
+  components:
+  - grid: 0
+    pos: -10.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
+  - containers:
+      light_bulb:
+        entities:
+        - 453
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: LightTube
+  uid: 453
+  components:
+  - parent: 452
+    grid: 0
+    pos: -0.1682115,0.5786161
+    type: Transform
+- type: poweredsmalllight
+  uid: 454
+  components:
+  - grid: 0
+    pos: -14.5,7.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
+  - containers:
+      light_bulb:
+        entities:
+        - 257
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: wall
+  uid: 455
+  components:
+  - grid: 0
+    pos: -15.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 456
+  components:
+  - grid: 0
+    pos: -15.5,2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 457
+  components:
+  - grid: 0
+    pos: -15.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 458
+  components:
+  - grid: 0
+    pos: -16.5,0.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 459
+  components:
+  - grid: 0
+    pos: -16.5,-0.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 460
+  components:
+  - grid: 0
+    pos: -16.5,-1.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 461
+  components:
+  - grid: 0
+    pos: -16.5,-2.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 462
+  components:
+  - grid: 0
+    pos: -16.5,-3.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 463
+  components:
+  - grid: 0
+    pos: -16.5,-4.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 464
+  components:
+  - grid: 0
+    pos: -16.5,-5.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 465
+  components:
+  - grid: 0
+    pos: -16.5,-6.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 466
+  components:
+  - grid: 0
+    pos: -16.5,-7.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 467
+  components:
+  - grid: 0
+    pos: -15.5,-8.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 468
+  components:
+  - grid: 0
+    pos: -14.5,-8.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 469
+  components:
+  - grid: 0
+    pos: -13.5,-8.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 470
+  components:
+  - grid: 0
+    pos: -12.5,-8.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 471
+  components:
+  - grid: 0
+    pos: -11.5,-8.5
+    rot: 1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 472
+  components:
+  - grid: 0
+    pos: -16.5,-8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: GlassStack
+  uid: 473
+  components:
+  - grid: 0
+    pos: -15.5,-2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_engineering
+  uid: 474
+  components:
+  - grid: 0
+    pos: -13.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_engineering
+  uid: 475
+  components:
+  - grid: 0
+    pos: -12.5,1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: airlock_engineering
+  uid: 476
+  components:
+  - grid: 0
+    pos: -10.5,-6.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall_light
+  uid: 477
+  components:
+  - grid: 0
+    pos: -15.5,-5.5
+    type: Transform
+- type: wall_light
+  uid: 478
+  components:
+  - grid: 0
+    pos: -15.5,-0.5
+    type: Transform
+- type: wall_light
+  uid: 479
+  components:
+  - grid: 0
+    pos: -11.5,-0.5
+    rot: 3.14159265358979 rad
+    type: Transform
+- type: wall_light
+  uid: 480
+  components:
+  - grid: 0
+    pos: -11.5,-5.5
+    rot: 3.14159265358979 rad
+    type: Transform
+- type: CableStack
+  uid: 481
+  components:
+  - grid: 0
+    pos: -15.5,-1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: GlassStack
+  uid: 482
+  components:
+  - grid: 0
+    pos: -15.5,-3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: CableStack
+  uid: 483
+  components:
+  - grid: 0
+    pos: -15.5,-1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: CableStack
+  uid: 484
+  components:
+  - grid: 0
+    pos: -15.5,-0.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: GlassStack
+  uid: 485
+  components:
+  - grid: 0
+    pos: -15.5,-3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: table
+  uid: 486
+  components:
+  - grid: 0
+    pos: -15.5,-4.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: table
+  uid: 487
+  components:
+  - grid: 0
+    pos: -15.5,-3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: table
+  uid: 488
+  components:
+  - grid: 0
+    pos: -15.5,-2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: table
+  uid: 489
+  components:
+  - grid: 0
+    pos: -15.5,-1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: table
+  uid: 490
+  components:
+  - grid: 0
+    pos: -15.5,-0.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: table
+  uid: 491
+  components:
+  - grid: 0
+    pos: -15.5,-5.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: MetalStack
+  uid: 492
+  components:
+  - grid: 0
+    pos: -15.5,-5.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: MetalStack
+  uid: 493
+  components:
+  - grid: 0
+    pos: -15.5,-4.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 494
+  components:
+  - grid: 0
+    pos: 4.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: autolathe
+  uid: 495
+  components:
+  - grid: 0
+    pos: -12.5,-7.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - recipes:
+    - Brutepack
+    - Ointment
+    - LightTube
+    - LightBulb
+    - MetalStack
+    - GlassStack
+    - Wirecutter
+    - Screwdriver
+    - Welder
+    - Wrench
+    - CableStack
+    - Crowbar
+    - Multitool
+    type: LatheDatabase
+- type: CableStack
+  uid: 496
+  components:
+  - grid: 0
+    pos: -15.5,-0.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: autolathe
+  uid: 497
+  components:
+  - grid: 0
+    pos: -14.5,-7.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - recipes:
+    - Brutepack
+    - Ointment
+    - LightTube
+    - LightBulb
+    - MetalStack
+    - GlassStack
+    - Wirecutter
+    - Screwdriver
+    - Welder
+    - Wrench
+    - CableStack
+    - Crowbar
+    - Multitool
+    type: LatheDatabase
+- type: autolathe
+  uid: 498
+  components:
+  - grid: 0
+    pos: -13.5,-7.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - recipes:
+    - Brutepack
+    - Ointment
+    - LightTube
+    - LightBulb
+    - MetalStack
+    - GlassStack
+    - Wirecutter
+    - Screwdriver
+    - Welder
+    - Wrench
+    - CableStack
+    - Crowbar
+    - Multitool
+    type: LatheDatabase
+- type: wall
+  uid: 499
+  components:
+  - grid: 0
+    pos: 4.5,2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: MetalStack
+  uid: 500
+  components:
+  - grid: 0
+    pos: -15.5,-4.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: MetalStack
+  uid: 501
+  components:
+  - grid: 0
+    pos: -15.5,-5.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: wall
+  uid: 502
+  components:
+  - grid: 0
+    pos: 4.5,4.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: locker_tool_filled
+  uid: 503
+  components:
+  - grid: 0
+    pos: -11.5,-3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        entities:
+        - 504
+        - 506
+        - 507
+        - 508
+        - 509
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - IsPlaceable: False
+    type: PlaceableSurface
+- type: FlashlightLantern
+  uid: 504
+  components:
+  - parent: 503
+    grid: 0
+    type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities:
+        - 505
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: PowerCellSmallHyper
+  uid: 505
+  components:
+  - parent: 504
+    grid: 0
+    type: Transform
+- type: Welder
+  uid: 506
+  components:
+  - parent: 503
+    grid: 0
+    type: Transform
+- type: Crowbar
+  uid: 507
+  components:
+  - parent: 503
+    grid: 0
+    type: Transform
+- type: Wirecutter
+  uid: 508
+  components:
+  - parent: 503
+    grid: 0
+    type: Transform
+- type: UtilityBeltClothing
+  uid: 509
+  components:
+  - parent: 503
+    grid: 0
+    type: Transform
+  - containers:
+      storagebase:
+        entities: []
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: locker_tool_filled
+  uid: 510
+  components:
+  - grid: 0
+    pos: -11.5,-2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        entities:
+        - 511
+        - 512
+        - 513
+        - 514
+        - 515
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: Screwdriver
+  uid: 511
+  components:
+  - parent: 510
+    grid: 0
+    pos: 11.5,2.5
+    type: Transform
+- type: Wrench
+  uid: 512
+  components:
+  - parent: 510
+    grid: 0
+    pos: 11.5,2.5
+    type: Transform
+- type: Welder
+  uid: 513
+  components:
+  - parent: 510
+    grid: 0
+    pos: 11.5,2.5
+    type: Transform
+- type: Crowbar
+  uid: 514
+  components:
+  - parent: 510
+    grid: 0
+    pos: 11.5,2.5
+    type: Transform
+- type: HelmetEngineering
+  uid: 515
+  components:
+  - parent: 510
+    grid: 0
+    pos: 11.5,2.5
+    type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities:
+        - 516
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: PowerCellSmallHyper
+  uid: 516
+  components:
+  - parent: 515
+    grid: 0
+    type: Transform
+- type: locker_tool_filled
+  uid: 517
+  components:
+  - grid: 0
+    pos: -11.5,-1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        entities:
+        - 518
+        - 519
+        - 520
+        - 521
+        - 522
+        - 523
+        - 524
+        - 525
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: HazardVestClothing
+  uid: 518
+  components:
+  - parent: 517
+    grid: 0
+    pos: 11.5,1.5
+    type: Transform
+- type: Screwdriver
+  uid: 519
+  components:
+  - parent: 517
+    grid: 0
+    pos: 11.5,1.5
+    type: Transform
+- type: Wrench
+  uid: 520
+  components:
+  - parent: 517
+    grid: 0
+    pos: 11.5,1.5
+    type: Transform
+- type: Welder
+  uid: 521
+  components:
+  - parent: 517
+    grid: 0
+    pos: 11.5,1.5
+    type: Transform
+- type: Crowbar
+  uid: 522
+  components:
+  - parent: 517
+    grid: 0
+    pos: 11.5,1.5
+    type: Transform
+- type: Wirecutter
+  uid: 523
+  components:
+  - parent: 517
+    grid: 0
+    pos: 11.5,1.5
+    type: Transform
+- type: Multitool
+  uid: 524
+  components:
+  - parent: 517
+    grid: 0
+    pos: 11.5,1.5
+    type: Transform
+- type: HelmetEngineering
+  uid: 525
+  components:
+  - parent: 517
+    grid: 0
+    pos: 11.5,1.5
+    type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities:
+        - 526
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: PowerCellSmallHyper
+  uid: 526
+  components:
+  - parent: 525
+    grid: 0
+    type: Transform
+- type: locker_tool_filled
+  uid: 527
+  components:
+  - grid: 0
+    pos: -11.5,-0.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        entities:
+        - 528
+        - 529
+        - 530
+        - 531
+        - 532
+        - 534
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: HazardVestClothing
+  uid: 528
+  components:
+  - parent: 527
+    grid: 0
+    pos: 11.5,0.5
+    type: Transform
+- type: Screwdriver
+  uid: 529
+  components:
+  - parent: 527
+    grid: 0
+    pos: 11.5,0.5
+    type: Transform
+- type: Welder
+  uid: 530
+  components:
+  - parent: 527
+    grid: 0
+    pos: 11.5,0.5
+    type: Transform
+- type: Wirecutter
+  uid: 531
+  components:
+  - parent: 527
+    grid: 0
+    pos: 11.5,0.5
+    type: Transform
+- type: HelmetEngineering
+  uid: 532
+  components:
+  - parent: 527
+    grid: 0
+    pos: 11.5,0.5
+    type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities:
+        - 533
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: PowerCellSmallHyper
+  uid: 533
+  components:
+  - parent: 532
+    grid: 0
+    type: Transform
+- type: CableStack
+  uid: 534
+  components:
+  - parent: 527
+    grid: 0
+    pos: 11.5,0.5
+    type: Transform
+- type: locker_tool_filled
+  uid: 535
+  components:
+  - grid: 0
+    pos: -11.5,-4.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        entities:
+        - 536
+        - 538
+        - 539
+        - 540
+        - 541
+        - 542
+        - 543
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: FlashlightLantern
+  uid: 536
+  components:
+  - parent: 535
+    grid: 0
+    pos: 11.5,4.5
+    type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities:
+        - 537
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: PowerCellSmallHyper
+  uid: 537
+  components:
+  - parent: 536
+    grid: 0
+    type: Transform
+- type: Screwdriver
+  uid: 538
+  components:
+  - parent: 535
+    grid: 0
+    pos: 11.5,4.5
+    type: Transform
+- type: Wrench
+  uid: 539
+  components:
+  - parent: 535
+    grid: 0
+    pos: 11.5,4.5
+    type: Transform
+- type: Welder
+  uid: 540
+  components:
+  - parent: 535
+    grid: 0
+    pos: 11.5,4.5
+    type: Transform
+- type: Crowbar
+  uid: 541
+  components:
+  - parent: 535
+    grid: 0
+    pos: 11.5,4.5
+    type: Transform
+- type: Wirecutter
+  uid: 542
+  components:
+  - parent: 535
+    grid: 0
+    pos: 11.5,4.5
+    type: Transform
+- type: CableStack
+  uid: 543
+  components:
+  - parent: 535
+    grid: 0
+    pos: 11.5,4.5
+    type: Transform
+- type: locker_tool_filled
+  uid: 544
+  components:
+  - grid: 0
+    pos: -11.5,-5.5
+    rot: -1.5707963267949 rad
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        entities:
+        - 545
+        - 546
+        - 547
+        - 548
+        - 549
+        - 550
+        - 551
+        - 552
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: HazardVestClothing
+  uid: 545
+  components:
+  - parent: 544
+    grid: 0
+    pos: 11.5,5.5
+    type: Transform
+- type: Screwdriver
+  uid: 546
+  components:
+  - parent: 544
+    grid: 0
+    pos: 11.5,5.5
+    type: Transform
+- type: Wrench
+  uid: 547
+  components:
+  - parent: 544
+    grid: 0
+    pos: 11.5,5.5
+    type: Transform
+- type: Welder
+  uid: 548
+  components:
+  - parent: 544
+    grid: 0
+    pos: 11.5,5.5
+    type: Transform
+- type: Crowbar
+  uid: 549
+  components:
+  - parent: 544
+    grid: 0
+    pos: 11.5,5.5
+    type: Transform
+- type: Wirecutter
+  uid: 550
+  components:
+  - parent: 544
+    grid: 0
+    pos: 11.5,5.5
+    type: Transform
+- type: UtilityBeltClothing
+  uid: 551
+  components:
+  - parent: 544
+    grid: 0
+    pos: 11.5,5.5
+    type: Transform
+  - containers:
+      storagebase:
+        entities: []
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- type: CableStack
+  uid: 552
+  components:
+  - parent: 544
+    grid: 0
+    pos: 11.5,5.5
+    type: Transform
 ...
