@@ -32,8 +32,7 @@ before_script:
 - "python3.5 RUN_THIS.py --no-prompt"
 
 script:
-  # Prevent people from putting in textures/ (lowercase).
-- "if [ -d Resources/textures ]; then exit 1; fi"
-- "msbuild /p:Configuration=Debug /p:Platform=x64 /p:HEADLESS=1 /nologo /m SpaceStation14.sln /p:Python=python3.5"
+- "msbuild /p:Configuration=Debug /p:Platform=x64 /nologo /m SpaceStation14.sln /p:Python=python3.5"
+- "mono packages/nunit.consolerunner/3.10.0/tools/nunit3-console.exe bin/Content.Tests/Content.Tests.dll bin/Content.IntegrationTests/Content.IntegrationTests.dll"
 
 
