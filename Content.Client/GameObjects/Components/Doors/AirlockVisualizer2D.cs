@@ -31,6 +31,11 @@ namespace Content.Client.GameObjects.Components.Doors
                 flick.LayerKey = DoorVisualLayers.Base;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("closing", 0f));
 
+                var flickUnlit = new AnimationTrackSpriteFlick();
+                CloseAnimation.AnimationTracks.Add(flickUnlit);
+                flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
+                flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("closing_unlit", 0f));
+
                 var sound = new AnimationTrackPlaySound();
                 CloseAnimation.AnimationTracks.Add(sound);
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(closeSound, 0));
@@ -42,6 +47,11 @@ namespace Content.Client.GameObjects.Components.Doors
                 OpenAnimation.AnimationTracks.Add(flick);
                 flick.LayerKey = DoorVisualLayers.Base;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("opening", 0f));
+
+                var flickUnlit = new AnimationTrackSpriteFlick();
+                OpenAnimation.AnimationTracks.Add(flickUnlit);
+                flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
+                flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("opening_unlit", 0f));
 
                 var sound = new AnimationTrackPlaySound();
                 OpenAnimation.AnimationTracks.Add(sound);
@@ -70,14 +80,18 @@ namespace Content.Client.GameObjects.Components.Doors
             {
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
+                    sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, true);
                     break;
                 case DoorVisualState.Closing:
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, true);
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(CloseAnimation, AnimationKey);
                     }
                     break;
                 case DoorVisualState.Opening:
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, true);
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(OpenAnimation, AnimationKey);
@@ -86,6 +100,7 @@ namespace Content.Client.GameObjects.Components.Doors
                     break;
                 case DoorVisualState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -95,6 +110,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
     public enum DoorVisualLayers
     {
-        Base
+        Base,
+        BaseUnlit
     }
 }

@@ -5,12 +5,16 @@
   components:
   - type: Clickable
   - type: Sprite
+    netsync: false
 
     drawdepth: Mobs # They're on the same layer as mobs, perspective.
     sprite: Buildings/airlock_basic.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+    - state: closed_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseUnlit"]
 
   - type: Icon
     sprite: Buildings/airlock_basic.rsi
