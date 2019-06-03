@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Explosive
             var tiles = mapGrid.GetTilesIntersecting(aabb);
             foreach (var tile in tiles)
             {
-                var tileLoc = new GridCoordinates(tile.X, tile.Y, tile.GridIndex);
+                var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
                 var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
                 var distanceFromTile = tileLoc.Distance(_mapManager, location);
                 if (distanceFromTile > RangeDamageMax)
