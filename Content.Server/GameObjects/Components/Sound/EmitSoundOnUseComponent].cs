@@ -20,11 +20,11 @@ namespace Content.Server.GameObjects.Components.Sound
     /// <summary>
     /// Simple sound emitter that emits sound on use in hand
     /// </summary>
-    public class SoundEmitterComponent : Component, IUse
+    public class EmitSoundOnUseComponent : Component, IUse
     {
         /// <inheritdoc />
         /// 
-        public override string Name => "SoundEmitter";
+        public override string Name => "EmitSoundOnUse";
 
         public string _soundName;
 

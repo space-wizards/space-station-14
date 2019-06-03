@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Sound
     /// <summary>
     /// Changes footstep sound
     /// </summary>
-    public class FootstepModifierComponent : Component, IOnMove
+    public class FootstepModifierComponent : Component
     {
         #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -46,16 +46,14 @@ namespace Content.Server.GameObjects.Components.Sound
             _footstepRandom = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
-        bool IOnMove.OnMove()
+        public void PlayFootstep()
         {
             if (!string.IsNullOrWhiteSpace(_soundCollectionName))
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
                 var file = _footstepRandom.Pick(soundCollection.PickFiles);
                 Owner.GetComponent<SoundComponent>().Play(file, AudioParams.Default.WithVolume(-2f));
-                return true;
             }
-            return false;
         }
     }
 }

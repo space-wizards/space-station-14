@@ -21,17 +21,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Interfaces.GameObjects;
-using System.Linq;
+using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.Components.Inventory;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public interface IOnMove
-    {
-        bool OnMove();
-    }
-
     [UsedImplicitly]
     internal class MoverSystem : EntitySystem
     {
@@ -157,24 +151,13 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (mover.StepSoundDistance > distanceNeeded)
                 {
                     mover.StepSoundDistance = 0;
-                    var isFootstepModified = false;
                     if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
-                        && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item))
+                        && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item) 
+                        && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
                     {
-                        var footstepmods = item.Owner.GetAllComponents<IOnMove>().ToList();
-                        if (footstepmods.Count > 0)
-                        {
-                            isFootstepModified = true;
-                            foreach (var footstepmod in footstepmods)
-                            {
-                                if (footstepmod.OnMove())
-                                {
-                                    return;
-                                }
-                            }
-                        }
+                        modifier.PlayFootstep();
                     }
-                    if(!isFootstepModified)
+                    else
                     {
                         PlayFootstepSound(transform.GridPosition);
                     }
