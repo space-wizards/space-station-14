@@ -134,5 +134,5 @@
     sprite: Objects/bikehorn.rsi
 
   - type: Sound
-  - type: SoundEmitter
+  - type: EmitSoundOnUse
     sound: /Audio/items/bikehorn.ogg
