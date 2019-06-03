@@ -1,18 +1,33 @@
 - type: entity
   parent: Clothing
-  id: HelmetSecurity
-  name: Security Helmet
+  id: BaseHelmet
+  name: Helmet
   description: "A slick logo covers the ear: \"Concussions are better than holes!\""
   components:
   - type: Sprite
-    sprite: Clothing/helmet_sec.rsi
+    sprite: Clothing/helmet_combat.rsi
     state: helmet
   - type: Icon
-    sprite: Clothing/helmet_sec.rsi
+    sprite: Clothing/helmet_combat.rsi
     state: helmet
   - type: Clothing
     Slots:
     - head
+    sprite: Clothing/helmet_combat.rsi
+
+- type: entity
+  parent: BaseHelmet
+  id: HelmetSecurity
+  name: Tactical Helmet
+  description: Standard Security gear. Protects the head from impacts. Can be attached with a flashlight.
+  components:
+  - type: Sprite
+    sprite: Clothing/helmet_sec.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/helmet_sec.rsi
+    state: icon
+  - type: Clothing
     sprite: Clothing/helmet_sec.rsi
 
 - type: entity

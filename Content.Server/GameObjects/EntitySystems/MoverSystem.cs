@@ -21,6 +21,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
+using Content.Server.GameObjects.Components.Sound;
+using Content.Shared.GameObjects.Components.Inventory;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -149,7 +151,16 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (mover.StepSoundDistance > distanceNeeded)
                 {
                     mover.StepSoundDistance = 0;
-                    PlayFootstepSound(transform.GridPosition);
+                    if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
+                        && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item) 
+                        && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
+                    {
+                        modifier.PlayFootstep();
+                    }
+                    else
+                    {
+                        PlayFootstepSound(transform.GridPosition);
+                    }
                 }
             }
         }

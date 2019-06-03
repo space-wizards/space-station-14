@@ -41,3 +41,45 @@
 
   - type: Clothing
     sprite: Clothing/shoes_white.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ClownShoes
+  name: Clown Shoes
+  description: The prankster's standard-issue clowning shoes. Damn they're huge!
+  components: 
+  - type: Sprite
+    sprite: Clothing/shoes_clown.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Clothing/shoes_clown.rsi
+    state: icon
+
+  - type: Clothing
+    sprite: Clothing/shoes_clown.rsi
+
+  - type: Sound
+  - type: FootstepModifier
+    footstepSoundCollection: footstep_clown
+
+- type: entity
+  parent: ShoesBase
+  id: JackbootShoes
+  name: Jackboots
+  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  components: 
+  - type: Sprite
+    sprite: Clothing/shoes_jackboots.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Clothing/shoes_jackboots.rsi
+    state: icon
+
+  - type: Clothing
+    sprite: Clothing/shoes_jackboots.rsi
+
+  - type: Sound
+  - type: FootstepModifier
+    footstepSoundCollection: footstep_heavy

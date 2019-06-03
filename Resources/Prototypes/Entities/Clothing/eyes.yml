@@ -37,3 +37,18 @@
     state: sunglasses
   - type: Clothing
     sprite: Clothing/sunglasses.rsi
+
+- type: entity
+  parent: GlassesBase
+  id: SecGlasses
+  name: Security Sunglasses
+  description: Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes. Often worn by budget security officers.
+  components:
+  - type: Sprite
+    sprite: Clothing/sunglasses_sec.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/sunglasses_sec.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/sunglasses_sec.rsi
