@@ -18,6 +18,10 @@
   - type: Collidable
   - type: Storage
     Capacity: 60
+    
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 100
 
   placement:
     snap:

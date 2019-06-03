@@ -1,4 +1,5 @@
-﻿using Robust.Server.GameObjects;
+﻿using System;
+using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -16,18 +17,18 @@ namespace Content.Server.GameObjects.Components.Triggers
 
         public override string Name => "OnUseTimerTrigger";
 
-        private int _delay = 0;
+        private float _delay = 0f;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _delay, "delay", 0);
+            serializer.DataField(ref _delay, "delay", 0f);
         }
 
         public override void Initialize()
         {
-            base.Initialize();
+            base.Initialize(); 
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -36,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Triggers
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearance)) {
                 appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
             }
-            triggerSystem.HandleTimerTrigger(_delay*1000, eventArgs.User, Owner);
+            triggerSystem.HandleTimerTrigger(TimeSpan.FromSeconds(_delay), eventArgs.User, Owner);
             return true;
         }
     }

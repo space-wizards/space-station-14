@@ -21,10 +21,10 @@
     delay: 5
 
   - type: Explosive
-    damageMax: 100
-    damageFalloff: 10
-    rangeDamageMax: 1
-    range: 3
+    damageMax: 150
+    damageFalloff: 5
+    rangeDamageMax: 2
+    range: 12
 
   - type: Appearance
     visuals:
@@ -54,10 +54,10 @@
     delay: 5
 
   - type: Explosive
-    damageMax: 500
-    damageFalloff: 200
-    rangeDamageMax: 3
-    range: 5
+    damageMax: 300
+    damageFalloff: 3
+    rangeDamageMax: 5
+    range: 20
 
   - type: Appearance
     visuals:

@@ -24,7 +24,4 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameObjects\Components\Trigger\" />
-  </ItemGroup>
 </Project>

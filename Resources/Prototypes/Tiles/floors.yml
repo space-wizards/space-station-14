@@ -6,6 +6,8 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+  subfloor: plating
+  hardness: 100
 
 - type: tile
   name: floor_white
@@ -15,6 +17,8 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.1
+  subfloor: underplating
+  hardness: 100
 
 - type: tile
   name: floor_techmaint
@@ -24,3 +28,5 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.5
+  subfloor: underplating
+  hardness: 200

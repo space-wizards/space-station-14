@@ -1,20 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.Interfaces.GameObjects;
-using Content.Shared.Input;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
-using Robust.Shared.Players;
 using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -39,7 +27,7 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class TriggerSystem : EntitySystem
     {
-        public void HandleTimerTrigger(int delay, IEntity user, IEntity trigger)
+        public void HandleTimerTrigger(TimeSpan delay, IEntity user, IEntity trigger)
         {
 
             Timer.Spawn(delay, () =>
@@ -49,11 +37,11 @@ namespace Content.Server.GameObjects.EntitySystems
                     User = user,
                     Source = trigger
                 };
-                var attackBys = trigger.GetAllComponents<ITimerTrigger>().ToList();
+                var timerTriggers = trigger.GetAllComponents<ITimerTrigger>().ToList();
 
-                foreach (var attackBy in attackBys)
+                foreach (var timerTrigger in timerTriggers)
                 {
-                    if (attackBy.Trigger(timerTriggerEventArgs))
+                    if (timerTrigger.Trigger(timerTriggerEventArgs))
                     {
                         // If an IOnTimerTrigger returns a status completion we finish our trigger
                         return;
