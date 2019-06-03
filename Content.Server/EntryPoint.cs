@@ -179,7 +179,7 @@ namespace Content.Server
             factory.Register<CatwalkComponent>();
 
             factory.Register<FootstepModifierComponent>();
-            factory.Register<SoundEmitterComponent>();
+            factory.Register<EmitSoundOnUseComponent>();
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
