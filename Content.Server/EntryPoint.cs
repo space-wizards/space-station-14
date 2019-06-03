@@ -183,6 +183,8 @@ namespace Content.Server
             factory.Register<ExplosiveComponent>();
             factory.Register<OnUseTimerTriggerComponent>();
 
+            factory.Register<FootstepModifierComponent>();
+            factory.Register<EmitSoundOnUseComponent>();
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();

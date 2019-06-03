@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared", "RobustTool
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.IntegrationTests", "Content.IntegrationTests\Content.IntegrationTests.csproj", "{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Benchmarks", "Content.Benchmarks\Content.Benchmarks.csproj", "{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -141,6 +143,14 @@ Global
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}.Release|x64.Build.0 = Release|x64
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}.Release|x86.ActiveCfg = Release|x86
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}.Release|x86.Build.0 = Release|x86
+		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Debug|x64.ActiveCfg = Debug|x64
+		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Debug|x64.Build.0 = Debug|x64
+		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Debug|x86.ActiveCfg = Debug|x86
+		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Debug|x86.Build.0 = Debug|x86
+		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Release|x64.ActiveCfg = Release|x64
+		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Release|x64.Build.0 = Release|x64
+		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Release|x86.ActiveCfg = Release|x86
+		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,13 +1,26 @@
 ﻿using System;
+using Content.Shared.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power;
 using Robust.Shared.Serialization;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
     public class HitscanWeaponCapacitorComponent : PowerCellComponent
     {
+        private AppearanceComponent _appearance;
 
         public override string Name => "HitscanWeaponCapacitor";
+
+        public override float Charge
+        {
+            get => base.Charge;
+            set
+            {
+                base.Charge = value;
+                _updateAppearance();
+            }
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -19,6 +32,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             base.Initialize();
 
             Charge = Capacity;
+            Owner.TryGetComponent(out _appearance);
+
         }
 
         public float GetChargeFrom(float toDeduct)
@@ -27,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             ChargeChanged();
             var chargeChangedBy = Math.Min(this.Charge, toDeduct);
             this.DeductCharge(chargeChangedBy);
+            _updateAppearance();
             return chargeChangedBy;
         }
 
@@ -43,6 +59,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
                 this.AddCharge(battery.Charge);
                 battery.DeductCharge(battery.Charge);
             }
+            _updateAppearance();
+        }
+
+        private void _updateAppearance()
+        {
+            _appearance?.SetData(PowerCellVisuals.ChargeLevel, Charge / Capacity);
         }
     }
 

@@ -1,1 +1,4 @@
-Sounds in this folder taken from here: https://github.com/discordia-space/CEV-Eris/tree/04f9e57ecf8a1c89ae2cba0f6803b6c5e9887c15/sound/effects/footstep
+Sounds in this folder taken from here: 
+https://github.com/discordia-space/CEV-Eris/tree/04f9e57ecf8a1c89ae2cba0f6803b6c5e9887c15/sound/effects/footstep
+https://github.com/tgstation/tgstation/tree/f8ee37afc00bce1ad421615eaa0e4cbddd5eea90/sound/effects
+https://github.com/vgstation-coders/vgstation13/tree/fbe7abec4cbadf2ad01369838828704fd7ca81ea/sound/effects

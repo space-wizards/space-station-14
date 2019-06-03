@@ -33,3 +33,18 @@
     state: breath
   - type: Clothing
     sprite: Clothing/mask_breath.rsi
+
+- type: entity
+  parent: MasksBase
+  id: MaskClown
+  name: Clown Wig and Mask
+  description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
+  components:
+  - type: Sprite
+    sprite: Clothing/mask_clown.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/mask_clown.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/mask_clown.rsi

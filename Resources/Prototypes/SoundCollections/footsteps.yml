@@ -25,3 +25,14 @@
   - /Audio/effects/footsteps/plating4.ogg
   - /Audio/effects/footsteps/plating5.ogg
 
+- type: sound_collection
+  id: footstep_clown
+  files:
+  - /Audio/effects/footsteps/clownstep1.ogg
+  - /Audio/effects/footsteps/clownstep2.ogg
+
+- type: sound_collection
+  id: footstep_heavy
+  files:
+  - /Audio/effects/footsteps/suitstep1.ogg
+  - /Audio/effects/footsteps/suitstep2.ogg

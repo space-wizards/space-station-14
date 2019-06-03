@@ -1,24 +1,59 @@
 - type: entity
-  name: Laser Gun
+  name: Retro Laser Gun
   parent: BaseItem
   id: LaserItem
-  description: A weapon using light amplified by the stimulated emission of radiation
+  description: A weapon using light amplified by the stimulated emission of radiation. Ancient inefficient model.
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/laser_retro.rsi
-    state: 100
+    state: laser_retro_100
   - type: Icon
     sprite: Objects/laser_retro.rsi
-    state: 100
+    state: laser_retro_100
   - type: RangedWeapon
   - type: HitscanWeapon
     damage: 30
-    sprite: "Objects/laser.png"
+    fireSprite: "Objects/laser.png"
+    fireSound: "/Audio/laser.ogg"
     lowerDischargeLimit: 10
   - type: HitscanWeaponCapacitor
-    capacity: 1000
+    capacity: 1200
   - type: Item
     Size: 24
     sprite: Objects/laser_retro.rsi
-    prefix: 100
+    prefix: laser_retro_100
+  - type: Appearance
+    visuals:
+    - type: HitscanWeaponVisualizer2D
+      prefix: laser_retro
   - type: Sound
+
+- type: entity
+  name: Laser Cannon
+  parent: LaserItem
+  id: LCannon
+  description: With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/laser_cannon.rsi
+    state: laser_cannon_100
+  - type: Icon
+    sprite: Objects/laser_cannon.rsi
+    state: laser_cannon_100
+  - type: HitscanWeapon
+    damage: 90
+    fireSprite: "Objects/heavylaser.png"
+    fireSound: "/Audio/lasercannonfire.ogg"
+    lowerDischargeLimit: 10
+  - type: HitscanWeaponCapacitor
+    capacity: 2400
+  - type: Item
+    Size: 32
+    sprite: Objects/laser_cannon.rsi
+    prefix: laser_cannon_100
+  - type: Appearance
+    visuals:
+    - type: HitscanWeaponVisualizer2D
+      prefix: laser_cannon

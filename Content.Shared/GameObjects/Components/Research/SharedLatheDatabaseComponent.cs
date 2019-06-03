@@ -75,13 +75,32 @@ namespace Content.Shared.GameObjects.Components.Research
         {
             base.ExposeData(serializer);
 
-            var recipes = serializer.ReadDataField("recipes", new List<string>());
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var id in recipes)
+            if (serializer.Reading)
             {
-                if (!prototypeManager.TryIndex(id, out LatheRecipePrototype recipe)) continue;
-                _recipes.Add(recipe);
+                var recipes = serializer.ReadDataField("recipes", new List<string>());
+                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+                foreach (var id in recipes)
+                {
+                    if (!prototypeManager.TryIndex(id, out LatheRecipePrototype recipe)) continue;
+                    _recipes.Add(recipe);
+                }
+            } else if (serializer.Writing)
+            {
+                var recipes = GetRecipeIdList();
+                serializer.DataField(ref recipes, "recipes", new List<string>());
             }
+        }
+
+        public List<string> GetRecipeIdList()
+        {
+            var list = new List<string>();
+
+            foreach (var recipe in this)
+            {
+                list.Add(recipe.ID);
+            }
+
+            return list;
         }
 
         public IEnumerator<LatheRecipePrototype> GetEnumerator()

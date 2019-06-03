@@ -114,3 +114,25 @@
     state: lantern_off
   - type: PointLight
     state: Off
+
+- type: entity
+  name: Bike Horn
+  parent: BaseItem
+  id: BikeHorn
+  description: A horn off of a bicycle.
+  components: 
+  - type: Sprite
+    sprite: Objects/bikehorn.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Objects/bikehorn.rsi
+    state: icon
+
+  - type: Item
+    Size: 5
+    sprite: Objects/bikehorn.rsi
+
+  - type: Sound
+  - type: EmitSoundOnUse
+    sound: /Audio/items/bikehorn.ogg
