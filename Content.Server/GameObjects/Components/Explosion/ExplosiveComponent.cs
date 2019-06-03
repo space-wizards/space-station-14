@@ -73,9 +73,8 @@ namespace Content.Server.GameObjects.Components.Explosive
             //Tile damage calculation mockup
             //TODO: make it into some sort of actual damage component or whatever the boys think is appropriate
             var mapGrid = _mapManager.GetGrid(Owner.Transform.GridPosition.GridID);
-            //var circle = new Circle(location.Position, Range);
-            var aabb = new Box2(Owner.Transform.GridPosition.Position - new Vector2(Range / 2, Range / 2), Owner.Transform.GridPosition.Position + new Vector2(Range / 2, Range / 2));
-            var tiles = mapGrid.GetTilesIntersecting(aabb);
+            var circle = new Circle(Owner.Transform.GridPosition.Position, Range);
+            var tiles = mapGrid.GetTilesIntersecting(circle);
             foreach (var tile in tiles)
             {
                 var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
