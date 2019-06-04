@@ -194,13 +194,13 @@ namespace Content.Client
             IoCManager.Resolve<IChatManager>().Initialize();
         }
 
-        public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)
+        public override void Update(ModUpdateLevel level, float frameTime)
         {
             base.Update(level, frameTime);
 
             switch (level)
             {
-                case AssemblyLoader.UpdateLevel.FramePreEngine:
+                case ModUpdateLevel.FramePreEngine:
                     var renderFrameEventArgs = new RenderFrameEventArgs(frameTime);
                     IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(renderFrameEventArgs);
                     IoCManager.Resolve<IClientGameTicker>().FrameUpdate(renderFrameEventArgs);

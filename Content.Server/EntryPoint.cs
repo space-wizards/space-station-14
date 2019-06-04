@@ -210,7 +210,7 @@ namespace Content.Server
             _gameTicker.Initialize();
         }
 
-        public override void Update(AssemblyLoader.UpdateLevel level, float frameTime)
+        public override void Update(ModUpdateLevel level, float frameTime)
         {
             base.Update(level, frameTime);
 

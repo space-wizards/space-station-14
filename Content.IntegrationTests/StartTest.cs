@@ -1,9 +1,6 @@
-using System;
-using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Shared.Exceptions;
-using Robust.Shared.Utility;
 using Robust.UnitTesting;
 
 namespace Content.IntegrationTests
@@ -28,6 +25,26 @@ namespace Content.IntegrationTests
             server.Stop();
             await server.WaitIdleAsync();
             Assert.That(!server.IsAlive);
+            Assert.That(server.UnhandledException, Is.Null);
+        }
+
+        /// <summary>
+        ///     Test that the client starts.
+        /// </summary>
+        [Test]
+        public async Task TestClientStart()
+        {
+            var client = StartClient();
+            await client.WaitIdleAsync();
+            Assert.That(client.IsAlive);
+            client.RunTicks(5);
+            await client.WaitIdleAsync();
+            Assert.That(client.IsAlive);
+            var runtimeLog = client.ResolveDependency<IRuntimeLog>();
+            Assert.That(runtimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged.");
+            client.Stop();
+            await client.WaitIdleAsync();
+            Assert.That(!client.IsAlive);
         }
     }
 }
