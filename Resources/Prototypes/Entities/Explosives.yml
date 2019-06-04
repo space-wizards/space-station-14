@@ -21,11 +21,15 @@
     delay: 5
 
   - type: Explosive
-    damageMax: 150
-    damageFalloff: 5
-    rangeDamageMax: 2
-    range: 12
+    devastationRange: 1
+    heavyImpactRange: 3
+    lightImpactRange: 5
+    flashRange: 7
 
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 10
+    
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer2D
@@ -54,10 +58,14 @@
     delay: 5
 
   - type: Explosive
-    damageMax: 300
-    damageFalloff: 3
-    rangeDamageMax: 5
-    range: 20
+    devastationRange: 3
+    heavyImpactRange: 5
+    lightImpactRange: 7
+    flashRange: 10
+
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 10
 
   - type: Appearance
     visuals:

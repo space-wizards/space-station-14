@@ -29,86 +29,86 @@ namespace Content.Server.GameObjects.Components.Explosive
 
         public override string Name => "Explosive";
 
-        public int DamageMax = 1;
-        public int DamageFalloff = 1;
-        public int RangeDamageMax = 1;
-        public int Range = 1;
+        public int DevastationRange = 0;
+        public int HeavyImpactRange = 0;
+        public int LightImpactRange = 0;
+        public int FlashRange = 0;
 
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref DamageMax, "damageMax", 1);
-            serializer.DataField(ref DamageFalloff, "damageFalloffCoeff", 1);
-            serializer.DataField(ref RangeDamageMax, "rangeDamageMax", 1);
-            serializer.DataField(ref Range, "range", 1);
+            serializer.DataField(ref DevastationRange, "devastationRange", 0);
+            serializer.DataField(ref HeavyImpactRange, "heavyImpactRange", 0);
+            serializer.DataField(ref LightImpactRange, "lightImpactRange", 0);
+            serializer.DataField(ref FlashRange, "flashRange", 0);
         }
 
         private bool Explosion()
         {
+            var maxRange = MathHelper.Max(DevastationRange, HeavyImpactRange, LightImpactRange, 0f);
             //Entity damage calculation
-            var entitiesAll = _serverEntityManager.GetEntitiesInRange(Owner.Transform.GridPosition, Range).ToList();
+            var entitiesAll = _serverEntityManager.GetEntitiesInRange(Owner.Transform.GridPosition, maxRange).ToList();
 
             foreach (var entity in entitiesAll)
             {
-                var distanceFromEntity = (int)entity.Transform.GridPosition.Distance(_mapManager, Owner.Transform.GridPosition);
+                Owner.Delete();
+                if (entity == Owner)
+                    continue;
                 if (!entity.Transform.IsMapTransform)
                     continue;
-                if (entity.TryGetComponent(out DamageableComponent damagecomponent))
+                var distanceFromEntity = (int)entity.Transform.GridPosition.Distance(_mapManager, Owner.Transform.GridPosition);
+                var exAct = _entitySystemManager.GetEntitySystem<ActSystem>();
+                var severity = ExplosionSeverity.Destruction;
+                if (distanceFromEntity < DevastationRange)
                 {
-                    var finalEntityDamage = DamageMax - (DamageFalloff * (distanceFromEntity - RangeDamageMax) * (distanceFromEntity - RangeDamageMax));
-                    if (distanceFromEntity <= RangeDamageMax)
-                    {
-                        finalEntityDamage = DamageMax;
-                    }
-                    else if (finalEntityDamage < 0)
-                    {
-                        finalEntityDamage = 0;
-                    }
-                    damagecomponent.TakeDamage(DamageType.Brute, finalEntityDamage);
+                    severity = ExplosionSeverity.Destruction;
+                } 
+                else if (distanceFromEntity < HeavyImpactRange)
+                {
+                    severity = ExplosionSeverity.Heavy;
                 }
+                else if (distanceFromEntity < LightImpactRange)
+                {
+                    severity = ExplosionSeverity.Light;
+                }
+                else
+                {
+                    continue;
+                }
+                exAct.HandleExplosion(Owner, entity, severity);
             }
 
             //Tile damage calculation mockup
             //TODO: make it into some sort of actual damage component or whatever the boys think is appropriate
             var mapGrid = _mapManager.GetGrid(Owner.Transform.GridPosition.GridID);
-            var circle = new Circle(Owner.Transform.GridPosition.Position, Range);
+            var circle = new Circle(Owner.Transform.GridPosition.Position, maxRange);
             var tiles = mapGrid.GetTilesIntersecting(circle);
             foreach (var tile in tiles)
             {
                 var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
                 var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
                 var distanceFromTile = (int)tileLoc.Distance(_mapManager, Owner.Transform.GridPosition);
-                if (tileDef.Hardness != 0)
-                {
-                    var finalTileDamage = DamageMax - (DamageFalloff * (distanceFromTile - RangeDamageMax) * (distanceFromTile - RangeDamageMax)); ;
-                    if (distanceFromTile <= RangeDamageMax)
+                if (!string.IsNullOrWhiteSpace(tileDef.SubFloor)) {
+                    if (distanceFromTile < DevastationRange)
+                        mapGrid.SetTile(tileLoc, new Tile(_tileDefinitionManager["space"].TileId));
+                    if (distanceFromTile < HeavyImpactRange)
                     {
-                        finalTileDamage = DamageMax;
-                    }
-                    else if (finalTileDamage < 0)
-                    {
-                        finalTileDamage = 0;
-                    }
-                    var resultingHardness = tileDef.Hardness - finalTileDamage;
-                    if (resultingHardness <= 0)
-                    {
-                        if (!string.IsNullOrWhiteSpace(tileDef.SubFloor))
+                        if (new Random().Prob(80))
                         {
-                            var newTileDef = (ContentTileDefinition)_tileDefinitionManager[tileDef.SubFloor];
-                            if (newTileDef.Hardness < -resultingHardness)
-                            {
-                                mapGrid.SetTile(tileLoc, new Tile(_tileDefinitionManager["space"].TileId));
-                            }
-                            else
-                            {
-                                mapGrid.SetTile(tileLoc, new Tile(newTileDef.TileId));
-                            }
+                            mapGrid.SetTile(tileLoc, new Tile(_tileDefinitionManager[tileDef.SubFloor].TileId));
                         }
                         else
                         {
                             mapGrid.SetTile(tileLoc, new Tile(_tileDefinitionManager["space"].TileId));
+                        }
+                    }
+                    if (distanceFromTile < LightImpactRange)
+                    {
+                        if (new Random().Prob(50))
+                        {
+                            mapGrid.SetTile(tileLoc, new Tile(_tileDefinitionManager[tileDef.SubFloor].TileId));
                         }
                     }
                 }
@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Explosive
                 EffectSprite = "Effects/explosion.png",
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(5),
-                Size = new Vector2(Range / 2, Range / 2),
+                Size = new Vector2(FlashRange / 2, FlashRange / 2),
                 Coordinates = Owner.Transform.GridPosition,
                 //Rotated from east facing
                 Rotation = 0f,
@@ -131,8 +131,6 @@ namespace Content.Server.GameObjects.Components.Explosive
             };
             _entitySystemManager.GetEntitySystem<EffectSystem>().CreateParticle(message);
             _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/effects/explosion.ogg", Owner);
-
-            Owner.Delete();
             return true;
         }
 
@@ -141,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Explosive
             return Explosion();
         }
 
-        void IDestroyAct.Destroy(DestructionEventArgs eventArgs)
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
             Explosion();
         }

@@ -5,7 +5,6 @@
   is_subfloor: true
   footstep_sounds: footstep_plating
   friction: 0.5
-  hardness: 100
   subfloor: space
 
 - type: tile
@@ -15,4 +14,3 @@
   is_subfloor: true
   footstep_sounds: footstep_plating
   friction: 0.5
-  hardness: 200

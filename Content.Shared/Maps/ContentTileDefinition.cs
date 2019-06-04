@@ -21,7 +21,6 @@ namespace Content.Shared.Maps
         public bool CanCrowbar { get; private set; }
         public string FootstepSounds { get; private set; }
         public float Friction { get; set; }
-        public int Hardness { get; set; }
 
         public void AssignTileId(ushort id)
         {
@@ -51,15 +50,6 @@ namespace Content.Shared.Maps
             if (mapping.TryGetNode("footstep_sounds", out node))
             {
                 FootstepSounds = node.AsString();
-            }
-
-            if (mapping.TryGetNode("hardness", out node))
-            {
-                Hardness = node.AsInt();
-            }
-            else
-            {
-                Hardness = 0;
             }
 
             if (mapping.TryGetNode("friction", out node))

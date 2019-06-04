@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Content.Server.Interfaces;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
@@ -14,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Destructible
     /// <summary>
     /// Deletes the entity once a certain damage threshold has been reached.
     /// </summary>
-    public class DestructibleComponent : Component, IOnDamageBehavior, IDestroyAct
+    public class DestructibleComponent : Component, IOnDamageBehavior, IDestroyAct, IExAct
     {
         #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -35,6 +37,8 @@ namespace Content.Server.GameObjects.Components.Destructible
         public string spawnOnDestroy = "";
         public bool destroyed = false;
 
+        ActSystem _actSystem;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -42,6 +46,12 @@ namespace Content.Server.GameObjects.Components.Destructible
             serializer.DataField(ref damageValue, "thresholdvalue", 100);
             serializer.DataField(ref damageType, "thresholdtype", DamageType.Total);
             serializer.DataField(ref spawnOnDestroy, "spawnondestroy", "");
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _actSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
         }
 
         /// <inheritdoc />
@@ -57,24 +67,36 @@ namespace Content.Server.GameObjects.Components.Destructible
             if (e.Passed && e.DamageThreshold == Threshold && destroyed == false)
             {
                 destroyed = true;
-                var actSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
-                actSystem.HandleDestruction(Owner, e.ExcessDamage);
-                Owner.Delete();
+                _actSystem.HandleDestruction(Owner, true);
             }
 
         }
-        void IDestroyAct.Destroy(DestructionEventArgs eventArgs)
+
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
-            if (!string.IsNullOrWhiteSpace(spawnOnDestroy) && Owner.EntityManager.TrySpawnEntityAt(spawnOnDestroy, Owner.Transform.GridPosition, out var wreck))
+            var prob = new Random();
+            switch (eventArgs.Severity)
             {
-                if (wreck.TryGetComponent<DamageableComponent>(out var component))
-                {
-                    if (eventArgs.Damage > 0)
-                    {
-                        Logger.DebugS("Second-hand Destruction", "Wreckage (UID {0}) received {1} damage.", wreck.Uid, eventArgs.Damage);
-                    }
-                    component.TakeDamage(eventArgs.TypeOfDamage, eventArgs.Damage);
-                }
+                case ExplosionSeverity.Destruction:
+                    _actSystem.HandleDestruction(Owner, false);
+                    break;
+                case ExplosionSeverity.Heavy:
+                    _actSystem.HandleDestruction(Owner, true);
+                    break;
+                case ExplosionSeverity.Light:
+                    if (RandomExtensions.Prob(prob, 40))
+                        _actSystem.HandleDestruction(Owner, true);
+                    break;
+            }
+
+        }
+
+
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
+            if (!string.IsNullOrWhiteSpace(spawnOnDestroy) && eventArgs.IsSpawnWreck)
+            {
+                Owner.EntityManager.TrySpawnEntityAt(spawnOnDestroy, Owner.Transform.GridPosition, out var wreck);
             }
         }
     }

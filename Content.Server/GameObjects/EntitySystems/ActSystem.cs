@@ -8,40 +8,76 @@ using Content.Shared.GameObjects;
 namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
-    /// This interface gives components behavior when being "triggered" by timer or other conditions
+    /// This interface gives components behavior on getting destoyed.
     /// </summary>
     public interface IDestroyAct
     {
         /// <summary>
-        /// Called when one object is triggering some event
+        /// Called when object is destroyed
         /// </summary>
-        void Destroy(DestructionEventArgs eventArgs);
+        void OnDestroy(DestructionEventArgs eventArgs);
     }
 
     public class DestructionEventArgs : EventArgs
     {
         public IEntity Owner { get; set; }
-        public DamageType TypeOfDamage { get; set; }
-        public int Damage { get; set; }
+        public bool IsSpawnWreck { get; set; }
+    }
+
+    public interface IExAct
+    {
+        /// <summary>
+        /// Called when explosion reaches the entity
+        /// </summary>
+        void OnExplosion(ExplosionEventArgs eventArgs);
+    }
+
+    public class ExplosionEventArgs : EventArgs
+    {
+        public IEntity Source { get; set; }
+        public IEntity Target { get; set; }
+        public ExplosionSeverity Severity { get; set; }
     }
 
     [UsedImplicitly]
     public sealed class ActSystem : EntitySystem
     {
-        public void HandleDestruction(IEntity owner, int damage)
+        public void HandleDestruction(IEntity owner, bool isWreck)
         {
             var eventArgs = new DestructionEventArgs
             {
                 Owner = owner,
-                TypeOfDamage = DamageType.Brute,
-                Damage = damage
+                IsSpawnWreck = isWreck
             };
             var destroyActs = owner.GetAllComponents<IDestroyAct>().ToList();
 
             foreach (var destroyAct in destroyActs)
             {
-                destroyAct.Destroy(eventArgs);
+                destroyAct.OnDestroy(eventArgs);
+            }
+            owner.Delete();
+        }
+
+        public void HandleExplosion(IEntity source, IEntity target, ExplosionSeverity severity)
+        {
+            var eventArgs = new ExplosionEventArgs
+            {
+                Source = source,
+                Target = target,
+                Severity = severity
+            };
+            var exActs = target.GetAllComponents<IExAct>().ToList();
+
+            foreach (var exAct in exActs)
+            {
+                exAct.OnExplosion(eventArgs);
             }
         }
+    }
+    public enum ExplosionSeverity
+    {
+        Destruction,
+        Heavy,
+        Light,
     }
 }

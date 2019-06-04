@@ -342,16 +342,12 @@ namespace Content.Server.GameObjects
             _storageInitialCalculated = true;
         }
 
-        void IDestroyAct.Destroy(DestructionEventArgs eventArgs)
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
             var storedEntities = storage.ContainedEntities.ToList();
             foreach (var entity in storedEntities)
             {
                 Remove(entity);
-                if (entity.TryGetComponent<DamageableComponent>(out var component))
-                {
-                    component.TakeDamage(eventArgs.TypeOfDamage, eventArgs.Damage);
-                }
             }
         }
     }
