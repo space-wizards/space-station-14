@@ -136,3 +136,21 @@
   - type: Sound
   - type: EmitSoundOnUse
     sound: /Audio/items/bikehorn.ogg
+
+- type: entity
+  name: Table Parts
+  parent: BaseItem
+  id: TableParts
+  description: Parts of a table.
+  components: 
+  - type: Sprite
+    sprite: Objects/table_parts.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Objects/table_parts.rsi
+    state: icon
+
+  - type: Item
+    Size: 25
+    sprite: Objects/table_parts.rsi

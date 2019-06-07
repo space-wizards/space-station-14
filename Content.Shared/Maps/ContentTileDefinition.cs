@@ -17,6 +17,7 @@ namespace Content.Shared.Maps
         public string DisplayName { get; private set; }
         public string SpriteName { get; private set; }
         public bool IsSubFloor { get; private set; }
+        public string SubFloor { get; private set; }
         public bool CanCrowbar { get; private set; }
         public string FootstepSounds { get; private set; }
         public float Friction { get; set; }
@@ -35,6 +36,10 @@ namespace Content.Shared.Maps
             if (mapping.TryGetNode("is_subfloor", out var node))
             {
                 IsSubFloor = node.AsBool();
+            }
+            if (mapping.TryGetNode("subfloor", out var another_node))
+            {
+                SubFloor = another_node.AsString();
             }
 
             if (mapping.TryGetNode("can_crowbar", out node))

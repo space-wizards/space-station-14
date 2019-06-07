@@ -12,7 +12,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
-    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior
+    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct
     {
         /// <summary>
         /// Damagestates are reached by reaching a certain damage threshold, they will block actions after being reached
@@ -114,6 +114,28 @@ namespace Content.Server.GameObjects
             currentstate = threshold;
 
             Owner.RaiseEvent(new MobDamageStateChangedMessage(this));
+        }
+
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            var burnDamage = 0;
+            var bruteDamage = 0;
+            switch(eventArgs.Severity)
+            {
+                case ExplosionSeverity.Destruction:
+                    bruteDamage += 250;
+                    burnDamage += 250;
+                    break;
+                case ExplosionSeverity.Heavy:
+                    bruteDamage += 60;
+                    burnDamage += 60;
+                    break;
+                case ExplosionSeverity.Light:
+                    bruteDamage += 30;
+                    break;
+            }
+            Owner.GetComponent<DamageableComponent>().TakeDamage(Shared.GameObjects.DamageType.Brute, bruteDamage);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(Shared.GameObjects.DamageType.Heat, burnDamage);
         }
     }
 

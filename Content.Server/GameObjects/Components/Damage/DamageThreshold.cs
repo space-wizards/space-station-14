@@ -50,11 +50,13 @@ namespace Content.Server.GameObjects
     {
         public DamageThreshold DamageThreshold { get; }
         public bool Passed { get; }
+        public int ExcessDamage { get; }
 
-        public DamageThresholdPassedEventArgs(DamageThreshold threshold, bool passed)
+        public DamageThresholdPassedEventArgs(DamageThreshold threshold, bool passed, int excess)
         {
             DamageThreshold = threshold;
             Passed = passed;
+            ExcessDamage = excess;
         }
     }
 }

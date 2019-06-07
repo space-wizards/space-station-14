@@ -123,7 +123,13 @@ namespace Content.Server.GameObjects
                 var value = threshold.Value;
                 if (((value * changeSign) > (oldValue * changeSign)) && ((value * changeSign) <= (_currentDamage[damageType] * changeSign)))
                 {
-                    var args = new DamageThresholdPassedEventArgs(threshold, (changeSign > 0));
+                    var excessDamage = change - value;
+                    var typeOfDamage = damageType;
+                    if (change - value < 0)
+                    {
+                        excessDamage = 0;
+                    }
+                    var args = new DamageThresholdPassedEventArgs(threshold, (changeSign > 0), excessDamage);
                     DamageThresholdPassed?.Invoke(this, args);
                 }
             }

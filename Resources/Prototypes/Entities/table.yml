@@ -21,3 +21,8 @@
   - type: IconSmooth
     key: tables
     base: solid_
+
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 50
+    spawnondestroy: TableParts
