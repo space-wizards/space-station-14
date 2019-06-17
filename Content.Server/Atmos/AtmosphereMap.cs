@@ -51,6 +51,9 @@ namespace Content.Server.Atmos
 
     internal class GridAtmosphereManager : IGridAtmosphereManager
     {
+        // Arbitrarily define rooms as being 2.5m high
+        private const float ROOM_HEIGHT = 2.5f;
+
         private readonly IMapGrid _grid;
         private Dictionary<MapIndices, Atmosphere> _atmospheres = new Dictionary<MapIndices, Atmosphere>();
 
@@ -92,7 +95,7 @@ namespace Content.Server.Atmos
             }
 
             // TODO create default atmosphere
-            atmosphere = new Atmosphere();
+            atmosphere = new Atmosphere(GetVolumeForCells(connected.Count));
 
             foreach (var c in connected)
                 _atmospheres[c] = atmosphere;
@@ -243,6 +246,7 @@ namespace Content.Server.Atmos
                 }
 
                 // If the sides were all connected, this atmosphere is intact
+                // TODO in some way adjust the atmosphere volume
                 if (i == 1)
                     continue;
 
@@ -262,12 +266,18 @@ namespace Content.Server.Atmos
 
                     var connected = FindConnectedCells(basePos);
 
-                    if(connected == null)
+                    if (connected == null)
                         continue;
 
-                    var newAtmos = new Atmosphere();
+                    var newAtmos = new Atmosphere(GetVolumeForCells(connected.Count));
 
-                    // TODO copy over contents of atmos
+                    // Copy over contents of atmos, scaling it down to maintain the partial pressure
+                    if (atmos != null)
+                    {
+                        newAtmos.Temperature = atmos.Temperature;
+                        foreach (var gas in atmos.Gasses)
+                            newAtmos.SetQuantity(gas.Gas, gas.Volume * newAtmos.Volume / atmos.Volume);
+                    }
 
                     foreach (var cpos in connected)
                         _atmospheres[cpos] = newAtmos;
@@ -283,6 +293,10 @@ namespace Content.Server.Atmos
             if (adjacent.Count <= 1)
                 return;
 
+            var allCells = new List<MapIndices> {pos};
+            foreach (var atmos in adjacent)
+                allCells.AddRange(FindRoomContents(atmos));
+
             // Fuse all adjacent atmospheres
             Atmosphere replacement;
             if (adjacent.Contains(null))
@@ -291,16 +305,17 @@ namespace Content.Server.Atmos
             }
             else
             {
-                replacement = new Atmosphere();
+                replacement = new Atmosphere(GetVolumeForCells(allCells.Count));
                 foreach (var atmos in adjacent)
                 {
-                    // TODO Add atmos's gasses into replacement
+                    if (atmos == null)
+                        continue;
+
+                    // Copy all the gasses across
+                    foreach (var gas in atmos.Gasses)
+                        replacement.Add(gas.Gas, gas.Volume, atmos.Temperature);
                 }
             }
-
-            var allCells = new List<MapIndices> {pos};
-            foreach (var atmos in adjacent)
-                allCells.AddRange(FindRoomContents(atmos));
 
             foreach (var cellPos in allCells)
                 _atmospheres[cellPos] = replacement;
@@ -321,10 +336,7 @@ namespace Content.Server.Atmos
             return sides;
         }
 
-        private static MapIndices Offset(MapIndices pos, Direction dir)
-        {
-            return pos + (MapIndices) CardinalToIntVec(dir);
-        }
+        private static MapIndices Offset(MapIndices pos, Direction dir) => pos + (MapIndices) CardinalToIntVec(dir);
 
         private IEnumerable<MapIndices> FindRoomContents(Atmosphere atmos)
         {
@@ -344,9 +356,116 @@ namespace Content.Server.Atmos
             {
                 Direction.North, Direction.East, Direction.South, Direction.West
             };
+
+        private float GetVolumeForCells(int cellCount)
+        {
+            int scale = _grid.TileSize;
+            return scale * scale * cellCount * ROOM_HEIGHT;
+        }
     }
 
     internal class Atmosphere : IAtmosphere
     {
+        // The universal gas constant, in cubic meters/pascals/kelvin/mols
+        // Note this is in pascals, NOT kilopascals - divide by 1000 to convert it
+        private const float R = 8.314462618f;
+
+        private readonly Dictionary<Gas, float> _quantities = new Dictionary<Gas, float>();
+        private float _temperature;
+
+        public Atmosphere(float volume)
+        {
+            Volume = volume;
+            UpdateCached();
+        }
+
+        public IEnumerable<GasProperty> Gasses => _quantities.Select(p => new GasProperty
+        {
+            Gas = p.Key,
+            Volume = p.Value,
+            PartialPressure = p.Value * PressureRatio
+        });
+
+        public float Volume { get; }
+
+        public float Pressure => Quantity * PressureRatio;
+
+        public float Quantity { get; private set; }
+
+        public float Mass => throw new NotImplementedException();
+
+        public float Temperature
+        {
+            get => _temperature;
+            set
+            {
+                _temperature = value;
+                UpdateCached();
+            }
+        }
+
+        public float PressureRatio { get; private set; }
+
+        public float QuantityOf(Gas gas)
+        {
+            return _quantities.ContainsKey(gas) ? _quantities[gas] : 0;
+        }
+
+        public float PartialPressureOf(Gas gas)
+        {
+            return QuantityOf(gas) * PressureRatio;
+        }
+
+        public float Add(Gas gas, float quantity, float temperature)
+        {
+            if (quantity < 0)
+                throw new NotImplementedException();
+
+            if (_quantities.ContainsKey(gas))
+            {
+                _quantities[gas] += quantity;
+
+                // Convert things to doubles while averaging the temperatures, otherwise
+                // small amounts of inaccuracy creep in
+                var newTotal = 1d * Quantity + quantity;
+                Temperature = (float) ((1d * Temperature * Quantity + 1d * temperature * quantity) / newTotal);
+            }
+            else
+            {
+                _quantities[gas] = quantity;
+                Temperature = temperature;
+            }
+
+            // Setting temperature does the update for us, no need to call it manually
+
+            return quantity;
+        }
+
+        public float SetQuantity(Gas gas, float quantity)
+        {
+            if (quantity < 0)
+                throw new ArgumentException("Cannot set a negative quantity of gas", nameof(quantity));
+
+            // Discard tiny amounts of gasses
+            if (Math.Abs(quantity) < 0.001)
+            {
+                _quantities.Remove(gas);
+                UpdateCached();
+                return 0;
+            }
+
+            _quantities[gas] = quantity;
+            UpdateCached();
+            return quantity;
+        }
+
+        private void UpdateCached()
+        {
+            float q = 0;
+            foreach (var value in _quantities.Values) q += value;
+            Quantity = q;
+
+            PressureRatio = R * Temperature / Volume;
+        }
     }
 }
