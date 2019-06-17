@@ -1,6 +1,8 @@
-﻿using Content.Server.Chat;
+using Content.Server.Atmos;
+using Content.Server.Chat;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.Atmos;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Sandbox;
@@ -50,6 +52,7 @@ namespace Content.Server
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
             IoCManager.Register<ISandboxManager, SandboxManager>();
+            IoCManager.Register<IAtmosphereMap, AtmosphereMap>();
             if (TestingCallbacks != null)
             {
                 var cast = (ServerModuleTestingCallbacks) TestingCallbacks;
