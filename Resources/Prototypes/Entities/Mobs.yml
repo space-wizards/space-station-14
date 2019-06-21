@@ -51,7 +51,8 @@
     context: "human"
     
   - type: Species
-    Template: Human
+    damageTemplate: Human
+    bodyTemplate: Human
     HeatResistance: 323
   - type: HeatResistance
   - type: Damageable

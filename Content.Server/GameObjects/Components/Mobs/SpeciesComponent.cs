@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Mobs.Body;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -30,6 +31,11 @@ namespace Content.Server.GameObjects
         private DamageTemplates DamageTemplate;
 
         /// <summary>
+        /// Holds the body template which controls the organs, body functions and processes in living beings 
+        /// </summary>
+        private BodyTemplate bodyTemplate;
+
+        /// <summary>
         /// Variable for serialization
         /// </summary>
         private string templatename;
@@ -41,11 +47,19 @@ namespace Content.Server.GameObjects
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref templatename, "Template", "Human");
+            serializer.DataField(ref templatename, "damageTemplate", "Human");
 
             Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Server")
                 .GetType("Content.Server.GameObjects." + templatename);
             DamageTemplate = (DamageTemplates) Activator.CreateInstance(type);
+
+            serializer.DataField(ref templatename, "bodyTemplate", "Human");
+
+            Type newtype = AppDomain.CurrentDomain.GetAssemblyByName("Content.Server")
+                .GetType("Content.Server.GameObjects.Components.Mobs.Body." + templatename);
+            bodyTemplate = (BodyTemplate)Activator.CreateInstance(newtype);
+            bodyTemplate.Initialize(Owner);
+
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
@@ -114,6 +128,10 @@ namespace Content.Server.GameObjects
             currentstate = threshold;
 
             Owner.RaiseEvent(new MobDamageStateChangedMessage(this));
+        }
+        public void OnUpdate(float frameTime)
+        {
+            bodyTemplate.Update();
         }
     }
 
