@@ -131,7 +131,7 @@ namespace Content.Server.GameObjects
         }
         public void OnUpdate(float frameTime)
         {
-            bodyTemplate.Update();
+            bodyTemplate.Life();
         }
     }
 

@@ -14,6 +14,8 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         public List<Organ> Organs;
         System.Enum Id;
         public List<Limb> Children;
+        public bool IsBroken = false;
+        public BleedingRate BleedingStatus = BleedingRate.None;
         int Health;
         public void ExposeData(ObjectSerializer obj)
         {
@@ -31,4 +33,19 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             Health = health;
         }
     }
+
+    public enum LimbState
+    {
+        Healthy,
+        Injured,
+        Missing
+    }
+
+    public enum BleedingRate
+    {
+        None,
+        Minor,
+        Major
+    }
+    //TODO: damage, rendering...
 }

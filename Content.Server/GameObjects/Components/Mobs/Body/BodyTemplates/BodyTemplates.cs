@@ -12,9 +12,8 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
     public class BodyTemplate
     {
         public string Name;
-        public List<Limb> bodyMap;
-        public List<Organ> allOrgans;
-        public List<IBodyFunction> neededFunctions;
+        public List<Limb> bodyMap;//it's for damage calculation
+        public List<Organ> allOrgans;//it's for life calls
         public IEntity Owner;
 
         //TODO: blood should be placed here too, separated from limbs, but bones i think should be inside limb class.
@@ -30,22 +29,11 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             Owner = owner;
         }
 
-        public void Update()
+        public void Life() //this is main Life() proc!
         {
-            foreach(var function in neededFunctions)
+            foreach(var organ in allOrgans)
             {
-                var ignoreNodes = new List<OrganNode>();
-                if (ignoreNodes.Contains(function.Node)) {
-                    continue; //no duplicates
-                }
-                foreach (var organ in allOrgans)
-                {
-                    if (organ.Nodes.Contains(function.Node))
-                    {
-                        ignoreNodes.Add(function.Node);
-                        function.Life(Owner, organ.State); 
-                    }
-                }
+                organ.Life();
             }
         }
         //TODO: calculate damage...

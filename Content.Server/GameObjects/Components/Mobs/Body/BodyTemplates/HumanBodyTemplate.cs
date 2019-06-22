@@ -28,7 +28,6 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         {
             base.Initialize(owner);
             bodyMap = mockBodyFactory();
-            neededFunctions = mockBodyFunctions();
         }
 
         //TODO:- Hack for testing, refactor into YAML ASAP
@@ -46,31 +45,42 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             var leg_r_child = new List<Limb>();
 
             //Organs that exist in several limbs (HACKS)
-            var snowflake_mouth = mockOrgan("Human Eyes", standard_health, OrganNode.Vision);
-            var snowflake_eyes = mockOrgan("Human Tongue", standard_health, OrganNode.Speech);
-            var snowflake_l_hand = mockOrgan("Human Left Hand", standard_health, OrganNode.Manipulation);
-            var snowflake_r_hand = mockOrgan("Human Right Hand", standard_health, OrganNode.Manipulation);
-            var snowflake_l_leg = mockOrgan("Human Left Leg", standard_health, OrganNode.Movement);
-            var snowflake_r_leg = mockOrgan("Human Right Leg", standard_health, OrganNode.Movement);
+            var snowflake_mouth = new Tongue();
+            snowflake_mouth.mockInit("Human Mouth", standard_health, OrganState.Healthy, OrganStatus.Normal);
+            var snowflake_eyes = new Eyes();
+            snowflake_eyes.mockInit("Human Tongue", standard_health, OrganState.Healthy, OrganStatus.Normal);
+            var snowflake_l_hand = new Hands();
+            snowflake_l_hand.mockInit("Human Left Hand", standard_health, OrganState.Healthy, OrganStatus.Normal);
+            var snowflake_r_hand = new Hands();
+            snowflake_r_hand.mockInit("Human Right Hand", standard_health, OrganState.Healthy, OrganStatus.Normal);
+            var snowflake_l_leg = new Legs();
+            snowflake_l_leg.mockInit("Human Left Leg", standard_health, OrganState.Healthy, OrganStatus.Normal);
+            var snowflake_r_leg = new Legs();
+            snowflake_r_leg.mockInit("Human Right Leg", standard_health, OrganState.Healthy, OrganStatus.Normal);
 
-            var brain = mockOrgan("Human Brain", standard_health, OrganNode.Consciousness);
-            var colon = mockOrgan("Human Colon", standard_health, OrganNode.Digestation);
-            var heart = mockOrgan("Human Heart", standard_health, OrganNode.BloodPump);
-            var lungs = mockOrgan("Human Lungs", standard_health, OrganNode.Breathing);
-            var liver = mockOrgan("Human Liver", standard_health, OrganNode.BloodFiltrationLiver);
+            var brain = new Brain();
+            brain.mockInit("Human Brain", standard_health, OrganState.Healthy, OrganStatus.Normal);
+            var kidneys = new Kidneys();
+            kidneys.mockInit("Human Kidneys", standard_health, OrganState.Healthy, OrganStatus.Normal);
+            var heart = new Heart();
+            heart.mockInit("Human Heart", standard_health, OrganState.Healthy, OrganStatus.Normal);
+            var lungs = new Lungs();
+            lungs.mockInit("Human Lungs", standard_health, OrganState.Healthy, OrganStatus.Normal);
+            var liver = new Liver();
+            liver.mockInit("Human Liver", standard_health, OrganState.Healthy, OrganStatus.Normal);
 
             //it's crucial to have same instance of Organ loaded into these two lists
-            allOrgans.Add(snowflake_mouth)
-            allOrgans.Add(snowflake_eyes)
-            allOrgans.Add(snowflake_l_hand)
-            allOrgans.Add(snowflake_r_hand)
-            allOrgans.Add(snowflake_)
-            allOrgans.Add(snowflake_r_leg)
-            allOrgans.Add(brain)
-            allOrgans.Add(colon)
-            allOrgans.Add(heart)
-            allOrgans.Add(lungs)
-]
+            allOrgans.Add(snowflake_mouth);
+            allOrgans.Add(snowflake_eyes);
+            allOrgans.Add(snowflake_l_hand);
+            allOrgans.Add(snowflake_r_hand);
+            allOrgans.Add(snowflake_l_leg);
+            allOrgans.Add(snowflake_r_leg);
+            allOrgans.Add(brain);
+            allOrgans.Add(kidneys);
+            allOrgans.Add(heart);
+            allOrgans.Add(lungs);
+
             //Eyesocket
             var eyesocket_organs = new List<Organ>();
             eyesocket_organs.Add(snowflake_eyes);
@@ -146,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
             //Groin
             var groin_organs = new List<Organ>();
-            groin_organs.Add(colon);
+            groin_organs.Add(kidneys);
             var groin = new Limb("Groin", HumanBodyMapDef.Groin, head_organs, groin_children, standard_health);
             chest_children.Add(groin);
             limbs.Add(groin);
@@ -159,33 +169,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             var chest = new Limb("Chest", HumanBodyMapDef.Chest, chest_organs, chest_children, standard_health);
             limbs.Add(chest);
 
-
-            organs.Add()
             return limbs;
-        }
-
-        //TODO: refactor into YAML, you HACK
-        private Organ mockOrgan(string name, int health, OrganNode node)
-        {
-            var nodes = new List<OrganNode>();
-            nodes.Add(node);
-            return new Organ(name, health, nodes, OrganState.Healthy);
-        }
-
-        //TODO: why just not add ALL existing body functions though?
-        private List<IBodyFunction> mockBodyFunctions()
-        {
-            var list = new List<IBodyFunction>();
-            list.Add(new BloodPumpBodyFunction());
-            list.Add(new BloodFiltrationLiverBodyFunction());
-            list.Add(new BreathingBodyFunction());
-            list.Add(new ConsciousnessBodyFunction());
-            list.Add(new DigestationBodyFunction());
-            list.Add(new ManipulationBodyFunction());
-            list.Add(new MovementBodyFunction());
-            list.Add(new SightBodyFunction());
-            list.Add(new SpeechBodyFunction());
-            return list;
         }
     }
 }
