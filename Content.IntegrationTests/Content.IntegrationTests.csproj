@@ -7,19 +7,19 @@
     <Platforms>x86;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.12.0"/>
-    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0"/>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0"/>
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Content.Client\Content.Client.csproj"/>
-    <ProjectReference Include="..\Content.Server\Content.Server.csproj"/>
-    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj"/>
-    <ProjectReference Include="..\Content.Tests\Content.Tests.csproj"/>
-    <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj"/>
-    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj"/>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj"/>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj"/>
-    <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj"/>
+    <ProjectReference Include="..\Content.Client\Content.Client.csproj" />
+    <ProjectReference Include="..\Content.Server\Content.Server.csproj" />
+    <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
+    <ProjectReference Include="..\Content.Tests\Content.Tests.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
   </ItemGroup>
 </Project>

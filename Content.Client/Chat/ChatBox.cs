@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
+
 namespace Content.Client.Chat
 {
     public class ChatBox : PanelContainer
@@ -19,6 +20,10 @@ namespace Content.Client.Chat
 
         public LineEdit Input { get; private set; }
         private OutputPanel contents;
+
+        // Buttons for filtering
+        public Button AllButton;
+        public Button OOCButton;
 
         /// <summary>
         ///     Index while cycling through the input history. -1 means not going through history.
@@ -50,6 +55,7 @@ namespace Content.Client.Chat
             AnchorRight = 1.0f;
 
             var vBox = new VBoxContainer("VBoxContainer");
+            var hBox = new HBoxContainer("FilterButtonsContainer");
 
             contents = new OutputPanel {SizeFlagsVertical = SizeFlags.FillExpand};
             vBox.AddChild(contents);
@@ -59,9 +65,37 @@ namespace Content.Client.Chat
             Input.OnTextEntered += Input_OnTextEntered;
             vBox.AddChild(Input);
 
+            vBox.AddChild(hBox);
+
+            AllButton = new Button()
+            {
+                Text = "All",
+                TextAlign = Button.AlignMode.Left,
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsStretchRatio = 1
+            };
+            AllButton.OnPressed += OnOOCPressed;
+
+            hBox.AddChild(AllButton);
+
+            OOCButton = new Button()
+            {
+                Text = "OOC",
+                TextAlign = Button.AlignMode.Left,
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsStretchRatio = 1
+            };
+            
+            hBox.AddChild(OOCButton);
+
             AddChild(vBox);
 
             PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Gray.WithAlpha(0.5f) };
+        }
+
+        private void OnOOCPressed(Button.ButtonEventArgs args)
+        {
+            ChatFilter.ButtonHandler();
         }
 
         protected override void MouseDown(GUIMouseButtonEventArgs e)
