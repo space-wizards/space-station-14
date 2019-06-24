@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using Robust.Shared.Maths;
+using System.Collections.Generic;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
@@ -14,23 +17,92 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         public List<Organ> Organs;
         System.Enum Id;
         public List<Limb> Children;
-        public bool IsBroken = false;
-        public BleedingRate BleedingStatus = BleedingRate.None;
-        int Health;
+        public List<LimbStatus> Statuses;
+        public LimbState State;
+        int MaxHealth;
+        int CurrentHealth;
+        public float BloodChange = 0f;
+
         public void ExposeData(ObjectSerializer obj)
         {
             obj.DataField(ref Name, "name", "");
             obj.DataField(ref Id, "limb", null);
             obj.DataField(ref Organs, "organs", null);
-            obj.DataField(ref Health, "health", 0);
+            obj.DataField(ref MaxHealth, "health", 0);
         }
-        public Limb(string name, System.Enum id, List<Organ> organs, List<Limb> children, int health)
+        public Limb(string name, Enum id, List<Organ> organs, List<Limb> children, int health)
         {
             Name = name;
             Id = id;
             Organs = organs;
             Children = children;
-            Health = health;
+            MaxHealth = health;
+            CurrentHealth = health;
+            Statuses = new List<LimbStatus>();
+        }
+
+        public void Render() //TODO
+        {
+
+        }
+
+        public void HandleDamage(int damage, Random seed) //TODO: test prob numbers
+        {
+            switch (ChangeHealthValue(damage))
+            {
+                case LimbState.Healthy:
+                    if(seed.Prob(10))
+                    {
+                        seed.Pick(Organs).HandleDamage(damage);
+                    }
+                    break;
+                case LimbState.Injured:
+                    if (seed.Prob(80))
+                    {
+                        seed.Pick(Organs).HandleDamage(damage);
+                    }
+                    break;
+                case LimbState.Missing:
+                    break;
+            }
+                
+
+        }
+
+        public Blood CirculateBlood(Blood blood)
+        {
+            blood.changeVolume(BloodChange);
+            return blood;
+        }
+
+        private LimbState ChangeHealthValue(int value)
+        {
+            CurrentHealth -= value;
+            if (CurrentHealth < 0)
+            {
+                CurrentHealth = 0;
+            }
+            if (CurrentHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+
+            switch (CurrentHealth)
+            {
+                case int n when (n > MaxHealth / 2):
+                    State = LimbState.Healthy;
+                    break;
+                case int n when (n < MaxHealth / 2 && n > 0):
+                    State = LimbState.Injured;
+                    break;
+                case int n when (n == 0):
+                    State = LimbState.Missing;
+                    break;
+                default:
+                    break;
+
+            }
+            return State;
         }
     }
 
@@ -41,11 +113,10 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         Missing
     }
 
-    public enum BleedingRate
-    {
-        None,
-        Minor,
-        Major
+    public enum LimbStatus
+    { 
+        Bleeding,
+        Broken
     }
-    //TODO: damage, rendering...
+
 }

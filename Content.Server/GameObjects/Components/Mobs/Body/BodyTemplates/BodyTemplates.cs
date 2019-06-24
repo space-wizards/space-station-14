@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using Robust.Shared.Maths;
+using System.Collections.Generic;
 using Robust.Shared.Serialization;
 using Robust.Shared.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameObjects.Components.Mobs;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
@@ -16,7 +17,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         public List<Organ> allOrgans;//it's for life calls
         public IEntity Owner;
 
-        //TODO: blood should be placed here too, separated from limbs, but bones i think should be inside limb class.
+        public Blood Blood; //blood should wait for reagents to get truly implemented
+
+        private Random _randomLimb;
 
         public virtual void ExposeData(ObjectSerializer obj)
         {
@@ -27,6 +30,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         public virtual void Initialize(IEntity owner)
         {
             Owner = owner;
+            _randomLimb = new Random(owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
         public void Life() //this is main Life() proc!
@@ -34,8 +38,17 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             foreach(var organ in allOrgans)
             {
                 organ.Life();
+                Blood = organ.CirculateBlood(Blood);
+            }
+            foreach(var limb in bodyMap)
+            {
+                Blood = limb.CirculateBlood(Blood);
             }
         }
-        //TODO: calculate damage...
+        public void HandleDamage(DamageableComponent damage)
+        {   
+            //TODO: Targetting.
+            _randomLimb.Pick(bodyMap).HandleDamage(damage.LastTakenDamage, new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode()));
+        }
     }
 }

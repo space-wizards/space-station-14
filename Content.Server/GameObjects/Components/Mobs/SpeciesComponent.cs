@@ -104,7 +104,13 @@ namespace Content.Server.GameObjects
             if (e.DamageThreshold.ThresholdType != ThresholdType.HUDUpdate)
             {
                 ChangeDamageState(DamageTemplate.CalculateDamageState(damage));
+                if (bodyTemplate != null)
+                {
+                    bodyTemplate.HandleDamage(damage);
+                }
             }
+
+
 
             if (Owner.TryGetComponent(out BasicActorComponent actor)
             ) //specifies if we have a client to update the hud for

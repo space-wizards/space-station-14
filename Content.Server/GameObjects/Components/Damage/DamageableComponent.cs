@@ -32,6 +32,8 @@ namespace Content.Server.GameObjects
 
         [ViewVariables]
         public IReadOnlyDictionary<DamageType, int> CurrentDamage => _currentDamage;
+        public int LastTakenDamage = 0;
+        public DamageType LastTakenDamageType = DamageType.Total;
         private Dictionary<DamageType, int> _currentDamage = new Dictionary<DamageType, int>();
 
         Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
@@ -88,6 +90,9 @@ namespace Content.Server.GameObjects
             amount = Resistances.CalculateDamage(damageType, amount);
             _currentDamage[damageType] = Math.Max(0, _currentDamage[damageType] + amount);
             UpdateForDamageType(damageType, oldValue);
+
+            LastTakenDamage = amount;
+            LastTakenDamageType = damageType;
 
             if (Resistances.AppliesToTotal(damageType))
             {

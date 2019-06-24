@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using YamlDotNet.RepresentationModel;
 using Robust.Shared.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameObjects.Components.Mobs;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
@@ -15,20 +14,25 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
     {
         public string Name;
 
-        public int Health;
+        public int MaxHealth;
+
+        public int CurrentHealth;
+
+        public float BloodChange = 0;
 
         public OrganState State = OrganState.Healthy;
 
-        public OrganStatus Status = OrganStatus.Normal;
+        public List<OrganStatus> Statuses;
 
         public Dictionary<string, object> OrganData; //TODO
 
-        public virtual void mockInit(string name, int health, OrganState state, OrganStatus status) //Temp code before YAML 
+        public virtual void mockInit(string name, int health, OrganState state) //Temp code before YAML 
         {
             Name = name;
-            Health = health;
+            MaxHealth = health;
+            CurrentHealth = MaxHealth;
             State = state;
-            Status = status;
+            Statuses = new List<OrganStatus>();
         }
 
         public virtual void LoadFrom(YamlMappingNode mapping)
@@ -37,6 +41,41 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         }
 
         public abstract void Life();
+
+        public void HandleDamage(int damage) //TODO: test prob numbers
+        {
+            CurrentHealth -= damage;
+            if (CurrentHealth < 0)
+            {
+                CurrentHealth = 0;
+            }
+            if (CurrentHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+
+            switch (CurrentHealth)
+            {
+                case int n when (n > MaxHealth / 2):
+                    State = OrganState.Healthy;
+                    break;
+                case int n when (n < MaxHealth / 2 && n > 0):
+                    State = OrganState.Damaged;
+                    break;
+                case int n when (n == 0):
+                    State = OrganState.Missing;
+                    break;
+                default:
+                    break;
+
+            }
+        }
+
+        public virtual Blood CirculateBlood(Blood blood)
+        {
+            blood.changeVolume(BloodChange);
+            return blood;
+        }
     }
 
     public enum OrganState
@@ -48,10 +87,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
     public enum OrganStatus
     {
-        Normal,
-        Bleed,
+        Bleeding,
         Boost,
-        Stasis,
+        Sepsis,
         Cancer
     }
 }
