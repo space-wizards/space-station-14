@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using YamlDotNet.RepresentationModel;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
@@ -69,6 +70,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
                     break;
 
             }
+            Logger.DebugS("Organ", "Organ {0} received {1} damage!", Name, damage);
         }
 
         public virtual Blood CirculateBlood(Blood blood)

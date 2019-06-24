@@ -3,6 +3,7 @@ using Robust.Shared.Maths;
 using System.Collections.Generic;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
@@ -65,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
                 case LimbState.Missing:
                     break;
             }
-                
+            Logger.DebugS("Limb", "Limb {0} received {1} damage!", Name, damage);
 
         }
 
