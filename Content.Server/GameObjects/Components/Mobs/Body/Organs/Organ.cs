@@ -27,19 +27,25 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public Dictionary<string, object> OrganData; //TODO
 
-        public virtual void mockInit(string name, int health, OrganState state) //Temp code before YAML 
+        public IEntity Owner;
+
+        public virtual void mockInit(string name, int health, OrganState state, IEntity owner) //Temp code before YAML 
         {
             Name = name;
             MaxHealth = health;
             CurrentHealth = MaxHealth;
             State = state;
             Statuses = new List<OrganStatus>();
+            Owner = owner;
+            ApplyOrganData();
         }
 
         public virtual void LoadFrom(YamlMappingNode mapping)
         {
 
         }
+        public abstract void Startup();
+        public abstract void ApplyOrganData();
 
         public abstract void Life();
 
@@ -84,6 +90,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
     {
         Healthy,
         Damaged,
+        Dead,
         Missing
     }
 

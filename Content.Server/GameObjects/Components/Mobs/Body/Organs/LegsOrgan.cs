@@ -4,6 +4,11 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 {
     public class Legs : Organ
     {
+        public override void ApplyOrganData()
+        {
+            //TODO
+        }
+
         public override void Life()
         {
             //TODO: Hook MoverComponent?
