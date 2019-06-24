@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs.Body;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.GameObjects;
 using Robust.Shared.ContentPack;
@@ -13,7 +14,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
-    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior
+    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IOnDamageReceived
     {
         /// <summary>
         /// Damagestates are reached by reaching a certain damage threshold, they will block actions after being reached
@@ -97,6 +98,15 @@ namespace Content.Server.GameObjects
             return thresholdlist;
         }
 
+        void IOnDamageReceived.OnDamageReceived(OnDamageReceivedEventArgs e)
+        {
+            //limb/organ damage
+            if (bodyTemplate != null) //this event gets called twice, for Total too, and we don't need it tbh
+            {
+                bodyTemplate.HandleDamage(e.DamageType, e.Damage);
+            }
+        }
+
         void IOnDamageBehavior.OnDamageThresholdPassed(object damageable, DamageThresholdPassedEventArgs e)
         {
             DamageableComponent damage = (DamageableComponent) damageable;
@@ -104,13 +114,8 @@ namespace Content.Server.GameObjects
             if (e.DamageThreshold.ThresholdType != ThresholdType.HUDUpdate)
             {
                 ChangeDamageState(DamageTemplate.CalculateDamageState(damage));
-                if (bodyTemplate != null)
-                {
-                    bodyTemplate.HandleDamage(damage);
-                }
+
             }
-
-
 
             if (Owner.TryGetComponent(out BasicActorComponent actor)
             ) //specifies if we have a client to update the hud for
@@ -139,6 +144,7 @@ namespace Content.Server.GameObjects
         {
             bodyTemplate.Life();
         }
+
     }
 
     /// <summary>

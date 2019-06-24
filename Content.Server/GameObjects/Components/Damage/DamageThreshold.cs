@@ -57,5 +57,16 @@ namespace Content.Server.GameObjects
             Passed = passed;
         }
     }
+    public class OnDamageReceivedEventArgs : EventArgs
+    {
+        public int Damage { get; }
+        public DamageType DamageType { get; }
+
+        public OnDamageReceivedEventArgs(DamageType type, int damage)
+        {
+            Damage = damage;
+            DamageType = type;
+        }
+    }
 }
 

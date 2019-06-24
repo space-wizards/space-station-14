@@ -24,4 +24,8 @@ namespace Content.Server.Interfaces
         /// <param name="e">Damage threshold and whether it's passed in one way or another.</param>
         void OnDamageThresholdPassed(object obj, DamageThresholdPassedEventArgs e);
     }
+    interface IOnDamageReceived
+    {
+        void OnDamageReceived(OnDamageReceivedEventArgs e);
+    }
 }

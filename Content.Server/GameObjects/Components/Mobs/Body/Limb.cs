@@ -52,13 +52,13 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             switch (ChangeHealthValue(damage))
             {
                 case LimbState.Healthy:
-                    if(seed.Prob(10))
+                    if(seed.Prob(0.1f))
                     {
                         seed.Pick(Organs).HandleDamage(damage);
                     }
                     break;
                 case LimbState.Injured:
-                    if (seed.Prob(80))
+                    if (seed.Prob(0.4f))
                     {
                         seed.Pick(Organs).HandleDamage(damage);
                     }

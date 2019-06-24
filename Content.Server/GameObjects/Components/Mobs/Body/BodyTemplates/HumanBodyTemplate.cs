@@ -27,13 +27,14 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         {
             base.Initialize(owner);
             bodyMap = mockBodyFactory();
+           
         }
 
         //TODO:- Hack for testing, refactor into YAML ASAP
         private List<Limb> mockBodyFactory()
         {
             var limbs = new List<Limb>();
-            int standard_health = 50;
+            int standard_health = 500;
             //Limb tree
             var chest_children = new List<Limb>();
             var groin_children = new List<Limb>();
@@ -68,6 +69,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             var liver = new Liver();
             liver.mockInit("Human Liver", standard_health, OrganState.Healthy);
 
+            allOrgans = new List<Organ>();
             //it's crucial to have same instance of Organ loaded into these two lists
             allOrgans.Add(snowflake_mouth);
             allOrgans.Add(snowflake_eyes);

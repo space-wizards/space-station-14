@@ -3,6 +3,7 @@ using Robust.Shared.Maths;
 using System.Collections.Generic;
 using Robust.Shared.Serialization;
 using Robust.Shared.Interfaces.GameObjects;
+using Content.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
@@ -30,6 +31,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         public virtual void Initialize(IEntity owner)
         {
             Owner = owner;
+            Blood = new Blood(2000f); //TODO
             _randomLimb = new Random(owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
@@ -45,10 +47,10 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
                 Blood = limb.CirculateBlood(Blood);
             }
         }
-        public void HandleDamage(DamageableComponent damage)
+        public void HandleDamage(DamageType damageType, int damage)
         {   
             //TODO: Targetting.
-            _randomLimb.Pick(bodyMap).HandleDamage(damage.LastTakenDamage, new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode()));
+            _randomLimb.Pick(bodyMap).HandleDamage(damage, new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode()));
         }
     }
 }
