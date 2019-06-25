@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects
         /// <summary>
         /// Holds the body template which controls the organs, body functions and processes in living beings 
         /// </summary>
-        private BodyTemplate bodyTemplate;
+        public BodyTemplate BodyTemplate { get; private set; };
 
         /// <summary>
         /// Variable for serialization
@@ -58,8 +58,8 @@ namespace Content.Server.GameObjects
 
             Type newtype = AppDomain.CurrentDomain.GetAssemblyByName("Content.Server")
                 .GetType("Content.Server.GameObjects.Components.Mobs.Body." + templatename);
-            bodyTemplate = (BodyTemplate)Activator.CreateInstance(newtype);
-            bodyTemplate.Initialize(Owner);
+            BodyTemplate = (BodyTemplate)Activator.CreateInstance(newtype);
+            BodyTemplate.Initialize(Owner);
 
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
@@ -101,9 +101,9 @@ namespace Content.Server.GameObjects
         void IOnDamageReceived.OnDamageReceived(OnDamageReceivedEventArgs e)
         {
             //limb/organ damage
-            if (bodyTemplate != null) //this event gets called twice, for Total too, and we don't need it tbh
+            if (BodyTemplate != null) //this event gets called twice, for Total too, and we don't need it tbh
             {
-                bodyTemplate.HandleDamage(e.DamageType, e.Damage);
+                BodyTemplate.HandleDamage(e.DamageType, e.Damage);
             }
         }
 
@@ -142,7 +142,7 @@ namespace Content.Server.GameObjects
         }
         public void OnUpdate(float frameTime)
         {
-            bodyTemplate.Life();
+            BodyTemplate.Life();
         }
 
     }

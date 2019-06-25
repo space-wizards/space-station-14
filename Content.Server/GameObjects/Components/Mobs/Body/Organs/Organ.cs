@@ -38,14 +38,21 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             Statuses = new List<OrganStatus>();
             Owner = owner;
             ApplyOrganData();
+            Startup()
         }
 
         public virtual void LoadFrom(YamlMappingNode mapping)
         {
 
         }
-        public abstract void Startup();
-        public abstract void ApplyOrganData();
+        public virtual void Startup()
+        {
+
+        }
+        public virtual void ApplyOrganData()
+        {
+
+        }
 
         public abstract void Life();
 
