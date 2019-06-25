@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             Statuses = new List<OrganStatus>();
             Owner = owner;
             ApplyOrganData();
-            Startup()
+            Startup();
         }
 
         public virtual void LoadFrom(YamlMappingNode mapping)
@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public virtual Blood CirculateBlood(Blood blood)
         {
-            blood.changeVolume(BloodChange);
+            blood.ChangeCurrentVolume(BloodChange);
             return blood;
         }
     }

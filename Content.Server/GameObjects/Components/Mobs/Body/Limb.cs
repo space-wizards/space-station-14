@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public Blood CirculateBlood(Blood blood)
         {
-            blood.changeVolume(BloodChange);
+            blood.ChangeCurrentVolume(BloodChange);
             return blood;
         }
 

@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects
         /// <summary>
         /// Holds the body template which controls the organs, body functions and processes in living beings 
         /// </summary>
-        public BodyTemplate BodyTemplate { get; private set; };
+        public BodyTemplate BodyTemplate { get; private set; }
 
         /// <summary>
         /// Variable for serialization
