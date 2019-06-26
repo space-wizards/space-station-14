@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             //TODO
         }
 
-        public override void Life()
+        public override void Life(int lifeTick)
         {
             //TODO: handle breathing maybe
         }

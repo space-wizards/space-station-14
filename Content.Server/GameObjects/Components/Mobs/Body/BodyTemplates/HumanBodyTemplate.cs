@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         private List<Limb> mockBodyFactory()
         {
             var limbs = new List<Limb>();
-            int standard_health = 500;
+            int standard_health = 40;
             //Limb tree
             var chest_children = new List<Limb>();
             var groin_children = new List<Limb>();
@@ -46,28 +46,28 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
             //Organs that exist in several limbs (HACKS)
             var snowflake_mouth = new Tongue();
-            snowflake_mouth.mockInit("Human Mouth", standard_health, OrganState.Healthy, Owner);
+            snowflake_mouth.mockInit("Human Mouth", standard_health, OrganState.Healthy, Owner, this);
             var snowflake_eyes = new Eyes();
-            snowflake_eyes.mockInit("Human Tongue", standard_health, OrganState.Healthy, Owner);
+            snowflake_eyes.mockInit("Human Tongue", standard_health, OrganState.Healthy, Owner, this);
             var snowflake_l_hand = new Hands();
-            snowflake_l_hand.mockInit("Human Left Hand", standard_health, OrganState.Healthy, Owner);
+            snowflake_l_hand.mockInit("Human Left Hand", standard_health, OrganState.Healthy, Owner, this);
             var snowflake_r_hand = new Hands();
-            snowflake_r_hand.mockInit("Human Right Hand", standard_health, OrganState.Healthy, Owner);
+            snowflake_r_hand.mockInit("Human Right Hand", standard_health, OrganState.Healthy, Owner, this);
             var snowflake_l_leg = new Legs();
-            snowflake_l_leg.mockInit("Human Left Leg", standard_health, OrganState.Healthy, Owner);
+            snowflake_l_leg.mockInit("Human Left Leg", standard_health, OrganState.Healthy, Owner, this);
             var snowflake_r_leg = new Legs();
-            snowflake_r_leg.mockInit("Human Right Leg", standard_health, OrganState.Healthy, Owner);
+            snowflake_r_leg.mockInit("Human Right Leg", standard_health, OrganState.Healthy, Owner, this);
 
             var brain = new Brain();
-            brain.mockInit("Human Brain", standard_health, OrganState.Healthy, Owner);
+            brain.mockInit("Human Brain", standard_health, OrganState.Healthy, Owner, this);
             var kidneys = new Kidneys();
-            kidneys.mockInit("Human Kidneys", standard_health, OrganState.Healthy, Owner);
+            kidneys.mockInit("Human Kidneys", standard_health, OrganState.Healthy, Owner, this);
             var heart = new Heart();
-            heart.mockInit("Human Heart", standard_health, OrganState.Healthy, Owner);
+            heart.mockInit("Human Heart", standard_health, OrganState.Healthy, Owner, this);
             var lungs = new Lungs();
-            lungs.mockInit("Human Lungs", standard_health, OrganState.Healthy, Owner);
+            lungs.mockInit("Human Lungs", standard_health, OrganState.Healthy, Owner, this);
             var liver = new Liver();
-            liver.mockInit("Human Liver", standard_health, OrganState.Healthy, Owner);
+            liver.mockInit("Human Liver", standard_health, OrganState.Healthy, Owner, this);
 
             allOrgans = new List<Organ>();
             //it's crucial to have same instance of Organ loaded into these two lists

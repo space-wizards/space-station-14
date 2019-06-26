@@ -44,6 +44,8 @@ namespace Content.Server.GameObjects
         private int _heatResistance;
         public int HeatResistance => _heatResistance;
 
+        private int _lifeTick = 0;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -140,9 +142,10 @@ namespace Content.Server.GameObjects
 
             Owner.RaiseEvent(new MobDamageStateChangedMessage(this));
         }
-        public void OnUpdate(float frameTime)
+        public void OnUpdate()
         {
-            BodyTemplate.Life();
+            BodyTemplate.Life(_lifeTick);
+            _lifeTick++;
         }
 
     }

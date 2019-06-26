@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
+﻿using System;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
@@ -12,17 +13,17 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public override void Startup()
         {
-            blood = Owner.GetComponent<SpeciesComponent>().BodyTemplate.Blood;
-            
+            blood = Body.Blood;
+            objPrototype = "HumanHeart";
         }
 
         public override void ApplyOrganData()
         {
-            MaxRate = (int)OrganData["MaxRate"];
+            MaxRate = 240;//(int)OrganData["MaxRate"]; //TODO: YAML
             CurrentRate = MaxRate / 2;
         }
 
-        public override void Life()
+        public override void Life(int lifeTick)
         {
             switch (State)
             {
@@ -35,14 +36,45 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             }
         }
 
+        public override void OnStateChange(OrganState oldState)
+        {
+            switch (State)
+            {
+                case OrganState.Healthy:
+                    setRateLevel(PulseLevel.Normal);
+                    break;
+                case OrganState.Damaged:
+                    setRateLevel(PulseLevel.Fast);
+                    break;
+                case OrganState.Dead:
+                    setRateLevel(PulseLevel.None);
+                    break;
+            }
+        }
+
         public PulseLevel GetPulse()
         {
-            if (blood.GetBloodLevel() < BloodLevel.Bad)
+            if ( (blood.GetBloodLevel() < BloodLevel.Bad) && (State != OrganState.Dead) )
             {
                 return PulseLevel.Thready;
             }
             var diff = CurrentRate / (MaxRate / _levels);
             return (PulseLevel)diff;
+        }
+
+        private void setRateLevel(PulseLevel accordingToLevel)
+        {
+            if(accordingToLevel == PulseLevel.Thready)
+            {
+                throw new ArgumentException("Pulse level can't be set to Thready here");
+            }
+            setRate(MaxRate * ((int)accordingToLevel / _levels));
+        }
+
+        private void setRate(int rateValue)
+        {
+            //TODO: should be aware of reagents that affects the heartrate
+            CurrentRate = rateValue;
         }
         
     }

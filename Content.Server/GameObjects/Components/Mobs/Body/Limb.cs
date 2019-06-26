@@ -58,6 +58,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
                     }
                     break;
                 case LimbState.Injured:
+                    //Organs[0].HandleDamage(damage); //testing brain damage
                     if (seed.Prob(0.4f))
                     {
                         seed.Pick(Organs).HandleDamage(damage);

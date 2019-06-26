@@ -10,7 +10,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -23,17 +23,25 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public class LifeSystem : EntitySystem
     {
+        IGameTiming _gameTick;
+        int lifeTickRate = 2; // 2 calls every second
+        int lifeTicks;
         public override void Initialize()
         {
+            _gameTick = IoCManager.Resolve<IGameTiming>();
             EntityQuery = new TypeEntityQuery(typeof(SpeciesComponent));
+            lifeTicks = 60 / lifeTickRate; //How to get current tickrate √∫
         }
 
         public override void Update(float frameTime)
         {
             foreach (var entity in RelevantEntities)
             {
-                var comp = entity.GetComponent<SpeciesComponent>();
-                comp.OnUpdate(frameTime);
+                if (_gameTick.CurTick.Value % lifeTicks == 0)
+                {
+                    var comp = entity.GetComponent<SpeciesComponent>();
+                    comp.OnUpdate();
+                }
             }
         }
     }

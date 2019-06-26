@@ -35,11 +35,11 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             _randomLimb = new Random(owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
-        public void Life() //this is main Life() proc!
+        public void Life(int lifeTick) //this is main Life() proc!
         {
             foreach(var organ in allOrgans)
             {
-                organ.Life();
+                organ.Life(lifeTick);
                 Blood = organ.CirculateBlood(Blood);
             }
             foreach(var limb in bodyMap)
@@ -48,8 +48,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             }
         }
         public void HandleDamage(DamageType damageType, int damage)
-        {   
+        {
             //TODO: Targetting.
+            //bodyMap[2].HandleDamage(damage, new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode())); //testing specific limb's (head) damage
             _randomLimb.Pick(bodyMap).HandleDamage(damage, new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode()));
         }
     }

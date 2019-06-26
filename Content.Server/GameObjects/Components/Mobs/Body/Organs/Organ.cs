@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public int CurrentHealth;
 
-        public float BloodChange = 0;
+        public float BloodChange = 0.005f; //TODO: Organs should consume reagents (nutriments) from blood, not blood directly
 
         public OrganState State = OrganState.Healthy;
 
@@ -29,7 +29,11 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public IEntity Owner;
 
-        public virtual void mockInit(string name, int health, OrganState state, IEntity owner) //Temp code before YAML 
+        public string objPrototype; //entity that spawns on place of the organ, useful for gibs and surgery
+
+        public BodyTemplate Body;
+
+        public virtual void mockInit(string name, int health, OrganState state, IEntity owner, BodyTemplate body) //Temp code before YAML 
         {
             Name = name;
             MaxHealth = health;
@@ -37,6 +41,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             State = state;
             Statuses = new List<OrganStatus>();
             Owner = owner;
+            Body = body;
             ApplyOrganData();
             Startup();
         }
@@ -54,7 +59,10 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         }
 
-        public abstract void Life();
+        public virtual void Life(int lifeTick)
+        {
+
+        }
 
         public void HandleDamage(int damage) //TODO: test prob numbers
         {
@@ -71,18 +79,16 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             switch (CurrentHealth)
             {
                 case int n when (n > MaxHealth / 2):
-                    State = OrganState.Healthy;
+                    HandleStateChange(OrganState.Healthy);
                     break;
-                case int n when (n < MaxHealth / 2 && n > 0):
-                    State = OrganState.Damaged;
+                case int n when (n <= MaxHealth / 2 && n > 0):
+                    HandleStateChange(OrganState.Damaged);
                     break;
                 case int n when (n == 0):
-                    State = OrganState.Missing;
+                    HandleStateChange(OrganState.Dead);
                     break;
-                default:
-                    break;
-
             }
+
             Logger.DebugS("Organ", "Organ {0} received {1} damage!", Name, damage);
         }
 
@@ -90,6 +96,21 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         {
             blood.ChangeCurrentVolume(BloodChange);
             return blood;
+        }
+
+        private void HandleStateChange(OrganState newState) //called once the state is changed
+        {
+            if (!newState.Equals(State))
+            {
+                var oldState = State;
+                State = newState;
+                OnStateChange(oldState);
+            }
+        }
+
+        public virtual void OnStateChange(OrganState oldState)
+        {
+
         }
     }
 
