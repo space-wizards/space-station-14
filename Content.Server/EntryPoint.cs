@@ -150,7 +150,7 @@ namespace Content.Server
             factory.RegisterIgnore("ConstructionGhost");
 
             factory.Register<MindComponent>();
-            factory.Register<SpeciesComponent>();
+            factory.Register<MobComponent>();
             factory.Register<HeatResistanceComponent>();
 
             factory.Register<SpawnPointComponent>();

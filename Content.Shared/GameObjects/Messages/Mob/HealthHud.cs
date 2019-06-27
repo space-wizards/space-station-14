@@ -1,5 +1,7 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Maths;
 using System;
 
 namespace Content.Shared.GameObjects
@@ -10,7 +12,7 @@ namespace Content.Shared.GameObjects
     [Serializable, NetSerializable]
     public class HudStateChange : ComponentMessage
     {
-        public string StateSprite;
+        public List<LimbRender> StateSprites;
         public ScreenEffects effect;
 
         public HudStateChange()
@@ -24,5 +26,21 @@ namespace Content.Shared.GameObjects
         None,
         CircleMask,
         GradientCircleMask,
+    }
+
+    [Serializable, NetSerializable]
+    public class LimbRender
+    {
+        public string Name;
+        public Color Color;
+
+        public LimbRender(string name, Nullable<Color> color = null)
+        {
+            Name = name;
+            if (color.HasValue)
+            {
+                Color = color.Value;
+            }
+        }
     }
 }

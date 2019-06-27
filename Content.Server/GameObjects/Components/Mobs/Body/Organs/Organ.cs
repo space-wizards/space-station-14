@@ -4,6 +4,7 @@ using YamlDotNet.RepresentationModel;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
@@ -29,11 +30,15 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public IEntity Owner;
 
-        public string objPrototype; //entity that spawns on place of the organ, useful for gibs and surgery
+        public string PrototypeEnitity; //entity that spawns on place of the organ, useful for gibs and surgery
+
+        public string GibletEntity;
 
         public BodyTemplate Body;
 
-        public virtual void mockInit(string name, int health, OrganState state, IEntity owner, BodyTemplate body) //Temp code before YAML 
+        Random _seed;
+
+        public virtual void mockInit(string name, int health, OrganState state, IEntity owner, BodyTemplate body, string prototype) //Temp code before YAML 
         {
             Name = name;
             MaxHealth = health;
@@ -42,6 +47,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             Statuses = new List<OrganStatus>();
             Owner = owner;
             Body = body;
+            PrototypeEnitity = prototype;
             ApplyOrganData();
             Startup();
         }
@@ -52,7 +58,8 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         }
         public virtual void Startup()
         {
-
+            _seed = new Random(DateTime.Now.GetHashCode());
+            GibletEntity = _seed.Pick(new List<string> { "Gib01", "Gib02", "Gib03", "Gib04", "Gib05" }); //HACK, they should be snowflakey decals which we don't have rn
         }
         public virtual void ApplyOrganData()
         {
@@ -90,6 +97,32 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             }
 
             Logger.DebugS("Organ", "Organ {0} received {1} damage!", Name, damage);
+        }
+
+        public void HandleGib()
+        {
+            if (_seed.Prob(0.5f))
+            {
+                SpawnPrototype(GibletEntity);
+            } else if (_seed.Prob(0.6f))
+            {
+                SpawnPrototype(PrototypeEnitity);
+            }
+            //Dispose();
+        }
+
+        public void SpawnPrototype(string Prototype)
+        {
+            if (!string.IsNullOrWhiteSpace(Prototype))
+            {
+                Owner.EntityManager.TrySpawnEntityAt(Prototype, Owner.Transform.GridPosition, out var entity);
+            }
+        }
+
+        private void Dispose()
+        {
+            Owner = null;
+            Body = null;
         }
 
         public virtual Blood CirculateBlood(Blood blood)

@@ -88,8 +88,8 @@ namespace Content.Server.GameObjects
         {
             if (entity.TryGetComponent(out AppearanceComponent appearance))
             {
-                var newState = SharedSpeciesComponent.MobState.Down;
-                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
+                var newState = SharedMobComponent.MobState.Down;
+                appearance.SetData(SharedMobComponent.MobVisuals.RotationState, newState);
             }
         }
 
@@ -97,8 +97,8 @@ namespace Content.Server.GameObjects
         {
             if (entity.TryGetComponent(out AppearanceComponent appearance))
             {
-                var newState = SharedSpeciesComponent.MobState.Stand;
-                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
+                var newState = SharedMobComponent.MobState.Stand;
+                appearance.SetData(SharedMobComponent.MobVisuals.RotationState, newState);
             }
         }
 

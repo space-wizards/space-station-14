@@ -108,7 +108,7 @@ namespace Content.Client.GameObjects.Components.Actor
     public enum UIPriority
     {
         First = 0,
-        Species = 100,
+        Mob = 100,
         Inventory = 200,
         Last = 99999
     }

@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Initialize()
         {
             _gameTick = IoCManager.Resolve<IGameTiming>();
-            EntityQuery = new TypeEntityQuery(typeof(SpeciesComponent));
+            EntityQuery = new TypeEntityQuery(typeof(MobComponent));
             lifeTicks = 60 / lifeTickRate; //How to get current tickrate √∫
         }
 
@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (_gameTick.CurTick.Value % lifeTicks == 0)
                 {
-                    var comp = entity.GetComponent<SpeciesComponent>();
+                    var comp = entity.GetComponent<MobComponent>();
                     comp.OnUpdate();
                 }
             }

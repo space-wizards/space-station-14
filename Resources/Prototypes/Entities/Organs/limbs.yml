@@ -1,0 +1,208 @@
+- type: entity
+  name: Head
+  parent: BaseItem
+  id: HumanHead
+  description: That's someone's head!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: head_m
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: head_m
+
+  - type: Item
+    Size: 20
+    sprite: Objects/Remains/limbs.rsi
+    state: head_m
+
+- type: entity
+  name: Chest
+  parent: BaseItem
+  id: HumanChest
+  description: That's someone's chest!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: torso_m
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: torso_m
+
+  - type: Item
+    Size: 50
+    sprite: Objects/Remains/limbs.rsi
+    state: torso_m
+
+- type: entity
+  name: Groin
+  parent: BaseItem
+  id: HumanGroin
+  description: That's someone's groin!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: groin_m
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: groin_m
+
+  - type: Item
+    Size: 30
+    sprite: Objects/Remains/limbs.rsi
+    state: groin_m
+
+- type: entity
+  name: Left Arm
+  parent: BaseItem
+  id: HumanLArm
+  description: That's someone's left arm!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: l_arm
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: l_arm
+
+  - type: Item
+    Size: 25
+    sprite: Objects/Remains/limbs.rsi
+    state: l_arm
+
+- type: entity
+  name: Right Arm
+  parent: BaseItem
+  id: HumanRArm
+  description: That's someone's right arm!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: r_arm
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: r_arm
+
+  - type: Item
+    Size: 25
+    sprite: Objects/Remains/limbs.rsi
+    state: r_arm
+
+- type: entity
+  name: Left Hand
+  parent: BaseItem
+  id: HumanLHand
+  description: That's someone's left hand!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: l_hand
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: l_hand
+
+  - type: Item
+    Size: 10
+    sprite: Objects/Remains/limbs.rsi
+    state: l_hand
+
+- type: entity
+  name: Right Hand
+  parent: BaseItem
+  id: HumanRHand
+  description: That's someone's right hand!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: r_hand
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: r_hand
+
+  - type: Item
+    Size: 10
+    sprite: Objects/Remains/limbs.rsi
+    state: r_hand
+
+- type: entity
+  name: Left Leg
+  parent: BaseItem
+  id: HumanLLeg
+  description: That's someone's left leg!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: l_leg
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: l_leg
+
+  - type: Item
+    Size: 30
+    sprite: Objects/Remains/limbs.rsi
+    state: l_leg
+
+- type: entity
+  name: Right Leg
+  parent: BaseItem
+  id: HumanRLeg
+  description: That's someone's right leg!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: r_leg
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: r_leg
+
+  - type: Item
+    Size: 30
+    sprite: Objects/Remains/limbs.rsi
+    state: r_leg
+
+- type: entity
+  name: Left Foot
+  parent: BaseItem
+  id: HumanLFoot
+  description: That's someone's left foot!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: l_foot
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: l_foot
+
+  - type: Item
+    Size: 10
+    sprite: Objects/Remains/limbs.rsi
+    state: l_foot
+
+- type: entity
+  name: Right Foot
+  parent: BaseItem
+  id: HumanRFoot
+  description: That's someone's head!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/limbs.rsi
+    state: r_foot
+
+  - type: Icon
+    sprite: Objects/Remains/limbs.rsi
+    state: r_foot
+
+  - type: Item
+    Size: 10
+    sprite: Objects/Remains/limbs.rsi
+    state: r_foot

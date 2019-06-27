@@ -1,5 +1,6 @@
 ﻿using Content.Shared.GameObjects;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Mobs.Body;
 
 namespace Content.Server.GameObjects
 {
@@ -30,13 +31,21 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public override HudStateChange ChangeHudState(DamageableComponent damage)
+        public override HudStateChange ChangeHudState(List<LimbRender> limbs, DamageableComponent damage)
         {
             ThresholdType healthstate = CalculateDamageState(damage);
             switch (healthstate)
             {
                 case ThresholdType.None:
                     var totaldamage = damage.CurrentDamage[DamageType.Total];
+                    if (totaldamage == 0 || limbs.Count == 0)
+                    {
+                        return new HudStateChange()
+                        {
+                            StateSprites = new List<LimbRender> { new LimbRender("Mob/UI/Human/human0.png") },
+                            effect = ScreenEffects.None
+                        };
+                    }
                     if (totaldamage > critvalue)
                     {
                         throw new System.InvalidOperationException(); //these should all be below the crit value, possibly going over multiple thresholds at once?
@@ -44,19 +53,19 @@ namespace Content.Server.GameObjects
                     var modifier = totaldamage / (critvalue / normalstates); //integer division floors towards zero
                     return new HudStateChange()
                     {
-                        StateSprite = "Mob/UI/Human/human" + modifier.ToString() + ".png",
+                        StateSprites = limbs,
                         effect = ScreenEffects.None
                     };
                 case ThresholdType.Critical:
                     return new HudStateChange()
                     {
-                        StateSprite = "Mob/UI/Human/humancrit-0.png", //TODO: display as gif or alternate with -0 and -1 as frames
+                        StateSprites = new List<LimbRender> { new LimbRender("Mob/UI/Human/humancrit-0.png") }, //TODO: display as gif or alternate with -0 and -1 as frames
                         effect = ScreenEffects.GradientCircleMask
                     };
                 case ThresholdType.Death:
                     return new HudStateChange()
                     {
-                        StateSprite = "Mob/UI/Human/humandead.png",
+                        StateSprites = new List<LimbRender> { new LimbRender("Mob/UI/Human/humandead.png") },
                         effect = ScreenEffects.CircleMask
                     };
                 default:

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.GameObjects;
+using Content.Server.GameObjects.Components.Mobs.Body;
 
 namespace Content.Server.GameObjects
 {
@@ -16,7 +17,7 @@ namespace Content.Server.GameObjects
         /// <param name="state"></param>
         /// <param name="damage"></param>
         /// <returns></returns>
-        public abstract HudStateChange ChangeHudState(DamageableComponent damage);
+        public abstract HudStateChange ChangeHudState(List<LimbRender> limbs, DamageableComponent damage);
 
         //public abstract ResistanceSet resistanceset { get; }
 

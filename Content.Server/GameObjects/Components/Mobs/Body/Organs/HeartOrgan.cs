@@ -13,8 +13,8 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public override void Startup()
         {
+            base.Startup();
             blood = Body.Blood;
-            objPrototype = "HumanHeart";
         }
 
         public override void ApplyOrganData()

@@ -47,11 +47,34 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
                 Blood = limb.CirculateBlood(Blood);
             }
         }
+
         public void HandleDamage(DamageType damageType, int damage)
         {
             //TODO: Targetting.
             //bodyMap[2].HandleDamage(damage, new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode())); //testing specific limb's (head) damage
-            _randomLimb.Pick(bodyMap).HandleDamage(damage, new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode()));
+            _randomLimb.Pick(bodyMap).HandleDamage(damage);
+        }
+
+        public void Gib()
+        {
+            foreach (var limb in bodyMap)
+            {
+                limb.HandleGib();
+            }
+            bodyMap = null;
+        }
+
+        public List<LimbRender> RenderDoll()
+        {
+            var list = new List<LimbRender>();
+            foreach (var limb in bodyMap)
+            {
+                if (string.IsNullOrEmpty(limb.RenderLimb))
+                {
+                    list.Add(limb.Render());
+                }
+            }
+            return list;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public override void Startup()
         {
-            objPrototype = "HumanBrain";
+            base.Startup();
             chat = IoCManager.Resolve<IChatManager>();
             brainDamagePhrases = fillBrainDamageList();
             random = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
