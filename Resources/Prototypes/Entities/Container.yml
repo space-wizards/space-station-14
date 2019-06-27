@@ -18,6 +18,43 @@
   - type: Collidable
   - type: Storage
     Capacity: 60
+    
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 100
+
+  placement:
+    snap:
+    - Wall
+
+- type: entity
+  id: weldtank
+  name: Fueltank
+  description: A storage tank containing welding fuel.
+  components:
+  - type: Sprite
+    texture: Buildings/weldtank.png
+
+  - type: Icon
+    texture: Buildings/weldtank.png
+
+  - type: Clickable
+  - type: BoundingBox
+    aabb: "-0.5,-0.25,0.5,0.25"
+  - type: Collidable
+    mask: 3
+    IsScrapingFloor: true
+  - type: Physics
+    mass: 15
+    Anchored: false
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 10
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 2
+    lightImpactRange: 4
+    flashRange: 5
 
   placement:
     snap:

@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Storage;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -26,7 +27,7 @@ namespace Content.Server.GameObjects
     /// <summary>
     /// Storage component for containing entities within this one, matches a UI on the client which shows stored entities
     /// </summary>
-    public class ServerStorageComponent : SharedStorageComponent, IAttackBy, IUse, IActivate, IStorageComponent
+    public class ServerStorageComponent : SharedStorageComponent, IAttackBy, IUse, IActivate, IStorageComponent, IDestroyAct
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -339,6 +340,15 @@ namespace Content.Server.GameObjects
             }
 
             _storageInitialCalculated = true;
+        }
+
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
+            var storedEntities = storage.ContainedEntities.ToList();
+            foreach (var entity in storedEntities)
+            {
+                Remove(entity);
+            }
         }
     }
 }

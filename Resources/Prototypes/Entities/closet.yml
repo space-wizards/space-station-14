@@ -25,6 +25,9 @@
     Anchored: false
   - type: EntityStorage
   - type: PlaceableSurface
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 100
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
