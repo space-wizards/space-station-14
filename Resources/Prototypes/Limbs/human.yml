@@ -1,4 +1,5 @@
-- id: HumanHead
+- type: limb
+  id: HumanHead
   name: Human Head
   health: 100
   dollIcon: Human/head.png
@@ -15,7 +16,8 @@
     - target: enum.AttackTarget.Eyes
       targetOrgan: HumanEyes
 
-- id: HumanChest
+- type: limb
+  id: HumanChest
   name: Human Chest
   health: 100
   dollIcon: Human/chest.png
@@ -26,7 +28,8 @@
     - type: HumanLiver
     - type: HumanLungs
 
-- id: HumanGroin
+- type: limb
+  id: HumanGroin
   name: Human Groin
   health: 100
   dollIcon: Human/groin.png
@@ -36,7 +39,8 @@
   organs:
     - type: HumanKidneys    
 
-- id: HumanLArm
+- type: limb
+  id: HumanLArm
   name: Human Left Arm
   health: 100
   dollIcon: Human/l_arm.png
@@ -45,7 +49,8 @@
   parent: HumanChest
   childOrganDamage: true
 
-- id: HumanLHand
+- type: limb
+  id: HumanLHand
   name: Human Left Hand
   health: 100
   dollIcon: Human/l_hand.png
@@ -56,7 +61,8 @@
   organs:
     - type: HumanHand 
 
-- id: HumanRArm
+- type: limb
+  id: HumanRArm
   name: Human Right Arm
   health: 100
   dollIcon: Human/l_arm.png
@@ -65,7 +71,8 @@
   parent: HumanChest
   childOrganDamage: true
 
-- id: HumanRHand
+- type: limb
+  id: HumanRHand
   name: Human Right Hand
   health: 100
   dollIcon: Human/r_hand.png
@@ -76,7 +83,8 @@
   organs:
     - type: HumanHand 
 
-- id: HumanLLeg
+- type: limb
+  id: HumanLLeg
   name: Human Left Leg
   health: 100
   dollIcon: Human/l_leg.png
@@ -85,7 +93,8 @@
   parent: HumanGroin
   childOrganDamage: true
 
-- id: HumanLFoot
+- type: limb
+  id: HumanLFoot
   name: Human Left Foot
   health: 100
   dollIcon: Human/l_foot.png
@@ -96,7 +105,8 @@
   organs:
     - type: HumanLeg
 
-- id: HumanRLeg
+- type: limb
+  id: HumanRLeg
   name: Human Right Leg
   health: 100
   dollIcon: Human/r_leg.png
@@ -105,7 +115,8 @@
   parent: HumanGroin
   childOrganDamage: true
 
-- id: HumanRFoot
+- type: limb
+  id: HumanRFoot
   name: Human Right Foot
   health: 100
   dollIcon: Human/r_foot.png

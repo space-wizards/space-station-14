@@ -6,18 +6,13 @@ using Content.Server.Interfaces.Chat;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
-namespace Content.Server.GameObjects.Components.Mobs.Body
+namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
 {
     public class Brain : Organ
     {
         IChatManager chat;
         List<string> brainDamagePhrases;
         Random random;
-
-        public override void ApplyOrganData()
-        {
-            //Brain-specific parameters
-        }
 
         public override void Startup()
         {

@@ -13,11 +13,16 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Maths;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
     public class MobComponent : SharedMobComponent, IActionBlocker, IOnDamageBehavior, IOnDamageReceived, IExAct
     {
+#pragma warning disable CS0649
+        [Dependency]
+        protected IPrototypeManager PrototypeManager;
+#pragma warning restore
         /// <summary>
         /// Damagestates are reached by reaching a certain damage threshold, they will block actions after being reached
         /// </summary>
@@ -36,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// <summary>
         /// Holds the body template which controls the organs, body functions and processes in living beings 
         /// </summary>
-        public BodyTemplate BodyTemplate { get; private set; }
+        public BodyTemplate Body { get; private set; }
 
         public List<string> States;
 
@@ -44,6 +49,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// Variable for serialization
         /// </summary>
         private string templatename;
+        private string bodyTemplateName;
 
         private int _heatResistance;
         public int HeatResistance => _heatResistance;
@@ -62,19 +68,20 @@ namespace Content.Server.GameObjects.Components.Mobs
                 .GetType("Content.Server.GameObjects." + templatename);
             DamageTemplate = (DamageTemplates) Activator.CreateInstance(type);
 
-            serializer.DataField(ref templatename, "bodyTemplate", "Human");
+            serializer.DataField(ref bodyTemplateName, "bodyTemplate", "Human");
 
-            Type newtype = AppDomain.CurrentDomain.GetAssemblyByName("Content.Server")
-                .GetType("Content.Server.GameObjects.Components.Mobs.Body." + templatename);
-            BodyTemplate = (BodyTemplate)Activator.CreateInstance(newtype);
-            BodyTemplate.Initialize(Owner);
-
+            if (PrototypeManager.TryIndex<BodyTemplate>(bodyTemplateName, out var body))
+            {
+                Body = body;
+                Body.Initialize(Owner);
+            }
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
         public override void Initialize()
         {
             base.Initialize();
+            PrototypeManager = IoCManager.Resolve<IPrototypeManager>();
             _seed = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
@@ -84,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             switch (message)
             {
                 case PlayerAttachedMsg _:
-                    var list = BodyTemplate.RenderDoll();
+                    var list = Body.RenderDoll();
                     var hudstatechange = DamageTemplate.ChangeHudState(list, Owner.GetComponent<DamageableComponent>());
                     SendNetworkMessage(hudstatechange);
                     break;
@@ -116,9 +123,9 @@ namespace Content.Server.GameObjects.Components.Mobs
         void IOnDamageReceived.OnDamageReceived(OnDamageReceivedEventArgs e)
         {
             //limb/organ damage
-            if (BodyTemplate != null) //this event gets called twice, for Total too, and we don't need it tbh
+            if (Body != null) //this event gets called twice, for Total too, and we don't need it tbh
             {
-                BodyTemplate.HandleDamage(e.DamageType, e.Damage);
+                Body.HandleDamage(e.DamageType, e.Damage);
             }
         }
 
@@ -135,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (Owner.TryGetComponent(out BasicActorComponent actor)
             ) //specifies if we have a client to update the hud for
             {
-                var list = BodyTemplate.RenderDoll();
+                var list = Body.RenderDoll();
                 var hudstatechange = DamageTemplate.ChangeHudState(list, damage);
                 SendNetworkMessage(hudstatechange);
             }
@@ -159,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public void OnUpdate()
         {
-            BodyTemplate.Life(_lifeTick);
+            Body.Life(_lifeTick);
             _lifeTick++;
         }
 
@@ -200,7 +207,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private void DestroyOwner()
         {
-            BodyTemplate.Gib();
+            Body.Gib();
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var ghost = entityManager.ForceSpawnEntityAt("MobObserver", Owner.Transform.GridPosition);
             var mind = Owner.GetComponent<MindComponent>().Mind;

@@ -1,8 +1,11 @@
 ﻿using Robust.Shared.Serialization;
+using YamlDotNet.RepresentationModel;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
-    public class Blood
+    [Prototype("blood")]
+    public class Blood : IPrototype, IIndexedPrototype
     {
         public string Name;
         public string Id;
@@ -13,8 +16,11 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         readonly int _levels = 7;
 
-        public void ExposeData(ObjectSerializer obj)
+        string IIndexedPrototype.ID => Id;
+
+        void IPrototype.LoadFrom(YamlMappingNode mapping)
         {
+            var obj = YamlObjectSerializer.NewReader(mapping);
             obj.DataField(ref Name, "name", "");
             obj.DataField(ref Name, "id", "");
             obj.DataField(ref MaxVolume, "maxVolume", 0f);

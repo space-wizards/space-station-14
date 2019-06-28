@@ -1,4 +1,5 @@
-- type: Human
+- type: bodyTemplate
+  id: HumanBody
   blood: HumanBlood
   limbs:
     - type: HumanChest

@@ -5,6 +5,10 @@ using Robust.Shared.Serialization;
 using Content.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Interfaces.GameObjects;
+using YamlDotNet.RepresentationModel;
+using Robust.Shared.Prototypes;
+using Content.Server.GameObjects.Components.Mobs.Body.Organs;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
@@ -13,14 +17,22 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
     ///     it receive damage first, then through resistances and such it transfers the damage to organs,
     ///     also the limb is visible, and it can be targeted
     /// </summary>
-    public class Limb
+    [Prototype("limb")]
+    public class Limb : IPrototype, IIndexedPrototype
     {
+#pragma warning disable CS0649
+        [Dependency]
+        protected IPrototypeManager PrototypeManager;
+#pragma warning restore
+
         public string Name;
         public string Id;
+        private List<string> _organProts;
+        public List<OrganPrototype> LoadOrgans;
         public List<Organ> Organs;
         AttackTargetDef AttackTarget;
         public List<Limb> Children;
-        Limb Parent;
+        public Limb Parent;
         public List<LimbStatus> Statuses;
         public LimbState State;
         int MaxHealth;
@@ -34,8 +46,11 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         Dictionary<string, object> addTargets;
         Random _seed;
 
-        public void ExposeData(ObjectSerializer obj)
+        string IIndexedPrototype.ID => Id;
+
+        void IPrototype.LoadFrom(YamlMappingNode mapping)
         {
+            var obj = YamlObjectSerializer.NewReader(mapping);
             obj.DataField(ref Id, "id", "");
             obj.DataField(ref Name, "name", "");
             obj.DataField(ref MaxHealth, "health", 0);
@@ -43,24 +58,29 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             obj.DataField(ref RenderLimb, "dollIcon", "");
             obj.DataField(ref PrototypeEntity, "prototype", "");
             obj.DataField(ref Parent, "parent", null);
-            obj.DataField(ref Organs, "organs", new List<Organ>());
-            obj.DataField(ref addTargets, "additionalTargets", new Dictionary<string, object>());
+            obj.DataField(ref _organProts, "organs", new List<string>());
         }
-        public Limb(string name, Enum id, List<Organ> organs, List<Limb> children, int health, string prototype, string render, IEntity owner, bool snowflakeT = false, bool snowflakeP = false)
+
+        public void Initialize(IEntity owner)
         {
-            Name = name;
-            Id = id;
-            Organs = organs;
-            Children = children;
-            MaxHealth = health;
-            CurrentHealth = health;
+            PrototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            CurrentHealth = MaxHealth;
             Statuses = new List<LimbStatus>();
-            PrototypeEntity = prototype;
-            RenderLimb = render;
             Owner = owner;
-            SnowflakeTarget = snowflakeT;
-            SnowflakeParent = snowflakeP;
             _seed = new Random(DateTime.Now.GetHashCode());
+            LoadOrgans = new List<OrganPrototype>();
+            foreach (var organProt in _organProts)
+            {
+                if(PrototypeManager.TryIndex<OrganPrototype>(organProt, out var organ))
+                {
+                    LoadOrgans.Add(organ);
+                }
+            }
+            Organs = new List<Organ>();
+            foreach (var loadOrgan in LoadOrgans)
+            {
+                Organs.Add(loadOrgan.Create());
+            }
         }
 
         public LimbRender Render() //TODO

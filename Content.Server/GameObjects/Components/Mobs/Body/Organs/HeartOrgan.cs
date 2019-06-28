@@ -1,7 +1,8 @@
 ﻿using System;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Mobs.Body
+namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
 {
     public class Heart : Organ
     {
@@ -17,9 +18,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             blood = Body.Blood;
         }
 
-        public override void ApplyOrganData()
+        public override void ExposeData(ObjectSerializer obj)
         {
-            MaxRate = 240;//(int)OrganData["MaxRate"]; //TODO: YAML
+            obj.DataField(ref MaxRate, "maxHeartRate", 240);
             CurrentRate = MaxRate / 2;
         }
 

@@ -1,4 +1,5 @@
-- id: HumanBlood
+- type: blood
+  id: HumanBlood
   name: Human Blood
   maxVolume: 600
   currentVolume: 560

@@ -52,7 +52,7 @@
     
   - type: Mob
     damageTemplate: Human
-    bodyTemplate: Human
+    bodyTemplate: HumanBody
     HeatResistance: 323
   - type: HeatResistance
   - type: Damageable

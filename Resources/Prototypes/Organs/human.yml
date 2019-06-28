@@ -1,4 +1,5 @@
-- type: Heart
+- type: organ
+  parent: Heart
   name: Human Heart
   id: HumanHeart
   health: 30
@@ -6,46 +7,54 @@
   organData:
     maxHeartRate: 240
 
-- type: Liver
+- type: organ
+  parent: Liver
   name: Human Liver
   id: HumanLiver
   health: 30
   prototype: HumanLiver
 
-- type: Lungs
+- type: organ
+  parent: Lungs
   name: Human Lungs
   id: HumanLungs
   health: 30
   prototype: HumanLungs
 
-- type: Kidneys
+- type: organ
+  parent: Kidneys
   name: Human Kidneys
   id: HumanKidneys
   health: 30
   prototype: HumanKidneys
 
-- type: Eyes
+- type: organ
+  parent: Eyes
   name: Human Eyes
   id: HumanEyes
   health: 30
   prototype: HumanEyes
 
-- type: Tongue
+- type: organ
+  parent: Tongue
   name: Human Tongue
   id: HumanTongue
   health: 30
 
-- type: Hand
+- type: organ
+  parent: Hand
   name: Human Hand
   id: HumanHand
   health: 100
 
-- type: Leg
+- type: organ
+  parent: Leg
   name: Human Leg
   id: HumanLeg
   health: 100
 
-- type: Brain
+- type: organ
+  parent: Brain
   name: Human Brain
   id: HumanBrain
   health: 50
