@@ -191,6 +191,11 @@ namespace Content.Server
             IoCManager.Register<IGameTicker, GameTicker>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
+            if (TestingCallbacks != null)
+            {
+                var cast = (ServerModuleTestingCallbacks) TestingCallbacks;
+                cast.ServerBeforeIoC?.Invoke();
+            }
             IoCManager.BuildGraph();
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
