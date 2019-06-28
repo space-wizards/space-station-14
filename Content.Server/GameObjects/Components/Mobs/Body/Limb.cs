@@ -16,9 +16,11 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
     public class Limb
     {
         public string Name;
+        public string Id;
         public List<Organ> Organs;
-        System.Enum Id;
+        AttackTargetDef AttackTarget;
         public List<Limb> Children;
+        Limb Parent;
         public List<LimbStatus> Statuses;
         public LimbState State;
         int MaxHealth;
@@ -29,16 +31,20 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         public string RenderLimb = "";
         public bool SnowflakeTarget; //limbs that are used for targeting, so they can't be deattached without parent (mouth, eyes)
         public bool SnowflakeParent; //limbs that are used for deattaching, they'll get deleted if parent is dropped. (arms, legs)
-
+        Dictionary<string, object> addTargets;
         Random _seed;
 
         public void ExposeData(ObjectSerializer obj)
         {
+            obj.DataField(ref Id, "id", "");
             obj.DataField(ref Name, "name", "");
-            obj.DataField(ref Id, "limb", null);
-            obj.DataField(ref Organs, "organs", null);
             obj.DataField(ref MaxHealth, "health", 0);
-            obj.DataField(ref PrototypeEntity, "PrototypeEntity", "");
+            obj.DataField(ref AttackTarget, "target", AttackTargetDef.All);
+            obj.DataField(ref RenderLimb, "dollIcon", "");
+            obj.DataField(ref PrototypeEntity, "prototype", "");
+            obj.DataField(ref Parent, "parent", null);
+            obj.DataField(ref Organs, "organs", new List<Organ>());
+            obj.DataField(ref addTargets, "additionalTargets", new Dictionary<string, object>());
         }
         public Limb(string name, Enum id, List<Organ> organs, List<Limb> children, int health, string prototype, string render, IEntity owner, bool snowflakeT = false, bool snowflakeP = false)
         {

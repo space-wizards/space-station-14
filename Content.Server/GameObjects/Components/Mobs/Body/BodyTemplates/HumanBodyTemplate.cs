@@ -4,9 +4,11 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
-    public enum HumanBodyMapDef
+    public enum AttackTargetDef
     {
         Head,
+        Eyes,
+        Mouth,
         Chest,
         LeftArm,
         RightArm,
@@ -16,7 +18,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         LeftLeg,
         RightLeg,
         LeftFoot,
-        RightFoot
+        RightFoot,
+        SeveralTargets,
+        All
     }
     public class Human : BodyTemplate
     {

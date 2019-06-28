@@ -3,63 +3,115 @@
   health: 100
   dollIcon: Human/head.png
   prototype: HumanHead
+  target: enum.AttackTarget.Head
+  parent: HumanChest
+  organs:
+    - type: HumanBrain
+    - type: HumanEyes
+    - type: HumanTongue
+  additionalTargets:
+    - target: enum.AttackTarget.Mouth
+      targetOrgan: HumanTongue
+    - target: enum.AttackTarget.Eyes
+      targetOrgan: HumanEyes
 
 - id: HumanChest
   name: Human Chest
   health: 100
   dollIcon: Human/chest.png
   prototype: HumanChest
+  target: enum.AttackTarget.Chest
+  organs:
+    - type: HumanHeart
+    - type: HumanLiver
+    - type: HumanLungs
 
 - id: HumanGroin
   name: Human Groin
   health: 100
   dollIcon: Human/groin.png
   prototype: HumanGroin
+  target: enum.AttackTarget.Groin
+  parent: HumanChest
+  organs:
+    - type: HumanKidneys    
 
 - id: HumanLArm
   name: Human Left Arm
   health: 100
   dollIcon: Human/l_arm.png
   prototype: HumanLArm
+  target: enum.AttackTarget.LeftArm
+  parent: HumanChest
+  childOrganDamage: true
 
 - id: HumanLHand
   name: Human Left Hand
   health: 100
   dollIcon: Human/l_hand.png
   prototype: HumanLHand
+  target: enum.AttackTarget.LeftHand
+  parent: HumanLArm
+  directOrganDamage: true
+  organs:
+    - type: HumanHand 
 
 - id: HumanRArm
   name: Human Right Arm
   health: 100
   dollIcon: Human/l_arm.png
   prototype: HumanLArm
+  target: enum.AttackTarget.RightArm
+  parent: HumanChest
+  childOrganDamage: true
 
 - id: HumanRHand
   name: Human Right Hand
   health: 100
   dollIcon: Human/r_hand.png
   prototype: HumanRHand
+  target: enum.AttackTarget.RightHand
+  parent: HumanRArm
+  directOrganDamage: true
+  organs:
+    - type: HumanHand 
 
 - id: HumanLLeg
   name: Human Left Leg
   health: 100
   dollIcon: Human/l_leg.png
   prototype: HumanLLeg
+  target: enum.AttackTarget.LeftLeg
+  parent: HumanGroin
+  childOrganDamage: true
 
 - id: HumanLFoot
   name: Human Left Foot
   health: 100
   dollIcon: Human/l_foot.png
   prototype: HumanLFoot
+  target: enum.AttackTarget.LeftFoot
+  parent: HumanLLeg
+  directOrganDamage: true
+  organs:
+    - type: HumanLeg
 
 - id: HumanRLeg
   name: Human Right Leg
   health: 100
   dollIcon: Human/r_leg.png
   prototype: HumanRLeg
+  target: enum.AttackTarget.RightLeg
+  parent: HumanGroin
+  childOrganDamage: true
 
 - id: HumanRFoot
   name: Human Right Foot
   health: 100
   dollIcon: Human/r_foot.png
   prototype: HumanRFoot
+  target: enum.AttackTarget.RightFoot
+  parent: HumanRLeg
+  directOrganDamage: true
+  organs:
+    - type: HumanLeg

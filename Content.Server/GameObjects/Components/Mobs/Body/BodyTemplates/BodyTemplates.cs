@@ -14,8 +14,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
     public class BodyTemplate
     {
         public string Name;
-        public List<Limb> bodyMap;//it's for damage calculation
-        public List<Organ> allOrgans;//it's for life calls
+        public List<Limb> bodyMap;
         public IEntity Owner;
 
         public Blood Blood; //blood should wait for reagents to get truly implemented
@@ -24,27 +23,30 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public virtual void ExposeData(ObjectSerializer obj)
         {
-            //obj.DataField(ref bodyMap, "limbs", null); TODO: soon.
-            //obj.DataField(ref neededFunctions, "bodyFunctions", null);
+            obj.DataField(ref bodyMap, "limbs", null);
+            obj.DataField(ref Blood, "blood", null);
         }
 
         public virtual void Initialize(IEntity owner)
         {
             Owner = owner;
-            Blood = new Blood(2000f); //TODO
             _randomLimb = new Random(owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
+            foreach (var limb in bodyMap)
+            {
+
+            }
         }
 
         public void Life(int lifeTick) //this is main Life() proc!
         {
-            foreach(var organ in allOrgans)
-            {
-                organ.Life(lifeTick);
-                Blood = organ.CirculateBlood(Blood);
-            }
             foreach(var limb in bodyMap)
             {
                 Blood = limb.CirculateBlood(Blood);
+                foreach(var organ in limb.Organs)
+                {
+                    organ.Life(lifeTick);
+                    organ.CirculateBlood(Blood);
+                }
             }
         }
 

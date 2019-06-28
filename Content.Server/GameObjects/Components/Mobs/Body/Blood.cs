@@ -1,7 +1,11 @@
-﻿namespace Content.Server.GameObjects.Components.Mobs.Body
+﻿using Robust.Shared.Serialization;
+
+namespace Content.Server.GameObjects.Components.Mobs.Body
 {
     public class Blood
     {
+        public string Name;
+        public string Id;
         public float MaxVolume;
         public float CurrentVolume;
         public float RegenerationRate = 0.1f;
@@ -9,10 +13,12 @@
 
         readonly int _levels = 7;
 
-        public Blood(float volume)
+        public void ExposeData(ObjectSerializer obj)
         {
-            MaxVolume = volume;
-            CurrentVolume = MaxVolume;
+            obj.DataField(ref Name, "name", "");
+            obj.DataField(ref Name, "id", "");
+            obj.DataField(ref MaxVolume, "maxVolume", 0f);
+            obj.DataField(ref CurrentVolume, "currentVolume", 0f);
         }
 
         public void ChangeCurrentVolume(float deltaVolume)
