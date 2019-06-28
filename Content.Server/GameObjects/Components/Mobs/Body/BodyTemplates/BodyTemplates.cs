@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             var list = new List<LimbRender>();
             foreach (var limb in bodyMap)
             {
-                if (string.IsNullOrEmpty(limb.RenderLimb))
+                if (!string.IsNullOrEmpty(limb.RenderLimb))
                 {
                     list.Add(limb.Render());
                 }

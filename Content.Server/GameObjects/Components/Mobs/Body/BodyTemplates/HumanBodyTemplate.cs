@@ -82,83 +82,69 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             allOrgans.Add(heart);
             allOrgans.Add(lungs);
 
-            //Eyesocket
-            var eyesocket_organs = new List<Organ>();
-            eyesocket_organs.Add(snowflake_eyes);
-            var eyesocket = new Limb("Eyes", HumanBodyMapDef.Eyes, eyesocket_organs, new List<Limb>(), standard_health, "", "eyes", Owner, true);
-            head_children.Add(eyesocket);
-            limbs.Add(eyesocket);
-
-            //Smash mouth
-            var mouth_organs = new List<Organ>();
-            mouth_organs.Add(snowflake_mouth);
-            var mouth = new Limb("Mouth", HumanBodyMapDef.Mouth, mouth_organs, new List<Limb>(), standard_health, "", "mouth", Owner, true);
-            head_children.Add(mouth);
-            limbs.Add(mouth);
-
             //Head
             var head_organs = new List<Organ>();
             head_organs.Add(brain);
             head_organs.Add(snowflake_mouth);
             head_organs.Add(snowflake_eyes);
-            var head = new Limb("Head", HumanBodyMapDef.Head, head_organs, head_children, standard_health, "HumanHead", "head", Owner);
+            var head = new Limb("Head", HumanBodyMapDef.Head, head_organs, head_children, standard_health, "HumanHead", "Mob/UI/Human/head.png", Owner);
             chest_children.Add(head);
             limbs.Add(head);
 
             //Hands
             var arm_l_organs = new List<Organ>();
             arm_l_organs.Add(snowflake_l_hand);
-            var arm_l = new Limb("Left Arm", HumanBodyMapDef.LeftHand, arm_l_organs, new List<Limb>(), standard_health, "HumanLArm", "l_arm", Owner, false, true);
+            var arm_l = new Limb("Left Arm", HumanBodyMapDef.LeftHand, arm_l_organs, new List<Limb>(), standard_health, "HumanLArm", "Mob/UI/Human/l_arm.png", Owner, false, true);
             hand_l_child.Add(arm_l);
             limbs.Add(arm_l);
 
             var hand_l_organs = new List<Organ>();
             hand_l_organs.Add(snowflake_l_hand);
-            var hand_l = new Limb("Left Hand", HumanBodyMapDef.LeftHand, hand_l_organs, hand_l_child, standard_health, "HumanLHand", "l_hand", Owner);
+            var hand_l = new Limb("Left Hand", HumanBodyMapDef.LeftHand, hand_l_organs, hand_l_child, standard_health, "HumanLHand", "Mob/UI/Human/l_hand.png", Owner);
             chest_children.Add(hand_l);
             limbs.Add(hand_l);
 
             var arm_r_organs = new List<Organ>();
             arm_r_organs.Add(snowflake_r_hand);
-            var arm_r = new Limb("Right Arm", HumanBodyMapDef.RightArm, arm_r_organs, new List<Limb>(), standard_health, "HumanRArm", "r_arm", Owner, false, true);
+            var arm_r = new Limb("Right Arm", HumanBodyMapDef.RightArm, arm_r_organs, new List<Limb>(), standard_health, "HumanRArm", "Mob/UI/Human/r_arm.png", Owner, false, true);
             hand_r_child.Add(arm_r);
             limbs.Add(arm_r);
 
             var hand_r_organs = new List<Organ>();
             hand_r_organs.Add(snowflake_r_hand);
-            var hand_r = new Limb("Right Hand", HumanBodyMapDef.RightHand, hand_r_organs, hand_r_child, standard_health, "HumanRHand", "r_hand", Owner);
+            var hand_r = new Limb("Right Hand", HumanBodyMapDef.RightHand, hand_r_organs, hand_r_child, standard_health, "HumanRHand", "Mob/UI/Human/r_hand.png", Owner);
             chest_children.Add(hand_r);
             limbs.Add(hand_r);
 
             //Legs
             var foot_l_organs = new List<Organ>();
             foot_l_organs.Add(snowflake_l_leg);
-            var foot_l = new Limb("Left Foot", HumanBodyMapDef.LeftFeet, foot_l_organs, new List<Limb>(), standard_health, "HumanLFoot", "l_foot", Owner);
+            var foot_l = new Limb("Left Foot", HumanBodyMapDef.LeftFeet, foot_l_organs, new List<Limb>(), standard_health, "HumanLFoot", "Mob/UI/Human/l_foot.png", Owner);
             leg_l_child.Add(foot_l);
             limbs.Add(foot_l);
 
             var leg_l_organs = new List<Organ>();
             leg_l_organs.Add(snowflake_l_leg);
-            var leg_l = new Limb("Left Leg", HumanBodyMapDef.LeftLeg, leg_l_organs, leg_l_child, standard_health, "HumanLLeg", "l_leg", Owner, false, true);
+            var leg_l = new Limb("Left Leg", HumanBodyMapDef.LeftLeg, leg_l_organs, leg_l_child, standard_health, "HumanLLeg", "Mob/UI/Human/l_leg.png", Owner, false, true);
             groin_children.Add(leg_l);
             limbs.Add(leg_l);
 
             var foot_r_organs = new List<Organ>();
             foot_r_organs.Add(snowflake_r_leg);
-            var foot_r = new Limb("Right Foot", HumanBodyMapDef.RightFeet, foot_r_organs, new List<Limb>(), standard_health, "HumanRFoot", "r_foot", Owner);
+            var foot_r = new Limb("Right Foot", HumanBodyMapDef.RightFeet, foot_r_organs, new List<Limb>(), standard_health, "HumanRFoot", "Mob/UI/Human/r_foot.png", Owner);
             leg_r_child.Add(foot_r);
             limbs.Add(foot_r);
 
             var leg_r_organs = new List<Organ>();
             leg_r_organs.Add(snowflake_r_leg);
-            var leg_r = new Limb("Right Leg", HumanBodyMapDef.RightLeg, leg_r_organs, leg_r_child, standard_health, "HumanRLeg", "r_leg", Owner, false, true);
+            var leg_r = new Limb("Right Leg", HumanBodyMapDef.RightLeg, leg_r_organs, leg_r_child, standard_health, "HumanRLeg", "Mob/UI/Human/r_leg.png", Owner, false, true);
             groin_children.Add(leg_r);
             limbs.Add(leg_r);
 
             //Groin
             var groin_organs = new List<Organ>();
             groin_organs.Add(kidneys);
-            var groin = new Limb("Groin", HumanBodyMapDef.Groin, head_organs, groin_children, standard_health, "HumanGroin", "groin", Owner);
+            var groin = new Limb("Groin", HumanBodyMapDef.Groin, head_organs, groin_children, standard_health, "HumanGroin", "Mob/UI/Human/groin.png", Owner);
             chest_children.Add(groin);
             limbs.Add(groin);
 
@@ -167,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             chest_organs.Add(heart);
             chest_organs.Add(lungs);
             chest_organs.Add(liver);
-            var chest = new Limb("Chest", HumanBodyMapDef.Chest, chest_organs, chest_children, standard_health, "HumanChest", "chest", Owner);
+            var chest = new Limb("Chest", HumanBodyMapDef.Chest, chest_organs, chest_children, standard_health, "HumanChest", "Mob/UI/Human/chest.png", Owner);
             limbs.Add(chest);
 
             return limbs;

@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects
                 case ThresholdType.Critical:
                     return new HudStateChange()
                     {
-                        StateSprites = new List<LimbRender> { new LimbRender("Mob/UI/Human/humancrit-0.png") }, //TODO: display as gif or alternate with -0 and -1 as frames
+                        StateSprites = new List<LimbRender> { new LimbRender("Mob/UI/Human/humancrit-0.png") }, //TODO: display as gif or alternate with -0 and -1 as frames (wyci)
                         effect = ScreenEffects.GradientCircleMask
                     };
                 case ThresholdType.Death:

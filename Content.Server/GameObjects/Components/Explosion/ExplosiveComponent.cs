@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Explosive
 
         private bool Explosion()
         {
-            var maxRange = MathHelper.Max(DevastationRange, HeavyImpactRange, LightImpactRange, 0f);
+            var maxRange = MathHelper.Max(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
             //Entity damage calculation
             var entitiesAll = _serverEntityManager.GetEntitiesInRange(Owner.Transform.GridPosition, maxRange).ToList();
 
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Explosive
                 if (!string.IsNullOrWhiteSpace(tileDef.SubFloor)) {
                     if (distanceFromTile < DevastationRange)
                         mapGrid.SetTile(tileLoc, new Tile(_tileDefinitionManager["space"].TileId));
-                    if (distanceFromTile < HeavyImpactRange)
+                    else if (distanceFromTile < HeavyImpactRange)
                     {
                         if (new Random().Prob(80))
                         {
@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Explosive
                             mapGrid.SetTile(tileLoc, new Tile(_tileDefinitionManager["space"].TileId));
                         }
                     }
-                    if (distanceFromTile < LightImpactRange)
+                    else if (distanceFromTile < LightImpactRange)
                     {
                         if (new Random().Prob(50))
                         {

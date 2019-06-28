@@ -65,8 +65,11 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
                 case LimbState.Healthy:
                     color = new Color(0, 255, 0);
                     break;
-                case LimbState.Injured:
+                case LimbState.InjuredLightly:
                     color = new Color(255, 255, 0);
+                    break;
+                case LimbState.Injured:
+                    color = new Color(255, 165, 0);
                     break;
                 case LimbState.InjuredSeverely:
                     color = new Color(255, 0, 0);
@@ -97,6 +100,23 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             Dispose();
         }
 
+        public void HandleDecapitation(bool spawn)
+        {
+            State = LimbState.Missing;
+            foreach (var organ in Organs)
+            {
+                organ.State = OrganState.Dead;
+            }
+            foreach (var child in Children)
+            {
+                child.HandleDecapitation(SnowflakeParent);
+            }
+            if (spawn)
+            {
+                SpawnPrototypeEntity();
+            }
+        }
+
         private void Dispose()
         {
             Children = null;
@@ -114,9 +134,14 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public void HandleDamage(int damage) //TODO: test prob numbers
         {
-            switch (ChangeHealthValue(damage))
+            if (State == LimbState.Missing)
             {
-                case LimbState.Healthy:
+                return; //It doesn't exist, so it's unaffected by damage/heal
+            }
+            var state = ChangeHealthValue(damage);
+            switch (state)
+            {
+                case LimbState.InjuredLightly:
                     if(_seed.Prob(0.1f))
                     {
                         _seed.Pick(Organs).HandleDamage(damage);
@@ -129,9 +154,17 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
                         _seed.Pick(Organs).HandleDamage(damage);
                     }
                     break;
+                case LimbState.InjuredSeverely:
+                    _seed.Pick(Organs).HandleDamage(damage);
+                    break;
                 case LimbState.Missing:
+                    if (State != state)
+                    {
+                        HandleDecapitation(true);
+                    }
                     break;
             }
+            State = state;
             Logger.DebugS("Limb", "Limb {0} received {1} damage!", Name, damage);
 
         }
@@ -154,23 +187,18 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
                 CurrentHealth = MaxHealth;
             }
 
-            switch (CurrentHealth)
+            switch ((float)CurrentHealth)
             {
-                case int n when (n > MaxHealth / 2):
-                    State = LimbState.Healthy;
-                    break;
-                case int n when (n <= MaxHealth / 2 && n > MaxHealth / 3):
-                    State = LimbState.Injured;
-                    break;
-                case int n when (n <= MaxHealth / 3 && n > 0):
-                    State = LimbState.InjuredSeverely;
-                    break;
-                case int n when (n == 0):
-                    State = LimbState.Missing;
-                    break;
-                default:
-                    break;
-
+                case float n when (n > MaxHealth / 0.75f):
+                    return LimbState.Healthy;
+                case float n when (n <= MaxHealth / 0.75f && n > MaxHealth / 3f):
+                    return LimbState.InjuredLightly;
+                case float n when (n <= MaxHealth / 2f && n > MaxHealth / 4f):
+                    return LimbState.Injured;
+                case float n when (n <= MaxHealth / 4f && Math.Abs(n) > float.Epsilon):
+                    return LimbState.InjuredSeverely;
+                case float n when (Math.Abs(n) < float.Epsilon):
+                    return LimbState.Missing;
             }
             return State;
         }
@@ -179,6 +207,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
     public enum LimbState
     {
         Healthy,
+        InjuredLightly,
         Injured,
         InjuredSeverely,
         Missing

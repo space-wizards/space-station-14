@@ -100,8 +100,15 @@ namespace Content.Client.GameObjects
         }
 
         private void ChangeHudIcon(HudStateChange changemessage)
-        { 
-            _windows.SetIcons(changemessage.StateSprites);
+        {
+            _windows.ResetTextures();
+            foreach (var sprite in changemessage.StateSprites)
+            {
+                var window = new MobWindow();
+                window.SetIcon(sprite);
+
+                _windows.AddChild(window);
+            }
             SetOverlay(changemessage);
         }
 
@@ -145,7 +152,7 @@ namespace Content.Client.GameObjects
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
                 SizeFlagsVertical = SizeFlags.None;
 
-                Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Mob/UI/Human/human0.png");
+                //Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Mob/UI/Human/human0.png");
             }
 
             public void SetIcon(LimbRender limb)
@@ -157,34 +164,33 @@ namespace Content.Client.GameObjects
                 }
 
                 Texture = newtexture;
-                if (limb.Color != null)
+                if (System.Math.Abs(limb.Color.A) > float.Epsilon)
                 {
                     Modulate = limb.Color;
                 }
             }
         }
 
-        private class MobWindows: Control
+        private class MobWindows: MarginContainer
         {
-            public List<MobWindow> _windows;
-
             public MobWindows()
             {
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
-                SizeFlagsVertical = SizeFlags.None;
-                _windows = new List<MobWindow> { new MobWindow() };
+                CustomMinimumSize = (32, 32);
             }
 
-            public void SetIcons(List<LimbRender> limbs)
+            public void ResetTextures()
             {
-                _windows = new List<MobWindow>();
-                foreach (var limb in limbs)
-                {
-                    var window = new MobWindow();
-                    window.SetIcon(limb);
-                    _windows.Add(window);
-                }
+                DisposeAllChildren();
             }
+
+            //public void SetIcons(List<LimbRender> limbs)
+            //{
+            //    for (var i = 0; i < limbs.Count; i++)
+            //    {
+            //        var window = (MobWindow)GetChild(i);
+            //        window.SetIcon(limbs[i]);
+            //    }
+            //}
         }
     }
 }

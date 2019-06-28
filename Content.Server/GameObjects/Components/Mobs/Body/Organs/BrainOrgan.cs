@@ -55,6 +55,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         private List<string> fillBrainDamageList()
         {
             return new List<string>(new string[] {
+                "HURR DURR IS SPESSMENS READY YET?",
                 "FUS RO DAH",
                 "fucking 4rries!",
                 "stat me",

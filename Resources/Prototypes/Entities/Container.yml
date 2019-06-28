@@ -53,7 +53,7 @@
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
-    lightImpactRange: 4
+    lightImpactRange: 6
     flashRange: 5
 
   placement:
