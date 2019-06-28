@@ -7,18 +7,16 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
     public enum HumanBodyMapDef
     {
         Head,
-        Eyes,
-        Mouth,
         Chest,
-        LeftHand,
-        RightHand,
         LeftArm,
         RightArm,
+        LeftHand,
+        RightHand,
         Groin,
         LeftLeg,
         RightLeg,
-        LeftFeet,
-        RightFeet
+        LeftFoot,
+        RightFoot
     }
     public class Human : BodyTemplate
     {
@@ -38,7 +36,6 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             //Limb tree
             var chest_children = new List<Limb>();
             var groin_children = new List<Limb>();
-            var head_children = new List<Limb>();
             var hand_l_child = new List<Limb>();
             var hand_r_child = new List<Limb>();
             var leg_l_child = new List<Limb>();
@@ -87,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             head_organs.Add(brain);
             head_organs.Add(snowflake_mouth);
             head_organs.Add(snowflake_eyes);
-            var head = new Limb("Head", HumanBodyMapDef.Head, head_organs, head_children, standard_health, "HumanHead", "Mob/UI/Human/head.png", Owner);
+            var head = new Limb("Head", HumanBodyMapDef.Head, head_organs, new List<Limb>(), standard_health, "HumanHead", "Mob/UI/Human/head.png", Owner);
             chest_children.Add(head);
             limbs.Add(head);
 
@@ -119,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             //Legs
             var foot_l_organs = new List<Organ>();
             foot_l_organs.Add(snowflake_l_leg);
-            var foot_l = new Limb("Left Foot", HumanBodyMapDef.LeftFeet, foot_l_organs, new List<Limb>(), standard_health, "HumanLFoot", "Mob/UI/Human/l_foot.png", Owner);
+            var foot_l = new Limb("Left Foot", HumanBodyMapDef.LeftFoot, foot_l_organs, new List<Limb>(), standard_health, "HumanLFoot", "Mob/UI/Human/l_foot.png", Owner);
             leg_l_child.Add(foot_l);
             limbs.Add(foot_l);
 
@@ -131,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
             var foot_r_organs = new List<Organ>();
             foot_r_organs.Add(snowflake_r_leg);
-            var foot_r = new Limb("Right Foot", HumanBodyMapDef.RightFeet, foot_r_organs, new List<Limb>(), standard_health, "HumanRFoot", "Mob/UI/Human/r_foot.png", Owner);
+            var foot_r = new Limb("Right Foot", HumanBodyMapDef.RightFoot, foot_r_organs, new List<Limb>(), standard_health, "HumanRFoot", "Mob/UI/Human/r_foot.png", Owner);
             leg_r_child.Add(foot_r);
             limbs.Add(foot_r);
 

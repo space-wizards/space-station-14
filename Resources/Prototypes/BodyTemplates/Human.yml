@@ -1,0 +1,76 @@
+- type: Human
+  limbs:
+    - type: HumanChest
+    node: enum.HumanBodyMapDef.Chest
+    organs:
+      - type: HumanHeart
+      - type: HumanLiver
+      - type: HumanLungs
+
+    - type: HumanHead
+    node: enum.HumanBodyMapDef.Head
+    parent: HumanChest
+    organs:
+      - type: HumanBrain
+      - type: HumanEyes
+      - type: HumanTongue
+    additionalTargets:
+      - node: enum.Target.Mouth
+        targetOrgan: HumanTongue
+      - node: enum.Target.Eyes
+        targetOrgan: HumanEyes
+
+    - type: HumanLArm
+    node: enum.HumanBodyMapDef.LeftArm
+    parent: HumanChest
+    childOrganDamage: true
+
+    - type: HumanLHand
+    node: enum.HumanBodyMapDef.LeftHand
+    parent: HumanLArm
+    directOrganDamage: true
+    organs:
+      - type: HumanHand 
+
+    - type: HumanRArm
+    node: enum.HumanBodyMapDef.RightArm
+    parent: HumanChest
+    childOrganDamage: true
+
+    - type: HumanRHand
+    node: enum.HumanBodyMapDef.RightHand
+    parent: HumanRArm
+    directOrganDamage: true
+    organs:
+      - type: HumanHand 
+
+    - type: HumanGroin
+    node: enum.HumanBodyMapDef.Groin
+    parent: HumanChest
+    organs:
+      - type: HumanKidneys    
+
+    - type: HumanLLeg
+    node: enum.HumanBodyMapDef.LeftLeg
+    parent: HumanGroin
+    childOrganDamage: true
+
+    - type: HumanLFoot
+    node: enum.HumanBodyMapDef.LeftFoot
+    parent: HumanLLeg
+    directOrganDamage: true
+    organs:
+      - type: HumanLeg
+
+    - type: HumanRLeg
+    node: enum.HumanBodyMapDef.RightLeg
+    parent: HumanGroin
+    childOrganDamage: true
+    
+    - type: HumanRFoot
+    node: enum.HumanBodyMapDef.RightFoot
+    parent: HumanRLeg
+    directOrganDamage: true
+    organs:
+      - type: HumanLeg
+     

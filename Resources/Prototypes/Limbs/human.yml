@@ -1,0 +1,65 @@
+- id: HumanHead
+  name: Human Head
+  health: 100
+  dollIcon: Human/head.png
+  prototype: HumanHead
+
+- id: HumanChest
+  name: Human Chest
+  health: 100
+  dollIcon: Human/chest.png
+  prototype: HumanChest
+
+- id: HumanGroin
+  name: Human Groin
+  health: 100
+  dollIcon: Human/groin.png
+  prototype: HumanGroin
+
+- id: HumanLArm
+  name: Human Left Arm
+  health: 100
+  dollIcon: Human/l_arm.png
+  prototype: HumanLArm
+
+- id: HumanLHand
+  name: Human Left Hand
+  health: 100
+  dollIcon: Human/l_hand.png
+  prototype: HumanLHand
+
+- id: HumanRArm
+  name: Human Right Arm
+  health: 100
+  dollIcon: Human/l_arm.png
+  prototype: HumanLArm
+
+- id: HumanRHand
+  name: Human Right Hand
+  health: 100
+  dollIcon: Human/r_hand.png
+  prototype: HumanRHand
+
+- id: HumanLLeg
+  name: Human Left Leg
+  health: 100
+  dollIcon: Human/l_leg.png
+  prototype: HumanLLeg
+
+- id: HumanLFoot
+  name: Human Left Foot
+  health: 100
+  dollIcon: Human/l_foot.png
+  prototype: HumanLFoot
+
+- id: HumanRLeg
+  name: Human Right Leg
+  health: 100
+  dollIcon: Human/r_leg.png
+  prototype: HumanRLeg
+
+- id: HumanRFoot
+  name: Human Right Foot
+  health: 100
+  dollIcon: Human/r_foot.png
+  prototype: HumanRFoot
