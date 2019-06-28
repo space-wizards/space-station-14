@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Input;
@@ -13,6 +14,8 @@ namespace Content.Client.Chat
     public class ChatBox : PanelContainer
     {
         public delegate void TextSubmitHandler(ChatBox chatBox, string text);
+
+        public delegate void FilterPressedHandler(ChatBox chatBox, Button.ButtonEventArgs e);
 
         private const int MaxLinePixelLength = 500;
 
@@ -69,23 +72,27 @@ namespace Content.Client.Chat
 
             AllButton = new Button()
             {
-                Text = "All",
+                Text = "ALL",
+                Name = "ALL",
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsStretchRatio = 1
+                SizeFlagsStretchRatio = 1,
+                ToggleMode = true
             };
-            AllButton.OnPressed += OnOOCPressed;
-
-            hBox.AddChild(AllButton);
 
             OOCButton = new Button()
             {
                 Text = "OOC",
+                Name = "OOC",
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsStretchRatio = 1
+                SizeFlagsStretchRatio = 1,
+                ToggleMode = true
             };
             
+            AllButton.OnToggled += OnFilterToggled;
+            OOCButton.OnToggled += OnFilterToggled;
+            hBox.AddChild(AllButton);
             hBox.AddChild(OOCButton);
 
             AddChild(vBox);
@@ -93,10 +100,10 @@ namespace Content.Client.Chat
             PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Gray.WithAlpha(0.5f) };
         }
 
-        private void OnOOCPressed(Button.ButtonEventArgs args)
-        {
-            ChatFilter.ButtonHandler();
-        }
+
+
+
+
 
         protected override void MouseDown(GUIMouseButtonEventArgs e)
         {
@@ -167,18 +174,27 @@ namespace Content.Client.Chat
 
         public event TextSubmitHandler TextSubmitted;
 
-        public void AddLine(string message, ChatChannel channel, Color color)
+        public event FilterPressedHandler FilterPressed;
+
+        public void AddLine(string message, ChatChannel channel, Color color, DateTime timestamp)
         {
+            // TODO implement re-inserting missed messages into chat, sort chat by timestamp
             if (Disposed)
             {
                 return;
             }
 
             var formatted = new FormattedMessage(3);
+            formatted.AddTimeStamp(timestamp);
             formatted.PushColor(color);
             formatted.AddText(message);
             formatted.Pop();
             contents.AddMessage(formatted);
+        }
+
+        private void OnFilterToggled(Button.ButtonEventArgs args)
+        {
+            FilterPressed?.Invoke(this, args);
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)

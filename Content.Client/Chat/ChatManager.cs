@@ -7,6 +7,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Robust.Client.UserInterface.Controls;
+using System.Collections.Generic;
 
 namespace Content.Client.Chat
 {
@@ -15,6 +17,16 @@ namespace Content.Client.Chat
         private const char ConCmdSlash = '/';
         private const char OOCAlias = '[';
         private const char MeAlias = '@';
+
+        // Holds any missed messages due to filtering for re-addition to chat later
+        public List<MsgChatMessage> filteredHistory = new List<MsgChatMessage>();
+
+        // Filter Button states
+        private bool _ALLstate;
+        private bool _OOCstate;
+
+        // List for holding currently filtered channels
+        public List<Enum> filteredChannels = new List<Enum>();
 
 #pragma warning disable 649
         [Dependency] private readonly IClientNetManager _netManager;
@@ -33,12 +45,14 @@ namespace Content.Client.Chat
             if (_currentChatBox != null)
             {
                 _currentChatBox.TextSubmitted -= _onChatBoxTextSubmitted;
+                _currentChatBox.FilterPressed -= _onFilterButtonToggled;
             }
 
             _currentChatBox = chatBox;
             if (_currentChatBox != null)
             {
                 _currentChatBox.TextSubmitted += _onChatBoxTextSubmitted;
+                _currentChatBox.FilterPressed += _onFilterButtonToggled;
             }
         }
 
@@ -46,24 +60,46 @@ namespace Content.Client.Chat
         {
             Logger.Debug($"{message.Channel}: {message.Message}");
 
-            var color = Color.DarkGray;
-            var messageText = message.Message;
-            if (!string.IsNullOrEmpty(message.MessageWrap))
-            {
-                messageText = string.Format(message.MessageWrap, messageText);
-            }
+            // Set time message sent
+            message.TimeStamp = DateTime.Now;
 
-            switch (message.Channel)
+            if (!IsFiltered(message))
             {
-                case ChatChannel.Server:
-                    color = Color.Orange;
-                    break;
-                case ChatChannel.OOC:
-                    color = Color.LightSkyBlue;
-                    break;
-            }
 
-            _currentChatBox?.AddLine(messageText, message.Channel, color);
+                var color = Color.DarkGray;
+                var messageText = message.Message;
+
+                if (!string.IsNullOrEmpty(message.MessageWrap))
+                {
+                    messageText = string.Format(message.MessageWrap, messageText);
+                }
+
+
+                switch (message.Channel)
+                {
+                    case ChatChannel.Server:
+                        color = Color.Orange;
+                        break;
+                    case ChatChannel.OOC:
+                        color = Color.LightSkyBlue;
+                        break;
+                }
+
+                _currentChatBox?.AddLine(messageText, message.Channel, color, message.TimeStamp);
+            }
+            else
+            {
+                filteredHistory.Add(message);
+                foreach (MsgChatMessage msg in filteredHistory)
+                {
+                    System.Console.WriteLine(msg.Message);
+                    System.Console.WriteLine(msg.TimeStamp);
+                }
+                foreach (var channel in filteredChannels)
+                {
+                    System.Console.WriteLine(channel);
+                }
+            }
         }
 
         private void _onChatBoxTextSubmitted(ChatBox chatBox, string text)
@@ -104,5 +140,64 @@ namespace Content.Client.Chat
                 }
             }
         }
+
+        private void _onFilterButtonToggled(ChatBox chatBox, Button.ButtonEventArgs e)
+        {
+
+            System.Console.WriteLine("A button was toggled");
+            switch (e.Button.Name)
+            {
+                case "OOC":
+
+                _OOCstate = !_OOCstate;
+                if (_OOCstate)
+                {
+                    filteredChannels.Add(ChatChannel.OOC);
+                    break;
+                } else
+                {
+                    filteredChannels.Remove(ChatChannel.OOC);
+                    // TODO re-populate chatbox with missed messages matching this channel type
+                    break;
+                }
+
+                default:
+
+                _ALLstate = !_ALLstate;
+                if (_ALLstate)
+                {
+                    foreach (string enumString in ChatChannel.GetNames(typeof(ChatChannel)))
+                    {
+                        ChatChannel.TryParse(enumString, out ChatChannel channel);
+                        filteredChannels.Add(channel);
+                    }
+                }
+                else 
+                {
+                    foreach (string enumString in ChatChannel.GetNames(typeof(ChatChannel)))
+                    {
+                        ChatChannel.TryParse(enumString, out ChatChannel channel);
+                        filteredChannels.Remove(channel);
+                    }                    
+                }
+
+                break;
+            }
+        }
+
+        private bool IsFiltered(MsgChatMessage message)
+        {
+            if (filteredChannels.Contains(message.Channel))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+       
+
     }
 }

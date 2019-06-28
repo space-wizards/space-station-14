@@ -21,6 +21,11 @@ namespace Content.Shared.Chat
         #endregion
 
         /// <summary>
+        ///     The time the message is created.
+        /// </summary>
+        public DateTime TimeStamp { get; set; }
+
+        /// <summary>
         ///     The channel the message is on. This can also change whether certain params are used.
         /// </summary>
         public ChatChannel Channel { get; set; }

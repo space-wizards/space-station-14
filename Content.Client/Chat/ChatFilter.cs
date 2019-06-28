@@ -10,16 +10,20 @@ using Robust.Shared.Utility;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Log;
 
+
 namespace Content.Client.Chat
 {
     public class ChatFilter
     {
         // TODO add property for selected filter mode
         // Fix t getting eaten by 
-
-        static public void ButtonHandler()
+        
+        private enum ToggledChannels
         {
-            Logger.Debug("Received event from a filter button");
+            ALL,
+            OOC
         }
+
+
     }
 }
