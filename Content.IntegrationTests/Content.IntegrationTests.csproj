@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <OutputPath>..\bin\Content.IntegrationTests\</OutputPath>
@@ -6,6 +7,7 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Platforms>x86;x64</Platforms>
   </PropertyGroup>
+  <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
@@ -22,6 +24,9 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
     <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
   </ItemGroup>
-  <Import Project="..\MSBuild\Robust.Engine.targets" />
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Engine.targets" />
+  <PropertyGroup>
+    <RobustToolsPath>..\RobustToolbox\Tools\</RobustToolsPath>
+  </PropertyGroup>
   <Target Name="RobustAfterBuild" DependsOnTargets="CopySS14Noise;CopyMiscDependencies" AfterTargets="Build" />
 </Project>
