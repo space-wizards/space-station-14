@@ -22,4 +22,6 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
     <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
   </ItemGroup>
+  <Import Project="..\MSBuild\Robust.Engine.targets" />
+  <Target Name="RobustAfterBuild" DependsOnTargets="CopySS14Noise;CopyMiscDependencies" AfterTargets="Build" />
 </Project>
