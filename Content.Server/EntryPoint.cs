@@ -186,6 +186,8 @@ namespace Content.Server
             factory.Register<FootstepModifierComponent>();
             factory.Register<EmitSoundOnUseComponent>();
 
+            factory.Register<CombatModeComponent>();
+
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IGameTicker, GameTicker>();
