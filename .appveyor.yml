@@ -16,3 +16,9 @@ before_build:
 
 build_script:
 - ps: msbuild SpaceStation14.sln /v:m /nologo /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Platform=x64 /p:Configuration=Debug /p:AppVeyor=yes
+
+test:
+  assemblies:
+    only:
+    - bin/Content.IntegrationTests/Content.IntegrationTests.dll
+    - bin/Content.Tests/Content.Tests.dll
