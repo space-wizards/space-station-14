@@ -6,7 +6,7 @@ using Robust.UnitTesting;
 namespace Content.IntegrationTests
 {
     [TestFixture]
-    public class StartTest : RobustIntegrationTest
+    public class StartTest : ContentIntegrationTest
     {
         /// <summary>
         ///     Test that the server starts.
@@ -15,8 +15,6 @@ namespace Content.IntegrationTests
         public async Task TestServerStart()
         {
             var server = StartServer();
-            await server.WaitIdleAsync();
-            Assert.That(server.IsAlive);
             server.RunTicks(5);
             await server.WaitIdleAsync();
             Assert.That(server.IsAlive);
@@ -25,7 +23,6 @@ namespace Content.IntegrationTests
             server.Stop();
             await server.WaitIdleAsync();
             Assert.That(!server.IsAlive);
-            Assert.That(server.UnhandledException, Is.Null);
         }
 
         /// <summary>

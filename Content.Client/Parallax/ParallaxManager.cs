@@ -1,14 +1,13 @@
 using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Content.Client.Interfaces.Parallax;
-using ICSharpCode.SharpZipLib.Checksum;
 using Nett;
 using SixLabors.ImageSharp;
 using SixLabors.Primitives;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Log;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -16,11 +15,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax
 {
-    public class ParallaxManager : IParallaxManager
+    internal sealed class ParallaxManager : IParallaxManager, IPostInjectInit
     {
 #pragma warning disable 649
         [Dependency] private readonly IResourceCache _resourceCache;
         [Dependency] private readonly ILogManager _logManager;
+        [Dependency] private readonly IConfigurationManager _configurationManager;
 #pragma warning restore 649
 
         private static readonly ResourcePath ParallaxConfigPath = new ResourcePath("/parallax_config.toml");
@@ -34,6 +34,11 @@ namespace Content.Client.Parallax
 
         public async void LoadParallax()
         {
+            if (!_configurationManager.GetCVar<bool>("parallax.enabled"))
+            {
+                return;
+            }
+
             MemoryStream configStream = null;
             string contents;
             TomlTable table;
@@ -98,6 +103,11 @@ namespace Content.Client.Parallax
             }
 
             OnTextureLoaded?.Invoke(ParallaxTexture);
+        }
+
+        public void PostInject()
+        {
+            _configurationManager.RegisterCVar("parallax.enabled", true);
         }
     }
 }
