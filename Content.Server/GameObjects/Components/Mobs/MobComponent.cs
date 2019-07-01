@@ -232,4 +232,23 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// </summary>
         public MobComponent Mob { get; }
     }
+    [Serializable]
+    public enum AttackTargetDef
+    {
+        Head,
+        Eyes,
+        Mouth,
+        Chest,
+        LeftArm,
+        RightArm,
+        LeftHand,
+        RightHand,
+        Groin,
+        LeftLeg,
+        RightLeg,
+        LeftFoot,
+        RightFoot,
+        SeveralTargets,
+        All
+    }
 }

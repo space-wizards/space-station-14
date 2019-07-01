@@ -26,16 +26,17 @@ namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
         public string GibletEntity;
         public string Parent;
         public BodyTemplate Body;
-        ObjectSerializer serializer;
+        YamlMappingNode _mapping;
 
         public void LoadFrom(YamlMappingNode mapping)
         {
-            serializer = YamlObjectSerializer.NewReader(mapping);
+            var serializer = YamlObjectSerializer.NewReader(mapping);
             serializer.DataField(ref Name, "name", "");
             serializer.DataField(ref Id, "id", "");
             serializer.DataField(ref MaxHealth, "health", 0);
             serializer.DataField(ref PrototypeEnitity, "prototype", "");
             serializer.DataField(ref Parent, "parent", "");
+            _mapping = mapping;
         }
 
         public Organ Create()
@@ -45,13 +46,13 @@ namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
                 return null;
             }
             Type newtype = AppDomain.CurrentDomain.GetAssemblyByName("Content.Server")
-                .GetType("Content.Server.GameObjects.Components.Mobs.Body.Organ" + Parent);
+                .GetType("Content.Server.GameObjects.Components.Mobs.Body.Organs." + Parent);
             var organ = (Organ)Activator.CreateInstance(newtype);
             organ.Name = Name;
             organ.Id = Id;
             organ.MaxHealth = MaxHealth;
             organ.PrototypeEnitity = PrototypeEnitity;
-            organ.ExposeData(serializer);
+            organ.ExposeData(_mapping);
             return organ;
         }
     }

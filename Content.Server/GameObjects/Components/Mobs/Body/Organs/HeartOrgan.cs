@@ -1,6 +1,7 @@
 ﻿using System;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
 {
@@ -18,8 +19,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
             blood = Body.Blood;
         }
 
-        public override void ExposeData(ObjectSerializer obj)
+        public override void ExposeData(YamlMappingNode mapping)
         {
+            var obj = YamlObjectSerializer.NewReader(mapping);
             obj.DataField(ref MaxRate, "maxHeartRate", 240);
             CurrentRate = MaxRate / 2;
         }

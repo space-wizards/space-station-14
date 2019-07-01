@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
 
         public virtual void Startup() { }
 
-        public virtual void ExposeData(ObjectSerializer obj) { }
+        public virtual void ExposeData(YamlMappingNode mapping) { }
 
         public virtual void Life(int lifeTick) { }
 

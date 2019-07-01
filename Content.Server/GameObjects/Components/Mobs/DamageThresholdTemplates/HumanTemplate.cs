@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects
                     {
                         return new HudStateChange()
                         {
-                            StateSprites = new List<LimbRender> { new LimbRender("Mob/UI/Human/human0.png") },
+                            StateSprites = new List<LimbRender> { new LimbRender("Human/human0.png") },
                             effect = ScreenEffects.None
                         };
                     }
@@ -59,13 +59,13 @@ namespace Content.Server.GameObjects
                 case ThresholdType.Critical:
                     return new HudStateChange()
                     {
-                        StateSprites = new List<LimbRender> { new LimbRender("Mob/UI/Human/humancrit-0.png") }, //TODO: display as gif or alternate with -0 and -1 as frames (wyci)
+                        StateSprites = new List<LimbRender> { new LimbRender("Human/humancrit-0.png") }, //TODO: display as gif or alternate with -0 and -1 as frames (wyci)
                         effect = ScreenEffects.GradientCircleMask
                     };
                 case ThresholdType.Death:
                     return new HudStateChange()
                     {
-                        StateSprites = new List<LimbRender> { new LimbRender("Mob/UI/Human/humandead.png") },
+                        StateSprites = new List<LimbRender> { new LimbRender("Human/humandead.png") },
                         effect = ScreenEffects.CircleMask
                     };
                 default:

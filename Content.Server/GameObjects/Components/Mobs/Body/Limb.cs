@@ -9,6 +9,10 @@ using YamlDotNet.RepresentationModel;
 using Robust.Shared.Prototypes;
 using Content.Server.GameObjects.Components.Mobs.Body.Organs;
 using Robust.Shared.IoC;
+using System.Linq;
+using Robust.Shared.Utility;
+using Robust.Shared.Interfaces.Reflection;
+using Robust.Shared.Reflection;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
@@ -23,27 +27,30 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 #pragma warning disable CS0649
         [Dependency]
         protected IPrototypeManager PrototypeManager;
+        protected IReflectionManager reflectionManager;
 #pragma warning restore
 
         public string Name;
         public string Id;
-        private List<string> _organProts;
-        public List<OrganPrototype> LoadOrgans;
-        public List<Organ> Organs;
+        public List<string> _organProt = new List<string>();
+        public List<Organ> Organs = new List<Organ>();
         AttackTargetDef AttackTarget;
-        public List<Limb> Children;
-        public Limb Parent;
-        public List<LimbStatus> Statuses;
+        string TargetKey;
+        public List<Limb> Children = new List<Limb>();
+        public string Parent;
+        public List<LimbStatus> Statuses = new List<LimbStatus>();
         public LimbState State;
         int MaxHealth;
         int CurrentHealth;
         public IEntity Owner;
+        public BodyTemplate BodyOwner;
         public float BloodChange = 0f;
         public string PrototypeEntity = "";
         public string RenderLimb = "";
-        public bool SnowflakeTarget; //limbs that are used for targeting, so they can't be deattached without parent (mouth, eyes)
-        public bool SnowflakeParent; //limbs that are used for deattaching, they'll get deleted if parent is dropped. (arms, legs)
-        Dictionary<string, object> addTargets;
+        private bool childOrganDamage; //limbs that are used for deattaching, they'll get deleted if parent is dropped. (arms, legs)
+        private bool directOrganDamage;
+        private Dictionary<string, string> _addTargetKeys = new Dictionary<string, string>();
+        private List<AdditionalTarget> _addTargets = new List<AdditionalTarget>();
         Random _seed;
 
         string IIndexedPrototype.ID => Id;
@@ -54,32 +61,57 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             obj.DataField(ref Id, "id", "");
             obj.DataField(ref Name, "name", "");
             obj.DataField(ref MaxHealth, "health", 0);
-            obj.DataField(ref AttackTarget, "target", AttackTargetDef.All);
+            obj.DataField(ref TargetKey, "target", "");
             obj.DataField(ref RenderLimb, "dollIcon", "");
             obj.DataField(ref PrototypeEntity, "prototype", "");
-            obj.DataField(ref Parent, "parent", null);
-            obj.DataField(ref _organProts, "organs", new List<string>());
+            obj.DataField(ref Parent, "parent", "");
+            obj.DataField(ref childOrganDamage, "childOrganDamage", false);
+            obj.DataField(ref directOrganDamage, "directOrganDamage", false);
+
+            if (mapping.TryGetNode<YamlSequenceNode>("additionalTargets", out var targetNodes))
+            {
+                foreach (var targetMap in targetNodes.Cast<YamlMappingNode>())
+                {
+                    ReadAddTargetPrototype(targetMap).ToList().ForEach(x => _addTargetKeys.Add(x.Key, x.Value));
+                }
+            }
+            if (mapping.TryGetNode<YamlSequenceNode>("organs", out var organNodes))
+            {
+                _organProt = new List<string>();
+                foreach (var prot in organNodes.Cast<YamlMappingNode>())
+                {
+                    _organProt.Add(prot.GetNode("map").AsString());
+                }
+            }
         }
 
-        public void Initialize(IEntity owner)
+        public void Initialize(IEntity owner, BodyTemplate body)
         {
             PrototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            reflectionManager = IoCManager.Resolve<IReflectionManager>();
             CurrentHealth = MaxHealth;
             Statuses = new List<LimbStatus>();
             Owner = owner;
+            BodyOwner = body;
             _seed = new Random(DateTime.Now.GetHashCode());
-            LoadOrgans = new List<OrganPrototype>();
-            foreach (var organProt in _organProts)
-            {
-                if(PrototypeManager.TryIndex<OrganPrototype>(organProt, out var organ))
-                {
-                    LoadOrgans.Add(organ);
-                }
-            }
             Organs = new List<Organ>();
-            foreach (var loadOrgan in LoadOrgans)
+            foreach (var key in _organProt)
             {
-                Organs.Add(loadOrgan.Create());
+                var prot = PrototypeManager.Index<OrganPrototype>(key);
+                var organ = prot.Create();
+                organ.Initialize(Owner, body);
+                Organs.Add(organ);
+            }
+            if (reflectionManager.TryParseEnumReference(TargetKey, out var @enum))
+            {
+                AttackTarget = (AttackTargetDef)@enum;
+            }
+            foreach(var _addTargetKey in _addTargetKeys)
+            {
+                if (reflectionManager.TryParseEnumReference(_addTargetKey.Key, out var @anotherEnum))
+                {
+                    _addTargets.Add(new AdditionalTarget((AttackTargetDef)@anotherEnum, _addTargetKey.Value));
+                }
             }
         }
 
@@ -110,18 +142,21 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public void HandleGib()
         {
-            if (_seed.Prob(0.7f) && !SnowflakeTarget && !SnowflakeTarget)
+            if(directOrganDamage) //don't spawn both arm and hand, leg and foot
+            {
+                Dispose();
+                return;
+            }
+            if (_seed.Prob(0.7f))
             {
                 foreach (var organ in Organs)
                 {
                     organ.HandleGib();
                 }
-            } else
+            } 
+            else 
             {
-                if (!SnowflakeTarget)
-                {
-                    SpawnPrototypeEntity();
-                }
+                SpawnPrototypeEntity();
             }
             Dispose();
         }
@@ -135,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             }
             foreach (var child in Children)
             {
-                child.HandleDecapitation(SnowflakeParent);
+                child.HandleDecapitation(childOrganDamage);
             }
             if (spawn)
             {
@@ -158,12 +193,13 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             }
         }
 
-        public void HandleDamage(int damage) //TODO: test prob numbers
+        public void HandleDamage(int damage) //TODO: test prob numbers, and add targetting!
         {
             if (State == LimbState.Missing)
             {
                 return; //It doesn't exist, so it's unaffected by damage/heal
             }
+            //if (_addTargets.Contains(target)) //handle the damage to additional snowflake targets (mouth, eyes, and whatever else you add)
             var state = ChangeHealthValue(damage);
             switch (state)
             {
@@ -227,6 +263,37 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
                     return LimbState.Missing;
             }
             return State;
+        }
+
+        private Dictionary<string, string> ReadAddTargetPrototype(YamlMappingNode map)
+        {
+
+            if (map.TryGetNode("map", out var target))
+            {
+                var addTargetKey = target.AsString();
+                if (map.TryGetNode("targetOrgan", out var targetOrgan))
+                {
+                    var addTargetOrgan = targetOrgan.AsString();
+                    var dict = new Dictionary<string, string>();
+                    dict.Add(addTargetKey, addTargetOrgan);
+                    return dict;
+                }
+
+            }
+            throw new InvalidOperationException("Not enough data specified to determine additional target.");
+        }
+
+    }
+
+    public class AdditionalTarget
+    {
+        AttackTargetDef Target;
+        string OrganTag;
+
+        public AdditionalTarget(AttackTargetDef target, string tag)
+        {
+            Target = target;
+            OrganTag = tag;
         }
     }
 

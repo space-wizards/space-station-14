@@ -22,9 +22,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         {
             var obj = YamlObjectSerializer.NewReader(mapping);
             obj.DataField(ref Name, "name", "");
-            obj.DataField(ref Name, "id", "");
-            obj.DataField(ref MaxVolume, "maxVolume", 0f);
-            obj.DataField(ref CurrentVolume, "currentVolume", 0f);
+            obj.DataField(ref Id, "id", "");
+            obj.DataField(ref MaxVolume, "maxVolume", 0);
+            obj.DataField(ref CurrentVolume, "currentVolume", 0);
         }
 
         public void ChangeCurrentVolume(float deltaVolume)

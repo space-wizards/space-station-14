@@ -157,9 +157,9 @@ namespace Content.Client.GameObjects
 
             public void SetIcon(LimbRender limb)
             {
-                if (!IoCManager.Resolve<IResourceCache>().TryGetResource<TextureResource>(new ResourcePath("/Textures") / limb.Name, out var newtexture))
+                if (!IoCManager.Resolve<IResourceCache>().TryGetResource<TextureResource>(new ResourcePath("/Textures/Mob/UI/") / limb.Name, out var newtexture))
                 {
-                    Logger.Info("The Species Health Sprite {0} Does Not Exist", new ResourcePath("/Textures") / limb.Name);
+                    Logger.Info("The Species Health Sprite {0} Does Not Exist", new ResourcePath("/Textures/Mob/UI/") / limb.Name);
                     return;
                 }
 

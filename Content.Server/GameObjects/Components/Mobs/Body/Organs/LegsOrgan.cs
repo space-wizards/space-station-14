@@ -2,7 +2,7 @@
 
 namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
 {
-    public class Legs : Organ
+    public class Leg : Organ
     {
         public override void Life(int lifeTick)
         {

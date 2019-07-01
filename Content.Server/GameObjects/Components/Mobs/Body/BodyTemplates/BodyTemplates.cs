@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Robust.Shared.Maths;
 using System.Collections.Generic;
 using Robust.Shared.Serialization;
@@ -7,7 +8,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using YamlDotNet.RepresentationModel;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
@@ -42,8 +43,13 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         {
             var obj = YamlObjectSerializer.NewReader(mapping);
             obj.DataField(ref Id, "id", "");
-            obj.DataField(ref _limbProts, "limbs", new List<String>());
             obj.DataField(ref _bloodProt, "blood", "");
+            _limbProts = new List<string>();
+            foreach (var limbMap in mapping.GetNode<YamlSequenceNode>("limbs").Cast<YamlMappingNode>())
+            {
+                var limbProt = limbMap.GetNode("map").AsString();
+                _limbProts.Add(limbProt);
+            }
         }
 
         public void Initialize(IEntity owner)
@@ -51,39 +57,52 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             Owner = owner;
             PrototypeManager = IoCManager.Resolve<IPrototypeManager>();
             _randomLimb = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
-            foreach(var limbProt in _limbProts)
+            Limbs = new List<Limb>();
+            foreach (var limbProt in _limbProts)
             {
-                if(PrototypeManager.TryIndex<Limb>(limbProt, out var limb))
+                if (PrototypeManager.TryIndex<Limb>(limbProt, out var limb))
                 {
+                    limb.Initialize(Owner, this);
                     Limbs.Add(limb);
                 }
             }
 
-            if(PrototypeManager.TryIndex<Limb>(_bloodProt, out var blood))
+            BodyMap = InitBodyMap();
+
+            if (PrototypeManager.TryIndex<Blood>(_bloodProt, out var blood))
             {
                 Blood = blood;
             }
-            BodyMap = new List<Limb>();
+        }
+
+        private List<Limb> InitBodyMap()
+        {
+            var bodyMap = new List<Limb>();
             foreach (var limb in Limbs)
             {
-                BodyMap.Add(limb);
-                var children = (ICollection<Limb>)findChildren(limb.Id);
+                limb.Children = new List<Limb>();
+                var children = FindChildren(limb.Id);
                 if (children.Count > 0)
                 {
                     limb.Children.AddRange(children);
                 }
+                bodyMap.Add(limb);
+
             }
+            return bodyMap;
         }
 
-        private IEnumerator<Limb> findChildren(string parentTag)
+        private List<Limb> FindChildren(string parentTag)
         {
+            var list = new List<Limb>();
             foreach (var limb in Limbs)
             {
-                if (limb.Parent != null && limb.Parent.Id == parentTag)
+                if (!string.IsNullOrEmpty(limb.Parent) && limb.Parent == parentTag)
                 {
-                    yield return limb;
+                    list.Add(limb);
                 }
             }
+            return list;
         }
 
         public virtual void Life(int lifeTick) //this is main Life() proc!
@@ -127,24 +146,5 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             }
             return list;
         }
-    }
-    [Serializable]
-    public enum AttackTargetDef
-    {
-        Head,
-        Eyes,
-        Mouth,
-        Chest,
-        LeftArm,
-        RightArm,
-        LeftHand,
-        RightHand,
-        Groin,
-        LeftLeg,
-        RightLeg,
-        LeftFoot,
-        RightFoot,
-        SeveralTargets,
-        All
     }
 }

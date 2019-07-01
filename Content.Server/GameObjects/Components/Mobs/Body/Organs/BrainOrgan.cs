@@ -5,6 +5,10 @@ using Content.Server.GameObjects.Components;
 using Content.Server.Interfaces.Chat;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
+using System.Linq;
+using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
 {
@@ -18,8 +22,17 @@ namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
         {
             base.Startup();
             chat = IoCManager.Resolve<IChatManager>();
-            brainDamagePhrases = fillBrainDamageList();
             random = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
+        }
+
+        public override void ExposeData(YamlMappingNode mapping)
+        {
+            brainDamagePhrases = new List<string>();
+            foreach (var prot in mapping.GetNode<YamlSequenceNode>("brainDamageLines").Cast<YamlMappingNode>())
+            {
+                var line = prot.GetNode("line").AsString();
+                brainDamagePhrases.Add(line);
+            }
         }
 
         public override void Life(int lifeTick) //TODO
