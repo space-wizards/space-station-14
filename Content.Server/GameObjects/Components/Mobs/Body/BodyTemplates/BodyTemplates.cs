@@ -27,13 +27,31 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public string Name;
         public string Id;
-        public List<Limb> BodyMap;
-        public List<Limb> Limbs;
+        /// <summary>
+        /// The list of all mob's limbs and organs. 
+        /// </summary>
+        private List<Limb> BodyMap;
+        /// <summary>
+        /// helper list to assign children to BodyMap
+        /// </summary>
+        private List<Limb> Limbs;
+
+        /// <summary>
+        /// Entity which owns MobComponent
+        /// </summary>
         public IEntity Owner;
 
+        /// <summary>
+        /// YAML string which iniits Blood prototype
+        /// </summary>
         private string _bloodProt;
+
+        /// <summary>
+        /// List of YAML strings which inits all the limbs
+        /// </summary>
         private List<string> _limbProts;
-        public Blood Blood; //blood should wait for reagents to get truly implemented
+
+        public Blood Blood; //TODO:blood should wait for reagents to get truly implemented
 
         private Random _randomLimb;
 
@@ -131,7 +149,6 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             {
                 limb.HandleGib();
             }
-            BodyMap = null;
         }
 
         public List<LimbRender> RenderDoll()
@@ -139,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             var list = new List<LimbRender>();
             foreach (var limb in BodyMap)
             {
-                if (!string.IsNullOrEmpty(limb.RenderLimb))
+                if (!string.IsNullOrEmpty(limb.TexturePath))
                 {
                     list.Add(limb.Render());
                 }

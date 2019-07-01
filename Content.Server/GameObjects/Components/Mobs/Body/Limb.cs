@@ -32,26 +32,32 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public string Name;
         public string Id;
-        public List<string> _organProt = new List<string>();
+        public string TexturePath = "";
         public List<Organ> Organs = new List<Organ>();
-        AttackTargetDef AttackTarget;
-        string TargetKey;
-        public List<Limb> Children = new List<Limb>();
+
         public string Parent;
-        public List<LimbStatus> Statuses = new List<LimbStatus>();
-        public LimbState State;
+        public List<Limb> Children = new List<Limb>();
+
+        Random _seed;
+        string TargetKey;
+        AttackTargetDef AttackTarget;
+        LimbState State;
         int MaxHealth;
         int CurrentHealth;
-        public IEntity Owner;
-        public BodyTemplate BodyOwner;
-        public float BloodChange = 0f;
-        public string PrototypeEntity = "";
-        public string RenderLimb = "";
-        private bool childOrganDamage; //limbs that are used for deattaching, they'll get deleted if parent is dropped. (arms, legs)
-        private bool directOrganDamage;
-        private Dictionary<string, string> _addTargetKeys = new Dictionary<string, string>();
-        private List<AdditionalTarget> _addTargets = new List<AdditionalTarget>();
-        Random _seed;
+        IEntity Owner;
+        BodyTemplate BodyOwner;
+        float BloodChange = 0f;
+        string PrototypeEntity = "";
+        bool childOrganDamage; //limbs that are used for deattaching, they'll get deleted if parent is dropped. (arms, legs)
+        bool directOrganDamage;
+        List<string> _organProt = new List<string>();
+        /// <summary>
+        /// Additional targets like Mouth and Eyes.
+        /// </summary>
+        Dictionary<string, string> _addTargetKeys = new Dictionary<string, string>();
+        List<AdditionalTarget> _addTargets = new List<AdditionalTarget>();
+        List<LimbStatus> Statuses = new List<LimbStatus>();
+
 
         string IIndexedPrototype.ID => Id;
 
@@ -62,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             obj.DataField(ref Name, "name", "");
             obj.DataField(ref MaxHealth, "health", 0);
             obj.DataField(ref TargetKey, "target", "");
-            obj.DataField(ref RenderLimb, "dollIcon", "");
+            obj.DataField(ref TexturePath, "dollIcon", "");
             obj.DataField(ref PrototypeEntity, "prototype", "");
             obj.DataField(ref Parent, "parent", "");
             obj.DataField(ref childOrganDamage, "childOrganDamage", false);
@@ -99,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             {
                 var prot = PrototypeManager.Index<OrganPrototype>(key);
                 var organ = prot.Create();
-                organ.Initialize(Owner, body);
+                organ.Initialize(owner, body);
                 Organs.Add(organ);
             }
             if (reflectionManager.TryParseEnumReference(TargetKey, out var @enum))
@@ -136,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
                     color = new Color(128, 128, 128);
                     break;
                 }
-            return new LimbRender(RenderLimb, color);
+            return new LimbRender(TexturePath, color);
 
         }
 
@@ -144,7 +150,6 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         {
             if(directOrganDamage) //don't spawn both arm and hand, leg and foot
             {
-                Dispose();
                 return;
             }
             if (_seed.Prob(0.7f))
@@ -158,7 +163,6 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             {
                 SpawnPrototypeEntity();
             }
-            Dispose();
         }
 
         public void HandleDecapitation(bool spawn)
@@ -201,6 +205,10 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             }
             //if (_addTargets.Contains(target)) //handle the damage to additional snowflake targets (mouth, eyes, and whatever else you add)
             var state = ChangeHealthValue(damage);
+            if(Organs.Count == 0)
+            {
+                return;
+            }
             switch (state)
             {
                 case LimbState.InjuredLightly:

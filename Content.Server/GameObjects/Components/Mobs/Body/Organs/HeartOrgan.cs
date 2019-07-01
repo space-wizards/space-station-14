@@ -5,6 +5,9 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
 {
+    /// <summary>
+    /// Handles blood vessels and pulse.
+    /// </summary>
     public class Heart : Organ
     {
         private int MaxRate; //PulseLevel.VeryFast level of pulse

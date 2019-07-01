@@ -10,22 +10,18 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
 {
+    /// <summary>
+    /// This class is a layer between YAML and actual <see cref="Organ"/> class. It's being created by YAML serialization and creates the object itself on body initialization
+    /// </summary>
     [Prototype("organ")]
     public class OrganPrototype : IPrototype, IIndexedPrototype
     {
-        public string Name;
-        public string Id;
+        string Name;
+        string Id;
         string IIndexedPrototype.ID => Id;
-        public int MaxHealth;
-        public int CurrentHealth;
-        public float BloodChange = 0.005f; //TODO: Organs should consume reagents (nutriments) from blood, not blood directly
-        public OrganState State = OrganState.Healthy;
-        public List<OrganStatus> Statuses;
-        public IEntity Owner;
-        public string PrototypeEnitity; //entity that spawns on place of the organ, useful for gibs and surgery
-        public string GibletEntity;
-        public string Parent;
-        public BodyTemplate Body;
+        int MaxHealth;
+        string PrototypeEnitity; //entity that spawns on place of the organ, useful for gibs and surgery
+        string Parent;
         YamlMappingNode _mapping;
 
         public void LoadFrom(YamlMappingNode mapping)

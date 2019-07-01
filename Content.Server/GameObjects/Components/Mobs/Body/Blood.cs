@@ -8,14 +8,17 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
     public class Blood : IPrototype, IIndexedPrototype
     {
         public string Name;
-        public string Id;
-        public float MaxVolume;
+        string Id;
+        float MaxVolume;
+
         public float CurrentVolume;
         public float RegenerationRate = 0.1f;
-        public float BleedRate = 0f; //the value at which the blood spills out
+        /// <summary>
+        /// Value at which the blood spills out.
+        /// </summary>
+        public float BleedRate = 0f;
 
-        readonly int _levels = 7;
-
+        int _levels = 7;
         string IIndexedPrototype.ID => Id;
 
         void IPrototype.LoadFrom(YamlMappingNode mapping)
@@ -57,6 +60,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             }
         }
 
+        /// <summary>
+        /// Called on life tick, to make it bleed simple change BleedRate variable
+        /// </summary>
         private void loseBlood()
         {
             ChangeCurrentVolume(BleedRate);

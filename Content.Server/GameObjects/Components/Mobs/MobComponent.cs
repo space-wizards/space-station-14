@@ -207,7 +207,10 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private void DestroyOwner()
         {
-            Body.Gib();
+            if (Body != null)
+            {
+                Body.Gib();
+            }
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var ghost = entityManager.ForceSpawnEntityAt("MobObserver", Owner.Transform.GridPosition);
             var mind = Owner.GetComponent<MindComponent>().Mind;

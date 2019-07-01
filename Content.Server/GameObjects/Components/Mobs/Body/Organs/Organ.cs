@@ -92,12 +92,6 @@ namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
             }
         }
 
-        private void Dispose()
-        {
-            Owner = null;
-            Body = null;
-        }
-
         public virtual Blood CirculateBlood(Blood blood)
         {
             blood.ChangeCurrentVolume(BloodChange);

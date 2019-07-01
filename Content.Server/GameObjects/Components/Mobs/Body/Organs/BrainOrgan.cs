@@ -12,6 +12,9 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Mobs.Body.Organs
 {
+    /// <summary>
+    /// Handles everything associated with brain damage and mind-altering states
+    /// </summary>
     public class Brain : Organ
     {
         IChatManager chat;
