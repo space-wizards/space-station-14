@@ -17,16 +17,23 @@ namespace Content.Client.Chat
 
         public delegate void FilterPressedHandler(ChatBox chatBox, Button.ButtonEventArgs e);
 
+        public delegate void FilterRemovedHandler(ChatBox chatBox, Button.ButtonEventArgs e);
+
         private const int MaxLinePixelLength = 500;
 
         private readonly IList<string> _inputHistory = new List<string>();
 
         public LineEdit Input { get; private set; }
-        private OutputPanel contents;
+        public OutputPanel contents;
 
         // Buttons for filtering
         public Button AllButton;
         public Button OOCButton;
+
+        /// <summary>
+        ///     List of timestamps for incoming messages
+        /// </summary>
+        private IList<DateTime> _timestampIndex;
 
         /// <summary>
         ///     Index while cycling through the input history. -1 means not going through history.
@@ -91,7 +98,11 @@ namespace Content.Client.Chat
             };
             
             AllButton.OnToggled += OnFilterToggled;
+            // AllButton.OnButtonDown += OnFilterRemoved;
+
             OOCButton.OnToggled += OnFilterToggled;
+            // OOCButton.OnButtonDown += OnFilterRemoved;
+
             hBox.AddChild(AllButton);
             hBox.AddChild(OOCButton);
 
@@ -99,11 +110,6 @@ namespace Content.Client.Chat
 
             PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Gray.WithAlpha(0.5f) };
         }
-
-
-
-
-
 
         protected override void MouseDown(GUIMouseButtonEventArgs e)
         {
@@ -176,9 +182,10 @@ namespace Content.Client.Chat
 
         public event FilterPressedHandler FilterPressed;
 
+        public event FilterRemovedHandler FilterRemoved;
+
         public void AddLine(string message, ChatChannel channel, Color color, DateTime timestamp)
         {
-            // TODO implement re-inserting missed messages into chat, sort chat by timestamp
             if (Disposed)
             {
                 return;
@@ -195,6 +202,11 @@ namespace Content.Client.Chat
         private void OnFilterToggled(Button.ButtonEventArgs args)
         {
             FilterPressed?.Invoke(this, args);
+        }
+
+        private void OnFilterRemoved(Button.ButtonEventArgs args)
+        {
+            contents.Clear();
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)

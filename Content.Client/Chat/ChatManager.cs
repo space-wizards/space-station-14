@@ -46,6 +46,7 @@ namespace Content.Client.Chat
             {
                 _currentChatBox.TextSubmitted -= _onChatBoxTextSubmitted;
                 _currentChatBox.FilterPressed -= _onFilterButtonToggled;
+                _currentChatBox.FilterRemoved -= _onFilterRemoved;
             }
 
             _currentChatBox = chatBox;
@@ -53,12 +54,16 @@ namespace Content.Client.Chat
             {
                 _currentChatBox.TextSubmitted += _onChatBoxTextSubmitted;
                 _currentChatBox.FilterPressed += _onFilterButtonToggled;
+                _currentChatBox.FilterRemoved += _onFilterRemoved;
             }
         }
 
         private void _onChatMessage(MsgChatMessage message)
         {
             Logger.Debug($"{message.Channel}: {message.Message}");
+
+            // Log all messages coming through to re-populate once filter is removed
+             
 
             // Set time message sent
             message.TimeStamp = DateTime.Now;
@@ -158,6 +163,7 @@ namespace Content.Client.Chat
                 {
                     filteredChannels.Remove(ChatChannel.OOC);
                     // TODO re-populate chatbox with missed messages matching this channel type
+                    _currentChatBox.contents.Clear();
                     break;
                 }
 
@@ -178,11 +184,17 @@ namespace Content.Client.Chat
                     {
                         ChatChannel.TryParse(enumString, out ChatChannel channel);
                         filteredChannels.Remove(channel);
+                        _currentChatBox.contents.Clear();
                     }                    
                 }
 
                 break;
             }
+        }
+
+        private void _onFilterRemoved(ChatBox chatBox, Button.ButtonEventArgs e)
+        {
+            System.Console.WriteLine("A filter has been removed");
         }
 
         private bool IsFiltered(MsgChatMessage message)
