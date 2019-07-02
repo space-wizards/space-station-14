@@ -1,0 +1,69 @@
+- type: entity
+  name: Gibs
+  parent: BaseItem
+  id: Gib01
+  description: What a mess!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/blood.rsi
+    state: gib1-old
+
+  - type: Icon
+    sprite: Objects/Remains/blood.rsi
+    state: gib1-old
+
+- type: entity
+  name: Gibs
+  parent: BaseItem
+  id: Gib02
+  description: What a mess!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/blood.rsi
+    state: gib2-old
+
+  - type: Icon
+    sprite: Objects/Remains/blood.rsi
+    state: gib2-old
+
+- type: entity
+  name: Gibs
+  parent: BaseItem
+  id: Gib03
+  description: What a mess!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/blood.rsi
+    state: gib3-old
+
+  - type: Icon
+    sprite: Objects/Remains/blood.rsi
+    state: gib3-old
+
+- type: entity
+  name: Gibs
+  parent: BaseItem
+  id: Gib04
+  description: What a mess!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/blood.rsi
+    state: gib4-old
+
+  - type: Icon
+    sprite: Objects/Remains/blood.rsi
+    state: gib4-old
+
+- type: entity
+  name: Gibs
+  parent: BaseItem
+  id: Gib05
+  description: What a mess!
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/blood.rsi
+    state: gib5-old
+
+  - type: Icon
+    sprite: Objects/Remains/blood.rsi
+    state: gib5-old

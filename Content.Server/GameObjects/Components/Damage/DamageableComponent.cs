@@ -32,6 +32,7 @@ namespace Content.Server.GameObjects
 
         [ViewVariables]
         public IReadOnlyDictionary<DamageType, int> CurrentDamage => _currentDamage;
+
         private Dictionary<DamageType, int> _currentDamage = new Dictionary<DamageType, int>();
 
         Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
@@ -95,6 +96,10 @@ namespace Content.Server.GameObjects
                 _currentDamage[DamageType.Total] = Math.Max(0, _currentDamage[DamageType.Total] + amount);
                 UpdateForDamageType(DamageType.Total, oldTotalValue);
             }
+
+            var args = new OnDamageReceivedEventArgs(damageType, amount);
+            foreach (var damagebehavior in Owner.GetAllComponents<IOnDamageReceived>())
+                damagebehavior.OnDamageReceived(args);
         }
 
         /// <inheritdoc />

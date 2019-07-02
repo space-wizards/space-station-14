@@ -96,7 +96,7 @@ namespace Content.Client
 
             factory.RegisterReference<ClothingComponent, ItemComponent>();
 
-            factory.Register<SpeciesUI>();
+            factory.Register<MobUI>();
             factory.Register<CharacterInterface>();
 
             factory.RegisterIgnore("Construction");

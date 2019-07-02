@@ -1,0 +1,113 @@
+- type: entity
+  name: Brain
+  parent: BaseItem
+  id: HumanBrain
+  description: Gross.
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/organs.rsi
+    state: brain2
+
+  - type: Icon
+    sprite: Objects/Remains/organs.rsi
+    state: brain2
+
+  - type: Item
+    Size: 15
+    sprite: Objects/Remains/organs.rsi
+    state: brain2
+
+- type: entity
+  name: Lungs
+  parent: BaseItem
+  id: HumanLungs
+  description: Gross.
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/organs.rsi
+    state: lungs
+
+  - type: Icon
+    sprite: Objects/Remains/organs.rsi
+    state: lungs
+
+  - type: Item
+    Size: 15
+    sprite: Objects/Remains/organs.rsi
+    state: lungs
+
+- type: entity
+  name: Heart
+  parent: BaseItem
+  id: HumanHeart
+  description: Gross.
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/organs.rsi
+    state: heart-off
+
+  - type: Icon
+    sprite: Objects/Remains/organs.rsi
+    state: heart-off
+
+  - type: Item
+    Size: 10
+    sprite: Objects/Remains/organs.rsi
+    state: heart-off
+
+- type: entity
+  name: Liver
+  parent: BaseItem
+  id: HumanLiver
+  description: Gross.
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/organs.rsi
+    state: liver
+
+  - type: Icon
+    sprite: Objects/Remains/organs.rsi
+    state: liver
+
+  - type: Item
+    Size: 10
+    sprite: Objects/Remains/organs.rsi
+    state: liver
+
+- type: entity
+  name: Kidneys
+  parent: BaseItem
+  id: HumanKidneys
+  description: Gross.
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/organs.rsi
+    state: kidneys
+
+  - type: Icon
+    sprite: Objects/Remains/organs.rsi
+    state: kidneys
+
+  - type: Item
+    Size: 10
+    sprite: Objects/Remains/organs.rsi
+    state: kidneys
+
+- type: entity
+  name: Eyes
+  parent: BaseItem
+  id: HumanEyes
+  description: Gross.
+  components: 
+  - type: Sprite
+    sprite: Objects/Remains/organs.rsi
+    state: eyes
+
+  - type: Icon
+    sprite: Objects/Remains/organs.rsi
+    state: eyes
+
+  - type: Item
+    Size: 5
+    sprite: Objects/Remains/organs.rsi
+    state: eyes

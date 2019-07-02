@@ -1,0 +1,107 @@
+- type: organ
+  parent: Misc
+  name: Human Heart
+  id: HumanHeart
+  health: 30
+  prototype: HumanHeart
+  maxHeartRate: 240
+
+- type: organ
+  parent: Misc
+  name: Human Liver
+  id: HumanLiver
+  health: 30
+  prototype: HumanLiver
+
+- type: organ
+  parent: Misc
+  name: Human Lungs
+  id: HumanLungs
+  health: 30
+  prototype: HumanLungs
+
+- type: organ
+  parent: Misc
+  name: Human Kidneys
+  id: HumanKidneys
+  health: 30
+  prototype: HumanKidneys
+
+- type: organ
+  parent: Misc
+  name: Human Eyes
+  id: HumanEyes
+  health: 30
+  prototype: HumanEyes
+
+- type: organ
+  parent: Misc
+  name: Human Tongue
+  id: HumanTongue
+  health: 30
+
+- type: organ
+  parent: Misc
+  name: Human Hand
+  id: HumanHand
+  health: 100
+
+- type: organ
+  parent: Misc
+  name: Human Leg
+  id: HumanLeg
+  health: 100
+
+- type: organ
+  parent: Brain
+  name: Human Brain
+  id: HumanBrain
+  health: 50
+  prototype: HumanBrain
+  brainDamageLines:
+    - line: "HURR DURR IS SPESSMENS READY YET?"
+    - line: "FUS RO DAH"
+    - line: "fucking 4rries!"
+    - line: "stat me"
+    - line: ">my face" 
+    - line: "roll it easy!" 
+    - line: "waaaaaagh!!!" 
+    - line: "red wonz go fasta" 
+    - line: "FOR TEH EMPRAH" 
+    - line: "lol2cat" 
+    - line: "dem dwarfs man, dem dwarfs" 
+    - line: "SPESS MAHREENS" 
+    - line: "hwee did eet fhor khayosss" 
+    - line: "lifelike texture ;_;" 
+    - line: "luv can bloooom" 
+    - line: "PACKETS!!!" 
+    - line: "SARAH HALE DID IT!!!" 
+    - line: "Don't tell Chase" 
+    - line: "not so tough now huh" 
+    - line: "WERE NOT BAY!!" 
+    - line: "IF YOU DONT LIKE THE CYBORGS OR SLIMES WHY DONT YU O JUST MAKE YORE OWN!" 
+    - line: "DONT TALK TO ME ABOUT BALANCE!!!!" 
+    - line: "YOU AR JUS LAZY AND DUMB JAMITORS AND SERVICE ROLLS" 
+    - line: "BLAME HOSHI!!!" 
+    - line: "ARRPEE IZ DED!!!" 
+    - line: "THERE ALL JUS MEATAFRIENDS!" 
+    - line: "SOTP MESING WITH THE ROUNS SHITMAN!!!" 
+    - line: "SKELINGTON IS 4 SHITERS!" 
+    - line: "MOMMSI R THE WURST SCUM!!" 
+    - line: "How do we engiener=" 
+    - line: "try to live freely and automatically good bye" 
+    - line: "why woud i take a pin pointner??" 
+    - line: "FUCK IT; KISSYOUR ASSES GOOD BYE DEAD MEN! I AM SELFDESTRUCKTING THE STATION!!!!" 
+    - line: "How do I set up the. SHow do I set u p the Singu. how I the scrungularity????" 
+    - line: "OMG I SED LAW 2 U FAG MOMIM LAW 2!!!"  
+    - line: "IM A PONY NEEEEEEIIIIIIIIIGH"
+    - line: "without oxigen blob don't evoluate?"
+    - line: "CAPTAINS A COMDOM"
+    - line: "can u give me telikesis?"
+    - line: "THe saiyans screwed"
+    - line: "Bi is THE BEST OF BOTH WORLDS>"
+    - line: "I WANNA PET TEH monkeyS"
+    - line: "stop grifing me!!!!"
+    - line: "SOTP IT#"
+    - line: "based and redpilled"
+    - line: "ho now talking like a milenian piece of shit is too unralistic in the fucking"

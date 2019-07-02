@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Doors;
+using Content.Server.GameObjects.Components.Mobs;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -66,7 +67,7 @@ namespace Content.Server.GameObjects
                     }
 
                     // Only open when bumped by mobs.
-                    if (!msg.Entity.HasComponent(typeof(SpeciesComponent)))
+                    if (!msg.Entity.HasComponent(typeof(MobComponent)))
                     {
                         return;
                     }

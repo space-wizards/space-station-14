@@ -1,6 +1,6 @@
 using System;
 using System.Threading;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Robust.Server.Interfaces.Player;
@@ -59,7 +59,7 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out SpeciesComponent species))
+                    || !playerSession.AttachedEntity.TryGetComponent(out MobComponent species))
                 {
                     continue;
                 }

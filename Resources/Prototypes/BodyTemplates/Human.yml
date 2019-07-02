@@ -1,0 +1,18 @@
+- type: bodyTemplate
+  id: HumanBody
+  className: Human
+  blood: HumanBlood
+  limbs:
+    - map: HumanChest
+    - map: HumanHead
+    - map: HumanLArm
+    - map: HumanLHand
+    - map: HumanRArm
+    - map: HumanRHand
+    - map: HumanGroin
+    - map: HumanLLeg
+    - map: HumanLFoot
+    - map: HumanRLeg
+    - map: HumanRFoot
+
+     

@@ -150,7 +150,7 @@ namespace Content.Server
             factory.RegisterIgnore("ConstructionGhost");
 
             factory.Register<MindComponent>();
-            factory.Register<SpeciesComponent>();
+            factory.Register<MobComponent>();
             factory.Register<HeatResistanceComponent>();
 
             factory.Register<SpawnPointComponent>();
@@ -185,6 +185,8 @@ namespace Content.Server
 
             factory.Register<FootstepModifierComponent>();
             factory.Register<EmitSoundOnUseComponent>();
+
+            factory.Register<BodyComponent>();
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
