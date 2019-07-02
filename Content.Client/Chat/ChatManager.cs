@@ -46,7 +46,6 @@ namespace Content.Client.Chat
             {
                 _currentChatBox.TextSubmitted -= _onChatBoxTextSubmitted;
                 _currentChatBox.FilterPressed -= _onFilterButtonToggled;
-                _currentChatBox.FilterRemoved -= _onFilterRemoved;
             }
 
             _currentChatBox = chatBox;
@@ -54,7 +53,6 @@ namespace Content.Client.Chat
             {
                 _currentChatBox.TextSubmitted += _onChatBoxTextSubmitted;
                 _currentChatBox.FilterPressed += _onFilterButtonToggled;
-                _currentChatBox.FilterRemoved += _onFilterRemoved;
             }
         }
 
@@ -63,7 +61,7 @@ namespace Content.Client.Chat
             Logger.Debug($"{message.Channel}: {message.Message}");
 
             // Log all messages coming through to re-populate once filter is removed
-             
+
 
             // Set time message sent
             message.TimeStamp = DateTime.Now;
@@ -95,15 +93,6 @@ namespace Content.Client.Chat
             else
             {
                 filteredHistory.Add(message);
-                foreach (MsgChatMessage msg in filteredHistory)
-                {
-                    System.Console.WriteLine(msg.Message);
-                    System.Console.WriteLine(msg.TimeStamp);
-                }
-                foreach (var channel in filteredChannels)
-                {
-                    System.Console.WriteLine(channel);
-                }
             }
         }
 
@@ -162,8 +151,8 @@ namespace Content.Client.Chat
                 } else
                 {
                     filteredChannels.Remove(ChatChannel.OOC);
-                    // TODO re-populate chatbox with missed messages matching this channel type
                     _currentChatBox.contents.Clear();
+                    RepopulateChat(filteredHistory);
                     break;
                 }
 
@@ -185,6 +174,7 @@ namespace Content.Client.Chat
                         ChatChannel.TryParse(enumString, out ChatChannel channel);
                         filteredChannels.Remove(channel);
                         _currentChatBox.contents.Clear();
+                        RepopulateChat(filteredHistory);
                     }                    
                 }
 
@@ -192,9 +182,12 @@ namespace Content.Client.Chat
             }
         }
 
-        private void _onFilterRemoved(ChatBox chatBox, Button.ButtonEventArgs e)
+        private void RepopulateChat(List<MsgChatMessage> filteredMessages)
         {
-            System.Console.WriteLine("A filter has been removed");
+            foreach (MsgChatMessage message in filteredMessages)
+            {
+                _onChatMessage(message);
+            }
         }
 
         private bool IsFiltered(MsgChatMessage message)

@@ -17,8 +17,6 @@ namespace Content.Client.Chat
 
         public delegate void FilterPressedHandler(ChatBox chatBox, Button.ButtonEventArgs e);
 
-        public delegate void FilterRemovedHandler(ChatBox chatBox, Button.ButtonEventArgs e);
-
         private const int MaxLinePixelLength = 500;
 
         private readonly IList<string> _inputHistory = new List<string>();
@@ -182,8 +180,6 @@ namespace Content.Client.Chat
 
         public event FilterPressedHandler FilterPressed;
 
-        public event FilterRemovedHandler FilterRemoved;
-
         public void AddLine(string message, ChatChannel channel, Color color, DateTime timestamp)
         {
             if (Disposed)
@@ -202,11 +198,6 @@ namespace Content.Client.Chat
         private void OnFilterToggled(Button.ButtonEventArgs args)
         {
             FilterPressed?.Invoke(this, args);
-        }
-
-        private void OnFilterRemoved(Button.ButtonEventArgs args)
-        {
-            contents.Clear();
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
