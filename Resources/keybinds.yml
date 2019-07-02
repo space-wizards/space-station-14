@@ -73,3 +73,6 @@ binds:
 - function: OpenContextMenu
   key: MouseRight
   type: state
+- function: ToggleCombatMode
+  type: Toggle
+  key: Tab

@@ -139,6 +139,12 @@ namespace Content.Client
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
+            if (TestingCallbacks != null)
+            {
+                var cast = (ClientModuleTestingCallbacks) TestingCallbacks;
+                cast.ClientBeforeIoC?.Invoke();
+            }
+
             IoCManager.BuildGraph();
 
             IoCManager.Resolve<IParallaxManager>().LoadParallax();

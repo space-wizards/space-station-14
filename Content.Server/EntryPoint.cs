@@ -187,12 +187,19 @@ namespace Content.Server
             factory.Register<EmitSoundOnUseComponent>();
 
             factory.Register<BodyComponent>();
+            
+            factory.Register<CombatModeComponent>();
 
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IGameTicker, GameTicker>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
+            if (TestingCallbacks != null)
+            {
+                var cast = (ServerModuleTestingCallbacks) TestingCallbacks;
+                cast.ServerBeforeIoC?.Invoke();
+            }
             IoCManager.BuildGraph();
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
