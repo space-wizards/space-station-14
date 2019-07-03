@@ -60,11 +60,17 @@ namespace Content.Client.Chat
         {
             Logger.Debug($"{message.Channel}: {message.Message}");
 
+            if (filteredHistory.ContainsValue(message))
+            {
+                return;
+            }
+
             // Set time message sent
             message.TimeStamp = DateTime.Now;
 
             if (!IsFiltered(message))
             {
+
 
                 var color = Color.DarkGray;
                 var messageText = message.Message;
@@ -184,9 +190,14 @@ namespace Content.Client.Chat
 
         private void RepopulateChat(SortedDictionary<DateTime, MsgChatMessage> filteredMessages)
         {
-            foreach (MsgChatMessage message in filteredMessages.Values)
+            // Copy the dict for enumration
+            SortedDictionary<DateTime, MsgChatMessage> filteredHistoryCopy = new SortedDictionary<DateTime, MsgChatMessage>(filteredMessages);
+
+            foreach ( KeyValuePair<DateTime, MsgChatMessage> item in filteredHistoryCopy)
             {
-                _onChatMessage(message);                
+                // TODO figure out why old history is deleted upon removing a filter
+                filteredMessages.Remove(item.Key);
+                _onChatMessage(item.Value);        
             }
 
             filteredMessages.Clear();
