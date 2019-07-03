@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         {
             if (!string.IsNullOrWhiteSpace(Prototype))
             {
-                Owner.EntityManager.TrySpawnEntityAt(Prototype, Owner.Transform.GridPosition, out var entity);
+                Owner.EntityManager.ForceSpawnEntityAt(Prototype, Owner.Transform.GridPosition);
             }
         }
     }
