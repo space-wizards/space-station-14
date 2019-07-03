@@ -19,7 +19,7 @@ namespace Content.Client.Chat
         private const char MeAlias = '@';
 
         // Holds any missed messages due to filtering for re-addition to chat later
-        public List<MsgChatMessage> filteredHistory = new List<MsgChatMessage>();
+        public SortedDictionary<DateTime,MsgChatMessage> filteredHistory = new SortedDictionary<DateTime,MsgChatMessage>();
 
         // Filter Button states
         private bool _ALLstate;
@@ -60,9 +60,6 @@ namespace Content.Client.Chat
         {
             Logger.Debug($"{message.Channel}: {message.Message}");
 
-            // Log all messages coming through to re-populate once filter is removed
-
-
             // Set time message sent
             message.TimeStamp = DateTime.Now;
 
@@ -78,6 +75,7 @@ namespace Content.Client.Chat
                 }
 
 
+
                 switch (message.Channel)
                 {
                     case ChatChannel.Server:
@@ -88,11 +86,13 @@ namespace Content.Client.Chat
                         break;
                 }
 
+                // Log all incoming chat to repopulate when filter if a filter is untoggled
+                filteredHistory.Add(message.TimeStamp, message);
                 _currentChatBox?.AddLine(messageText, message.Channel, color, message.TimeStamp);
             }
             else
             {
-                filteredHistory.Add(message);
+                filteredHistory.Add(message.TimeStamp, message);
             }
         }
 
@@ -182,12 +182,14 @@ namespace Content.Client.Chat
             }
         }
 
-        private void RepopulateChat(List<MsgChatMessage> filteredMessages)
+        private void RepopulateChat(SortedDictionary<DateTime, MsgChatMessage> filteredMessages)
         {
-            foreach (MsgChatMessage message in filteredMessages)
+            foreach (MsgChatMessage message in filteredMessages.Values)
             {
-                _onChatMessage(message);
+                _onChatMessage(message);                
             }
+
+            filteredMessages.Clear();
         }
 
         private bool IsFiltered(MsgChatMessage message)
@@ -201,8 +203,6 @@ namespace Content.Client.Chat
                 return false;
             }
         }
-
-       
 
     }
 }
