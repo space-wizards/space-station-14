@@ -98,6 +98,7 @@ namespace Content.Client.Chat
             }
             else
             {
+                Logger.Debug($"Message filtered: {message.Channel}: {message.Message}");
                 filteredHistory.Add(message.TimeStamp, message);
             }
         }
@@ -143,8 +144,6 @@ namespace Content.Client.Chat
 
         private void _onFilterButtonToggled(ChatBox chatBox, Button.ButtonEventArgs e)
         {
-
-            System.Console.WriteLine("A button was toggled");
             switch (e.Button.Name)
             {
                 case "OOC":
@@ -154,11 +153,13 @@ namespace Content.Client.Chat
                 {
                     filteredChannels.Add(ChatChannel.OOC);
                     break;
+
                 } else
                 {
                     filteredChannels.Remove(ChatChannel.OOC);
                     _currentChatBox.contents.Clear();
                     RepopulateChat(filteredHistory);
+
                     break;
                 }
 
@@ -180,8 +181,9 @@ namespace Content.Client.Chat
                         ChatChannel.TryParse(enumString, out ChatChannel channel);
                         filteredChannels.Remove(channel);
                         _currentChatBox.contents.Clear();
-                        RepopulateChat(filteredHistory);
-                    }                    
+                    } 
+
+                    RepopulateChat(filteredHistory);                   
                 }
 
                 break;
@@ -195,12 +197,12 @@ namespace Content.Client.Chat
 
             foreach ( KeyValuePair<DateTime, MsgChatMessage> item in filteredHistoryCopy)
             {
-                // TODO figure out why old history is deleted upon removing a filter
                 filteredMessages.Remove(item.Key);
                 _onChatMessage(item.Value);        
             }
 
-            filteredMessages.Clear();
+            // filteredHistoryCopy.Clear();
+            // filteredMessages.Clear();
         }
 
         private bool IsFiltered(MsgChatMessage message)
