@@ -64,7 +64,6 @@ namespace Content.Client.Chat
         {
             Logger.Debug($"{message.Channel}: {message.Message}");
 
-<<<<<<< Updated upstream
             if (filteredHistory.ContainsValue(message))
             {
                 return;
@@ -105,47 +104,6 @@ namespace Content.Client.Chat
             {
                 Logger.Debug($"Message filtered: {message.Channel}: {message.Message}");
                 filteredHistory.Add(message.TimeStamp, message);
-=======
-            // Set time message sent
-            message.TimeStamp = DateTime.Now;
-
-            if (!IsFiltered(message))
-            {
-
-                var color = Color.DarkGray;
-                var messageText = message.Message;
-
-                if (!string.IsNullOrEmpty(message.MessageWrap))
-                {
-                    messageText = string.Format(message.MessageWrap, messageText);
-                }
-
-
-                switch (message.Channel)
-                {
-                    case ChatChannel.Server:
-                        color = Color.Orange;
-                        break;
-                    case ChatChannel.OOC:
-                        color = Color.LightSkyBlue;
-                        break;
-                }
-
-                _currentChatBox?.AddLine(messageText, message.Channel, color, message.TimeStamp);
-            }
-            else
-            {
-                filteredHistory.Add(message);
-                foreach (MsgChatMessage msg in filteredHistory)
-                {
-                    System.Console.WriteLine(msg.Message);
-                    System.Console.WriteLine(msg.TimeStamp);
-                }
-                foreach (var channel in filteredChannels)
-                {
-                    System.Console.WriteLine(channel);
-                }
->>>>>>> Stashed changes
             }
         }
 
@@ -190,11 +148,6 @@ namespace Content.Client.Chat
 
         private void _onFilterButtonToggled(ChatBox chatBox, Button.ButtonEventArgs e)
         {
-<<<<<<< Updated upstream
-=======
-
-            System.Console.WriteLine("A button was toggled");
->>>>>>> Stashed changes
             switch (e.Button.Name)
             {
                 case "OOC":
@@ -204,7 +157,6 @@ namespace Content.Client.Chat
                 {
                     filteredChannels.Add(ChatChannel.OOC);
                     break;
-<<<<<<< Updated upstream
 
                 } else
                 {
@@ -212,12 +164,6 @@ namespace Content.Client.Chat
                     _currentChatBox.contents.Clear();
                     RepopulateChat(filteredHistory);
 
-=======
-                } else
-                {
-                    filteredChannels.Remove(ChatChannel.OOC);
-                    // TODO re-populate chatbox with missed messages matching this channel type
->>>>>>> Stashed changes
                     break;
                 }
 
@@ -238,21 +184,16 @@ namespace Content.Client.Chat
                     {
                         ChatChannel.TryParse(enumString, out ChatChannel channel);
                         filteredChannels.Remove(channel);
-<<<<<<< Updated upstream
                         _currentChatBox.contents.Clear();
                     } 
 
                     RepopulateChat(filteredHistory);                   
-=======
-                    }                    
->>>>>>> Stashed changes
                 }
 
                 break;
             }
         }
 
-<<<<<<< Updated upstream
         private void RepopulateChat(SortedDictionary<DateTime, MsgChatMessage> filteredMessages)
         {
             // Copy the dict for enumration
@@ -268,8 +209,6 @@ namespace Content.Client.Chat
             // filteredMessages.Clear();
         }
 
-=======
->>>>>>> Stashed changes
         private bool IsFiltered(MsgChatMessage message)
         {
             if (filteredChannels.Contains(message.Channel))
@@ -282,10 +221,5 @@ namespace Content.Client.Chat
             }
         }
 
-<<<<<<< Updated upstream
-=======
-       
-
->>>>>>> Stashed changes
     }
 }
