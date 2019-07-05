@@ -6,7 +6,7 @@
   - type: Sprite
     netsync: false
     color: "#636769"
-    drawdepth: Mobs
+    drawdepth: Walls
     sprite: Buildings/wall.rsi
 
   - type: Icon
