@@ -82,8 +82,12 @@ namespace Content.Client.Chat
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
+<<<<<<< Updated upstream
                 ToggleMode = true,
                 Pressed = true
+=======
+                ToggleMode = true
+>>>>>>> Stashed changes
             };
 
             OOCButton = new Button()
@@ -93,6 +97,7 @@ namespace Content.Client.Chat
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
+<<<<<<< Updated upstream
                 ToggleMode = true,
                 Pressed = true
             };
@@ -103,6 +108,13 @@ namespace Content.Client.Chat
             OOCButton.OnToggled += OnFilterToggled;
             // OOCButton.OnButtonDown += OnFilterRemoved;
 
+=======
+                ToggleMode = true
+            };
+            
+            AllButton.OnToggled += OnFilterToggled;
+            OOCButton.OnToggled += OnFilterToggled;
+>>>>>>> Stashed changes
             hBox.AddChild(AllButton);
             hBox.AddChild(OOCButton);
 
@@ -111,6 +123,14 @@ namespace Content.Client.Chat
             PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Gray.WithAlpha(0.5f) };
         }
 
+<<<<<<< Updated upstream
+=======
+
+
+
+
+
+>>>>>>> Stashed changes
         protected override void MouseDown(GUIMouseButtonEventArgs e)
         {
             base.MouseDown(e);
@@ -184,6 +204,7 @@ namespace Content.Client.Chat
 
         public void AddLine(string message, ChatChannel channel, Color color, DateTime timestamp)
         {
+            // TODO implement re-inserting missed messages into chat, sort chat by timestamp
             if (Disposed)
             {
                 return;
