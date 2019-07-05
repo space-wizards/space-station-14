@@ -64,6 +64,8 @@
     visuals:
     - type: SpeciesVisualizer2D
 
+  - type: CombatMode
+
 - type: entity
   id: MobObserver
   name: Observer

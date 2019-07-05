@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Input;
 using JetBrains.Annotations;
@@ -124,6 +125,23 @@ namespace Content.Server.GameObjects.EntitySystems
         public IEntity User { get; set; }
     }
 
+    public interface IAttack
+    {
+        void Attack(AttackEventArgs eventArgs);
+    }
+
+    public class AttackEventArgs : EventArgs
+    {
+        public AttackEventArgs(IEntity user, GridCoordinates clickLocation)
+        {
+            User = user;
+            ClickLocation = clickLocation;
+        }
+
+        public IEntity User { get; }
+        public GridCoordinates ClickLocation { get; }
+    }
+
     /// <summary>
     /// Governs interactions during clicking on entities
     /// </summary>
@@ -143,7 +161,7 @@ namespace Content.Server.GameObjects.EntitySystems
             inputSys.BindMap.BindFunction(ContentKeyFunctions.UseItemInHand,
                 new PointerInputCmdHandler(HandleUseItemInHand));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
-                new PointerInputCmdHandler((HandleActivateItemInWorld)));
+                new PointerInputCmdHandler(HandleActivateItemInWorld));
         }
 
         public void HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
@@ -199,7 +217,16 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            UserInteraction(((IPlayerSession) session).AttachedEntity, coords, uid);
+            var userEntity = ((IPlayerSession) session).AttachedEntity;
+
+            if (userEntity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
+            {
+                DoAttack(userEntity, coords, uid);
+            }
+            else
+            {
+                UserInteraction(userEntity, coords, uid);
+            }
         }
 
         private void UserInteraction(IEntity player, GridCoordinates coordinates, EntityUid clickedUid)
@@ -477,6 +504,37 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var afterAttack in afterAttacks)
             {
                 afterAttack.AfterAttack(afterAttackEventArgs);
+            }
+        }
+
+        private void DoAttack(IEntity player, GridCoordinates coordinates, EntityUid uid)
+        {
+            // Verify player is on the same map as the entity he clicked on
+            if (_mapManager.GetGrid(coordinates.GridID).ParentMap.Index != player.Transform.MapID)
+            {
+                Logger.WarningS("system.interaction",
+                    $"Player named {player.Name} clicked on a map he isn't located on");
+                return;
+            }
+
+            // Verify player has a hand, and find what object he is currently holding in his active hand
+            if (!player.TryGetComponent<IHandsComponent>(out var hands))
+            {
+                return;
+            }
+
+            var item = hands.GetActiveHand?.Owner;
+
+            // TODO: If item is null we need some kinda unarmed combat.
+            if (!ActionBlockerSystem.CanInteract(player) || item == null)
+            {
+                return;
+            }
+
+            var eventArgs = new AttackEventArgs(player, coordinates);
+            foreach (var attackComponent in item.GetAllComponents<IAttack>())
+            {
+                attackComponent.Attack(eventArgs);
             }
         }
     }

@@ -9,7 +9,7 @@ using Robust.Shared.Interfaces.Map;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
-    public class MeleeWeaponComponent : Component, IAfterAttack
+    public class MeleeWeaponComponent : Component, IAttack
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref ArcWidth, "arcwidth", 90);
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAttack.Attack(AttackEventArgs eventArgs)
         {
             var location = eventArgs.User.Transform.GridPosition;
             var angle = new Angle(eventArgs.ClickLocation.ToWorld(_mapManager).Position - location.ToWorld(_mapManager).Position);
@@ -42,9 +42,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (!entity.Transform.IsMapTransform || entity == eventArgs.User)
                     continue;
 
-                if (entity.TryGetComponent(out DamageableComponent damagecomponent))
+                if (entity.TryGetComponent(out DamageableComponent damageComponent))
                 {
-                    damagecomponent.TakeDamage(DamageType.Brute, Damage);
+                    damageComponent.TakeDamage(DamageType.Brute, Damage);
                 }
             }
         }
