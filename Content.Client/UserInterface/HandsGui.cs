@@ -90,8 +90,8 @@ namespace Content.Client.UserInterface
             var handL = new UIBox2(_handL.TopLeft * UIScale, _handL.BottomRight * UIScale);
             var handR = new UIBox2(_handR.TopLeft * UIScale, _handR.BottomRight * UIScale);
 
-            handle.DrawStyleBox(handBox, leftActive ? handL : handR);
-            handle.DrawStyleBox(inactiveHandBox, leftActive ? handR : handL);
+            handBox.Draw(handle, leftActive ? handL : handR);
+            inactiveHandBox.Draw(handle, leftActive ? handR : handL);
         }
 
         /// <summary>

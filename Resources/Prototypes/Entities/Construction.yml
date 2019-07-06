@@ -9,8 +9,6 @@
   - type: ConstructionGhost
   - type: BoundingBox
   - type: Clickable
-    baseshader: unshaded
-    selectionshader: selection_outline_unshaded
 
 - type: entity
   name: somebody-messed-up frame
