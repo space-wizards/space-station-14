@@ -5,6 +5,7 @@ using Robust.Client.Graphics.Drawing;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
@@ -15,7 +16,7 @@ namespace Content.Client.Chat
     {
         public delegate void TextSubmitHandler(ChatBox chatBox, string text);
 
-        public delegate void FilterPressedHandler(ChatBox chatBox, Button.ButtonEventArgs e);
+        public delegate void FilterToggledHandler(ChatBox chatBox, Button.ButtonToggledEventArgs e);
 
         private const int MaxLinePixelLength = 500;
 
@@ -77,7 +78,7 @@ namespace Content.Client.Chat
 
             AllButton = new Button()
             {
-                Text = "ALL",
+                Text = "All",
                 Name = "ALL",
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
@@ -180,27 +181,25 @@ namespace Content.Client.Chat
 
         public event TextSubmitHandler TextSubmitted;
 
-        public event FilterPressedHandler FilterPressed;
+        public event FilterToggledHandler FilterToggled;
 
         public void AddLine(string message, ChatChannel channel, Color color, DateTime timestamp)
         {
-            // TODO implement re-inserting missed messages into chat, sort chat by timestamp
             if (Disposed)
             {
                 return;
             }
 
             var formatted = new FormattedMessage(3);
-            formatted.AddTimeStamp(timestamp);
             formatted.PushColor(color);
             formatted.AddText(message);
             formatted.Pop();
             contents.AddMessage(formatted);
         }
 
-        private void OnFilterToggled(Button.ButtonEventArgs args)
+        private void OnFilterToggled(Button.ButtonToggledEventArgs args)
         {
-            FilterPressed?.Invoke(this, args);
+            FilterToggled?.Invoke(this, args);
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)

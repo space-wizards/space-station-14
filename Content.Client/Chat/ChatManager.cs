@@ -18,19 +18,15 @@ namespace Content.Client.Chat
         private const char OOCAlias = '[';
         private const char MeAlias = '@';
 
-        // Holds any missed messages due to filtering for re-addition to chat later
-<<<<<<< Updated upstream
-        public SortedDictionary<DateTime,MsgChatMessage> filteredHistory = new SortedDictionary<DateTime,MsgChatMessage>();
-=======
         public List<MsgChatMessage> filteredHistory = new List<MsgChatMessage>();
->>>>>>> Stashed changes
 
         // Filter Button states
         private bool _ALLstate;
+        private bool _Localstate;
         private bool _OOCstate;
 
-        // List for holding currently filtered channels
-        public List<Enum> filteredChannels = new List<Enum>();
+        // Flag enums for holding currently filtered channels
+        private ChatChannel _filteredChannels;
 
 #pragma warning disable 649
         [Dependency] private readonly IClientNetManager _netManager;
@@ -49,25 +45,20 @@ namespace Content.Client.Chat
             if (_currentChatBox != null)
             {
                 _currentChatBox.TextSubmitted -= _onChatBoxTextSubmitted;
-                _currentChatBox.FilterPressed -= _onFilterButtonToggled;
+                _currentChatBox.FilterToggled -= _onFilterButtonToggled;
             }
 
             _currentChatBox = chatBox;
             if (_currentChatBox != null)
             {
                 _currentChatBox.TextSubmitted += _onChatBoxTextSubmitted;
-                _currentChatBox.FilterPressed += _onFilterButtonToggled;
+                _currentChatBox.FilterToggled += _onFilterButtonToggled;
             }
         }
 
         private void _onChatMessage(MsgChatMessage message)
         {
             Logger.Debug($"{message.Channel}: {message.Message}");
-
-            if (filteredHistory.ContainsValue(message))
-            {
-                return;
-            }
 
             // Set time message sent
             message.TimeStamp = DateTime.Now;
@@ -84,8 +75,6 @@ namespace Content.Client.Chat
                     messageText = string.Format(message.MessageWrap, messageText);
                 }
 
-
-
                 switch (message.Channel)
                 {
                     case ChatChannel.Server:
@@ -96,15 +85,15 @@ namespace Content.Client.Chat
                         break;
                 }
 
-                // Log all incoming chat to repopulate when filter if a filter is untoggled
-                filteredHistory.Add(message.TimeStamp, message);
                 _currentChatBox?.AddLine(messageText, message.Channel, color, message.TimeStamp);
             }
             else
             {
                 Logger.Debug($"Message filtered: {message.Channel}: {message.Message}");
-                filteredHistory.Add(message.TimeStamp, message);
             }
+
+            // Log all incoming chat to repopulate when filter if a filter is untoggled
+            filteredHistory.Add(message);
         }
 
         private void _onChatBoxTextSubmitted(ChatBox chatBox, string text)
@@ -150,59 +139,63 @@ namespace Content.Client.Chat
         {
             switch (e.Button.Name)
             {
+                case "Local":
+                    _Localstate = !_Localstate;
+                    if (_Localstate)
+                    {
+                        _filteredChannels = ChatChannel.Local;
+                        break;
+                    }
+                    else
+                    {
+                        _filteredChannels = _filteredChannels ^ ChatChannel.Local;
+                        _currentChatBox.contents.Clear();
+                        RepopulateChat(filteredHistory);
+                        break;
+                    }
+
+
                 case "OOC":
-
-                _OOCstate = !_OOCstate;
-                if (_OOCstate)
-                {
-                    filteredChannels.Add(ChatChannel.OOC);
-                    break;
-
-                } else
-                {
-                    filteredChannels.Remove(ChatChannel.OOC);
-                    _currentChatBox.contents.Clear();
-                    RepopulateChat(filteredHistory);
-
-                    break;
-                }
+                    _OOCstate = !_OOCstate;
+                    if (_OOCstate)
+                    {
+                        _filteredChannels = ChatChannel.OOC;
+                        break;
+                    } 
+                    else
+                    {
+                        _filteredChannels = _filteredChannels ^ ChatChannel.OOC;
+                        _currentChatBox.contents.Clear();
+                        RepopulateChat(filteredHistory);
+                        break;
+                    }
 
                 default:
-
-                _ALLstate = !_ALLstate;
-                if (_ALLstate)
-                {
-                    foreach (string enumString in ChatChannel.GetNames(typeof(ChatChannel)))
+                    // TODO make it so ticking the ALL button just flips all buttons to OFF and triggers the logic for each 
+                    _ALLstate = !_ALLstate;
+                    if (_ALLstate)
                     {
-                        ChatChannel.TryParse(enumString, out ChatChannel channel);
-                        filteredChannels.Add(channel);
+                        _filteredChannels = ChatChannel.OOC | ChatChannel.Local;
                     }
-                }
-                else 
-                {
-                    foreach (string enumString in ChatChannel.GetNames(typeof(ChatChannel)))
+                    else 
                     {
-                        ChatChannel.TryParse(enumString, out ChatChannel channel);
-                        filteredChannels.Remove(channel);
                         _currentChatBox.contents.Clear();
-                    } 
+                        RepopulateChat(filteredHistory);                   
+                    }
 
-                    RepopulateChat(filteredHistory);                   
-                }
-
-                break;
+                    break;
             }
         }
 
-        private void RepopulateChat(SortedDictionary<DateTime, MsgChatMessage> filteredMessages)
+        private void RepopulateChat(List<MsgChatMessage> filteredMessages)
         {
-            // Copy the dict for enumration
-            SortedDictionary<DateTime, MsgChatMessage> filteredHistoryCopy = new SortedDictionary<DateTime, MsgChatMessage>(filteredMessages);
-
-            foreach ( KeyValuePair<DateTime, MsgChatMessage> item in filteredHistoryCopy)
+            // Copy the list for enumration
+            List<MsgChatMessage> filteredMessagesCopy = new List<MsgChatMessage>(filteredMessages);
+            
+            foreach ( MsgChatMessage item in filteredMessagesCopy)
             {
-                filteredMessages.Remove(item.Key);
-                _onChatMessage(item.Value);        
+                _onChatMessage(item);  
+                filteredMessages.Remove(item);      
             }
 
             // filteredHistoryCopy.Clear();
@@ -211,7 +204,7 @@ namespace Content.Client.Chat
 
         private bool IsFiltered(MsgChatMessage message)
         {
-            if (filteredChannels.Contains(message.Channel))
+            if (_filteredChannels.HasFlag(message.Channel))
             {
                 return true;
             }

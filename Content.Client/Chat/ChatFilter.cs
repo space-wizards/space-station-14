@@ -9,21 +9,13 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Log;
-
+using Robust.Shared.Localization;
 
 namespace Content.Client.Chat
 {
+    // TODO implement better storing of chat messages for repopulation
     public class ChatFilter
     {
-        // TODO add property for selected filter mode
-        // Fix t getting eaten by 
-        
-        private enum ToggledChannels
-        {
-            ALL,
-            OOC
-        }
-
 
     }
 }
