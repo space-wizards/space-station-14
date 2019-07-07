@@ -261,7 +261,7 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnPlayerMob()
         {
-            var entity = _entityManager.ForceSpawnEntityAt(PlayerPrototypeName, _getLateJoinSpawnPoint());
+            var entity = _entityManager.SpawnEntityAt(PlayerPrototypeName, _getLateJoinSpawnPoint());
             var shoes = _entityManager.SpawnEntity("ShoesItem");
             var uniform = _entityManager.SpawnEntity("UniformAssistant");
             if (entity.TryGetComponent(out InventoryComponent inventory))
@@ -275,7 +275,7 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnObserverMob()
         {
-            return _entityManager.ForceSpawnEntityAt(ObserverPrototypeName, _getLateJoinSpawnPoint());
+            return _entityManager.SpawnEntityAt(ObserverPrototypeName, _getLateJoinSpawnPoint());
         }
 
         private GridCoordinates _getLateJoinSpawnPoint()

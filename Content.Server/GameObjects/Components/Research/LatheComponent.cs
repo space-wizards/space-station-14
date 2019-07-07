@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 Producing = false;
                 _producingRecipe = null;
-                Owner.EntityManager.TrySpawnEntityAt(recipe.Result, Owner.Transform.GridPosition, out var entity);
+                Owner.EntityManager.SpawnEntityAt(recipe.Result, Owner.Transform.GridPosition);
                 _userInterface.SendMessage(new LatheStoppedProducingRecipeMessage());
             });
 
