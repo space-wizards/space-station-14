@@ -6,19 +6,20 @@ using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Utility;
 using System.Collections.Generic;
+using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Client.Graphics;
 using Robust.Client.Graphics.Overlays;
+using Robust.Client.Interfaces.UserInterface;
+using Robust.Shared.GameObjects.Components.Renderable;
 
 namespace Content.Client.GameObjects
 {
@@ -27,6 +28,8 @@ namespace Content.Client.GameObjects
     /// </summary>
     public class SpeciesUI : SharedSpeciesComponent, ICharacterUI
     {
+        private StatusEffectsUI _ui;
+
         /// <summary>
         /// Holds the godot control for the species window 
         /// </summary>
@@ -37,10 +40,12 @@ namespace Content.Client.GameObjects
         /// </summary>
         private ScreenEffects _currentEffect = ScreenEffects.None;
 
-        // Required dependencies
 #pragma warning disable 649
+        // Required dependencies
         [Dependency] private readonly IOverlayManager _overlayManager;
         [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
+        [Dependency] private readonly IResourceCache _resourceCache;
 #pragma warning restore 649
 
         //Relevant interface implementation for the character UI controller
@@ -69,6 +74,7 @@ namespace Content.Client.GameObjects
             base.OnAdd();
 
             _window = new SpeciesWindow();
+            _ui = new StatusEffectsUI();
 
             EffectsDictionary = new Dictionary<ScreenEffects, Overlay>()
             {
@@ -82,26 +88,35 @@ namespace Content.Client.GameObjects
             switch (message)
             {
                 case HudStateChange msg:
-                    if(CurrentlyControlled)
+                    if (CurrentlyControlled)
                     {
                         ChangeHudIcon(msg);
                     }
                     break;
 
                 case PlayerAttachedMsg _:
+                    _ui.Parent?.RemoveChild(_ui);
+
+                    _userInterfaceManager.StateRoot.AddChild(_ui);
                     ApplyOverlay();
                     break;
 
                 case PlayerDetachedMsg _:
+                    _ui.Parent?.RemoveChild(_ui);
                     RemoveOverlay();
                     break;
             }
         }
 
-        private void ChangeHudIcon(HudStateChange changemessage)
+        private void ChangeHudIcon(HudStateChange changeMessage)
         {
-            _window.SetIcon(changemessage);
-            SetOverlay(changemessage);
+            var path = SharedSpriteComponent.TextureRoot / changeMessage.StateSprite;
+            var texture = _resourceCache.GetTexture(path);
+
+            _window.SetIcon(texture);
+            _ui.SetHealthIcon(texture);
+
+            SetOverlay(changeMessage);
         }
 
         private void SetOverlay(HudStateChange message)
@@ -117,8 +132,8 @@ namespace Content.Client.GameObjects
         {
             if (_currentEffect != ScreenEffects.None)
             {
-                var appliedeffect = EffectsDictionary[_currentEffect];
-                _overlayManager.RemoveOverlay(appliedeffect.ID);
+                var appliedEffect = EffectsDictionary[_currentEffect];
+                _overlayManager.RemoveOverlay(appliedEffect.ID);
             }
 
             _currentEffect = ScreenEffects.None;
@@ -147,15 +162,9 @@ namespace Content.Client.GameObjects
                 Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Mob/UI/Human/human0.png");
             }
 
-            public void SetIcon(HudStateChange changeMessage)
+            public void SetIcon(Texture texture)
             {
-                if (!IoCManager.Resolve<IResourceCache>().TryGetResource<TextureResource>(new ResourcePath("/Textures") / changeMessage.StateSprite, out var newtexture))
-                {
-                    Logger.Info("The Species Health Sprite {0} Does Not Exist", new ResourcePath("/Textures") / changeMessage.StateSprite);
-                    return;
-                }
-
-                Texture = newtexture;
+                Texture = texture;
             }
         }
     }
