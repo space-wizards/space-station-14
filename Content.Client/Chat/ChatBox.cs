@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Input;
@@ -6,6 +7,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Robust.Shared.Localization;
 
 
 namespace Content.Client.Chat
@@ -14,12 +16,14 @@ namespace Content.Client.Chat
     {
         public delegate void TextSubmitHandler(ChatBox chatBox, string text);
 
+        public delegate void FilterToggledHandler(ChatBox chatBox, Button.ButtonToggledEventArgs e);
+
         private const int MaxLinePixelLength = 500;
 
         private readonly IList<string> _inputHistory = new List<string>();
 
         public LineEdit Input { get; private set; }
-        private OutputPanel contents;
+        public OutputPanel contents;
 
         // Buttons for filtering
         public Button AllButton;
@@ -70,32 +74,30 @@ namespace Content.Client.Chat
             AllButton = new Button()
             {
                 Text = "All",
+                Name = "ALL",
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1
             };
-            AllButton.OnPressed += OnOOCPressed;
-
-            hBox.AddChild(AllButton);
 
             OOCButton = new Button()
             {
                 Text = "OOC",
+                Name = "OOC",
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1
             };
+
+            AllButton.OnToggled += OnFilterToggled;
+            OOCButton.OnToggled += OnFilterToggled;
             
+            hBox.AddChild(AllButton);
             hBox.AddChild(OOCButton);
 
             AddChild(vBox);
 
             PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Gray.WithAlpha(0.5f) };
-        }
-
-        private void OnOOCPressed(Button.ButtonEventArgs args)
-        {
-            ChatFilter.ButtonHandler();
         }
 
         protected override void MouseDown(GUIMouseButtonEventArgs e)
@@ -167,6 +169,8 @@ namespace Content.Client.Chat
 
         public event TextSubmitHandler TextSubmitted;
 
+        public event FilterToggledHandler FilterToggled;
+
         public void AddLine(string message, ChatChannel channel, Color color)
         {
             if (Disposed)
@@ -197,6 +201,11 @@ namespace Content.Client.Chat
             {
                 Input.ReleaseKeyboardFocus();
             }
+        }
+
+        private void OnFilterToggled(Button.ButtonToggledEventArgs args)
+        {
+            FilterToggled?.Invoke(this, args);
         }
     }
 }
