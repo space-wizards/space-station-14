@@ -1,4 +1,5 @@
-﻿using Robust.Server.GameObjects.Components.Container;
+﻿using System;
+using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
@@ -12,7 +13,18 @@ namespace Content.Server.GameObjects
         public IEntity ContainedEntity { get; private set; } = null;
 
         /// <inheritdoc />
-        public override IReadOnlyCollection<IEntity> ContainedEntities => new List<IEntity> { ContainedEntity }.AsReadOnly();
+        public override IReadOnlyCollection<IEntity> ContainedEntities
+        {
+            get
+            {
+                if (ContainedEntity == null)
+                {
+                    return Array.Empty<IEntity>();
+                }
+
+                return new List<IEntity> {ContainedEntity}.AsReadOnly();
+            }
+        }
 
         public ContainerSlot(string id, IContainerManager manager) : base(id, manager)
         {

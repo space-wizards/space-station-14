@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Mobs;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.EntitySystemMessages;
@@ -15,6 +16,7 @@ using Robust.Shared.Serialization;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.Maps;
+using Robust.Server.Interfaces.Player;
 
 namespace Content.Server.GameObjects.Components.Explosive
 {
@@ -118,7 +120,8 @@ namespace Content.Server.GameObjects.Components.Explosive
             var time = IoCManager.Resolve<IGameTiming>().CurTime;
             var message = new EffectSystemMessage
             {
-                EffectSprite = "Effects/explosion.png",
+                EffectSprite = "Effects/explosion.rsi",
+                RsiState = "explosionfast",
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(5),
                 Size = new Vector2(FlashRange / 2, FlashRange / 2),
@@ -131,6 +134,32 @@ namespace Content.Server.GameObjects.Components.Explosive
             };
             _entitySystemManager.GetEntitySystem<EffectSystem>().CreateParticle(message);
             _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/effects/explosion.ogg", Owner);
+
+            // Knock back cameras of all players in the area.
+
+            var playerManager = IoCManager.Resolve<IPlayerManager>();
+            var selfPos = Owner.Transform.WorldPosition;
+            foreach (var player in playerManager.GetAllPlayers())
+            {
+                if (player.AttachedEntity == null
+                    || player.AttachedEntity.Transform.MapID != mapGrid.ParentMapId
+                    || !player.AttachedEntity.TryGetComponent(out CameraRecoilComponent recoil))
+                {
+                    continue;
+                }
+
+                var playerPos = player.AttachedEntity.Transform.WorldPosition;
+                var delta = selfPos - playerPos;
+                var distance = delta.LengthSquared;
+
+                var effect = 1 / (1 + 0.2f * distance);
+                if (effect > 0.01f)
+                {
+                    var kick = -delta.Normalized * effect;
+                    recoil.Kick(kick);
+                }
+            }
+
             return true;
         }
 

@@ -24,6 +24,8 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);
             human.AddFunction(ContentKeyFunctions.OpenContextMenu);
+            // Disabled until there is feedback, so hitting tab doesn't suddenly break interaction.
+            // human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
 
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);

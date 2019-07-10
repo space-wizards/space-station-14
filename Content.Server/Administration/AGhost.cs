@@ -30,7 +30,7 @@ namespace Content.Server.Administration
             else
             {
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var ghost = entityManager.ForceSpawnEntityAt("AdminObserver",
+                var ghost = entityManager.SpawnEntityAt("AdminObserver",
                     player.AttachedEntity.Transform.GridPosition);
 
                 mind.Visit(ghost);

@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 {
                     // Oh boy we get to finish construction!
                     var entMgr = IoCManager.Resolve<IServerEntityManager>();
-                    var ent = entMgr.ForceSpawnEntityAt(Prototype.Result, Transform.GridPosition);
+                    var ent = entMgr.SpawnEntityAt(Prototype.Result, Transform.GridPosition);
                     ent.GetComponent<ITransformComponent>().LocalRotation = Transform.LocalRotation;
                     Owner.Delete();
                     return true;

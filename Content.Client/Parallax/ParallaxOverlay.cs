@@ -43,12 +43,14 @@ namespace Content.Client.Parallax
             }
         }
 
-        protected override void Draw(DrawingHandle handle)
+        protected override void Draw(DrawingHandleBase handle)
         {
             if (_parallaxTexture == null)
             {
                 return;
             }
+
+            var screenHandle = (DrawingHandleScreen) handle;
 
             var (sizeX, sizeY) = _parallaxTexture.Size;
             var (posX, posY) = _eyeManager.ScreenToWorld(Vector2.Zero).ToWorld(_mapManager).Position;
@@ -56,10 +58,10 @@ namespace Content.Client.Parallax
             ox = MathHelper.Mod(ox, sizeX);
             oy = MathHelper.Mod(oy, sizeY);
 
-            handle.DrawTexture(_parallaxTexture, new Vector2(ox, oy));
-            handle.DrawTexture(_parallaxTexture, new Vector2(ox - sizeX, oy));
-            handle.DrawTexture(_parallaxTexture, new Vector2(ox, oy - sizeY));
-            handle.DrawTexture(_parallaxTexture, new Vector2(ox - sizeX, oy - sizeY));
+            screenHandle.DrawTexture(_parallaxTexture, new Vector2(ox, oy));
+            screenHandle.DrawTexture(_parallaxTexture, new Vector2(ox - sizeX, oy));
+            screenHandle.DrawTexture(_parallaxTexture, new Vector2(ox, oy - sizeY));
+            screenHandle.DrawTexture(_parallaxTexture, new Vector2(ox - sizeX, oy - sizeY));
         }
     }
 }

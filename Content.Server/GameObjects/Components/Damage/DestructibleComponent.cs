@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Destructible
         {
             if (!string.IsNullOrWhiteSpace(spawnOnDestroy) && eventArgs.IsSpawnWreck)
             {
-                Owner.EntityManager.TrySpawnEntityAt(spawnOnDestroy, Owner.Transform.GridPosition, out var wreck);
+                Owner.EntityManager.SpawnEntityAt(spawnOnDestroy, Owner.Transform.GridPosition);
             }
         }
     }

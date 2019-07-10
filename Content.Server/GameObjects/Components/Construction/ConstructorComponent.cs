@@ -83,12 +83,12 @@ namespace Content.Server.GameObjects.Components.Construction
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
-                var ent = _serverEntityManager.ForceSpawnEntityAt(prototype.Result, loc);
+                var ent = _serverEntityManager.SpawnEntityAt(prototype.Result, loc);
                 ent.Transform.LocalRotation = angle;
             }
             else
             {
-                var frame = _serverEntityManager.ForceSpawnEntityAt("structureconstructionframe", loc);
+                var frame = _serverEntityManager.SpawnEntityAt("structureconstructionframe", loc);
                 var construction = frame.GetComponent<ConstructionComponent>();
                 construction.Init(prototype);
                 frame.Transform.LocalRotation = angle;
