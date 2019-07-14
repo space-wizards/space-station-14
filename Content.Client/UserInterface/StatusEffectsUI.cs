@@ -23,11 +23,13 @@ namespace Content.Client.UserInterface
 
             _vBox.AddChild(_healthStatusRect = new TextureRect
             {
+                TextureScale = (2, 2),
                 Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Mob/UI/Human/human0.png")
             });
 
             SetAnchorAndMarginPreset(LayoutPreset.TopRight);
             MarginTop = 200;
+            MarginRight = 10;
         }
 
         public void SetHealthIcon(Texture texture)
