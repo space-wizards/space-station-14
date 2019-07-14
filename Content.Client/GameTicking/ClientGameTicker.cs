@@ -35,6 +35,7 @@ namespace Content.Client.GameTicking
         [Dependency] private ILocalizationManager _localization;
         [Dependency] private IResourceCache _resourceCache;
         [Dependency] private IPlayerManager _playerManager;
+        [Dependency] private IGameHud _gameHud;
 #pragma warning restore 649
 
         [ViewVariables] private bool _areWeReady;
@@ -177,6 +178,8 @@ namespace Content.Client.GameTicking
                 _tutorialButton = null;
             }
 
+            _gameHud.RootControl?.Parent.RemoveChild(_gameHud.RootControl);
+
             _tickerState = TickerState.InLobby;
 
             _lobby = new LobbyGui(_localization, _resourceCache);
@@ -248,6 +251,7 @@ namespace Content.Client.GameTicking
 
             _gameChat = new ChatBox();
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
+            _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
             _tutorialButton = new TutorialButton();
             _userInterfaceManager.StateRoot.AddChild(_tutorialButton);

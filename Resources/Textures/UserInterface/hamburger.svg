@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="7.9563375mm"
+   height="7.1438789mm"
+   viewBox="0 0 7.9563375 7.1438789"
+   version="1.1"
+   id="svg4593"
+   sodipodi:docname="hamburger.svg"
+   inkscape:export-filename="/home/pj/Projects/space-station-14-content/Resources/Textures/UserInterface/hamburger.svg.96dpi.png"
+   inkscape:export-xdpi="95.998207"
+   inkscape:export-ydpi="95.998207"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14">
+  <defs
+     id="defs4587" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6"
+     inkscape:cx="35.456574"
+     inkscape:cy="-4.4711292"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     units="px" />
+  <metadata
+     id="metadata4590">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-97.319452,-120.31497)">
+    <path
+       inkscape:connector-curvature="0"
+       style="stroke:#ffffff;stroke-width:1.32291663;stroke-linecap:round;stroke-opacity:1"
+       d="m 97.990331,120.97649 h 6.614579"
+       id="path4"
+       inkscape:export-filename="/home/pj/Projects/space-station-14-content/Resources/Textures/UserInterface/hamburger.png"
+       inkscape:export-xdpi="95.998207"
+       inkscape:export-ydpi="95.998207" />
+    <path
+       inkscape:connector-curvature="0"
+       style="stroke:#ffffff;stroke-width:1.32291663;stroke-linecap:round;stroke-opacity:1"
+       d="m 97.990331,123.8869 h 6.614579"
+       id="path6"
+       inkscape:export-filename="/home/pj/Projects/space-station-14-content/Resources/Textures/UserInterface/hamburger.png"
+       inkscape:export-xdpi="95.998207"
+       inkscape:export-ydpi="95.998207" />
+    <path
+       inkscape:connector-curvature="0"
+       style="stroke:#ffffff;stroke-width:1.32291663;stroke-linecap:round;stroke-opacity:1"
+       d="m 97.990331,126.79732 h 6.614579"
+       id="path8"
+       inkscape:export-filename="/home/pj/Projects/space-station-14-content/Resources/Textures/UserInterface/hamburger.png"
+       inkscape:export-xdpi="95.998207"
+       inkscape:export-ydpi="95.998207" />
+  </g>
+</svg>

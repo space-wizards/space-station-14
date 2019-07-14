@@ -1,3 +1,4 @@
+using Content.Client.UserInterface;
 using Robust.Client;
 
 namespace Content.Client.Interfaces

@@ -440,7 +440,23 @@ namespace Content.Client.UserInterface
                 new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassPowerStateGood}, null, null), new []
                 {
                     new StyleProperty(Label.StylePropertyFontColor, new Color(0.024f, 0.8f, 0.0f))
-                }), 
+                }),
+
+                // Those buttons on the top left.
+                new StyleRule(new SelectorElement(typeof(TextureButton), new []{GameHud.StyleClassTopMenuButton}, null, TextureButton.StylePseudoClassNormal), new []
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#7b7e9e"))
+                }),
+
+                new StyleRule(new SelectorElement(typeof(TextureButton), new []{GameHud.StyleClassTopMenuButton}, null, TextureButton.StylePseudoClassHover), new []
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#8285a3"))
+                }),
+
+                new StyleRule(new SelectorElement(typeof(TextureButton), new []{GameHud.StyleClassTopMenuButton}, null, TextureButton.StylePseudoClassPressed), new []
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#00b061"))
+                }),
             });
         }
     }

@@ -133,6 +133,7 @@ namespace Content.Client
             factory.RegisterIgnore("AiController");
             factory.RegisterIgnore("PlayerInputMover");
 
+            IoCManager.Register<IGameHud, GameHud>();
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
             IoCManager.Register<IClientGameTicker, ClientGameTicker>();
@@ -198,6 +199,7 @@ namespace Content.Client
             IoCManager.Resolve<IClientGameTicker>().Initialize();
             IoCManager.Resolve<IOverlayManager>().AddOverlay(new ParallaxOverlay());
             IoCManager.Resolve<IChatManager>().Initialize();
+            IoCManager.Resolve<IGameHud>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, float frameTime)
