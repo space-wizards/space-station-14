@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Robust.Shared.Localization;
+using Robust.Shared.IoC;
 
 
 namespace Content.Client.Chat
@@ -21,6 +22,8 @@ namespace Content.Client.Chat
         private const int MaxLinePixelLength = 500;
 
         private readonly IList<string> _inputHistory = new List<string>();
+
+        private ILocalizationManager localize = IoCManager.Resolve<ILocalizationManager>();
 
         public LineEdit Input { get; private set; }
         public OutputPanel contents;
@@ -73,7 +76,7 @@ namespace Content.Client.Chat
 
             AllButton = new Button()
             {
-                Text = "All",
+                Text = localize.GetString("All"),
                 Name = "ALL",
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
@@ -83,7 +86,7 @@ namespace Content.Client.Chat
 
             OOCButton = new Button()
             {
-                Text = "OOC",
+                Text = localize.GetString("OOC"),
                 Name = "OOC",
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
