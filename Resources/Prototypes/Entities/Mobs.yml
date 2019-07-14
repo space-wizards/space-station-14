@@ -65,6 +65,7 @@
     - type: SpeciesVisualizer2D
 
   - type: CombatMode
+  - type: Teleportable
 
 - type: entity
   id: MobObserver

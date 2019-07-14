@@ -1,0 +1,62 @@
+- type: entity
+  name: "BaseHandTele"
+  parent: BaseItem
+  id: BaseHandTele
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/hand_tele.rsi
+    state: ready
+  - type: Icon
+    sprite: Objects/hand_tele.rsi
+    state: ready
+  - type: ItemTeleporter
+    teleporter_type: Random
+  - type: Item
+    Size: 12
+    sprite: Objects/hand_tele.rsi
+  - type: Sound
+  - type: Appearance
+    visuals:
+    - type: HandTeleporterVisualizer2D
+
+- type: entity
+  name: "Hand Teleporter - Random"
+  parent: BaseHandTele
+  id: RandHandTele
+  description: "Travel to a random spot in range"
+  components:
+  - type: ItemTeleporter
+    teleporter_type: Random
+    range: 15
+    cooldown: 5
+    charge_time: 1
+
+- type: entity
+  name: "Hand Teleporter - Direct"
+  parent: BaseHandTele
+  id: DirHandTele
+  description: "Travel to a specific spot in a short range"
+  components:
+  - type: ItemTeleporter
+    teleporter_type: Directed
+    range: 5
+    cooldown: 2
+    charge_time: 0.2
+
+- type: entity
+  name: Portal
+  id: Portal
+  description: "Portal to another location"
+  components:
+  - type: Collidable
+  - type: Portal
+  - type: BoundingBox
+    aabb: "-0.25,-0.25,0.25,0.25"
+  - type: Sprite
+    netsync: false
+    sprite: "Effects/portal.rsi"
+    state: portal-pending
+  - type: Appearance
+    visuals:
+    - type: PortalVisualizer2D

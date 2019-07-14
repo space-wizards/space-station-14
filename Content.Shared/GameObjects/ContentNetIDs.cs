@@ -21,5 +21,6 @@
         public const uint LATHE = 1016;
         public const uint LATHE_DATABASE = 1017;
         public const uint MATERIAL_STORAGE = 1018;
+        public const uint HAND_TELEPORTER = 1019;
     }
 }
