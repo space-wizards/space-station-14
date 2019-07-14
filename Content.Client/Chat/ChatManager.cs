@@ -60,7 +60,7 @@ namespace Content.Client.Chat
         {
             Logger.Debug($"{message.Channel}: {message.Message}");
 
-            if (!IsFiltered(message))
+            if (!IsNotFiltered(message))
             {
                 var color = Color.DarkGray;
                 var messageText = message.Message;
@@ -139,12 +139,12 @@ namespace Content.Client.Chat
                     if (_Localstate)
                     {
                         _filteredChannels = ChatChannel.Local;
+                        RepopulateChat(filteredHistory);
                         break;
                     }
                     else
                     {
                         _filteredChannels = _filteredChannels ^ ChatChannel.Local;
-                        _currentChatBox.contents.Clear();
                         RepopulateChat(filteredHistory);
                         break;
                     }
@@ -154,12 +154,12 @@ namespace Content.Client.Chat
                     if (_OOCstate)
                     {
                         _filteredChannels = ChatChannel.OOC;
+                        RepopulateChat(filteredHistory);
                         break;
                     }
                     else
                     {
-                        _filteredChannels = _filteredChannels ^ChatChannel.Local;
-                        _currentChatBox.contents.Clear();
+                        _filteredChannels = _filteredChannels ^ ChatChannel.OOC;
                         RepopulateChat(filteredHistory);
                         break;
                     }
@@ -169,11 +169,13 @@ namespace Content.Client.Chat
                     if (_ALLstate)
                     {
                         _filteredChannels = ChatChannel.OOC | ChatChannel.Local;
+                        RepopulateChat(filteredHistory);
                         break;
                     }
                     else
                     {
-                        _currentChatBox.contents.Clear();
+                        _filteredChannels = _filteredChannels ^ ChatChannel.OOC;
+                        _filteredChannels = _filteredChannels ^ ChatChannel.Local;
                         RepopulateChat(filteredHistory);
                         break;
                     }
@@ -185,6 +187,8 @@ namespace Content.Client.Chat
             // Copy list for enumeration
             List<MsgChatMessage> filteredMessagesCopy = new List<MsgChatMessage>(filteredMessages);
 
+            _currentChatBox.contents.Clear();
+
             foreach (MsgChatMessage msg in filteredMessagesCopy)
             {
                 _onChatMessage(msg);
@@ -192,7 +196,7 @@ namespace Content.Client.Chat
             }
         }
 
-        private bool IsFiltered(MsgChatMessage message)
+        private bool IsNotFiltered(MsgChatMessage message)
         {
             if (_filteredChannels.HasFlag(message.Channel))
             {

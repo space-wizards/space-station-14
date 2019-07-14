@@ -77,7 +77,8 @@ namespace Content.Client.Chat
                 Name = "ALL",
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsStretchRatio = 1
+                SizeFlagsStretchRatio = 1,
+                ToggleMode = true
             };
 
             OOCButton = new Button()
@@ -86,7 +87,8 @@ namespace Content.Client.Chat
                 Name = "OOC",
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsStretchRatio = 1
+                SizeFlagsStretchRatio = 1,
+                ToggleMode = true
             };
 
             AllButton.OnToggled += OnFilterToggled;
