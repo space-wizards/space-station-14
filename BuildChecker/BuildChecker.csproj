@@ -12,7 +12,7 @@ You want to handle the Build, Clean and Rebuild tasks to prevent missing task er
 If you want to learn more about these kinds of things, check out Microsoft's official documentation about MSBuild:
 https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
 -->
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Python>python3</Python>
     <Python Condition="'$(OS)'=='Windows_NT' Or '$(OS)'=='Windows'">py -3</Python>
