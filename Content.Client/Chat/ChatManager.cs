@@ -138,14 +138,12 @@ namespace Content.Client.Chat
                     _Localstate = !_Localstate;
                     if (_Localstate)
                     {
-                        _filteredChannels = ChatChannel.Local;
-                        RepopulateChat(filteredHistory);
+                        _filteredChannels |= ChatChannel.Local;
                         break;
                     }
                     else
                     {
-                        _filteredChannels = _filteredChannels ^ ChatChannel.Local;
-                        RepopulateChat(filteredHistory);
+                        _filteredChannels &= ~ChatChannel.Local;
                         break;
                     }
 
@@ -153,14 +151,12 @@ namespace Content.Client.Chat
                     _OOCstate = !_OOCstate;
                     if (_OOCstate)
                     {
-                        _filteredChannels = ChatChannel.OOC;
-                        RepopulateChat(filteredHistory);
+                        _filteredChannels |= ChatChannel.OOC;
                         break;
                     }
                     else
                     {
-                        _filteredChannels = _filteredChannels ^ ChatChannel.OOC;
-                        RepopulateChat(filteredHistory);
+                        _filteredChannels &= ~ChatChannel.OOC;
                         break;
                     }
 
@@ -169,17 +165,17 @@ namespace Content.Client.Chat
                     if (_ALLstate)
                     {
                         _filteredChannels = ChatChannel.OOC | ChatChannel.Local;
-                        RepopulateChat(filteredHistory);
                         break;
                     }
                     else
                     {
-                        _filteredChannels = _filteredChannels ^ ChatChannel.OOC;
-                        _filteredChannels = _filteredChannels ^ ChatChannel.Local;
-                        RepopulateChat(filteredHistory);
+                        _filteredChannels &= ~ChatChannel.OOC;
+                        _filteredChannels &= ~ChatChannel.Local;
                         break;
                     }
             }
+
+            RepopulateChat(filteredHistory);
         }
 
         private void RepopulateChat(List<MsgChatMessage> filteredMessages)
