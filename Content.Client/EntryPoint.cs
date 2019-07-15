@@ -195,11 +195,11 @@ namespace Content.Client
             var inputMan = IoCManager.Resolve<IInputManager>();
             ContentContexts.SetupContexts(inputMan.Contexts);
 
+            IoCManager.Resolve<IGameHud>().Initialize();
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
             IoCManager.Resolve<IClientGameTicker>().Initialize();
             IoCManager.Resolve<IOverlayManager>().AddOverlay(new ParallaxOverlay());
             IoCManager.Resolve<IChatManager>().Initialize();
-            IoCManager.Resolve<IGameHud>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, float frameTime)

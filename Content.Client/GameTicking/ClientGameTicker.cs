@@ -178,7 +178,7 @@ namespace Content.Client.GameTicking
                 _tutorialButton = null;
             }
 
-            _gameHud.RootControl?.Parent.RemoveChild(_gameHud.RootControl);
+            _gameHud.RootControl.Parent?.RemoveChild(_gameHud.RootControl);
 
             _tickerState = TickerState.InLobby;
 
