@@ -5,12 +5,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public class SharedTeleporterComponent : Component
-    {
-        public override string Name => "ItemTeleporter";
-        public override uint? NetID => ContentNetIDs.HAND_TELEPORTER;
-    }
-
     public enum ItemTeleporterState
     {
         Off,

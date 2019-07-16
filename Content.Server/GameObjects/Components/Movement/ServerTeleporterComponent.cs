@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -19,7 +19,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Movement
 {
 
-    public class ServerTeleporterComponent : SharedTeleporterComponent
+    public class ServerTeleporterComponent : Component, IAfterAttack
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -27,6 +27,8 @@ namespace Content.Server.GameObjects.Components.Movement
 #pragma warning restore 649
         // TODO: Look at MapManager.Map for Beacons to get all entities on grid
         public ItemTeleporterState State => _state;
+
+        public override string Name => "ItemTeleporter";
 
         [ViewVariables] private float _chargeTime;
         [ViewVariables] private float _cooldown;
@@ -43,7 +45,6 @@ namespace Content.Server.GameObjects.Components.Movement
         private AppearanceComponent _appearanceComponent;
 
         private Random _spreadRandom;
-        // TODO: Add hand_tele from discordia under obj/device and add recharge animation
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -58,37 +59,6 @@ namespace Content.Server.GameObjects.Components.Movement
             serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/effects/teleport_arrival.ogg");
             serializer.DataField(ref _cooldownSound, "cooldown_sound", null);
             serializer.DataField(ref _portalAliveTime, "portal_alive_time", 5.0f);  // TODO: Change this to 0 before PR?
-        }
-
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
-        {
-            base.HandleMessage(message, netChannel, component);
-            var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            var session = playerMgr.GetSessionByChannel(netChannel);
-            var user = session.AttachedEntity;
-            if (user == null)
-            {
-                return;
-            }
-
-            switch (message)
-            {
-                case TeleportMessage msg:
-                    if (_teleporterType == TeleporterType.Directed)
-                    {
-                        TryDirectedTeleport(user, msg.Target);
-                        break;
-                    }
-
-                    if (_teleporterType == TeleporterType.Random)
-                    {
-                        TryRandomTeleport(user);
-                        break;
-                    }
-
-                    break;
-            }
         }
 
         public override void OnRemove()
@@ -111,6 +81,20 @@ namespace Content.Server.GameObjects.Components.Movement
             _state = newState;
         }
 
+        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        {
+            if (_teleporterType == TeleporterType.Directed)
+            {
+                var userTarget = eventArgs.ClickLocation.ToWorld(_mapManager);
+                TryDirectedTeleport(eventArgs.User, userTarget);
+            }
+
+            if (_teleporterType == TeleporterType.Random)
+            {
+                TryRandomTeleport(eventArgs.User);
+            }
+        }
+
         public void TryDirectedTeleport(IEntity user, GridCoordinates grid)
         {
             // Checks
@@ -128,6 +112,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(grid))
                 {
                     // Added this component to avoid stacking portals and causing shenanigans
+                    // TODO: Doesn't do a great job of stopping stacking portals for directed
                     if (entity.HasComponent<CollidableComponent>() || entity.HasComponent<ServerTeleporterComponent>())
                     {
                         return;
@@ -171,9 +156,10 @@ namespace Content.Server.GameObjects.Components.Movement
 
         private bool emptySpace(IEntity user, Vector2 target)
         {
+            // TODO: Check the user's spot? Upside is no stacking TPs but downside is they can't unstuck themselves from walls.
             foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(user.Transform.MapID, target))
             {
-                if (entity.HasComponent<CollidableComponent>())
+                if (entity.HasComponent<CollidableComponent>() || entity.HasComponent<ServerPortalComponent>())
                 {
                     return false;
                 }
@@ -256,10 +242,8 @@ namespace Content.Server.GameObjects.Components.Movement
                 var arrivalPortal = _serverEntityManager.SpawnEntityAt("Portal", targetGrid);
                 arrivalPortal.TryGetComponent<ServerPortalComponent>(out var arrivalComponent);
 
-                // Stop the user getting portal spammed
+                // Connect. TODO: If the OnUpdate in ServerPortalComponent is changed this may need to change as well.
                 arrivalComponent.TryConnectPortal(departurePortal);
-                arrivalComponent.TryChangeState(PortalState.RecentlyTeleported);
-                departureComponent.TryChangeState(PortalState.RecentlyTeleported);
             }
             else
             {

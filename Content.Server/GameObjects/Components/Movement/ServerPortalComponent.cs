@@ -41,9 +41,9 @@ namespace Content.Server.GameObjects.Components.Movement
             // How long will the portal stay up: 0 is infinite
             serializer.DataField(ref _aliveTime, "alive_time", 10.0f);
             // How long before a specific person can go back into it
-            serializer.DataField(ref _individualPortalCooldown, "individual_cooldown", 3.0f);
+            serializer.DataField(ref _individualPortalCooldown, "individual_cooldown", 2.1f);
             // How long before anyone can go in it
-            serializer.DataField(ref _overallPortalCooldown, "overall_cooldown", 1.0f);
+            serializer.DataField(ref _overallPortalCooldown, "overall_cooldown", 2.0f);
             serializer.DataField(ref _departureSound, "departure_sound", "/Audio/effects/teleport_departure.ogg");
             serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/effects/teleport_arrival.ogg");
         }
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 collide.IsHardCollidable = false;
             }
 
-            _state = PortalState.UnableToTeleport;
+            _state = PortalState.Pending;
             if (_aliveTime > 0)
             {
                 Timer.Spawn(TimeSpan.FromSeconds(_aliveTime), () => Owner.Delete());
@@ -88,7 +88,6 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public void TryConnectPortal(IEntity otherPortal)
         {
-            // TODO: Refactor to use out or w/e
             if (otherPortal.TryGetComponent<ServerPortalComponent>(out var connectedPortal) && connectedPortal.CanBeConnected())
             {
                 _connectingTeleporter = otherPortal;
@@ -125,23 +124,28 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        private IEnumerable<IEntity> GetPortableEntities()
+        public IEnumerable<IEntity> GetPortableEntities()
         {
-            // TODO: Performance optimisation?
-            // TODO: If Teleportable put on a stored component (hands or storage) don't teleport it?
-            var portableEntities = new List<IEntity>();
-
             foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(Owner))
             {
-                if (entity.HasComponent<TeleportableComponent>())
+                if (IsEntityPortable(entity))
                 {
-                    portableEntities.Add(entity);
+                    yield return entity;
                 }
             }
-
-            return portableEntities;
         }
 
+        private bool IsEntityPortable(IEntity entity)
+        {
+            // TODO: Check if it's slotted etc. Otherwise the slot item itself gets ported.
+            if (!immuneEntities.Contains(entity) && entity.HasComponent<TeleportableComponent>())
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // TODO: Fix portal updates for performance
         public void OnUpdate()
         {
             if (_onCooldown == false)
@@ -149,6 +153,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 foreach (var entity in GetPortableEntities())
                 {
                     TryPortalEntity(entity);
+                    break;
                 }
             }
         }
