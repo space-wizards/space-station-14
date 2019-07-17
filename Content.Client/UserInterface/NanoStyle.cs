@@ -442,20 +442,23 @@ namespace Content.Client.UserInterface
                     new StyleProperty(Label.StylePropertyFontColor, new Color(0.024f, 0.8f, 0.0f))
                 }),
 
-                // Those buttons on the top left.
-                new StyleRule(new SelectorElement(typeof(TextureButton), new []{GameHud.StyleClassTopMenuButton}, null, TextureButton.StylePseudoClassNormal), new []
+                // Those top menu buttons.
+                new StyleRule(
+                    new SelectorElement(typeof(GameHud.TopButton), null, null, Button.StylePseudoClassNormal), new []
                 {
-                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#7b7e9e"))
+                    new StyleProperty(Button.StylePropertyStyleBox, buttonNormal),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(TextureButton), new []{GameHud.StyleClassTopMenuButton}, null, TextureButton.StylePseudoClassHover), new []
+                new StyleRule(
+                    new SelectorElement(typeof(GameHud.TopButton), null, null, Button.StylePseudoClassPressed), new []
                 {
-                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#8285a3"))
+                    new StyleProperty(Button.StylePropertyStyleBox, buttonPressed),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(TextureButton), new []{GameHud.StyleClassTopMenuButton}, null, TextureButton.StylePseudoClassPressed), new []
+                new StyleRule(
+                    new SelectorElement(typeof(GameHud.TopButton), null, null, Button.StylePseudoClassHover), new []
                 {
-                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#00b061"))
+                    new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
                 }),
             });
         }
