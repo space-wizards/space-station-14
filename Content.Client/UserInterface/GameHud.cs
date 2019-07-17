@@ -59,7 +59,7 @@ namespace Content.Client.UserInterface
             var escapeTexture = _resourceCache.GetTexture("/Textures/UserInterface/hamburger.svg.96dpi.png");
             var characterTexture = _resourceCache.GetTexture("/Textures/UserInterface/character.svg.96dpi.png");
             var craftingTexture = _resourceCache.GetTexture("/Textures/UserInterface/hammer.svg.96dpi.png");
-            var tutorialTexture = _resourceCache.GetTexture("/Textures/UserInterface/tutorial.svg.96dpi.png");
+            var tutorialTexture = _resourceCache.GetTexture("/Textures/UserInterface/students-cap.svg.96dpi.png");
 
             _topButtonsContainer = new HBoxContainer
             {
@@ -199,7 +199,8 @@ namespace Content.Client.UserInterface
                     SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
                     MouseFilter = MouseFilterMode.Ignore,
                     ModulateSelfOverride = ColorNormal,
-                    CustomMinimumSize = (0, 32)
+                    CustomMinimumSize = (0, 32),
+                    Stretch = TextureRect.StretchMode.KeepCentered
                 });
 
                 _container.AddChild(_label = new Label
