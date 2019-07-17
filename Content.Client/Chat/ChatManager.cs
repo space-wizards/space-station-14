@@ -18,7 +18,7 @@ namespace Content.Client.Chat
         private const char OOCAlias = '[';
         private const char MeAlias = '@';
 
-        public List<MsgChatMessage> filteredHistory = new List<MsgChatMessage>();
+        public List<StoredChatMessage> filteredHistory = new List<StoredChatMessage>();
 
         // Filter Button States
         private bool _ALLstate;
@@ -87,7 +87,8 @@ namespace Content.Client.Chat
             }
 
             // Log all incoming chat to repopulate when filter is untoggled
-            filteredHistory.Add(message);
+            StoredChatMessage storedMessage = new StoredChatMessage(message);
+            filteredHistory.Add(storedMessage);
         }
 
         private void _onChatBoxTextSubmitted(ChatBox chatBox, string text)
@@ -178,21 +179,59 @@ namespace Content.Client.Chat
             RepopulateChat(filteredHistory);
         }
 
-        private void RepopulateChat(List<MsgChatMessage> filteredMessages)
+        private void RepopulateChat(List<StoredChatMessage> filteredMessages)
         {
             // Copy list for enumeration
-            List<MsgChatMessage> filteredMessagesCopy = new List<MsgChatMessage>(filteredMessages);
+            List<StoredChatMessage> filteredMessagesCopy = new List<StoredChatMessage>(filteredMessages);
 
             _currentChatBox.contents.Clear();
 
-            foreach (MsgChatMessage msg in filteredMessagesCopy)
+            foreach (StoredChatMessage msg in filteredMessagesCopy)
             {
-                _onChatMessage(msg);
+
+                if (!IsNotFilteredStored(msg))
+                {
+                    var color = Color.DarkGray;
+                    var messageText = msg.Message;
+                    if (!string.IsNullOrEmpty(msg.MessageWrap))
+                    {
+                        messageText = string.Format(msg.MessageWrap, messageText);
+                    }
+
+                    switch (msg.Channel)
+                    {
+                        case ChatChannel.Server:
+                            color = Color.Orange;
+                            break;
+                        case ChatChannel.OOC:
+                            color = Color.LightSkyBlue;
+                            break;
+                    }
+
+                    _currentChatBox?.AddLine(messageText, msg.Channel, color);
+                }
+                else
+                {
+                    Logger.Debug($"Message filtered: {msg.Channel}: {msg.Message}");
+                }
+
                 filteredMessages.Remove(msg);
             }
         }
 
         private bool IsNotFiltered(MsgChatMessage message)
+        {
+            if (_filteredChannels.HasFlag(message.Channel))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsNotFilteredStored(StoredChatMessage message)
         {
             if (_filteredChannels.HasFlag(message.Channel))
             {

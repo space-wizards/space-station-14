@@ -14,6 +14,8 @@ namespace Content.Client.Chat
 {
     public class StoredChatMessage
     {
+        // TODO Make me reflected with respect to MsgChatMessage
+
         /// <summary>
         ///     Client's own copies of chat messages used in filtering locally
         /// </summary> 
@@ -21,17 +23,17 @@ namespace Content.Client.Chat
         /// <summary>
         ///     Actual Message contents, i.e. words
         /// </summary>
-        public string MsgText { get; set; }
+        public string Message { get; set; }
 
         /// <summary>
         ///     Message channel, used for filtering
         /// </summary>
-        public ChatChannel MsgChannel { get; set; }
+        public ChatChannel Channel { get; set; }
 
         /// <summary> 
         ///     What to "wrap" the message contents with. Example is stuff like 'Joe says: "{0}"'
         /// </summary> 
-        public string MsgWrap { get; set; }
+        public string MessageWrap { get; set; }
 
         public StoredChatMessage(MsgChatMessage netMsg)
         {
@@ -39,9 +41,9 @@ namespace Content.Client.Chat
             ///     Constructor to copy a net message into stored client variety
             /// </summary>
             
-            MsgText = netMsg.Message;
-            MsgChannel = netMsg.Channel;
-            MsgWrap = netMsg.MessageWrap;
+            Message = netMsg.Message;
+            Channel = netMsg.Channel;
+            MessageWrap = netMsg.MessageWrap;
         }
     }
 }
