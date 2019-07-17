@@ -60,7 +60,7 @@ namespace Content.Client.Chat
         {
             Logger.Debug($"{message.Channel}: {message.Message}");
 
-            if (!IsNotFiltered(message))
+            if (!IsNotFiltered(message.Channel))
             {
                 var color = Color.DarkGray;
                 var messageText = message.Message;
@@ -189,7 +189,7 @@ namespace Content.Client.Chat
             foreach (StoredChatMessage msg in filteredMessagesCopy)
             {
 
-                if (!IsNotFilteredStored(msg))
+                if (!IsNotFiltered(msg.Channel))
                 {
                     var color = Color.DarkGray;
                     var messageText = msg.Message;
@@ -209,31 +209,19 @@ namespace Content.Client.Chat
                     }
 
                     _currentChatBox?.AddLine(messageText, msg.Channel, color);
+                    // filteredMessages.Remove(msg);
                 }
                 else
                 {
                     Logger.Debug($"Message filtered: {msg.Channel}: {msg.Message}");
                 }
-
-                filteredMessages.Remove(msg);
             }
+
         }
 
-        private bool IsNotFiltered(MsgChatMessage message)
+        private bool IsNotFiltered(ChatChannel channel)
         {
-            if (_filteredChannels.HasFlag(message.Channel))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool IsNotFilteredStored(StoredChatMessage message)
-        {
-            if (_filteredChannels.HasFlag(message.Channel))
+            if (_filteredChannels.HasFlag(channel))
             {
                 return true;
             }
