@@ -11,6 +11,9 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface
 {
+    /// <summary>
+    ///     Responsible for laying out the default game HUD.
+    /// </summary>
     public interface IGameHud
     {
         Control RootControl { get; }
@@ -20,12 +23,12 @@ namespace Content.Client.UserInterface
         void Initialize();
     }
 
-    /// <summary>
-    ///     Responsible for laying out the default game HUD.
-    /// </summary>
     internal sealed class GameHud : IGameHud
     {
+        private HBoxContainer _topButtonsContainer;
         private TopButton _buttonEscapeMenu;
+        private TopButton _buttonInventoryMenu;
+        private TopButton _buttonCraftingMenu;
 
 #pragma warning disable 649
         [Dependency] private readonly IResourceCache _resourceCache;
@@ -34,21 +37,46 @@ namespace Content.Client.UserInterface
 
         public void Initialize()
         {
-            RootControl = new Control();
+            RootControl = new Control {MouseFilter = Control.MouseFilterMode.Ignore};
 
             RootControl.SetAnchorPreset(Control.LayoutPreset.Wide);
 
             var escapeTexture = _resourceCache.GetTexture("/Textures/UserInterface/hamburger.svg.96dpi.png");
 
+            _topButtonsContainer = new HBoxContainer
+            {
+                SeparationOverride = 4
+            };
+
+            RootControl.AddChild(_topButtonsContainer);
+            _topButtonsContainer.SetAnchorAndMarginPreset(Control.LayoutPreset.TopLeft, margin: 10);
+
+            // TODO: Pull key names here from the actual key binding config.
+            // Escape
             _buttonEscapeMenu = new TopButton(escapeTexture, "esc")
             {
                 ToolTip = _localizationManager.GetString("Open escape menu.")
             };
 
-            _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
+            _topButtonsContainer.AddChild(_buttonEscapeMenu);
 
-            RootControl.AddChild(_buttonEscapeMenu);
-            _buttonEscapeMenu.SetAnchorAndMarginPreset(Control.LayoutPreset.TopLeft, margin: 10);
+            // Inventory
+            _buttonInventoryMenu = new TopButton(escapeTexture, "i")
+            {
+                ToolTip = _localizationManager.GetString("Open inventory menu.")
+            };
+
+            _topButtonsContainer.AddChild(_buttonInventoryMenu);
+
+            // Crafting
+            _buttonCraftingMenu = new TopButton(escapeTexture, "g")
+            {
+                ToolTip = _localizationManager.GetString("Open crafting menu.")
+            };
+
+            _topButtonsContainer.AddChild(_buttonCraftingMenu);
+
+            _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
         }
 
         public Control RootControl { get; private set; }
