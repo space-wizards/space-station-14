@@ -18,8 +18,21 @@ namespace Content.Client.UserInterface
     {
         Control RootControl { get; }
 
+        // Escape top button.
         bool EscapeButtonDown { get; set; }
         Action<bool> EscapeButtonToggled { get; set; }
+
+        // Character top button.
+        bool CharacterButtonDown { get; set; }
+        bool CharacterButtonVisible { get; set; }
+        Action<bool> CharacterButtonToggled { get; set; }
+
+        // Crafting top button.
+        bool CraftingButtonDown { get; set; }
+        bool CraftingButtonVisible { get; set; }
+        Action<bool> CraftingButtonToggled { get; set; }
+
+        // Init logic.
         void Initialize();
     }
 
@@ -27,8 +40,10 @@ namespace Content.Client.UserInterface
     {
         private HBoxContainer _topButtonsContainer;
         private TopButton _buttonEscapeMenu;
-        private TopButton _buttonInventoryMenu;
+        private TopButton _buttonTutorial;
+        private TopButton _buttonCharacterMenu;
         private TopButton _buttonCraftingMenu;
+        private TutorialWindow _tutorialWindow;
 
 #pragma warning disable 649
         [Dependency] private readonly IResourceCache _resourceCache;
@@ -42,6 +57,9 @@ namespace Content.Client.UserInterface
             RootControl.SetAnchorPreset(Control.LayoutPreset.Wide);
 
             var escapeTexture = _resourceCache.GetTexture("/Textures/UserInterface/hamburger.svg.96dpi.png");
+            var characterTexture = _resourceCache.GetTexture("/Textures/UserInterface/character.svg.96dpi.png");
+            var craftingTexture = _resourceCache.GetTexture("/Textures/UserInterface/hammer.svg.96dpi.png");
+            var tutorialTexture = _resourceCache.GetTexture("/Textures/UserInterface/tutorial.svg.96dpi.png");
 
             _topButtonsContainer = new HBoxContainer
             {
@@ -53,30 +71,71 @@ namespace Content.Client.UserInterface
 
             // TODO: Pull key names here from the actual key binding config.
             // Escape
-            _buttonEscapeMenu = new TopButton(escapeTexture, "esc")
+            _buttonEscapeMenu = new TopButton(escapeTexture, "ESC")
             {
                 ToolTip = _localizationManager.GetString("Open escape menu.")
             };
 
             _topButtonsContainer.AddChild(_buttonEscapeMenu);
 
-            // Inventory
-            _buttonInventoryMenu = new TopButton(escapeTexture, "i")
+            _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
+
+            // Tutorial
+            _buttonTutorial = new TopButton(tutorialTexture, " ")
             {
-                ToolTip = _localizationManager.GetString("Open inventory menu.")
+                ToolTip = _localizationManager.GetString("Open tutorial.")
             };
 
-            _topButtonsContainer.AddChild(_buttonInventoryMenu);
+            _topButtonsContainer.AddChild(_buttonTutorial);
+
+            _buttonTutorial.OnToggled += ButtonTutorialOnOnToggled;
+
+            // Inventory
+            _buttonCharacterMenu = new TopButton(characterTexture, "C")
+            {
+                ToolTip = _localizationManager.GetString("Open character menu."),
+                Visible = false
+            };
+
+            _topButtonsContainer.AddChild(_buttonCharacterMenu);
+
+            _buttonCharacterMenu.OnToggled += args => CharacterButtonToggled?.Invoke(args.Pressed);
 
             // Crafting
-            _buttonCraftingMenu = new TopButton(escapeTexture, "g")
+            _buttonCraftingMenu = new TopButton(craftingTexture, "G")
             {
-                ToolTip = _localizationManager.GetString("Open crafting menu.")
+                ToolTip = _localizationManager.GetString("Open crafting menu."),
+                Visible = false
             };
 
             _topButtonsContainer.AddChild(_buttonCraftingMenu);
 
-            _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
+            _buttonCraftingMenu.OnToggled += args => CraftingButtonToggled?.Invoke(args.Pressed);
+
+            _tutorialWindow = new TutorialWindow();
+            _tutorialWindow.AddToScreen();
+
+            _tutorialWindow.OnClose += () => _buttonTutorial.Pressed = false;
+        }
+
+        private void ButtonTutorialOnOnToggled(BaseButton.ButtonToggledEventArgs obj)
+        {
+            if (_tutorialWindow.Visible)
+            {
+                if (!_tutorialWindow.IsAtFront())
+                {
+                    _tutorialWindow.MoveToFront();
+                }
+                else
+                {
+                    _tutorialWindow.Close();
+                }
+            }
+            else
+            {
+                _tutorialWindow.OpenCentered();
+                _buttonTutorial.Pressed = true;
+            }
         }
 
         public Control RootControl { get; private set; }
@@ -89,6 +148,33 @@ namespace Content.Client.UserInterface
 
         public Action<bool> EscapeButtonToggled { get; set; }
 
+        public bool CharacterButtonDown
+        {
+            get => _buttonCharacterMenu.Pressed;
+            set => _buttonCharacterMenu.Pressed = value;
+        }
+
+        public bool CharacterButtonVisible
+        {
+            get => _buttonCharacterMenu.Visible;
+            set => _buttonCharacterMenu.Visible = value;
+        }
+
+        public Action<bool> CharacterButtonToggled { get; set; }
+
+        public bool CraftingButtonDown
+        {
+            get => _buttonCraftingMenu.Pressed;
+            set => _buttonCraftingMenu.Pressed = value;
+        }
+
+        public bool CraftingButtonVisible
+        {
+            get => _buttonCraftingMenu.Visible;
+            set => _buttonCraftingMenu.Visible = value;
+        }
+
+        public Action<bool> CraftingButtonToggled { get; set; }
 
         public sealed class TopButton : BaseButton
         {
@@ -110,8 +196,10 @@ namespace Content.Client.UserInterface
                 {
                     Texture = texture,
                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                    SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
                     MouseFilter = MouseFilterMode.Ignore,
-                    ModulateSelfOverride = ColorNormal
+                    ModulateSelfOverride = ColorNormal,
+                    CustomMinimumSize = (0, 32)
                 });
 
                 _container.AddChild(_label = new Label

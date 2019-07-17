@@ -76,3 +76,6 @@ binds:
 - function: ToggleCombatMode
   type: Toggle
   key: Tab
+- function: OpenCraftingMenu
+  type: state
+  key: G

@@ -1,15 +1,16 @@
-﻿using Content.Client.GameObjects.Components.Mobs;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Client.GameObjects.Components.Mobs;
+using Content.Client.UserInterface;
 using Content.Shared.Input;
+using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Utility;
-using System.Collections.Generic;
-using System.Linq;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.GameObjects.Components.Actor
 {
@@ -21,15 +22,15 @@ namespace Content.Client.GameObjects.Components.Actor
     {
         public override string Name => "Character Interface Component";
 
-        /// <summary>
-        /// Stored keybind to open the menu on keypress
-        /// </summary>
-        private InputCmdHandler _openMenuCmdHandler;
+        [Dependency]
+#pragma warning disable 649
+        private readonly IGameHud _gameHud;
+#pragma warning restore 649
 
         /// <summary>
         /// Window to hold each of the character interfaces
         /// </summary>
-        private SS14Window _window;
+        public SS14Window Window { get; private set; }
 
         /// <summary>
         /// Create the window with all character UIs and bind it to a keypress
@@ -39,26 +40,11 @@ namespace Content.Client.GameObjects.Components.Actor
             base.Initialize();
 
             //Use all the character ui interfaced components to create the character window
-            var UIcomponents = Owner.GetAllComponents<ICharacterUI>();
-            _window = new CharacterWindow(UIcomponents);
+            var uiComponents = Owner.GetAllComponents<ICharacterUI>();
+            Window = new CharacterWindow(uiComponents);
+            Window.OnClose += () => _gameHud.CharacterButtonDown = false;
 
-            _window.AddToScreen();
-
-            //Toggle window visible/invisible on keypress
-            _openMenuCmdHandler = InputCmdHandler.FromDelegate(session => {
-                if (_window.Visible)
-                {
-                    _window.Close();
-                }
-                else
-                {
-                    _window.Open();
-                }
-            });
-
-            //Set keybind to open character menu
-            var inputMgr = IoCManager.Resolve<IInputManager>();
-            inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, _openMenuCmdHandler);
+            Window.AddToScreen();
         }
 
         /// <summary>
@@ -68,11 +54,38 @@ namespace Content.Client.GameObjects.Components.Actor
         {
             base.OnRemove();
 
-            _window.Dispose();
-            _window = null;
+            Window.Dispose();
+            Window = null;
 
             var inputMgr = IoCManager.Resolve<IInputManager>();
             inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
+        }
+
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        {
+            base.HandleMessage(message, netChannel, component);
+
+            switch (message)
+            {
+                case PlayerAttachedMsg playerAttachedMsg:
+                    _gameHud.CharacterButtonVisible = true;
+                    _gameHud.CharacterButtonToggled = b =>
+                    {
+                        if (b)
+                        {
+                            Window.Open();
+                        }
+                        else
+                        {
+                            Window.Close();
+                        }
+                    };
+                    break;
+
+                case PlayerDetachedMsg playerDetachedMsg:
+                    _gameHud.CharacterButtonVisible = false;
+                    break;
+            }
         }
 
         /// <summary>

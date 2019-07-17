@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface
 {
-    internal sealed class TutorialButton : Button
+    public sealed class TutorialWindow : SS14Window
     {
         private const string TutorialContents = @"Hi and welcome to Space Station 14!
 
@@ -21,32 +21,19 @@ New to SS14: You can press ""E"" to activate objects. This functions similarly t
 
 You can talk in OOC by prefixing the message with [ or /ooc.
 
-If you are not on a QWERTY keyboard, the keys mentioned above are bound to the physical location on your keyboard,
-not what letter they correspond to. For example on AZERTY movement is ZQSD, drop is A, W is activate in hand.
+If you are not on a QWERTY keyboard, the keys mentioned above are bound to the physical location on your keyboard, not what letter they correspond to.
+For example on AZERTY movement is ZQSD, drop is A, W is activate in hand.
 
 If you have any feedback, questions, bug reports, etc..., do not be afraid to tell us!
-You can ask on Discord or heck, just write it in OOC, we'll catch it.
-";
+You can ask on Discord or heck, just write it in OOC! We'll catch it.";
 
-
-        public TutorialButton()
+        public TutorialWindow()
         {
-            OnPressed += OnOnPressed;
-
-            Text = "Tutorial";
-        }
-
-        private void OnOnPressed(ButtonEventArgs obj)
-        {
-            _openTutorialWindow();
-        }
-
-        private void _openTutorialWindow()
-        {
-            var window = new SS14Window {Title = "Tutorial"};
+            HideOnClose = true;
+            Visible = false;
 
             var scrollContainer = new ScrollContainer();
-            window.Contents.AddChild(scrollContainer);
+            Contents.AddChild(scrollContainer);
 
             var label = new RichTextLabel();
             scrollContainer.AddChild(label);
@@ -54,8 +41,6 @@ You can ask on Discord or heck, just write it in OOC, we'll catch it.
             var message = new FormattedMessage();
             message.AddText(TutorialContents);
             label.SetMessage(message);
-
-            window.AddToScreen();
         }
     }
 }

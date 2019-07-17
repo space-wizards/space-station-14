@@ -45,7 +45,6 @@ namespace Content.Client.GameTicking
         [ViewVariables] private LobbyGui _lobby;
         [ViewVariables] private bool _gameStarted;
         [ViewVariables] private DateTime _startTime;
-        [ViewVariables] private TutorialButton _tutorialButton;
 
         public void Initialize()
         {
@@ -172,12 +171,6 @@ namespace Content.Client.GameTicking
                 _gameChat = null;
             }
 
-            if (_tutorialButton != null)
-            {
-                _tutorialButton.Dispose();
-                _tutorialButton = null;
-            }
-
             _gameHud.RootControl.Parent?.RemoveChild(_gameHud.RootControl);
 
             _tickerState = TickerState.InLobby;
@@ -253,9 +246,6 @@ namespace Content.Client.GameTicking
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
-            _tutorialButton = new TutorialButton();
-            _userInterfaceManager.StateRoot.AddChild(_tutorialButton);
-            _tutorialButton.SetAnchorAndMarginPreset(Control.LayoutPreset.BottomLeft, Control.LayoutPresetMode.MinSize, 50);
             _gameChat.DefaultChatFormat = "say \"{0}\"";
         }
 

@@ -95,7 +95,7 @@ namespace Content.Client
             else
             {
                 _gameHud.EscapeButtonDown = false;
-                _escapeMenu.Visible = false;
+                _escapeMenu.Close();
             }
         }
     }

@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using Content.Client.Construction;
+using Content.Client.UserInterface;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Construction;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -18,17 +17,19 @@ namespace Content.Client.GameObjects.Components.Construction
 {
     public class ConstructorComponent : SharedConstructorComponent
     {
-        int nextId;
-        readonly Dictionary<int, ConstructionGhostComponent> Ghosts = new Dictionary<int, ConstructionGhostComponent>();
-        ConstructionButton Button;
+#pragma warning disable 649
+        [Dependency] private readonly IGameHud _gameHud;
+#pragma warning restore 649
 
-        ITransformComponent Transform;
+        private int nextId;
+        private readonly Dictionary<int, ConstructionGhostComponent> Ghosts = new Dictionary<int, ConstructionGhostComponent>();
+        public ConstructionMenu ConstructionMenu { get; private set; }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            Transform = Owner.GetComponent<ITransformComponent>();
+            Owner.GetComponent<ITransformComponent>();
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
@@ -38,15 +39,30 @@ namespace Content.Client.GameObjects.Components.Construction
             switch (message)
             {
                 case PlayerAttachedMsg _:
-                    if (Button == null)
+                    if (ConstructionMenu == null)
                     {
-                        Button = new ConstructionButton {Owner = this};
+                        ConstructionMenu = new ConstructionMenu {Owner = this};
+                        ConstructionMenu.OnClose += () => _gameHud.CraftingButtonDown = false;
                     }
-                    Button.AddToScreen();
+                    ConstructionMenu.AddToScreen();
+
+                    _gameHud.CraftingButtonVisible = true;
+                    _gameHud.CraftingButtonToggled = b =>
+                    {
+                        if (b)
+                        {
+                            ConstructionMenu.Open();
+                        }
+                        else
+                        {
+                            ConstructionMenu.Close();
+                        }
+                    };
                     break;
 
                 case PlayerDetachedMsg _:
-                    Button.RemoveFromScreen();
+                    ConstructionMenu.Parent.RemoveChild(ConstructionMenu);
+                    _gameHud.CraftingButtonVisible = false;
                     break;
 
                 case AckStructureConstructionMessage ackMsg:
@@ -57,7 +73,7 @@ namespace Content.Client.GameObjects.Components.Construction
 
         public override void OnRemove()
         {
-            Button?.Dispose();
+            ConstructionMenu?.Dispose();
         }
 
         public void SpawnGhost(ConstructionPrototype prototype, GridCoordinates loc, Direction dir)
