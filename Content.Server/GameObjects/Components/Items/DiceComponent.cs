@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Items
 
         public override string Name => "Dice";
 
-        private readonly Random _random = new Random();
+        private Random _random;
         private int _step = 1;
         private int _sides = 20;
         private int _currentSide = 20;
@@ -43,6 +43,12 @@ namespace Content.Server.GameObjects.Components.Items
             serializer.DataField(ref _sides, "sides", 20);
             serializer.DataField(ref _soundCollectionName, "diceSoundCollection", "dice");
             _currentSide = _sides;
+        }
+
+        public override void OnAdd()
+        {
+            base.OnAdd();
+            _random = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode();
         }
 
         public void Roll()
