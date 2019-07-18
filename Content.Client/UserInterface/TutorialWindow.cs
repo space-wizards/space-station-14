@@ -29,6 +29,8 @@ You can ask on Discord or heck, just write it in OOC! We'll catch it.";
 
         public TutorialWindow()
         {
+            Title = "The Tutorial!";
+
             var scrollContainer = new ScrollContainer();
             Contents.AddChild(scrollContainer);
 
