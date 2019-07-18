@@ -430,6 +430,18 @@ namespace Content.Server.GameObjects
             }
         }
 
+        public bool ThrowItem()
+        {
+            var item = GetActiveHand?.Owner;
+            if (item != null)
+            {
+                var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                return interactionSystem.TryThrowInteraction(Owner, item);
+            }
+
+            return false;
+        }
+
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
             IComponent component = null)
         {

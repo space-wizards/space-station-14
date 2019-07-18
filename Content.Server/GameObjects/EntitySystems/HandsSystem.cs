@@ -135,6 +135,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var throwEnt = handsComp.GetHand(handsComp.ActiveIndex).Owner;
 
+            if (!handsComp.ThrowItem())
+                return;
+
             // pop off an item, or throw the single item in hand.
             if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2)
             {
@@ -147,9 +150,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
-            {
                 return;
-            }
 
             colComp.CollisionEnabled = true;
             // I can now collide with player, so that i can do damage.
@@ -161,15 +162,14 @@ namespace Content.Server.GameObjects.EntitySystems
                 colComp.IsScrapingFloor = false;
             }
 
+            projComp.User = plyEnt;
             projComp.IgnoreEntity(plyEnt);
 
             var transform = plyEnt.Transform;
             var dirVec = (coords.ToWorld(_mapManager).Position - transform.WorldPosition).Normalized;
 
             if (!throwEnt.TryGetComponent(out PhysicsComponent physComp))
-            {
                 physComp = throwEnt.AddComponent<PhysicsComponent>();
-            }
 
             // TODO: Move this into PhysicsSystem, we need an ApplyForce function.
             var a = ThrowForce / (float) Math.Max(0.001, physComp.Mass); // a = f / m
@@ -185,6 +185,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
             lHomoDir.Normalize();
             transform.LocalRotation = new Angle(lHomoDir.Xy);
+
+
         }
     }
 }

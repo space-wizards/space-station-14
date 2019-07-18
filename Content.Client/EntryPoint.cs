@@ -78,6 +78,8 @@ namespace Content.Client
 
             factory.RegisterIgnore("Stack");
 
+            factory.RegisterIgnore("Dice");
+
             factory.Register<HandsComponent>();
             factory.RegisterReference<HandsComponent, IHandsComponent>();
             factory.Register<ClientStorageComponent>();

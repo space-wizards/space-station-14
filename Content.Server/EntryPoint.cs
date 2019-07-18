@@ -56,6 +56,7 @@ using Content.Server.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.Interfaces.Log;
 using Content.Server.GameObjects.Components.Explosive;
+using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Triggers;
 
 namespace Content.Server
@@ -179,6 +180,8 @@ namespace Content.Server
             factory.Register<AiControllerComponent>();
 
             factory.Register<CatwalkComponent>();
+
+            factory.Register<DiceComponent>();
 
             factory.Register<ExplosiveComponent>();
             factory.Register<OnUseTimerTriggerComponent>();

@@ -46,6 +46,11 @@ namespace Content.Server.GameObjects
         {
             return true;
         }
+
+        bool IActionBlocker.CanThrow()
+        {
+            return true;
+        }
     }
 
     /// <summary>
@@ -74,6 +79,11 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanUse()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanThrow()
         {
             return false;
         }
@@ -115,6 +125,11 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanUse()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanThrow()
         {
             return false;
         }
