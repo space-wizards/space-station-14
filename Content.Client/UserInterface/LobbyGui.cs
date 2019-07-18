@@ -88,7 +88,7 @@ namespace Content.Client.UserInterface
                 ReadyButton.AddStyleClass(NanoStyle.StyleClassButtonBig);
 
                 leftVBox.AddChild(Chat = new ChatBox {SizeFlagsVertical = SizeFlags.FillExpand});
-                Chat.Input.PlaceHolder = localization.GetString("Talk!");
+                Chat.Input.PlaceHolder = localization.GetString("Say something!");
             }
 
             {
