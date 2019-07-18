@@ -60,7 +60,6 @@ namespace Content.Client.GameObjects.Components.Construction
                     break;
 
                 case PlayerDetachedMsg _:
-                    ConstructionMenu.Parent.RemoveChild(ConstructionMenu);
                     _gameHud.CraftingButtonVisible = false;
                     break;
 
