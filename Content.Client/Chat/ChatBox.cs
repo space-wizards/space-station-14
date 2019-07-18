@@ -81,7 +81,8 @@ namespace Content.Client.Chat
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
-                ToggleMode = true
+                ToggleMode = true,
+                Pressed = true
             };
 
             OOCButton = new Button()
@@ -91,12 +92,13 @@ namespace Content.Client.Chat
                 TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
-                ToggleMode = true
+                ToggleMode = true,
+                Pressed = true
             };
 
             AllButton.OnToggled += OnFilterToggled;
             OOCButton.OnToggled += OnFilterToggled;
-            
+
             hBox.AddChild(AllButton);
             hBox.AddChild(OOCButton);
 
