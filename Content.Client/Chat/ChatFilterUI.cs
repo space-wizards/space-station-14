@@ -19,9 +19,7 @@ namespace Content.Client.Chat
         {
             base.Initialize();
 
-            HideOnClose = true;
             Title = "Filter Channels";
-            Visible = false;
 
             var margin = new MarginContainer()
             {
@@ -44,7 +42,7 @@ namespace Content.Client.Chat
                 MarginRight = -5f,
                 MarginBottom = -5f,
                 SizeFlagsHorizontal = SizeFlags.Fill,
-                SizeFlagsStretchRatio = 2,                
+                SizeFlagsStretchRatio = 2,
             };
 
             var hbox = new HBoxContainer()
