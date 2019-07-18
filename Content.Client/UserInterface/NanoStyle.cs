@@ -27,6 +27,7 @@ namespace Content.Client.UserInterface
         {
             var resCache = IoCManager.Resolve<IResourceCache>();
             var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
             var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
             var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
             var textureCloseButton = resCache.GetTexture("/Nano/cross.svg.png");
@@ -180,7 +181,7 @@ namespace Content.Client.UserInterface
                     new[]
                     {
                         new StyleProperty(Label.StylePropertyFontColor, NanoGold),
-                        new StyleProperty(Label.StylePropertyFont, notoSansBold16),
+                        new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
                     }),
                 // Window background.
                 new StyleRule(
@@ -459,6 +460,12 @@ namespace Content.Client.UserInterface
                     new SelectorElement(typeof(GameHud.TopButton), null, null, Button.StylePseudoClassHover), new []
                 {
                     new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
+                }),
+
+                new StyleRule(
+                    new SelectorElement(typeof(Label), new [] {GameHud.TopButton.StyleClassLabelTopButton}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
                 }),
             });
         }
