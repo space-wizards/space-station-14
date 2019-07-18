@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Items
         public override void OnAdd()
         {
             base.OnAdd();
-            _random = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode();
+            _random = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
         public void Roll()
