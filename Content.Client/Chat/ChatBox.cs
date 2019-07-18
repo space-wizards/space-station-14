@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Input;
@@ -6,6 +7,9 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Robust.Shared.Localization;
+using Robust.Shared.IoC;
+
 
 namespace Content.Client.Chat
 {
@@ -13,12 +17,20 @@ namespace Content.Client.Chat
     {
         public delegate void TextSubmitHandler(ChatBox chatBox, string text);
 
+        public delegate void FilterToggledHandler(ChatBox chatBox, Button.ButtonToggledEventArgs e);
+
         private const int MaxLinePixelLength = 500;
 
         private readonly IList<string> _inputHistory = new List<string>();
 
+        private ILocalizationManager localize = IoCManager.Resolve<ILocalizationManager>();
+
         public LineEdit Input { get; private set; }
-        private OutputPanel contents;
+        public OutputPanel contents;
+
+        // Buttons for filtering
+        public Button AllButton;
+        public Button OOCButton;
 
         /// <summary>
         ///     Index while cycling through the input history. -1 means not going through history.
@@ -50,6 +62,7 @@ namespace Content.Client.Chat
             AnchorRight = 1.0f;
 
             var vBox = new VBoxContainer("VBoxContainer");
+            var hBox = new HBoxContainer("FilterButtonsContainer");
 
             contents = new OutputPanel {SizeFlagsVertical = SizeFlags.FillExpand};
             vBox.AddChild(contents);
@@ -58,6 +71,36 @@ namespace Content.Client.Chat
             Input.OnKeyDown += InputKeyDown;
             Input.OnTextEntered += Input_OnTextEntered;
             vBox.AddChild(Input);
+
+            vBox.AddChild(hBox);
+
+            AllButton = new Button()
+            {
+                Text = localize.GetString("All"),
+                Name = "ALL",
+                TextAlign = Button.AlignMode.Left,
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsStretchRatio = 1,
+                ToggleMode = true,
+                Pressed = true
+            };
+
+            OOCButton = new Button()
+            {
+                Text = localize.GetString("OOC"),
+                Name = "OOC",
+                TextAlign = Button.AlignMode.Left,
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsStretchRatio = 1,
+                ToggleMode = true,
+                Pressed = true
+            };
+
+            AllButton.OnToggled += OnFilterToggled;
+            OOCButton.OnToggled += OnFilterToggled;
+
+            hBox.AddChild(AllButton);
+            hBox.AddChild(OOCButton);
 
             AddChild(vBox);
 
@@ -133,6 +176,8 @@ namespace Content.Client.Chat
 
         public event TextSubmitHandler TextSubmitted;
 
+        public event FilterToggledHandler FilterToggled;
+
         public void AddLine(string message, ChatChannel channel, Color color)
         {
             if (Disposed)
@@ -163,6 +208,11 @@ namespace Content.Client.Chat
             {
                 Input.ReleaseKeyboardFocus();
             }
+        }
+
+        private void OnFilterToggled(Button.ButtonToggledEventArgs args)
+        {
+            FilterToggled?.Invoke(this, args);
         }
     }
 }
