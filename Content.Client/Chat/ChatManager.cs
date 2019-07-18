@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Chat;
 using Robust.Client.Console;
@@ -56,39 +57,35 @@ namespace Content.Client.Chat
             }
         }
 
-        private void _onChatMessage(MsgChatMessage message)
+        private void WriteChatMessage(StoredChatMessage message)
         {
             Logger.Debug($"{message.Channel}: {message.Message}");
 
-            if (!IsNotFiltered(message.Channel))
-            {
-                var color = Color.DarkGray;
-                var messageText = message.Message;
-                if (!string.IsNullOrEmpty(message.MessageWrap))
-                {
-                    messageText = string.Format(message.MessageWrap, messageText);
-                }
-
-                switch (message.Channel)
-                {
-                    case ChatChannel.Server:
-                        color = Color.Orange;
-                        break;
-                    case ChatChannel.OOC:
-                        color = Color.LightSkyBlue;
-                        break;
-                }
-
-                _currentChatBox?.AddLine(messageText, message.Channel, color);
-            }
-            else
+            if (IsFiltered(message.Channel))
             {
                 Logger.Debug($"Message filtered: {message.Channel}: {message.Message}");
+                return;
             }
 
-            // Log all incoming chat to repopulate when filter is untoggled
-            StoredChatMessage storedMessage = new StoredChatMessage(message);
-            filteredHistory.Add(storedMessage);
+            var color = Color.DarkGray;
+            var messageText = message.Message;
+            if (!string.IsNullOrEmpty(message.MessageWrap))
+            {
+                messageText = string.Format(message.MessageWrap, messageText);
+            }
+
+            switch (message.Channel)
+            {
+                case ChatChannel.Server:
+                    color = Color.Orange;
+                    break;
+                case ChatChannel.OOC:
+                    color = Color.LightSkyBlue;
+                    break;
+            }
+
+            _currentChatBox?.AddLine(messageText, message.Channel, color);
+
         }
 
         private void _onChatBoxTextSubmitted(ChatBox chatBox, string text)
@@ -181,45 +178,29 @@ namespace Content.Client.Chat
 
         private void RepopulateChat(List<StoredChatMessage> filteredMessages)
         {
+            _currentChatBox.contents.Clear();
+
             // Copy list for enumeration
             List<StoredChatMessage> filteredMessagesCopy = new List<StoredChatMessage>(filteredMessages);
 
-            _currentChatBox.contents.Clear();
-
             foreach (StoredChatMessage msg in filteredMessagesCopy)
             {
-
-                if (!IsNotFiltered(msg.Channel))
-                {
-                    var color = Color.DarkGray;
-                    var messageText = msg.Message;
-                    if (!string.IsNullOrEmpty(msg.MessageWrap))
-                    {
-                        messageText = string.Format(msg.MessageWrap, messageText);
-                    }
-
-                    switch (msg.Channel)
-                    {
-                        case ChatChannel.Server:
-                            color = Color.Orange;
-                            break;
-                        case ChatChannel.OOC:
-                            color = Color.LightSkyBlue;
-                            break;
-                    }
-
-                    _currentChatBox?.AddLine(messageText, msg.Channel, color);
-                    // filteredMessages.Remove(msg);
-                }
-                else
-                {
-                    Logger.Debug($"Message filtered: {msg.Channel}: {msg.Message}");
-                }
+                WriteChatMessage(msg);
             }
 
         }
 
-        private bool IsNotFiltered(ChatChannel channel)
+        private void _onChatMessage(MsgChatMessage msg)
+        {
+            Logger.Debug($"{msg.Channel}: {msg.Message}");
+
+            // Log all incoming chat to repopulate when filter is un-toggled
+            StoredChatMessage storedMessage = new StoredChatMessage(msg);
+            filteredHistory.Add(storedMessage);
+            WriteChatMessage(storedMessage);
+        }
+
+        private bool IsFiltered(ChatChannel channel)
         {
             if (_filteredChannels.HasFlag(channel))
             {
