@@ -71,7 +71,7 @@ namespace Content.Client.UserInterface
 
             // TODO: Pull key names here from the actual key binding config.
             // Escape
-            _buttonEscapeMenu = new TopButton(escapeTexture, "ESC")
+            _buttonEscapeMenu = new TopButton(escapeTexture, "Esc")
             {
                 ToolTip = _localizationManager.GetString("Open escape menu.")
             };
@@ -177,6 +177,8 @@ namespace Content.Client.UserInterface
 
         public sealed class TopButton : BaseButton
         {
+            public const string StyleClassLabelTopButton = "topButtonLabel";
+
             private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
             private static readonly Color ColorHovered = Color.FromHex("#9699bb");
             private static readonly Color ColorPressed = Color.FromHex("#00b061");
@@ -209,6 +211,8 @@ namespace Content.Client.UserInterface
                     MouseFilter = MouseFilterMode.Ignore,
                     ModulateSelfOverride = ColorNormal
                 });
+
+                _label.AddStyleClass(StyleClassLabelTopButton);
 
                 _container.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
