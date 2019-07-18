@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Input;
@@ -10,14 +9,13 @@ using Robust.Shared.Utility;
 using Robust.Shared.Localization;
 using Robust.Shared.IoC;
 
-
 namespace Content.Client.Chat
 {
-    public class ChatBox : PanelContainer
+    public class ChatBox : MarginContainer
     {
         public delegate void TextSubmitHandler(ChatBox chatBox, string text);
 
-        public delegate void FilterToggledHandler(ChatBox chatBox, Button.ButtonToggledEventArgs e);
+        public delegate void FilterToggledHandler(ChatBox chatBox, BaseButton.ButtonToggledEventArgs e);
 
         private const int MaxLinePixelLength = 500;
 
@@ -30,6 +28,7 @@ namespace Content.Client.Chat
 
         // Buttons for filtering
         public Button AllButton;
+        public Button LocalButton;
         public Button OOCButton;
 
         /// <summary>
@@ -56,41 +55,59 @@ namespace Content.Client.Chat
             MarginLeft = -475.0f;
             MarginTop = 10.0f;
             MarginRight = -10.0f;
-            MarginBottom = 185.0f;
+            MarginBottom = 235.0f;
 
             AnchorLeft = 1.0f;
             AnchorRight = 1.0f;
 
-            var vBox = new VBoxContainer("VBoxContainer");
-            var hBox = new HBoxContainer("FilterButtonsContainer");
+            var outerVBox = new VBoxContainer();
+
+            var panelContainer = new PanelContainer
+            {
+                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#25252aaa")},
+                SizeFlagsVertical = SizeFlags.FillExpand
+            };
+            var vBox = new VBoxContainer();
+            panelContainer.AddChild(vBox);
+            var hBox = new HBoxContainer();
+
+            outerVBox.AddChild(panelContainer);
+            outerVBox.AddChild(hBox);
 
             contents = new OutputPanel {SizeFlagsVertical = SizeFlags.FillExpand};
             vBox.AddChild(contents);
 
-            Input = new LineEdit("Input");
+            Input = new LineEdit();
             Input.OnKeyDown += InputKeyDown;
             Input.OnTextEntered += Input_OnTextEntered;
             vBox.AddChild(Input);
 
-            vBox.AddChild(hBox);
-
-            AllButton = new Button()
+            AllButton = new Button
             {
                 Text = localize.GetString("All"),
                 Name = "ALL",
                 TextAlign = Button.AlignMode.Left,
-                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand,
                 SizeFlagsStretchRatio = 1,
                 ToggleMode = true,
                 Pressed = true
             };
 
-            OOCButton = new Button()
+            LocalButton = new Button
+            {
+                Text = localize.GetString("Local"),
+                Name = "Local",
+                TextAlign = Button.AlignMode.Left,
+                SizeFlagsStretchRatio = 1,
+                ToggleMode = true,
+                Pressed = true
+            };
+
+            OOCButton = new Button
             {
                 Text = localize.GetString("OOC"),
                 Name = "OOC",
                 TextAlign = Button.AlignMode.Left,
-                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
                 ToggleMode = true,
                 Pressed = true
@@ -102,9 +119,7 @@ namespace Content.Client.Chat
             hBox.AddChild(AllButton);
             hBox.AddChild(OOCButton);
 
-            AddChild(vBox);
-
-            PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Gray.WithAlpha(0.5f) };
+            AddChild(outerVBox);
         }
 
         protected override void MouseDown(GUIMouseButtonEventArgs e)
@@ -210,7 +225,7 @@ namespace Content.Client.Chat
             }
         }
 
-        private void OnFilterToggled(Button.ButtonToggledEventArgs args)
+        private void OnFilterToggled(BaseButton.ButtonToggledEventArgs args)
         {
             FilterToggled?.Invoke(this, args);
         }

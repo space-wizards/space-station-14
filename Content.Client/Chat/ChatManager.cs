@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Net;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Chat;
 using Robust.Client.Console;
@@ -22,9 +20,9 @@ namespace Content.Client.Chat
         public List<StoredChatMessage> filteredHistory = new List<StoredChatMessage>();
 
         // Filter Button States
-        private bool _ALLstate;
-        private bool _Localstate;
-        private bool _OOCstate;
+        private bool _allState;
+        private bool _localState;
+        private bool _oocState;
 
         // Flag Enums for holding filtered channels
         private ChatChannel _filteredChannels;
@@ -55,6 +53,11 @@ namespace Content.Client.Chat
                 _currentChatBox.TextSubmitted += _onChatBoxTextSubmitted;
                 _currentChatBox.FilterToggled += _onFilterButtonToggled;
             }
+
+            RepopulateChat(filteredHistory);
+            _currentChatBox.AllButton.Pressed = !_allState;
+            _currentChatBox.LocalButton.Pressed = !_localState;
+            _currentChatBox.OOCButton.Pressed = !_oocState;
         }
 
         private void WriteChatMessage(StoredChatMessage message)
@@ -127,14 +130,13 @@ namespace Content.Client.Chat
             }
         }
 
-        private void _onFilterButtonToggled(ChatBox chatBox, Button.ButtonToggledEventArgs e)
+        private void _onFilterButtonToggled(ChatBox chatBox, BaseButton.ButtonToggledEventArgs e)
         {
-            // TODO make toggled ALL button flip all button states programatically + visually
             switch (e.Button.Name)
             {
                 case "Local":
-                    _Localstate = !_Localstate;
-                    if (_Localstate)
+                    _localState = !_localState;
+                    if (_localState)
                     {
                         _filteredChannels |= ChatChannel.Local;
                         break;
@@ -146,8 +148,8 @@ namespace Content.Client.Chat
                     }
 
                 case "OOC":
-                    _OOCstate = !_OOCstate;
-                    if (_OOCstate)
+                    _oocState = !_oocState;
+                    if (_oocState)
                     {
                         _filteredChannels |= ChatChannel.OOC;
                         break;
@@ -158,36 +160,24 @@ namespace Content.Client.Chat
                         break;
                     }
 
-                default:
-                    _ALLstate = !_ALLstate;
-                    if (_ALLstate)
-                    {
-                        _filteredChannels = ChatChannel.OOC | ChatChannel.Local;
-                        break;
-                    }
-                    else
-                    {
-                        _filteredChannels &= ~ChatChannel.OOC;
-                        _filteredChannels &= ~ChatChannel.Local;
-                        break;
-                    }
+                case "ALL":
+                    chatBox.LocalButton.Pressed ^= true;
+                    chatBox.OOCButton.Pressed ^= true;
+                    _allState = !_allState;
+                    break;
             }
 
             RepopulateChat(filteredHistory);
         }
 
-        private void RepopulateChat(List<StoredChatMessage> filteredMessages)
+        private void RepopulateChat(IEnumerable<StoredChatMessage> filteredMessages)
         {
             _currentChatBox.contents.Clear();
 
-            // Copy list for enumeration
-            List<StoredChatMessage> filteredMessagesCopy = new List<StoredChatMessage>(filteredMessages);
-
-            foreach (StoredChatMessage msg in filteredMessagesCopy)
+            foreach (var msg in filteredMessages)
             {
                 WriteChatMessage(msg);
             }
-
         }
 
         private void _onChatMessage(MsgChatMessage msg)
@@ -202,14 +192,8 @@ namespace Content.Client.Chat
 
         private bool IsFiltered(ChatChannel channel)
         {
-            if (_filteredChannels.HasFlag(channel))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            // _ALLstate works as inverter.
+            return _allState ^ _filteredChannels.HasFlag(channel);
         }
     }
 }

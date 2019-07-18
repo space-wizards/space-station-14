@@ -28,7 +28,7 @@ namespace Content.Client.UserInterface
             });
 
             SetAnchorAndMarginPreset(LayoutPreset.TopRight);
-            MarginTop = 200;
+            MarginTop = 250;
             MarginRight = 10;
         }
 
