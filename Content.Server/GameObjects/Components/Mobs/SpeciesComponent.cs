@@ -76,6 +76,11 @@ namespace Content.Server.GameObjects
             return CurrentDamageState.CanUse();
         }
 
+        bool IActionBlocker.CanThrow()
+        {
+            return CurrentDamageState.CanThrow();
+        }
+
         List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
         {
             var thresholdlist = DamageTemplate.DamageThresholds;

@@ -1,0 +1,10 @@
+- type: sound_collection
+  id: dice
+  files:
+  - /Audio/items/dice/dice1.ogg
+  - /Audio/items/dice/dice2.ogg
+  - /Audio/items/dice/dice3.ogg
+  - /Audio/items/dice/dice4.ogg
+  - /Audio/items/dice/dice5.ogg
+  - /Audio/items/dice/dice6.ogg
+  - /Audio/items/dice/dice7.ogg

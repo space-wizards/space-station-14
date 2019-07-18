@@ -125,6 +125,44 @@ namespace Content.Server.GameObjects.EntitySystems
         public IEntity User { get; set; }
     }
 
+    /// <summary>
+    ///     This interface gives components behavior when thrown.
+    /// </summary>
+    public interface IThrown
+    {
+        void Thrown(ThrownEventArgs eventArgs);
+    }
+
+    public class ThrownEventArgs : EventArgs
+    {
+        public ThrownEventArgs(IEntity user)
+        {
+            User = user;
+        }
+
+        public IEntity User { get; }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when landing after being thrown.
+    /// </summary>
+    public interface ILand
+    {
+        void Land(LandEventArgs eventArgs);
+    }
+
+    public class LandEventArgs : EventArgs
+    {
+        public LandEventArgs(IEntity user, GridCoordinates landingLocation)
+        {
+            User = user;
+            LandingLocation = landingLocation;
+        }
+
+        public IEntity User { get; }
+        public GridCoordinates LandingLocation { get; }
+    }
+
     public interface IAttack
     {
         void Attack(AttackEventArgs eventArgs);
@@ -463,6 +501,63 @@ namespace Content.Server.GameObjects.EntitySystems
         }
 
         /// <summary>
+        /// Activates the Use behavior of an object
+        /// Verifies that the user is capable of doing the use interaction first
+        /// </summary>
+        public bool TryThrowInteraction(IEntity user, IEntity item)
+        {
+            if (user == null || item == null || !ActionBlockerSystem.CanThrow(user)) return false;
+
+            ThrownInteraction(user, item);
+            return true;
+
+        }
+
+        /// <summary>
+        ///     Calls Thrown on all components that implement the IThrown interface
+        ///     on an entity that has been thrown.
+        /// </summary>
+        public void ThrownInteraction(IEntity user, IEntity thrown)
+        {
+            var throwMsg = new ThrownMessage(user, thrown);
+            RaiseEvent(throwMsg);
+            if (throwMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = thrown.GetAllComponents<IThrown>().ToList();
+
+            // Call Thrown on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.Thrown(new ThrownEventArgs(user));
+            }
+        }
+
+        /// <summary>
+        ///     Calls Land on all components that implement the ILand interface
+        ///     on an entity that has landed after being thrown.
+        /// </summary>
+        public void LandInteraction(IEntity user, IEntity landing, GridCoordinates landLocation)
+        {
+            var landMsg = new LandMessage(user, landing, landLocation);
+            RaiseEvent(landMsg);
+            if (landMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = landing.GetAllComponents<ILand>().ToList();
+
+            // Call Land on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.Land(new LandEventArgs(user, landLocation));
+            }
+        }
+
+        /// <summary>
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
         /// </summary>
@@ -712,6 +807,68 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             User = user;
             Used = used;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when throwing the entity in your hands.
+    /// </summary>
+    [PublicAPI]
+    public class ThrownMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that threw the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was thrown.
+        /// </summary>
+        public IEntity Thrown { get; }
+
+        public ThrownMessage(IEntity user, IEntity thrown)
+        {
+            User = user;
+            Thrown = thrown;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an entity that was thrown lands.
+    /// </summary>
+    [PublicAPI]
+    public class LandMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that threw the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was thrown.
+        /// </summary>
+        public IEntity Thrown { get; }
+
+        /// <summary>
+        ///     Location where the item landed.
+        /// </summary>
+        public GridCoordinates LandLocation { get; }
+
+        public LandMessage(IEntity user, IEntity thrown, GridCoordinates landLocation)
+        {
+            User = user;
+            Thrown = thrown;
+            LandLocation = landLocation;
         }
     }
 
