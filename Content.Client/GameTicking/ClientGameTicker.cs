@@ -247,6 +247,7 @@ namespace Content.Client.GameTicking
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
             _gameChat.DefaultChatFormat = "say \"{0}\"";
+            _gameChat.Input.PlaceHolder = _localization.GetString("Say something! [ for OOC");
         }
 
         private enum TickerState
