@@ -32,7 +32,6 @@ namespace Content.Client.GameObjects.Components.Power
                 MarginRight = 426.0f, MarginBottom = 270.0f
             };
             _window.OnClose += Close;
-            _window.AddToScreen();
 
             _breakerButton = _window.BreakerButton;
             _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());
@@ -153,7 +152,7 @@ namespace Content.Client.GameObjects.Components.Power
                 externalStatus.AddChild(externalStatusLabel);
                 externalStatus.AddChild(ExternalPowerStateLabel);
                 rows.AddChild(externalStatus);
-                
+
                 var charge = new HBoxContainer("Charge");
                 var chargeLabel = new Label("Label") { Text = "Charge:" };
                 ChargeBar = new ProgressBar("Charge")

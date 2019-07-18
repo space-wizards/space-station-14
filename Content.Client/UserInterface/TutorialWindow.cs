@@ -29,9 +29,6 @@ You can ask on Discord or heck, just write it in OOC! We'll catch it.";
 
         public TutorialWindow()
         {
-            HideOnClose = true;
-            Visible = false;
-
             var scrollContainer = new ScrollContainer();
             Contents.AddChild(scrollContainer);
 

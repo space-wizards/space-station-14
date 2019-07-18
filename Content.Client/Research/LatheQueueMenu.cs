@@ -29,7 +29,6 @@ namespace Content.Client.Research
         {
             base.Initialize();
 
-            HideOnClose = true;
             Title = "Lathe Queue";
             Visible = false;
 

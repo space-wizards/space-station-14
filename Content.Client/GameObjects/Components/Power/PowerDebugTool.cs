@@ -28,7 +28,6 @@ namespace Content.Client.GameObjects.Components.Power
                         Title = "Power Debug Tool",
                     };
                     LastWindow.Contents.AddChild(new Label() { Text = msg.Data });
-                    LastWindow.AddToScreen();
                     LastWindow.Open();
                     break;
             }

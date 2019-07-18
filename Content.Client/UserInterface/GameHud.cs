@@ -113,14 +113,13 @@ namespace Content.Client.UserInterface
             _buttonCraftingMenu.OnToggled += args => CraftingButtonToggled?.Invoke(args.Pressed);
 
             _tutorialWindow = new TutorialWindow();
-            _tutorialWindow.AddToScreen();
 
             _tutorialWindow.OnClose += () => _buttonTutorial.Pressed = false;
         }
 
         private void ButtonTutorialOnOnToggled(BaseButton.ButtonToggledEventArgs obj)
         {
-            if (_tutorialWindow.Visible)
+            if (_tutorialWindow.IsOpen)
             {
                 if (!_tutorialWindow.IsAtFront())
                 {

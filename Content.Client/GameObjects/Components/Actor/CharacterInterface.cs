@@ -43,8 +43,6 @@ namespace Content.Client.GameObjects.Components.Actor
             var uiComponents = Owner.GetAllComponents<ICharacterUI>();
             Window = new CharacterWindow(uiComponents);
             Window.OnClose += () => _gameHud.CharacterButtonDown = false;
-
-            Window.AddToScreen();
         }
 
         /// <summary>
@@ -98,7 +96,6 @@ namespace Content.Client.GameObjects.Components.Actor
             public CharacterWindow(IEnumerable<ICharacterUI> windowComponents)
             {
                 Title = "Character";
-                HideOnClose = true;
                 Visible = false;
 
                 _contentsVBox = new VBoxContainer();

@@ -81,7 +81,6 @@ namespace Content.Client.GameObjects.Components.Storage
         /// </summary>
         private void OpenUI()
         {
-            Window.AddToScreen();
             Window.Open();
         }
 
@@ -119,7 +118,6 @@ namespace Content.Client.GameObjects.Components.Storage
                 base.Initialize();
 
                 Title = "Storage Item";
-                HideOnClose = true;
                 Visible = false;
                 RectClipContent = true;
 

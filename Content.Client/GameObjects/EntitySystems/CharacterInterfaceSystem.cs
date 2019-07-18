@@ -36,7 +36,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var menu = characterInterface.Window;
 
-            if (menu.Visible)
+            if (menu.IsOpen)
             {
                 if (menu.IsAtFront())
                 {

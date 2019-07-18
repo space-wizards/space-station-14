@@ -48,7 +48,6 @@ namespace Content.Client.Research
             base.Initialize();
             IoCManager.InjectDependencies(this);
 
-            HideOnClose = true;
             Title = "Lathe Menu";
             Visible = false;
 

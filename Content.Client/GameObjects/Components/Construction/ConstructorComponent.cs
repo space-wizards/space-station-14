@@ -44,7 +44,6 @@ namespace Content.Client.GameObjects.Components.Construction
                         ConstructionMenu = new ConstructionMenu {Owner = this};
                         ConstructionMenu.OnClose += () => _gameHud.CraftingButtonDown = false;
                     }
-                    ConstructionMenu.AddToScreen();
 
                     _gameHud.CraftingButtonVisible = true;
                     _gameHud.CraftingButtonToggled = b =>

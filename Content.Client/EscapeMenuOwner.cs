@@ -50,8 +50,6 @@ namespace Content.Client
 
                 _escapeMenu.OnClose += () => _gameHud.EscapeButtonDown = false;
 
-                _escapeMenu.AddToScreen();
-
                 var escapeMenuCommand = InputCmdHandler.FromDelegate(Enabled);
 
                 _inputManager.SetInputCommand(EngineKeyFunctions.EscapeMenu, escapeMenuCommand);
@@ -68,7 +66,7 @@ namespace Content.Client
 
         private void Enabled(ICommonSession session)
         {
-            if (_escapeMenu.Visible)
+            if (_escapeMenu.IsOpen)
             {
                 if (_escapeMenu.IsAtFront())
                 {

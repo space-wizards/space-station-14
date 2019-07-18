@@ -52,10 +52,8 @@ namespace Content.Client.GameObjects.Components.Research
 
             menu.OnClose += Close;
 
-            menu.AddToScreen();
             menu.Populate();
             menu.PopulateMaterials();
-            queueMenu.AddToScreen();
 
             menu.QueueButton.OnPressed += (args) => { queueMenu.OpenCentered(); };
 

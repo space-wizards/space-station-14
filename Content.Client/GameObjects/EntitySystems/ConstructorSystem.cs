@@ -36,7 +36,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var menu = constructor.ConstructionMenu;
 
-            if (menu.Visible)
+            if (menu.IsOpen)
             {
                 if (menu.IsAtFront())
                 {

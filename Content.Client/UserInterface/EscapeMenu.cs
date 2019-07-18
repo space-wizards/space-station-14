@@ -49,10 +49,8 @@ namespace Content.Client.UserInterface
             {
                 Visible = false
             };
-            optionsMenu.AddToScreen();
 
             Resizable = false;
-            HideOnClose = true;
 
             Title = "Menu";
 
@@ -95,14 +93,12 @@ namespace Content.Client.UserInterface
         private void OnSpawnEntitiesButtonClicked(BaseButton.ButtonEventArgs args)
         {
             var window = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
-            window.AddToScreen();
             window.OpenToLeft();
         }
 
         private void OnSpawnTilesButtonClicked(BaseButton.ButtonEventArgs args)
         {
             var window = new TileSpawnWindow(__tileDefinitionManager, _placementManager, _resourceCache);
-            window.AddToScreen();
             window.OpenToLeft();
         }
 

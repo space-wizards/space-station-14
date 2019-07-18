@@ -61,7 +61,6 @@ namespace Content.Client.Construction
             Placement = (PlacementManager)IoCManager.Resolve<IPlacementManager>();
             Placement.PlacementCanceled += OnPlacementCanceled;
 
-            HideOnClose = true;
             Title = "Construction";
             Visible = false;
 
