@@ -417,7 +417,6 @@ namespace Content.Server.GameTicking
                         }
                     }
 
-                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} joined game!");
                     break;
                 }
 
@@ -466,6 +465,7 @@ namespace Content.Server.GameTicking
 
         private void _playerJoinGame(IPlayerSession session)
         {
+            _chatManager.DispatchServerMessage(session, $"Welcome to Space Station 14! If this is your first time checking out the game, be sure to check out the tutorial in the top left!");
             if (_playersInLobby.ContainsKey(session))
             {
                 _playersInLobby.Remove(session);
