@@ -137,6 +137,8 @@ namespace Content.Client
             factory.RegisterIgnore("AiController");
             factory.RegisterIgnore("PlayerInputMover");
 
+            factory.Register<ExaminerComponent>();
+
             IoCManager.Register<IGameHud, GameHud>();
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
             IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();

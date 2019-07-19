@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
@@ -11,7 +12,6 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -22,12 +22,9 @@ using Robust.Shared.Players;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class ExamineSystem : EntitySystem
+    internal sealed class ExamineSystem : ExamineSystemShared
     {
         public const string StyleClassEntityTooltip = "entity-tooltip";
-
-        public const float ExamineRange = 1.5f;
-        public const float ExamineRangeSquared = ExamineRange * ExamineRange;
 
 #pragma warning disable 649
         [Dependency] private IInputManager _inputManager;
@@ -56,19 +53,19 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HandleExamine(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
-            if (!uid.IsValid() || !_entityManager.TryGetEntity(uid, out var entity))
+            if (!uid.IsValid() || !_entityManager.TryGetEntity(uid, out var examined))
             {
                 return;
             }
 
             var playerEntity = _playerManager.LocalPlayer.ControlledEntity;
-            if(playerEntity == null)
-                return;
-            
-            if((entity.Transform.WorldPosition - playerEntity.Transform.WorldPosition).LengthSquared > ExamineRangeSquared)
-                return;
 
-            DoExamine(entity);
+            if (playerEntity == null || !CanExamine(playerEntity, examined))
+            {
+                return;
+            }
+
+            DoExamine(examined);
         }
 
         public async void DoExamine(IEntity entity)

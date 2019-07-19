@@ -195,6 +195,8 @@ namespace Content.Server
 
             factory.Register<CombatModeComponent>();
 
+            factory.Register<ExaminerComponent>();
+
             IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
             IoCManager.Register<IGameTicker, GameTicker>();

@@ -163,6 +163,9 @@ namespace Content.Server.GameObjects.EntitySystems
         public GridCoordinates LandingLocation { get; }
     }
 
+    /// <summary>
+    ///     This interface gives components behavior when being used to "attack".
+    /// </summary>
     public interface IAttack
     {
         void Attack(AttackEventArgs eventArgs);

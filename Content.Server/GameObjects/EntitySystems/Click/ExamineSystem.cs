@@ -1,20 +1,11 @@
-﻿using System;
-using System.Text;
-using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.Input;
-using Robust.Server.GameObjects.EntitySystems;
+﻿using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -27,11 +18,8 @@ namespace Content.Server.GameObjects.EntitySystems
         void Examine(FormattedMessage message);
     }
 
-    public class ExamineSystem : EntitySystem
+    public class ExamineSystem : ExamineSystemShared
     {
-        public const float ExamineRange = 1.5f;
-        public const float ExamineRangeSquared = ExamineRange * ExamineRange;
-
 #pragma warning disable 649
         [Dependency] private IEntityManager _entityManager;
         [Dependency] private IPlayerManager _playerManager;
@@ -105,18 +93,17 @@ namespace Content.Server.GameObjects.EntitySystems
             var session = _playerManager.GetSessionByChannel(channel);
             var playerEnt = session.AttachedEntity;
 
-            if((playerEnt == null) ||
-               (!_entityManager.TryGetEntity(request.EntityUid, out var entity)) ||
-               (entity.Transform.MapID != playerEnt.Transform.MapID) ||
-               ((entity.Transform.WorldPosition - playerEnt.Transform.WorldPosition).LengthSquared > ExamineRangeSquared))
+            if (playerEnt == null
+                || !_entityManager.TryGetEntity(request.EntityUid, out var entity)
+                || !CanExamine(playerEnt, entity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, _entityNotFoundMessage));
+                    request.EntityUid, _entityNotFoundMessage), channel);
                 return;
             }
 
             var text = GetExamineText(entity);
-            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text));
+            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text), channel);
         }
     }
 }
