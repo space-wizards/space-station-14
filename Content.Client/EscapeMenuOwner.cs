@@ -45,10 +45,7 @@ namespace Content.Client
             {
                 // Switched TO GameScreen.
                 _escapeMenu = new EscapeMenu(_clientConsole, _tileDefinitionManager, _placementManager,
-                    _prototypeManager, _resourceCache, _configurationManager, _localizationManager)
-                {
-                    Visible = false
-                };
+                    _prototypeManager, _resourceCache, _configurationManager, _localizationManager);
 
                 _escapeMenu.OnClose += () => _gameHud.EscapeButtonDown = false;
 

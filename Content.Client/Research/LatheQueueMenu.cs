@@ -30,7 +30,6 @@ namespace Content.Client.Research
             base.Initialize();
 
             Title = "Lathe Queue";
-            Visible = false;
 
             var margin = new MarginContainer()
             {

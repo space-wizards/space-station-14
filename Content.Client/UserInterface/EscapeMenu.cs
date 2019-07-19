@@ -48,10 +48,7 @@ namespace Content.Client.UserInterface
 
         private void PerformLayout()
         {
-            optionsMenu = new OptionsMenu(_configSystem)
-            {
-                Visible = false
-            };
+            optionsMenu = new OptionsMenu(_configSystem);
 
             Resizable = false;
 

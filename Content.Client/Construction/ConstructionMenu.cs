@@ -62,7 +62,6 @@ namespace Content.Client.Construction
             Placement.PlacementCanceled += OnPlacementCanceled;
 
             Title = "Construction";
-            Visible = false;
 
             var hSplitContainer = new HSplitContainer();
 

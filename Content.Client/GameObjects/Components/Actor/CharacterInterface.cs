@@ -113,7 +113,6 @@ namespace Content.Client.GameObjects.Components.Actor
             public CharacterWindow(List<ICharacterUI> windowComponents)
             {
                 Title = "Character";
-                Visible = false;
 
                 _contentsVBox = new VBoxContainer();
                 Contents.AddChild(_contentsVBox);

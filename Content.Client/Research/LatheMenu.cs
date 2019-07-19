@@ -49,7 +49,6 @@ namespace Content.Client.Research
             IoCManager.InjectDependencies(this);
 
             Title = "Lathe Menu";
-            Visible = false;
 
             var margin = new MarginContainer()
             {
