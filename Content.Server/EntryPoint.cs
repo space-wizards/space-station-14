@@ -58,6 +58,7 @@ using Robust.Shared.Interfaces.Log;
 using Content.Server.GameObjects.Components.Explosive;
 using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Triggers;
+using Content.Shared.GameObjects.Components.Movement;
 
 namespace Content.Server
 {
@@ -178,6 +179,9 @@ namespace Content.Server
             factory.RegisterReference<PlayerInputMoverComponent, IMoverComponent>();
 
             factory.Register<AiControllerComponent>();
+            factory.Register<ServerPortalComponent>();
+            factory.Register<ServerTeleporterComponent>();
+            factory.Register<TeleportableComponent>();
 
             factory.Register<CatwalkComponent>();
 
