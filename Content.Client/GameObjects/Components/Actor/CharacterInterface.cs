@@ -28,8 +28,11 @@ namespace Content.Client.GameObjects.Components.Actor
 #pragma warning restore 649
 
         /// <summary>
-        /// Window to hold each of the character interfaces
+        ///     Window to hold each of the character interfaces
         /// </summary>
+        /// <remarks>
+        ///     Null if it would otherwise be empty.
+        /// </remarks>
         public SS14Window Window { get; private set; }
 
         /// <summary>
@@ -40,7 +43,12 @@ namespace Content.Client.GameObjects.Components.Actor
             base.Initialize();
 
             //Use all the character ui interfaced components to create the character window
-            var uiComponents = Owner.GetAllComponents<ICharacterUI>();
+            var uiComponents = Owner.GetAllComponents<ICharacterUI>().ToList();
+            if (uiComponents.Count == 0)
+            {
+                return;
+            }
+
             Window = new CharacterWindow(uiComponents);
             Window.OnClose += () => _gameHud.CharacterButtonDown = false;
         }
@@ -52,36 +60,45 @@ namespace Content.Client.GameObjects.Components.Actor
         {
             base.OnRemove();
 
-            Window.Dispose();
+            Window?.Dispose();
             Window = null;
 
             var inputMgr = IoCManager.Resolve<IInputManager>();
             inputMgr.SetInputCommand(ContentKeyFunctions.OpenCharacterMenu, null);
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
+            IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
 
             switch (message)
             {
-                case PlayerAttachedMsg playerAttachedMsg:
-                    _gameHud.CharacterButtonVisible = true;
-                    _gameHud.CharacterButtonToggled = b =>
+                case PlayerAttachedMsg _:
+                    if (Window != null)
                     {
-                        if (b)
+                        _gameHud.CharacterButtonVisible = true;
+                        _gameHud.CharacterButtonToggled = b =>
                         {
-                            Window.Open();
-                        }
-                        else
-                        {
-                            Window.Close();
-                        }
-                    };
+                            if (b)
+                            {
+                                Window.Open();
+                            }
+                            else
+                            {
+                                Window.Close();
+                            }
+                        };
+                    }
+
                     break;
 
-                case PlayerDetachedMsg playerDetachedMsg:
-                    _gameHud.CharacterButtonVisible = false;
+                case PlayerDetachedMsg _:
+                    if (Window != null)
+                    {
+                        _gameHud.CharacterButtonVisible = false;
+                    }
+
                     break;
             }
         }
@@ -93,7 +110,7 @@ namespace Content.Client.GameObjects.Components.Actor
         {
             private readonly VBoxContainer _contentsVBox;
 
-            public CharacterWindow(IEnumerable<ICharacterUI> windowComponents)
+            public CharacterWindow(List<ICharacterUI> windowComponents)
             {
                 Title = "Character";
                 Visible = false;
@@ -101,8 +118,8 @@ namespace Content.Client.GameObjects.Components.Actor
                 _contentsVBox = new VBoxContainer();
                 Contents.AddChild(_contentsVBox);
 
-                // TODO: sort window components by priority of window component
-                foreach (var element in windowComponents.OrderBy(x => x.Priority))
+                windowComponents.Sort((a, b) => ((int) a.Priority).CompareTo((int) b.Priority));
+                foreach (var element in windowComponents)
                 {
                     _contentsVBox.AddChild(element.Scene);
                 }
