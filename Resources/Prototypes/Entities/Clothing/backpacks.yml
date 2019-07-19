@@ -12,6 +12,7 @@
     state: backpack
   - type: Clothing
     Size: 9999
+    QuickEquip: false
     Slots:
     - back
     sprite: Clothing/backpack.rsi
