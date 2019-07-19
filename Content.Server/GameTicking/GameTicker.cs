@@ -21,7 +21,6 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -569,23 +568,38 @@ namespace Content.Server.GameTicking
     {
         public string Command => "respawn";
         public string Description => "Respawns a player, kicking them back to the lobby.";
-        public string Help => "respawn <player>";
+        public string Help => "respawn [player]";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length > 1)
             {
-                shell.SendText(player, "Must provide exactly one argument.");
+                shell.SendText(player, "Must provide <= 1 argument.");
                 return;
             }
 
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
             var ticker = IoCManager.Resolve<IGameTicker>();
 
-            var arg = new NetSessionId(args[0]);
-            if (!playerMgr.TryGetSessionById(arg, out var targetPlayer))
+            NetSessionId sessionId;
+            if (args.Length == 0)
             {
-                if (!playerMgr.TryGetPlayerData(arg, out var data))
+                if (player == null)
+                {
+                    shell.SendText((IPlayerSession)null, "If not a player, an argument must be given.");
+                    return;
+                }
+
+                sessionId = player.SessionId;
+            }
+            else
+            {
+                sessionId = new NetSessionId(args[0]);
+            }
+
+            if (!playerMgr.TryGetSessionById(sessionId, out var targetPlayer))
+            {
+                if (!playerMgr.TryGetPlayerData(sessionId, out var data))
                 {
                     shell.SendText(player, "Unknown player");
                     return;
