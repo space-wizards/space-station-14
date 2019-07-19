@@ -92,31 +92,22 @@ namespace Content.Client.Chat
             {
                 Text = localize.GetString("All"),
                 Name = "ALL",
-                TextAlign = Button.AlignMode.Left,
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand,
-                SizeFlagsStretchRatio = 1,
                 ToggleMode = true,
-                Pressed = true
             };
 
             LocalButton = new Button
             {
                 Text = localize.GetString("Local"),
                 Name = "Local",
-                TextAlign = Button.AlignMode.Left,
-                SizeFlagsStretchRatio = 1,
                 ToggleMode = true,
-                Pressed = true
             };
 
             OOCButton = new Button
             {
                 Text = localize.GetString("OOC"),
                 Name = "OOC",
-                TextAlign = Button.AlignMode.Left,
-                SizeFlagsStretchRatio = 1,
                 ToggleMode = true,
-                Pressed = true
             };
 
             AllButton.OnToggled += OnFilterToggled;
