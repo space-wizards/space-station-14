@@ -74,8 +74,14 @@ namespace Content.Client.Chat
             outerVBox.AddChild(panelContainer);
             outerVBox.AddChild(hBox);
 
-            contents = new OutputPanel {SizeFlagsVertical = SizeFlags.FillExpand};
-            vBox.AddChild(contents);
+            var contentMargin = new MarginContainer
+            {
+                MarginLeftOverride = 4, MarginRightOverride = 4,
+                SizeFlagsVertical = SizeFlags.FillExpand
+            };
+            contents = new OutputPanel();
+            contentMargin.AddChild(contents);
+            vBox.AddChild(contentMargin);
 
             Input = new LineEdit();
             Input.OnKeyDown += InputKeyDown;
