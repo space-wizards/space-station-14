@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
@@ -19,6 +20,7 @@ namespace Content.Client.UserInterface
         private readonly IPrototypeManager _prototypeManager;
         private readonly IResourceCache _resourceCache;
         private readonly IConfigurationManager _configSystem;
+        private readonly ILocalizationManager _localizationManager;
 
         private BaseButton QuitButton;
         private BaseButton OptionsButton;
@@ -31,9 +33,10 @@ namespace Content.Client.UserInterface
             IPlacementManager placementManager,
             IPrototypeManager prototypeManager,
             IResourceCache resourceCache,
-            IConfigurationManager configSystem)
+            IConfigurationManager configSystem, ILocalizationManager localizationManager)
         {
             _configSystem = configSystem;
+            _localizationManager = localizationManager;
             _console = console;
             __tileDefinitionManager = tileDefinitionManager;
             _placementManager = placementManager;
@@ -92,7 +95,7 @@ namespace Content.Client.UserInterface
 
         private void OnSpawnEntitiesButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            var window = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
+            var window = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localizationManager);
             window.OpenToLeft();
         }
 

@@ -9,6 +9,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
@@ -26,6 +27,7 @@ namespace Content.Client
         [Dependency] private readonly IStateManager _stateManager;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
         [Dependency] private readonly IGameHud _gameHud;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         private EscapeMenu _escapeMenu;
@@ -43,7 +45,7 @@ namespace Content.Client
             {
                 // Switched TO GameScreen.
                 _escapeMenu = new EscapeMenu(_clientConsole, _tileDefinitionManager, _placementManager,
-                    _prototypeManager, _resourceCache, _configurationManager)
+                    _prototypeManager, _resourceCache, _configurationManager, _localizationManager)
                 {
                     Visible = false
                 };
