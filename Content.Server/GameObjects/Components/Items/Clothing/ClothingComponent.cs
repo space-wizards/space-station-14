@@ -5,6 +5,7 @@ using Robust.Shared.Serialization;
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects
@@ -64,17 +65,16 @@ namespace Content.Server.GameObjects
             if (!eventArgs.User.TryGetComponent(out InventoryComponent inv)
             ||  !eventArgs.User.TryGetComponent(out HandsComponent hands)) return false;
 
-            foreach (var pair in SlotMasks)
+            foreach (var (slot, flag) in SlotMasks)
             {
-                if ((SlotFlags & pair.Value) == 0) continue;
+                // We check if the clothing can be equipped in this slot.
+                if ((SlotFlags & flag) == 0) continue;
 
-
-
-                if (inv.TryGetSlotItem(pair.Key, out ItemComponent item))
+                if (inv.TryGetSlotItem(slot, out ItemComponent item))
                 {
-                    if (!inv.CanUnequip(pair.Key)) continue;
+                    if (!inv.CanUnequip(slot)) continue;
                     hands.Drop(Owner);
-                    inv.Unequip(pair.Key);
+                    inv.Unequip(slot);
                     hands.PutInHand(item);
                 }
                 else
@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects
                     hands.Drop(Owner);
                 }
 
-                return inv.Equip(pair.Key, this);
+                return inv.Equip(slot, this);
             }
 
             return false;
