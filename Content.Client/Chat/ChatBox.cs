@@ -120,9 +120,11 @@ namespace Content.Client.Chat
             };
 
             AllButton.OnToggled += OnFilterToggled;
+            LocalButton.OnToggled += OnFilterToggled;
             OOCButton.OnToggled += OnFilterToggled;
 
             hBox.AddChild(AllButton);
+            hBox.AddChild(LocalButton);
             hBox.AddChild(OOCButton);
 
             AddChild(outerVBox);
