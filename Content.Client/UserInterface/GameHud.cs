@@ -1,10 +1,13 @@
 using System;
 using Content.Client.Utility;
+using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -31,6 +34,9 @@ namespace Content.Client.UserInterface
         bool CraftingButtonDown { get; set; }
         bool CraftingButtonVisible { get; set; }
         Action<bool> CraftingButtonToggled { get; set; }
+        bool SandboxButtonDown { get; set; }
+        bool SandboxButtonVisible { get; set; }
+        Action<bool> SandboxButtonToggled { get; set; }
 
         // Init logic.
         void Initialize();
@@ -43,11 +49,13 @@ namespace Content.Client.UserInterface
         private TopButton _buttonTutorial;
         private TopButton _buttonCharacterMenu;
         private TopButton _buttonCraftingMenu;
+        private TopButton _buttonSandboxMenu;
         private TutorialWindow _tutorialWindow;
 
 #pragma warning disable 649
         [Dependency] private readonly IResourceCache _resourceCache;
         [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IInputManager _inputManager;
 #pragma warning restore 649
 
         public void Initialize()
@@ -60,6 +68,7 @@ namespace Content.Client.UserInterface
             var characterTexture = _resourceCache.GetTexture("/Textures/UserInterface/character.svg.96dpi.png");
             var craftingTexture = _resourceCache.GetTexture("/Textures/UserInterface/hammer.svg.96dpi.png");
             var tutorialTexture = _resourceCache.GetTexture("/Textures/UserInterface/students-cap.svg.96dpi.png");
+            var sandboxTexture = _resourceCache.GetTexture("/Textures/UserInterface/sandbox.svg.96dpi.png");
 
             _topButtonsContainer = new HBoxContainer
             {
@@ -81,14 +90,14 @@ namespace Content.Client.UserInterface
             _buttonEscapeMenu.OnToggled += args => EscapeButtonToggled?.Invoke(args.Pressed);
 
             // Tutorial
-            _buttonTutorial = new TopButton(tutorialTexture, " ")
+            _buttonTutorial = new TopButton(tutorialTexture, "F1")
             {
                 ToolTip = _localizationManager.GetString("Open tutorial.")
             };
 
             _topButtonsContainer.AddChild(_buttonTutorial);
 
-            _buttonTutorial.OnToggled += ButtonTutorialOnOnToggled;
+            _buttonTutorial.OnToggled += a => ButtonTutorialOnOnToggled();
 
             // Inventory
             _buttonCharacterMenu = new TopButton(characterTexture, "C")
@@ -112,22 +121,37 @@ namespace Content.Client.UserInterface
 
             _buttonCraftingMenu.OnToggled += args => CraftingButtonToggled?.Invoke(args.Pressed);
 
+            // Sandbox
+            _buttonSandboxMenu = new TopButton(sandboxTexture, "B")
+            {
+                ToolTip = _localizationManager.GetString("Open sandbox menu."),
+                Visible = true
+            };
+
+            _topButtonsContainer.AddChild(_buttonSandboxMenu);
+
+            _buttonSandboxMenu.OnToggled += args => SandboxButtonToggled?.Invoke(args.Pressed);
+
             _tutorialWindow = new TutorialWindow();
 
             _tutorialWindow.OnClose += () => _buttonTutorial.Pressed = false;
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenTutorial, InputCmdHandler.FromDelegate(s => ButtonTutorialOnOnToggled()));
         }
 
-        private void ButtonTutorialOnOnToggled(BaseButton.ButtonToggledEventArgs obj)
+        private void ButtonTutorialOnOnToggled()
         {
             if (_tutorialWindow.IsOpen)
             {
                 if (!_tutorialWindow.IsAtFront())
                 {
                     _tutorialWindow.MoveToFront();
+                    _buttonTutorial.Pressed = true;
                 }
                 else
                 {
                     _tutorialWindow.Close();
+                    _buttonTutorial.Pressed = false;
                 }
             }
             else
@@ -175,13 +199,27 @@ namespace Content.Client.UserInterface
 
         public Action<bool> CraftingButtonToggled { get; set; }
 
+        public bool SandboxButtonDown
+        {
+            get => _buttonSandboxMenu.Pressed;
+            set => _buttonSandboxMenu.Pressed = value;
+        }
+
+        public bool SandboxButtonVisible
+        {
+            get => _buttonSandboxMenu.Visible;
+            set => _buttonSandboxMenu.Visible = value;
+        }
+
+        public Action<bool> SandboxButtonToggled { get; set; }
+
         public sealed class TopButton : BaseButton
         {
             public const string StyleClassLabelTopButton = "topButtonLabel";
 
             private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
             private static readonly Color ColorHovered = Color.FromHex("#9699bb");
-            private static readonly Color ColorPressed = Color.FromHex("#00b061");
+            private static readonly Color ColorPressed = Color.FromHex("#789B8C");
 
             private readonly VBoxContainer _container;
             private readonly TextureRect _textureRect;

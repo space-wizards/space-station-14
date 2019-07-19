@@ -17,5 +17,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenContextMenu = "OpenContextMenu";
         public static readonly BoundKeyFunction FocusChat = "FocusChatWindow";
         public static readonly BoundKeyFunction ToggleCombatMode = "ToggleCombatMode";
+        public static readonly BoundKeyFunction OpenTutorial = "OpenTutorial";
     }
 }

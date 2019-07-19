@@ -14,6 +14,7 @@ namespace Content.Client.Input
             var common = contexts.GetContext("common");
             common.AddFunction(ContentKeyFunctions.FocusChat);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
+            common.AddFunction(ContentKeyFunctions.OpenTutorial);
 
             var human = contexts.GetContext("human");
             human.AddFunction(ContentKeyFunctions.SwapHands);

@@ -79,3 +79,6 @@ binds:
 - function: OpenCraftingMenu
   type: state
   key: G
+- function: OpenTutorial
+  type: state
+  key: F1
