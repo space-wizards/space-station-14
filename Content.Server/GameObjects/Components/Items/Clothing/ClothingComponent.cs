@@ -1,14 +1,16 @@
-﻿using Content.Shared.GameObjects;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects
 {
-    public class ClothingComponent : ItemComponent
+    public class ClothingComponent : ItemComponent, IUse
     {
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
@@ -16,6 +18,7 @@ namespace Content.Server.GameObjects
 
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
+        private bool _quickEquipEnabled = true;
         private int _heatResistance;
         public int HeatResistance => _heatResistance;
 
@@ -46,12 +49,43 @@ namespace Content.Server.GameObjects
                 }
             });
 
+            serializer.DataField(ref _quickEquipEnabled, "QuickEquip", true);
+
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
         public override ComponentState GetComponentState()
         {
             return new ClothingComponentState(ClothingEquippedPrefix, EquippedPrefix);
+        }
+
+        public bool UseEntity(UseEntityEventArgs eventArgs)
+        {
+            if (!_quickEquipEnabled) return false;
+            if (!eventArgs.User.TryGetComponent(out InventoryComponent inv)
+            ||  !eventArgs.User.TryGetComponent(out HandsComponent hands)) return false;
+
+            foreach (var (slot, flag) in SlotMasks)
+            {
+                // We check if the clothing can be equipped in this slot.
+                if ((SlotFlags & flag) == 0) continue;
+
+                if (inv.TryGetSlotItem(slot, out ItemComponent item))
+                {
+                    if (!inv.CanUnequip(slot)) continue;
+                    hands.Drop(Owner);
+                    inv.Unequip(slot);
+                    hands.PutInHand(item);
+                }
+                else
+                {
+                    hands.Drop(Owner);
+                }
+
+                return inv.Equip(slot, this);
+            }
+
+            return false;
         }
     }
 }
