@@ -1,20 +1,17 @@
 ﻿using Content.Client.GameObjects;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces.GameObjects;
-using Robust.Client.GameObjects;
+using Content.Client.Utility;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.Input;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -22,17 +19,18 @@ namespace Content.Client.UserInterface
 {
     public class HandsGui : Control
     {
-        private static readonly Color _inactiveColor = new Color(90, 90, 90);
+        private const int BoxSpacing = 0;
+        private const int BoxSize = 64;
 
-        private const int BOX_SPACING = 1;
+#pragma warning disable 0649
+        [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IResourceCache _resourceCache;
+        [Dependency] private readonly ILocalizationManager _loc;
+#pragma warning restore 0649
 
-        // The boxes are square so that's both width and height.
-        private const int BOX_SIZE = 50;
-
-        private readonly IPlayerManager _playerManager = IoCManager.Resolve<IPlayerManager>();
-        private readonly IUserInterfaceManager _userInterfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
-        private StyleBoxTexture handBox;
-        private StyleBoxTexture inactiveHandBox;
+        private Texture TextureHandLeft;
+        private Texture TextureHandRight;
+        private Texture TextureHandActive;
 
         private IEntity LeftHand;
         private IEntity RightHand;
@@ -41,35 +39,64 @@ namespace Content.Client.UserInterface
 
         private SpriteView LeftSpriteView;
         private SpriteView RightSpriteView;
+        private TextureRect ActiveHandRect;
 
         protected override void Initialize()
         {
             base.Initialize();
 
-            var resMgr = IoCManager.Resolve<IResourceCache>();
-            var handsBoxTexture = resMgr.GetResource<TextureResource>("/Textures/UserInterface/handsbox.png");
-            handBox = new StyleBoxTexture()
-            {
-                Texture = handsBoxTexture,
-            };
-            handBox.SetPatchMargin(StyleBox.Margin.All, 6);
-            inactiveHandBox = new StyleBoxTexture(handBox)
-            {
-                Modulate = _inactiveColor,
-            };
-            SetMarginsPreset(LayoutPreset.CenterBottom);
-            SetAnchorPreset(LayoutPreset.CenterBottom);
+            IoCManager.InjectDependencies(this);
 
-            _handL = new UIBox2i(0, 0, BOX_SIZE, BOX_SIZE);
-            _handR = _handL.Translated(new Vector2i(BOX_SIZE + BOX_SPACING, 0));
+            ToolTip = _loc.GetString("Your hands");
+
+            _handR = new UIBox2i(0, 0, BoxSize, BoxSize);
+            _handL = _handR.Translated((BoxSize + BoxSpacing, 0));
+
+            SetAnchorAndMarginPreset(LayoutPreset.CenterBottom);
             MouseFilter = MouseFilterMode.Stop;
 
-            LeftSpriteView = new SpriteView {MouseFilter = MouseFilterMode.Ignore};
+            TextureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
+            TextureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
+            TextureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
+
+            AddChild(new TextureRect
+            {
+                Texture = TextureHandLeft,
+                Size = _handL.Size,
+                Position = _handL.TopLeft,
+                TextureScale = (2, 2)
+            });
+
+            AddChild(new TextureRect
+            {
+                Texture = TextureHandRight,
+                Size = _handR.Size,
+                Position = _handR.TopLeft,
+                TextureScale = (2, 2)
+            });
+
+            AddChild(ActiveHandRect = new TextureRect
+            {
+                Texture = TextureHandActive,
+                Size = _handL.Size,
+                Position = _handL.TopLeft,
+                TextureScale = (2, 2)
+            });
+
+            LeftSpriteView = new SpriteView
+            {
+                MouseFilter = MouseFilterMode.Ignore,
+                Scale = (2, 2)
+            };
             AddChild(LeftSpriteView);
             LeftSpriteView.Size = _handL.Size;
             LeftSpriteView.Position = _handL.TopLeft;
 
-            RightSpriteView = new SpriteView {MouseFilter = MouseFilterMode.Ignore};
+            RightSpriteView = new SpriteView
+            {
+                MouseFilter = MouseFilterMode.Ignore,
+                Scale = (2, 2)
+            };
             AddChild(RightSpriteView);
             RightSpriteView.Size = _handR.Size;
             RightSpriteView.Position = _handR.TopLeft;
@@ -77,21 +104,7 @@ namespace Content.Client.UserInterface
 
         protected override Vector2 CalculateMinimumSize()
         {
-            return new Vector2(BOX_SIZE * 2 + 1, BOX_SIZE) * UIScale;
-        }
-
-        protected override void Draw(DrawingHandleScreen handle)
-        {
-            if (!TryGetHands(out IHandsComponent hands))
-                return;
-
-            var leftActive = hands.ActiveIndex == "left";
-
-            var handL = new UIBox2(_handL.TopLeft * UIScale, _handL.BottomRight * UIScale);
-            var handR = new UIBox2(_handR.TopLeft * UIScale, _handR.BottomRight * UIScale);
-
-            handBox.Draw(handle, leftActive ? handL : handR);
-            inactiveHandBox.Draw(handle, leftActive ? handR : handL);
+            return new Vector2(BoxSize * 2 + BoxSpacing, BoxSize) * UIScale;
         }
 
         /// <summary>
@@ -101,19 +114,10 @@ namespace Content.Client.UserInterface
         /// <returns></returns>
         private bool TryGetHands(out IHandsComponent hands)
         {
-            hands = null;
-            if (_playerManager?.LocalPlayer == null)
-            {
-                return false;
-            }
+            hands = default;
 
-            IEntity entity = _playerManager.LocalPlayer.ControlledEntity;
-            if (entity == null || !entity.TryGetComponent(out hands))
-            {
-                return false;
-            }
-
-            return true;
+            var entity = _playerManager?.LocalPlayer?.ControlledEntity;
+            return entity != null && entity.TryGetComponent(out hands);
         }
 
         public void UpdateHandIcons()
@@ -130,6 +134,8 @@ namespace Content.Client.UserInterface
 
             var left = hands.GetEntity("left");
             var right = hands.GetEntity("right");
+
+            ActiveHandRect.Position = hands.ActiveIndex == "left" ? _handL.TopLeft : _handR.TopLeft;
 
             if (left != null)
             {

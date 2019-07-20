@@ -1,25 +1,22 @@
-﻿using Content.Shared.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
+using Content.Client.UserInterface;
+using Content.Shared.GameObjects;
+using Robust.Client.GameObjects;
+using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Reflection;
+using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.GameObjects.Components.Actor;
-using Content.Client.UserInterface;
-using Robust.Client.GameObjects;
-using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Interfaces.Network;
 
 namespace Content.Client.GameObjects
 {

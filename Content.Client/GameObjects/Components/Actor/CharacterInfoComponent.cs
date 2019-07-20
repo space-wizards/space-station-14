@@ -7,7 +7,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Actor
 {
@@ -58,7 +57,7 @@ namespace Content.Client.GameObjects.Components.Actor
                 {
                     Children =
                     {
-                        (SpriteView = new SpriteView()),
+                        (SpriteView = new SpriteView { Scale = (2, 2)}),
                         new VBoxContainer
                         {
                             SizeFlagsVertical = SizeFlags.None,
