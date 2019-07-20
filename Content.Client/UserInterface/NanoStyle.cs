@@ -13,6 +13,7 @@ namespace Content.Client.UserInterface
     public sealed class NanoStyle
     {
         public const string StyleClassLabelHeading = "LabelHeading";
+        public const string StyleClassLabelSubText = "LabelSubText";
         public const string StyleClassButtonBig = "ButtonBig";
         private static readonly Color NanoGold = Color.FromHex("#A88B5E");
 
@@ -26,6 +27,7 @@ namespace Content.Client.UserInterface
         public NanoStyle()
         {
             var resCache = IoCManager.Resolve<IResourceCache>();
+            var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
             var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
             var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
@@ -419,6 +421,13 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty(Label.StylePropertyFont, notoSansBold16),
                     new StyleProperty(Label.StylePropertyFontColor, NanoGold),
+                } ),
+
+                // Small Label
+                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassLabelSubText}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSans10),
+                    new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
                 } ),
 
                 // Big Button

@@ -51,10 +51,6 @@ namespace Content.Client.GameObjects
 
         private ISpriteComponent _sprite;
 
-        //Relevant interface implementation for the character UI controller
-        public Control Scene => _window;
-        public UIPriority Priority => UIPriority.Inventory;
-
         public override void OnRemove()
         {
             base.OnRemove();

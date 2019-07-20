@@ -67,6 +67,7 @@
   - type: CombatMode
   - type: Teleportable
   - type: Examiner
+  - type: CharacterInfo
 
 - type: entity
   id: MobObserver

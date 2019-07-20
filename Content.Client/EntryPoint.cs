@@ -138,6 +138,7 @@ namespace Content.Client
             factory.RegisterIgnore("PlayerInputMover");
 
             factory.Register<ExaminerComponent>();
+            factory.Register<CharacterInfoComponent>();
 
             IoCManager.Register<IGameHud, GameHud>();
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();

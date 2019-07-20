@@ -26,12 +26,12 @@ namespace Content.Client.GameObjects
     /// <summary>
     /// A character UI component which shows the current damage state of the mob (living/dead)
     /// </summary>
-    public class SpeciesUI : SharedSpeciesComponent, ICharacterUI
+    public class SpeciesUI : SharedSpeciesComponent//, ICharacterUI
     {
         private StatusEffectsUI _ui;
 
         /// <summary>
-        /// Holds the godot control for the species window 
+        /// Holds the godot control for the species window
         /// </summary>
         private SpeciesWindow _window;
 
