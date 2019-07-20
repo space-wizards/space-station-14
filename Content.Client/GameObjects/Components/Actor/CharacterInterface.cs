@@ -97,6 +97,7 @@ namespace Content.Client.GameObjects.Components.Actor
                     if (Window != null)
                     {
                         _gameHud.CharacterButtonVisible = false;
+                        Window.Close();
                     }
 
                     break;

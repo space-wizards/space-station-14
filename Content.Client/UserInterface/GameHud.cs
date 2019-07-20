@@ -30,10 +30,17 @@ namespace Content.Client.UserInterface
         bool CharacterButtonVisible { get; set; }
         Action<bool> CharacterButtonToggled { get; set; }
 
+        // Inventory top button.
+        bool InventoryButtonDown { get; set; }
+        bool InventoryButtonVisible { get; set; }
+        Action<bool> InventoryButtonToggled { get; set; }
+
         // Crafting top button.
         bool CraftingButtonDown { get; set; }
         bool CraftingButtonVisible { get; set; }
         Action<bool> CraftingButtonToggled { get; set; }
+
+        // Sandbox top button.
         bool SandboxButtonDown { get; set; }
         bool SandboxButtonVisible { get; set; }
         Action<bool> SandboxButtonToggled { get; set; }
@@ -48,13 +55,14 @@ namespace Content.Client.UserInterface
         private TopButton _buttonEscapeMenu;
         private TopButton _buttonTutorial;
         private TopButton _buttonCharacterMenu;
+        private TopButton _buttonInventoryMenu;
         private TopButton _buttonCraftingMenu;
         private TopButton _buttonSandboxMenu;
         private TutorialWindow _tutorialWindow;
 
 #pragma warning disable 649
         [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IInputManager _inputManager;
 #pragma warning restore 649
 
@@ -66,6 +74,7 @@ namespace Content.Client.UserInterface
 
             var escapeTexture = _resourceCache.GetTexture("/Textures/UserInterface/hamburger.svg.96dpi.png");
             var characterTexture = _resourceCache.GetTexture("/Textures/UserInterface/character.svg.96dpi.png");
+            var inventoryTexture = _resourceCache.GetTexture("/Textures/UserInterface/inventory.svg.96dpi.png");
             var craftingTexture = _resourceCache.GetTexture("/Textures/UserInterface/hammer.svg.96dpi.png");
             var tutorialTexture = _resourceCache.GetTexture("/Textures/UserInterface/students-cap.svg.96dpi.png");
             var sandboxTexture = _resourceCache.GetTexture("/Textures/UserInterface/sandbox.svg.96dpi.png");
@@ -82,7 +91,7 @@ namespace Content.Client.UserInterface
             // Escape
             _buttonEscapeMenu = new TopButton(escapeTexture, "Esc")
             {
-                ToolTip = _localizationManager.GetString("Open escape menu.")
+                ToolTip = _loc.GetString("Open escape menu.")
             };
 
             _topButtonsContainer.AddChild(_buttonEscapeMenu);
@@ -92,17 +101,17 @@ namespace Content.Client.UserInterface
             // Tutorial
             _buttonTutorial = new TopButton(tutorialTexture, "F1")
             {
-                ToolTip = _localizationManager.GetString("Open tutorial.")
+                ToolTip = _loc.GetString("Open tutorial.")
             };
 
             _topButtonsContainer.AddChild(_buttonTutorial);
 
             _buttonTutorial.OnToggled += a => ButtonTutorialOnOnToggled();
 
-            // Inventory
+            // Character
             _buttonCharacterMenu = new TopButton(characterTexture, "C")
             {
-                ToolTip = _localizationManager.GetString("Open character menu."),
+                ToolTip = _loc.GetString("Open character menu."),
                 Visible = false
             };
 
@@ -110,10 +119,21 @@ namespace Content.Client.UserInterface
 
             _buttonCharacterMenu.OnToggled += args => CharacterButtonToggled?.Invoke(args.Pressed);
 
+            // Inventory
+            _buttonInventoryMenu = new TopButton(inventoryTexture, "I")
+            {
+                ToolTip = _loc.GetString("Open inventory menu."),
+                Visible = false
+            };
+
+            _topButtonsContainer.AddChild(_buttonInventoryMenu);
+
+            _buttonInventoryMenu.OnToggled += args => InventoryButtonToggled?.Invoke(args.Pressed);
+
             // Crafting
             _buttonCraftingMenu = new TopButton(craftingTexture, "G")
             {
-                ToolTip = _localizationManager.GetString("Open crafting menu."),
+                ToolTip = _loc.GetString("Open crafting menu."),
                 Visible = false
             };
 
@@ -124,7 +144,7 @@ namespace Content.Client.UserInterface
             // Sandbox
             _buttonSandboxMenu = new TopButton(sandboxTexture, "B")
             {
-                ToolTip = _localizationManager.GetString("Open sandbox menu."),
+                ToolTip = _loc.GetString("Open sandbox menu."),
                 Visible = true
             };
 
@@ -184,6 +204,20 @@ namespace Content.Client.UserInterface
         }
 
         public Action<bool> CharacterButtonToggled { get; set; }
+
+        public bool InventoryButtonDown
+        {
+            get => _buttonInventoryMenu.Pressed;
+            set => _buttonInventoryMenu.Pressed = value;
+        }
+
+        public bool InventoryButtonVisible
+        {
+            get => _buttonInventoryMenu.Visible;
+            set => _buttonInventoryMenu.Visible = value;
+        }
+
+        public Action<bool> InventoryButtonToggled { get; set; }
 
         public bool CraftingButtonDown
         {

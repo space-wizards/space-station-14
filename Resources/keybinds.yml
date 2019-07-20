@@ -82,3 +82,6 @@ binds:
 - function: OpenTutorial
   type: state
   key: F1
+- function: OpenInventoryMenu
+  type: state
+  key: I

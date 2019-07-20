@@ -16,20 +16,31 @@ using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefine
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Actor;
+using Content.Client.UserInterface;
+using Robust.Client.GameObjects;
+using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Interfaces.Network;
 
 namespace Content.Client.GameObjects
 {
     /// <summary>
     /// A character UI which shows items the user has equipped within his inventory
     /// </summary>
-    public class ClientInventoryComponent : SharedInventoryComponent, ICharacterUI
+    public class ClientInventoryComponent : SharedInventoryComponent
     {
-        private Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
+        private readonly Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
+
+        [Dependency]
+#pragma warning disable 649
+        private readonly IGameHud _gameHud;
+#pragma warning restore 649
 
         /// <summary>
-        /// Holds the godot control for the inventory window 
+        /// Holds the godot control for the inventory window
         /// </summary>
         private InventoryWindow _window;
+
+        public SS14Window Window => _window;
 
         private string _templateName = "HumanInventory"; //stored for serialization purposes
 
@@ -59,11 +70,12 @@ namespace Content.Client.GameObjects
             var reflectionManager = IoCManager.Resolve<IReflectionManager>();
             var type = reflectionManager.LooseGetType(_templateName);
             DebugTools.Assert(type != null);
-            _inventory = (Inventory)Activator.CreateInstance(type);
+            _inventory = (Inventory) Activator.CreateInstance(type);
 
             //Creates godot control class for inventory
             _window = new InventoryWindow(this);
             _window.CreateInventory(_inventory);
+            _window.OnClose += () => _gameHud.InventoryButtonDown = false;
 
             if (Owner.TryGetComponent(out _sprite))
             {
@@ -73,6 +85,7 @@ namespace Content.Client.GameObjects
                     {
                         continue;
                     }
+
                     _sprite.LayerMapReserveBlank(mask);
                 }
             }
@@ -102,8 +115,6 @@ namespace Content.Client.GameObjects
 
             var doneSlots = new HashSet<Slots>();
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
             foreach (var (slot, entityUid) in cast.Entities)
             {
                 if (_slots.ContainsKey(slot))
@@ -112,7 +123,7 @@ namespace Content.Client.GameObjects
                     _clearSlot(slot);
                 }
 
-                var entity = entityManager.GetEntity(entityUid);
+                var entity = Owner.EntityManager.GetEntity(entityUid);
                 _slots[slot] = entity;
                 _setSlot(slot, entity);
                 doneSlots.Add(slot);
@@ -168,18 +179,59 @@ namespace Content.Client.GameObjects
             SendNetworkMessage(equipmessage);
         }
 
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
+            IComponent component = null)
+        {
+            base.HandleMessage(message, netChannel, component);
+
+            switch (message)
+            {
+                case PlayerAttachedMsg _:
+                    _gameHud.InventoryButtonVisible = true;
+                    _gameHud.InventoryButtonToggled = b =>
+                    {
+                        if (b)
+                        {
+                            Window.Open();
+                        }
+                        else
+                        {
+                            Window.Close();
+                        }
+                    };
+
+                    break;
+
+                case PlayerDetachedMsg _:
+                    _gameHud.InventoryButtonVisible = false;
+                    _window.Close();
+
+                    break;
+            }
+        }
+
         /// <summary>
         /// Temporary window to hold the basis for inventory hud
         /// </summary>
-        private class InventoryWindow : GridContainer
+        private sealed class InventoryWindow : SS14Window
         {
             private List<Slots> IndexedSlots;
-            private Dictionary<Slots, InventoryButton> InventorySlots = new Dictionary<Slots, InventoryButton>(); //ordered dictionary?
+
+            private Dictionary<Slots, InventoryButton>
+                InventorySlots = new Dictionary<Slots, InventoryButton>(); //ordered dictionary?
+
             private readonly ClientInventoryComponent InventoryComponent;
+            private readonly GridContainer _gridContainer;
 
             public InventoryWindow(ClientInventoryComponent inventory)
             {
+                Title = "Inventory";
+
                 InventoryComponent = inventory;
+                _gridContainer = new GridContainer();
+                Contents.AddChild(_gridContainer);
+
+                Size = CombinedMinimumSize;
             }
 
             /// <summary>
@@ -187,7 +239,7 @@ namespace Content.Client.GameObjects
             /// </summary>
             public void CreateInventory(Inventory inventory)
             {
-                Columns = inventory.Columns;
+                _gridContainer.Columns = inventory.Columns;
 
                 IndexedSlots = new List<Slots>(inventory.SlotMasks);
 
@@ -213,7 +265,7 @@ namespace Content.Client.GameObjects
                         button.Text = button.ToolTip = SlotNames[slot];
                     }
 
-                    AddChild(newButton);
+                    _gridContainer.AddChild(newButton);
                 }
             }
 
@@ -255,7 +307,7 @@ namespace Content.Client.GameObjects
             private void RemoveFromInventory(BaseButton.ButtonEventArgs args)
             {
                 args.Button.Pressed = false;
-                var control = (InventoryButton)args.Button.Parent;
+                var control = (InventoryButton) args.Button.Parent;
 
                 InventoryComponent.SendUnequipMessage(control.Slot);
             }
@@ -263,7 +315,7 @@ namespace Content.Client.GameObjects
             private void AddToInventory(BaseButton.ButtonEventArgs args)
             {
                 args.Button.Pressed = false;
-                var control = (InventoryButton)args.Button.Parent;
+                var control = (InventoryButton) args.Button.Parent;
 
                 InventoryComponent.SendEquipMessage(control.Slot);
             }

@@ -26,6 +26,7 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);
             human.AddFunction(ContentKeyFunctions.OpenContextMenu);
             human.AddFunction(ContentKeyFunctions.OpenCraftingMenu);
+            human.AddFunction(ContentKeyFunctions.OpenInventoryMenu);
             // Disabled until there is feedback, so hitting tab doesn't suddenly break interaction.
             // human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
 

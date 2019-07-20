@@ -1,4 +1,3 @@
-using Content.Client.GameObjects.Components.Actor;
 using Content.Client.UserInterface;
 using Content.Shared.Input;
 using Robust.Client.GameObjects.EntitySystems;
@@ -10,7 +9,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
-    public sealed class CharacterInterfaceSystem : EntitySystem
+    public sealed class ClientInventorySystem : EntitySystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud;
@@ -22,24 +21,19 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Initialize();
 
             var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.OpenCharacterMenu,
-                InputCmdHandler.FromDelegate(s => HandleOpenCharacterMenu()));
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.OpenInventoryMenu,
+                InputCmdHandler.FromDelegate(s => HandleOpenInventoryMenu()));
         }
 
-        private void HandleOpenCharacterMenu()
+        private void HandleOpenInventoryMenu()
         {
             if (_playerManager.LocalPlayer.ControlledEntity == null
-                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out CharacterInterface characterInterface))
+                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out ClientInventoryComponent clientInventory))
             {
                 return;
             }
 
-            var menu = characterInterface.Window;
-
-            if (menu == null)
-            {
-                return;
-            }
+            var menu = clientInventory.Window;
 
             if (menu.IsOpen)
             {
@@ -62,12 +56,12 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             if (value)
             {
-                _gameHud.CharacterButtonDown = true;
+                _gameHud.InventoryButtonDown = true;
                 menu.OpenCentered();
             }
             else
             {
-                _gameHud.CharacterButtonDown = false;
+                _gameHud.InventoryButtonDown = false;
                 menu.Close();
             }
         }
