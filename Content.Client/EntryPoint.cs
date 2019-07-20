@@ -64,6 +64,25 @@ namespace Content.Client
             factory.RegisterIgnore("PowerStorage");
             factory.RegisterIgnore("PowerGenerator");
 
+            factory.RegisterIgnore("Explosive");
+            factory.RegisterIgnore("OnUseTimerTrigger");
+
+            factory.RegisterIgnore("ToolboxElectricalFill");
+            factory.RegisterIgnore("ToolLockerFill");
+
+            factory.RegisterIgnore("EmitSoundOnUse");
+            factory.RegisterIgnore("FootstepModifier");
+
+            factory.RegisterIgnore("HeatResistance");
+            factory.RegisterIgnore("CombatMode");
+
+            factory.RegisterIgnore("Teleportable");
+            factory.RegisterIgnore("ItemTeleporter");
+            factory.RegisterIgnore("Portal");
+
+            factory.RegisterIgnore("EntityStorage");
+            factory.RegisterIgnore("PlaceableSurface");
+
             factory.RegisterIgnore("Wirecutter");
             factory.RegisterIgnore("Screwdriver");
             factory.RegisterIgnore("Multitool");
