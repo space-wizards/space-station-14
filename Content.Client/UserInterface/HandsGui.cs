@@ -52,7 +52,6 @@ namespace Content.Client.UserInterface
             _handR = new UIBox2i(0, 0, BoxSize, BoxSize);
             _handL = _handR.Translated((BoxSize + BoxSpacing, 0));
 
-            SetAnchorAndMarginPreset(LayoutPreset.CenterBottom);
             MouseFilter = MouseFilterMode.Stop;
 
             TextureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");

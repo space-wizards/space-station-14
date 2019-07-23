@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.GameObjects
 {
     public abstract class Inventory
     {
-        public abstract int Columns { get; }
+        public abstract string InterfaceControllerTypeName { get; }
 
         public abstract IReadOnlyList<Slots> SlotMasks { get; }
 
@@ -19,11 +20,13 @@ namespace Content.Shared.GameObjects
         public abstract int SlotDrawingOrder(Slots slot);
     }
 
+    // Dynamically created by SharedInventoryComponent.
+    [UsedImplicitly]
     public class HumanInventory : Inventory
     {
-        public override int Columns => 3;
+        public override string InterfaceControllerTypeName => "HumanInventoryInterfaceController";
 
-        private static Dictionary<Slots, int> _slotDrawingOrder = new Dictionary<Slots, int>
+        private static readonly Dictionary<Slots, int> _slotDrawingOrder = new Dictionary<Slots, int>
         {
             {Slots.HEAD, 10},
             {Slots.MASK, 9},

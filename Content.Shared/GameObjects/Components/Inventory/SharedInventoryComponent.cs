@@ -1,16 +1,52 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Reflection;
+using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.GameObjects
 {
     public abstract class SharedInventoryComponent : Component
     {
+        // ReSharper disable UnassignedReadonlyField
+        [Dependency] protected readonly IReflectionManager ReflectionManager;
+        [Dependency] protected readonly IDynamicTypeFactory DynamicTypeFactory;
+        // ReSharper restore UnassignedReadonlyField
+
         public sealed override string Name => "Inventory";
         public sealed override uint? NetID => ContentNetIDs.STORAGE;
         public sealed override Type StateType => typeof(InventoryComponentState);
+
+        [ViewVariables]
+        protected Inventory InventoryInstance { get; private set; }
+
+        [ViewVariables]
+        private string _templateName = "HumanInventory"; //stored for serialization purposes
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _templateName, "Template", "HumanInventory");
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            CreateInventory();
+        }
+
+        private void CreateInventory()
+        {
+            var type = ReflectionManager.LooseGetType(_templateName);
+            DebugTools.Assert(type != null);
+            InventoryInstance = DynamicTypeFactory.CreateInstance<Inventory>(type);
+        }
 
         [Serializable, NetSerializable]
         protected class InventoryComponentState : ComponentState

@@ -45,6 +45,9 @@ namespace Content.Client.UserInterface
         bool SandboxButtonVisible { get; set; }
         Action<bool> SandboxButtonToggled { get; set; }
 
+        Control HandsContainer { get; }
+        Control InventoryQuickButtonContainer { get; }
+
         // Init logic.
         void Initialize();
     }
@@ -65,6 +68,9 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IInputManager _inputManager;
 #pragma warning restore 649
+
+        public Control HandsContainer { get; private set; }
+        public Control InventoryQuickButtonContainer { get; private set; }
 
         public void Initialize()
         {
@@ -156,7 +162,33 @@ namespace Content.Client.UserInterface
 
             _tutorialWindow.OnClose += () => _buttonTutorial.Pressed = false;
 
-            _inputManager.SetInputCommand(ContentKeyFunctions.OpenTutorial, InputCmdHandler.FromDelegate(s => ButtonTutorialOnOnToggled()));
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenTutorial,
+                InputCmdHandler.FromDelegate(s => ButtonTutorialOnOnToggled()));
+
+            var inventoryContainer = new HBoxContainer
+            {
+                GrowHorizontal = Control.GrowDirection.Begin,
+                GrowVertical = Control.GrowDirection.Begin,
+                SeparationOverride = 10
+            };
+
+            RootControl.AddChild(inventoryContainer);
+            inventoryContainer.SetAnchorAndMarginPreset(Control.LayoutPreset.BottomRight);
+
+            InventoryQuickButtonContainer = new MarginContainer
+            {
+                GrowHorizontal = Control.GrowDirection.Begin,
+                GrowVertical = Control.GrowDirection.Begin,
+            };
+
+            HandsContainer = new MarginContainer
+            {
+                GrowHorizontal = Control.GrowDirection.Both,
+                GrowVertical = Control.GrowDirection.Begin
+            };
+
+            inventoryContainer.Children.Add(HandsContainer);
+            inventoryContainer.Children.Add(InventoryQuickButtonContainer);
         }
 
         private void ButtonTutorialOnOnToggled()

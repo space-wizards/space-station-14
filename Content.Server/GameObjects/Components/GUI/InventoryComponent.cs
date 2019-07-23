@@ -1,51 +1,35 @@
-﻿using Robust.Server.GameObjects.Components.Container;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.GameObjects;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
-using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
 using Robust.Shared.IoC;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.ContentPack;
-using System.Linq;
-using Robust.Shared.Serialization;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
 
 namespace Content.Server.GameObjects
 {
     public class InventoryComponent : SharedInventoryComponent
     {
         [ViewVariables]
-        private Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
+        private readonly Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
 
-        string TemplateName = "HumanInventory"; //stored for serialization purposes
-
-        public override void ExposeData(ObjectSerializer serializer)
+        public override void Initialize()
         {
-            base.ExposeData(serializer);
+            base.Initialize();
 
-            serializer.DataField(ref TemplateName, "Template", "HumanInventory");
-            if (serializer.Reading)
+            foreach (var slotName in InventoryInstance.SlotMasks)
             {
-                CreateInventory(TemplateName);
-            }
-        }
-
-        private void CreateInventory(string TemplateName)
-        {
-            Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Shared")
-                .GetType("Content.Shared.GameObjects." + TemplateName);
-            Inventory inventory = (Inventory) Activator.CreateInstance(type);
-            foreach (Slots slotnames in inventory.SlotMasks)
-            {
-                if (slotnames != Slots.NONE)
+                if (slotName != Slots.NONE)
                 {
-                    AddSlot(slotnames);
+                    AddSlot(slotName);
                 }
             }
         }

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
-using Content.Client.UserInterface;
 using Content.Shared.GameObjects;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
 
@@ -27,24 +22,8 @@ namespace Content.Client.GameObjects
     {
         private readonly Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();
 
-        [Dependency]
-#pragma warning disable 649
-        private readonly IGameHud _gameHud;
-#pragma warning restore 649
-
-        /// <summary>
-        /// Holds the godot control for the inventory window
-        /// </summary>
-        private InventoryWindow _window;
-
-        public SS14Window Window => _window;
-
-        private string _templateName = "HumanInventory"; //stored for serialization purposes
-
-        /// <summary>
-        /// Inventory template after being loaded from instance creator and string name
-        /// </summary>
-        private Inventory _inventory;
+        [ViewVariables]
+        public InventoryInterfaceController InterfaceController { get; private set; }
 
         private ISpriteComponent _sprite;
 
@@ -52,27 +31,21 @@ namespace Content.Client.GameObjects
         {
             base.OnRemove();
 
-            _window.Dispose();
+            InterfaceController?.Dispose();
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            //Loads inventory template
-            var reflectionManager = IoCManager.Resolve<IReflectionManager>();
-            var type = reflectionManager.LooseGetType(_templateName);
-            DebugTools.Assert(type != null);
-            _inventory = (Inventory) Activator.CreateInstance(type);
-
-            //Creates godot control class for inventory
-            _window = new InventoryWindow(this);
-            _window.CreateInventory(_inventory);
-            _window.OnClose += () => _gameHud.InventoryButtonDown = false;
+            var controllerType = ReflectionManager.LooseGetType(InventoryInstance.InterfaceControllerTypeName);
+            var args = new object[] {this};
+            InterfaceController = DynamicTypeFactory.CreateInstance<InventoryInterfaceController>(controllerType, args);
+            InterfaceController.Initialize();
 
             if (Owner.TryGetComponent(out _sprite))
             {
-                foreach (var mask in _inventory.SlotMasks.OrderBy(s => _inventory.SlotDrawingOrder(s)))
+                foreach (var mask in InventoryInstance.SlotMasks.OrderBy(s => InventoryInstance.SlotDrawingOrder(s)))
                 {
                     if (mask == Slots.NONE)
                     {
@@ -88,13 +61,6 @@ namespace Content.Client.GameObjects
             {
                 _setSlot(slot, entity);
             }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _templateName, "Template", "HumanInventory");
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
@@ -151,12 +117,12 @@ namespace Content.Client.GameObjects
                 }
             }
 
-            _window?.AddToSlot(slot, entity);
+            InterfaceController?.AddToSlot(slot, entity);
         }
 
         private void _clearSlot(Slots slot)
         {
-            _window?.RemoveFromSlot(slot);
+            InterfaceController?.RemoveFromSlot(slot);
             _sprite?.LayerSetVisible(slot, false);
         }
 
@@ -180,159 +146,12 @@ namespace Content.Client.GameObjects
             switch (message)
             {
                 case PlayerAttachedMsg _:
-                    _gameHud.InventoryButtonVisible = true;
-                    _gameHud.InventoryButtonToggled = b =>
-                    {
-                        if (b)
-                        {
-                            Window.Open();
-                        }
-                        else
-                        {
-                            Window.Close();
-                        }
-                    };
-
+                    InterfaceController.PlayerAttached();
                     break;
 
                 case PlayerDetachedMsg _:
-                    _gameHud.InventoryButtonVisible = false;
-                    _window.Close();
-
+                    InterfaceController.PlayerDetached();
                     break;
-            }
-        }
-
-        /// <summary>
-        /// Temporary window to hold the basis for inventory hud
-        /// </summary>
-        private sealed class InventoryWindow : SS14Window
-        {
-            private List<Slots> IndexedSlots;
-
-            private Dictionary<Slots, InventoryButton>
-                InventorySlots = new Dictionary<Slots, InventoryButton>(); //ordered dictionary?
-
-            private readonly ClientInventoryComponent InventoryComponent;
-            private readonly GridContainer _gridContainer;
-
-            public InventoryWindow(ClientInventoryComponent inventory)
-            {
-                Title = "Inventory";
-
-                InventoryComponent = inventory;
-                _gridContainer = new GridContainer();
-                Contents.AddChild(_gridContainer);
-
-                Size = CombinedMinimumSize;
-            }
-
-            /// <summary>
-            ///     Creates a grid container filled with slot buttons loaded from an inventory template
-            /// </summary>
-            public void CreateInventory(Inventory inventory)
-            {
-                _gridContainer.Columns = inventory.Columns;
-
-                IndexedSlots = new List<Slots>(inventory.SlotMasks);
-
-                foreach (var slot in IndexedSlots)
-                {
-                    var newButton = new InventoryButton(slot);
-
-                    if (slot == Slots.NONE)
-                    {
-                        //TODO: Re-enable when godot grid container maintains grid with invisible elements
-                        //newbutton.Visible = false;
-                    }
-                    else
-                    {
-                        // Store slot button and give it the default onpress behavior for empty elements
-                        newButton.GetChild<Button>("Button").OnPressed += AddToInventory;
-                        InventorySlots.Add(slot, newButton);
-                    }
-
-                    if (SlotNames.ContainsKey(slot))
-                    {
-                        var button = newButton.GetChild<Button>("Button");
-                        button.Text = button.ToolTip = SlotNames[slot];
-                    }
-
-                    _gridContainer.AddChild(newButton);
-                }
-            }
-
-            /// <summary>
-            /// Adds the item we have equipped to the slot texture and prepares the slot button for removal
-            /// </summary>
-            public void AddToSlot(Slots slot, IEntity entity)
-            {
-                var button = InventorySlots[slot];
-
-                button.EntityUid = entity.Uid;
-                var theButton = button.GetChild<Button>("Button");
-                theButton.OnPressed += RemoveFromInventory;
-                theButton.OnPressed -= AddToInventory;
-                theButton.Text = "";
-
-                //Gets entity sprite and assigns it to button texture
-                if (entity.TryGetComponent(out ISpriteComponent sprite))
-                {
-                    var view = button.GetChild<SpriteView>("SpriteView");
-                    view.Sprite = sprite;
-                }
-            }
-
-            /// <summary>
-            /// Remove element from the UI and update its button to blank texture and prepare for insertion again
-            /// </summary>
-            public void RemoveFromSlot(Slots slot)
-            {
-                var button = InventorySlots[slot];
-                button.GetChild<SpriteView>("SpriteView").Sprite = null;
-                button.EntityUid = EntityUid.Invalid;
-                var theButton = button.GetChild<Button>("Button");
-                theButton.OnPressed -= RemoveFromInventory;
-                theButton.OnPressed += AddToInventory;
-                theButton.Text = SlotNames[slot];
-            }
-
-            private void RemoveFromInventory(BaseButton.ButtonEventArgs args)
-            {
-                args.Button.Pressed = false;
-                var control = (InventoryButton) args.Button.Parent;
-
-                InventoryComponent.SendUnequipMessage(control.Slot);
-            }
-
-            private void AddToInventory(BaseButton.ButtonEventArgs args)
-            {
-                args.Button.Pressed = false;
-                var control = (InventoryButton) args.Button.Parent;
-
-                InventoryComponent.SendEquipMessage(control.Slot);
-            }
-        }
-
-        private sealed class InventoryButton : MarginContainer
-        {
-            public Slots Slot { get; }
-            public EntityUid EntityUid { get; set; }
-
-            public InventoryButton(Slots slot)
-            {
-                Slot = slot;
-
-                CustomMinimumSize = (50, 50);
-
-                AddChild(new Button("Button")
-                {
-                    ClipText = true
-                });
-                AddChild(new SpriteView("SpriteView")
-                {
-                    MouseFilter = MouseFilterMode.Ignore
-                });
             }
         }
     }

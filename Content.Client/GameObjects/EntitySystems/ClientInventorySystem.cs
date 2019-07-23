@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var menu = clientInventory.Window;
+            var menu = clientInventory.InterfaceController.Window;
 
             if (menu.IsOpen)
             {

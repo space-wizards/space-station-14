@@ -1,15 +1,14 @@
-﻿using Content.Client.Interfaces.GameObjects;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Client.Interfaces.GameObjects;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects;
-using Robust.Client.Interfaces.UserInterface;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using System.Collections.Generic;
-using System.Linq;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -19,7 +18,10 @@ namespace Content.Client.GameObjects
     public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
         private HandsGui _gui;
-        private IUserInterfaceManager _userInterfaceManager;
+
+#pragma warning disable 649
+        [Dependency] private readonly IGameHud _gameHud;
+#pragma warning restore 649
 
         [ViewVariables] private readonly Dictionary<string, IEntity> _hands = new Dictionary<string, IEntity>();
 
@@ -28,13 +30,6 @@ namespace Content.Client.GameObjects
         [ViewVariables] private ISpriteComponent _sprite;
 
         [ViewVariables] public IEntity ActiveHand => GetEntity(ActiveIndex);
-
-        public override void OnAdd()
-        {
-            base.OnAdd();
-
-            _userInterfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
-        }
 
         public override void OnRemove()
         {
@@ -46,8 +41,6 @@ namespace Content.Client.GameObjects
         public override void Initialize()
         {
             base.Initialize();
-
-            _userInterfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
 
             if (Owner.TryGetComponent(out _sprite))
             {
@@ -164,7 +157,7 @@ namespace Content.Client.GameObjects
                         _gui.Parent?.RemoveChild(_gui);
                     }
 
-                    _userInterfaceManager.StateRoot.AddChild(_gui);
+                    _gameHud.HandsContainer.AddChild(_gui);
                     _gui.UpdateHandIcons();
                     break;
 
