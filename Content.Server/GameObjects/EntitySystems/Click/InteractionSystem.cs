@@ -15,6 +15,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -330,7 +331,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // Check if ClickLocation is in object bounds here, if not lets log as warning and see why
             if (attacked.TryGetComponent(out BoundingBoxComponent boundingBox))
             {
-                if (!boundingBox.WorldAABB.Contains(coordinates.Position))
+                if (!boundingBox.WorldAABB.Contains(coordinates.ToWorld(_mapManager).Position))
                 {
                     Logger.WarningS("system.interaction",
                         $"Player {player.Name} clicked {attacked.Name} outside of its bounding box component somehow");
