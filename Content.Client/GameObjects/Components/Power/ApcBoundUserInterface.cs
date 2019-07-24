@@ -27,11 +27,12 @@ namespace Content.Client.GameObjects.Components.Power
         {
             base.Open();
 
-            _window = new ApcWindow()
+            _window = new ApcWindow
             {
                 MarginRight = 426.0f, MarginBottom = 270.0f
             };
             _window.OnClose += Close;
+            _window.OpenCenteredMinSize();
 
             _breakerButton = _window.BreakerButton;
             _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());
