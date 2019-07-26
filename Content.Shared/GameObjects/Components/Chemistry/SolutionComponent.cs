@@ -10,6 +10,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 {
     public class SolutionComponent : Component
     {
+        [ViewVariables]
         private Solution _containedSolution;
         private int _maxVolume;
         private SolutionCaps _capabilities;
@@ -34,9 +35,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ///     The current blended color of all the reagents in the container.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-
         public Color SubstanceColor { get; private set; }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public SolutionCaps Capabilities
         {
             get => _capabilities;
@@ -82,16 +83,20 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             throw new NotImplementedException();
         }
 
-        public bool TryAddSolution(Solution solution, int quantity)
+        public bool TryAddSolution(Solution solution)
         {
-            throw new NotImplementedException();
-        }
-        
-        public List<(string reagentId, int quantity)> TryRemoveSolution(int quantity)
-        {
-            throw new NotImplementedException();
+            if (solution.TotalVolume > (_maxVolume - _containedSolution.TotalVolume))
+                return false;
+
+            _containedSolution.AddSolution(solution);
+            return true;
         }
 
+        public Solution SplitSolution(int quantity)
+        {
+            return _containedSolution.SplitSolution(quantity);
+        }
+        
         /// <inheritdoc />
         public override ComponentState GetComponentState()
         {

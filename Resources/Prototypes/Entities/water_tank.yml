@@ -27,6 +27,7 @@
     
   - type: Solution
     maxVol: 1500
+    caps: 3
     
 
   placement:
@@ -36,4 +37,10 @@
 - type: entity
   parent: watertank
   id: watertank_full
+  components:
+  - type: Solution
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 1500
   

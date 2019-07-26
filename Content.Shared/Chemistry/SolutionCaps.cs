@@ -1,4 +1,5 @@
 ﻿using System;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry
 {
@@ -6,6 +7,7 @@ namespace Content.Shared.Chemistry
     ///     These are the defined capabilities of a container of a solution.
     /// </summary>
     [Flags]
+    [Serializable, NetSerializable]
     public enum SolutionCaps
     {
         None = 0,

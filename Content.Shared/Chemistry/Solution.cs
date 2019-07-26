@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry
 {
     /// <summary>
     ///     A solution of reagents.
     /// </summary>
-    public class Solution
+    public class Solution : IExposeData
     {
         // Most objects on the station hold only 1 or 2 reagents
-        private readonly List<ReagentQuantity> _contents = new List<ReagentQuantity>(2);
+        [ViewVariables]
+        private List<ReagentQuantity> _contents = new List<ReagentQuantity>(2);
 
         /// <summary>
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
         /// </summary>
+        [ViewVariables]
         public int TotalVolume { get; private set; }
 
         /// <summary>
@@ -31,6 +36,21 @@ namespace Content.Shared.Chemistry
         public Solution(string reagentId, int quantity)
         {
             AddReagent(reagentId, quantity);
+        }
+
+        /// <inheritdoc />
+        public void ExposeData(ObjectSerializer serializer)
+        {
+            serializer.DataField(ref _contents, "reagents", new List<ReagentQuantity>());
+
+            if (serializer.Reading)
+            {
+                TotalVolume = 0;
+                foreach (var reagent in _contents)
+                {
+                    TotalVolume += reagent.Quantity;
+                }
+            }
         }
 
         /// <summary>
@@ -216,6 +236,7 @@ namespace Content.Shared.Chemistry
             return newSolution;
         }
 
+        [Serializable, NetSerializable]
         private readonly struct ReagentQuantity
         {
             public readonly string ReagentId;

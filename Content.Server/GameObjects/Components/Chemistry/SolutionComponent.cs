@@ -44,7 +44,28 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             protected override void Activate(IEntity user, SolutionComponent component)
             {
-                throw new NotImplementedException();
+                if (!user.TryGetComponent<HandsComponent>(out var hands))
+                    return;
+
+                if (hands.GetActiveHand == null)
+                    return;
+
+                if (!hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var handSolutionComp))
+                    return;
+
+                if ((handSolutionComp.Capabilities & SolutionCaps.PourOut) == 0 || (component.Capabilities & SolutionCaps.PourIn) == 0)
+                    return;
+
+                var transferQuantity = Math.Min(component.MaxVolume - component.CurrentVolume, handSolutionComp.CurrentVolume);
+                transferQuantity = Math.Min(transferQuantity, 10);
+
+                // nothing to transfer
+                if (transferQuantity <= 0)
+                    return;
+
+                var transferSolution = handSolutionComp.SplitSolution(transferQuantity);
+                component.TryAddSolution(transferSolution);
+
             }
         }
 
@@ -90,9 +111,21 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (hands.GetActiveHand == null)
                     return;
 
-                var heldEntity = hands.GetActiveHand.Owner;
+                if(!hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var handSolutionComp))
+                    return;
 
+                if ((handSolutionComp.Capabilities & SolutionCaps.PourIn) == 0 || (component.Capabilities & SolutionCaps.PourOut) == 0)
+                    return;
 
+                var transferQuantity = Math.Min(handSolutionComp.MaxVolume - handSolutionComp.CurrentVolume, component.CurrentVolume);
+                transferQuantity = Math.Min(transferQuantity, 10);
+
+                // pulling from an empty container, pointless to continue
+                if (transferQuantity <= 0)
+                    return;
+                
+                var transferSolution = component.SplitSolution(transferQuantity);
+                handSolutionComp.TryAddSolution(transferSolution);
             }
         }
     }
