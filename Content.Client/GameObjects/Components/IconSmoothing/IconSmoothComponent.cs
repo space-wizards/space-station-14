@@ -1,10 +1,14 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using static Robust.Client.GameObjects.SpriteComponent;
 
@@ -21,7 +25,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     ///     To use, set <c>base</c> equal to the prefix of the corner states in the sprite base RSI.
     ///     Any objects with the same <c>key</c> will connect.
     /// </remarks>
-    public sealed class IconSmoothComponent : Component
+    public class IconSmoothComponent : Component
     {
         private string _smoothKey;
         private string _stateBase;
@@ -76,9 +80,9 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
             SnapGrid.OnPositionChanged += SnapGridOnPositionChanged;
             Owner.EntityManager.RaiseEvent(Owner, new IconSmoothDirtyEvent(null, SnapGrid.Offset, Mode));
-            var state0 = $"{StateBase}0";
             if (Mode == IconSmoothingMode.Corners)
             {
+                var state0 = $"{StateBase}0";
                 Sprite.LayerMapSet(CornerLayers.SE, Sprite.AddLayerState(state0));
                 Sprite.LayerSetDirOffset(CornerLayers.SE, DirectionOffset.None);
                 Sprite.LayerMapSet(CornerLayers.NE, Sprite.AddLayerState(state0));
@@ -88,6 +92,107 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
                 Sprite.LayerMapSet(CornerLayers.SW, Sprite.AddLayerState(state0));
                 Sprite.LayerSetDirOffset(CornerLayers.SW, DirectionOffset.Clockwise);
             }
+        }
+
+        internal virtual void CalculateNewSprite()
+        {
+            switch (Mode)
+            {
+                case IconSmoothingMode.Corners:
+                    CalculateNewSpriteCorers();
+                    break;
+
+                case IconSmoothingMode.CardinalFlags:
+                    CalculateNewSpriteCardinal();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void CalculateNewSpriteCardinal()
+        {
+            var dirs = CardinalConnectDirs.None;
+
+            if (MatchingEntity(SnapGrid.GetInDir(Direction.North)))
+                dirs |= CardinalConnectDirs.North;
+            if (MatchingEntity(SnapGrid.GetInDir(Direction.South)))
+                dirs |= CardinalConnectDirs.South;
+            if (MatchingEntity(SnapGrid.GetInDir(Direction.East)))
+                dirs |= CardinalConnectDirs.East;
+            if (MatchingEntity(SnapGrid.GetInDir(Direction.West)))
+                dirs |= CardinalConnectDirs.West;
+
+            Sprite.LayerSetState(0, $"{StateBase}{(int) dirs}");
+        }
+
+        private void CalculateNewSpriteCorers()
+        {
+            var n = MatchingEntity(SnapGrid.GetInDir(Direction.North));
+            var ne = MatchingEntity(SnapGrid.GetInDir(Direction.NorthEast));
+            var e = MatchingEntity(SnapGrid.GetInDir(Direction.East));
+            var se = MatchingEntity(SnapGrid.GetInDir(Direction.SouthEast));
+            var s = MatchingEntity(SnapGrid.GetInDir(Direction.South));
+            var sw = MatchingEntity(SnapGrid.GetInDir(Direction.SouthWest));
+            var w = MatchingEntity(SnapGrid.GetInDir(Direction.West));
+            var nw = MatchingEntity(SnapGrid.GetInDir(Direction.NorthWest));
+
+            // ReSharper disable InconsistentNaming
+            var cornerNE = CornerFill.None;
+            var cornerSE = CornerFill.None;
+            var cornerSW = CornerFill.None;
+            var cornerNW = CornerFill.None;
+            // ReSharper restore InconsistentNaming
+
+            if (n)
+            {
+                cornerNE |= CornerFill.CounterClockwise;
+                cornerNW |= CornerFill.Clockwise;
+            }
+
+            if (ne)
+            {
+                cornerNE |= CornerFill.Diagonal;
+            }
+
+            if (e)
+            {
+                cornerNE |= CornerFill.Clockwise;
+                cornerSE |= CornerFill.CounterClockwise;
+            }
+
+            if (se)
+            {
+                cornerSE |= CornerFill.Diagonal;
+            }
+
+            if (s)
+            {
+                cornerSE |= CornerFill.Clockwise;
+                cornerSW |= CornerFill.CounterClockwise;
+            }
+
+            if (sw)
+            {
+                cornerSW |= CornerFill.Diagonal;
+            }
+
+            if (w)
+            {
+                cornerSW |= CornerFill.Clockwise;
+                cornerNW |= CornerFill.CounterClockwise;
+            }
+
+            if (nw)
+            {
+                cornerNW |= CornerFill.Diagonal;
+            }
+
+            Sprite.LayerSetState(CornerLayers.NE, $"{StateBase}{(int) cornerNE}");
+            Sprite.LayerSetState(CornerLayers.SE, $"{StateBase}{(int) cornerSE}");
+            Sprite.LayerSetState(CornerLayers.SW, $"{StateBase}{(int) cornerSW}");
+            Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) cornerNW}");
         }
 
         public override void Shutdown()
@@ -102,6 +207,52 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         {
             Owner.EntityManager.RaiseEvent(Owner, new IconSmoothDirtyEvent(_lastPosition, SnapGrid.Offset, Mode));
             _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
+        }
+
+        [System.Diagnostics.Contracts.Pure]
+        protected bool MatchingEntity(IEnumerable<IEntity> candidates)
+        {
+            foreach (var entity in candidates)
+            {
+                if (!entity.TryGetComponent(out IconSmoothComponent other))
+                {
+                    continue;
+                }
+
+                if (other.SmoothKey == SmoothKey)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        [Flags]
+        private enum CardinalConnectDirs : byte
+        {
+            None = 0,
+            North = 1,
+            South = 2,
+            East = 4,
+            West = 8
+        }
+
+        [Flags]
+        public enum CornerFill : byte
+        {
+            // These values are pulled from Baystation12.
+            // I'm too lazy to convert the state names.
+            None = 0,
+
+            // The cardinal tile counter-clockwise of this corner is filled.
+            CounterClockwise = 1,
+
+            // The diagonal tile in the direction of this corner.
+            Diagonal = 2,
+
+            // The cardinal tile clockwise of this corner is filled.
+            Clockwise = 4,
         }
 
         [SuppressMessage("ReSharper", "InconsistentNaming")]

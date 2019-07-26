@@ -109,6 +109,8 @@ namespace Content.Client
             factory.Register<ConstructorComponent>();
             factory.Register<ConstructionGhostComponent>();
             factory.Register<IconSmoothComponent>();
+            factory.Register<LowWallComponent>();
+            factory.RegisterReference<LowWallComponent, IconSmoothComponent>();
             factory.Register<DamageableComponent>();
             factory.Register<ClothingComponent>();
             factory.Register<ItemComponent>();
@@ -158,6 +160,8 @@ namespace Content.Client
 
             factory.Register<ExaminerComponent>();
             factory.Register<CharacterInfoComponent>();
+
+            factory.Register<WindowComponent>();
 
             IoCManager.Register<IGameHud, GameHud>();
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();

@@ -1,33 +1,29 @@
 - type: entity
-  id: wall
-  name: Wall
+  id: window
+  name: Window
+  description: Don't smudge up the glass down there.
   components:
   - type: Clickable
   - type: Sprite
     netsync: false
-    color: "#71797a"
-    drawdepth: Walls
-    sprite: Buildings/wall.rsi
+    drawdepth: WallTops
+    sprite: Buildings/window.rsi
 
   - type: Icon
-    sprite: Buildings/wall.rsi
-    state: full
+    sprite: Buildings/window.rsi
+    state: window0
 
   - type: BoundingBox
   - type: Collidable
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
-  - type: Occluder
-    sizeX: 32
-    sizeY: 32
+
   - type: SnapGrid
     offset: Center
 
-  - type: IconSmooth
-    key: walls
-    base: solid
+  - type: Window
+    base: window
 
   placement:
     snap:
