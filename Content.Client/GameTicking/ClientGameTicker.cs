@@ -91,6 +91,7 @@ namespace Content.Client.GameTicking
             _lobby = null;
             _gameChat?.Dispose();
             _gameChat = null;
+            _gameHud.RootControl.Orphan();
         }
 
         public void FrameUpdate(RenderFrameEventArgs renderFrameEventArgs)
@@ -171,7 +172,7 @@ namespace Content.Client.GameTicking
                 _gameChat = null;
             }
 
-            _gameHud.RootControl.Parent?.RemoveChild(_gameHud.RootControl);
+            _gameHud.RootControl.Orphan();
 
             _tickerState = TickerState.InLobby;
 
