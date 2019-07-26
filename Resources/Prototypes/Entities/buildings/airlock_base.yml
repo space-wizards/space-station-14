@@ -36,31 +36,3 @@
 
   placement:
     mode: SnapgridBorder
-
-- type: entity
-  parent: airlock
-  id: airlock_external
-  name: External Airlock
-  components:
-  - type: Sprite
-    sprite: Buildings/airlock_external.rsi
-
-  - type: Icon
-    sprite: Buildings/airlock_external.rsi
-
-  - type: Appearance
-    visuals:
-    - type: AirlockVisualizer2D
-      open_sound: /Audio/machines/airlock_ext_open.ogg
-      close_sound: /Audio/machines/airlock_ext_close.ogg
-
-- type: entity
-  parent: airlock
-  id: airlock_engineering
-  name: Engineering Airlock
-  components:
-  - type: Sprite
-    sprite: Buildings/airlock_engineering.rsi
-
-  - type: Icon
-    sprite: Buildings/airlock_engineering.rsi

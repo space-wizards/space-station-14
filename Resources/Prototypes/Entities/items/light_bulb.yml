@@ -1,0 +1,56 @@
+- type: entity
+  parent: BaseLightbulb
+  name: Light Bulb
+  id: LightBulb
+  components:
+  - type: LightBulb
+    bulb: Bulb
+
+  - type: Sprite
+    sprite: Objects/light_bulb.rsi
+    state: normal
+
+  - type: Icon
+    sprite: Objects/light_bulb.rsi
+    state: normal
+
+- type: entity
+  parent: BaseItem
+  name: BaseLightbulb
+  id: BaseLightbulb
+  components:
+  - type: LightBulb
+
+- type: entity
+  parent: BaseLightbulb
+  name: Light Tube
+  id: LightTube
+  components:
+  - type: LightBulb
+    bulb: Tube
+
+  - type: Sprite
+    sprite: Objects/light_tube.rsi
+    state: normal
+
+  - type: Icon
+    sprite: Objects/light_tube.rsi
+    state: normal
+
+- type: entity
+  parent: BaseLightbulb
+  name: LED Light Tube
+  id: LedLightTube
+  components:
+  - type: LightBulb
+    bulb: Tube
+    color: "#EEEEFF"
+    BurningTemperature: 350
+    PowerUse: 9
+  - type: Sprite
+    sprite: Objects/light_tube.rsi
+    state: normal
+  - type: Icon
+    sprite: Objects/light_tube.rsi
+    state: normal
+

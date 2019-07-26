@@ -1,0 +1,12 @@
+- type: entity
+  name: Extra-Grip Mop
+  parent: BaseItem
+  id: MopItem
+  description: A mop that cant be stopped, viscera cleanup detail awaits
+  components:
+  - type: Sprite
+    texture: Objects/mop.png
+  - type: Icon
+    texture: Objects/mop.png
+  - type: Item
+    Size: 10

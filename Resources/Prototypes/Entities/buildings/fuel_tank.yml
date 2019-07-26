@@ -1,33 +1,4 @@
 - type: entity
-  id: crate_generic
-  name: Crate
-  description: A large container for items.
-  components:
-  - type: Sprite
-    sprite: Buildings/crate.rsi
-    layers:
-    - state: crate
-    - state: crate_door
-
-  - type: Icon
-    sprite: Buildings/crate.rsi
-    state: crate
-
-  - type: Clickable
-  - type: BoundingBox
-  - type: Collidable
-  - type: Storage
-    Capacity: 60
-    
-  - type: Damageable
-  - type: Destructible
-    thresholdvalue: 100
-
-  placement:
-    snap:
-    - Wall
-
-- type: entity
   id: weldtank
   name: Fueltank
   description: A storage tank containing welding fuel.
