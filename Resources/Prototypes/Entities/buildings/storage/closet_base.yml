@@ -4,6 +4,7 @@
   description: A standard-issue Nanotrasen storage unit.
   components:
   - type: Sprite
+    netsync: false
     sprite: Buildings/closet.rsi
     layers:
     - state: generic

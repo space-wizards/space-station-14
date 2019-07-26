@@ -4,10 +4,12 @@
   description: A large container for items.
   components:
   - type: Sprite
+    netsync: false
     sprite: Buildings/crate.rsi
     layers:
     - state: crate
     - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
 
   - type: Icon
     sprite: Buildings/crate.rsi
@@ -15,14 +17,24 @@
 
   - type: Clickable
   - type: BoundingBox
+    aabb: -0.4, -0.4, 0.4, 0.4
+
+  - type: Physics
+    mass: 25
+    Anchored: false
+
   - type: Collidable
-  - type: Storage
+  - type: EntityStorage
     Capacity: 60
+  - type: PlaceableSurface
 
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100
 
-  placement:
-    snap:
-    - Wall
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: crate_open
+      state_closed: crate_door
+
