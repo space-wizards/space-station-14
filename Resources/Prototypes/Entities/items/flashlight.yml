@@ -17,3 +17,4 @@
     state: lantern_off
   - type: PointLight
     state: Off
+  - type: Sound

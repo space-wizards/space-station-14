@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
@@ -50,9 +51,20 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (Cell != null) return false;
 
-            eventArgs.User.GetComponent<IHandsComponent>().Drop(eventArgs.AttackWith, _cellContainer);
+            var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
 
-            return _cellContainer.Insert(eventArgs.AttackWith);
+            if (!handsComponent.Drop(eventArgs.AttackWith, _cellContainer))
+            {
+                return false;
+            }
+
+            if (Owner.TryGetComponent(out SoundComponent soundComponent))
+            {
+                soundComponent.Play("/Audio/items/weapons/pistol_magin.ogg");
+            }
+
+            return true;
+
         }
 
         void IExamine.Examine(FormattedMessage message)
@@ -85,17 +97,14 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         public bool ToggleStatus()
         {
-            // Update the activation state.
-            Activated = !Activated;
-
             // Update sprite and light states to match the activation.
             if (Activated)
             {
-                SetState(LightState.On);
+                TurnOff();
             }
             else
             {
-                SetState(LightState.Off);
+                TurnOn();
             }
 
             // Toggle always succeeds.
@@ -104,25 +113,57 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void TurnOff()
         {
-            if (!Activated) return;
+            if (!Activated)
+            {
+                return;
+            }
 
             SetState(LightState.Off);
             Activated = false;
+
+            if (Owner.TryGetComponent(out SoundComponent soundComponent))
+            {
+                soundComponent.Play("/Audio/items/flashlight_toggle.ogg");
+            }
         }
 
         public void TurnOn()
         {
-            if (Activated) return;
+            if (Activated)
+            {
+                return;
+            }
 
             var cell = Cell;
-            if (cell == null) return;
+            SoundComponent soundComponent;
+            if (cell == null)
+            {
+                if (Owner.TryGetComponent(out soundComponent))
+                {
+                    soundComponent.Play("/Audio/machines/button.ogg");
+                }
+                return;
+            }
 
             // To prevent having to worry about frame time in here.
             // Let's just say you need a whole second of charge before you can turn it on.
             // Simple enough.
-            if (cell.AvailableCharge(1) < Wattage) return;
+            if (cell.AvailableCharge(1) < Wattage)
+            {
+                if (Owner.TryGetComponent(out soundComponent))
+                {
+                    soundComponent.Play("/Audio/machines/button.ogg");
+                }
+                return;
+            }
 
+            Activated = true;
             SetState(LightState.On);
+
+            if (Owner.TryGetComponent(out soundComponent))
+            {
+                soundComponent.Play("/Audio/items/flashlight_toggle.ogg");
+            }
         }
 
         private void SetState(LightState newState)
@@ -145,15 +186,32 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private void EjectCell(IEntity user)
         {
-            if (Cell == null) return;
+            if (Cell == null)
+            {
+                return;
+            }
 
             var cell = Cell;
 
-            if (!_cellContainer.Remove(cell.Owner)) return;
+            if (!_cellContainer.Remove(cell.Owner))
+            {
+                return;
+            }
 
-            if (!user.TryGetComponent(out HandsComponent hands)
-                || !hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
+            if (!user.TryGetComponent(out HandsComponent hands))
+            {
+                return;
+            }
+
+            if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
+            {
                 cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
+            }
+
+            if (Owner.TryGetComponent(out SoundComponent soundComponent))
+            {
+                soundComponent.Play("/Audio/items/weapons/pistol_magout.ogg");
+            }
         }
 
         [Verb]
