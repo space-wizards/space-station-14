@@ -1,15 +1,20 @@
 ﻿using System;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
+    /// <summary>
+    ///     Shared ECS component that manages a liquid solution of reagents.
+    /// </summary>
     internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent
     {
+        /// <summary>
+        ///     Transfers solution from the held container to the target container.
+        /// </summary>
         [Verb]
-        private sealed class FillVerb : Verb<SolutionComponent>
+        private sealed class FillTargetVerb : Verb<SolutionComponent>
         {
             protected override string GetText(IEntity user, SolutionComponent component)
             {
@@ -69,8 +74,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
+        /// <summary>
+        ///     Transfers solution from a target container to the held container.
+        /// </summary>
         [Verb]
-        private sealed class EmptyVerb : Verb<SolutionComponent>
+        private sealed class EmptyTargetVerb : Verb<SolutionComponent>
         {
             protected override string GetText(IEntity user, SolutionComponent component)
             {

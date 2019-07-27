@@ -42,6 +42,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         [ViewVariables(VVAccess.ReadWrite)]
         public Color SubstanceColor { get; private set; }
 
+        /// <summary>
+        ///     The current capabilities of this container (is the top open to pour? can I inject it into another object?).
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public SolutionCaps Capabilities
         {

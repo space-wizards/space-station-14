@@ -31,7 +31,7 @@
     caps: 3
     
 - type: entity
-  parent: BaseItem
+  parent: ReagentItem
   name: Bucket
   id: Bucket
   description: "It's a bucket."
