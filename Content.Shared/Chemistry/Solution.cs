@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Interfaces.Serialization;
@@ -11,7 +12,7 @@ namespace Content.Shared.Chemistry
     /// <summary>
     ///     A solution of reagents.
     /// </summary>
-    public class Solution : IExposeData
+    public class Solution : IExposeData, IEnumerable<Solution.ReagentQuantity>
     {
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
@@ -237,7 +238,7 @@ namespace Content.Shared.Chemistry
         }
 
         [Serializable, NetSerializable]
-        private readonly struct ReagentQuantity
+        public readonly struct ReagentQuantity
         {
             public readonly string ReagentId;
             public readonly int Quantity;
@@ -254,5 +255,19 @@ namespace Content.Shared.Chemistry
                 return $"{ReagentId}:{Quantity}";
             }
         }
+
+        #region Enumeration
+        
+        public IEnumerator<ReagentQuantity> GetEnumerator()
+        {
+            return _contents.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -10,6 +11,10 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 {
     public class SolutionComponent : Component
     {
+#pragma warning disable 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+#pragma warning restore 649
+
         [ViewVariables]
         private Solution _containedSolution;
         private int _maxVolume;
@@ -66,8 +71,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public override void Startup()
         {
             base.Startup();
-            
-            //TODO: Calculate color
+
+            RecalculateColor();
         }
 
         public override void Shutdown()
@@ -89,6 +94,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
                 return false;
 
             _containedSolution.AddSolution(solution);
+            RecalculateColor();
             return true;
         }
 
@@ -96,7 +102,39 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             return _containedSolution.SplitSolution(quantity);
         }
-        
+
+        private void RecalculateColor()
+        {
+            if(_containedSolution.TotalVolume == 0)
+                SubstanceColor = Color.White;
+
+            Color mixColor = default;
+            float runningTotalQuantity = 0;
+
+            foreach (var reagent in _containedSolution)
+            {
+                runningTotalQuantity += reagent.Quantity;
+
+                if(!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                    continue;
+
+                if (mixColor == default)
+                    mixColor = proto.SubstanceColor;
+
+                mixColor = BlendRGB(mixColor, proto.SubstanceColor, reagent.Quantity / runningTotalQuantity);
+            }
+        }
+
+         private Color BlendRGB(Color rgb1, Color rgb2, float amount)
+         {
+             var r     = (float)Math.Round(rgb1.R + (rgb2.R - rgb1.R) * amount, 1);
+             var g     = (float)Math.Round(rgb1.G + (rgb2.G - rgb1.G) * amount, 1);
+             var b     = (float)Math.Round(rgb1.B + (rgb2.B - rgb1.B) * amount, 1);
+             var alpha = (float)Math.Round(rgb1.A + (rgb2.A - rgb1.A) * amount, 1);
+
+             return new Color(r, g, b, alpha);
+         }
+
         /// <inheritdoc />
         public override ComponentState GetComponentState()
         {
