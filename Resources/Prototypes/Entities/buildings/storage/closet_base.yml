@@ -34,6 +34,7 @@
     - type: StorageVisualizer2D
       state_open: generic_open
       state_closed: generic_door
+  - type: Sound
 
   placement:
     snap:
