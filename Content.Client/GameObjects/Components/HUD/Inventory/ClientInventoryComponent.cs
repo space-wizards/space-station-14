@@ -138,6 +138,11 @@ namespace Content.Client.GameObjects
             SendNetworkMessage(equipmessage);
         }
 
+        public void SendOpenStorageUIMessage(Slots slot)
+        {
+            SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
+        }
+
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
             IComponent component = null)
         {

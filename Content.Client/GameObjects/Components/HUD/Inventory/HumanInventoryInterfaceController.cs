@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Utility;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -55,7 +56,8 @@ namespace Content.Client.GameObjects
                 var storageTexture = _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/back.png");
                 variable = new InventoryButton(slot, texture, storageTexture)
                 {
-                    OnPressed = AddToInventory
+                    OnPressed = AddToInventory,
+                    OnStoragePressed = OpenStorage
                 };
                 _inventoryButtons[slot].Add(variable);
             }
@@ -90,11 +92,13 @@ namespace Content.Client.GameObjects
             }
 
             entity.TryGetComponent(out ISpriteComponent sprite);
+            var hasInventory = entity.HasComponent<ClientStorageComponent>();
 
             foreach (var button in buttons)
             {
                 button.SpriteView.Sprite = sprite;
                 button.OnPressed = RemoveFromInventory;
+                button.StorageButton.Visible = hasInventory;
             }
         }
 
@@ -111,6 +115,7 @@ namespace Content.Client.GameObjects
             {
                 button.SpriteView.Sprite = null;
                 button.OnPressed = AddToInventory;
+                button.StorageButton.Visible = false;
             }
         }
 

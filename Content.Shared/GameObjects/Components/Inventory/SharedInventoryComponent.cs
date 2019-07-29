@@ -78,5 +78,20 @@ namespace Content.Shared.GameObjects
                 Unequip = 1
             }
         }
+
+        /// <summary>
+        /// Component message for opening the Storage UI of item in Slot
+        /// </summary>
+        [Serializable, NetSerializable]
+        public class OpenSlotStorageUIMessage : ComponentMessage
+        {
+            public Slots Slot;
+
+            public OpenSlotStorageUIMessage(Slots slot)
+            {
+                Directed = true;
+                Slot = slot;
+            }
+        }
     }
 }

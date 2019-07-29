@@ -33,6 +33,7 @@ namespace Content.Server.GameObjects
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         private Container storage;
@@ -173,12 +174,18 @@ namespace Content.Server.GameObjects
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             _ensureInitialCalculated();
-            var user_session = eventArgs.User.GetComponent<BasicActorComponent>().playerSession;
+            OpenStorageUI(eventArgs.User);
+            return false;
+        }
+
+        public void OpenStorageUI(IEntity Character)
+        {
+            _ensureInitialCalculated();
+            var user_session = Character.GetComponent<BasicActorComponent>().playerSession;
             Logger.DebugS("Storage", "Storage (UID {0}) \"used\" by player session (UID {1}).", Owner.Uid, user_session.AttachedEntityUid);
             SubscribeSession(user_session);
             SendNetworkMessage(new OpenStorageUIMessage(), user_session.ConnectedClient);
             UpdateClientInventory(user_session);
-            return false;
         }
 
         /// <summary>
@@ -300,16 +307,15 @@ namespace Content.Server.GameObjects
                             entity.GetComponent<ITransformComponent>().WorldPosition = ourtransform.WorldPosition;
                         }
                     }
-                }
                     break;
-
+                }
                 case CloseStorageUIMessage _:
                 {
                     var session = _playerManager.GetSessionByChannel(netChannel);
 
                     UnsubscribeSession(session);
-                }
                     break;
+                }
             }
         }
 

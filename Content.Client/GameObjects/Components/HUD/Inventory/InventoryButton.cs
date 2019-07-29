@@ -13,8 +13,10 @@ namespace Content.Client.GameObjects
 
         public BaseButton Button { get; }
         public SpriteView SpriteView { get; }
+        public BaseButton StorageButton { get; }
 
         public Action<BaseButton.ButtonEventArgs> OnPressed { get; set; }
+        public Action<BaseButton.ButtonEventArgs> OnStoragePressed { get; set; }
 
         public InventoryButton(EquipmentSlotDefines.Slots slot, Texture texture, Texture storageTexture)
         {
@@ -36,7 +38,7 @@ namespace Content.Client.GameObjects
                 Scale = (2, 2)
             });
 
-            AddChild(Button = new TextureButton
+            AddChild(StorageButton = new TextureButton
             {
                 TextureNormal = storageTexture,
                 Scale = (0.75f, 0.75f),
@@ -44,6 +46,8 @@ namespace Content.Client.GameObjects
                 SizeFlagsVertical = SizeFlags.ShrinkEnd,
                 Visible = false
             });
+
+            StorageButton.OnPressed += e => OnStoragePressed?.Invoke(e);
         }
     }
 }
