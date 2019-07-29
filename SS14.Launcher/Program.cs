@@ -10,6 +10,7 @@ using Content.Client.Utility;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.UserInterface;
@@ -43,6 +44,7 @@ namespace SS14.Launcher
         [Dependency] private readonly ITaskManager _taskManager;
         [Dependency] private readonly IUriOpener _uriOpener;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
+        [Dependency] private readonly IGameController _gameController;
 #pragma warning restore 649
 
         public static void Main(string[] args)
@@ -93,7 +95,11 @@ namespace SS14.Launcher
 
                 _interface.StatusLabel.Text = _loc.GetString("Ready!");
                 _interface.LaunchButton.Disabled = false;
-                _interface.LaunchButton.OnPressed += _ => LaunchClient();
+                _interface.LaunchButton.OnPressed += _ =>
+                {
+                    LaunchClient();
+                    _gameController.Shutdown();
+                };
             }
             catch (Exception e)
             {
