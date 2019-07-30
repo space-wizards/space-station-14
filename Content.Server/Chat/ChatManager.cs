@@ -1,13 +1,10 @@
 ﻿using System.Linq;
-using System.Net.Http;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Chat;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Chat
@@ -57,6 +54,7 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
             msg.MessageWrap = $"{source.Name} says, \"{{0}}\"";
+            msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
