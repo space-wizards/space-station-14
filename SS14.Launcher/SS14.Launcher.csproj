@@ -21,4 +21,9 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Engine.targets" />
+  <PropertyGroup>
+    <RobustToolsPath>..\RobustToolbox\Tools\</RobustToolsPath>
+  </PropertyGroup>
+  <Target Name="RobustAfterBuild" DependsOnTargets="CopySS14Noise;CopyMiscDependencies;CopySwnfd" AfterTargets="Build" />
 </Project>

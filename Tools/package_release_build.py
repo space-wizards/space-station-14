@@ -76,7 +76,7 @@ def main():
         build_windows()
 
     if "linux" in platforms:
-        #wipe_bin()
+        wipe_bin()
         build_linux()
 
     if "mac" in platforms:

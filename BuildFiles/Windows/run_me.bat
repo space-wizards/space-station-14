@@ -1,1 +1,1 @@
-call bin/SS14.Launcher.exe
+call bin\SS14.Launcher.exe
