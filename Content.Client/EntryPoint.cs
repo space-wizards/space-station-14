@@ -1,44 +1,40 @@
-﻿using Content.Client.GameObjects;
+﻿using System;
+using Content.Client.Chat;
+using Content.Client.GameObjects;
+using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.Components.Actor;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Client.GameObjects.Components.Construction;
-using Content.Client.GameObjects.Components.Power;
 using Content.Client.GameObjects.Components.IconSmoothing;
+using Content.Client.GameObjects.Components.Mobs;
+using Content.Client.GameObjects.Components.Power;
+using Content.Client.GameObjects.Components.Research;
+using Content.Client.GameObjects.Components.Sound;
 using Content.Client.GameObjects.Components.Storage;
 using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Client.GameTicking;
 using Content.Client.Input;
 using Content.Client.Interfaces;
+using Content.Client.Interfaces.Chat;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
+using Content.Client.UserInterface;
+using Content.Shared.GameObjects.Components.Markers;
+using Content.Shared.GameObjects.Components.Materials;
+using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Interfaces;
 using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using System;
-using Content.Client.Chat;
-using Content.Client.GameObjects.Components;
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.GameObjects.Components.Movement;
-using Content.Client.GameObjects.Components.Research;
-using Content.Client.GameObjects.Components.Sound;
-using Content.Client.Interfaces.Chat;
-using Content.Client.UserInterface;
-using Content.Shared.GameObjects.Components.Markers;
-using Content.Shared.GameObjects.Components.Materials;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Research;
-using Robust.Client.Interfaces.State;
-using Robust.Client.Interfaces.UserInterface;
-using Robust.Client.State.States;
 
 namespace Content.Client
 {
@@ -242,6 +238,7 @@ namespace Content.Client
                     var renderFrameEventArgs = new RenderFrameEventArgs(frameTime);
                     IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(renderFrameEventArgs);
                     IoCManager.Resolve<IClientGameTicker>().FrameUpdate(renderFrameEventArgs);
+                    IoCManager.Resolve<IChatManager>().FrameUpdate(renderFrameEventArgs);
                     break;
             }
         }

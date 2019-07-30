@@ -371,6 +371,11 @@ namespace Content.Client.UserInterface
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
 
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new []{"tooltipBox"}, null, null), new[]
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                }),
+
                 // Entity tooltip
                 new StyleRule(
                     new SelectorElement(typeof(PanelContainer), new[] {ExamineSystem.StyleClassEntityTooltip}, null,
