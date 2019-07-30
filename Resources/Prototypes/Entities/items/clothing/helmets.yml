@@ -38,7 +38,7 @@
   components:
   - type: HandheldLight
   - type: PointLight
-    state: Off
+    enabled: false
   - type: Sprite
     sprite: Clothing/helmet_engineering.rsi
     layers:
