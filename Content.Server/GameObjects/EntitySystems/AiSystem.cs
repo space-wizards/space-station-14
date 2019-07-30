@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.Interfaces.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
 using Robust.Server.Interfaces.Console;
@@ -98,6 +99,11 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     shell.SendText(player, "Entity already has an AI component.");
                     return;
+                }
+
+                if (ent.HasComponent<IMoverComponent>())
+                {
+                    ent.RemoveComponent<IMoverComponent>();
                 }
 
                 var comp = ent.AddComponent<AiControllerComponent>();

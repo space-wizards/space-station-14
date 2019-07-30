@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.Chat;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.AI;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -23,9 +27,46 @@ namespace Content.Server.AI
         [Dependency, UsedImplicitly] private readonly IPhysicsManager _physMan;
         [Dependency, UsedImplicitly] private readonly IServerEntityManager _entMan;
         [Dependency, UsedImplicitly] private readonly IGameTiming _timeMan;
+        [Dependency, UsedImplicitly] private readonly IEntitySystemManager _entSysMan;
+        [Dependency, UsedImplicitly] private readonly IChatManager _chatMan;
 
         private static readonly TimeSpan IdleTimeSpan = TimeSpan.FromSeconds(1);
         private static readonly TimeSpan WalkingTimeout = TimeSpan.FromSeconds(3);
+        private static readonly TimeSpan DisabledTimeout = TimeSpan.FromSeconds(10);
+
+        private static List<string> _normalAssistantConversation = new List<string>
+        {
+            "stat me",
+            "roll it easy!",
+            "waaaaaagh!!!",
+            "red wonz go fasta",
+            "FOR TEH EMPRAH",
+            "lol2cat",
+            "dem dwarfs man, dem dwarfs",
+            "SPESS MAHREENS",
+            "hwee did eet fhor khayosss",
+            "lifelike texture ;_;",
+            "luv can bloooom",
+            "PACKETS!!!",
+            "SARAH HALE DID IT!!!",
+            "Don't tell Chase",
+            "not so tough now huh",
+            "WERE NOT BAY!!",
+            "IF YOU DONT LIKE THE CYBORGS OR SLIMES WHY DONT YU O JUST MAKE YORE OWN!",
+            "DONT TALK TO ME ABOUT BALANCE!!!!",
+            "YOU AR JUS LAZY AND DUMB JAMITORS AND SERVICE ROLLS",
+            "BLAME HOSHI!!!",
+            "ARRPEE IZ DED!!!",
+            "THERE ALL JUS MEATAFRIENDS!",
+            "SOTP MESING WITH THE ROUNS SHITMAN!!!",
+            "SKELINGTON IS 4 SHITERS!",
+            "MOMMSI R THE WURST SCUM!!",
+            "How do we engiener=",
+            "try to live freely and automatically good bye",
+            "why woud i take a pin pointner??",
+            "How do I set up the. SHow do I set u p the Singu. how I the scrungularity????",
+        };
+
         private const float MaxWalkDistance = 3; // meters
         private const float AdditionalIdleTime = 2; // 0 to this many more seconds
 
@@ -54,17 +95,28 @@ namespace Content.Server.AI
                 case FsmState.Walking:
                     WalkingState();
                     break;
+                case FsmState.Disabled:
+                    DisabledState();
+                    break;
             }
         }
 
-        private void IdlePositiveEdge(uint rngState)
+        private void IdlePositiveEdge(ref uint rngState)
         {
             _startStateTime = _timeMan.CurTime + IdleTimeSpan + TimeSpan.FromSeconds(Random01(ref rngState) * AdditionalIdleTime);
             _CurrentState = FsmState.Idle;
+
+            EmitProfanity(ref rngState);
         }
 
         private void IdleState()
         {
+            if (!ActionBlockerSystem.CanMove(SelfEntity))
+            {
+                DisabledPositiveEdge();
+                return;
+            }
+
             if (_timeMan.CurTime < _startStateTime + IdleTimeSpan)
                 return;
 
@@ -111,7 +163,7 @@ namespace Content.Server.AI
             var rngState = GenSeed();
             if (_timeMan.CurTime > _startStateTime + WalkingTimeout) // walked too long, go idle
             {
-                IdlePositiveEdge(rngState);
+                IdlePositiveEdge(ref rngState);
                 return;
             }
 
@@ -120,30 +172,49 @@ namespace Content.Server.AI
             if (targetDiff.LengthSquared < 0.1) // close enough
             {
                 // stop walking
-                if (SelfEntity.TryGetComponent<PhysicsComponent>(out var phys))
+                if (SelfEntity.TryGetComponent<AiControllerComponent>(out var mover))
                 {
-                    phys.LinearVelocity = Vector2.Zero;
+                    mover.VelocityDir = Vector2.Zero;
                 }
 
-                IdlePositiveEdge(rngState);
+                IdlePositiveEdge(ref rngState);
                 return;
             }
 
             // continue walking
-            if (SelfEntity.TryGetComponent<PhysicsComponent>(out var physics))
+            if (SelfEntity.TryGetComponent<AiControllerComponent>(out var moverTwo))
             {
-                var moveSpeed = 2.0f;
-                if (SelfEntity.TryGetComponent<PlayerInputMoverComponent>(out var mover))
-                    moveSpeed = mover.WalkMoveSpeed;
-
-                var velDiff = targetDiff.Normalized * moveSpeed - physics.LinearVelocity; // to - from
-                var diffSpeed = velDiff.Length;
-
-                var speedmod = moveSpeed / diffSpeed;
-                speedmod = FloatMath.Min(speedmod, moveSpeed);
-
-                physics.LinearVelocity += velDiff * speedmod;
+                moverTwo.VelocityDir = targetDiff.Normalized;
             }
+        }
+
+        private void DisabledPositiveEdge()
+        {
+            _startStateTime = _timeMan.CurTime;
+            _CurrentState = FsmState.Disabled;
+        }
+
+        private void DisabledState()
+        {
+            if(_timeMan.CurTime < _startStateTime + DisabledTimeout)
+                return;
+
+            if (ActionBlockerSystem.CanMove(SelfEntity))
+            {
+                var rngState = GenSeed();
+                IdlePositiveEdge(ref rngState);
+            }
+            else
+                DisabledPositiveEdge();
+        }
+
+        private void EmitProfanity(ref uint rngState)
+        {
+            if(Random01(ref rngState) < 0.5f)
+                return;
+
+            var pick = (int) Math.Round(Random01(ref rngState) * _normalAssistantConversation.Count);
+            _chatMan.EntitySay(SelfEntity, _normalAssistantConversation[pick]);
         }
 
         private uint GenSeed()
@@ -172,6 +243,7 @@ namespace Content.Server.AI
             None,
             Idle,
             Walking,
+            Disabled
         }
     }
 }
