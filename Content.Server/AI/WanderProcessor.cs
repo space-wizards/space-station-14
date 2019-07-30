@@ -15,7 +15,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.AI
 {
     /// <summary>
-    ///     Designed to control a mob. The mob will wander around, then idke at a the destination for awhile.
+    ///     Designed to control a mob. The mob will wander around, then idle at a the destination for awhile.
     /// </summary>
     [AiLogicProcessor("Wander")]
     class WanderProcessor : AiLogicProcessor
@@ -73,14 +73,13 @@ namespace Content.Server.AI
             if (SelfEntity.TryGetComponent<BoundingBoxComponent>(out var bounds))
                 entWorldPos = bounds.WorldAABB.Center;
 
-
-            var rngState = _timeMan.CurTick.Value + 1;
+            var rngState = GenSeed();
             for (var i = 0; i < 3; i++) // you get 3 chances to find a place to walk
             {
                 var dir = new Vector2(Random01(ref rngState) * 2 - 1, Random01(ref rngState) *2 -1);
                 var ray = new Ray(entWorldPos, dir, (int) CollisionGroup.Grid);
                 var rayResult = _physMan.IntersectRay(ray, MaxWalkDistance, SelfEntity);
-                
+
                 if (rayResult.DidHitObject && rayResult.Distance > 1) // hit an impassable object
                 {
                     // set the new position back from the wall a bit
@@ -109,7 +108,7 @@ namespace Content.Server.AI
 
         private void WalkingState()
         {
-            var rngState = _timeMan.CurTick.Value + 1;
+            var rngState = GenSeed();
             if (_timeMan.CurTime > _startStateTime + WalkingTimeout) // walked too long, go idle
             {
                 IdlePositiveEdge(rngState);
@@ -147,17 +146,25 @@ namespace Content.Server.AI
             }
         }
 
+        private uint GenSeed()
+        {
+            return RotateRight((uint)_timeMan.CurTick.GetHashCode(), 11) ^ (uint)SelfEntity.Uid.GetHashCode();
+        }
+
+        private uint RotateRight(uint n, int s)
+        {
+            return (n << (32 - s)) | (n >> s);
+        }
+
         private float Random01(ref uint state)
         {
             DebugTools.Assert(state != 0);
 
             //xorshift32
-            var x = state;
-            x ^= x << 13;
-            x ^= x >> 17;
-            x ^= x << 5;
-            state = x;
-            return x / (float)uint.MaxValue;
+            state ^= state << 13;
+            state ^= state >> 17;
+            state ^= state << 5;
+            return state / (float)uint.MaxValue;
         }
 
         private enum FsmState
