@@ -115,6 +115,11 @@ namespace Content.Client.Chat
 
         private void Die()
         {
+            if (Disposed)
+            {
+                return;
+            }
+
             _chatManager.RemoveSpeechBubble(_senderEntity.Uid, this);
         }
 
