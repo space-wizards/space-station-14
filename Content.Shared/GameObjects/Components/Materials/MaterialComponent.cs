@@ -14,6 +14,7 @@ namespace Content.Shared.GameObjects.Components.Materials
     ///     Component to store data such as "this object is made out of steel".
     ///     This is not a storage system for say smelteries.
     /// </summary>
+    [RegisterComponent]
     public class MaterialComponent : Component
     {
         public const string SerializationCache = "mat";

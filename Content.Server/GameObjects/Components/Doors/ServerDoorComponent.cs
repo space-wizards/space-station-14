@@ -10,6 +10,8 @@ using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
     public class ServerDoorComponent : Component, IActivate
     {
         public override string Name => "Door";

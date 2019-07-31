@@ -1,20 +1,18 @@
-﻿using Content.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects;
+﻿using System.Linq;
+using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using System.Linq;
-using Robust.Shared.Interfaces.GameObjects;
-using Content.Server.GameObjects.Components.Interactable.Tools;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     /// <summary>
     /// Component to transfer power to nearby components, can create powernets and connect to nodes
     /// </summary>
+    [RegisterComponent]
     public class PowerTransferComponent : Component, IAttackBy
     {
         public override string Name => "PowerTransfer";

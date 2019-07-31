@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.GameObjects.Components;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects;
+using Robust.Shared.Interfaces.Physics;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
+    [RegisterComponent]
     public class ProjectileComponent : Component, ICollideSpecial, ICollideBehavior
     {
         public override string Name => "Projectile";

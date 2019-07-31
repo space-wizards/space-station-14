@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.Components.IconSmoothing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using static Robust.Client.GameObjects.SpriteComponent;
@@ -14,6 +15,8 @@ namespace Content.Client.GameObjects.Components
     /// <summary>
     ///     Override of icon smoothing to handle the specific complexities of low walls.
     /// </summary>
+    [RegisterComponent]
+    [ComponentReference(typeof(IconSmoothComponent))]
     public class LowWallComponent : IconSmoothComponent
     {
         public override string Name => "LowWall";

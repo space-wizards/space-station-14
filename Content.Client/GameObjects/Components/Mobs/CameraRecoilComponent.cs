@@ -8,6 +8,8 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(SharedCameraRecoilComponent))]
     public sealed class CameraRecoilComponent : SharedCameraRecoilComponent
     {
         // Maximum rate of magnitude restore towards 0 kick.

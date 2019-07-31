@@ -1,33 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using Content.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Sound
 {
     /// <summary>
     /// Changes footstep sound
     /// </summary>
+    [RegisterComponent]
     public class FootstepModifierComponent : Component
     {
         #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         #pragma warning restore 649
         /// <inheritdoc />
-        /// 
+        ///
         private Random _footstepRandom;
 
         public override string Name => "FootstepModifier";

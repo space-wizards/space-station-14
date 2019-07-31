@@ -16,6 +16,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     /// <summary>
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
+    [RegisterComponent]
     internal class HandheldLightComponent : Component, IUse, IExamine, IAttackBy, IMapInit
     {
         public const float Wattage = 10;

@@ -25,6 +25,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     ///     To use, set <c>base</c> equal to the prefix of the corner states in the sprite base RSI.
     ///     Any objects with the same <c>key</c> will connect.
     /// </remarks>
+    [RegisterComponent]
     public class IconSmoothComponent : Component
     {
         private string _smoothKey;

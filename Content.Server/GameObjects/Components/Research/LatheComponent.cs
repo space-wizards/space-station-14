@@ -6,15 +6,16 @@ using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
     public class LatheComponent : SharedLatheComponent, IAttackBy, IActivate
     {
         public const int VolumePerSheet = 3750;

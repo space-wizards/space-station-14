@@ -8,6 +8,7 @@ using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothCompo
 
 namespace Content.Client.GameObjects.Components
 {
+    [RegisterComponent]
     public sealed class WindowComponent : Component
     {
         public override string Name => "Window";

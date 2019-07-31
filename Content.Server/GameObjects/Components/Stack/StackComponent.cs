@@ -10,6 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Stack
 {
     // TODO: Naming and presentation and such could use some improvement.
+    [RegisterComponent]
     public class StackComponent : Component, IAttackBy, IExamine
     {
         private const string SerializationCache = "stack";

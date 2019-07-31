@@ -1,9 +1,10 @@
 ﻿using System;
-using Robust.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects
 {
+    [RegisterComponent]
     public class HeatResistanceComponent : Component
     {
         public override string Name => "HeatResistance";

@@ -18,6 +18,7 @@ namespace Content.Client.GameObjects
     /// <summary>
     /// A character UI which shows items the user has equipped within his inventory
     /// </summary>
+    [RegisterComponent]
     public class ClientInventoryComponent : SharedInventoryComponent
     {
         private readonly Dictionary<Slots, IEntity> _slots = new Dictionary<Slots, IEntity>();

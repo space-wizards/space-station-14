@@ -17,6 +17,7 @@ namespace Content.Client.GameObjects.Components.Storage
     /// <summary>
     /// Client version of item storage containers, contains a UI which displays stored entities and their size
     /// </summary>
+    [RegisterComponent]
     public class ClientStorageComponent : SharedStorageComponent
     {
         private Dictionary<EntityUid, int> StoredEntities { get; set; } = new Dictionary<EntityUid, int>();

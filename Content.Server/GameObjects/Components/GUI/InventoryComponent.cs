@@ -5,8 +5,8 @@ using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
@@ -16,6 +16,7 @@ using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventory
 
 namespace Content.Server.GameObjects
 {
+    [RegisterComponent]
     public class InventoryComponent : SharedInventoryComponent
     {
         [ViewVariables]

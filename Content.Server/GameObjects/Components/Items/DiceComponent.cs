@@ -6,7 +6,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -15,6 +14,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items
 {
+    [RegisterComponent]
     public class DiceComponent : Component, IActivate, IUse, ILand, IExamine
     {
 #pragma warning disable 649

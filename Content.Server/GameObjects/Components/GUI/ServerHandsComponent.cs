@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
-using Content.Shared.Input;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -24,6 +20,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(IHandsComponent))]
     public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
 #pragma warning disable 649

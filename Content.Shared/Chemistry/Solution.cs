@@ -55,7 +55,7 @@ namespace Content.Shared.Chemistry
         }
 
         /// <summary>
-        ///     Adds a given quantity of a reagent directly into the solution. 
+        ///     Adds a given quantity of a reagent directly into the solution.
         /// </summary>
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
@@ -193,7 +193,7 @@ namespace Content.Shared.Chemistry
 
             return newSolution;
         }
-        
+
         public void AddSolution(Solution otherSolution)
         {
             for (var i = 0; i < otherSolution._contents.Count; i++)
@@ -232,7 +232,7 @@ namespace Content.Shared.Chemistry
                 newSolution._contents.Add(reagent);
                 volume += reagent.Quantity;
             }
-            
+
             newSolution.TotalVolume = volume;
             return newSolution;
         }
@@ -257,7 +257,7 @@ namespace Content.Shared.Chemistry
         }
 
         #region Enumeration
-        
+
         public IEnumerator<ReagentQuantity> GetEnumerator()
         {
             return _contents.GetEnumerator();

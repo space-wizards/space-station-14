@@ -12,6 +12,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
+    [RegisterComponent]
     public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct
     {
         /// <summary>

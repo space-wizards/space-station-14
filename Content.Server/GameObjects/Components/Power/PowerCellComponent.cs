@@ -1,8 +1,11 @@
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Power
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(PowerStorageComponent))]
     public class PowerCellComponent : PowerStorageComponent
     {
         public override string Name => "PowerCell";

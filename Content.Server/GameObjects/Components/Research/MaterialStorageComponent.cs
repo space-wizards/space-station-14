@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Research
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(SharedMaterialStorageComponent))]
     public class MaterialStorageComponent : SharedMaterialStorageComponent
     {
         protected override Dictionary<string, int> Storage { get; set; } = new Dictionary<string, int>();

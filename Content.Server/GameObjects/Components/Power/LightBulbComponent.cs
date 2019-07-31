@@ -1,9 +1,9 @@
 ﻿using System;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using SpriteComponent = Robust.Server.GameObjects.SpriteComponent;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -23,6 +23,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// <summary>
     ///     Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
     /// </summary>
+    [RegisterComponent]
     public class LightBulbComponent : Component
     {
 

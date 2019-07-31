@@ -1,18 +1,17 @@
 ﻿using System;
-using Robust.Shared.GameObjects;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
 {
+    [RegisterComponent]
     public sealed class RangedWeaponComponent : SharedRangedWeaponComponent
     {
         private TimeSpan _lastFireTime;

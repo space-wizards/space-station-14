@@ -15,6 +15,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Construction
 {
+    [RegisterComponent]
     public class ConstructorComponent : SharedConstructorComponent
     {
 #pragma warning disable 649

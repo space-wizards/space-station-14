@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -16,6 +17,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
+    [RegisterComponent]
     public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackBy, IMapInit
     {
         public override string Name => "BallisticMagazineWeapon";

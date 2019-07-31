@@ -1,22 +1,19 @@
-﻿using Content.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     /// <summary>
     /// Component that requires power to function
     /// </summary>
+    [RegisterComponent]
     public class PowerDeviceComponent : Component, EntitySystems.IExamine
     {
         public override string Name => "PowerDevice";

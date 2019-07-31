@@ -3,12 +3,13 @@ using System.Text;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Power
 {
+    [RegisterComponent]
     public class PowerDebugTool : SharedPowerDebugTool, IAfterAttack
     {
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)

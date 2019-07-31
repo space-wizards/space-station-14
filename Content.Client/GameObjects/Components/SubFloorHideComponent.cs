@@ -10,6 +10,7 @@ namespace Content.Client.GameObjects.Components
     ///     is not a sub floor (plating).
     /// </summary>
     /// <seealso cref="ContentTileDefinition.IsSubFloor"/>
+    [RegisterComponent]
     public sealed class SubFloorHideComponent : Component
     {
         private SnapGridComponent _snapGridComponent;

@@ -17,6 +17,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
+    [RegisterComponent]
     public class PoweredLightComponent : Component, IAttackHand, IAttackBy
     {
         public override string Name => "PoweredLight";

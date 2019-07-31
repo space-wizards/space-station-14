@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.GameObjects.Components.Markers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -6,6 +5,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Markers
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(SharedSpawnPointComponent))]
     public sealed class SpawnPointComponent : SharedSpawnPointComponent
     {
         private SpawnPointType _spawnType;

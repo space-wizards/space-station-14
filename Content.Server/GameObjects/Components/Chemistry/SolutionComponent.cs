@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Chemistry
@@ -8,6 +9,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// <summary>
     ///     Shared ECS component that manages a liquid solution of reagents.
     /// </summary>
+    [RegisterComponent]
     internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent
     {
         /// <summary>
@@ -131,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 // pulling from an empty container, pointless to continue
                 if (transferQuantity <= 0)
                     return;
-                
+
                 var transferSolution = component.SplitSolution(transferQuantity);
                 handSolutionComp.TryAddSolution(transferSolution);
             }
