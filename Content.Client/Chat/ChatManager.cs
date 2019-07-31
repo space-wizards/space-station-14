@@ -5,6 +5,7 @@ using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -61,6 +62,7 @@ namespace Content.Client.Chat
 #pragma warning restore 649
 
         private ChatBox _currentChatBox;
+        private Control _speechBubbleRoot;
 
         /// <summary>
         ///     Speech bubbles that are currently visible on screen.
@@ -78,6 +80,11 @@ namespace Content.Client.Chat
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME, _onChatMessage);
+
+            _speechBubbleRoot = new Control();
+            _speechBubbleRoot.SetAnchorPreset(Control.LayoutPreset.Wide);
+            _userInterfaceManager.StateRoot.AddChild(_speechBubbleRoot);
+            _speechBubbleRoot.SetPositionFirst();
         }
 
         public void FrameUpdate(RenderFrameEventArgs delta)
@@ -372,7 +379,7 @@ namespace Content.Client.Chat
             }
 
             existing.Add(bubble);
-            _userInterfaceManager.StateRoot.AddChild(bubble);
+            _speechBubbleRoot.AddChild(bubble);
 
             if (existing.Count > SpeechBubbleCap)
             {
