@@ -32,7 +32,10 @@ namespace Content.Server
             {
                 "ConstructionGhost",
                 "IconSmooth",
-                "SubFloorHide"
+                "SubFloorHide",
+                "LowWall",
+                "Window",
+                "CharacterInfo"
             };
 
             foreach (var ignoreName in registerIgnore)
