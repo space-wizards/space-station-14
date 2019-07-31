@@ -1,0 +1,9 @@
+- type: reagent
+  id: chem.H2SO4
+  name: Sulfuric Acid
+  desc: A highly corrosive, oily, colorless liquid.
+  
+- type: reagent
+  id: chem.H2O
+  name: Water
+  desc: A tasty colorless liquid.

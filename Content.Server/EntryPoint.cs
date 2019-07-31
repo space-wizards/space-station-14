@@ -39,6 +39,7 @@ using Content.Server.GameObjects.Components.Weapon.Ranged;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Markers;
@@ -59,6 +60,7 @@ using Content.Server.GameObjects.Components.Explosive;
 using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Triggers;
 using Content.Shared.GameObjects.Components.Movement;
+using SolutionComponent = Content.Server.GameObjects.Components.Chemistry.SolutionComponent;
 
 namespace Content.Server
 {
@@ -93,6 +95,8 @@ namespace Content.Server
             factory.Register<TemperatureComponent>();
             factory.Register<ServerDoorComponent>();
             factory.RegisterReference<ServerDoorComponent, IActivate>();
+
+            factory.Register<Content.Server.GameObjects.Components.Chemistry.SolutionComponent>();
 
             //Power Components
             factory.Register<PowerTransferComponent>();
