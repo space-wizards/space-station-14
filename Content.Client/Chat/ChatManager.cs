@@ -81,7 +81,10 @@ namespace Content.Client.Chat
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME, _onChatMessage);
 
-            _speechBubbleRoot = new Control();
+            _speechBubbleRoot = new Control
+            {
+                MouseFilter = Control.MouseFilterMode.Ignore
+            };
             _speechBubbleRoot.SetAnchorPreset(Control.LayoutPreset.Wide);
             _userInterfaceManager.StateRoot.AddChild(_speechBubbleRoot);
             _speechBubbleRoot.SetPositionFirst();
@@ -328,7 +331,7 @@ namespace Content.Client.Chat
                     {
                         // Word is STILL too long.
                         // Truncate it with an ellipse.
-                        messages.Add($"{word.Substring(0, SingleBubbleCharLimit-3)}...");
+                        messages.Add($"{word.Substring(0, SingleBubbleCharLimit - 3)}...");
                         currentWordLength = 0;
                         continue;
                     }
