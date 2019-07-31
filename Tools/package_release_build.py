@@ -44,8 +44,12 @@ SERVER_IGNORED_RESOURCES = {
     "Shaders",
 }
 
+LAUNCHER_RESOURCES = {
+    "Nano",
+    "Fonts",
+}
+
 def main():
-    global GODOT
     parser = argparse.ArgumentParser(
         description="Packages the SS14 content repo for release on all platforms.")
     parser.add_argument("--platform",
@@ -125,6 +129,15 @@ def build_windows():
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
 
+    print(Fore.GREEN + "Packaging Windows x64 launcher..." + Style.RESET_ALL)
+    launcher_zip = zipfile.ZipFile(p("release", "SS14.Launcher_Windows_x64.zip"), "w",
+                                   compression=zipfile.ZIP_DEFLATED)
+
+    copy_dir_into_zip(p("bin", "SS14.Launcher"), "bin", launcher_zip)
+    copy_launcher_resources(p("bin", "Resources"), launcher_zip)
+    launcher_zip.write(p("BuildFiles", "Windows", "run_me.bat"), "run_me.bat")
+    launcher_zip.close()
+
 
 def build_macos():
     print(Fore.GREEN + "Building project for macOS x64..." + Style.RESET_ALL)
@@ -160,6 +173,17 @@ def build_macos():
     copy_resources(p("Resources"), server_zip, server=True)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
+
+    print(Fore.GREEN + "Packaging macOS x64 launcher..." + Style.RESET_ALL)
+    launcher_zip = zipfile.ZipFile(p("release", "SS14.Launcher_macOS_x64.zip"), "w",
+                                   compression=zipfile.ZIP_DEFLATED)
+
+    contents = p("Space Station 14 Launcher.app", "Contents", "Resources")
+    copy_dir_into_zip(p("BuildFiles", "Mac", "Space Station 14 Launcher.app"), "Space Station 14 Launcher.app", launcher_zip)
+    copy_dir_into_zip(p("bin", "SS14.Launcher"), contents, launcher_zip)
+
+    copy_launcher_resources(p(contents, "Resources"), launcher_zip)
+    launcher_zip.close()
 
 
 def build_linux():
@@ -197,21 +221,37 @@ def build_linux():
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
 
+    print(Fore.GREEN + "Packaging Linux x64 launcher..." + Style.RESET_ALL)
+    launcher_zip = zipfile.ZipFile(p("release", "SS14.Launcher_Linux_x64.zip"), "w",
+                                   compression=zipfile.ZIP_DEFLATED)
+
+    copy_dir_into_zip(p("bin", "SS14.Launcher"), "bin", launcher_zip)
+    copy_launcher_resources(p("bin", "Resources"), launcher_zip)
+    launcher_zip.write(p("BuildFiles", "Linux", "SS14.Launcher"), "SS14.Launcher")
+    launcher_zip.close()
 
 def copy_resources(target, zipf, server):
     # Content repo goes FIRST so that it won't override engine files as that's forbidden.
-    do_resource_copy(target, "Resources", zipf, server)
-    do_resource_copy(target, p("RobustToolbox", "Resources"), zipf, server)
+    ignore_set = SHARED_IGNORED_RESOURCES
+    if server:
+        ignore_set = ignore_set.union(SERVER_IGNORED_RESOURCES)
+    else:
+        ignore_set = ignore_set.union(CLIENT_IGNORED_RESOURCES)
+
+    do_resource_copy(target, "Resources", zipf, ignore_set)
+    do_resource_copy(target, p("RobustToolbox", "Resources"), zipf, ignore_set)
 
 
-def do_resource_copy(target, source, zipf, server):
+def copy_launcher_resources(target, zipf):
+    # Copy all engine resources, since those are stripped down enough now.
+    do_resource_copy(target, p("RobustToolbox", "Resources"), zipf, SHARED_IGNORED_RESOURCES)
+    for folder in LAUNCHER_RESOURCES:
+        copy_dir_into_zip(p("Resources", folder), p(target, folder), zipf)
+
+
+def do_resource_copy(target, source, zipf, ignore_set):
     for filename in os.listdir(source):
-        if filename in SHARED_IGNORED_RESOURCES \
-                or filename in (SERVER_IGNORED_RESOURCES if server else CLIENT_IGNORED_RESOURCES):
-            continue
-
-        # Get rid of Godot .import files, thanks.
-        if filename.endswith(".import"):
+        if filename in ignore_set:
             continue
 
         path = p(source, filename)

@@ -16,5 +16,5 @@
     sprite: Objects/lantern.rsi
     state: lantern_off
   - type: PointLight
-    state: Off
+    enabled: false
   - type: Sound

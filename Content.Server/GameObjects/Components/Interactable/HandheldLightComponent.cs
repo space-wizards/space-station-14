@@ -6,7 +6,6 @@ using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
@@ -118,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            SetState(LightState.Off);
+            SetState(false);
             Activated = false;
 
             if (Owner.TryGetComponent(out SoundComponent soundComponent))
@@ -158,7 +157,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             Activated = true;
-            SetState(LightState.On);
+            SetState(true);
 
             if (Owner.TryGetComponent(out soundComponent))
             {
@@ -166,13 +165,13 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
-        private void SetState(LightState newState)
+        private void SetState(bool on)
         {
-            _spriteComponent.LayerSetVisible(1, newState == LightState.On);
-            _pointLight.State = newState;
+            _spriteComponent.LayerSetVisible(1, on);
+            _pointLight.Enabled = on;
             if (_clothingComponent != null)
             {
-                _clothingComponent.ClothingEquippedPrefix = newState.ToString();
+                _clothingComponent.ClothingEquippedPrefix = on ? "On" : "Off";
             }
         }
 
