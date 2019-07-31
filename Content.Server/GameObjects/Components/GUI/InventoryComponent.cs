@@ -263,6 +263,12 @@ namespace Content.Server.GameObjects
                     if (playerentity == Owner)
                         HandleInventoryMessage(msg);
                     break;
+                case OpenSlotStorageUIMessage msg:
+                    ItemComponent item = GetSlotItem(msg.Slot);
+                    ServerStorageComponent storage;
+                    if (item.Owner.TryGetComponent(out storage))
+                        storage.OpenStorageUI(Owner);
+                    break;
             }
         }
 

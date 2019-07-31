@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -77,15 +80,12 @@ namespace Content.Client.GameObjects
 
             foreach (var (slot, entityUid) in cast.Entities)
             {
-                if (_slots.ContainsKey(slot))
-                {
-                    _slots.Remove(slot);
-                    _clearSlot(slot);
-                }
-
                 var entity = Owner.EntityManager.GetEntity(entityUid);
-                _slots[slot] = entity;
-                _setSlot(slot, entity);
+                if (!_slots.ContainsKey(slot) || _slots[slot] != entity)
+                {
+                    _slots[slot] = entity;
+                    _setSlot(slot, entity);
+                }
                 doneSlots.Add(slot);
             }
 
@@ -137,6 +137,11 @@ namespace Content.Client.GameObjects
         {
             var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Equip);
             SendNetworkMessage(equipmessage);
+        }
+
+        public void SendOpenStorageUIMessage(Slots slot)
+        {
+            SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,

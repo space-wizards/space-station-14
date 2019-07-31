@@ -75,5 +75,13 @@ namespace Content.Client.GameObjects
 
             Owner.SendEquipMessage(control.Slot);
         }
+
+        protected void OpenStorage(BaseButton.ButtonEventArgs args)
+        {
+            args.Button.Pressed = false;
+            var control = (InventoryButton)args.Button.Parent;
+
+            Owner.SendOpenStorageUIMessage(control.Slot);
+        }
     }
 }

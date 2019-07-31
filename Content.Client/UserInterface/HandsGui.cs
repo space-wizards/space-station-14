@@ -60,6 +60,7 @@ namespace Content.Client.UserInterface
 
             AddChild(new TextureRect
             {
+                MouseFilter = MouseFilterMode.Ignore,
                 Texture = TextureHandLeft,
                 Size = _handL.Size,
                 Position = _handL.TopLeft,
@@ -68,6 +69,7 @@ namespace Content.Client.UserInterface
 
             AddChild(new TextureRect
             {
+                MouseFilter = MouseFilterMode.Ignore,
                 Texture = TextureHandRight,
                 Size = _handR.Size,
                 Position = _handR.TopLeft,
@@ -76,6 +78,7 @@ namespace Content.Client.UserInterface
 
             AddChild(ActiveHandRect = new TextureRect
             {
+                MouseFilter = MouseFilterMode.Ignore,
                 Texture = TextureHandActive,
                 Size = _handL.Size,
                 Position = _handL.TopLeft,

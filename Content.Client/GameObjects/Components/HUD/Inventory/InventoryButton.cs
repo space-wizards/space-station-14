@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
@@ -13,10 +13,12 @@ namespace Content.Client.GameObjects
 
         public BaseButton Button { get; }
         public SpriteView SpriteView { get; }
+        public BaseButton StorageButton { get; }
 
         public Action<BaseButton.ButtonEventArgs> OnPressed { get; set; }
+        public Action<BaseButton.ButtonEventArgs> OnStoragePressed { get; set; }
 
-        public InventoryButton(EquipmentSlotDefines.Slots slot, Texture texture)
+        public InventoryButton(EquipmentSlotDefines.Slots slot, Texture texture, Texture storageTexture)
         {
             Slot = slot;
 
@@ -25,7 +27,7 @@ namespace Content.Client.GameObjects
             AddChild(Button = new TextureButton
             {
                 TextureNormal = texture,
-                Scale = (2, 2),
+                Scale = (2, 2)
             });
 
             Button.OnPressed += e => OnPressed?.Invoke(e);
@@ -35,6 +37,17 @@ namespace Content.Client.GameObjects
                 MouseFilter = MouseFilterMode.Ignore,
                 Scale = (2, 2)
             });
+
+            AddChild(StorageButton = new TextureButton
+            {
+                TextureNormal = storageTexture,
+                Scale = (0.75f, 0.75f),
+                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                SizeFlagsVertical = SizeFlags.ShrinkEnd,
+                Visible = false
+            });
+
+            StorageButton.OnPressed += e => OnStoragePressed?.Invoke(e);
         }
     }
 }
