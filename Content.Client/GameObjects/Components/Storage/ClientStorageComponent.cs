@@ -1,4 +1,6 @@
-﻿using Content.Shared.GameObjects.Components.Storage;
+﻿using System;
+using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,13 +9,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -118,7 +115,6 @@ namespace Content.Client.GameObjects.Components.Storage
                 base.Initialize();
 
                 Title = "Storage Item";
-                Visible = false;
                 RectClipContent = true;
 
                 VSplitContainer = new VBoxContainer("VSplitContainer");
