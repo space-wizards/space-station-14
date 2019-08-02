@@ -1,14 +1,15 @@
 ﻿using System;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Triggers;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
-using Robust.Shared.GameObjects;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Triggers;
 
 namespace Content.Server.GameObjects.Components.Triggers
 {
+    [RegisterComponent]
     public class OnUseTimerTriggerComponent : Component, IUse
     {
         #pragma warning disable 649
@@ -28,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Triggers
 
         public override void Initialize()
         {
-            base.Initialize(); 
+            base.Initialize();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

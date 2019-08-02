@@ -1,0 +1,20 @@
+- type: entity
+  name: Flashlight
+  parent: BaseItem
+  id: FlashlightLantern
+  description: They light the way to freedom
+  components:
+  - type: HandheldLight
+  - type: Sprite
+    sprite: Objects/lantern.rsi
+    layers:
+    - state: lantern_off
+    - state: HandheldLightOnOverlay
+      shader: unshaded
+      visible: false
+  - type: Icon
+    sprite: Objects/lantern.rsi
+    state: lantern_off
+  - type: PointLight
+    enabled: false
+  - type: Sound

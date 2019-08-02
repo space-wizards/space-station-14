@@ -1,0 +1,71 @@
+- type: entity
+  save: false
+  name: Urist McHands
+  id: HumanMob_Content
+  description: A miserable pile of secrets
+  components:
+  - type: Hands
+    hands:
+    - left
+    - right
+  - type: Inventory
+  - type: Constructor
+  - type: Clickable
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+
+    layers:
+    - sprite: Mob/human.rsi
+      state: male
+    - map: ["enum.Slots.INNERCLOTHING"]
+    - map: ["enum.Slots.IDCARD"]
+    - map: ["enum.Slots.SHOES"]
+    - map: ["enum.Slots.GLOVES"]
+    - map: ["enum.Slots.BELT"]
+    - map: ["enum.Slots.OUTERCLOTHING"]
+    - map: ["enum.Slots.EYES"]
+    - map: ["enum.Slots.BACKPACK"]
+    - map: ["enum.Slots.EARS"]
+    - map: ["enum.Slots.MASK"]
+    - map: ["enum.Slots.HEAD"]
+    - map: ["hand-left"]
+    - map: ["hand-right"]
+
+  - type: Icon
+    sprite: Mob/human.rsi
+    state: male
+
+  - type: BoundingBox
+    aabb: "-0.35,-0.35,0.35,0.35"
+
+  - type: Physics
+    mass: 85
+
+  - type: Collidable
+    mask: 3
+    layer: 2
+    DebugColor: "#0000FF"
+
+  - type: Input
+    context: "human"
+
+  - type: Species
+    Template: Human
+    HeatResistance: 323
+  - type: HeatResistance
+  - type: Damageable
+
+  - type: Eye
+    zoom: 0.5, 0.5
+
+  - type: CameraRecoil
+  - type: Appearance
+    visuals:
+    - type: SpeciesVisualizer2D
+
+  - type: CombatMode
+  - type: Teleportable
+  - type: Examiner
+  - type: CharacterInfo
+

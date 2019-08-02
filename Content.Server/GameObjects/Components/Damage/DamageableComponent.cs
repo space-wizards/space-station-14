@@ -1,12 +1,9 @@
-﻿using Content.Server.Interfaces.GameObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Robust.Shared.Maths;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -18,6 +15,7 @@ namespace Content.Server.GameObjects
     /// A component that handles receiving damage and healing,
     /// as well as informing other components of it.
     /// </summary>
+    [RegisterComponent]
     public class DamageableComponent : SharedDamageableComponent, IDamageableComponent
     {
         /// <inheritdoc />

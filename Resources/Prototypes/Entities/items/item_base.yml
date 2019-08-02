@@ -1,0 +1,17 @@
+- type: entity
+  name: "Item"
+  id: BaseItem
+  components:
+  - type: Item
+    Size: 5
+  - type: Clickable
+  - type: BoundingBox
+    aabb: "-0.25,-0.25,0.25,0.25"
+  - type: Collidable
+    mask: 5
+    layer: 8
+    IsScrapingFloor: true
+  - type: Physics
+    mass: 5
+  - type: Sprite
+    drawdepth: Items

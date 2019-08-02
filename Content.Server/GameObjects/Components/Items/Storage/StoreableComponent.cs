@@ -3,6 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
+    [RegisterComponent]
     public class StoreableComponent : Component
     {
         public override string Name => "Storeable";

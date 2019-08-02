@@ -1,15 +1,18 @@
+using System;
+using System.Collections.Generic;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(ItemComponent))]
+    [ComponentReference(typeof(StoreableComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
         public override string Name => "Clothing";

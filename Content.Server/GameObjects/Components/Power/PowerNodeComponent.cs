@@ -1,10 +1,9 @@
-﻿using Robust.Server.GameObjects;
+﻿using System;
+using System.Linq;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
-using System;
-using System.Linq;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -12,6 +11,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// <summary>
     /// Component that connects to the powernet
     /// </summary>
+    [RegisterComponent]
     public class PowerNodeComponent : Component
     {
         public override string Name => "PowerNode";

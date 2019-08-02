@@ -1,0 +1,16 @@
+- type: reagent
+  id: chem.H2
+  name: Hydrogen
+  desc: A light, flammable gas.
+  
+- type: reagent
+  id: chem.O2
+  name: Oxygen
+  desc: An oxidizing, colorless gas.
+  
+- type: reagent
+  id: chem.S8
+  name: Sulfur
+  desc: A yellow, crystalline solid.
+  color: "#FFFACD"
+  

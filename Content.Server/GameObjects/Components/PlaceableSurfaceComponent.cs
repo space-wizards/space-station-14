@@ -4,6 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components
 {
+    [RegisterComponent]
     public class PlaceableSurfaceComponent : Component, IAttackBy
     {
         public override string Name => "PlaceableSurface";

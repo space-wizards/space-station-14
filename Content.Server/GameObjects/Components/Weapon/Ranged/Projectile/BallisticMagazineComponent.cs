@@ -11,6 +11,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
+    [RegisterComponent]
     public class BallisticMagazineComponent : Component, IMapInit
     {
         public override string Name => "BallisticMagazine";

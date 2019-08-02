@@ -1,0 +1,46 @@
+- type: entity
+  parent: ReagentItem
+  name: "Extra-Grip™ Mop"
+  id: MopItem
+  description: A mop that cant be stopped, viscera cleanup detail awaits.
+  components:
+  - type: Sprite
+    texture: Objects/mop.png
+  - type: Icon
+    texture: Objects/mop.png
+  - type: Item
+    Size: 10
+  - type: Solution
+    maxVol: 10
+    caps: 1
+
+- type: entity
+  parent: ReagentItem
+  name: Mop Bucket
+  id: MopBucket
+  description: Holds water and the tears of the janitor.
+  components:
+  - type: Sprite
+    texture: Objects/mopbucket.png
+  - type: Icon
+    texture: Objects/mopbucket.png
+  - type: Clickable
+  - type: BoundingBox
+  - type: Solution
+    maxVol: 500
+    caps: 3
+    
+- type: entity
+  parent: ReagentItem
+  name: Bucket
+  id: Bucket
+  description: "It's a bucket."
+  components:
+  - type: Sprite
+    texture: Objects/bucket.png
+  - type: Icon
+    texture: Objects/bucket.png
+  - type: Solution
+    maxVol: 500
+    caps: 3
+    

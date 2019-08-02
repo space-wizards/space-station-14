@@ -1,18 +1,13 @@
 ﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using System;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     /// <summary>
     /// Component that creates power and supplies it to the powernet
     /// </summary>
+    [RegisterComponent]
     public class PowerGeneratorComponent : Component
     {
         public override string Name => "PowerGenerator";

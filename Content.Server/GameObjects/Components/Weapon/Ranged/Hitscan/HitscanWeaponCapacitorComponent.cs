@@ -1,11 +1,13 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power;
-using Robust.Shared.Serialization;
+using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
+    [RegisterComponent]
     public class HitscanWeaponCapacitorComponent : PowerCellComponent
     {
         private AppearanceComponent _appearance;

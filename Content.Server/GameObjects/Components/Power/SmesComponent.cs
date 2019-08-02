@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Power;
+﻿using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -11,6 +10,7 @@ namespace Content.Server.GameObjects.Components.Power
     ///     This is operations that are specific to the SMES, like UI and visuals.
     ///     Code interfacing with the powernet is handled in <see cref="PowerStorageComponent" />.
     /// </summary>
+    [RegisterComponent]
     public class SmesComponent : Component
     {
         public override string Name => "Smes";

@@ -1,31 +1,31 @@
-﻿using Content.Client.GameObjects.Components.Actor;
-using Content.Client.GameObjects.Components.Mobs;
+﻿using System.Collections.Generic;
+using Content.Client.GameObjects.Components.Actor;
 using Content.Client.Graphics.Overlays;
+using Content.Client.UserInterface;
+using Content.Client.Utility;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Renderable;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using System.Collections.Generic;
-using Content.Client.UserInterface;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Client.Graphics;
-using Robust.Client.Graphics.Overlays;
-using Robust.Client.Interfaces.UserInterface;
-using Robust.Shared.GameObjects.Components.Renderable;
 
 namespace Content.Client.GameObjects
 {
     /// <summary>
     /// A character UI component which shows the current damage state of the mob (living/dead)
     /// </summary>
+    [RegisterComponent]
     public class SpeciesUI : SharedSpeciesComponent//, ICharacterUI
     {
         private StatusEffectsUI _ui;

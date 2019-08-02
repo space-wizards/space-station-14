@@ -8,6 +8,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     ///     This is used to differentiate between regular item interactions or
     ///     using *everything* as a weapon.
     /// </summary>
+    [RegisterComponent]
     public sealed class CombatModeComponent : Component
     {
         public override string Name => "CombatMode";

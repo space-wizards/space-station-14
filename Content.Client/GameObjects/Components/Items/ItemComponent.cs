@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects;
+﻿using System;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -9,10 +10,10 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Client.GameObjects
 {
+    [RegisterComponent]
     public class ItemComponent : Component
     {
         public override string Name => "Item";

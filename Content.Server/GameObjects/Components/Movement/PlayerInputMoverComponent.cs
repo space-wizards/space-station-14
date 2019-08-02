@@ -12,6 +12,8 @@ namespace Content.Server.GameObjects.Components.Movement
     /// <summary>
     ///     Moves the entity based on input from a KeyBindingInputComponent.
     /// </summary>
+    [RegisterComponent]
+    [ComponentReference(typeof(IMoverComponent))]
     public class PlayerInputMoverComponent : Component, IMoverComponent
     {
         private bool _movingUp;

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
@@ -6,6 +5,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Research
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(SharedLatheDatabaseComponent))]
     public class LatheDatabaseComponent : SharedLatheDatabaseComponent
     {
         /// <summary>

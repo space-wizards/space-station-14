@@ -1,6 +1,13 @@
-﻿using Content.Shared.GameObjects;
+﻿using System;
+using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Sound;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects;
+using Content.Shared.Interfaces;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
@@ -10,16 +17,10 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using System;
-using Content.Server.GameObjects.Components.Sound;
-using Robust.Shared.GameObjects;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.Components.Power;
-using Content.Shared.Interfaces;
-using Content.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
+    [RegisterComponent]
     public class HitscanWeaponComponent : Component, IAttackBy
     {
         private const float MaxLength = 20;

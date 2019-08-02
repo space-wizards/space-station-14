@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
+using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Content.Server.Interfaces;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Destructible
 {
     /// <summary>
     /// Deletes the entity once a certain damage threshold has been reached.
     /// </summary>
+    [RegisterComponent]
     public class DestructibleComponent : Component, IOnDamageBehavior, IDestroyAct, IExAct
     {
         #pragma warning disable 649
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Destructible
 
         /// <inheritdoc />
         void IOnDamageBehavior.OnDamageThresholdPassed(object obj, DamageThresholdPassedEventArgs e)
-        { 
+        {
             if (e.Passed && e.DamageThreshold == Threshold && destroyed == false)
             {
                 destroyed = true;

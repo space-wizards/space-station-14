@@ -5,6 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
+    [RegisterComponent]
     public class AiControllerComponent : Component, IMoverComponent
     {
         private string _logicName;

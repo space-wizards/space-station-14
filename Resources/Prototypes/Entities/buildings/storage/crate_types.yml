@@ -1,0 +1,120 @@
+- type: entity
+  id: crate_plastic
+  name: Plastic Crate
+  parent: crate_generic
+  components:
+  - type: Sprite
+    layers:
+    - state: plasticcrate
+    - state: plasticcrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: plasticcrate_open
+      state_closed: plasticcrate_door
+
+  - type: Icon
+    state: plasticcrate
+
+- type: entity
+  id: crate_freezer
+  name: Freezer
+  parent: crate_generic
+  components:
+  - type: Sprite
+    layers:
+    - state: freezer
+    - state: freezer_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: freezer_open
+      state_closed: freezer_door
+
+  - type: Icon
+    state: freezer
+
+- type: entity
+  id: crate_hydroponics
+  name: Hydroponics Crate
+  parent: crate_generic
+  components:
+  - type: Sprite
+    layers:
+    - state: hydrocrate
+    - state: hydrocrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: hydrocrate_open
+      state_closed: hydrocrate_door
+
+  - type: Icon
+    state: hydrocrate
+
+- type: entity
+  id: crate_medical
+  name: Medical Crate
+  parent: crate_generic
+  components:
+  - type: Sprite
+    layers:
+    - state: medicalcrate
+    - state: medicalcrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: medicalcrate_open
+      state_closed: medicalcrate_door
+
+  - type: Icon
+    state: medicalcrate
+
+- type: entity
+  id: crate_radiation
+  name: Radiation Gear Crate
+  description: Is not actually lead lined. Do not store your plutonium in this.
+  parent: crate_generic
+  components:
+  - type: Sprite
+    layers:
+    - state: radiationcrate
+    - state: radiationcrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: radiationcrate_open
+      state_closed: radiationcrate_door
+
+  - type: Icon
+    state: radiationcrate
+
+- type: entity
+  id: crate_internals
+  name: Internals Crate
+  parent: crate_generic
+  components:
+  - type: Sprite
+    layers:
+    - state: o2crate
+    - state: o2crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: o2crate_open
+      state_closed: o2crate_door
+
+  - type: Icon
+    state: o2crate

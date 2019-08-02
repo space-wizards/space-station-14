@@ -7,6 +7,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// <summary>
     ///     Component required for a player to be able to examine things.
     /// </summary>
+    [RegisterComponent]
     public sealed class ExaminerComponent : Component
     {
         public override string Name => "Examiner";

@@ -1,3 +1,4 @@
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -6,6 +7,8 @@ namespace Content.Server.GameObjects.Components.Power
     /// <summary>
     ///     Feeds energy from the powernet and may have the ability to supply back into it
     /// </summary>
+    [RegisterComponent]
+    [ComponentReference(typeof(PowerStorageComponent))]
     public class PowerStorageNetComponent : PowerStorageComponent
     {
         public override string Name => "PowerStorage";

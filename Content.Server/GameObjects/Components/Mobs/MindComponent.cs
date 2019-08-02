@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Content.Server.Mobs;
-using Robust.Server.GameObjects;
+﻿using Content.Server.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Mobs
@@ -16,6 +8,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     /// <summary>
     ///     Stores a <see cref="Server.Mobs.Mind"/> on a mob.
     /// </summary>
+    [RegisterComponent]
     public class MindComponent : Component
     {
         /// <inheritdoc />

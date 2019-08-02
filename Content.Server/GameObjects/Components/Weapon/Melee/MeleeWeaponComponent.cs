@@ -1,14 +1,15 @@
-﻿using Robust.Shared.GameObjects;
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
-using Content.Shared.GameObjects;
-using Robust.Shared.Interfaces.Map;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
+    [RegisterComponent]
     public class MeleeWeaponComponent : Component, IAttack
     {
 #pragma warning disable 649

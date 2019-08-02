@@ -5,7 +5,6 @@ using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Audio;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
@@ -18,6 +17,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
+    [RegisterComponent]
     public class PoweredLightComponent : Component, IAttackHand, IAttackBy
     {
         public override string Name => "PoweredLight";
@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             bool CanBurn(int heatResistance)
             {
-                return _lightState == LightState.On && heatResistance < LightBulb.BurningTemperature;
+                return _lightState && heatResistance < LightBulb.BurningTemperature;
             }
 
             void Burn()
@@ -135,8 +135,8 @@ namespace Content.Server.GameObjects.Components.Power
             UpdateLight();
         }
 
-        private LightState _lightState => Owner.GetComponent<PointLightComponent>().State;
-            
+        private bool _lightState => Owner.GetComponent<PointLightComponent>().Enabled;
+
         /// <summary>
         ///     Updates the light's power drain, sprite and actual light state.
         /// </summary>
@@ -149,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 device.Load = 0;
                 sprite.LayerSetState(0, "empty");
-                light.State = LightState.Off;
+                light.Enabled = false;
                 return;
             }
 
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Power
                     if (device.Powered)
                     {
                         sprite.LayerSetState(0, "on");
-                        light.State = LightState.On;
+                        light.Enabled = true;
                         light.Color = LightBulb.Color;
                         var time = IoCManager.Resolve<IGameTiming>().CurTime;
                         if (time > _lastThunk + _thunkDelay)
@@ -172,18 +172,18 @@ namespace Content.Server.GameObjects.Components.Power
                     else
                     {
                         sprite.LayerSetState(0, "off");
-                        light.State = LightState.Off;
+                        light.Enabled = false;
                     }
                     break;
                 case LightBulbState.Broken:
                     device.Load = 0;
                     sprite.LayerSetState(0, "broken");
-                    light.State = LightState.Off;
+                    light.Enabled = false;
                     break;
                 case LightBulbState.Burned:
                     device.Load = 0;
                     sprite.LayerSetState(0, "burned");
-                    light.State = LightState.Off;
+                    light.Enabled = false;
                     break;
             }
         }

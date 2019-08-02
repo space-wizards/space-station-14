@@ -1,13 +1,15 @@
-﻿using Content.Shared.GameObjects;
+﻿using System;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Client.GameObjects.Components.Clothing
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(ItemComponent))]
     public class ClothingComponent : ItemComponent
     {
         public override string Name => "Clothing";

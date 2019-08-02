@@ -3,8 +3,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Content.Client.Interfaces.Parallax;
 using Nett;
-using SixLabors.ImageSharp;
-using SixLabors.Primitives;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Shared.Interfaces.Configuration;
@@ -12,6 +10,8 @@ using Robust.Shared.Interfaces.Log;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
+using SixLabors.ImageSharp;
+using SixLabors.Primitives;
 
 namespace Content.Client.Parallax
 {
@@ -39,7 +39,7 @@ namespace Content.Client.Parallax
                 return;
             }
 
-            MemoryStream configStream = null;
+            Stream configStream = null;
             string contents;
             TomlTable table;
             try

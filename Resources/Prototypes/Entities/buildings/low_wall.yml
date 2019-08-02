@@ -1,0 +1,32 @@
+- type: entity
+  id: low_wall
+  name: Low Wall
+  description: Goes up to about your waist.
+  components:
+  - type: Clickable
+  - type: Sprite
+    netsync: false
+    color: "#71797a"
+    drawdepth: Walls
+    sprite: Buildings/low_wall.rsi
+
+  - type: Icon
+    sprite: Buildings/low_wall.rsi
+    state: metal
+
+  - type: BoundingBox
+  - type: Collidable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 100
+
+  - type: SnapGrid
+    offset: Center
+
+  - type: LowWall
+    key: walls
+    base: metal_
+
+  placement:
+    snap:
+    - Wall

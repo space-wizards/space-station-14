@@ -1,0 +1,74 @@
+- type: entity
+  id: wall_light
+  name: "Unpowered Light"
+  components:
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sound
+  - type: Sprite
+    sprite: Buildings/light_tube.rsi
+    state: on
+
+  - type: Icon
+    sprite: Buildings/light_tube.rsi
+    state: on
+
+  - type: PointLight
+    radius: 8
+    energy: 1.2
+    #offset: "0, -16"
+    color: "#DCDCC6"
+
+  placement:
+    snap:
+    - Wallmount
+
+- type: entity
+  name: Light
+  id: poweredlight
+  parent: wall_light
+  components:
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    sprite: Buildings/light_tube.rsi
+    state: off
+
+  - type: Icon
+    sprite: Buildings/light_tube.rsi
+    state: off
+
+  - type: PointLight
+    enabled: false
+
+  - type: PowerDevice
+    priority: Low
+
+  - type: PoweredLight
+    bulb: Tube
+
+- type: entity
+  name: Small Light
+  id: poweredsmalllight
+  parent: wall_light
+  components:
+  - type: Clickable
+  - type: BoundingBox
+  - type: Sprite
+    sprite: Buildings/light_small.rsi
+    state: off
+
+  - type: Icon
+    sprite: Buildings/light_small.rsi
+    state: off
+
+  - type: PointLight
+    energy: 1.0
+    enabled: false
+
+  - type: PowerDevice
+    priority: Low
+
+  - type: PoweredLight
+    bulb: Bulb
+

@@ -11,6 +11,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components
 {
+    [RegisterComponent]
     class ThrownItemComponent : ProjectileComponent, ICollideBehavior
     {
 #pragma warning disable 649

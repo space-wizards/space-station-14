@@ -1,4 +1,9 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using System.Linq;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Sound;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Storage;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -7,13 +12,12 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System.Linq;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Shared.GameObjects.Components.Storage;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.GameObjects.Components
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(IStorageComponent))]
     public class EntityStorageComponent : Component, IActivate, IStorageComponent
     {
         public override string Name => "EntityStorage";
@@ -70,7 +74,12 @@ namespace Content.Server.GameObjects.Components
                     break;
                 }
             }
+
             ModifyComponents();
+            if (Owner.TryGetComponent(out SoundComponent soundComponent))
+            {
+                soundComponent.Play("/Audio/machines/closetclose.ogg");
+            }
         }
 
         private void OpenStorage()
@@ -78,10 +87,14 @@ namespace Content.Server.GameObjects.Components
             Open = true;
             EmptyContents();
             ModifyComponents();
+            if (Owner.TryGetComponent(out SoundComponent soundComponent))
+            {
+                soundComponent.Play("/Audio/machines/closetopen.ogg");
+            }
         }
 
         private void ModifyComponents()
-        { 
+        {
             if (Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
             {
                 collidableComponent.CollisionEnabled = IsCollidableWhenOpen || !Open;

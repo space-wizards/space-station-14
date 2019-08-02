@@ -3,6 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
+    [RegisterComponent]
     public class BallisticBulletComponent : Component
     {
         public override string Name => "BallisticBullet";

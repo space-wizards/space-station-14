@@ -1,32 +1,33 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Storage;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
-using System.Collections.Generic;
-using Content.Shared.Interfaces;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.ViewVariables;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Robust.Server.GameObjects.EntitySystemMessages;
 
 namespace Content.Server.GameObjects
 {
     /// <summary>
     /// Storage component for containing entities within this one, matches a UI on the client which shows stored entities
     /// </summary>
+    [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(IStorageComponent))]
     public class ServerStorageComponent : SharedStorageComponent, IAttackBy, IUse, IActivate, IStorageComponent, IDestroyAct
     {
 #pragma warning disable 649
@@ -150,7 +151,7 @@ namespace Content.Server.GameObjects
             {
                 return false;
             }
-            
+
             //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
             if (CanInsert(hands.GetActiveHand.Owner) &&  hands.Drop(hands.ActiveIndex))
             {

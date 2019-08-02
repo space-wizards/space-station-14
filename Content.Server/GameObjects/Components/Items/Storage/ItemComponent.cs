@@ -1,17 +1,18 @@
-﻿using Content.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+﻿using System;
 using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects;
-using System;
+using Content.Server.Interfaces.GameObjects;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
-using Content.Server.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(StoreableComponent))]
     public class ItemComponent : StoreableComponent, IAttackHand
     {
         public override string Name => "Item";

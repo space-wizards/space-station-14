@@ -10,6 +10,7 @@ using Robust.Shared.Localization;
 
 namespace Content.Client.GameObjects.Components.Actor
 {
+    [RegisterComponent]
     public sealed class CharacterInfoComponent : Component, ICharacterUI
     {
         private CharacterInfoControl _control;

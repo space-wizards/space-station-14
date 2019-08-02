@@ -1,10 +1,8 @@
-﻿using Content.Server.Interfaces.GameObjects;
-using Content.Shared.Maths;
-using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+﻿using System;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
+using Content.Shared.Maths;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -15,6 +13,7 @@ namespace Content.Server.GameObjects
     /// informing others of the current temperature,
     /// and taking fire damage from high temperature.
     /// </summary>
+    [RegisterComponent]
     public class TemperatureComponent : Component, ITemperatureComponent
     {
         /// <inheritdoc />

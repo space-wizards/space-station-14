@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Text;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
-using Robust.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable.Tools
@@ -14,6 +12,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
     /// <summary>
     /// Tool used to weld metal together, light things on fire, or melt into constituent parts
     /// </summary>
+    [RegisterComponent]
     class WelderComponent : ToolComponent, EntitySystems.IUse, EntitySystems.IExamine
     {
         SpriteComponent spriteComponent;

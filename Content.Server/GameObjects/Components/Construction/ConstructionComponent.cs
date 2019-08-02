@@ -17,6 +17,7 @@ using static Content.Shared.Construction.ConstructionStepTool;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
+    [RegisterComponent]
     public class ConstructionComponent : Component, IAttackBy
     {
         public override string Name => "Construction";

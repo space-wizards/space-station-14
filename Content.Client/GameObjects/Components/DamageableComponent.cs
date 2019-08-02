@@ -1,6 +1,6 @@
-﻿using Content.Shared.GameObjects;
+﻿using System.Collections.Generic;
+using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
-using System.Collections.Generic;
 
 namespace Content.Client.GameObjects
 {
@@ -8,6 +8,7 @@ namespace Content.Client.GameObjects
     /// Fuck I really hate doing this
     /// TODO: make sure the client only gets damageable component on the clientside entity for its player mob
     /// </summary>
+    [RegisterComponent]
     public class DamageableComponent : SharedDamageableComponent
     {
         /// <inheritdoc />

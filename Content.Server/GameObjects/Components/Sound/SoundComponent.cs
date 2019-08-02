@@ -1,16 +1,11 @@
-using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Sound;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Sound
 {
+    [RegisterComponent]
     public class SoundComponent : SharedSoundComponent
     {
         /// <summary>

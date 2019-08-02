@@ -1,0 +1,4 @@
+- type: entity
+  parent: MobObserver
+  save: false
+  id: AdminObserver

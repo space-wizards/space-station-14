@@ -1,44 +1,27 @@
-﻿using Content.Client.GameObjects;
+﻿using System;
+using Content.Client.Chat;
 using Content.Client.GameObjects.Components.Actor;
-using Content.Client.GameObjects.Components.Clothing;
-using Content.Client.GameObjects.Components.Construction;
-using Content.Client.GameObjects.Components.Power;
-using Content.Client.GameObjects.Components.IconSmoothing;
-using Content.Client.GameObjects.Components.Storage;
-using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Client.GameTicking;
 using Content.Client.Input;
 using Content.Client.Interfaces;
-using Content.Client.Interfaces.GameObjects;
+using Content.Client.Interfaces.Chat;
 using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
+using Content.Client.UserInterface;
+using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.Components.Markers;
+using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Interfaces;
 using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using System;
-using Content.Client.Chat;
-using Content.Client.GameObjects.Components;
-using Content.Client.GameObjects.Components.Mobs;
-using Content.Client.GameObjects.Components.Movement;
-using Content.Client.GameObjects.Components.Research;
-using Content.Client.GameObjects.Components.Sound;
-using Content.Client.Interfaces.Chat;
-using Content.Client.UserInterface;
-using Content.Shared.GameObjects.Components.Markers;
-using Content.Shared.GameObjects.Components.Materials;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Research;
-using Robust.Client.Interfaces.State;
-using Robust.Client.Interfaces.UserInterface;
-using Robust.Client.State.States;
 
 namespace Content.Client
 {
@@ -54,110 +37,74 @@ namespace Content.Client
             var factory = IoCManager.Resolve<IComponentFactory>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
-            factory.RegisterIgnore("Interactable");
-            factory.RegisterIgnore("Destructible");
-            factory.RegisterIgnore("Temperature");
-            factory.RegisterIgnore("PowerTransfer");
-            factory.RegisterIgnore("PowerNode");
-            factory.RegisterIgnore("PowerProvider");
-            factory.RegisterIgnore("PowerDevice");
-            factory.RegisterIgnore("PowerStorage");
-            factory.RegisterIgnore("PowerGenerator");
+            factory.DoAutoRegistrations();
 
-            factory.RegisterIgnore("Explosive");
-            factory.RegisterIgnore("OnUseTimerTrigger");
+            var registerIgnore = new[]
+            {
+                "Interactable",
+                "Destructible",
+                "Temperature",
+                "PowerTransfer",
+                "PowerNode",
+                "PowerProvider",
+                "PowerDevice",
+                "PowerStorage",
+                "PowerGenerator",
+                "Explosive",
+                "OnUseTimerTrigger",
+                "ToolboxElectricalFill",
+                "ToolLockerFill",
+                "EmitSoundOnUse",
+                "FootstepModifier",
+                "HeatResistance",
+                "CombatMode",
+                "Teleportable",
+                "ItemTeleporter",
+                "Portal",
+                "EntityStorage",
+                "PlaceableSurface",
+                "Wirecutter",
+                "Screwdriver",
+                "Multitool",
+                "Welder",
+                "Wrench",
+                "Crowbar",
+                "HitscanWeapon",
+                "ProjectileWeapon",
+                "Projectile",
+                "MeleeWeapon",
+                "Storeable",
+                "Stack",
+                "Dice",
+                "Construction",
+                "Apc",
+                "Door",
+                "PoweredLight",
+                "Smes",
+                "Powercell",
+                "HandheldLight",
+                "LightBulb",
+                "Healing",
+                "Catwalk",
+                "BallisticMagazine",
+                "BallisticMagazineWeapon",
+                "BallisticBullet",
+                "HitscanWeaponCapacitor",
+                "PowerCell",
+                "AiController",
+                "PlayerInputMover",
+            };
 
-            factory.RegisterIgnore("ToolboxElectricalFill");
-            factory.RegisterIgnore("ToolLockerFill");
-
-            factory.RegisterIgnore("EmitSoundOnUse");
-            factory.RegisterIgnore("FootstepModifier");
-
-            factory.RegisterIgnore("HeatResistance");
-            factory.RegisterIgnore("CombatMode");
-
-            factory.RegisterIgnore("Teleportable");
-            factory.RegisterIgnore("ItemTeleporter");
-            factory.RegisterIgnore("Portal");
-
-            factory.RegisterIgnore("EntityStorage");
-            factory.RegisterIgnore("PlaceableSurface");
-
-            factory.RegisterIgnore("Wirecutter");
-            factory.RegisterIgnore("Screwdriver");
-            factory.RegisterIgnore("Multitool");
-            factory.RegisterIgnore("Welder");
-            factory.RegisterIgnore("Wrench");
-            factory.RegisterIgnore("Crowbar");
-            factory.Register<ClientRangedWeaponComponent>();
-            factory.RegisterIgnore("HitscanWeapon");
-            factory.RegisterIgnore("ProjectileWeapon");
-            factory.RegisterIgnore("Projectile");
-            factory.RegisterIgnore("MeleeWeapon");
-
-            factory.RegisterIgnore("Storeable");
-
-            factory.RegisterIgnore("Stack");
-
-            factory.RegisterIgnore("Dice");
-
-            factory.Register<HandsComponent>();
-            factory.RegisterReference<HandsComponent, IHandsComponent>();
-            factory.Register<ClientStorageComponent>();
-            factory.Register<ClientInventoryComponent>();
-            factory.Register<PowerDebugTool>();
-            factory.Register<ConstructorComponent>();
-            factory.Register<ConstructionGhostComponent>();
-            factory.Register<IconSmoothComponent>();
-            factory.Register<DamageableComponent>();
-            factory.Register<ClothingComponent>();
-            factory.Register<ItemComponent>();
-            factory.Register<MaterialComponent>();
-            factory.Register<SoundComponent>();
-            factory.Register<MaterialStorageComponent>();
-            factory.RegisterReference<MaterialStorageComponent, SharedMaterialStorageComponent>();
-
-            factory.RegisterReference<ClothingComponent, ItemComponent>();
-
-            factory.Register<SpeciesUI>();
-            factory.Register<CharacterInterface>();
-
-            factory.RegisterIgnore("Construction");
-            factory.RegisterIgnore("Apc");
-            factory.RegisterIgnore("Door");
-            factory.RegisterIgnore("PoweredLight");
-            factory.RegisterIgnore("Smes");
-            factory.RegisterIgnore("Powercell");
-            factory.RegisterIgnore("HandheldLight");
-            factory.RegisterIgnore("LightBulb");
-            factory.RegisterIgnore("Healing");
-            factory.RegisterIgnore("Catwalk");
-            factory.RegisterIgnore("BallisticMagazine");
-            factory.RegisterIgnore("BallisticMagazineWeapon");
-            factory.RegisterIgnore("BallisticBullet");
-            factory.RegisterIgnore("HitscanWeaponCapacitor");
-
-            prototypes.RegisterIgnore("material");
-
-            factory.RegisterIgnore("PowerCell");
-
-            factory.Register<SharedSpawnPointComponent>();
+            foreach (var ignoreName in registerIgnore)
+            {
+                factory.RegisterIgnore(ignoreName);
+            }
 
             factory.Register<SharedLatheComponent>();
-            factory.Register<LatheDatabaseComponent>();
+            factory.Register<SharedSpawnPointComponent>();
+            factory.Register<SolutionComponent>();
 
-            factory.RegisterReference<LatheDatabaseComponent, SharedLatheDatabaseComponent>();
-
-            factory.Register<CameraRecoilComponent>();
-            factory.RegisterReference<CameraRecoilComponent, SharedCameraRecoilComponent>();
-
-            factory.Register<SubFloorHideComponent>();
-
-            factory.RegisterIgnore("AiController");
-            factory.RegisterIgnore("PlayerInputMover");
-
-            factory.Register<ExaminerComponent>();
-            factory.Register<CharacterInfoComponent>();
+            prototypes.RegisterIgnore("material");
 
             IoCManager.Register<IGameHud, GameHud>();
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
@@ -186,6 +133,7 @@ namespace Content.Client
 
             _escapeMenuOwner.Initialize();
         }
+
         /// <summary>
         /// Subscribe events to the player manager after the player manager is set up
         /// </summary>
@@ -238,6 +186,7 @@ namespace Content.Client
                     var renderFrameEventArgs = new RenderFrameEventArgs(frameTime);
                     IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(renderFrameEventArgs);
                     IoCManager.Resolve<IClientGameTicker>().FrameUpdate(renderFrameEventArgs);
+                    IoCManager.Resolve<IChatManager>().FrameUpdate(renderFrameEventArgs);
                     break;
             }
         }

@@ -1,22 +1,20 @@
-﻿using Robust.Server.GameObjects;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     /// <summary>
     /// Component that wirelessly connects and powers devices, connects to powernet via node and can be combined with internal storage component
     /// </summary>
+    [RegisterComponent]
+    [ComponentReference(typeof(PowerDeviceComponent))]
     public class PowerProviderComponent : PowerDeviceComponent
     {
         public override string Name => "PowerProvider";

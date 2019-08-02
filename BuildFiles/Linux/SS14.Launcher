@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+exec mono bin/SS14.Launcher.exe

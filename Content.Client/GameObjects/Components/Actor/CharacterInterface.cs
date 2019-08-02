@@ -18,6 +18,7 @@ namespace Content.Client.GameObjects.Components.Actor
     /// A semi-abstract component which gets added to entities upon attachment and collects all character
     /// user interfaces into a single window and keybind for the user
     /// </summary>
+    [RegisterComponent]
     public class CharacterInterface : Component
     {
         public override string Name => "Character Interface Component";

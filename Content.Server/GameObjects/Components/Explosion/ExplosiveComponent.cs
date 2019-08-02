@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Robust.Server.Interfaces.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects;
-using Content.Shared.Maps;
-using Robust.Server.Interfaces.Player;
 
 namespace Content.Server.GameObjects.Components.Explosive
 {
+    [RegisterComponent]
     public class ExplosiveComponent : Component, ITimerTrigger, IDestroyAct
     {
-#pragma warning disable 649        
+#pragma warning disable 649
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
@@ -66,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Explosive
                 if (distanceFromEntity < DevastationRange)
                 {
                     severity = ExplosionSeverity.Destruction;
-                } 
+                }
                 else if (distanceFromEntity < HeavyImpactRange)
                 {
                     severity = ExplosionSeverity.Heavy;

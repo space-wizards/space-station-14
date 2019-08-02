@@ -1,5 +1,8 @@
-﻿namespace Content.Server.GameObjects.Components.Interactable.Tools
+﻿using Robust.Shared.GameObjects;
+
+namespace Content.Server.GameObjects.Components.Interactable.Tools
 {
+    [RegisterComponent]
     public class ScrewdriverComponent : ToolComponent
     {
         /// <summary>

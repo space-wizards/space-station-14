@@ -7,6 +7,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 {
+    [RegisterComponent]
     internal sealed class ToolLockerFillComponent : Component, IMapInit
     {
         public override string Name => "ToolLockerFill";

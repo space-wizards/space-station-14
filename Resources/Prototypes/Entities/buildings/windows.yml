@@ -1,0 +1,30 @@
+- type: entity
+  id: window
+  name: Window
+  description: Don't smudge up the glass down there.
+  components:
+  - type: Clickable
+  - type: Sprite
+    netsync: false
+    drawdepth: WallTops
+    sprite: Buildings/window.rsi
+
+  - type: Icon
+    sprite: Buildings/window.rsi
+    state: window0
+
+  - type: BoundingBox
+  - type: Collidable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 100
+
+  - type: SnapGrid
+    offset: Center
+
+  - type: Window
+    base: window
+
+  placement:
+    snap:
+    - Wall

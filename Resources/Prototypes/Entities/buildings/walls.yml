@@ -1,0 +1,34 @@
+- type: entity
+  id: wall
+  name: Wall
+  components:
+  - type: Clickable
+  - type: Sprite
+    netsync: false
+    color: "#71797a"
+    drawdepth: Walls
+    sprite: Buildings/wall.rsi
+
+  - type: Icon
+    sprite: Buildings/wall.rsi
+    state: full
+
+  - type: BoundingBox
+  - type: Collidable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: girder
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+  - type: SnapGrid
+    offset: Center
+
+  - type: IconSmooth
+    key: walls
+    base: solid
+
+  placement:
+    snap:
+    - Wall
