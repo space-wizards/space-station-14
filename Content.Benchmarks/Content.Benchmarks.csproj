@@ -1,10 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
+    <TargetFramework>$(TargetFramework)</TargetFramework>
     <OutputPath>..\bin\Content.Benchmarks\</OutputPath>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <Platforms>x86;x64</Platforms>
+    <Platforms>x64</Platforms>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
