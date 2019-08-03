@@ -18,6 +18,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -94,7 +95,7 @@ namespace Content.Client.GameTicking
             _gameHud.RootControl.Orphan();
         }
 
-        public void FrameUpdate(RenderFrameEventArgs renderFrameEventArgs)
+        public void FrameUpdate(FrameEventArgs FrameEventArgs)
         {
             if (_lobby == null)
             {

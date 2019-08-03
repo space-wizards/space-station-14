@@ -13,6 +13,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Chat
@@ -90,7 +91,7 @@ namespace Content.Client.Chat
             _speechBubbleRoot.SetPositionFirst();
         }
 
-        public void FrameUpdate(RenderFrameEventArgs delta)
+        public void FrameUpdate(FrameEventArgs delta)
         {
             // Update queued speech bubbles.
             if (_queuedSpeechBubbles.Count == 0)
@@ -106,7 +107,7 @@ namespace Content.Client.Chat
                     continue;
                 }
 
-                queueData.TimeLeft -= delta.Elapsed;
+                queueData.TimeLeft -= delta.DeltaSeconds;
                 if (queueData.TimeLeft > 0)
                 {
                     continue;

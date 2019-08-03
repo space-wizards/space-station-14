@@ -1,6 +1,7 @@
 using Content.Shared.Interfaces;
 using Robust.Client;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Interfaces
 {
@@ -9,6 +10,6 @@ namespace Content.Client.Interfaces
         void Initialize();
         void PopupMessage(ScreenCoordinates coordinates, string message);
         void PopupMessage(string message);
-        void FrameUpdate(RenderFrameEventArgs eventArgs);
+        void FrameUpdate(FrameEventArgs eventArgs);
     }
 }

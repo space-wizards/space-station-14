@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Timers;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Chat
 {
@@ -73,11 +74,11 @@ namespace Content.Client.Chat
             _verticalOffsetAchieved = -ContentHeight;
         }
 
-        protected override void FrameUpdate(RenderFrameEventArgs args)
+        protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
 
-            _timeLeft -= args.Elapsed;
+            _timeLeft -= args.DeltaSeconds;
 
             if (_timeLeft <= FadeTime)
             {
@@ -99,7 +100,7 @@ namespace Content.Client.Chat
             }
             else
             {
-                _verticalOffsetAchieved = FloatMath.Lerp(_verticalOffsetAchieved, VerticalOffset, 10 * args.Elapsed);
+                _verticalOffsetAchieved = FloatMath.Lerp(_verticalOffsetAchieved, VerticalOffset, 10 * args.DeltaSeconds);
             }
 
             var worldPos = _senderEntity.Transform.WorldPosition;
