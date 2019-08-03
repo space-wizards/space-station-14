@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <PropertyGroup>
+    <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
+    <TargetFramework>$(TargetFramework)</TargetFramework>
     <OutputPath>..\bin\Content.IntegrationTests\</OutputPath>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
