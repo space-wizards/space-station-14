@@ -18,22 +18,33 @@ namespace Content.Server.AI
     [AiLogicProcessor("StaticBarker")]
     class StaticBarkerProcessor : AiLogicProcessor
     {
-        [Dependency, UsedImplicitly] private readonly IGameTiming _timeMan;
-        [Dependency, UsedImplicitly] private readonly IChatManager _chatMan;
+#pragma warning disable 649
+        [Dependency] private readonly IGameTiming _timeMan;
+        [Dependency] private readonly IChatManager _chatMan;
+#pragma warning restore 649
 
         private static readonly TimeSpan MinimumDelay = TimeSpan.FromSeconds(15);
-
         private TimeSpan _nextBark;
+
+
+        private static List<string> slogans = new List<string>
+        {
+            "Come try my great products today!",
+            "More value for the way you live.",
+            "Quality you'd expect at prices you wouldn't.",
+            "The right stuff. The right price.",
+        };
 
         public override void Update(float frameTime)
         {
             if(_timeMan.CurTime < _nextBark)
                 return;
-
-            _chatMan.EntitySay(SelfEntity, $"Time: {_timeMan.CurTime.ToString()}");
-
+            
             var rngState = GenSeed();
-            _nextBark = MinimumDelay + TimeSpan.FromSeconds(Random01(ref rngState) * 10);
+            _nextBark = _timeMan.CurTime + MinimumDelay + TimeSpan.FromSeconds(Random01(ref rngState) * 10);
+
+            var pick = (int)Math.Round(Random01(ref rngState) * (slogans.Count - 1));
+            _chatMan.EntitySay(SelfEntity, slogans[pick]);
         }
 
         private uint GenSeed()

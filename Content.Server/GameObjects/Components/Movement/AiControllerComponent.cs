@@ -1,5 +1,6 @@
 ﻿using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Robust.Server.AI;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -36,6 +37,17 @@ namespace Content.Server.GameObjects.Components.Movement
             set => _visionRadius = value;
         }
 
+        /// <inheritdoc />
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            // This component requires a physics component.
+            if (!Owner.HasComponent<PhysicsComponent>())
+                Owner.AddComponent<PhysicsComponent>();
+        }
+
+        /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
