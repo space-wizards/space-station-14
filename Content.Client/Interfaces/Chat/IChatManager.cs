@@ -1,6 +1,7 @@
 using Content.Client.Chat;
 using Robust.Client;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Interfaces.Chat
 {
@@ -8,7 +9,7 @@ namespace Content.Client.Interfaces.Chat
     {
         void Initialize();
 
-        void FrameUpdate(RenderFrameEventArgs delta);
+        void FrameUpdate(FrameEventArgs delta);
 
         void SetChatBox(ChatBox chatBox);
 

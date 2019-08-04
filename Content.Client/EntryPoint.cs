@@ -22,6 +22,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client
 {
@@ -176,17 +177,16 @@ namespace Content.Client
             IoCManager.Resolve<IChatManager>().Initialize();
         }
 
-        public override void Update(ModUpdateLevel level, float frameTime)
+        public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
         {
-            base.Update(level, frameTime);
+            base.Update(level, frameEventArgs);
 
             switch (level)
             {
                 case ModUpdateLevel.FramePreEngine:
-                    var renderFrameEventArgs = new RenderFrameEventArgs(frameTime);
-                    IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(renderFrameEventArgs);
-                    IoCManager.Resolve<IClientGameTicker>().FrameUpdate(renderFrameEventArgs);
-                    IoCManager.Resolve<IChatManager>().FrameUpdate(renderFrameEventArgs);
+                    IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(frameEventArgs);
+                    IoCManager.Resolve<IClientGameTicker>().FrameUpdate(frameEventArgs);
+                    IoCManager.Resolve<IChatManager>().FrameUpdate(frameEventArgs);
                     break;
             }
         }

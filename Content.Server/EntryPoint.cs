@@ -75,11 +75,11 @@ namespace Content.Server
             _gameTicker.Initialize();
         }
 
-        public override void Update(ModUpdateLevel level, float frameTime)
+        public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
         {
-            base.Update(level, frameTime);
+            base.Update(level, frameEventArgs);
 
-            _gameTicker.Update(new FrameEventArgs(frameTime));
+            _gameTicker.Update(frameEventArgs);
         }
     }
 }

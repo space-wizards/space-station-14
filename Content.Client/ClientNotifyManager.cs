@@ -14,6 +14,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client
@@ -69,7 +70,7 @@ namespace Content.Client
             PopupMessage(new ScreenCoordinates(_inputManager.MouseScreenPosition), message);
         }
 
-        public void FrameUpdate(RenderFrameEventArgs eventArgs)
+        public void FrameUpdate(FrameEventArgs eventArgs)
         {
             foreach (var label in _aliveLabels)
             {
@@ -94,9 +95,9 @@ namespace Content.Client
 
             }
 
-            public void Update(RenderFrameEventArgs eventArgs)
+            public void Update(FrameEventArgs eventArgs)
             {
-                _timeLeft += eventArgs.Elapsed;
+                _timeLeft += eventArgs.DeltaSeconds;
                 Position = InitialPos - new Vector2(0, 20 * (_timeLeft * _timeLeft + _timeLeft));
                 if (_timeLeft > 0.5f)
                 {
