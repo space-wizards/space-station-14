@@ -1,7 +1,17 @@
 - type: tile
-  name: floor
-  display_name: Floor
-  texture: "floor_steel"
+  name: floor_carpet
+  display_name: Carpet
+  texture: "carpet"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_carpet
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_dark
+  display_name: Dark floor
+  texture: "dark"
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -9,21 +19,131 @@
   subfloor: plating
 
 - type: tile
-  name: floor_white
-  display_name: White Floor
-  texture: "floor_white"
+  name: floor_elevator_shaft
+  display_name: Elevator shaft
+  texture: "elevator_shaft"
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  friction: 0.1
-  subfloor: underplating
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_freezer
+  display_name: Freezer
+  texture: "freezer"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_hydro
+  display_name: Hydro floor
+  texture: "hydro"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_green_circuit
+  display_name: Green circuit floor
+  texture: "green_circuit"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_lino
+  display_name: Linoleum floor
+  texture: "lino"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_mono
+  display_name: Mono floor
+  texture: "mono"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_reinforced
+  display_name: Reinforced floor
+  texture: "reinforced"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_rock_vault
+  display_name: Rock vault floor
+  texture: "rock_vault"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_showroom
+  display_name: Showroom floor
+  texture: "showroom"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_steel
+  display_name: Steel floor
+  texture: "steel"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  subfloor: plating
+
+- type: tile
+  name: floor_steel_dirty
+  display_name: Dirty steel floor
+  texture: "steel_dirty"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  subfloor: plating
 
 - type: tile
   name: floor_techmaint
   display_name: Techmaint Floor
-  texture: "floor_techmaint"
+  texture: "tech_maint"
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.5
+  subfloor: underplating
+
+- type: tile
+  name: floor_white
+  display_name: White Floor
+  texture: "white"
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.1
   subfloor: underplating

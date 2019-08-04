@@ -23,6 +23,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.Components.Inventory;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -234,9 +235,17 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // Ok well we know the position of the
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
-            var file = _footstepRandom.Pick(soundCollection.PickFiles);
-            _audioSystem.Play(file, coordinates);
+            try
+            {
+                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
+                var file = _footstepRandom.Pick(soundCollection.PickFiles);
+                _audioSystem.Play(file, coordinates);
+            }
+            catch (UnknownPrototypeException)
+            {
+                // Shouldn't crash over a sound
+                Logger.ErrorS("sound", $"Unable to find sound collection for {soundCollectionName}");
+            }
         }
     }
 }
