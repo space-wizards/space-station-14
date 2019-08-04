@@ -1,4 +1,4 @@
-using Content.Client.GameObjects.Components.Weapons.Ranged;
+﻿using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Client.Interfaces.GameObjects;
 using Content.Shared.Input;
 using Robust.Client.GameObjects.EntitySystems;
@@ -37,7 +37,7 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Update(frameTime);
 
             var canFireSemi = _isFirstShot;
-            var state = _inputSystem.CmdStates.GetState(ContentKeyFunctions.UseItemInHand);
+            var state = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
             if (state != BoundKeyState.Down)
             {
                 _isFirstShot = true;

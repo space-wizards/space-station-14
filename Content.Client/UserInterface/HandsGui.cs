@@ -2,6 +2,7 @@
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.Utility;
+using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -9,6 +10,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -201,12 +203,17 @@ namespace Content.Client.UserInterface
             return _handL.Contains((Vector2i) point) || _handR.Contains((Vector2i) point);
         }
 
-        protected override void MouseDown(GUIMouseButtonEventArgs args)
+        protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
-            base.MouseDown(args);
+            base.KeyBindDown(args);
 
-            var leftHandContains = _handL.Contains((Vector2i) args.RelativePosition);
-            var rightHandContains = _handR.Contains((Vector2i) args.RelativePosition);
+            if (!args.CanFocus)
+            {
+                return;
+            }
+
+            var leftHandContains = _handL.Contains((Vector2i)args.RelativePosition);
+            var rightHandContains = _handR.Contains((Vector2i)args.RelativePosition);
 
             string handIndex;
             if (leftHandContains)
@@ -222,7 +229,7 @@ namespace Content.Client.UserInterface
                 return;
             }
 
-            if (args.Button == Mouse.Button.Left)
+            if (args.Function == EngineKeyFunctions.Use)
             {
                 if (!TryGetHands(out var hands))
                     return;
@@ -238,12 +245,12 @@ namespace Content.Client.UserInterface
                 }
             }
 
-            else if (args.Button == Mouse.Button.Middle)
+            else if (args.Function == ContentKeyFunctions.MouseMiddle)
             {
                 SendSwitchHandTo(handIndex);
             }
 
-            else if (args.Button == Mouse.Button.Right)
+            else if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
                 if (!TryGetHands(out var hands))
                 {
@@ -257,7 +264,7 @@ namespace Content.Client.UserInterface
                 }
 
                 var esm = IoCManager.Resolve<IEntitySystemManager>();
-                esm.GetEntitySystem<VerbSystem>().OpenContextMenu(entity, new ScreenCoordinates(args.GlobalPosition));
+                esm.GetEntitySystem<VerbSystem>().OpenContextMenu(entity, new ScreenCoordinates(args.PointerLocation.Position));
             }
         }
     }

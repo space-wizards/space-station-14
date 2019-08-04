@@ -121,9 +121,14 @@ namespace Content.Client.Chat
             AddChild(outerVBox);
         }
 
-        protected override void MouseDown(GUIMouseButtonEventArgs e)
+        protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
-            base.MouseDown(e);
+            base.KeyBindDown(args);
+
+            if (!args.CanFocus)
+            {
+                return;
+            }
 
             Input.GrabKeyboardFocus();
         }

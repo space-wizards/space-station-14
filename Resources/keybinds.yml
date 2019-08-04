@@ -1,78 +1,86 @@
 version: 1 # Not used right now, whatever.
 binds:
+- function: Use
+  type: state
+  key: MouseLeft
+  canFocus: true
 - function: ShowDebugMonitors
+  type: Toggle
   key: F3
-  type: Toggle
 - function: HideUI
-  key: F4
   type: Toggle
+  key: F4
 - function: MoveUp
+  type: State
   key: W
-  type: State
 - function: MoveLeft
+  type: State
   key: A
-  type: State
 - function: MoveRight
+  type: State
   key: D
-  type: State
 - function: MoveDown
+  type: State
   key: S
-  type: State
 - function: Run
+  type: State
   key: Shift
-  type: State
 - function: ShowEscapeMenu
+  type: State
   key: Escape
-  type: State
 - function: FocusChatWindow
+  type: State
   key: T
-  type: State
 - function: EditorLinePlace
-  key: MouseLeft
-  mod1: Shift
   type: State
+  key: MouseLeft
+  canFocus: true
+  mod1: Shift
 - function: EditorGridPlace
-  key: MouseLeft
-  mod1: Control
   type: State
+  key: MouseLeft
+  canFocus: true
+  mod1: Control
 - function: EditorPlaceObject
-  key: MouseLeft
   type: State
+  key: MouseLeft
+  canFocus: true
 - function: EditorCancelPlace
-  key: MouseRight
   type: State
+  key: MouseRight
+  canFocus: true
 - function: EditorRotateObject
+  type: State
   key: MouseMiddle
-  type: State
 - function: SwapHands
+  type: State
   key: X
-  type: State
 - function: Drop
+  type: State
   key: Q
-  type: State
 - function: ActivateItemInHand
+  type: State
   key: Z
-  type: State
 - function: OpenCharacterMenu
+  type: State
   key: C
-  type: State
 - function: ExamineEntity
-  key: MouseLeft
-  mod1: Shift
   type: State
-- function: UseItemInHand
   key: MouseLeft
-  type: state
+  canFocus: true
+  mod1: Shift
 - function: ActivateItemInWorld
+  type: state
   key: E
-  type: state
 - function: ThrowItemInHand
+  type: state
   key: MouseLeft
+  canFocus: true
   mod1: Control
-  type: state
 - function: OpenContextMenu
-  key: MouseRight
   type: state
+  key: MouseRight
+  canFocus: true
 - function: ToggleCombatMode
   type: Toggle
   key: Tab
@@ -85,3 +93,10 @@ binds:
 - function: OpenInventoryMenu
   type: state
   key: I
+- function: ShowDebugConsole
+  type: state
+  key: Tilde
+- function: MouseMiddle
+  type: state
+  key: MouseMiddle
+  canFocus: true

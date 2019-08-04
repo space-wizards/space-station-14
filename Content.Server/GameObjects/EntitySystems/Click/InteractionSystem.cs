@@ -200,7 +200,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Initialize()
         {
             var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.UseItemInHand,
+            inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
                 new PointerInputCmdHandler(HandleUseItemInHand));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
                 new PointerInputCmdHandler(HandleActivateItemInWorld));
