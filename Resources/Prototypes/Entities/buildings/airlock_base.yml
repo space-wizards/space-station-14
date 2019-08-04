@@ -35,4 +35,4 @@
       close_sound: /Audio/machines/airlock_close.ogg
 
   placement:
-    mode: SnapgridBorder
+    mode: SnapgridCenter
