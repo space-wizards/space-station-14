@@ -1,0 +1,12 @@
+- type: entity
+  name: Handcuffs
+  parent: BaseItem
+  id: Handcuffs
+  components:
+  - type: Sprite
+    texture: Objects/handcuffs.png
+  - type: Icon
+    texture: Objects/handcuffs.png
+  - type: MeleeWeapon
+  - type: Item
+    Size: 24
