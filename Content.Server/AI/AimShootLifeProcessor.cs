@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Shared.Physics;
-using JetBrains.Annotations;
 using Robust.Server.AI;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -21,9 +20,11 @@ namespace Content.Server.AI
     [AiLogicProcessor("AimShootLife")]
     class AimShootLifeProcessor : AiLogicProcessor
     {
-        [Dependency, UsedImplicitly] private readonly IPhysicsManager _physMan;
-        [Dependency, UsedImplicitly] private readonly IServerEntityManager _entMan;
-        [Dependency, UsedImplicitly] private readonly IGameTiming _timeMan;
+#pragma warning disable 649
+        [Dependency] private readonly IPhysicsManager _physMan;
+        [Dependency] private readonly IServerEntityManager _entMan;
+        [Dependency] private readonly IGameTiming _timeMan;
+#pragma warning restore 649
 
         private readonly List<IEntity> _workList = new List<IEntity>();
 

@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Physics;
-using JetBrains.Annotations;
 using Robust.Server.AI;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -23,11 +22,13 @@ namespace Content.Server.AI
     [AiLogicProcessor("Wander")]
     class WanderProcessor : AiLogicProcessor
     {
-        [Dependency, UsedImplicitly] private readonly IPhysicsManager _physMan;
-        [Dependency, UsedImplicitly] private readonly IServerEntityManager _entMan;
-        [Dependency, UsedImplicitly] private readonly IGameTiming _timeMan;
-        [Dependency, UsedImplicitly] private readonly IEntitySystemManager _entSysMan;
-        [Dependency, UsedImplicitly] private readonly IChatManager _chatMan;
+#pragma warning disable 649
+        [Dependency] private readonly IPhysicsManager _physMan;
+        [Dependency] private readonly IServerEntityManager _entMan;
+        [Dependency] private readonly IGameTiming _timeMan;
+        [Dependency] private readonly IEntitySystemManager _entSysMan;
+        [Dependency] private readonly IChatManager _chatMan;
+#pragma warning restore 649
 
         private static readonly TimeSpan IdleTimeSpan = TimeSpan.FromSeconds(1);
         private static readonly TimeSpan WalkingTimeout = TimeSpan.FromSeconds(3);

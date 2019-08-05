@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
-using JetBrains.Annotations;
 using Robust.Server.AI;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -17,9 +16,11 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     internal class AiSystem : EntitySystem
     {
-        [Dependency, UsedImplicitly] private readonly IPauseManager _pauseManager;
-        [Dependency, UsedImplicitly] private readonly IDynamicTypeFactory _typeFactory;
-        [Dependency, UsedImplicitly] private readonly IReflectionManager _reflectionManager;
+#pragma warning disable 649
+        [Dependency] private readonly IPauseManager _pauseManager;
+        [Dependency] private readonly IDynamicTypeFactory _typeFactory;
+        [Dependency] private readonly IReflectionManager _reflectionManager;
+#pragma warning restore 649
 
         private readonly Dictionary<string, Type> _processorTypes = new Dictionary<string, Type>();
 
