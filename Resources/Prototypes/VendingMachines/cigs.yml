@@ -1,0 +1,6 @@
+- type: vendingMachineInventory
+  id: Cigarette machine
+  name: Cigarette machine
+  description: A vending machine containing smoking supplies.
+  animationDuration: 2.1
+  spriteName: cigs

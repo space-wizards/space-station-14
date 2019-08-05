@@ -1,0 +1,5 @@
+- type: vendingMachineInventory
+  id: Discount Dan's
+  name: Discount Dan's
+  description: A vending machine containing discount snacks from the infamous 'Discount Dan' franchise.
+  spriteName: discount

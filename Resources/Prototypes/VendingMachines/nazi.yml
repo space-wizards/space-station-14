@@ -1,0 +1,5 @@
+- type: vendingMachineInventory
+  id: Nazivend
+  name: Nazivend
+  description: "A vending machine containing Nazi German supplies. A label reads: \"Remember the gorillions lost.\""
+  spriteName: nazi

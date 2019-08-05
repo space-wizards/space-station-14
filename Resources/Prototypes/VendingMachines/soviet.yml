@@ -1,0 +1,5 @@
+- type: vendingMachineInventory
+  id: KomradeVendtink
+  name: KomradeVendtink
+  description: Rodina-mat' zovyot!
+  spriteName: soviet

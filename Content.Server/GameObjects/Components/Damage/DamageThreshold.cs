@@ -43,7 +43,8 @@ namespace Content.Server.GameObjects
         Destruction,
         Death,
         Critical,
-        HUDUpdate
+        HUDUpdate,
+        Breakage,
     }
 
     public class DamageThresholdPassedEventArgs : EventArgs

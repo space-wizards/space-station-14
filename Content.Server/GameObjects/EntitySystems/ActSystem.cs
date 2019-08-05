@@ -24,6 +24,19 @@ namespace Content.Server.GameObjects.EntitySystems
         public bool IsSpawnWreck { get; set; }
     }
 
+    public class BreakageEventArgs : EventArgs
+    {
+        public IEntity Owner { get; set; }
+    }
+
+    public interface IBreakAct
+    {
+        /// <summary>
+        /// Called when object is broken
+        /// </summary>
+        void OnBreak(BreakageEventArgs eventArgs);
+    }
+
     public interface IExAct
     {
         /// <summary>
@@ -71,6 +84,19 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var exAct in exActs)
             {
                 exAct.OnExplosion(eventArgs);
+            }
+        }
+
+        public void HandleBreakage(IEntity owner)
+        {
+            var eventArgs = new BreakageEventArgs
+            {
+                Owner = owner,
+            };
+            var breakActs = owner.GetAllComponents<IBreakAct>().ToList();
+            foreach (var breakAct in breakActs)
+            {
+                breakAct.OnBreak(eventArgs);
             }
         }
     }
