@@ -100,3 +100,34 @@ binds:
   type: state
   key: MouseMiddle
   canFocus: true
+- function: TextCursorLeft
+  type: state
+  key: Left
+- function: TextCursorRight
+  type: state
+  key: Right
+- function: TextBackspace
+  type: state
+  key: BackSpace
+- function: TextSubmit
+  type: state
+  key: Return
+- function: TextSubmit
+  type: state
+  key: NumpadEnter
+- function: TextPaste
+  type: state
+  key: V
+  mod1: Control
+- function: TextHistoryPrev
+  type: state
+  key: Up
+- function: TextHistoryNext
+  type: state
+  key: Down
+- function: TextReleaseFocus
+  type: state
+  key: Escape
+- function: TextScrollToBottom
+  type: state
+  key: PageDown
