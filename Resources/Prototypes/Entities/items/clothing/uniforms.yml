@@ -108,3 +108,20 @@
 
   - type: Clothing
     sprite: Clothing/uniform_sec.rsi
+
+- type: entity
+  parent: UniformBase
+  id: UniformChef
+  name: Chef's Uniform
+  description: Can't cook without this.
+  components:
+  - type: Sprite
+    sprite: Clothing/chef_uniform.rsi
+    state: chef
+
+  - type: Icon
+    sprite: Clothing/chef_uniform.rsi
+    state: chef
+
+  - type: Clothing
+    sprite: Clothing/chef_uniform.rsi    

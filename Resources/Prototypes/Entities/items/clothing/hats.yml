@@ -1,0 +1,25 @@
+- type: entity
+  parent: Clothing
+  id: HatBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots: [helmet]
+
+
+- type: entity
+  parent: HatBase
+  id: HatChef
+  name: Chef's Hat
+  description: It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work.
+  components:
+  - type: Sprite
+    sprite: Clothing/chef_hat.rsi
+    state: chef
+  - type: Icon
+    sprite: Clothing/chef_hat.rsi
+    state: chef
+  - type: Clothing
+    sprite: Clothing/chef_hat.rsi
+    Slots:
+      - helmet
