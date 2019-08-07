@@ -27,7 +27,8 @@ namespace Content.Client.GameObjects
             AddChild(Button = new TextureButton
             {
                 TextureNormal = texture,
-                Scale = (2, 2)
+                Scale = (2, 2),
+                NonFocusKeybinds = true
             });
 
             Button.OnPressed += e => OnPressed?.Invoke(e);
@@ -44,7 +45,8 @@ namespace Content.Client.GameObjects
                 Scale = (0.75f, 0.75f),
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                 SizeFlagsVertical = SizeFlags.ShrinkEnd,
-                Visible = false
+                Visible = false,
+                NonFocusKeybinds = true
             });
 
             StorageButton.OnPressed += e => OnStoragePressed?.Invoke(e);

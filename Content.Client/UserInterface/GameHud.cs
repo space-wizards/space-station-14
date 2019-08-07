@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.Utility;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
