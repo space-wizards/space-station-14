@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using Nett;
 using SixLabors.ImageSharp;
@@ -7,9 +8,9 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.Primitives;
 using Robust.Client.Utility;
 using Robust.Shared.Interfaces.Log;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Noise;
+using SixLabors.ImageSharp.Advanced;
 using BlendFactor = Robust.Shared.Maths.Color.BlendFactor;
 
 namespace Content.Client.Parallax
@@ -24,6 +25,9 @@ namespace Content.Client.Parallax
             var generator = new ParallaxGenerator();
             generator._loadConfig(config);
 
+            sawmill.Debug("Timing start!");
+            var sw = new Stopwatch();
+            sw.Start();
             var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, Rgba32.Black);
             var count = 0;
             foreach (var layer in generator.Layers)
@@ -31,6 +35,9 @@ namespace Content.Client.Parallax
                 layer.Apply(image);
                 sawmill.Debug("Layer {0} done!", count++);
             }
+
+            sw.Stop();
+            sawmill.Debug("Total time: {0}", sw.Elapsed.TotalSeconds);
 
             return image;
         }
@@ -69,12 +76,12 @@ namespace Content.Client.Parallax
             private readonly Color OuterColor = Color.Black;
             private readonly NoiseGenerator.NoiseType NoiseType = NoiseGenerator.NoiseType.Fbm;
             private readonly uint Seed = 1234;
-            private readonly double Persistence = 0.5;
-            private readonly double Lacunarity = Math.PI * 2 / 3;
-            private readonly double Frequency = 1;
+            private readonly float Persistence = 0.5f;
+            private readonly float Lacunarity = (float) (Math.PI * 2 / 3);
+            private readonly float Frequency = 1;
             private readonly uint Octaves = 3;
-            private readonly double Threshold;
-            private readonly double Power = 1;
+            private readonly float Threshold;
+            private readonly float Power = 1;
             private readonly BlendFactor SrcFactor = BlendFactor.One;
             private readonly BlendFactor DstFactor = BlendFactor.One;
 
@@ -97,17 +104,17 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("persistence", out tomlObject))
                 {
-                    Persistence = double.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
+                    Persistence = float.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
                 }
 
                 if (table.TryGetValue("lacunarity", out tomlObject))
                 {
-                    Lacunarity = double.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
+                    Lacunarity = float.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
                 }
 
                 if (table.TryGetValue("frequency", out tomlObject))
                 {
-                    Frequency = double.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
+                    Frequency = float.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
                 }
 
                 if (table.TryGetValue("octaves", out tomlObject))
@@ -117,7 +124,7 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("threshold", out tomlObject))
                 {
-                    Threshold = double.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
+                    Threshold = float.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
                 }
 
                 if (table.TryGetValue("sourcefactor", out tomlObject))
@@ -132,7 +139,7 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("power", out tomlObject))
                 {
-                    Power = double.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
+                    Power = float.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
                 }
 
                 if (table.TryGetValue("noise_type", out tomlObject))
@@ -163,9 +170,12 @@ namespace Content.Client.Parallax
                 noise.SetPeriodY(bitmap.Height);
                 var threshVal = 1 / (1 - Threshold);
                 var powFactor = 1 / Power;
-                for (var x = 0; x < bitmap.Width; x++)
+
+                var span = bitmap.GetPixelSpan();
+
+                for (var y = 0; y < bitmap.Height; y++)
                 {
-                    for (var y = 0; y < bitmap.Height; y++)
+                    for (var x = 0; x < bitmap.Width; x++)
                     {
                         // Do noise calculations.
                         var noiseVal = Math.Min(1, Math.Max(0, (noise.GetNoiseTiled(x, y) + 1) / 2));
@@ -173,15 +183,16 @@ namespace Content.Client.Parallax
                         // Threshold
                         noiseVal = Math.Max(0, noiseVal - Threshold);
                         noiseVal *= threshVal;
-                        noiseVal = Math.Pow(noiseVal, powFactor);
+                        noiseVal = (float) Math.Pow(noiseVal, powFactor);
 
                         // Get colors based on noise values.
-                        var srcColor = Color.InterpolateBetween(InnerColor, OuterColor, (float) noiseVal)
-                            .WithAlpha((float) noiseVal);
+                        var srcColor = Color.InterpolateBetween(OuterColor, InnerColor, noiseVal)
+                            .WithAlpha(noiseVal);
 
                         // Apply blending factors & write back.
-                        var dstColor = bitmap[x, y].ConvertImgSharp();
-                        bitmap[x, y] = Color.Blend(dstColor, srcColor, DstFactor, SrcFactor).ConvertImgSharp();
+                        var i = y * bitmap.Width + x;
+                        var dstColor = span[i].ConvertImgSharp();
+                        span[i] = Color.Blend(dstColor, srcColor, DstFactor, SrcFactor).ConvertImgSharp();
                     }
                 }
             }
@@ -202,13 +213,13 @@ namespace Content.Client.Parallax
             private readonly bool Masked;
             private readonly NoiseGenerator.NoiseType MaskNoiseType = NoiseGenerator.NoiseType.Fbm;
             private readonly uint MaskSeed = 1234;
-            private readonly double MaskPersistence = 0.5;
-            private readonly double MaskLacunarity = Math.PI * 2 / 3;
-            private readonly double MaskFrequency = 1;
+            private readonly float MaskPersistence = 0.5f;
+            private readonly float MaskLacunarity = (float) Math.PI * 2 / 3;
+            private readonly float MaskFrequency = 1;
             private readonly uint MaskOctaves = 3;
-            private readonly double MaskThreshold;
+            private readonly float MaskThreshold;
             private readonly int PointSize = 1;
-            private readonly double MaskPower = 1;
+            private readonly float MaskPower = 1;
 
 
             public LayerPoints(TomlTable table)
@@ -261,17 +272,17 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("maskpersistence", out tomlObject))
                 {
-                    MaskPersistence = double.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
+                    MaskPersistence = float.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
                 }
 
                 if (table.TryGetValue("masklacunarity", out tomlObject))
                 {
-                    MaskLacunarity = double.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
+                    MaskLacunarity = float.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
                 }
 
                 if (table.TryGetValue("maskfrequency", out tomlObject))
                 {
-                    MaskFrequency = double.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
+                    MaskFrequency = float.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
                 }
 
                 if (table.TryGetValue("maskoctaves", out tomlObject))
@@ -281,7 +292,7 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("maskthreshold", out tomlObject))
                 {
-                    MaskThreshold = double.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
+                    MaskThreshold = float.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
                 }
 
                 if (table.TryGetValue("masknoise_type", out tomlObject))
@@ -301,7 +312,7 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("maskpower", out tomlObject))
                 {
-                    MaskPower = double.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
+                    MaskPower = float.Parse(tomlObject.Get<string>(), CultureInfo.InvariantCulture);
                 }
             }
 
@@ -319,14 +330,22 @@ namespace Content.Client.Parallax
                     GenPoints(buffer);
                 }
 
-                for (var x = 0; x < bitmap.Width; x++)
-                {
-                    for (var y = 0; y < bitmap.Height; y++)
-                    {
-                        var dstColor = bitmap[x, y].ConvertImgSharp();
-                        var srcColor = buffer[x, y].ConvertImgSharp();
+                var srcSpan = buffer.GetPixelSpan();
+                var dstSpan = bitmap.GetPixelSpan();
 
-                        bitmap[x, y] = Color.Blend(dstColor, srcColor, DstFactor, SrcFactor).ConvertImgSharp();
+                var width = bitmap.Width;
+                var height = bitmap.Height;
+
+                for (var y = 0; y < height; y++)
+                {
+                    for (var x = 0; x < width; x++)
+                    {
+                        var i = y * width + x;
+
+                        var dstColor = dstSpan[i].ConvertImgSharp();
+                        var srcColor = srcSpan[i].ConvertImgSharp();
+
+                        dstSpan[i] = Color.Blend(dstColor, srcColor, DstFactor, SrcFactor).ConvertImgSharp();
                     }
                 }
             }
@@ -335,28 +354,30 @@ namespace Content.Client.Parallax
             {
                 var o = PointSize - 1;
                 var random = new Random(Seed);
+                var span = buffer.GetPixelSpan();
+
                 for (var i = 0; i < PointCount; i++)
                 {
-                    var relX = random.NextDouble();
-                    var relY = random.NextDouble();
+                    var x = random.Next(0, buffer.Width);
+                    var y = random.Next(0, buffer.Height);
 
-                    var x = (int) (relX * buffer.Width);
-                    var y = (int) (relY * buffer.Height);
+                    var dist = random.NextFloat();
 
-                    var dist = random.NextDouble();
-
-                    for (var ox = x - o; ox <= x + o; ox++)
+                    for (var oy = y - o; oy <= y + o; oy++)
                     {
-                        for (var oy = y - o; oy <= y + o; oy++)
+                        for (var ox = x - o; ox <= x + o; ox++)
                         {
-                            var color = Color.InterpolateBetween(FarColor, CloseColor, (float) dist).ConvertImgSharp();
-                            buffer[MathHelper.Mod(ox, buffer.Width), MathHelper.Mod(oy, buffer.Width)] = color;
+                            var ix = MathHelper.Mod(ox, buffer.Width);
+                            var iy = MathHelper.Mod(oy, buffer.Height);
+
+                            var color = Color.InterpolateBetween(FarColor, CloseColor, dist).ConvertImgSharp();
+                            span[iy * buffer.Width + ix] = color;
                         }
                     }
                 }
             }
 
-            void GenPointsMasked(Image<Rgba32> buffer)
+            private void GenPointsMasked(Image<Rgba32> buffer)
             {
                 var o = PointSize - 1;
                 var random = new Random(Seed);
@@ -375,22 +396,21 @@ namespace Content.Client.Parallax
                 const int maxPointAttemptCount = 9999;
                 var pointAttemptCount = 0;
 
+                var span = buffer.GetPixelSpan();
+
                 for (var i = 0; i < PointCount; i++)
                 {
-                    var relX = random.NextDouble();
-                    var relY = random.NextDouble();
-
-                    var x = (int) (relX * buffer.Width);
-                    var y = (int) (relY * buffer.Height);
+                    var x = random.Next(0, buffer.Width);
+                    var y = random.Next(0, buffer.Height);
 
                     // Grab noise at this point.
                     var noiseVal = Math.Min(1, Math.Max(0, (noise.GetNoiseTiled(x, y) + 1) / 2));
                     // Threshold
                     noiseVal = Math.Max(0, noiseVal - MaskThreshold);
                     noiseVal *= threshVal;
-                    noiseVal = Math.Pow(noiseVal, powFactor);
+                    noiseVal = (float) Math.Pow(noiseVal, powFactor);
 
-                    var randomThresh = random.NextDouble();
+                    var randomThresh = random.NextFloat();
                     if (randomThresh > noiseVal)
                     {
                         if (++pointAttemptCount <= maxPointAttemptCount)
@@ -401,14 +421,17 @@ namespace Content.Client.Parallax
                         continue;
                     }
 
-                    var dist = random.NextDouble();
+                    var dist = random.NextFloat();
 
-                    for (var ox = x - o; ox <= x + o; ox++)
+                    for (var oy = y - o; oy <= y + o; oy++)
                     {
-                        for (var oy = y - o; oy <= y + o; oy++)
+                        for (var ox = x - o; ox <= x + o; ox++)
                         {
-                            var color = Color.InterpolateBetween(FarColor, CloseColor, (float) dist).ConvertImgSharp();
-                            buffer[MathHelper.Mod(ox, buffer.Width), MathHelper.Mod(oy, buffer.Height)] = color;
+                            var ix = MathHelper.Mod(ox, buffer.Width);
+                            var iy = MathHelper.Mod(oy, buffer.Height);
+
+                            var color = Color.InterpolateBetween(FarColor, CloseColor, dist).ConvertImgSharp();
+                            span[iy * buffer.Width + ix] = color;
                         }
                     }
                 }

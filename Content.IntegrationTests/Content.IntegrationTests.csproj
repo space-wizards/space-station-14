@@ -29,5 +29,5 @@
   <PropertyGroup>
     <RobustToolsPath>..\RobustToolbox\Tools\</RobustToolsPath>
   </PropertyGroup>
-  <Target Name="RobustAfterBuild" DependsOnTargets="CopySS14Noise;CopyMiscDependencies;CopySwnfd" AfterTargets="Build" />
+  <Target Name="RobustAfterBuild" DependsOnTargets="CopyMiscDependencies;CopySwnfd" AfterTargets="Build" />
 </Project>
