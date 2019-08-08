@@ -28,7 +28,7 @@
   parent: HatBase
   id: HatCaptain
   name: Captain's Hat
-  description: It's good being the king.
+  description: It's good to be king.
   components:
   - type: Sprite
     sprite: Clothing/captain_hat.rsi
