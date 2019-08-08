@@ -23,3 +23,20 @@
     sprite: Clothing/chef_hat.rsi
     Slots:
       - helmet
+
+- type: entity
+  parent: HatBase
+  id: HatCaptain
+  name: Captain's Hat
+  description: It's good being the king.
+  components:
+  - type: Sprite
+    sprite: Clothing/captain_hat.rsi
+    state: captain
+  - type: Icon
+    sprite: Clothing/captain_hat.rsi
+    state: captain
+  - type: Clothing
+    sprite: Clothing/captain_hat.rsi
+    Slots:
+      - helmet
