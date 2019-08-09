@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects
             {
                 TextureNormal = texture,
                 Scale = (2, 2),
-                NonFocusKeybinds = true
+                EnableAllKeybinds = true
             });
 
             Button.OnPressed += e => OnPressed?.Invoke(e);
@@ -46,7 +46,7 @@ namespace Content.Client.GameObjects
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                 SizeFlagsVertical = SizeFlags.ShrinkEnd,
                 Visible = false,
-                NonFocusKeybinds = true
+                EnableAllKeybinds = true
             });
 
             StorageButton.OnPressed += e => OnStoragePressed?.Invoke(e);
