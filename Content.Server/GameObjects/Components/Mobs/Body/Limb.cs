@@ -16,11 +16,6 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
     /// </summary>
     public class Limb : BodyPart
     {
-#pragma warning disable CS0649
-        [Dependency]
-        protected IPrototypeManager PrototypeManager;
-#pragma warning restore
-
         public string TexturePath { get; private set; }
         public string Parent { get; private set; }
 
@@ -95,20 +90,8 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public override void HandleDamage(int damage) //TODO: test prob numbers, and add targetting!
         {
-            if (CurrentHealth - damage < 0)
-            {
-                CurrentHealth = 0;
-            } 
-            else if (CurrentHealth - damage > MaxHealth)
-            {
-                CurrentHealth = MaxHealth;
-            }
-            else
-            {
-                CurrentHealth -= damage;
-            }
-
-            if(Organs.Count == 0)
+            CurrentHealth = (CurrentHealth - damage).Clamp(0, MaxHealth);
+            if (Organs.Count == 0)
             {
                 return;
             }

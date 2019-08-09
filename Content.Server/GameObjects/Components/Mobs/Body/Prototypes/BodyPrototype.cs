@@ -45,14 +45,14 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             }
         }
 
-        public BodyTemplate Create()
+        public BodyInstance Create()
         {
             if (string.IsNullOrEmpty(ClassName))
             {
                 throw new InvalidOperationException("Organ doesn't have an instance to create.");
             }
             Type newtype = reflectionManager.GetType("Content.Server.GameObjects.Components.Mobs.Body." + ClassName);
-            var body = (BodyTemplate)Activator.CreateInstance(newtype);
+            var body = (BodyInstance)Activator.CreateInstance(newtype);
             body.DataFromPrototype(this);
             return body;
         }

@@ -10,11 +10,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameObjects.Components.Mobs.Body
 {
     /// <summary>
-    ///    Core of the mobcode. It glues all the shitcode with limbs, organs 
-    ///    and body functions together with DAMAGE, making frankensteins that we call Mobs
+    ///    Core of the mobcode. Damage to bodyparts is handled here, as well as calling bodypart functions on specific gameticks.
     /// </summary>
 
-    public class BodyTemplate
+    public class BodyInstance
     {
 #pragma warning disable CS0649
         [Dependency]
@@ -36,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         /// <summary>
         /// helper list to assign children to BodyMap
         /// </summary>
-        private List<Limb> Limbs;
+        private List<Limb> _helperLimbs;
 
 
 
@@ -48,21 +47,15 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         /// <summary>
         /// List of YAML strings which inits all the limbs
         /// </summary>
-        private List<string> _limbProts;
+        private BodyPrototype _prototype;
 
-        Random _randomLimb
-        {
-            get 
-            {
-                return new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
-            }
-        }
+        Random _randomLimb;
 
         public void DataFromPrototype(BodyPrototype prototype)
         {
-            Name = prototype.Name;
-            Id = prototype.Id;
-            _limbProts = prototype.LimbPrototypes;
+            _prototype = prototype;
+            Name = _prototype.Name;
+            Id = _prototype.Id;
         }
 
         public void Initialize(IEntity owner, IPrototypeManager prototypeManager)
@@ -70,24 +63,18 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
             Owner = owner;
             PrototypeManager = prototypeManager;
             TimeSinceUpdate = 0;
-            Limbs = new List<Limb>();
-            foreach (var limbProtKey in _limbProts)
+            _randomLimb = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
+            _helperLimbs = new List<Limb>();
+            foreach (var limbProtKey in _prototype.LimbPrototypes)
             {
-                if (PrototypeManager.TryIndex<LimbPrototype>(limbProtKey, out var limbProt))
-                {
-                    var limb = limbProt.Create();
-                    limb.Initialize(Owner, this);
-                    Limbs.Add(limb);
-                }
+                var limbProt = PrototypeManager.Index<LimbPrototype>(limbProtKey);
+                var limb = limbProt.Create();
+                limb.Initialize(Owner, this);
+                _helperLimbs.Add(limb);
             }
-            FillTheLists();
-        }
-
-        private void FillTheLists()
-        {
             BodyMap = new List<Limb>();
             AllBodyParts = new List<BodyPart>();
-            foreach (var limb in Limbs)
+            foreach (var limb in _helperLimbs)
             {
                 limb.Children = new List<Limb>();
                 var children = FindChildren(limb.Id);
@@ -100,23 +87,20 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
                 foreach (var organProtKey in limb.OrganPrototypes)
                 {
-                    if (PrototypeManager.TryIndex<OrganPrototype>(organProtKey, out var organProt))
-                    {
-                        var organ = organProt.Create();
-                        organ.Initialize(Owner, this);
-                        limb.Organs.Add(organ);
-                        AllBodyParts.Add(organ);
-                    }
+                    var organProt = PrototypeManager.Index<OrganPrototype>(organProtKey);
+                    var organ = organProt.Create();
+                    organ.Initialize(Owner, this);
+                    limb.Organs.Add(organ);
+                    AllBodyParts.Add(organ);
                 }
-
             }
-            Limbs = null;
+            _helperLimbs = null;
         }
 
         private List<Limb> FindChildren(string parentTag)
         {
             var list = new List<Limb>();
-            foreach (var limb in Limbs)
+            foreach (var limb in _helperLimbs)
             {
                 if (!string.IsNullOrEmpty(limb.Parent) && limb.Parent == parentTag)
                 {
@@ -128,9 +112,17 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 
         public void RemovePart(BodyPart part)
         {
-            if (part is Limb)
+            if (part is Limb limb)
             {
-                BodyMap.Remove((Limb)part);
+                var children = FindChildren(limb.Id);
+                if (children.Count > 0)
+                {
+                    foreach (var child in children)
+                    {
+                        RemovePart(child);
+                    }
+                }
+                BodyMap.Remove(limb);
             }
             AllBodyParts.Remove(part);
         }

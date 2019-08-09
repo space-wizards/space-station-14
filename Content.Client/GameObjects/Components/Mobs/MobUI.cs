@@ -164,9 +164,9 @@ namespace Content.Client.GameObjects
                 }
 
                 Texture = newtexture;
-                if (System.Math.Abs(limb.Color.A) > float.Epsilon)
+                if (limb.Color.HasValue == true)
                 {
-                    Modulate = limb.Color;
+                    Modulate = limb.Color.Value;
                 }
             }
         }

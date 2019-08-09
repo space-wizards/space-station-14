@@ -7,13 +7,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
 {
     public abstract class BodyPart
     {
-        protected Random _seed
-        {
-            get
-            {
-                return new Random(DateTime.Now.GetHashCode() ^ Owner.GetHashCode());
-            }
-        }
+        protected Random _seed;
 
         public string Name { get; protected set; }
         public string Id { get; protected set; }
@@ -27,30 +21,32 @@ namespace Content.Server.GameObjects.Components.Mobs.Body
         {
             get
             {
-                switch ((float)CurrentHealth)
+                switch (CurrentHealth)
                 {
-                    case float n when (n > (float)MaxHealth * 0.9f):
+                    case int n when (n > MaxHealth * 0.9f):
                         return BodyPartState.Healthy;
-                    case float n when (n <= (float)MaxHealth * 0.9f && n > (float)MaxHealth * 0.75f):
+                    case int n when (n <= MaxHealth * 0.9f && n > MaxHealth * 0.75f):
                         return BodyPartState.InjuredLightly;
-                    case float n when (n <= (float)MaxHealth * 0.5f && n > (float)MaxHealth * 0.25f):
+                    case int n when (n <= MaxHealth * 0.5f && n > MaxHealth * 0.25f):
                         return BodyPartState.Injured;
-                    case float n when (n <= (float)MaxHealth / 0.25f && Math.Abs(n) > float.Epsilon):
+                    case int n when (n <= MaxHealth / 0.25f && n > 0):
                         return BodyPartState.InjuredSeverely;
-                    case float n when (Math.Abs(n) < float.Epsilon):
+                    case int n when (n == 0):
                         return BodyPartState.Dead;
                 }
                 return BodyPartState.Dead;
             }
         }
         public IEntity Owner { get; private set; }
-        public BodyTemplate BodyOwner { get; private set; }
+        public BodyInstance BodyOwner { get; private set; }
 
-        public void Initialize(IEntity entity, BodyTemplate body)
+        public void Initialize(IEntity entity, BodyInstance body)
         {
             Owner = entity;
             BodyOwner = body;
+            _seed = new Random(DateTime.Now.GetHashCode() ^ Owner.GetHashCode() ^ Name.GetHashCode() ^ Id.GetHashCode());
             GibletEntity = _seed.Pick(new List<string> { "Gib01", "Gib02", "Gib03", "Gib04", "Gib05" });
+
             StartUp();
         }
 

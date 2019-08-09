@@ -11,7 +11,7 @@ using Content.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
-    public class BodyComponent : Component, IExAct, IOnDamageReceived, IOnLife
+    public class BodyComponent : Component, IExAct, IOnDamageReceived
     {
 #pragma warning disable CS0649
         [Dependency]
@@ -20,16 +20,10 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public override string Name => "Body";
 
-        public BodyTemplate Body;
+        public BodyInstance Body;
         private string bodyProto;
 
-        Random Seed
-        {
-            get
-            {
-                return new Random(DateTime.Now.GetHashCode() ^ Owner.GetHashCode());
-            }
-        }
+        Random Seed;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -42,9 +36,10 @@ namespace Content.Server.GameObjects.Components.Mobs
             base.Initialize();
             Body = PrototypeManager.Index<BodyPrototype>(bodyProto).Create();
             Body.Initialize(Owner, PrototypeManager);
+            Seed = new Random(DateTime.Now.GetHashCode() ^ Owner.GetHashCode());
         }
 
-        void IOnLife.OnUpdate(float frameTime)
+        void Update(float frameTime)
         {
             Body.Life(frameTime);
         }

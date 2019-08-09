@@ -32,15 +32,12 @@ namespace Content.Shared.GameObjects
     public class LimbRender
     {
         public string Name;
-        public Color Color;
+        public Color? Color;
 
-        public LimbRender(string name, Nullable<Color> color = null)
+        public LimbRender(string name, Color? color = null)
         {
             Name = name;
-            if (color.HasValue)
-            {
-                Color = color.Value;
-            }
+            Color = color;
         }
     }
 }

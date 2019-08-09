@@ -17,28 +17,23 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
-
+using Content.Server.GameObjects.Components.Mobs;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public interface IOnLife
-    {
-        void OnUpdate(float frameTime);
-    }
-
-    public class LifeSystem : EntitySystem
+    public class BodySystem : EntitySystem
     {
         public override void Initialize()
         {
-            EntityQuery = new TypeEntityQuery(typeof(IOnLife));
+            EntityQuery = new TypeEntityQuery(typeof(BodyComponent));
         }
 
         public override void Update(float frameTime)
         {
             foreach (var entity in RelevantEntities)
             {
-                var comp = entity.GetComponent<IOnLife>();
-                comp.OnUpdate(frameTime);
+                var comp = entity.GetComponent<BodyComponent>();
+                comp.Update(frameTime);
             }
         }
     }
