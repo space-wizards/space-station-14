@@ -124,4 +124,21 @@
     state: chef
 
   - type: Clothing
-    sprite: Clothing/chef_uniform.rsi    
+    sprite: Clothing/chef_uniform.rsi
+
+- type: entity
+  parent: UniformBase
+  id: UniformCaptain
+  name: Captain's Jumpsuit
+  description: It's a blue jumpsuit with some gold markings denoting the rank of "Captain".
+  components:
+  - type: Sprite
+    sprite: Clothing/captain_uniform.rsi
+    state: captain
+
+  - type: Icon
+    sprite: Clothing/captain_uniform.rsi
+    state: captain
+
+  - type: Clothing
+    sprite: Clothing/captain_uniform.rsi            

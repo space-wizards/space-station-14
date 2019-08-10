@@ -83,3 +83,21 @@
   - type: Sound
   - type: FootstepModifier
     footstepSoundCollection: footstep_heavy
+
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesBrown
+  name: Brown Shoes
+  description: A pair of brown shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/shoes_brown.rsi
+    state: brown
+
+  - type: Icon
+    sprite: Clothing/shoes_brown.rsi
+    state: brown
+
+  - type: Clothing
+    sprite: Clothing/shoes_brown.rsi
