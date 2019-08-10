@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
-            EntityQuery = new TypeEntityQuery(typeof(PlayerInputMoverComponent));
+            EntityQuery = new TypeEntityQuery(typeof(IMoverComponent));
             
             var moveUpCmdHandler = InputCmdHandler.FromDelegate(
                 session => HandleDirChange(session, Direction.North, true),
@@ -117,14 +117,14 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     continue;
                 }
-                var mover = entity.GetComponent<PlayerInputMoverComponent>();
+                var mover = entity.GetComponent<IMoverComponent>();
                 var physics = entity.GetComponent<PhysicsComponent>();
 
                 UpdateKinematics(entity.Transform, mover, physics);
             }
         }
 
-        private void UpdateKinematics(ITransformComponent transform, PlayerInputMoverComponent mover, PhysicsComponent physics)
+        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics)
         {
             if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
             {
