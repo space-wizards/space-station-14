@@ -1,4 +1,13 @@
 - type: sound_collection
+  id: footstep_carpet
+  files:
+  - /Audio/effects/footsteps/carpet1.ogg
+  - /Audio/effects/footsteps/carpet2.ogg
+  - /Audio/effects/footsteps/carpet3.ogg
+  - /Audio/effects/footsteps/carpet4.ogg
+  - /Audio/effects/footsteps/carpet5.ogg
+
+- type: sound_collection
   id: footstep_catwalk
   files:
   - /Audio/effects/footsteps/catwalk1.ogg
@@ -17,6 +26,15 @@
   - /Audio/effects/footsteps/floor5.ogg
 
 - type: sound_collection
+  id: footstep_hull
+  files:
+  - /Audio/effects/footsteps/hull1.ogg
+  - /Audio/effects/footsteps/hull2.ogg
+  - /Audio/effects/footsteps/hull3.ogg
+  - /Audio/effects/footsteps/hull4.ogg
+  - /Audio/effects/footsteps/hull5.ogg
+
+- type: sound_collection
   id: footstep_plating
   files:
   - /Audio/effects/footsteps/plating1.ogg
@@ -24,6 +42,15 @@
   - /Audio/effects/footsteps/plating3.ogg
   - /Audio/effects/footsteps/plating4.ogg
   - /Audio/effects/footsteps/plating5.ogg
+
+- type: sound_collection
+  id: footstep_tile
+  files:
+  - /Audio/effects/footsteps/tile1.ogg
+  - /Audio/effects/footsteps/tile2.ogg
+  - /Audio/effects/footsteps/tile3.ogg
+  - /Audio/effects/footsteps/tile4.ogg
+  - /Audio/effects/footsteps/tile5.ogg
 
 - type: sound_collection
   id: footstep_clown
