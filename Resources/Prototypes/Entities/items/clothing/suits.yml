@@ -41,3 +41,35 @@
 
   - type: Clothing
     sprite: Clothing/vest_hazard.rsi
+
+- type: entity
+  parent: SuitBase
+  id: ChefApronClothing
+  name: Chef's Apron
+  description: An apron used by a high class chef.
+  components:
+  - type: Sprite
+    sprite: Clothing/chef_apron.rsi
+    state: apron
+
+  - type: Icon
+    sprite: Clothing/chef_apron.rsi
+    state: apron
+
+  - type: Clothing
+    sprite: Clothing/chef_apron.rsi
+
+- type: entity
+  parent: SuitBase
+  id: BeltSuspenders
+  name: Suspenders
+  description: They suspend the illusion of the mime's play.
+  components:
+  - type: Sprite
+    sprite: Clothing/suspenders.rsi
+    state: suspenders
+  - type: Icon
+    sprite: Clothing/suspenders.rsi
+    state: suspenders
+  - type: Clothing
+    sprite: Clothing/suspenders.rsi

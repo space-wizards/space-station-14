@@ -20,9 +20,11 @@ namespace Content.Server.AI
     [AiLogicProcessor("AimShootLife")]
     class AimShootLifeProcessor : AiLogicProcessor
     {
-        private readonly IPhysicsManager _physMan;
-        private readonly IServerEntityManager _entMan;
-        private readonly IGameTiming _timeMan;
+#pragma warning disable 649
+        [Dependency] private readonly IPhysicsManager _physMan;
+        [Dependency] private readonly IServerEntityManager _entMan;
+        [Dependency] private readonly IGameTiming _timeMan;
+#pragma warning restore 649
 
         private readonly List<IEntity> _workList = new List<IEntity>();
 
@@ -31,16 +33,6 @@ namespace Content.Server.AI
         private float _lastScan;
 
         private IEntity _curTarget;
-
-        /// <summary>
-        ///     Creates an instance of this LogicProcessor.
-        /// </summary>
-        public AimShootLifeProcessor()
-        {
-            _physMan = IoCManager.Resolve<IPhysicsManager>();
-            _entMan = IoCManager.Resolve<IServerEntityManager>();
-            _timeMan = IoCManager.Resolve<IGameTiming>();
-        }
 
         /// <inheritdoc />
         public override void Update(float frameTime)

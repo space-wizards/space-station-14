@@ -5,7 +5,7 @@ meta:
   postmapinit: false
 tilemap:
   0: space
-  1: floor
+  1: floor_steel
   2: floor_techmaint
   3: floor_white
   4: plating
@@ -99,112 +99,112 @@ entities:
     pos: 1.412994,7.507263
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 9
   components:
   - grid: 0
     pos: -7.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 10
   components:
   - grid: 0
     pos: -7.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 11
   components:
   - grid: 0
     pos: -7.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 12
   components:
   - grid: 0
     pos: -7.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 13
   components:
   - grid: 0
     pos: -7.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 14
   components:
   - grid: 0
     pos: 0.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 15
   components:
   - grid: 0
     pos: -0.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 16
   components:
   - grid: 0
     pos: 3.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 17
   components:
   - grid: 0
     pos: 4.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 18
   components:
   - grid: 0
     pos: -7.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 19
   components:
   - grid: 0
     pos: -7.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 20
   components:
   - grid: 0
     pos: -7.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 21
   components:
   - grid: 0
     pos: -7.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 22
   components:
   - grid: 0
     pos: 2.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 23
   components:
   - grid: 0
     pos: 1.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 24
   components:
   - grid: 0
@@ -271,266 +271,266 @@ entities:
     pos: -6.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 31
   components:
   - grid: 0
     pos: -7.5,-9.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 32
   components:
   - grid: 0
     pos: -10.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 33
   components:
   - grid: 0
     pos: -10.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 34
   components:
   - grid: 0
     pos: -10.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 35
   components:
   - grid: 0
     pos: -10.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 36
   components:
   - grid: 0
     pos: -10.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 37
   components:
   - grid: 0
     pos: -10.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 38
   components:
   - grid: 0
     pos: -10.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 39
   components:
   - grid: 0
     pos: -3.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 40
   components:
   - grid: 0
     pos: 1.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 41
   components:
   - grid: 0
     pos: 0.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 42
   components:
   - grid: 0
     pos: -0.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 43
   components:
   - grid: 0
     pos: -1.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 44
   components:
   - grid: 0
     pos: -2.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 45
   components:
   - grid: 0
     pos: -3.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 46
   components:
   - grid: 0
     pos: -4.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 47
   components:
   - grid: 0
     pos: -5.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 48
   components:
   - grid: 0
     pos: -6.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 49
   components:
   - grid: 0
     pos: 4.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 50
   components:
   - grid: 0
     pos: 5.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 51
   components:
   - grid: 0
     pos: 6.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 52
   components:
   - grid: 0
     pos: -7.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 53
   components:
   - grid: 0
     pos: -2.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 54
   components:
   - grid: 0
     pos: -6.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 55
   components:
   - grid: 0
     pos: -5.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 56
   components:
   - grid: 0
     pos: -4.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 57
   components:
   - grid: 0
     pos: 6.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 58
   components:
   - grid: 0
     pos: 6.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 59
   components:
   - grid: 0
     pos: 6.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 60
   components:
   - grid: 0
     pos: 6.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 61
   components:
   - grid: 0
     pos: 6.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 62
   components:
   - grid: 0
     pos: 5.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 63
   components:
   - grid: 0
     pos: -7.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 64
   components:
   - grid: 0
     pos: -7.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 65
   components:
   - grid: 0
     pos: -8.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 66
   components:
   - grid: 0
     pos: -9.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 67
   components:
   - grid: 0
     pos: -10.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 68
   components:
   - grid: 0
@@ -551,28 +551,28 @@ entities:
     pos: -8.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 71
   components:
   - grid: 0
     pos: 5.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 72
   components:
   - grid: 0
     pos: 5.5,-9.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 73
   components:
   - grid: 0
     pos: 6.5,-9.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 74
   components:
   - grid: 0
@@ -595,7 +595,7 @@ entities:
     type: Transform
   - load: 120
     type: PowerProvider
-- type: wall
+- type: solid_wall
   uid: 77
   components:
   - grid: 0
@@ -637,14 +637,14 @@ entities:
     pos: 2.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 83
   components:
   - grid: 0
     pos: 6.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 84
   components:
   - grid: 0
@@ -1068,7 +1068,7 @@ entities:
     pos: -0.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 143
   components:
   - grid: 0
@@ -1593,14 +1593,14 @@ entities:
     pos: -9.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 229
   components:
   - grid: 0
     pos: -10.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 230
   components:
   - grid: 0
@@ -1983,7 +1983,7 @@ entities:
     type: Transform
   - load: 280
     type: PowerProvider
-- type: wall
+- type: solid_wall
   uid: 277
   components:
   - grid: 0
@@ -2146,287 +2146,287 @@ entities:
     pos: -1.94591,7.485576
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 381
   components:
   - grid: 0
     pos: -10.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 382
   components:
   - grid: 0
     pos: -11.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 383
   components:
   - grid: 0
     pos: -10.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 384
   components:
   - grid: 0
     pos: -9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 385
   components:
   - grid: 0
     pos: -8.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 386
   components:
   - grid: 0
     pos: -7.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 387
   components:
   - grid: 0
     pos: -8.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 388
   components:
   - grid: 0
     pos: -5.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 389
   components:
   - grid: 0
     pos: -6.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 390
   components:
   - grid: 0
     pos: -7.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 391
   components:
   - grid: 0
     pos: -0.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 392
   components:
   - grid: 0
     pos: 0.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 393
   components:
   - grid: 0
     pos: 1.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 394
   components:
   - grid: 0
     pos: 1.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 395
   components:
   - grid: 0
     pos: 1.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 396
   components:
   - grid: 0
     pos: 4.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 397
   components:
   - grid: 0
     pos: 4.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 398
   components:
   - grid: 0
     pos: 4.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 399
   components:
   - grid: 0
     pos: 4.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 400
   components:
   - grid: 0
     pos: 4.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 401
   components:
   - grid: 0
     pos: 4.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 402
   components:
   - grid: 0
     pos: 4.5,2.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 403
   components:
   - grid: 0
     pos: 4.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 404
   components:
   - grid: 0
     pos: 4.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 405
   components:
   - grid: 0
     pos: 4.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 406
   components:
   - grid: 0
     pos: 4.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 407
   components:
   - grid: 0
     pos: 4.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 408
   components:
   - grid: 0
     pos: 4.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 409
   components:
   - grid: 0
     pos: 1.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 410
   components:
   - grid: 0
     pos: 0.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 411
   components:
   - grid: 0
     pos: -0.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 412
   components:
   - grid: 0
     pos: -1.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 413
   components:
   - grid: 0
     pos: -2.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 414
   components:
   - grid: 0
     pos: -3.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 415
   components:
   - grid: 0
     pos: -4.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 416
   components:
   - grid: 0
     pos: -5.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 417
   components:
   - grid: 0
     pos: -6.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 418
   components:
   - grid: 0
     pos: -7.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 419
   components:
   - grid: 0
     pos: -7.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 420
   components:
   - grid: 0
     pos: -7.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: wall
+- type: solid_wall
   uid: 421
   components:
   - grid: 0

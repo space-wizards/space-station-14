@@ -108,3 +108,71 @@
 
   - type: Clothing
     sprite: Clothing/uniform_sec.rsi
+
+- type: entity
+  parent: UniformBase
+  id: UniformChef
+  name: Chef's Uniform
+  description: Can't cook without this.
+  components:
+  - type: Sprite
+    sprite: Clothing/chef_uniform.rsi
+    state: chef
+
+  - type: Icon
+    sprite: Clothing/chef_uniform.rsi
+    state: chef
+
+  - type: Clothing
+    sprite: Clothing/chef_uniform.rsi
+
+- type: entity
+  parent: UniformBase
+  id: UniformCaptain
+  name: Captain's Jumpsuit
+  description: It's a blue jumpsuit with some gold markings denoting the rank of "Captain".
+  components:
+  - type: Sprite
+    sprite: Clothing/captain_uniform.rsi
+    state: captain
+
+  - type: Icon
+    sprite: Clothing/captain_uniform.rsi
+    state: captain
+
+  - type: Clothing
+    sprite: Clothing/captain_uniform.rsi        
+
+- type: entity
+  parent: UniformBase
+  id: UniformHOP
+  name: Head of Personnel's Jumpsuit
+  description: It's a jumpsuit worn by someone who works in the position of "Head of Personnel".
+  components:
+  - type: Sprite
+    sprite: Clothing/hop_jumpsuit.rsi
+    state: hop
+
+  - type: Icon
+    sprite: Clothing/hop_jumpsuit.rsi
+    state: hop
+
+  - type: Clothing
+    sprite: Clothing/hop_jumpsuit.rsi       
+
+- type: entity
+  parent: UniformBase
+  id: UniformMime
+  name: Mime's Outfit
+  description: It's not very colourful.
+  components:
+  - type: Sprite
+    sprite: Clothing/mime_outfit.rsi
+    state: mime
+
+  - type: Icon
+    sprite: Clothing/mime_outfit.rsi
+    state: mime
+
+  - type: Clothing
+    sprite: Clothing/mime_outfit.rsi   
