@@ -2,8 +2,8 @@
 [[layers]]
 type = "noise"
 seed = 7832
-innercolor = "#A020E1"
-outercolor = "#490070"
+innercolor = "#5d1fe1"
+outercolor = "#230070"
 noise_type = "ridged"
 frequency = "4"
 octaves = 8
@@ -77,7 +77,7 @@ maskseed = 3551
 [[layers]]
 type = "points"
 closecolor = "#FFD363"
-count = 100
+count = 30
 seed = 6454
 
 # And their dim edge.
@@ -85,5 +85,5 @@ seed = 6454
 type = "points"
 closecolor = "#43371A"
 pointsize = 2
-count = 100
+count = 30
 seed = 6454

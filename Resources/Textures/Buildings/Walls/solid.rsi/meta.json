@@ -1,0 +1,65 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/c34c1b30abf18aa552e19294523924c39e5ea127/icons/turf/wall_masks.dmi and modified.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "full",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "solid0",
+            "select": [],
+            "flags": {},
+            "directions": 4
+        },
+        {
+            "name": "solid1",
+            "select": [],
+            "flags": {},
+            "directions": 4
+        },
+        {
+            "name": "solid2",
+            "select": [],
+            "flags": {},
+            "directions": 4
+        },
+        {
+            "name": "solid3",
+            "select": [],
+            "flags": {},
+            "directions": 4
+        },
+        {
+            "name": "solid4",
+            "select": [],
+            "flags": {},
+            "directions": 4
+        },
+        {
+            "name": "solid5",
+            "select": [],
+            "flags": {},
+            "directions": 4
+        },
+        {
+            "name": "solid6",
+            "select": [],
+            "flags": {},
+            "directions": 4
+        },
+        {
+            "name": "solid7",
+            "select": [],
+            "flags": {},
+            "directions": 4
+        }
+    ]
+}

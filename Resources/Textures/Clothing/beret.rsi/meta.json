@@ -1,0 +1,26 @@
+﻿{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/tree/Bleeding-Edge/icons",
+    "states": [
+        {
+            "name": "equipped-HELMET",
+            "directions": 4,
+            "delays": [
+                [ 1.0 ],
+                [ 1.0 ],
+                [ 1.0 ],
+                [ 1.0 ]
+            ]
+        },
+        {
+            "name": "beret",
+            "directions": 1,
+            "delays": [ [ 1.0 ] ]
+        }		
+    ]
+}

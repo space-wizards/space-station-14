@@ -1,0 +1,20 @@
+- type: entity
+  name: Butcher's Cleaver
+  parent: BaseItem
+  id: ButchCleaver
+  desc: A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products.
+  components:
+  - type: Sprite
+    sprite: Objects/items/cleaver.rsi
+    size: 4
+    state: butch
+
+  - type: Icon
+    sprite: Objects/items/cleaver.rsi
+    state: butch
+
+  - type: MeleeWeapon
+  - type: Item
+    Size: 10
+    sprite: Objects/items/cleaver.rsi
+    prefix: inhand

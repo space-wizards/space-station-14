@@ -23,6 +23,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.Components.Inventory;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -45,7 +46,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
-            EntityQuery = new TypeEntityQuery(typeof(PlayerInputMoverComponent));
+            EntityQuery = new TypeEntityQuery(typeof(IMoverComponent));
             
             var moveUpCmdHandler = InputCmdHandler.FromDelegate(
                 session => HandleDirChange(session, Direction.North, true),
@@ -116,14 +117,14 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     continue;
                 }
-                var mover = entity.GetComponent<PlayerInputMoverComponent>();
+                var mover = entity.GetComponent<IMoverComponent>();
                 var physics = entity.GetComponent<PhysicsComponent>();
 
                 UpdateKinematics(entity.Transform, mover, physics);
             }
         }
 
-        private void UpdateKinematics(ITransformComponent transform, PlayerInputMoverComponent mover, PhysicsComponent physics)
+        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics)
         {
             if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
             {
@@ -234,9 +235,17 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // Ok well we know the position of the
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
-            var file = _footstepRandom.Pick(soundCollection.PickFiles);
-            _audioSystem.Play(file, coordinates);
+            try
+            {
+                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
+                var file = _footstepRandom.Pick(soundCollection.PickFiles);
+                _audioSystem.Play(file, coordinates);
+            }
+            catch (UnknownPrototypeException)
+            {
+                // Shouldn't crash over a sound
+                Logger.ErrorS("sound", $"Unable to find sound collection for {soundCollectionName}");
+            }
         }
     }
 }

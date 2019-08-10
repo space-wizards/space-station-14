@@ -48,3 +48,18 @@
     state: icon
   - type: Clothing
     sprite: Clothing/mask_clown.rsi
+
+- type: entity
+  parent: MasksBase
+  id: MaskMime
+  name: Mime Mask
+  description: The traditional mime's mask. It has an eerie facial posture.
+  components:
+  - type: Sprite
+    sprite: Clothing/mask_mime.rsi
+    state: mime
+  - type: Icon
+    sprite: Clothing/mask_mime.rsi
+    state: mime
+  - type: Clothing
+    sprite: Clothing/mask_mime.rsi   
