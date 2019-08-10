@@ -101,3 +101,20 @@
 
   - type: Clothing
     sprite: Clothing/shoes_brown.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesMime
+  name: Mime Shoes
+  description: Comfortable-looking shoes.
+  components:
+  - type: Sprite
+    sprite: Clothing/shoes_mime.rsi
+    state: mime
+
+  - type: Icon
+    sprite: Clothing/shoes_mime.rsi
+    state: mime
+
+  - type: Clothing
+    sprite: Clothing/shoes_mime.rsi   
