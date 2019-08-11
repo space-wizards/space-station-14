@@ -59,8 +59,11 @@ def main():
                         nargs="*",
                         help="Which platform to build for. If not provided, all platforms will be built")
 
+    parser.add_argument("--core", action="store_true", help="Build with .NET Core instead.")
+
     args = parser.parse_args()
     platforms = args.platform
+    core = args.core
     if not platforms:
         platforms = ["windows", "mac", "linux"]
 
@@ -73,15 +76,15 @@ def main():
 
     if "windows" in platforms:
         wipe_bin()
-        build_windows()
+        build_windows(core)
 
     if "linux" in platforms:
         wipe_bin()
-        build_linux()
+        build_linux(core)
 
     if "mac" in platforms:
         wipe_bin()
-        build_macos()
+        build_macos(core)
 
 
 def wipe_bin():
@@ -94,20 +97,25 @@ def wipe_bin():
         shutil.rmtree("bin")
 
 
-def build_windows():
+def build_windows(core):  # type: (bool) -> None
     # Run a full build.
     print(Fore.GREEN + "Building project for Windows x64..." + Style.RESET_ALL)
-    subprocess.run(["msbuild",
-                    "SpaceStation14.sln",
-                    "/m",
-                    "/p:Configuration=Release",
-                    "/p:Platform=x64",
-                    "/nologo",
-                    "/v:m",
-                    "/p:TargetOS=Windows",
-                    "/t:Rebuild",
-                    "/p:FullRelease=True"
-                    ], check=True)
+    command = ["msbuild",
+        "SpaceStation14.sln",
+        "/m",
+        "/p:Configuration=Release",
+        "/p:Platform=x64",
+        "/nologo",
+        "/v:m",
+        "/p:TargetOS=Windows",
+        "/t:Rebuild",
+        "/p:FullRelease=True"
+    ]
+
+    if core:
+        command = ["dotnet"] + command + ["/p:UseNetCore=true"]
+
+    subprocess.run(command, check=True)
 
     print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
 
@@ -139,19 +147,24 @@ def build_windows():
     launcher_zip.close()
 
 
-def build_macos():
+def build_macos(core):  # type: (bool) -> None
     print(Fore.GREEN + "Building project for macOS x64..." + Style.RESET_ALL)
-    subprocess.run(["msbuild",
-                    "SpaceStation14.sln",
-                    "/m",
-                    "/p:Configuration=Release",
-                    "/p:Platform=x64",
-                    "/nologo",
-                    "/v:m",
-                    "/p:TargetOS=MacOS",
-                    "/t:Rebuild",
-                    "/p:FullRelease=True"
-                    ], check=True)
+    command = ["msbuild",
+        "SpaceStation14.sln",
+        "/m",
+        "/p:Configuration=Release",
+        "/p:Platform=x64",
+        "/nologo",
+        "/v:m",
+        "/p:TargetOS=MacOS",
+        "/t:Rebuild",
+        "/p:FullRelease=True"
+    ]
+
+    if core:
+        command = ["dotnet"] + command + ["/p:UseNetCore=true"]
+
+    subprocess.run(command, check=True)
 
     print(Fore.GREEN + "Packaging macOS x64 client..." + Style.RESET_ALL)
     # Client has to go in an app bundle.
@@ -186,20 +199,25 @@ def build_macos():
     launcher_zip.close()
 
 
-def build_linux():
+def build_linux(core):  # type: (bool) -> None
     # Run a full build.
     print(Fore.GREEN + "Building project for Linux x64..." + Style.RESET_ALL)
-    subprocess.run(["msbuild",
-                    "SpaceStation14.sln",
-                    "/m",
-                    "/p:Configuration=Release",
-                    "/p:Platform=x64",
-                    "/nologo",
-                    "/v:m",
-                    "/p:TargetOS=Linux",
-                    "/t:Rebuild",
-                    "/p:FullRelease=True"
-                    ], check=True)
+    command = ["msbuild",
+        "SpaceStation14.sln",
+        "/m",
+        "/p:Configuration=Release",
+        "/p:Platform=x64",
+        "/nologo",
+        "/v:m",
+        "/p:TargetOS=Linux",
+        "/t:Rebuild",
+        "/p:FullRelease=True"
+    ]
+
+    if core:
+        command = ["dotnet"] + command + ["/p:UseNetCore=true"]
+
+    subprocess.run(command, check=True)
 
     print(Fore.GREEN + "Packaging Linux x64 client..." + Style.RESET_ALL)
 
