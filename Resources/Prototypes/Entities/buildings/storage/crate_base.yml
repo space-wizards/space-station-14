@@ -21,6 +21,8 @@
     Anchored: false
 
   - type: Collidable
+    layer: 16
+    mask: 19
     shape:
       bounds: "-0.4, -0.4, 0.4, 0.4"
   - type: EntityStorage

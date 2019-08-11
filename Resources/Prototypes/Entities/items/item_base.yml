@@ -5,8 +5,6 @@
   - type: Item
     Size: 5
   - type: Clickable
-  - type: BoundingBox
-    aabb: "-0.25,-0.25,0.25,0.25"
   - type: Collidable
     mask: 5
     layer: 8
