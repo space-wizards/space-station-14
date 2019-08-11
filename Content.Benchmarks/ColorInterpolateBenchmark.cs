@@ -13,6 +13,12 @@ namespace Content.Benchmarks
     [DisassemblyDiagnoser]
     public class ColorInterpolateBenchmark
     {
+#if NETCOREAPP
+        private const MethodImplOptions AggressiveOpt = MethodImplOptions.AggressiveOptimization;
+#else
+        private const MethodImplOptions AggressiveOpt = default;
+#endif
+
         private (Color, Color)[] _colors;
         private Color[] _output;
 
@@ -95,7 +101,7 @@ namespace Content.Benchmarks
         }
 #endif
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(AggressiveOpt)]
         public static Color InterpolateSimple(Color a, Color b, float lambda)
         {
             return new Color(
@@ -106,7 +112,7 @@ namespace Content.Benchmarks
             );
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(AggressiveOpt)]
         public static Color InterpolateSysVector4(Color a, Color b,
             float lambda)
         {
@@ -118,7 +124,7 @@ namespace Content.Benchmarks
             return Unsafe.As<SysVector4, Color>(ref res);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(AggressiveOpt)]
         public static Color InterpolateSysVector4In(in Color endPoint1, in Color endPoint2,
             float lambda)
         {
@@ -131,7 +137,7 @@ namespace Content.Benchmarks
         }
 
 #if NETCOREAPP
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(AggressiveOpt)]
         public static Color InterpolateSimd(Color a, Color b,
             float lambda)
         {
@@ -143,7 +149,7 @@ namespace Content.Benchmarks
             return Unsafe.As<Vector128<float>, Color>(ref vecB);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(AggressiveOpt)]
         public static Color InterpolateSimdIn(in Color a, in Color b,
             float lambda)
         {
