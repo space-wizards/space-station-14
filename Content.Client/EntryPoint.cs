@@ -12,7 +12,6 @@ using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Interfaces;
-using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
@@ -94,6 +93,7 @@ namespace Content.Client
                 "PowerCell",
                 "AiController",
                 "PlayerInputMover",
+                "Computer"
             };
 
             foreach (var ignoreName in registerIgnore)
