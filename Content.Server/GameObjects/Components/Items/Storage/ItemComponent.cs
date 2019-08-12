@@ -8,6 +8,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
@@ -48,6 +49,13 @@ namespace Content.Server.GameObjects
             {
                 component.Visible = false;
             }
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _equippedPrefix, "HeldPrefix", null);
         }
 
         public bool AttackHand(AttackHandEventArgs eventArgs)

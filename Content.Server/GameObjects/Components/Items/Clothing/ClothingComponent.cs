@@ -43,6 +43,8 @@ namespace Content.Server.GameObjects
         {
             base.ExposeData(serializer);
 
+            serializer.DataField(ref _clothingEquippedPrefix, "ClothingPrefix", null);
+
             // TODO: Writing.
             serializer.DataReadFunction("Slots", new List<string>(0), list =>
             {
