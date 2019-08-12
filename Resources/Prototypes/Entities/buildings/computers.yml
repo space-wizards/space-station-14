@@ -1,0 +1,117 @@
+- type: entity
+  id: computerBase
+  name: Computer
+  components:
+  - type: Clickable
+  - type: Collidable
+  - type: BoundingBox
+  - type: Icon
+    sprite: Buildings/computer.rsi
+    state: computer
+
+  - type: Computer
+  - type: PowerDevice
+    priority: High
+
+  - type: Sprite
+    sprite: Buildings/computer.rsi
+    layers:
+    - state: computer
+      map: ["enum.ComputerVisualizer2D+Layers.Body"]
+    - state: generic_key_off
+      map: ["enum.ComputerVisualizer2D+Layers.Keyboard"]
+    - state: generic
+      shader: unshaded
+      map: ["enum.ComputerVisualizer2D+Layers.Screen"]
+    - state: generic_key
+      shader: unshaded
+      map: ["enum.ComputerVisualizer2D+Layers.KeyboardOn"]
+
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: generic_key
+      screen: generic
+
+
+- type: entity
+  id: computerAlert
+  parent: computerBase
+  name: Alerts Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: atmos_key
+      screen: "alert:2"
+
+
+- type: entity
+  id: computerPowerMonitoring
+  parent: computerBase
+  name: Power Monitoring Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: power_key
+      screen: power_monitor
+
+
+- type: entity
+  id: computerSupplyOrdering
+  parent: computerBase
+  name: Supply Ordering Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: tech_key
+      screen: supply
+
+
+- type: entity
+  id: computerMedicalRecords
+  parent: computerBase
+  name: Medical Records Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: med_key
+      screen: medcomp
+
+
+- type: entity
+  id: computerResearchAndDevelopment
+  parent: computerBase
+  name: R&D Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: rd_key
+      screen: rdcomp
+
+
+- type: entity
+  id: computerId
+  parent: computerBase
+  name: ID Card Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: id_key
+      screen: id
+
+- type: entity
+  id: computerComms
+  parent: computerBase
+  name: Communications Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: generic_key
+      screen: comm
