@@ -641,7 +641,7 @@ entities:
     pos: 1.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
-  - load: 120
+  - load: 220
     type: PowerProvider
 - type: solid_wall
   uid: 77
@@ -1799,7 +1799,7 @@ entities:
     pos: 4.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
-  - load: 320
+  - load: 460
     type: PowerProvider
 - type: APC
   uid: 227
@@ -2559,6 +2559,10 @@ entities:
     pos: 0.5,-5.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
   - containers:
       light_bulb:
         entities:
@@ -2571,5 +2575,54 @@ entities:
   - parent: 322
     grid: 0
     pos: -0.5,5.5
+    type: Transform
+- type: chairOfficeDark
+  uid: 324
+  components:
+  - grid: 0
+    pos: 0.5,-6.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- type: chairOfficeLight
+  uid: 325
+  components:
+  - grid: 0
+    pos: -3.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- type: chairOfficeLight
+  uid: 326
+  components:
+  - grid: 0
+    pos: -2.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- type: chairOfficeLight
+  uid: 327
+  components:
+  - grid: 0
+    pos: -2.5,-2.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- type: chairOfficeLight
+  uid: 328
+  components:
+  - grid: 0
+    pos: -3.5,-2.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- type: stool
+  uid: 329
+  components:
+  - grid: 0
+    pos: -1.5,-9.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- type: stool
+  uid: 330
+  components:
+  - grid: 0
+    pos: -2.5,-6.5
+    rot: 1.5707963267948966 rad
     type: Transform
 ...
