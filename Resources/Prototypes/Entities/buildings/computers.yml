@@ -43,7 +43,7 @@
     visuals:
     - type: ComputerVisualizer2D
       key: atmos_key
-      screen: "alert:2"
+      screen: "alert-2"
 
 
 - type: entity
