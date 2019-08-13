@@ -186,6 +186,7 @@ namespace SS14.Launcher
             _interface.StatusLabel.Text = _loc.GetString("Extracting update..");
             _interface.ProgressBarVisible = false;
 
+            Logger.InfoS("launcher", "Extracting: '{0}' to '{1}'", tmpFile, binPath);
             await Task.Run(() =>
             {
                 using (var file = File.OpenRead(tmpFile))
@@ -226,7 +227,7 @@ namespace SS14.Launcher
                     $"{JenkinsBaseUrl}/job/{Uri.EscapeUriString(JenkinsJobName)}/{buildNumber}/artifact/release/{Uri.EscapeUriString(fileName)}");
 
             var tmpFile = Path.GetTempFileName();
-            Logger.InfoS("launcher", tmpFile);
+            Logger.InfoS("launcher", "temp download file path: {0}", tmpFile);
             await _httpClient.DownloadToFile(artifactUri, tmpFile, f => _taskManager.RunOnMainThread(() =>
             {
                 _interface.ProgressBarVisible = true;
