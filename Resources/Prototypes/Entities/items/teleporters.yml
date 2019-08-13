@@ -50,8 +50,9 @@
   description: "Portal to another location"
   components:
   - type: Collidable
-    shape:
-      bounds: "-0.25,-0.25,0.25,0.25"
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 10
   - type: Portal
   - type: Sprite
     netsync: false

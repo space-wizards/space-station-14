@@ -41,10 +41,11 @@
   components:
   - type: Clickable
   - type: Collidable
-    shape:
+    shapes:
+    - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.3, 0.5"
-    mask: 19
-    layer: 16
+      mask: 19
+      layer: 16
   - type: Sprite
     texture: Objects/generator.png
   - type: Icon
@@ -58,8 +59,10 @@
   components:
   - type: Clickable
   - type: Collidable
-    mask: 19
-    layer: 4
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 19
+      layer: 4
   - type: Sprite
     drawdepth: WallMountedItems
     texture: Objects/provider.png
@@ -101,7 +104,8 @@
     - key: enum.ApcUiKey.Key
       type: ApcBoundUserInterface
   - type: Collidable
-    shape:
+    shapes:
+    - !type:PhysShapeAabb
       bounds: "-0.25, -0.25, 0.25, 0.3"
   - type: Sound
 
@@ -112,10 +116,11 @@
   components:
   - type: Clickable
   - type: Collidable
-    shape:
+    shapes:
+    - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
-    mask: 19
-    layer: 16
+      mask: 19
+      layer: 16
   - type: Sprite
     netsync: false
     sprite: Buildings/smes.rsi
@@ -151,10 +156,11 @@
   components:
   - type: Clickable
   - type: Collidable
-    shape:
+    shapes:
+    - !type:PhysShapeAabb
       bounds: "-0.5, -0.25, 0.5, 0.25"
-    mask: 19
-    layer: 16
+      mask: 19
+      layer: 16
   - type: Sprite
     texture: Objects/wiredmachine.png
   - type: Icon
@@ -171,10 +177,11 @@
   components:
   - type: Clickable
   - type: Collidable
-    shape:
+    shapes:
+    - !type:PhysShapeAabb
       bounds: "-0.5, -0.25, 0.5, 0.25"
-    mask: 19
-    layer: 16
+      mask: 19
+      layer: 16
   - type: Sprite
     texture: Objects/wirelessmachine.png
   - type: Icon

@@ -21,8 +21,10 @@
     state: closed
 
   - type: Collidable
-    mask: 2
-    layer: 16
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 2
+      layer: 16
   - type: Door
   - type: Appearance
     visuals:

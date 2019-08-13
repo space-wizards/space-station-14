@@ -4,7 +4,8 @@
   parent: BaseItem
   components:
   - type: Collidable
-    shape:
+    shapes:
+    - !type:PhysShapeAabb
       bounds: "-0.15,-0.3,0.2,0.3"
   - type: PowerCell
   - type: Appearance

@@ -10,6 +10,10 @@
     sprite: Buildings/autolathe.rsi
     state: idle
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 19
+      layer: 16
   - type: SnapGrid
     offset: Center
   - type: Lathe

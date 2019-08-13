@@ -21,10 +21,12 @@
     Anchored: false
 
   - type: Collidable
-    layer: 16
-    mask: 19
-    shape:
+    shapes:
+    - !type:PhysShapeAabb
       bounds: "-0.4, -0.4, 0.4, 0.4"
+      layer: 16
+      mask: 19
+      
   - type: EntityStorage
     Capacity: 60
   - type: PlaceableSurface

@@ -11,9 +11,11 @@
 
   - type: Clickable
   - type: Collidable
-    mask: 3
-    shape:
+    shapes:
+    - !type:PhysShapeAabb
       bounds: "-0.5,-0.25,0.5,0.25"
+      mask: 19
+      layer: 16
     IsScrapingFloor: true
   - type: Physics
     mass: 15

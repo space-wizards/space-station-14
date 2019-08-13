@@ -13,8 +13,10 @@
     state: plain_preview
 
   - type: Collidable
-    mask: 19
-    layer: 16
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 19
+      layer: 16
 
   - type: SnapGrid
     offset: Center
