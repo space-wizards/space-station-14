@@ -259,18 +259,12 @@ entities:
     pos: -1.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: LightTube
+- type: poweredsmalllight
   uid: 25
   components:
-  - parent: 26
-    grid: 0
-    type: Transform
-- type: poweredlight
-  uid: 26
-  components:
   - grid: 0
-    pos: 4.5,-9.5
-    rot: 3.14159265358979 rad
+    pos: -4.5,-5
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -279,7 +273,24 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 25
+        - 29
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: poweredlight
+  uid: 26
+  components:
+  - grid: 0
+    pos: -8.5,4
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
+  - containers:
+      light_bulb:
+        entities:
+        - 219
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: Wire
@@ -289,18 +300,12 @@ entities:
     pos: 8.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: LightTube
+- type: poweredsmalllight
   uid: 28
   components:
-  - parent: 29
-    grid: 0
-    type: Transform
-- type: poweredlight
-  uid: 29
-  components:
   - grid: 0
-    pos: -0.5,-13.5
-    rot: 1.5707963267949 rad
+    pos: 0.5,-5
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -309,9 +314,16 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 28
+        - 171
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
+- type: LightBulb
+  uid: 29
+  components:
+  - parent: 25
+    grid: 0
+    pos: 4.5,5
+    type: Transform
 - type: Wire
   uid: 30
   components:
@@ -1225,11 +1237,12 @@ entities:
     pos: -5.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: LightTube
+- type: computerPowerMonitoring
   uid: 155
   components:
-  - parent: 171
-    grid: 0
+  - grid: 0
+    pos: 0.5,-5.5
+    rot: -1.5707963267948966 rad
     type: Transform
 - type: computerAlert
   uid: 156
@@ -1336,34 +1349,26 @@ entities:
     pos: -6.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: poweredlight
+- type: LightBulb
   uid: 171
   components:
-  - grid: 0
-    pos: -6.5,-9.5
+  - parent: 28
+    grid: 0
+    pos: -0.5,5
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 155
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
 - type: LightBulb
   uid: 172
   components:
   - parent: 173
     grid: 0
+    pos: 10,6.5
     type: Transform
 - type: poweredsmalllight
   uid: 173
   components:
   - grid: 0
-    pos: -4.5,-5.5
-    rot: 1.5707963267949 rad
+    pos: -10,-6.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -1655,12 +1660,19 @@ entities:
     pos: -9.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: poweredsmalllight
+- type: LightTube
   uid: 214
   components:
+  - parent: 215
+    grid: 0
+    pos: -0.5,-1
+    type: Transform
+- type: poweredlight
+  uid: 215
+  components:
   - grid: 0
-    pos: -9.5,-6.5
-    rot: 3.14159265358979 rad
+    pos: 0.5,1
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -1669,44 +1681,29 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 215
+        - 214
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- type: LightBulb
-  uid: 215
-  components:
-  - parent: 214
-    grid: 0
-    type: Transform
-- type: poweredlight
+- type: chairOfficeLight
   uid: 216
   components:
   - grid: 0
-    pos: -0.5,0.5
-    rot: -1.5707963267949 rad
+    pos: -3.5,-0.5
+    rot: -1.5707963267948966 rad
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 217
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: LightTube
+- type: chairOfficeDark
   uid: 217
   components:
-  - parent: 216
-    grid: 0
+  - grid: 0
+    pos: 0.5,-6.5
+    rot: 1.5707963267948966 rad
     type: Transform
 - type: poweredlight
   uid: 218
   components:
   - grid: 0
-    pos: -5.5,0.5
-    rot: -1.5707963267949 rad
+    pos: -6.5,1
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -1715,66 +1712,263 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 219
+        - 320
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: LightTube
   uid: 219
   components:
-  - parent: 218
+  - parent: 26
     grid: 0
+    pos: 8.5,-4
     type: Transform
-- type: poweredlight
+- type: stool
   uid: 220
   components:
   - grid: 0
-    pos: -6.5,5.5
+    pos: -1.5,-9.5
+    rot: 1.5707963267948966 rad
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 221
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: LightTube
+- type: chairOfficeLight
   uid: 221
   components:
-  - parent: 220
-    grid: 0
+  - grid: 0
+    pos: -3.5,-2.5
+    rot: 1.5707963267948966 rad
     type: Transform
-- type: poweredlight
+- type: chairOfficeLight
   uid: 222
   components:
   - grid: 0
-    pos: 3.5,5.5
-    rot: 3.14159265358979 rad
+    pos: -2.5,-2.5
+    rot: 1.5707963267948966 rad
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 223
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: LightTube
+- type: chairOfficeLight
   uid: 223
   components:
-  - parent: 222
-    grid: 0
+  - grid: 0
+    pos: -2.5,-0.5
+    rot: -1.5707963267948966 rad
     type: Transform
-- type: poweredlight
+- type: stool
   uid: 224
   components:
   - grid: 0
-    pos: -1.5,7.5
+    pos: -2.5,-6.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- type: LightBulb
+  uid: 225
+  components:
+  - parent: 254
+    grid: 0
+    pos: -5,9.5
+    type: Transform
+- type: APC
+  uid: 226
+  components:
+  - grid: 0
+    pos: -6.5,-7.5
     rot: -1.5707963267949 rad
+    type: Transform
+  - load: 80
+    type: PowerProvider
+- type: Wire
+  uid: 227
+  components:
+  - grid: 0
+    pos: -9.5,2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 228
+  components:
+  - grid: 0
+    pos: -9.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 229
+  components:
+  - grid: 0
+    pos: -8.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 230
+  components:
+  - grid: 0
+    pos: -7.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 231
+  components:
+  - grid: 0
+    pos: -6.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 232
+  components:
+  - grid: 0
+    pos: -5.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 233
+  components:
+  - grid: 0
+    pos: -4.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 234
+  components:
+  - grid: 0
+    pos: -3.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 235
+  components:
+  - grid: 0
+    pos: -2.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 236
+  components:
+  - grid: 0
+    pos: -1.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 237
+  components:
+  - grid: 0
+    pos: -0.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 238
+  components:
+  - grid: 0
+    pos: 0.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: Wire
+  uid: 239
+  components:
+  - grid: 0
+    pos: 1.5,3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 240
+  components:
+  - grid: 0
+    pos: 9.5,-0.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 241
+  components:
+  - grid: 0
+    pos: 9.5,-1.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 242
+  components:
+  - grid: 0
+    pos: 9.5,-2.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 243
+  components:
+  - grid: 0
+    pos: 9.5,-3.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 244
+  components:
+  - grid: 0
+    pos: 9.5,-4.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 245
+  components:
+  - grid: 0
+    pos: 9.5,-5.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 246
+  components:
+  - grid: 0
+    pos: 9.5,-6.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 247
+  components:
+  - grid: 0
+    pos: 9.5,-7.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 248
+  components:
+  - grid: 0
+    pos: 9.5,-8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 249
+  components:
+  - grid: 0
+    pos: 9.5,-9.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 250
+  components:
+  - grid: 0
+    pos: 9.5,-10.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 251
+  components:
+  - grid: 0
+    pos: 9.5,-11.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: catwalk
+  uid: 252
+  components:
+  - grid: 0
+    pos: 8.5,-8.5
+    rot: -1.5707963267949 rad
+    type: Transform
+- type: APC
+  uid: 253
+  components:
+  - grid: 0
+    pos: 4.5,-9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - load: 380
+    type: PowerProvider
+- type: poweredsmalllight
+  uid: 254
+  components:
+  - grid: 0
+    pos: 5,-9.5
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -1786,237 +1980,8 @@ entities:
         - 225
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- type: LightTube
-  uid: 225
-  components:
-  - parent: 224
-    grid: 0
-    type: Transform
 - type: APC
-  uid: 226
-  components:
-  - grid: 0
-    pos: 4.5,-10.5
-    rot: -1.5707963267949 rad
-    type: Transform
-  - load: 460
-    type: PowerProvider
-- type: APC
-  uid: 227
-  components:
-  - grid: 0
-    pos: -6.5,-7.5
-    rot: -1.5707963267949 rad
-    type: Transform
-  - load: 120
-    type: PowerProvider
-- type: Wire
-  uid: 228
-  components:
-  - grid: 0
-    pos: -9.5,2.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 229
-  components:
-  - grid: 0
-    pos: -9.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 230
-  components:
-  - grid: 0
-    pos: -8.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 231
-  components:
-  - grid: 0
-    pos: -7.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 232
-  components:
-  - grid: 0
-    pos: -6.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 233
-  components:
-  - grid: 0
-    pos: -5.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 234
-  components:
-  - grid: 0
-    pos: -4.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 235
-  components:
-  - grid: 0
-    pos: -3.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 236
-  components:
-  - grid: 0
-    pos: -2.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 237
-  components:
-  - grid: 0
-    pos: -1.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 238
-  components:
-  - grid: 0
-    pos: -0.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 239
-  components:
-  - grid: 0
-    pos: 0.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: Wire
-  uid: 240
-  components:
-  - grid: 0
-    pos: 1.5,3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 241
-  components:
-  - grid: 0
-    pos: 9.5,-0.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 242
-  components:
-  - grid: 0
-    pos: 9.5,-1.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 243
-  components:
-  - grid: 0
-    pos: 9.5,-2.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 244
-  components:
-  - grid: 0
-    pos: 9.5,-3.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 245
-  components:
-  - grid: 0
-    pos: 9.5,-4.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 246
-  components:
-  - grid: 0
-    pos: 9.5,-5.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 247
-  components:
-  - grid: 0
-    pos: 9.5,-6.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 248
-  components:
-  - grid: 0
-    pos: 9.5,-7.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 249
-  components:
-  - grid: 0
-    pos: 9.5,-8.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 250
-  components:
-  - grid: 0
-    pos: 9.5,-9.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 251
-  components:
-  - grid: 0
-    pos: 9.5,-10.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 252
-  components:
-  - grid: 0
-    pos: 9.5,-11.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: catwalk
-  uid: 253
-  components:
-  - grid: 0
-    pos: 8.5,-8.5
-    rot: -1.5707963267949 rad
-    type: Transform
-- type: poweredsmalllight
-  uid: 254
-  components:
-  - grid: 0
-    pos: 8.5,-7.5
-    rot: 3.14159265358979 rad
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 255
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: LightBulb
   uid: 255
-  components:
-  - parent: 254
-    grid: 0
-    type: Transform
-- type: APC
-  uid: 256
   components:
   - grid: 0
     pos: -7.5,3.5
@@ -2025,14 +1990,14 @@ entities:
   - load: 280
     type: PowerProvider
 - type: solid_wall
-  uid: 257
+  uid: 256
   components:
   - grid: 0
     pos: 7.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: YellowToolboxItemFilled
-  uid: 258
+  uid: 257
   components:
   - grid: 0
     pos: -0.8099712,-5.21454
@@ -2044,7 +2009,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: YellowToolboxItemFilled
-  uid: 259
+  uid: 258
   components:
   - grid: 0
     pos: -0.5597038,-5.679647
@@ -2056,7 +2021,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: FlashlightLantern
-  uid: 260
+  uid: 259
   components:
   - grid: 0
     pos: -1.934832,-5.154238
@@ -2068,7 +2033,7 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: FlashlightLantern
-  uid: 261
+  uid: 260
   components:
   - grid: 0
     pos: -2.017696,-5.71715
@@ -2080,35 +2045,35 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: Crowbar
-  uid: 262
+  uid: 261
   components:
   - grid: 0
     pos: -2.861032,-5.524786
     rot: -1.5707963267949 rad
     type: Transform
 - type: UniformEngineering
-  uid: 263
+  uid: 262
   components:
   - grid: 0
     pos: -0.6474335,-10.27245
     rot: -1.5707963267949 rad
     type: Transform
 - type: GasMaskClothing
-  uid: 264
+  uid: 263
   components:
   - grid: 0
     pos: -0.2880585,-10.69432
     rot: -1.5707963267949 rad
     type: Transform
 - type: HazardVestClothing
-  uid: 265
+  uid: 264
   components:
   - grid: 0
     pos: -0.9130585,-10.66307
     rot: -1.5707963267949 rad
     type: Transform
 - type: UtilityBeltClothing
-  uid: 266
+  uid: 265
   components:
   - grid: 0
     pos: -1.895102,-10.33495
@@ -2120,7 +2085,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: UtilityBeltClothing
-  uid: 267
+  uid: 266
   components:
   - grid: 0
     pos: -1.770102,-10.63182
@@ -2132,7 +2097,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: magazine_12mm_filled
-  uid: 268
+  uid: 267
   components:
   - grid: 0
     pos: -6.605512,7.638151
@@ -2144,7 +2109,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: magazine_12mm_filled
-  uid: 269
+  uid: 268
   components:
   - grid: 0
     pos: -6.339887,7.669401
@@ -2156,7 +2121,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: magazine_12mm_filled
-  uid: 270
+  uid: 269
   components:
   - grid: 0
     pos: -6.027387,7.622526
@@ -2168,7 +2133,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: BackpackClothing
-  uid: 271
+  uid: 270
   components:
   - grid: 0
     pos: -5.089887,7.591276
@@ -2180,7 +2145,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: BackpackClothing
-  uid: 272
+  uid: 271
   components:
   - grid: 0
     pos: -4.683637,7.606901
@@ -2192,14 +2157,14 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: BlackGloves
-  uid: 273
+  uid: 272
   components:
   - grid: 0
     pos: -3.386762,7.466276
     rot: -1.5707963267949 rad
     type: Transform
 - type: smg_c20r
-  uid: 274
+  uid: 273
   components:
   - grid: 0
     pos: -2.524035,7.579326
@@ -2214,7 +2179,7 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: smg_c20r
-  uid: 275
+  uid: 274
   components:
   - grid: 0
     pos: -1.94591,7.485576
@@ -2229,315 +2194,315 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: solid_wall
-  uid: 276
+  uid: 275
   components:
   - grid: 0
     pos: -10.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 277
+  uid: 276
   components:
   - grid: 0
     pos: -11.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 278
+  uid: 277
   components:
   - grid: 0
     pos: -10.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 279
+  uid: 278
   components:
   - grid: 0
     pos: -9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 280
+  uid: 279
   components:
   - grid: 0
     pos: -8.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 281
+  uid: 280
   components:
   - grid: 0
     pos: -7.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 282
+  uid: 281
   components:
   - grid: 0
     pos: -8.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 283
+  uid: 282
   components:
   - grid: 0
     pos: -5.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 284
+  uid: 283
   components:
   - grid: 0
     pos: -6.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 285
+  uid: 284
   components:
   - grid: 0
     pos: -7.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 286
+  uid: 285
   components:
   - grid: 0
     pos: -0.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 287
+  uid: 286
   components:
   - grid: 0
     pos: 0.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 288
+  uid: 287
   components:
   - grid: 0
     pos: 1.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 289
+  uid: 288
   components:
   - grid: 0
     pos: 1.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 290
+  uid: 289
   components:
   - grid: 0
     pos: 1.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 291
+  uid: 290
   components:
   - grid: 0
     pos: 4.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 292
+  uid: 291
   components:
   - grid: 0
     pos: 4.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 293
+  uid: 292
   components:
   - grid: 0
     pos: 4.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 294
+  uid: 293
   components:
   - grid: 0
     pos: 4.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 295
+  uid: 294
   components:
   - grid: 0
     pos: 4.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 296
+  uid: 295
   components:
   - grid: 0
     pos: 4.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 297
+  uid: 296
   components:
   - grid: 0
     pos: 4.5,2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 298
+  uid: 297
   components:
   - grid: 0
     pos: 4.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 299
+  uid: 298
   components:
   - grid: 0
     pos: 4.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 300
+  uid: 299
   components:
   - grid: 0
     pos: 4.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 301
+  uid: 300
   components:
   - grid: 0
     pos: 4.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 302
+  uid: 301
   components:
   - grid: 0
     pos: 4.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 303
+  uid: 302
   components:
   - grid: 0
     pos: 4.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 304
+  uid: 303
   components:
   - grid: 0
     pos: 1.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 305
+  uid: 304
   components:
   - grid: 0
     pos: 0.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 306
+  uid: 305
   components:
   - grid: 0
     pos: -0.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 307
+  uid: 306
   components:
   - grid: 0
     pos: -1.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 308
+  uid: 307
   components:
   - grid: 0
     pos: -2.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 309
+  uid: 308
   components:
   - grid: 0
     pos: -3.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 310
+  uid: 309
   components:
   - grid: 0
     pos: -4.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 311
+  uid: 310
   components:
   - grid: 0
     pos: -5.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 312
+  uid: 311
   components:
   - grid: 0
     pos: -6.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 313
+  uid: 312
   components:
   - grid: 0
     pos: -7.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 314
+  uid: 313
   components:
   - grid: 0
     pos: -7.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 315
+  uid: 314
   components:
   - grid: 0
     pos: -7.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 316
+  uid: 315
   components:
   - grid: 0
     pos: -7.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: LeatherGloves
-  uid: 317
+  uid: 316
   components:
   - grid: 0
     pos: -4.332221,4.64238
     rot: -1.5707963267949 rad
     type: Transform
 - type: LeatherGloves
-  uid: 318
+  uid: 317
   components:
   - grid: 0
     pos: -3.519721,4.64238
     rot: -1.5707963267949 rad
     type: Transform
 - type: LeatherGloves
-  uid: 319
+  uid: 318
   components:
   - grid: 0
     pos: -2.597846,4.61113
     rot: -1.5707963267949 rad
     type: Transform
 - type: LedLightTube
-  uid: 320
+  uid: 319
   components:
   - grid: 0
     pos: -3.511025,-10.35149
@@ -2545,19 +2510,19 @@ entities:
     type: Transform
   - color: '#EEEEFFFF'
     type: Sprite
-- type: computerPowerMonitoring
+- type: LightTube
+  uid: 320
+  components:
+  - parent: 218
+    grid: 0
+    pos: 6.5,-1
+    type: Transform
+- type: poweredlight
   uid: 321
   components:
   - grid: 0
-    pos: 0.5,-5.5
+    pos: -1.5,8
     rot: -1.5707963267948966 rad
-    type: Transform
-- type: poweredsmalllight
-  uid: 322
-  components:
-  - grid: 0
-    pos: 0.5,-5.5
-    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -2566,63 +2531,51 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 323
+        - 322
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- type: LightBulb
+- type: LightTube
+  uid: 322
+  components:
+  - parent: 321
+    grid: 0
+    pos: 1.5,-8
+    type: Transform
+- type: poweredlight
   uid: 323
   components:
-  - parent: 322
-    grid: 0
-    pos: -0.5,5.5
+  - grid: 0
+    pos: 4,3.5
+    rot: 3.141592653589793 rad
     type: Transform
-- type: chairOfficeDark
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
+  - containers:
+      light_bulb:
+        entities:
+        - 324
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: LightTube
   uid: 324
   components:
-  - grid: 0
-    pos: 0.5,-6.5
-    rot: 1.5707963267948966 rad
+  - parent: 323
+    grid: 0
+    pos: -4,-3.5
     type: Transform
-- type: chairOfficeLight
+- type: wall_light
   uid: 325
   components:
   - grid: 0
-    pos: -3.5,-0.5
-    rot: -1.5707963267948966 rad
+    pos: -7,-10.5
     type: Transform
-- type: chairOfficeLight
+- type: wall_light
   uid: 326
   components:
   - grid: 0
-    pos: -2.5,-0.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- type: chairOfficeLight
-  uid: 327
-  components:
-  - grid: 0
-    pos: -2.5,-2.5
-    rot: 1.5707963267948966 rad
-    type: Transform
-- type: chairOfficeLight
-  uid: 328
-  components:
-  - grid: 0
-    pos: -3.5,-2.5
-    rot: 1.5707963267948966 rad
-    type: Transform
-- type: stool
-  uid: 329
-  components:
-  - grid: 0
-    pos: -1.5,-9.5
-    rot: 1.5707963267948966 rad
-    type: Transform
-- type: stool
-  uid: 330
-  components:
-  - grid: 0
-    pos: -2.5,-6.5
+    pos: -0.5,-14
     rot: 1.5707963267948966 rad
     type: Transform
 ...
