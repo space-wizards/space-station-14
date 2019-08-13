@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         private PowerDeviceComponent _powerDevice;
 
         private bool _ejecting = false;
-        private int _animationDuration = 0;
+        private TimeSpan _animationDuration = TimeSpan.Zero;
         private string _packPrototypeId;
         private string _description;
         private string _spriteName;
@@ -48,13 +48,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            if (serializer.Reading)
-            {
-                _packPrototypeId = serializer.ReadDataField("pack", string.Empty);
-            } else if (serializer.Writing)
-            {
-                serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
-            }
+
+            serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
         }
 
         private void InitializeFromPrototype()
@@ -68,7 +63,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
             Owner.Name = packPrototype.Name;
             _description = packPrototype.Description;
-            _animationDuration = Convert.ToInt32(TimeSpan.FromSeconds(packPrototype.AnimationDuration).TotalMilliseconds);
+            _animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
             _spriteName = packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(_spriteName))
             {
