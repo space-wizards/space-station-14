@@ -43,6 +43,7 @@ namespace Content.Client
             var registerIgnore = new[]
             {
                 "Breakable",
+                "Pickaxe",
                 "Interactable",
                 "Destructible",
                 "Temperature",
@@ -95,7 +96,8 @@ namespace Content.Client
                 "PowerCell",
                 "AiController",
                 "PlayerInputMover",
-                "Computer"
+                "Computer",
+                "AsteroidRock",
             };
 
             foreach (var ignoreName in registerIgnore)

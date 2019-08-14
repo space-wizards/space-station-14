@@ -63,3 +63,12 @@
   files:
   - /Audio/effects/footsteps/suitstep1.ogg
   - /Audio/effects/footsteps/suitstep2.ogg
+
+- type: sound_collection
+  id: footstep_asteroid
+  files:
+  - /Audio/effects/footsteps/asteroid1.ogg
+  - /Audio/effects/footsteps/asteroid2.ogg
+  - /Audio/effects/footsteps/asteroid3.ogg
+  - /Audio/effects/footsteps/asteroid4.ogg
+  - /Audio/effects/footsteps/asteroid5.ogg

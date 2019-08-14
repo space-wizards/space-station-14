@@ -253,7 +253,7 @@
   - type: IconSmooth
     key: walls. Seriously, just a wall. Nothing extraordinary here.
     base: sandstone
-    
+
 - type: entity
   id: silver_wall
   name: Silver wall
@@ -302,7 +302,7 @@
   - type: IconSmooth
     key: walls. Seriously, just a wall. Nothing extraordinary here.
     base: uranium
-    
+
 - type: entity
   id: wood_wall
   name: Wood wall

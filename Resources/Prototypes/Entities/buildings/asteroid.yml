@@ -1,0 +1,25 @@
+- type: entity
+  id: asteroid_rock
+  name: Asteroid Rock
+  components:
+  - type: AsteroidRock
+  - type: Clickable
+  - type: Sprite
+    sprite: Buildings/Walls/asteroid_rock.rsi
+    state: 0
+  - type: Icon
+    sprite: Buildings/Walls/asteroid_rock.rsi
+    state: 0
+  - type: BoundingBox
+  - type: Collidable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 100
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+  - type: SnapGrid
+    offset: Center
+  placement:
+    snap:
+    - Wall
