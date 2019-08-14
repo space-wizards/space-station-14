@@ -42,6 +42,7 @@ namespace Content.Client
 
             var registerIgnore = new[]
             {
+                "Breakable",
                 "Interactable",
                 "Destructible",
                 "Temperature",
