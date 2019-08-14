@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Chat;
-using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.UserInterface;
@@ -274,7 +273,7 @@ namespace Content.Client.Chat
 
         private void RepopulateChat(IEnumerable<StoredChatMessage> filteredMessages)
         {
-            _currentChatBox.contents.Clear();
+            _currentChatBox.Contents.Clear();
 
             foreach (var msg in filteredMessages)
             {

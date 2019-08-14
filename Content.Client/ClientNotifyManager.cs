@@ -85,14 +85,11 @@ namespace Content.Client
             private float _timeLeft;
             public Vector2 InitialPos { get; set; }
 
-            protected override void Initialize()
+            public PopupLabel()
             {
-                base.Initialize();
-
                 ShadowOffsetXOverride = 1;
                 ShadowOffsetYOverride = 1;
                 FontColorShadowOverride = Color.Black;
-
             }
 
             public void Update(FrameEventArgs eventArgs)

@@ -24,12 +24,12 @@ namespace Content.Client.Chat
         private ILocalizationManager localize = IoCManager.Resolve<ILocalizationManager>();
 
         public LineEdit Input { get; private set; }
-        public OutputPanel contents;
+        public OutputPanel Contents { get; }
 
         // Buttons for filtering
-        public Button AllButton;
-        public Button LocalButton;
-        public Button OOCButton;
+        public Button AllButton { get; }
+        public Button LocalButton { get; }
+        public Button OOCButton { get; }
 
         /// <summary>
         ///     Index while cycling through the input history. -1 means not going through history.
@@ -48,11 +48,9 @@ namespace Content.Client.Chat
 
         public bool ReleaseFocusOnEnter { get; set; } = true;
 
-        protected override void Initialize()
+        public ChatBox()
         {
-            base.Initialize();
-
-            MarginLeft = -475.0f;
+                        MarginLeft = -475.0f;
             MarginTop = 10.0f;
             MarginRight = -10.0f;
             MarginBottom = 235.0f;
@@ -79,8 +77,8 @@ namespace Content.Client.Chat
                 MarginLeftOverride = 4, MarginRightOverride = 4,
                 SizeFlagsVertical = SizeFlags.FillExpand
             };
-            contents = new OutputPanel();
-            contentMargin.AddChild(contents);
+            Contents = new OutputPanel();
+            contentMargin.AddChild(Contents);
             vBox.AddChild(contentMargin);
 
             Input = new LineEdit();
@@ -176,18 +174,6 @@ namespace Content.Client.Chat
             }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                TextSubmitted = null;
-                Input = null;
-                contents = null;
-            }
-        }
-
         public event TextSubmitHandler TextSubmitted;
 
         public event FilterToggledHandler FilterToggled;
@@ -203,7 +189,7 @@ namespace Content.Client.Chat
             formatted.PushColor(color);
             formatted.AddText(message);
             formatted.Pop();
-            contents.AddMessage(formatted);
+            Contents.AddMessage(formatted);
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)

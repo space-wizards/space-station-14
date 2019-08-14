@@ -1,18 +1,13 @@
 ﻿using System;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Power;
-using NJsonSchema.Validation;
-using OpenTK.Graphics.OpenGL4;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.Power
 {
@@ -72,34 +67,34 @@ namespace Content.Client.GameObjects.Components.Power
 
             _chargeBar.Value = castState.Charge;
             UpdateChargeBarColor(castState.Charge);
-            float ChargePercentage = (castState.Charge / _chargeBar.MaxValue) * 100.0f;
-            _window.ChargePercentage.Text = " " + ChargePercentage.ToString("0.00") + "%";
+            var chargePercentage = (castState.Charge / _chargeBar.MaxValue) * 100.0f;
+            _window.ChargePercentage.Text = " " + chargePercentage.ToString("0.00") + "%";
         }
 
         private void UpdateChargeBarColor(float charge)
         {
-            float normalizedCharge = charge / _chargeBar.MaxValue;
+            var normalizedCharge = charge / _chargeBar.MaxValue;
 
-            float leftHue = 0.0f;// Red
-            float middleHue = 0.066f;// Orange
-            float rightHue = 0.33f;// Green
-            float saturation = 1.0f;// Uniform saturation
-            float value = 0.8f;// Uniform value / brightness
-            float alpha = 1.0f;// Uniform alpha
+            const float leftHue = 0.0f; // Red
+            const float middleHue = 0.066f; // Orange
+            const float rightHue = 0.33f; // Green
+            const float saturation = 1.0f; // Uniform saturation
+            const float value = 0.8f; // Uniform value / brightness
+            const float alpha = 1.0f; // Uniform alpha
 
             // These should add up to 1.0 or your transition won't be smooth
-            float leftSideSize = 0.5f;// Fraction of _chargeBar lerped from leftHue to middleHue
-            float rightSideSize = 0.5f;// Fraction of _chargeBar lerped from middleHue to rightHue
+            const float leftSideSize = 0.5f; // Fraction of _chargeBar lerped from leftHue to middleHue
+            const float rightSideSize = 0.5f; // Fraction of _chargeBar lerped from middleHue to rightHue
 
             float finalHue;
             if (normalizedCharge <= leftSideSize)
             {
-                normalizedCharge /= leftSideSize;// Adjust range to 0.0 to 1.0
+                normalizedCharge /= leftSideSize; // Adjust range to 0.0 to 1.0
                 finalHue = FloatMath.Lerp(leftHue, middleHue, normalizedCharge);
             }
             else
             {
-                normalizedCharge = (normalizedCharge - leftSideSize) / rightSideSize;// Adjust range to 0.0 to 1.0.
+                normalizedCharge = (normalizedCharge - leftSideSize) / rightSideSize; // Adjust range to 0.0 to 1.0.
                 finalHue = FloatMath.Lerp(middleHue, rightHue, normalizedCharge);
             }
 
@@ -109,7 +104,7 @@ namespace Content.Client.GameObjects.Components.Power
                 _chargeBar.ForegroundStyleBoxOverride = new StyleBoxFlat();
             }
 
-            var foregroundStyleBoxOverride = (StyleBoxFlat)_chargeBar.ForegroundStyleBoxOverride;
+            var foregroundStyleBoxOverride = (StyleBoxFlat) _chargeBar.ForegroundStyleBoxOverride;
             foregroundStyleBoxOverride.BackgroundColor =
                 Color.FromHsv(new Vector4(finalHue, saturation, value, alpha));
         }
@@ -134,29 +129,29 @@ namespace Content.Client.GameObjects.Components.Power
             public ApcWindow()
             {
                 Title = "APC";
-                var rows = new VBoxContainer("Rows");
+                var rows = new VBoxContainer();
 
-                var statusHeader = new Label("StatusHeader") { Text = "Power Status: " };
+                var statusHeader = new Label {Text = "Power Status: "};
                 rows.AddChild(statusHeader);
 
-                var breaker = new HBoxContainer("Breaker");
-                var breakerLabel = new Label("Label") { Text = "Main Breaker: " };
-                BreakerButton = new CheckButton {Name = "Breaker", Text = "Toggle"};
+                var breaker = new HBoxContainer();
+                var breakerLabel = new Label {Text = "Main Breaker: "};
+                BreakerButton = new CheckButton {Text = "Toggle"};
                 breaker.AddChild(breakerLabel);
                 breaker.AddChild(BreakerButton);
                 rows.AddChild(breaker);
 
-                var externalStatus = new HBoxContainer("ExternalStatus");
-                var externalStatusLabel = new Label("Label") { Text = "External Power: " };
-                ExternalPowerStateLabel = new Label("Status") { Text = "Good" };
+                var externalStatus = new HBoxContainer();
+                var externalStatusLabel = new Label {Text = "External Power: "};
+                ExternalPowerStateLabel = new Label {Text = "Good"};
                 ExternalPowerStateLabel.SetOnlyStyleClass(NanoStyle.StyleClassPowerStateGood);
                 externalStatus.AddChild(externalStatusLabel);
                 externalStatus.AddChild(ExternalPowerStateLabel);
                 rows.AddChild(externalStatus);
 
-                var charge = new HBoxContainer("Charge");
-                var chargeLabel = new Label("Label") { Text = "Charge:" };
-                ChargeBar = new ProgressBar("Charge")
+                var charge = new HBoxContainer();
+                var chargeLabel = new Label {Text = "Charge:"};
+                ChargeBar = new ProgressBar
                 {
                     SizeFlagsHorizontal = Control.SizeFlags.FillExpand,
                     MinValue = 0.0f,
@@ -164,7 +159,7 @@ namespace Content.Client.GameObjects.Components.Power
                     Page = 0.0f,
                     Value = 0.5f
                 };
-                ChargePercentage = new Label("ChargePercentage");
+                ChargePercentage = new Label();
                 charge.AddChild(chargeLabel);
                 charge.AddChild(ChargeBar);
                 charge.AddChild(ChargePercentage);

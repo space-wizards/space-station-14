@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Research;
 using Content.Shared.Materials;
 using Content.Shared.Research;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -12,15 +10,13 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timers;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Research
 {
     public class LatheMenu : SS14Window
     {
 #pragma warning disable CS0649
-        [Dependency]
-        private IPrototypeManager PrototypeManager;
+        [Dependency] private IPrototypeManager PrototypeManager;
 #pragma warning restore
 
         private ItemList Items;
@@ -37,15 +33,6 @@ namespace Content.Client.Research
 
         public LatheMenu()
         {
-        }
-
-        public LatheMenu(string name) : base(name)
-        {
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
             IoCManager.InjectDependencies(this);
 
             Title = "Lathe Menu";
@@ -62,15 +49,15 @@ namespace Content.Client.Research
 
             margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
-            var vbox = new VBoxContainer()
+            var vBox = new VBoxContainer()
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SeparationOverride = 5,
             };
 
-            vbox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+            vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
-            var hboxButtons = new HBoxContainer()
+            var hBoxButtons = new HBoxContainer()
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsVertical = SizeFlags.FillExpand,
@@ -93,7 +80,7 @@ namespace Content.Client.Research
 
             spacer.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
-            var hboxFilter = new HBoxContainer()
+            var hBoxFilter = new HBoxContainer()
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsVertical = SizeFlags.FillExpand,
@@ -124,8 +111,6 @@ namespace Content.Client.Research
                 SizeFlagsVertical = SizeFlags.FillExpand,
             };
 
-
-
             Items.OnItemSelected += ItemSelected;
 
             AmountLineEdit = new LineEdit()
@@ -143,19 +128,19 @@ namespace Content.Client.Research
                 SizeFlagsStretchRatio = 3
             };
 
-            hboxButtons.AddChild(spacer);
-            hboxButtons.AddChild(QueueButton);
+            hBoxButtons.AddChild(spacer);
+            hBoxButtons.AddChild(QueueButton);
 
-            hboxFilter.AddChild(SearchBar);
-            hboxFilter.AddChild(filterButton);
+            hBoxFilter.AddChild(SearchBar);
+            hBoxFilter.AddChild(filterButton);
 
-            vbox.AddChild(hboxButtons);
-            vbox.AddChild(hboxFilter);
-            vbox.AddChild(Items);
-            vbox.AddChild(AmountLineEdit);
-            vbox.AddChild(Materials);
+            vBox.AddChild(hBoxButtons);
+            vBox.AddChild(hBoxFilter);
+            vBox.AddChild(Items);
+            vBox.AddChild(AmountLineEdit);
+            vBox.AddChild(Materials);
 
-            margin.AddChild(vbox);
+            margin.AddChild(vBox);
 
             Contents.AddChild(margin);
         }
