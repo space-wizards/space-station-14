@@ -3,12 +3,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -22,7 +17,7 @@ namespace Content.Client.VendingMachines
     {
         protected override Vector2? CustomSize => (300, 450);
 
-        private ItemList _items;
+        private readonly ItemList _items;
         private List<VendingMachineInventoryEntry> _cachedInventory;
 
         #pragma warning disable CS0649
@@ -32,18 +27,9 @@ namespace Content.Client.VendingMachines
         private readonly IPrototypeManager _prototypeManager;
         #pragma warning restore
         public VendingMachineBoundUserInterface Owner { get; set; }
+
         public VendingMachineMenu()
         {
-        }
-
-        public VendingMachineMenu(string name) : base(name)
-        {
-
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
             IoCManager.InjectDependencies(this);
 
             _items = new ItemList()
