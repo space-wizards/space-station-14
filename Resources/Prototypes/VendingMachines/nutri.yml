@@ -1,0 +1,5 @@
+- type: vendingMachineInventory
+  id: NutriMax
+  name: NutriMax
+  description: A vending machine containing nutritional substances for plants and botanical tools.
+  spriteName: nutri
