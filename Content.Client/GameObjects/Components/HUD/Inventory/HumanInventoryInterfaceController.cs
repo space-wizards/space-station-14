@@ -185,7 +185,7 @@ namespace Content.Client.GameObjects
 
                 // Right column
                 AddButton(Slots.EARS, "ears", (2 * (size + sep), 0));
-                AddButton(Slots.IDCARD, "mask", (2 * (size + sep), size + sep));
+                AddButton(Slots.IDCARD, "id", (2 * (size + sep), size + sep));
                 AddButton(Slots.GLOVES, "gloves", (2 * (size + sep), 2 * (size + sep)));
 
                 // Far right column.
