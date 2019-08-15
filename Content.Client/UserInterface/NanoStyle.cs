@@ -211,7 +211,7 @@ namespace Content.Client.UserInterface
                 // Window close button hover.
                 new StyleRule(
                     new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
-                        TextureButton.StylePseudoClassHover),
+                        new [] {TextureButton.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
@@ -219,7 +219,7 @@ namespace Content.Client.UserInterface
                 // Window close button pressed.
                 new StyleRule(
                     new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
-                        TextureButton.StylePseudoClassPressed),
+                        new [] {TextureButton.StylePseudoClassPressed}),
                     new[]
                     {
                         new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
@@ -227,25 +227,25 @@ namespace Content.Client.UserInterface
 
                 // Regular buttons!
                 new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, Button.StylePseudoClassNormal),
+                    new SelectorElement(typeof(Button), null, null, new [] {Button.StylePseudoClassNormal}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, buttonNormal),
                     }),
                 new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, Button.StylePseudoClassHover),
+                    new SelectorElement(typeof(Button), null, null, new [] {Button.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
                     }),
                 new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, Button.StylePseudoClassPressed),
+                    new SelectorElement(typeof(Button), null, null, new [] {Button.StylePseudoClassPressed}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, buttonPressed),
                     }),
                 new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, Button.StylePseudoClassDisabled),
+                    new SelectorElement(typeof(Button), null, null, new [] {Button.StylePseudoClassDisabled}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, buttonDisabled),
@@ -283,7 +283,7 @@ namespace Content.Client.UserInterface
                         new StyleProperty("font-color", new Color(192, 192, 192)),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(LineEdit), null, null, LineEdit.StylePseudoClassPlaceholder),
+                new StyleRule(new SelectorElement(typeof(LineEdit), null, null, new [] {LineEdit.StylePseudoClassPlaceholder}),
                     new[]
                     {
                         new StyleProperty("font-color", Color.Gray),
@@ -306,14 +306,14 @@ namespace Content.Client.UserInterface
                             vScrollBarGrabberNormal),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, ScrollBar.StylePseudoClassHover),
+                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, new [] {ScrollBar.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(ScrollBar.StylePropertyGrabber,
                             vScrollBarGrabberHover),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, ScrollBar.StylePseudoClassGrabbed),
+                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, new [] {ScrollBar.StylePseudoClassGrabbed}),
                     new[]
                     {
                         new StyleProperty(ScrollBar.StylePropertyGrabber,
@@ -327,14 +327,14 @@ namespace Content.Client.UserInterface
                             hScrollBarGrabberNormal),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, ScrollBar.StylePseudoClassHover),
+                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, new [] {ScrollBar.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(ScrollBar.StylePropertyGrabber,
                             hScrollBarGrabberHover),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, ScrollBar.StylePseudoClassGrabbed),
+                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, new [] {ScrollBar.StylePseudoClassGrabbed}),
                     new[]
                     {
                         new StyleProperty(ScrollBar.StylePropertyGrabber,
@@ -355,7 +355,7 @@ namespace Content.Client.UserInterface
                     new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureUnchecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, Button.StylePseudoClassPressed), new[]
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, new [] {Button.StylePseudoClassPressed}), new[]
                 {
                     new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureChecked),
                 }),
@@ -459,19 +459,19 @@ namespace Content.Client.UserInterface
 
                 // Those top menu buttons.
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), null, null, Button.StylePseudoClassNormal), new []
+                    new SelectorElement(typeof(GameHud.TopButton), null, null, new [] {Button.StylePseudoClassNormal}), new []
                 {
                     new StyleProperty(Button.StylePropertyStyleBox, buttonNormal),
                 }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), null, null, Button.StylePseudoClassPressed), new []
+                    new SelectorElement(typeof(GameHud.TopButton), null, null, new [] {Button.StylePseudoClassPressed}), new []
                 {
                     new StyleProperty(Button.StylePropertyStyleBox, buttonPressed),
                 }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), null, null, Button.StylePseudoClassHover), new []
+                    new SelectorElement(typeof(GameHud.TopButton), null, null, new [] {Button.StylePseudoClassHover}), new []
                 {
                     new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
                 }),
