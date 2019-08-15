@@ -8,10 +8,12 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -23,7 +25,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         private float _spreadStdDev = 3;
         private bool _spread = true;
 
-        private Random _spreadRandom;
+#pragma warning disable 649
+        [Dependency] private IRobustRandom _spreadRandom;
+#pragma warning restore 649
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Spread
@@ -45,8 +49,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
             var rangedWeapon = Owner.GetComponent<RangedWeaponComponent>();
             rangedWeapon.FireHandler = Fire;
-
-            _spreadRandom = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
         public override void ExposeData(ObjectSerializer serializer)

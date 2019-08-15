@@ -8,6 +8,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -24,6 +25,7 @@ namespace Content.Server.GameObjects.Components.Movement
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
+        [Dependency] private readonly IRobustRandom _spreadRandom;
 #pragma warning restore 649
         // TODO: Look at MapManager.Map for Beacons to get all entities on grid
         public ItemTeleporterState State => _state;
@@ -43,8 +45,6 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables] private float _portalAliveTime;
 
         private AppearanceComponent _appearanceComponent;
-
-        private Random _spreadRandom;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -149,7 +149,6 @@ namespace Content.Server.GameObjects.Components.Movement
         public override void Initialize()
         {
             _appearanceComponent = Owner.GetComponent<AppearanceComponent>();
-            _spreadRandom = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
             _state = ItemTeleporterState.Off;
             base.Initialize();
         }

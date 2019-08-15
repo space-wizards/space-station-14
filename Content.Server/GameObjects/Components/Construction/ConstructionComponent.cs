@@ -10,6 +10,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Construction.ConstructionStepMaterial;
@@ -29,7 +30,9 @@ namespace Content.Server.GameObjects.Components.Construction
 
         SpriteComponent Sprite;
         ITransformComponent Transform;
-        Random random;
+        #pragma warning disable 649
+        [Dependency] private IRobustRandom _random;
+        #pragma warning restore 649
 
         public override void Initialize()
         {
@@ -38,7 +41,6 @@ namespace Content.Server.GameObjects.Components.Construction
             Sprite = Owner.GetComponent<SpriteComponent>();
             Transform = Owner.GetComponent<ITransformComponent>();
             var systemman = IoCManager.Resolve<IEntitySystemManager>();
-            random = new Random();
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)
@@ -127,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Construction
                         case ToolType.Welder:
                             if (slapped.TryGetComponent(out WelderComponent welder) && welder.TryUse(toolStep.Amount))
                             {
-                                if (random.NextDouble() > 0.5)
+                                if (_random.NextDouble() > 0.5)
                                     sound.Play("/Audio/items/welder.ogg", Transform.GridPosition);
                                 else
                                     sound.Play("/Audio/items/welder2.ogg", Transform.GridPosition);
@@ -144,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Construction
                         case ToolType.Screwdriver:
                             if (slapped.HasComponent<ScrewdriverComponent>())
                             {
-                                if (random.NextDouble() > 0.5)
+                                if (_random.NextDouble() > 0.5)
                                     sound.Play("/Audio/items/screwdriver.ogg", Transform.GridPosition);
                                 else
                                     sound.Play("/Audio/items/screwdriver2.ogg", Transform.GridPosition);

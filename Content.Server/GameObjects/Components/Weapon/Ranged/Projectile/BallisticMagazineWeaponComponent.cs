@@ -10,7 +10,10 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -34,8 +37,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         [ViewVariables]
         private IEntity Magazine => _magazineSlot.ContainedEntity;
 
-        [ViewVariables]
-        private Random _bulletDropRandom;
+#pragma warning disable 649
+        [Dependency] private readonly IRobustRandom _bulletDropRandom;
+#pragma warning restore 649
         [ViewVariables]
         private string _magInSound;
         [ViewVariables]
@@ -74,7 +78,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             base.Initialize();
 
             _appearance = Owner.GetComponent<AppearanceComponent>();
-            _bulletDropRandom = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
         public override void Startup()
