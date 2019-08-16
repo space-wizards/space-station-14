@@ -24,7 +24,6 @@ namespace Content.Client.GameObjects
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IGameHud _gameHud;
 #pragma warning restore 649
 
         private readonly Dictionary<Slots, List<InventoryButton>> _inventoryButtons
@@ -45,7 +44,7 @@ namespace Content.Client.GameObjects
             base.Initialize();
 
             _window = new HumanInventoryWindow(_loc, _resourceCache);
-            _window.OnClose += () => _gameHud.InventoryButtonDown = false;
+            _window.OnClose += () => GameHud.InventoryButtonDown = false;
             foreach (var (slot, button) in _window.Buttons)
             {
                 button.OnPressed = AddToInventory;
@@ -125,14 +124,14 @@ namespace Content.Client.GameObjects
         {
             base.PlayerAttached();
 
-            _gameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
+            GameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
         }
 
         public override void PlayerDetached()
         {
             base.PlayerDetached();
 
-            _gameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
+            GameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
         }
 
         private class HumanInventoryWindow : SS14Window
