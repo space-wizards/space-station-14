@@ -141,38 +141,4 @@
     state: captain
 
   - type: Clothing
-    sprite: Clothing/captain_uniform.rsi        
-
-- type: entity
-  parent: UniformBase
-  id: UniformHOP
-  name: Head of Personnel's Jumpsuit
-  description: It's a jumpsuit worn by someone who works in the position of "Head of Personnel".
-  components:
-  - type: Sprite
-    sprite: Clothing/hop_jumpsuit.rsi
-    state: hop
-
-  - type: Icon
-    sprite: Clothing/hop_jumpsuit.rsi
-    state: hop
-
-  - type: Clothing
-    sprite: Clothing/hop_jumpsuit.rsi       
-
-- type: entity
-  parent: UniformBase
-  id: UniformMime
-  name: Mime's Outfit
-  description: It's not very colourful.
-  components:
-  - type: Sprite
-    sprite: Clothing/mime_outfit.rsi
-    state: mime
-
-  - type: Icon
-    sprite: Clothing/mime_outfit.rsi
-    state: mime
-
-  - type: Clothing
-    sprite: Clothing/mime_outfit.rsi   
+    sprite: Clothing/captain_uniform.rsi            
