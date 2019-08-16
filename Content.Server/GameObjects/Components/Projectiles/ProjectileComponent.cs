@@ -20,6 +20,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         public Dictionary<DamageType, int> damages = new Dictionary<DamageType, int>();
 
+        public float TimeLeft { get; set; } = 10;
+
         /// <summary>
         /// Function that makes the collision of this object ignore a specific entity so we don't collide with ourselves
         /// </summary>

@@ -5,11 +5,59 @@ meta:
   postmapinit: false
 tilemap:
   0: space
-  1: floor_steel
-  2: floor_techmaint
-  3: floor_white
-  4: plating
-  5: underplating
+  1: floor_carpet
+  2: floor_dark
+  3: floor_elevator_shaft
+  4: floor_freezer
+  5: floor_green_circuit
+  6: floor_hull_center0
+  7: floor_hull_center1
+  8: floor_hull_center10
+  9: floor_hull_center11
+  10: floor_hull_center12
+  11: floor_hull_center13
+  12: floor_hull_center14
+  13: floor_hull_center15
+  14: floor_hull_center16
+  15: floor_hull_center17
+  16: floor_hull_center18
+  17: floor_hull_center19
+  18: floor_hull_center2
+  19: floor_hull_center20
+  20: floor_hull_center21
+  21: floor_hull_center22
+  22: floor_hull_center23
+  23: floor_hull_center24
+  24: floor_hull_center25
+  25: floor_hull_center26
+  26: floor_hull_center27
+  27: floor_hull_center28
+  28: floor_hull_center29
+  29: floor_hull_center3
+  30: floor_hull_center30
+  31: floor_hull_center31
+  32: floor_hull_center32
+  33: floor_hull_center33
+  34: floor_hull_center34
+  35: floor_hull_center35
+  36: floor_hull_center4
+  37: floor_hull_center5
+  38: floor_hull_center6
+  39: floor_hull_center7
+  40: floor_hull_center8
+  41: floor_hull_center9
+  42: floor_hydro
+  43: floor_lino
+  44: floor_mono
+  45: floor_reinforced
+  46: floor_rock_vault
+  47: floor_showroom
+  48: floor_steel
+  49: floor_steel_dirty
+  50: floor_techmaint
+  51: floor_white
+  52: plating
+  53: underplating
 grids:
 - settings:
     chunksize: 16
@@ -18,17 +66,17 @@ grids:
     worldpos: 0,0
   chunks:
   - ind: "-1,0"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAIAAAAFAAAABQAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAUAAAAFAAAABQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANQAAADUAAAA1AAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAADIAAAA1AAAANQAAADUAAAA1AAAAMAAAADAAAAAwAAAAMAAAADUAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANQAAADUAAAA1AAAANQAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-1,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAABQAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAUAAAACAAAAAgAAAAUAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAUAAAAFAAAABQAAAAUAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAACAAAABQAAAAUAAAAFAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAgAAAAUAAAACAAAABQAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAIAAAAFAAAABQAAAAUAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAACAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAgAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAIAAAAFAAAABQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAACAAAABQAAAAUAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAgAAAAUAAAAFAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAANQAAADIAAAAyAAAAMgAAADIAAAAyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANQAAADUAAAAyAAAAMgAAADUAAAAyAAAAMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANQAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAADUAAAA1AAAANQAAADUAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAAyAAAANQAAADUAAAA1AAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAAMgAAADUAAAAyAAAANQAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAADIAAAA1AAAANQAAADUAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAAyAAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAAMgAAADUAAAA1AAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAADIAAAA1AAAANQAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAAyAAAANQAAADUAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAAMgAAADUAAAA1AAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAAA==
   - ind: "-1,1"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "0,1"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "0,0"
-    tiles: AQAAAAUAAAABAAAAAQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAQAAAAEAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAEAAAABAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAUAAAABAAAAAQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAQAAAAEAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAEAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: MAAAADUAAAAwAAAAMAAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAAMAAAADAAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAwAAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAwAAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANQAAADAAAAAwAAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAADUAAAAwAAAAMAAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAAMAAAADAAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANQAAADAAAAA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "0,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAUAAAACAAAAAgAAAAUAAAAFAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAUAAAAFAAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAgAAAAIAAAAFAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAAAgAAAAUAAAAFAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAABQAAAAIAAAACAAAABQAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAUAAAABAAAAAQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAAQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyAAAAMgAAADIAAAAyAAAANQAAADUAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMgAAADUAAAAyAAAAMgAAADUAAAA1AAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyAAAAMgAAADIAAAAyAAAANQAAADUAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMgAAADIAAAAyAAAAMgAAADUAAAA1AAAANQAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADIAAAAyAAAAMgAAADIAAAA1AAAAMgAAADIAAAAyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyAAAAMgAAADIAAAAyAAAAMgAAADUAAAA1AAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANQAAADIAAAAyAAAANQAAADUAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADUAAAAwAAAAMAAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADAAAAAwAAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "1,-1"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
@@ -39,7 +87,7 @@ entities:
     pos: -1.47174,4.550247
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1000
+  - charge: 1200
     type: HitscanWeaponCapacitor
 - type: LaserItem
   uid: 1
@@ -48,7 +96,7 @@ entities:
     pos: -0.6748645,4.487747
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1000
+  - charge: 1200
     type: HitscanWeaponCapacitor
 - type: Brutepack
   uid: 2
@@ -211,18 +259,12 @@ entities:
     pos: -1.5,-14.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: LightTube
+- type: poweredsmalllight
   uid: 25
   components:
-  - parent: 26
-    grid: 0
-    type: Transform
-- type: poweredlight
-  uid: 26
-  components:
   - grid: 0
-    pos: 4.5,-9.5
-    rot: 3.14159265358979 rad
+    pos: -4.5,-5
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -231,7 +273,24 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 25
+        - 29
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: poweredlight
+  uid: 26
+  components:
+  - grid: 0
+    pos: -8.5,4
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
+  - containers:
+      light_bulb:
+        entities:
+        - 219
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: Wire
@@ -241,18 +300,12 @@ entities:
     pos: 8.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: LightTube
+- type: poweredsmalllight
   uid: 28
   components:
-  - parent: 29
-    grid: 0
-    type: Transform
-- type: poweredlight
-  uid: 29
-  components:
   - grid: 0
-    pos: -0.5,-13.5
-    rot: 1.5707963267949 rad
+    pos: 0.5,-5
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -261,9 +314,16 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 28
+        - 171
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
+- type: LightBulb
+  uid: 29
+  components:
+  - parent: 25
+    grid: 0
+    pos: 4.5,5
+    type: Transform
 - type: Wire
   uid: 30
   components:
@@ -593,7 +653,7 @@ entities:
     pos: 1.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
-  - load: 120
+  - load: 220
     type: PowerProvider
 - type: solid_wall
   uid: 77
@@ -695,6 +755,9 @@ entities:
     type: Transform
   - containers:
       storagebase:
+        entities: []
+        type: Robust.Server.GameObjects.Components.Container.Container
+      EntityStorageComponent:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
@@ -1076,28 +1139,28 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 145
+  uid: 144
   components:
   - grid: 0
     pos: -3.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: SecurityVestClothing
-  uid: 146
+  uid: 145
   components:
   - grid: 0
     pos: 0.5223687,7.507263
     rot: -1.5707963267949 rad
     type: Transform
 - type: HelmetSecurity
-  uid: 147
+  uid: 146
   components:
   - grid: 0
     pos: -0.1807563,7.585388
     rot: -1.5707963267949 rad
     type: Transform
 - type: locker_generic
-  uid: 148
+  uid: 147
   components:
   - grid: 0
     pos: 1.5,-10.5
@@ -1110,30 +1173,33 @@ entities:
       Content.Server.GameObjects.Components.EntityStorageComponent149:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
+      EntityStorageComponent:
+        entities: []
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: HelmetSecurity
-  uid: 149
+  uid: 148
   components:
   - grid: 0
     pos: -0.7432563,7.601013
     rot: -1.5707963267949 rad
     type: Transform
 - type: Medkit
-  uid: 150
+  uid: 149
   components:
   - grid: 0
     pos: -3.209215,-1.486604
     rot: -1.5707963267949 rad
     type: Transform
 - type: Medkit
-  uid: 151
+  uid: 150
   components:
   - grid: 0
     pos: -4.146715,-1.408479
     rot: -1.5707963267949 rad
     type: Transform
 - type: locker_generic
-  uid: 152
+  uid: 151
   components:
   - grid: 0
     pos: 0.5,-10.5
@@ -1146,183 +1212,163 @@ entities:
       Content.Server.GameObjects.Components.EntityStorageComponent153:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
+      EntityStorageComponent:
+        entities: []
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: fire_extinguisher
-  uid: 157
+  uid: 152
   components:
   - grid: 0
     pos: -1.297692,-5.396082
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 166
+  uid: 153
   components:
   - grid: 0
     pos: -0.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 167
+  uid: 154
   components:
   - grid: 0
     pos: -5.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: poweredsmalllight
-  uid: 169
+- type: computerPowerMonitoring
+  uid: 155
   components:
   - grid: 0
     pos: 0.5,-5.5
-    rot: 1.5707963267949 rad
+    rot: -1.5707963267948966 rad
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 171
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: LightTube
-  uid: 170
+- type: computerAlert
+  uid: 156
   components:
-  - parent: 189
-    grid: 0
-    type: Transform
-- type: LightBulb
-  uid: 171
-  components:
-  - parent: 169
-    grid: 0
+  - grid: 0
+    pos: 0.5,0.5
+    rot: -1.5707963267948966 rad
     type: Transform
 - type: table
-  uid: 175
+  uid: 157
   components:
   - grid: 0
     pos: -4.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 176
+  uid: 158
   components:
   - grid: 0
     pos: -1.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 177
+  uid: 159
   components:
   - grid: 0
     pos: -2.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 178
+  uid: 160
   components:
   - grid: 0
     pos: -3.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: WirelessMachine
-  uid: 179
+  uid: 161
   components:
   - grid: 0
     pos: -6.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 180
+  uid: 162
   components:
   - grid: 0
     pos: 4.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 181
+  uid: 163
   components:
   - grid: 0
     pos: -5.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 182
+  uid: 164
   components:
   - grid: 0
     pos: -6.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 183
+  uid: 165
   components:
   - grid: 0
     pos: -6.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 184
+  uid: 166
   components:
   - grid: 0
     pos: 5.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 185
+  uid: 167
   components:
   - grid: 0
     pos: 5.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 186
+  uid: 168
   components:
   - grid: 0
     pos: 5.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: WiredMachine
-  uid: 187
+  uid: 169
   components:
   - grid: 0
     pos: 5.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: WiredMachine
-  uid: 188
+  uid: 170
   components:
   - grid: 0
     pos: -6.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: poweredlight
-  uid: 189
-  components:
-  - grid: 0
-    pos: -6.5,-9.5
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 170
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
 - type: LightBulb
-  uid: 190
+  uid: 171
   components:
-  - parent: 191
+  - parent: 28
     grid: 0
+    pos: -0.5,5
+    type: Transform
+- type: LightBulb
+  uid: 172
+  components:
+  - parent: 173
+    grid: 0
+    pos: 10,6.5
     type: Transform
 - type: poweredsmalllight
-  uid: 191
+  uid: 173
   components:
   - grid: 0
-    pos: -4.5,-5.5
-    rot: 1.5707963267949 rad
+    pos: -10,-6.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -1331,295 +1377,302 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 190
+        - 172
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - type: spawn_point_latejoin
-  uid: 192
+  uid: 174
   components:
   - grid: 0
     pos: -9.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 193
+  uid: 175
   components:
   - grid: 0
     pos: -0.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 194
+  uid: 176
   components:
   - grid: 0
     pos: -5.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 195
+  uid: 177
   components:
   - grid: 0
     pos: -0.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: spawn_point_latejoin
-  uid: 196
+  uid: 178
   components:
   - grid: 0
     pos: -5.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 197
+  uid: 179
   components:
   - grid: 0
     pos: 9.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 198
+  uid: 180
   components:
   - grid: 0
     pos: 9.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 199
+  uid: 181
   components:
   - grid: 0
     pos: 9.5,2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 200
+  uid: 182
   components:
   - grid: 0
     pos: 9.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 201
+  uid: 183
   components:
   - grid: 0
     pos: 9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 202
+  uid: 184
   components:
   - grid: 0
     pos: 9.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 203
+  uid: 185
   components:
   - grid: 0
     pos: 9.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 204
+  uid: 186
   components:
   - grid: 0
     pos: 9.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 205
+  uid: 187
   components:
   - grid: 0
     pos: 9.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 206
+  uid: 188
   components:
   - grid: 0
     pos: 9.5,9.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 207
+  uid: 189
   components:
   - grid: 0
     pos: 9.5,10.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 208
+  uid: 190
   components:
   - grid: 0
     pos: -6.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 209
+  uid: 191
   components:
   - grid: 0
     pos: -5.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 210
+  uid: 192
   components:
   - grid: 0
     pos: -4.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 211
+  uid: 193
   components:
   - grid: 0
     pos: -3.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 212
+  uid: 194
   components:
   - grid: 0
     pos: -2.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 213
+  uid: 195
   components:
   - grid: 0
     pos: -1.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 214
+  uid: 196
   components:
   - grid: 0
     pos: -0.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 215
+  uid: 197
   components:
   - grid: 0
     pos: 0.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 216
+  uid: 198
   components:
   - grid: 0
     pos: 1.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 217
+  uid: 199
   components:
   - grid: 0
     pos: -4.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 218
+  uid: 200
   components:
   - grid: 0
     pos: -3.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 219
+  uid: 201
   components:
   - grid: 0
     pos: -2.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 220
+  uid: 202
   components:
   - grid: 0
     pos: -1.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: table
-  uid: 221
+  uid: 203
   components:
   - grid: 0
     pos: -0.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: airlock
-  uid: 222
+  uid: 204
   components:
   - grid: 0
     pos: 2.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: airlock
-  uid: 223
+  uid: 205
   components:
   - grid: 0
     pos: 3.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 224
+  uid: 206
   components:
   - grid: 0
     pos: -9.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 225
+  uid: 207
   components:
   - grid: 0
     pos: -8.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 226
+  uid: 208
   components:
   - grid: 0
     pos: -8.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 227
+  uid: 209
   components:
   - grid: 0
     pos: -9.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 228
+  uid: 210
   components:
   - grid: 0
     pos: -9.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 229
+  uid: 211
   components:
   - grid: 0
     pos: -10.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 230
+  uid: 212
   components:
   - grid: 0
     pos: -10.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: airlock
-  uid: 233
+  uid: 213
   components:
   - grid: 0
     pos: -9.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: poweredsmalllight
-  uid: 234
+- type: LightTube
+  uid: 214
+  components:
+  - parent: 215
+    grid: 0
+    pos: -0.5,-1
+    type: Transform
+- type: poweredlight
+  uid: 215
   components:
   - grid: 0
-    pos: -9.5,-6.5
-    rot: 3.14159265358979 rad
+    pos: 0.5,1
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -1628,335 +1681,294 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 235
+        - 214
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
+- type: chairOfficeLight
+  uid: 216
+  components:
+  - grid: 0
+    pos: -3.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- type: chairOfficeDark
+  uid: 217
+  components:
+  - grid: 0
+    pos: 0.5,-6.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- type: poweredlight
+  uid: 218
+  components:
+  - grid: 0
+    pos: -6.5,1
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
+  - containers:
+      light_bulb:
+        entities:
+        - 320
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: LightTube
+  uid: 219
+  components:
+  - parent: 26
+    grid: 0
+    pos: 8.5,-4
+    type: Transform
+- type: stool
+  uid: 220
+  components:
+  - grid: 0
+    pos: -1.5,-9.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- type: chairOfficeLight
+  uid: 221
+  components:
+  - grid: 0
+    pos: -3.5,-2.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- type: chairOfficeLight
+  uid: 222
+  components:
+  - grid: 0
+    pos: -2.5,-2.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- type: chairOfficeLight
+  uid: 223
+  components:
+  - grid: 0
+    pos: -2.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- type: stool
+  uid: 224
+  components:
+  - grid: 0
+    pos: -2.5,-6.5
+    rot: 1.5707963267948966 rad
+    type: Transform
 - type: LightBulb
-  uid: 235
+  uid: 225
   components:
-  - parent: 234
+  - parent: 254
     grid: 0
-    type: Transform
-- type: poweredlight
-  uid: 236
-  components:
-  - grid: 0
-    pos: -0.5,0.5
-    rot: -1.5707963267949 rad
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 237
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: LightTube
-  uid: 237
-  components:
-  - parent: 236
-    grid: 0
-    type: Transform
-- type: poweredlight
-  uid: 238
-  components:
-  - grid: 0
-    pos: -5.5,0.5
-    rot: -1.5707963267949 rad
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 239
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: LightTube
-  uid: 239
-  components:
-  - parent: 238
-    grid: 0
-    type: Transform
-- type: poweredlight
-  uid: 240
-  components:
-  - grid: 0
-    pos: -6.5,5.5
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 241
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: LightTube
-  uid: 241
-  components:
-  - parent: 240
-    grid: 0
-    type: Transform
-- type: poweredlight
-  uid: 242
-  components:
-  - grid: 0
-    pos: 3.5,5.5
-    rot: 3.14159265358979 rad
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 243
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: LightTube
-  uid: 243
-  components:
-  - parent: 242
-    grid: 0
-    type: Transform
-- type: poweredlight
-  uid: 244
-  components:
-  - grid: 0
-    pos: -1.5,7.5
-    rot: -1.5707963267949 rad
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - load: 40
-    type: PowerDevice
-  - containers:
-      light_bulb:
-        entities:
-        - 245
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-- type: LightTube
-  uid: 245
-  components:
-  - parent: 244
-    grid: 0
+    pos: -5,9.5
     type: Transform
 - type: APC
-  uid: 246
-  components:
-  - grid: 0
-    pos: 4.5,-10.5
-    rot: -1.5707963267949 rad
-    type: Transform
-  - load: 360
-    type: PowerProvider
-- type: APC
-  uid: 247
+  uid: 226
   components:
   - grid: 0
     pos: -6.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
-  - load: 120
+  - load: 80
     type: PowerProvider
 - type: Wire
-  uid: 248
+  uid: 227
   components:
   - grid: 0
     pos: -9.5,2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 249
+  uid: 228
   components:
   - grid: 0
     pos: -9.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 250
+  uid: 229
   components:
   - grid: 0
     pos: -8.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 251
+  uid: 230
   components:
   - grid: 0
     pos: -7.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 252
+  uid: 231
   components:
   - grid: 0
     pos: -6.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 253
+  uid: 232
   components:
   - grid: 0
     pos: -5.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 254
+  uid: 233
   components:
   - grid: 0
     pos: -4.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 255
+  uid: 234
   components:
   - grid: 0
     pos: -3.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 256
+  uid: 235
   components:
   - grid: 0
     pos: -2.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 257
+  uid: 236
   components:
   - grid: 0
     pos: -1.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 258
+  uid: 237
   components:
   - grid: 0
     pos: -0.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 259
+  uid: 238
   components:
   - grid: 0
     pos: 0.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: Wire
-  uid: 260
+  uid: 239
   components:
   - grid: 0
     pos: 1.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 261
+  uid: 240
   components:
   - grid: 0
     pos: 9.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 262
+  uid: 241
   components:
   - grid: 0
     pos: 9.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 263
+  uid: 242
   components:
   - grid: 0
     pos: 9.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 264
+  uid: 243
   components:
   - grid: 0
     pos: 9.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 265
+  uid: 244
   components:
   - grid: 0
     pos: 9.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 266
+  uid: 245
   components:
   - grid: 0
     pos: 9.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 267
+  uid: 246
   components:
   - grid: 0
     pos: 9.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 268
+  uid: 247
   components:
   - grid: 0
     pos: 9.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 269
+  uid: 248
   components:
   - grid: 0
     pos: 9.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 270
+  uid: 249
   components:
   - grid: 0
     pos: 9.5,-9.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 271
+  uid: 250
   components:
   - grid: 0
     pos: 9.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 272
+  uid: 251
   components:
   - grid: 0
     pos: 9.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: catwalk
-  uid: 273
+  uid: 252
   components:
   - grid: 0
     pos: 8.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: poweredsmalllight
-  uid: 274
+- type: APC
+  uid: 253
   components:
   - grid: 0
-    pos: 8.5,-7.5
-    rot: 3.14159265358979 rad
+    pos: 4.5,-9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - load: 380
+    type: PowerProvider
+- type: poweredsmalllight
+  uid: 254
+  components:
+  - grid: 0
+    pos: 5,-9.5
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -1965,17 +1977,11 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 275
+        - 225
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- type: LightBulb
-  uid: 275
-  components:
-  - parent: 274
-    grid: 0
-    type: Transform
 - type: APC
-  uid: 276
+  uid: 255
   components:
   - grid: 0
     pos: -7.5,3.5
@@ -1984,14 +1990,14 @@ entities:
   - load: 280
     type: PowerProvider
 - type: solid_wall
-  uid: 277
+  uid: 256
   components:
   - grid: 0
     pos: 7.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: YellowToolboxItemFilled
-  uid: 278
+  uid: 257
   components:
   - grid: 0
     pos: -0.8099712,-5.21454
@@ -2003,7 +2009,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: YellowToolboxItemFilled
-  uid: 279
+  uid: 258
   components:
   - grid: 0
     pos: -0.5597038,-5.679647
@@ -2015,49 +2021,59 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: FlashlightLantern
-  uid: 280
+  uid: 259
   components:
   - grid: 0
     pos: -1.934832,-5.154238
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: FlashlightLantern
-  uid: 282
+  uid: 260
   components:
   - grid: 0
     pos: -2.017696,-5.71715
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: Crowbar
-  uid: 285
+  uid: 261
   components:
   - grid: 0
     pos: -2.861032,-5.524786
     rot: -1.5707963267949 rad
     type: Transform
 - type: UniformEngineering
-  uid: 286
+  uid: 262
   components:
   - grid: 0
     pos: -0.6474335,-10.27245
     rot: -1.5707963267949 rad
     type: Transform
 - type: GasMaskClothing
-  uid: 287
+  uid: 263
   components:
   - grid: 0
     pos: -0.2880585,-10.69432
     rot: -1.5707963267949 rad
     type: Transform
 - type: HazardVestClothing
-  uid: 288
+  uid: 264
   components:
   - grid: 0
     pos: -0.9130585,-10.66307
     rot: -1.5707963267949 rad
     type: Transform
 - type: UtilityBeltClothing
-  uid: 289
+  uid: 265
   components:
   - grid: 0
     pos: -1.895102,-10.33495
@@ -2069,7 +2085,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: UtilityBeltClothing
-  uid: 290
+  uid: 266
   components:
   - grid: 0
     pos: -1.770102,-10.63182
@@ -2081,28 +2097,43 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: magazine_12mm_filled
-  uid: 291
+  uid: 267
   components:
   - grid: 0
     pos: -6.605512,7.638151
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      magazine_bullet_container:
+        entities: []
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - type: magazine_12mm_filled
-  uid: 312
+  uid: 268
   components:
   - grid: 0
     pos: -6.339887,7.669401
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      magazine_bullet_container:
+        entities: []
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - type: magazine_12mm_filled
-  uid: 333
+  uid: 269
   components:
   - grid: 0
     pos: -6.027387,7.622526
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      magazine_bullet_container:
+        entities: []
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - type: BackpackClothing
-  uid: 354
+  uid: 270
   components:
   - grid: 0
     pos: -5.089887,7.591276
@@ -2114,7 +2145,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: BackpackClothing
-  uid: 355
+  uid: 271
   components:
   - grid: 0
     pos: -4.683637,7.606901
@@ -2126,336 +2157,352 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - type: BlackGloves
-  uid: 356
+  uid: 272
   components:
   - grid: 0
     pos: -3.386762,7.466276
     rot: -1.5707963267949 rad
     type: Transform
 - type: smg_c20r
-  uid: 357
+  uid: 273
   components:
   - grid: 0
     pos: -2.524035,7.579326
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      ballistics_chamber_0:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+      ballistic_gun_magazine:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: smg_c20r
-  uid: 379
+  uid: 274
   components:
   - grid: 0
     pos: -1.94591,7.485576
     rot: -1.5707963267949 rad
     type: Transform
+  - containers:
+      ballistics_chamber_0:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+      ballistic_gun_magazine:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - type: solid_wall
-  uid: 381
+  uid: 275
   components:
   - grid: 0
     pos: -10.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 382
+  uid: 276
   components:
   - grid: 0
     pos: -11.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 383
+  uid: 277
   components:
   - grid: 0
     pos: -10.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 384
+  uid: 278
   components:
   - grid: 0
     pos: -9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 385
+  uid: 279
   components:
   - grid: 0
     pos: -8.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 386
+  uid: 280
   components:
   - grid: 0
     pos: -7.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 387
+  uid: 281
   components:
   - grid: 0
     pos: -8.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 388
+  uid: 282
   components:
   - grid: 0
     pos: -5.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 389
+  uid: 283
   components:
   - grid: 0
     pos: -6.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 390
+  uid: 284
   components:
   - grid: 0
     pos: -7.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 391
+  uid: 285
   components:
   - grid: 0
     pos: -0.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 392
+  uid: 286
   components:
   - grid: 0
     pos: 0.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 393
+  uid: 287
   components:
   - grid: 0
     pos: 1.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 394
+  uid: 288
   components:
   - grid: 0
     pos: 1.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 395
+  uid: 289
   components:
   - grid: 0
     pos: 1.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 396
+  uid: 290
   components:
   - grid: 0
     pos: 4.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 397
+  uid: 291
   components:
   - grid: 0
     pos: 4.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 398
+  uid: 292
   components:
   - grid: 0
     pos: 4.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 399
+  uid: 293
   components:
   - grid: 0
     pos: 4.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 400
+  uid: 294
   components:
   - grid: 0
     pos: 4.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 401
+  uid: 295
   components:
   - grid: 0
     pos: 4.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 402
+  uid: 296
   components:
   - grid: 0
     pos: 4.5,2.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 403
+  uid: 297
   components:
   - grid: 0
     pos: 4.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 404
+  uid: 298
   components:
   - grid: 0
     pos: 4.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 405
+  uid: 299
   components:
   - grid: 0
     pos: 4.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 406
+  uid: 300
   components:
   - grid: 0
     pos: 4.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 407
+  uid: 301
   components:
   - grid: 0
     pos: 4.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 408
+  uid: 302
   components:
   - grid: 0
     pos: 4.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 409
+  uid: 303
   components:
   - grid: 0
     pos: 1.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 410
+  uid: 304
   components:
   - grid: 0
     pos: 0.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 411
+  uid: 305
   components:
   - grid: 0
     pos: -0.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 412
+  uid: 306
   components:
   - grid: 0
     pos: -1.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 413
+  uid: 307
   components:
   - grid: 0
     pos: -2.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 414
+  uid: 308
   components:
   - grid: 0
     pos: -3.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 415
+  uid: 309
   components:
   - grid: 0
     pos: -4.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 416
+  uid: 310
   components:
   - grid: 0
     pos: -5.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 417
+  uid: 311
   components:
   - grid: 0
     pos: -6.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 418
+  uid: 312
   components:
   - grid: 0
     pos: -7.5,8.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 419
+  uid: 313
   components:
   - grid: 0
     pos: -7.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 420
+  uid: 314
   components:
   - grid: 0
     pos: -7.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: solid_wall
-  uid: 421
+  uid: 315
   components:
   - grid: 0
     pos: -7.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - type: LeatherGloves
-  uid: 422
+  uid: 316
   components:
   - grid: 0
     pos: -4.332221,4.64238
     rot: -1.5707963267949 rad
     type: Transform
 - type: LeatherGloves
-  uid: 423
+  uid: 317
   components:
   - grid: 0
     pos: -3.519721,4.64238
     rot: -1.5707963267949 rad
     type: Transform
 - type: LeatherGloves
-  uid: 424
+  uid: 318
   components:
   - grid: 0
     pos: -2.597846,4.61113
     rot: -1.5707963267949 rad
     type: Transform
 - type: LedLightTube
-  uid: 425
+  uid: 319
   components:
   - grid: 0
     pos: -3.511025,-10.35149
@@ -2463,4 +2510,72 @@ entities:
     type: Transform
   - color: '#EEEEFFFF'
     type: Sprite
+- type: LightTube
+  uid: 320
+  components:
+  - parent: 218
+    grid: 0
+    pos: 6.5,-1
+    type: Transform
+- type: poweredlight
+  uid: 321
+  components:
+  - grid: 0
+    pos: -1.5,8
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
+  - containers:
+      light_bulb:
+        entities:
+        - 322
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: LightTube
+  uid: 322
+  components:
+  - parent: 321
+    grid: 0
+    pos: 1.5,-8
+    type: Transform
+- type: poweredlight
+  uid: 323
+  components:
+  - grid: 0
+    pos: 4,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - load: 40
+    type: PowerDevice
+  - containers:
+      light_bulb:
+        entities:
+        - 324
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- type: LightTube
+  uid: 324
+  components:
+  - parent: 323
+    grid: 0
+    pos: -4,-3.5
+    type: Transform
+- type: wall_light
+  uid: 325
+  components:
+  - grid: 0
+    pos: -7,-10.5
+    type: Transform
+- type: wall_light
+  uid: 326
+  components:
+  - grid: 0
+    pos: -0.5,-14
+    rot: 1.5707963267948966 rad
+    type: Transform
 ...

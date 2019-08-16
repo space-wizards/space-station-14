@@ -1,0 +1,1 @@
+{"version": 1, "size": {"x": 32, "y": 32}, "states": [{"name": "chair", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "officechair_dark", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "officechair_white", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "stool_base", "directions": 1, "delays": [[1.0]]}]}

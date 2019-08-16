@@ -1,13 +1,9 @@
 using Content.Client.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
@@ -25,11 +21,9 @@ namespace Content.Client.Research
         private Label Description;
         private TextureRect Icon;
 
-        protected override void Initialize()
+        public LatheQueueMenu()
         {
-            base.Initialize();
-
-            Title = "Lathe Queue";
+                        Title = "Lathe Queue";
 
             var margin = new MarginContainer()
             {
@@ -41,9 +35,9 @@ namespace Content.Client.Research
 
             margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
-            var vbox = new VBoxContainer();
+            var vBox = new VBoxContainer();
 
-            vbox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+            vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var descMargin = new MarginContainer()
             {
@@ -55,7 +49,7 @@ namespace Content.Client.Research
                 SizeFlagsStretchRatio = 2,
             };
 
-            var hbox = new HBoxContainer()
+            var hBox = new HBoxContainer()
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
             };
@@ -66,7 +60,7 @@ namespace Content.Client.Research
                 SizeFlagsStretchRatio = 2,
             };
 
-            var vboxInfo = new VBoxContainer()
+            var vBoxInfo = new VBoxContainer()
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 3,
@@ -94,18 +88,18 @@ namespace Content.Client.Research
                 SelectMode = ItemList.ItemListSelectMode.None
             };
 
-            vboxInfo.AddChild(NameLabel);
-            vboxInfo.AddChild(Description);
+            vBoxInfo.AddChild(NameLabel);
+            vBoxInfo.AddChild(Description);
 
-            hbox.AddChild(Icon);
-            hbox.AddChild(vboxInfo);
+            hBox.AddChild(Icon);
+            hBox.AddChild(vBoxInfo);
 
-            descMargin.AddChild(hbox);
+            descMargin.AddChild(hBox);
 
-            vbox.AddChild(descMargin);
-            vbox.AddChild(QueueList);
+            vBox.AddChild(descMargin);
+            vBox.AddChild(QueueList);
 
-            margin.AddChild(vbox);
+            margin.AddChild(vBox);
 
             Contents.AddChild(margin);
 

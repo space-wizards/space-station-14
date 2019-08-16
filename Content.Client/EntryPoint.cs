@@ -11,8 +11,8 @@ using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
+using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Interfaces;
-using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
@@ -42,6 +42,7 @@ namespace Content.Client
 
             var registerIgnore = new[]
             {
+                "Breakable",
                 "Interactable",
                 "Destructible",
                 "Temperature",
@@ -94,6 +95,7 @@ namespace Content.Client
                 "PowerCell",
                 "AiController",
                 "PlayerInputMover",
+                "Computer"
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -104,6 +106,8 @@ namespace Content.Client
             factory.Register<SharedLatheComponent>();
             factory.Register<SharedSpawnPointComponent>();
             factory.Register<SolutionComponent>();
+
+            factory.Register<SharedVendingMachineComponent>();
 
             prototypes.RegisterIgnore("material");
 

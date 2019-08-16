@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Input;
@@ -66,7 +65,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _currentPopup = new Popup();
             _currentPopup.UserInterfaceManager.StateRoot.AddChild(_currentPopup);
             _currentPopup.OnPopupHide += _closeContextMenu;
-            var vBox = new VBoxContainer("ButtonBox");
+            var vBox = new VBoxContainer();
             _currentPopup.AddChild(vBox);
 
             vBox.AddChild(new Label {Text = "Waiting on Server..."});
@@ -94,7 +93,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _currentPopup = new Popup();
             _currentPopup.OnPopupHide += _closeContextMenu;
-            var vBox = new VBoxContainer("ButtonBox");
+            var vBox = new VBoxContainer();
             _currentPopup.AddChild(vBox);
             foreach (var entity in entities)
             {

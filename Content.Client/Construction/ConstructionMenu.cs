@@ -3,62 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Shared.Construction;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.GameObjects;
-using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Placement;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Construction
 {
     public class ConstructionMenu : SS14Window
     {
-
 #pragma warning disable CS0649
-        [Dependency]
-        readonly IPrototypeManager PrototypeManager;
-        [Dependency]
-        readonly IResourceCache ResourceCache;
+        [Dependency] readonly IPrototypeManager PrototypeManager;
+        [Dependency] readonly IResourceCache ResourceCache;
 #pragma warning restore
 
         public ConstructorComponent Owner { get; set; }
-        Button BuildButton;
-        Button EraseButton;
-        LineEdit SearchBar;
-        Tree RecipeList;
-        TextureRect InfoIcon;
-        Label InfoLabel;
-        ItemList StepList;
+        private readonly Button BuildButton;
+        private readonly Button EraseButton;
+        private readonly LineEdit SearchBar;
+        private readonly Tree RecipeList;
+        private readonly TextureRect InfoIcon;
+        private readonly Label InfoLabel;
+        private readonly ItemList StepList;
 
-        CategoryNode RootCategory;
+        private CategoryNode RootCategory;
+
         // This list is flattened in such a way that the top most deepest category is first.
-        List<CategoryNode> FlattenedCategories;
-        PlacementManager Placement;
+        private List<CategoryNode> FlattenedCategories;
+        private readonly PlacementManager Placement;
 
         public ConstructionMenu()
         {
-            Size = new Vector2(500.0f, 350.0f);
-        }
+            Size = (500, 350);
 
-        protected override void Initialize()
-        {
-            base.Initialize();
             IoCManager.InjectDependencies(this);
-            Placement = (PlacementManager)IoCManager.Resolve<IPlacementManager>();
+            Placement = (PlacementManager) IoCManager.Resolve<IPlacementManager>();
             Placement.PlacementCanceled += OnPlacementCanceled;
 
             Title = "Construction";
@@ -66,18 +54,18 @@ namespace Content.Client.Construction
             var hSplitContainer = new HSplitContainer();
 
             // Left side
-            var recipes = new VBoxContainer("Recipes") {CustomMinimumSize = new Vector2(150.0f, 0.0f)};
-            SearchBar = new LineEdit("Search") {PlaceHolder = "Search"};
-            RecipeList = new Tree("Tree") {SizeFlagsVertical = SizeFlags.FillExpand, HideRoot = true};
+            var recipes = new VBoxContainer {CustomMinimumSize = new Vector2(150.0f, 0.0f)};
+            SearchBar = new LineEdit {PlaceHolder = "Search"};
+            RecipeList = new Tree {SizeFlagsVertical = SizeFlags.FillExpand, HideRoot = true};
             recipes.AddChild(SearchBar);
             recipes.AddChild(RecipeList);
             hSplitContainer.AddChild(recipes);
 
             // Right side
-            var guide = new VBoxContainer("Guide");
-            var info = new HBoxContainer("Info");
-            InfoIcon = new TextureRect("TextureRect");
-            InfoLabel = new Label("Label")
+            var guide = new VBoxContainer();
+            var info = new HBoxContainer();
+            InfoIcon = new TextureRect();
+            InfoLabel = new Label
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsVertical = SizeFlags.ShrinkCenter
             };
@@ -85,7 +73,7 @@ namespace Content.Client.Construction
             info.AddChild(InfoLabel);
             guide.AddChild(info);
 
-            var stepsLabel = new Label("Label")
+            var stepsLabel = new Label
             {
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
@@ -93,14 +81,14 @@ namespace Content.Client.Construction
             };
             guide.AddChild(stepsLabel);
 
-            StepList = new ItemList("StepsList")
+            StepList = new ItemList
             {
                 SizeFlagsVertical = SizeFlags.FillExpand, SelectMode = ItemList.ItemListSelectMode.None
             };
             guide.AddChild(StepList);
 
-            var buttonsContainer = new HBoxContainer("Buttons");
-            BuildButton = new Button("BuildButton")
+            var buttonsContainer = new HBoxContainer();
+            BuildButton = new Button
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 TextAlign = Button.AlignMode.Center,
@@ -108,7 +96,7 @@ namespace Content.Client.Construction
                 Disabled = true,
                 ToggleMode = false
             };
-            EraseButton = new Button("EraseButton")
+            EraseButton = new Button
             {
                 TextAlign = Button.AlignMode.Center, Text = "Clear Ghosts", ToggleMode = true
             };
@@ -140,7 +128,7 @@ namespace Content.Client.Construction
 
         void OnItemSelected()
         {
-            var prototype = (ConstructionPrototype)RecipeList.Selected.Metadata;
+            var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
 
             if (prototype == null)
             {
@@ -163,6 +151,7 @@ namespace Content.Client.Construction
                     {
                         continue;
                     }
+
                     Texture icon;
                     string text;
                     switch (forward)
@@ -171,20 +160,24 @@ namespace Content.Client.Construction
                             switch (mat.Material)
                             {
                                 case ConstructionStepMaterial.MaterialType.Metal:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/sheet_metal.png");
+                                    icon = ResourceCache.GetResource<TextureResource>(
+                                        "/Textures/Objects/sheet_metal.png");
                                     text = $"Metal x{mat.Amount}";
                                     break;
                                 case ConstructionStepMaterial.MaterialType.Glass:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/sheet_glass.png");
+                                    icon = ResourceCache.GetResource<TextureResource>(
+                                        "/Textures/Objects/sheet_glass.png");
                                     text = $"Glass x{mat.Amount}";
                                     break;
                                 case ConstructionStepMaterial.MaterialType.Cable:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/cable_coil.png");
+                                    icon = ResourceCache.GetResource<TextureResource>(
+                                        "/Textures/Objects/cable_coil.png");
                                     text = $"Cable Coil x{mat.Amount}";
                                     break;
                                 default:
                                     throw new NotImplementedException();
                             }
+
                             break;
                         case ConstructionStepTool tool:
                             switch (tool.Tool)
@@ -198,20 +191,24 @@ namespace Content.Client.Construction
                                     text = "Crowbar";
                                     break;
                                 case ConstructionStepTool.ToolType.Screwdriver:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/screwdriver.png");
+                                    icon = ResourceCache.GetResource<TextureResource>(
+                                        "/Textures/Objects/screwdriver.png");
                                     text = "Screwdriver";
                                     break;
                                 case ConstructionStepTool.ToolType.Welder:
-                                    icon = ResourceCache.GetResource<RSIResource>("/Textures/Objects/tools.rsi").RSI["welder"].Frame0;
+                                    icon = ResourceCache.GetResource<RSIResource>("/Textures/Objects/tools.rsi")
+                                        .RSI["welder"].Frame0;
                                     text = $"Welding tool ({tool.Amount} fuel)";
                                     break;
                                 case ConstructionStepTool.ToolType.Wirecutters:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/wirecutter.png");
+                                    icon = ResourceCache.GetResource<TextureResource>(
+                                        "/Textures/Objects/wirecutter.png");
                                     text = "Wirecutters";
                                     break;
                                 default:
                                     throw new NotImplementedException();
                             }
+
                             break;
                         default:
                             throw new NotImplementedException();
@@ -230,7 +227,7 @@ namespace Content.Client.Construction
 
         void OnBuildPressed(Button.ButtonEventArgs args)
         {
-            var prototype = (ConstructionPrototype)RecipeList.Selected.Metadata;
+            var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
             if (prototype == null)
             {
                 return;
@@ -278,6 +275,7 @@ namespace Content.Client.Construction
                         subNode = new CategoryNode(category, currentNode);
                         currentNode.ChildCategories.Add(category, subNode);
                     }
+
                     currentNode = subNode;
                 }
 
@@ -356,6 +354,7 @@ namespace Content.Client.Construction
                             continue;
                         }
                     }
+
                     var subItem = RecipeList.CreateItem(ItemForNode(node));
                     subItem.Text = prototype.Name;
                     subItem.Metadata = prototype;
@@ -377,7 +376,10 @@ namespace Content.Client.Construction
         {
             public readonly string Name;
             public readonly CategoryNode Parent;
-            public SortedDictionary<string, CategoryNode> ChildCategories = new SortedDictionary<string, CategoryNode>();
+
+            public SortedDictionary<string, CategoryNode>
+                ChildCategories = new SortedDictionary<string, CategoryNode>();
+
             public List<ConstructionPrototype> Prototypes = new List<ConstructionPrototype>();
             public int FlattenedIndex = -1;
 

@@ -1,0 +1,5 @@
+- type: vendingMachineInventory
+  id: BODA
+  name: BODA
+  description: An old vending machine containing sweet water.
+  spriteName: sovietsoda

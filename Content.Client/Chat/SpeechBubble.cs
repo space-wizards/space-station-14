@@ -1,5 +1,4 @@
 using Content.Client.Interfaces.Chat;
-using Robust.Client;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -32,14 +31,14 @@ namespace Content.Client.Chat
         private readonly IEntity _senderEntity;
         private readonly IChatManager _chatManager;
 
-        private Control _panel;
+        private readonly Control _panel;
 
         private float _timeLeft = TotalTime;
 
         public float VerticalOffset { get; set; }
         private float _verticalOffsetAchieved;
 
-        public float ContentHeight { get; }
+        public float ContentHeight { get; private set; }
 
         public SpeechBubble(string text, IEntity senderEntity, IEyeManager eyeManager, IChatManager chatManager)
         {
@@ -67,6 +66,8 @@ namespace Content.Client.Chat
             };
 
             AddChild(_panel);
+
+            ForceRunStyleUpdate();
 
             _panel.Size = _panel.CombinedMinimumSize;
             ContentHeight = _panel.Height;

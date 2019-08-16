@@ -39,14 +39,12 @@ namespace Content.Client.UserInterface
         private UIBox2i _handL;
         private UIBox2i _handR;
 
-        private SpriteView LeftSpriteView;
-        private SpriteView RightSpriteView;
-        private TextureRect ActiveHandRect;
+        private readonly SpriteView LeftSpriteView;
+        private readonly SpriteView RightSpriteView;
+        private readonly TextureRect ActiveHandRect;
 
-        protected override void Initialize()
+        public HandsGui()
         {
-            base.Initialize();
-
             IoCManager.InjectDependencies(this);
 
             ToolTip = _loc.GetString("Your hands");
