@@ -30,7 +30,7 @@ namespace Content.Benchmarks
         [GlobalSetup]
         public void Setup()
         {
-            var random = IoCManager.Resolve<IRobustRandom>();
+            var random = new Random(3005);
 
             _colors = new (Color, Color)[N];
             _output = new Color[N];
