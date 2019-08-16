@@ -28,6 +28,7 @@ namespace Content.Client.GameObjects
 
         public virtual void PlayerAttached()
         {
+            Window.OnClose += () => GameHud.InventoryButtonDown = false;
             GameHud.InventoryButtonVisible = true;
             GameHud.InventoryButtonToggled = b =>
             {
