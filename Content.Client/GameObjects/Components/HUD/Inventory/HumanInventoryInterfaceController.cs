@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Storage;
-using Content.Client.UserInterface;
 using Content.Client.Utility;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.GameObjects.Components;
