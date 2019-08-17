@@ -7,7 +7,10 @@ using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects
@@ -19,6 +22,10 @@ namespace Content.Server.GameObjects
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
         public override Type StateType => typeof(ItemComponentState);
+
+        #pragma warning disable 649
+        [Dependency] private readonly IRobustRandom _robustRandom;
+        #pragma warning restore 649
 
         private string _equippedPrefix;
 
@@ -115,7 +122,7 @@ namespace Content.Server.GameObjects
             float RandomOffset()
             {
                 var size = 15.0F;
-                return (new Random().NextFloat() * size) - size / 2;
+                return (_robustRandom.NextFloat() * size) - size / 2;
             }
         }
     }

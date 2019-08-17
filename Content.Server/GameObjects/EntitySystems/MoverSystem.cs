@@ -23,7 +23,9 @@ using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.Components.Inventory;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Log;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -35,10 +37,10 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IRobustRandom _robustRandom;
 #pragma warning restore 649
 
         private AudioSystem _audioSystem;
-        private Random _footstepRandom;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -47,7 +49,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Initialize()
         {
             EntityQuery = new TypeEntityQuery(typeof(IMoverComponent));
-            
+
             var moveUpCmdHandler = InputCmdHandler.FromDelegate(
                 session => HandleDirChange(session, Direction.North, true),
                 session => HandleDirChange(session, Direction.North, false));
@@ -75,7 +77,6 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeEvent<PlayerAttachSystemMessage>(PlayerAttached);
             SubscribeEvent<PlayerDetachedSystemMessage>(PlayerDetached);
 
-            _footstepRandom = new Random();
             _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
         }
 
@@ -153,7 +154,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     mover.StepSoundDistance = 0;
                     if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
-                        && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item) 
+                        && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
                         && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
                     {
                         modifier.PlayFootstep();
@@ -186,7 +187,7 @@ namespace Content.Server.GameObjects.EntitySystems
             where T: Component
         {
             component = default;
-            
+
             var ent = session.AttachedEntity;
 
             if (ent == null || !ent.IsValid())
@@ -238,7 +239,7 @@ namespace Content.Server.GameObjects.EntitySystems
             try
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
-                var file = _footstepRandom.Pick(soundCollection.PickFiles);
+                var file = _robustRandom.Pick(soundCollection.PickFiles);
                 _audioSystem.Play(file, coordinates);
             }
             catch (UnknownPrototypeException)
