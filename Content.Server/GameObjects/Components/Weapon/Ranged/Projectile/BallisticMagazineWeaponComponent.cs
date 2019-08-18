@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
@@ -12,6 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -30,10 +33,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         [ViewVariables]
         private ContainerSlot _magazineSlot;
-        private BallisticMagazineType _magazineType;
+        private List<BallisticMagazineType> _magazineTypes;
 
         [ViewVariables]
-        public BallisticMagazineType MagazineType => _magazineType;
+        public List<BallisticMagazineType> MagazineTypes => _magazineTypes;
         [ViewVariables]
         private IEntity Magazine => _magazineSlot.ContainedEntity;
 
@@ -65,7 +68,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _magazineType, "magazine", BallisticMagazineType.Unspecified);
+            serializer.DataField(ref _magazineTypes, "magazines",
+                            new List<BallisticMagazineType>{BallisticMagazineType.Unspecified});
             serializer.DataField(ref _defaultMagazine, "default_magazine", null);
             serializer.DataField(ref _autoEjectMagazine, "auto_eject_magazine", false);
             serializer.DataField(ref _autoEjectSound, "sound_auto_eject", null);
@@ -102,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 throw new ArgumentException("Not a magazine", nameof(magazine));
             }
 
-            if (component.MagazineType != MagazineType)
+            if (!MagazineTypes.Contains(component.MagazineType))
             {
                 throw new ArgumentException("Wrong magazine type", nameof(magazine));
             }
@@ -170,7 +174,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             var entity = RemoveFromChamber(chamber);
             entity.Transform.GridPosition = Owner.Transform.GridPosition;
             entity.Transform.LocalRotation = _bulletDropRandom.Pick(_randomBulletDirs).ToAngle();
-            var effect = $"/Audio/items/weapons/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
+            var effect = $"/Audio/Guns/Casings/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
             Owner.GetComponent<SoundComponent>().Play(effect, AudioParams.Default.WithVolume(-3));
 
             if (Magazine != null)
@@ -223,7 +227,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 return false;
             }
 
-            if (component.MagazineType != MagazineType || component.Caliber != Caliber)
+            if (!MagazineTypes.Contains(component.MagazineType) || component.Caliber != Caliber)
             {
                 Owner.PopupMessage(eventArgs.User, "Magazine doesn't fit.");
                 return false;

@@ -1,0 +1,65 @@
+- type: entity
+  id: bullet_50
+  name: .50 cal Bullet
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 50
+
+- type: entity
+  id: bullet_50f
+  name: .50 cal Bullet (Flash)
+  parent: bullet_basef
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 50
+
+- type: entity
+  id: bullet_50hv
+  name: .50 cal Bullet (High-Velocity)
+  parent: bullet_basehv
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 30
+    damages:
+      Brute: 60
+
+- type: entity
+  id: bullet_50l
+  name: .50 cal Bullet (L)
+  parent: bullet_basel
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 50
+
+- type: entity
+  id: bullet_50p
+  name: .50 cal Bullet (Practice)
+  parent: bullet_basep
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 0
+
+- type: entity
+  id: bullet_50r
+  name: .50 cal Bullet (Rubber)
+  parent: bullet_baser
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 7

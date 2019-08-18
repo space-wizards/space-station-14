@@ -136,6 +136,33 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     public enum BallisticMagazineType
     {
         Unspecified = 0,
-        A12mm,
+        // .32
+        A32,
+        // .357
+        A357,
+        // .44
+        A44,
+        // .45mm
+        A45mm,
+        // .50 cal
+        A50,
+        // 5.56mm
+        A556mm,
+        // 6.5mm
+        A65mm,
+        // 7.62mm
+        A762mm,
+        Maxim,
+        // 9mm
+        A9mm,
+        A9mmSMG,
+        A9mmTopMounted,
+        // 10mm
+        A10mm,
+        A10mmSMG,
+        // 20mm
+        A20mm,
+        // 24mm
+        A24mm,
     }
 }

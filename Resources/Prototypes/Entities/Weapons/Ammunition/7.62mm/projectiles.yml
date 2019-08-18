@@ -1,0 +1,65 @@
+- type: entity
+  id: bullet_762mm
+  name: 7.62mm Bullet
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 20
+
+- type: entity
+  id: bullet_762mmf
+  name: 7.62mm Bullet (Flash)
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 20
+
+- type: entity
+  id: bullet_762mmhv
+  name: 7.62mm Bullet (High-Velocity)
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 30
+    damages:
+      Brute: 24
+
+- type: entity
+  id: bullet_762mml
+  name: 7.62mm Bullet (L)
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 20
+
+- type: entity
+  id: bullet_762mmp
+  name: 7.62mm Bullet (Practice)
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 0
+
+- type: entity
+  id: bullet_762mmr
+  name: 7.62mm Bullet (Rubber)
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 3

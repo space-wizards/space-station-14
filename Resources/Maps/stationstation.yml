@@ -2096,7 +2096,7 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- type: magazine_12mm_filled
+- type: magazine_10mm_smg
   uid: 267
   components:
   - grid: 0
@@ -2108,7 +2108,7 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- type: magazine_12mm_filled
+- type: magazine_10mm_smg
   uid: 268
   components:
   - grid: 0
@@ -2120,7 +2120,7 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- type: magazine_12mm_filled
+- type: magazine_10mm_smg
   uid: 269
   components:
   - grid: 0
