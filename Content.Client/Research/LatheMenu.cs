@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timers;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Research
 {

@@ -5,6 +5,7 @@ using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
@@ -16,7 +17,9 @@ namespace Content.Client.GameObjects.Components.Sound
     {
         private readonly List<ScheduledSound> _schedules = new List<ScheduledSound>();
         private AudioSystem _audioSystem;
-        private Random Random;
+        #pragma warning disable 649
+        [Dependency] private readonly IRobustRandom _random;
+        #pragma warning restore 649
 
         public override void StopAllSounds()
         {
@@ -46,9 +49,8 @@ namespace Content.Client.GameObjects.Components.Sound
         public void Play(ScheduledSound schedule)
         {
             if (!schedule.Play) return;
-            if (Random == null) Random = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
 
-            Timer.Spawn((int) schedule.Delay + (Random.Next((int) schedule.RandomDelay)),() =>
+            Timer.Spawn((int) schedule.Delay + (_random.Next((int) schedule.RandomDelay)),() =>
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
                     if (_audioSystem == null) _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();

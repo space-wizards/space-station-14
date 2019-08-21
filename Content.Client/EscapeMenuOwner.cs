@@ -1,4 +1,4 @@
-using Content.Client.UserInterface;
+﻿using Content.Client.UserInterface;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.Placement;
@@ -49,9 +49,8 @@ namespace Content.Client
 
                 _escapeMenu.OnClose += () => _gameHud.EscapeButtonDown = false;
 
-                var escapeMenuCommand = InputCmdHandler.FromDelegate(Enabled);
-
-                _inputManager.SetInputCommand(EngineKeyFunctions.EscapeMenu, escapeMenuCommand);
+                _inputManager.SetInputCommand(EngineKeyFunctions.EscapeMenu,
+                    InputCmdHandler.FromDelegate(s => Enabled()));
             }
             else if (obj.OldState is GameScreen)
             {
@@ -63,7 +62,7 @@ namespace Content.Client
             }
         }
 
-        private void Enabled(ICommonSession session)
+        private void Enabled()
         {
             if (_escapeMenu.IsOpen)
             {

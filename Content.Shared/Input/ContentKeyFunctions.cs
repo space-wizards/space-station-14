@@ -18,6 +18,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction SwapHands = "SwapHands";
         public static readonly BoundKeyFunction ThrowItemInHand = "ThrowItemInHand";
         public static readonly BoundKeyFunction ToggleCombatMode = "ToggleCombatMode";
-        public static readonly BoundKeyFunction UseItemInHand = "UseItemInHand"; // use hand item on world entity
+        public static readonly BoundKeyFunction MouseMiddle = "MouseMiddle";
     }
 }

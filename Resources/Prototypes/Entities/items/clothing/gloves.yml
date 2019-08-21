@@ -54,18 +54,3 @@
   - type: Clothing
     sprite: Clothing/gloves_leather.rsi
     HeatResistance: 1500
-
-- type: entity
-  parent: GlovesBase
-  id: WhiteGloves
-  name: White Gloves
-  description: These look pretty fancy.
-  components:
-  - type: Sprite
-    sprite: Clothing/gloves_white.rsi
-    state: white
-  - type: Icon
-    sprite: Clothing/gloves_white.rsi
-    state: white
-  - type: Clothing
-    sprite: Clothing/gloves_white.rsi

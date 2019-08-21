@@ -34,7 +34,6 @@ namespace Content.Server.GameObjects
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         private Container storage;

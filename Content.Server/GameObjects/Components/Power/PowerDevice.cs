@@ -182,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (!Powered)
             {
-                message.AddText("The device is not powered");
+                message.AddText("The device is not powered.");
             }
         }
 

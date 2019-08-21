@@ -10,10 +10,12 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Explosive
@@ -26,6 +28,7 @@ namespace Content.Server.GameObjects.Components.Explosive
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IRobustRandom _robustRandom;
 #pragma warning restore 649
 
         public override string Name => "Explosive";
@@ -96,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Explosive
                         mapGrid.SetTile(tileLoc, new Tile(_tileDefinitionManager["space"].TileId));
                     if (distanceFromTile < HeavyImpactRange)
                     {
-                        if (new Random().Prob(80))
+                        if (_robustRandom.Prob(80))
                         {
                             mapGrid.SetTile(tileLoc, new Tile(_tileDefinitionManager[tileDef.SubFloor].TileId));
                         }
@@ -107,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Explosive
                     }
                     if (distanceFromTile < LightImpactRange)
                     {
-                        if (new Random().Prob(50))
+                        if (_robustRandom.Prob(50))
                         {
                             mapGrid.SetTile(tileLoc, new Tile(_tileDefinitionManager[tileDef.SubFloor].TileId));
                         }

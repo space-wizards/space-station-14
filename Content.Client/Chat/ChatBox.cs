@@ -8,6 +8,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Robust.Shared.Localization;
 using Robust.Shared.IoC;
+using Robust.Shared.Input;
 
 namespace Content.Client.Chat
 {
@@ -82,7 +83,7 @@ namespace Content.Client.Chat
             vBox.AddChild(contentMargin);
 
             Input = new LineEdit();
-            Input.OnKeyDown += InputKeyDown;
+            Input.OnKeyBindDown += InputKeyBindDown;
             Input.OnTextEntered += Input_OnTextEntered;
             vBox.AddChild(Input);
 
@@ -119,23 +120,27 @@ namespace Content.Client.Chat
             AddChild(outerVBox);
         }
 
-        protected override void MouseDown(GUIMouseButtonEventArgs e)
+        protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
-            base.MouseDown(e);
+            base.KeyBindDown(args);
+
+            if (!args.CanFocus)
+            {
+                return;
+            }
 
             Input.GrabKeyboardFocus();
         }
 
-        private void InputKeyDown(GUIKeyEventArgs e)
+        private void InputKeyBindDown(GUIBoundKeyEventArgs args)
         {
-            if (e.Key == Keyboard.Key.Escape)
+            if (args.Function == EngineKeyFunctions.TextReleaseFocus)
             {
                 Input.ReleaseKeyboardFocus();
-                e.Handle();
+                args.Handle();
                 return;
             }
-
-            if (e.Key == Keyboard.Key.Up)
+            else if (args.Function == EngineKeyFunctions.TextHistoryPrev)
             {
                 if (_inputIndex == -1 && _inputHistory.Count != 0)
                 {
@@ -151,12 +156,12 @@ namespace Content.Client.Chat
                 {
                     Input.Text = _inputHistory[_inputIndex];
                 }
+                Input.CursorPos = Input.Text.Length;
 
-                e.Handle();
+                args.Handle();
                 return;
             }
-
-            if (e.Key == Keyboard.Key.Down)
+            else if (args.Function == EngineKeyFunctions.TextHistoryNext)
             {
                 if (_inputIndex == 0)
                 {
@@ -169,8 +174,9 @@ namespace Content.Client.Chat
                     _inputIndex--;
                     Input.Text = _inputHistory[_inputIndex];
                 }
+                Input.CursorPos = Input.Text.Length;
 
-                e.Handle();
+                args.Handle();
             }
         }
 

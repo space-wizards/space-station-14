@@ -43,7 +43,7 @@ namespace Content.Client.GameObjects
             base.Initialize();
 
             _window = new HumanInventoryWindow(_loc, _resourceCache);
-
+            _window.OnClose += () => GameHud.InventoryButtonDown = false;
             foreach (var (slot, button) in _window.Buttons)
             {
                 button.OnPressed = AddToInventory;
@@ -97,7 +97,7 @@ namespace Content.Client.GameObjects
             foreach (var button in buttons)
             {
                 button.SpriteView.Sprite = sprite;
-                button.OnPressed = RemoveFromInventory;
+                button.OnPressed = HandleInventoryKeybind;
                 button.StorageButton.Visible = hasInventory;
             }
         }

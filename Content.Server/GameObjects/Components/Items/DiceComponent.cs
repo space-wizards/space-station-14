@@ -5,9 +5,11 @@ using Content.Shared.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -19,11 +21,11 @@ namespace Content.Server.GameObjects.Components.Items
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
         public override string Name => "Dice";
 
-        private Random _random;
         private int _step = 1;
         private int _sides = 20;
         private int _currentSide = 20;
@@ -43,12 +45,6 @@ namespace Content.Server.GameObjects.Components.Items
             serializer.DataField(ref _sides, "sides", 20);
             serializer.DataField(ref _soundCollectionName, "diceSoundCollection", "dice");
             _currentSide = _sides;
-        }
-
-        public override void OnAdd()
-        {
-            base.OnAdd();
-            _random = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
         public void Roll()

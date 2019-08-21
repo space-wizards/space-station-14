@@ -10,6 +10,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Interfaces.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Noise;
+using Robust.Shared.Random;
 using SixLabors.ImageSharp.Advanced;
 using BlendFactor = Robust.Shared.Maths.Color.BlendFactor;
 

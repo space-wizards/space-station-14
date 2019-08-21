@@ -161,6 +161,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             message.AddText("Fuel: ");
             message.PushColor(Fuel < FuelCapacity / 4f ? Color.DarkOrange : Color.Orange);
             message.AddText($"{Math.Round(Fuel)}/{FuelCapacity}");
+            message.AddText(".");
             message.Pop();
         }
     }

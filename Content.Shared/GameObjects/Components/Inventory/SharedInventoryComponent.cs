@@ -75,7 +75,7 @@ namespace Content.Shared.GameObjects
             public enum ClientInventoryUpdate
             {
                 Equip = 0,
-                Unequip = 1
+                Use = 1
             }
         }
 

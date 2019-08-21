@@ -62,20 +62,19 @@ namespace Content.Server.GameObjects.EntitySystems
 
             message.PushColor(Color.DarkGray);
 
-            var subMessage = new FormattedMessage();
             //Add component statuses from components that report one
             foreach (var examineComponents in entity.GetAllComponents<IExamine>())
             {
+                var subMessage = new FormattedMessage();
                 examineComponents.Examine(subMessage);
                 if (subMessage.Tags.Count == 0)
                     continue;
 
                 if (doNewline)
-                {
                     message.AddText("\n");
-                    doNewline = false;
-                }
+
                 message.AddMessage(subMessage);
+                doNewline = true;
             }
 
             message.Pop();
