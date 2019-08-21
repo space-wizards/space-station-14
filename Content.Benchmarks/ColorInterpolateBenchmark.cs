@@ -5,7 +5,10 @@ using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 #endif
 using BenchmarkDotNet.Attributes;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 using SysVector4 = System.Numerics.Vector4;
 
 namespace Content.Benchmarks

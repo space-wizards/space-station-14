@@ -2,9 +2,11 @@
 using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Sound
@@ -17,10 +19,10 @@ namespace Content.Server.GameObjects.Components.Sound
     {
         #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IRobustRandom _footstepRandom;
         #pragma warning restore 649
         /// <inheritdoc />
         ///
-        private Random _footstepRandom;
 
         public override string Name => "FootstepModifier";
 
@@ -30,12 +32,6 @@ namespace Content.Server.GameObjects.Components.Sound
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _soundCollectionName, "footstepSoundCollection", "");
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            _footstepRandom = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
         }
 
         public void PlayFootstep()

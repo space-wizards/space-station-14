@@ -21,12 +21,14 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Random;
 using Robust.Shared.Timers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -76,8 +78,6 @@ namespace Content.Server.GameTicking
         [ViewVariables] private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
         private DateTime _roundStartTimeUtc;
 
-        private readonly Random _spawnRandom = new Random();
-
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
 
         [ViewVariables] private Type _presetType;
@@ -92,6 +92,7 @@ namespace Content.Server.GameTicking
         [Dependency] private IChatManager _chatManager;
         [Dependency] private IServerNetManager _netManager;
         [Dependency] private IDynamicTypeFactory _dynamicTypeFactory;
+        [Dependency] private readonly IRobustRandom _robustRandom;
 #pragma warning restore 649
 
         public void Initialize()
@@ -293,7 +294,7 @@ namespace Content.Server.GameTicking
 
             if (possiblePoints.Count != 0)
             {
-                location = _spawnRandom.Pick(possiblePoints);
+                location = _robustRandom.Pick(possiblePoints);
             }
 
             return location;
