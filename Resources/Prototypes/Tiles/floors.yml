@@ -147,3 +147,63 @@
   footstep_sounds: footstep_floor
   friction: 0.1
   subfloor: underplating
+
+- type: tile
+  name: floor_asteroid_sand
+  display_name: Asteroid Floor
+  texture: asteroid_sand
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: footstep_asteroid
+  friction: 0.35
+  subfloor: space
+
+- type: tile
+  name: floor_asteroid_tile
+  display_name: Asteroid Tile
+  texture: asteroid_tile
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: footstep_asteroid
+  friction: 0.35
+  subfloor: space
+
+- type: tile
+  name: floor_asteroid_coarse_sand0
+  display_name: Asteroid Coarse Sand 0
+  texture: asteroid_coarse_sand0
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: footstep_asteroid
+  friction: 0.35
+  subfloor: space
+
+- type: tile
+  name: floor_asteroid_coarse_sand1
+  display_name: Asteroid Coarse Sand 1
+  texture: asteroid_coarse_sand1
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: footstep_asteroid
+  friction: 0.35
+  subfloor: space
+
+- type: tile
+  name: floor_asteroid_coarse_sand2
+  display_name: Asteroid Coarse Sand 2
+  texture: asteroid_coarse_sand2
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: footstep_asteroid
+  friction: 0.35
+  subfloor: space
+
+- type: tile
+  name: floor_asteroid_coarse_sand_dug
+  display_name: Asteroid Dug Coarse Sand
+  texture: asteroid_coarse_sand_dug
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: footstep_asteroid
+  friction: 0.35
+  subfloor: space
