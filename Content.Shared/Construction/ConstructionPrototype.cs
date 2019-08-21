@@ -77,24 +77,11 @@ namespace Content.Shared.Construction
 
             ser.DataField(ref _id, "id", string.Empty);
             ser.DataField(ref _description, "description", string.Empty);
+            ser.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
             ser.DataField(ref _type, "objecttype", ConstructionType.Structure);
             ser.DataField(ref _result, "result", null);
             ser.DataField(ref _placementMode, "placementmode", "PlaceFree");
 
-
-
-            if(ser.TryReadDataField("icon",out string icon)) {
-                _icon = new SpriteSpecifier.Texture(new ResourcePath(icon));
-            }
-            else if(ser.TryReadDataField("sprite",out string sprite)
-                    && ser.TryReadDataField("state",out string step))
-            {
-                _icon = new SpriteSpecifier.Rsi(new ResourcePath(sprite),step);
-            }
-            else
-            {
-                _icon = SpriteSpecifier.Invalid;
-            }
             _keywords = ser.ReadDataField<List<string>>("keywords", new List<string>());
             {
                 var cat = ser.ReadDataField<string>("category");
@@ -113,29 +100,6 @@ namespace Content.Shared.Construction
                     if (stepMap.TryGetNode("icon", out var node))
                     {
                         nextIcon = SpriteSpecifier.FromYaml(node);
-                    }
-                    else if(stepMap.TryGetNode("state",out var step_state))
-                    {
-                        if(stepMap.TryGetNode("sprite",out var step_sprite))
-                        {
-                            nextIcon = new SpriteSpecifier.Rsi(step_sprite.AsResourcePath(),step_state.AsString());
-                        }
-                        else
-                        {
-                            switch(_icon)
-                            {
-                                case SpriteSpecifier.Rsi rsi:
-                                    nextIcon = new SpriteSpecifier.Rsi(rsi.RsiPath,step_state.AsString());
-                                break;
-                                default:
-                                    nextIcon = _icon;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        nextIcon = _icon;
                     }
 
                     if (stepMap.TryGetNode("reverse", out YamlMappingNode revMap))

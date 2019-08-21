@@ -4,17 +4,16 @@
   category: Items/Weapons
   keywords: [melee]
   description: A crude spear for when you need to put holes in somebody.
-  sprite: Objects/items/spear.rsi
-  state: spear
+  icon: Objects/items/spear.rsi spear
   objecttype: Item
   result: Spear
   steps:
   - material: Metal
-    state: build1
+    icon: Objects/items/spear.rsi build1
     amount: 1
 
   - material: Cable
-    state: build2
+    icon: Objects/items/spear.rsi build2
     amount: 3
 
   # Should probably use a shard but y'know.
