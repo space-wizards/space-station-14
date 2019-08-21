@@ -103,12 +103,15 @@ binds:
 - function: TextCursorLeft
   type: state
   key: Left
+  canRepeat: true
 - function: TextCursorRight
   type: state
   key: Right
+  canRepeat: true
 - function: TextBackspace
   type: state
   key: BackSpace
+  canRepeat: true
 - function: TextSubmit
   type: state
   key: Return
