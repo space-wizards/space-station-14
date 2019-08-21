@@ -4,8 +4,10 @@
   category: Items/Weapons
   keywords: [melee]
   description: A crude spear for when you need to put holes in somebody.
-  icon: Objects/spear.png
+  sprite: Objects/items/spear.rsi
+  state: spear
   objecttype: Item
+  result: Spear
   steps:
   - material: Metal
     amount: 1
