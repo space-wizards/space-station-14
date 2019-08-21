@@ -10,9 +10,11 @@
   result: Spear
   steps:
   - material: Metal
+    state: build1
     amount: 1
 
   - material: Cable
+    state: build2
     amount: 3
 
   # Should probably use a shard but y'know.

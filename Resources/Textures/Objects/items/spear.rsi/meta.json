@@ -44,6 +44,14 @@
         {
             "name": "spear",
             "directions": 1
+        },
+		{
+            "name": "build1",
+            "directions": 1
+        },
+		{
+            "name": "build2",
+            "directions": 1
         }
     ]
 }
