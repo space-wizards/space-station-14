@@ -348,19 +348,19 @@ namespace Content.Client.UserInterface
                 switch (DrawMode)
                 {
                     case DrawModeEnum.Normal:
-                        AddStylePseudoClass(Button.StylePseudoClassNormal);
+                        SetOnlyStylePseudoClass(Button.StylePseudoClassNormal);
                         _textureRect.ModulateSelfOverride = ColorNormal;
                         _label.ModulateSelfOverride = ColorNormal;
                         break;
 
                     case DrawModeEnum.Pressed:
-                        AddStylePseudoClass(Button.StylePseudoClassPressed);
+                        SetOnlyStylePseudoClass(Button.StylePseudoClassPressed);
                         _textureRect.ModulateSelfOverride = ColorPressed;
                         _label.ModulateSelfOverride = ColorPressed;
                         break;
 
                     case DrawModeEnum.Hover:
-                        AddStylePseudoClass(Button.StylePseudoClassHover);
+                        SetOnlyStylePseudoClass(Button.StylePseudoClassHover);
                         _textureRect.ModulateSelfOverride = ColorHovered;
                         _label.ModulateSelfOverride = ColorHovered;
                         break;
