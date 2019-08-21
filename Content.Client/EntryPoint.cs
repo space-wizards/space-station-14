@@ -8,6 +8,7 @@ using Content.Client.Interfaces.Chat;
 using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
 using Content.Client.UserInterface;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
@@ -110,6 +111,7 @@ namespace Content.Client
             factory.Register<SolutionComponent>();
 
             factory.Register<SharedVendingMachineComponent>();
+            factory.Register<SharedWiresComponent>();
 
             prototypes.RegisterIgnore("material");
 
