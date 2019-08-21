@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.Player;
@@ -19,6 +20,10 @@ namespace Content.Server.GameObjects
     [RegisterComponent]
     public class InventoryComponent : SharedInventoryComponent
     {
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
+
         [ViewVariables]
         private readonly Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
 
@@ -223,27 +228,41 @@ namespace Content.Server.GameObjects
         /// <param name="msg"></param>
         private void HandleInventoryMessage(ClientInventoryMessage msg)
         {
-            if (msg.Updatetype == ClientInventoryUpdate.Equip)
+            switch (msg.Updatetype)
             {
-                var hands = Owner.GetComponent<HandsComponent>();
-                var activehand = hands.GetActiveHand;
-                if (activehand != null && activehand.Owner.TryGetComponent(out ClothingComponent clothing))
+                case ClientInventoryUpdate.Equip:
                 {
-                    hands.Drop(hands.ActiveIndex);
-                    if (!Equip(msg.Inventoryslot, clothing))
+                    var hands = Owner.GetComponent<HandsComponent>();
+                    var activeHand = hands.GetActiveHand;
+                    if (activeHand != null && activeHand.Owner.TryGetComponent(out ClothingComponent clothing))
                     {
-                        hands.PutInHand(clothing);
+                        hands.Drop(hands.ActiveIndex);
+                        if (!Equip(msg.Inventoryslot, clothing))
+                        {
+                            hands.PutInHand(clothing);
+                        }
                     }
+                    break;
                 }
-            }
-            else if (msg.Updatetype == ClientInventoryUpdate.Unequip)
-            {
-                var hands = Owner.GetComponent<HandsComponent>();
-                var activehand = hands.GetActiveHand;
-                var itemcontainedinslot = GetSlotItem(msg.Inventoryslot);
-                if (activehand == null && itemcontainedinslot != null && Unequip(msg.Inventoryslot))
+                case ClientInventoryUpdate.Use:
                 {
-                    hands.PutInHand(itemcontainedinslot);
+                    var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                    var hands = Owner.GetComponent<HandsComponent>();
+                    var activeHand = hands.GetActiveHand;
+                    var itemContainedInSlot = GetSlotItem(msg.Inventoryslot);
+                    if (itemContainedInSlot != null)
+                    {
+                        if (activeHand != null)
+                        {
+                            interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
+                                new Robust.Shared.Map.GridCoordinates());
+                        }
+                        else if (Unequip(msg.Inventoryslot))
+                        {
+                            hands.PutInHand(itemContainedInSlot);
+                        }
+                    }
+                    break;
                 }
             }
         }

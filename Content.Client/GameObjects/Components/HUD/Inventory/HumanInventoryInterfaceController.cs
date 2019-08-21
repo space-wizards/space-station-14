@@ -97,7 +97,7 @@ namespace Content.Client.GameObjects
             foreach (var button in buttons)
             {
                 button.SpriteView.Sprite = sprite;
-                button.OnPressed = RemoveFromInventory;
+                button.OnPressed = HandleInventoryKeybind;
                 button.StorageButton.Visible = hasInventory;
             }
         }

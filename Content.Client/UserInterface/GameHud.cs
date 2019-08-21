@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.Utility;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
@@ -348,19 +348,19 @@ namespace Content.Client.UserInterface
                 switch (DrawMode)
                 {
                     case DrawModeEnum.Normal:
-                        StylePseudoClass = Button.StylePseudoClassNormal;
+                        SetOnlyStylePseudoClass(Button.StylePseudoClassNormal);
                         _textureRect.ModulateSelfOverride = ColorNormal;
                         _label.ModulateSelfOverride = ColorNormal;
                         break;
 
                     case DrawModeEnum.Pressed:
-                        StylePseudoClass = Button.StylePseudoClassPressed;
+                        SetOnlyStylePseudoClass(Button.StylePseudoClassPressed);
                         _textureRect.ModulateSelfOverride = ColorPressed;
                         _label.ModulateSelfOverride = ColorPressed;
                         break;
 
                     case DrawModeEnum.Hover:
-                        StylePseudoClass = Button.StylePseudoClassHover;
+                        SetOnlyStylePseudoClass(Button.StylePseudoClassHover);
                         _textureRect.ModulateSelfOverride = ColorHovered;
                         _label.ModulateSelfOverride = ColorHovered;
                         break;

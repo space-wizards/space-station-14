@@ -21,12 +21,12 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.Drop);
             human.AddFunction(ContentKeyFunctions.ActivateItemInHand);
             human.AddFunction(ContentKeyFunctions.OpenCharacterMenu);
-            human.AddFunction(ContentKeyFunctions.UseItemInHand);
             human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);
             human.AddFunction(ContentKeyFunctions.OpenContextMenu);
             human.AddFunction(ContentKeyFunctions.OpenCraftingMenu);
             human.AddFunction(ContentKeyFunctions.OpenInventoryMenu);
+            human.AddFunction(ContentKeyFunctions.MouseMiddle);
             // Disabled until there is feedback, so hitting tab doesn't suddenly break interaction.
             // human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
 

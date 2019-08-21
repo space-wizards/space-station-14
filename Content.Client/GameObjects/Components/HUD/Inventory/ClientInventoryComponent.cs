@@ -127,15 +127,15 @@ namespace Content.Client.GameObjects
             _sprite?.LayerSetVisible(slot, false);
         }
 
-        public void SendUnequipMessage(Slots slot)
-        {
-            var unequipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Unequip);
-            SendNetworkMessage(unequipmessage);
-        }
-
         public void SendEquipMessage(Slots slot)
         {
             var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Equip);
+            SendNetworkMessage(equipmessage);
+        }
+
+        public void SendUseMessage(Slots slot)
+        {
+            var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Use);
             SendNetworkMessage(equipmessage);
         }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Content.Client.Chat;
 using Content.Client.Interfaces;
@@ -18,6 +18,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -188,11 +189,7 @@ namespace Content.Client.GameTicking
             _lobby.ServerName.Text = _baseClient.GameInfo.ServerName;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
-                InputCmdHandler.FromDelegate(session =>
-                {
-                    _lobby.Chat.Input.IgnoreNext = true;
-                    _lobby.Chat.Input.GrabKeyboardFocus();
-                }));
+                InputCmdHandler.FromDelegate(s => _focusChat(_lobby.Chat)));
 
             _updateLobbyUi();
 
@@ -237,19 +234,25 @@ namespace Content.Client.GameTicking
                 _lobby = null;
             }
 
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
-                InputCmdHandler.FromDelegate(session =>
-                {
-                    _gameChat.Input.IgnoreNext = true;
-                    _gameChat.Input.GrabKeyboardFocus();
-                }));
-
             _gameChat = new ChatBox();
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
             _gameChat.DefaultChatFormat = "say \"{0}\"";
             _gameChat.Input.PlaceHolder = _localization.GetString("Say something! [ for OOC");
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
+                InputCmdHandler.FromDelegate(s => _focusChat(_gameChat)));
+        }
+
+        private void _focusChat(ChatBox chat)
+        {
+            if (_userInterfaceManager.KeyboardFocused != null)
+            {
+                return;
+            }
+            chat.Input.IgnoreNext = true;
+            chat.Input.GrabKeyboardFocus();
         }
 
         private enum TickerState
