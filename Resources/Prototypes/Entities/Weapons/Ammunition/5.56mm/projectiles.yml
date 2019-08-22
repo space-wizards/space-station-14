@@ -1,0 +1,65 @@
+- type: entity
+  id: bullet_556mm
+  name: 5.56mm Bullet
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 16
+
+- type: entity
+  id: bullet_556mmf
+  name: 5.56mm Bullet (Flash)
+  parent: bullet_basef
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 16
+
+- type: entity
+  id: bullet_556mmhv
+  name: 5.56mm Bullet (High-Velocity)
+  parent: bullet_basehv
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 30
+    damages:
+      Brute: 19
+
+- type: entity
+  id: bullet_556mml
+  name: 5.56mm Bullet (L)
+  parent: bullet_basel
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 16
+
+- type: entity
+  id: bullet_556mmp
+  name: 5.56mm Bullet (Practice)
+  parent: bullet_basep
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 0
+
+- type: entity
+  id: bullet_556mmr
+  name: 5.56mm Bullet (Rubber)
+  parent: bullet_baser
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 2

@@ -1,7 +1,9 @@
+using System;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Utility;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -37,8 +39,8 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
                     return;
                 }
 
-                var step = ContentHelpers.RoundToLevels(current, capacity, _steps);
-
+                // capacity is - 1 as normally a bullet is chambered so max state is virtually never hit.
+                var step = ContentHelpers.RoundToLevels(current, capacity  - 1, _steps);
                 sprite.LayerSetState(0, $"{_baseState}-{step}");
             }
             else

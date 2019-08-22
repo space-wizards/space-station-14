@@ -11,7 +11,7 @@ namespace Content.IntegrationTests
     {
         protected override ClientIntegrationInstance StartClient(ClientIntegrationOptions options = null)
         {
-            options ??= new ClientIntegrationOptions();
+            options = options ?? new ClientIntegrationOptions();
             // ReSharper disable once RedundantNameQualifier
             options.ClientContentAssembly = typeof(Client.EntryPoint).Assembly;
             options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
@@ -33,7 +33,7 @@ namespace Content.IntegrationTests
 
         protected override ServerIntegrationInstance StartServer(ServerIntegrationOptions options = null)
         {
-            options ??= new ServerIntegrationOptions();
+            options = options ?? new ServerIntegrationOptions();
             options.ServerContentAssembly = typeof(Server.EntryPoint).Assembly;
             options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
             return base.StartServer(options);

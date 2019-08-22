@@ -1,0 +1,65 @@
+- type: entity
+  id: bullet_24mm
+  name: 24mm Bullet
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 10
+
+- type: entity
+  id: bullet_24mmf
+  name: 24mm Bullet (Flash)
+  parent: bullet_basef
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 10
+
+- type: entity
+  id: bullet_24mmhv
+  name: 24mm Bullet (High-Velocity)
+  parent: bullet_basehv
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 27
+    damages:
+      Brute: 15
+
+- type: entity
+  id: bullet_24mml
+  name: 24mm Bullet (L)
+  parent: bullet_basel
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 10
+
+- type: entity
+  id: bullet_24mmp
+  name: 24mm Bullet (Practice)
+  parent: bullet_basep
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 0
+
+- type: entity
+  id: bullet_24mmr
+  name: 24mm Bullet (Rubber)
+  parent: bullet_baser
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 2

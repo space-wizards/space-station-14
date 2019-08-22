@@ -1,0 +1,65 @@
+- type: entity
+  id: bullet_9mm
+  name: 9mm Bullet
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 22
+
+- type: entity
+  id: bullet_9mmf
+  name: 9mm Bullet (Flash)
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 22
+
+- type: entity
+  id: bullet_9mmhv
+  name: 9mm Bullet (High-Velocity)
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 30
+    damages:
+      Brute: 26
+
+- type: entity
+  id: bullet_9mml
+  name: 9mm Bullet (L)
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 22
+
+- type: entity
+  id: bullet_9mmp
+  name: 9mm Bullet (Practice)
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 0
+
+- type: entity
+  id: bullet_9mmr
+  name: 9mm Bullet (Rubber)
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 3

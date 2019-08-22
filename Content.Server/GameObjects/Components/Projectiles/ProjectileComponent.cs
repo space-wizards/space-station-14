@@ -5,7 +5,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Serialization;
 using Robust.Shared.Interfaces.Physics;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -18,7 +20,23 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         private EntityUid Shooter = EntityUid.Invalid;
 
-        public Dictionary<DamageType, int> damages = new Dictionary<DamageType, int>();
+        private Dictionary<DamageType, int> _damages;
+        [ViewVariables]
+        public Dictionary<DamageType, int> Damages => _damages;
+        private float _velocity;
+        public float Velocity
+        {
+            get => _velocity;
+            set => _velocity = value;
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            // If not specified 0 damage
+            serializer.DataField(ref _damages, "damages", new Dictionary<DamageType, int>());
+            serializer.DataField(ref _velocity, "velocity", 20f);
+        }
 
         public float TimeLeft { get; set; } = 10;
 
@@ -53,7 +71,10 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 if (entity.TryGetComponent(out DamageableComponent damage))
                 {
-                    damage.TakeDamage(DamageType.Brute, 10);
+                    foreach (var damageType in _damages)
+                    {
+                        damage.TakeDamage(damageType.Key, damageType.Value);
+                    }
                 }
 
                 if (entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
