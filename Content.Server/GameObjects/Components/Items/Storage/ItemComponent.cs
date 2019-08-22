@@ -68,7 +68,11 @@ namespace Content.Server.GameObjects
         public bool AttackHand(AttackHandEventArgs eventArgs)
         {
             var hands = eventArgs.User.GetComponent<IHandsComponent>();
-            hands.PutInHand(this, hands.ActiveIndex, fallback: false);
+            var oldSlot = FindHand(item.Owner);
+            if (old_slot != null && !Drop(oldSlot))
+                    return true;
+            if (!hands.PutInHand(this, hands.ActiveIndex, fallback: false) && oldSlot != null)
+                PutInHand(item,old_slot,fallback);
             return true;
         }
 
