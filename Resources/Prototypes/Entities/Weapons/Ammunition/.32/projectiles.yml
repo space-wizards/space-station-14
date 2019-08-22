@@ -1,0 +1,65 @@
+- type: entity
+  id: bullet_32
+  name: .32 Bullet
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 20
+
+- type: entity
+  id: bullet_32f
+  name: .32 Bullet (Flash)
+  parent: bullet_basef
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 20
+
+- type: entity
+  id: bullet_32hv
+  name: .32 Bullet (High-Velocity)
+  parent: bullet_basehv
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 30
+    damages:
+      Brute: 24
+
+- type: entity
+  id: bullet_32l
+  name: .32 Bullet (L)
+  parent: bullet_basel
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 20
+
+- type: entity
+  id: bullet_32p
+  name: .32 Bullet (Practice)
+  parent: bullet_basep
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 0
+
+- type: entity
+  id: bullet_32r
+  name: .32 Bullet (Rubber)
+  parent: bullet_baser
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 3

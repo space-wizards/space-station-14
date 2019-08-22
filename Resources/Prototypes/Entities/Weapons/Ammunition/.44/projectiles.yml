@@ -1,0 +1,65 @@
+- type: entity
+  id: bullet_44
+  name: .44 Bullet
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 45
+
+- type: entity
+  id: bullet_44f
+  name: .44 Bullet (Flash)
+  parent: bullet_basef
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 45
+
+- type: entity
+  id: bullet_44hv
+  name: .44 Bullet (High-Velocity)
+  parent: bullet_basehv
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 30
+    damages:
+      Brute: 54
+
+- type: entity
+  id: bullet_44l
+  name: .44 Bullet (L)
+  parent: bullet_basel
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 45
+
+- type: entity
+  id: bullet_44p
+  name: .44 Bullet (Practice)
+  parent: bullet_basep
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 0
+
+- type: entity
+  id: bullet_44r
+  name: .44 Bullet (Rubber)
+  parent: bullet_baser
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 7

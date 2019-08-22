@@ -1,0 +1,83 @@
+# One bullet to bring them all into the darkness and bind them
+- type: entity
+  id: bullet_base
+  name: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Sprite
+    directional: false
+    texture: Objects/Projectiles/bullet.png
+    #rotation: -180
+  - type: Icon
+    texture: Objects/Projectiles/bullet.png
+  - type: BoundingBox
+    aabb: -0.2,-0.2,0.2,0.2
+  - type: Physics
+    edgeslide: false
+  - type: Projectile
+    damages:
+      Brute: 20
+  - type: Collidable
+    hard: false
+    mask: 3
+
+- type: entity
+  id: ProjectileBullet
+  name: ProjectileBullet
+  parent: bullet_base
+# Placeholder bullet
+
+- type: entity
+  id: bullet_basef
+  name: Base Bullet Flash
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 10
+
+- type: entity
+  id: bullet_basehv
+  name: Base Bullet High-Velocity
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 27
+    damages:
+      Brute: 12
+
+- type: entity
+  id: bullet_basel
+  name: Base Bullet L
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 15
+    damages:
+      Brute: 10
+
+- type: entity
+  id: bullet_basep
+  name: Base Bullet Practice
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 0
+
+- type: entity
+  id: bullet_baser
+  name: Base Bullet Rubber
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 2
