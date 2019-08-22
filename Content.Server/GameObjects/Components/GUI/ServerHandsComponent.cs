@@ -482,10 +482,10 @@ namespace Content.Server.GameObjects
                         }
                         else
                         {
-                            var attacked = slot.ContainedEntity;
-                            if (!Drop(attacked))
+                            var entity = slot.ContainedEntity;
+                            if (!Drop(entity))
                                 break;
-                            interactionSystem.Interaction(Owner, attacked);
+                            interactionSystem.Interaction(Owner, entity);
                         }
                     }
 
