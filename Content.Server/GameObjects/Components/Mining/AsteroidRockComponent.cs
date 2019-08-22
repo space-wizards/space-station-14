@@ -1,5 +1,3 @@
-using System;
-using System.Runtime.InteropServices;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.EntitySystems;
@@ -7,9 +5,9 @@ using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Renderable;
-using Robust.Shared.Maths;
-using Robust.Shared.Utility;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Mining
 {
@@ -19,12 +17,15 @@ namespace Content.Server.GameObjects.Components.Mining
         public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
 
+#pragma warning disable 649
+        [Dependency] private readonly IRobustRandom _random;
+#pragma warning restore 649
+
         public override void Initialize()
         {
             base.Initialize();
             var spriteComponent = Owner.GetComponent<SpriteComponent>();
-            var random = new Random(Owner.Uid.GetHashCode() ^ DateTime.Now.GetHashCode());
-            spriteComponent.LayerSetState(0, random.Pick(SpriteStates));
+            spriteComponent.LayerSetState(0, _random.Pick(SpriteStates));
         }
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
