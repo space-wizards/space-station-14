@@ -15,10 +15,18 @@
     <PackageReference Include="YamlDotNet" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj" />
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
-    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj">
+      <Private>false</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj">
+      <Private>false</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj">
+      <Private>false</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj">
+      <Private>false</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
