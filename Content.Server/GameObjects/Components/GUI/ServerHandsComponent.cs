@@ -137,10 +137,22 @@ namespace Content.Server.GameObjects
 
             var slot = hands[index];
             Dirty();
+            var old_slot = FindHand(item.Owner);
+            if(old_slot != null)
+            {
+                if(!Drop(old_slot))
+                {
+                    return false;
+                }
+            }
             var success = slot.Insert(item.Owner);
             if (success)
             {
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
+            }
+            else if(old_slot != null)
+            {
+                PutInHand(item,old_slot,fallback);
             }
 
             return success;
