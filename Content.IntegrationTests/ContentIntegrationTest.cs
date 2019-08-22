@@ -11,7 +11,10 @@ namespace Content.IntegrationTests
     {
         protected override ClientIntegrationInstance StartClient(ClientIntegrationOptions options = null)
         {
-            options = options ?? new ClientIntegrationOptions();
+            options ??= new ClientIntegrationOptions();
+            // ReSharper disable once RedundantNameQualifier
+            options.ClientContentAssembly = typeof(Client.EntryPoint).Assembly;
+            options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
             options.BeforeStart += () =>
             {
                 // Connecting to Discord is a massive waste of time.
@@ -26,6 +29,14 @@ namespace Content.IntegrationTests
                 });
             };
             return base.StartClient(options);
+        }
+
+        protected override ServerIntegrationInstance StartServer(ServerIntegrationOptions options = null)
+        {
+            options ??= new ServerIntegrationOptions();
+            options.ServerContentAssembly = typeof(Server.EntryPoint).Assembly;
+            options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
+            return base.StartServer(options);
         }
     }
 }
