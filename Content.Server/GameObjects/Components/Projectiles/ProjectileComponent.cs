@@ -22,7 +22,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         private EntityUid Shooter = EntityUid.Invalid;
 
-        public Dictionary<DamageType, int> _damages;
+        private Dictionary<DamageType, int> _damages;
+        [ViewVariables]
+        public Dictionary<DamageType, int> Damages => _damages;
         private float _velocity;
         public float Velocity
         {
