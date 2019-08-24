@@ -26,7 +26,9 @@
     # yeah...
     # TODO: Fix that.
     aabb: -0.45, -0.45, 0.45, 0.45
+
   - type: Collidable
+    mask: 2
   - type: Door
   - type: Appearance
     visuals:
