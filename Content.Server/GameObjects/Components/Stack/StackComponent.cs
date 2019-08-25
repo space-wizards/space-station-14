@@ -19,11 +19,11 @@ namespace Content.Server.GameObjects.Components.Stack
 
         public override string Name => "Stack";
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public int Count
         {
             get => _count;
-            private set
+            set
             {
                 _count = value;
                 if (_count <= 0)
