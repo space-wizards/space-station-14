@@ -98,6 +98,9 @@ namespace Content.Client
                 "PlayerInputMover",
                 "Computer",
                 "AsteroidRock",
+                "IdCard",
+                "Access",
+                "AccessReader",
             };
 
             foreach (var ignoreName in registerIgnore)

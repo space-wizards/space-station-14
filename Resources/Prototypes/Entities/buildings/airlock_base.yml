@@ -34,6 +34,7 @@
     - type: AirlockVisualizer2D
       open_sound: /Audio/machines/airlock_open.ogg
       close_sound: /Audio/machines/airlock_close.ogg
+      deny_sound: /Audio/machines/airlock_deny.ogg
 
   placement:
     mode: SnapgridCenter
