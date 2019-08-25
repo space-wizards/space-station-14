@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Input;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.State;
@@ -23,7 +24,8 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
-    public class VerbSystem : EntitySystem
+    [UsedImplicitly]
+    public sealed class VerbSystem : EntitySystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IStateManager _stateManager;
@@ -33,7 +35,7 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
 #pragma warning restore 649
 
-        private Popup _currentPopup;
+        private VerbPopup _currentPopup;
         private EntityUid _currentEntity;
 
         public override void Initialize()
@@ -62,16 +64,14 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             _currentEntity = entity.Uid;
-            _currentPopup = new Popup();
+            _currentPopup = new VerbPopup();
             _currentPopup.UserInterfaceManager.StateRoot.AddChild(_currentPopup);
             _currentPopup.OnPopupHide += _closeContextMenu;
-            var vBox = new VBoxContainer();
-            _currentPopup.AddChild(vBox);
 
-            vBox.AddChild(new Label {Text = "Waiting on Server..."});
+            _currentPopup.List.AddChild(new Label {Text = "Waiting on Server..."});
             RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
 
-            var size = vBox.CombinedMinimumSize;
+            var size = _currentPopup.List.CombinedMinimumSize;
             var box = UIBox2.FromDimensions(screenCoordinates.Position, size);
             _currentPopup.Open(box);
         }
@@ -91,20 +91,18 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var entities = gameScreen.GetEntitiesUnderPosition(args.Coordinates);
 
-            _currentPopup = new Popup();
+            _currentPopup = new VerbPopup();
             _currentPopup.OnPopupHide += _closeContextMenu;
-            var vBox = new VBoxContainer();
-            _currentPopup.AddChild(vBox);
             foreach (var entity in entities)
             {
                 var button = new Button {Text = entity.Name};
-                vBox.AddChild(button);
+                _currentPopup.List.AddChild(button);
                 button.OnPressed += _ => OnContextButtonPressed(entity);
             }
 
             _currentPopup.UserInterfaceManager.StateRoot.AddChild(_currentPopup);
 
-            var size = vBox.CombinedMinimumSize;
+            var size = _currentPopup.List.CombinedMinimumSize;
             var box = UIBox2.FromDimensions(args.ScreenCoordinates.Position, size);
             _currentPopup.Open(box);
         }
@@ -137,7 +135,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var buttons = new List<Button>();
 
-            var vBox = _currentPopup.GetChild<VBoxContainer>("ButtonBox");
+            var vBox = _currentPopup.List;
             vBox.DisposeAllChildren();
             foreach (var data in msg.Verbs)
             {
@@ -212,8 +210,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             // If we're at the bottom of the window and the menu would go below the bottom of the window,
             // shift it up so it extends UP.
-            var bottomCoord = vBox.CombinedMinimumSize.Y + _currentPopup.Position.Y;
-            if (bottomCoord > _userInterfaceManager.StateRoot.Size.Y)
+            var bottomCoords = vBox.CombinedMinimumSize.Y + _currentPopup.Position.Y;
+            if (bottomCoords > _userInterfaceManager.StateRoot.Size.Y)
             {
                 _currentPopup.Position = _currentPopup.Position - new Vector2(0, vBox.CombinedMinimumSize.Y);
             }
@@ -229,6 +227,16 @@ namespace Content.Client.GameObjects.EntitySystems
         private IEntity GetUserEntity()
         {
             return _playerManager.LocalPlayer.ControlledEntity;
+        }
+
+        private sealed class VerbPopup : Popup
+        {
+            public VBoxContainer List { get; }
+
+            public VerbPopup()
+            {
+                AddChild(List = new VBoxContainer());
+            }
         }
     }
 }
