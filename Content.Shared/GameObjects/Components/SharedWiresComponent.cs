@@ -9,13 +9,13 @@ namespace Content.Shared.GameObjects.Components
 {
     public class SharedWiresComponent : Component
     {
+        public override string Name => "Wires";
+
         [Serializable, NetSerializable]
         public enum WiresVisuals
         {
             MaintenancePanelState
         }
-
-        public override string Name => "Wires";
 
         [Serializable, NetSerializable]
         public enum WiresUiKey
@@ -32,29 +32,24 @@ namespace Content.Shared.GameObjects.Components
         }
 
         [Serializable, NetSerializable]
-        public class WiresSyncRequestMessage : BoundUserInterfaceMessage
+        public class WiresBoundUserInterfaceState : BoundUserInterfaceState
         {
-        }
+            public readonly List<ClientWire> WiresList;
 
-        [Serializable, NetSerializable]
-        public class WiresListMessage : BoundUserInterfaceMessage
-        {
-            public readonly List<ClientWiresListEntry> WiresList;
-
-            public WiresListMessage(List<ClientWiresListEntry> wiresList)
+            public WiresBoundUserInterfaceState(List<ClientWire> wiresList)
             {
                 WiresList = wiresList;
             }
         }
 
         [Serializable, NetSerializable]
-        public class ClientWiresListEntry
+        public class ClientWire
         {
             public Guid Guid;
             public Color Color;
             public bool IsCut;
 
-            public ClientWiresListEntry(Guid guid, Color color, bool isCut)
+            public ClientWire(Guid guid, Color color, bool isCut)
             {
                 Guid = guid;
                 Color = color;

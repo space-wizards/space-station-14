@@ -4,18 +4,15 @@ using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.GameObjects.Components.Wires
 {
     public class WiresBoundUserInterface : BoundUserInterface
     {
-        private WiresMenu _menu;
-
-        public SharedWiresComponent Wires { get; private set; }
-
         public WiresBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            SendMessage(new WiresSyncRequestMessage());
         }
+
+        private WiresMenu _menu;
 
         protected override void Open()
         {
@@ -26,24 +23,17 @@ namespace Content.Client.GameObjects.Components
                 return;
             }
 
-            Wires = wires;
-
-
             _menu = new WiresMenu() {Owner = this};
-            //_menu.Populate(Wires.WiresList);
 
             _menu.OnClose += Close;
             _menu.OpenCentered();
         }
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        protected override void UpdateState(BoundUserInterfaceState state)
         {
-            switch(message)
-            {
-                case WiresListMessage msg:
-                    _menu.Populate(msg.WiresList);
-                    break;
-            }
+            base.UpdateState(state);
+            var castState = (WiresBoundUserInterfaceState) state;
+            _menu.Populate(castState.WiresList);
         }
 
         public void PerformAction(Guid guid, WiresAction action)

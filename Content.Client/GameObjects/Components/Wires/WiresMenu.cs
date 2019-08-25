@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Content.Client.GameObjects.Components.Wires;
 using Content.Client.Interfaces.Chat;
 using Content.Client.VendingMachines;
 using Robust.Client.UserInterface.Controls;
@@ -15,7 +16,7 @@ namespace Content.Client.GameObjects.Components
     {
         protected override Vector2? CustomSize => (300, 450);
 
-        private List<ClientWiresListEntry> _cachedWires;
+        private List<ClientWire> _cachedWires;
 
         public WiresBoundUserInterface Owner { get; set; }
 
@@ -28,7 +29,7 @@ namespace Content.Client.GameObjects.Components
             Contents.AddChild(_rows);
         }
 
-        public void Populate(List<ClientWiresListEntry> wiresList)
+        public void Populate(List<ClientWire> wiresList)
         {
             _cachedWires = wiresList;
             _rows.RemoveAllChildren();

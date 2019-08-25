@@ -81,6 +81,8 @@ namespace Content.Server.GameObjects.Components
                 var builder = new WiresBuilder(this, wiresProvider);
                 wiresProvider.RegisterWires(builder);
             }
+
+            UpdateUserInterface();
         }
 
         public class Wire
@@ -187,6 +189,7 @@ namespace Content.Server.GameObjects.Components
                                 return;
                             }
                             wire.IsCut = true;
+                            UpdateUserInterface();
                             break;
                         case WiresAction.Mend:
                             if (activeHandEntity?.HasComponent<WirecutterComponent>() != true)
@@ -195,6 +198,7 @@ namespace Content.Server.GameObjects.Components
                                 return;
                             }
                             wire.IsCut = false;
+                            UpdateUserInterface();
                             break;
                         case WiresAction.Pulse:
                             if (activeHandEntity?.HasComponent<MultitoolComponent>() != true)
@@ -210,27 +214,18 @@ namespace Content.Server.GameObjects.Components
                             break;
                     }
                     wire.Owner.WiresUpdate(new WiresUpdateEventArgs(wire.Identifier, msg.Action));
-                    _userInterface.SendMessage(CreateClientWiresList());
-                    break;
-                case WiresSyncRequestMessage msg:
-                    _userInterface.SendMessage(CreateClientWiresList());
                     break;
             }
         }
 
-        /// <summary>
-        /// Creates a <see cref="SharedWiresComponent.WiresListMessage"/> from the server-side <see cref="WiresList"/>.
-        /// </summary>
-        /// <returns>The message for the client.</returns>
-        private WiresListMessage CreateClientWiresList()
+        private void UpdateUserInterface()
         {
-            var clientList = new List<ClientWiresListEntry>();
+            var clientList = new List<ClientWire>();
             foreach (var entry in WiresList)
             {
-                clientList.Add(new ClientWiresListEntry(entry.Guid, entry.Color, entry.IsCut));
+                clientList.Add(new ClientWire(entry.Guid, entry.Color, entry.IsCut));
             }
-
-            return new WiresListMessage(clientList);
+            _userInterface.SetState(new WiresBoundUserInterfaceState(clientList));
         }
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
