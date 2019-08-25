@@ -482,7 +482,10 @@ namespace Content.Server.GameObjects
                         }
                         else
                         {
-                            interactionSystem.Interaction(Owner, slot.ContainedEntity);
+                            var entity = slot.ContainedEntity;
+                            if (!Drop(entity))
+                                break;
+                            interactionSystem.Interaction(Owner, entity);
                         }
                     }
 
