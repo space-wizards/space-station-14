@@ -74,7 +74,7 @@
   components:
   - type: BallisticMagazine
     fill: ammo_casing_9mm_flash
-    caliber: A9mmFlash
+    caliber: A9mm
     capacity: 10
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pf.rsi
@@ -95,7 +95,7 @@
   components:
   - type: BallisticMagazine
     fill: ammo_casing_9mm_hv
-    caliber: A9mmHighVelocity
+    caliber: A9mm
     capacity: 10
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19phv.rsi
@@ -116,7 +116,7 @@
   components:
   - type: BallisticMagazine
     fill: ammo_casing_9mm_l
-    caliber: A9mmL
+    caliber: A9mm
     capacity: 10
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pl.rsi
@@ -137,7 +137,7 @@
   components:
   - type: BallisticMagazine
     fill: ammo_casing_9mm_p
-    caliber: A9mmPractice
+    caliber: A9mm
     capacity: 10
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pp.rsi
@@ -158,7 +158,7 @@
   components:
   - type: BallisticMagazine
     fill: ammo_casing_9mm_r
-    caliber: A9mmRubber
+    caliber: A9mm
     capacity: 10
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pr.rsi
@@ -200,7 +200,7 @@
   components:
   - type: BallisticMagazine
     fill: ammo_casing_9mm_f
-    caliber: A9mmFlash
+    caliber: A9mm
     capacity: 30
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmf.rsi
@@ -221,7 +221,7 @@
   components:
   - type: BallisticMagazine
     fill: ammo_casing_9mm_hv
-    caliber: A9mmHighVelocity
+    caliber: A9mm
     capacity: 30
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmhv.rsi
@@ -242,7 +242,7 @@
   components:
   - type: BallisticMagazine
     fill: ammo_casing_9mm_l
-    caliber: A9mmL
+    caliber: A9mm
     capacity: 30
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mml.rsi
@@ -263,7 +263,7 @@
   components:
   - type: BallisticMagazine
     fill: ammo_casing_9mm_p
-    caliber: A9mmPractice
+    caliber: A9mm
     capacity: 30
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmp.rsi
@@ -284,7 +284,7 @@
   components:
   - type: BallisticMagazine
     fill: ammo_casing_9mm_r
-    caliber: A9mmRubber
+    caliber: A9mm
     capacity: 30
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmr.rsi
@@ -321,7 +321,7 @@
   parent: BaseItem
   components:
   - type: BallisticBullet
-    caliber: A9mmFlash
+    caliber: A9mm
     projectile: bullet_9mmf
   - type: Sprite
     sprite: Objects/Guns/Ammunition/ammo_casing.rsi
@@ -337,7 +337,7 @@
   parent: BaseItem
   components:
   - type: BallisticBullet
-    caliber: A9mmHighVelocity
+    caliber: A9mm
     projectile: bullet_9mmhv
   - type: Sprite
     sprite: Objects/Guns/Ammunition/ammo_casing.rsi
@@ -353,7 +353,7 @@
   parent: BaseItem
   components:
   - type: BallisticBullet
-    caliber: A9mmL
+    caliber: A9mm
     projectile: bullet_9mml
   - type: Sprite
     sprite: Objects/Guns/Ammunition/ammo_casing.rsi
@@ -369,7 +369,7 @@
   parent: BaseItem
   components:
   - type: BallisticBullet
-    caliber: A9mmPractice
+    caliber: A9mm
     projectile: bullet_9mmp
   - type: Sprite
     sprite: Objects/Guns/Ammunition/ammo_casing.rsi
@@ -385,7 +385,7 @@
   parent: BaseItem
   components:
   - type: BallisticBullet
-    caliber: A9mmRubber
+    caliber: A9mm
     projectile: bullet_9mmr
   - type: Sprite
     sprite: Objects/Guns/Ammunition/ammo_casing.rsi
