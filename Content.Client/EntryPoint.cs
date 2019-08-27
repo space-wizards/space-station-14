@@ -98,6 +98,9 @@ namespace Content.Client
                 "PlayerInputMover",
                 "Computer",
                 "AsteroidRock",
+                "ResearchServer",
+                "ResearchPointSource",
+                "ResearchClient"
             };
 
             foreach (var ignoreName in registerIgnore)

@@ -49,11 +49,11 @@
   name: "Protolathe"
   components:
   - type: Sprite
-    sprite: Buildings/autolathe.rsi
-    state: idle
+    sprite: Buildings/research.rsi
+    state: protolathe
   - type: Icon
-    sprite: Buildings/autolathe.rsi
-    state: idle
+    sprite: Buildings/research.rsi
+    state: protolathe
   - type: ResearchClient
   - type: TechnologyDatabase
   - type: ProtolatheDatabase
