@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Research
         private List<LatheRecipePrototype> _protolatheRecipes = new List<LatheRecipePrototype>();
 
         /// <summary>
-        ///    A full list of recipes this protolathe can have.
+        ///    A full list of recipes this protolathe can print.
         /// </summary>
         public List<LatheRecipePrototype> ProtolatheRecipes => _protolatheRecipes;
 
@@ -43,6 +43,10 @@ namespace Content.Shared.GameObjects.Components.Research
             }
         }
 
+        /// <summary>
+        ///     Returns a list of the allowed protolathe recipe IDs.
+        /// </summary>
+        /// <returns>A list of recipe IDs allowed</returns>
         public List<string> GetProtolatheRecipeIdList()
         {
             var list = new List<string>();

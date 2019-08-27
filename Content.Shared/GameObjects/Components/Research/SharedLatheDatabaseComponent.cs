@@ -34,7 +34,8 @@ namespace Content.Shared.GameObjects.Components.Research
         /// <returns>Whether it could be added or not</returns>
         public virtual void AddRecipe(LatheRecipePrototype recipe)
         {
-            _recipes.Add(recipe);
+            if(!Contains(recipe))
+                _recipes.Add(recipe);
         }
 
         /// <summary>

@@ -8,6 +8,9 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public class ResearchSystem : EntitySystem
     {
+        public const float ResearchConsoleUIUpdateTime = 30f;
+
+        private float _timer = ResearchConsoleUIUpdateTime;
         private readonly List<ResearchServerComponent> _servers = new List<ResearchServerComponent>();
         private readonly IEntityQuery ConsoleQuery;
         public IReadOnlyList<ResearchServerComponent> Servers => _servers;
@@ -65,14 +68,21 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
+            _timer += frameTime;
+
             foreach (var server in _servers)
             {
                 server.Update(frameTime);
             }
 
-            foreach (var console in EntityManager.GetEntities(ConsoleQuery))
+            if (_timer >= ResearchConsoleUIUpdateTime)
             {
-                console.GetComponent<ResearchConsoleComponent>().Update(frameTime);
+                foreach (var console in EntityManager.GetEntities(ConsoleQuery))
+                {
+                    console.GetComponent<ResearchConsoleComponent>().UpdateUserInterface();
+                }
+
+                _timer = 0f;
             }
         }
     }

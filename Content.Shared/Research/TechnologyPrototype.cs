@@ -19,23 +19,44 @@ namespace Content.Shared.Research
         private List<string> _requiredTechnologies;
         private List<string> _unlockedRecipes;
 
+        /// <summary>
+        ///     The ID of this technology prototype.
+        /// </summary>
         [ViewVariables]
         public string ID => _id;
 
+        /// <summary>
+        ///     The name this technology will have on user interfaces.
+        /// </summary>
         [ViewVariables]
         public string Name => _name;
 
+        /// <summary>
+        ///     An icon that represent this technology.
+        /// </summary>
         public SpriteSpecifier Icon => _icon;
 
+        /// <summary>
+        ///     A short description of the technology.
+        /// </summary>
         [ViewVariables]
         public string Description => _description;
 
+        /// <summary>
+        ///    The required research points to unlock this technology.
+        /// </summary>
         [ViewVariables]
         public int RequiredPoints => _requiredPoints;
 
+        /// <summary>
+        ///     A list of technology IDs required to unlock this technology.
+        /// </summary>
         [ViewVariables]
         public List<string> RequiredTechnologies => _requiredTechnologies;
 
+        /// <summary>
+        ///     A list of recipe IDs this technology unlocks.
+        /// </summary>
         [ViewVariables]
         public List<string> UnlockedRecipes => _unlockedRecipes;
 

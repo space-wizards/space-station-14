@@ -2,6 +2,7 @@ using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Research
@@ -14,44 +15,63 @@ namespace Content.Server.GameObjects.Components.Research
             return new TechnologyDatabaseState(_technologies);
         }
 
+        /// <summary>
+        ///     Synchronizes this database against other,
+        ///     adding all technologies from the other that
+        ///     this one doesn't have.
+        /// </summary>
+        /// <param name="otherDatabase">The other database</param>
+        /// <param name="twoway">Whether the other database should be synced against this one too or not.</param>
+        public void Sync(TechnologyDatabaseComponent otherDatabase, bool twoway = true)
+        {
+            foreach (var tech in otherDatabase.Technologies)
+            {
+                if (!IsTechnologyUnlocked(tech)) AddTechnology(tech);
+            }
+
+            if(twoway)
+                otherDatabase.Sync(this, false);
+
+            Dirty();
+        }
+
+        /// <summary>
+        ///     If there's a research client component attached to the owner entity,
+        ///     and the research client is connected to a research server, this method
+        ///     syncs against the research server, and the server against the local database.
+        /// </summary>
+        /// <returns>Whether it could sync or not</returns>
         public bool SyncWithServer()
         {
             if (!Owner.TryGetComponent(out ResearchClientComponent client)) return false;
             if (!client.ConnectedToServer) return false;
 
-            foreach (var tech in client.Server.UnlockedTechnologies)
-            {
-                if (!IsTechnologyUnlocked(tech)) UnlockTechnology(tech);
-            }
-
-            foreach (var tech in _technologies)
-            {
-                if (!client.Server.IsTechnologyUnlocked(tech)) client.Server.Database.UnlockTechnology(tech);
-            }
-
-            Dirty();
-            client.Server.Database.Dirty();
+            Sync(client.Server.Database);
 
             return true;
         }
 
+        /// <summary>
+        ///     If possible, unlocks a technology on this database.
+        /// </summary>
+        /// <param name="technology"></param>
+        /// <returns></returns>
         public bool UnlockTechnology(TechnologyPrototype technology)
         {
-            if (_technologies.Contains(technology)) return false;
-            var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var requiredTech in technology.RequiredTechnologies)
-            {
-                if (!prototypeMan.TryIndex(requiredTech, out technology)) return false;
-                if (!_technologies.Contains(technology)) return false;
-            }
-            _technologies.Add(technology);
+            if (!CanUnlockTechnology(technology)) return false;
+
+            AddTechnology(technology);
             Dirty();
             return true;
         }
 
-        public bool IsTechnologyUnlocked(TechnologyPrototype technology)
+        /// <summary>
+        ///     Adds a technology to the database without checking if it could be unlocked.
+        /// </summary>
+        /// <param name="technology"></param>
+        public void AddTechnology(TechnologyPrototype technology)
         {
-            return _technologies.Contains(technology);
+            _technologies.Add(technology);
         }
     }
 }

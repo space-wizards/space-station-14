@@ -42,6 +42,10 @@ namespace Content.Server.GameObjects.Components.Research
 
         public int Point => _points;
 
+        /// <summary>
+        ///     How many points per second this R&D server gets.
+        ///     The value is calculated from all point sources connected to it.
+        /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public int PointsPerSecond
         {
@@ -82,29 +86,40 @@ namespace Content.Server.GameObjects.Components.Research
 
         public bool CanUnlockTechnology(TechnologyPrototype technology)
         {
-            if (technology == null || _points < technology.RequiredPoints || Database.IsTechnologyUnlocked(technology)) return false;
-            var protoman = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var technologyId in technology.RequiredTechnologies)
-            {
-                protoman.TryIndex(technologyId, out TechnologyPrototype requiredTechnology);
-                if (requiredTechnology == null) return false;
-                if (!Database.IsTechnologyUnlocked(technology)) return false;
-            }
+            if (!Database.CanUnlockTechnology(technology) || _points < technology.RequiredPoints || Database.IsTechnologyUnlocked(technology)) return false;
             return true;
         }
 
+        /// <summary>
+        ///     Unlocks a technology, but only if there are enough research points for it.
+        ///     If there are, it subtracts the amount of points from the total.
+        /// </summary>
+        /// <param name="technology"></param>
+        /// <returns></returns>
         public bool UnlockTechnology(TechnologyPrototype technology)
         {
             if (!CanUnlockTechnology(technology)) return false;
-            _points -= technology.RequiredPoints;
-            return Database.UnlockTechnology(technology);
+            var result = Database.UnlockTechnology(technology);
+            if(result)
+                _points -= technology.RequiredPoints;
+            return result;
         }
 
+        /// <summary>
+        ///     Check whether a technology is unlocked or not.
+        /// </summary>
+        /// <param name="technology"></param>
+        /// <returns></returns>
         public bool IsTechnologyUnlocked(TechnologyPrototype technology)
         {
             return Database.IsTechnologyUnlocked(technology);
         }
 
+        /// <summary>
+        ///     Registers a remote client on this research server.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
         public bool RegisterClient(ResearchClientComponent client)
         {
             if (client is ResearchPointSourceComponent source)
@@ -121,6 +136,10 @@ namespace Content.Server.GameObjects.Components.Research
             return true;
         }
 
+        /// <summary>
+        ///     Unregisters a remote client from this server.
+        /// </summary>
+        /// <param name="client"></param>
         public void UnregisterClient(ResearchClientComponent client)
         {
             if (client is ResearchPointSourceComponent source)

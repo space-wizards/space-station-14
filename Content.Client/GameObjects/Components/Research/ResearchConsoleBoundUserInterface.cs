@@ -1,6 +1,7 @@
 using Content.Client.Research;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Log;
 
@@ -8,14 +9,15 @@ namespace Content.Client.GameObjects.Components.Research
 {
     public class ResearchConsoleBoundUserInterface : BoundUserInterface
     {
-        private int _points = 0;
-        private int _pointsPerSecond = 0;
+        public int Points { get; private set; } = 0;
+        public int PointsPerSecond { get; private set; } = 0;
         private ResearchConsoleMenu _consoleMenu;
         public TechnologyDatabaseComponent TechnologyDatabase;
 
 
         public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
+            SendMessage(new SharedResearchConsoleComponent.ConsoleServerSyncMessage());
         }
 
         protected override void Open()
@@ -24,18 +26,43 @@ namespace Content.Client.GameObjects.Components.Research
 
             if (!Owner.Owner.TryGetComponent(out TechnologyDatabase)) return;
 
-            _consoleMenu = new ResearchConsoleMenu() { Owner = this };
+            _consoleMenu = new ResearchConsoleMenu(this);
+
+            _consoleMenu.ServerSyncButton.OnPressed += (args) =>
+                {
+                    SendMessage(new SharedResearchConsoleComponent.ConsoleServerSyncMessage());
+                };
+
+            _consoleMenu.ServerSelectionButton.OnPressed += (args) =>
+            {
+                SendMessage(new SharedResearchConsoleComponent.ConsoleServerSelectionMessage());
+            };
+
+            _consoleMenu.UnlockButton.OnPressed += (args) =>
+            {
+                SendMessage(new SharedResearchConsoleComponent.ConsoleUnlockTechnologyMessage(_consoleMenu.TechnologySelected.ID));
+            };
 
             _consoleMenu.OpenCentered();
         }
+
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
 
             var castState = (SharedResearchConsoleComponent.ResearchConsoleBoundInterfaceState)state;
-            _points = castState.Points;
-            _pointsPerSecond = castState.PointsPerSecond;
+            Points = castState.Points;
+            PointsPerSecond = castState.PointsPerSecond;
+            // We update the user interface here.
+            _consoleMenu?.PopulatePoints();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+            _consoleMenu?.Dispose();
         }
     }
 }

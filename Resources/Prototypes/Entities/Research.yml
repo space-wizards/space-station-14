@@ -15,8 +15,6 @@
     offset: Center
   - type: ResearchServer
   - type: TechnologyDatabase
-    technologies:
-    - Sheets
   
 - type: entity
   id: BaseRDPointSource

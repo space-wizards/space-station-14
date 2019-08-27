@@ -16,6 +16,9 @@ namespace Content.Client.GameObjects.Components.Research
         private IPrototypeManager _prototypeManager;
 #pragma warning restore
 
+        /// <summary>
+        ///     Invoked when the database gets updated.
+        /// </summary>
         public event Action OnDatabaseUpdated;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)

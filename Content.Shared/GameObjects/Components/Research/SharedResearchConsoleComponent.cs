@@ -17,13 +17,27 @@ namespace Content.Shared.GameObjects.Components.Research
         }
 
         [Serializable, NetSerializable]
-        public class ConsoleUnlockTechnology : BoundUserInterfaceMessage
+        public class ConsoleUnlockTechnologyMessage : BoundUserInterfaceMessage
         {
             public string Id;
-            public ConsoleUnlockTechnology(string id)
+            public ConsoleUnlockTechnologyMessage(string id)
             {
                 Id = id;
             }
+        }
+
+        [Serializable, NetSerializable]
+        public class ConsoleServerSyncMessage : BoundUserInterfaceMessage
+        {
+            public ConsoleServerSyncMessage()
+            {}
+        }
+
+        [Serializable, NetSerializable]
+        public class ConsoleServerSelectionMessage : BoundUserInterfaceMessage
+        {
+            public ConsoleServerSelectionMessage()
+            {}
         }
 
         [Serializable, NetSerializable]

@@ -1,11 +1,14 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Research;
+using Content.Shared.Research;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Research
 {
@@ -15,7 +18,6 @@ namespace Content.Server.GameObjects.Components.Research
     {
         private BoundUserInterface _userInterface;
         private ResearchClientComponent _client;
-        private bool _uiDirty = true;
         public override void Initialize()
         {
             base.Initialize();
@@ -26,13 +28,38 @@ namespace Content.Server.GameObjects.Components.Research
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
+            if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)) return;
+
             switch (message.Message)
             {
-                case ConsoleUnlockTechnology msg:
+                case ConsoleUnlockTechnologyMessage msg:
+                    var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                    if (!protoMan.TryIndex(msg.Id, out TechnologyPrototype tech)) break;
+                    if(!_client.Server.CanUnlockTechnology(tech)) break;
+                    if (_client.Server.UnlockTechnology(tech))
+                    {
+                        database.SyncWithServer();
+                        database.Dirty();
+                        UpdateUserInterface();
+                    }
+
+                    break;
+
+                case ConsoleServerSyncMessage msg:
+                    database.SyncWithServer();
+                    UpdateUserInterface();
+                    break;
+
+                case ConsoleServerSelectionMessage msg:
+                    if (!Owner.TryGetComponent(out ResearchClientComponent client)) break;
+                    client.OpenUserInterface(message.Session);
                     break;
             }
         }
 
+        /// <summary>
+        ///     Method to update the user interface on the clients.
+        /// </summary>
         public void UpdateUserInterface()
         {
             _userInterface.SetState(GetNewUiState());
@@ -46,15 +73,10 @@ namespace Content.Server.GameObjects.Components.Research
             return new ResearchConsoleBoundInterfaceState(points, pointsPerSecond);
         }
 
-        public void Update(float frameTime)
-        {
-            if (_uiDirty)
-            {
-                _uiDirty = false;
-                UpdateUserInterface();
-            }
-        }
-
+        /// <summary>
+        ///     Open the user interface on a certain player session.
+        /// </summary>
+        /// <param name="session">Session where the UI will be shown</param>
         public void OpenUserInterface(IPlayerSession session)
         {
             _userInterface.Open(session);

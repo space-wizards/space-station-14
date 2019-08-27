@@ -21,6 +21,9 @@ namespace Content.Server.GameObjects.Components.Research
             return new ProtolatheDatabaseState(GetRecipeIdList());
         }
 
+        /// <summary>
+        ///     Adds unlocked recipes from technologies to the database.
+        /// </summary>
         public void Sync()
         {
             if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)) return;
@@ -39,6 +42,11 @@ namespace Content.Server.GameObjects.Components.Research
             Dirty();
         }
 
+        /// <summary>
+        ///     Unlocks a recipe but only if it's one of the allowed recipes on this protolathe.
+        /// </summary>
+        /// <param name="recipe">The recipe</param>
+        /// <returns>Whether it could add it or not.</returns>
         public bool UnlockRecipe(LatheRecipePrototype recipe)
         {
             if (!ProtolatheRecipes.Contains(recipe)) return false;
