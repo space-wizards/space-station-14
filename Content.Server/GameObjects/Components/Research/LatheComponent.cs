@@ -37,8 +37,9 @@ namespace Content.Server.GameObjects.Components.Research
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
         }
 
-        private void UserInterfaceOnOnReceiveMessage(BoundUserInterfaceMessage message)
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            var message = serverMsg.Message;
             switch (message)
             {
                 case LatheQueueRecipeMessage msg:

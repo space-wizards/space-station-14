@@ -106,8 +106,9 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             TrySetVisualState(state);
         }
 
-        private void UserInterfaceOnOnReceiveMessage(BoundUserInterfaceMessage message)
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            var message = serverMsg.Message;
             switch (message)
             {
                 case VendingMachineEjectMessage msg:
