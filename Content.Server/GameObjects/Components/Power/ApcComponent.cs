@@ -34,10 +34,10 @@ namespace Content.Server.GameObjects.Components.Power
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
         }
 
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
-            var msg = obj.Message;
-            if (msg is ApcToggleMainBreakerMessage)
+            var obj = serverMsg.Message;
+            if (obj is ApcToggleMainBreakerMessage)
             {
                 _provider.MainBreaker = !_provider.MainBreaker;
                 _uiDirty = true;

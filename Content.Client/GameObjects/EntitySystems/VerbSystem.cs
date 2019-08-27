@@ -91,6 +91,11 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var entities = gameScreen.GetEntitiesUnderPosition(args.Coordinates);
 
+            if (entities.Count == 0)
+            {
+                return;
+            }
+
             _currentPopup = new VerbPopup();
             _currentPopup.OnPopupHide += _closeContextMenu;
             foreach (var entity in entities)
