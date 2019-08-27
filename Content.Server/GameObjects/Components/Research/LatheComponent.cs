@@ -38,10 +38,9 @@ namespace Content.Server.GameObjects.Components.Research
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
         }
 
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            var message = serverMsg.Message;
-            switch (message)
+            switch (message.Message)
             {
                 case LatheQueueRecipeMessage msg:
                     _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
@@ -61,8 +60,16 @@ namespace Content.Server.GameObjects.Components.Research
 
                 case LatheServerSelectionMessage msg:
                     if (!Owner.TryGetComponent(out ResearchClientComponent researchClient)) return;
-                    researchClient.OpenUserInterface(null);
-                    // TODO: Use actual user session. Requires Damian's PR
+                    researchClient.OpenUserInterface(message.Session);
+                    break;
+
+                case LatheServerSyncMessage msg:
+                    if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)
+                    ||  !Owner.TryGetComponent(out ProtolatheDatabaseComponent protoDatabase)) return;
+
+                    if(database.SyncWithServer())
+                        protoDatabase.Sync();
+
                     break;
             }
         }

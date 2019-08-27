@@ -55,6 +55,19 @@ namespace Content.Shared.GameObjects.Components.Research
             }
         }
 
+
+
+        /// <summary>
+        ///     Sent to the server to sync the lathe's technology database with the research server.
+        /// </summary>
+        [Serializable, NetSerializable]
+        public class LatheServerSyncMessage : BoundUserInterfaceMessage
+        {
+            public LatheServerSyncMessage()
+            {
+            }
+        }
+
         /// <summary>
         ///     Sent to the server to open the ResearchClient UI.
         /// </summary>

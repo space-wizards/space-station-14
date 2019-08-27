@@ -35,9 +35,12 @@ namespace Content.Client.Research
         private List<LatheRecipePrototype> _recipes = new List<LatheRecipePrototype>();
         private List<LatheRecipePrototype> _shownRecipes = new List<LatheRecipePrototype>();
 
-        public LatheMenu()
+        public LatheMenu(LatheBoundUserInterface owner = null)
         {
             IoCManager.InjectDependencies(this);
+
+            if (owner != null)
+                Owner = owner;
 
             Title = "Lathe Menu";
 
@@ -150,10 +153,11 @@ namespace Content.Client.Research
 
             hBoxButtons.AddChild(spacer);
             hBoxButtons.AddChild(QueueButton);
-            if (Owner.Database is SharedProtolatheDatabaseComponent)
+            if (Owner?.Database is ProtolatheDatabaseComponent database)
             {
                 hBoxButtons.AddChild(ServerConnectButton);
                 hBoxButtons.AddChild(ServerSyncButton);
+                database.OnDatabaseUpdated += Populate;
             }
 
             hBoxFilter.AddChild(SearchBar);

@@ -14,22 +14,39 @@ namespace Content.Server.GameObjects.Components.Research
             return new TechnologyDatabaseState(_technologies);
         }
 
+        public bool SyncWithServer()
+        {
+            if (!Owner.TryGetComponent(out ResearchClientComponent client)) return false;
+            if (!client.ConnectedToServer) return false;
+
+            foreach (var tech in client.Server.UnlockedTechnologies)
+            {
+                if (!IsTechnologyUnlocked(tech)) UnlockTechnology(tech);
+            }
+
+            foreach (var tech in _technologies)
+            {
+                if (!client.Server.IsTechnologyUnlocked(tech)) client.Server.Database.UnlockTechnology(tech);
+            }
+
+            Dirty();
+            client.Server.Database.Dirty();
+
+            return true;
+        }
+
         public bool UnlockTechnology(TechnologyPrototype technology)
         {
             if (_technologies.Contains(technology)) return false;
+            var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
             foreach (var requiredTech in technology.RequiredTechnologies)
             {
-                if (!IoCManager.Resolve<PrototypeManager>().TryIndex(requiredTech, out technology)) return false;
+                if (!prototypeMan.TryIndex(requiredTech, out technology)) return false;
                 if (!_technologies.Contains(technology)) return false;
             }
             _technologies.Add(technology);
             Dirty();
             return true;
-        }
-
-        public bool UnlockTechnology(string id)
-        {
-            return UnlockTechnology((TechnologyPrototype)IoCManager.Resolve<PrototypeManager>().Index(typeof(TechnologyPrototype), id));
         }
 
         public bool IsTechnologyUnlocked(TechnologyPrototype technology)

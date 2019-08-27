@@ -55,6 +55,7 @@
     sprite: Buildings/autolathe.rsi
     state: idle
   - type: ResearchClient
+  - type: TechnologyDatabase
   - type: ProtolatheDatabase
     protolatherecipes:
       - Brutepack

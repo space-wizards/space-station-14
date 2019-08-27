@@ -78,9 +78,9 @@ namespace Content.Server.GameObjects.Components.Research
                 rd.GetServerIds(), ConnectedToServer ? Server.Id : -1);
         }
 
-        private void UserInterfaceOnOnReceiveMessage(BoundUserInterfaceMessage msg)
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage msg)
         {
-            switch (msg)
+            switch (msg.Message)
             {
                 case ResearchClientSyncMessage _:
                     UpdateUserInterface();

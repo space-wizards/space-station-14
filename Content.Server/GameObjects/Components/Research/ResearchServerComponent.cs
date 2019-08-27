@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         private string _serverName = "RDSERVER";
         private float _timer = 0f;
-        private TechnologyDatabaseComponent _database;
+        public TechnologyDatabaseComponent Database { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         private int _points = 0;
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         // You could optimize research by keeping a list of unlocked recipes too.
         [ViewVariables(VVAccess.ReadOnly)]
-        public IReadOnlyList<TechnologyPrototype> UnlockedTechnologies => _database.Technologies;
+        public IReadOnlyList<TechnologyPrototype> UnlockedTechnologies => Database.Technologies;
         [ViewVariables(VVAccess.ReadOnly)]
         public List<ResearchPointSourceComponent> PointSources { get; } = new List<ResearchPointSourceComponent>();
         [ViewVariables(VVAccess.ReadOnly)]
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Research
             base.Initialize();
             Id = ServerCount++;
             IoCManager.Resolve<IEntitySystemManager>()?.GetEntitySystem<ResearchSystem>()?.RegisterServer(this);
-            _database = Owner.GetComponent<TechnologyDatabaseComponent>();
+            Database = Owner.GetComponent<TechnologyDatabaseComponent>();
         }
 
         public override void Shutdown()
@@ -82,13 +82,13 @@ namespace Content.Server.GameObjects.Components.Research
 
         public bool CanUnlockTechnology(TechnologyPrototype technology)
         {
-            if (technology == null || _points < technology.RequiredPoints || _database.IsTechnologyUnlocked(technology)) return false;
-            var protoman = IoCManager.Resolve<PrototypeManager>();
+            if (technology == null || _points < technology.RequiredPoints || Database.IsTechnologyUnlocked(technology)) return false;
+            var protoman = IoCManager.Resolve<IPrototypeManager>();
             foreach (var technologyId in technology.RequiredTechnologies)
             {
                 protoman.TryIndex(technologyId, out TechnologyPrototype requiredTechnology);
                 if (requiredTechnology == null) return false;
-                if (!_database.IsTechnologyUnlocked(technology)) return false;
+                if (!Database.IsTechnologyUnlocked(technology)) return false;
             }
             return true;
         }
@@ -97,13 +97,12 @@ namespace Content.Server.GameObjects.Components.Research
         {
             if (!CanUnlockTechnology(technology)) return false;
             _points -= technology.RequiredPoints;
-            _database.UnlockTechnology(technology);
-            return true;
+            return Database.UnlockTechnology(technology);
         }
 
-        public bool UnlockTechnology(string id)
+        public bool IsTechnologyUnlocked(TechnologyPrototype technology)
         {
-            return UnlockTechnology((TechnologyPrototype)IoCManager.Resolve<PrototypeManager>().Index(typeof(TechnologyPrototype), id));
+            return Database.IsTechnologyUnlocked(technology);
         }
 
         public bool RegisterClient(ResearchClientComponent client)

@@ -1,0 +1,8 @@
+- type: technology
+  id: Sheets
+  icon: Objects/sheet_metal.png
+  result: GlassSheet1
+  requiredpoints: 500
+  unlockedrecipes:
+    - "MetalStack"
+    - "GlassStack"

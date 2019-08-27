@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Research
             _technologies.Clear();
             foreach (var techID in state.Technologies)
             {
-                if (!IoCManager.Resolve<PrototypeManager>().TryIndex(techID, out TechnologyPrototype technology)) continue;
+                if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(techID, out TechnologyPrototype technology)) continue;
                 _technologies.Add(technology);
             }
 

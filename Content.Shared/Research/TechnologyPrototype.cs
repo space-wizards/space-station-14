@@ -49,7 +49,7 @@ namespace Content.Shared.Research
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
             serializer.DataField(ref _requiredPoints, "requiredpoints", 0);
             serializer.DataField(ref _requiredTechnologies, "requiredtechnologies", new List<string>());
-            serializer.DataField(ref _requiredTechnologies, "unlockedrecipes", new List<string>());
+            serializer.DataField(ref _unlockedRecipes, "unlockedrecipes", new List<string>());
         }
     }
 }

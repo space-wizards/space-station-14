@@ -1,3 +1,4 @@
+using System;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
@@ -15,6 +16,8 @@ namespace Content.Client.GameObjects.Components.Research
         private IPrototypeManager _prototypeManager;
 #pragma warning restore
 
+        public event Action OnDatabaseUpdated;
+
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
@@ -25,6 +28,8 @@ namespace Content.Client.GameObjects.Components.Research
                 if(!_prototypeManager.TryIndex(ID, out LatheRecipePrototype recipe)) continue;
                 AddRecipe(recipe);
             }
+
+            OnDatabaseUpdated?.Invoke();
         }
     }
 }

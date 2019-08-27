@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Research;
@@ -22,37 +23,20 @@ namespace Content.Server.GameObjects.Components.Research
 
         public void Sync()
         {
-            if (!Owner.TryGetComponent(out ResearchClientComponent client)) return;
-            if (!client.ConnectedToServer) return;
+            if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)) return;
 
-            foreach (var technology in client.Server.UnlockedTechnologies)
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            foreach (var technology in database.Technologies)
             {
-                foreach (var recipe in technology.UnlockedRecipes)
+                foreach (var id in technology.UnlockedRecipes)
                 {
+                    var recipe = (LatheRecipePrototype)prototypeManager.Index(typeof(LatheRecipePrototype), id);
                     UnlockRecipe(recipe);
                 }
             }
 
             Dirty();
-        }
-
-        public override void Clear()
-        {
-            base.Clear();
-            Dirty();
-        }
-
-        public override void AddRecipe(LatheRecipePrototype recipe)
-        {
-            base.AddRecipe(recipe);
-            Dirty();
-        }
-
-        public override bool RemoveRecipe(LatheRecipePrototype recipe)
-        {
-            if (!base.RemoveRecipe(recipe)) return false;
-            Dirty();
-            return true;
         }
 
         public bool UnlockRecipe(LatheRecipePrototype recipe)
@@ -62,12 +46,6 @@ namespace Content.Server.GameObjects.Components.Research
             AddRecipe(recipe);
 
             return true;
-        }
-
-        public bool UnlockRecipe(string id)
-        {
-            var recipe = (LatheRecipePrototype)IoCManager.Resolve<PrototypeManager>().Index(typeof(LatheRecipePrototype), id);
-            return UnlockRecipe(recipe);
         }
     }
 }

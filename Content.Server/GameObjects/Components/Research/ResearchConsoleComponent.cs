@@ -24,9 +24,9 @@ namespace Content.Server.GameObjects.Components.Research
             _client = Owner.GetComponent<ResearchClientComponent>();
         }
 
-        private void UserInterfaceOnOnReceiveMessage(BoundUserInterfaceMessage message)
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            switch (message)
+            switch (message.Message)
             {
                 case ConsoleUnlockTechnology msg:
                     break;
@@ -40,13 +40,8 @@ namespace Content.Server.GameObjects.Components.Research
 
         private ResearchConsoleBoundInterfaceState GetNewUiState()
         {
-            int points = 0;
-            int pointsPerSecond = 0;
-            if (_client.ConnectedToServer)
-            {
-                points = _client.Server.Point;
-                pointsPerSecond = _client.Server.PointsPerSecond;
-            }
+            var points = _client.ConnectedToServer ? _client.Server.Point : 0;
+            var pointsPerSecond = _client.ConnectedToServer ? _client.Server.PointsPerSecond : 0;
 
             return new ResearchConsoleBoundInterfaceState(points, pointsPerSecond);
         }

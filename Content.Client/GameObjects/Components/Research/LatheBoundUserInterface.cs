@@ -49,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Research
             Lathe = lathe;
             Database = database;
 
-            menu = new LatheMenu { Owner = this };
+            menu = new LatheMenu(this);
             queueMenu = new LatheQueueMenu { Owner = this };
 
             menu.OnClose += Close;
@@ -58,6 +58,16 @@ namespace Content.Client.GameObjects.Components.Research
             menu.PopulateMaterials();
 
             menu.QueueButton.OnPressed += (args) => { queueMenu.OpenCentered(); };
+
+            menu.ServerConnectButton.OnPressed += (args) =>
+            {
+                SendMessage(new SharedLatheComponent.LatheServerSelectionMessage());
+            };
+
+            menu.ServerSyncButton.OnPressed += (args) =>
+            {
+                SendMessage(new SharedLatheComponent.LatheServerSyncMessage());
+            };
 
             storage.OnMaterialStorageChanged += menu.PopulateDisabled;
             storage.OnMaterialStorageChanged += menu.PopulateMaterials;
