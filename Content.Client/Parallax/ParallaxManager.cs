@@ -96,6 +96,8 @@ namespace Content.Client.Parallax
                 image.SaveAsPng(stream);
             }
 
+            image.Dispose();
+
             using (var stream = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Create))
             using (var writer = new StreamWriter(stream, EncodingHelpers.UTF8))
             {
