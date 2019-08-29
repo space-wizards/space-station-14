@@ -1152,13 +1152,6 @@ entities:
     pos: 0.5223687,7.507263
     rot: -1.5707963267949 rad
     type: Transform
-- type: HelmetSecurity
-  uid: 146
-  components:
-  - grid: 0
-    pos: -0.1807563,7.585388
-    rot: -1.5707963267949 rad
-    type: Transform
 - type: locker_generic
   uid: 147
   components:
@@ -1177,13 +1170,6 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- type: HelmetSecurity
-  uid: 148
-  components:
-  - grid: 0
-    pos: -0.7432563,7.601013
-    rot: -1.5707963267949 rad
-    type: Transform
 - type: Medkit
   uid: 149
   components:
