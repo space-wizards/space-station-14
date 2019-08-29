@@ -1,20 +1,11 @@
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.GameObjects.Components.Wires
 {
     public class WiresVisualizer2D : AppearanceVisualizer
     {
-        public override void InitializeEntity(IEntity entity)
-        {
-            base.InitializeEntity(entity);
-
-            var sprite = entity.GetComponent<ISpriteComponent>();
-            sprite.LayerSetTexture(WiresVisualLayers.MaintenancePanel, "/Textures/Buildings/maintenance_panel.png");
-        }
-
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
