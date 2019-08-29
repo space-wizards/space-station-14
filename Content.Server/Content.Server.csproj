@@ -30,6 +30,6 @@
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Net.Http" />
+    <Reference Condition="'$(UseNetCore)' != 'true'" Include="System.Net.Http" />
   </ItemGroup>
 </Project>
