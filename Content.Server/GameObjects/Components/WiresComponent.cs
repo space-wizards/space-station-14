@@ -9,10 +9,13 @@ using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -25,8 +28,9 @@ namespace Content.Server.GameObjects.Components
 #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
-
+        private AudioSystem _audioSystem;
         private AppearanceComponent _appearance;
         private BoundUserInterface _userInterface;
         private bool _isOpen;
@@ -70,6 +74,7 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
+            _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _appearance.SetData(WiresVisuals.MaintenancePanelState, IsOpen);
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
@@ -176,7 +181,7 @@ namespace Content.Server.GameObjects.Components
                     var player = serverMsg.Session.AttachedEntity;
                     if (!player.TryGetComponent(out IHandsComponent handsComponent))
                     {
-                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, "You have no hands.");
+                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You have no hands."));
                         return;
                     }
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
@@ -185,32 +190,35 @@ namespace Content.Server.GameObjects.Components
                         case WiresAction.Cut:
                             if (activeHandEntity?.HasComponent<WirecutterComponent>() != true)
                             {
-                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, "You need to hold a wirecutter in your hand!");
+                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
                             }
+                            _audioSystem.Play("/Audio/items/wirecutter.ogg", Owner);
                             wire.IsCut = true;
                             UpdateUserInterface();
                             break;
                         case WiresAction.Mend:
                             if (activeHandEntity?.HasComponent<WirecutterComponent>() != true)
                             {
-                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, "You need to hold a wirecutter in your hand!");
+                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
                             }
+                            _audioSystem.Play("/Audio/items/wirecutter.ogg", Owner);
                             wire.IsCut = false;
                             UpdateUserInterface();
                             break;
                         case WiresAction.Pulse:
                             if (activeHandEntity?.HasComponent<MultitoolComponent>() != true)
                             {
-                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, "You need to hold a multitool in your hand!");
+                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a multitool in your hand!"));
                                 return;
                             }
                             if (wire.IsCut)
                             {
-                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, "You can't pulse a wire that's been cut!");
+                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You can't pulse a wire that's been cut!"));
                                 return;
                             }
+                            _audioSystem.Play("/Audio/effects/multitool_pulse.ogg", Owner);
                             break;
                     }
                     wire.Owner.WiresUpdate(new WiresUpdateEventArgs(wire.Identifier, msg.Action));
