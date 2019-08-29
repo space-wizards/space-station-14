@@ -1,9 +1,6 @@
 using System;
-using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
 namespace Content.Client.GameObjects.Components.Wires
