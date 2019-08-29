@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Content.Client.Interfaces.Parallax;
@@ -11,6 +12,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.Primitives;
 
 namespace Content.Client.Parallax
@@ -39,24 +41,24 @@ namespace Content.Client.Parallax
                 return;
             }
 
-            Stream configStream = null;
+            var debugParallax = _configurationManager.GetCVar<bool>("parallax.debug");
             string contents;
             TomlTable table;
-            try
+            // Load normal config into memory
+            if (!_resourceCache.TryContentFileRead(ParallaxConfigPath, out var configStream))
             {
-                // Load normal config into memory
-                if (!_resourceCache.TryContentFileRead(ParallaxConfigPath, out configStream))
-                {
-                    Logger.ErrorS("parallax", "Parallax config not found.");
-                    return;
-                }
+                Logger.ErrorS("parallax", "Parallax config not found.");
+                return;
+            }
 
+            using (configStream)
+            {
                 using (var reader = new StreamReader(configStream, EncodingHelpers.UTF8))
                 {
                     contents = reader.ReadToEnd();
                 }
 
-                if (_resourceCache.UserData.Exists(ParallaxConfigOld))
+                if (!debugParallax && _resourceCache.UserData.Exists(ParallaxConfigOld))
                 {
                     bool match;
                     using (var data = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Open))
@@ -79,14 +81,17 @@ namespace Content.Client.Parallax
 
                 table = Toml.ReadString(contents);
             }
-            finally
+
+            List<Image<Rgba32>> debugImages = null;
+            if (debugParallax)
             {
-                configStream?.Dispose();
+                debugImages = new List<Image<Rgba32>>();
             }
 
             var sawmill = _logManager.GetSawmill("parallax");
             // Generate the parallax in the thread pool.
-            var image = await Task.Run(() => ParallaxGenerator.GenerateParallax(table, new Size(1920, 1080), sawmill));
+            var image = await Task.Run(() =>
+                ParallaxGenerator.GenerateParallax(table, new Size(1920, 1080), sawmill, debugImages));
             // And load it in the main thread for safety reasons.
             ParallaxTexture = Texture.LoadFromImage(image, "Parallax");
 
@@ -94,6 +99,21 @@ namespace Content.Client.Parallax
             using (var stream = _resourceCache.UserData.Open(ParallaxPath, FileMode.Create))
             {
                 image.SaveAsPng(stream);
+            }
+
+            if (debugParallax)
+            {
+                var i = 0;
+                foreach (var debugImage in debugImages)
+                {
+                    using (var stream = _resourceCache.UserData.Open(new ResourcePath($"/parallax_debug_{i}.png"),
+                        FileMode.Create))
+                    {
+                        debugImage.SaveAsPng(stream);
+                    }
+
+                    i += 1;
+                }
             }
 
             image.Dispose();
@@ -110,6 +130,7 @@ namespace Content.Client.Parallax
         public void PostInject()
         {
             _configurationManager.RegisterCVar("parallax.enabled", true);
+            _configurationManager.RegisterCVar("parallax.debug", false);
         }
     }
 }
