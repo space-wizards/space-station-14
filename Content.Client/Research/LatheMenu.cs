@@ -74,7 +74,7 @@ namespace Content.Client.Research
             {
                 Text = "Queue",
                 TextAlign = Button.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -82,7 +82,7 @@ namespace Content.Client.Research
             {
                 Text = "Server list",
                 TextAlign = Button.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -90,7 +90,7 @@ namespace Content.Client.Research
             {
                 Text = "Sync",
                 TextAlign = Button.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -122,7 +122,7 @@ namespace Content.Client.Research
             {
                 Text = "Filter",
                 TextAlign = Button.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
                 Disabled = true,
             };
@@ -151,13 +151,13 @@ namespace Content.Client.Research
             };
 
             hBoxButtons.AddChild(spacer);
-            hBoxButtons.AddChild(QueueButton);
             if (Owner?.Database is ProtolatheDatabaseComponent database)
             {
                 hBoxButtons.AddChild(ServerConnectButton);
                 hBoxButtons.AddChild(ServerSyncButton);
                 database.OnDatabaseUpdated += Populate;
             }
+            hBoxButtons.AddChild(QueueButton);
 
             hBoxFilter.AddChild(SearchBar);
             hBoxFilter.AddChild(filterButton);
