@@ -49,6 +49,8 @@ namespace SS14.Launcher
 
         public static void Main(string[] args)
         {
+            FixTlsVersions();
+
             LiteLoader.Run(() => new Program().Run(), new InitialWindowParameters
             {
                 Size = (500, 250),
@@ -303,6 +305,20 @@ namespace SS14.Launcher
             return $"SS14.Client_{platform}_x64.zip";
         }
 
+        [Conditional("NET_FRAMEWORK")]
+        private static void FixTlsVersions()
+        {
+            // So, supposedly .NET Framework 4.7 is supposed to automatically select sane TLS versions.
+            // Yet, it does not for some people. This causes it to try to connect to our servers with
+            // SSL 3 or TLS 1.0, neither of which are accepted for security reasons.
+            // (The minimum our servers accept is TLS 1.2)
+            // So, ONLY on Windows (Mono is fine) and .NET Framework we manually tell it to use TLS 1.2
+            // I assume .NET Core does not have this issue being disconnected from the OS and all that.
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
+            }
+        }
 
         private class LauncherInterface
         {
