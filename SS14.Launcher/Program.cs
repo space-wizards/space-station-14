@@ -305,7 +305,7 @@ namespace SS14.Launcher
             return $"SS14.Client_{platform}_x64.zip";
         }
 
-        [Conditional("NET_FRAMEWORK")]
+        [Conditional("NETFRAMEWORK")]
         private static void FixTlsVersions()
         {
             // So, supposedly .NET Framework 4.7 is supposed to automatically select sane TLS versions.
