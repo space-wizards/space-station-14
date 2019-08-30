@@ -39,8 +39,7 @@ namespace Content.Client.Research
         {
             IoCManager.InjectDependencies(this);
 
-            if (owner != null)
-                Owner = owner;
+            Owner = owner;
 
             Title = "Lathe Menu";
 

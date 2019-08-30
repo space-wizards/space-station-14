@@ -41,11 +41,9 @@ namespace Content.Client.Research
 
         public ResearchConsoleMenu(ResearchConsoleBoundUserInterface owner = null)
         {
-            IoCManager.InjectDependencies(this);
             Title = "R&D Console";
 
-            if (owner != null)
-                Owner = owner;
+            Owner = owner;
 
             _unlockedTechnologies = new ItemList()
             {

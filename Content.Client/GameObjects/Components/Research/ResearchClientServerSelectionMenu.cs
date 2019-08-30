@@ -16,7 +16,6 @@ namespace Content.Client.GameObjects.Components.Research
 
         public ResearchClientServerSelectionMenu()
         {
-            IoCManager.InjectDependencies(this);
             Title = "Research Server Selection";
 
             _servers = new ItemList() {SelectMode = ItemList.ItemListSelectMode.Single};
