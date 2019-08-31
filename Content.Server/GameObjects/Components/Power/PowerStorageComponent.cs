@@ -5,6 +5,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System;
+using System.Globalization;
+using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
@@ -13,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// <summary>
     ///     Stores electrical energy. Used by power cells and SMESes.
     /// </summary>
-    public abstract class PowerStorageComponent : Component
+    public abstract class PowerStorageComponent : Component, IExamine
     {
         [ViewVariables]
         public ChargeState LastChargeState { get; private set; } = ChargeState.Still;
@@ -163,6 +166,14 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
             }
             AddCharge(RequestCharge(frameTime));
+        }
+        
+        /// <inheritdoc />
+        public void Examine(FormattedMessage message)
+        {
+            message.PushColor(Color.Yellow);
+            var chargePercent = Math.Round(100*(Capacity != 0f ? (Charge/Capacity) : 1f), 2).ToString(NumberFormatInfo.InvariantInfo);
+            message.AddText($"Charge: {Math.Round(Charge, 2)}J / {Capacity}J ({chargePercent}%)\nRate: {ChargeRate}W IN, {DistributionRate}W OUT");
         }
     }
 }
