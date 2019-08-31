@@ -138,7 +138,7 @@ namespace Content.Server.GameObjects
         public void Deny()
         {
             _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Deny);
-            Timer.Spawn(CloseTime, () =>
+            Timer.Spawn(DenyTime, () =>
             {
                 _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
             });

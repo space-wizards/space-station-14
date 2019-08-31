@@ -117,6 +117,7 @@ namespace Content.Client.GameObjects.Components.Doors
                     sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, false);
                     break;
                 case DoorVisualState.Deny:
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, false);
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(DenyAnimation, AnimationKey);
