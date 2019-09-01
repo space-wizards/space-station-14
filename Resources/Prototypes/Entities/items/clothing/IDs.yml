@@ -5,9 +5,16 @@
   description: A card necessary to access various areas aboard the station
   components:
   - type: Sprite
-    texture: Clothing/idcard_standard.png
+    sprite: Clothing/id_cards.rsi
+    state: assistant
   - type: Icon
-    texture: Clothing/idcard_standard.png
+    sprite: Clothing/id_cards.rsi
+    state: assistant
   - type: Clothing
     Slots:
     - idcard
+  - type: IdCard
+    fullName: John Doe
+    jobTitle: Assistant
+  - type: Access
+    tags: ["civilian", "maintenance", "engineering"]

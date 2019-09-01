@@ -96,9 +96,9 @@ namespace Content.Client.UserInterface
             tabContainerPanel.SetPatchMargin(StyleBox.Margin.All, 2);
 
             var tabContainerBoxActive = new StyleBoxFlat {BackgroundColor = new Color(64, 64, 64)};
-            tabContainerBoxActive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 3);
+            tabContainerBoxActive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
             var tabContainerBoxInactive = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 32)};
-            tabContainerBoxInactive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 3);
+            tabContainerBoxInactive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             var vScrollBarGrabberNormal = new StyleBoxFlat
             {

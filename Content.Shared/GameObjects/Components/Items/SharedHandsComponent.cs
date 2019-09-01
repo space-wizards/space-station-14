@@ -49,4 +49,16 @@ namespace Content.Shared.GameObjects
             Index = index;
         }
     }
+
+    [Serializable, NetSerializable]
+    public class ClientChangedHandMsg : ComponentMessage
+    {
+        public string Index { get; }
+
+        public ClientChangedHandMsg(string index)
+        {
+            Directed = true;
+            Index = index;
+        }
+    }
 }

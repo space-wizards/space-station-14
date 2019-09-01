@@ -20,7 +20,7 @@ namespace Content.Client.Parallax
     {
         private readonly List<Layer> Layers = new List<Layer>();
 
-        public static Image<Rgba32> GenerateParallax(TomlTable config, Size size, ISawmill sawmill)
+        public static Image<Rgba32> GenerateParallax(TomlTable config, Size size, ISawmill sawmill, List<Image<Rgba32>> debugLayerDump)
         {
             sawmill.Debug("Generating parallax!");
             var generator = new ParallaxGenerator();
@@ -34,6 +34,7 @@ namespace Content.Client.Parallax
             foreach (var layer in generator.Layers)
             {
                 layer.Apply(image);
+                debugLayerDump?.Add(image.Clone());
                 sawmill.Debug("Layer {0} done!", count++);
             }
 
@@ -320,33 +321,34 @@ namespace Content.Client.Parallax
             public override void Apply(Image<Rgba32> bitmap)
             {
                 // Temporary buffer so we don't mess up blending.
-                var buffer = new Image<Rgba32>(Configuration.Default, bitmap.Width, bitmap.Height, Rgba32.Black);
-
-                if (Masked)
+                using (var buffer = new Image<Rgba32>(Configuration.Default, bitmap.Width, bitmap.Height, Rgba32.Black))
                 {
-                    GenPointsMasked(buffer);
-                }
-                else
-                {
-                    GenPoints(buffer);
-                }
-
-                var srcSpan = buffer.GetPixelSpan();
-                var dstSpan = bitmap.GetPixelSpan();
-
-                var width = bitmap.Width;
-                var height = bitmap.Height;
-
-                for (var y = 0; y < height; y++)
-                {
-                    for (var x = 0; x < width; x++)
+                    if (Masked)
                     {
-                        var i = y * width + x;
+                        GenPointsMasked(buffer);
+                    }
+                    else
+                    {
+                        GenPoints(buffer);
+                    }
 
-                        var dstColor = dstSpan[i].ConvertImgSharp();
-                        var srcColor = srcSpan[i].ConvertImgSharp();
+                    var srcSpan = buffer.GetPixelSpan();
+                    var dstSpan = bitmap.GetPixelSpan();
 
-                        dstSpan[i] = Color.Blend(dstColor, srcColor, DstFactor, SrcFactor).ConvertImgSharp();
+                    var width = bitmap.Width;
+                    var height = bitmap.Height;
+
+                    for (var y = 0; y < height; y++)
+                    {
+                        for (var x = 0; x < width; x++)
+                        {
+                            var i = y * width + x;
+
+                            var dstColor = dstSpan[i].ConvertImgSharp();
+                            var srcColor = srcSpan[i].ConvertImgSharp();
+
+                            dstSpan[i] = Color.Blend(dstColor, srcColor, DstFactor, SrcFactor).ConvertImgSharp();
+                        }
                     }
                 }
             }

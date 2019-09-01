@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Server.GameObjects;
@@ -26,6 +27,7 @@ namespace Content.Server.GameObjects
         private static readonly TimeSpan CloseTime = TimeSpan.FromSeconds(1.2f);
         private static readonly TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.3f);
         private static readonly TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.9f);
+        private static readonly TimeSpan DenyTime = TimeSpan.FromSeconds(0.45f);
 
         public override void Initialize()
         {
@@ -51,7 +53,7 @@ namespace Content.Server.GameObjects
             }
             else if (_state == DoorState.Closed)
             {
-                Open();
+                TryOpen(eventArgs.User);
             }
         }
 
@@ -73,9 +75,22 @@ namespace Content.Server.GameObjects
                         return;
                     }
 
-                    Open();
+                    TryOpen(msg.Entity);
                     break;
             }
+        }
+
+        public void TryOpen(IEntity user)
+        {
+            if (Owner.TryGetComponent(out AccessReader accessReader))
+            {
+                if (!accessReader.IsAllowed(user))
+                {
+                    Deny();
+                    return;
+                }
+            }
+            Open();
         }
 
         public void Open()
@@ -118,6 +133,15 @@ namespace Content.Server.GameObjects
                 _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
             });
             return true;
+        }
+
+        public void Deny()
+        {
+            _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Deny);
+            Timer.Spawn(DenyTime, () =>
+            {
+                _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
+            });
         }
 
         private const float AUTO_CLOSE_DELAY = 5;

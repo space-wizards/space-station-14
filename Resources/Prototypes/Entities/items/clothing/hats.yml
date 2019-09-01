@@ -1,42 +1,3198 @@
+
 - type: entity
   parent: Clothing
   id: HatBase
   abstract: true
   components:
   - type: Clothing
-    Slots: [helmet]
-
-
-- type: entity
-  parent: HatBase
-  id: HatChef
-  name: Chef's Hat
-  description: It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work.
-  components:
-  - type: Sprite
-    sprite: Clothing/chef_hat.rsi
-    state: chef
-  - type: Icon
-    sprite: Clothing/chef_hat.rsi
-    state: chef
-  - type: Clothing
-    sprite: Clothing/chef_hat.rsi
     Slots:
-      - helmet
+    - Helmet
+  - type: Sprite
+    state: icon
+  - type: Icon
+    state: icon
 
 - type: entity
+  id: HatAliceMccrea
+  name: Alice Mccrea
+  description: ''
+  components:
+  - sprite: Clothing/Head/alice_mccrea_1.rsi
+    type: Sprite
+  - sprite: Clothing/Head/alice_mccrea_1.rsi
+    type: Icon
+  - sprite: Clothing/Head/alice_mccrea_1.rsi
+    type: Clothing
   parent: HatBase
+
+- type: entity
+  id: HatAliceMccreaup
+  name: Alice Mccrea (up)
+  description: ''
+  components:
+  - sprite: Clothing/Head/alice_mccrea_1up.rsi
+    type: Sprite
+  - sprite: Clothing/Head/alice_mccrea_1up.rsi
+    type: Icon
+  - sprite: Clothing/Head/alice_mccrea_1up.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatAmp
+  name: Amp
+  description: ''
+  components:
+  - sprite: Clothing/Head/amp.rsi
+    type: Sprite
+  - sprite: Clothing/Head/amp.rsi
+    type: Icon
+  - sprite: Clothing/Head/amp.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatAssetProtectionRig
+  name: Asset Protection Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/asset_protection_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/asset_protection_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/asset_protection_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatAssetProtectionRigSealed
+  name: Asset Protection Rig (Sealed)
+  description: ''
+  components:
+  - sprite: Clothing/Head/asset_protection_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/asset_protection_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/asset_protection_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatAtmosHelm
+  name: Atmos Helm
+  description: ''
+  components:
+  - sprite: Clothing/Head/atmos_helm.rsi
+    type: Sprite
+  - sprite: Clothing/Head/atmos_helm.rsi
+    type: Icon
+  - sprite: Clothing/Head/atmos_helm.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandana
+  name: Bandana
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandana.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandana.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandana.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandblack
+  name: Bandana black
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandblack.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandblack.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandblack.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandblue
+  name: Bandana blue
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandblue.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandblue.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandblue.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandbotany
+  name: Bandana botany
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandbotany.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandbotany.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandbotany.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandcamo
+  name: Bandana camo
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandcamo.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandcamo.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandcamo.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandgold
+  name: Bandana gold
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandgold.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandgold.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandgold.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandgreen
+  name: Bandana green
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandgreen.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandgreen.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandgreen.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandorange
+  name: Bandana orange
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandorange.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandorange.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandorange.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandpurple
+  name: Bandana purple
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandpurple.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandpurple.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandpurple.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandred
+  name: Bandana red
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandred.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandred.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandred.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBandskull
+  name: Bandana skull
+  description: ''
+  components:
+  - sprite: Clothing/Head/bandskull.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bandskull.rsi
+    type: Icon
+  - sprite: Clothing/Head/bandskull.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBearpelt
+  name: Bear pelt
+  description: ''
+  components:
+  - sprite: Clothing/Head/bearpelt.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bearpelt.rsi
+    type: Icon
+  - sprite: Clothing/Head/bearpelt.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBeaverHat
+  name: Beaver hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/beaver_hat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/beaver_hat.rsi
+    type: Icon
+  - sprite: Clothing/Head/beaver_hat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBeret
+  name: Beret
+  description: ''
+  components:
+  - sprite: Clothing/Head/beret.rsi
+    type: Sprite
+  - sprite: Clothing/Head/beret.rsi
+    type: Icon
+  - sprite: Clothing/Head/beret.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBeretBadge
+  name: Beret Badge
+  description: ''
+  components:
+  - sprite: Clothing/Head/beret_badge.rsi
+    type: Sprite
+  - sprite: Clothing/Head/beret_badge.rsi
+    type: Icon
+  - sprite: Clothing/Head/beret_badge.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBeretEngineering
+  name: Beret Engineering
+  description: ''
+  components:
+  - sprite: Clothing/Head/beret_engineering.rsi
+    type: Sprite
+  - sprite: Clothing/Head/beret_engineering.rsi
+    type: Icon
+  - sprite: Clothing/Head/beret_engineering.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBeretNavyHos
+  name: Beret Navy HoS
+  description: ''
+  components:
+  - sprite: Clothing/Head/beret_navy_hos.rsi
+    type: Sprite
+  - sprite: Clothing/Head/beret_navy_hos.rsi
+    type: Icon
+  - sprite: Clothing/Head/beret_navy_hos.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBeretNavyOfficer
+  name: Beret Navy Officer
+  description: ''
+  components:
+  - sprite: Clothing/Head/beret_navy_officer.rsi
+    type: Sprite
+  - sprite: Clothing/Head/beret_navy_officer.rsi
+    type: Icon
+  - sprite: Clothing/Head/beret_navy_officer.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBeretNavyWarden
+  name: Beret Navy Warden
+  description: ''
+  components:
+  - sprite: Clothing/Head/beret_navy_warden.rsi
+    type: Sprite
+  - sprite: Clothing/Head/beret_navy_warden.rsi
+    type: Icon
+  - sprite: Clothing/Head/beret_navy_warden.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBeretPurple
+  name: Beret Purple
+  description: ''
+  components:
+  - sprite: Clothing/Head/beret_purple.rsi
+    type: Sprite
+  - sprite: Clothing/Head/beret_purple.rsi
+    type: Icon
+  - sprite: Clothing/Head/beret_purple.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBioCmo
+  name: Bio - CMO
+  description: ''
+  components:
+  - sprite: Clothing/Head/bio_cmo.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bio_cmo.rsi
+    type: Icon
+  - sprite: Clothing/Head/bio_cmo.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBioGeneral
+  name: Bio - General
+  description: ''
+  components:
+  - sprite: Clothing/Head/bio_general.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bio_general.rsi
+    type: Icon
+  - sprite: Clothing/Head/bio_general.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBioJanitor
+  name: Bio - Janitor
+  description: ''
+  components:
+  - sprite: Clothing/Head/bio_janitor.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bio_janitor.rsi
+    type: Icon
+  - sprite: Clothing/Head/bio_janitor.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBioScientist
+  name: Bio - Scientist
+  description: ''
+  components:
+  - sprite: Clothing/Head/bio_scientist.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bio_scientist.rsi
+    type: Icon
+  - sprite: Clothing/Head/bio_scientist.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBioSecurity
+  name: Bio - Security
+  description: ''
+  components:
+  - sprite: Clothing/Head/bio_security.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bio_security.rsi
+    type: Icon
+  - sprite: Clothing/Head/bio_security.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBioVirology
+  name: Bio - Virology
+  description: ''
+  components:
+  - sprite: Clothing/Head/bio_virology.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bio_virology.rsi
+    type: Icon
+  - sprite: Clothing/Head/bio_virology.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBluesoft
+  name: Bluesoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/bluesoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bluesoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/bluesoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBluesoftFlipped
+  name: Bluesoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/bluesoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bluesoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/bluesoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBoaterHat
+  name: Boater Hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/boater_hat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/boater_hat.rsi
+    type: Icon
+  - sprite: Clothing/Head/boater_hat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBombsuit
+  name: Bombsuit
+  description: ''
+  components:
+  - sprite: Clothing/Head/bombsuit.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bombsuit.rsi
+    type: Icon
+  - sprite: Clothing/Head/bombsuit.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBombsuitold
+  name: Bombsuit old
+  description: ''
+  components:
+  - sprite: Clothing/Head/bombsuitold.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bombsuitold.rsi
+    type: Icon
+  - sprite: Clothing/Head/bombsuitold.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBombsuitsec
+  name: Bombsuit sec
+  description: ''
+  components:
+  - sprite: Clothing/Head/bombsuitsec.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bombsuitsec.rsi
+    type: Icon
+  - sprite: Clothing/Head/bombsuitsec.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBombsuitsecold
+  name: Bombsuit sec old
+  description: ''
+  components:
+  - sprite: Clothing/Head/bombsuitsecold.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bombsuitsecold.rsi
+    type: Icon
+  - sprite: Clothing/Head/bombsuitsecold.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBombsuitWhite
+  name: Bombsuit White
+  description: ''
+  components:
+  - sprite: Clothing/Head/bombsuit_white.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bombsuit_white.rsi
+    type: Icon
+  - sprite: Clothing/Head/bombsuit_white.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBowler
+  name: Bowler
+  description: ''
+  components:
+  - sprite: Clothing/Head/bowler.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bowler.rsi
+    type: Icon
+  - sprite: Clothing/Head/bowler.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBowlerHat
+  name: Bowler Hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/bowler_hat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bowler_hat.rsi
+    type: Icon
+  - sprite: Clothing/Head/bowler_hat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBrucehachert
+  name: Bruce hachert
+  description: ''
+  components:
+  - sprite: Clothing/Head/brucehachert.rsi
+    type: Sprite
+  - sprite: Clothing/Head/brucehachert.rsi
+    type: Icon
+  - sprite: Clothing/Head/brucehachert.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatBunny
+  name: Bunny
+  description: ''
+  components:
+  - sprite: Clothing/Head/bunny.rsi
+    type: Sprite
+  - sprite: Clothing/Head/bunny.rsi
+    type: Icon
+  - sprite: Clothing/Head/bunny.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCake
+  name: Cake
+  description: ''
+  components:
+  - sprite: Clothing/Head/cake0.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cake0.rsi
+    type: Icon
+  - sprite: Clothing/Head/cake0.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCakeLit
+  name: Cake (lit)
+  description: ''
+  components:
+  - sprite: Clothing/Head/cake1.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cake1.rsi
+    type: Icon
+  - sprite: Clothing/Head/cake1.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCapcap
+  name: Cap cap
+  description: ''
+  components:
+  - sprite: Clothing/Head/capcap.rsi
+    type: Sprite
+  - sprite: Clothing/Head/capcap.rsi
+    type: Icon
+  - sprite: Clothing/Head/capcap.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCapspace
+  name: Cap space
+  description: ''
+  components:
+  - sprite: Clothing/Head/capspace.rsi
+    type: Sprite
+  - sprite: Clothing/Head/capspace.rsi
+    type: Icon
+  - sprite: Clothing/Head/capspace.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
   id: HatCaptain
-  name: Captain's Hat
-  description: It's good to be king.
+  name: Captain
+  description: ''
   components:
-  - type: Sprite
-    sprite: Clothing/captain_hat.rsi
-    state: captain
-  - type: Icon
-    sprite: Clothing/captain_hat.rsi
-    state: captain
-  - type: Clothing
-    sprite: Clothing/captain_hat.rsi
-    Slots:
-      - helmet
+  - sprite: Clothing/Head/captain.rsi
+    type: Sprite
+  - sprite: Clothing/Head/captain.rsi
+    type: Icon
+  - sprite: Clothing/Head/captain.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCardborgH
+  name: Cardborg H
+  description: ''
+  components:
+  - sprite: Clothing/Head/cardborg_h.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cardborg_h.rsi
+    type: Icon
+  - sprite: Clothing/Head/cardborg_h.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCargosoft
+  name: Cargosoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/cargosoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cargosoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/cargosoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCargosoftFlipped
+  name: Cargosoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/cargosoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cargosoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/cargosoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCat
+  name: Cat
+  description: ''
+  components:
+  - sprite: Clothing/Head/cat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cat.rsi
+    type: Icon
+  - sprite: Clothing/Head/cat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCat2
+  name: Cat2
+  description: ''
+  components:
+  - sprite: Clothing/Head/cat2.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cat2.rsi
+    type: Icon
+  - sprite: Clothing/Head/cat2.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCat3
+  name: Cat3
+  description: ''
+  components:
+  - sprite: Clothing/Head/cat3.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cat3.rsi
+    type: Icon
+  - sprite: Clothing/Head/cat3.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCentcom
+  name: Centcom
+  description: ''
+  components:
+  - sprite: Clothing/Head/centcom.rsi
+    type: Sprite
+  - sprite: Clothing/Head/centcom.rsi
+    type: Icon
+  - sprite: Clothing/Head/centcom.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCespaceHelmet
+  name: CE space Helmet
+  description: ''
+  components:
+  - sprite: Clothing/Head/cespace_helmet.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cespace_helmet.rsi
+    type: Icon
+  - sprite: Clothing/Head/cespace_helmet.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCeRig
+  name: CE Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/ce_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/ce_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/ce_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCeRigSealed
+  name: CE Rig (Sealed)
+  description: ''
+  components:
+  - sprite: Clothing/Head/ce_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/ce_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/ce_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatChaplainHood
+  name: Chaplain Hood
+  description: ''
+  components:
+  - sprite: Clothing/Head/chaplain_hood.rsi
+    type: Sprite
+  - sprite: Clothing/Head/chaplain_hood.rsi
+    type: Icon
+  - sprite: Clothing/Head/chaplain_hood.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatChefhat
+  name: Chef hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/chefhat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/chefhat.rsi
+    type: Icon
+  - sprite: Clothing/Head/chefhat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatChickenhead
+  name: Chicken head
+  description: ''
+  components:
+  - sprite: Clothing/Head/chickenhead.rsi
+    type: Sprite
+  - sprite: Clothing/Head/chickenhead.rsi
+    type: Icon
+  - sprite: Clothing/Head/chickenhead.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatConstructiondrone
+  name: Construction drone
+  description: ''
+  components:
+  - sprite: Clothing/Head/constructiondrone.rsi
+    type: Sprite
+  - sprite: Clothing/Head/constructiondrone.rsi
+    type: Icon
+  - sprite: Clothing/Head/constructiondrone.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCorpsoft
+  name: Corpsoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/corpsoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/corpsoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/corpsoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCorpsoftFlipped
+  name: Corpsoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/corpsoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/corpsoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/corpsoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCosmo
+  name: Cosmo
+  description: ''
+  components:
+  - sprite: Clothing/Head/cosmo.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cosmo.rsi
+    type: Icon
+  - sprite: Clothing/Head/cosmo.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCowboy
+  name: Cowboy
+  description: ''
+  components:
+  - sprite: Clothing/Head/cowboy.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cowboy.rsi
+    type: Icon
+  - sprite: Clothing/Head/cowboy.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCulthood
+  name: Cult hood
+  description: ''
+  components:
+  - sprite: Clothing/Head/culthood.rsi
+    type: Sprite
+  - sprite: Clothing/Head/culthood.rsi
+    type: Icon
+  - sprite: Clothing/Head/culthood.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCultHelmet
+  name: Cult Helmet
+  description: ''
+  components:
+  - sprite: Clothing/Head/cult_helmet.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cult_helmet.rsi
+    type: Icon
+  - sprite: Clothing/Head/cult_helmet.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCultHoodalt
+  name: Cult Hood alt
+  description: ''
+  components:
+  - sprite: Clothing/Head/cult_hoodalt.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cult_hoodalt.rsi
+    type: Icon
+  - sprite: Clothing/Head/cult_hoodalt.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatDeathsquad
+  name: Deathsquad
+  description: ''
+  components:
+  - sprite: Clothing/Head/deathsquad.rsi
+    type: Sprite
+  - sprite: Clothing/Head/deathsquad.rsi
+    type: Icon
+  - sprite: Clothing/Head/deathsquad.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatDetective
+  name: Detective
+  description: ''
+  components:
+  - sprite: Clothing/Head/detective.rsi
+    type: Sprite
+  - sprite: Clothing/Head/detective.rsi
+    type: Icon
+  - sprite: Clothing/Head/detective.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatDetective2
+  name: Detective2
+  description: ''
+  components:
+  - sprite: Clothing/Head/detective2.rsi
+    type: Sprite
+  - sprite: Clothing/Head/detective2.rsi
+    type: Icon
+  - sprite: Clothing/Head/detective2.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatEdvinTelephosphor
+  name: Edvin Telephosphor
+  description: ''
+  components:
+  - sprite: Clothing/Head/edvin_telephosphor_1.rsi
+    type: Sprite
+  - sprite: Clothing/Head/edvin_telephosphor_1.rsi
+    type: Icon
+  - sprite: Clothing/Head/edvin_telephosphor_1.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatEmergencyhelm
+  name: Emergency helm
+  description: ''
+  components:
+  - sprite: Clothing/Head/emergencyhelm.rsi
+    type: Sprite
+  - sprite: Clothing/Head/emergencyhelm.rsi
+    type: Icon
+  - sprite: Clothing/Head/emergencyhelm.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatEngineeringRig
+  name: Engineering Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/engineering_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/engineering_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/engineering_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatEngineeringRigSealed
+  name: Engineering Rig (Sealed)
+  description: ''
+  components:
+  - sprite: Clothing/Head/engineering_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/engineering_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/engineering_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatEngspaceHelmet
+  name: Engspace Helmet
+  description: ''
+  components:
+  - sprite: Clothing/Head/engspace_helmet.rsi
+    type: Sprite
+  - sprite: Clothing/Head/engspace_helmet.rsi
+    type: Icon
+  - sprite: Clothing/Head/engspace_helmet.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatEngHelm
+  name: Eng Helm
+  description: ''
+  components:
+  - sprite: Clothing/Head/eng_helm.rsi
+    type: Sprite
+  - sprite: Clothing/Head/eng_helm.rsi
+    type: Icon
+  - sprite: Clothing/Head/eng_helm.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatEnosAdlai
+  name: Enos Adlai
+  description: ''
+  components:
+  - sprite: Clothing/Head/enos_adlai_1.rsi
+    type: Sprite
+  - sprite: Clothing/Head/enos_adlai_1.rsi
+    type: Icon
+  - sprite: Clothing/Head/enos_adlai_1.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatEvaRig
+  name: Eva Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/eva_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/eva_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/eva_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatEvaRigSealed
+  name: Eva Rig Sealed
+  description: ''
+  components:
+  - sprite: Clothing/Head/eva_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/eva_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/eva_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatFeatherTrilby
+  name: Feather Trilby
+  description: ''
+  components:
+  - sprite: Clothing/Head/feather_trilby.rsi
+    type: Sprite
+  - sprite: Clothing/Head/feather_trilby.rsi
+    type: Icon
+  - sprite: Clothing/Head/feather_trilby.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatFedora
+  name: Fedora
+  description: ''
+  components:
+  - sprite: Clothing/Head/fedora.rsi
+    type: Sprite
+  - sprite: Clothing/Head/fedora.rsi
+    type: Icon
+  - sprite: Clothing/Head/fedora.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatFez
+  name: Fez
+  description: ''
+  components:
+  - sprite: Clothing/Head/fez.rsi
+    type: Sprite
+  - sprite: Clothing/Head/fez.rsi
+    type: Icon
+  - sprite: Clothing/Head/fez.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatFlatCap
+  name: Flat Cap
+  description: ''
+  components:
+  - sprite: Clothing/Head/flat_cap.rsi
+    type: Sprite
+  - sprite: Clothing/Head/flat_cap.rsi
+    type: Icon
+  - sprite: Clothing/Head/flat_cap.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatGentcap
+  name: Gent cap
+  description: ''
+  components:
+  - sprite: Clothing/Head/gentcap.rsi
+    type: Sprite
+  - sprite: Clothing/Head/gentcap.rsi
+    type: Icon
+  - sprite: Clothing/Head/gentcap.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatGladiator
+  name: Gladiator
+  description: ''
+  components:
+  - sprite: Clothing/Head/gladiator.rsi
+    type: Sprite
+  - sprite: Clothing/Head/gladiator.rsi
+    type: Icon
+  - sprite: Clothing/Head/gladiator.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatGreenbandana
+  name: Greenbandana
+  description: ''
+  components:
+  - sprite: Clothing/Head/greenbandana.rsi
+    type: Sprite
+  - sprite: Clothing/Head/greenbandana.rsi
+    type: Icon
+  - sprite: Clothing/Head/greenbandana.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatGreensoft
+  name: Greensoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/greensoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/greensoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/greensoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatGreensoftFlipped
+  name: Greensoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/greensoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/greensoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/greensoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatGreysoft
+  name: Greysoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/greysoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/greysoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/greysoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatGreysoftFlipped
+  name: Greysoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/greysoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/greysoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/greysoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHackerRig
+  name: Hacker Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/hacker_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hacker_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/hacker_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHackerRigSealed
+  name: Hacker Rig Sealed
+  description: ''
+  components:
+  - sprite: Clothing/Head/hacker_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hacker_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/hacker_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHairflower
+  name: Hairflower
+  description: ''
+  components:
+  - sprite: Clothing/Head/hairflower.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hairflower.rsi
+    type: Icon
+  - sprite: Clothing/Head/hairflower.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHardhatDblue
+  name: Hardhat Dblue
+  description: ''
+  components:
+  - sprite: Clothing/Head/hardhat0_dblue.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hardhat0_dblue.rsi
+    type: Icon
+  - sprite: Clothing/Head/hardhat0_dblue.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHardhat Orange
+  name: Hardhat Orange
+  description: ''
+  components:
+  - sprite: Clothing/Head/hardhat0_orange.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hardhat0_orange.rsi
+    type: Icon
+  - sprite: Clothing/Head/hardhat0_orange.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHardhatPumpkin
+  name: Hardhat Pumpkin
+  description: ''
+  components:
+  - sprite: Clothing/Head/hardhat0_pumpkin.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hardhat0_pumpkin.rsi
+    type: Icon
+  - sprite: Clothing/Head/hardhat0_pumpkin.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHardhatRed
+  name: Hardhat Red
+  description: ''
+  components:
+  - sprite: Clothing/Head/hardhat0_red.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hardhat0_red.rsi
+    type: Icon
+  - sprite: Clothing/Head/hardhat0_red.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHardhatWhite
+  name: Hardhat White
+  description: ''
+  components:
+  - sprite: Clothing/Head/hardhat0_white.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hardhat0_white.rsi
+    type: Icon
+  - sprite: Clothing/Head/hardhat0_white.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHardhatYellow
+  name: Hardhat Yellow
+  description: ''
+  components:
+  - sprite: Clothing/Head/hardhat0_yellow.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hardhat0_yellow.rsi
+    type: Icon
+  - sprite: Clothing/Head/hardhat0_yellow.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHardhatPumpkinAlt
+  name: Hardhat Pumpkin (alt)
+  description: ''
+  components:
+  - sprite: Clothing/Head/hardhat1_pumpkin.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hardhat1_pumpkin.rsi
+    type: Icon
+  - sprite: Clothing/Head/hardhat1_pumpkin.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHasturhood
+  name: Hasturhood
+  description: ''
+  components:
+  - sprite: Clothing/Head/hasturhood.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hasturhood.rsi
+    type: Icon
+  - sprite: Clothing/Head/hasturhood.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHazardRig
+  name: Hazard Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/hazard_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hazard_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/hazard_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHazardRigSealed
+  name: Hazard Rig (Sealed)
+  description: ''
+  components:
+  - sprite: Clothing/Head/hazard_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hazard_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/hazard_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHeadslime
+  name: Headslime
+  description: ''
+  components:
+  - sprite: Clothing/Head/headslime.rsi
+    type: Sprite
+  - sprite: Clothing/Head/headslime.rsi
+    type: Icon
+  - sprite: Clothing/Head/headslime.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHelmet
+  name: Helmet
+  description: ''
+  components:
+  - sprite: Clothing/Head/helmet.rsi
+    type: Sprite
+  - sprite: Clothing/Head/helmet.rsi
+    type: Icon
+  - sprite: Clothing/Head/helmet.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHelmetold
+  name: Helmet old
+  description: ''
+  components:
+  - sprite: Clothing/Head/helmetold.rsi
+    type: Sprite
+  - sprite: Clothing/Head/helmetold.rsi
+    type: Icon
+  - sprite: Clothing/Head/helmetold.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHgpiratecap
+  name: HG pirate cap
+  description: ''
+  components:
+  - sprite: Clothing/Head/hgpiratecap.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hgpiratecap.rsi
+    type: Icon
+  - sprite: Clothing/Head/hgpiratecap.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHmHelmet
+  name: HM Helmet
+  description: ''
+  components:
+  - sprite: Clothing/Head/hm_helmet.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hm_helmet.rsi
+    type: Icon
+  - sprite: Clothing/Head/hm_helmet.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHopcap
+  name: HoP cap
+  description: ''
+  components:
+  - sprite: Clothing/Head/hopcap.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hopcap.rsi
+    type: Icon
+  - sprite: Clothing/Head/hopcap.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatHoshat
+  name: HoS hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/hoshat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/hoshat.rsi
+    type: Icon
+  - sprite: Clothing/Head/hoshat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatIhsvoidhelm
+  name: IHS voidhelm
+  description: ''
+  components:
+  - sprite: Clothing/Head/ihsvoidhelm.rsi
+    type: Sprite
+  - sprite: Clothing/Head/ihsvoidhelm.rsi
+    type: Icon
+  - sprite: Clothing/Head/ihsvoidhelm.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatIhsvoidhelmOn
+  name: IHS voidhelm (On)
+  description: ''
+  components:
+  - sprite: Clothing/Head/ihsvoidhelm_on.rsi
+    type: Sprite
+  - sprite: Clothing/Head/ihsvoidhelm_on.rsi
+    type: Icon
+  - sprite: Clothing/Head/ihsvoidhelm_on.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatIhsRig
+  name: IHS Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/ihs_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/ihs_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/ihs_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatIhsRigSealed
+  name: IHS Rig (Sealed)
+  description: ''
+  components:
+  - sprite: Clothing/Head/ihs_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/ihs_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/ihs_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatKitten
+  name: Kitten
+  description: ''
+  components:
+  - sprite: Clothing/Head/kitten.rsi
+    type: Sprite
+  - sprite: Clothing/Head/kitten.rsi
+    type: Icon
+  - sprite: Clothing/Head/kitten.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatKitty
+  name: Kitty
+  description: ''
+  components:
+  - sprite: Clothing/Head/kitty.rsi
+    type: Sprite
+  - sprite: Clothing/Head/kitty.rsi
+    type: Icon
+  - sprite: Clothing/Head/kitty.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatKittyinner
+  name: Kitty inner
+  description: ''
+  components:
+  - sprite: Clothing/Head/kittyinner.rsi
+    type: Sprite
+  - sprite: Clothing/Head/kittyinner.rsi
+    type: Icon
+  - sprite: Clothing/Head/kittyinner.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatKrinnHat
+  name: Krinn Hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/krinn_hat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/krinn_hat.rsi
+    type: Icon
+  - sprite: Clothing/Head/krinn_hat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatLightRiot
+  name: Light Riot
+  description: ''
+  components:
+  - sprite: Clothing/Head/light_riot.rsi
+    type: Sprite
+  - sprite: Clothing/Head/light_riot.rsi
+    type: Icon
+  - sprite: Clothing/Head/light_riot.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatLightRiotOn
+  name: Light Riot (On)
+  description: ''
+  components:
+  - sprite: Clothing/Head/light_riot_on.rsi
+    type: Sprite
+  - sprite: Clothing/Head/light_riot_on.rsi
+    type: Icon
+  - sprite: Clothing/Head/light_riot_on.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMagus
+  name: Magus
+  description: ''
+  components:
+  - sprite: Clothing/Head/magus.rsi
+    type: Sprite
+  - sprite: Clothing/Head/magus.rsi
+    type: Icon
+  - sprite: Clothing/Head/magus.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMailman
+  name: Mailman
+  description: ''
+  components:
+  - sprite: Clothing/Head/mailman.rsi
+    type: Sprite
+  - sprite: Clothing/Head/mailman.rsi
+    type: Icon
+  - sprite: Clothing/Head/mailman.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMarisa
+  name: Marisa
+  description: ''
+  components:
+  - sprite: Clothing/Head/marisa.rsi
+    type: Sprite
+  - sprite: Clothing/Head/marisa.rsi
+    type: Icon
+  - sprite: Clothing/Head/marisa.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMedicalHelm
+  name: Medical Helm
+  description: ''
+  components:
+  - sprite: Clothing/Head/medical_helm.rsi
+    type: Sprite
+  - sprite: Clothing/Head/medical_helm.rsi
+    type: Icon
+  - sprite: Clothing/Head/medical_helm.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMedicalRig
+  name: Medical Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/medical_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/medical_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/medical_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMedicalRigSealed
+  name: Medical Rig (Sealed)
+  description: ''
+  components:
+  - sprite: Clothing/Head/medical_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/medical_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/medical_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMercRig
+  name: Merc Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/merc_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/merc_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/merc_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMercRigSealed
+  name: Merc Rig (Sealed)
+  description: ''
+  components:
+  - sprite: Clothing/Head/merc_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/merc_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/merc_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMetroid
+  name: Metroid
+  description: ''
+  components:
+  - sprite: Clothing/Head/metroid.rsi
+    type: Sprite
+  - sprite: Clothing/Head/metroid.rsi
+    type: Icon
+  - sprite: Clothing/Head/metroid.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMimesoft
+  name: Mimesoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/mimesoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/mimesoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/mimesoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMimesoftFlipped
+  name: Mimesoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/mimesoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/mimesoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/mimesoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMiningHelm
+  name: Mining Helm
+  description: ''
+  components:
+  - sprite: Clothing/Head/mining_helm.rsi
+    type: Sprite
+  - sprite: Clothing/Head/mining_helm.rsi
+    type: Icon
+  - sprite: Clothing/Head/mining_helm.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMonkey
+  name: Monkey
+  description: ''
+  components:
+  - sprite: Clothing/Head/monkey.rsi
+    type: Sprite
+  - sprite: Clothing/Head/monkey.rsi
+    type: Icon
+  - sprite: Clothing/Head/monkey.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMouseBrown
+  name: Mouse Brown
+  description: ''
+  components:
+  - sprite: Clothing/Head/mouse_brown.rsi
+    type: Sprite
+  - sprite: Clothing/Head/mouse_brown.rsi
+    type: Icon
+  - sprite: Clothing/Head/mouse_brown.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMouseGray
+  name: Mouse Gray
+  description: ''
+  components:
+  - sprite: Clothing/Head/mouse_gray.rsi
+    type: Sprite
+  - sprite: Clothing/Head/mouse_gray.rsi
+    type: Icon
+  - sprite: Clothing/Head/mouse_gray.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatMouseWhite
+  name: Mouse White
+  description: ''
+  components:
+  - sprite: Clothing/Head/mouse_white.rsi
+    type: Sprite
+  - sprite: Clothing/Head/mouse_white.rsi
+    type: Icon
+  - sprite: Clothing/Head/mouse_white.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatNeilpattersonHat
+  name: Neil Patterson Hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/neilpatterson0_hat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/neilpatterson0_hat.rsi
+    type: Icon
+  - sprite: Clothing/Head/neilpatterson0_hat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatNeilpatterson1Hat
+  name: Neil Patterson1 Hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/neilpatterson1_hat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/neilpatterson1_hat.rsi
+    type: Icon
+  - sprite: Clothing/Head/neilpatterson1_hat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatNinjaRig
+  name: Ninja Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/ninja_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/ninja_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/ninja_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatNinjaRigSealed
+  name: Ninja Rig (Sealed)
+  description: ''
+  components:
+  - sprite: Clothing/Head/ninja_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/ninja_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/ninja_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatNorahBriggs
+  name: Norah Briggs
+  description: ''
+  components:
+  - sprite: Clothing/Head/norah_briggs_1.rsi
+    type: Sprite
+  - sprite: Clothing/Head/norah_briggs_1.rsi
+    type: Icon
+  - sprite: Clothing/Head/norah_briggs_1.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatNorahBriggsup
+  name: Norah Briggs (up)
+  description: ''
+  components:
+  - sprite: Clothing/Head/norah_briggs_1up.rsi
+    type: Sprite
+  - sprite: Clothing/Head/norah_briggs_1up.rsi
+    type: Icon
+  - sprite: Clothing/Head/norah_briggs_1up.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatNunHood
+  name: Nun Hood
+  description: ''
+  components:
+  - sprite: Clothing/Head/nun_hood.rsi
+    type: Sprite
+  - sprite: Clothing/Head/nun_hood.rsi
+    type: Icon
+  - sprite: Clothing/Head/nun_hood.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatNursehat
+  name: Nurse hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/nursehat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/nursehat.rsi
+    type: Icon
+  - sprite: Clothing/Head/nursehat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatNymph
+  name: Nymph
+  description: ''
+  components:
+  - sprite: Clothing/Head/nymph.rsi
+    type: Sprite
+  - sprite: Clothing/Head/nymph.rsi
+    type: Icon
+  - sprite: Clothing/Head/nymph.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatOfficercap
+  name: Officer cap
+  description: ''
+  components:
+  - sprite: Clothing/Head/officercap.rsi
+    type: Sprite
+  - sprite: Clothing/Head/officercap.rsi
+    type: Icon
+  - sprite: Clothing/Head/officercap.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatOrangesoft
+  name: Orangesoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/orangesoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/orangesoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/orangesoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatOrangesoftFlipped
+  name: Orangesoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/orangesoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/orangesoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/orangesoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatOrangeBandana
+  name: Orange Bandana
+  description: ''
+  components:
+  - sprite: Clothing/Head/orange_bandana.rsi
+    type: Sprite
+  - sprite: Clothing/Head/orange_bandana.rsi
+    type: Icon
+  - sprite: Clothing/Head/orange_bandana.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPai-cat
+  name: Pai-cat
+  description: ''
+  components:
+  - sprite: Clothing/Head/pai-cat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/pai-cat.rsi
+    type: Icon
+  - sprite: Clothing/Head/pai-cat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPai-monkey
+  name: Pai-monkey
+  description: ''
+  components:
+  - sprite: Clothing/Head/pai-monkey.rsi
+    type: Sprite
+  - sprite: Clothing/Head/pai-monkey.rsi
+    type: Icon
+  - sprite: Clothing/Head/pai-monkey.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPai-mouse
+  name: Pai-mouse
+  description: ''
+  components:
+  - sprite: Clothing/Head/pai-mouse.rsi
+    type: Sprite
+  - sprite: Clothing/Head/pai-mouse.rsi
+    type: Icon
+  - sprite: Clothing/Head/pai-mouse.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPai-repairbot
+  name: Pai-repairbot
+  description: ''
+  components:
+  - sprite: Clothing/Head/pai-repairbot.rsi
+    type: Sprite
+  - sprite: Clothing/Head/pai-repairbot.rsi
+    type: Icon
+  - sprite: Clothing/Head/pai-repairbot.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPaintedwelding
+  name: Painted welding mask
+  description: ''
+  components:
+  - sprite: Clothing/Head/paintedwelding.rsi
+    type: Sprite
+  - sprite: Clothing/Head/paintedwelding.rsi
+    type: Icon
+  - sprite: Clothing/Head/paintedwelding.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPaintedweldingup
+  name: Painted welding mask (up)
+  description: ''
+  components:
+  - sprite: Clothing/Head/paintedweldingup.rsi
+    type: Sprite
+  - sprite: Clothing/Head/paintedweldingup.rsi
+    type: Icon
+  - sprite: Clothing/Head/paintedweldingup.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPaper
+  name: Paper
+  description: ''
+  components:
+  - sprite: Clothing/Head/paper.rsi
+    type: Sprite
+  - sprite: Clothing/Head/paper.rsi
+    type: Icon
+  - sprite: Clothing/Head/paper.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPetehat
+  name: Pete hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/petehat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/petehat.rsi
+    type: Icon
+  - sprite: Clothing/Head/petehat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPhilosopherWig
+  name: Philosopher Wig
+  description: ''
+  components:
+  - sprite: Clothing/Head/philosopher_wig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/philosopher_wig.rsi
+    type: Icon
+  - sprite: Clothing/Head/philosopher_wig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPirate
+  name: Pirate
+  description: ''
+  components:
+  - sprite: Clothing/Head/pirate.rsi
+    type: Sprite
+  - sprite: Clothing/Head/pirate.rsi
+    type: Icon
+  - sprite: Clothing/Head/pirate.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPlaguedoctor
+  name: Plague doctor
+  description: ''
+  components:
+  - sprite: Clothing/Head/plaguedoctor.rsi
+    type: Sprite
+  - sprite: Clothing/Head/plaguedoctor.rsi
+    type: Icon
+  - sprite: Clothing/Head/plaguedoctor.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPolicehelm
+  name: Police helm
+  description: ''
+  components:
+  - sprite: Clothing/Head/policehelm.rsi
+    type: Sprite
+  - sprite: Clothing/Head/policehelm.rsi
+    type: Icon
+  - sprite: Clothing/Head/policehelm.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPurplesoft
+  name: Purple soft
+  description: ''
+  components:
+  - sprite: Clothing/Head/purplesoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/purplesoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/purplesoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPurplesoftFlipped
+  name: Purplesoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/purplesoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/purplesoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/purplesoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatPwig
+  name: Pwig
+  description: ''
+  components:
+  - sprite: Clothing/Head/pwig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/pwig.rsi
+    type: Icon
+  - sprite: Clothing/Head/pwig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRad
+  name: Rad
+  description: ''
+  components:
+  - sprite: Clothing/Head/rad.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rad.rsi
+    type: Icon
+  - sprite: Clothing/Head/rad.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRainbowsoft
+  name: Rainbowsoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/rainbowsoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rainbowsoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/rainbowsoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRainbowsoftFlipped
+  name: Rainbowsoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/rainbowsoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rainbowsoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/rainbowsoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRedcoat
+  name: Redcoat
+  description: ''
+  components:
+  - sprite: Clothing/Head/redcoat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/redcoat.rsi
+    type: Icon
+  - sprite: Clothing/Head/redcoat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRedsoft
+  name: Redsoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/redsoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/redsoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/redsoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRedsoftFlipped
+  name: Redsoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/redsoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/redsoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/redsoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRedwizard
+  name: Red wizard
+  description: ''
+  components:
+  - sprite: Clothing/Head/redwizard.rsi
+    type: Sprite
+  - sprite: Clothing/Head/redwizard.rsi
+    type: Icon
+  - sprite: Clothing/Head/redwizard.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRepairbot
+  name: Repairbot
+  description: ''
+  components:
+  - sprite: Clothing/Head/repairbot.rsi
+    type: Sprite
+  - sprite: Clothing/Head/repairbot.rsi
+    type: Icon
+  - sprite: Clothing/Head/repairbot.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRichard
+  name: Richard
+  description: ''
+  components:
+  - sprite: Clothing/Head/richard.rsi
+    type: Sprite
+  - sprite: Clothing/Head/richard.rsi
+    type: Icon
+  - sprite: Clothing/Head/richard.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRig-old
+  name: Rig-old
+  description: ''
+  components:
+  - sprite: Clothing/Head/rig-old.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rig-old.rsi
+    type: Icon
+  - sprite: Clothing/Head/rig-old.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRig-atmos
+  name: Rig-atmos
+  description: ''
+  components:
+  - sprite: Clothing/Head/rig-atmos.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rig-atmos.rsi
+    type: Icon
+  - sprite: Clothing/Head/rig-atmos.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRig-engineering
+  name: Rig-engineering
+  description: ''
+  components:
+  - sprite: Clothing/Head/rig-engineering.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rig-engineering.rsi
+    type: Icon
+  - sprite: Clothing/Head/rig-engineering.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRig-hazardhardsuit
+  name: Rig-hazardhardsuit
+  description: ''
+  components:
+  - sprite: Clothing/Head/rig-hazardhardsuit.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rig-hazardhardsuit.rsi
+    type: Icon
+  - sprite: Clothing/Head/rig-hazardhardsuit.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRig-medical
+  name: Rig-medical
+  description: ''
+  components:
+  - sprite: Clothing/Head/rig-medical.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rig-medical.rsi
+    type: Icon
+  - sprite: Clothing/Head/rig-medical.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRig-mining
+  name: Rig-mining
+  description: ''
+  components:
+  - sprite: Clothing/Head/rig-mining.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rig-mining.rsi
+    type: Icon
+  - sprite: Clothing/Head/rig-mining.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRig-sectg
+  name: Rig-sectg
+  description: ''
+  components:
+  - sprite: Clothing/Head/rig-sectg.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rig-sectg.rsi
+    type: Icon
+  - sprite: Clothing/Head/rig-sectg.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRig-syndie
+  name: Rig-syndie
+  description: ''
+  components:
+  - sprite: Clothing/Head/rig-syndie.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rig-syndie.rsi
+    type: Icon
+  - sprite: Clothing/Head/rig-syndie.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRig-white
+  name: Rig-white
+  description: ''
+  components:
+  - sprite: Clothing/Head/rig-white.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rig-white.rsi
+    type: Icon
+  - sprite: Clothing/Head/rig-white.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRig-wiz
+  name: Rig-wiz
+  description: ''
+  components:
+  - sprite: Clothing/Head/rig-wiz.rsi
+    type: Sprite
+  - sprite: Clothing/Head/rig-wiz.rsi
+    type: Icon
+  - sprite: Clothing/Head/rig-wiz.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatRiot
+  name: Riot
+  description: ''
+  components:
+  - sprite: Clothing/Head/riot.rsi
+    type: Sprite
+  - sprite: Clothing/Head/riot.rsi
+    type: Icon
+  - sprite: Clothing/Head/riot.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatS-ninja
+  name: S-ninja
+  description: ''
+  components:
+  - sprite: Clothing/Head/s-ninja.rsi
+    type: Sprite
+  - sprite: Clothing/Head/s-ninja.rsi
+    type: Icon
+  - sprite: Clothing/Head/s-ninja.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSantahat
+  name: Santa hat
+  description: ''
+  components:
+  - sprite: Clothing/Head/santahat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/santahat.rsi
+    type: Icon
+  - sprite: Clothing/Head/santahat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatScaf
+  name: Scaf
+  description: ''
+  components:
+  - sprite: Clothing/Head/scaf.rsi
+    type: Sprite
+  - sprite: Clothing/Head/scaf.rsi
+    type: Icon
+  - sprite: Clothing/Head/scaf.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatScienceRig
+  name: Science Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/science_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/science_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/science_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatScienceRigSealed
+  name: Science Rig (Sealed)
+  description: ''
+  components:
+  - sprite: Clothing/Head/science_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/science_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/science_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSecsoft
+  name: Secsoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/secsoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/secsoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/secsoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSecsoftFlipped
+  name: Secsoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/secsoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/secsoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/secsoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSecurity
+  name: Security
+  description: ''
+  components:
+  - sprite: Clothing/Head/security.rsi
+    type: Sprite
+  - sprite: Clothing/Head/security.rsi
+    type: Icon
+  - sprite: Clothing/Head/security.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSecurityRig
+  name: Security Rig
+  description: ''
+  components:
+  - sprite: Clothing/Head/security_rig.rsi
+    type: Sprite
+  - sprite: Clothing/Head/security_rig.rsi
+    type: Icon
+  - sprite: Clothing/Head/security_rig.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSecurityRigSealed
+  name: Security Rig (Sealed)
+  description: ''
+  components:
+  - sprite: Clothing/Head/security_rig_sealed.rsi
+    type: Sprite
+  - sprite: Clothing/Head/security_rig_sealed.rsi
+    type: Icon
+  - sprite: Clothing/Head/security_rig_sealed.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSecHelm
+  name: Sec Helm
+  description: ''
+  components:
+  - sprite: Clothing/Head/sec_helm.rsi
+    type: Sprite
+  - sprite: Clothing/Head/sec_helm.rsi
+    type: Icon
+  - sprite: Clothing/Head/sec_helm.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSombrero
+  name: Sombrero
+  description: ''
+  components:
+  - sprite: Clothing/Head/sombrero.rsi
+    type: Sprite
+  - sprite: Clothing/Head/sombrero.rsi
+    type: Icon
+  - sprite: Clothing/Head/sombrero.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSpace
+  name: Space
+  description: ''
+  components:
+  - sprite: Clothing/Head/space.rsi
+    type: Sprite
+  - sprite: Clothing/Head/space.rsi
+    type: Icon
+  - sprite: Clothing/Head/space.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSurgcapBlue
+  name: Surgcap Blue
+  description: ''
+  components:
+  - sprite: Clothing/Head/surgcap_blue.rsi
+    type: Sprite
+  - sprite: Clothing/Head/surgcap_blue.rsi
+    type: Icon
+  - sprite: Clothing/Head/surgcap_blue.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSurgcapGreen
+  name: Surgcap Green
+  description: ''
+  components:
+  - sprite: Clothing/Head/surgcap_green.rsi
+    type: Sprite
+  - sprite: Clothing/Head/surgcap_green.rsi
+    type: Icon
+  - sprite: Clothing/Head/surgcap_green.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSurgcapPurple
+  name: Surgcap Purple
+  description: ''
+  components:
+  - sprite: Clothing/Head/surgcap_purple.rsi
+    type: Sprite
+  - sprite: Clothing/Head/surgcap_purple.rsi
+    type: Icon
+  - sprite: Clothing/Head/surgcap_purple.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSwat-alt
+  name: Swat-alt
+  description: ''
+  components:
+  - sprite: Clothing/Head/swat-alt.rsi
+    type: Sprite
+  - sprite: Clothing/Head/swat-alt.rsi
+    type: Icon
+  - sprite: Clothing/Head/swat-alt.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSwat
+  name: Swat
+  description: ''
+  components:
+  - sprite: Clothing/Head/swat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/swat.rsi
+    type: Icon
+  - sprite: Clothing/Head/swat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSwathelm
+  name: Swat helm
+  description: ''
+  components:
+  - sprite: Clothing/Head/swathelm.rsi
+    type: Sprite
+  - sprite: Clothing/Head/swathelm.rsi
+    type: Icon
+  - sprite: Clothing/Head/swathelm.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSwatold
+  name: Swat old
+  description: ''
+  components:
+  - sprite: Clothing/Head/swatold.rsi
+    type: Sprite
+  - sprite: Clothing/Head/swatold.rsi
+    type: Icon
+  - sprite: Clothing/Head/swatold.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSwatup
+  name: Swat helm (up)
+  description: ''
+  components:
+  - sprite: Clothing/Head/swatup.rsi
+    type: Sprite
+  - sprite: Clothing/Head/swatup.rsi
+    type: Icon
+  - sprite: Clothing/Head/swatup.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-black-blue
+  name: Syndicate-helm-black-blue
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-black-blue.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-black-blue.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-black-blue.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-black-engie
+  name: Syndicate-helm-black-engie
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-black-engie.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-black-engie.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-black-engie.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-black-engie1
+  name: Syndicate-helm-black-engie1
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-black-engie1.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-black-engie1.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-black-engie1.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-black-green
+  name: Syndicate-helm-black-green
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-black-green.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-black-green.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-black-green.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-black-med
+  name: Syndicate-helm-black-med
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-black-med.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-black-med.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-black-med.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-black-orange
+  name: Syndicate-helm-black-orange
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-black-orange.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-black-orange.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-black-orange.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-black-red
+  name: Syndicate-helm-black-red
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-black-red.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-black-red.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-black-red.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-black
+  name: Syndicate-helm-black
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-black.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-black.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-black.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-blue
+  name: Syndicate-helm-blue
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-blue.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-blue.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-blue.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-green-dark
+  name: Syndicate-helm-green-dark
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-green-dark.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-green-dark.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-green-dark.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-green
+  name: Syndicate-helm-green
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-green.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-green.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-green.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-orange
+  name: Syndicate-helm-orange
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-orange.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-orange.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-orange.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-orangeLight
+  name: Syndicate-helm-orange Light
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-orange_light.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-orange_light.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-orange_light.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate-helm-orangeLight1
+  name: Syndicate-helm-orange Light1
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate-helm-orange_light1.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate-helm-orange_light1.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate-helm-orange_light1.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndicate
+  name: Syndicate
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndicate.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndicate.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndicate.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatSyndieHelm
+  name: Syndie Helm
+  description: ''
+  components:
+  - sprite: Clothing/Head/syndie_helm.rsi
+    type: Sprite
+  - sprite: Clothing/Head/syndie_helm.rsi
+    type: Icon
+  - sprite: Clothing/Head/syndie_helm.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatThunderdome
+  name: Thunderdome
+  description: ''
+  components:
+  - sprite: Clothing/Head/thunderdome.rsi
+    type: Sprite
+  - sprite: Clothing/Head/thunderdome.rsi
+    type: Icon
+  - sprite: Clothing/Head/thunderdome.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatTophat
+  name: Tophat
+  description: ''
+  components:
+  - sprite: Clothing/Head/tophat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/tophat.rsi
+    type: Icon
+  - sprite: Clothing/Head/tophat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatUshankadown
+  name: Ushanka (down)
+  description: ''
+  components:
+  - sprite: Clothing/Head/ushankadown.rsi
+    type: Sprite
+  - sprite: Clothing/Head/ushankadown.rsi
+    type: Icon
+  - sprite: Clothing/Head/ushankadown.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatUshankaup
+  name: Ushanka (up)
+  description: ''
+  components:
+  - sprite: Clothing/Head/ushankaup.rsi
+    type: Sprite
+  - sprite: Clothing/Head/ushankaup.rsi
+    type: Icon
+  - sprite: Clothing/Head/ushankaup.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatV62
+  name: V62
+  description: ''
+  components:
+  - sprite: Clothing/Head/v62.rsi
+    type: Sprite
+  - sprite: Clothing/Head/v62.rsi
+    type: Icon
+  - sprite: Clothing/Head/v62.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatViking
+  name: Viking
+  description: ''
+  components:
+  - sprite: Clothing/Head/viking.rsi
+    type: Sprite
+  - sprite: Clothing/Head/viking.rsi
+    type: Icon
+  - sprite: Clothing/Head/viking.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatVioletwizard
+  name: Violetwizard
+  description: ''
+  components:
+  - sprite: Clothing/Head/violetwizard.rsi
+    type: Sprite
+  - sprite: Clothing/Head/violetwizard.rsi
+    type: Icon
+  - sprite: Clothing/Head/violetwizard.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatVoid
+  name: Void
+  description: ''
+  components:
+  - sprite: Clothing/Head/void.rsi
+    type: Sprite
+  - sprite: Clothing/Head/void.rsi
+    type: Icon
+  - sprite: Clothing/Head/void.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatWelding
+  name: Welding mask
+  description: ''
+  components:
+  - sprite: Clothing/Head/welding.rsi
+    type: Sprite
+  - sprite: Clothing/Head/welding.rsi
+    type: Icon
+  - sprite: Clothing/Head/welding.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatWeldingup
+  name: Welding mask (up)
+  description: ''
+  components:
+  - sprite: Clothing/Head/weldingup.rsi
+    type: Sprite
+  - sprite: Clothing/Head/weldingup.rsi
+    type: Icon
+  - sprite: Clothing/Head/weldingup.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatWitch
+  name: Witch
+  description: ''
+  components:
+  - sprite: Clothing/Head/witch.rsi
+    type: Sprite
+  - sprite: Clothing/Head/witch.rsi
+    type: Icon
+  - sprite: Clothing/Head/witch.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatWizard-fake
+  name: Wizard-fake
+  description: ''
+  components:
+  - sprite: Clothing/Head/wizard-fake.rsi
+    type: Sprite
+  - sprite: Clothing/Head/wizard-fake.rsi
+    type: Icon
+  - sprite: Clothing/Head/wizard-fake.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatWizard
+  name: Wizard
+  description: ''
+  components:
+  - sprite: Clothing/Head/wizard.rsi
+    type: Sprite
+  - sprite: Clothing/Head/wizard.rsi
+    type: Icon
+  - sprite: Clothing/Head/wizard.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatXenom
+  name: Xenom
+  description: ''
+  components:
+  - sprite: Clothing/Head/xenom.rsi
+    type: Sprite
+  - sprite: Clothing/Head/xenom.rsi
+    type: Icon
+  - sprite: Clothing/Head/xenom.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatXenos
+  name: Xenos
+  description: ''
+  components:
+  - sprite: Clothing/Head/xenos.rsi
+    type: Sprite
+  - sprite: Clothing/Head/xenos.rsi
+    type: Icon
+  - sprite: Clothing/Head/xenos.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatXmashat
+  name: Xmashat
+  description: ''
+  components:
+  - sprite: Clothing/Head/xmashat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/xmashat.rsi
+    type: Icon
+  - sprite: Clothing/Head/xmashat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatYellowsoft
+  name: Yellowsoft
+  description: ''
+  components:
+  - sprite: Clothing/Head/yellowsoft.rsi
+    type: Sprite
+  - sprite: Clothing/Head/yellowsoft.rsi
+    type: Icon
+  - sprite: Clothing/Head/yellowsoft.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatYellowsoftFlipped
+  name: Yellowsoft Flipped
+  description: ''
+  components:
+  - sprite: Clothing/Head/yellowsoft_flipped.rsi
+    type: Sprite
+  - sprite: Clothing/Head/yellowsoft_flipped.rsi
+    type: Icon
+  - sprite: Clothing/Head/yellowsoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatYukiMatsuda
+  name: Yuki Matsuda
+  description: ''
+  components:
+  - sprite: Clothing/Head/yuki_matsuda_1.rsi
+    type: Sprite
+  - sprite: Clothing/Head/yuki_matsuda_1.rsi
+    type: Icon
+  - sprite: Clothing/Head/yuki_matsuda_1.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatYukiMatsudaup
+  name: Yuki Matsuda (up)
+  description: ''
+  components:
+  - sprite: Clothing/Head/yuki_matsuda_1up.rsi
+    type: Sprite
+  - sprite: Clothing/Head/yuki_matsuda_1up.rsi
+    type: Icon
+  - sprite: Clothing/Head/yuki_matsuda_1up.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatZhanScarf
+  name: Zhan Scarf
+  description: ''
+  components:
+  - sprite: Clothing/Head/zhan_scarf.rsi
+    type: Sprite
+  - sprite: Clothing/Head/zhan_scarf.rsi
+    type: Icon
+  - sprite: Clothing/Head/zhan_scarf.rsi
+    type: Clothing
+  parent: HatBase

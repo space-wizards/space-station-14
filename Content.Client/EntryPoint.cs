@@ -8,6 +8,7 @@ using Content.Client.Interfaces.Chat;
 using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
 using Content.Client.UserInterface;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
@@ -100,7 +101,10 @@ namespace Content.Client
                 "AsteroidRock",
                 "ResearchServer",
                 "ResearchPointSource",
-                "ResearchClient"
+                "ResearchClient",
+                "IdCard",
+                "Access",
+                "AccessReader",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -115,6 +119,7 @@ namespace Content.Client
             factory.Register<SolutionComponent>();
 
             factory.Register<SharedVendingMachineComponent>();
+            factory.Register<SharedWiresComponent>();
 
             prototypes.RegisterIgnore("material");
 

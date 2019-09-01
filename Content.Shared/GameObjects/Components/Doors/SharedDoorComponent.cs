@@ -18,5 +18,6 @@ namespace Content.Shared.GameObjects.Components.Doors
         Opening,
         Open,
         Closing,
+        Deny,
     }
 }
