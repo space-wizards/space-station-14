@@ -8,6 +8,8 @@
     layers:
     - state: normal
       map: ["enum.VendingMachineVisualLayers.Base"]
+    - texture: Buildings/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Icon
     sprite: Buildings/VendingMachines/empty.rsi
     state: normal
@@ -20,12 +22,16 @@
   - type: Appearance
     visuals:
     - type: VendingMachineVisualizer2D
+    - type: WiresVisualizer2D
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key
       type: VendingMachineBoundUserInterface
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
   - type: PowerDevice
     priority: Low
+  - type: Wires
 
 - type: entity
   parent: VendingMachine

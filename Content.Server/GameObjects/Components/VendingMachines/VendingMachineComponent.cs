@@ -5,23 +5,28 @@ using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
-using Robust.Shared.Log;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Random;
+using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
 namespace Content.Server.GameObjects.Components.VendingMachines
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IExamine, IBreakAct
+    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IExamine, IBreakAct, IWires
     {
+#pragma warning disable 649
+        [Dependency] private readonly IRobustRandom _random;
+#pragma warning restore 649
         private AppearanceComponent _appearance;
         private BoundUserInterface _userInterface;
         private PowerDeviceComponent _powerDevice;
@@ -42,7 +47,14 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 return;
             }
 
-            _userInterface.Open(actor.playerSession);
+            var wires = Owner.GetComponent<WiresComponent>();
+            if (wires.IsOpen)
+            {
+                wires.OpenInterface(actor.playerSession);
+            } else
+            {
+                _userInterface.Open(actor.playerSession);
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -190,6 +202,60 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             _broken = true;
             TrySetVisualState(VendingMachineVisualState.Broken);
         }
+
+        public enum Wires
+        {
+            /// <summary>
+            /// Shoots a random item when pulsed.
+            /// </summary>
+            Shoot
+        }
+
+        void IWires.RegisterWires(WiresComponent.WiresBuilder builder)
+        {
+            builder.CreateWire(Wires.Shoot);
+        }
+
+        void IWires.WiresUpdate(WiresUpdateEventArgs args)
+        {
+            var identifier = (Wires) args.Identifier;
+            if (identifier == Wires.Shoot && args.Action == WiresAction.Pulse)
+            {
+                EjectRandom();
+            }
+        }
+
+        /// <summary>
+        /// Ejects a random item if present.
+        /// </summary>
+        private void EjectRandom()
+        {
+            var availableItems = Inventory.Where(x => x.Amount > 0).ToList();
+            if (availableItems.Count <= 0)
+            {
+                return;
+            }
+            TryEject(_random.Pick(availableItems).ID);
+        }
+    }
+
+    public class WiresUpdateEventArgs : EventArgs
+    {
+        public readonly object Identifier;
+        public readonly WiresAction Action;
+
+        public WiresUpdateEventArgs(object identifier, WiresAction action)
+        {
+            Identifier = identifier;
+            Action = action;
+        }
+    }
+
+    public interface IWires
+    {
+        void RegisterWires(WiresComponent.WiresBuilder builder);
+        void WiresUpdate(WiresUpdateEventArgs args);
+
     }
 }
 
