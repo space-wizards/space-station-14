@@ -16,6 +16,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
         private Animation CloseAnimation;
         private Animation OpenAnimation;
+        private Animation DenyAnimation;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -23,6 +24,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
             var openSound = node.GetNode("open_sound").AsString();
             var closeSound = node.GetNode("close_sound").AsString();
+            var denySound = node.GetNode("deny_sound").AsString();
 
             CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
             {
@@ -56,6 +58,18 @@ namespace Content.Client.GameObjects.Components.Doors
                 var sound = new AnimationTrackPlaySound();
                 OpenAnimation.AnimationTracks.Add(sound);
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(openSound, 0));
+            }
+
+            DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(0.45f)};
+            {
+                var flick = new AnimationTrackSpriteFlick();
+                DenyAnimation.AnimationTracks.Add(flick);
+                flick.LayerKey = DoorVisualLayers.Base;
+                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny", 0f));
+
+                var sound = new AnimationTrackPlaySound();
+                DenyAnimation.AnimationTracks.Add(sound);
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0));
             }
         }
 
@@ -101,6 +115,13 @@ namespace Content.Client.GameObjects.Components.Doors
                 case DoorVisualState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");
                     sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, false);
+                    break;
+                case DoorVisualState.Deny:
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, false);
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(DenyAnimation, AnimationKey);
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
