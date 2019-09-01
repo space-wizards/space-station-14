@@ -155,6 +155,10 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 stackComp.Use(1);
                 throwEnt = throwEnt.EntityManager.SpawnEntityAt(throwEnt.Prototype.ID, plyEnt.Transform.GridPosition);
+
+                // can only throw one item at a time, regardless of what the prototype stack size is.
+                if (throwEnt.TryGetComponent<StackComponent>(out var newStackComp))
+                    newStackComp.Count = 1;
             }
 
             if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
