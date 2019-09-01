@@ -47,6 +47,7 @@ namespace Content.Client.GameObjects
             foreach (var (slot, button) in _window.Buttons)
             {
                 button.OnPressed = AddToInventory;
+                button.OnStoragePressed = OpenStorage;
                 _inventoryButtons.Add(slot, new List<InventoryButton> {button});
             }
 
