@@ -109,7 +109,15 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return;
             }
-            handsComp.Drop(handsComp.ActiveIndex);
+
+            if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
+            {
+                handsComp.Drop(handsComp.ActiveIndex, coords);
+            }
+            else
+            {
+                handsComp.Drop(handsComp.ActiveIndex);
+            }
         }
 
         private static void HandleActivateItem(ICommonSession session)
