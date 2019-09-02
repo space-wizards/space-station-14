@@ -22,6 +22,8 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "EntityStorage";
 
+        private const float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
+
         private int StorageCapacityMax;
         private bool IsCollidableWhenOpen;
         private Container Contents;
@@ -116,8 +118,8 @@ namespace Content.Server.GameObjects.Components
             var collidableComponent = Owner.GetComponent<ICollidableComponent>();
             if(entity.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
             {
-                if(collidableComponent.WorldAABB.Size.X < entityCollidableComponent.WorldAABB.Size.X
-                    || collidableComponent.WorldAABB.Size.Y < entityCollidableComponent.WorldAABB.Size.Y)
+                if(MaxSize < entityCollidableComponent.WorldAABB.Size.X
+                    || MaxSize < entityCollidableComponent.WorldAABB.Size.Y)
                 {
                     return false;
                 }
