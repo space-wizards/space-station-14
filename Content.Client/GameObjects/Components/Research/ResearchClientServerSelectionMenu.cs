@@ -10,6 +10,10 @@ namespace Content.Client.GameObjects.Components.Research
     public class ResearchClientServerSelectionMenu : SS14Window
     {
         private ItemList _servers;
+        private int _serverCount = 0;
+        private string[] _serverNames = new string[]{};
+        private int[] _serverIds = new int[]{};
+        private int _selectedServerId = -1;
 
         protected override Vector2? CustomSize => (300, 300);
         public ResearchClientBoundUserInterface Owner { get; set; }
@@ -40,7 +44,7 @@ namespace Content.Client.GameObjects.Components.Research
 
         public void OnItemSelected(ItemList.ItemListSelectedEventArgs itemListSelectedEventArgs)
         {
-            Owner.SelectServer(Owner.ServerIds[itemListSelectedEventArgs.ItemIndex]);
+            Owner.SelectServer(_serverIds[itemListSelectedEventArgs.ItemIndex]);
         }
 
         public void OnItemDeselected(ItemList.ItemListDeselectedEventArgs itemListDeselectedEventArgs)
@@ -48,18 +52,23 @@ namespace Content.Client.GameObjects.Components.Research
             Owner.DeselectServer();
         }
 
-        public void Populate()
+        public void Populate(int serverCount, string[] serverNames, int[] serverIds, int selectedServerId)
         {
+            _serverCount = serverCount;
+            _serverNames = serverNames;
+            _serverIds = serverIds;
+            _selectedServerId = selectedServerId;
+
             // Disable so we can select the new selected server without triggering a new sync request.
             _servers.OnItemSelected -= OnItemSelected;
             _servers.OnItemDeselected -= OnItemDeselected;
 
             _servers.Clear();
-            for (var i = 0; i < Owner.ServerCount; i++)
+            for (var i = 0; i < _serverCount; i++)
             {
-                var id = Owner.ServerIds[i];
-                _servers.AddItem($"ID: {id} || {Owner.ServerNames[i]}");
-                if(id == Owner.SelectedServerId)
+                var id = _serverIds[i];
+                _servers.AddItem($"ID: {id} || {_serverNames[i]}");
+                if(id == _selectedServerId)
                     _servers.Select(i);
             }
 

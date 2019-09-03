@@ -9,11 +9,6 @@ namespace Content.Client.GameObjects.Components.Research
     {
         private ResearchClientServerSelectionMenu _menu;
 
-        public int ServerCount = 0;
-        public string[] ServerNames = new string[]{};
-        public int[] ServerIds = new int[]{};
-        public int SelectedServerId = -1;
-
         public ResearchClientBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
             SendMessage(new SharedResearchClientComponent.ResearchClientSyncMessage());
@@ -44,11 +39,7 @@ namespace Content.Client.GameObjects.Components.Research
         {
             base.UpdateState(state);
             if (!(state is SharedResearchClientComponent.ResearchClientBoundInterfaceState rstate)) return;
-            ServerCount = rstate.ServerCount;
-            ServerNames = rstate.ServerNames;
-            ServerIds = rstate.ServerIds;
-            SelectedServerId = rstate.SelectedServerId;
-            _menu.Populate();
+            _menu.Populate(rstate.ServerCount, rstate.ServerNames, rstate.ServerIds, rstate.SelectedServerId);
 
         }
     }
