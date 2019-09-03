@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;
@@ -12,13 +14,13 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
     [RegisterComponent]
-    public class BallisticMagazineComponent : Component, IMapInit
+    public class BallisticMagazineComponent : Component, IMapInit, IAttackBy
     {
         public override string Name => "BallisticMagazine";
 
         // Stack of loaded bullets.
         [ViewVariables] private readonly Stack<IEntity> _loadedBullets = new Stack<IEntity>();
-        [ViewVariables] private string _fillType;
+        private string _fillType;
 
         [ViewVariables] private Container _bulletContainer;
         [ViewVariables] private AppearanceComponent _appearance;
@@ -27,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         private BallisticCaliber _caliber;
         private int _capacity;
 
+        [ViewVariables] public string FillType => _fillType;
         [ViewVariables] public BallisticMagazineType MagazineType => _magazineType;
         [ViewVariables] public BallisticCaliber Caliber => _caliber;
         [ViewVariables] public int Capacity => _capacity;
@@ -45,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _fillType, "fill", null);
             serializer.DataField(ref _capacity, "capacity", 20);
-            serializer.DataField(ref _availableSpawnCount, "availableSpawnCount", 0);
+            serializer.DataField(ref _availableSpawnCount, "availableSpawnCount", Capacity);
         }
 
         public override void Initialize()
@@ -110,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 }
 
                 _availableSpawnCount -= 1;
-                bullet = Owner.EntityManager.SpawnEntity(_fillType);
+                bullet = Owner.EntityManager.SpawnEntity(FillType);
             }
             else
             {
@@ -121,6 +124,103 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             _updateAppearance();
             OnAmmoCountChanged?.Invoke();
             return bullet;
+        }
+
+        // TODO: Allow putting individual casings into mag (also box)
+        AmmoMagTransferPopupMessage CanTransferFrom(IEntity source)
+        {
+            // Currently the below duplicates box but at some stage these will likely differ
+            if (source.TryGetComponent(out BallisticMagazineComponent magazineComponent))
+            {
+                if (magazineComponent.Caliber != Caliber)
+                {
+                    return new AmmoMagTransferPopupMessage(result: false, message: "Wrong caliber");
+                }
+
+                if (CountLoaded == Capacity)
+                {
+                    return new AmmoMagTransferPopupMessage(result: false, message: "Already full");
+                }
+
+                if (magazineComponent.CountLoaded == 0)
+                {
+                    return new AmmoMagTransferPopupMessage(result: false, message: "No ammo to transfer");
+                }
+
+                return new AmmoMagTransferPopupMessage(result: true, message: "");
+            }
+
+            // If box
+            if (source.TryGetComponent(out AmmoBoxComponent boxComponent))
+            {
+                if (boxComponent.Caliber != Caliber)
+                {
+                    return new AmmoMagTransferPopupMessage(result: false, message: "Wrong caliber");
+                }
+
+                if (CountLoaded == Capacity)
+                {
+                    return new AmmoMagTransferPopupMessage(result: false, message: "Already full");
+                }
+
+                if (boxComponent.CountLeft == 0)
+                {
+                    return new AmmoMagTransferPopupMessage(result: false, message: "No ammo to transfer");
+                }
+
+                return new AmmoMagTransferPopupMessage(result: true, message: "");
+            }
+
+            return new AmmoMagTransferPopupMessage(result: false, message: "");
+        }
+
+        // TODO: Potentially abstract out to reduce duplicate structs
+        private struct AmmoMagTransferPopupMessage
+        {
+            public readonly bool Result;
+            public readonly string Message;
+
+            public AmmoMagTransferPopupMessage(bool result, string message)
+            {
+                Result = result;
+                Message = message;
+            }
+        }
+
+        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        {
+            var ammoMagTransfer = CanTransferFrom(eventArgs.AttackWith);
+            if (ammoMagTransfer.Result) {
+                IEntity bullet;
+                if (eventArgs.AttackWith.TryGetComponent(out BallisticMagazineComponent magazineComponent))
+                {
+                    int fillCount = Math.Min(magazineComponent.CountLoaded, Capacity - CountLoaded);
+                    for (int i = 0; i < fillCount; i++)
+                    {
+                        bullet = magazineComponent.TakeBullet();
+                        AddBullet(bullet);
+                    }
+                    eventArgs.User.PopupMessage(eventArgs.User, $"Transferred {fillCount} rounds");
+                    return true;
+                }
+                if (eventArgs.AttackWith.TryGetComponent(out AmmoBoxComponent boxComponent))
+                {
+                    int fillCount = Math.Min(boxComponent.CountLeft, Capacity - CountLoaded);
+                    for (int i = 0; i < fillCount; i++)
+                    {
+                        bullet = boxComponent.TakeBullet();
+                        AddBullet(bullet);
+                    }
+                    eventArgs.User.PopupMessage(eventArgs.User, $"Transferred {fillCount} rounds");
+                    return true;
+                }
+            }
+            else
+            {
+                eventArgs.User.PopupMessage(eventArgs.User, ammoMagTransfer.Message);
+            }
+
+            return false;
         }
 
         private void _updateAppearance()
