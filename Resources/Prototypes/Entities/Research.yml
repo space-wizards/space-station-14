@@ -1,0 +1,40 @@
+- type: entity
+  id: researchAndDevelopmentServer
+  name: "R&D Server"
+  components:
+  - type: Sprite
+    sprite: Buildings/research.rsi
+    state: server
+  - type: Icon
+    sprite: Buildings/research.rsi
+    state: server
+  - type: Clickable
+  - type: BoundingBox
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: ResearchServer
+  - type: TechnologyDatabase
+  
+- type: entity
+  id: baseResearchAndDevelopmentPointSource
+  name: "Base R&D Point Source"
+  components:
+  - type: Sprite
+    sprite: Buildings/research.rsi
+    state: tdoppler
+  - type: Icon
+    sprite: Buildings/research.rsi
+    state: tdoppler
+  - type: Clickable
+  - type: BoundingBox
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: ResearchPointSource
+    pointspersecond: 1000
+    active: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface

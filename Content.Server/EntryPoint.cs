@@ -35,7 +35,7 @@ namespace Content.Server
                 "SubFloorHide",
                 "LowWall",
                 "Window",
-                "CharacterInfo"
+                "CharacterInfo",
             };
 
             foreach (var ignoreName in registerIgnore)

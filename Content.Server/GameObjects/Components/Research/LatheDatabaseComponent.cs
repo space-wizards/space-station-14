@@ -30,12 +30,14 @@ namespace Content.Server.GameObjects.Components.Research
         public override void Clear()
         {
             if (Static) return;
+            base.Clear();
             Dirty();
         }
 
         public override void AddRecipe(LatheRecipePrototype recipe)
         {
             if (Static) return;
+            base.AddRecipe(recipe);
             Dirty();
         }
 

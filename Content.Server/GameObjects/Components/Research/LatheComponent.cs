@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Timers;
@@ -37,10 +38,9 @@ namespace Content.Server.GameObjects.Components.Research
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
         }
 
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            var message = serverMsg.Message;
-            switch (message)
+            switch (message.Message)
             {
                 case LatheQueueRecipeMessage msg:
                     _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
@@ -56,6 +56,20 @@ namespace Content.Server.GameObjects.Components.Research
                     _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
                     if (_producingRecipe != null)
                         _userInterface.SendMessage(new LatheProducingRecipeMessage(_producingRecipe.ID));
+                    break;
+
+                case LatheServerSelectionMessage msg:
+                    if (!Owner.TryGetComponent(out ResearchClientComponent researchClient)) return;
+                    researchClient.OpenUserInterface(message.Session);
+                    break;
+
+                case LatheServerSyncMessage msg:
+                    if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)
+                    ||  !Owner.TryGetComponent(out ProtolatheDatabaseComponent protoDatabase)) return;
+
+                    if(database.SyncWithServer())
+                        protoDatabase.Sync();
+
                     break;
             }
         }
@@ -88,12 +102,17 @@ namespace Content.Server.GameObjects.Components.Research
             return true;
         }
 
+        public void OpenUserInterface(IPlayerSession session)
+        {
+            _userInterface.Open(session);
+        }
+
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return;
 
-            _userInterface.Open(actor.playerSession);
+            OpenUserInterface(actor.playerSession);
             return;
         }
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)

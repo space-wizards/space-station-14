@@ -1,0 +1,26 @@
+- type: technology
+  name: "Test Technology 1"
+  id: Parent1
+  description: Parent technology needed for sheets
+  icon: Objects/sheet_glass.png
+  requiredpoints: 5000
+  
+- type: technology
+  name: "Test Technology 2"
+  id: Parent2
+  description: Parent technology 2 needed for sheets
+  icon: Objects/sheet_glass.png
+  requiredpoints: 5000
+
+- type: technology
+  name: Material sheet printing
+  id: Sheets
+  description: Print those sheets!
+  icon: Objects/sheet_metal.png
+  requiredpoints: 500
+  requiredtechnologies:
+    - Parent1
+    - Parent2
+  unlockedrecipes:
+    - MetalStack
+    - GlassStack

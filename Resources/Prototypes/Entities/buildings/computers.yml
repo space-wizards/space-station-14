@@ -10,7 +10,6 @@
   - type: Icon
     sprite: Buildings/computer.rsi
     state: computer
-
   - type: Computer
   - type: PowerDevice
     priority: High
@@ -94,6 +93,15 @@
     - type: ComputerVisualizer2D
       key: rd_key
       screen: rdcomp
+  - type: ResearchClient
+  - type: ResearchConsole
+  - type: TechnologyDatabase
+  - type: UserInterface
+    interfaces:
+    - key: enum.ResearchConsoleUiKey.Key
+      type: ResearchConsoleBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
 
 
 - type: entity

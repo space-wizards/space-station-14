@@ -100,6 +100,9 @@ namespace Content.Client
                 "PlayerInputMover",
                 "Computer",
                 "AsteroidRock",
+                "ResearchServer",
+                "ResearchPointSource",
+                "ResearchClient",
                 "IdCard",
                 "Access",
                 "AccessReader",
@@ -110,8 +113,10 @@ namespace Content.Client
                 factory.RegisterIgnore(ignoreName);
             }
 
+            factory.Register<SharedResearchConsoleComponent>();
             factory.Register<SharedLatheComponent>();
             factory.Register<SharedSpawnPointComponent>();
+
             factory.Register<SolutionComponent>();
 
             factory.Register<SharedVendingMachineComponent>();

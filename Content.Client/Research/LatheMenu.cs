@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Research;
+using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Materials;
 using Content.Shared.Research;
 using Robust.Client.UserInterface;
@@ -25,6 +26,8 @@ namespace Content.Client.Research
         private LineEdit AmountLineEdit;
         private LineEdit SearchBar;
         public Button QueueButton;
+        public Button ServerConnectButton;
+        public Button ServerSyncButton;
         protected override Vector2? CustomSize => (300, 450);
 
         public LatheBoundUserInterface Owner { get; set; }
@@ -32,9 +35,11 @@ namespace Content.Client.Research
         private List<LatheRecipePrototype> _recipes = new List<LatheRecipePrototype>();
         private List<LatheRecipePrototype> _shownRecipes = new List<LatheRecipePrototype>();
 
-        public LatheMenu()
+        public LatheMenu(LatheBoundUserInterface owner = null)
         {
             IoCManager.InjectDependencies(this);
+
+            Owner = owner;
 
             Title = "Lathe Menu";
 
@@ -69,7 +74,23 @@ namespace Content.Client.Research
             {
                 Text = "Queue",
                 TextAlign = Button.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsStretchRatio = 1,
+            };
+
+            ServerConnectButton = new Button()
+            {
+                Text = "Server list",
+                TextAlign = Button.AlignMode.Center,
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsStretchRatio = 1,
+            };
+
+            ServerSyncButton  = new Button()
+            {
+                Text = "Sync",
+                TextAlign = Button.AlignMode.Center,
+                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
 
@@ -101,7 +122,7 @@ namespace Content.Client.Research
             {
                 Text = "Filter",
                 TextAlign = Button.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
                 Disabled = true,
             };
@@ -130,6 +151,12 @@ namespace Content.Client.Research
             };
 
             hBoxButtons.AddChild(spacer);
+            if (Owner?.Database is ProtolatheDatabaseComponent database)
+            {
+                hBoxButtons.AddChild(ServerConnectButton);
+                hBoxButtons.AddChild(ServerSyncButton);
+                database.OnDatabaseUpdated += Populate;
+            }
             hBoxButtons.AddChild(QueueButton);
 
             hBoxFilter.AddChild(SearchBar);
