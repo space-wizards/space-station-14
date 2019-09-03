@@ -90,6 +90,17 @@ namespace Content.Server.GameObjects.Components
             UpdateUserInterface();
         }
 
+        /// <summary>
+        /// Returns whether the wire associated with <see cref="identifier"/> is cut.
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
+        public bool IsWireCut(object identifier)
+        {
+            var wire = WiresList.Find(x => x.Identifier.Equals(identifier));
+            if(wire == null) throw new ArgumentException();
+            return wire.IsCut;
+        }
+
         public class Wire
         {
             /// <summary>
