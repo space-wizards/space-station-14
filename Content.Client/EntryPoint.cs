@@ -43,6 +43,7 @@ namespace Content.Client
 
             var registerIgnore = new[]
             {
+                "AmmoBox",
                 "Breakable",
                 "Pickaxe",
                 "Interactable",

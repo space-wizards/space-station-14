@@ -3,7 +3,7 @@
   name: Catwalk
   components:
   - type: Clickable
-  - type: BoundingBox
+  - type: Collidable
   - type: Sprite
     netsync: false
     sprite: Buildings/catwalk.rsi

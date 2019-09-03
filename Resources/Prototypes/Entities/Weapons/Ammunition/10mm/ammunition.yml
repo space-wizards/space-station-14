@@ -166,7 +166,7 @@
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
-    fill: ammo_casing_10mm_f
+    fill: ammo_casing_10mm_flash
     caliber: A10mm
     magazine: A10mmSMG
     capacity: 20

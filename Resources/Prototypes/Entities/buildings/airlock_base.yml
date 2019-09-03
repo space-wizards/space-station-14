@@ -20,14 +20,11 @@
     sprite: Buildings/airlock_basic.rsi
     state: closed
 
-  - type: BoundingBox
-    # This AABB isn't the full tile because..
-    # If it is, airlocks collide with walls and other airlocks causing them to never close.
-    # yeah...
-    # TODO: Fix that.
-    aabb: -0.45, -0.45, 0.45, 0.45
   - type: Collidable
-    mask: 2
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 2
+      layer: 16
   - type: Door
   - type: Appearance
     visuals:

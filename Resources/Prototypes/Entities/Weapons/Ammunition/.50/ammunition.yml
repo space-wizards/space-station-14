@@ -38,7 +38,7 @@
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
-    fill: ammo_casing_50f
+    fill: ammo_casing_50_f
     capacity: 7
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/.50/50aef.rsi
@@ -58,7 +58,7 @@
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
-    fill: ammo_casing_50hv
+    fill: ammo_casing_50_hv
     capacity: 7
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/.50/50aehv.rsi
@@ -78,7 +78,7 @@
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
-    fill: ammo_casing_50l
+    fill: ammo_casing_50_l
     capacity: 7
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/.50/50ael.rsi
@@ -98,7 +98,7 @@
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
-    fill: ammo_casing_50p
+    fill: ammo_casing_50_p
     capacity: 7
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/.50/50aep.rsi
@@ -118,7 +118,7 @@
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
-    fill: ammo_casing_50r
+    fill: ammo_casing_50_r
     capacity: 7
   - type: Icon
     sprite: Objects/Guns/Ammunition/Magazine/.50/50aer.rsi
@@ -150,7 +150,7 @@
     state: s-casing
 
 - type: entity
-  id: ammo_casing_50f
+  id: ammo_casing_50_f
   name: ".50 cal casing (Flash)"
   parent: BaseItem
   components:
@@ -166,7 +166,7 @@
     state: s-casing
 
 - type: entity
-  id: ammo_casing_50hv
+  id: ammo_casing_50_hv
   name: ".50 cal casing (High-Velocity)"
   parent: BaseItem
   components:
@@ -182,7 +182,7 @@
     state: s-casing
 
 - type: entity
-  id: ammo_casing_50l
+  id: ammo_casing_50_l
   name: ".50 cal casing (L)"
   parent: BaseItem
   components:
@@ -198,7 +198,7 @@
     state: s-casing
 
 - type: entity
-  id: ammo_casing_50p
+  id: ammo_casing_50_p
   name: ".50 cal casing (Practice)"
   parent: BaseItem
   components:
@@ -214,7 +214,7 @@
     state: s-casing
 
 - type: entity
-  id: ammo_casing_50r
+  id: ammo_casing_50_r
   name: ".50 cal casing (Rubber)"
   parent: BaseItem
   components:

@@ -25,7 +25,6 @@
   - type: Icon
     texture: Objects/mopbucket.png
   - type: Clickable
-  - type: BoundingBox
   - type: Solution
     maxVol: 500
     caps: 3

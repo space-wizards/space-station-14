@@ -17,6 +17,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -109,7 +110,15 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return;
             }
-            handsComp.Drop(handsComp.ActiveIndex);
+
+            if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
+            {
+                handsComp.Drop(handsComp.ActiveIndex, coords);
+            }
+            else
+            {
+                handsComp.Drop(handsComp.ActiveIndex);
+            }
         }
 
         private static void HandleActivateItem(ICommonSession session)
@@ -147,6 +156,10 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 stackComp.Use(1);
                 throwEnt = throwEnt.EntityManager.SpawnEntityAt(throwEnt.Prototype.ID, plyEnt.Transform.GridPosition);
+
+                // can only throw one item at a time, regardless of what the prototype stack size is.
+                if (throwEnt.TryGetComponent<StackComponent>(out var newStackComp))
+                    newStackComp.Count = 1;
             }
 
             if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
@@ -158,7 +171,11 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!throwEnt.TryGetComponent(out ThrownItemComponent projComp))
             {
                 projComp = throwEnt.AddComponent<ThrownItemComponent>();
-                colComp.CollisionMask |= (int)CollisionGroup.Mob;
+
+                if(colComp.PhysicsShapes.Count == 0)
+                    colComp.PhysicsShapes.Add(new PhysShapeAabb());
+
+                colComp.PhysicsShapes[0].CollisionMask |= (int)CollisionGroup.Mob;
                 colComp.IsScrapingFloor = false;
             }
 

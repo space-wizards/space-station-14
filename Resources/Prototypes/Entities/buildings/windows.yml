@@ -13,8 +13,11 @@
     sprite: Buildings/window.rsi
     state: window0
 
-  - type: BoundingBox
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.3, 0.5"
+      layer: 1
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

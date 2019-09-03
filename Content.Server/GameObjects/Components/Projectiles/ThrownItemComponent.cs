@@ -39,9 +39,9 @@ namespace Content.Server.GameObjects.Components
             // after impacting the first object.
             // For realism this should actually be changed when the velocity of the object is less than a threshold.
             // This would allow ricochets off walls, and weird gravity effects from slowing the object.
-            if (collidedwith.Count > 0 && Owner.TryGetComponent(out CollidableComponent body))
+            if (collidedwith.Count > 0 && Owner.TryGetComponent(out CollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
-                body.CollisionMask &= (int)~CollisionGroup.Mob;
+                body.PhysicsShapes[0].CollisionMask &= (int)~CollisionGroup.Mob;
                 body.IsScrapingFloor = true;
 
                 // KYS, your job is finished. Trigger ILand as well.

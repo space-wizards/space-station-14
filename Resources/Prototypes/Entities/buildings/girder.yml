@@ -8,8 +8,11 @@
   - type: Icon
     texture: Buildings/wall_girder.png
 
-  - type: BoundingBox
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 19
+      layer: 1
   - type: Damageable
   - type: Destructible
     thresholdvalue: 50

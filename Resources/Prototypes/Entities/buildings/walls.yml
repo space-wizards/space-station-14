@@ -8,8 +8,10 @@
     drawdepth: Walls
   - type: Icon
     state: full
-  - type: BoundingBox
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer: 1
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

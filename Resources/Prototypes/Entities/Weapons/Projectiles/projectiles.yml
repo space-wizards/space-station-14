@@ -10,16 +10,18 @@
     #rotation: -180
   - type: Icon
     texture: Objects/Projectiles/bullet.png
-  - type: BoundingBox
-    aabb: -0.2,-0.2,0.2,0.2
+  - type: Collidable
+    hard: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.2,0.2,0.2"
+      layer: 1
+      mask: 3
   - type: Physics
     edgeslide: false
   - type: Projectile
     damages:
       Brute: 20
-  - type: Collidable
-    hard: false
-    mask: 3
 
 - type: entity
   id: ProjectileBullet
