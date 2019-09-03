@@ -14,6 +14,7 @@
     - type: AirlockVisualizer2D
       open_sound: /Audio/machines/airlock_ext_open.ogg
       close_sound: /Audio/machines/airlock_ext_close.ogg
+      deny_sound: /Audio/machines/airlock_deny.ogg
 
 - type: entity
   parent: airlock
@@ -25,3 +26,12 @@
 
   - type: Icon
     sprite: Buildings/airlock_engineering.rsi
+
+- type: entity
+  parent: airlock_engineering
+  id: airlock_engineering_locked
+  name: Locked Engineering Airlock
+  components:
+  - type: AccessReader
+    required: ["engineering"]
+
