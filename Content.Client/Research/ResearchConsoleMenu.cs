@@ -33,7 +33,7 @@ namespace Content.Client.Research
         private ItemList _unlockableTechnologies;
         private ItemList _futureTechnologies;
 
-        public Button UnlockButton;
+        public Button UnlockButton { get; private set; }
         public Button ServerSelectionButton { get; private set; }
         public Button ServerSyncButton { get; private set; }
 
