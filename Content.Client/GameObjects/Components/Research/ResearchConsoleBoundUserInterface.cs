@@ -12,7 +12,7 @@ namespace Content.Client.GameObjects.Components.Research
         public int Points { get; private set; } = 0;
         public int PointsPerSecond { get; private set; } = 0;
         private ResearchConsoleMenu _consoleMenu;
-        public TechnologyDatabaseComponent TechnologyDatabase;
+        private TechnologyDatabaseComponent TechnologyDatabase;
 
 
         public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
