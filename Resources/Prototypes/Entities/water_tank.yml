@@ -11,11 +11,11 @@
     texture: Buildings/watertank.png
 
   - type: Clickable
-  - type: BoundingBox
-    aabb: "-0.5,-0.25,0.5,0.25"
   - type: Collidable
     mask: 3
     layer: 1
+    shape:
+      bounds: "-0.5,-0.25,0.5,0.25"
     IsScrapingFloor: true
   - type: Physics
     mass: 15

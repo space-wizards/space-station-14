@@ -14,8 +14,10 @@
     sprite: Buildings/low_wall.rsi
     state: metal
 
-  - type: BoundingBox
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer: 1
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

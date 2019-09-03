@@ -17,6 +17,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -170,7 +171,11 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!throwEnt.TryGetComponent(out ThrownItemComponent projComp))
             {
                 projComp = throwEnt.AddComponent<ThrownItemComponent>();
-                colComp.CollisionMask |= (int)CollisionGroup.Mob;
+
+                if(colComp.PhysicsShapes.Count == 0)
+                    colComp.PhysicsShapes.Add(new PhysShapeAabb());
+
+                colComp.PhysicsShapes[0].CollisionMask |= (int)CollisionGroup.Mob;
                 colComp.IsScrapingFloor = false;
             }
 

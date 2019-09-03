@@ -4,7 +4,9 @@
   components:
   - type: Clickable
   - type: Collidable
-  - type: BoundingBox
+    shapes:
+    - !type:PhysShapeAabb
+      layer: 8
   - type: Icon
     sprite: Buildings/computer.rsi
     state: computer

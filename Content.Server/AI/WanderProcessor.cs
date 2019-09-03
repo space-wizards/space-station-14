@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Physics;
 using Robust.Server.AI;
+using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -12,6 +13,7 @@ using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI
@@ -122,8 +124,8 @@ namespace Content.Server.AI
 
             var entWorldPos = SelfEntity.Transform.WorldPosition;
 
-            if (SelfEntity.TryGetComponent<BoundingBoxComponent>(out var bounds))
-                entWorldPos = bounds.WorldAABB.Center;
+            if (SelfEntity.TryGetComponent<CollidableComponent>(out var bounds))
+                entWorldPos = ((IPhysBody) bounds).WorldAABB.Center;
 
             var rngState = GenSeed();
             for (var i = 0; i < 3; i++) // you get 3 chances to find a place to walk

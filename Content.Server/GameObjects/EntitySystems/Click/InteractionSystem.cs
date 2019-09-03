@@ -329,9 +329,9 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // Check if ClickLocation is in object bounds here, if not lets log as warning and see why
-            if (attacked.TryGetComponent(out BoundingBoxComponent boundingBox))
+            if (attacked.TryGetComponent(out ICollidableComponent collideComp))
             {
-                if (!boundingBox.WorldAABB.Contains(coordinates.ToWorld(_mapManager).Position))
+                if (!collideComp.WorldAABB.Contains(coordinates.ToWorld(_mapManager).Position))
                 {
                     Logger.WarningS("system.interaction",
                         $"Player {player.Name} clicked {attacked.Name} outside of its bounding box component somehow");

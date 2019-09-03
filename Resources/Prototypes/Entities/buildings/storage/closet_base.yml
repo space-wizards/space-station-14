@@ -16,10 +16,12 @@
     state: generic_door
 
   - type: Clickable
-  - type: BoundingBox
-    aabb: "-0.5,-0.25,0.5,0.25"
   - type: Collidable
-    mask: 3
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
+      mask: 19
+      layer: 16
     IsScrapingFloor: true
   - type: Physics
     mass: 25

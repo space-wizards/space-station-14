@@ -13,8 +13,10 @@
   - type: Icon
     sprite: Buildings/VendingMachines/empty.rsi
     state: normal
-  - type: BoundingBox
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer: 8
   - type: SnapGrid
     offset: Center
   - type: Damageable

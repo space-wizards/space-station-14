@@ -16,14 +16,17 @@
     state: crate
 
   - type: Clickable
-  - type: BoundingBox
-    aabb: -0.4, -0.4, 0.4, 0.4
-
   - type: Physics
     mass: 25
     Anchored: false
 
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4, -0.4, 0.4, 0.4"
+      layer: 16
+      mask: 19
+      
   - type: EntityStorage
     Capacity: 60
   - type: PlaceableSurface

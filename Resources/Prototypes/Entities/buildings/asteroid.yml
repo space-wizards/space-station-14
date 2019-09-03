@@ -10,8 +10,10 @@
   - type: Icon
     sprite: Buildings/Walls/asteroid_rock.rsi
     state: 0
-  - type: BoundingBox
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer: 1
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

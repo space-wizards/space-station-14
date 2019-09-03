@@ -5,8 +5,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Projectiles
@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// </summary>
         /// <param name="collidedwith"></param>
         /// <returns></returns>
-        bool ICollideSpecial.PreventCollide(ICollidable collidedwith)
+        bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
             if (IgnoreShooter && collidedwith.Owner.Uid == Shooter)
                 return true;

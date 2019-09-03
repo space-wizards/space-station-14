@@ -50,9 +50,10 @@
   description: "Portal to another location"
   components:
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 10
   - type: Portal
-  - type: BoundingBox
-    aabb: "-0.25,-0.25,0.25,0.25"
   - type: Sprite
     netsync: false
     sprite: "Effects/portal.rsi"

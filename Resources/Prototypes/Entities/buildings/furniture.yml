@@ -3,7 +3,7 @@
   id: stool
   components:
   - type: Clickable
-  - type: BoundingBox
+  - type: Collidable
   - type: Sprite
     sprite: Buildings/furniture.rsi
     state: stool_base
@@ -17,7 +17,7 @@
   id: chairOfficeLight
   components:
   - type: Clickable
-  - type: BoundingBox
+  - type: Collidable
   - type: Sprite
     sprite: Buildings/furniture.rsi
     state: officechair_white
@@ -30,7 +30,7 @@
   id: chairOfficeDark
   components:
   - type: Clickable
-  - type: BoundingBox
+  - type: Collidable
   - type: Sprite
     sprite: Buildings/furniture.rsi
     state: officechair_dark
@@ -43,7 +43,7 @@
   id: chair
   components:
   - type: Clickable
-  - type: BoundingBox
+  - type: Collidable
   - type: Sprite
     sprite: Buildings/furniture.rsi
     state: chair
