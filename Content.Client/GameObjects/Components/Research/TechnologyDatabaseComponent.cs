@@ -21,9 +21,10 @@ namespace Content.Client.GameObjects.Components.Research
             base.HandleComponentState(curState, nextState);
             if (!(curState is TechnologyDatabaseState state)) return;
             _technologies.Clear();
+            var protoManager = IoCManager.Resolve<IPrototypeManager>();
             foreach (var techID in state.Technologies)
             {
-                if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(techID, out TechnologyPrototype technology)) continue;
+                if (!protoManager.TryIndex(techID, out TechnologyPrototype technology)) continue;
                 _technologies.Add(technology);
             }
 
