@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -33,6 +34,10 @@ namespace Content.Client.Research
         private ItemList _unlockableTechnologies;
         private ItemList _futureTechnologies;
 
+#pragma warning disable 649
+        [Dependency] private readonly ILocalizationManager _localizationManager;
+#pragma warning restore 649
+
         public Button UnlockButton { get; private set; }
         public Button ServerSelectionButton { get; private set; }
         public Button ServerSyncButton { get; private set; }
@@ -41,7 +46,9 @@ namespace Content.Client.Research
 
         public ResearchConsoleMenu(ResearchConsoleBoundUserInterface owner = null)
         {
-            Title = "R&D Console";
+            IoCManager.InjectDependencies(this);
+
+            Title = _localizationManager.GetString("R&D Console");
 
             Owner = owner;
 
@@ -107,8 +114,8 @@ namespace Content.Client.Research
                 SizeFlagsStretchRatio = 3,
             };
 
-            _pointLabel = new Label() { Text = "Research Points: 0" };
-            _pointsPerSecondLabel = new Label() { Text = "Points per Second: 0" };
+            _pointLabel = new Label() { Text = _localizationManager.GetString("Research Points") + ": 0" };
+            _pointsPerSecondLabel = new Label() { Text = _localizationManager.GetString("Points per Second") + ": 0" };
 
             var vboxPointsButtons = new VBoxContainer()
             {
@@ -117,9 +124,9 @@ namespace Content.Client.Research
                 SizeFlagsVertical = SizeFlags.FillExpand,
             };
 
-            ServerSelectionButton = new Button() { Text = "Server list" };
-            ServerSyncButton = new Button() { Text = "Sync"};
-            UnlockButton = new Button() { Text = "Unlock", Disabled = true };
+            ServerSelectionButton = new Button() { Text = _localizationManager.GetString("Server list") };
+            ServerSyncButton = new Button() { Text = _localizationManager.GetString("Sync")};
+            UnlockButton = new Button() { Text = _localizationManager.GetString("Unlock"), Disabled = true };
 
 
             vboxPointsButtons.AddChild(ServerSelectionButton);
@@ -162,8 +169,6 @@ namespace Content.Client.Research
             {
                 CleanSelectedTechnology();
             };
-
-            Owner.TechnologyDatabase.OnDatabaseUpdated += Populate;
 
             Populate();
         }
@@ -240,12 +245,12 @@ namespace Content.Client.Research
             // For now, we retrieve all technologies. In the future, this should be changed.
             foreach (var tech in prototypeMan.EnumeratePrototypes<TechnologyPrototype>())
             {
-                if (Owner.TechnologyDatabase.IsTechnologyUnlocked(tech))
+                if (Owner.IsTechnologyUnlocked(tech))
                 {
                     _unlockedTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
                     _unlockedTechnologyPrototypes.Add(tech);
                 }
-                else if (Owner.TechnologyDatabase.CanUnlockTechnology(tech))
+                else if (Owner.CanUnlockTechnology(tech))
                 {
                     _unlockableTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
                     _unlockableTechnologyPrototypes.Add(tech);
@@ -273,8 +278,8 @@ namespace Content.Client.Research
 
             _technologyIcon.Texture = TechnologySelected.Icon.Frame0();
             _technologyName.Text = TechnologySelected.Name;
-            _technologyDescription.Text = TechnologySelected.Description+$"\n{TechnologySelected.RequiredPoints} research points.";
-            _technologyRequirements.Text = "No technology requirements.";
+            _technologyDescription.Text = TechnologySelected.Description+$"\n{TechnologySelected.RequiredPoints} " + _localizationManager.GetString("research points");
+            _technologyRequirements.Text = _localizationManager.GetString("No technology requirements.");
 
             var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
 
@@ -283,7 +288,7 @@ namespace Content.Client.Research
                 var requiredId = TechnologySelected.RequiredTechnologies[i];
                 if (!prototypeMan.TryIndex(requiredId, out TechnologyPrototype prototype)) continue;
                 if (i == 0)
-                    _technologyRequirements.Text = $"Requires: {prototype.Name}";
+                    _technologyRequirements.Text = _localizationManager.GetString("Requires") + $": {prototype.Name}";
                 else
                     _technologyRequirements.Text += $", {prototype.Name}";
             }
@@ -294,8 +299,8 @@ namespace Content.Client.Research
         /// </summary>
         public void PopulatePoints()
         {
-            _pointLabel.Text = $"Research Points: {Owner.Points}";
-            _pointsPerSecondLabel.Text = $"Points per second: {Owner.PointsPerSecond}";
+            _pointLabel.Text = _localizationManager.GetString("Research Points") + $": {Owner.Points}";
+            _pointsPerSecondLabel.Text = _localizationManager.GetString("Points per second") + $": {Owner.PointsPerSecond}";
         }
 
         /// <summary>
