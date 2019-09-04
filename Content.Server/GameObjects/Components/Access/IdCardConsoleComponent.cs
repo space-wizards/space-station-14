@@ -26,16 +26,16 @@ namespace Content.Server.GameObjects.Components.Access
 #pragma warning restore 649
 
         private BoundUserInterface _userInterface;
-        private Container _privilegedIdContainer;
-        private Container _targetIdContainer;
+        private ContainerSlot _privilegedIdContainer;
+        private ContainerSlot _targetIdContainer;
         private AccessReader _accessReader;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _privilegedIdContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-privilegedId", Owner);
-            _targetIdContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-targetId", Owner);
+            _privilegedIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-privilegedId", Owner);
+            _targetIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-targetId", Owner);
 
             _accessReader = Owner.GetComponent<AccessReader>();
 
@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Access
         /// </summary>
         private bool PrivilegedIdIsAuthorized()
         {
-            var privilegedIdEntity = _privilegedIdContainer.ContainedEntities.FirstOrDefault();
+            var privilegedIdEntity = _privilegedIdContainer.ContainedEntity;
             return privilegedIdEntity != null && _accessReader.IsAllowed(privilegedIdEntity);
         }
         /// <summary>
@@ -80,16 +80,12 @@ namespace Content.Server.GameObjects.Components.Access
         /// </summary>
         private void TryWriteToTargetId(string newFullName, string newJobTitle, List<string> newAccessList)
         {
-            if (!PrivilegedIdIsAuthorized())
-            {
-                return;
-            }
-            if (_targetIdContainer.ContainedEntities.Count == 0)
+            if (!PrivilegedIdIsAuthorized() || _targetIdContainer.ContainedEntity == null)
             {
                 return;
             }
 
-            var targetIdEntity = _targetIdContainer.ContainedEntities.First();
+            var targetIdEntity = _targetIdContainer.ContainedEntity;
 
             var targetIdComponent = targetIdEntity.GetComponent<IdCardComponent>();
             targetIdComponent.FullName = newFullName;
@@ -107,19 +103,7 @@ namespace Content.Server.GameObjects.Components.Access
         /// <summary>
         /// Called when one of the insert/remove ID buttons gets pressed.
         /// </summary>
-        private void HandleId(IEntity user, Container container)
-        {
-            if (container.ContainedEntities.Count == 0)
-            {
-                InsertIdFromHand(user, container);
-            }
-            else
-            {
-                PutIdInHand(user, container);
-            }
-        }
-
-        private void InsertIdFromHand(IEntity user, Container container)
+        private void HandleId(IEntity user, ContainerSlot container)
         {
             if (!user.TryGetComponent(out IHandsComponent hands))
             {
@@ -127,6 +111,18 @@ namespace Content.Server.GameObjects.Components.Access
                 return;
             }
 
+            if (container.ContainedEntity == null)
+            {
+                InsertIdFromHand(user, container, hands);
+            }
+            else
+            {
+                PutIdInHand(container, hands);
+            }
+        }
+
+        private void InsertIdFromHand(IEntity user, ContainerSlot container, IHandsComponent hands)
+        {
             var isId = hands.GetActiveHand?.Owner.HasComponent<IdCardComponent>();
             if (isId != true)
             {
@@ -140,15 +136,9 @@ namespace Content.Server.GameObjects.Components.Access
             UpdateUserInterface();
         }
 
-        private void PutIdInHand(IEntity user, Container container)
+        private void PutIdInHand(ContainerSlot container, IHandsComponent hands)
         {
-            if (!user.TryGetComponent(out IHandsComponent hands))
-            {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, _localizationManager.GetString("You have no hands."));
-                return;
-            }
-
-            var idEntity = container.ContainedEntities.FirstOrDefault();
+            var idEntity = container.ContainedEntity;
             if (idEntity == null || !container.Remove(idEntity))
             {
                 return;
@@ -160,8 +150,8 @@ namespace Content.Server.GameObjects.Components.Access
 
         private void UpdateUserInterface()
         {
-            var isPrivilegedIdPresent = _privilegedIdContainer.ContainedEntities.Count > 0;
-            var targetIdEntity = _targetIdContainer.ContainedEntities.FirstOrDefault();
+            var isPrivilegedIdPresent = _privilegedIdContainer.ContainedEntity != null;
+            var targetIdEntity = _targetIdContainer.ContainedEntity;
             IdCardConsoleBoundUserInterfaceState newState;
             // this could be prettier
             if (targetIdEntity == null)
