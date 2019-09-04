@@ -26,12 +26,9 @@ namespace Content.Server.GameObjects.Components.Power
             base.Startup();
             if (_drawType != DrawTypes.Node)
             {
-                Logger.Error($"Finding a provider for {Owner.Uid}.");
                 var componentMgr = IoCManager.Resolve<IComponentManager>();
                 AvailableProviders = componentMgr.GetAllComponents<PowerProviderComponent>().Where(x => x.CanServiceDevice(this)).ToList();
                 ConnectToBestProvider();
-                var provider = Provider?.Owner.Uid;
-                Logger.Error($"Provider for ${Owner.Uid}: ${provider}");
             }
         }
 
