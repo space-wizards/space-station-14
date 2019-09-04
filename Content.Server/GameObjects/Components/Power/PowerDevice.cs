@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -25,9 +26,12 @@ namespace Content.Server.GameObjects.Components.Power
             base.Startup();
             if (_drawType != DrawTypes.Node)
             {
+                Logger.Error($"Finding a provider for {Owner.Uid}.");
                 var componentMgr = IoCManager.Resolve<IComponentManager>();
                 AvailableProviders = componentMgr.GetAllComponents<PowerProviderComponent>().Where(x => x.CanServiceDevice(this)).ToList();
                 ConnectToBestProvider();
+                var provider = Provider?.Owner.Uid;
+                Logger.Error($"Provider for ${Owner.Uid}: ${provider}");
             }
         }
 
@@ -206,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Power
             if (Connected == DrawTypes.Node)
             {
                 var node = Owner.GetComponent<PowerNodeComponent>();
-                node.Parent.UpdateDevice(this, oldLoad);
+                node.Parent?.UpdateDevice(this, oldLoad);
             }
             else if (Connected == DrawTypes.Provider)
             {
