@@ -1,11 +1,15 @@
 using System;
+using System.Threading;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent.WiresAction;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Doors
 {
@@ -15,18 +19,47 @@ namespace Content.Server.GameObjects.Components.Doors
     {
         public override string Name => "Airlock";
 
+#pragma warning disable 649
+        [Dependency] private readonly ILocalizationManager _localizationMgr;
+#pragma warning restore 649
+
         /// <summary>
         /// Duration for which power will be disabled after pulsing either power wire.
         /// </summary>
-        private readonly TimeSpan _powerWireTimeout = TimeSpan.FromSeconds(5.0);
+        private readonly TimeSpan _powerWiresTimeout = TimeSpan.FromSeconds(5.0);
 
         private PowerDeviceComponent _powerDevice;
         private WiresComponent _wires;
 
+        private CancellationTokenSource _powerWiresPulsedTimerCancel;
+
+        private bool _powerWiresPulsed;
         /// <summary>
-        /// Last time either power wire was pulsed.
+        /// True if either power wire was pulsed in the last <see cref="_powerWiresTimeout"/>.
         /// </summary>
-        private DateTime _lastPowerPulse = DateTime.MinValue;
+        private bool PowerWiresPulsed
+        {
+            get => _powerWiresPulsed;
+            set
+            {
+                _powerWiresPulsed = value;
+                UpdateWiresStatus();
+            }
+        }
+
+        private void UpdateWiresStatus()
+        {
+            var powerMessage = "A yellow light is on.";
+            if (_powerWiresPulsed)
+            {
+                powerMessage = "A yellow light is blinking rapidly.";
+            } else if (_wires.IsWireCut(Wires.MainPower) &&
+                       _wires.IsWireCut(Wires.BackupPower))
+            {
+                powerMessage = "A red light is on.";
+            }
+            _wires.SetStatus(WiresStatus.PowerIndicator, _localizationMgr.GetString(powerMessage));
+        }
 
         public override void Initialize()
         {
@@ -53,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Doors
         private enum Wires
         {
             /// <summary>
-            /// Pulsing turns off power for <see cref="AirlockComponent._powerWireTimeout"/>.
+            /// Pulsing turns off power for <see cref="AirlockComponent._powerWiresTimeout"/>.
             /// Cutting turns off power permanently if <see cref="BackupPower"/> is also cut.
             /// Mending restores power.
             /// </summary>
@@ -62,10 +95,16 @@ namespace Content.Server.GameObjects.Components.Doors
             BackupPower,
         }
 
+        private enum WiresStatus
+        {
+            PowerIndicator,
+        }
+
         public void RegisterWires(WiresComponent.WiresBuilder builder)
         {
             builder.CreateWire(Wires.MainPower);
             builder.CreateWire(Wires.BackupPower);
+            UpdateWiresStatus();
         }
 
         public void WiresUpdate(WiresUpdateEventArgs args)
@@ -76,7 +115,12 @@ namespace Content.Server.GameObjects.Components.Doors
                 {
                     case Wires.MainPower:
                     case Wires.BackupPower:
-                        _lastPowerPulse = DateTime.Now;
+                        PowerWiresPulsed = true;
+                        _powerWiresPulsedTimerCancel?.Cancel();
+                        _powerWiresPulsedTimerCancel = new CancellationTokenSource();
+                        Timer.Spawn(_powerWiresTimeout,
+                            () => PowerWiresPulsed = false,
+                            _powerWiresPulsedTimerCancel.Token);
                         break;
                 }
             }
@@ -88,10 +132,13 @@ namespace Content.Server.GameObjects.Components.Doors
                     case Wires.MainPower:
                     case Wires.BackupPower:
                         // mending power wires instantly restores power
-                        _lastPowerPulse = DateTime.MinValue;
+                        _powerWiresPulsedTimerCancel?.Cancel();
+                        PowerWiresPulsed = false;
                         break;
                 }
             }
+
+            UpdateWiresStatus();
         }
 
         public override bool CanOpen()
@@ -110,17 +157,14 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool IsPowered()
         {
-            var now = DateTime.Now;
-            if (now.Subtract(_lastPowerPulse) < _powerWireTimeout)
+            if (PowerWiresPulsed)
             {
                 return false;
             }
-            if (_wires.IsWireCut(Wires.MainPower))
+            if (_wires.IsWireCut(Wires.MainPower) &&
+                _wires.IsWireCut(Wires.BackupPower))
             {
-                if (_wires.IsWireCut(Wires.BackupPower))
-                {
-                    return false;
-                }
+                return false;
             }
             return _powerDevice.Powered;
         }

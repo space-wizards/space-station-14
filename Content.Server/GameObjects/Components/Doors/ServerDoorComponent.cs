@@ -162,7 +162,7 @@ namespace Content.Server.GameObjects
         }
 
         private const float AUTO_CLOSE_DELAY = 5;
-        public void OnUpdate(float frameTime)
+        public virtual void OnUpdate(float frameTime)
         {
             if (_state != DoorState.Open)
             {

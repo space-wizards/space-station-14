@@ -35,10 +35,12 @@ namespace Content.Shared.GameObjects.Components
         public class WiresBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly List<ClientWire> WiresList;
+            public readonly List<string> Statuses;
 
-            public WiresBoundUserInterfaceState(List<ClientWire> wiresList)
+            public WiresBoundUserInterfaceState(List<ClientWire> wiresList, List<string> statuses)
             {
                 WiresList = wiresList;
+                Statuses = statuses;
             }
         }
 
