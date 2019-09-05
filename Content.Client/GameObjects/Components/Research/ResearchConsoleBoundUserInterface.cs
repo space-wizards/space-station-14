@@ -29,6 +29,8 @@ namespace Content.Client.GameObjects.Components.Research
 
             _consoleMenu = new ResearchConsoleMenu(this);
 
+            _consoleMenu.OnClose += Close;
+
             _consoleMenu.ServerSyncButton.OnPressed += (args) =>
                 {
                     SendMessage(new SharedResearchConsoleComponent.ConsoleServerSyncMessage());
