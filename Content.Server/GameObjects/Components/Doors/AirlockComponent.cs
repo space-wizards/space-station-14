@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// Duration for which power will be disabled after pulsing either power wire.
         /// </summary>
-        private readonly TimeSpan _powerWiresTimeout = TimeSpan.FromSeconds(5.0);
+        private static readonly TimeSpan _powerWiresTimeout = TimeSpan.FromSeconds(5.0);
 
         private PowerDeviceComponent _powerDevice;
         private WiresComponent _wires;
