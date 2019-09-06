@@ -269,5 +269,13 @@ namespace Content.Server.GameObjects.Components.Power
                     device.Owner, Owner);
             }
         }
+
+        /// <summary>
+        /// Whether the device can be serviced by this provider.
+        /// </summary>
+        public bool CanServiceDevice(PowerDeviceComponent device)
+        {
+            return (device.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).LengthSquared <= _range;
+        }
     }
 }

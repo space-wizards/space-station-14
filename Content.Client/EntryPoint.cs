@@ -106,6 +106,8 @@ namespace Content.Client
                 "IdCard",
                 "Access",
                 "AccessReader",
+                "IdCardConsole",
+                "Airlock",
             };
 
             foreach (var ignoreName in registerIgnore)

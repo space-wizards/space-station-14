@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects
     {
         public override string Name => "Door";
 
-        private DoorState _state = DoorState.Closed;
+        protected DoorState _state = DoorState.Closed;
 
         private float OpenTimeCounter;
 
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects
             base.OnRemove();
         }
 
-        void IActivate.Activate(ActivateEventArgs eventArgs)
+        protected virtual void ActivateImpl(ActivateEventArgs eventArgs)
         {
             if (_state == DoorState.Open)
             {
@@ -55,6 +55,11 @@ namespace Content.Server.GameObjects
             {
                 TryOpen(eventArgs.User);
             }
+        }
+
+        void IActivate.Activate(ActivateEventArgs eventArgs)
+        {
+            ActivateImpl(eventArgs);
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
@@ -80,15 +85,27 @@ namespace Content.Server.GameObjects
             }
         }
 
+        public virtual bool CanOpen()
+        {
+            return true;
+        }
+
+        public bool CanOpen(IEntity user)
+        {
+            if (!CanOpen()) return false;
+            if (!Owner.TryGetComponent(out AccessReader accessReader))
+            {
+                return true;
+            }
+            return accessReader.IsAllowed(user);
+        }
+
         public void TryOpen(IEntity user)
         {
-            if (Owner.TryGetComponent(out AccessReader accessReader))
+            if (!CanOpen(user))
             {
-                if (!accessReader.IsAllowed(user))
-                {
-                    Deny();
-                    return;
-                }
+                Deny();
+                return;
             }
             Open();
         }
@@ -135,7 +152,7 @@ namespace Content.Server.GameObjects
             return true;
         }
 
-        public void Deny()
+        public virtual void Deny()
         {
             _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Deny);
             Timer.Spawn(DenyTime, () =>
@@ -145,7 +162,7 @@ namespace Content.Server.GameObjects
         }
 
         private const float AUTO_CLOSE_DELAY = 5;
-        public void OnUpdate(float frameTime)
+        public virtual void OnUpdate(float frameTime)
         {
             if (_state != DoorState.Open)
             {
@@ -163,7 +180,7 @@ namespace Content.Server.GameObjects
             }
         }
 
-        private enum DoorState
+        protected enum DoorState
         {
             Closed,
             Open,

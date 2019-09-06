@@ -109,7 +109,7 @@ namespace Content.Shared.GameObjects.Components.Research
         public List<string> Technologies;
         public TechnologyDatabaseState(List<string> technologies) : base(ContentNetIDs.TECHNOLOGY_DATABASE)
         {
-            technologies = technologies;
+            Technologies = technologies;
         }
 
         public TechnologyDatabaseState(List<TechnologyPrototype> technologies) : base(ContentNetIDs.TECHNOLOGY_DATABASE)
