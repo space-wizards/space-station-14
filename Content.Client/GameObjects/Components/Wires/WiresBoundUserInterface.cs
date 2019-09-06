@@ -25,8 +25,7 @@ namespace Content.Client.GameObjects.Components.Wires
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            var castState = (WiresBoundUserInterfaceState) state;
-            _menu.Populate(castState.WiresList);
+            _menu.Populate((WiresBoundUserInterfaceState) state);
         }
 
         public void PerformAction(Guid guid, WiresAction action)

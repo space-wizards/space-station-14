@@ -16,26 +16,26 @@ namespace Content.Client.GameObjects.Components.Wires
         protected override Vector2? CustomSize => (300, 450);
         public WiresBoundUserInterface Owner { get; set; }
 
-        private readonly VBoxContainer _rows;
+        private readonly VBoxContainer _wiresContainer;
 
         public WiresMenu()
         {
             IoCManager.InjectDependencies(this); // TODO: Remove this and use DynamicTypeFactory?
             Title = _localizationManager.GetString("Wires");
-            _rows = new VBoxContainer();
-            Contents.AddChild(_rows);
+            _wiresContainer = new VBoxContainer();
+            Contents.AddChild(_wiresContainer);
         }
 
-        public void Populate(List<ClientWire> wiresList)
+        public void Populate(WiresBoundUserInterfaceState state)
         {
-            _rows.RemoveAllChildren();
-            foreach (var entry in wiresList)
+            _wiresContainer.RemoveAllChildren();
+            foreach (var wire in state.WiresList)
             {
                 var container = new HBoxContainer();
                 var newLabel = new Label()
                 {
-                    Text = $"{_localizationManager.GetString(entry.Color.Name())}: ",
-                    FontColorOverride = entry.Color,
+                    Text = $"{_localizationManager.GetString(wire.Color.Name())}: ",
+                    FontColorOverride = wire.Color,
                 };
                 container.AddChild(newLabel);
 
@@ -43,16 +43,26 @@ namespace Content.Client.GameObjects.Components.Wires
                 {
                     Text = _localizationManager.GetString("Pulse"),
                 };
-                newButton.OnPressed += _ => Owner.PerformAction(entry.Guid, WiresAction.Pulse);
+                newButton.OnPressed += _ => Owner.PerformAction(wire.Guid, WiresAction.Pulse);
                 container.AddChild(newButton);
 
                 newButton = new Button()
                 {
-                    Text = entry.IsCut ? _localizationManager.GetString("Mend") : _localizationManager.GetString("Cut"),
+                    Text = wire.IsCut ? _localizationManager.GetString("Mend") : _localizationManager.GetString("Cut"),
                 };
-                newButton.OnPressed += _ => Owner.PerformAction(entry.Guid, entry.IsCut ? WiresAction.Mend : WiresAction.Cut);
+                newButton.OnPressed += _ => Owner.PerformAction(wire.Guid, wire.IsCut ? WiresAction.Mend : WiresAction.Cut);
                 container.AddChild(newButton);
-                _rows.AddChild(container);
+                _wiresContainer.AddChild(container);
+            }
+
+            foreach (var status in state.Statuses)
+            {
+                var container = new HBoxContainer();
+                container.AddChild(new Label
+                {
+                    Text = status
+                });
+                _wiresContainer.AddChild(container);
             }
         }
 
