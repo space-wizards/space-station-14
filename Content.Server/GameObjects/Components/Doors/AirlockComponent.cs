@@ -15,6 +15,7 @@ namespace Content.Server.GameObjects.Components.Doors
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(ServerDoorComponent))]
     public class AirlockComponent : ServerDoorComponent, IWires, IAttackBy
     {
         public override string Name => "Airlock";
