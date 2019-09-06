@@ -210,12 +210,14 @@ namespace Content.Client.UserInterface
             {
                 GrowHorizontal = Control.GrowDirection.Begin,
                 GrowVertical = Control.GrowDirection.Begin,
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
 
             HandsContainer = new MarginContainer
             {
                 GrowHorizontal = Control.GrowDirection.Both,
-                GrowVertical = Control.GrowDirection.Begin
+                GrowVertical = Control.GrowDirection.Begin,
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
 
             _combatPanelContainer = new VBoxContainer
