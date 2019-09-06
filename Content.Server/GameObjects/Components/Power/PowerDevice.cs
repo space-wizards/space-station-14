@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -17,6 +20,17 @@ namespace Content.Server.GameObjects.Components.Power
     public class PowerDeviceComponent : Component, EntitySystems.IExamine
     {
         public override string Name => "PowerDevice";
+
+        public override void Startup()
+        {
+            base.Startup();
+            if (_drawType != DrawTypes.Node)
+            {
+                var componentMgr = IoCManager.Resolve<IComponentManager>();
+                AvailableProviders = componentMgr.GetAllComponents<PowerProviderComponent>().Where(x => x.CanServiceDevice(this)).ToList();
+                ConnectToBestProvider();
+            }
+        }
 
         /// <summary>
         ///     The method of draw we will try to use to place our load set via component parameter, defaults to using power providers
@@ -160,6 +174,8 @@ namespace Content.Server.GameObjects.Components.Power
                 node.OnPowernetDisconnect -= PowernetDisconnect;
                 node.OnPowernetRegenerate -= PowernetRegenerate;
             }
+
+            Connected = DrawTypes.None;
 
             if (Provider != null)
             {
