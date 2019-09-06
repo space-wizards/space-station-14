@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// Duration for which power will be disabled after pulsing either power wire.
         /// </summary>
-        private static readonly TimeSpan _powerWiresTimeout = TimeSpan.FromSeconds(5.0);
+        private static readonly TimeSpan PowerWiresTimeout = TimeSpan.FromSeconds(5.0);
 
         private PowerDeviceComponent _powerDevice;
         private WiresComponent _wires;
@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool _powerWiresPulsed;
         /// <summary>
-        /// True if either power wire was pulsed in the last <see cref="_powerWiresTimeout"/>.
+        /// True if either power wire was pulsed in the last <see cref="PowerWiresTimeout"/>.
         /// </summary>
         private bool PowerWiresPulsed
         {
@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Doors
         private enum Wires
         {
             /// <summary>
-            /// Pulsing turns off power for <see cref="AirlockComponent._powerWiresTimeout"/>.
+            /// Pulsing turns off power for <see cref="AirlockComponent.PowerWiresTimeout"/>.
             /// Cutting turns off power permanently if <see cref="BackupPower"/> is also cut.
             /// Mending restores power.
             /// </summary>
@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Doors
                         PowerWiresPulsed = true;
                         _powerWiresPulsedTimerCancel?.Cancel();
                         _powerWiresPulsedTimerCancel = new CancellationTokenSource();
-                        Timer.Spawn(_powerWiresTimeout,
+                        Timer.Spawn(PowerWiresTimeout,
                             () => PowerWiresPulsed = false,
                             _powerWiresPulsedTimerCancel.Token);
                         break;
