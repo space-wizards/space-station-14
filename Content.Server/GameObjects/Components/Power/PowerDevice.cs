@@ -175,6 +175,8 @@ namespace Content.Server.GameObjects.Components.Power
                 node.OnPowernetRegenerate -= PowernetRegenerate;
             }
 
+            Connected = DrawTypes.None;
+
             if (Provider != null)
             {
                 Provider = null;
