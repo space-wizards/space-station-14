@@ -62,7 +62,6 @@ namespace Content.Client
                 "EmitSoundOnUse",
                 "FootstepModifier",
                 "HeatResistance",
-                "CombatMode",
                 "Teleportable",
                 "ItemTeleporter",
                 "Portal",
