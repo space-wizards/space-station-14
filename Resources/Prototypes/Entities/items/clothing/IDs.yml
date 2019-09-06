@@ -6,15 +6,121 @@
   components:
   - type: Sprite
     sprite: Clothing/id_cards.rsi
-    state: assistant
+    state: civilian
   - type: Icon
     sprite: Clothing/id_cards.rsi
-    state: assistant
+    state: civilian
   - type: Clothing
     Slots:
     - idcard
+    sprite: Clothing/id_cards.rsi
+    HeldPrefix: civilian
   - type: IdCard
-    fullName: John Doe
+  - type: Access
+
+- type: entity
+  parent: IDCardStandard
+  id: CommandIDCard
+  name: Command Identification Card
+  components:
+  - type: Clothing
+    HeldPrefix: gold
+  - type: Sprite
+    state: gold
+  - type: Icon
+    state: gold
+  - type: IdCard
+    jobTitle: Captain
+  - type: Access
+    tags: ["command"]
+
+- type: entity
+  parent: IDCardStandard
+  id: SecurityIDCard
+  name: Security Identification Card
+  components:
+  - type: Sprite
+    state: security
+  - type: Icon
+    state: security
+  - type: IdCard
+    jobTitle: Security Officer
+  - type: Access
+    tags: ["security"]
+
+- type: entity
+  parent: IDCardStandard
+  id: EngineeringIDCard
+  name: Engineering Identification Card
+  components:
+  - type: Sprite
+    state: engineering
+  - type: Icon
+    state: engineering
+  - type: IdCard
+    jobTitle: Engineer
+  - type: Access
+    tags: ["engineering"]
+
+- type: entity
+  parent: IDCardStandard
+  id: MedicalIDCard
+  name: Medical Identification Card
+  components:
+  - type: Sprite
+    state: medical
+  - type: Icon
+    state: medical
+  - type: IdCard
+    jobTitle: Doctor
+  - type: Access
+    tags: ["medical"]
+
+- type: entity
+  parent: IDCardStandard
+  id: CargoIDCard
+  name: Cargo Identification Card
+  components:
+  - type: Sprite
+    state: cargo
+  - type: Icon
+    state: cargo
+  - type: IdCard
+    jobTitle: Cargo Technician
+  - type: Access
+    tags: ["cargo"]
+
+- type: entity
+  parent: IDCardStandard
+  id: ResearchIDCard
+  name: Research Identification Card
+  components:
+  - type: Sprite
+    state: research
+  - type: Icon
+    state: research
+  - type: IdCard
+    jobTitle: Scientist
+  - type: Access
+    tags: ["research"]
+
+- type: entity
+  parent: IDCardStandard
+  id: ServiceIDCard
+  name: Service Identification Card
+  components:
+  - type: IdCard
+    jobTitle: Bartender
+  - type: Access
+    tags: ["service"]
+
+- type: entity
+  parent: IDCardStandard
+  id: AssistantIDCard
+  name: Assistant Identification Card
+  components:
+  - type: IdCard
     jobTitle: Assistant
   - type: Access
-    tags: ["civilian", "maintenance", "engineering"]
+    tags: ["maintenance"]
+

@@ -109,6 +109,13 @@
   parent: computerBase
   name: ID Card Computer
   components:
+  - type: AccessReader
+    necessary: ["command"]
+  - type: IdCardConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.IdCardConsoleUiKey.Key
+      type: IdCardConsoleBoundUserInterface
   - type: Appearance
     visuals:
     - type: ComputerVisualizer2D
