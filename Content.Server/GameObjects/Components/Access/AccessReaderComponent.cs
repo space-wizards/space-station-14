@@ -13,9 +13,17 @@ namespace Content.Server.GameObjects.Components.Access
     public class AccessReader : Component
     {
         public override string Name => "AccessReader";
+        [ViewVariables]
         private List<string> _necessaryTags;
+        [ViewVariables]
         private List<string> _sufficientTags;
 
+        /// <summary>
+        /// Searches an <see cref="AccessComponent"/> in the entity itself, in its active hand or in its ID slot.
+        /// Returns true if an <see cref="AccessComponent"/> is found and its tags list contains
+        /// at least one of <see cref="_sufficientTags"/> or all of <see cref="_necessaryTags"/>.
+        /// </summary>
+        /// <param name="entity">The entity to be searched for access.</param>
         public bool IsAllowed(IEntity entity)
         {
             var accessProvider = FindAccessProvider(entity);
