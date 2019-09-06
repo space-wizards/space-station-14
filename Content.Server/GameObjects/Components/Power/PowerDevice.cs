@@ -209,7 +209,7 @@ namespace Content.Server.GameObjects.Components.Power
             if (Connected == DrawTypes.Node)
             {
                 var node = Owner.GetComponent<PowerNodeComponent>();
-                node.Parent?.UpdateDevice(this, oldLoad);
+                node.Parent.UpdateDevice(this, oldLoad);
             }
             else if (Connected == DrawTypes.Provider)
             {
