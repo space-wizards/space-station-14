@@ -131,6 +131,7 @@ namespace Content.Client.Research
             {
                 SizeFlagsStretchRatio = 8,
                 SizeFlagsVertical = SizeFlags.FillExpand,
+                SelectMode = ItemList.ItemListSelectMode.Button,
             };
 
             Items.OnItemSelected += ItemSelected;
@@ -178,12 +179,6 @@ namespace Content.Client.Research
             int.TryParse(AmountLineEdit.Text, out var quantity);
             if (quantity <= 0) quantity = 1;
             Owner.Queue(_shownRecipes[args.ItemIndex], quantity);
-            Items.SelectMode = ItemList.ItemListSelectMode.None;
-            Timer.Spawn(100, () =>
-            {
-                Items.Unselect(args.ItemIndex);
-                Items.SelectMode = ItemList.ItemListSelectMode.Single;
-            });
         }
 
         public void PopulateMaterials()
@@ -194,7 +189,7 @@ namespace Content.Client.Research
             {
                 if (!PrototypeManager.TryIndex(id, out MaterialPrototype materialPrototype)) continue;
                 var material = materialPrototype.Material;
-                Materials.AddItem($"{material.Name} {amount} cm³", material.Icon.Frame0(), false);
+                Materials.Add(new Item() {Text = $"{material.Name} {amount} cm³", Icon = material.Icon.Frame0(), Selectable = false});
             }
         }
 
@@ -208,7 +203,7 @@ namespace Content.Client.Research
             for (var i = 0; i < _shownRecipes.Count; i++)
             {
                 var prototype = _shownRecipes[i];
-                Items.SetItemDisabled(i, !Owner.Lathe.CanProduce(prototype, quantity));
+                Items[i].Disabled = !Owner.Lathe.CanProduce(prototype, quantity);
             }
         }
 
@@ -227,7 +222,7 @@ namespace Content.Client.Research
             for (var i = 0; i < _shownRecipes.Count; i++)
             {
                 var prototype = _shownRecipes[i];
-                Items.AddItem(prototype.Name, prototype.Icon.Frame0());
+                Items.Add(new Item() {Text = prototype.Name, Icon = prototype.Icon.Frame0()});
             }
 
             PopulateDisabled();

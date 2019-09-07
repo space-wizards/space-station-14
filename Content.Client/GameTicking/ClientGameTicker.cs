@@ -14,6 +14,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -77,7 +78,7 @@ namespace Content.Client.GameTicking
             _lobby.OnlinePlayerItemList.Clear();
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
-                _lobby.OnlinePlayerItemList.AddItem(session.Name);
+                _lobby.OnlinePlayerItemList.Add(new Item() { Text = session.Name });
             }
         }
 
