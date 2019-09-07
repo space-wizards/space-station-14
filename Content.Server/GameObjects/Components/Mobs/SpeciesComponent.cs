@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects
         /// <summary>
         /// Holds the damage template which controls the threshold and resistance settings for this species type
         /// </summary>
-        private DamageTemplates DamageTemplate;
+        public DamageTemplates DamageTemplate { get; private set; }
 
         /// <summary>
         /// Variable for serialization
