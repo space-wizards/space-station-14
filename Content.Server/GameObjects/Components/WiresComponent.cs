@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
@@ -51,6 +53,11 @@ namespace Content.Server.GameObjects.Components
         public readonly List<Wire> WiresList = new List<Wire>();
 
         /// <summary>
+        /// Status messages are displayed at the bottom of the UI.
+        /// </summary>
+        private readonly Dictionary<object, string> _statuses = new Dictionary<object, string>();
+
+        /// <summary>
         /// As seen on /vg/station.
         /// <see cref="AssignColor"/> and <see cref="WiresBuilder.CreateWire"/>.
         /// </summary>
@@ -88,6 +95,17 @@ namespace Content.Server.GameObjects.Components
             }
 
             UpdateUserInterface();
+        }
+
+        /// <summary>
+        /// Returns whether the wire associated with <see cref="identifier"/> is cut.
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
+        public bool IsWireCut(object identifier)
+        {
+            var wire = WiresList.Find(x => x.Identifier.Equals(identifier));
+            if(wire == null) throw new ArgumentException();
+            return wire.IsCut;
         }
 
         public class Wire
@@ -233,7 +251,7 @@ namespace Content.Server.GameObjects.Components
             {
                 clientList.Add(new ClientWire(entry.Guid, entry.Color, entry.IsCut));
             }
-            _userInterface.SetState(new WiresBoundUserInterfaceState(clientList));
+            _userInterface.SetState(new WiresBoundUserInterfaceState(clientList, _statuses.Values.ToList()));
         }
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
@@ -246,6 +264,19 @@ namespace Content.Server.GameObjects.Components
         void IExamine.Examine(FormattedMessage message)
         {
             message.AddText($"The maintenance panel is {(IsOpen ? "open" : "closed")}.");
+        }
+
+        public void SetStatus(object statusIdentifier, string newMessage)
+        {
+            if (_statuses.TryGetValue(statusIdentifier, out var storedMessage))
+            {
+                if (storedMessage == newMessage)
+                {
+                    return;
+                }
+            }
+            _statuses[statusIdentifier] = newMessage;
+            UpdateUserInterface();
         }
     }
 }
