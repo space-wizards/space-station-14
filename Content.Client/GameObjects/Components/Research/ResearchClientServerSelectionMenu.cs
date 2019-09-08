@@ -74,7 +74,7 @@ namespace Content.Client.GameObjects.Components.Research
             for (var i = 0; i < _serverCount; i++)
             {
                 var id = _serverIds[i];
-                _servers.Add(new Item(){ Text = $"ID: {id} || {_serverNames[i]}" });
+                _servers.AddItem($"ID: {id} || {_serverNames[i]}");
                 if (id == _selectedServerId)
                     _servers[id].Selected = true;
             }

@@ -241,17 +241,17 @@ namespace Content.Client.Research
             {
                 if (Owner.IsTechnologyUnlocked(tech))
                 {
-                    _unlockedTechnologies.Add(new Item() {Text = tech.Name, Icon = tech.Icon.Frame0()});
+                    _unlockedTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
                     _unlockedTechnologyPrototypes.Add(tech);
                 }
                 else if (Owner.CanUnlockTechnology(tech))
                 {
-                    _unlockableTechnologies.Add(new Item() {Text = tech.Name, Icon = tech.Icon.Frame0()});
+                    _unlockableTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
                     _unlockableTechnologyPrototypes.Add(tech);
                 }
                 else
                 {
-                    _futureTechnologies.Add(new Item() {Text = tech.Name, Icon = tech.Icon.Frame0()});
+                    _futureTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
                     _futureTechnologyPrototypes.Add(tech);
                 }
             }

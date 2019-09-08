@@ -53,7 +53,7 @@ namespace Content.Client.VendingMachines
                 {
                     icon = IconComponent.GetPrototypeIcon(prototype, _resourceCache).TextureFor(Direction.South);
                 }
-                _items.Add(new Item() {Text = $"{entry.ID} ({entry.Amount} left)", Icon = icon});
+                _items.AddItem($"{entry.ID} ({entry.Amount} left)", icon);
             }
         }
 

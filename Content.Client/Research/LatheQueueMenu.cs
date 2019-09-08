@@ -128,7 +128,7 @@ namespace Content.Client.Research
             var idx = 1;
             foreach (var recipe in Owner.QueuedRecipes)
             {
-                QueueList.Add(new Item() {Text = $"{idx}. {recipe.Name}", Icon = recipe.Icon.Frame0(), Disabled = false});
+                QueueList.AddItem($"{idx}. {recipe.Name}", recipe.Icon.Frame0());
                 idx++;
             }
         }

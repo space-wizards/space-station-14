@@ -189,7 +189,7 @@ namespace Content.Client.Research
             {
                 if (!PrototypeManager.TryIndex(id, out MaterialPrototype materialPrototype)) continue;
                 var material = materialPrototype.Material;
-                Materials.Add(new Item() {Text = $"{material.Name} {amount} cm³", Icon = material.Icon.Frame0(), Selectable = false});
+                Materials.AddItem($"{material.Name} {amount} cm³", material.Icon.Frame0(), false);
             }
         }
 
@@ -222,7 +222,7 @@ namespace Content.Client.Research
             for (var i = 0; i < _shownRecipes.Count; i++)
             {
                 var prototype = _shownRecipes[i];
-                Items.Add(new Item() {Text = prototype.Name, Icon = prototype.Icon.Frame0()});
+                Items.AddItem(prototype.Name, prototype.Icon.Frame0());
             }
 
             PopulateDisabled();

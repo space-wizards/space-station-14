@@ -78,7 +78,7 @@ namespace Content.Client.GameTicking
             _lobby.OnlinePlayerItemList.Clear();
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
-                _lobby.OnlinePlayerItemList.Add(new Item() { Text = session.Name });
+                _lobby.OnlinePlayerItemList.AddItem(session.Name);
             }
         }
 

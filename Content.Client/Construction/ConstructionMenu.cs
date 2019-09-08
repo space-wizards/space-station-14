@@ -214,7 +214,7 @@ namespace Content.Client.Construction
                             throw new NotImplementedException();
                     }
 
-                    StepList.Add(new Item() { Text = text, Icon = icon, Selectable = false});
+                    StepList.AddItem(text, icon, false);
                 }
             }
         }
