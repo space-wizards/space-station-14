@@ -10,17 +10,15 @@ namespace Content.Client.GameObjects.Components.Wires
 {
     public class WiresMenu : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        private readonly ILocalizationManager _localizationManager;
         protected override Vector2? CustomSize => (300, 450);
         public WiresBoundUserInterface Owner { get; set; }
 
         private readonly VBoxContainer _wiresContainer;
 
-        public WiresMenu()
+        public WiresMenu(ILocalizationManager localizationManager)
         {
-            IoCManager.InjectDependencies(this); // TODO: Remove this and use DynamicTypeFactory?
+            _localizationManager = localizationManager;
             Title = _localizationManager.GetString("Wires");
             _wiresContainer = new VBoxContainer();
             Contents.AddChild(_wiresContainer);

@@ -267,6 +267,7 @@ namespace Content.Server.GameObjects
             }
         }
 
+        /// <inheritdoc />
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
             IComponent component = null)
         {
@@ -282,10 +283,12 @@ namespace Content.Server.GameObjects
                     if (playerentity == Owner)
                         HandleInventoryMessage(msg);
                     break;
+
                 case OpenSlotStorageUIMessage msg:
-                    ItemComponent item = GetSlotItem(msg.Slot);
-                    ServerStorageComponent storage;
-                    if (item.Owner.TryGetComponent(out storage))
+                    if (!HasSlot(msg.Slot)) // client input sanitization
+                        return;
+                    var item = GetSlotItem(msg.Slot);
+                    if (item != null && item.Owner.TryGetComponent(out ServerStorageComponent storage))
                         storage.OpenStorageUI(Owner);
                     break;
             }
