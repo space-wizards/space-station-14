@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects;
@@ -262,11 +262,12 @@ namespace Content.Server.GameTicking
         private IEntity _spawnPlayerMob()
         {
             var entity = _entityManager.SpawnEntityAt(PlayerPrototypeName, _getLateJoinSpawnPoint());
-            var shoes = _entityManager.SpawnEntity("ShoesItem");
-            var uniform = _entityManager.SpawnEntity("UniformAssistant");
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
+                var uniform = _entityManager.SpawnEntity("UniformAssistant");
                 inventory.Equip(EquipmentSlotDefines.Slots.INNERCLOTHING, uniform.GetComponent<ClothingComponent>());
+
+                var shoes = _entityManager.SpawnEntity("ShoesItem");
                 inventory.Equip(EquipmentSlotDefines.Slots.SHOES, shoes.GetComponent<ClothingComponent>());
             }
 
