@@ -12,7 +12,20 @@
     state: spear
 
   - type: MeleeWeapon
+    range: 1.5
+    arcwidth: 10
+    arc: spear
+
   - type: Item
     Size: 24
     sprite: Objects/items/spear.rsi
     prefix: inhand
+
+- type: WeaponArc
+  id: spear
+  color: 255,255,255,765
+  colorDelta: 0,0,0,-5100
+  state: spear
+  length: 0.15
+  speed: 6
+  arcType: Poke

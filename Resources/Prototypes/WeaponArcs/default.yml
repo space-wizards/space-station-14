@@ -1,0 +1,7 @@
+- type: WeaponArc
+  id: default
+  state: slash
+  arcType: Slash
+  length: 0.2
+  color: 255,255,255,1020
+  colorDelta: 0,0,0,-5100

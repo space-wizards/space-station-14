@@ -1,0 +1,9 @@
+- type: entity
+  id: WeaponArc
+  save: false
+  components:
+  - type: Sprite
+    sprite: Effects/weapons/arcs.rsi
+    directional: false
+    offset: 0.75, 0
+  - type: MeleeWeaponArcAnimation
