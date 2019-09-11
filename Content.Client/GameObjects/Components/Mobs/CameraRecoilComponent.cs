@@ -13,10 +13,10 @@ namespace Content.Client.GameObjects.Components.Mobs
     public sealed class CameraRecoilComponent : SharedCameraRecoilComponent
     {
         // Maximum rate of magnitude restore towards 0 kick.
-        private const float RestoreRateMax = 1.5f;
+        private const float RestoreRateMax = 2f;
 
         // Minimum rate of magnitude restore towards 0 kick.
-        private const float RestoreRateMin = 0.5f;
+        private const float RestoreRateMin = 1f;
 
         // Time in seconds since the last kick that lerps RestoreRateMin and RestoreRateMax
         private const float RestoreRateRamp = 0.05f;
@@ -77,7 +77,19 @@ namespace Content.Client.GameObjects.Components.Mobs
             var normalized = _currentKick.Normalized;
             var restoreRate = FloatMath.Lerp(RestoreRateMin, RestoreRateMax, Math.Min(1, _lastKickTime/RestoreRateRamp));
             var restore = normalized * restoreRate * frameTime;
-            _currentKick -= restore;
+            var (x, y) = _currentKick - restore;
+            if (Math.Sign(x) != Math.Sign(_currentKick.X))
+            {
+                x = 0;
+            }
+
+            if (Math.Sign(y) != Math.Sign(_currentKick.Y))
+            {
+                y = 0;
+            }
+
+            _currentKick = (x, y);
+
             _updateEye();
         }
 
