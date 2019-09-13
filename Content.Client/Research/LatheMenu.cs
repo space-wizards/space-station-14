@@ -131,6 +131,7 @@ namespace Content.Client.Research
             {
                 SizeFlagsStretchRatio = 8,
                 SizeFlagsVertical = SizeFlags.FillExpand,
+                SelectMode = ItemList.ItemListSelectMode.Button,
             };
 
             Items.OnItemSelected += ItemSelected;
@@ -178,12 +179,6 @@ namespace Content.Client.Research
             int.TryParse(AmountLineEdit.Text, out var quantity);
             if (quantity <= 0) quantity = 1;
             Owner.Queue(_shownRecipes[args.ItemIndex], quantity);
-            Items.SelectMode = ItemList.ItemListSelectMode.None;
-            Timer.Spawn(100, () =>
-            {
-                Items.Unselect(args.ItemIndex);
-                Items.SelectMode = ItemList.ItemListSelectMode.Single;
-            });
         }
 
         public void PopulateMaterials()
@@ -208,7 +203,7 @@ namespace Content.Client.Research
             for (var i = 0; i < _shownRecipes.Count; i++)
             {
                 var prototype = _shownRecipes[i];
-                Items.SetItemDisabled(i, !Owner.Lathe.CanProduce(prototype, quantity));
+                Items[i].Disabled = !Owner.Lathe.CanProduce(prototype, quantity);
             }
         }
 
