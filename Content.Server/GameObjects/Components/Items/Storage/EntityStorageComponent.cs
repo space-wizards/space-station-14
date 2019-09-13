@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Storage;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -66,6 +67,14 @@ namespace Content.Server.GameObjects.Components
             var count = 0;
             foreach (var entity in entities)
             {
+                // prevents taking items out of inventories, out of containers, and orphaning child entities
+                if(!entity.Transform.IsMapTransform)
+                    continue;
+
+                // only items that can be stored in an inventory, or a player, can be eaten by a locker
+                if(!entity.HasComponent<StoreableComponent>() && !entity.HasComponent<IActorComponent>())
+                    continue;
+                
                 if (!AddToContents(entity))
                 {
                     continue;

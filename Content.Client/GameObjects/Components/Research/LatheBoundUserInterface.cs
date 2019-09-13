@@ -37,7 +37,6 @@ namespace Content.Client.GameObjects.Components.Research
         protected override void Open()
         {
             base.Open();
-            IoCManager.InjectDependencies(this);
 
             if (!Owner.Owner.TryGetComponent(out MaterialStorageComponent storage)
             ||  !Owner.Owner.TryGetComponent(out SharedLatheComponent lathe)

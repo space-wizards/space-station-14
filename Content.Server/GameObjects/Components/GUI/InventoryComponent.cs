@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -14,6 +15,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
+using IComponent = Robust.Shared.Interfaces.GameObjects.IComponent;
 
 namespace Content.Server.GameObjects
 {
@@ -223,6 +225,24 @@ namespace Content.Server.GameObjects
         }
 
         /// <summary>
+        /// The underlying Container System just notified us that an entity was removed from it.
+        /// We need to make sure we process that removed entity as being unequpped from the slot.
+        /// </summary>
+        private void ForceUnequip(IContainer container, IEntity entity)
+        {
+            // make sure this is one of our containers.
+            // Technically the correct way would be to enumerate the possible slot names
+            // comparing with this container, but I might as well put the dictionary to good use.
+            if (!(container is ContainerSlot slot) || !SlotContainers.ContainsValue(slot))
+                return;
+
+            if (entity.TryGetComponent(out ItemComponent itemComp))
+                itemComp.RemovedFromSlot();
+
+            Dirty();
+        }
+
+        /// <summary>
         /// Message that tells us to equip or unequip items from the inventory slots
         /// </summary>
         /// <param name="msg"></param>
@@ -290,6 +310,11 @@ namespace Content.Server.GameObjects
                     var item = GetSlotItem(msg.Slot);
                     if (item != null && item.Owner.TryGetComponent(out ServerStorageComponent storage))
                         storage.OpenStorageUI(Owner);
+                    break;
+
+                case ContainerContentsModifiedMessage msg:
+                    if (msg.Removed)
+                        ForceUnequip(msg.Container, msg.Entity);
                     break;
             }
         }
