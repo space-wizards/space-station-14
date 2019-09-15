@@ -20,7 +20,6 @@ namespace Content.Client.GameObjects.Components.Access
 
         protected override void Open()
         {
-            IoCManager.InjectDependencies(this);
             base.Open();
 
             _window = new IdCardConsoleWindow(this, _localizationManager);

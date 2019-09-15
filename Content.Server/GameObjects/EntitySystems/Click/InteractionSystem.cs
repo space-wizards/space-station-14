@@ -261,6 +261,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var userEntity = ((IPlayerSession) session).AttachedEntity;
 
+            if (userEntity == null || !userEntity.IsValid())
+            {
+                return;
+            }
+
             if (userEntity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
             {
                 DoAttack(userEntity, coords, uid);

@@ -61,7 +61,7 @@ namespace Content.Client
             var label = new PopupLabel {Text = message};
             var minimumSize = label.CombinedMinimumSize;
             label.InitialPos = label.Position = coordinates.Position - minimumSize / 2;
-            _userInterfaceManager.StateRoot.AddChild(label);
+            _userInterfaceManager.PopupRoot.AddChild(label);
             _aliveLabels.Add(label);
         }
 

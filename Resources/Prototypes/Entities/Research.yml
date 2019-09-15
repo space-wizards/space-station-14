@@ -9,13 +9,12 @@
     sprite: Buildings/research.rsi
     state: server
   - type: Clickable
-  - type: BoundingBox
   - type: Collidable
   - type: SnapGrid
     offset: Center
   - type: ResearchServer
   - type: TechnologyDatabase
-  
+
 - type: entity
   id: baseResearchAndDevelopmentPointSource
   name: "Base R&D Point Source"
@@ -27,7 +26,6 @@
     sprite: Buildings/research.rsi
     state: tdoppler
   - type: Clickable
-  - type: BoundingBox
   - type: Collidable
   - type: SnapGrid
     offset: Center

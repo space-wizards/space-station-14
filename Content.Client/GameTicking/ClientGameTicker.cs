@@ -14,6 +14,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;

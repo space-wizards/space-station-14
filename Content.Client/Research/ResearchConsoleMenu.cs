@@ -54,7 +54,7 @@ namespace Content.Client.Research
 
             _unlockedTechnologies = new ItemList()
             {
-                SelectMode = ItemList.ItemListSelectMode.Single,
+                SelectMode = ItemList.ItemListSelectMode.Button,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsVertical = SizeFlags.FillExpand,
             };
@@ -63,7 +63,7 @@ namespace Content.Client.Research
 
             _unlockableTechnologies = new ItemList()
             {
-                SelectMode = ItemList.ItemListSelectMode.Single,
+                SelectMode = ItemList.ItemListSelectMode.Button,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsVertical = SizeFlags.FillExpand,
             };
@@ -72,7 +72,7 @@ namespace Content.Client.Research
 
             _futureTechnologies = new ItemList()
             {
-                SelectMode = ItemList.ItemListSelectMode.Single,
+                SelectMode = ItemList.ItemListSelectMode.Button,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsVertical = SizeFlags.FillExpand,
             };
@@ -192,8 +192,6 @@ namespace Content.Client.Research
         {
             TechnologySelected = _unlockedTechnologyPrototypes[obj.ItemIndex];
 
-            _unlockedTechnologies.Unselect(obj.ItemIndex);
-
             UnlockButton.Disabled = true;
 
             PopulateSelectedTechnology();
@@ -206,8 +204,6 @@ namespace Content.Client.Research
         {
             TechnologySelected = _unlockableTechnologyPrototypes[obj.ItemIndex];
 
-            _unlockableTechnologies.Unselect(obj.ItemIndex);
-
             UnlockButton.Disabled = Owner.Points < TechnologySelected.RequiredPoints;
 
             PopulateSelectedTechnology();
@@ -219,8 +215,6 @@ namespace Content.Client.Research
         private void FutureTechnologySelected(ItemList.ItemListSelectedEventArgs obj)
         {
             TechnologySelected = _futureTechnologyPrototypes[obj.ItemIndex];
-
-            _futureTechnologies.Unselect(obj.ItemIndex);
 
             UnlockButton.Disabled = true;
 
@@ -257,7 +251,7 @@ namespace Content.Client.Research
                 }
                 else
                 {
-                    _futureTechnologies.AddItem(tech.Name, tech.Icon.Frame0());;
+                    _futureTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
                     _futureTechnologyPrototypes.Add(tech);
                 }
             }
