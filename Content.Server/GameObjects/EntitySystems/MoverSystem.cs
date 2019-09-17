@@ -153,6 +153,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (mover.StepSoundDistance > distanceNeeded)
                 {
                     mover.StepSoundDistance = 0;
+
+                    if (mover.Owner.Prototype.ID == "MobObserver" || mover.Owner.Prototype.ID == "AdminObserver")
+                    {
+                        return;
+                    }
+
                     if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
                         && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
                         && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
