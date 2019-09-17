@@ -51,21 +51,22 @@ namespace Content.Client.GameObjects.EntitySystems
             RegisterMessageType<ExamineSystemMessages.ExamineInfoResponseMessage>();
         }
 
-        private void HandleExamine(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleExamine(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             if (!uid.IsValid() || !_entityManager.TryGetEntity(uid, out var examined))
             {
-                return;
+                return false;
             }
 
             var playerEntity = _playerManager.LocalPlayer.ControlledEntity;
 
             if (playerEntity == null || !CanExamine(playerEntity, examined))
             {
-                return;
+                return false;
             }
 
             DoExamine(examined);
+            return true;
         }
 
         public async void DoExamine(IEntity entity)

@@ -6,6 +6,7 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -275,6 +276,10 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public bool CanServiceDevice(PowerDeviceComponent device)
         {
+            // Stops an APC from trying to connect to itself
+            if (this == device)
+                return false;
+            
             return (device.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).LengthSquared <= _range;
         }
     }

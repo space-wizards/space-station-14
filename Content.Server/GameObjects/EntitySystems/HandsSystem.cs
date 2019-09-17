@@ -97,18 +97,18 @@ namespace Content.Server.GameObjects.EntitySystems
             handsComp.SwapHands();
         }
 
-        private void HandleDrop(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleDrop(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             var ent = ((IPlayerSession) session).AttachedEntity;
 
             if (ent == null || !ent.IsValid())
             {
-                return;
+                return false;
             }
 
             if (!ent.TryGetComponent(out HandsComponent handsComp))
             {
-                return;
+                return false;
             }
 
             if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
@@ -119,6 +119,8 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 handsComp.Drop(handsComp.ActiveIndex);
             }
+
+            return true;
         }
 
         private static void HandleActivateItem(ICommonSession session)
@@ -129,23 +131,23 @@ namespace Content.Server.GameObjects.EntitySystems
             handsComp.ActivateItem();
         }
 
-        private void HandleThrowItem(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleThrowItem(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             var plyEnt = ((IPlayerSession)session).AttachedEntity;
 
             if (plyEnt == null || !plyEnt.IsValid())
-                return;
+                return false;
 
             if (!plyEnt.TryGetComponent(out HandsComponent handsComp))
-                return;
+                return false;
 
             if (!handsComp.CanDrop(handsComp.ActiveIndex))
-                return;
+                return false;
 
             var throwEnt = handsComp.GetHand(handsComp.ActiveIndex).Owner;
 
             if (!handsComp.ThrowItem())
-                return;
+                return false;
 
             // pop off an item, or throw the single item in hand.
             if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2)
@@ -163,7 +165,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
-                return;
+                return true;
 
             colComp.CollisionEnabled = true;
             // I can now collide with player, so that i can do damage.
@@ -203,7 +205,7 @@ namespace Content.Server.GameObjects.EntitySystems
             lHomoDir.Normalize();
             transform.LocalRotation = new Angle(lHomoDir.Xy);
 
-
+            return true;
         }
     }
 }

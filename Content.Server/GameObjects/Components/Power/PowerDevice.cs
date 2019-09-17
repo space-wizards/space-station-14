@@ -371,9 +371,19 @@ namespace Content.Server.GameObjects.Components.Power
         }
     }
 
+    /// <summary>
+    /// The different methods that a <see cref="PowerDeviceComponent"/> can use to connect to a power network.
+    /// </summary>
     public enum DrawTypes
     {
+        /// <summary>
+        /// This device cannot be connected to a power network.
+        /// </summary>
         None = 0,
+
+        /// <summary>
+        /// This device can connect to a <see cref=""/>
+        /// </summary>
         Node = 1,
         Provider = 2,
         Both = 3,
