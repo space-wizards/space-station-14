@@ -71,14 +71,16 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
         }
 
-        public override void Startup()
+        /// <inheritdoc />
+        protected override void Startup()
         {
             base.Startup();
 
             RecalculateColor();
         }
 
-        public override void Shutdown()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
             base.Shutdown();
 

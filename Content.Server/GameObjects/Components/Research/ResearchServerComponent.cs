@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Content.Server.GameObjects.EntitySystems;
@@ -71,7 +71,8 @@ namespace Content.Server.GameObjects.Components.Research
             Database = Owner.GetComponent<TechnologyDatabaseComponent>();
         }
 
-        public override void Shutdown()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
             base.Shutdown();
             IoCManager.Resolve<IEntitySystemManager>()?.GetEntitySystem<ResearchSystem>()?.UnregisterServer(this);

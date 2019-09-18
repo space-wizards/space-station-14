@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public override string Name => "PowerDevice";
 
-        public override void Startup()
+        protected override void Startup()
         {
             base.Startup();
             if (_drawType != DrawTypes.Node)
@@ -161,7 +161,8 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public override void Shutdown()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
             if (Owner.TryGetComponent(out PowerNodeComponent node))
             {

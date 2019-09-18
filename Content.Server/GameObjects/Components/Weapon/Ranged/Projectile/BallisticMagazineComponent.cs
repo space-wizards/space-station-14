@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
@@ -58,7 +58,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             _appearance = Owner.GetComponent<AppearanceComponent>();
         }
 
-        public override void Startup()
+        /// <inheritdoc />
+        protected override void Startup()
         {
             base.Startup();
 

@@ -1,4 +1,4 @@
-using Content.Client.GameObjects.EntitySystems;
+﻿using Content.Client.GameObjects.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -25,7 +25,8 @@ namespace Content.Client.GameObjects.Components
             _snapGrid = Owner.GetComponent<SnapGridComponent>();
         }
 
-        public override void Startup()
+        /// <inheritdoc />
+        protected override void Startup()
         {
             base.Startup();
 
@@ -43,7 +44,8 @@ namespace Content.Client.GameObjects.Components
             _sprite.LayerSetDirOffset(CornerLayers.SW, SpriteComponent.DirectionOffset.Clockwise);
         }
 
-        public override void Shutdown()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
             _snapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
 

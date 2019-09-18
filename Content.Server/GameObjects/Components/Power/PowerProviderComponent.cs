@@ -97,7 +97,8 @@ namespace Content.Server.GameObjects.Components.Power
             Load = 0;
         }
 
-        public override void Shutdown()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
             base.Shutdown();
 
