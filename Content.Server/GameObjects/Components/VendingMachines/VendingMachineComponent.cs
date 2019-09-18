@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             }
 
             var wires = Owner.GetComponent<WiresComponent>();
-            if (wires.IsOpen)
+            if (wires.IsPanelOpen)
             {
                 wires.OpenInterface(actor.playerSession);
             } else
