@@ -1,0 +1,182 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Medical;
+using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Utility;
+
+namespace Content.Server.GameObjects.Components.Medical
+{
+    [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
+    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate
+    {
+        private AppearanceComponent _appearance;
+        private BoundUserInterface _userInterface;
+        private ContainerSlot _bodyContainer;
+        public bool IsOccupied => _bodyContainer.ContainedEntity != null;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _appearance = Owner.GetComponent<AppearanceComponent>();
+            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
+                .GetBoundUserInterface(MedicalScannerUiKey.Key);
+            _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
+            UpdateUserInterface();
+        }
+
+        private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
+            new MedicalScannerBoundUserInterfaceState(
+                0,
+                0,
+                null);
+
+        private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
+        {
+            var body = _bodyContainer.ContainedEntity;
+            if (body == null)
+            {
+                _appearance.SetData(MedicalScannerVisuals.Status, MedicalScannerStatus.Open);
+                return EmptyUIState;
+            }
+
+            var damageable = body.GetComponent<DamageableComponent>();
+            var species = body.GetComponent<SpeciesComponent>();
+            var deathThreshold =
+                species.DamageTemplate.DamageThresholds.FirstOrNull(x => x.ThresholdType == ThresholdType.Death);
+            if (!deathThreshold.HasValue)
+            {
+                return EmptyUIState;
+            }
+
+            var deathThresholdValue = deathThreshold.Value.Value;
+            var currentHealth = damageable.CurrentDamage[DamageType.Total];
+
+            var dmgDict = new Dictionary<string, int>();
+
+            foreach (var dmgType in (DamageType[])Enum.GetValues(typeof(DamageType)))
+            {
+                if (damageable.CurrentDamage.TryGetValue(dmgType, out var amount))
+                {
+                    dmgDict[dmgType.ToString()] = amount;
+                }
+            }
+
+            return new MedicalScannerBoundUserInterfaceState(
+                deathThresholdValue-currentHealth,
+                deathThresholdValue,
+                dmgDict);
+        }
+
+        private void UpdateUserInterface()
+        {
+            var newState = GetUserInterfaceState();
+            _userInterface.SetState(newState);
+        }
+
+        private MedicalScannerStatus GetStatusFromDamageState(DamageState damageState)
+        {
+            switch (damageState)
+            {
+                case NormalState _: return MedicalScannerStatus.Green;
+                case CriticalState _: return MedicalScannerStatus.Red;
+                case DeadState _: return MedicalScannerStatus.Death;
+                default: throw new ArgumentException(nameof(damageState));
+            }
+        }
+        private MedicalScannerStatus GetStatus()
+        {
+            var body = _bodyContainer.ContainedEntity;
+            return body == null
+                ? MedicalScannerStatus.Open
+                : GetStatusFromDamageState(body.GetComponent<SpeciesComponent>().CurrentDamageState);
+        }
+
+        private void UpdateAppearance()
+        {
+            _appearance.SetData(MedicalScannerVisuals.Status, GetStatus());
+        }
+
+        public void Activate(ActivateEventArgs args)
+        {
+            if (!args.User.TryGetComponent(out IActorComponent actor))
+            {
+                return;
+            }
+            _userInterface.Open(actor.playerSession);
+        }
+
+        [Verb]
+        public sealed class EnterVerb : Verb<MedicalScannerComponent>
+        {
+            protected override string GetText(IEntity user, MedicalScannerComponent component)
+            {
+                return "Enter";
+            }
+
+            protected override VerbVisibility GetVisibility(IEntity user, MedicalScannerComponent component)
+            {
+                return component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
+            }
+
+            protected override void Activate(IEntity user, MedicalScannerComponent component)
+            {
+                component.InsertBody(user);
+            }
+        }
+
+        [Verb]
+        public sealed class EjectVerb : Verb<MedicalScannerComponent>
+        {
+            protected override string GetText(IEntity user, MedicalScannerComponent component)
+            {
+                return "Eject";
+            }
+
+            protected override VerbVisibility GetVisibility(IEntity user, MedicalScannerComponent component)
+            {
+                return component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
+            }
+
+            protected override void Activate(IEntity user, MedicalScannerComponent component)
+            {
+                component.EjectBody();
+            }
+        }
+
+        public void InsertBody(IEntity user)
+        {
+            _bodyContainer.Insert(user);
+            UpdateUserInterface();
+            UpdateAppearance();
+        }
+
+        public void EjectBody()
+        {
+            _bodyContainer.Remove(_bodyContainer.ContainedEntity);
+            UpdateUserInterface();
+            UpdateAppearance();
+        }
+
+        public void Update(float frameTime)
+        {
+            if (_bodyContainer.ContainedEntity == null)
+            {
+                // There's no need to update if there's no one inside
+                return;
+            }
+            UpdateUserInterface();
+            UpdateAppearance();
+        }
+    }
+}
