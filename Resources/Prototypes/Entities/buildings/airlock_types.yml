@@ -15,6 +15,7 @@
       open_sound: /Audio/machines/airlock_ext_open.ogg
       close_sound: /Audio/machines/airlock_ext_close.ogg
       deny_sound: /Audio/machines/airlock_deny.ogg
+    - type: WiresVisualizer2D
 
 - type: entity
   parent: airlock
