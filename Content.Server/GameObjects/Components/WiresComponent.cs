@@ -35,16 +35,46 @@ namespace Content.Server.GameObjects.Components
         private AudioSystem _audioSystem;
         private AppearanceComponent _appearance;
         private BoundUserInterface _userInterface;
-        private bool _isOpen;
 
-        public bool IsOpen
+        private bool _isPanelOpen;
+        /// <summary>
+        /// Opening the maintenance panel (typically with a screwdriver) changes this.
+        /// </summary>
+        public bool IsPanelOpen
         {
-            get => _isOpen;
+            get => _isPanelOpen;
             private set
             {
-                _isOpen = value;
-                _appearance.SetData(WiresVisuals.MaintenancePanelState, value);
+                if (_isPanelOpen == value)
+                {
+                    return;
+                }
+                _isPanelOpen = value;
+                UpdateAppearance();
             }
+        }
+
+        private bool _isPanelVisible = true;
+        /// <summary>
+        /// Components can set this to prevent the maintenance panel overlay from showing even if it's open
+        /// </summary>
+        public bool IsPanelVisible
+        {
+            get => _isPanelVisible;
+            set
+            {
+                if (_isPanelVisible == value)
+                {
+                    return;
+                }
+                _isPanelVisible = value;
+                UpdateAppearance();
+            }
+        }
+
+        private void UpdateAppearance()
+        {
+            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
         }
 
         /// <summary>
@@ -83,7 +113,7 @@ namespace Content.Server.GameObjects.Components
             base.Initialize();
             _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
             _appearance = Owner.GetComponent<AppearanceComponent>();
-            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsOpen);
+            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(WiresUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
@@ -257,13 +287,13 @@ namespace Content.Server.GameObjects.Components
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
             if (!eventArgs.AttackWith.HasComponent<ScrewdriverComponent>()) return false;
-            IsOpen = !IsOpen;
+            IsPanelOpen = !IsPanelOpen;
             return true;
         }
 
         void IExamine.Examine(FormattedMessage message)
         {
-            message.AddText($"The maintenance panel is {(IsOpen ? "open" : "closed")}.");
+            message.AddText($"The maintenance panel is {(IsPanelOpen ? "open" : "closed")}.");
         }
 
         public void SetStatus(object statusIdentifier, string newMessage)
