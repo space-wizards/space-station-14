@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 
             if (random.Prob(0.4f))
             {
-                Spawn("HelmetEngineering");
+                Spawn("HatHardhatRed");
             }
 
             for (var i = 0; i < 3; i++)
