@@ -32,6 +32,8 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
+        protected virtual bool SaveLoad => true;
+
         /// <summary>
         ///     The method of draw we will try to use to place our load set via component parameter, defaults to using power providers
         /// </summary>
@@ -191,8 +193,12 @@ namespace Content.Server.GameObjects.Components.Power
             base.ExposeData(serializer);
 
             serializer.DataField(ref _drawType, "drawtype", DrawTypes.Provider);
-            serializer.DataField(ref _load, "load", 100);
             serializer.DataField(ref _priority, "priority", Powernet.Priority.Medium);
+
+            if (SaveLoad)
+            {
+                serializer.DataField(ref _load, "load", 100);
+            }
         }
 
         void IExamine.Examine(FormattedMessage message)

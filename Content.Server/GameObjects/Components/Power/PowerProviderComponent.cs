@@ -23,6 +23,8 @@ namespace Content.Server.GameObjects.Components.Power
         /// <inheritdoc />
         public override DrawTypes DrawType { get; protected set; } = DrawTypes.Node;
 
+        protected override bool SaveLoad => false;
+
         /// <summary>
         /// Variable that determines the range that the power provider will try to supply power to
         /// </summary>
@@ -280,7 +282,7 @@ namespace Content.Server.GameObjects.Components.Power
             // Stops an APC from trying to connect to itself
             if (this == device)
                 return false;
-            
+
             return (device.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).LengthSquared <= _range;
         }
     }
