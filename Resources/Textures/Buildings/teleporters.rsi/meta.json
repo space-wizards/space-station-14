@@ -1,0 +1,32 @@
+{
+    "version": 1,
+
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/d1e0161af146835f4fb79d21a6200caa9cc842d0/icons/teleporter.dmi and modified by Swept",
+
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "teleporter.png",
+            "select": [],
+            "flags": {},
+            "directions": 1,
+            "delays": []
+        },
+        {
+            "name": "teleporter-theory.png",
+            "select": [],
+            "flags": {},
+            "directions": 1,
+            "delays": [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+        },
+]
+}
+
+
+
+
+
