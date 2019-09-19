@@ -66,3 +66,4 @@
     color: red
   - type: Icon
     texture: Objects/cable_coil.png
+  - type: WirePlacer
