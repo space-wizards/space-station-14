@@ -24,7 +24,6 @@
     <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj">
       <Private>false</Private>
     </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\NFluidsynth\NFluidsynth\NFluidsynth.Desktop.csproj" />
     <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj">
       <Private>false</Private>
     </ProjectReference>
@@ -35,6 +34,5 @@
       <Private>false</Private>
     </ProjectReference>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
-    <ProjectReference Include="..\RobustToolbox\Soundfont2\SoundFont2\SoundFont2.csproj" />
   </ItemGroup>
 </Project>
