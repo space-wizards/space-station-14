@@ -3,3 +3,4 @@
   display_name: Space
   texture: ""
   friction: 0
+  is_subfloor: true
