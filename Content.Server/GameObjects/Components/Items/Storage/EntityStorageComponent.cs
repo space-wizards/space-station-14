@@ -152,7 +152,11 @@ namespace Content.Server.GameObjects.Components
             }
             if (Contents.CanInsert(entity))
             {
+                // Because Insert sets the local position to (0,0), and we want to keep the contents spread out,
+                // we re-apply the world position after inserting.
+                var worldPos = entity.Transform.WorldPosition;
                 Contents.Insert(entity);
+                entity.Transform.WorldPosition = worldPos;
                 return true;
             }
             return false;
@@ -163,7 +167,6 @@ namespace Content.Server.GameObjects.Components
             foreach (var contained in Contents.ContainedEntities.ToArray())
             {
                 Contents.Remove(contained);
-                contained.Transform.WorldPosition = Owner.Transform.WorldPosition;
             }
         }
 

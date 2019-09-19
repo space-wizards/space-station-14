@@ -1,4 +1,4 @@
-using Content.Shared.Maps;
+﻿using Content.Shared.Maps;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -24,7 +24,8 @@ namespace Content.Client.GameObjects.Components
             _snapGridComponent = Owner.GetComponent<SnapGridComponent>();
         }
 
-        public override void Startup()
+        /// <inheritdoc />
+        protected override void Startup()
         {
             base.Startup();
 
@@ -32,7 +33,8 @@ namespace Content.Client.GameObjects.Components
             Owner.EntityManager.RaiseEvent(Owner, new SubFloorHideDirtyEvent());
         }
 
-        public override void Shutdown()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
             base.Shutdown();
 

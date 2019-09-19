@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.Components.IconSmoothing;
 using Robust.Shared.GameObjects;
@@ -26,7 +26,8 @@ namespace Content.Client.GameObjects.Components
         public CornerFill LastCornerSW { get; private set; }
         public CornerFill LastCornerNW { get; private set; }
 
-        public override void Startup()
+        /// <inheritdoc />
+        protected override void Startup()
         {
             base.Startup();
 

@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public override string Name => "PowerDevice";
 
-        public override void Startup()
+        protected override void Startup()
         {
             base.Startup();
             if (_drawType != DrawTypes.Node)
@@ -31,6 +31,8 @@ namespace Content.Server.GameObjects.Components.Power
                 ConnectToBestProvider();
             }
         }
+
+        protected virtual bool SaveLoad => true;
 
         /// <summary>
         ///     The method of draw we will try to use to place our load set via component parameter, defaults to using power providers
@@ -161,7 +163,8 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public override void Shutdown()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
             if (Owner.TryGetComponent(out PowerNodeComponent node))
             {
@@ -190,8 +193,12 @@ namespace Content.Server.GameObjects.Components.Power
             base.ExposeData(serializer);
 
             serializer.DataField(ref _drawType, "drawtype", DrawTypes.Provider);
-            serializer.DataField(ref _load, "load", 100);
             serializer.DataField(ref _priority, "priority", Powernet.Priority.Medium);
+
+            if (SaveLoad)
+            {
+                serializer.DataField(ref _load, "load", 100);
+            }
         }
 
         void IExamine.Examine(FormattedMessage message)
@@ -371,9 +378,19 @@ namespace Content.Server.GameObjects.Components.Power
         }
     }
 
+    /// <summary>
+    /// The different methods that a <see cref="PowerDeviceComponent"/> can use to connect to a power network.
+    /// </summary>
     public enum DrawTypes
     {
+        /// <summary>
+        /// This device cannot be connected to a power network.
+        /// </summary>
         None = 0,
+
+        /// <summary>
+        /// This device can connect to a <see cref=""/>
+        /// </summary>
         Node = 1,
         Provider = 2,
         Both = 3,

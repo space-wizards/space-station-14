@@ -6,6 +6,7 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -21,6 +22,8 @@ namespace Content.Server.GameObjects.Components.Power
 
         /// <inheritdoc />
         public override DrawTypes DrawType { get; protected set; } = DrawTypes.Node;
+
+        protected override bool SaveLoad => false;
 
         /// <summary>
         /// Variable that determines the range that the power provider will try to supply power to
@@ -96,7 +99,8 @@ namespace Content.Server.GameObjects.Components.Power
             Load = 0;
         }
 
-        public override void Shutdown()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
             base.Shutdown();
 
@@ -275,6 +279,10 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public bool CanServiceDevice(PowerDeviceComponent device)
         {
+            // Stops an APC from trying to connect to itself
+            if (this == device)
+                return false;
+
             return (device.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).LengthSquared <= _range;
         }
     }

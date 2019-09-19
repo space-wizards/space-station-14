@@ -84,7 +84,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             _appearance = Owner.GetComponent<AppearanceComponent>();
         }
 
-        public override void Startup()
+        /// <inheritdoc />
+        protected override void Startup()
         {
             base.Startup();
 

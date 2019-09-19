@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -99,7 +99,8 @@ namespace Content.Server.GameObjects.Components.Research
             }
         }
 
-        public override void Shutdown()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
             base.Shutdown();
             UnregisterFromServer();

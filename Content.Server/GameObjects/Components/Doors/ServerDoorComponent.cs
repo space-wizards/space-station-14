@@ -17,7 +17,13 @@ namespace Content.Server.GameObjects
     {
         public override string Name => "Door";
 
-        protected DoorState _state = DoorState.Closed;
+        private DoorState _state = DoorState.Closed;
+
+        protected virtual DoorState State
+        {
+            get => _state;
+            set => _state = value;
+        }
 
         private float OpenTimeCounter;
 
@@ -47,11 +53,11 @@ namespace Content.Server.GameObjects
 
         protected virtual void ActivateImpl(ActivateEventArgs eventArgs)
         {
-            if (_state == DoorState.Open)
+            if (State == DoorState.Open)
             {
                 Close();
             }
-            else if (_state == DoorState.Closed)
+            else if (State == DoorState.Closed)
             {
                 TryOpen(eventArgs.User);
             }
@@ -69,7 +75,7 @@ namespace Content.Server.GameObjects
             switch (message)
             {
                 case BumpedEntMsg msg:
-                    if (_state != DoorState.Closed)
+                    if (State != DoorState.Closed)
                     {
                         return;
                     }
@@ -112,12 +118,12 @@ namespace Content.Server.GameObjects
 
         public void Open()
         {
-            if (_state != DoorState.Closed)
+            if (State != DoorState.Closed)
             {
                 return;
             }
 
-            _state = DoorState.Opening;
+            State = DoorState.Opening;
             _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Opening);
 
             Timer.Spawn(OpenTimeOne, async () =>
@@ -126,7 +132,7 @@ namespace Content.Server.GameObjects
 
                 await Timer.Delay(OpenTimeTwo);
 
-                _state = DoorState.Open;
+                State = DoorState.Open;
                 _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Open);
             });
         }
@@ -139,14 +145,14 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            _state = DoorState.Closing;
+            State = DoorState.Closing;
             collidableComponent.IsHardCollidable = true;
             OpenTimeCounter = 0;
             _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closing);
 
             Timer.Spawn(CloseTime, () =>
             {
-                _state = DoorState.Closed;
+                State = DoorState.Closed;
                 _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
             });
             return true;
@@ -164,7 +170,7 @@ namespace Content.Server.GameObjects
         private const float AUTO_CLOSE_DELAY = 5;
         public virtual void OnUpdate(float frameTime)
         {
-            if (_state != DoorState.Open)
+            if (State != DoorState.Open)
             {
                 return;
             }

@@ -75,7 +75,8 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             serializer.DataFieldCached(ref _mode, "mode", IconSmoothingMode.Corners);
         }
 
-        public override void Startup()
+        /// <inheritdoc />
+        protected override void Startup()
         {
             base.Startup();
 
@@ -196,7 +197,8 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) cornerNW}");
         }
 
-        public override void Shutdown()
+        /// <inheritdoc />
+        protected override void Shutdown()
         {
             SnapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
             Owner.EntityManager.RaiseEvent(Owner, new IconSmoothDirtyEvent(_lastPosition, SnapGrid.Offset, Mode));

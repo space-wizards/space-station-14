@@ -76,24 +76,24 @@ namespace Content.Client.GameObjects.EntitySystems
             _currentPopup.Open(box);
         }
 
-        private void OnOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        private bool OnOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             if (_currentPopup != null)
             {
                 _closeContextMenu();
-                return;
+                return true;
             }
 
             if (!(_stateManager.CurrentState is GameScreen gameScreen))
             {
-                return;
+                return false;
             }
 
             var entities = gameScreen.GetEntitiesUnderPosition(args.Coordinates);
 
             if (entities.Count == 0)
             {
-                return;
+                return false;
             }
 
             _currentPopup = new VerbPopup();
@@ -110,6 +110,8 @@ namespace Content.Client.GameObjects.EntitySystems
             var size = _currentPopup.List.CombinedMinimumSize;
             var box = UIBox2.FromDimensions(args.ScreenCoordinates.Position, size);
             _currentPopup.Open(box);
+
+            return true;
         }
 
         private void OnContextButtonPressed(IEntity entity)

@@ -206,24 +206,25 @@ namespace Content.Server.GameObjects.EntitySystems
                 new PointerInputCmdHandler(HandleActivateItemInWorld));
         }
 
-        public void HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             if (!EntityManager.TryGetEntity(uid, out var used))
-                return;
+                return false;
 
             var playerEnt = ((IPlayerSession) session).AttachedEntity;
 
             if (playerEnt == null || !playerEnt.IsValid())
             {
-                return;
+                return false;
             }
 
             if (!playerEnt.Transform.GridPosition.InRange(_mapManager, used.Transform.GridPosition, InteractionRange))
             {
-                return;
+                return false;
             }
 
             InteractionActivate(playerEnt, used);
+            return true;
         }
 
         private void InteractionActivate(IEntity user, IEntity used)
@@ -243,27 +244,27 @@ namespace Content.Server.GameObjects.EntitySystems
             activateComp.Activate(new ActivateEventArgs {User = user});
         }
 
-        private void HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!_mapManager.GridExists(coords.GridID))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
-                return;
+                return true;
             }
 
             if (uid.IsClientSide())
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
-                return;
+                return true;
             }
 
             var userEntity = ((IPlayerSession) session).AttachedEntity;
 
             if (userEntity == null || !userEntity.IsValid())
             {
-                return;
+                return true;
             }
 
             if (userEntity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
@@ -274,6 +275,8 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 UserInteraction(userEntity, coords, uid);
             }
+
+            return true;
         }
 
         private void UserInteraction(IEntity player, GridCoordinates coordinates, EntityUid clickedUid)

@@ -62,6 +62,16 @@ namespace Content.Server.GameObjects.Components.Doors
             _wires.SetStatus(WiresStatus.PowerIndicator, _localizationMgr.GetString(powerMessage));
         }
 
+        protected override DoorState State
+        {
+            set
+            {
+                base.State = value;
+                // Only show the maintenance panel if the airlock is closed
+                _wires.IsPanelVisible = value == DoorState.Closed;
+            }
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -71,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         protected override void ActivateImpl(ActivateEventArgs args)
         {
-            if (_wires.IsOpen)
+            if (_wires.IsPanelOpen)
             {
                 if (args.User.TryGetComponent(out IActorComponent actor))
                 {
@@ -174,11 +184,11 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             if (eventArgs.AttackWith.HasComponent<CrowbarComponent>() && !IsPowered())
             {
-                if (_state == DoorState.Closed)
+                if (State == DoorState.Closed)
                 {
                     Open();
                 }
-                else if(_state == DoorState.Open)
+                else if(State == DoorState.Open)
                 {
                     Close();
                 }
