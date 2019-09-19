@@ -109,6 +109,7 @@ namespace Content.Client
                 "IdCardConsole",
                 "Airlock",
                 "MedicalScanner",
+                "WirePlacer",
             };
 
             foreach (var ignoreName in registerIgnore)
