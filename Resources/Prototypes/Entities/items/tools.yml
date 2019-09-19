@@ -12,6 +12,17 @@
   - type: MeleeWeapon
 
 - type: entity
+  name: Instrument
+  parent: BaseItem
+  id: Instrument
+  description: Play Needles Piano Now.
+  components:
+  - type: Instrument
+  - type: Sprite
+    texture: Objects/wirecutter.png
+  - type: Icon
+
+- type: entity
   name: Screwdriver
   parent: BaseItem
   id: Screwdriver
