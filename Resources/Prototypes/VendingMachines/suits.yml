@@ -3,3 +3,13 @@
   name: Suitlord 9000
   description: A vending machine containing jumpsuits and dress garments.
   spriteName: suits
+  startingInventory:
+    JanitorUniform: 3
+    UniformGrey: 3
+    UniformEngineering: 3
+    UniformAssistant: 3
+    UniformClown: 3
+    UniformSec: 3
+    UniformChef: 3
+    UniformCaptain: 3
+

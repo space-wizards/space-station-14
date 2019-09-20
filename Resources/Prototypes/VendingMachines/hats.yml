@@ -3,3 +3,23 @@
   name: Hatlord 9000
   description: A vending machine containing hats.
   spriteName: hats
+  startingInventory:
+    HatBandana: 3
+    HatBandblack: 3
+    HatBandblue: 3
+    HatBandbotany: 3
+    HatBandcamo: 3
+    HatBandgreen: 3
+    HatBandred: 3
+    HatBandskull: 3
+    HatBearpelt: 3
+    HatBeret: 3
+    HatBluesoft: 3
+    HatBluesoftFlipped: 3
+    HatBowler: 3
+    HatBunny: 3
+    HatCake: 3
+    HatCargosoft: 3
+    HatCentcom: 3
+    HatChefhat: 3
+    HatCowboy: 3
