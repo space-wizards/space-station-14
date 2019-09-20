@@ -4,3 +4,6 @@
   description: A vending machine containing medical supplies.
   animationDuration: 1.8
   spriteName: medical
+  startingInventory:
+    Brutepack: 5
+    Ointment: 5

@@ -3,3 +3,8 @@
   name: Shoelord 9000
   description: A vending machine containing footwear.
   spriteName: shoes
+  startingInventory:
+    WhiteShoes: 3
+    ClownShoes: 3
+    JackbootShoes: 3
+    ShoesBrown: 3

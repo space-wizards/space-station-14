@@ -4,3 +4,7 @@
   description: Spare tool vending. What? Did you expect some witty description?
   animationDuration: 2.1
   spriteName: engivend
+  startingInventory:
+    MesonGlasses: 4
+    Multitool: 4
+    PowerCellSmallHigh: 5
