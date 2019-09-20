@@ -1833,7 +1833,9 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb
-      layer: 8
+      bounds: "-0.5,-0.25,0.5,0.25"
+      mask: 19
+      layer: 16
     type: Collidable
 - type: computerAlert
   uid: 154
@@ -1844,7 +1846,9 @@ entities:
     type: Transform
   - shapes:
     - !type:PhysShapeAabb
-      layer: 8
+      bounds: "-0.5,-0.25,0.5,0.25"
+      mask: 19
+      layer: 16
     type: Collidable
 - type: table
   uid: 155
@@ -5049,7 +5053,9 @@ entities:
     type: Sprite
   - shapes:
     - !type:PhysShapeAabb
-      layer: 8
+      bounds: "-0.5,-0.25,0.5,0.25"
+      mask: 19
+      layer: 16
     type: Collidable
 - type: vending_machine_youtool
   uid: 419
@@ -5062,7 +5068,9 @@ entities:
     type: Sprite
   - shapes:
     - !type:PhysShapeAabb
-      layer: 8
+      bounds: "-0.5,-0.25,0.5,0.25"
+      mask: 19
+      layer: 16
     type: Collidable
 - type: Generator
   uid: 420
