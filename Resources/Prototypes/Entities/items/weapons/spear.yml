@@ -4,15 +4,15 @@
   id: Spear
   components:
   - type: Sprite
-    sprite: Objects/items/spear.rsi
+    sprite: Objects/Melee/spear.rsi
     state: spear
 
   - type: Icon
-    sprite: Objects/items/spear.rsi
+    sprite: Objects/Melee/spear.rsi
     state: spear
 
   - type: MeleeWeapon
   - type: Item
     Size: 24
-    sprite: Objects/items/spear.rsi
+    sprite: Objects/Melee/spear.rsi
     prefix: inhand

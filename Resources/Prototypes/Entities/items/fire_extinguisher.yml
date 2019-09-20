@@ -5,8 +5,8 @@
   description: Extinguishes fires.
   components:
   - type: Sprite
-    texture: Objects/fire_extinguisher.png
+    texture: Objects/Misc/fire_extinguisher.png
   - type: Icon
-    texture: Objects/fire_extinguisher.png
+    texture: Objects/Misc/fire_extinguisher.png
   - type: Item
     Size: 10
