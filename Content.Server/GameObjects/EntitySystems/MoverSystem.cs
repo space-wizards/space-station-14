@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Shared.Audio;
@@ -153,6 +154,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (mover.StepSoundDistance > distanceNeeded)
                 {
                     mover.StepSoundDistance = 0;
+
+                    if (!mover.Owner.HasComponent<FootstepSoundComponent>())
+                    {
+                        return;
+                    }
+
                     if (mover.Owner.TryGetComponent<InventoryComponent>(out var inventory)
                         && inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.SHOES, out var item)
                         && item.Owner.TryGetComponent<FootstepModifierComponent>(out var modifier))
