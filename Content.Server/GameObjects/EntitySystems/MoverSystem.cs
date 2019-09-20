@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Shared.Audio;
@@ -154,7 +155,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     mover.StepSoundDistance = 0;
 
-                    if (mover.Owner.Prototype.ID == "MobObserver" || mover.Owner.Prototype.ID == "AdminObserver")
+                    if (!mover.Owner.HasComponent<FootstepSoundComponent>())
                     {
                         return;
                     }
