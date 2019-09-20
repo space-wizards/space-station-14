@@ -10,7 +10,7 @@ using Robust.Client.Interfaces.Graphics;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Logger = NFluidsynth.Logger;
+using Logger = Robust.Shared.Log.Logger;
 using MidiEvent = NFluidsynth.MidiEvent;
 
 namespace Content.Client.GameObjects.Components.Instruments
@@ -41,7 +41,6 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private void RendererOnOnSampleRendered((ushort[] left, ushort[] right) obj)
         {
-            Robust.Shared.Log.Logger.Info("fuck");
             var left = _clydeAudio.LoadAudioMonoPCM(obj.left);
             var right = _clydeAudio.LoadAudioMonoPCM(obj.right);
             _audioSystem.Play(left, Owner.Transform.GridPosition);
