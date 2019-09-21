@@ -65,10 +65,10 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             var entity = EntityManager.SpawnEntityAt("WeaponArc", msg.Position);
-            entity.Transform.LocalRotation = msg.Angle + MathHelper.PiOver2;
+            entity.Transform.LocalRotation = msg.Angle;
 
             var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();
-            weaponArcAnimation.SetData(weaponArc);
+            weaponArcAnimation.SetData(weaponArc, msg.Angle);
         }
     }
 }

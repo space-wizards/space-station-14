@@ -23,9 +23,7 @@
 
 - type: WeaponArc
   id: spear
-  color: 255,255,255,765
-  colorDelta: 0,0,0,-5100
   state: spear
-  length: 0.15
+  length: 0.10
   speed: 6
   arcType: Poke

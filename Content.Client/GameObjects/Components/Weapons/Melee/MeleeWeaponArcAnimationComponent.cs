@@ -15,6 +15,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
 
         private float _timer;
         private SpriteComponent _sprite;
+        private Angle _baseAngle;
 
         public override void Initialize()
         {
@@ -23,10 +24,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
             _sprite = Owner.GetComponent<SpriteComponent>();
         }
 
-        public void SetData(WeaponArcPrototype prototype)
+        public void SetData(WeaponArcPrototype prototype, Angle baseAngle)
         {
             _weaponArc = prototype;
             _sprite.AddLayer(new RSI.StateId(prototype.State));
+            _baseAngle = baseAngle;
         }
 
         internal void Update(float frameTime)
@@ -46,7 +48,8 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
             {
                 case WeaponArcType.Slash:
                     var angle = Angle.FromDegrees(_weaponArc.Width)/2;
-                    _sprite.Rotation = Angle.Lerp(-angle, angle, (float) (_timer / _weaponArc.Length.TotalSeconds));
+                    Owner.Transform.LocalRotation =
+                        _baseAngle + Angle.Lerp(-angle, angle, (float) (_timer / _weaponArc.Length.TotalSeconds));
                     break;
 
                 case WeaponArcType.Poke:

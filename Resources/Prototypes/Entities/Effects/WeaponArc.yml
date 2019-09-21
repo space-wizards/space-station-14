@@ -6,4 +6,5 @@
     sprite: Effects/weapons/arcs.rsi
     directional: false
     offset: 0.75, 0
+    drawdepth: Overlays
   - type: MeleeWeaponArcAnimation
