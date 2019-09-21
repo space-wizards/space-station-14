@@ -1,17 +1,10 @@
-using System;
-using System.IO;
 using System.Linq;
 using Robust.Shared.GameObjects;
-using Commons.Music.Midi;
-using NFluidsynth;
 using Robust.Client.Audio.Midi;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Logger = Robust.Shared.Log.Logger;
-using MidiEvent = NFluidsynth.MidiEvent;
 
 namespace Content.Client.GameObjects.Components.Instruments
 {
