@@ -24,20 +24,12 @@ namespace Content.Client.GameObjects.Components.Instruments
             base.Initialize();
             IoCManager.InjectDependencies(this);
             _renderer = _midiManager.GetNewRenderer();
-            _renderer.OnSampleRendered += RendererOnOnSampleRendered;
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
             _renderer.LoadSoundfont("soundfont.sf2");
             _renderer.MidiProgram = 1;
+            _renderer.Position = Owner;
             _renderer.OpenInput(_midiManager.Inputs.Last().Id);
             //_renderer.OpenMidi(File.Open("mysong.mid", FileMode.Open));
-        }
-
-        private void RendererOnOnSampleRendered((ushort[] left, ushort[] right) obj)
-        {
-            var left = _clydeAudio.LoadAudioMonoPCM(obj.left);
-            var right = _clydeAudio.LoadAudioMonoPCM(obj.right);
-            _audioSystem.Play(left, Owner.Transform.GridPosition);
-            _audioSystem.Play(right, Owner.Transform.GridPosition);
         }
     }
 }
