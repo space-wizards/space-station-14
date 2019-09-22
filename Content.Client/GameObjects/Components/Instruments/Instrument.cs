@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Client.Audio.Midi;
@@ -28,8 +29,8 @@ namespace Content.Client.GameObjects.Components.Instruments
             _renderer.LoadSoundfont("soundfont.sf2");
             _renderer.MidiProgram = 1;
             _renderer.Position = Owner;
-            _renderer.OpenInput(_midiManager.Inputs.Last().Id);
-            //_renderer.OpenMidi(File.Open("mysong.mid", FileMode.Open));
+            //_renderer.OpenInput(_midiManager.Inputs.Last().Id);
+            _renderer.OpenMidi("mysong.mid");
         }
     }
 }

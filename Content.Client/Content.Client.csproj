@@ -11,9 +11,7 @@
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
-    <PackageReference Include="managed-midi" Version="1.9.9" />
     <PackageReference Include="Nett" Version="0.13.0" />
-    <PackageReference Include="nfluidsynth" Version="0.1.0" />
     <PackageReference Include="SixLabors.Core" Version="1.0.0-beta0007" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
