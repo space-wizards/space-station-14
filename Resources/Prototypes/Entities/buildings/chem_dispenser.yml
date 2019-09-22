@@ -1,0 +1,44 @@
+- type: entity
+  id: chem_dispenser
+  name: Chemical Dispenser
+  description: An industrial grade chemical dispenser with a sizeable chemical supply.
+  components:
+  - type: Sprite
+    texture: Buildings/industrial_dispenser.png
+  - type: Icon
+    texture: Buildings/industrial_dispenser.png
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.25,0.4,0.25"
+      mask: 19
+      layer: 16
+    IsScrapingFloor: true
+  - type: Physics
+    mass: 25
+    Anchored: true
+  - type: SnapGrid
+    offset: Center
+  - type: ReagentDispenser
+    pack: ChemDispenserStandardInventory
+  - type: PowerDevice
+  - type: UserInterface
+    interfaces:
+    - key: enum.ReagentDispenserUiKey.Key
+      type: ReagentDispenserBoundUserInterface
+
+- type: reagentDispenserInventory
+  id: ChemDispenserStandardInventory
+  inventory:
+  - chem.H2
+  - chem.O2
+  - chem.S8
+  - chem.C
+  - chem.Cu
+  - chem.N2
+  - chem.Fe
+  - chem.F2
+  - chem.Al
+  - chem.H2SO4
+  - chem.H2O
