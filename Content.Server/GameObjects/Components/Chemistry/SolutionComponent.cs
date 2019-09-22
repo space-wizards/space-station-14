@@ -1,8 +1,12 @@
 ﻿using System;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -10,8 +14,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
     ///     Shared ECS component that manages a liquid solution of reagents.
     /// </summary>
     [RegisterComponent]
-    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent
+    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+
         /// <summary>
         ///     Transfers solution from the held container to the target container.
         /// </summary>
@@ -73,6 +79,22 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var transferSolution = handSolutionComp.SplitSolution(transferQuantity);
                 component.TryAddSolution(transferSolution);
 
+            }
+        }
+
+        void IExamine.Examine(FormattedMessage message)
+        {
+            message.AddText("Contains:\n");
+            foreach (var reagent in ContainedSolution)
+            {
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                {
+                    message.AddText($"{proto.Name}: {reagent.Quantity}u\n");
+                }
+                else
+                {
+                    message.AddText($"Unknown reagent: {reagent.Quantity}u\n");
+                }
             }
         }
 
