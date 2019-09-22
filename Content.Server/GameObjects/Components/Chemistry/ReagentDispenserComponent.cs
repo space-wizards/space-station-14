@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
-using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -21,8 +15,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
-    //Todo: Implement power draw for this
-
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IAttackBy))]
@@ -53,7 +45,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(ReagentDispenserUiKey.Key);
             _userInterface.OnReceiveMessage += OnUiReceiveMessage;
 
-            //_beakerContainer = ContainerManagerComponent.Create<ContainerSlot>(nameof(ContainerSlot), Owner);
             _beakerContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
 
             InitializeFromPrototype();
@@ -156,12 +147,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
             solution.TryAddReagent(Inventory[dispenseIndex].ID, DispenseAmount, out int acceptedQuantity);
-            //_notifyManager.PopupMessage(Owner.Transform.GridPosition, user, $"Dispensing {DispenseAmount}u of {Inventory[dispenseIndex].ID} to {_beakerContainer.ContainedEntity.Name}. Accepted {acceptedQuantity}u");
 
             UpdateUserInterface();
         }
 
-        //Todo: Get all these notification strings from the localization manager
         //Called when you click it with an empty hand
         public void Activate(ActivateEventArgs args)
         {
