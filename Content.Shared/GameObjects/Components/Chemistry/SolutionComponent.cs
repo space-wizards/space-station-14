@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -30,8 +31,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             set => _maxVolume = value; // Note that the contents won't spill out if the capacity is reduced.
         }
 
-        public Solution ContainedSolution => _containedSolution;
-
         /// <summary>
         ///     The total volume of all the of the reagents in the container.
         /// </summary>
@@ -53,6 +52,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             get => _capabilities;
             set => _capabilities = value;
         }
+
+        public ReadOnlyCollection<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
 
         /// <inheritdoc />
         public override string Name => "Solution";
@@ -88,6 +89,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
             _containedSolution.RemoveAllSolution();
             _containedSolution = new Solution();
+        }
+
+        public void RemoveAllSolution()
+        {
+            _containedSolution.RemoveAllSolution();
         }
 
         public bool TryAddReagent(string reagentId, int quantity, out int acceptedQuantity)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
@@ -117,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             var solution = beaker.GetComponent<SolutionComponent>();
             return new ReagentDispenserBoundUserInterfaceState(true, solution.CurrentVolume, solution.MaxVolume, beaker.Name,
-                Inventory, Owner.Name, solution.ContainedSolution.Contents);
+                Inventory, Owner.Name, solution.ReagentList.ToList());
         }
 
         private void UpdateUserInterface()
@@ -138,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (!HasBeaker) return;
             var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
-            solution.ContainedSolution.RemoveAllSolution();
+            solution.RemoveAllSolution();
 
             UpdateUserInterface();
         }

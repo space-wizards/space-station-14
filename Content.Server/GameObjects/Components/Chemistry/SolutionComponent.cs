@@ -16,7 +16,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine
     {
+#pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
+#pragma warning restore 649
 
         /// <summary>
         ///     Transfers solution from the held container to the target container.
@@ -85,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         void IExamine.Examine(FormattedMessage message)
         {
             message.AddText("Contains:\n");
-            foreach (var reagent in ContainedSolution)
+            foreach (var reagent in ReagentList)
             {
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {
