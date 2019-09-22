@@ -30,6 +30,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             set => _maxVolume = value; // Note that the contents won't spill out if the capacity is reduced.
         }
 
+        public Solution ContainedSolution => _containedSolution;
+
         /// <summary>
         ///     The total volume of all the of the reagents in the container.
         /// </summary>
@@ -90,7 +92,19 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         public bool TryAddReagent(string reagentId, int quantity, out int acceptedQuantity)
         {
-            throw new NotImplementedException();
+            if (quantity > _maxVolume - _containedSolution.TotalVolume)
+            {
+                acceptedQuantity = _maxVolume - _containedSolution.TotalVolume;
+                if (acceptedQuantity == 0) return false;
+            }
+            else
+            {
+                acceptedQuantity = quantity;
+            }
+
+            _containedSolution.AddReagent(reagentId, acceptedQuantity);
+            RecalculateColor();
+            return true;
         }
 
         public bool TryAddSolution(Solution solution)
