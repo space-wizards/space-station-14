@@ -17,7 +17,8 @@ namespace Content.Client.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]
-    public class HandsComponent : SharedHandsComponent, IHandsComponent
+    public class
+        HandsComponent : SharedHandsComponent, IHandsComponent
     {
         private HandsGui _gui;
 

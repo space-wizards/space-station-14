@@ -17,6 +17,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         [ViewVariables]
         private Solution _containedSolution;
+
+        public Solution ContainedSolution => _containedSolution;
         private int _maxVolume;
         private SolutionCaps _capabilities;
 
@@ -60,7 +62,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         /// <inheritdoc />
         public sealed override Type StateType => typeof(SolutionComponentState);
-        
+
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -158,7 +160,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
             //TODO: Make me work!
         }
-        
+
         [Serializable, NetSerializable]
         public class SolutionComponentState : ComponentState
         {

@@ -1,4 +1,6 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.Nutrition;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
@@ -10,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     ///     Shared ECS component that manages a liquid solution of reagents.
     /// </summary>
     [RegisterComponent]
-    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent
+    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IUse
     {
         /// <summary>
         ///     Transfers solution from the held container to the target container.
@@ -137,6 +139,16 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var transferSolution = component.SplitSolution(transferQuantity);
                 handSolutionComp.TryAddSolution(transferSolution);
             }
+        }
+
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        {
+            if (eventArgs.User.TryGetComponent(out StomachComponent stomachComponent))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

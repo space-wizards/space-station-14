@@ -28,5 +28,8 @@
         public const uint TECHNOLOGY_DATABASE = 1022;
         public const uint RESEARCH_CONSOLE = 1023;
         public const uint WIRES = 1024;
+        public const uint STOMACH = 1025;
+        public const uint HUNGER = 1026;
+        public const uint THIRST = 1027;
     }
 }

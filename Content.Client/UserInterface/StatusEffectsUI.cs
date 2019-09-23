@@ -12,6 +12,7 @@ namespace Content.Client.UserInterface
     /// </summary>
     public sealed class StatusEffectsUI : Control
     {
+        public VBoxContainer VBox => _vBox;
         private readonly VBoxContainer _vBox;
 
         private TextureRect _healthStatusRect;
@@ -19,8 +20,10 @@ namespace Content.Client.UserInterface
         public StatusEffectsUI()
         {
             _vBox = new VBoxContainer {GrowHorizontal = GrowDirection.Begin};
+
             AddChild(_vBox);
 
+            // Health
             _vBox.AddChild(_healthStatusRect = new TextureRect
             {
                 TextureScale = (2, 2),

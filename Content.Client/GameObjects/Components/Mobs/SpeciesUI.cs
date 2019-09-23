@@ -28,6 +28,10 @@ namespace Content.Client.GameObjects
     [RegisterComponent]
     public class SpeciesUI : SharedSpeciesComponent//, ICharacterUI
     {
+        public StatusEffectsUI UI
+        {
+            get { return _ui; }
+        }
         private StatusEffectsUI _ui;
 
         /// <summary>
