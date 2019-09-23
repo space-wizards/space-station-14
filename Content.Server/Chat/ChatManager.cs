@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Chat;
@@ -48,12 +49,9 @@ namespace Content.Server.Chat
 
         public void EntitySay(IEntity source, string message)
         {
-            if (source.TryGetComponent(out SpeciesComponent species))
+            if (!ActionBlockerSystem.CanSpeak(source))
             {
-                if (!species.CurrentDamageState.IsConscious)
-                {
-                    return;
-                }
+                return;
             }
 
             var pos = source.Transform.GridPosition;
