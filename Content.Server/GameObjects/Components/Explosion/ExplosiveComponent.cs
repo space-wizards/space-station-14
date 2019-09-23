@@ -38,6 +38,7 @@ namespace Content.Server.GameObjects.Components.Explosive
         public int LightImpactRange = 0;
         public int FlashRange = 0;
 
+        private bool _beingExploded = false;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -51,13 +52,16 @@ namespace Content.Server.GameObjects.Components.Explosive
 
         private bool Explosion()
         {
+            //Prevent adjacent explosives from infinitely blowing each other up.
+            if (_beingExploded) return true;
+            _beingExploded = true;
+
             var maxRange = MathHelper.Max(DevastationRange, HeavyImpactRange, LightImpactRange, 0f);
             //Entity damage calculation
             var entitiesAll = _serverEntityManager.GetEntitiesInRange(Owner.Transform.GridPosition, maxRange).ToList();
 
             foreach (var entity in entitiesAll)
             {
-                Owner.Delete();
                 if (entity == Owner)
                     continue;
                 if (!entity.Transform.IsMapTransform)
@@ -162,6 +166,7 @@ namespace Content.Server.GameObjects.Components.Explosive
                 }
             }
 
+            Owner.Delete();
             return true;
         }
 
