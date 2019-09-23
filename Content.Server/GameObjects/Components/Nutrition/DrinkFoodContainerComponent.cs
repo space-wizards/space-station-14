@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _availableSpawnCount = Capacity;
         }
 
-        public override void Startup()
+        protected override void Startup()
         {
             base.Startup();
 

@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
         }
 
-        public override void Startup()
+        protected override void Startup()
         {
             base.Startup();
             _currentThirst = _random.Next(

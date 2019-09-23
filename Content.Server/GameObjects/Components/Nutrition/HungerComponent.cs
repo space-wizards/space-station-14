@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                         return;
 
                     case HungerThreshold.Dead:
-                        // TODO: Remove hungercomponent from the dead people
+                        // TODO: Remove from dead people
                         if (Owner.TryGetComponent(out DamageableComponent damage))
                         {
                             // TODO shitcode: Look at refactoring to something else, e.g. damage per tick
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
         }
 
-        public override void Startup()
+        protected override void Startup()
         {
             base.Startup();
             // Similar functionality to SS13. Should also stagger people going to the chef.
@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _currentHunger = Math.Min(_currentHunger + amount, HungerThresholds[HungerThreshold.Overfed]);
         }
 
-        // TODO: If mob is moving increase rate of consumption.
+        // TODO: If mob is moving increase rate of consumption?
         //  Should use a multiplier as something like a disease would overwrite decay rate.
         public void OnUpdate(float frametime)
         {
