@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
