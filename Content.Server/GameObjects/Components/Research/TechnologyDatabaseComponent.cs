@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameObjects.Components.Research
 {
     [RegisterComponent]
-    public class TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
+    public class  TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
     {
         public override ComponentState GetComponentState()
         {

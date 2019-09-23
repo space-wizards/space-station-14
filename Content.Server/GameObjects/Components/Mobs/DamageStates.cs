@@ -56,6 +56,11 @@ namespace Content.Server.GameObjects
         {
             return true;
         }
+
+        bool IActionBlocker.CanDrop()
+        {
+            return true;
+        }
     }
 
     /// <summary>
@@ -94,6 +99,11 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanSpeak()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanDrop()
         {
             return false;
         }
@@ -145,6 +155,11 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanSpeak()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanDrop()
         {
             return false;
         }

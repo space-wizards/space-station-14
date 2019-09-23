@@ -1,0 +1,50 @@
+- type: entity
+  name: BaseInstrument
+  parent: BaseItem
+  id: BaseInstrument
+  description: Play Needles Piano Now.
+  components:
+  - type: Instrument
+  - type: Clickable
+
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 19
+      layer: 16
+
+  - type: SnapGrid
+    offset: Center
+
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 50
+
+- type: entity
+  name: Piano
+  parent: BaseInstrument
+  id: PianoInstrument
+  description: Play Needles Piano Now.
+  components:
+  - type: Instrument
+    program: 1
+  - type: Sprite
+    sprite: Objects/musician.rsi
+    state: piano
+  - type: Icon
+    sprite: Objects/musician.rsi
+    state: piano
+
+- type: entity
+  name: Minimoog
+  parent: BaseInstrument
+  id: MinimoogInstrument
+  description: Play Needles Piano Now.
+  components:
+  - type: Instrument
+  - type: Sprite
+    sprite: Objects/musician.rsi
+    state: minimoog
+  - type: Icon
+    sprite: Objects/musician.rsi
+    state: minimoog
