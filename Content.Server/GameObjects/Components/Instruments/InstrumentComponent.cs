@@ -1,16 +1,49 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Instruments;
+using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Instruments
 {
     [RegisterComponent]
-    public class InstrumentComponent : SharedInstrumentComponent, IDropped, IHandSelected, IHandDeselected
+    public class InstrumentComponent : SharedInstrumentComponent, IDropped, IHandSelected, IHandDeselected, IActivate, IUse
     {
         private INetChannel _instrumentPlayer;
+        private bool _handheld = false;
+
+        [ViewVariables]
+        private BoundUserInterface _userInterface;
+
+        [ViewVariables]
+        public bool Handheld => _handheld;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(InstrumentUiKey.Key);
+            _userInterface.OnClosed += UserInterfaceOnClosed;
+        }
+
+        private void UserInterfaceOnClosed(ServerBoundUserInterfaceMessage obj)
+        {
+            if (!Handheld && obj.Session.ConnectedClient == _instrumentPlayer)
+                _instrumentPlayer = null;
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _handheld, "handheld", false);
+        }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
@@ -24,19 +57,53 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
         }
 
+        private void OpenUserInterface(IPlayerSession session)
+        {
+            _userInterface.Open(session);
+        }
+
         public void Dropped(DroppedEventArgs eventArgs)
         {
-            // TODO
+            SendNetworkMessage(new InstrumentStopMidiMessage());
+            _instrumentPlayer = null;
+            _userInterface.CloseAll();
         }
 
         public void HandSelected(HandSelectedEventArgs eventArgs)
         {
-            Logger.Info("yay selected");
+            var session = eventArgs.User?.GetComponent<BasicActorComponent>()?.playerSession;
+
+            if (session == null) return;
+
+            _instrumentPlayer = session.ConnectedClient;
         }
 
         public void HandDeselected(HandDeselectedEventArgs eventArgs)
         {
-            Logger.Info("NO DESELECTED AAAAAA");
+            SendNetworkMessage(new InstrumentStopMidiMessage());
+            _userInterface.CloseAll();
+        }
+
+        public void Activate(ActivateEventArgs eventArgs)
+        {
+            if (Handheld || !eventArgs.User.TryGetComponent(out IActorComponent actor))
+                return;
+
+            if (_instrumentPlayer != null)
+                return;
+
+            _instrumentPlayer = actor.playerSession.ConnectedClient;
+            OpenUserInterface(actor.playerSession);
+        }
+
+        public bool UseEntity(UseEntityEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+                return false;
+
+            if(_instrumentPlayer == actor.playerSession.ConnectedClient)
+                OpenUserInterface(actor.playerSession);
+            return false;
         }
     }
 }

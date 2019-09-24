@@ -5,6 +5,11 @@
   description: Play Needles Piano Now.
   components:
   - type: Instrument
+    handheld: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
 
 - type: entity
   name: Synthesizer

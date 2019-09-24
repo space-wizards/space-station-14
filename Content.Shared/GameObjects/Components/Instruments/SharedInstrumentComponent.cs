@@ -8,15 +8,12 @@ namespace Content.Shared.GameObjects.Components.Instruments
     public class SharedInstrumentComponent : Component
     {
         public override string Name => "Instrument";
+        public override uint? NetID => ContentNetIDs.INSTRUMENTS;
     }
 
-    [Serializable, NetSerializable]
-    public class InstrumentOpenInputMessage : ComponentMessage
-    {
-    }
 
     [Serializable, NetSerializable]
-    public class InstrumentCloseInputMessage : ComponentMessage
+    public class InstrumentStopMidiMessage : ComponentMessage
     {
     }
 
@@ -29,5 +26,11 @@ namespace Content.Shared.GameObjects.Components.Instruments
         {
             MidiEvent = midiEvent;
         }
+    }
+
+    [NetSerializable, Serializable]
+    public enum InstrumentUiKey
+    {
+        Key,
     }
 }

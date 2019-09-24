@@ -1,10 +1,11 @@
 - type: entity
   name: BaseInstrument
-  parent: BaseItem
   id: BaseInstrument
   description: Play Needles Piano Now.
   components:
   - type: Instrument
+    handheld: false
+
   - type: Clickable
 
   - type: Collidable
@@ -19,6 +20,11 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 50
+
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
 
 - type: entity
   name: Piano

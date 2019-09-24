@@ -1,15 +1,20 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Instruments;
+using OpenTK.Platform.Windows;
 using Robust.Shared.GameObjects;
 using Robust.Client.Audio.Midi;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Reflection;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Reflection;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -27,6 +32,16 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private IMidiRenderer _renderer;
         private int _instrumentProgram = 1;
+        private Queue<MidiEvent> _eventQueue = new Queue<MidiEvent>();
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool LoopMidi
+        {
+            get => _renderer.LoopMidi;
+            set => _renderer.LoopMidi = value;
+        }
+
+        public event Action OnMidiPlaybackEnded;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int InstrumentProgram
@@ -38,6 +53,12 @@ namespace Content.Client.GameObjects.Components.Instruments
             }
         }
 
+        [ViewVariables]
+        public bool IsMidiOpen => _renderer.IsMidiOpen;
+
+        [ViewVariables]
+        public bool IsInputOpen => _renderer.IsInputOpen;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -46,8 +67,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             _renderer.LoadSoundfont("soundfont.sf2");
             _renderer.MidiProgram = _instrumentProgram;
             _renderer.Position = Owner;
-            _renderer.OpenInput();
-            //_renderer.OpenMidi("mysong.mid");
+            _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); };
         }
 
         public override void Shutdown()
@@ -68,10 +88,51 @@ namespace Content.Client.GameObjects.Components.Instruments
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMessage:
-                    if (_renderer.IsInputOpen || _renderer.IsMidiOpen) break;
+                    if (IsInputOpen || IsMidiOpen) break;
                     _renderer.SendMidiEvent(midiEventMessage.MidiEvent);
                     break;
+
+                case InstrumentStopMidiMessage _:
+                    if(IsInputOpen) CloseInput();
+                    if(IsMidiOpen) CloseMidi();
+                    _renderer.StopAllNotes();
+                    break;
             }
+        }
+
+        public void OpenInput()
+        {
+            _renderer.OpenInput();
+            _renderer.OnMidiEvent += RendererOnMidiEvent;
+        }
+
+        public void CloseInput()
+        {
+            _renderer.CloseInput();
+            _renderer.OnMidiEvent -= RendererOnMidiEvent;
+        }
+
+        public void OpenMidi(string filename)
+        {
+            _renderer.OpenMidi(filename);
+            _renderer.OnMidiEvent += RendererOnMidiEvent;
+        }
+
+        public void CloseMidi()
+        {
+            _renderer.CloseMidi();
+            _renderer.OnMidiEvent -= RendererOnMidiEvent;
+        }
+
+        private void RendererOnMidiEvent(MidiEvent obj)
+        {
+            _eventQueue.Enqueue(obj);
+        }
+
+        public void Update()
+        {
+            if (!_eventQueue.TryDequeue(out var midiEvent)) return;
+            SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent));
         }
     }
 }
