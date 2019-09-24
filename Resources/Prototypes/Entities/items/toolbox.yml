@@ -2,12 +2,12 @@
   name: Emergency Toolbox
   parent: BaseItem
   id: RedToolboxItem
-  description: A shiny red and robust container
+  description: A bright red toolbox, stocked with emergency tools
   components:
   - type: Sprite
-    texture: Objects/toolbox_r.png
+    texture: Objects/Tools/toolbox_r.png
   - type: Icon
-    texture: Objects/toolbox_r.png
+    texture: Objects/Tools/toolbox_r.png
   - type: Storage
     Capacity: 60
   - type: Item
@@ -17,12 +17,12 @@
   name: Mechanical Toolbox
   parent: BaseItem
   id: BlueToolboxItem
-  description: A blue box, not the kind you're thinking of
+  description: A blue box, stocked with mechanical tools
   components:
   - type: Sprite
-    texture: Objects/Toolbox_b.png
+    texture: Objects/Tools/Toolbox_b.png
   - type: Icon
-    texture: Objects/Toolbox_b.png
+    texture: Objects/Tools/Toolbox_b.png
   - type: Storage
     Capacity: 60
   - type: Item
@@ -35,9 +35,9 @@
   description: A toolbox typically stocked with electrical gear
   components:
   - type: Sprite
-    texture: Objects/Toolbox_y.png
+    texture: Objects/Tools/Toolbox_y.png
   - type: Icon
-    texture: Objects/Toolbox_y.png
+    texture: Objects/Tools/Toolbox_y.png
   - type: Storage
     Capacity: 60
   - type: Item

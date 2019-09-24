@@ -5,13 +5,13 @@
   id: ExGrenade
   components:
   - type: Sprite
-    sprite: Objects/grenade.rsi
+    sprite: Objects/Grenades/grenade.rsi
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
 
   - type: Icon
-    sprite: Objects/grenade.rsi
+    sprite: Objects/Grenades/grenade.rsi
     state: icon
 
   - type: Item
@@ -29,7 +29,7 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 10
-    
+
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer2D
@@ -42,13 +42,13 @@
   id: SyndieMiniBomb
   components:
   - type: Sprite
-    sprite: Objects/syndgrenade.rsi
+    sprite: Objects/Grenades/syndgrenade.rsi
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
 
   - type: Icon
-    sprite: Objects/syndgrenade.rsi
+    sprite: Objects/Grenades/syndgrenade.rsi
     state: icon
 
   - type: Item
@@ -71,4 +71,3 @@
     visuals:
     - type: TimerTriggerVisualizer2D
       countdown_sound: /Audio/effects/countdown.ogg
-

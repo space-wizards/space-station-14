@@ -25,12 +25,12 @@
   category: Machines/Power
   placementmode: SnapgridCenter
   description: A portable generator capable of producing power from thin air.
-  icon: Objects/generator.png
+  icon: Objects/Power/generator.png
   result: Generator
   steps:
   - material: Metal
     amount: 2
-    icon: Objects/generator.png
+    icon: Objects/Power/generator.png
 
   - material: Cable
     amount: 2
@@ -54,4 +54,3 @@
 
   - material: Cable
     amount: 2
-

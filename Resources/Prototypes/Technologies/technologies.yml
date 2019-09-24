@@ -1,0 +1,78 @@
+# In order to make this list somewhat organized, please place new technologies underneath their overarching "base" technology.
+# The technology tree is using this layout - https://tgstation13.org/wiki//images/thumb/f/f4/ResearchTree.png/800px-ResearchTree.png
+
+# Base Technology
+
+- type: technology
+  name: "Basic Research Technology"
+  id: Base_1
+  description: Nanotransen basic research technologies.
+  icon: Buildings/research.rsi/server-on.png
+  requiredpoints: 250
+
+# Biological Technology Tree
+
+- type: technology
+  name: "Biological Technology"
+  id: Bio_Base_1
+  description: Investigations into the natural world.
+  icon: Buildings/plants.rsi/plant_1.png
+  requiredpoints: 1000
+  requiredtechnologies:
+    - Base_1
+
+# Data Theory Technology Tree
+
+- type: technology
+  name: "Data Theory"
+  id: Data_Base_1
+  description: Just like regular data, but in space!
+  icon: Buildings/computers.rsi/computer-datatheory.png
+  requiredpoints: 1000
+  requiredtechnologies:
+    - Base_1
+
+# Industrial Engineering Technology Tree
+
+  - type: technology
+  name: "Industrial Engineering"
+  id: Industrial_Base_1
+  description: A refresher course on modern engineering technology.
+  icon: Buildings/research.rsi/protolathe.png
+  requiredpoints: 1000
+  requiredtechnologies:
+    - Base_1
+
+  - type: technology
+  name: Material sheet printing
+  id: Sheets
+  description: Print those sheets!
+  icon: Objects/Materials/sheet_metal.png
+  requiredpoints: 250
+  requiredtechnologies:
+    - Industrial_Base_1
+  unlockedrecipes:
+    - MetalStack
+    - GlassStack
+
+# Electromagnetic Theory Technology Tree
+
+  - type: technology
+  name: "Electromagnetic Theory"
+  id: Electro_Base_1
+  description: Try not to fry yourself.
+  icon: Buildings/apc.rsi/apcwires.png
+  requiredpoints: 1000
+  requiredtechnologies:
+    - Base_1
+
+# Bluespace Theory Technology Tree
+
+  - type: technology
+  name: "Basic Bluespace Theory"
+  id: Bluespace_Base_1
+  description: An experimental course on the mysterious technology known as bluespace.
+  icon: Buildings/teleporters.rsi/teleporter-theory.png
+  requiredpoints: 1000
+  requiredtechnologies:
+    - Base_1
