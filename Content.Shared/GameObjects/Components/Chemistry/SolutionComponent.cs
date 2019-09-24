@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             set => _capabilities = value;
         }
 
-        public ReadOnlyCollection<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
+        public IReadOnlyList<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
 
         /// <inheritdoc />
         public override string Name => "Solution";
