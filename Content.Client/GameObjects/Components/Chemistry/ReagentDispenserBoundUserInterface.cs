@@ -8,6 +8,9 @@ using static Content.Shared.GameObjects.Components.Chemistry.SharedReagentDispen
 
 namespace Content.Client.GameObjects.Components.Chemistry
 {
+    /// <summary>
+    /// Initializes a <see cref="ReagentDispenserWindow"/> and updates it when new server messages are received.
+    /// </summary>
     public class ReagentDispenserBoundUserInterface : BoundUserInterface
     {
         private ReagentDispenserWindow _window;
@@ -18,10 +21,16 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
         }
 
+        /// <summary>
+        /// Called each time a dispenser UI instance is opened. Generates the dispenser window and fills it with
+        /// relevant info. Sets the actions for static buttons.
+        /// <para>Buttons which can change like reagent dispense buttons have their actions set in <see cref="UpdateReagentsList"/>.</para>
+        /// </summary>
         protected override void Open()
         {
             base.Open();
 
+            //Setup window layout/elements
             _window = new ReagentDispenserWindow()
             {
                 Title = "Reagent dispenser",
@@ -31,6 +40,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
             _window.OpenCenteredMinSize();
             _window.OnClose += Close;
 
+            //Setup static button actions.
             _window.EjectButton.OnPressed += _ => ButtonPressed(UiButton.Eject);
             _window.ClearButton.OnPressed += _ => ButtonPressed(UiButton.Clear);
             _window.DispenseButton1.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount1);
@@ -41,6 +51,10 @@ namespace Content.Client.GameObjects.Components.Chemistry
             _window.DispenseButton100.OnPressed += _ => ButtonPressed(UiButton.SetDispenseAmount100);
         }
 
+        /// <summary>
+        /// Update the ui each time new state data is sent from the server.
+        /// </summary>
+        /// <param name="state">Data of the <see cref="ReagentDispenserComponent"/> that this ui represents. Sent from the server.</param>
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
@@ -48,12 +62,16 @@ namespace Content.Client.GameObjects.Components.Chemistry
             var castState = (ReagentDispenserBoundUserInterfaceState)state;
             _lastState = castState;
 
-            _window?.UpdateState(castState);
-            UpdateReagentsList(castState.Inventory);
+            _window?.UpdateState(castState); //Update window state
+            UpdateReagentsList(castState.Inventory); //Update reagents list & reagent button actions
 
             _window.ForceRunLayoutUpdate();
         }
 
+        /// <summary>
+        /// Update the list of reagents that this dispenser can dispense on the UI.
+        /// </summary>
+        /// <param name="inventory">A list of the reagents which can be dispensed.</param>
         private void UpdateReagentsList(List<ReagentDispenserInventoryEntry> inventory)
         {
             _window.UpdateReagentsList(inventory);

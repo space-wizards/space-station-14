@@ -7,20 +7,35 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Chemistry
 {
+
+    /// <summary>
+    /// Shared class for <c>ReagentDispenserComponent</c>. Provides a way for entities to dispense and remove reagents from other entities with SolutionComponents via a user interface.
+    /// <para>This is useful for machines such as the chemical dispensers, booze dispensers, or soda dispensers.</para>
+    /// <para>The chemicals which may be dispensed are defined by specifying a reagent pack. See <see cref="ReagentDispenserInventoryPrototype"/> for more information on that.</para>
+    /// </summary>
     public class SharedReagentDispenserComponent : Component
     {
         public override string Name => "ReagentDispenser";
 
+        /// <summary>
+        /// A list of reagents which this may dispense. Defined in yaml prototype, see <see cref="ReagentDispenserInventoryPrototype"/>.
+        /// </summary>
         public List<ReagentDispenserInventoryEntry> Inventory = new List<ReagentDispenserInventoryEntry>();
 
         [Serializable, NetSerializable]
         public class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly bool HasBeaker;
+            public readonly bool HasBeaker; 
             public readonly int BeakerCurrentVolume;
             public readonly int BeakerMaxVolume;
             public readonly string ContainerName;
+            /// <summary>
+            /// A list of the reagents which this dispenser can dispense.
+            /// </summary>
             public readonly List<ReagentDispenserInventoryEntry> Inventory;
+            /// <summary>
+            /// A list of the reagents and their amounts within the beaker/reagent container, if applicable.
+            /// </summary>
             public readonly List<Solution.ReagentQuantity> ContainerReagents;
             public readonly string DispenserName;
 
@@ -37,6 +52,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             }
         }
 
+        /// <summary>
+        /// Message data sent from client to server when a dispenser ui button is pressed.
+        /// </summary>
         [Serializable, NetSerializable]
         public class UiButtonPressedMessage : BoundUserInterfaceMessage
         {
@@ -56,6 +74,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             Key
         }
 
+        /// <summary>
+        /// Used in <see cref="UiButtonPressedMessage"/> to specify which button was pressed.
+        /// </summary>
         public enum UiButton
         {
             Eject,
@@ -66,9 +87,16 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             SetDispenseAmount25,
             SetDispenseAmount50,
             SetDispenseAmount100,
+            /// <summary>
+            /// Used when any dispense button is pressed. Such as "Carbon", or "Oxygen" buttons on the chem dispenser.
+            /// The index of the reagent attached to that dispense button is sent as <see cref="UiButtonPressedMessage.DispenseIndex"/>.
+            /// </summary>
             Dispense
         }
 
+        /// <summary>
+        /// Information about a reagent which the dispenser can dispense.
+        /// </summary>
         [Serializable, NetSerializable]
         public class ReagentDispenserInventoryEntry
         {

@@ -16,6 +16,12 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
+    /// <summary>
+    /// Contains all the server-side logic for reagent dispensers. See also <see cref="SharedReagentDispenserComponent"/>.
+    /// This includes initializing the component based on prototype data, and sending and receiving messages from the client.
+    /// Messages sent to the client are used to update update the user interface for a component instance.
+    /// Messages sent from the client are used to handle ui button presses.
+    /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IAttackBy))]
@@ -33,6 +39,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public bool HasBeaker => _beakerContainer.ContainedEntity != null;
         public int DispenseAmount = 10;
 
+        /// <summary>
+        /// Shows the serializer how to save/load this components yaml prototype.
+        /// </summary>
+        /// <param name="serializer">Yaml serializer</param>
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -40,6 +50,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
             serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
         }
 
+        /// <summary>
+        /// Called once per instance of this component. Gets references to any other components needed
+        /// by this component and initializes it's UI and other data.
+        /// </summary>
         public override void Initialize()
         {
             base.Initialize();
@@ -52,6 +66,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
             UpdateUserInterface();
         }
 
+        /// <summary>
+        /// Checks to see if the <c>pack</c> defined in this components yaml prototype
+        /// exists. If so, it fills the reagent inventory list.
+        /// </summary>
         private void InitializeFromPrototype()
         {
             if (string.IsNullOrEmpty(_packPrototypeId)) return;
@@ -68,6 +86,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
+        /// <summary>
+        /// Handles ui messages from the client. For things such as button presses
+        /// which interact with the world and require server action.
+        /// </summary>
+        /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
             var msg = (UiButtonPressedMessage)obj.Message;
@@ -100,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 case UiButton.Dispense:
                     if (HasBeaker)
                     {
-                        TryDispense(msg.DispenseIndex, obj.Session.AttachedEntity);
+                        TryDispense(msg.DispenseIndex);
                     }
                     break;
                 default:
@@ -108,6 +131,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
+        /// <summary>
+        /// Gets component data to be used to update the user interface client-side. 
+        /// </summary>
+        /// <returns>Returns a <see cref="SharedReagentDispenserComponent.ReagentDispenserBoundUserInterfaceState"/></returns>
         private ReagentDispenserBoundUserInterfaceState GetUserInterfaceState()
         {
             var beaker = _beakerContainer.ContainedEntity;
@@ -121,12 +148,18 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 Inventory, Owner.Name, solution.ReagentList.ToList());
         }
 
+        /// <summary>
+        /// Gets current component data as a <see cref="SharedReagentDispenserComponent.ReagentDispenserBoundUserInterfaceState"/> and sends it to the client.
+        /// </summary>
         private void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
             _userInterface.SetState(state);
         }
 
+        /// <summary>
+        /// If this component contains an entity with a <see cref="SolutionComponent"/>, eject it.
+        /// </summary>
         private void TryEject()
         {
             if(!HasBeaker) return;
@@ -135,6 +168,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
             UpdateUserInterface();
         }
 
+        /// <summary>
+        /// If this component contains an entity with a <see cref="SolutionComponent"/>, remove all of it's reagents / solutions.
+        /// </summary>
         private void TryClear()
         {
             if (!HasBeaker) return;
@@ -144,15 +180,24 @@ namespace Content.Server.GameObjects.Components.Chemistry
             UpdateUserInterface();
         }
 
-        private void TryDispense(int dispenseIndex, IEntity user)
+        /// <summary>
+        /// If this component contains an entity with a <see cref="SolutionComponent"/>, attempt to dispense the specified reagent to it.
+        /// </summary>
+        /// <param name="dispenseIndex">The index of the reagent in <c>Inventory</c>.</param>
+        private void TryDispense(int dispenseIndex)
         {
+            if (!HasBeaker) return;
+
             var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
             solution.TryAddReagent(Inventory[dispenseIndex].ID, DispenseAmount, out int acceptedQuantity);
 
             UpdateUserInterface();
         }
 
-        //Called when you click it with an empty hand
+        /// <summary>
+        /// Called when you click the owner entity with an empty hand. Opens the UI client-side if possible.
+        /// </summary>
+        /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         public void Activate(ActivateEventArgs args)
         {
             if (!args.User.TryGetComponent(out IActorComponent actor))
@@ -172,7 +217,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        //Calls when you click it with something in your hand
+        /// <summary>
+        /// Called when you click the owner entity with something in your active hand. If the entity in your hand
+        /// contains a <see cref="SolutionComponent"/>, if you have hands, and if the dispenser doesn't already
+        /// hold a container, it will be added to the dispenser.
+        /// </summary>
+        /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
+        /// <returns></returns>
         public bool AttackBy(AttackByEventArgs args)
         {
             if (!args.User.TryGetComponent(out IHandsComponent hands))
