@@ -48,12 +48,14 @@ namespace Content.Client.VendingMachines
             _cachedInventory = inventory;
             foreach (VendingMachineInventoryEntry entry in inventory)
             {
+                var itemName = _prototypeManager.Index<EntityPrototype>(entry.ID).Name;
+
                 Texture icon = null;
                 if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype prototype))
                 {
                     icon = IconComponent.GetPrototypeIcon(prototype, _resourceCache).TextureFor(Direction.South);
                 }
-                _items.AddItem($"{entry.ID} ({entry.Amount} left)", icon);
+                _items.AddItem($"{itemName} ({entry.Amount} left)", icon);
             }
         }
 

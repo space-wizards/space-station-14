@@ -1,4 +1,4 @@
-using Content.Client.GameObjects.Components;
+﻿using Content.Client.GameObjects.Components;
 using Content.Shared.Maps;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -39,12 +39,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var sprite = senderEnt.GetComponent<ISpriteComponent>();
             var grid = _mapManager.GetGrid(senderEnt.Transform.GridID);
-            var position = senderEnt.Transform.GridPosition;
-            var tileRef = grid.GetTileRef(position);
-            var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
-            sprite.Visible = tileDef.IsSubFloor;
+            var indices = grid.WorldToTile(senderEnt.Transform.WorldPosition);
+            UpdateTile(grid, indices);
         }
 
         private void MapManagerOnTileChanged(object sender, TileChangedEventArgs e)
@@ -67,13 +64,13 @@ namespace Content.Client.GameObjects.EntitySystems
             foreach (var snapGridComponent in grid.GetSnapGridCell(position, SnapGridOffset.Center))
             {
                 var entity = snapGridComponent.Owner;
-                if (!entity.HasComponent<SubFloorHideComponent>() ||
+                if (!entity.TryGetComponent(out SubFloorHideComponent subFloorComponent) ||
                     !entity.TryGetComponent(out ISpriteComponent spriteComponent))
                 {
                     continue;
                 }
 
-                spriteComponent.Visible = tileDef.IsSubFloor;
+                spriteComponent.Visible = !subFloorComponent.Running || tileDef.IsSubFloor;
             }
         }
     }

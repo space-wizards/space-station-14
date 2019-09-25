@@ -18,11 +18,11 @@
   parent: PowerCellSmallBase
   components:
   - type: Sprite
-    sprite: Objects/PowerCells/power_cell_small_st.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
     layers:
     - state: s_st
   - type: Icon
-    sprite: Objects/PowerCells/power_cell_small_st.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
     state: s_st
   - type: PowerCell
     capacity: 1500
@@ -39,11 +39,11 @@
   parent: PowerCellSmallBase
   components:
   - type: Sprite
-    sprite: Objects/PowerCells/power_cell_small_hi.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
     layers:
     - state: s_hi
   - type: Icon
-    sprite: Objects/PowerCells/power_cell_small_hi.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
     state: s_hi
   - type: PowerCell
     capacity: 3000
@@ -60,11 +60,11 @@
   parent: PowerCellSmallBase
   components:
   - type: Sprite
-    sprite: Objects/PowerCells/power_cell_small_sup.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
     layers:
     - state: s_sup
   - type: Icon
-    sprite: Objects/PowerCells/power_cell_small_sup.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
     state: s_sup
   - type: PowerCell
     capacity: 6000
@@ -81,11 +81,11 @@
   parent: PowerCellSmallBase
   components:
   - type: Sprite
-    sprite: Objects/PowerCells/power_cell_small_hy.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_hy.rsi
     layers:
     - state: s_hy
   - type: Icon
-    sprite: Objects/PowerCells/power_cell_small_hy.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_hy.rsi
     state: s_hy
   - type: PowerCell
     capacity: 10000

@@ -1,22 +1,24 @@
-﻿using Content.Shared.Maps;
-using Robust.Client.Interfaces.GameObjects.Components;
+﻿using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 
 namespace Content.Client.GameObjects.Components
 {
     /// <summary>
-    ///     Simple component that automatically hides the sibling <see cref="ISpriteComponent"/> when the tile it's on
-    ///     is not a sub floor (plating).
+    /// Simple component that automatically hides the sibling
+    /// <see cref="ISpriteComponent" /> when the tile it's on is not a sub floor
+    /// (plating).
     /// </summary>
-    /// <seealso cref="ContentTileDefinition.IsSubFloor"/>
+    /// <seealso cref="P:Content.Shared.Maps.ContentTileDefinition.IsSubFloor" />
     [RegisterComponent]
     public sealed class SubFloorHideComponent : Component
     {
         private SnapGridComponent _snapGridComponent;
 
+        /// <inheritdoc />
         public override string Name => "SubFloorHide";
 
+        /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
@@ -39,6 +41,7 @@ namespace Content.Client.GameObjects.Components
             base.Shutdown();
 
             _snapGridComponent.OnPositionChanged -= SnapGridOnPositionChanged;
+            Owner.EntityManager.RaiseEvent(Owner, new SubFloorHideDirtyEvent());
         }
 
         private void SnapGridOnPositionChanged()
@@ -47,7 +50,5 @@ namespace Content.Client.GameObjects.Components
         }
     }
 
-    internal sealed class SubFloorHideDirtyEvent : EntitySystemMessage
-    {
-    }
+    internal sealed class SubFloorHideDirtyEvent : EntitySystemMessage { }
 }

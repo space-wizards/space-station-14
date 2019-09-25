@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Content.Server.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Chat;
@@ -47,6 +49,11 @@ namespace Content.Server.Chat
 
         public void EntitySay(IEntity source, string message)
         {
+            if (!ActionBlockerSystem.CanSpeak(source))
+            {
+                return;
+            }
+
             var pos = source.Transform.GridPosition;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
 

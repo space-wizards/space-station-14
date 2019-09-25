@@ -16,7 +16,9 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 8
+      bounds: "-0.5,-0.25,0.5,0.25"
+      mask: 19
+      layer: 16
   - type: SnapGrid
     offset: Center
   - type: Damageable

@@ -67,4 +67,5 @@
   - type: Teleportable
   - type: Examiner
   - type: CharacterInfo
+  - type: FootstepSound
 
