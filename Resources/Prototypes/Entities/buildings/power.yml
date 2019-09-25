@@ -9,10 +9,10 @@
     netsync: false
     drawdepth: BelowFloor
     color: Red
-    sprite: Objects/power_cable.rsi
+    sprite: Objects/Power/power_cable.rsi
     state: cable_0
   - type: Icon
-    texture: Objects/eightdirwire.png
+    texture: Objects/Power/eightdirwire.png
   - type: PowerTransfer
   - type: SnapGrid
     offset: Center
@@ -47,9 +47,9 @@
       mask: 19
       layer: 16
   - type: Sprite
-    texture: Objects/generator.png
+    texture: Objects/Power/generator.png
   - type: Icon
-    texture: Objects/generator.png
+    texture: Objects/Power/generator.png
   - type: PowerGenerator
 
 - type: entity
@@ -65,9 +65,9 @@
       layer: 4
   - type: Sprite
     drawdepth: WallMountedItems
-    texture: Objects/provider.png
+    texture: Objects/Power/provider.png
   - type: Icon
-    texture: Objects/provider.png
+    texture: Objects/Power/provider.png
   - type: PowerProvider
     range: 5
     priority: Provider
@@ -162,9 +162,9 @@
       mask: 19
       layer: 16
   - type: Sprite
-    texture: Objects/wiredmachine.png
+    texture: Objects/Power/wiredmachine.png
   - type: Icon
-    texture: Objects/wiredmachine.png
+    texture: Objects/Power/wiredmachine.png
   - type: PowerDevice
     drawtype: Node
     load: 100
@@ -183,9 +183,9 @@
       mask: 19
       layer: 16
   - type: Sprite
-    texture: Objects/wirelessmachine.png
+    texture: Objects/Furniture/wirelessmachine.png
   - type: Icon
-    texture: Objects/wirelessmachine.png
+    texture: Objects/Furniture/wirelessmachine.png
   - type: PowerDevice
     drawtype: Both
     load: 200
