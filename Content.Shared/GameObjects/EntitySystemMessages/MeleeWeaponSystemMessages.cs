@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -9,18 +10,20 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     public static class MeleeWeaponSystemMessages
     {
         [Serializable, NetSerializable]
-        public sealed class PlayWeaponArcMessage : EntitySystemMessage
+        public sealed class PlayMeleeWeaponAnimationMessage : EntitySystemMessage
         {
-            public PlayWeaponArcMessage(string arcPrototype, GridCoordinates position, Angle angle)
+            public PlayMeleeWeaponAnimationMessage(string arcPrototype, Angle angle, EntityUid attacker, List<EntityUid> hits)
             {
                 ArcPrototype = arcPrototype;
-                Position = position;
                 Angle = angle;
+                Attacker = attacker;
+                Hits = hits;
             }
 
             public string ArcPrototype { get; }
-            public GridCoordinates Position { get; }
             public Angle Angle { get; }
+            public EntityUid Attacker { get; }
+            public List<EntityUid> Hits { get; }
         }
     }
 }

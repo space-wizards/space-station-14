@@ -1,4 +1,4 @@
-- type: WeaponArc
+- type: MeleeWeaponAnimation
   id: default
   state: slash
   arcType: Slash

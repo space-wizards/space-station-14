@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
     {
         public override string Name => "MeleeWeaponArcAnimation";
 
-        private WeaponArcPrototype _weaponArc;
+        private MeleeWeaponAnimationPrototype _meleeWeaponAnimation;
 
         private float _timer;
         private SpriteComponent _sprite;
@@ -24,16 +24,16 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
             _sprite = Owner.GetComponent<SpriteComponent>();
         }
 
-        public void SetData(WeaponArcPrototype prototype, Angle baseAngle)
+        public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle)
         {
-            _weaponArc = prototype;
+            _meleeWeaponAnimation = prototype;
             _sprite.AddLayer(new RSI.StateId(prototype.State));
             _baseAngle = baseAngle;
         }
 
         internal void Update(float frameTime)
         {
-            if (_weaponArc == null)
+            if (_meleeWeaponAnimation == null)
             {
                 return;
             }
@@ -41,24 +41,24 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
             _timer += frameTime;
 
             var (r, g, b, a) =
-                Vector4.Clamp(_weaponArc.Color + _weaponArc.ColorDelta * _timer, Vector4.Zero, Vector4.One);
+                Vector4.Clamp(_meleeWeaponAnimation.Color + _meleeWeaponAnimation.ColorDelta * _timer, Vector4.Zero, Vector4.One);
             _sprite.Color = new Color(r, g, b, a);
 
-            switch (_weaponArc.ArcType)
+            switch (_meleeWeaponAnimation.ArcType)
             {
                 case WeaponArcType.Slash:
-                    var angle = Angle.FromDegrees(_weaponArc.Width)/2;
+                    var angle = Angle.FromDegrees(_meleeWeaponAnimation.Width)/2;
                     Owner.Transform.LocalRotation =
-                        _baseAngle + Angle.Lerp(-angle, angle, (float) (_timer / _weaponArc.Length.TotalSeconds));
+                        _baseAngle + Angle.Lerp(-angle, angle, (float) (_timer / _meleeWeaponAnimation.Length.TotalSeconds));
                     break;
 
                 case WeaponArcType.Poke:
-                    _sprite.Offset += (_weaponArc.Speed * frameTime, 0);
+                    _sprite.Offset += (_meleeWeaponAnimation.Speed * frameTime, 0);
                     break;
             }
 
 
-            if (_weaponArc.Length.TotalSeconds <= _timer)
+            if (_meleeWeaponAnimation.Length.TotalSeconds <= _timer)
             {
                 Owner.Delete();
             }

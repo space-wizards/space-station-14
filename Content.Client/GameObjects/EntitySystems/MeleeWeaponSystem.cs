@@ -1,12 +1,17 @@
+using System.Linq;
+using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Weapons.Melee;
 using Content.Shared.GameObjects.Components.Weapons.Melee;
 using JetBrains.Annotations;
+using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timers;
 using static Content.Shared.GameObjects.EntitySystemMessages.MeleeWeaponSystemMessages;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -14,7 +19,6 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class MeleeWeaponSystem : EntitySystem
     {
-
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
@@ -30,7 +34,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.RegisterMessageTypes();
 
-            RegisterMessageType<PlayWeaponArcMessage>();
+            RegisterMessageType<PlayMeleeWeaponAnimationMessage>();
         }
 
         public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
@@ -39,7 +43,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             switch (message)
             {
-                case PlayWeaponArcMessage playMsg:
+                case PlayMeleeWeaponAnimationMessage playMsg:
                     PlayWeaponArc(playMsg);
                     break;
             }
@@ -55,19 +59,43 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        private void PlayWeaponArc(PlayWeaponArcMessage msg)
+        private void PlayWeaponArc(PlayMeleeWeaponAnimationMessage msg)
         {
-            if (!_prototypeManager.TryIndex(msg.ArcPrototype, out WeaponArcPrototype weaponArc))
+            if (!_prototypeManager.TryIndex(msg.ArcPrototype, out MeleeWeaponAnimationPrototype weaponArc))
             {
                 Logger.Error("Tried to play unknown weapon arc prototype '{0}'", msg.ArcPrototype);
                 return;
             }
 
-            var entity = EntityManager.SpawnEntityAt("WeaponArc", msg.Position);
+            var attacker = EntityManager.GetEntity(msg.Attacker);
+
+            var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
+            lunge.SetData(msg.Angle);
+
+            var entity = EntityManager.SpawnEntityAt("WeaponArc", attacker.Transform.GridPosition);
             entity.Transform.LocalRotation = msg.Angle;
 
             var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();
             weaponArcAnimation.SetData(weaponArc, msg.Angle);
+
+
+            foreach (var hitEntity in msg.Hits.Select(u => EntityManager.GetEntity(u)))
+            {
+                if (!hitEntity.TryGetComponent(out ISpriteComponent sprite)) continue;
+
+                var originalColor = sprite.Color;
+                var newColor = Color.Red * originalColor;
+                sprite.Color = newColor;
+
+                Timer.Spawn(100, () =>
+                {
+                    // Only reset back to the original color if something else didn't change the color in the mean time.
+                    if (sprite.Color == newColor)
+                    {
+                        sprite.Color = originalColor;
+                    }
+                });
+            }
         }
     }
 }

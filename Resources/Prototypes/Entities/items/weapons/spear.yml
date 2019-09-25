@@ -21,7 +21,7 @@
     sprite: Objects/items/spear.rsi
     prefix: inhand
 
-- type: WeaponArc
+- type: MeleeWeaponAnimation
   id: spear
   state: spear
   length: 0.10

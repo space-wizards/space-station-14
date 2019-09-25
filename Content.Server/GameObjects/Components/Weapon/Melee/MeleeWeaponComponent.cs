@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -83,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var entities =
                 _serverEntityManager.GetEntitiesInArc(eventArgs.User.Transform.GridPosition, Range, angle, ArcWidth);
 
-            var hit = false;
+            var hitEntities = new List<IEntity>();
             foreach (var entity in entities)
             {
                 if (!entity.Transform.IsMapTransform || entity == eventArgs.User)
@@ -91,31 +93,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
                 if (entity.TryGetComponent(out DamageableComponent damageComponent))
                 {
-                    hit = true;
                     damageComponent.TakeDamage(DamageType.Brute, Damage);
+                    hitEntities.Add(entity);
                 }
             }
 
-            if (hit)
-            {
-                _entitySystemManager.GetEntitySystem<AudioSystem>()
-                    .Play(_hitSound);
-            }
-            else
-            {
-                _entitySystemManager.GetEntitySystem<AudioSystem>()
-                    .Play("/Audio/weapons/punchmiss.ogg");
-            }
+            var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            audioSystem.Play(hitEntities.Count > 0  ? _hitSound : "/Audio/weapons/punchmiss.ogg");
 
             if (Arc != null)
             {
-                _entitySystemManager.GetEntitySystem<MeleeWeaponSystem>()
-                    .SendArc(Arc, eventArgs.User.Transform.GridPosition, angle);
-            }
-
-            if (eventArgs.User.TryGetComponent(out CameraRecoilComponent recoilComponent))
-            {
-                recoilComponent.Kick(angle.RotateVec((0.15f, 0)));
+                var sys = _entitySystemManager.GetEntitySystem<MeleeWeaponSystem>();
+                sys.SendAnimation(Arc, angle, eventArgs.User, hitEntities);
             }
         }
     }
