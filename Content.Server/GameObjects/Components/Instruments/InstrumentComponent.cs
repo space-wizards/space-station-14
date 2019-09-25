@@ -15,6 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Instruments
 {
     [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
     public class InstrumentComponent : SharedInstrumentComponent, IDropped, IHandSelected, IHandDeselected, IActivate, IUse
     {
         private INetChannel _instrumentPlayer;
@@ -36,7 +37,10 @@ namespace Content.Server.GameObjects.Components.Instruments
         private void UserInterfaceOnClosed(ServerBoundUserInterfaceMessage obj)
         {
             if (!Handheld && obj.Session.ConnectedClient == _instrumentPlayer)
+            {
                 _instrumentPlayer = null;
+                SendNetworkMessage(new InstrumentStopMidiMessage());
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)

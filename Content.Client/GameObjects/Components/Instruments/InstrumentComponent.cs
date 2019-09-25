@@ -93,46 +93,50 @@ namespace Content.Client.GameObjects.Components.Instruments
                     break;
 
                 case InstrumentStopMidiMessage _:
+                    _renderer.StopAllNotes();
                     if(IsInputOpen) CloseInput();
                     if(IsMidiOpen) CloseMidi();
-                    _renderer.StopAllNotes();
                     break;
             }
         }
 
         public void OpenInput()
         {
-            _renderer.OpenInput();
             _renderer.OnMidiEvent += RendererOnMidiEvent;
+            _renderer.OpenInput();
         }
 
         public void CloseInput()
         {
-            _renderer.CloseInput();
             _renderer.OnMidiEvent -= RendererOnMidiEvent;
+            _renderer.CloseInput();
         }
 
         public void OpenMidi(string filename)
         {
-            _renderer.OpenMidi(filename);
             _renderer.OnMidiEvent += RendererOnMidiEvent;
+            _renderer.OpenMidi(filename);
         }
 
         public void CloseMidi()
         {
-            _renderer.CloseMidi();
             _renderer.OnMidiEvent -= RendererOnMidiEvent;
+            _renderer.CloseMidi();
         }
 
         private void RendererOnMidiEvent(MidiEvent obj)
         {
-            _eventQueue.Enqueue(obj);
+            lock (_eventQueue)
+                _eventQueue.Enqueue(obj);
         }
 
         public void Update()
         {
-            if (!_eventQueue.TryDequeue(out var midiEvent)) return;
-            SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent));
+            lock (_eventQueue)
+            {
+                if (!_eventQueue.TryDequeue(out var midiEvent)) return;
+                SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent));
+            }
         }
     }
 }

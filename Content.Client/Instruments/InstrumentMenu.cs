@@ -25,6 +25,7 @@ namespace Content.Client.Instruments
         public InstrumentMenu(InstrumentBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
+            Title = "Instrument";
 
             _owner = owner;
 
@@ -122,7 +123,7 @@ namespace Content.Client.Instruments
                 Disabled = !_owner.Instrument.IsMidiOpen,
             };
 
-            midiStopButton.OnPressed += MidiStopButtonOnOnPressed;
+            midiStopButton.OnPressed += MidiStopButtonOnPressed;
 
             hBoxBottomButtons.AddChild(midiLoopButton);
             hBoxBottomButtons.AddChild(bottomSpacer);
@@ -171,14 +172,14 @@ namespace Content.Client.Instruments
         {
             if (obj.Pressed)
             {
+                MidiStopButtonOnPressed(null);
                 _owner.Instrument.OpenInput();
-                MidiStopButtonOnOnPressed(null);
             }
             else
                 _owner.Instrument.CloseInput();
         }
 
-        private void MidiStopButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        private void MidiStopButtonOnPressed(BaseButton.ButtonEventArgs obj)
         {
             MidiPlaybackSetButtonsDisabled(true);
             _owner.Instrument.CloseMidi();
