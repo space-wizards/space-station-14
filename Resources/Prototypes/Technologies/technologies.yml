@@ -34,7 +34,7 @@
 
 # Industrial Engineering Technology Tree
 
-  - type: technology
+- type: technology
   name: "Industrial Engineering"
   id: Industrial_Base_1
   description: A refresher course on modern engineering technology.
@@ -43,7 +43,7 @@
   requiredtechnologies:
     - Base_1
 
-  - type: technology
+- type: technology
   name: Material sheet printing
   id: Sheets
   description: Print those sheets!
@@ -57,7 +57,7 @@
 
 # Electromagnetic Theory Technology Tree
 
-  - type: technology
+- type: technology
   name: "Electromagnetic Theory"
   id: Electro_Base_1
   description: Try not to fry yourself.
@@ -68,7 +68,7 @@
 
 # Bluespace Theory Technology Tree
 
-  - type: technology
+- type: technology
   name: "Basic Bluespace Theory"
   id: Bluespace_Base_1
   description: An experimental course on the mysterious technology known as bluespace.
