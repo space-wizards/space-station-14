@@ -5,6 +5,9 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
+    /// <summary>
+    ///     This system is used to trigger an update on all instruments, and send queued midi events.
+    /// </summary>
     internal sealed class InstrumentSystem : EntitySystem
     {
         private readonly IEntityQuery _instrumentQuery;

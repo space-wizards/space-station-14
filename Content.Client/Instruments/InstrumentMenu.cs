@@ -1,4 +1,5 @@
 using Content.Client.GameObjects.Components.Instruments;
+using Robust.Client.Audio.Midi;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -12,6 +13,7 @@ namespace Content.Client.Instruments
     public class InstrumentMenu : SS14Window
     {
 #pragma warning disable 169
+        [Dependency] private IMidiManager _midiManager;
         [Dependency] private IFileDialogManager _fileDialogManager;
 #pragma warning enable 169
 
@@ -158,9 +160,10 @@ namespace Content.Client.Instruments
 
             if (filename == null) return;
 
-            if (!filename.EndsWith("midi") && !filename.EndsWith("mid"))
+            if (!_midiManager.IsMidiFile(filename))
             {
-                Logger.Warning("Not a midi file!");
+                Logger.Warning($"Not a midi file! Chosen file: {filename}");
+                return;
             }
 
             midiInputButton.Pressed = false;

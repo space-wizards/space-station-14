@@ -25,6 +25,11 @@ namespace Content.Client.GameObjects.Components.Instruments
     [RegisterComponent]
     public class InstrumentComponent : SharedInstrumentComponent
     {
+        /// <summary>
+        ///     Called when a midi song stops playing.
+        /// </summary>
+        public event Action OnMidiPlaybackEnded;
+
 #pragma warning disable 649
         [Dependency] private IMidiManager _midiManager;
         [Dependency] private IFileDialogManager _fileDialogManager;
@@ -32,8 +37,15 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private IMidiRenderer _renderer;
         private int _instrumentProgram = 1;
+
+        /// <summary>
+        ///     A queue of MidiEvents to be sent to the server.
+        /// </summary>
         private Queue<MidiEvent> _eventQueue = new Queue<MidiEvent>();
 
+        /// <summary>
+        ///     Whether a midi song will loop or not.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool LoopMidi
         {
@@ -41,8 +53,9 @@ namespace Content.Client.GameObjects.Components.Instruments
             set => _renderer.LoopMidi = value;
         }
 
-        public event Action OnMidiPlaybackEnded;
-
+        /// <summary>
+        ///     Changes the instrument the midi renderer will play.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int InstrumentProgram
         {
@@ -53,9 +66,15 @@ namespace Content.Client.GameObjects.Components.Instruments
             }
         }
 
+        /// <summary>
+        ///     Whether there's a midi song being played or not.
+        /// </summary>
         [ViewVariables]
         public bool IsMidiOpen => _renderer.IsMidiOpen;
 
+        /// <summary>
+        ///     Whether the midi renderer is listening for midi input or not.
+        /// </summary>
         [ViewVariables]
         public bool IsInputOpen => _renderer.IsInputOpen;
 
@@ -64,7 +83,6 @@ namespace Content.Client.GameObjects.Components.Instruments
             base.Initialize();
             IoCManager.InjectDependencies(this);
             _renderer = _midiManager.GetNewRenderer();
-            _renderer.LoadSoundfont("soundfont.sf2");
             _renderer.MidiProgram = _instrumentProgram;
             _renderer.Position = Owner;
             _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); };
@@ -88,6 +106,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMessage:
+                    // If we're the ones sending the MidiEvents, we ignore this message.
                     if (IsInputOpen || IsMidiOpen) break;
                     _renderer.SendMidiEvent(midiEventMessage.MidiEvent);
                     break;
@@ -100,38 +119,50 @@ namespace Content.Client.GameObjects.Components.Instruments
             }
         }
 
+        /// <inheritdoc cref="MidiRenderer.OpenInput"/>
         public void OpenInput()
         {
             _renderer.OnMidiEvent += RendererOnMidiEvent;
             _renderer.OpenInput();
         }
 
+        /// <inheritdoc cref="MidiRenderer.CloseInput"/>
         public void CloseInput()
         {
             _renderer.OnMidiEvent -= RendererOnMidiEvent;
             _renderer.CloseInput();
         }
 
+        /// <inheritdoc cref="MidiRenderer.OpenMidi(string)"/>
         public void OpenMidi(string filename)
         {
             _renderer.OnMidiEvent += RendererOnMidiEvent;
             _renderer.OpenMidi(filename);
         }
 
+        /// <inheritdoc cref="MidiRenderer.CloseMidi"/>
         public void CloseMidi()
         {
             _renderer.OnMidiEvent -= RendererOnMidiEvent;
             _renderer.CloseMidi();
         }
 
-        private void RendererOnMidiEvent(MidiEvent obj)
+        /// <summary>
+        ///     Called whenever the renderer receives a midi event.
+        /// </summary>
+        /// <param name="midiEvent">The received midi event</param>
+        private void RendererOnMidiEvent(MidiEvent midiEvent)
         {
             lock (_eventQueue)
-                _eventQueue.Enqueue(obj);
+                _eventQueue.Enqueue(midiEvent);
         }
 
+        /// <summary>
+        ///     Sends queued midi events to the server.
+        /// </summary>
         public void Update()
         {
+            if (!(IsInputOpen || IsMidiOpen)) return;
             lock (_eventQueue)
             {
                 if (!_eventQueue.TryDequeue(out var midiEvent)) return;

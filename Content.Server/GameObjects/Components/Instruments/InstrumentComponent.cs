@@ -7,8 +7,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -16,14 +14,21 @@ namespace Content.Server.GameObjects.Components.Instruments
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class InstrumentComponent : SharedInstrumentComponent, IDropped, IHandSelected, IHandDeselected, IActivate, IUse
+    public class InstrumentComponent : SharedInstrumentComponent,
+        IDropped, IHandSelected, IHandDeselected, IActivate, IUse, IThrown
     {
+        /// <summary>
+        ///     The client channel currently playing the instrument, or null if there's none.
+        /// </summary>
         private INetChannel _instrumentPlayer;
-        private bool _handheld = false;
+        private bool _handheld;
 
         [ViewVariables]
         private BoundUserInterface _userInterface;
 
+        /// <summary>
+        ///     Whether the instrument is an item which can be held or not.
+        /// </summary>
         [ViewVariables]
         public bool Handheld => _handheld;
 
@@ -32,15 +37,6 @@ namespace Content.Server.GameObjects.Components.Instruments
             base.Initialize();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(InstrumentUiKey.Key);
             _userInterface.OnClosed += UserInterfaceOnClosed;
-        }
-
-        private void UserInterfaceOnClosed(ServerBoundUserInterfaceMessage obj)
-        {
-            if (!Handheld && obj.Session.ConnectedClient == _instrumentPlayer)
-            {
-                _instrumentPlayer = null;
-                SendNetworkMessage(new InstrumentStopMidiMessage());
-            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -52,6 +48,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
+            // If the client that sent the message isn't the client playing this instrument, we ignore it.
             if (netChannel != _instrumentPlayer) return;
             switch (message)
             {
@@ -61,12 +58,14 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
         }
 
-        private void OpenUserInterface(IPlayerSession session)
+        public void Dropped(DroppedEventArgs eventArgs)
         {
-            _userInterface.Open(session);
+            SendNetworkMessage(new InstrumentStopMidiMessage());
+            _instrumentPlayer = null;
+            _userInterface.CloseAll();
         }
 
-        public void Dropped(DroppedEventArgs eventArgs)
+        public void Thrown(ThrownEventArgs eventArgs)
         {
             SendNetworkMessage(new InstrumentStopMidiMessage());
             _instrumentPlayer = null;
@@ -108,6 +107,20 @@ namespace Content.Server.GameObjects.Components.Instruments
             if(_instrumentPlayer == actor.playerSession.ConnectedClient)
                 OpenUserInterface(actor.playerSession);
             return false;
+        }
+
+        private void UserInterfaceOnClosed(ServerBoundUserInterfaceMessage obj)
+        {
+            if (!Handheld && obj.Session.ConnectedClient == _instrumentPlayer)
+            {
+                _instrumentPlayer = null;
+                SendNetworkMessage(new InstrumentStopMidiMessage());
+            }
+        }
+
+        private void OpenUserInterface(IPlayerSession session)
+        {
+            _userInterface.Open(session);
         }
     }
 }

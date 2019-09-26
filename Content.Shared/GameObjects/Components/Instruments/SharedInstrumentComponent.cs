@@ -12,11 +12,17 @@ namespace Content.Shared.GameObjects.Components.Instruments
     }
 
 
+    /// <summary>
+    ///     This message is sent to the client to completely stop midi input and midi playback.
+    /// </summary>
     [Serializable, NetSerializable]
     public class InstrumentStopMidiMessage : ComponentMessage
     {
     }
 
+    /// <summary>
+    ///     This message carries a MidiEvent to be played on clients.
+    /// </summary>
     [Serializable, NetSerializable]
     public class InstrumentMidiEventMessage : ComponentMessage
     {

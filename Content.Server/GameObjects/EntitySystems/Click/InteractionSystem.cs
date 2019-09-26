@@ -184,6 +184,9 @@ namespace Content.Server.GameObjects.EntitySystems
         public GridCoordinates ClickLocation { get; }
     }
 
+    /// <summary>
+    ///     This interface gives components behavior when they're held on the selected hand.
+    /// </summary>
     public interface IHandSelected
     {
         void HandSelected(HandSelectedEventArgs eventArgs);
@@ -199,6 +202,9 @@ namespace Content.Server.GameObjects.EntitySystems
         public IEntity User { get; }
     }
 
+    /// <summary>
+    ///     This interface gives components behavior when they're held on a deselected hand.
+    /// </summary>
     public interface IHandDeselected
     {
         void HandDeselected(HandDeselectedEventArgs eventArgs);
@@ -214,6 +220,9 @@ namespace Content.Server.GameObjects.EntitySystems
         public IEntity User { get; }
     }
 
+    /// <summary>
+    ///     This interface gives components behavior when they're dropped by a mob.
+    /// </summary>
     public interface IDropped
     {
         void Dropped(DroppedEventArgs eventArgs);
