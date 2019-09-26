@@ -29,6 +29,10 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private EyeComponent _eye;
 
+        // Basically I needed a way to chain this effect for the attack lunge animation.
+        // Sorry!
+        public Vector2 BaseOffset { get; set; }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -95,7 +99,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void _updateEye()
         {
-            _eye.Offset = _currentKick;
+            _eye.Offset = BaseOffset + _currentKick;
         }
     }
 }

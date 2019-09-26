@@ -481,6 +481,23 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
                 }),
+
+                // Targeting doll
+
+                new StyleRule(new SelectorElement(typeof(TextureButton), new []{TargetingDoll.StyleClassTargetDollZone}, null, new [] {TextureButton.StylePseudoClassNormal}), new []
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#F00")),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(TextureButton), new []{TargetingDoll.StyleClassTargetDollZone}, null, new [] {TextureButton.StylePseudoClassHover}), new []
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#0F0")),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(TextureButton), new []{TargetingDoll.StyleClassTargetDollZone}, null, new [] {TextureButton.StylePseudoClassPressed}), new []
+                {
+                    new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#00F")),
+                }),
             });
         }
     }

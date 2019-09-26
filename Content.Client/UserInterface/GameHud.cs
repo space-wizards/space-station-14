@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Client.Utility;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
@@ -48,6 +49,13 @@ namespace Content.Client.UserInterface
         Control HandsContainer { get; }
         Control InventoryQuickButtonContainer { get; }
 
+        bool CombatPanelVisible { get; set; }
+        bool CombatModeActive { get; set; }
+        TargetingZone TargetingZone { get; set; }
+        Action<bool> OnCombatModeChanged { get; set; }
+        Action<TargetingZone> OnTargetingZoneChanged { get; set; }
+
+
         // Init logic.
         void Initialize();
     }
@@ -62,6 +70,9 @@ namespace Content.Client.UserInterface
         private TopButton _buttonCraftingMenu;
         private TopButton _buttonSandboxMenu;
         private TutorialWindow _tutorialWindow;
+        private TargetingDoll _targetingDoll;
+        private Button _combatModeButton;
+        private VBoxContainer _combatPanelContainer;
 
 #pragma warning disable 649
         [Dependency] private readonly IResourceCache _resourceCache;
@@ -71,6 +82,26 @@ namespace Content.Client.UserInterface
 
         public Control HandsContainer { get; private set; }
         public Control InventoryQuickButtonContainer { get; private set; }
+        public bool CombatPanelVisible
+        {
+            get => _combatPanelContainer.Visible;
+            set => _combatPanelContainer.Visible = value;
+        }
+
+        public bool CombatModeActive
+        {
+            get => _combatModeButton.Pressed;
+            set => _combatModeButton.Pressed = value;
+        }
+
+        public TargetingZone TargetingZone
+        {
+            get => _targetingDoll.ActiveZone;
+            set => _targetingDoll.ActiveZone = value;
+        }
+
+        public Action<bool> OnCombatModeChanged { get; set; }
+        public Action<TargetingZone> OnTargetingZoneChanged { get; set; }
 
         public void Initialize()
         {
@@ -179,16 +210,35 @@ namespace Content.Client.UserInterface
             {
                 GrowHorizontal = Control.GrowDirection.Begin,
                 GrowVertical = Control.GrowDirection.Begin,
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
 
             HandsContainer = new MarginContainer
             {
                 GrowHorizontal = Control.GrowDirection.Both,
-                GrowVertical = Control.GrowDirection.Begin
+                GrowVertical = Control.GrowDirection.Begin,
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
+
+            _combatPanelContainer = new VBoxContainer
+            {
+                Children =
+                {
+                    (_combatModeButton = new Button
+                    {
+                        Text = _loc.GetString("Combat Mode"),
+                        ToggleMode = true
+                    }),
+                    (_targetingDoll = new TargetingDoll(_resourceCache))
+                }
+            };
+
+            _combatModeButton.OnToggled += args => OnCombatModeChanged?.Invoke(args.Pressed);
+            _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
             inventoryContainer.Children.Add(HandsContainer);
             inventoryContainer.Children.Add(InventoryQuickButtonContainer);
+            inventoryContainer.Children.Add(_combatPanelContainer);
         }
 
         private void ButtonTutorialOnOnToggled()

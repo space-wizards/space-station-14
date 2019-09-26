@@ -1,6 +1,17 @@
 - type: entity
-  name: Emergency Toolbox
+  id: ToolboxBase
   parent: BaseItem
+  components:
+  - type: Storage
+    Capacity: 60
+  - type: Item
+    Size: 9999
+  - type: MeleeWeapon
+    hitSound: "/Audio/weapons/smash.ogg"
+
+- type: entity
+  name: Emergency Toolbox
+  parent: ToolboxBase
   id: RedToolboxItem
   description: A bright red toolbox, stocked with emergency tools
   components:
@@ -8,14 +19,10 @@
     texture: Objects/Tools/toolbox_r.png
   - type: Icon
     texture: Objects/Tools/toolbox_r.png
-  - type: Storage
-    Capacity: 60
-  - type: Item
-    Size: 9999
 
 - type: entity
   name: Mechanical Toolbox
-  parent: BaseItem
+  parent: ToolboxBase
   id: BlueToolboxItem
   description: A blue box, stocked with mechanical tools
   components:
@@ -23,14 +30,10 @@
     texture: Objects/Tools/Toolbox_b.png
   - type: Icon
     texture: Objects/Tools/Toolbox_b.png
-  - type: Storage
-    Capacity: 60
-  - type: Item
-    Size: 9999
 
 - type: entity
   name: Electrical Toolbox
-  parent: BaseItem
+  parent: ToolboxBase
   id: YellowToolboxItem
   description: A toolbox typically stocked with electrical gear
   components:
@@ -38,10 +41,6 @@
     texture: Objects/Tools/Toolbox_y.png
   - type: Icon
     texture: Objects/Tools/Toolbox_y.png
-  - type: Storage
-    Capacity: 60
-  - type: Item
-    Size: 9999
 
 - type: entity
   id: YellowToolboxItemFilled

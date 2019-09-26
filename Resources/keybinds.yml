@@ -82,7 +82,7 @@ binds:
   key: MouseRight
   canFocus: true
 - function: ToggleCombatMode
-  type: Toggle
+  type: State
   key: Tab
 - function: OpenCraftingMenu
   type: state
