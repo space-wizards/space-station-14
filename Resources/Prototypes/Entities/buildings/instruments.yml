@@ -1,7 +1,6 @@
 - type: entity
   name: BaseInstrument
   id: BaseInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     handheld: false
@@ -35,7 +34,7 @@
   - type: Instrument
     program: 1
   - type: Sprite
-    sprite: Objects/musician.rsi
+    sprite: Objects/Instruments/musician.rsi
     state: piano
   - type: Icon
     sprite: Objects/musician.rsi
@@ -45,9 +44,9 @@
   name: Minimoog
   parent: BaseInstrument
   id: MinimoogInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
+    program: 7
   - type: Sprite
     sprite: Objects/musician.rsi
     state: minimoog

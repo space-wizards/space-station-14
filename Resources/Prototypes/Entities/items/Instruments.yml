@@ -2,7 +2,6 @@
   name: BaseHandheldInstrument
   parent: BaseItem
   id: BaseHandheldInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     handheld: true
@@ -15,142 +14,130 @@
   name: Synthesizer
   parent: BaseHandheldInstrument
   id: SynthesizerInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 2
   - type: Sprite
-    texture: Objects/musician.rsi/h_synthesizer.png
+    texture: Objects/Instruments/musician.rsi/h_synthesizer.png
   - type: Icon
-    texture: Objects/musician.rsi/h_synthesizer.png
+    texture: Objects/Instruments/musician.rsi/h_synthesizer.png
 
 - type: entity
   name: Violin
   parent: BaseHandheldInstrument
   id: ViolinInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 40
   - type: Sprite
-    texture: Objects/musician.rsi/violin.png
+    texture: Objects/Instruments/musician.rsi/violin.png
   - type: Icon
-    texture: Objects/musician.rsi/violin.png
+    texture: Objects/Instruments/musician.rsi/violin.png
 
 - type: entity
   name: Trumpet
   parent: BaseHandheldInstrument
   id: TrumpetInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 56
   - type: Sprite
-    texture: Objects/musician.rsi/trumpet.png
+    texture: Objects/Instruments/musician.rsi/trumpet.png
   - type: Icon
-    texture: Objects/musician.rsi/trumpet.png
+    texture: Objects/Instruments/musician.rsi/trumpet.png
 
 - type: entity
   name: Electric Guitar
   parent: BaseHandheldInstrument
   id: ElectricGuitarInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 27
   - type: Sprite
-    texture: Objects/musician.rsi/eguitar.png
+    texture: Objects/Instruments/musician.rsi/eguitar.png
   - type: Icon
-    texture: Objects/musician.rsi/eguitar.png
+    texture: Objects/Instruments/musician.rsi/eguitar.png
 
 - type: entity
   name: Accordion
   parent: BaseHandheldInstrument
   id: AccordionInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 21
   - type: Sprite
-    texture: Objects/musician.rsi/accordion.png
+    texture: Objects/Instruments/musician.rsi/accordion.png
   - type: Icon
-    texture: Objects/musician.rsi/accordion.png
+    texture: Objects/Instruments/musician.rsi/accordion.png
 
 - type: entity
   name: Harmonica
   parent: BaseHandheldInstrument
   id: HarmonicaInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 22
   - type: Sprite
-    texture: Objects/musician.rsi/harmonica.png
+    texture: Objects/Instruments/musician.rsi/harmonica.png
   - type: Icon
-    texture: Objects/musician.rsi/harmonica.png
+    texture: Objects/Instruments/musician.rsi/harmonica.png
 
 - type: entity
   name: Recorder
   parent: BaseHandheldInstrument
   id: RecorderInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 74
   - type: Sprite
-    texture: Objects/musician.rsi/recorder.png
+    texture: Objects/Instruments/musician.rsi/recorder.png
   - type: Icon
-    texture: Objects/musician.rsi/recorder.png
+    texture: Objects/Instruments/musician.rsi/recorder.png
 
 - type: entity
   name: Trombone
   parent: BaseHandheldInstrument
   id: TromboneInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 57
   - type: Sprite
-    texture: Objects/musician.rsi/trombone.png
+    texture: Objects/Instruments/musician.rsi/trombone.png
   - type: Icon
-    texture: Objects/musician.rsi/trombone.png
+    texture: Objects/Instruments/musician.rsi/trombone.png
 
 - type: entity
   name: Saxophone
   parent: BaseHandheldInstrument
   id: SaxophoneInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 67
   - type: Sprite
-    texture: Objects/musician.rsi/saxophone.png
+    texture: Objects/Instruments/musician.rsi/saxophone.png
   - type: Icon
-    texture: Objects/musician.rsi/saxophone.png
+    texture: Objects/Instruments/musician.rsi/saxophone.png
 
 - type: entity
   name: Xylophone
   parent: BaseHandheldInstrument
   id: XylophoneInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 13
   - type: Sprite
-    texture: Objects/musician.rsi/xylophone.png
+    texture: Objects/Instruments/musician.rsi/xylophone.png
   - type: Icon
-    texture: Objects/musician.rsi/xylophone.png
+    texture: Objects/Instruments/musician.rsi/xylophone.png
 
 - type: entity
   name: Glockenspiel
   parent: BaseHandheldInstrument
   id: GlockenspielInstrument
-  description: Play Needles Piano Now.
   components:
   - type: Instrument
     program: 9
   - type: Sprite
-    texture: Objects/musician.rsi/glockenspiel.png
+    texture: Objects/Instruments/musician.rsi/glockenspiel.png
   - type: Icon
-    texture: Objects/musician.rsi/glockenspiel.png
-    state: glockenspiel
+    texture: Objects/Instruments/musician.rsi/glockenspiel.png
