@@ -19,10 +19,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
     /// </summary>
     public class ReagentDispenserWindow : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         /// <summary>Sets the dispense amount to 1 when pressed.</summary>
         public Button DispenseButton1;
         /// <summary>Sets the dispense amount to 5 when pressed.</summary>
@@ -47,7 +43,10 @@ namespace Content.Client.GameObjects.Components.Chemistry
         /// <summary>A grid of buttons for each reagent which can be dispensed.</summary>
         public GridContainer ChemicalList;
 
+#pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
+#pragma warning restore 649
 
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
@@ -56,6 +55,8 @@ namespace Content.Client.GameObjects.Components.Chemistry
         public ReagentDispenserWindow()
         {
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            _localizationManager = IoCManager.Resolve<ILocalizationManager>();
+
             Contents.AddChild(new VBoxContainer
             {
                 Children =
