@@ -12,3 +12,4 @@
   id: chem.Ice
   name: Ice
   desc: Frozen water.
+  color: "#bed8e6"
