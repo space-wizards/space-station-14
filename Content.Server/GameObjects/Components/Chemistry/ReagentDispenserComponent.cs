@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -235,13 +236,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return true;
             }
 
-            var activeHandEntity = hands.GetActiveHand?.Owner;
-            if (activeHandEntity?.HasComponent<SolutionComponent>() == true)
+            var activeHandEntity = hands.GetActiveHand.Owner;
+            if (activeHandEntity.TryGetComponent<SolutionComponent>(out var solution))
             {
                 if (HasBeaker)
                 {
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
                         _localizationManager.GetString("This dispenser already has a container in it."));
+                }
+                else if ((solution.Capabilities & SolutionCaps.FitsInDispenser) == 0) 
+                {
+                    //If it can't fit in the dispenser, don't put it in. For example, buckets and mop buckets can't fit.
+                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
+                        _localizationManager.GetString("That can't fit in the dispenser."));
                 }
                 else
                 {

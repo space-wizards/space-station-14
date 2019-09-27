@@ -10,7 +10,7 @@
     texture: Objects/beaker.png
   - type: Solution
     maxVol: 50
-    caps: 3
+    caps: 19
 
 - type: entity
   name: Large Beaker
@@ -24,7 +24,7 @@
     texture: Objects/beakerlarge.png
   - type: Solution
     maxVol: 100
-    caps: 3
+    caps: 19
 
 - type: entity
   name: Dropper
@@ -38,4 +38,4 @@
     texture: Objects/dropper.png
   - type: Solution
     maxVol: 5
-    caps: 3
+    caps: 19
