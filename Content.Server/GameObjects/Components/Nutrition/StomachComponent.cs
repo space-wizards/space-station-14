@@ -1,3 +1,4 @@
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
@@ -17,34 +18,45 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public static readonly int HydrationFactor = 30;
         public static readonly int MetabolisationAmount = 5;
 
-        public Solution StomachContents => _stomachContents;
         [ViewVariables]
-        private Solution _stomachContents = new Solution();
-        public int MaxVolume => _maxVolume;
-        [ViewVariables]
-        private int _maxVolume;
+        private SolutionComponent _stomachContents;
         public float MetaboliseDelay => _metaboliseDelay;
         [ViewVariables]
         private float _metaboliseDelay; // How long between metabolisation for 5 units
 
+        public int MaxVolume
+        {
+            get => _stomachContents.MaxVolume;
+            set => _stomachContents.MaxVolume = value;
+        }
 
         private float _metabolisationCounter = 0.0f;
+
+        private int _initialMaxVolume;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _maxVolume, "max_volume", 20);
             serializer.DataField(ref _metaboliseDelay, "metabolise_delay", 6.0f);
+            serializer.DataField(ref _initialMaxVolume, "max_volume", 20);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            // Shouldn't add to Owner to avoid cross-contamination (e.g. with blood or whatever they made hold other solutions)
+            _stomachContents = new SolutionComponent();
+            _stomachContents.MaxVolume = _initialMaxVolume;
         }
 
         public bool TryTransferSolution(Solution solution)
         {
             // TODO: For now no partial transfers. Potentially change by design
-            if (solution.TotalVolume + StomachContents.TotalVolume > MaxVolume)
+            if (solution.TotalVolume + _stomachContents.CurrentVolume > _stomachContents.MaxVolume)
             {
                 return false;
             }
-            StomachContents.AddSolution(solution);
+            _stomachContents.TryAddSolution(solution, false);
             return true;
         }
 
@@ -91,12 +103,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void Metabolise()
         {
-            if (StomachContents.TotalVolume == 0)
+            if (_stomachContents.CurrentVolume == 0)
             {
                 return;
             }
 
-            var metabolisation = StomachContents.SplitSolution(MetabolisationAmount);
+            var metabolisation = _stomachContents.SplitSolution(MetabolisationAmount);
 
             React(metabolisation);
         }

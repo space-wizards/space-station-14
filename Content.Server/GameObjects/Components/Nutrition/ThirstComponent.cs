@@ -50,6 +50,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void ThirstThresholdEffect(bool force = false)
         {
+            if (_currentThirstThreshold == ThirstThreshold.Dead)
+            {
+                // TODO: Remove from dead people
+                if (Owner.TryGetComponent(out DamageableComponent damage))
+                {
+                    damage.TakeDamage(DamageType.Brute, 2);
+                    return;
+                }
+                return;
+            }
             if (_currentThirstThreshold != _lastThirstThreshold || force) {
                 Logger.InfoS("thirst", $"Updating Thirst state for {Owner.Name}");
 
@@ -94,15 +104,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                         return;
 
                     case ThirstThreshold.Dead:
-                        // TODO: Remove hungercomponent from the dead people
-                        if (Owner.TryGetComponent(out DamageableComponent damage))
-                        {
-                            // TODO shitcode: Look at refactoring to something else, e.g. damage per tick
-                            damage.TakeDamage(DamageType.Brute, 100000);
-                            Owner.RemoveComponent<StomachComponent>(); // TODO: Add back in if revived
-                            return;
-                        }
-                        return;
+                        throw new ArgumentOutOfRangeException();
                     default:
                         Logger.ErrorS("thirst", $"No thirst threshold found for {_currentThirstThreshold}");
                         throw new ArgumentOutOfRangeException($"No thirst threshold found for {_currentThirstThreshold}");

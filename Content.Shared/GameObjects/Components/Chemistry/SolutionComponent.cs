@@ -16,9 +16,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 #pragma warning restore 649
 
         [ViewVariables]
-        private Solution _containedSolution;
+        private Solution _containedSolution = new Solution();
 
-        public Solution ContainedSolution => _containedSolution;
         private int _maxVolume;
         private SolutionCaps _capabilities;
 
@@ -69,7 +68,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             base.ExposeData(serializer);
 
             serializer.DataField(ref _maxVolume, "maxVol", 0);
-            serializer.DataField(ref _containedSolution, "contents", new Solution());
+            // This seems dumb of me
+            serializer.DataField(ref _containedSolution, "contents", _containedSolution);
             serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
         }
 
@@ -92,16 +92,25 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         public bool TryAddReagent(string reagentId, int quantity, out int acceptedQuantity)
         {
-            throw new NotImplementedException();
+            acceptedQuantity = _containedSolution.TotalVolume;
+            _containedSolution.AddReagent(reagentId, quantity);
+            acceptedQuantity -= _containedSolution.TotalVolume;
+            if (acceptedQuantity == 0)
+            {
+                return false;
+            }
+            return true;
         }
 
-        public bool TryAddSolution(Solution solution)
+        public bool TryAddSolution(Solution solution, bool recalculateColor = true)
         {
             if (solution.TotalVolume > (_maxVolume - _containedSolution.TotalVolume))
                 return false;
 
             _containedSolution.AddSolution(solution);
-            RecalculateColor();
+            if (recalculateColor) {
+                RecalculateColor();
+            }
             return true;
         }
 
