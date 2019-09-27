@@ -5,6 +5,7 @@ using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -18,6 +19,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         /// <summary>
@@ -86,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         void IExamine.Examine(FormattedMessage message)
         {
-            message.AddText("Contains:\n");
+            message.AddText(_localizationManager.GetString("Contains:\n"));
             foreach (var reagent in ReagentList)
             {
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
@@ -95,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 }
                 else
                 {
-                    message.AddText($"Unknown reagent: {reagent.Quantity}u\n");
+                    message.AddText(_localizationManager.GetString("Unknown reagent:") + $"{reagent.Quantity}u\n");
                 }
             }
         }

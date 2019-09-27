@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Chemistry.SharedReagentDispenserComponent;
@@ -18,6 +19,10 @@ namespace Content.Client.GameObjects.Components.Chemistry
     /// </summary>
     public class ReagentDispenserWindow : SS14Window
     {
+#pragma warning disable 649
+        [Dependency] private readonly ILocalizationManager _localizationManager;
+#pragma warning restore 649
+
         /// <summary>Sets the dispense amount to 1 when pressed.</summary>
         public Button DispenseButton1;
         /// <summary>Sets the dispense amount to 5 when pressed.</summary>
@@ -60,7 +65,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                     {
                         Children =
                         {
-                            new Label{Text = "Amount    "},
+                            new Label{Text = _localizationManager.GetString("Amount    ")},
                             (DispenseButton1 = new Button{Text = "1"}),
                             (DispenseButton5 = new Button{Text = "5"}),
                             (DispenseButton10 = new Button{Text = "10"}),
@@ -82,9 +87,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
                     {
                         Children =
                         {
-                            new Label{Text = "Container: "},
-                            (ClearButton = new Button{Text = "Clear"}),
-                            (EjectButton = new Button{Text = "Eject"})
+                            new Label{Text = _localizationManager.GetString("Container: ")},
+                            (ClearButton = new Button{Text = _localizationManager.GetString("Clear")}),
+                            (EjectButton = new Button{Text = _localizationManager.GetString("Eject")})
                         }
                     },
                     new PanelContainer //Wrap the container info in a PanelContainer so we can color it's background differently.
@@ -103,7 +108,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                                 Children =
                                 {
-                                    new Label{Text = "No container loaded."}
+                                    new Label{Text = _localizationManager.GetString("No container loaded.")}
                                 }
                             }),
                         }
@@ -132,7 +137,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 }
                 else
                 {
-                    ChemicalList.AddChild(new Button { Text = "Reagent name not found" });
+                    ChemicalList.AddChild(new Button { Text = _localizationManager.GetString("Reagent name not found") });
                 }
 
             }
@@ -215,7 +220,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                             {
                                 Children =
                                 {
-                                    new Label {Text = "Unknown reagent: "},
+                                    new Label {Text = _localizationManager.GetString("Unknown reagent: ")},
                                     new Label
                                     {
                                         Text = $"{reagent.Quantity}u",
@@ -229,7 +234,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
             }
             else
             {
-                ContainerInfo.Children.Add(new Label{Text = "No container loaded."});
+                ContainerInfo.Children.Add(new Label{Text = _localizationManager.GetString("No container loaded.")});
             }
             ForceRunLayoutUpdate(); //Force a layout update to avoid text hanging off the window until the user manually resizes it.
         }

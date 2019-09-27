@@ -140,12 +140,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var beaker = _beakerContainer.ContainedEntity;
             if (beaker == null)
             {
-                return new ReagentDispenserBoundUserInterfaceState(false, 0,0, "", Inventory, Owner.Name, null);
+                return new ReagentDispenserBoundUserInterfaceState(false, 0,0,
+                    "", Inventory, Owner.Name, null);
             }
 
             var solution = beaker.GetComponent<SolutionComponent>();
-            return new ReagentDispenserBoundUserInterfaceState(true, solution.CurrentVolume, solution.MaxVolume, beaker.Name,
-                Inventory, Owner.Name, solution.ReagentList.ToList());
+            return new ReagentDispenserBoundUserInterfaceState(true, solution.CurrentVolume, solution.MaxVolume,
+                beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList());
         }
 
         /// <summary>
@@ -206,7 +207,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User, _localizationManager.GetString("You have no hands."));
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
+                    _localizationManager.GetString("You have no hands."));
                 return;
             }
 
@@ -228,7 +230,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User, _localizationManager.GetString("You have no hands."));
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
+                    _localizationManager.GetString("You have no hands."));
                 return true;
             }
 
@@ -237,7 +240,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 if (HasBeaker)
                 {
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User, _localizationManager.GetString("This dispenser already has a container in it."));
+                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
+                        _localizationManager.GetString("This dispenser already has a container in it."));
                 }
                 else
                 {
@@ -247,7 +251,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             else
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User, _localizationManager.GetString("You can't put this in the dispenser."));
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
+                    _localizationManager.GetString("You can't put this in the dispenser."));
             }
 
             return true;

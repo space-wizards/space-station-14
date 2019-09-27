@@ -4,6 +4,8 @@ using System.Linq;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Chemistry.SharedReagentDispenserComponent;
 
 namespace Content.Client.GameObjects.Components.Chemistry
@@ -13,6 +15,10 @@ namespace Content.Client.GameObjects.Components.Chemistry
     /// </summary>
     public class ReagentDispenserBoundUserInterface : BoundUserInterface
     {
+#pragma warning disable 649
+        [Dependency] private readonly ILocalizationManager _localizationManager;
+#pragma warning restore 649
+
         private ReagentDispenserWindow _window;
         private ReagentDispenserBoundUserInterfaceState _lastState;
 
@@ -31,9 +37,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
             base.Open();
 
             //Setup window layout/elements
-            _window = new ReagentDispenserWindow()
+            _window = new ReagentDispenserWindow
             {
-                Title = "Reagent dispenser",
+                Title = _localizationManager.GetString("Reagent dispenser"),
                 Size = (500, 600)
             };
             
