@@ -51,16 +51,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void HungerThresholdEffect(bool force = false)
         {
-            if (_currentHungerThreshold == HungerThreshold.Dead)
-            {
-                // TODO: Remove from dead people
-                if (Owner.TryGetComponent(out DamageableComponent damage))
-                {
-                    damage.TakeDamage(DamageType.Brute, 2);
-                    return;
-                }
-                return;
-            }
             if (_currentHungerThreshold != _lastHungerThreshold || force) {
                 Logger.InfoS("hunger", $"Updating hunger state for {Owner.Name}");
 
@@ -105,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                         return;
 
                     case HungerThreshold.Dead:
-                        throw new ArgumentOutOfRangeException();
+                        return;
                     default:
                         Logger.ErrorS("hunger", $"No hunger threshold found for {_currentHungerThreshold}");
                         throw new ArgumentOutOfRangeException($"No hunger threshold found for {_currentHungerThreshold}");
@@ -157,6 +147,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 _currentHungerThreshold = calculatedHungerThreshold;
                 HungerThresholdEffect();
+            }
+            if (_currentHungerThreshold == HungerThreshold.Dead)
+            {
+                // TODO: Remove from dead people
+                if (Owner.TryGetComponent(out DamageableComponent damage))
+                {
+                    damage.TakeDamage(DamageType.Brute, 2);
+                    return;
+                }
+                return;
             }
         }
     }

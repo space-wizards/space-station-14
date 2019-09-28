@@ -50,16 +50,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void ThirstThresholdEffect(bool force = false)
         {
-            if (_currentThirstThreshold == ThirstThreshold.Dead)
-            {
-                // TODO: Remove from dead people
-                if (Owner.TryGetComponent(out DamageableComponent damage))
-                {
-                    damage.TakeDamage(DamageType.Brute, 2);
-                    return;
-                }
-                return;
-            }
             if (_currentThirstThreshold != _lastThirstThreshold || force) {
                 Logger.InfoS("thirst", $"Updating Thirst state for {Owner.Name}");
 
@@ -104,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                         return;
 
                     case ThirstThreshold.Dead:
-                        throw new ArgumentOutOfRangeException();
+                        return;
                     default:
                         Logger.ErrorS("thirst", $"No thirst threshold found for {_currentThirstThreshold}");
                         throw new ArgumentOutOfRangeException($"No thirst threshold found for {_currentThirstThreshold}");
@@ -156,6 +146,17 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 _currentThirstThreshold = calculatedThirstThreshold;
                 ThirstThresholdEffect();
+            }
+
+            if (_currentThirstThreshold == ThirstThreshold.Dead)
+            {
+                // TODO: Remove from dead people
+                if (Owner.TryGetComponent(out DamageableComponent damage))
+                {
+                    damage.TakeDamage(DamageType.Brute, 2);
+                    return;
+                }
+                return;
             }
         }
     }
