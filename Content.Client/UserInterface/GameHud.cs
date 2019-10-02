@@ -182,7 +182,7 @@ namespace Content.Client.UserInterface
             _buttonSandboxMenu = new TopButton(sandboxTexture, "B")
             {
                 ToolTip = _loc.GetString("Open sandbox menu."),
-                Visible = true
+                Visible = false
             };
 
             _topButtonsContainer.AddChild(_buttonSandboxMenu);
