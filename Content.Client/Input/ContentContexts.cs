@@ -27,8 +27,7 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.OpenCraftingMenu);
             human.AddFunction(ContentKeyFunctions.OpenInventoryMenu);
             human.AddFunction(ContentKeyFunctions.MouseMiddle);
-            // Disabled until there is feedback, so hitting tab doesn't suddenly break interaction.
-            // human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
+            human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
 
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);

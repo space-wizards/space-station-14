@@ -28,5 +28,6 @@
         public const uint TECHNOLOGY_DATABASE = 1022;
         public const uint RESEARCH_CONSOLE = 1023;
         public const uint WIRES = 1024;
+        public const uint COMBATMODE = 1025;
     }
 }

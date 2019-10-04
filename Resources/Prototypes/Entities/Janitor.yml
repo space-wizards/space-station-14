@@ -2,12 +2,12 @@
   parent: ReagentItem
   name: "Extra-Grip™ Mop"
   id: MopItem
-  description: A mop that cant be stopped, viscera cleanup detail awaits.
+  description: A mop that can't be stopped, viscera cleanup detail awaits.
   components:
   - type: Sprite
-    texture: Objects/mop.png
+    texture: Objects/Janitorial/mop.png
   - type: Icon
-    texture: Objects/mop.png
+    texture: Objects/Janitorial/mop.png
   - type: Item
     Size: 10
   - type: Solution
@@ -21,14 +21,14 @@
   description: Holds water and the tears of the janitor.
   components:
   - type: Sprite
-    texture: Objects/mopbucket.png
+    texture: Objects/Janitorial/mopbucket.png
   - type: Icon
-    texture: Objects/mopbucket.png
+    texture: Objects/Janitorial/mopbucket.png
   - type: Clickable
   - type: Solution
     maxVol: 500
     caps: 3
-    
+
 - type: entity
   parent: ReagentItem
   name: Bucket
@@ -36,10 +36,9 @@
   description: "It's a bucket."
   components:
   - type: Sprite
-    texture: Objects/bucket.png
+    texture: Objects/Janitorial/bucket.png
   - type: Icon
-    texture: Objects/bucket.png
+    texture: Objects/Janitorial/bucket.png
   - type: Solution
     maxVol: 500
     caps: 3
-    
