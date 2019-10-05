@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -164,7 +164,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <summary>
         /// If this component contains an entity with a <see cref="SolutionComponent"/>, eject it.
         /// </summary>
-        private void TryEject()
+        public void TryEject()
         {
             if(!HasBeaker) return;
             _solution.Dispenser = null;

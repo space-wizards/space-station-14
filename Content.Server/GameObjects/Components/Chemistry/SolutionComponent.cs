@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     ///     Shared ECS component that manages a liquid solution of reagents.
     /// </summary>
     [RegisterComponent]
-    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine
+    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine, IDestroyAct
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -33,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         [Verb]
         private sealed class FillTargetVerb : Verb<SolutionComponent>
-        {
+        { 
             protected override string GetText(IEntity user, SolutionComponent component)
             {
                 if(!user.TryGetComponent<HandsComponent>(out var hands))
@@ -169,6 +170,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var transferSolution = component.SplitSolution(transferQuantity);
                 handSolutionComp.TryAddSolution(transferSolution);
             }
+        }
+
+        public void OnDestroy(DestructionEventArgs eventArgs)
+        {
+            Dispenser?.UpdateUserInterface();
         }
     }
 }

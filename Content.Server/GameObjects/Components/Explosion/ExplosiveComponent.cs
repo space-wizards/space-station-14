@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Explosive
 #pragma warning restore 649
 
         public override string Name => "Explosive";
-
+        
         public int DevastationRange = 0;
         public int HeavyImpactRange = 0;
         public int LightImpactRange = 0;
@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Explosive
             serializer.DataField(ref FlashRange, "flashRange", 0);
         }
 
-        private bool Explosion()
+        public bool Explosion()
         {
             //Prevent adjacent explosives from infinitely blowing each other up.
             if (_beingExploded) return true;
