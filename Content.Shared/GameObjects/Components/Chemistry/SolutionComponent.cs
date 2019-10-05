@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -52,6 +53,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             set => _capabilities = value;
         }
 
+        public IReadOnlyList<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
+
         /// <inheritdoc />
         public override string Name => "Solution";
 
@@ -88,9 +91,26 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             _containedSolution = new Solution();
         }
 
+        public void RemoveAllSolution()
+        {
+            _containedSolution.RemoveAllSolution();
+        }
+
         public bool TryAddReagent(string reagentId, int quantity, out int acceptedQuantity)
         {
-            throw new NotImplementedException();
+            if (quantity > _maxVolume - _containedSolution.TotalVolume)
+            {
+                acceptedQuantity = _maxVolume - _containedSolution.TotalVolume;
+                if (acceptedQuantity == 0) return false;
+            }
+            else
+            {
+                acceptedQuantity = quantity;
+            }
+
+            _containedSolution.AddReagent(reagentId, acceptedQuantity);
+            RecalculateColor();
+            return true;
         }
 
         public bool TryAddSolution(Solution solution)

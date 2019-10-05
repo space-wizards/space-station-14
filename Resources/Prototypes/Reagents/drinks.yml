@@ -1,0 +1,29 @@
+- type: reagent
+  id: chem.Whiskey
+  name: Whiskey
+  desc: An alcoholic beverage made from fermented grain mash
+
+- type: reagent
+  id: chem.Ale
+  name: Ale
+  desc: A type of beer brewed using a warm fermentation method, resulting in a sweet, full-bodied and fruity taste.
+
+- type: reagent
+  id: chem.Wine
+  name: Wine
+  desc: An alcoholic drink made from fermented grapes
+
+- type: reagent
+  id: chem.Cola
+  name: Cola
+  desc: A sweet, carbonated soft drink. Caffeine free.
+
+- type: reagent
+  id: chem.Coffee
+  name: Coffee
+  desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
+
+- type: reagent
+  id: chem.Tea
+  name: Tea
+  desc: A made by boiling leaves of the tea tree, Camellia sinensis.

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
@@ -17,6 +18,7 @@ namespace Content.Shared.Chemistry
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
         private List<ReagentQuantity> _contents = new List<ReagentQuantity>(2);
+        public IReadOnlyList<ReagentQuantity> Contents => _contents;
 
         /// <summary>
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).

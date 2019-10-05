@@ -14,6 +14,7 @@ namespace Content.Client.UserInterface
     {
         public const string StyleClassLabelHeading = "LabelHeading";
         public const string StyleClassLabelSubText = "LabelSubText";
+        public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
         public const string StyleClassButtonBig = "ButtonBig";
         private static readonly Color NanoGold = Color.FromHex("#A88B5E");
 
@@ -432,6 +433,12 @@ namespace Content.Client.UserInterface
                 new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassLabelSubText}, null, null), new []
                 {
                     new StyleProperty(Label.StylePropertyFont, notoSans10),
+                    new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
+                } ),
+
+                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassLabelSecondaryColor}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSans12),
                     new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
                 } ),
 

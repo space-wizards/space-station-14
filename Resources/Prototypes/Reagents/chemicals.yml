@@ -7,3 +7,9 @@
   id: chem.H2O
   name: Water
   desc: A tasty colorless liquid.
+
+- type: reagent
+  id: chem.Ice
+  name: Ice
+  desc: Frozen water.
+  color: "#bed8e6"

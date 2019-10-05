@@ -14,3 +14,36 @@
   desc: A yellow, crystalline solid.
   color: "#FFFACD"
   
+- type: reagent
+  id: chem.C
+  name: Carbon
+  desc: A black, crystalline solid.
+  color: "#22282b"
+
+- type: reagent
+  id: chem.Al
+  name: Aluminum
+  desc: A silvery-white, soft, non-magnetic, and ductile metal.
+  color: "#848789"
+
+- type: reagent
+  id: chem.Cu
+  name: Copper
+  desc: A soft, malleable, and ductile metal with very high thermal and electrical conductivity.
+  color: "#b05b3c"
+
+- type: reagent
+  id: chem.N2
+  name: Nitrogen
+  desc: A colorless, odorless unreactive gas. Highly stable.
+
+- type: reagent
+  id: chem.Fe
+  name: Iron
+  desc: A silvery-grey metal which forms iron oxides (rust) with contact with air. Commonly alloyed with other elements to create alloys such as steel.
+  color: "#434b4d"
+
+- type: reagent
+  id: chem.F2
+  name: Fluorine
+  desc: A highly toxic pale yellow gas. Extremely reactive.

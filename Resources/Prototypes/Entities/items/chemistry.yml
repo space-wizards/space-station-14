@@ -1,0 +1,41 @@
+- type: entity
+  name: Beaker
+  parent: BaseItem
+  description: Used to contain a moderate amount of chemicals and solutions.
+  id: Beaker
+  components:
+  - type: Sprite
+    texture: Objects/beaker.png
+  - type: Icon
+    texture: Objects/beaker.png
+  - type: Solution
+    maxVol: 50
+    caps: 19
+
+- type: entity
+  name: Large Beaker
+  parent: BaseItem
+  description: Used to contain a large amount of chemicals or solutions.
+  id: LargeBeaker
+  components:
+  - type: Sprite
+    texture: Objects/beakerlarge.png
+  - type: Icon
+    texture: Objects/beakerlarge.png
+  - type: Solution
+    maxVol: 100
+    caps: 19
+
+- type: entity
+  name: Dropper
+  parent: BaseItem
+  description: Used to transfer small amounts of chemical solution between containers.
+  id: Dropper
+  components:
+  - type: Sprite
+    texture: Objects/dropper.png
+  - type: Icon
+    texture: Objects/dropper.png
+  - type: Solution
+    maxVol: 5
+    caps: 19

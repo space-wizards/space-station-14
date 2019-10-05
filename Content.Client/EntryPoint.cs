@@ -126,6 +126,8 @@ namespace Content.Client
             factory.Register<SharedVendingMachineComponent>();
             factory.Register<SharedWiresComponent>();
 
+            factory.Register<SharedReagentDispenserComponent>();
+
             prototypes.RegisterIgnore("material");
 
             IoCManager.Register<IGameHud, GameHud>();
