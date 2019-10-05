@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -39,6 +39,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public bool HasBeaker => _beakerContainer.ContainedEntity != null;
         public int DispenseAmount = 10;
+
+        private SolutionComponent _solution => _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
 
         /// <summary>
         /// Shows the serializer how to save/load this components yaml prototype.
@@ -153,7 +155,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <summary>
         /// Gets current component data as a <see cref="SharedReagentDispenserComponent.ReagentDispenserBoundUserInterfaceState"/> and sends it to the client.
         /// </summary>
-        private void UpdateUserInterface()
+        public void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
             _userInterface.SetState(state);
@@ -165,6 +167,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private void TryEject()
         {
             if(!HasBeaker) return;
+            _solution.Dispenser = null;
             _beakerContainer.Remove(_beakerContainer.ContainedEntity);
 
             UpdateUserInterface();
@@ -253,6 +256,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 else
                 {
                     _beakerContainer.Insert(activeHandEntity);
+                    _solution.Dispenser = this;
                     UpdateUserInterface();
                 }
             }

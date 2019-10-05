@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
@@ -21,6 +21,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
+
+        /// <summary>
+        /// Reference to the dispenser containing this solution, if applicable.
+        /// <para>Used to provide easy UI update for that dispenser when a reaction occurs.</para>
+        /// </summary>
+        [CanBeNull] public ReagentDispenserComponent Dispenser = null;
 
         /// <summary>
         ///     Transfers solution from the held container to the target container.

@@ -123,6 +123,22 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return true;
         }
 
+        public bool TryRemoveReagent(string reagentId, int quantity)
+        {
+            if (!ContainsReagent(reagentId, out var currentQuantity)) return false;
+
+            _containedSolution.RemoveReagent(reagentId, quantity);
+            return true;
+        }
+
+        public bool TryRemoveSolution(int quantity)
+        {
+            if (CurrentVolume == 0) return false;
+
+            _containedSolution.RemoveSolution(quantity);
+            return true;
+        }
+
         public Solution SplitSolution(int quantity)
         {
             return _containedSolution.SplitSolution(quantity);
@@ -183,6 +199,26 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public class SolutionComponentState : ComponentState
         {
             public SolutionComponentState() : base(ContentNetIDs.SOLUTION) { }
+        }
+
+        /// <summary>
+        /// Check if the solution contains the specified reagent.
+        /// </summary>
+        /// <param name="reagentId">The reagent to check for.</param>
+        /// <param name="quantity">Output the quantity of the reagent if it is contained, 0 if it isn't.</param>
+        /// <returns>Return true if the solution contains the reagent.</returns>
+        public bool ContainsReagent(string reagentId, out int quantity)
+        {
+            foreach (var reagent in _containedSolution.Contents)
+            {
+                if (reagent.ReagentId == reagentId)
+                {
+                    quantity = reagent.Quantity;
+                    return true;
+                }
+            }
+            quantity = 0;
+            return false;
         }
     }
 }
