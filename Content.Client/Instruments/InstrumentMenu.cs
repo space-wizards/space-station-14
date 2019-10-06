@@ -12,10 +12,10 @@ namespace Content.Client.Instruments
 {
     public class InstrumentMenu : SS14Window
     {
-#pragma warning disable 169
+#pragma warning disable 649
         [Dependency] private IMidiManager _midiManager;
         [Dependency] private IFileDialogManager _fileDialogManager;
-#pragma warning enable 169
+#pragma warning restore 649
 
         private InstrumentBoundUserInterface _owner;
         private Button midiLoopButton;

@@ -88,7 +88,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); };
         }
 
-        public override void Shutdown()
+        protected override void Shutdown()
         {
             base.Shutdown();
             _renderer?.Dispose();
