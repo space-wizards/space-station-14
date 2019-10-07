@@ -1,11 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -20,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     ///     Shared ECS component that manages a liquid solution of reagents.
     /// </summary>
     [RegisterComponent]
-    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine, IDestroyAct
+    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -30,12 +28,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private IEnumerable<ReactionPrototype> _reactions;
         private AudioSystem _audioSystem;
-
-        /// <summary>
-        /// Reference to the dispenser containing this solution, if applicable.
-        /// <para>Used to provide easy UI update for that dispenser when a reaction occurs.</para>
-        /// </summary>
-        [CanBeNull] public ReagentDispenserComponent Dispenser = null;
 
         protected override void Startup()
         {
@@ -188,11 +180,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        public void OnDestroy(DestructionEventArgs eventArgs)
-        {
-            Dispenser?.UpdateUserInterface();
-        }
-
         private void CheckForReaction()
         {
             //Check the solution for every reaction
@@ -221,6 +208,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _containedSolution.AddReagent(reagentId, acceptedQuantity);
             RecalculateColor();
             CheckForReaction();
+            OnSolutionChanged(EventArgs.Empty);
             return true;
         }
 
@@ -232,6 +220,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _containedSolution.AddSolution(solution);
             RecalculateColor();
             CheckForReaction();
+            OnSolutionChanged(EventArgs.Empty);
             return true;
         }
 
@@ -296,8 +285,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 effect.React(Owner, unitReactions);
             }
 
-            //Update dispenser UI
-            Dispenser?.UpdateUserInterface();
             //Play reaction sound client-side
             _audioSystem.Play("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
         }

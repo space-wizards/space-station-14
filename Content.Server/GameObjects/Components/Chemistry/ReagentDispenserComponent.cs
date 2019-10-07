@@ -9,7 +9,6 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -167,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public void TryEject()
         {
             if(!HasBeaker) return;
-            _solution.Dispenser = null;
+            _solution.SolutionChanged -= HandleSolutionChangedEvent;
             _beakerContainer.Remove(_beakerContainer.ContainedEntity);
 
             UpdateUserInterface();
@@ -256,7 +255,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 else
                 {
                     _beakerContainer.Insert(activeHandEntity);
-                    _solution.Dispenser = this;
+                    _solution.SolutionChanged += HandleSolutionChangedEvent;
                     UpdateUserInterface();
                 }
             }
@@ -267,6 +266,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             return true;
+        }
+
+        void HandleSolutionChangedEvent(object sender, EventArgs a)
+        {
+            UpdateUserInterface();
         }
     }
 }

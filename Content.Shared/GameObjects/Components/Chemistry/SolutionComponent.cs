@@ -22,6 +22,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         private SolutionCaps _capabilities;
 
         /// <summary>
+        /// Triggered when the solution contents change.
+        /// </summary>
+        public event EventHandler SolutionChanged;
+
+        /// <summary>
         ///     The maximum volume of the container.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
@@ -94,6 +99,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public void RemoveAllSolution()
         {
             _containedSolution.RemoveAllSolution();
+            OnSolutionChanged(EventArgs.Empty);
         }
 
         public bool TryRemoveReagent(string reagentId, int quantity)
@@ -101,6 +107,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             if (!ContainsReagent(reagentId, out var currentQuantity)) return false;
 
             _containedSolution.RemoveReagent(reagentId, quantity);
+            OnSolutionChanged(EventArgs.Empty);
             return true;
         }
 
@@ -109,12 +116,15 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             if (CurrentVolume == 0) return false;
 
             _containedSolution.RemoveSolution(quantity);
+            OnSolutionChanged(EventArgs.Empty);
             return true;
         }
 
         public Solution SplitSolution(int quantity)
         {
-            return _containedSolution.SplitSolution(quantity);
+            var solutionSplit = _containedSolution.SplitSolution(quantity);
+            OnSolutionChanged(EventArgs.Empty);
+            return solutionSplit;
         }
 
         protected void RecalculateColor()
@@ -192,6 +202,12 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             }
             quantity = 0;
             return false;
+        }
+
+        protected virtual void OnSolutionChanged(EventArgs e)
+        {
+            EventHandler handler = SolutionChanged;
+            handler?.Invoke(this, e);
         }
     }
 }
