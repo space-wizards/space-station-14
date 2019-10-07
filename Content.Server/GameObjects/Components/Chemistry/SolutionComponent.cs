@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
@@ -207,7 +207,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             _containedSolution.AddReagent(reagentId, acceptedQuantity);
             RecalculateColor();
-            CheckForReaction();
+            if(!skipReactionCheck)
+                CheckForReaction();
             OnSolutionChanged(EventArgs.Empty);
             return true;
         }
@@ -219,7 +220,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             _containedSolution.AddSolution(solution);
             RecalculateColor();
-            CheckForReaction();
+            if(!skipReactionCheck)
+                CheckForReaction();
             OnSolutionChanged(EventArgs.Empty);
             return true;
         }
