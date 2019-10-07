@@ -70,13 +70,13 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     Whether there's a midi song being played or not.
         /// </summary>
         [ViewVariables]
-        public bool IsMidiOpen => _renderer.IsMidiOpen;
+        public bool IsMidiOpen => _renderer.Status == MidiRendererStatus.File;
 
         /// <summary>
         ///     Whether the midi renderer is listening for midi input or not.
         /// </summary>
         [ViewVariables]
-        public bool IsInputOpen => _renderer.IsInputOpen;
+        public bool IsInputOpen => _renderer.Status == MidiRendererStatus.Input;
 
         public override void Initialize()
         {
