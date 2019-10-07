@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
@@ -103,6 +104,18 @@ namespace Content.Server.GameObjects
                 throw new ArgumentException("Cannot heal for DamageType.Total");
             }
             TakeDamage(damageType, -amount);
+        }
+
+        public void HealAllDamage()
+        {
+            var values = Enum.GetValues(typeof(DamageType)).Cast<DamageType>();
+            foreach (var damageType in values)
+            {
+                if (CurrentDamage.ContainsKey(damageType) && damageType != DamageType.Total)
+                {
+                    TakeHealing(damageType, CurrentDamage[damageType]);
+                }
+            }
         }
 
         void UpdateForDamageType(DamageType damageType, int oldValue)
