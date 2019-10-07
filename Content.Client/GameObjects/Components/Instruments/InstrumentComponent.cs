@@ -91,7 +91,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         protected override void Shutdown()
         {
             base.Shutdown();
-            _renderer?.Dispose();
+            _midiManager.DisposeRenderer(_renderer);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -153,21 +153,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <param name="midiEvent">The received midi event</param>
         private void RendererOnMidiEvent(MidiEvent midiEvent)
         {
-            lock (_eventQueue)
-                _eventQueue.Enqueue(midiEvent);
-        }
-
-        /// <summary>
-        ///     Sends queued midi events to the server.
-        /// </summary>
-        public void Update()
-        {
-            if (!(IsInputOpen || IsMidiOpen)) return;
-            lock (_eventQueue)
-            {
-                if (!_eventQueue.TryDequeue(out var midiEvent)) return;
-                SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent));
-            }
+            SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent));
         }
     }
 }
