@@ -17,8 +17,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 #pragma warning restore 649
 
         [ViewVariables]
-        private Solution _containedSolution;
-        private int _maxVolume;
+        protected Solution _containedSolution;
+        protected int _maxVolume;
         private SolutionCaps _capabilities;
 
         /// <summary>
@@ -96,33 +96,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             _containedSolution.RemoveAllSolution();
         }
 
-        public bool TryAddReagent(string reagentId, int quantity, out int acceptedQuantity)
-        {
-            if (quantity > _maxVolume - _containedSolution.TotalVolume)
-            {
-                acceptedQuantity = _maxVolume - _containedSolution.TotalVolume;
-                if (acceptedQuantity == 0) return false;
-            }
-            else
-            {
-                acceptedQuantity = quantity;
-            }
-
-            _containedSolution.AddReagent(reagentId, acceptedQuantity);
-            RecalculateColor();
-            return true;
-        }
-
-        public bool TryAddSolution(Solution solution)
-        {
-            if (solution.TotalVolume > (_maxVolume - _containedSolution.TotalVolume))
-                return false;
-
-            _containedSolution.AddSolution(solution);
-            RecalculateColor();
-            return true;
-        }
-
         public bool TryRemoveReagent(string reagentId, int quantity)
         {
             if (!ContainsReagent(reagentId, out var currentQuantity)) return false;
@@ -144,7 +117,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return _containedSolution.SplitSolution(quantity);
         }
 
-        private void RecalculateColor()
+        protected void RecalculateColor()
         {
             if(_containedSolution.TotalVolume == 0)
                 SubstanceColor = Color.White;
