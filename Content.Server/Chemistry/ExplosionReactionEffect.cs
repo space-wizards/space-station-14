@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.Explosive;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.Components.Chemistry;
@@ -44,10 +45,8 @@ namespace Content.Server.Chemistry
                 return;
             if(!solutionEntity.TryGetComponent(out SolutionComponent solution))
                 return;
-            solution.Dispenser?.TryEject();
 
             //Handle scaling
-            var explosive = solutionEntity.AddComponent<ExplosiveComponent>();
             if (_scaled)
             {
                 floatIntensity = Math.Min(floatIntensity, _maxScale);
@@ -58,11 +57,14 @@ namespace Content.Server.Chemistry
             }
 
             //Calculate intensities
-            explosive.DevastationRange = (int)Math.Round(_devastationRange * floatIntensity);
-            explosive.HeavyImpactRange = (int)Math.Round(_heavyImpactRange * floatIntensity);
-            explosive.LightImpactRange = (int)Math.Round(_lightImpactRange * floatIntensity);
-            explosive.FlashRange = (int)Math.Round(_flashRange * floatIntensity);
-            explosive.Explosion();
+            int finalDevastationRange = (int)Math.Round(_devastationRange * floatIntensity);
+            int finalHeavyImpactRange = (int)Math.Round(_heavyImpactRange * floatIntensity);
+            int finalLightImpactRange = (int)Math.Round(_lightImpactRange * floatIntensity);
+            int finalFlashRange = (int)Math.Round(_flashRange * floatIntensity);
+            ExplosionHelper.SpawnExplosion(solutionEntity.Transform.GridPosition, finalDevastationRange,
+                finalHeavyImpactRange, finalLightImpactRange, finalFlashRange);
         }
     }
 }
+
+
