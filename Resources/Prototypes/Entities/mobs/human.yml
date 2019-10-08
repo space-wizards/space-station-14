@@ -52,6 +52,10 @@
   - type: Species
     Template: Human
     HeatResistance: 323
+  - type: StatusEffectsUI
+    netsync: false
+  - type: OverlayEffectsUI
+    netsync: false
   - type: HeatResistance
   - type: Damageable
 

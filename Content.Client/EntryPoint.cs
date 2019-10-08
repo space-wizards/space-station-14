@@ -110,6 +110,7 @@ namespace Content.Client
                 "Airlock",
                 "MedicalScanner",
                 "WirePlacer",
+                "Species",
             };
 
             foreach (var ignoreName in registerIgnore)

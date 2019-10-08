@@ -1,8 +1,12 @@
 ﻿using Content.Shared.GameObjects;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs;
+using JetBrains.Annotations;
 
 namespace Content.Server.GameObjects
 {
+    [UsedImplicitly]
     public class Human : DamageTemplates
     {
         int critvalue = 200;
@@ -30,9 +34,11 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public override HudStateChange ChangeHudState(DamageableComponent damage)
+        public override void ChangeHudState(DamageableComponent damage)
         {
             ThresholdType healthstate = CalculateDamageState(damage);
+            damage.Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
+            damage.Owner.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent);
             switch (healthstate)
             {
                 case ThresholdType.None:
@@ -42,23 +48,27 @@ namespace Content.Server.GameObjects
                         throw new System.InvalidOperationException(); //these should all be below the crit value, possibly going over multiple thresholds at once?
                     }
                     var modifier = totaldamage / (critvalue / normalstates); //integer division floors towards zero
-                    return new HudStateChange()
-                    {
-                        StateSprite = "Mob/UI/Human/human" + modifier.ToString() + ".png",
-                        effect = ScreenEffects.None
-                    };
+                    statusEffectsComponent?.Owner.SendNetworkMessage(statusEffectsComponent, new StatusEffectsMessage(StatusEffectsMode.Change,
+                            StatusEffect.Health,
+                            "/Textures/Mob/UI/Human/human" + modifier + ".png"));
+
+                    overlayComponent?.Owner.SendNetworkMessage(overlayComponent, new OverlayEffectMessage(ScreenEffects.None));
+
+                    return;
                 case ThresholdType.Critical:
-                    return new HudStateChange()
-                    {
-                        StateSprite = "Mob/UI/Human/humancrit-0.png", //TODO: display as gif or alternate with -0 and -1 as frames
-                        effect = ScreenEffects.GradientCircleMask
-                    };
+                    statusEffectsComponent?.Owner.SendNetworkMessage(statusEffectsComponent, new StatusEffectsMessage(StatusEffectsMode.Change,
+                        StatusEffect.Health,
+                        "/Textures/Mob/UI/Human/humancrit-0.png"));
+                    overlayComponent?.Owner.SendNetworkMessage(overlayComponent, new OverlayEffectMessage(ScreenEffects.GradientCircleMask));
+
+                    return;
                 case ThresholdType.Death:
-                    return new HudStateChange()
-                    {
-                        StateSprite = "Mob/UI/Human/humandead.png",
-                        effect = ScreenEffects.CircleMask
-                    };
+                    statusEffectsComponent?.Owner.SendNetworkMessage(statusEffectsComponent, new StatusEffectsMessage(StatusEffectsMode.Change,
+                        StatusEffect.Health,
+                        "/Textures/Mob/UI/Human/humandead.png"));
+                    overlayComponent?.Owner.SendNetworkMessage(overlayComponent, new OverlayEffectMessage(ScreenEffects.CircleMask));
+
+                    return;
                 default:
                     throw new System.InvalidOperationException();
             }

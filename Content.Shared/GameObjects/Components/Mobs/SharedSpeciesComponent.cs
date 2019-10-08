@@ -8,8 +8,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         public sealed override string Name => "Species";
 
-        public sealed override uint? NetID => ContentNetIDs.SPECIES;
-
         [Serializable, NetSerializable]
         public enum MobVisuals
         {
@@ -29,6 +27,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
             /// </summary>
             Down,
         }
-  
+
     }
 }
