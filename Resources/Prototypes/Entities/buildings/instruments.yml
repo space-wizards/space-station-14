@@ -37,7 +37,7 @@
     sprite: Objects/Instruments/musician.rsi
     state: piano
   - type: Icon
-    sprite: Objects/musician.rsi
+    sprite: Objects/Instruments/musician.rsi
     state: piano
 
 - type: entity
@@ -48,8 +48,8 @@
   - type: Instrument
     program: 7
   - type: Sprite
-    sprite: Objects/musician.rsi
+    sprite: Objects/Instruments/musician.rsi
     state: minimoog
   - type: Icon
-    sprite: Objects/musician.rsi
+    sprite: Objects/Instruments/musician.rsi
     state: minimoog
