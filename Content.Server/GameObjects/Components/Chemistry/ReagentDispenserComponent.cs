@@ -268,7 +268,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        void HandleSolutionChangedEvent(object sender, EventArgs a)
+        void HandleSolutionChangedEvent()
         {
             UpdateUserInterface();
         }

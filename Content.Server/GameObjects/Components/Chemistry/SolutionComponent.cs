@@ -209,7 +209,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             RecalculateColor();
             if(!skipReactionCheck)
                 CheckForReaction();
-            OnSolutionChanged(EventArgs.Empty);
+            OnSolutionChanged();
             return true;
         }
 
@@ -222,7 +222,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             RecalculateColor();
             if(!skipReactionCheck)
                 CheckForReaction();
-            OnSolutionChanged(EventArgs.Empty);
+            OnSolutionChanged();
             return true;
         }
 
