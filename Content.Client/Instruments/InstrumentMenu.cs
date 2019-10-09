@@ -166,9 +166,10 @@ namespace Content.Client.Instruments
                 return;
             }
 
-            midiInputButton.Pressed = false;
-            MidiPlaybackSetButtonsDisabled(false);
             _owner.Instrument.OpenMidi(filename);
+            MidiPlaybackSetButtonsDisabled(_owner.Instrument.IsMidiOpen); // Midi file might not load if it's too big.
+            if(midiInputButton.Pressed)
+                midiInputButton.Pressed = !_owner.Instrument.IsMidiOpen;
         }
 
         private void MidiInputButtonOnOnToggled(BaseButton.ButtonToggledEventArgs obj)
