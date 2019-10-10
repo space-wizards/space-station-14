@@ -121,6 +121,9 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!ent.TryGetComponent(out HandsComponent handsComp))
                 return false;
 
+            if (handsComp.GetActiveHand == null)
+                return false;
+
             if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(ent, handsComp.GetActiveHand.Owner))
                 return false;
                 
