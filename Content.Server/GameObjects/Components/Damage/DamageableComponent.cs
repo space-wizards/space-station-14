@@ -196,18 +196,16 @@ namespace Content.Server.GameObjects
         {
             protected override string GetText(IEntity user, DamageableComponent component)
             {
-                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                return localizationManager.GetString("Rejuvenate");
+                return "Rejuvenate";
             }
 
             protected override VerbVisibility GetVisibility(IEntity user, DamageableComponent component)
             {
-                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
                 var groupController = IoCManager.Resolve<IConGroupController>();
 
                 if (user.TryGetComponent<IActorComponent>(out var player))
                 {
-                    if (groupController.CanCommand(player.playerSession, localizationManager.GetString("rejuvenate")))
+                    if (groupController.CanCommand(player.playerSession, "rejuvenate"))
                         return VerbVisibility.Visible;
                 }
                 return VerbVisibility.Invisible;

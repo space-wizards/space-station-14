@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Content.Server.GameObjects;
-using Content.Server.Players;
+﻿using Content.Server.GameObjects;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Administration
 {
@@ -17,35 +12,46 @@ namespace Content.Server.Administration
     {
         public string Command => "rejuvenate";
         public string Description => "Fully heals a mob.";
-        public string Help => "rejuvenate <mobUid_1> <mobUid_2> ... <mobUid_n>";
+        public string Help => "rejuvenate <mobUid_1> <mobUid_2> ... <mobUid_n>. Attempts to heal the user's mob if no arguments are provided.";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
-            if (player == null)
+            var localizationManager = IoCManager.Resolve<ILocalizationManager>();
+            if (args.Length < 1 && player != null) //Try to heal the users mob if applicable
             {
-                shell.SendText((IPlayerSession)null, "Player session is null.");
-                return;
-            }
-            if (args.Length < 1)
-            {
-                shell.SendText(player, Description);
+                shell.SendText(player, localizationManager.GetString("Healing the user's mob since no arguments were provided."));
+                if (player.AttachedEntity == null)
+                {
+                    shell.SendText(player, localizationManager.GetString("There's no entity attached to the user."));
+                    return;
+                }
+                if (!player.AttachedEntity.TryGetComponent(out DamageableComponent damage))
+                {
+                    shell.SendText(player, localizationManager.GetString("The user's entity does not have a DamageableComponent."));
+                    return;
+                }
+                damage.HealAllDamage();
                 return;
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (entityManager == null)
+            foreach (var arg in args)
             {
-                shell.SendText(player, "Couldn't resolve IEntityManager.");
-                return;
-            }
-
-            for (var i = 0; i < args.Length; i++)
-            {
-                var arg = args[i];
-                var entity = entityManager.GetEntity(EntityUid.Parse(arg));
+                if(!EntityUid.TryParse(arg, out var uid))
+                {
+                    shell.SendText(player, localizationManager.GetString("Could not find entity ") + arg);
+                    continue;
+                }
+                if(!entityManager.TryGetEntity(uid, out var entity))
+                {
+                    shell.SendText(player, localizationManager.GetString("Could not find entity ") + arg);
+                    continue;
+                }
                 if (!entity.TryGetComponent(out DamageableComponent damage))
                 {
-                    shell.SendText(player, $"Entity at argument {i} does not have a DamageableComponent.");
+                    shell.SendText(player, localizationManager.GetString("Entity ")
+                                           + arg
+                                           + localizationManager.GetString(" does not have a DamageableComponent."));
                     continue;
                 }
                 damage.HealAllDamage();
