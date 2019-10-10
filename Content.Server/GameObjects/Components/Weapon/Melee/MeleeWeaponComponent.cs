@@ -8,10 +8,8 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -26,8 +24,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
 
         private int _damage = 1;
