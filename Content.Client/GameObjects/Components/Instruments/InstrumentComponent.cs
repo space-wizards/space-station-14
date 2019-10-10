@@ -120,31 +120,42 @@ namespace Content.Client.GameObjects.Components.Instruments
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenInput"/>
-        public void OpenInput()
+        public bool OpenInput()
         {
-            _renderer.OnMidiEvent += RendererOnMidiEvent;
-            _renderer.OpenInput();
+            if (_renderer.OpenInput())
+            {
+                _renderer.OnMidiEvent += RendererOnMidiEvent;
+                return true;
+            }
+
+            return false;
         }
 
         /// <inheritdoc cref="MidiRenderer.CloseInput"/>
-        public void CloseInput()
+        public bool CloseInput()
         {
+            if (!_renderer.CloseInput()) return false;
             _renderer.OnMidiEvent -= RendererOnMidiEvent;
-            _renderer.CloseInput();
+            return true;
+
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenMidi(string)"/>
-        public void OpenMidi(string filename)
+        public bool OpenMidi(string filename)
         {
+            if (!_renderer.OpenMidi(filename)) return false;
             _renderer.OnMidiEvent += RendererOnMidiEvent;
-            _renderer.OpenMidi(filename);
+            return true;
+
         }
 
         /// <inheritdoc cref="MidiRenderer.CloseMidi"/>
-        public void CloseMidi()
+        public bool CloseMidi()
         {
+            if (!_renderer.CloseMidi()) return false;
             _renderer.OnMidiEvent -= RendererOnMidiEvent;
-            _renderer.CloseMidi();
+            return true;
+
         }
 
         /// <summary>
