@@ -51,21 +51,14 @@ namespace Content.Server.Administration
             var entityManager = IoCManager.Resolve<IEntityManager>();
             foreach (var arg in args)
             {
-                if(!EntityUid.TryParse(arg, out var uid))
+                if(!EntityUid.TryParse(arg, out var uid) || !entityManager.TryGetEntity(uid, out var entity))
                 {
-                    shell.SendText(player, localizationManager.GetString("Could not find entity ") + arg);
-                    continue;
-                }
-                if(!entityManager.TryGetEntity(uid, out var entity))
-                {
-                    shell.SendText(player, localizationManager.GetString("Could not find entity ") + arg);
+                    shell.SendText(player, localizationManager.GetString("Could not find entity {0}", arg));
                     continue;
                 }
                 if (!entity.TryGetComponent(out DamageableComponent damage))
                 {
-                    shell.SendText(player, localizationManager.GetString("Entity ")
-                                           + arg
-                                           + localizationManager.GetString(" does not have a DamageableComponent."));
+                    shell.SendText(player, localizationManager.GetString("Entity {0} does not have a DamageableComponent.", arg));
                     continue;
                 }
                 damage.HealAllDamage();

@@ -210,7 +210,13 @@ namespace Content.Server.GameObjects
 
             protected override void Activate(IEntity user, DamageableComponent component)
             {
-                component.HealAllDamage();
+                var groupController = IoCManager.Resolve<IConGroupController>();
+                if (user.TryGetComponent<IActorComponent>(out var player))
+                {
+                    if (groupController.CanCommand(player.playerSession, "rejuvenate"))
+                        component.HealAllDamage();
+                }
+                
             }
         }
     }
