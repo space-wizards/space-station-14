@@ -104,6 +104,7 @@ namespace Content.Shared.GameObjects
     ///     so that they're automatically detected.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    [MeansImplicitUse]
     public sealed class VerbAttribute : Attribute
     {
     }
