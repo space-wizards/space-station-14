@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 
             if (random.Prob(0.4f))
             {
-                Spawn("HazardVestClothing");
+                Spawn("OuterclothingHazard");
             }
 
             if (random.Prob(0.7f))
