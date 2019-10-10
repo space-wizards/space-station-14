@@ -194,10 +194,7 @@ namespace Content.Server.GameObjects
         [Verb]
         private sealed class RejuvenateVerb : Verb<DamageableComponent>
         {
-            protected override string GetText(IEntity user, DamageableComponent component)
-            {
-                return "Rejuvenate";
-            }
+            protected override string GetText(IEntity user, DamageableComponent component) => "Rejuvenate";
 
             protected override VerbVisibility GetVisibility(IEntity user, DamageableComponent component)
             {

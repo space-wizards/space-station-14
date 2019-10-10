@@ -11,8 +11,22 @@ namespace Content.Server.Administration
     class Rejuvenate : IClientCommand
     {
         public string Command => "rejuvenate";
-        public string Description => "Fully heals a mob.";
-        public string Help => "rejuvenate <mobUid_1> <mobUid_2> ... <mobUid_n>. Attempts to heal the user's mob if no arguments are provided.";
+        public string Description
+        {
+            get
+            {
+                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
+                return localizationManager.GetString("Fully heals a mob.");
+            }
+        }
+        public string Help
+        {
+            get
+            {
+                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
+                return localizationManager.GetString("Usage: rejuvenate <mobUid_1> <mobUid_2> ... <mobUid_n>\nAttempts to heal the user's mob if no arguments are provided.");
+            }
+        }
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
