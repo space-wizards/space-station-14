@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using Content.Server.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -20,14 +23,26 @@ namespace Content.Server.GameObjects.Components.Chemistry
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
+
+        private IEnumerable<ReactionPrototype> _reactions;
+        private AudioSystem _audioSystem;
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+            _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+        }
 
         /// <summary>
         ///     Transfers solution from the held container to the target container.
         /// </summary>
         [Verb]
         private sealed class FillTargetVerb : Verb<SolutionComponent>
-        {
+        { 
             protected override string GetText(IEntity user, SolutionComponent component)
             {
                 if(!user.TryGetComponent<HandsComponent>(out var hands))
@@ -163,6 +178,117 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var transferSolution = component.SplitSolution(transferQuantity);
                 handSolutionComp.TryAddSolution(transferSolution);
             }
+        }
+
+        private void CheckForReaction()
+        {
+            //Check the solution for every reaction
+            foreach (var reaction in _reactions)
+            {
+                if (SolutionValidReaction(reaction, out int unitReactions))
+                {
+                    PerformReaction(reaction, unitReactions);
+                    break; //Only perform one reaction per solution per update.
+                }
+            }
+        }
+
+        public bool TryAddReagent(string reagentId, int quantity, out int acceptedQuantity, bool skipReactionCheck = false)
+        {
+            if (quantity > _maxVolume - _containedSolution.TotalVolume)
+            {
+                acceptedQuantity = _maxVolume - _containedSolution.TotalVolume;
+                if (acceptedQuantity == 0) return false;
+            }
+            else
+            {
+                acceptedQuantity = quantity;
+            }
+
+            _containedSolution.AddReagent(reagentId, acceptedQuantity);
+            RecalculateColor();
+            if(!skipReactionCheck)
+                CheckForReaction();
+            OnSolutionChanged();
+            return true;
+        }
+
+        public bool TryAddSolution(Solution solution, bool skipReactionCheck = false)
+        {
+            if (solution.TotalVolume > (_maxVolume - _containedSolution.TotalVolume))
+                return false;
+
+            _containedSolution.AddSolution(solution);
+            RecalculateColor();
+            if(!skipReactionCheck)
+                CheckForReaction();
+            OnSolutionChanged();
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if a solution has the reactants required to cause a specified reaction.
+        /// </summary>
+        /// <param name="solution">The solution to check for reaction conditions.</param>
+        /// <param name="reaction">The reaction whose reactants will be checked for in the solution.</param>
+        /// <param name="unitReactions">The number of times the reaction can occur with the given solution.</param>
+        /// <returns></returns>
+        private bool SolutionValidReaction(ReactionPrototype reaction, out int unitReactions)
+        {
+            unitReactions = int.MaxValue; //Set to some impossibly large number initially
+            foreach (var reactant in reaction.Reactants)
+            {
+                if (!ContainsReagent(reactant.Key, out int reagentQuantity))
+                {
+                    return false;
+                }
+                int currentUnitReactions = reagentQuantity / reactant.Value.Amount;
+                if (currentUnitReactions < unitReactions)
+                {
+                    unitReactions = currentUnitReactions;
+                }
+            }
+
+            if (unitReactions == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Perform a reaction on a solution. This assumes all reaction criteria have already been checked and are met.
+        /// </summary>
+        /// <param name="solution">Solution to be reacted.</param>
+        /// <param name="reaction">Reaction to occur.</param>
+        /// <param name="unitReactions">The number of times to cause this reaction.</param>
+        private void PerformReaction(ReactionPrototype reaction, int unitReactions)
+        {
+            //Remove non-catalysts
+            foreach (var reactant in reaction.Reactants)
+            {
+                if (!reactant.Value.Catalyst)
+                {
+                    int amountToRemove = unitReactions * reactant.Value.Amount;
+                    TryRemoveReagent(reactant.Key, amountToRemove);
+                }
+            }
+            //Add products
+            foreach (var product in reaction.Products)
+            {
+                TryAddReagent(product.Key, (int)(unitReactions * product.Value), out int acceptedQuantity, true);
+            }
+            //Trigger reaction effects
+            foreach (var effect in reaction.Effects)
+            {
+                effect.React(Owner, unitReactions);
+            }
+
+            //Play reaction sound client-side
+            _audioSystem.Play("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
         }
     }
 }

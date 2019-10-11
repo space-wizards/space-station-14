@@ -17,9 +17,14 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 #pragma warning restore 649
 
         [ViewVariables]
-        private Solution _containedSolution;
-        private int _maxVolume;
+        protected Solution _containedSolution;
+        protected int _maxVolume;
         private SolutionCaps _capabilities;
+
+        /// <summary>
+        /// Triggered when the solution contents change.
+        /// </summary>
+        public event Action SolutionChanged;
 
         /// <summary>
         ///     The maximum volume of the container.
@@ -94,41 +99,35 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public void RemoveAllSolution()
         {
             _containedSolution.RemoveAllSolution();
+            OnSolutionChanged();
         }
 
-        public bool TryAddReagent(string reagentId, int quantity, out int acceptedQuantity)
+        public bool TryRemoveReagent(string reagentId, int quantity)
         {
-            if (quantity > _maxVolume - _containedSolution.TotalVolume)
-            {
-                acceptedQuantity = _maxVolume - _containedSolution.TotalVolume;
-                if (acceptedQuantity == 0) return false;
-            }
-            else
-            {
-                acceptedQuantity = quantity;
-            }
+            if (!ContainsReagent(reagentId, out var currentQuantity)) return false;
 
-            _containedSolution.AddReagent(reagentId, acceptedQuantity);
-            RecalculateColor();
+            _containedSolution.RemoveReagent(reagentId, quantity);
+            OnSolutionChanged();
             return true;
         }
 
-        public bool TryAddSolution(Solution solution)
+        public bool TryRemoveSolution(int quantity)
         {
-            if (solution.TotalVolume > (_maxVolume - _containedSolution.TotalVolume))
-                return false;
+            if (CurrentVolume == 0) return false;
 
-            _containedSolution.AddSolution(solution);
-            RecalculateColor();
+            _containedSolution.RemoveSolution(quantity);
+            OnSolutionChanged();
             return true;
         }
 
         public Solution SplitSolution(int quantity)
         {
-            return _containedSolution.SplitSolution(quantity);
+            var solutionSplit = _containedSolution.SplitSolution(quantity);
+            OnSolutionChanged();
+            return solutionSplit;
         }
 
-        private void RecalculateColor()
+        protected void RecalculateColor()
         {
             if(_containedSolution.TotalVolume == 0)
                 SubstanceColor = Color.White;
@@ -183,6 +182,31 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public class SolutionComponentState : ComponentState
         {
             public SolutionComponentState() : base(ContentNetIDs.SOLUTION) { }
+        }
+
+        /// <summary>
+        /// Check if the solution contains the specified reagent.
+        /// </summary>
+        /// <param name="reagentId">The reagent to check for.</param>
+        /// <param name="quantity">Output the quantity of the reagent if it is contained, 0 if it isn't.</param>
+        /// <returns>Return true if the solution contains the reagent.</returns>
+        public bool ContainsReagent(string reagentId, out int quantity)
+        {
+            foreach (var reagent in _containedSolution.Contents)
+            {
+                if (reagent.ReagentId == reagentId)
+                {
+                    quantity = reagent.Quantity;
+                    return true;
+                }
+            }
+            quantity = 0;
+            return false;
+        }
+
+        protected virtual void OnSolutionChanged()
+        {
+            SolutionChanged?.Invoke();
         }
     }
 }
