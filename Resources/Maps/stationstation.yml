@@ -194,7 +194,7 @@ entities:
     - !type:PhysShapeAabb
       bounds: -0.15,-0.3,0.2,0.3
     type: Collidable
-- type: SecurityVestClothing
+- type: OuterclothingVest
   uid: 8
   components:
   - grid: 0
@@ -1710,7 +1710,7 @@ entities:
     pos: -3.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: SecurityVestClothing
+- type: OuterclothingVest
   uid: 145
   components:
   - grid: 0
@@ -3024,7 +3024,7 @@ entities:
       mask: 5
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
-- type: HazardVestClothing
+- type: OuterclothingVest
   uid: 260
   components:
   - grid: 0
