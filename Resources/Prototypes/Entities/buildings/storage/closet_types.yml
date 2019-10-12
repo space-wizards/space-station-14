@@ -88,3 +88,66 @@
 
   - type: Icon
     state: eng_rad_door
+
+- type: entity
+  id: locker_medical
+  name: Medical Locker
+  parent: locker_generic
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: med
+    - state: med_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: med_open
+      state_closed: med_door
+
+  - type: Icon
+    state: med_door
+
+- type: entity
+  id: locker_chemistry
+  name: Chemistry Locker
+  parent: locker_generic
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: med
+    - state: chemical_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: med_open
+      state_closed: chemical_door
+
+  - type: Icon
+    state: chemical_door
+
+- type: entity
+  id: locker_science
+  name: Science Locker
+  parent: locker_generic
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: science
+    - state: science_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: science_open
+      state_closed: science_door
+
+  - type: Icon
+    state: science_door
