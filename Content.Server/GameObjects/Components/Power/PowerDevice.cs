@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     Is an internal power source currently available?
         /// </summary>
         [ViewVariables]
-        public bool InternalPowered
+        protected bool InternalPowered
         {
             get => _internalPowered;
             set
@@ -98,6 +98,17 @@ namespace Content.Server.GameObjects.Components.Power
         }
         private Powernet.Priority _priority = Powernet.Priority.Medium;
 
+        [ViewVariables]
+        public bool IsPowerCut
+        {
+            get => _isPowerCut;
+            set
+            {
+                _isPowerCut = value;
+                UpdatePowered();
+            }
+        }
+
         private float _load = 100; //arbitrary magic number to start
         /// <summary>
         ///     Power load from this entity.
@@ -117,6 +128,7 @@ namespace Content.Server.GameObjects.Components.Power
 
 
         private PowerProviderComponent _provider;
+        private bool _isPowerCut;
 
         /// <summary>
         /// A power provider that will handle our load, if we are linked to any
@@ -239,7 +251,7 @@ namespace Content.Server.GameObjects.Components.Power
         private void UpdatePowered()
         {
             var oldPowered = Powered;
-            Powered = ExternalPowered || InternalPowered;
+            Powered = !IsPowerCut && (ExternalPowered || InternalPowered);
             if (oldPowered != Powered)
             {
                 if (Powered)

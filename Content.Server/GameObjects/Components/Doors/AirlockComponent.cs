@@ -48,13 +48,14 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 _powerWiresPulsed = value;
                 UpdateWiresStatus();
+                UpdatePowerCutStatus();
             }
         }
 
         private void UpdateWiresStatus()
         {
             var powerMessage = "A yellow light is on.";
-            if (_powerWiresPulsed)
+            if (PowerWiresPulsed)
             {
                 powerMessage = "A yellow light is blinking rapidly.";
             } else if (_wires.IsWireCut(Wires.MainPower) &&
@@ -63,6 +64,13 @@ namespace Content.Server.GameObjects.Components.Doors
                 powerMessage = "A red light is on.";
             }
             _wires.SetStatus(WiresStatus.PowerIndicator, _localizationMgr.GetString(powerMessage));
+        }
+
+        private void UpdatePowerCutStatus()
+        {
+            _powerDevice.IsPowerCut = PowerWiresPulsed ||
+                                      _wires.IsWireCut(Wires.MainPower) ||
+                                      _wires.IsWireCut(Wires.BackupPower);
         }
 
         protected override DoorState State
@@ -163,6 +171,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
 
             UpdateWiresStatus();
+            UpdatePowerCutStatus();
         }
 
         public override bool CanOpen()
@@ -186,15 +195,6 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool IsPowered()
         {
-            if (PowerWiresPulsed)
-            {
-                return false;
-            }
-            if (_wires.IsWireCut(Wires.MainPower) &&
-                _wires.IsWireCut(Wires.BackupPower))
-            {
-                return false;
-            }
             return _powerDevice.Powered;
         }
 
