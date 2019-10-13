@@ -4,6 +4,8 @@ using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Doors;
+using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -77,6 +79,16 @@ namespace Content.Server.GameObjects.Components.Doors
             base.Initialize();
             _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
             _wires = Owner.GetComponent<WiresComponent>();
+
+            _powerDevice.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;
+        }
+
+        private void PowerDeviceOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DoorVisuals.Powered, e.Powered);
+            }
         }
 
         protected override void ActivateImpl(ActivateEventArgs args)

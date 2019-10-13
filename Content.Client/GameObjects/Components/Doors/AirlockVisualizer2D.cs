@@ -90,22 +90,20 @@ namespace Content.Client.GameObjects.Components.Doors
                 state = DoorVisualState.Closed;
             }
 
+            var unlitVisible = true;
             switch (state)
             {
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
-                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, true);
                     break;
                 case DoorVisualState.Closing:
-                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, true);
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(CloseAnimation, AnimationKey);
                     }
                     break;
                 case DoorVisualState.Opening:
-                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, true);
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(OpenAnimation, AnimationKey);
@@ -114,10 +112,10 @@ namespace Content.Client.GameObjects.Components.Doors
                     break;
                 case DoorVisualState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");
-                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, false);
+                    unlitVisible = false;
                     break;
                 case DoorVisualState.Deny:
-                    sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, false);
+                    unlitVisible = false;
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(DenyAnimation, AnimationKey);
@@ -126,6 +124,13 @@ namespace Content.Client.GameObjects.Components.Doors
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            if (component.TryGetData(DoorVisuals.Powered, out bool powered) && !powered)
+            {
+                unlitVisible = false;
+            }
+
+            sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);
         }
     }
 
