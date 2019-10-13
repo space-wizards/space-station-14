@@ -129,6 +129,7 @@ namespace Content.Client
             factory.Register<SharedReagentDispenserComponent>();
 
             prototypes.RegisterIgnore("material");
+            prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
 
             IoCManager.Register<IGameHud, GameHud>();
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();

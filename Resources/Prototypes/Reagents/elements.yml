@@ -1,19 +1,19 @@
 - type: reagent
-  id: chem.H2
+  id: chem.H
   name: Hydrogen
   desc: A light, flammable gas.
-  
+
 - type: reagent
-  id: chem.O2
+  id: chem.O
   name: Oxygen
   desc: An oxidizing, colorless gas.
-  
+
 - type: reagent
-  id: chem.S8
+  id: chem.S
   name: Sulfur
   desc: A yellow, crystalline solid.
   color: "#FFFACD"
-  
+
 - type: reagent
   id: chem.C
   name: Carbon
@@ -33,7 +33,7 @@
   color: "#b05b3c"
 
 - type: reagent
-  id: chem.N2
+  id: chem.N
   name: Nitrogen
   desc: A colorless, odorless unreactive gas. Highly stable.
 
@@ -44,6 +44,54 @@
   color: "#434b4d"
 
 - type: reagent
-  id: chem.F2
+  id: chem.F
   name: Fluorine
   desc: A highly toxic pale yellow gas. Extremely reactive.
+
+- type: reagent
+  id: chem.Si
+  name: Silicon
+  desc: A hard and brittle crystalline solid with a blue-grey color.
+  color: "#364266"
+
+- type: reagent
+  id: chem.Cl
+  name: Chlorine
+  desc: A yellow-green gas which is toxic to humans.
+  color: "#a2ff00"
+
+- type: reagent
+  id: chem.Li
+  name: Lithium
+  desc: A soft, silvery-white alkali metal. It is highly reactive, and ignites if it makes contact with water.
+  color: "#c6c8cc"
+
+- type: reagent
+  id: chem.Hg
+  name: Mercury
+  desc: A silver metal which is liquid at room temperature. It is highly toxic to humans.
+  color: "#929296"
+
+- type: reagent
+  id: chem.P
+  name: Phosphorus
+  desc: A reactive metal used in pyrotechnics and weapons.
+  color: "#803330"
+
+- type: reagent
+  id: chem.K
+  name: Potassium
+  desc: A soft, silvery-white metal. Even more reactive than lithium.
+  color: "#c6c8cc"
+
+- type: reagent
+  id: chem.Ra
+  name: Radium
+  desc: A radioactive metal, silvery-white in it's pure form. It glows due to it's radioactivity and is highly toxic.
+  color: "#00ff04"
+
+- type: reagent
+  id: chem.Na
+  name: Sodium
+  desc: A silvery-white alkali metal. Highly reactive in it's pure form.
+  color: "#c6c8cc"

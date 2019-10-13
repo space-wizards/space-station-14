@@ -3,11 +3,14 @@ using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -19,6 +22,11 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     internal class HandheldLightComponent : Component, IUse, IExamine, IAttackBy, IMapInit
     {
+#pragma warning disable 649
+        [Dependency] private readonly ISharedNotifyManager _notifyManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
+#pragma warning restore 649
+
         public const float Wattage = 10;
         [ViewVariables] private ContainerSlot _cellContainer;
         private PointLightComponent _pointLight;
@@ -77,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            return ToggleStatus();
+            return ToggleStatus(eventArgs.User);
         }
 
         public override void Initialize()
@@ -95,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         ///     Illuminates the light if it is not active, extinguishes it if it is active.
         /// </summary>
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
-        public bool ToggleStatus()
+        private bool ToggleStatus(IEntity user)
         {
             // Update sprite and light states to match the activation.
             if (Activated)
@@ -104,14 +112,14 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
             else
             {
-                TurnOn();
+                TurnOn(user);
             }
 
             // Toggle always succeeds.
             return true;
         }
 
-        public void TurnOff()
+        private void TurnOff()
         {
             if (!Activated)
             {
@@ -127,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
-        public void TurnOn()
+        private void TurnOn(IEntity user)
         {
             if (Activated)
             {
@@ -142,6 +150,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 {
                     soundComponent.Play("/Audio/machines/button.ogg");
                 }
+                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
                 return;
             }
 
@@ -154,6 +163,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 {
                     soundComponent.Play("/Audio/machines/button.ogg");
                 }
+                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
                 return;
             }
 

@@ -9,7 +9,6 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -39,6 +38,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public bool HasBeaker => _beakerContainer.ContainedEntity != null;
         public int DispenseAmount = 10;
+
+        private SolutionComponent _solution => _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
 
         /// <summary>
         /// Shows the serializer how to save/load this components yaml prototype.
@@ -153,7 +154,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <summary>
         /// Gets current component data as a <see cref="SharedReagentDispenserComponent.ReagentDispenserBoundUserInterfaceState"/> and sends it to the client.
         /// </summary>
-        private void UpdateUserInterface()
+        public void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
             _userInterface.SetState(state);
@@ -162,9 +163,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <summary>
         /// If this component contains an entity with a <see cref="SolutionComponent"/>, eject it.
         /// </summary>
-        private void TryEject()
+        public void TryEject()
         {
             if(!HasBeaker) return;
+            _solution.SolutionChanged -= HandleSolutionChangedEvent;
             _beakerContainer.Remove(_beakerContainer.ContainedEntity);
 
             UpdateUserInterface();
@@ -253,6 +255,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 else
                 {
                     _beakerContainer.Insert(activeHandEntity);
+                    _solution.SolutionChanged += HandleSolutionChangedEvent;
                     UpdateUserInterface();
                 }
             }
@@ -263,6 +266,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             return true;
+        }
+
+        void HandleSolutionChangedEvent()
+        {
+            UpdateUserInterface();
         }
     }
 }

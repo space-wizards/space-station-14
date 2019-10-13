@@ -60,6 +60,48 @@
             "select": [],
             "flags": {},
             "directions": 1
+        },
+        {
+            "name": "med",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "med_door",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "med_open",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "chemical_door",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "science_door",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "science_open",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "science",
+            "select": [],
+            "flags": {},
+            "directions": 1
         }
     ]
 }
