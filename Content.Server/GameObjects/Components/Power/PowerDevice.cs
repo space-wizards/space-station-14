@@ -221,11 +221,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (!Powered)
             {
-                message.AddText(loc.GetString("The device is "));
-                message.PushColor(Color.Orange);
-                message.AddText(loc.GetString("not powered"));
-                message.Pop();
-                message.AddText(".");
+                message.AddMarkup(loc.GetString("The device is [color=orange]not powered[/color]."));
             }
         }
 

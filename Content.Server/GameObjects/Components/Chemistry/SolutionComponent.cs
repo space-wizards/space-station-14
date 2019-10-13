@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         [Verb]
         private sealed class FillTargetVerb : Verb<SolutionComponent>
-        { 
+        {
             protected override string GetText(IEntity user, SolutionComponent component)
             {
                 if(!user.TryGetComponent<HandsComponent>(out var hands))
@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         void IExamine.Examine(FormattedMessage message)
         {
-            message.AddText(_localizationManager.GetString("Contains:\n"));
+            message.AddText(_loc.GetString("Contains:\n"));
             foreach (var reagent in ReagentList)
             {
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 }
                 else
                 {
-                    message.AddText(_localizationManager.GetString("Unknown reagent:") + $"{reagent.Quantity}u\n");
+                    message.AddText(_loc.GetString("Unknown reagent: {0}u\n", reagent.Quantity));
                 }
             }
         }

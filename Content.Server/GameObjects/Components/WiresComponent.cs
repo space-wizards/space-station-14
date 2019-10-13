@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
@@ -301,15 +300,10 @@ namespace Content.Server.GameObjects.Components
         void IExamine.Examine(FormattedMessage message)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
-            message.AddText(loc.GetString("The "));
-            message.PushColor(Color.LightGray);
-            message.AddText(loc.GetString("maintenance panel"));
-            message.Pop();
-            message.AddText(loc.GetString(" is "));
-            message.PushColor(IsPanelOpen ? Color.DarkGreen : Color.DarkRed);
-            message.AddText(loc.GetString(IsPanelOpen ? "open" : "closed"));
-            message.Pop();
-            message.AddText(".");
+
+            message.AddMarkup(loc.GetString(IsPanelOpen
+                ? "The [color=lightgray]maintenance panel[/color] is [color=darkgreen]open[/color]."
+                : "The [color=lightgray]maintenance panel[/color] is [color=darkred]closed[/color]."));
         }
 
         public void SetStatus(object statusIdentifier, string newMessage)

@@ -77,9 +77,11 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         void IExamine.Examine(FormattedMessage message)
         {
+            var loc = IoCManager.Resolve<ILocalizationManager>();
+
             if (Activated)
             {
-                message.AddText("The light is currently on.");
+                message.AddMarkup(loc.GetString("The light is currently [color=darkgreen]on[/color]."));
             }
         }
 
