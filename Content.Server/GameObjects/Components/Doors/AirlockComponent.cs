@@ -170,6 +170,11 @@ namespace Content.Server.GameObjects.Components.Doors
             return IsPowered();
         }
 
+        public override bool CanClose()
+        {
+            return IsPowered();
+        }
+
         public override void Deny()
         {
             if (!IsPowered())
