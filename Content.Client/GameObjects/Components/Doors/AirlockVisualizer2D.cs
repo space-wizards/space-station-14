@@ -1,4 +1,5 @@
 using System;
+using Content.Client.GameObjects.Components.Wires;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -38,6 +39,11 @@ namespace Content.Client.GameObjects.Components.Doors
                 flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
                 flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("closing_unlit", 0f));
 
+                var flickMaintenancePanel = new AnimationTrackSpriteFlick();
+                CloseAnimation.AnimationTracks.Add(flickMaintenancePanel);
+                flickMaintenancePanel.LayerKey = WiresVisualizer2D.WiresVisualLayers.MaintenancePanel;
+                flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_closing", 0f));
+
                 var sound = new AnimationTrackPlaySound();
                 CloseAnimation.AnimationTracks.Add(sound);
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(closeSound, 0));
@@ -54,6 +60,11 @@ namespace Content.Client.GameObjects.Components.Doors
                 OpenAnimation.AnimationTracks.Add(flickUnlit);
                 flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
                 flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("opening_unlit", 0f));
+
+                var flickMaintenancePanel = new AnimationTrackSpriteFlick();
+                OpenAnimation.AnimationTracks.Add(flickMaintenancePanel);
+                flickMaintenancePanel.LayerKey = WiresVisualizer2D.WiresVisualLayers.MaintenancePanel;
+                flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_opening", 0f));
 
                 var sound = new AnimationTrackPlaySound();
                 OpenAnimation.AnimationTracks.Add(sound);
@@ -96,6 +107,7 @@ namespace Content.Client.GameObjects.Components.Doors
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
+                    sprite.LayerSetState(WiresVisualizer2D.WiresVisualLayers.MaintenancePanel, "panel_open");
                     break;
                 case DoorVisualState.Closing:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))

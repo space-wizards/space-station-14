@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 base.State = value;
                 // Only show the maintenance panel if the airlock is closed
-                _wires.IsPanelVisible = value == DoorState.Closed;
+                _wires.IsPanelVisible = value != DoorState.Open;
             }
         }
 
