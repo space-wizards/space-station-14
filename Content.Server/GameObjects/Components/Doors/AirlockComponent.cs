@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
@@ -194,8 +195,15 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.HasComponent<CrowbarComponent>() && !IsPowered())
+            if (eventArgs.AttackWith.HasComponent<CrowbarComponent>())
             {
+                if (IsPowered())
+                {
+                    var notify = IoCManager.Resolve<IServerNotifyManager>();
+                    notify.PopupMessage(Owner, eventArgs.User, "The powered motors block your efforts!");
+                    return true;
+                }
+
                 if (State == DoorState.Closed)
                 {
                     Open();
