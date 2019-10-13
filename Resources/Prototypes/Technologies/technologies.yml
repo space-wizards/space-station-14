@@ -27,7 +27,7 @@
   name: "Data Theory"
   id: Data_Base_1
   description: Just like regular data, but in space!
-  icon: Buildings/computers.rsi/computer-datatheory.png
+  icon: Buildings/computer.rsi/computer-datatheory.png
   requiredpoints: 1000
   requiredtechnologies:
     - Base_1
@@ -61,7 +61,7 @@
   name: "Electromagnetic Theory"
   id: Electro_Base_1
   description: Try not to fry yourself.
-  icon: Buildings/apc.rsi/apcwires.png
+  icon: Buildings/apc.rsi/apcewires.png
   requiredpoints: 1000
   requiredtechnologies:
     - Base_1
@@ -72,7 +72,7 @@
   name: "Basic Bluespace Theory"
   id: Bluespace_Base_1
   description: An experimental course on the mysterious technology known as bluespace.
-  icon: Buildings/teleporters.rsi/teleporter-theory.png
+  icon: Objects/Misc/hand_tele.png
   requiredpoints: 1000
   requiredtechnologies:
     - Base_1
