@@ -286,14 +286,30 @@ namespace Content.Server.GameObjects.Components
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<ScrewdriverComponent>()) return false;
+            if (!eventArgs.AttackWith.HasComponent<ScrewdriverComponent>())
+            {
+                return false;
+            }
+
             IsPanelOpen = !IsPanelOpen;
+            IoCManager.Resolve<IEntitySystemManager>()
+                .GetEntitySystem<AudioSystem>()
+                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg");
             return true;
         }
 
         void IExamine.Examine(FormattedMessage message)
         {
-            message.AddText($"The maintenance panel is {(IsPanelOpen ? "open" : "closed")}.");
+            var loc = IoCManager.Resolve<ILocalizationManager>();
+            message.AddText(loc.GetString("The "));
+            message.PushColor(Color.LightGray);
+            message.AddText(loc.GetString("maintenance panel"));
+            message.Pop();
+            message.AddText(loc.GetString(" is "));
+            message.PushColor(IsPanelOpen ? Color.DarkGreen : Color.DarkRed);
+            message.AddText(loc.GetString(IsPanelOpen ? "open" : "closed"));
+            message.Pop();
+            message.AddText(".");
         }
 
         public void SetStatus(object statusIdentifier, string newMessage)
