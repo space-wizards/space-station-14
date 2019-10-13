@@ -6,7 +6,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -203,9 +205,15 @@ namespace Content.Server.GameObjects.Components.Power
 
         void IExamine.Examine(FormattedMessage message)
         {
+            var loc = IoCManager.Resolve<ILocalizationManager>();
+
             if (!Powered)
             {
-                message.AddText("The device is not powered.");
+                message.AddText(loc.GetString("The device is "));
+                message.PushColor(Color.Orange);
+                message.AddText(loc.GetString("not powered"));
+                message.Pop();
+                message.AddText(".");
             }
         }
 
