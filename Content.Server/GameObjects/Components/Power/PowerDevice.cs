@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Power;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -248,15 +250,14 @@ namespace Content.Server.GameObjects.Components.Power
         {
             var oldPowered = Powered;
             Powered = !IsPowerCut && (ExternalPowered || InternalPowered);
+
             if (oldPowered != Powered)
             {
-                if (Powered)
+                OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
+
+                if (Owner.TryGetComponent(out AppearanceComponent appearance))
                 {
-                    OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(true));
-                }
-                else
-                {
-                    OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(false));
+                    appearance.SetData(PowerDeviceVisuals.Powered, Powered);
                 }
             }
         }
