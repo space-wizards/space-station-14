@@ -78,7 +78,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                     new Panel{CustomMinimumSize = (0.0f, 10.0f)}, //Padding
                     (ChemicalList = new GridContainer //Grid of which reagents can be dispensed.
                     {
-                        CustomMinimumSize = (470.0f, 200.0f),
+                        CustomMinimumSize = (503.0f, 200.0f),
                         SizeFlagsVertical = SizeFlags.FillExpand,
                         SizeFlagsHorizontal = SizeFlags.FillExpand,
                         Columns = 5
