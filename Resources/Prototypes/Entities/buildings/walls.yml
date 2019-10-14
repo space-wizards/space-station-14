@@ -1,6 +1,7 @@
 - type: entity
   id: base_wall
   name: BaseWall
+  description: Keeps the air in and the greytide out.
   components:
   - type: Clickable
   - type: Sprite
@@ -42,7 +43,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: brick
 
 - type: entity
@@ -58,7 +59,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: clock
 
 - type: entity
@@ -74,7 +75,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: clown
 
 
@@ -91,7 +92,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: cult
 
 - type: entity
@@ -107,7 +108,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: debug
 
 - type: entity
@@ -123,7 +124,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: diamond
 
 
@@ -140,7 +141,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: gold
 
 - type: entity
@@ -156,7 +157,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: ice
 
 - type: entity
@@ -172,7 +173,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: metal
 
 - type: entity
@@ -188,7 +189,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: plasma
 
 - type: entity
@@ -204,7 +205,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: plastic
 
 - type: entity
@@ -220,7 +221,7 @@
     thresholdvalue: 300
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: reinforced
 
 # Riveting
@@ -237,7 +238,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: riveted
 
 - type: entity
@@ -253,7 +254,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: sandstone
 
 - type: entity
@@ -269,7 +270,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: silver
 
 - type: entity
@@ -286,7 +287,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: solid
 
 - type: entity
@@ -302,7 +303,7 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: uranium
 
 - type: entity
@@ -318,5 +319,5 @@
     thresholdvalue: 100
     spawnondestroy: girder
   - type: IconSmooth
-    key: walls. Seriously, just a wall. Nothing extraordinary here.
+    key: walls
     base: wood
