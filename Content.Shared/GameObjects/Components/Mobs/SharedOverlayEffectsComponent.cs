@@ -7,10 +7,11 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// <summary>
     /// Full screen overlays; Blindness, death, flash, alcohol etc.
     /// </summary>
-    public class SharedOverlayEffectsComponent : Component
+    public abstract class SharedOverlayEffectsComponent : Component
     {
         public override string Name => "OverlayEffectsUI";
         public sealed override uint? NetID => ContentNetIDs.OVERLAYEFFECTS;
+        public sealed override Type StateType => typeof(OverlayEffectComponentState);
     }
 
     public enum ScreenEffects
@@ -21,13 +22,13 @@ namespace Content.Shared.GameObjects.Components.Mobs
     }
 
     [Serializable, NetSerializable]
-    public class OverlayEffectMessage : ComponentMessage
+    public class OverlayEffectComponentState : ComponentState
     {
-        public ScreenEffects Effect;
-        public OverlayEffectMessage(ScreenEffects effect)
+        public ScreenEffects ScreenEffect;
+
+        public OverlayEffectComponentState(ScreenEffects screenEffect) : base(ContentNetIDs.OVERLAYEFFECTS)
         {
-            Effect = effect;
-            Directed = true;
+            ScreenEffect = screenEffect;
         }
     }
 }

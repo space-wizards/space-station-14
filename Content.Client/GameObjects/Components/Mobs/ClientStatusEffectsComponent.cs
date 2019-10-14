@@ -27,20 +27,14 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IResourceCache _resourceCache;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
 #pragma warning restore 649
-        // TODO: Combine with StatusEffectsUI?
+
         private StatusEffectsUI _ui;
-        private readonly IDictionary<StatusEffect, TextureRect> _icons = new Dictionary<StatusEffect, TextureRect>();
+        private IDictionary<StatusEffect, string> _icons = new Dictionary<StatusEffect, string>();
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
         /// </summary>
         private bool CurrentlyControlled => _playerManager.LocalPlayer.ControlledEntity == Owner;
-
-        public override void OnAdd()
-        {
-            base.OnAdd();
-            PlayerAttached();
-        }
 
         protected override void Shutdown()
         {
@@ -54,85 +48,68 @@ namespace Content.Client.GameObjects.Components.Mobs
             base.HandleMessage(message, netChannel, component);
             switch (message)
             {
-                case StatusEffectsMessage msg:
-                    if (!CurrentlyControlled)
-                    {
-                        break;
-                    }
-                    switch (msg.Mode)
-                    {
-                        case StatusEffectsMode.Change:
-                            ChangeIcon(msg.Name, msg.Filepath);
-                            break;
-                        case StatusEffectsMode.Remove:
-                            RemoveIcon(msg.Name);
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                    break;
                 case PlayerAttachedMsg _:
-                    if (!CurrentlyControlled)
-                    {
-                        break;
-                    }
                     PlayerAttached();
                     break;
                 case PlayerDetachedMsg _:
-                    if (!CurrentlyControlled)
-                    {
-                        break;
-                    }
                     PlayerDetached();
                     break;
             }
         }
 
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+            if (!(curState is StatusEffectComponentState state) || _icons == state.StatusEffects) return;
+            _icons = state.StatusEffects;
+            UpdateIcons();
+        }
+
         private void PlayerAttached()
         {
-            if (_ui != null)
+            if (!CurrentlyControlled || _ui != null)
             {
                 return;
             }
             _ui = new StatusEffectsUI();
             _userInterfaceManager.StateRoot.AddChild(_ui);
+            UpdateIcons();
         }
 
         private void PlayerDetached()
         {
+            if (!CurrentlyControlled)
+            {
+                return;
+            }
             _ui?.Dispose();
-            _icons.Clear();
         }
 
-        public void ChangeIcon(StatusEffect name, string filepath)
+        public void UpdateIcons()
         {
-            // Create
-            if (!_icons.ContainsKey(name))
+            if (!CurrentlyControlled || _ui == null)
+            {
+                return;
+            }
+            _ui.VBox.DisposeAllChildren();
+
+            foreach (var effect in _icons.OrderBy(x => (int) x.Key))
             {
                 TextureRect newIcon = new TextureRect
                 {
                     TextureScale = (2, 2),
-                    Texture = _resourceCache.GetTexture(filepath)
+                    Texture = _resourceCache.GetTexture(effect.Value)
                 };
-                _icons.Add(name, newIcon);
-                // TODO: May be a better way to do this but I don't imagine they would update that frequently
-                // Priorities
-                _ui.VBox.DisposeAllChildren();
-                foreach (var effect in _icons.OrderBy(x => (int) x.Key))
-                {
-                    _ui.VBox.AddChild(effect.Value);
-                }
-                return;
+
+                newIcon.Texture = _resourceCache.GetTexture(effect.Value);
+                _ui.VBox.AddChild(newIcon);
             }
-            // Update
-            _icons[name].Texture = _resourceCache.GetTexture(filepath);
-            Logger.InfoS("statuseffects", $"Changed icon {name} to {filepath}");
         }
 
         public void RemoveIcon(StatusEffect name)
         {
-            _icons[name].Dispose();
+            _icons.Remove(name);
+            UpdateIcons();
             Logger.InfoS("statuseffects", $"Removed icon {name}");
         }
     }

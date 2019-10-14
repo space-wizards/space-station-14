@@ -67,6 +67,16 @@ namespace Content.Server.GameObjects
             }
         }
 
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
+            statusEffectsComponent?.TryRemoveStatus(StatusEffect.Health);
+
+            Owner.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent);
+            overlayEffectsComponent?.ChangeOverlay(ScreenEffects.None);
+        }
+
         bool IActionBlocker.CanMove()
         {
             return CurrentDamageState.CanMove();
@@ -117,12 +127,17 @@ namespace Content.Server.GameObjects
 
         private bool CanReceiveStatusEffect(IEntity user)
         {
-            if (!user.HasComponent<DamageableComponent>())
+            if (!user.HasComponent<ServerStatusEffectsComponent>() &&
+                !user.HasComponent<ServerOverlayEffectsComponent>())
             {
                 return false;
             }
+            if (user.HasComponent<DamageableComponent>())
+            {
+                return true;
+            }
 
-            return true;
+            return false;
         }
 
         private void ChangeDamageState(ThresholdType threshold)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
+using ScreenEffects = Content.Shared.GameObjects.Components.Mobs.ScreenEffects;
 
 namespace Content.Server.GameObjects
 {
@@ -48,25 +49,24 @@ namespace Content.Server.GameObjects
                         throw new System.InvalidOperationException(); //these should all be below the crit value, possibly going over multiple thresholds at once?
                     }
                     var modifier = totaldamage / (critvalue / normalstates); //integer division floors towards zero
-                    statusEffectsComponent?.Owner.SendNetworkMessage(statusEffectsComponent, new StatusEffectsMessage(StatusEffectsMode.Change,
-                            StatusEffect.Health,
-                            "/Textures/Mob/UI/Human/human" + modifier + ".png"));
+                    statusEffectsComponent?.ChangeStatus(StatusEffect.Health,
+                            "/Textures/Mob/UI/Human/human" + modifier + ".png");
 
-                    overlayComponent?.Owner.SendNetworkMessage(overlayComponent, new OverlayEffectMessage(ScreenEffects.None));
+                    overlayComponent?.ChangeOverlay(ScreenEffects.None);
 
                     return;
                 case ThresholdType.Critical:
-                    statusEffectsComponent?.Owner.SendNetworkMessage(statusEffectsComponent, new StatusEffectsMessage(StatusEffectsMode.Change,
+                    statusEffectsComponent?.ChangeStatus(
                         StatusEffect.Health,
-                        "/Textures/Mob/UI/Human/humancrit-0.png"));
-                    overlayComponent?.Owner.SendNetworkMessage(overlayComponent, new OverlayEffectMessage(ScreenEffects.GradientCircleMask));
+                        "/Textures/Mob/UI/Human/humancrit-0.png");
+                    overlayComponent?.ChangeOverlay(ScreenEffects.GradientCircleMask);
 
                     return;
                 case ThresholdType.Death:
-                    statusEffectsComponent?.Owner.SendNetworkMessage(statusEffectsComponent, new StatusEffectsMessage(StatusEffectsMode.Change,
+                    statusEffectsComponent?.ChangeStatus(
                         StatusEffect.Health,
-                        "/Textures/Mob/UI/Human/humandead.png"));
-                    overlayComponent?.Owner.SendNetworkMessage(overlayComponent, new OverlayEffectMessage(ScreenEffects.CircleMask));
+                        "/Textures/Mob/UI/Human/humandead.png");
+                    overlayComponent?.ChangeOverlay(ScreenEffects.CircleMask);
 
                     return;
                 default:

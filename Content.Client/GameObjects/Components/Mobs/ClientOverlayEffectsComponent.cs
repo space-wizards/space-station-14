@@ -17,7 +17,8 @@ namespace Content.Client.GameObjects
     /// A character UI component which shows the current damage state of the mob (living/dead)
     /// </summary>
     [RegisterComponent]
-    public class ClientOverlayEffectsComponent : SharedOverlayEffectsComponent//, ICharacterUI
+    [ComponentReference(typeof(SharedOverlayEffectsComponent))]
+    public sealed class ClientOverlayEffectsComponent : SharedOverlayEffectsComponent//, ICharacterUI
     {
 
         /// <summary>
@@ -56,22 +57,17 @@ namespace Content.Client.GameObjects
         {
             switch (message)
             {
-                case OverlayEffectMessage msg:
-                    if (!CurrentlyControlled)
-                    {
-                        break;
-                    }
-                    SetOverlay(msg.Effect);
-                    break;
-
                 case PlayerAttachedMsg _:
-                    ApplyOverlay();
-                    break;
-
-                case PlayerDetachedMsg _:
-                    RemoveOverlay();
+                    SetOverlay(_currentEffect);
                     break;
             }
+        }
+
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+            if (!(curState is OverlayEffectComponentState state) || _currentEffect == state.ScreenEffect) return;
+            SetOverlay(state.ScreenEffect);
         }
 
         private void SetOverlay(ScreenEffects effect)
@@ -85,7 +81,7 @@ namespace Content.Client.GameObjects
 
         private void RemoveOverlay()
         {
-            if (_currentEffect != ScreenEffects.None)
+            if (CurrentlyControlled && _currentEffect != ScreenEffects.None)
             {
                 var appliedEffect = _effectsDictionary[_currentEffect];
                 _overlayManager.RemoveOverlay(appliedEffect.ID);
@@ -96,7 +92,7 @@ namespace Content.Client.GameObjects
 
         private void ApplyOverlay()
         {
-            if (_currentEffect != ScreenEffects.None)
+            if (CurrentlyControlled && _currentEffect != ScreenEffects.None)
             {
                 var overlay = _effectsDictionary[_currentEffect];
                 if (_overlayManager.HasOverlay(overlay.ID))
@@ -104,6 +100,7 @@ namespace Content.Client.GameObjects
                     return;
                 }
                 _overlayManager.AddOverlay(overlay);
+                Logger.InfoS("overlay", $"Changed overlay to {overlay}");
             }
         }
     }
