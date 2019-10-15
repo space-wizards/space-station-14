@@ -59,7 +59,7 @@ namespace Content.Client.UserInterface
             buttonNormal.SetPatchMargin(StyleBox.Margin.All, 8);
             buttonNormal.SetPadding(StyleBox.Margin.All, 1);
             buttonNormal.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Horizontal, 6);
+            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Horizontal, 12);
 
             var buttonHover = new StyleBoxTexture(buttonNormal)
             {
