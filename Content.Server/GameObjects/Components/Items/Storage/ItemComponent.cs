@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects
             {
                 if (user.TryGetComponent(out HandsComponent hands) && hands.IsHolding(component.Owner))
                 {
-                    return VerbVisibility.Disabled;
+                    return VerbVisibility.Invisible;
                 }
 
                 return VerbVisibility.Visible;

@@ -31,14 +31,24 @@
 - type: reagentDispenserInventory
   id: ChemDispenserStandardInventory
   inventory:
-  - chem.H2
-  - chem.O2
-  - chem.S8
-  - chem.C
-  - chem.Cu
-  - chem.N2
-  - chem.Fe
-  - chem.F2
-  - chem.Al
   - chem.H2SO4
   - chem.H2O
+  - chem.Ethanol
+  - chem.Glucose
+  - chem.H
+  - chem.O
+  - chem.S
+  - chem.C
+  - chem.Cu
+  - chem.N
+  - chem.Fe
+  - chem.F
+  - chem.Al
+  - chem.Si
+  - chem.Cl
+  - chem.Li
+  - chem.Hg
+  - chem.P
+  - chem.K
+  - chem.Ra
+  - chem.Na

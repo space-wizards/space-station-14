@@ -69,7 +69,7 @@
   - type: Icon
     texture: Objects/Power/provider.png
   - type: PowerProvider
-    range: 5
+    range: 8
     priority: Provider
     load: 0
 

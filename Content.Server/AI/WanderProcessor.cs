@@ -6,9 +6,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Shared.Physics;
 using Robust.Server.AI;
 using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -26,9 +24,7 @@ namespace Content.Server.AI
     {
 #pragma warning disable 649
         [Dependency] private readonly IPhysicsManager _physMan;
-        [Dependency] private readonly IServerEntityManager _entMan;
         [Dependency] private readonly IGameTiming _timeMan;
-        [Dependency] private readonly IEntitySystemManager _entSysMan;
         [Dependency] private readonly IChatManager _chatMan;
 #pragma warning restore 649
 

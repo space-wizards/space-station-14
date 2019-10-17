@@ -8,6 +8,7 @@ namespace Content.Shared.GameObjects.Components.Doors
     public enum DoorVisuals
     {
         VisualState,
+        Powered
     }
 
     [NetSerializable]

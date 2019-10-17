@@ -7,6 +7,7 @@ using Robust.Shared.Utility;
 using System;
 using System.Globalization;
 using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
@@ -167,13 +168,16 @@ namespace Content.Server.GameObjects.Components.Power
             }
             AddCharge(RequestCharge(frameTime));
         }
-        
+
         /// <inheritdoc />
         public void Examine(FormattedMessage message)
         {
-            message.PushColor(Color.Yellow);
-            var chargePercent = Math.Round(100*(Capacity != 0f ? (Charge/Capacity) : 1f), 2).ToString(NumberFormatInfo.InvariantInfo);
-            message.AddText($"Charge: {Math.Round(Charge, 2)}J / {Capacity}J ({chargePercent}%)\nRate: {ChargeRate}W IN, {DistributionRate}W OUT");
+            var loc = IoCManager.Resolve<ILocalizationManager>();
+
+            var chargePercent = Math.Round(100*Charge/Capacity, 2);
+            message.AddMarkup(loc.GetString(
+                "[color=yellow]Charge: {0}J / {1}J ({2}%)\nRate: {3}W IN, {4}W OUT[/color]",
+                Math.Round(Charge, 2), Capacity, chargePercent, ChargeRate, DistributionRate));
         }
     }
 }

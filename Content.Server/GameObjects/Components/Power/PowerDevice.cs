@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Power;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -74,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Power
         ///     Is an internal power source currently available?
         /// </summary>
         [ViewVariables]
-        public bool InternalPowered
+        protected bool InternalPowered
         {
             get => _internalPowered;
             set
@@ -96,6 +100,17 @@ namespace Content.Server.GameObjects.Components.Power
         }
         private Powernet.Priority _priority = Powernet.Priority.Medium;
 
+        [ViewVariables]
+        public bool IsPowerCut
+        {
+            get => _isPowerCut;
+            set
+            {
+                _isPowerCut = value;
+                UpdatePowered();
+            }
+        }
+
         private float _load = 100; //arbitrary magic number to start
         /// <summary>
         ///     Power load from this entity.
@@ -115,6 +130,7 @@ namespace Content.Server.GameObjects.Components.Power
 
 
         private PowerProviderComponent _provider;
+        private bool _isPowerCut;
 
         /// <summary>
         /// A power provider that will handle our load, if we are linked to any
@@ -203,9 +219,11 @@ namespace Content.Server.GameObjects.Components.Power
 
         void IExamine.Examine(FormattedMessage message)
         {
+            var loc = IoCManager.Resolve<ILocalizationManager>();
+
             if (!Powered)
             {
-                message.AddText("The device is not powered.");
+                message.AddMarkup(loc.GetString("The device is [color=orange]not powered[/color]."));
             }
         }
 
@@ -231,16 +249,15 @@ namespace Content.Server.GameObjects.Components.Power
         private void UpdatePowered()
         {
             var oldPowered = Powered;
-            Powered = ExternalPowered || InternalPowered;
+            Powered = !IsPowerCut && (ExternalPowered || InternalPowered);
+
             if (oldPowered != Powered)
             {
-                if (Powered)
+                OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
+
+                if (Owner.TryGetComponent(out AppearanceComponent appearance))
                 {
-                    OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(true));
-                }
-                else
-                {
-                    OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(false));
+                    appearance.SetData(PowerDeviceVisuals.Powered, Powered);
                 }
             }
         }
