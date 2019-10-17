@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
@@ -50,6 +51,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     var userEntity = session.AttachedEntity;
 
                     var data = new List<VerbsResponseMessage.VerbData>();
+                    //Get verbs, component dependent.
                     foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
                     {
                         if (verb.RequireInteractionRange)
@@ -70,6 +72,26 @@ namespace Content.Server.GameObjects.EntitySystems
                         data.Add(new VerbsResponseMessage.VerbData(verb.GetText(userEntity, component),
                             $"{component.GetType()}:{verb.GetType()}",
                             vis == VerbVisibility.Visible));
+                    }
+                    //Get global verbs. Visible for all entities regardless of their components.
+                    foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
+                    {
+                        if (globalVerb.RequireInteractionRange)
+                        {
+                            var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
+                                .LengthSquared;
+                            if (distanceSquared > GlobalVerb.InteractionRangeSquared)
+                            {
+                                continue;
+                            }
+                        }
+
+                        var vis = globalVerb.GetVisibility(userEntity, entity);
+                        if (vis == VerbVisibility.Invisible)
+                            continue;
+
+                        data.Add(new VerbsResponseMessage.VerbData(globalVerb.GetText(userEntity, entity),
+                            globalVerb.GetType().ToString(), vis == VerbVisibility.Visible));
                     }
 
                     var response = new VerbsResponseMessage(data, req.EntityUid);

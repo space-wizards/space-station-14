@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Input;
@@ -160,6 +161,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             var user = GetUserEntity();
+            //Get verbs, component dependent.
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
                 if (verb.RequireInteractionRange)
@@ -190,6 +192,43 @@ namespace Content.Client.GameObjects.EntitySystems
                         catch (Exception e)
                         {
                             Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verb, entity, e);
+                        }
+                    };
+                }
+
+                buttons.Add(button);
+            }
+            //Get global verbs. Visible for all entities regardless of their components.
+            foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
+            {
+                if (globalVerb.RequireInteractionRange)
+                {
+                    var distanceSquared = (user.Transform.WorldPosition - entity.Transform.WorldPosition)
+                        .LengthSquared;
+                    if (distanceSquared > Verb.InteractionRangeSquared)
+                    {
+                        continue;
+                    }
+                }
+
+                var disabled = globalVerb.GetVisibility(user, entity) != VerbVisibility.Visible;
+                var button = new Button
+                {
+                    Text = globalVerb.GetText(user, entity),
+                    Disabled = disabled
+                };
+                if (!disabled)
+                {
+                    button.OnPressed += _ =>
+                    {
+                        _closeContextMenu();
+                        try
+                        {
+                            globalVerb.Activate(user, entity);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", globalVerb, entity, e);
                         }
                     };
                 }
