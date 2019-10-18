@@ -4,9 +4,9 @@
   description: A booze dispenser with a single slot for a container to be filled.
   components:
   - type: Sprite
-    texture: Buildings/booze_dispenser.png
+    texture: Buildings/chemicals.rsi/booze_dispenser.png
   - type: Icon
-    texture: Buildings/booze_dispenser.png
+    texture: Buildings/chemicals.rsi/booze_dispenser.png
   - type: Clickable
   - type: Collidable
     shapes:
