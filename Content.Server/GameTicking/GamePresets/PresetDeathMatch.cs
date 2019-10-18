@@ -14,5 +14,7 @@ namespace Content.Server.GameTicking.GamePresets
         {
             _gameTicker.AddGameRule<RuleDeathMatch>();
         }
+
+        public override string Description => "Deathmatch, go and kill everybody else to win!";
     }
 }

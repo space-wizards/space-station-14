@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects;
@@ -10,7 +10,6 @@ using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -24,10 +23,10 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timers;
 using Robust.Shared.Timing;
@@ -92,6 +91,7 @@ namespace Content.Server.GameTicking
         [Dependency] private IChatManager _chatManager;
         [Dependency] private IServerNetManager _netManager;
         [Dependency] private IDynamicTypeFactory _dynamicTypeFactory;
+        [Dependency] private readonly ILocalizationManager _localization;
         [Dependency] private readonly IRobustRandom _robustRandom;
 #pragma warning restore 649
 
@@ -105,6 +105,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
+            _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
 
             RestartRound();
 
@@ -156,7 +157,7 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.InRound;
 
-            var preset = _dynamicTypeFactory.CreateInstance<GamePreset>(_presetType ?? typeof(PresetSandbox));
+            var preset = MakeGamePreset();
             preset.Start();
 
             foreach (var (playerSession, ready) in _playersInLobby.ToList())
@@ -256,6 +257,7 @@ namespace Content.Server.GameTicking
                 throw new ArgumentException("type must inherit GamePreset");
             }
             _presetType = type;
+            UpdateInfoText();
         }
 
         private IEntity _spawnPlayerMob()
@@ -461,6 +463,7 @@ namespace Content.Server.GameTicking
 
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
+            _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);
         }
 
         private void _playerJoinGame(IPlayerSession session)
@@ -484,12 +487,39 @@ namespace Content.Server.GameTicking
             return msg;
         }
 
+        private MsgTickerLobbyInfo GetInfoMsg()
+        {
+            var msg = _netManager.CreateNetMessage<MsgTickerLobbyInfo>();
+            msg.TextBlob = GetInfoText();
+            return msg;
+        }
+
         private void _sendStatusToAll()
         {
             foreach (var player in _playersInLobby.Keys)
             {
                 _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
             }
+        }
+
+        private string GetInfoText()
+        {
+            var gameMode = MakeGamePreset().Description;
+            return _localization.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
+
+The current game mode is [color=white]{0}[/color]", gameMode);
+        }
+
+        private void UpdateInfoText()
+        {
+            var infoMsg = GetInfoMsg();
+
+            _netManager.ServerSendToMany(infoMsg, _playersInLobby.Keys.Select(p => p.ConnectedClient).ToList());
+        }
+
+        private GamePreset MakeGamePreset()
+        {
+            return _dynamicTypeFactory.CreateInstance<GamePreset>(_presetType ?? typeof(PresetSandbox));
         }
     }
 
