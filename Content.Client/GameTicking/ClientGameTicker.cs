@@ -14,12 +14,10 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -48,6 +46,7 @@ namespace Content.Client.GameTicking
         [ViewVariables] private LobbyGui _lobby;
         [ViewVariables] private bool _gameStarted;
         [ViewVariables] private DateTime _startTime;
+        [ViewVariables] private string _serverInfoBlob;
 
         public void Initialize()
         {
@@ -56,6 +55,7 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby), _joinLobby);
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame), _joinGame);
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), _lobbyStatus);
+            _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo), _lobbyInfo);
 
             _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
             _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
@@ -97,7 +97,7 @@ namespace Content.Client.GameTicking
             _gameHud.RootControl.Orphan();
         }
 
-        public void FrameUpdate(FrameEventArgs FrameEventArgs)
+        public void FrameUpdate(FrameEventArgs frameEventArgs)
         {
             if (_lobby == null)
             {
@@ -140,6 +140,13 @@ namespace Content.Client.GameTicking
             _updateLobbyUi();
         }
 
+        private void _lobbyInfo(MsgTickerLobbyInfo message)
+        {
+            _serverInfoBlob = message.TextBlob;
+
+            _updateLobbyUi();
+        }
+
         private void _updateLobbyUi()
         {
             if (_lobby == null)
@@ -160,6 +167,8 @@ namespace Content.Client.GameTicking
                 _lobby.ReadyButton.ToggleMode = true;
                 _lobby.ReadyButton.Pressed = _areWeReady;
             }
+
+            _lobby.ServerInfo.SetInfoBlob(_serverInfoBlob);
         }
 
         private void _joinLobby(MsgTickerJoinLobby message)

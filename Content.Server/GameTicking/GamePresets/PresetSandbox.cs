@@ -14,5 +14,7 @@ namespace Content.Server.GameTicking.GamePresets
         {
             _sandboxManager.IsSandboxEnabled = true;
         }
+
+        public override string Description => "Sandbox, go and build something!";
     }
 }
