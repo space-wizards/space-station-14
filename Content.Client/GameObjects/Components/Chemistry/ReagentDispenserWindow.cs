@@ -75,7 +75,8 @@ namespace Content.Client.GameObjects.Components.Chemistry
                         Children =
                         {
                             new Label {Text = _localizationManager.GetString("Amount")},
-                            new Control {CustomMinimumSize = (20, 0)}, //Padding
+                            //Padding
+                            new Control {CustomMinimumSize = (20, 0)},
                             (DispenseButton1 = new Button {Text = "1", Group = dispenseAmountGroup}),
                             (DispenseButton5 = new Button {Text = "5", Group = dispenseAmountGroup}),
                             (DispenseButton10 = new Button {Text = "10", Group = dispenseAmountGroup}),
@@ -84,15 +85,15 @@ namespace Content.Client.GameObjects.Components.Chemistry
                             (DispenseButton100 = new Button {Text = "100", Group = dispenseAmountGroup}),
                         }
                     },
-                    new Control {CustomMinimumSize = (0.0f, 10.0f)}, //Padding
-                    (ChemicalList = new GridContainer //Grid of which reagents can be dispensed.
+                    //Padding
+                    new Control {CustomMinimumSize = (0.0f, 10.0f)},
+                    //Grid of which reagents can be dispensed.
+                    (ChemicalList = new GridContainer
                     {
-                        CustomMinimumSize = (470.0f, 200.0f),
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
                         Columns = 5
                     }),
-                    new Control {CustomMinimumSize = (0.0f, 10.0f)}, //Padding
+                    //Padding
+                    new Control {CustomMinimumSize = (0.0f, 10.0f)},
                     new HBoxContainer
                     {
                         Children =
@@ -102,33 +103,33 @@ namespace Content.Client.GameObjects.Components.Chemistry
                             (EjectButton = new Button {Text = _localizationManager.GetString("Eject")})
                         }
                     },
-                    new
-                        PanelContainer //Wrap the container info in a PanelContainer so we can color it's background differently.
+                    //Wrap the container info in a PanelContainer so we can color it's background differently.
+                    new PanelContainer
+                    {
+                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        SizeFlagsStretchRatio = 6,
+                        CustomMinimumSize = (0, 150),
+                        PanelOverride = new StyleBoxFlat
                         {
-                            SizeFlagsVertical = SizeFlags.FillExpand,
-                            SizeFlagsStretchRatio = 6,
-                            PanelOverride = new StyleBoxFlat
-                            {
-                                BackgroundColor = new Color(27, 27, 30)
-                            },
-                            Children =
-                            {
-                                (ContainerInfo =
-                                    new
-                                        VBoxContainer //Currently empty, when server sends state data this will have container contents and fill volume.
-                                        {
-                                            MarginLeft = 5.0f,
-                                            SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                            Children =
-                                            {
-                                                new Label
-                                                {
-                                                    Text = _localizationManager.GetString("No container loaded.")
-                                                }
-                                            }
-                                        }),
-                            }
+                            BackgroundColor = new Color(27, 27, 30)
                         },
+                        Children =
+                        {
+                            //Currently empty, when server sends state data this will have container contents and fill volume.
+                            (ContainerInfo = new VBoxContainer
+                            {
+                                MarginLeft = 5.0f,
+                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                Children =
+                                {
+                                    new Label
+                                    {
+                                        Text = _localizationManager.GetString("No container loaded.")
+                                    }
+                                }
+                            }),
+                        }
+                    },
                 }
             });
         }
