@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Components.UserInterface;
@@ -15,33 +16,39 @@ using static Content.Shared.GameObjects.Components.Chemistry.SharedReagentDispen
 namespace Content.Client.GameObjects.Components.Chemistry
 {
     /// <summary>
-    /// Client-side UI used to control a <see cref="ReagentDispenserComponent"/>
+    /// Client-side UI used to control a <see cref="SharedReagentDispenserComponent"/>
     /// </summary>
     public class ReagentDispenserWindow : SS14Window
     {
-        /// <summary>Sets the dispense amount to 1 when pressed.</summary>
-        public Button DispenseButton1;
-        /// <summary>Sets the dispense amount to 5 when pressed.</summary>
-        public Button DispenseButton5;
-        /// <summary>Sets the dispense amount to 10 when pressed.</summary>
-        public Button DispenseButton10;
-        /// <summary>Sets the dispense amount to 25 when pressed.</summary>
-        public Button DispenseButton25;
-        /// <summary>Sets the dispense amount to 50 when pressed.</summary>
-        public Button DispenseButton50;
-        /// <summary>Sets the dispense amount to 100 when pressed.</summary>
-        public Button DispenseButton100;
-
         /// <summary>Contains info about the reagent container such as it's contents, if one is loaded into the dispenser.</summary>
-        public VBoxContainer ContainerInfo;
+        private readonly VBoxContainer ContainerInfo;
+
+        /// <summary>Sets the dispense amount to 1 when pressed.</summary>
+        public Button DispenseButton1 { get; }
+
+        /// <summary>Sets the dispense amount to 5 when pressed.</summary>
+        public Button DispenseButton5 { get; }
+
+        /// <summary>Sets the dispense amount to 10 when pressed.</summary>
+        public Button DispenseButton10 { get; }
+
+        /// <summary>Sets the dispense amount to 25 when pressed.</summary>
+        public Button DispenseButton25 { get; }
+
+        /// <summary>Sets the dispense amount to 50 when pressed.</summary>
+        public Button DispenseButton50 { get; }
+
+        /// <summary>Sets the dispense amount to 100 when pressed.</summary>
+        public Button DispenseButton100 { get; }
 
         /// <summary>Ejects the reagent container from the dispenser.</summary>
-        public Button ClearButton;
+        public Button ClearButton { get; }
+
         /// <summary>Removes all reagents from the reagent container.</summary>
-        public Button EjectButton;
+        public Button EjectButton { get; }
 
         /// <summary>A grid of buttons for each reagent which can be dispensed.</summary>
-        public GridContainer ChemicalList;
+        public GridContainer ChemicalList { get; }
 
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -54,8 +61,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
         /// </summary>
         public ReagentDispenserWindow()
         {
-            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            _localizationManager = IoCManager.Resolve<ILocalizationManager>();
+            IoCManager.InjectDependencies(this);
+
+            var dispenseAmountGroup = new ButtonGroup();
 
             Contents.AddChild(new VBoxContainer
             {
@@ -66,16 +74,17 @@ namespace Content.Client.GameObjects.Components.Chemistry
                     {
                         Children =
                         {
-                            new Label{Text = _localizationManager.GetString("Amount    ")},
-                            (DispenseButton1 = new Button{Text = "1"}),
-                            (DispenseButton5 = new Button{Text = "5"}),
-                            (DispenseButton10 = new Button{Text = "10"}),
-                            (DispenseButton25 = new Button{Text = "25"}),
-                            (DispenseButton50 = new Button{Text = "50"}),
-                            (DispenseButton100 = new Button{Text = "100"}),
+                            new Label {Text = _localizationManager.GetString("Amount")},
+                            new Control {CustomMinimumSize = (20, 0)}, //Padding
+                            (DispenseButton1 = new Button {Text = "1", Group = dispenseAmountGroup}),
+                            (DispenseButton5 = new Button {Text = "5", Group = dispenseAmountGroup}),
+                            (DispenseButton10 = new Button {Text = "10", Group = dispenseAmountGroup}),
+                            (DispenseButton25 = new Button {Text = "25", Group = dispenseAmountGroup}),
+                            (DispenseButton50 = new Button {Text = "50", Group = dispenseAmountGroup}),
+                            (DispenseButton100 = new Button {Text = "100", Group = dispenseAmountGroup}),
                         }
                     },
-                    new Panel{CustomMinimumSize = (0.0f, 10.0f)}, //Padding
+                    new Control {CustomMinimumSize = (0.0f, 10.0f)}, //Padding
                     (ChemicalList = new GridContainer //Grid of which reagents can be dispensed.
                     {
                         CustomMinimumSize = (470.0f, 200.0f),
@@ -83,37 +92,43 @@ namespace Content.Client.GameObjects.Components.Chemistry
                         SizeFlagsHorizontal = SizeFlags.FillExpand,
                         Columns = 5
                     }),
-                    new Panel{CustomMinimumSize = (0.0f, 10.0f)}, //Padding
+                    new Control {CustomMinimumSize = (0.0f, 10.0f)}, //Padding
                     new HBoxContainer
                     {
                         Children =
                         {
-                            new Label{Text = _localizationManager.GetString("Container: ")},
-                            (ClearButton = new Button{Text = _localizationManager.GetString("Clear")}),
-                            (EjectButton = new Button{Text = _localizationManager.GetString("Eject")})
+                            new Label {Text = _localizationManager.GetString("Container: ")},
+                            (ClearButton = new Button {Text = _localizationManager.GetString("Clear")}),
+                            (EjectButton = new Button {Text = _localizationManager.GetString("Eject")})
                         }
                     },
-                    new PanelContainer //Wrap the container info in a PanelContainer so we can color it's background differently.
-                    {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        SizeFlagsStretchRatio = 6,
-                        PanelOverride = new StyleBoxFlat
+                    new
+                        PanelContainer //Wrap the container info in a PanelContainer so we can color it's background differently.
                         {
-                            BackgroundColor = new Color(27, 27, 30)
-                        },
-                        Children =
-                        {
-                            (ContainerInfo = new VBoxContainer //Currently empty, when server sends state data this will have container contents and fill volume.
+                            SizeFlagsVertical = SizeFlags.FillExpand,
+                            SizeFlagsStretchRatio = 6,
+                            PanelOverride = new StyleBoxFlat
                             {
-                                MarginLeft = 5.0f,
-                                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                Children =
-                                {
-                                    new Label{Text = _localizationManager.GetString("No container loaded.")}
-                                }
-                            }),
-                        }
-                    },
+                                BackgroundColor = new Color(27, 27, 30)
+                            },
+                            Children =
+                            {
+                                (ContainerInfo =
+                                    new
+                                        VBoxContainer //Currently empty, when server sends state data this will have container contents and fill volume.
+                                        {
+                                            MarginLeft = 5.0f,
+                                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                            Children =
+                                            {
+                                                new Label
+                                                {
+                                                    Text = _localizationManager.GetString("No container loaded.")
+                                                }
+                                            }
+                                        }),
+                            }
+                        },
                 }
             });
         }
@@ -134,13 +149,12 @@ namespace Content.Client.GameObjects.Components.Chemistry
             {
                 if (_prototypeManager.TryIndex(entry.ID, out ReagentPrototype proto))
                 {
-                    ChemicalList.AddChild(new Button { Text = proto.Name });
+                    ChemicalList.AddChild(new Button {Text = proto.Name});
                 }
                 else
                 {
-                    ChemicalList.AddChild(new Button { Text = _localizationManager.GetString("Reagent name not found") });
+                    ChemicalList.AddChild(new Button {Text = _localizationManager.GetString("Reagent name not found")});
                 }
-
             }
         }
 
@@ -150,9 +164,31 @@ namespace Content.Client.GameObjects.Components.Chemistry
         /// <param name="state">State data sent by the server.</param>
         public void UpdateState(BoundUserInterfaceState state)
         {
-            var castState = (ReagentDispenserBoundUserInterfaceState)state;
+            var castState = (ReagentDispenserBoundUserInterfaceState) state;
             Title = castState.DispenserName;
             UpdateContainerInfo(castState);
+
+            switch (castState.SelectedDispenseAmount)
+            {
+                case 1:
+                    DispenseButton1.Pressed = true;
+                    break;
+                case 5:
+                    DispenseButton5.Pressed = true;
+                    break;
+                case 10:
+                    DispenseButton10.Pressed = true;
+                    break;
+                case 25:
+                    DispenseButton25.Pressed = true;
+                    break;
+                case 50:
+                    DispenseButton50.Pressed = true;
+                    break;
+                case 100:
+                    DispenseButton100.Pressed = true;
+                    break;
+            }
         }
 
         /// <summary>
@@ -161,83 +197,80 @@ namespace Content.Client.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="state">State data for the dispenser.</param>
         /// <param name="highlightedReagentId">Prototype id of the reagent whose dispense button is currently being mouse hovered.</param>
-        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state, string highlightedReagentId = "InvalidReagent")
+        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state,
+            string highlightedReagentId = null)
         {
             ContainerInfo.Children.Clear();
-            if (state.HasBeaker) //If the dispenser doesn't have a beaker/container don't bother with this.
+
+            if (!state.HasBeaker)
             {
-                ContainerInfo.Children.Add(new HBoxContainer //Name of the container and it's fill status (Ex: 44/100u)
+                ContainerInfo.Children.Add(new Label {Text = _localizationManager.GetString("No container loaded.")});
+                return;
+            }
+
+            ContainerInfo.Children.Add(new HBoxContainer // Name of the container and its fill status (Ex: 44/100u)
+            {
+                Children =
                 {
-                    Children =
+                    new Label {Text = $"{state.ContainerName}: "},
+                    new Label
                     {
-                        new Label{Text = $"{state.ContainerName}: "},
-                        new Label{Text = $"{state.BeakerCurrentVolume}/{state.BeakerMaxVolume}", StyleClasses = { NanoStyle.StyleClassLabelSecondaryColor }}
-                    }
-                });
-                //List the reagents in the container if it has any at all.
-                if (state.ContainerReagents != null)
-                {
-                    //Loop through the reagents in the container.
-                    foreach (var reagent in state.ContainerReagents)
-                    {
-                        //Try to the prototype for the given reagent. This gives us it's name.
-                        if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
-                        {
-                            //Check if the reagent is being moused over. If so, color it green.
-                            if (proto.ID == highlightedReagentId)
-                            {
-                                ContainerInfo.Children.Add(new HBoxContainer
-                                {
-                                    Children =
-                                    {
-                                        new Label {Text = $"{proto.Name}: ", StyleClasses = {NanoStyle.StyleClassPowerStateGood}},
-                                        new Label
-                                        {
-                                            Text = $"{reagent.Quantity}u",
-                                            StyleClasses = {NanoStyle.StyleClassPowerStateGood}
-                                        }
-                                    }
-                                });
-                            }
-                            else //Otherwise, color it the normal colors.
-                            {
-                                ContainerInfo.Children.Add(new HBoxContainer
-                                {
-                                    Children =
-                                    {
-                                        new Label {Text = $"{proto.Name}: "},
-                                        new Label
-                                        {
-                                            Text = $"{reagent.Quantity}u",
-                                            StyleClasses = {NanoStyle.StyleClassLabelSecondaryColor}
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                        else //If you fail to get the reagents name, just call it "Unknown reagent".
-                        {
-                            ContainerInfo.Children.Add(new HBoxContainer
-                            {
-                                Children =
-                                {
-                                    new Label {Text = _localizationManager.GetString("Unknown reagent: ")},
-                                    new Label
-                                    {
-                                        Text = $"{reagent.Quantity}u",
-                                        StyleClasses = {NanoStyle.StyleClassLabelSecondaryColor}
-                                    }
-                                }
-                            });
-                        }
+                        Text = $"{state.BeakerCurrentVolume}/{state.BeakerMaxVolume}",
+                        StyleClasses = {NanoStyle.StyleClassLabelSecondaryColor}
                     }
                 }
-            }
-            else
+            });
+
+            if (state.ContainerReagents == null)
             {
-                ContainerInfo.Children.Add(new Label{Text = _localizationManager.GetString("No container loaded.")});
+                return;
             }
-            ForceRunLayoutUpdate(); //Force a layout update to avoid text hanging off the window until the user manually resizes it.
+
+            foreach (var reagent in state.ContainerReagents)
+            {
+                var name = _localizationManager.GetString("Unknown reagent");
+                //Try to the prototype for the given reagent. This gives us it's name.
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                {
+                    name = proto.Name;
+                }
+
+                //Check if the reagent is being moused over. If so, color it green.
+                if (proto.ID == highlightedReagentId)
+                {
+                    ContainerInfo.Children.Add(new HBoxContainer
+                    {
+                        Children =
+                        {
+                            new Label
+                            {
+                                Text = $"{name}: ",
+                                StyleClasses = {NanoStyle.StyleClassPowerStateGood}
+                            },
+                            new Label
+                            {
+                                Text = $"{reagent.Quantity}u",
+                                StyleClasses = {NanoStyle.StyleClassPowerStateGood}
+                            }
+                        }
+                    });
+                }
+                else //Otherwise, color it the normal colors.
+                {
+                    ContainerInfo.Children.Add(new HBoxContainer
+                    {
+                        Children =
+                        {
+                            new Label {Text = $"{name}: "},
+                            new Label
+                            {
+                                Text = $"{reagent.Quantity}u",
+                                StyleClasses = {NanoStyle.StyleClassLabelSecondaryColor}
+                            }
+                        }
+                    });
+                }
+            }
         }
     }
 }
