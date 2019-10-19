@@ -90,5 +90,28 @@ namespace Content.Shared
                 buffer.Write(StartTime.Ticks);
             }
         }
+
+        protected class MsgTickerLobbyInfo : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgTickerLobbyInfo);
+            public MsgTickerLobbyInfo(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public string TextBlob { get; set; }
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                TextBlob = buffer.ReadString();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(TextBlob);
+            }
+        }
     }
 }

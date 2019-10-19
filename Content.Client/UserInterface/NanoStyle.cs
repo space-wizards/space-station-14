@@ -13,10 +13,12 @@ namespace Content.Client.UserInterface
     public sealed class NanoStyle
     {
         public const string StyleClassLabelHeading = "LabelHeading";
+        public const string StyleClassLabelHeadingBigger = "LabelHeadingBigger";
         public const string StyleClassLabelSubText = "LabelSubText";
         public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
+        public const string StyleClassLabelBig = "LabelBig";
         public const string StyleClassButtonBig = "ButtonBig";
-        private static readonly Color NanoGold = Color.FromHex("#A88B5E");
+        public static readonly Color NanoGold = Color.FromHex("#A88B5E");
 
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
@@ -33,6 +35,7 @@ namespace Content.Client.UserInterface
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
             var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
             var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
+            var notoSansBold20 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 20);
             var textureCloseButton = resCache.GetTexture("/Nano/cross.svg.png");
             var windowHeaderTex = resCache.GetTexture("/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
@@ -56,10 +59,10 @@ namespace Content.Client.UserInterface
                 Texture = buttonTex,
                 Modulate = Color.FromHex("#464966")
             };
-            buttonNormal.SetPatchMargin(StyleBox.Margin.All, 8);
+            buttonNormal.SetPatchMargin(StyleBox.Margin.All, 10);
             buttonNormal.SetPadding(StyleBox.Margin.All, 1);
             buttonNormal.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Horizontal, 12);
+            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Horizontal, 14);
 
             var buttonHover = new StyleBoxTexture(buttonNormal)
             {
@@ -150,8 +153,9 @@ namespace Content.Client.UserInterface
             // Placeholder
             var placeholderTexture = resCache.GetTexture("/Nano/placeholder.png");
             var placeholder = new StyleBoxTexture {Texture = placeholderTexture};
-            placeholder.SetPatchMargin(StyleBox.Margin.All, 24);
+            placeholder.SetPatchMargin(StyleBox.Margin.All, 19);
             placeholder.SetExpandMargin(StyleBox.Margin.All, -5);
+            placeholder.Mode = StyleBoxTexture.StretchMode.Tile;
 
             var itemListBackgroundSelected = new StyleBoxFlat {BackgroundColor = new Color(75, 75, 86)};
             itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
@@ -162,6 +166,28 @@ namespace Content.Client.UserInterface
             var itemListItemBackground = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)};
             itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
+
+            // NanoHeading
+            var nanoHeadingTex = resCache.GetTexture("/Nano/nanoheading.svg.96dpi.png");
+            var nanoHeadingBox = new StyleBoxTexture
+            {
+                Texture = nanoHeadingTex,
+                PatchMarginRight = 10,
+                PatchMarginTop = 10,
+                ContentMarginTopOverride = 2,
+                ContentMarginLeftOverride = 10,
+                PaddingTop = 4
+            };
+
+            nanoHeadingBox.SetPatchMargin(StyleBox.Margin.Left | StyleBox.Margin.Bottom, 2);
+
+            // Stripe background
+            var stripeBackTex = resCache.GetTexture("/Nano/stripeback.svg.96dpi.png");
+            var stripeBack = new StyleBoxTexture
+            {
+                Texture = stripeBackTex,
+                Mode = StyleBoxTexture.StretchMode.Tile
+            };
 
             Stylesheet = new Stylesheet(new[]
             {
@@ -431,6 +457,13 @@ namespace Content.Client.UserInterface
                     new StyleProperty(Label.StylePropertyFontColor, NanoGold),
                 }),
 
+                // Bigger Label
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeadingBigger}, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSansBold20),
+                    new StyleProperty(Label.StylePropertyFontColor, NanoGold),
+                }),
+
                 // Small Label
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSubText}, null, null), new[]
                 {
@@ -517,6 +550,33 @@ namespace Content.Client.UserInterface
                         new[] {TextureButton.StylePseudoClassPressed}), new[]
                     {
                         new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#00F")),
+                    }),
+
+                // NanoHeading
+
+                new StyleRule(
+                    new SelectorChild(
+                        SelectorElement.Type(typeof(NanoHeading)),
+                        SelectorElement.Type(typeof(PanelContainer))),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, nanoHeadingBox),
+                    }),
+
+                // StripeBack
+                new StyleRule(
+                    SelectorElement.Type(typeof(StripeBack)),
+                    new []
+                    {
+                        new StyleProperty(StripeBack.StylePropertyBackground, stripeBack),
+                    }),
+
+                // StyleClassLabelBig
+                new StyleRule(
+                    SelectorElement.Class(StyleClassLabelBig),
+                    new []
+                    {
+                        new StyleProperty("font", notoSans16),
                     }),
             });
         }
