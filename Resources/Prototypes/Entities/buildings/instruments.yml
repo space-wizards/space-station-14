@@ -53,3 +53,17 @@
   - type: Icon
     sprite: Objects/Instruments/musician.rsi
     state: minimoog
+
+- type: entity
+  name: Xylophone
+  parent: BaseInstrument
+  id: XylophoneInstrument
+  components:
+  - type: Instrument
+    program: 13
+  - type: Sprite
+    sprite: Objects/Instruments/musician.rsi
+    state: xylophone
+  - type: Icon
+    sprite: Objects/Instruments/musician.rsi
+    state: xylophone

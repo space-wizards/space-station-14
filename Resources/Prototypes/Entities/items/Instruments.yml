@@ -119,18 +119,6 @@
     texture: Objects/Instruments/musician.rsi/saxophone.png
 
 - type: entity
-  name: Xylophone
-  parent: BaseHandheldInstrument
-  id: XylophoneInstrument
-  components:
-  - type: Instrument
-    program: 13
-  - type: Sprite
-    texture: Objects/Instruments/musician.rsi/xylophone.png
-  - type: Icon
-    texture: Objects/Instruments/musician.rsi/xylophone.png
-
-- type: entity
   name: Glockenspiel
   parent: BaseHandheldInstrument
   id: GlockenspielInstrument
