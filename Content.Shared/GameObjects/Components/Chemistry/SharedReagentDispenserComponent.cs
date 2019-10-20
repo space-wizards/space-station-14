@@ -20,12 +20,12 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// <summary>
         /// A list of reagents which this may dispense. Defined in yaml prototype, see <see cref="ReagentDispenserInventoryPrototype"/>.
         /// </summary>
-        public List<ReagentDispenserInventoryEntry> Inventory = new List<ReagentDispenserInventoryEntry>();
+        protected readonly List<ReagentDispenserInventoryEntry> Inventory = new List<ReagentDispenserInventoryEntry>();
 
         [Serializable, NetSerializable]
         public class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly bool HasBeaker; 
+            public readonly bool HasBeaker;
             public readonly int BeakerCurrentVolume;
             public readonly int BeakerMaxVolume;
             public readonly string ContainerName;
@@ -38,9 +38,10 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             /// </summary>
             public readonly List<Solution.ReagentQuantity> ContainerReagents;
             public readonly string DispenserName;
+            public readonly int SelectedDispenseAmount;
 
             public ReagentDispenserBoundUserInterfaceState(bool hasBeaker, int beakerCurrentVolume, int beakerMaxVolume, string containerName,
-                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Solution.ReagentQuantity> containerReagents)
+                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Solution.ReagentQuantity> containerReagents, int selectedDispenseAmount)
             {
                 HasBeaker = hasBeaker;
                 BeakerCurrentVolume = beakerCurrentVolume;
@@ -49,6 +50,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
                 Inventory = inventory;
                 DispenserName = dispenserName;
                 ContainerReagents = containerReagents;
+                SelectedDispenseAmount = selectedDispenseAmount;
             }
         }
 
@@ -98,9 +100,10 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// Information about a reagent which the dispenser can dispense.
         /// </summary>
         [Serializable, NetSerializable]
-        public class ReagentDispenserInventoryEntry
+        public struct ReagentDispenserInventoryEntry
         {
-            public string ID;
+            public readonly string ID;
+
             public ReagentDispenserInventoryEntry(string id)
             {
                 ID = id;
