@@ -87,7 +87,6 @@ namespace Content.Server.GameObjects.Components
         private readonly Dictionary<object, string> _statuses = new Dictionary<object, string>();
 
         /// <summary>
-        /// As seen on /vg/station.
         /// <see cref="AssignColor"/> and <see cref="WiresBuilder.CreateWire"/>.
         /// </summary>
         private readonly List<Color> _availableColors = new List<Color>()
@@ -104,7 +103,6 @@ namespace Content.Server.GameObjects.Components
             Color.Purple,
             Color.Pink,
             Color.Fuchsia,
-            Color.Aqua,
         };
 
         public override void Initialize()
