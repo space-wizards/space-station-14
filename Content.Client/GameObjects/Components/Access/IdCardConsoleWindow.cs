@@ -1,108 +1,143 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Access;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Access.SharedIdCardConsoleComponent;
 
 namespace Content.Client.GameObjects.Components.Access
 {
     public class IdCardConsoleWindow : SS14Window
     {
+        private readonly Button _privilegedIdButton;
+        private readonly Button _targetIdButton;
+
+        private readonly Label _privilegedIdLabel;
+        private readonly Label _targetIdLabel;
+
         private readonly Label _fullNameLabel;
         private readonly LineEdit _fullNameLineEdit;
         private readonly Label _jobTitleLabel;
         private readonly LineEdit _jobTitleLineEdit;
+
+        private readonly Button _fullNameSaveButton;
+        private readonly Button _jobTitleSaveButton;
+
         private readonly IdCardConsoleBoundUserInterface _owner;
-        private readonly Button _privilegedIdButton;
-        private readonly Button _targetIdButton;
-        private readonly Button _submitButton;
-        private readonly ILocalizationManager _localizationManager;
 
-        private Dictionary<string, Button> _accessButtons = new Dictionary<string, Button>();
+        private readonly ILocalizationManager _loc;
 
-        public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, ILocalizationManager localizationManager)
+        private readonly Dictionary<string, Button> _accessButtons = new Dictionary<string, Button>();
+
+        private string _lastFullName;
+        private string _lastJobTitle;
+
+        protected override Vector2? CustomSize => (650, 270);
+
+        public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, ILocalizationManager loc)
         {
-            _localizationManager = localizationManager;
+            _loc = loc;
             _owner = owner;
             var vBox = new VBoxContainer();
 
+            vBox.AddChild(new GridContainer
             {
-                var hBox = new HBoxContainer();
-                vBox.AddChild(hBox);
+                Columns = 3,
+                Children =
+                {
+                    new Label {Text = loc.GetString("Privileged ID:")},
+                    (_privilegedIdButton = new Button()),
+                    (_privilegedIdLabel = new Label()),
 
-                _privilegedIdButton = new Button();
-                _privilegedIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.PrivilegedId);
-                hBox.AddChild(_privilegedIdButton);
+                    new Label {Text = loc.GetString("Target ID:")},
+                    (_targetIdButton = new Button()),
+                    (_targetIdLabel = new Label())
+                }
+            });
 
-                _targetIdButton = new Button();
-                _targetIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.TargetId);
-                hBox.AddChild(_targetIdButton);
-            }
+            _privilegedIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.PrivilegedId);
+            _targetIdButton.OnPressed += _ => _owner.ButtonPressed(UiButton.TargetId);
+
+            // Separator
+            vBox.AddChild(new Control {CustomMinimumSize = (0, 8)});
+
+            // Name and job title line edits.
+            vBox.AddChild(new GridContainer
+            {
+                Columns = 3,
+                HSeparationOverride = 4,
+                Children =
+                {
+                    // Name
+                    (_fullNameLabel = new Label
+                    {
+                        Text = loc.GetString("Full name:")
+                    }),
+                    (_fullNameLineEdit = new LineEdit
+                    {
+                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    }),
+                    (_fullNameSaveButton = new Button
+                    {
+                        Text = loc.GetString("Save"),
+                        Disabled = true
+                    }),
+
+                    // Title
+                    (_jobTitleLabel = new Label
+                    {
+                        Text = loc.GetString("Job title:")
+                    }),
+                    (_jobTitleLineEdit = new LineEdit
+                    {
+                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                    }),
+                    (_jobTitleSaveButton = new Button
+                    {
+                        Text = loc.GetString("Save"),
+                        Disabled = true
+                    }),
+                },
+            });
+
+            _fullNameLineEdit.OnTextEntered += _ => SubmitData();
+            _fullNameLineEdit.OnTextChanged += _ =>
+            {
+                _fullNameSaveButton.Disabled = _fullNameSaveButton.Text == _lastFullName;
+            };
+            _fullNameSaveButton.OnPressed += _ => SubmitData();
+
+            _jobTitleLineEdit.OnTextEntered += _ => SubmitData();
+            _jobTitleLineEdit.OnTextChanged += _ =>
+            {
+                _jobTitleSaveButton.Disabled = _jobTitleLineEdit.Text == _lastJobTitle;
+            };
+            _jobTitleSaveButton.OnPressed += _ => SubmitData();
+
+            // Separator
+            vBox.AddChild(new Control {CustomMinimumSize = (0, 8)});
 
             {
-                var hBox = new HBoxContainer();
-                vBox.AddChild(hBox);
-                hBox.AddChild(_fullNameLabel = new Label()
+                var grid = new GridContainer
                 {
-                    Text = localizationManager.GetString("Full name:")
-                });
-
-                _fullNameLineEdit = new LineEdit()
-                {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    Columns = 4,
+                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter
                 };
-                hBox.AddChild(_fullNameLineEdit);
-            }
-
-            {
-                var hBox = new HBoxContainer();
-                vBox.AddChild(hBox);
-                hBox.AddChild(_jobTitleLabel = new Label()
-                {
-                    Text = localizationManager.GetString("Job title:")
-                });
-
-                _jobTitleLineEdit = new LineEdit()
-                {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
-                };
-                hBox.AddChild(_jobTitleLineEdit);
-            }
-
-            {
-                var hBox = new HBoxContainer();
-                vBox.AddChild(hBox);
+                vBox.AddChild(grid);
 
                 foreach (var accessName in SharedAccess.AllAccess)
                 {
-                    var newButton = new Button()
+                    var newButton = new Button
                     {
                         Text = accessName,
                         ToggleMode = true,
                     };
-                    hBox.AddChild(newButton);
+                    grid.AddChild(newButton);
                     _accessButtons.Add(accessName, newButton);
                 }
-            }
-
-            {
-                var hBox = new HBoxContainer();
-                vBox.AddChild(hBox);
-
-                _submitButton = new Button()
-                {
-                    Text = localizationManager.GetString("Submit")
-                };
-                _submitButton.OnPressed += _ => owner.SubmitData(
-                    _fullNameLineEdit.Text,
-                    _jobTitleLineEdit.Text,
-                    // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
-                    _accessButtons.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
-                hBox.AddChild(_submitButton);
             }
 
             Contents.AddChild(vBox);
@@ -111,22 +146,40 @@ namespace Content.Client.GameObjects.Components.Access
         public void UpdateState(IdCardConsoleBoundUserInterfaceState state)
         {
             _privilegedIdButton.Text = state.IsPrivilegedIdPresent
-                ? _localizationManager.GetString("Remove privileged ID card")
-                : _localizationManager.GetString("Insert privileged ID card");
+                ? _loc.GetString("Eject")
+                : _loc.GetString("Insert");
+
+            _privilegedIdLabel.Text = state.PrivilegedIdName;
 
             _targetIdButton.Text = state.IsTargetIdPresent
-                ? _localizationManager.GetString("Remove target ID card")
-                : _localizationManager.GetString("Insert target ID card");
+                ? _loc.GetString("Eject")
+                : _loc.GetString("Insert");
 
-            var interfaceEnabled = state.IsPrivilegedIdPresent && state.IsPrivilegedIdAuthorized && state.IsTargetIdPresent;
+            _targetIdLabel.Text = state.TargetIdName;
+
+            var interfaceEnabled =
+                state.IsPrivilegedIdPresent && state.IsPrivilegedIdAuthorized && state.IsTargetIdPresent;
+
+            var fullNameDirty = _lastFullName != null && _fullNameLineEdit.Text != state.TargetIdFullName;
+            var jobTitleDirty = _lastJobTitle != null && _jobTitleLineEdit.Text != state.TargetIdJobTitle;
 
             _fullNameLabel.Modulate = interfaceEnabled ? Color.White : Color.Gray;
             _fullNameLineEdit.Editable = interfaceEnabled;
-            _fullNameLineEdit.Text = state.TargetIdFullName;
+            if (!fullNameDirty)
+            {
+                _fullNameLineEdit.Text = state.TargetIdFullName;
+            }
+
+            _fullNameSaveButton.Disabled = !interfaceEnabled || !fullNameDirty;
 
             _jobTitleLabel.Modulate = interfaceEnabled ? Color.White : Color.Gray;
             _jobTitleLineEdit.Editable = interfaceEnabled;
-            _jobTitleLineEdit.Text = state.TargetIdJobTitle;
+            if (!jobTitleDirty)
+            {
+                _jobTitleLineEdit.Text = state.TargetIdJobTitle;
+            }
+
+            _jobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;
 
             foreach (var (accessName, button) in _accessButtons)
             {
@@ -137,7 +190,17 @@ namespace Content.Client.GameObjects.Components.Access
                 }
             }
 
-            _submitButton.Disabled = !interfaceEnabled;
+            _lastFullName = state.TargetIdFullName;
+            _lastJobTitle = state.TargetIdJobTitle;
+        }
+
+        private void SubmitData()
+        {
+            _owner.SubmitData(
+                _fullNameLineEdit.Text,
+                _jobTitleLineEdit.Text,
+                // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
+                _accessButtons.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
         }
     }
 }
