@@ -19,6 +19,10 @@ namespace Content.Client.UserInterface
         public const string StyleClassLabelBig = "LabelBig";
         public const string StyleClassButtonBig = "ButtonBig";
         public static readonly Color NanoGold = Color.FromHex("#A88B5E");
+        public static readonly Color ButtonColorDefault = Color.FromHex("#464966");
+        public static readonly Color ButtonColorHovered = Color.FromHex("#575b7f");
+        public static readonly Color ButtonColorPressed = Color.FromHex("#3e6c45");
+        public static readonly Color ButtonColorDisabled = Color.FromHex("#30313c");
 
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
@@ -57,7 +61,7 @@ namespace Content.Client.UserInterface
             var buttonNormal = new StyleBoxTexture
             {
                 Texture = buttonTex,
-                Modulate = Color.FromHex("#464966")
+                Modulate = ButtonColorDefault
             };
             buttonNormal.SetPatchMargin(StyleBox.Margin.All, 10);
             buttonNormal.SetPadding(StyleBox.Margin.All, 1);
@@ -66,17 +70,17 @@ namespace Content.Client.UserInterface
 
             var buttonHover = new StyleBoxTexture(buttonNormal)
             {
-                Modulate = Color.FromHex("#575b7f")
+                Modulate = ButtonColorHovered
             };
 
             var buttonPressed = new StyleBoxTexture(buttonNormal)
             {
-                Modulate = Color.FromHex("#3e6c45")
+                Modulate = ButtonColorPressed
             };
 
             var buttonDisabled = new StyleBoxTexture(buttonNormal)
             {
-                Modulate = Color.FromHex("#30313c")
+                Modulate = ButtonColorDisabled
             };
 
             var lineEditTex = resCache.GetTexture("/Nano/lineedit.png");
@@ -535,21 +539,21 @@ namespace Content.Client.UserInterface
                     new SelectorElement(typeof(TextureButton), new[] {TargetingDoll.StyleClassTargetDollZone}, null,
                         new[] {TextureButton.StylePseudoClassNormal}), new[]
                     {
-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#F00")),
+                        new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDefault),
                     }),
 
                 new StyleRule(
                     new SelectorElement(typeof(TextureButton), new[] {TargetingDoll.StyleClassTargetDollZone}, null,
                         new[] {TextureButton.StylePseudoClassHover}), new[]
                     {
-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#0F0")),
+                        new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorHovered),
                     }),
 
                 new StyleRule(
                     new SelectorElement(typeof(TextureButton), new[] {TargetingDoll.StyleClassTargetDollZone}, null,
                         new[] {TextureButton.StylePseudoClassPressed}), new[]
                     {
-                        new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#00F")),
+                        new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorPressed),
                     }),
 
                 // NanoHeading
