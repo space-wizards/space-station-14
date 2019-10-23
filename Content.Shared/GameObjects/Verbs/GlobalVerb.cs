@@ -16,17 +16,13 @@ namespace Content.Shared.GameObjects
     ///     To add a global verb to all entities,
     ///     define it and mark it with <see cref="GlobalVerbAttribute"/>
     /// </remarks>
-    [UsedImplicitly]
     public abstract class GlobalVerb
     {
         /// <summary>
-        ///     If true, this verb requires the user to be inside within
-        ///     <see cref="InteractionRange"/> meters from the entity on which this verb resides.
+        ///     If true, this verb requires the user to be within
+        ///     <see cref="VerbUtility.InteractionRange"/> meters from the entity on which this verb resides.
         /// </summary>
         public virtual bool RequireInteractionRange => true;
-
-        public const float InteractionRange = 2;
-        public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         /// <summary>
         ///     Gets the text string that will be shown to <paramref name="user"/> in the right click menu.
@@ -54,6 +50,8 @@ namespace Content.Shared.GameObjects
     /// This attribute should be used on <see cref="GlobalVerb"/>. These are verbs which are on visible for all entities,
     /// regardless of the components they contain.
     /// </summary>
+    [MeansImplicitUse]
+    [BaseTypeRequired(typeof(GlobalVerb))]
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class GlobalVerbAttribute : Attribute
     {

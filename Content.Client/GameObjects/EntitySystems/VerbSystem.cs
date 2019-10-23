@@ -168,7 +168,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 {
                     var distanceSquared = (user.Transform.WorldPosition - entity.Transform.WorldPosition)
                         .LengthSquared;
-                    if (distanceSquared > Verb.InteractionRangeSquared)
+                    if (distanceSquared > VerbUtility.InteractionRangeSquared)
                     {
                         continue;
                     }
@@ -205,7 +205,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 {
                     var distanceSquared = (user.Transform.WorldPosition - entity.Transform.WorldPosition)
                         .LengthSquared;
-                    if (distanceSquared > Verb.InteractionRangeSquared)
+                    if (distanceSquared > VerbUtility.InteractionRangeSquared)
                     {
                         continue;
                     }

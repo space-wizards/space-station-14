@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         {
                             var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
                                 .LengthSquared;
-                            if (distanceSquared > Verb.InteractionRangeSquared)
+                            if (distanceSquared > VerbUtility.InteractionRangeSquared)
                             {
                                 continue;
                             }
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         {
                             var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
                                 .LengthSquared;
-                            if (distanceSquared > GlobalVerb.InteractionRangeSquared)
+                            if (distanceSquared > VerbUtility.InteractionRangeSquared)
                             {
                                 continue;
                             }
@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         {
                             var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
                                 .LengthSquared;
-                            if (distanceSquared > Verb.InteractionRangeSquared)
+                            if (distanceSquared > VerbUtility.InteractionRangeSquared)
                             {
                                 break;
                             }

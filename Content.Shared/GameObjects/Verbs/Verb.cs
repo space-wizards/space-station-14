@@ -23,9 +23,6 @@ namespace Content.Shared.GameObjects
         /// </summary>
         public virtual bool RequireInteractionRange => true;
 
-        public const float InteractionRange = 2;
-        public const float InteractionRangeSquared = InteractionRange * InteractionRange;
-
         /// <summary>
         ///     Gets the text string that will be shown to <paramref name="user"/> in the right click menu.
         /// </summary>

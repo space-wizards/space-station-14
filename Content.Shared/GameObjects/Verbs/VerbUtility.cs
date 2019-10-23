@@ -11,6 +11,9 @@ namespace Content.Shared.GameObjects
 {
     public static class VerbUtility
     {
+        public const float InteractionRange = 2;
+        public const float InteractionRangeSquared = InteractionRange * InteractionRange;
+
         // TODO: This is a quick hack. Verb objects should absolutely be cached properly.
         // This works for now though.
         public static IEnumerable<(IComponent, Verb)> GetVerbs(IEntity entity)
