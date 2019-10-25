@@ -9,6 +9,7 @@ using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
@@ -125,6 +126,8 @@ namespace Content.Client
 
             factory.Register<SharedVendingMachineComponent>();
             factory.Register<SharedWiresComponent>();
+
+            factory.Register<SharedCargoConsoleComponent>();
 
             prototypes.RegisterIgnore("material");
 

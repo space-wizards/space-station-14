@@ -1,4 +1,5 @@
-﻿using Content.Server.Chat;
+﻿using Content.Server.Cargo;
+using Content.Server.Chat;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -48,6 +49,8 @@ namespace Content.Server
             IoCManager.Register<IGameTicker, GameTicker>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
+            IoCManager.Register<IGalacticBankManager, GalacticBankManager>();
+            IoCManager.Register<ICargoOrderDataManager, CargoOrderDataManager>();
             if (TestingCallbacks != null)
             {
                 var cast = (ServerModuleTestingCallbacks) TestingCallbacks;
@@ -80,6 +83,14 @@ namespace Content.Server
             base.Update(level, frameEventArgs);
 
             _gameTicker.Update(frameEventArgs);
+            switch (level)
+            {
+                case ModUpdateLevel.PreEngine:
+                {
+                    IoCManager.Resolve<IGalacticBankManager>().Update(frameEventArgs);
+                    break;
+                }
+            }
         }
     }
 }

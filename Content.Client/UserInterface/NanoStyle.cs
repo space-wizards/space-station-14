@@ -14,6 +14,7 @@ namespace Content.Client.UserInterface
     {
         public const string StyleClassLabelHeading = "LabelHeading";
         public const string StyleClassLabelSubText = "LabelSubText";
+        public const string StyleClassLabelKeyText = "LabelKeyText";
         public const string StyleClassButtonBig = "ButtonBig";
         private static readonly Color NanoGold = Color.FromHex("#A88B5E");
 
@@ -29,6 +30,7 @@ namespace Content.Client.UserInterface
             var resCache = IoCManager.Resolve<IResourceCache>();
             var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
             var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSansBold12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 12);
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
             var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
             var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
@@ -166,6 +168,9 @@ namespace Content.Client.UserInterface
             var itemListItemBackground = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)};
             itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
+            var itemListItemBackgroundTransparent = new StyleBoxFlat { BackgroundColor = Color.Transparent };
+            itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
             Stylesheet = new Stylesheet(new[]
             {
@@ -397,6 +402,18 @@ namespace Content.Client.UserInterface
                         itemListBackgroundSelected)
                 }),
 
+                new StyleRule(new SelectorElement(typeof(ItemList), new []{"transparentItemList"}, null, null), new[]
+                {
+                    new StyleProperty(ItemList.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = Color.Transparent}),
+                    new StyleProperty(ItemList.StylePropertyItemBackground,
+                        itemListItemBackgroundTransparent),
+                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
+                        itemListItemBackgroundDisabled),
+                    new StyleProperty(ItemList.StylePropertySelectedItemBackground,
+                        itemListBackgroundSelected)
+                }),
+
                 // Tree
                 new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new[]
                 {
@@ -426,14 +443,21 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty(Label.StylePropertyFont, notoSansBold16),
                     new StyleProperty(Label.StylePropertyFontColor, NanoGold),
-                } ),
+                }),
 
                 // Small Label
                 new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassLabelSubText}, null, null), new []
                 {
                     new StyleProperty(Label.StylePropertyFont, notoSans10),
                     new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
-                } ),
+                }),
+
+                // Label Key
+                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassLabelKeyText}, null, null), new []
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSansBold12),
+                    new StyleProperty(Label.StylePropertyFontColor, NanoGold)
+                }),
 
                 // Big Button
                 new StyleRule(new SelectorElement(typeof(Button), new []{StyleClassButtonBig}, null, null), new []
