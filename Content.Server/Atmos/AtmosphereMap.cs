@@ -144,7 +144,7 @@ namespace Content.Server.Atmos
 
         private void Check(ICollection<MapIndices> inner, ISet<MapIndices> edges, MapIndices pos, Direction dir)
         {
-            pos += (MapIndices) CardinalToIntVec(dir);
+            pos += (MapIndices) dir.CardinalToIntVec();
             if (IsObstructed(pos))
                 return;
 
@@ -152,23 +152,6 @@ namespace Content.Server.Atmos
                 return;
 
             edges.Add(pos);
-        }
-
-        private static Vector2i CardinalToIntVec(Direction dir)
-        {
-            switch (dir)
-            {
-                case Direction.North:
-                    return new Vector2i(0, 1);
-                case Direction.East:
-                    return new Vector2i(1, 0);
-                case Direction.South:
-                    return new Vector2i(0, -1);
-                case Direction.West:
-                    return new Vector2i(-1, 0);
-                default:
-                    throw new ArgumentException($"Direction dir {dir} is not a cardinal direction", nameof(dir));
-            }
         }
 
         private bool IsObstructed(MapIndices pos) => GetObstructingComponent(pos) != null;
@@ -215,7 +198,7 @@ namespace Content.Server.Atmos
             _atmospheres.Remove(pos);
 
             var adjacent = GetAdjacentAtmospheres(pos);
-            var adjacentPositions = adjacent.Select(p => Offset(pos, p.Key)).ToList();
+            var adjacentPositions = adjacent.Select(p => pos.Offset(p.Key)).ToList();
             var adjacentAtmospheres = new HashSet<Atmosphere>(adjacent.Values);
 
             foreach (var atmos in adjacentAtmospheres)
@@ -226,7 +209,7 @@ namespace Content.Server.Atmos
 
                 foreach (var pair in adjacent.Where(p => p.Value == atmos))
                 {
-                    var edgePos = Offset(pos, pair.Key);
+                    var edgePos = pos.Offset(pair.Key);
                     if (sides.ContainsKey(edgePos))
                         continue;
 
@@ -326,7 +309,7 @@ namespace Content.Server.Atmos
             var sides = new Dictionary<Direction, Atmosphere>();
             foreach (var dir in Cardinal())
             {
-                var side = Offset(pos, dir);
+                var side = pos.Offset(dir);
                 if (IsObstructed(side))
                     continue;
 
@@ -335,8 +318,6 @@ namespace Content.Server.Atmos
 
             return sides;
         }
-
-        private static MapIndices Offset(MapIndices pos, Direction dir) => pos + (MapIndices) CardinalToIntVec(dir);
 
         private IEnumerable<MapIndices> FindRoomContents(Atmosphere atmos)
         {
