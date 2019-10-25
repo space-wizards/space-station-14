@@ -164,76 +164,22 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get verbs, component dependent.
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
-                if (verb.RequireInteractionRange)
-                {
-                    var distanceSquared = (user.Transform.WorldPosition - entity.Transform.WorldPosition)
-                        .LengthSquared;
-                    if (distanceSquared > VerbUtility.InteractionRangeSquared)
-                    {
-                        continue;
-                    }
-                }
+                if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                    continue;
 
                 var disabled = verb.GetVisibility(user, component) != VerbVisibility.Visible;
-                var button = new Button
-                {
-                    Text = verb.GetText(user, component),
-                    Disabled = disabled
-                };
-                if (!disabled)
-                {
-                    button.OnPressed += _ =>
-                    {
-                        _closeContextMenu();
-                        try
-                        {
-                            verb.Activate(user, component);
-                        }
-                        catch (Exception e)
-                        {
-                            Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verb, entity, e);
-                        }
-                    };
-                }
-
-                buttons.Add(button);
+                buttons.Add(CreateVerbButton(verb.GetText(user, component), disabled, verb.ToString(),
+                    entity.ToString(), () => verb.Activate(user, component)));
             }
             //Get global verbs. Visible for all entities regardless of their components.
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
-                if (globalVerb.RequireInteractionRange)
-                {
-                    var distanceSquared = (user.Transform.WorldPosition - entity.Transform.WorldPosition)
-                        .LengthSquared;
-                    if (distanceSquared > VerbUtility.InteractionRangeSquared)
-                    {
-                        continue;
-                    }
-                }
+                if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                    continue;
 
                 var disabled = globalVerb.GetVisibility(user, entity) != VerbVisibility.Visible;
-                var button = new Button
-                {
-                    Text = globalVerb.GetText(user, entity),
-                    Disabled = disabled
-                };
-                if (!disabled)
-                {
-                    button.OnPressed += _ =>
-                    {
-                        _closeContextMenu();
-                        try
-                        {
-                            globalVerb.Activate(user, entity);
-                        }
-                        catch (Exception e)
-                        {
-                            Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", globalVerb, entity, e);
-                        }
-                    };
-                }
-
-                buttons.Add(button);
+                buttons.Add(CreateVerbButton(globalVerb.GetText(user, entity), disabled, globalVerb.ToString(),
+                    entity.ToString(), () => globalVerb.Activate(user, entity)));
             }
 
             if (buttons.Count > 0)
@@ -261,6 +207,31 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 _currentPopup.Position = _currentPopup.Position - new Vector2(0, vBox.CombinedMinimumSize.Y);
             }
+        }
+
+        private Button CreateVerbButton(string text, bool disabled, string verbName, string ownerName, Action action)
+        {
+            var button = new Button
+            {
+                Text = text,
+                Disabled = disabled
+            };
+            if (!disabled)
+            {
+                button.OnPressed += _ =>
+                {
+                    _closeContextMenu();
+                    try
+                    {
+                        action.Invoke();
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verbName, ownerName, e);
+                    }
+                };
+            }
+            return button;
         }
 
         private void _closeContextMenu()

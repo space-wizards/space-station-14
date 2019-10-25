@@ -52,5 +52,28 @@ namespace Content.Shared.GameObjects
                 }
             }
         }
+
+        public static bool InVerbUseRange(IEntity user, IEntity target)
+        {
+            var distanceSquared = (user.Transform.WorldPosition - target.Transform.WorldPosition)
+                .LengthSquared;
+            if (distanceSquared > InteractionRangeSquared)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool IsVerbInvisible(Verb verb, IEntity user, IComponent target, out VerbVisibility visibility)
+        {
+            visibility = verb.GetVisibility(user, target);
+            return visibility == VerbVisibility.Invisible;
+        }
+
+        public static bool IsVerbInvisible(GlobalVerb verb, IEntity user, IEntity target, out VerbVisibility visibility)
+        {
+            visibility = verb.GetVisibility(user, target);
+            return visibility == VerbVisibility.Invisible;
+        }
     }
 }

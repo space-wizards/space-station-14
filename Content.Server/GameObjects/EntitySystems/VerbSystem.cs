@@ -54,18 +54,9 @@ namespace Content.Server.GameObjects.EntitySystems
                     //Get verbs, component dependent.
                     foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
                     {
-                        if (verb.RequireInteractionRange)
-                        {
-                            var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
-                                .LengthSquared;
-                            if (distanceSquared > VerbUtility.InteractionRangeSquared)
-                            {
-                                continue;
-                            }
-                        }
-                        
-                        var vis = verb.GetVisibility(userEntity, component);
-                        if(vis == VerbVisibility.Invisible)
+                        if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
+                            continue;
+                        if(VerbUtility.IsVerbInvisible(verb, userEntity, component, out var vis))
                             continue;
 
                         // TODO: These keys being giant strings is inefficient as hell.
@@ -76,18 +67,9 @@ namespace Content.Server.GameObjects.EntitySystems
                     //Get global verbs. Visible for all entities regardless of their components.
                     foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
                     {
-                        if (globalVerb.RequireInteractionRange)
-                        {
-                            var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
-                                .LengthSquared;
-                            if (distanceSquared > VerbUtility.InteractionRangeSquared)
-                            {
-                                continue;
-                            }
-                        }
-
-                        var vis = globalVerb.GetVisibility(userEntity, entity);
-                        if (vis == VerbVisibility.Invisible)
+                        if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
+                            continue;
+                        if(VerbUtility.IsVerbInvisible(globalVerb, userEntity, entity, out var vis))
                             continue;
 
                         data.Add(new VerbsResponseMessage.VerbData(globalVerb.GetText(userEntity, entity),
