@@ -5,16 +5,16 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/hand_tele.rsi
+    sprite: Objects/Misc/hand_tele.rsi
     state: ready
   - type: Icon
-    sprite: Objects/hand_tele.rsi
+    sprite: Objects/Misc/hand_tele.rsi
     state: ready
   - type: ItemTeleporter
     teleporter_type: Random
   - type: Item
     Size: 12
-    sprite: Objects/hand_tele.rsi
+    sprite: Objects/Misc/hand_tele.rsi
   - type: Sound
   - type: Appearance
     visuals:

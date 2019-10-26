@@ -50,4 +50,5 @@
   - endround
   - restartround
   - respawn
+  - rejuvenate
   CanViewVar: true

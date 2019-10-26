@@ -1,14 +1,14 @@
 - type: latheRecipe
   id: MetalStack
-  icon: Objects/sheet_metal.png
+  icon: Objects/Materials/sheet_metal.png
   result: SteelSheet1
   completetime: 500
   materials:
     steel: 3750
-    
+
 - type: latheRecipe
   id: GlassStack
-  icon: Objects/sheet_glass.png
+  icon: Objects/Materials/sheet_glass.png
   result: GlassSheet1
   completetime: 500
   materials:

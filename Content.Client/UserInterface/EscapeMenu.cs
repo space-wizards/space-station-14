@@ -54,7 +54,7 @@ namespace Content.Client.UserInterface
 
             Title = "Menu";
 
-            var vBox = new VBoxContainer {SeparationOverride = 2};
+            var vBox = new VBoxContainer {SeparationOverride = 6};
             Contents.AddChild(vBox);
 
             SpawnEntitiesButton = new Button {Text = "Spawn Entities"};
@@ -66,7 +66,7 @@ namespace Content.Client.UserInterface
             vBox.AddChild(SpawnTilesButton);
 
             // Add a spacer.
-            vBox.AddChild(new Control { CustomMinimumSize = (0, 5)});
+            //vBox.AddChild(new Control { CustomMinimumSize = (0, 5)});
 
             OptionsButton = new Button {Text = "Options"};
             OptionsButton.OnPressed += OnOptionsButtonClicked;

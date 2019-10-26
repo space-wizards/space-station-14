@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
@@ -88,7 +87,6 @@ namespace Content.Server.GameObjects.Components
         private readonly Dictionary<object, string> _statuses = new Dictionary<object, string>();
 
         /// <summary>
-        /// As seen on /vg/station.
         /// <see cref="AssignColor"/> and <see cref="WiresBuilder.CreateWire"/>.
         /// </summary>
         private readonly List<Color> _availableColors = new List<Color>()
@@ -105,7 +103,6 @@ namespace Content.Server.GameObjects.Components
             Color.Purple,
             Color.Pink,
             Color.Fuchsia,
-            Color.Aqua,
         };
 
         public override void Initialize()
@@ -286,14 +283,25 @@ namespace Content.Server.GameObjects.Components
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<ScrewdriverComponent>()) return false;
+            if (!eventArgs.AttackWith.HasComponent<ScrewdriverComponent>())
+            {
+                return false;
+            }
+
             IsPanelOpen = !IsPanelOpen;
+            IoCManager.Resolve<IEntitySystemManager>()
+                .GetEntitySystem<AudioSystem>()
+                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg");
             return true;
         }
 
         void IExamine.Examine(FormattedMessage message)
         {
-            message.AddText($"The maintenance panel is {(IsPanelOpen ? "open" : "closed")}.");
+            var loc = IoCManager.Resolve<ILocalizationManager>();
+
+            message.AddMarkup(loc.GetString(IsPanelOpen
+                ? "The [color=lightgray]maintenance panel[/color] is [color=darkgreen]open[/color]."
+                : "The [color=lightgray]maintenance panel[/color] is [color=darkred]closed[/color]."));
         }
 
         public void SetStatus(object statusIdentifier, string newMessage)

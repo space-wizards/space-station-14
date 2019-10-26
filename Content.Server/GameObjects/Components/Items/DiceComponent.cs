@@ -1,4 +1,3 @@
-using System;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
@@ -7,7 +6,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -81,17 +80,11 @@ namespace Content.Server.GameObjects.Components.Items
             Roll();
         }
 
-        public void Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message)
         {
-            message.AddText("A dice with ");
-            message.PushColor(new Color(1F, 0.75F, 0.75F));
-            message.AddText(_sides.ToString());
-            message.Pop();
-            message.AddText(" sides.\nIt has landed on a ");
-            message.PushColor(new Color(1F, 1F, 1F));
-            message.AddText(_currentSide.ToString());
-            message.Pop();
-            message.AddText(".");
+            var loc = IoCManager.Resolve<ILocalizationManager>();
+            message.AddMarkup(loc.GetString("A dice with [color=lightgray]{0}[/color] sides.\n" +
+                                            "It has landed on a [color=white]{1}[/color].", _sides, _currentSide));
         }
     }
 }

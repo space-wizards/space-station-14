@@ -2,6 +2,8 @@
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -148,21 +150,18 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
 
         void IExamine.Examine(FormattedMessage message)
         {
+            var loc = IoCManager.Resolve<ILocalizationManager>();
             if (Activated)
             {
-                message.PushColor(Color.Orange);
-                message.AddText("Lit\n");
-                message.Pop();
+                message.AddMarkup(loc.GetString("[color=orange]Lit[/color]\n"));
             }
             else
             {
-                message.AddText("Not lit\n");
+                message.AddText(loc.GetString("Not lit\n"));
             }
-            message.AddText("Fuel: ");
-            message.PushColor(Fuel < FuelCapacity / 4f ? Color.DarkOrange : Color.Orange);
-            message.AddText($"{Math.Round(Fuel)}/{FuelCapacity}");
-            message.AddText(".");
-            message.Pop();
+
+            message.AddMarkup(loc.GetString("Fuel: [color={0}]{1}/{2}[/color].",
+                Fuel < FuelCapacity / 4f ? "darkorange" : "orange", Math.Round(Fuel), FuelCapacity));
         }
     }
 }

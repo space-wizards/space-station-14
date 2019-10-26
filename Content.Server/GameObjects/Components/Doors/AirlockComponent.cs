@@ -4,6 +4,9 @@ using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
+using Content.Shared.GameObjects.Components.Doors;
+using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -45,13 +48,14 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 _powerWiresPulsed = value;
                 UpdateWiresStatus();
+                UpdatePowerCutStatus();
             }
         }
 
         private void UpdateWiresStatus()
         {
             var powerMessage = "A yellow light is on.";
-            if (_powerWiresPulsed)
+            if (PowerWiresPulsed)
             {
                 powerMessage = "A yellow light is blinking rapidly.";
             } else if (_wires.IsWireCut(Wires.MainPower) &&
@@ -62,13 +66,20 @@ namespace Content.Server.GameObjects.Components.Doors
             _wires.SetStatus(WiresStatus.PowerIndicator, _localizationMgr.GetString(powerMessage));
         }
 
+        private void UpdatePowerCutStatus()
+        {
+            _powerDevice.IsPowerCut = PowerWiresPulsed ||
+                                      _wires.IsWireCut(Wires.MainPower) ||
+                                      _wires.IsWireCut(Wires.BackupPower);
+        }
+
         protected override DoorState State
         {
             set
             {
                 base.State = value;
                 // Only show the maintenance panel if the airlock is closed
-                _wires.IsPanelVisible = value == DoorState.Closed;
+                _wires.IsPanelVisible = value != DoorState.Open;
             }
         }
 
@@ -77,6 +88,16 @@ namespace Content.Server.GameObjects.Components.Doors
             base.Initialize();
             _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
             _wires = Owner.GetComponent<WiresComponent>();
+
+            _powerDevice.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;
+        }
+
+        private void PowerDeviceOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DoorVisuals.Powered, e.Powered);
+            }
         }
 
         protected override void ActivateImpl(ActivateEventArgs args)
@@ -150,9 +171,15 @@ namespace Content.Server.GameObjects.Components.Doors
             }
 
             UpdateWiresStatus();
+            UpdatePowerCutStatus();
         }
 
         public override bool CanOpen()
+        {
+            return IsPowered();
+        }
+
+        public override bool CanClose()
         {
             return IsPowered();
         }
@@ -168,22 +195,20 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool IsPowered()
         {
-            if (PowerWiresPulsed)
-            {
-                return false;
-            }
-            if (_wires.IsWireCut(Wires.MainPower) &&
-                _wires.IsWireCut(Wires.BackupPower))
-            {
-                return false;
-            }
             return _powerDevice.Powered;
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.HasComponent<CrowbarComponent>() && !IsPowered())
+            if (eventArgs.AttackWith.HasComponent<CrowbarComponent>())
             {
+                if (IsPowered())
+                {
+                    var notify = IoCManager.Resolve<IServerNotifyManager>();
+                    notify.PopupMessage(Owner, eventArgs.User, "The powered motors block your efforts!");
+                    return true;
+                }
+
                 if (State == DoorState.Closed)
                 {
                     Open();

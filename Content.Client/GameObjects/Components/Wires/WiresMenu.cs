@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.Components.Wires
     public class WiresMenu : SS14Window
     {
         private readonly ILocalizationManager _localizationManager;
-        protected override Vector2? CustomSize => (300, 450);
+        protected override Vector2? CustomSize => (300, 150);
         public WiresBoundUserInterface Owner { get; set; }
 
         private readonly VBoxContainer _wiresContainer;

@@ -6,22 +6,22 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/laser_retro.rsi
+    sprite: Objects/Guns/Laser/laser_retro.rsi
     state: laser_retro_100
   - type: Icon
-    sprite: Objects/laser_retro.rsi
+    sprite: Objects/Guns/Laser/laser_retro.rsi
     state: laser_retro_100
   - type: RangedWeapon
   - type: HitscanWeapon
     damage: 30
-    fireSprite: "Objects/laser.png"
+    fireSprite: "Objects/Projectiles/laser.png"
     fireSound: "/Audio/Guns/Gunshots/laser.ogg"
     lowerDischargeLimit: 10
   - type: HitscanWeaponCapacitor
     capacity: 1200
   - type: Item
     Size: 24
-    sprite: Objects/laser_retro.rsi
+    sprite: Objects/Guns/Laser/laser_retro.rsi
     prefix: laser_retro_100
   - type: Appearance
     visuals:
@@ -37,21 +37,21 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/laser_cannon.rsi
+    sprite: Objects/Guns/Laser/laser_cannon.rsi
     state: laser_cannon_100
   - type: Icon
-    sprite: Objects/laser_cannon.rsi
+    sprite: Objects/Guns/Laser/laser_cannon.rsi
     state: laser_cannon_100
   - type: HitscanWeapon
     damage: 90
-    fireSprite: "Objects/heavylaser.png"
+    fireSprite: "Objects/Projectiles/heavylaser.png"
     fireSound: "/Audio/Guns/Gunshots/laser_cannon.ogg"
     lowerDischargeLimit: 10
   - type: HitscanWeaponCapacitor
     capacity: 2400
   - type: Item
     Size: 32
-    sprite: Objects/laser_cannon.rsi
+    sprite: Objects/Guns/Laser/laser_cannon.rsi
     prefix: laser_cannon_100
   - type: Appearance
     visuals:

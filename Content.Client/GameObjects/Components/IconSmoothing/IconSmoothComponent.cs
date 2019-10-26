@@ -200,10 +200,10 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         /// <inheritdoc />
         protected override void Shutdown()
         {
+            base.Shutdown();
+
             SnapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
             Owner.EntityManager.RaiseEvent(Owner, new IconSmoothDirtyEvent(_lastPosition, SnapGrid.Offset, Mode));
-
-            base.Shutdown();
         }
 
         private void SnapGridOnPositionChanged()

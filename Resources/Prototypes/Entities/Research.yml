@@ -21,7 +21,11 @@
   components:
   - type: Sprite
     sprite: Buildings/research.rsi
-    state: tdoppler
+    layers:
+    - state: tdoppler-off
+    - state: tdoppler
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Icon
     sprite: Buildings/research.rsi
     state: tdoppler
@@ -36,3 +40,7 @@
     interfaces:
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: PowerDeviceVisualizer2D
+  - type: PowerDevice

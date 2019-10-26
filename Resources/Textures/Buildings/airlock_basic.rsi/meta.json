@@ -71,7 +71,7 @@
             ]
         },
         {
-            "name": "o_closing",
+            "name": "panel_closing",
             "directions": 1,
             "delays": [
                 [
@@ -87,7 +87,7 @@
             ]
         },
         {
-            "name": "o_opening",
+            "name": "panel_opening",
             "directions": 1,
             "delays": [
                 [

@@ -82,6 +82,11 @@ namespace Content.Server.GameObjects
             return CurrentDamageState.CanThrow();
         }
 
+        bool IActionBlocker.CanSpeak()
+        {
+            return CurrentDamageState.CanSpeak();
+        }
+
         List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
         {
             var thresholdlist = DamageTemplate.DamageThresholds;

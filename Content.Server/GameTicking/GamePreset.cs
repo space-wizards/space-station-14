@@ -6,5 +6,6 @@ namespace Content.Server.GameTicking
     public abstract class GamePreset
     {
         public abstract void Start();
+        public virtual string Description => "Secret!";
     }
 }

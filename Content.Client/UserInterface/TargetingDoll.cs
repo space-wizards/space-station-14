@@ -1,0 +1,82 @@
+using System;
+using Content.Client.Utility;
+using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.UserInterface.Controls;
+
+namespace Content.Client.UserInterface
+{
+    public sealed class TargetingDoll : VBoxContainer
+    {
+        private TargetingZone _activeZone = TargetingZone.Middle;
+        public const string StyleClassTargetDollZone = "target-doll-zone";
+
+        private const string TextureHigh = "/Textures/UserInterface/target-doll-high.svg.96dpi.png";
+        private const string TextureMiddle = "/Textures/UserInterface/target-doll-middle.svg.96dpi.png";
+        private const string TextureLow = "/Textures/UserInterface/target-doll-low.svg.96dpi.png";
+
+        private readonly TextureButton _buttonHigh;
+        private readonly TextureButton _buttonMiddle;
+        private readonly TextureButton _buttonLow;
+
+        public TargetingZone ActiveZone
+        {
+            get => _activeZone;
+            set
+            {
+                if (_activeZone == value)
+                {
+                    return;
+                }
+
+                _activeZone = value;
+                OnZoneChanged?.Invoke(value);
+
+                UpdateButtons();
+            }
+        }
+
+        public event Action<TargetingZone> OnZoneChanged;
+
+        public TargetingDoll(IResourceCache resourceCache)
+        {
+            _buttonHigh = new TextureButton
+            {
+                TextureNormal = resourceCache.GetTexture(TextureHigh),
+                StyleClasses = {StyleClassTargetDollZone},
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+            };
+
+            _buttonMiddle = new TextureButton
+            {
+                TextureNormal = resourceCache.GetTexture(TextureMiddle),
+                StyleClasses = {StyleClassTargetDollZone},
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+            };
+
+            _buttonLow = new TextureButton
+            {
+                TextureNormal = resourceCache.GetTexture(TextureLow),
+                StyleClasses = {StyleClassTargetDollZone},
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+            };
+
+            _buttonHigh.OnPressed += _ => ActiveZone = TargetingZone.High;
+            _buttonMiddle.OnPressed += _ => ActiveZone = TargetingZone.Middle;
+            _buttonLow.OnPressed += _ => ActiveZone = TargetingZone.Low;
+
+            AddChild(_buttonHigh);
+            AddChild(_buttonMiddle);
+            AddChild(_buttonLow);
+
+            UpdateButtons();
+        }
+
+        private void UpdateButtons()
+        {
+            _buttonHigh.Pressed = _activeZone == TargetingZone.High;
+            _buttonMiddle.Pressed = _activeZone == TargetingZone.Middle;
+            _buttonLow.Pressed = _activeZone == TargetingZone.Low;
+        }
+    }
+}

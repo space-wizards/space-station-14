@@ -13,11 +13,10 @@ namespace Content.Server.GameObjects.Components.Power
     [RegisterComponent]
     internal class WirePlacerComponent : Component, IAfterAttack
     {
-#pragma warning disable 169
+#pragma warning disable 649
         [Dependency] private readonly IServerEntityManager _entityManager;
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-#pragma warning restore 169
+#pragma warning restore 649
 
         /// <inheritdoc />
         public override string Name => "WirePlacer";
@@ -46,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (found)
                 return;
-            
+
             var newWire = _entityManager.SpawnEntityAt("Wire", grid.GridTileToLocal(snapPos));
             if (newWire.TryGetComponent(out SpriteComponent wireSpriteComp)
                 && Owner.TryGetComponent(out SpriteComponent itemSpriteComp))

@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -117,7 +118,10 @@ namespace Content.Server.GameObjects.Components.Stack
 
         void IExamine.Examine(FormattedMessage message)
         {
-            message.AddText($"There are {Count} things in the stack.");
+            var loc = IoCManager.Resolve<ILocalizationManager>();
+            message.AddMarkup(loc.GetPluralString(
+                "There is [color=lightgray]1[/color] thing in the stack",
+                "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
         }
     }
 
