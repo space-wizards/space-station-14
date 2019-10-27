@@ -84,14 +84,14 @@ namespace Content.Client.GameObjects.Components.Instruments
             IoCManager.InjectDependencies(this);
             _renderer = _midiManager.GetNewRenderer();
             _renderer.MidiProgram = _instrumentProgram;
-            _renderer.Position = Owner;
+            _renderer.TrackingEntity = Owner;
             _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); };
         }
 
         protected override void Shutdown()
         {
             base.Shutdown();
-            _midiManager.DisposeRenderer(_renderer);
+            _renderer?.Dispose();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
