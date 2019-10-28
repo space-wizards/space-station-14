@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             Dirty();
         }
 
-        public void TryRemoveStatus(StatusEffect effect)
+        public void RemoveStatus(StatusEffect effect)
         {
             if (!_statusEffects.Remove(effect))
             {

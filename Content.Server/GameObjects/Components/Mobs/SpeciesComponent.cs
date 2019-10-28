@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects
         {
             base.OnRemove();
             Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-            statusEffectsComponent?.TryRemoveStatus(StatusEffect.Health);
+            statusEffectsComponent?.RemoveStatus(StatusEffect.Health);
 
             Owner.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent);
             overlayEffectsComponent?.ChangeOverlay(ScreenEffects.None);
