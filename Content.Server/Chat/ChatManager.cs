@@ -65,6 +65,24 @@ namespace Content.Server.Chat
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
+        public void EntityMe(IEntity source, string action)
+        {
+            if (!ActionBlockerSystem.CanEmote(source))
+            {
+                return;
+            }
+
+            var pos = source.Transform.GridPosition;
+            var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Emotes;
+            msg.Message = action;
+            msg.MessageWrap = $"{source.Name} {{0}}";
+            msg.SenderEntity = source.Uid;
+            _netManager.ServerSendToMany(msg, clients.ToList());
+        }
+
         public void SendOOC(IPlayerSession player, string message)
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
