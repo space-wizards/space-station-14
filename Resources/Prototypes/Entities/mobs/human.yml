@@ -52,6 +52,8 @@
   - type: Species
     Template: Human
     HeatResistance: 323
+  - type: StatusEffectsUI
+  - type: OverlayEffectsUI
   - type: HeatResistance
   - type: Damageable
 
