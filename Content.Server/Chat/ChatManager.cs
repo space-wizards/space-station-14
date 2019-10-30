@@ -67,7 +67,7 @@ namespace Content.Server.Chat
 
         public void EntityMe(IEntity source, string action)
         {
-            if (!ActionBlockerSystem.CanSpeak(source))
+            if (!ActionBlockerSystem.CanEmote(source))
             {
                 return;
             }
