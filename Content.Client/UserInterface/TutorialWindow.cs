@@ -24,6 +24,9 @@ You can talk in OOC by prefixing the message with [ or /ooc.
 If you are not on a QWERTY keyboard, the keys mentioned above are bound to the physical location on your keyboard, not what letter they correspond to.
 For example on AZERTY movement is ZQSD, drop is A, W is activate in hand.
 
+Instead of intents, we have ""combat mode"". Hit 1 (on your number row) to toggle it on or off.
+You can't attack anybody with it off, so no more hitting yourself with your own crowbar. 
+
 If you have any feedback, questions, bug reports, etc..., do not be afraid to tell us!
 You can ask on Discord or heck, just write it in OOC! We'll catch it.";
 

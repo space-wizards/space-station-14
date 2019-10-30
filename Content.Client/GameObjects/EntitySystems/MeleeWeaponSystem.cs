@@ -79,9 +79,17 @@ namespace Content.Client.GameObjects.EntitySystems
             weaponArcAnimation.SetData(weaponArc, msg.Angle);
 
 
-            foreach (var hitEntity in msg.Hits.Select(u => EntityManager.GetEntity(u)))
+            foreach (var uid in msg.Hits)
             {
-                if (!hitEntity.TryGetComponent(out ISpriteComponent sprite)) continue;
+                if (!EntityManager.TryGetEntity(uid, out var hitEntity))
+                {
+                    continue;
+                }
+
+                if (!hitEntity.TryGetComponent(out ISpriteComponent sprite))
+                {
+                    continue;
+                }
 
                 var originalColor = sprite.Color;
                 var newColor = Color.Red * originalColor;

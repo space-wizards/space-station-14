@@ -111,6 +111,11 @@ namespace Content.Server.GameObjects
                 var newState = SharedSpeciesComponent.MobState.Down;
                 appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
             }
+
+            if (entity.TryGetComponent(out CollidableComponent collidable))
+            {
+                collidable.CollisionEnabled = false;
+            }
         }
 
         public void ExitState(IEntity entity)
@@ -119,6 +124,11 @@ namespace Content.Server.GameObjects
             {
                 var newState = SharedSpeciesComponent.MobState.Stand;
                 appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
+            }
+
+            if (entity.TryGetComponent(out CollidableComponent collidable))
+            {
+                collidable.CollisionEnabled = true;
             }
         }
 

@@ -64,6 +64,8 @@ namespace Content.Server.GameObjects.Components.Access
                     TryWriteToTargetId(msg.FullName, msg.JobTitle, msg.AccessList);
                     break;
             }
+
+            UpdateUserInterface();
         }
 
         /// <summary>
@@ -162,7 +164,9 @@ namespace Content.Server.GameObjects.Components.Access
                     false,
                     null,
                     null,
-                    null);
+                    null,
+                    _privilegedIdContainer.ContainedEntity?.Name ?? "",
+                    _targetIdContainer.ContainedEntity?.Name ?? "");
             }
             else
             {
@@ -174,7 +178,9 @@ namespace Content.Server.GameObjects.Components.Access
                     true,
                     targetIdComponent.FullName,
                     targetIdComponent.JobTitle,
-                    targetAccessComponent.Tags);
+                    targetAccessComponent.Tags,
+                    _privilegedIdContainer.ContainedEntity?.Name ?? "",
+                    _targetIdContainer.ContainedEntity?.Name ?? "");
             }
             _userInterface.SetState(newState);
         }

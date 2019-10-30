@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.GameObjects.Components.Chemistry;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
@@ -13,6 +14,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
     /// <summary>
     /// Initializes a <see cref="ReagentDispenserWindow"/> and updates it when new server messages are received.
     /// </summary>
+    [UsedImplicitly]
     public class ReagentDispenserBoundUserInterface : BoundUserInterface
     {
 #pragma warning disable 649
@@ -42,7 +44,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 Title = _localizationManager.GetString("Reagent dispenser"),
                 Size = (500, 600)
             };
-            
+
             _window.OpenCenteredMinSize();
             _window.OnClose += Close;
 
@@ -60,7 +62,10 @@ namespace Content.Client.GameObjects.Components.Chemistry
         /// <summary>
         /// Update the ui each time new state data is sent from the server.
         /// </summary>
-        /// <param name="state">Data of the <see cref="ReagentDispenserComponent"/> that this ui represents. Sent from the server.</param>
+        /// <param name="state">
+        /// Data of the <see cref="SharedReagentDispenserComponent"/> that this ui represents.
+        /// Sent from the server.
+        /// </param>
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
@@ -70,8 +75,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
             _window?.UpdateState(castState); //Update window state
             UpdateReagentsList(castState.Inventory); //Update reagents list & reagent button actions
-
-            _window.ForceRunLayoutUpdate();
         }
 
         /// <summary>
@@ -103,7 +106,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
             }
         }
 
-        public void ButtonPressed(UiButton button, int dispenseIndex = -1)
+        private void ButtonPressed(UiButton button, int dispenseIndex = -1)
         {
             SendMessage(new UiButtonPressedMessage(button, dispenseIndex));
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Utility;
 using JetBrains.Annotations;
@@ -114,10 +115,15 @@ namespace Content.Client.GameObjects
 
             foreach (var button in buttons)
             {
-                button.SpriteView.Sprite = null;
-                button.OnPressed = AddToInventory;
-                button.StorageButton.Visible = false;
+                ClearButton(button);
             }
+        }
+
+        private void ClearButton(InventoryButton button)
+        {
+            button.SpriteView.Sprite = null;
+            button.OnPressed = AddToInventory;
+            button.StorageButton.Visible = false;
         }
 
         public override void PlayerAttached()
@@ -132,6 +138,11 @@ namespace Content.Client.GameObjects
             base.PlayerDetached();
 
             GameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
+
+            foreach (var button in _inventoryButtons.Values.SelectMany(l => l))
+            {
+                ClearButton(button);
+            }
         }
 
         private class HumanInventoryWindow : SS14Window
