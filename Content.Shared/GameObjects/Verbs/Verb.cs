@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
@@ -21,9 +22,6 @@ namespace Content.Shared.GameObjects
         ///     <see cref="InteractionRange"/> meters from the entity on which this verb resides.
         /// </summary>
         public virtual bool RequireInteractionRange => true;
-
-        public const float InteractionRange = 2;
-        public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         /// <summary>
         ///     Gets the text string that will be shown to <paramref name="user"/> in the right click menu.
@@ -107,29 +105,6 @@ namespace Content.Shared.GameObjects
     [MeansImplicitUse]
     public sealed class VerbAttribute : Attribute
     {
-    }
-
-    public static class VerbUtility
-    {
-        // TODO: This is a quick hack. Verb objects should absolutely be cached properly.
-        // This works for now though.
-        public static IEnumerable<(IComponent, Verb)> GetVerbs(IEntity entity)
-        {
-            foreach (var component in entity.GetAllComponents())
-            {
-                var type = component.GetType();
-                foreach (var nestedType in type.GetAllNestedTypes())
-                {
-                    if (!typeof(Verb).IsAssignableFrom(nestedType) || nestedType.IsAbstract)
-                    {
-                        continue;
-                    }
-
-                    var verb = (Verb) Activator.CreateInstance(nestedType);
-                    yield return (component, verb);
-                }
-            }
-        }
     }
 
     /// <summary>
