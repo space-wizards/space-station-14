@@ -6,7 +6,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.UnitTesting;
 
 namespace Content.IntegrationTests
 {

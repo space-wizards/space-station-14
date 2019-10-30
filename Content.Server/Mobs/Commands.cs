@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
+using Content.Server.Mobs.Roles;
 using Content.Server.Players;
+using Content.Shared.Jobs;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Mobs
 {
+
     public class MindInfoCommand : IClientCommand
     {
         public string Command => "mindinfo";
@@ -51,6 +51,10 @@ namespace Content.Server.Mobs
 
     public class AddRoleCommand : IClientCommand
     {
+#pragma warning disable 649
+        [Dependency] private IPrototypeManager _prototypeManager;
+#pragma warning restore 649
+
         public string Command => "addrole";
 
         public string Description => "Adds a role to a player's mind.";
@@ -69,9 +73,8 @@ namespace Content.Server.Mobs
             if (mgr.TryGetPlayerData(new NetSessionId(args[0]), out var data))
             {
                 var mind = data.ContentData().Mind;
-                var refl = IoCManager.Resolve<IReflectionManager>();
-                var type = refl.LooseGetType(args[1]);
-                mind.AddRole(type);
+                var role = new Job(mind, _prototypeManager.Index<JobPrototype>(args[1]));
+                mind.AddRole(role);
             }
             else
             {
@@ -82,6 +85,11 @@ namespace Content.Server.Mobs
 
     public class RemoveRoleCommand : IClientCommand
     {
+
+#pragma warning disable 649
+        [Dependency] private IPrototypeManager _prototypeManager;
+#pragma warning restore 649
+
         public string Command => "rmrole";
 
         public string Description => "Removes a role from a player's mind.";
@@ -100,9 +108,8 @@ namespace Content.Server.Mobs
             if (mgr.TryGetPlayerData(new NetSessionId(args[0]), out var data))
             {
                 var mind = data.ContentData().Mind;
-                var refl = IoCManager.Resolve<IReflectionManager>();
-                var type = refl.LooseGetType(args[1]);
-                mind.RemoveRole(type);
+                var role = new Job(mind, _prototypeManager.Index<JobPrototype>(args[1]));
+                mind.RemoveRole(role);
             }
             else
             {

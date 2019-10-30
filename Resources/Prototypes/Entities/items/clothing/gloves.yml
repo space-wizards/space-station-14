@@ -3,54 +3,804 @@
   id: GlovesBase
   abstract: true
   components:
+  - type: Sprite
+    state: icon
+  - type: Icon
+    state: icon
   - type: Clothing
-    Slots: [gloves]
-
+    Slots:
+    - gloves
 
 - type: entity
   parent: GlovesBase
-  id: YellowGloves
-  name: Insulated Gloves
-  description: Electrical gloves that keep you from frying
+  id: GlovesAssetProtectionRig
+  name: Asset Protection Rig gloves
+  description: ''
   components:
   - type: Sprite
-    sprite: Clothing/glove_icons.rsi
-    state: yellow
+    sprite: Clothing/Gloves/asset_protection_rig.rsi
   - type: Icon
-    sprite: Clothing/glove_icons.rsi
-    state: yellow
+    sprite: Clothing/Gloves/asset_protection_rig.rsi
   - type: Clothing
-    sprite: Clothing/gloves_yellow.rsi
-
+    sprite: Clothing/Gloves/asset_protection_rig.rsi
 
 - type: entity
   parent: GlovesBase
-  id: BlackGloves
-  name: Black Gloves
+  id: GlovesAssetProtectionRigSealed
+  name: Asset Protection Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/asset_protection_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/asset_protection_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/asset_protection_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesBlack
+  name: Black gloves
   description: Regular gloves that do not keep you from frying
   components:
   - type: Sprite
-    sprite: Clothing/glove_icons.rsi
-    state: black
+    sprite: Clothing/Gloves/black.rsi
   - type: Icon
-    sprite: Clothing/glove_icons.rsi
-    state: black
+    sprite: Clothing/Gloves/black.rsi
   - type: Clothing
-    sprite: Clothing/gloves_black.rsi
-    HeatResistance: 500
-    
+    sprite: Clothing/Gloves/black.rsi
+
 - type: entity
   parent: GlovesBase
-  id: LeatherGloves
-  name: Botanist's leather gloves
-  description: These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm.
+  id: GlovesBlue
+  name: Blue gloves
+  description: ''
   components:
   - type: Sprite
-    sprite: Clothing/glove_icons.rsi
-    state: leather
+    sprite: Clothing/Gloves/blue.rsi
   - type: Icon
-    sprite: Clothing/glove_icons.rsi
-    state: leather
+    sprite: Clothing/Gloves/blue.rsi
   - type: Clothing
-    sprite: Clothing/gloves_leather.rsi
+    sprite: Clothing/Gloves/blue.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesBoxingRed
+  name: Boxing gloves (red)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/boxing.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/boxing.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/boxing.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesBoxingBlue
+  name: Boxing gloves (blue)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/boxingblue.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/boxingblue.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/boxingblue.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesBoxingGreen
+  name: Boxing gloves (green)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/boxinggreen.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/boxinggreen.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/boxinggreen.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesBoxingYellow
+  name: Boxing gloves (yellow)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/boxingyellow.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/boxingyellow.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/boxingyellow.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesBrown
+  name: Brown gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/brown.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/brown.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/brown.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesCaptain
+  name: Captain gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/captain.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/captain.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/captain.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesCeRig
+  name: CE Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ce_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ce_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ce_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesCeRigSealed
+  name: CE Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ce_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ce_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ce_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesChalAppara1
+  name: Chal Appara 1 gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/chal_appara_1.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/chal_appara_1.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/chal_appara_1.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesChalAppara12
+  name: Chal Appara 12 gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/chal_appara_12.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/chal_appara_12.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/chal_appara_12.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesEngineeringRig
+  name: Engineering Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/engineering_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/engineering_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/engineering_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesEngineeringRigSealed
+  name: Engineering Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/engineering_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/engineering_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/engineering_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesErtCommanderRig
+  name: ERT Commander Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ert_commander_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ert_commander_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ert_commander_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesErtCommanderRigSealed
+  name: ERT Commander Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ert_commander_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ert_commander_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ert_commander_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesErtEngineerRig
+  name: ERT Engineer Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ert_engineer_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ert_engineer_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ert_engineer_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesErtEngineerRigSealed
+  name: ERT Engineer Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ert_engineer_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ert_engineer_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ert_engineer_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesErtMedicalRig
+  name: ERT Medical Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ert_medical_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ert_medical_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ert_medical_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesErtMedicalRigSealed
+  name: ERT Medical Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ert_medical_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ert_medical_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ert_medical_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesErtSecurityRig
+  name: ERT Security Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ert_security_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ert_security_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ert_security_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesErtSecurityRigSealed
+  name: ERT Security Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ert_security_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ert_security_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ert_security_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesEvaRig
+  name: Eva Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/eva_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/eva_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/eva_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesEvaRigSealed
+  name: Eva Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/eva_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/eva_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/eva_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesGray
+  name: Gray gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/gray.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/gray.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/gray.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesGreen
+  name: Green gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/green.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/green.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/green.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesHackerRig
+  name: Hacker Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/hacker_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/hacker_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/hacker_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesHackerRigSealed
+  name: Hacker Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/hacker_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/hacker_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/hacker_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesHazardRig
+  name: Hazard Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/hazard_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/hazard_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/hazard_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesHazardRigSealed
+  name: Hazard Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/hazard_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/hazard_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/hazard_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesIhscombat
+  name: IHS combat gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ihscombat.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ihscombat.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ihscombat.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesIhsRig
+  name: IHS Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ihs_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ihs_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ihs_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesIhsRigSealed
+  name: IHS Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ihs_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ihs_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ihs_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesLatex
+  name: Latex gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/latex.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/latex.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/latex.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesLeather
+  name: Leather gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/leather.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/leather.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/leather.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesLightBrown
+  name: Light brown gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/lightbrown.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/lightbrown.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/lightbrown.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesMedicalRig
+  name: Medical Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/medical_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/medical_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/medical_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesMedicalRigSealed
+  name: Medical Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/medical_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/medical_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/medical_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesMercRig
+  name: Merc Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/merc_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/merc_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/merc_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesMercRigSealed
+  name: Merc Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/merc_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/merc_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/merc_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesNinjaRig
+  name: Ninja Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ninja_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ninja_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ninja_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesNinjaRigSealed
+  name: Ninja Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/ninja_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/ninja_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/ninja_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesOrange
+  name: Orange gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/orange.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/orange.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/orange.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesPowerglove
+  name: Power gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/powerglove.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/powerglove.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/powerglove.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesPowergloveActive
+  name: Powergloves (Active)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/powerglove_active.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/powerglove_active.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/powerglove_active.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesPurple
+  name: Purple gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/purple.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/purple.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/purple.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesRainbow
+  name: Rainbow gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/rainbow.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/rainbow.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/rainbow.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesRed
+  name: Red gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/red.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/red.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/red.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesRobohands
+  name: Robohands gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/robohands.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/robohands.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/robohands.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesScienceRig
+  name: Science Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/science_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/science_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/science_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesScienceRigSealed
+  name: Science Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/science_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/science_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/science_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesSecurityRig
+  name: Security Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/security_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/security_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/security_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesSecurityRigSealed
+  name: Security Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/security_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/security_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/security_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesStealthRig
+  name: Stealth Rig gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/stealth_rig.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/stealth_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/stealth_rig.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesStealthRigSealed
+  name: Stealth Rig Sealed gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/stealth_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/stealth_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/stealth_rig_sealed.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesSNinja
+  name: S Ninja gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/s_ninja.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/s_ninja.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/s_ninja.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesSNinjak
+  name: S Ninjak gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/s_ninjak.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/s_ninjak.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/s_ninjak.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesSNinjan
+  name: S Ninjan gloves
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/s_ninjan.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/s_ninjan.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/s_ninjan.rsi
+
+- type: entity
+  parent: GlovesBase
+  id: GlovesYellow
+  name: Insulated gloves
+  description: Electrical gloves that keep you from frying
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/yellow.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/yellow.rsi
+  - type: Clothing
     HeatResistance: 1500
+    sprite: Clothing/Gloves/yellow.rsi

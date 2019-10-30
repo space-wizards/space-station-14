@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Content.Client.Interfaces;
 using Content.Shared;
-using Robust.Client;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;

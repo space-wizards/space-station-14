@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using Nett;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.Primitives;
 using Robust.Client.Utility;
 using Robust.Shared.Interfaces.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Noise;
 using Robust.Shared.Random;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
-using BlendFactor = Robust.Shared.Maths.Color.BlendFactor;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.Primitives;
 
 namespace Content.Client.Parallax
 {
@@ -84,8 +83,8 @@ namespace Content.Client.Parallax
             private readonly uint Octaves = 3;
             private readonly float Threshold;
             private readonly float Power = 1;
-            private readonly BlendFactor SrcFactor = BlendFactor.One;
-            private readonly BlendFactor DstFactor = BlendFactor.One;
+            private readonly Color.BlendFactor SrcFactor = Color.BlendFactor.One;
+            private readonly Color.BlendFactor DstFactor = Color.BlendFactor.One;
 
             public LayerNoise(TomlTable table)
             {
@@ -131,12 +130,12 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("sourcefactor", out tomlObject))
                 {
-                    SrcFactor = (BlendFactor) Enum.Parse(typeof(BlendFactor), tomlObject.Get<string>());
+                    SrcFactor = (Color.BlendFactor) Enum.Parse(typeof(Color.BlendFactor), tomlObject.Get<string>());
                 }
 
                 if (table.TryGetValue("destfactor", out tomlObject))
                 {
-                    DstFactor = (BlendFactor) Enum.Parse(typeof(BlendFactor), tomlObject.Get<string>());
+                    DstFactor = (Color.BlendFactor) Enum.Parse(typeof(Color.BlendFactor), tomlObject.Get<string>());
                 }
 
                 if (table.TryGetValue("power", out tomlObject))
@@ -208,8 +207,8 @@ namespace Content.Client.Parallax
             private readonly Color CloseColor = Color.White;
             private readonly Color FarColor = Color.Black;
 
-            private readonly BlendFactor SrcFactor = BlendFactor.One;
-            private readonly BlendFactor DstFactor = BlendFactor.One;
+            private readonly Color.BlendFactor SrcFactor = Color.BlendFactor.One;
+            private readonly Color.BlendFactor DstFactor = Color.BlendFactor.One;
 
             // Noise mask stuff.
             private readonly bool Masked;
@@ -238,12 +237,12 @@ namespace Content.Client.Parallax
 
                 if (table.TryGetValue("sourcefactor", out tomlObject))
                 {
-                    SrcFactor = (BlendFactor) Enum.Parse(typeof(BlendFactor), tomlObject.Get<string>());
+                    SrcFactor = (Color.BlendFactor) Enum.Parse(typeof(Color.BlendFactor), tomlObject.Get<string>());
                 }
 
                 if (table.TryGetValue("destfactor", out tomlObject))
                 {
-                    DstFactor = (BlendFactor) Enum.Parse(typeof(BlendFactor), tomlObject.Get<string>());
+                    DstFactor = (Color.BlendFactor) Enum.Parse(typeof(Color.BlendFactor), tomlObject.Get<string>());
                 }
 
                 if (table.TryGetValue("farcolor", out tomlObject))

@@ -61,6 +61,11 @@ namespace Content.Server.GameObjects
         {
             return true;
         }
+        
+        bool IActionBlocker.CanEmote()
+        {
+            return true;
+        }
     }
 
     /// <summary>
@@ -107,6 +112,11 @@ namespace Content.Server.GameObjects
         {
             return false;
         }
+        
+        bool IActionBlocker.CanEmote()
+        {
+            return false;
+        }
     }
 
     /// <summary>
@@ -121,6 +131,11 @@ namespace Content.Server.GameObjects
                 var newState = SharedSpeciesComponent.MobState.Down;
                 appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
             }
+
+            if (entity.TryGetComponent(out CollidableComponent collidable))
+            {
+                collidable.CollisionEnabled = false;
+            }
         }
 
         public void ExitState(IEntity entity)
@@ -129,6 +144,11 @@ namespace Content.Server.GameObjects
             {
                 var newState = SharedSpeciesComponent.MobState.Stand;
                 appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
+            }
+
+            if (entity.TryGetComponent(out CollidableComponent collidable))
+            {
+                collidable.CollisionEnabled = true;
             }
         }
 
@@ -160,6 +180,11 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanDrop()
+        {
+            return false;
+        }
+        
+        bool IActionBlocker.CanEmote()
         {
             return false;
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using Content.Client.GameObjects.Components.IconSmoothing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -179,7 +180,7 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        [System.Diagnostics.Contracts.Pure]
+        [Pure]
         private (bool connected, bool lowWall) MatchingWall(IEnumerable<IEntity> candidates)
         {
             foreach (var entity in candidates)

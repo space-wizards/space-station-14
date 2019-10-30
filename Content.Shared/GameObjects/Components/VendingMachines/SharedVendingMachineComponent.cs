@@ -1,11 +1,8 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.VendingMachines
 {

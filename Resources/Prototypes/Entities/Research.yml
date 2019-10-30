@@ -14,7 +14,11 @@
     offset: Center
   - type: ResearchServer
   - type: TechnologyDatabase
-
+  - type: PowerDevice
+    drawtype: Both
+    load: 200
+    priority: Low
+    
 - type: entity
   id: baseResearchAndDevelopmentPointSource
   name: "Base R&D Point Source"

@@ -1,0 +1,212 @@
+# These can still be used as containers
+- type: entity
+  name: Base empty bottle
+  parent: BaseItem
+  id: DrinkBottleBase
+  components:
+  - type: Sound
+  - type: Sprite
+    state: icon
+  - type: Icon
+    state: icon
+  - type: Drink
+    despawn_empty: false
+    max_volume: 10
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 0
+
+# Containers
+- type: entity
+  name: Jailbreaker Verte bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleAbsinthe
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/absinthebottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/absinthebottle_empty.rsi
+
+- type: entity
+  name: Alcohol bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleAlcoClear
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/alco-clear.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/alco-clear.rsi
+
+- type: entity
+  name: Ale bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleAle
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/alebottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/alebottle_empty.rsi
+
+- type: entity
+  name: Beer bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleBeer
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/beer_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/beer_empty.rsi
+
+- type: entity
+  name: Broken bottle
+  parent: DrinkBottleBase  # Can't hold liquids
+  id: DrinkBrokenBottle
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/broken_bottle.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/broken_bottle.rsi
+
+- type: entity
+  name: Cognac bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleCognac
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/cognacbottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/cognacbottle_empty.rsi
+
+- type: entity
+  name: Griffeater gin bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleGin
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/ginbottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/ginbottle_empty.rsi
+
+# Couldn't think of a nice place to put this
+- type: entity
+  name: Empty glass
+  parent: DrinkBottleBase
+  id: DrinkEmptyGlass
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/alebottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/alebottle_empty.rsi
+  - type: Solution
+    max_volume: 4
+
+- type: entity
+  name: Goldschlager bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleGoldschlager
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/goldschlagerbottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/goldschlagerbottle_empty.rsi
+
+- type: entity
+  name: Kahlua bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleKahlua
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/kahluabottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/kahluabottle_empty.rsi
+
+- type: entity
+  name: NT Cahors bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleNTCahors
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/ntcahors_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/ntcahors_empty.rsi
+
+- type: entity
+  name: Patron bottle
+  parent: DrinkBottleBase
+  id: DrinkBottlePatron
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/patronbottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/patronbottle_empty.rsi
+
+- type: entity
+  name: Poison wine bottle
+  parent: DrinkBottleBase
+  id: DrinkBottlePoisonWine
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/pwinebottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/pwinebottle_empty.rsi
+
+- type: entity
+  name: Rum bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleRum
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/rumbottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/rumbottle_empty.rsi
+
+- type: entity
+  name: Tequila bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleTequila
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/tequillabottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/tequillabottle_empty.rsi
+
+- type: entity
+  name: Vermouth bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleVermouth
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/vermouthbottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/vermouthbottle_empty.rsi
+
+- type: entity
+  name: Vodka bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleVodka
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/vodkabottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/vodkabottle_empty.rsi
+
+- type: entity
+  name: Whiskey bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleWhiskey
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/whiskeybottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/whiskeybottle_empty.rsi
+
+- type: entity
+  name: Wine bottle
+  parent: DrinkBottleBase
+  id: DrinkBottleWine
+  components:
+  - type: Sprite
+    sprite: Objects/TrashDrinks/winebottle_empty.rsi
+  - type: Icon
+    sprite: Objects/TrashDrinks/winebottle_empty.rsi

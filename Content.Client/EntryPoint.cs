@@ -44,6 +44,7 @@ namespace Content.Client
 
             var registerIgnore = new[]
             {
+                "Wrenchable",
                 "AmmoBox",
                 "Breakable",
                 "Pickaxe",
@@ -110,6 +111,14 @@ namespace Content.Client
                 "Airlock",
                 "MedicalScanner",
                 "WirePlacer",
+                "Species",
+                "Drink",
+                "Food",
+                "DrinkFoodContainer",
+                "Stomach",
+                "Hunger",
+                "Thirst",
+                "Rotatable",
             };
 
             foreach (var ignoreName in registerIgnore)

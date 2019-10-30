@@ -13,10 +13,9 @@ namespace Content.Server.GameObjects
         /// <summary>
         /// Changes the hud state when a threshold is reached
         /// </summary>
-        /// <param name="state"></param>
         /// <param name="damage"></param>
         /// <returns></returns>
-        public abstract HudStateChange ChangeHudState(DamageableComponent damage);
+        public abstract void ChangeHudState(DamageableComponent damage);
 
         //public abstract ResistanceSet resistanceset { get; }
 

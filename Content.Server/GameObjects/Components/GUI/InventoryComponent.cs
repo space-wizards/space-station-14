@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
@@ -11,11 +14,10 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Utility;
+using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
-using IComponent = Robust.Shared.Interfaces.GameObjects.IComponent;
 
 namespace Content.Server.GameObjects
 {
@@ -275,7 +277,7 @@ namespace Content.Server.GameObjects
                         if (activeHand != null)
                         {
                             interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
-                                new Robust.Shared.Map.GridCoordinates());
+                                new GridCoordinates());
                         }
                         else if (Unequip(msg.Inventoryslot))
                         {

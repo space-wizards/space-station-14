@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.GameObjects;
 using Robust.Shared.ContentPack;
@@ -56,10 +58,24 @@ namespace Content.Server.GameObjects
             switch (message)
             {
                 case PlayerAttachedMsg _:
-                    var hudstatechange = DamageTemplate.ChangeHudState(Owner.GetComponent<DamageableComponent>());
-                    SendNetworkMessage(hudstatechange);
+                    if (CanReceiveStatusEffect(Owner)) {
+                        DamageableComponent damage = Owner.GetComponent<DamageableComponent>();
+                        DamageTemplate.ChangeHudState(damage);
+                    }
+                    break;
+                case PlayerDetachedMsg _:
                     break;
             }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
+            statusEffectsComponent?.RemoveStatus(StatusEffect.Health);
+
+            Owner.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent);
+            overlayEffectsComponent?.ChangeOverlay(ScreenEffects.None);
         }
 
         bool IActionBlocker.CanMove()
@@ -92,6 +108,11 @@ namespace Content.Server.GameObjects
             return CurrentDamageState.CanDrop();
         }
 
+        bool IActionBlocker.CanEmote()
+        {
+            return CurrentDamageState.CanEmote();
+        }
+
         List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
         {
             var thresholdlist = DamageTemplate.DamageThresholds;
@@ -108,12 +129,26 @@ namespace Content.Server.GameObjects
                 ChangeDamageState(DamageTemplate.CalculateDamageState(damage));
             }
 
-            if (Owner.TryGetComponent(out BasicActorComponent actor)
-            ) //specifies if we have a client to update the hud for
+            //specifies if we have a client to update the hud for
+            if (CanReceiveStatusEffect(Owner))
             {
-                var hudstatechange = DamageTemplate.ChangeHudState(damage);
-                SendNetworkMessage(hudstatechange);
+                DamageTemplate.ChangeHudState(damage);
             }
+        }
+
+        private bool CanReceiveStatusEffect(IEntity user)
+        {
+            if (!user.HasComponent<ServerStatusEffectsComponent>() &&
+                !user.HasComponent<ServerOverlayEffectsComponent>())
+            {
+                return false;
+            }
+            if (user.HasComponent<DamageableComponent>())
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void ChangeDamageState(ThresholdType threshold)
@@ -150,8 +185,8 @@ namespace Content.Server.GameObjects
                     bruteDamage += 30;
                     break;
             }
-            Owner.GetComponent<DamageableComponent>().TakeDamage(Shared.GameObjects.DamageType.Brute, bruteDamage);
-            Owner.GetComponent<DamageableComponent>().TakeDamage(Shared.GameObjects.DamageType.Heat, burnDamage);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage);
         }
     }
 

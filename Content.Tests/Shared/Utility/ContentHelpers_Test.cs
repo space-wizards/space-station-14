@@ -1,10 +1,6 @@
-﻿using Content.Shared.Utility;
+﻿using System.Collections.Generic;
+using Content.Shared.Utility;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Tests.Shared.Utility
 {

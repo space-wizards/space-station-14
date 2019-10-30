@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.Utility;using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Utility;
@@ -12,7 +14,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.GameObjects
@@ -55,7 +56,7 @@ namespace Content.Client.GameObjects
             void AddButton(out InventoryButton variable, Slots slot, string textureName)
             {
                 var texture = _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/{textureName}.png");
-                var storageTexture = _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/back.png");
+                var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
                 variable = new InventoryButton(slot, texture, storageTexture)
                 {
                     OnPressed = AddToInventory,
@@ -170,7 +171,7 @@ namespace Content.Client.GameObjects
                 void AddButton(Slots slot, string textureName, Vector2 position)
                 {
                     var texture = resourceCache.GetTexture($"/Textures/UserInterface/Inventory/{textureName}.png");
-                    var storageTexture = resourceCache.GetTexture($"/Textures/UserInterface/Inventory/back.png");
+                    var storageTexture = resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
                     var button = new InventoryButton(slot, texture, storageTexture)
                     {
                         Position = position

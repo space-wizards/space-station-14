@@ -11,6 +11,7 @@
     sprite: Objects/Melee/pickaxe.rsi
     state: pickaxe
   - type: Pickaxe
+  - type: ItemCooldown
   - type: MeleeWeapon
     damage: 25
   - type: Item

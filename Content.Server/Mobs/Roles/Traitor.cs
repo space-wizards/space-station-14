@@ -1,5 +1,4 @@
 ﻿using Content.Server.Interfaces.Chat;
-using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Mobs.Roles

@@ -1,6 +1,6 @@
-﻿using Content.Shared.GameObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Content.Shared.GameObjects;
 
 namespace Content.Server.GameObjects
 {

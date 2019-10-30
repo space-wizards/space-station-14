@@ -4,7 +4,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Network.Messages;
 
 namespace Content.Shared
 {

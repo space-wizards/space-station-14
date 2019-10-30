@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -50,26 +50,29 @@ namespace Content.Server.GameObjects.EntitySystems
                     var userEntity = session.AttachedEntity;
 
                     var data = new List<VerbsResponseMessage.VerbData>();
+                    //Get verbs, component dependent.
                     foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
                     {
-                        if (verb.RequireInteractionRange)
-                        {
-                            var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
-                                .LengthSquared;
-                            if (distanceSquared > Verb.InteractionRangeSquared)
-                            {
-                                continue;
-                            }
-                        }
-                        
-                        var vis = verb.GetVisibility(userEntity, component);
-                        if(vis == VerbVisibility.Invisible)
+                        if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
+                            continue;
+                        if(VerbUtility.IsVerbInvisible(verb, userEntity, component, out var vis))
                             continue;
 
                         // TODO: These keys being giant strings is inefficient as hell.
                         data.Add(new VerbsResponseMessage.VerbData(verb.GetText(userEntity, component),
                             $"{component.GetType()}:{verb.GetType()}",
                             vis == VerbVisibility.Visible));
+                    }
+                    //Get global verbs. Visible for all entities regardless of their components.
+                    foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
+                    {
+                        if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
+                            continue;
+                        if(VerbUtility.IsVerbInvisible(globalVerb, userEntity, entity, out var vis))
+                            continue;
+
+                        data.Add(new VerbsResponseMessage.VerbData(globalVerb.GetText(userEntity, entity),
+                            globalVerb.GetType().ToString(), vis == VerbVisibility.Visible));
                     }
 
                     var response = new VerbsResponseMessage(data, req.EntityUid);
@@ -99,7 +102,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         {
                             var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
                                 .LengthSquared;
-                            if (distanceSquared > Verb.InteractionRangeSquared)
+                            if (distanceSquared > VerbUtility.InteractionRangeSquared)
                             {
                                 break;
                             }
