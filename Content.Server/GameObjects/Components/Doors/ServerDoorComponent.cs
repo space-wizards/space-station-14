@@ -178,7 +178,7 @@ namespace Content.Server.GameObjects
             Timer.Spawn(CloseTime, () =>
             {
                 State = DoorState.Closed;
-                _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
+                _appearance?.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
             });
             return true;
         }
@@ -188,7 +188,7 @@ namespace Content.Server.GameObjects
             _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Deny);
             Timer.Spawn(DenyTime, () =>
             {
-                _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
+                _appearance?.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
             });
         }
 
