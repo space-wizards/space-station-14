@@ -70,7 +70,8 @@ namespace Content.Client.UserInterface
             {
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                 Text = localization.GetString("Leave"),
-                StyleClasses = {NanoStyle.StyleClassButtonBig}
+                StyleClasses = {NanoStyle.StyleClassButtonBig},
+                GrowHorizontal = GrowDirection.Begin
             });
 
             LeaveButton.SetAnchorAndMarginPreset(LayoutPreset.TopRight);

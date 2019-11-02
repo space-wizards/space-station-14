@@ -14,9 +14,13 @@
   description: Regulations require these to be stocked after the fourth coolant leak
   components:
   - type: Sprite
-    texture: Clothing/gasmask.png
+    sprite: Clothing/gas_mask.rsi
+    state: gas_mask
   - type: Icon
-    texture: Clothing/gasmask.png
+    sprite: Clothing/gas_mask.rsi
+    state: gas_mask
+  - type: Clothing
+    sprite: Clothing/gas_mask.rsi
 
 
 - type: entity

@@ -45,9 +45,11 @@ namespace Content.Shared.GameObjects.Components.Access
         [Serializable, NetSerializable]
         public class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
         {
+            public readonly string PrivilegedIdName;
             public readonly bool IsPrivilegedIdPresent;
             public readonly bool IsPrivilegedIdAuthorized;
             public readonly bool IsTargetIdPresent;
+            public readonly string TargetIdName;
             public readonly string TargetIdFullName;
             public readonly string TargetIdJobTitle;
             public readonly List<string> TargetIdAccessList;
@@ -57,7 +59,7 @@ namespace Content.Shared.GameObjects.Components.Access
                 bool isTargetIdPresent,
                 string targetIdFullName,
                 string targetIdJobTitle,
-                List<string> targetIdAccessList)
+                List<string> targetIdAccessList, string privilegedIdName, string targetIdName)
             {
                 IsPrivilegedIdPresent = isPrivilegedIdPresent;
                 IsPrivilegedIdAuthorized = isPrivilegedIdAuthorized;
@@ -65,6 +67,8 @@ namespace Content.Shared.GameObjects.Components.Access
                 TargetIdFullName = targetIdFullName;
                 TargetIdJobTitle = targetIdJobTitle;
                 TargetIdAccessList = targetIdAccessList;
+                PrivilegedIdName = privilegedIdName;
+                TargetIdName = targetIdName;
             }
         }
 
