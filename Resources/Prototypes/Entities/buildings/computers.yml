@@ -2,8 +2,12 @@
   id: computerBase
   name: Computer
   components:
+  - type: Physics
+    mass: 25
+    Anchored: true
   - type: Clickable
   - type: Collidable
+    IsScrapingFloor: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5,-0.25,0.5,0.25"
@@ -15,6 +19,7 @@
   - type: Computer
   - type: PowerDevice
     priority: High
+  - type: Wrenchable
 
   - type: Sprite
     sprite: Buildings/computer.rsi
