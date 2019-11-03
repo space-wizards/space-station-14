@@ -16,6 +16,7 @@
   name: White Office Chair
   id: chairOfficeLight
   components:
+  - type: Rotatable
   - type: Clickable
   - type: Collidable
   - type: Sprite
@@ -29,6 +30,7 @@
   name: Dark Office Chair
   id: chairOfficeDark
   components:
+  - type: Rotatable
   - type: Clickable
   - type: Collidable
   - type: Sprite
