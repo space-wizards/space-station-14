@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components
 #pragma warning restore 649
         public override string Name => "Rotatable";
 
-        private void TryRotate(IEntity user)
+        private void TryRotate(IEntity user, Angle angle)
         {
             if (Owner.TryGetComponent(out PhysicsComponent physics))
             {
@@ -28,7 +28,8 @@ namespace Content.Server.GameObjects.Components
                     return;
                 }
             }
-            Owner.Transform.LocalRotation += Angle.FromDegrees(90);
+
+            Owner.Transform.LocalRotation += angle;
         }
 
         [Verb]
@@ -36,7 +37,7 @@ namespace Content.Server.GameObjects.Components
         {
             protected override string GetText(IEntity user, RotatableComponent component)
             {
-                return "Rotate";
+                return "Rotate clockwise";
             }
 
             protected override VerbVisibility GetVisibility(IEntity user, RotatableComponent component)
@@ -46,8 +47,28 @@ namespace Content.Server.GameObjects.Components
 
             protected override void Activate(IEntity user, RotatableComponent component)
             {
-                component.TryRotate(user);
+                component.TryRotate(user, Angle.FromDegrees(90));
             }
         }
+
+        [Verb]
+        public sealed class RotateCounterVerb : Verb<RotatableComponent>
+        {
+            protected override string GetText(IEntity user, RotatableComponent component)
+            {
+                return "Rotate counter-clockwise";
+            }
+
+            protected override VerbVisibility GetVisibility(IEntity user, RotatableComponent component)
+            {
+                return VerbVisibility.Visible;
+            }
+
+            protected override void Activate(IEntity user, RotatableComponent component)
+            {
+                component.TryRotate(user, Angle.FromDegrees(-90));
+            }
+        }
+
     }
 }
