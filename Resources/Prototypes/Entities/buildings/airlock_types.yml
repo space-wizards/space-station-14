@@ -36,3 +36,47 @@
   - type: AccessReader
     required: ["engineering"]
 
+
+- type: entity
+  parent: airlock
+  id: airlock_medical
+  name: Medical Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/airlock_medical.rsi
+
+  - type: Icon
+    sprite: Buildings/airlock_medical.rsi
+
+- type: entity
+  parent: airlock
+  id: airlock_medical_glass
+  name: Glass Medical Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/airlock_medical_glass.rsi
+
+  - type: Icon
+    sprite: Buildings/airlock_medical_glass.rsi
+
+- type: entity
+  parent: airlock
+  id: airlock_science
+  name: Science Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/airlock_science.rsi
+
+  - type: Icon
+    sprite: Buildings/airlock_science.rsi
+
+- type: entity
+  parent: airlock
+  id: airlock_science_glass
+  name: Glass Science Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/airlock_science_glass.rsi
+
+  - type: Icon
+    sprite: Buildings/airlock_science_glass.rsi

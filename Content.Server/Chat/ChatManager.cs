@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Content.Server.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Chat;
@@ -47,6 +49,11 @@ namespace Content.Server.Chat
 
         public void EntitySay(IEntity source, string message)
         {
+            if (!ActionBlockerSystem.CanSpeak(source))
+            {
+                return;
+            }
+
             var pos = source.Transform.GridPosition;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
 
@@ -54,6 +61,24 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
             msg.MessageWrap = $"{source.Name} says, \"{{0}}\"";
+            msg.SenderEntity = source.Uid;
+            _netManager.ServerSendToMany(msg, clients.ToList());
+        }
+
+        public void EntityMe(IEntity source, string action)
+        {
+            if (!ActionBlockerSystem.CanEmote(source))
+            {
+                return;
+            }
+
+            var pos = source.Transform.GridPosition;
+            var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Emotes;
+            msg.Message = action;
+            msg.MessageWrap = $"{source.Name} {{0}}";
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
         }

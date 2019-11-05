@@ -15,29 +15,13 @@ namespace Content.Client.UserInterface
         public VBoxContainer VBox => _vBox;
         private readonly VBoxContainer _vBox;
 
-        private TextureRect _healthStatusRect;
-
         public StatusEffectsUI()
         {
             _vBox = new VBoxContainer {GrowHorizontal = GrowDirection.Begin};
-
             AddChild(_vBox);
-
-            // Health
-            _vBox.AddChild(_healthStatusRect = new TextureRect
-            {
-                TextureScale = (2, 2),
-                Texture = IoCManager.Resolve<IResourceCache>().GetTexture("/Textures/Mob/UI/Human/human0.png")
-            });
-
             SetAnchorAndMarginPreset(LayoutPreset.TopRight);
             MarginTop = 250;
             MarginRight = 10;
-        }
-
-        public void SetHealthIcon(Texture texture)
-        {
-            _healthStatusRect.Texture = texture;
         }
     }
 }

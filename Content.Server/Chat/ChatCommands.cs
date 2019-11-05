@@ -28,6 +28,28 @@ namespace Content.Server.Chat
         }
     }
 
+    internal class MeCommand : IClientCommand
+    {
+        public string Command => "me";
+        public string Description => "Perform an action.";
+        public string Help => "me <text>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (player.Status != SessionStatus.InGame || !player.AttachedEntityUid.HasValue)
+                return;
+
+            if (args.Length < 1)
+                return;
+
+            var chat = IoCManager.Resolve<IChatManager>();
+
+            var action = string.Join(" ", args);
+
+            chat.EntityMe(player.AttachedEntity, action);
+        }
+    }
+
     internal class OOCCommand : IClientCommand
     {
         public string Command => "ooc";

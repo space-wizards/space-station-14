@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects
         {
             if (State == DoorState.Open)
             {
-                Close();
+                TryClose(eventArgs.User);
             }
             else if (State == DoorState.Closed)
             {
@@ -137,6 +137,31 @@ namespace Content.Server.GameObjects
             });
         }
 
+        public virtual bool CanClose()
+        {
+            return true;
+        }
+
+        public bool CanClose(IEntity user)
+        {
+            if (!CanClose()) return false;
+            if (!Owner.TryGetComponent(out AccessReader accessReader))
+            {
+                return true;
+            }
+            return accessReader.IsAllowed(user);
+        }
+
+        public void TryClose(IEntity user)
+        {
+            if (!CanClose(user))
+            {
+                Deny();
+                return;
+            }
+            Close();
+        }
+
         public bool Close()
         {
             if (collidableComponent.TryCollision(Vector2.Zero))
@@ -178,7 +203,7 @@ namespace Content.Server.GameObjects
             OpenTimeCounter += frameTime;
             if (OpenTimeCounter > AUTO_CLOSE_DELAY)
             {
-                if (!Close())
+                if (!CanClose() || !Close())
                 {
                     // Try again in 2 seconds if it's jammed or something.
                     OpenTimeCounter -= 2;

@@ -13,9 +13,16 @@ namespace Content.Client.UserInterface
     public sealed class NanoStyle
     {
         public const string StyleClassLabelHeading = "LabelHeading";
+        public const string StyleClassLabelHeadingBigger = "LabelHeadingBigger";
         public const string StyleClassLabelSubText = "LabelSubText";
+        public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
+        public const string StyleClassLabelBig = "LabelBig";
         public const string StyleClassButtonBig = "ButtonBig";
-        private static readonly Color NanoGold = Color.FromHex("#A88B5E");
+        public static readonly Color NanoGold = Color.FromHex("#A88B5E");
+        public static readonly Color ButtonColorDefault = Color.FromHex("#464966");
+        public static readonly Color ButtonColorHovered = Color.FromHex("#575b7f");
+        public static readonly Color ButtonColorPressed = Color.FromHex("#3e6c45");
+        public static readonly Color ButtonColorDisabled = Color.FromHex("#30313c");
 
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
@@ -32,6 +39,7 @@ namespace Content.Client.UserInterface
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
             var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
             var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
+            var notoSansBold20 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 20);
             var textureCloseButton = resCache.GetTexture("/Nano/cross.svg.png");
             var windowHeaderTex = resCache.GetTexture("/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
@@ -48,37 +56,32 @@ namespace Content.Client.UserInterface
             windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
 
-            var buttonNormalTex = resCache.GetTexture("/Nano/button_normal.png");
+            // Button styles.
+            var buttonTex = resCache.GetTexture("/Nano/button.svg.96dpi.png");
             var buttonNormal = new StyleBoxTexture
             {
-                Texture = buttonNormalTex,
+                Texture = buttonTex,
+                Modulate = ButtonColorDefault
             };
-            buttonNormal.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
+            buttonNormal.SetPatchMargin(StyleBox.Margin.All, 10);
+            buttonNormal.SetPadding(StyleBox.Margin.All, 1);
+            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Horizontal, 14);
 
-            var buttonHoverTex = resCache.GetTexture("/Nano/button_hover.png");
-            var buttonHover = new StyleBoxTexture
+            var buttonHover = new StyleBoxTexture(buttonNormal)
             {
-                Texture = buttonHoverTex,
+                Modulate = ButtonColorHovered
             };
-            buttonHover.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonHover.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
-            var buttonPressedTex = resCache.GetTexture("/Nano/button_pressed.png");
-            var buttonPressed = new StyleBoxTexture
+            var buttonPressed = new StyleBoxTexture(buttonNormal)
             {
-                Texture = buttonPressedTex,
+                Modulate = ButtonColorPressed
             };
-            buttonPressed.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonPressed.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
-            var buttonDisabledTex = resCache.GetTexture("/Nano/button_disabled.png");
-            var buttonDisabled = new StyleBoxTexture
+            var buttonDisabled = new StyleBoxTexture(buttonNormal)
             {
-                Texture = buttonDisabledTex,
+                Modulate = ButtonColorDisabled
             };
-            buttonDisabled.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonDisabled.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
 
             var lineEditTex = resCache.GetTexture("/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
@@ -153,9 +156,10 @@ namespace Content.Client.UserInterface
 
             // Placeholder
             var placeholderTexture = resCache.GetTexture("/Nano/placeholder.png");
-            var placeholder = new StyleBoxTexture { Texture = placeholderTexture };
-            placeholder.SetPatchMargin(StyleBox.Margin.All, 24);
+            var placeholder = new StyleBoxTexture {Texture = placeholderTexture};
+            placeholder.SetPatchMargin(StyleBox.Margin.All, 19);
             placeholder.SetExpandMargin(StyleBox.Margin.All, -5);
+            placeholder.Mode = StyleBoxTexture.StretchMode.Tile;
 
             var itemListBackgroundSelected = new StyleBoxFlat {BackgroundColor = new Color(75, 75, 86)};
             itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
@@ -166,6 +170,28 @@ namespace Content.Client.UserInterface
             var itemListItemBackground = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)};
             itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
+
+            // NanoHeading
+            var nanoHeadingTex = resCache.GetTexture("/Nano/nanoheading.svg.96dpi.png");
+            var nanoHeadingBox = new StyleBoxTexture
+            {
+                Texture = nanoHeadingTex,
+                PatchMarginRight = 10,
+                PatchMarginTop = 10,
+                ContentMarginTopOverride = 2,
+                ContentMarginLeftOverride = 10,
+                PaddingTop = 4
+            };
+
+            nanoHeadingBox.SetPatchMargin(StyleBox.Margin.Left | StyleBox.Margin.Bottom, 2);
+
+            // Stripe background
+            var stripeBackTex = resCache.GetTexture("/Nano/stripeback.svg.96dpi.png");
+            var stripeBack = new StyleBoxTexture
+            {
+                Texture = stripeBackTex,
+                Mode = StyleBoxTexture.StretchMode.Tile
+            };
 
             Stylesheet = new Stylesheet(new[]
             {
@@ -211,7 +237,7 @@ namespace Content.Client.UserInterface
                 // Window close button hover.
                 new StyleRule(
                     new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
-                        new [] {TextureButton.StylePseudoClassHover}),
+                        new[] {TextureButton.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
@@ -219,7 +245,7 @@ namespace Content.Client.UserInterface
                 // Window close button pressed.
                 new StyleRule(
                     new SelectorElement(typeof(TextureButton), new[] {SS14Window.StyleClassWindowCloseButton}, null,
-                        new [] {TextureButton.StylePseudoClassPressed}),
+                        new[] {TextureButton.StylePseudoClassPressed}),
                     new[]
                     {
                         new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
@@ -227,25 +253,25 @@ namespace Content.Client.UserInterface
 
                 // Regular buttons!
                 new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new [] {Button.StylePseudoClassNormal}),
+                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, buttonNormal),
                     }),
                 new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new [] {Button.StylePseudoClassHover}),
+                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
                     }),
                 new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new [] {Button.StylePseudoClassPressed}),
+                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassPressed}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, buttonPressed),
                     }),
                 new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new [] {Button.StylePseudoClassDisabled}),
+                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassDisabled}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, buttonDisabled),
@@ -283,7 +309,8 @@ namespace Content.Client.UserInterface
                         new StyleProperty("font-color", new Color(192, 192, 192)),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(LineEdit), null, null, new [] {LineEdit.StylePseudoClassPlaceholder}),
+                new StyleRule(
+                    new SelectorElement(typeof(LineEdit), null, null, new[] {LineEdit.StylePseudoClassPlaceholder}),
                     new[]
                     {
                         new StyleProperty("font-color", Color.Gray),
@@ -306,14 +333,16 @@ namespace Content.Client.UserInterface
                             vScrollBarGrabberNormal),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, new [] {ScrollBar.StylePseudoClassHover}),
+                new StyleRule(
+                    new SelectorElement(typeof(VScrollBar), null, null, new[] {ScrollBar.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(ScrollBar.StylePropertyGrabber,
                             vScrollBarGrabberHover),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, new [] {ScrollBar.StylePseudoClassGrabbed}),
+                new StyleRule(
+                    new SelectorElement(typeof(VScrollBar), null, null, new[] {ScrollBar.StylePseudoClassGrabbed}),
                     new[]
                     {
                         new StyleProperty(ScrollBar.StylePropertyGrabber,
@@ -327,14 +356,16 @@ namespace Content.Client.UserInterface
                             hScrollBarGrabberNormal),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, new [] {ScrollBar.StylePseudoClassHover}),
+                new StyleRule(
+                    new SelectorElement(typeof(HScrollBar), null, null, new[] {ScrollBar.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(ScrollBar.StylePropertyGrabber,
                             hScrollBarGrabberHover),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, new [] {ScrollBar.StylePseudoClassGrabbed}),
+                new StyleRule(
+                    new SelectorElement(typeof(HScrollBar), null, null, new[] {ScrollBar.StylePseudoClassGrabbed}),
                     new[]
                     {
                         new StyleProperty(ScrollBar.StylePropertyGrabber,
@@ -355,10 +386,11 @@ namespace Content.Client.UserInterface
                     new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureUnchecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, new [] {Button.StylePseudoClassPressed}), new[]
-                {
-                    new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureChecked),
-                }),
+                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, new[] {Button.StylePseudoClassPressed}),
+                    new[]
+                    {
+                        new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureChecked),
+                    }),
 
                 new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new[]
                 {
@@ -371,7 +403,7 @@ namespace Content.Client.UserInterface
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new []{"tooltipBox"}, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"tooltipBox"}, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
@@ -410,77 +442,146 @@ namespace Content.Client.UserInterface
                 }),
 
                 // Placeholder
-                new StyleRule(new SelectorElement(typeof(Placeholder), null, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Placeholder), null, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, placeholder),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(Label), new []{Placeholder.StyleClassPlaceholderText}, null, null), new []
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSans16),
-                    new StyleProperty(Label.StylePropertyFontColor, new Color(103, 103, 103, 128)),
-                }),
+                new StyleRule(
+                    new SelectorElement(typeof(Label), new[] {Placeholder.StyleClassPlaceholderText}, null, null), new[]
+                    {
+                        new StyleProperty(Label.StylePropertyFont, notoSans16),
+                        new StyleProperty(Label.StylePropertyFontColor, new Color(103, 103, 103, 128)),
+                    }),
 
                 // Big Label
-                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassLabelHeading}, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeading}, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyFont, notoSansBold16),
                     new StyleProperty(Label.StylePropertyFontColor, NanoGold),
-                } ),
+                }),
+
+                // Bigger Label
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeadingBigger}, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyFont, notoSansBold20),
+                    new StyleProperty(Label.StylePropertyFontColor, NanoGold),
+                }),
 
                 // Small Label
-                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassLabelSubText}, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSubText}, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyFont, notoSans10),
                     new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
-                } ),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSecondaryColor}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Label.StylePropertyFont, notoSans12),
+                        new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
+                    }),
 
                 // Big Button
-                new StyleRule(new SelectorElement(typeof(Button), new []{StyleClassButtonBig}, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Button), new[] {StyleClassButtonBig}, null, null), new[]
                 {
                     new StyleProperty("font", notoSans16)
                 }),
 
                 //APC and SMES power state label colors
-                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassPowerStateNone}, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateNone}, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyFontColor, new Color(0.8f, 0.0f, 0.0f))
                 }),
 
-                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassPowerStateLow}, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateLow}, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyFontColor, new Color(0.9f, 0.36f, 0.0f))
                 }),
 
-                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassPowerStateGood}, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateGood}, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyFontColor, new Color(0.024f, 0.8f, 0.0f))
                 }),
 
                 // Those top menu buttons.
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), null, null, new [] {Button.StylePseudoClassNormal}), new []
-                {
-                    new StyleProperty(Button.StylePropertyStyleBox, buttonNormal),
-                }),
+                    new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyStyleBox, buttonNormal),
+                    }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), null, null, new [] {Button.StylePseudoClassPressed}), new []
-                {
-                    new StyleProperty(Button.StylePropertyStyleBox, buttonPressed),
-                }),
+                    new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassPressed}),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyStyleBox, buttonPressed),
+                    }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(GameHud.TopButton), null, null, new [] {Button.StylePseudoClassHover}), new []
-                {
-                    new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
-                }),
+                    new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassHover}),
+                    new[]
+                    {
+                        new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
+                    }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(Label), new [] {GameHud.TopButton.StyleClassLabelTopButton}, null, null), new []
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
-                }),
+                    new SelectorElement(typeof(Label), new[] {GameHud.TopButton.StyleClassLabelTopButton}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
+                    }),
+
+                // Targeting doll
+
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] {TargetingDoll.StyleClassTargetDollZone}, null,
+                        new[] {TextureButton.StylePseudoClassNormal}), new[]
+                    {
+                        new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDefault),
+                    }),
+
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] {TargetingDoll.StyleClassTargetDollZone}, null,
+                        new[] {TextureButton.StylePseudoClassHover}), new[]
+                    {
+                        new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorHovered),
+                    }),
+
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] {TargetingDoll.StyleClassTargetDollZone}, null,
+                        new[] {TextureButton.StylePseudoClassPressed}), new[]
+                    {
+                        new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorPressed),
+                    }),
+
+                // NanoHeading
+
+                new StyleRule(
+                    new SelectorChild(
+                        SelectorElement.Type(typeof(NanoHeading)),
+                        SelectorElement.Type(typeof(PanelContainer))),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, nanoHeadingBox),
+                    }),
+
+                // StripeBack
+                new StyleRule(
+                    SelectorElement.Type(typeof(StripeBack)),
+                    new []
+                    {
+                        new StyleProperty(StripeBack.StylePropertyBackground, stripeBack),
+                    }),
+
+                // StyleClassLabelBig
+                new StyleRule(
+                    SelectorElement.Class(StyleClassLabelBig),
+                    new []
+                    {
+                        new StyleProperty("font", notoSans16),
+                    }),
             });
         }
     }

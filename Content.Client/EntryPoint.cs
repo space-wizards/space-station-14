@@ -7,6 +7,7 @@ using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
 using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
+using Content.Client.Sandbox;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -62,7 +63,6 @@ namespace Content.Client
                 "EmitSoundOnUse",
                 "FootstepModifier",
                 "HeatResistance",
-                "CombatMode",
                 "Teleportable",
                 "ItemTeleporter",
                 "Portal",
@@ -110,6 +110,7 @@ namespace Content.Client
                 "Airlock",
                 "MedicalScanner",
                 "WirePlacer",
+                "Species",
                 "Drink",
                 "Food",
                 "DrinkFoodContainer",
@@ -130,7 +131,10 @@ namespace Content.Client
             factory.Register<SharedVendingMachineComponent>();
             factory.Register<SharedWiresComponent>();
 
+            factory.Register<SharedReagentDispenserComponent>();
+
             prototypes.RegisterIgnore("material");
+            prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
 
             IoCManager.Register<IGameHud, GameHud>();
             IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
@@ -139,6 +143,8 @@ namespace Content.Client
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
+            IoCManager.Register<ISandboxManager, SandboxManager>();
+
             if (TestingCallbacks != null)
             {
                 var cast = (ClientModuleTestingCallbacks) TestingCallbacks;
@@ -200,6 +206,7 @@ namespace Content.Client
             IoCManager.Resolve<IClientGameTicker>().Initialize();
             IoCManager.Resolve<IOverlayManager>().AddOverlay(new ParallaxOverlay());
             IoCManager.Resolve<IChatManager>().Initialize();
+            IoCManager.Resolve<ISandboxManager>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

@@ -4,9 +4,9 @@
   id: Medkit
   components:
   - type: Sprite
-    texture: Objects/medkit_r.png
+    texture: Objects/Medical/medkit_r.png
   - type: Icon
-    texture: Objects/medkit_r.png
+    texture: Objects/Medical/medkit_r.png
   - type: Healing
     heal: 100
     damage: Brute
@@ -30,9 +30,9 @@
   id: Ointment
   components:
   - type: Sprite
-    texture: Objects/ointment.png
+    texture: Objects/Medical/ointment.png
   - type: Icon
-    texture: Objects/ointment.png
+    texture: Objects/Medical/ointment.png
   - type: Healing
     heal: 10
     damage: Heat
@@ -49,9 +49,9 @@
   id: Brutepack
   components:
   - type: Sprite
-    texture: Objects/brutepack.png
+    texture: Objects/Medical/brutepack.png
   - type: Icon
-    texture: Objects/brutepack.png
+    texture: Objects/Medical/brutepack.png
   - type: Healing
     heal: 10
     damage: Brute

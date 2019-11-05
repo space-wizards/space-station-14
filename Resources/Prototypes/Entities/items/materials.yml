@@ -18,9 +18,9 @@
   - type: Stack
     stacktype: enum.StackType.Metal
   - type: Sprite
-    texture: Objects/sheet_metal.png
+    texture: Objects/Materials/sheet_metal.png
   - type: Icon
-    texture: Objects/sheet_metal.png
+    texture: Objects/Materials/sheet_metal.png
 
 - type: entity
   id: SteelSheet1
@@ -42,10 +42,10 @@
   - type: Stack
     stacktype: enum.StackType.Glass
   - type: Sprite
-    texture: Objects/sheet_glass.png
+    texture: Objects/Materials/sheet_glass.png
   - type: Icon
-    texture: Objects/sheet_glass.png
-    
+    texture: Objects/Materials/sheet_glass.png
+
 - type: entity
   id: GlassSheet1
   name: Glass Sheet 1
@@ -62,8 +62,8 @@
   - type: Stack
     stacktype: enum.StackType.Cable
   - type: Sprite
-    texture: Objects/cable_coil.png
+    texture: Objects/Tools/cable_coil.png
     color: red
   - type: Icon
-    texture: Objects/cable_coil.png
+    texture: Objects/Tools/cable_coil.png
   - type: WirePlacer

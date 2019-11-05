@@ -13,8 +13,7 @@ If you want to host or create content for SS14, this is the repo you need. Conta
 * Website: [spacestation14.io](https://spacestation14.io/)
 * Discord: [Invite Link](https://discord.gg/t2jac3p)
 * IRC: `irc.rizon.net#spacebus`
-* Project Management Board: [Waffle](https://waffle.io/space-wizards/space-station-14)
-* Automatic Content Builds: [builds.spacestation14.io](https://builds.spacestation14.io)
+* Automatic Content Builds: [builds.spacestation14.io](https://builds.spacestation14.io/jenkins)
 
 The IRC is setup to relay back and forth to the Discord server so [IRC nerds](https://xkcd.com/1782/) will not be left out.
 

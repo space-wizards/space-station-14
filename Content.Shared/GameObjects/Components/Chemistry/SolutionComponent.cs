@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -16,10 +17,14 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 #pragma warning restore 649
 
         [ViewVariables]
-        private Solution _containedSolution = new Solution();
-
-        private int _maxVolume;
+        protected Solution _containedSolution;
+        protected int _maxVolume;
         private SolutionCaps _capabilities;
+
+        /// <summary>
+        /// Triggered when the solution contents change.
+        /// </summary>
+        public event Action SolutionChanged;
 
         /// <summary>
         ///     The maximum volume of the container.
@@ -53,6 +58,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             set => _capabilities = value;
         }
 
+        public IReadOnlyList<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
+
         /// <inheritdoc />
         public override string Name => "Solution";
 
@@ -61,15 +68,14 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         /// <inheritdoc />
         public sealed override Type StateType => typeof(SolutionComponentState);
-
+        
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref _maxVolume, "maxVol", 0);
-            // This seems dumb of me
-            serializer.DataField(ref _containedSolution, "contents", _containedSolution);
+            serializer.DataField(ref _containedSolution, "contents", new Solution());
             serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
         }
 
@@ -90,36 +96,38 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             _containedSolution = new Solution();
         }
 
-        public bool TryAddReagent(string reagentId, int quantity, out int acceptedQuantity)
+        public void RemoveAllSolution()
         {
-            acceptedQuantity = _containedSolution.TotalVolume;
-            _containedSolution.AddReagent(reagentId, quantity);
-            acceptedQuantity -= _containedSolution.TotalVolume;
-            if (acceptedQuantity == 0)
-            {
-                return false;
-            }
+            _containedSolution.RemoveAllSolution();
+            OnSolutionChanged();
+        }
+
+        public bool TryRemoveReagent(string reagentId, int quantity)
+        {
+            if (!ContainsReagent(reagentId, out var currentQuantity)) return false;
+
+            _containedSolution.RemoveReagent(reagentId, quantity);
+            OnSolutionChanged();
             return true;
         }
 
-        public bool TryAddSolution(Solution solution, bool recalculateColor = true)
+        public bool TryRemoveSolution(int quantity)
         {
-            if (solution.TotalVolume > (_maxVolume - _containedSolution.TotalVolume))
-                return false;
+            if (CurrentVolume == 0) return false;
 
-            _containedSolution.AddSolution(solution);
-            if (recalculateColor) {
-                RecalculateColor();
-            }
+            _containedSolution.RemoveSolution(quantity);
+            OnSolutionChanged();
             return true;
         }
 
         public Solution SplitSolution(int quantity)
         {
-            return _containedSolution.SplitSolution(quantity);
+            var solutionSplit = _containedSolution.SplitSolution(quantity);
+            OnSolutionChanged();
+            return solutionSplit;
         }
 
-        private void RecalculateColor()
+        protected void RecalculateColor()
         {
             if(_containedSolution.TotalVolume == 0)
                 SubstanceColor = Color.White;
@@ -169,11 +177,36 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
             //TODO: Make me work!
         }
-
+        
         [Serializable, NetSerializable]
         public class SolutionComponentState : ComponentState
         {
             public SolutionComponentState() : base(ContentNetIDs.SOLUTION) { }
+        }
+
+        /// <summary>
+        /// Check if the solution contains the specified reagent.
+        /// </summary>
+        /// <param name="reagentId">The reagent to check for.</param>
+        /// <param name="quantity">Output the quantity of the reagent if it is contained, 0 if it isn't.</param>
+        /// <returns>Return true if the solution contains the reagent.</returns>
+        public bool ContainsReagent(string reagentId, out int quantity)
+        {
+            foreach (var reagent in _containedSolution.Contents)
+            {
+                if (reagent.ReagentId == reagentId)
+                {
+                    quantity = reagent.Quantity;
+                    return true;
+                }
+            }
+            quantity = 0;
+            return false;
+        }
+
+        protected virtual void OnSolutionChanged()
+        {
+            SolutionChanged?.Invoke();
         }
     }
 }

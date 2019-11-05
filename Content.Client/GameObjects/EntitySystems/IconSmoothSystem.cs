@@ -64,7 +64,8 @@ namespace Content.Client.GameObjects.EntitySystems
             // Yes, we updates ALL smoothing entities surrounding us even if they would never smooth with us.
             // This is simpler to implement. If you want to optimize it be my guest.
             if (sender is IEntity senderEnt && senderEnt.IsValid() &&
-                senderEnt.HasComponent<IconSmoothComponent>())
+                senderEnt.TryGetComponent(out IconSmoothComponent iconSmooth)
+                && iconSmooth.Running)
             {
                 var snapGrid = senderEnt.GetComponent<SnapGridComponent>();
 
@@ -82,7 +83,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     AddValidEntities(snapGrid.GetInDir(Direction.NorthWest));
                 }
             }
-            else if (ev.LastPosition.HasValue)
+
+            if (ev.LastPosition.HasValue)
             {
                 // Entity is no longer valid, update around the last position it was at.
                 var grid = _mapManager.GetGrid(ev.LastPosition.Value.grid);
