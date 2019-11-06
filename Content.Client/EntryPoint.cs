@@ -111,6 +111,7 @@ namespace Content.Client
                 "MedicalScanner",
                 "WirePlacer",
                 "Species",
+                "Rotatable",
             };
 
             foreach (var ignoreName in registerIgnore)

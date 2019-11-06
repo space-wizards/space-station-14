@@ -2,6 +2,9 @@
   id: VendingMachine
   name: vending machine
   components:
+  - type: Physics
+    Anchored: true
+  - type: Rotatable
   - type: Clickable
   - type: Sprite
     sprite: Buildings/VendingMachines/empty.rsi
