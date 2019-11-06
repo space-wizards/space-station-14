@@ -39,6 +39,7 @@
   - type: PowerDevice
     priority: Low
   - type: Wires
+  - type: Wrenchable
 
 - type: entity
   parent: VendingMachine
