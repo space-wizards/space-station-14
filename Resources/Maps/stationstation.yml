@@ -3175,7 +3175,7 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- type: BlackGloves
+- type: GlovesBlack
   uid: 267
   components:
   - grid: 0
@@ -3687,7 +3687,7 @@ entities:
     - !type:PhysShapeAabb
       layer: 1
     type: Collidable
-- type: LeatherGloves
+- type: GlovesLeather
   uid: 311
   components:
   - grid: 0
@@ -3700,7 +3700,7 @@ entities:
       mask: 5
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
-- type: LeatherGloves
+- type: GlovesLeather
   uid: 312
   components:
   - grid: 0
@@ -3713,7 +3713,7 @@ entities:
       mask: 5
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
-- type: LeatherGloves
+- type: GlovesLeather
   uid: 313
   components:
   - grid: 0

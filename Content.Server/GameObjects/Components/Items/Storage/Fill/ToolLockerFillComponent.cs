@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 
             if (random.Prob(0.05f))
             {
-                Spawn("YellowGloves");
+                Spawn("GlovesYellow");
             }
 
             if (random.Prob(0.4f))
