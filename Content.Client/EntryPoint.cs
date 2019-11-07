@@ -115,6 +115,8 @@ namespace Content.Client
                 "Food",
                 "DrinkFoodContainer",
                 "Stomach",
+                "Hunger",
+                "Thirst",
             };
 
             foreach (var ignoreName in registerIgnore)

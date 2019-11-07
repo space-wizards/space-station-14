@@ -20,8 +20,6 @@ namespace Content.Shared.Chemistry
         private List<ReagentQuantity> _contents = new List<ReagentQuantity>(2);
         public IReadOnlyList<ReagentQuantity> Contents => _contents;
 
-        public IReadOnlyList<ReagentQuantity> Contents => _contents;
-
         /// <summary>
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
         /// </summary>

@@ -80,6 +80,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 else
                 {
                     _contents = Owner.AddComponent<SolutionComponent>();
+                    _contents.Initialize();
                 }
             }
 
@@ -91,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             base.Startup();
             if (_initialContents != null)
             {
-                _contents.TryAddSolution(_initialContents);
+                _contents.TryAddSolution(_initialContents, true, true);
             }
             _initialContents = null;
             Owner.TryGetComponent(out AppearanceComponent appearance);

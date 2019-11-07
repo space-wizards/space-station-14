@@ -18,7 +18,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public static readonly int HydrationFactor = 30;
         public static readonly int MetabolisationAmount = 5;
 
-        [ViewVariables]
         private SolutionComponent _stomachContents;
         public float MetaboliseDelay => _metaboliseDelay;
         [ViewVariables]
@@ -46,6 +45,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             base.Initialize();
             // Shouldn't add to Owner to avoid cross-contamination (e.g. with blood or whatever they made hold other solutions)
             _stomachContents = new SolutionComponent();
+            _stomachContents.InitializeFromPrototype();
             _stomachContents.MaxVolume = _initialMaxVolume;
         }
 
@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 return false;
             }
-            _stomachContents.TryAddSolution(solution, false);
+            _stomachContents.TryAddSolution(solution, false, true);
             return true;
         }
 
@@ -66,7 +66,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// <param name="solution"></param>
         public void React(Solution solution)
         {
-            // TODO: Optimise further?
+            // TODO: Implement metabolism post from here
+            // https://github.com/space-wizards/space-station-14/issues/170#issuecomment-481835623 as raised by moneyl
             var hungerUpdate = 0;
             var thirstUpdate = 0;
             foreach (var reagent in solution.Contents)

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -13,12 +15,13 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class HungerComponent : SharedHungerComponent
+    public sealed class HungerComponent : Component
     {
         #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
         #pragma warning restore 649
 
+        public override string Name => "Hunger";
 
         // Base stuff
         public float BaseDecayRate => _baseDecayRate;
@@ -63,7 +66,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     playerSpeedupComponent.SprintMoveSpeed = playerSpeedupComponent.SprintMoveSpeed * 4;
                 }
 
-                SendNetworkMessage(new HungerStateMessage(_currentHungerThreshold));
+                // Update UI
+                Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
+                statusEffectsComponent?.ChangeStatus(StatusEffect.Hunger, "/Textures/Mob/UI/Hunger/" +
+                                                                          _currentHungerThreshold + ".png");
 
                 switch (_currentHungerThreshold)
                 {
@@ -159,5 +165,14 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return;
             }
         }
+    }
+
+    public enum HungerThreshold
+    {
+        Overfed,
+        Okay,
+        Peckish,
+        Starving,
+        Dead,
     }
 }
