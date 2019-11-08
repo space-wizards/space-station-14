@@ -60,7 +60,7 @@
 
 - type: entity
   name: Broken bottle
-  parent: BaseItem  # Can't hold liquids
+  parent: DrinkBottleBase  # Can't hold liquids
   id: DrinkBrokenBottle
   components:
   - type: Sprite
