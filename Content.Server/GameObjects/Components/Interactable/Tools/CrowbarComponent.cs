@@ -31,11 +31,10 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
 
-            var ownerLocation = Owner.Transform.GridPosition;
-            var tileCenterX = tile.X + 0.5;
-            var tileCenterY = tile.Y + 0.5;
+            var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
+            float distance = coordinates.Distance(_mapManager, Owner.Transform.GridPosition);
 
-            if (Distance(ownerLocation.X, tileCenterX, ownerLocation.Y, tileCenterY) > MAX_DISTANCE)
+            if (distance > MAX_DISTANCE)
             {
                 return;
             }
@@ -47,11 +46,6 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(underplating.TileId));
                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/crowbar.ogg", Owner);
             }
-        }
-
-        private double Distance(float x1, double x2, float y1, double y2)
-        {
-            return Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
         }
     }
 }
