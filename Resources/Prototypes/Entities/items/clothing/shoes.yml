@@ -4,100 +4,971 @@
   abstract: true
   components:
   - type: Clothing
-    Slots: [shoes]
-
+    Slots:
+    - shoes
+  - type: Sprite
+    state: icon
+  - type: Icon
+    state: icon
 
 - type: entity
   parent: ShoesBase
-  id: ShoesItem
-  name: Black Shoes
+  id: ShoesAssetProtectionRig
+  name: Asset Protection Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/asset_protection_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/asset_protection_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/asset_protection_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesAssetProtectionRigSealed
+  name: Asset Protection Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/asset_protection_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/asset_protection_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/asset_protection_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesAtmosMagboots0
+  name: Atmos magboots (off)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/atmosmagboots0.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/atmosmagboots0.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/atmosmagboots0.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesAtmosMagboots1
+  name: Atmos magboots (on)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/atmosmagboots1.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/atmosmagboots1.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/atmosmagboots1.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesBlack
+  name: Black shoes
   description: Don't take them off at your office Christmas party
   components:
   - type: Sprite
-    sprite: Clothing/shoes_black.rsi
-    state: black
-
+    sprite: Clothing/Shoes/black.rsi
   - type: Icon
-    sprite: Clothing/shoes_black.rsi
-    state: black
-
+    sprite: Clothing/Shoes/black.rsi
   - type: Clothing
-    sprite: Clothing/shoes_black.rsi
-
+    sprite: Clothing/Shoes/black.rsi
 
 - type: entity
   parent: ShoesBase
-  id: WhiteShoes
-  name: White Shoes
+  id: ShoesBlue
+  name: Blue shoes
   description: Don't take them off at your office Christmas party
   components:
   - type: Sprite
-    sprite: Clothing/shoes_white.rsi
-    state: white
-
+    sprite: Clothing/Shoes/blue.rsi
   - type: Icon
-    sprite: Clothing/shoes_white.rsi
-    state: white
-
+    sprite: Clothing/Shoes/blue.rsi
   - type: Clothing
-    sprite: Clothing/shoes_white.rsi
+    sprite: Clothing/Shoes/blue.rsi
 
 - type: entity
   parent: ShoesBase
-  id: ClownShoes
-  name: Clown Shoes
-  description: The prankster's standard-issue clowning shoes. Damn they're huge!
-  components: 
+  id: ShoesBoots
+  name: Boots
+  description: ''
+  components:
   - type: Sprite
-    sprite: Clothing/shoes_clown.rsi
-    state: icon
-
+    sprite: Clothing/Shoes/boots.rsi
   - type: Icon
-    sprite: Clothing/shoes_clown.rsi
-    state: icon
-
+    sprite: Clothing/Shoes/boots.rsi
   - type: Clothing
-    sprite: Clothing/shoes_clown.rsi
-
-  - type: Sound
-  - type: FootstepModifier
-    footstepSoundCollection: footstep_clown
-
-- type: entity
-  parent: ShoesBase
-  id: JackbootShoes
-  name: Jackboots
-  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
-  components: 
-  - type: Sprite
-    sprite: Clothing/shoes_jackboots.rsi
-    state: icon
-
-  - type: Icon
-    sprite: Clothing/shoes_jackboots.rsi
-    state: icon
-
-  - type: Clothing
-    sprite: Clothing/shoes_jackboots.rsi
-
-  - type: Sound
-  - type: FootstepModifier
-    footstepSoundCollection: footstep_heavy
-
+    sprite: Clothing/Shoes/boots.rsi
 
 - type: entity
   parent: ShoesBase
   id: ShoesBrown
-  name: Brown Shoes
+  name: Brown shoes
   description: A pair of brown shoes.
   components:
   - type: Sprite
-    sprite: Clothing/shoes_brown.rsi
-    state: brown
-
+    sprite: Clothing/Shoes/brown.rsi
   - type: Icon
-    sprite: Clothing/shoes_brown.rsi
-    state: brown
-
+    sprite: Clothing/Shoes/brown.rsi
   - type: Clothing
-    sprite: Clothing/shoes_brown.rsi
+    sprite: Clothing/Shoes/brown.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesCeRig
+  name: CE Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ce_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ce_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ce_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesCeRigSealed
+  name: CE Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ce_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ce_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ce_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesChef
+  name: Chef shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/chef.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/chef.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/chef.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesClown
+  name: Clown shoes
+  description: The prankster's standard-issue clowning shoes. Damn they're huge!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/clown.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/clown.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/clown.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesCowboy
+  name: Cowboy shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/cowboy.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/cowboy.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/cowboy.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesCult
+  name: Cult shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/cult.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/cult.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/cult.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesDetective
+  name: Detective shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/detective.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/detective.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/detective.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesDigiboots
+  name: Digiboots
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/digiboots.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/digiboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/digiboots.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesEngineeringRig
+  name: Engineering Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/engineering_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/engineering_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/engineering_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesEngineeringRigSealed
+  name: Engineering Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/engineering_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/engineering_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/engineering_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesErtCommanderRig
+  name: ERT Commander Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ert_commander_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ert_commander_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ert_commander_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesErtCommanderRigSealed
+  name: ERT Commander Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ert_commander_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ert_commander_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ert_commander_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesErtEngineerRig
+  name: ERT Engineer Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ert_engineer_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ert_engineer_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ert_engineer_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesErtEngineerRigSealed
+  name: ERT Engineer Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ert_engineer_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ert_engineer_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ert_engineer_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesErtMedicalRig
+  name: ERT Medical Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ert_medical_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ert_medical_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ert_medical_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesErtMedicalRigSealed
+  name: ERT Medical Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ert_medical_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ert_medical_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ert_medical_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesErtSecurityRig
+  name: ERT Security Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ert_security_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ert_security_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ert_security_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesErtSecurityRigSealed
+  name: ERT Security Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ert_security_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ert_security_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ert_security_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesEvaRig
+  name: EVA Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/eva_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/eva_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/eva_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesEvaRigSealed
+  name: EVA Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/eva_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/eva_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/eva_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesFlippers
+  name: Flippers
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/flippers.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/flippers.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/flippers.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesGaloshes
+  name: Galoshes shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/galoshes.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/galoshes.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/galoshes.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesGreen
+  name: Green shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/green.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/green.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/green.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesHackerRig
+  name: Hacker Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/hacker_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/hacker_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/hacker_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesHackerRigSealed
+  name: Hacker Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/hacker_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/hacker_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/hacker_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesHazardRig
+  name: Hazard Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/hazard_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/hazard_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/hazard_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesHazardRigSealed
+  name: Hazard Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/hazard_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/hazard_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/hazard_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesIhsRig
+  name: IHS Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ihs_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ihs_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ihs_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesIhsRigOld
+  name: IHS Rig Old shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ihs_rig_old.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ihs_rig_old.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ihs_rig_old.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesIhsRigSealed
+  name: IHS Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ihs_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ihs_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ihs_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesIhsRigSealedOld
+  name: IHS Rig Sealed Old shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ihs_rig_sealed_old.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ihs_rig_sealed_old.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ihs_rig_sealed_old.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesJackboots
+  name: Jackboots
+  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/jackboots.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/jackboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/jackboots.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesLeather
+  name: Leather shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/leather.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/leather.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/leather.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesMagboots0
+  name: Magboots (off)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/magboots0.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/magboots0.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/magboots0.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesMagboots1
+  name: Magboots (on)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/magboots1.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/magboots1.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/magboots1.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesMedicalRig
+  name: Medical Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/medical_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/medical_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/medical_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesMedicalRigSealed
+  name: Medical Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/medical_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/medical_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/medical_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesMercboots0
+  name: Merc boots
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/mercboots0.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/mercboots0.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/mercboots0.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesMercboots1
+  name: Merc boots
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/mercboots1.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/mercboots1.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/mercboots1.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesMercRig
+  name: Merc Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/merc_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/merc_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/merc_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesMercRigSealed
+  name: Merc Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/merc_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/merc_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/merc_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesMime
+  name: Mime shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/mime.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/mime.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/mime.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesNinjaRig
+  name: Ninja Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ninja_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ninja_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ninja_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesNinjaRigSealed
+  name: Ninja Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/ninja_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/ninja_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/ninja_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesOrange
+  name: Orange shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/orange.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/orange.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/orange.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesOrange1
+  name: Orange shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/orange1.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/orange1.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/orange1.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesPurple
+  name: Purple shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/purple.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/purple.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/purple.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesRainbow
+  name: Rainbow shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/rain_bow.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/rain_bow.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/rain_bow.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesRed
+  name: Red shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/red.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/red.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/red.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesReinforced
+  name: Reinforced shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/reinforced.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/reinforced.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/reinforced.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesScienceRig
+  name: Science Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/science_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/science_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/science_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesScienceRigSealed
+  name: Science Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/science_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/science_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/science_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesSecurityRig
+  name: Security Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/security_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/security_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/security_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesSecurityRigSealed
+  name: Security Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/security_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/security_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/security_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesSlippers
+  name: Slippers
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/slippers.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/slippers.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/slippers.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesSlippersWorn
+  name: Slippers (Worn)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/slippers_worn.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/slippers_worn.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/slippers_worn.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesSpringjacks
+  name: Springjacks
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/springjacks.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/springjacks.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/springjacks.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesStealthRig
+  name: Stealth Rig shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/stealth_rig.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/stealth_rig.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/stealth_rig.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesStealthRigSealed
+  name: Stealth Rig Sealed shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/stealth_rig_sealed.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/stealth_rig_sealed.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/stealth_rig_sealed.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesSwat
+  name: Swat shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/swat.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/swat.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/swat.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesSNinja
+  name: S Ninja shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/s_ninja.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/s_ninja.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/s_ninja.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesTourist
+  name: Tourist shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/tourist.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/tourist.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/tourist.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesWhite
+  name: White shoes
+  description: Don't take them off at your office Christmas party
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/white.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/white.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/white.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesWizard
+  name: Wizard shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/wizard.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/wizard.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/wizard.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesWorkboots
+  name: Workboots shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/workboots.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/workboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/workboots.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesYellow
+  name: Yellow shoes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/yellow.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/yellow.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/yellow.rsi
