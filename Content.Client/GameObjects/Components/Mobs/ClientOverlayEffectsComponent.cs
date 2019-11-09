@@ -60,6 +60,9 @@ namespace Content.Client.GameObjects
                 case PlayerAttachedMsg _:
                     SetOverlay(_currentEffect);
                     break;
+                case PlayerDetachedMsg _:
+                    RemoveOverlay();
+                    break;
             }
         }
 
