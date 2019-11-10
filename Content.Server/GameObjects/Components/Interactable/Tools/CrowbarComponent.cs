@@ -19,8 +19,6 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
-        private double MAX_DISTANCE = 1.5;
-
         /// <summary>
         /// Tool that can be used to crowbar things apart, such as deconstructing
         /// </summary>
@@ -34,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
             float distance = coordinates.Distance(_mapManager, Owner.Transform.GridPosition);
 
-            if (distance > MAX_DISTANCE)
+            if (distance > InteractionSystem.InteractionRange)
             {
                 return;
             }
