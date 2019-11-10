@@ -268,7 +268,7 @@ namespace Content.Server.GameTicking
                 var uniform = _entityManager.SpawnEntity("UniformAssistant");
                 inventory.Equip(EquipmentSlotDefines.Slots.INNERCLOTHING, uniform.GetComponent<ClothingComponent>());
 
-                var shoes = _entityManager.SpawnEntity("ShoesItem");
+                var shoes = _entityManager.SpawnEntity("ShoesBlack");
                 inventory.Equip(EquipmentSlotDefines.Slots.SHOES, shoes.GetComponent<ClothingComponent>());
             }
 

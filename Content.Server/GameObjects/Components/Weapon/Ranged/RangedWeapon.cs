@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -63,6 +64,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         {
             if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand?.Owner != Owner)
             {
+                return;
+            }
+
+            if(!user.TryGetComponent(out CombatModeComponent combat) || !combat.IsInCombatMode) {
                 return;
             }
 

@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
             Spawn("CableStack");
 
             // 5% chance for a pair of fancy insulated gloves, else just a third cable coil.
-            Spawn(random.Prob(0.05f) ? "YellowGloves" : "CableStack");
+            Spawn(random.Prob(0.05f) ? "GlovesYellow" : "CableStack");
         }
     }
 }
