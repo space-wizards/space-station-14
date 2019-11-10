@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using System;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -27,6 +28,15 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         {
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
+
+            var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
+            float distance = coordinates.Distance(_mapManager, Owner.Transform.GridPosition);
+
+            if (distance > InteractionSystem.InteractionRange)
+            {
+                return;
+            }
+
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
             if (tileDef.CanCrowbar)
             {
