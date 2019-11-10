@@ -1,23 +1,35 @@
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Research
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class ResearchConsoleComponent : SharedResearchConsoleComponent, IActivate
-    {
+    public class ResearchConsoleComponent : SharedResearchConsoleComponent, IActivate {
+
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IRobustRandom _random;
+#pragma warning restore 649
+
         private BoundUserInterface _userInterface;
         private ResearchClientComponent _client;
+        private const string _soundCollectionName = "keyboard";
         public override void Initialize()
         {
             base.Initialize();
@@ -88,7 +100,15 @@ namespace Content.Server.GameObjects.Components.Research
                 return;
 
             OpenUserInterface(actor.playerSession);
+            PlayKeyBoardSound();
             return;
+        }
+
+        private void PlayKeyBoardSound() {
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
+            var file = _random.Pick(soundCollection.PickFiles);
+            var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            audioSystem.Play(file);
         }
     }
 }
