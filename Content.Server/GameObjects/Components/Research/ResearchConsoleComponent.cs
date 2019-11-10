@@ -104,7 +104,8 @@ namespace Content.Server.GameObjects.Components.Research
             return;
         }
 
-        private void PlayKeyBoardSound() {
+        private void PlayKeyBoardSound()
+        {
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
             var file = _random.Pick(soundCollection.PickFiles);
             var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
