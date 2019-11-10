@@ -19,7 +19,8 @@ namespace Content.Server.GameObjects.Components.Research
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class ResearchConsoleComponent : SharedResearchConsoleComponent, IActivate {
+    public class ResearchConsoleComponent : SharedResearchConsoleComponent, IActivate
+    {
 
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
