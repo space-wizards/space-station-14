@@ -100,11 +100,11 @@ namespace Content.Server.GameObjects.Components.Research
                 return;
 
             OpenUserInterface(actor.playerSession);
-            PlayKeyBoardSound();
+            PlayKeyboardSound();
             return;
         }
 
-        private void PlayKeyBoardSound()
+        private void PlayKeyboardSound()
         {
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
             var file = _random.Pick(soundCollection.PickFiles);
