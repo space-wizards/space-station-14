@@ -1,0 +1,14 @@
+- type: entity
+  name: Steel Floor Tile
+  parent: BaseItem
+  id: FloorTileSteel
+  description: Those could work as a pretty decent throwing weapon.
+  components:
+  - type: Sprite
+    texture: Objects/Tiles/tile.png
+  - type: Icon
+    texture: Objects/Tiles/tile.png
+  - type: Item
+    Size: 25
+  - type: FloorTile
+    output: floor_steel

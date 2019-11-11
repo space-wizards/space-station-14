@@ -117,6 +117,7 @@
   footstep_sounds: footstep_floor
   friction: 0.35
   subfloor: plating
+  item_drop: FloorTileSteel
 
 - type: tile
   name: floor_steel_dirty
