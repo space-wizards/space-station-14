@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
@@ -8,6 +9,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -19,6 +21,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     public class MeleeWeaponComponent : Component, IAttack
     {
         public override string Name => "MeleeWeapon";
+        private TimeSpan _lastAttackTime;
 
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -31,6 +34,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private float _arcWidth = 90;
         private string _arc;
         private string _hitSound;
+        private float _cooldownTime = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string Arc
@@ -69,10 +73,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _arcWidth, "arcwidth", 90);
             serializer.DataField(ref _arc, "arc", "default");
             serializer.DataField(ref _hitSound, "hitSound", "/Audio/weapons/genhit1.ogg");
+            serializer.DataField(ref _cooldownTime, "cooldownTime", 1f);
         }
 
         void IAttack.Attack(AttackEventArgs eventArgs)
         {
+            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            var span = curTime - _lastAttackTime;
+            if(span.TotalSeconds < _cooldownTime) {
+                return;
+            }
             var location = eventArgs.User.Transform.GridPosition;
             var angle = new Angle(eventArgs.ClickLocation.ToWorld(_mapManager).Position -
                                   location.ToWorld(_mapManager).Position);
@@ -102,6 +112,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 var sys = _entitySystemManager.GetEntitySystem<MeleeWeaponSystem>();
                 sys.SendAnimation(Arc, angle, eventArgs.User, hitEntities);
             }
+            _lastAttackTime = IoCManager.Resolve<IGameTiming>().CurTime;
         }
     }
 }
