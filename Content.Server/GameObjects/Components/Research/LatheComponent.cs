@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Research
         internal bool Produce(LatheRecipePrototype recipe)
         {   if(!Powered)
             {
-                return;
+                return false;
             }
             if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent storage)) return false;
 
