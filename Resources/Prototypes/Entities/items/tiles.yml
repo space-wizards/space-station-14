@@ -12,3 +12,7 @@
     Size: 25
   - type: FloorTile
     output: floor_steel
+  - type: Stack
+    stacktype: FloorTileSteel
+    count: 1
+    max: 8
