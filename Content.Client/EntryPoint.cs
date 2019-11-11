@@ -112,6 +112,12 @@ namespace Content.Client
                 "MedicalScanner",
                 "WirePlacer",
                 "Species",
+                "Drink",
+                "Food",
+                "DrinkFoodContainer",
+                "Stomach",
+                "Hunger",
+                "Thirst",
                 "Rotatable",
             };
 

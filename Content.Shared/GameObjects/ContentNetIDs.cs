@@ -30,5 +30,6 @@
         public const uint COMBATMODE = 1025;
         public const uint STATUSEFFECTS = 1026;
         public const uint OVERLAYEFFECTS = 1027;
+        public const uint STOMACH = 1028;
     }
 }

@@ -32,5 +32,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     public enum StatusEffect
     {
         Health,
+        Hunger,
+        Thirst,
     }
 }
