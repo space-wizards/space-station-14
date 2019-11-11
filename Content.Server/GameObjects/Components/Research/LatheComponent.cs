@@ -79,8 +79,11 @@ namespace Content.Server.GameObjects.Components.Research
         }
 
         internal bool Produce(LatheRecipePrototype recipe)
-        {
-            if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent storage) || !Powered) return false;
+        {   if(!Powered)
+            {
+                return;
+            }
+            if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent storage)) return false;
 
             _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
 
