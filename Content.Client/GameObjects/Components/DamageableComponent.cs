@@ -20,9 +20,8 @@ namespace Content.Client.GameObjects
         {
             base.HandleComponentState(curState, nextState);
 
-            if(curState is DamageComponentState)
+            if(curState is DamageComponentState damagestate)
             {
-                var damagestate = (DamageComponentState)curState;
                 CurrentDamage = damagestate.CurrentDamage;
             }
         }

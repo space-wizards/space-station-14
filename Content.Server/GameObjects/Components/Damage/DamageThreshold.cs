@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects
 
         public override bool Equals(Object obj)
         {
-            return obj is DamageThreshold && this == (DamageThreshold)obj;
+            return obj is DamageThreshold threshold && this == threshold;
         }
         public override int GetHashCode()
         {
