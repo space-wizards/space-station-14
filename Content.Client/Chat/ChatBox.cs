@@ -22,7 +22,7 @@ namespace Content.Client.Chat
 
         private readonly IList<string> _inputHistory = new List<string>();
 
-        private ILocalizationManager localize = IoCManager.Resolve<ILocalizationManager>();
+        private readonly ILocalizationManager localize = IoCManager.Resolve<ILocalizationManager>();
 
         public LineEdit Input { get; private set; }
         public OutputPanel Contents { get; }
