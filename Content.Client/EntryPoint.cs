@@ -97,6 +97,8 @@ namespace Content.Client
                 "BallisticBullet",
                 "HitscanWeaponCapacitor",
                 "PowerCell",
+                "WeaponCapacitorCharger",
+                "PowerCellCharger",
                 "AiController",
                 "PlayerInputMover",
                 "Computer",
