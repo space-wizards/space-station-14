@@ -1,7 +1,9 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -30,13 +32,18 @@ namespace Content.Server.GameObjects.Components.Research
 
         private BoundUserInterface _userInterface;
         private ResearchClientComponent _client;
+        private PowerDeviceComponent _powerDevice;
         private const string _soundCollectionName = "keyboard";
+
+        private bool Powered => _powerDevice.Powered;
+        
         public override void Initialize()
         {
             base.Initialize();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(ResearchConsoleUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             _client = Owner.GetComponent<ResearchClientComponent>();
+            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -99,7 +106,10 @@ namespace Content.Server.GameObjects.Components.Research
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return;
-
+            if (!Powered)
+            {
+                return;
+            }
             OpenUserInterface(actor.playerSession);
             PlayKeyboardSound();
             return;
@@ -112,5 +122,7 @@ namespace Content.Server.GameObjects.Components.Research
             var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
             audioSystem.Play(file);
         }
+
+
     }
 }

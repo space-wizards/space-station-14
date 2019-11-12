@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Materials;
@@ -30,12 +31,15 @@ namespace Content.Server.GameObjects.Components.Research
         public bool Producing { get; private set; } = false;
 
         private LatheRecipePrototype _producingRecipe = null;
+        private PowerDeviceComponent _powerDevice;
+        private bool Powered => _powerDevice.Powered;
 
         public override void Initialize()
         {
             base.Initialize();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(LatheUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -75,7 +79,10 @@ namespace Content.Server.GameObjects.Components.Research
         }
 
         internal bool Produce(LatheRecipePrototype recipe)
-        {
+        {   if(!Powered)
+            {
+                return false;
+            }
             if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent storage)) return false;
 
             _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
@@ -111,7 +118,10 @@ namespace Content.Server.GameObjects.Components.Research
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return;
-
+            if (!Powered)
+            {
+                return;
+            }
             OpenUserInterface(actor.playerSession);
             return;
         }

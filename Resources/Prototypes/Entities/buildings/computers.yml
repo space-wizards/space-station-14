@@ -109,7 +109,10 @@
       type: ResearchConsoleBoundUserInterface
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
-
+  - type: PowerDevice
+    drawtype: Both
+    load: 200
+    priority: Low
 
 - type: entity
   id: computerId
