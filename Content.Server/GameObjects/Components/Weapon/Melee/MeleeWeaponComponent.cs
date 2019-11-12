@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Items;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -112,7 +111,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 var sys = _entitySystemManager.GetEntitySystem<MeleeWeaponSystem>();
                 sys.SendAnimation(Arc, angle, eventArgs.User, hitEntities);
             }
+
             _lastAttackTime = IoCManager.Resolve<IGameTiming>().CurTime;
+
+            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
+            {
+                cooldown.CooldownStart = _lastAttackTime;
+                cooldown.CooldownEnd = _lastAttackTime + TimeSpan.FromSeconds(_cooldownTime);
+            }
         }
     }
 }

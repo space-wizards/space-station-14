@@ -31,5 +31,6 @@
         public const uint STATUSEFFECTS = 1026;
         public const uint OVERLAYEFFECTS = 1027;
         public const uint STOMACH = 1028;
+        public const uint ITEMCOOLDOWN = 1029;
     }
 }

@@ -21,6 +21,8 @@
     sprite: Objects/Melee/spear.rsi
     prefix: inhand
 
+  - type: ItemCooldown
+
 - type: MeleeWeaponAnimation
   id: spear
   state: spear
