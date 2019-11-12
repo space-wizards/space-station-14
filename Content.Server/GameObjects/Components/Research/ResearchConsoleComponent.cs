@@ -33,7 +33,6 @@ namespace Content.Server.GameObjects.Components.Research
         private BoundUserInterface _userInterface;
         private ResearchClientComponent _client;
         private PowerDeviceComponent _powerDevice;
-        private AppearanceComponent _appearance;
         private const string _soundCollectionName = "keyboard";
 
         private bool Powered => _powerDevice.Powered;
