@@ -53,12 +53,11 @@ namespace Content.Server.GameObjects.Components.Items
             }
 
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
-            if (tileDef.IsSubFloor && attacked == null)
+            if (tileDef.IsSubFloor && attacked == null && Stack.Use(1))
             {
                 var desiredTile = _tileDefinitionManager[_outputTile];
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
                 _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/genhit.ogg", Owner);
-                Stack.Use(1);
                 if(Stack.Count < 1){
                     Owner.Delete();
                 }
