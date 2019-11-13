@@ -58,10 +58,9 @@ namespace Content.Server.GameObjects.Components.Items
                 var desiredTile = _tileDefinitionManager[_outputTile];
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
                 _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/genhit.ogg", Owner);
-                if (!Stack.Use(1))
-                {
+                Stack.Use(1);
+                if(Stack.Count < 1){
                     Owner.Delete();
-                    return;
                 }
             }
 
