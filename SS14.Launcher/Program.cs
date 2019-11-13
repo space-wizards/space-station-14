@@ -47,7 +47,7 @@ namespace SS14.Launcher
         [Dependency] private readonly IGameController _gameController;
 #pragma warning restore 649
 
-        public static void Main(string[] args)
+        public static void Main()
         {
             FixTlsVersions();
 
@@ -326,7 +326,6 @@ namespace SS14.Launcher
             [Dependency] private readonly IResourceCache _resourceCache;
             [Dependency] private readonly ILocalizationManager _loc;
             [Dependency] private readonly IUriOpener _uriOpener;
-            private bool _progressBarVisible;
 #pragma warning restore 649
 
             public Control RootControl { get; }
@@ -336,10 +335,8 @@ namespace SS14.Launcher
 
             public bool ProgressBarVisible
             {
-                get => _progressBarVisible;
                 set
                 {
-                    _progressBarVisible = value;
                     ProgressBar.Visible = value;
                     StatusLabel.SizeFlagsHorizontal = value ? SizeFlags.Fill : SizeFlags.FillExpand;
                 }
