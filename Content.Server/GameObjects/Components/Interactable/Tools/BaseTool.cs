@@ -1,4 +1,4 @@
-﻿// This comment prevent Rider and Resharper Optimized Import from removing Robust.Shared.Utility
+﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
 // ReSharper disable once RedundantUsingDirective
 using Robust.Shared.Utility;
 using Robust.Shared.GameObjects;
