@@ -1,5 +1,4 @@
 using Content.Client.Chat;
-using Robust.Client;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 

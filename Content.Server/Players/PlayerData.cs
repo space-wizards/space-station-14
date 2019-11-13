@@ -1,6 +1,5 @@
 ﻿using Content.Server.Mobs;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
 

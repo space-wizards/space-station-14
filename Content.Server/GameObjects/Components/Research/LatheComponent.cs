@@ -9,9 +9,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Timers;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research

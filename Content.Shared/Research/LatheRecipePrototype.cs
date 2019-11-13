@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

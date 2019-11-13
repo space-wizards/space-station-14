@@ -1,5 +1,5 @@
-﻿using Content.Shared.GameObjects;
-using System;
+﻿using System;
+using Content.Shared.GameObjects;
 
 namespace Content.Server.GameObjects
 {

@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Robust.Server.Interfaces.Player;
-using Robust.Server.Player;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Interfaces.GameTicking

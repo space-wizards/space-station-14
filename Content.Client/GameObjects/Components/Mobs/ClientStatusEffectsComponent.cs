@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
@@ -14,7 +13,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {

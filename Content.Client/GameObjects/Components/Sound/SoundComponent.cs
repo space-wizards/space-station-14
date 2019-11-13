@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Sound;
 using Robust.Client.GameObjects.EntitySystems;

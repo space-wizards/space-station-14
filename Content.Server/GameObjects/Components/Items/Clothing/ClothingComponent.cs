@@ -5,7 +5,6 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects

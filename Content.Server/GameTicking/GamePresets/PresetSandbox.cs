@@ -1,4 +1,3 @@
-using Content.Server.Interfaces.GameTicking;
 using Content.Server.Sandbox;
 using Robust.Shared.IoC;
 

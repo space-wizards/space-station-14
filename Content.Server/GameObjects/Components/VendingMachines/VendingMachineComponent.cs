@@ -1,21 +1,21 @@
 ﻿using System;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.VendingMachines;
-using Content.Shared.VendingMachines;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
-using Robust.Shared.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.VendingMachines;
+using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
+using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
 namespace Content.Server.GameObjects.Components.VendingMachines

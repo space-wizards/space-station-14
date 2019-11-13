@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;

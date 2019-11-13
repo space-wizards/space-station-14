@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Research;
-using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Materials;
 using Content.Shared.Research;
 using Robust.Client.UserInterface;
@@ -10,8 +9,6 @@ using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timers;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Research
 {

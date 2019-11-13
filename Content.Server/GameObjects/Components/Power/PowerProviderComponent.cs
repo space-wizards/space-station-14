@@ -6,7 +6,6 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power

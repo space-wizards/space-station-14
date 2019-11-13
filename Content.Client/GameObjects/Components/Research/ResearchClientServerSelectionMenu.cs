@@ -1,6 +1,4 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Research;
-using Robust.Client.UserInterface.Controls;
+﻿using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;

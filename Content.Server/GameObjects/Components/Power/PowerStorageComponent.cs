@@ -1,16 +1,12 @@
-﻿using Content.Shared.GameObjects.Components.Power;
+﻿using System;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Power;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System;
-using System.Globalization;
-using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Power
 {

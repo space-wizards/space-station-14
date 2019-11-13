@@ -1,11 +1,8 @@
 ﻿using System;
 using Content.Server.Explosions;
-using Content.Server.GameObjects.Components.Explosive;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Chemistry

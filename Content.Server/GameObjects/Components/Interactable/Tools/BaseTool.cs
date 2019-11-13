@@ -1,8 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameObjects.Components.Interactable.Tools
 {

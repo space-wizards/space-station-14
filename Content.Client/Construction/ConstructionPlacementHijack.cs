@@ -1,14 +1,11 @@
 using Content.Client.GameObjects.Components.Construction;
 using Content.Shared.Construction;
-using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Placement;
-using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Construction
 {

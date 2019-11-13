@@ -225,7 +225,7 @@ namespace Content.Client.Construction
             PopulateTree(string.IsNullOrWhiteSpace(str) ? null : str.ToLowerInvariant());
         }
 
-        void OnBuildPressed(Button.ButtonEventArgs args)
+        void OnBuildPressed(BaseButton.ButtonEventArgs args)
         {
             var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
             if (prototype == null)

@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿using System;
+using System.Collections.Generic;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using System;
-using System.Collections.Generic;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power

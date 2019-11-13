@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using Robust.Shared.Localization;
-using Robust.Shared.IoC;
-using Robust.Shared.Input;
 
 namespace Content.Client.Chat
 {

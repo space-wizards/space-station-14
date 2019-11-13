@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -316,7 +317,7 @@ namespace SS14.Launcher
             // I assume .NET Core does not have this issue being disconnected from the OS and all that.
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
+                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
             }
         }
 
