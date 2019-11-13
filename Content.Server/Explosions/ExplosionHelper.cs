@@ -107,7 +107,7 @@ namespace Content.Server.Explosions
                 RsiState = "explosionfast",
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(5),
-                Size = new Vector2(flashRange / 2, flashRange / 2),
+                Size = new Vector2(flashRange / 2, y: flashRange / 2),
                 Coordinates = coords,
                 //Rotated from east facing
                 Rotation = 0f,
@@ -119,7 +119,7 @@ namespace Content.Server.Explosions
             entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/effects/explosion.ogg", coords);
 
             // Knock back cameras of all players in the area.
-            
+
             var playerManager = IoCManager.Resolve<IPlayerManager>();
             //var selfPos = Owner.Transform.WorldPosition; //vec2
             var selfPos = coords.ToWorld(mapManager).Position;
