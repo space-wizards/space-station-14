@@ -1,3 +1,6 @@
+// This comment prevent Rider and Resharper Optimized Import from removing Robust.Shared.Utility
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.Utility;
 using System.Text;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
