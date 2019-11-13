@@ -87,7 +87,7 @@ namespace Content.Client.GameObjects.Components.Research
                     if (!_prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe)) break;
                     queueMenu?.SetInfo(recipe);
                     break;
-                case SharedLatheComponent.LatheStoppedProducingRecipeMessage msg:
+                case SharedLatheComponent.LatheStoppedProducingRecipeMessage _:
                     queueMenu?.ClearInfo();
                     break;
                 case SharedLatheComponent.LatheFullQueueMessage msg:

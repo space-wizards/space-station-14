@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using System.Collections.Generic;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects

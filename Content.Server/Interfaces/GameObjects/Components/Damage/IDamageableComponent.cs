@@ -1,7 +1,7 @@
-﻿using Content.Server.GameObjects;
+﻿using System;
+using Content.Server.GameObjects;
 using Content.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using System;
 
 namespace Content.Server.Interfaces.GameObjects
 {

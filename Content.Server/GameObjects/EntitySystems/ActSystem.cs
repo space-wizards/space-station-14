@@ -3,7 +3,6 @@ using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Content.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

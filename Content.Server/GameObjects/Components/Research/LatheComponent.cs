@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.Utility;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
@@ -9,9 +12,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Timers;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research

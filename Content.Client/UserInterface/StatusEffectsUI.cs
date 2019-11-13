@@ -1,9 +1,5 @@
-using Content.Client.Utility;
-using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.IoC;
 
 namespace Content.Client.UserInterface
 {

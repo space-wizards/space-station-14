@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Weapons.Melee;
 using Content.Shared.GameObjects.Components.Weapons.Melee;

@@ -1,18 +1,15 @@
-using System.Collections.Generic;
+// Only unused on .NET Core due to KeyValuePair.Deconstruct
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.Utility;
 using System.Text;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
 
 namespace Content.Client.GameObjects.Components.MedicalScanner
 {
     public class MedicalScannerWindow : SS14Window
     {
-        public MedicalScannerWindow()
-        {
-        }
-
         public void Populate(MedicalScannerBoundUserInterfaceState state)
         {
             Contents.RemoveAllChildren();

@@ -10,7 +10,6 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client

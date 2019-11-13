@@ -13,7 +13,7 @@ namespace Content.IntegrationTests
         {
             options = options ?? new ClientIntegrationOptions();
             // ReSharper disable once RedundantNameQualifier
-            options.ClientContentAssembly = typeof(Client.EntryPoint).Assembly;
+            options.ClientContentAssembly = typeof(EntryPoint).Assembly;
             options.SharedContentAssembly = typeof(Shared.EntryPoint).Assembly;
             options.BeforeStart += () =>
             {

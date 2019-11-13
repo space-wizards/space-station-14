@@ -168,8 +168,8 @@ namespace Content.Server.GameObjects.Components.Construction
             }
         }
 
-        private static Dictionary<StackType, ConstructionStepMaterial.MaterialType> StackTypeMap
-        = new Dictionary<StackType, ConstructionStepMaterial.MaterialType>
+        private static Dictionary<StackType, MaterialType> StackTypeMap
+        = new Dictionary<StackType, MaterialType>
         {
             { StackType.Cable, MaterialType.Cable },
             { StackType.Glass, MaterialType.Glass },

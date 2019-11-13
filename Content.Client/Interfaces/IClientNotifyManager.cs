@@ -1,5 +1,4 @@
 using Content.Shared.Interfaces;
-using Robust.Client;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 

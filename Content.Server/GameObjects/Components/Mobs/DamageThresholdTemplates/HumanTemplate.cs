@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
-using ScreenEffects = Content.Shared.GameObjects.Components.Mobs.ScreenEffects;
 
 namespace Content.Server.GameObjects
 {
@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects
                     var totaldamage = damage.CurrentDamage[DamageType.Total];
                     if (totaldamage > critvalue)
                     {
-                        throw new System.InvalidOperationException(); //these should all be below the crit value, possibly going over multiple thresholds at once?
+                        throw new InvalidOperationException(); //these should all be below the crit value, possibly going over multiple thresholds at once?
                     }
                     var modifier = totaldamage / (critvalue / normalstates); //integer division floors towards zero
                     statusEffectsComponent?.ChangeStatus(StatusEffect.Health,
@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects
 
                     return;
                 default:
-                    throw new System.InvalidOperationException();
+                    throw new InvalidOperationException();
             }
         }
     }

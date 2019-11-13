@@ -1,3 +1,6 @@
+// Only unused on .NET Core due to KeyValuePair.Deconstruct
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
@@ -5,7 +8,6 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects

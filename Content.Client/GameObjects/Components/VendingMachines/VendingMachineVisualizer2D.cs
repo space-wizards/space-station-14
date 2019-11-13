@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Client.GameObjects.Components.Doors;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;

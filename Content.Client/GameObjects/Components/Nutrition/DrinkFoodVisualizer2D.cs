@@ -35,7 +35,7 @@ namespace Content.Client.GameObjects.Components.Nutrition
             }
             else
             {
-                sprite.LayerSetState(0, $"icon-0");
+                sprite.LayerSetState(0, "icon-0");
             }
         }
     }

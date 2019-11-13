@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects
 {

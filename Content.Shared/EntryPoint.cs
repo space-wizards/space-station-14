@@ -1,13 +1,12 @@
 ﻿﻿using System;
-using System.Collections.Generic;
-using Content.Shared.Maps;
-using Robust.Shared.ContentPack;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Resources;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+ using System.Collections.Generic;
+ using Content.Shared.Maps;
+ using Robust.Shared.ContentPack;
+ using Robust.Shared.Interfaces.Map;
+ using Robust.Shared.IoC;
+ using Robust.Shared.Prototypes;
 
-namespace Content.Shared
+ namespace Content.Shared
 {
     public class EntryPoint : GameShared
     {

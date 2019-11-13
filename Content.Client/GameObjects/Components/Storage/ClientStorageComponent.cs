@@ -10,7 +10,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -39,11 +38,6 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnRemove();
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-        }
-
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
             IComponent component = null)
         {
@@ -54,10 +48,10 @@ namespace Content.Client.GameObjects.Components.Storage
                     HandleStorageMessage(msg);
                     break;
                 //Opens the UI
-                case OpenStorageUIMessage msg:
+                case OpenStorageUIMessage _:
                     OpenUI();
                     break;
-                case CloseStorageUIMessage msg:
+                case CloseStorageUIMessage _:
                     CloseUI();
                     break;
             }

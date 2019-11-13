@@ -1,3 +1,6 @@
+// Only unused on .NET Core due to KeyValuePair.Deconstruct
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Access;
@@ -6,7 +9,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Access.SharedIdCardConsoleComponent;
 
 namespace Content.Client.GameObjects.Components.Access

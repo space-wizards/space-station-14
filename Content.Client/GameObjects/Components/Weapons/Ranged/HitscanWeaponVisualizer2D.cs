@@ -2,7 +2,6 @@
 using Content.Shared.Utility;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 

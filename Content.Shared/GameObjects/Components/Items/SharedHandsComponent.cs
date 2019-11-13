@@ -1,7 +1,7 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects
 {

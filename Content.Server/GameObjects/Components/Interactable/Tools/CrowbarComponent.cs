@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;

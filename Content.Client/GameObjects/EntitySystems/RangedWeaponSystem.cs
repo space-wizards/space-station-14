@@ -1,6 +1,5 @@
 ﻿using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Client.Interfaces.GameObjects;
-using Content.Shared.Input;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
