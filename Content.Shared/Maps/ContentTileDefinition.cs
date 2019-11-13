@@ -68,6 +68,10 @@ namespace Content.Shared.Maps
             {
                 ItemDropPrototypeName = node.ToString();
             }
+            else
+            {
+                ItemDropPrototypeName = "FloorTileItemSteel";
+            }
         }
 
     }
