@@ -219,9 +219,8 @@ namespace Content.Client.Research
         public void PopulateList()
         {
             Items.Clear();
-            for (var i = 0; i < _shownRecipes.Count; i++)
+            foreach (var prototype in _shownRecipes)
             {
-                var prototype = _shownRecipes[i];
                 Items.AddItem(prototype.Name, prototype.Icon.Frame0());
             }
 

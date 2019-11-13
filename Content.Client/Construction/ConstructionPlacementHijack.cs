@@ -43,7 +43,6 @@ namespace Content.Client.Construction
         {
             base.StartHijack(manager);
 
-            var res = IoCManager.Resolve<IResourceCache>();
             manager.CurrentBaseSprite = Prototype.Icon.DirFrame0();
         }
     }

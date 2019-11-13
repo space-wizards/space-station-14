@@ -10,10 +10,6 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
 {
     public class MedicalScannerWindow : SS14Window
     {
-        public MedicalScannerWindow()
-        {
-        }
-
         public void Populate(MedicalScannerBoundUserInterfaceState state)
         {
             Contents.RemoveAllChildren();
