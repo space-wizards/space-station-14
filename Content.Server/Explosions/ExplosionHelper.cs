@@ -104,7 +104,7 @@ namespace Content.Server.Explosions
                 RsiState = "explosionfast",
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(5),
-                Size = new Vector2(flashRange / 2, y: flashRange / 2),
+                Size = new Vector2(flashRange / 2, flashRange / 2),
                 Coordinates = coords,
                 //Rotated from east facing
                 Rotation = 0f,
