@@ -1,10 +1,18 @@
-- type: job
+- type: role
+  id: BaseJob
+  name: "BaseJob"
+  parent: BaseRole
+  faction: Station
+
+- type: role
+  parent: BaseJob
   id: Captain
   name: "Captain"
   department:
     - Command
 
-- type: job
+- type: role
+  parent: BaseJob
   id: HeadOfPersonnel
   name: "Head Of Personnel"
   department:
@@ -12,187 +20,217 @@
     - Civilian
     - Cargo
 
-- type: job
+- type: role
+  parent: BaseJob
   id: HeadOfSecurity
   name: "Head Of Security"
   department:
     - Command
     - Security
 
-- type: job
+- type: role
+  parent: BaseJob
   id: ChiefEngineer
   name: "Chief Engineer"
   department:
     - Command
     - Engineering
 
-- type: job
+- type: role
+  parent: BaseJob
   id: ResearchDirector
   name: "Research Director"
   department:
     - Command
     - Science
 
-- type: job
+- type: role
+  parent: BaseJob
   id: ChiefMedicalOfficer
   name: "Chief Medical Officer"
   department:
     - Command
     - Medical
 
-- type: job
+- type: role
+  parent: BaseJob
   id: StationEngineer
   name: "Station Engineer"
   department:
     - Engineering
 
-- type: job
+- type: role
+  parent: BaseJob
   id: AtmosphericTechnician
   name: "Atmospheric Technician"
   department:
     - Engineering
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Mechanic
   name: "Mechanic"
   department:
     - Engineering
     - Science
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Medical Doctor
   name: "Medical Doctor"
   department:
     - Medical
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Geneticist
   name: "Geneticist"
   department:
     - Science
     - Medical
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Virologist
   name: "Virologist"
   department:
     - Medical
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Paramedic
   name: "Paramedic"
   department:
     - Medical
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Chemist
   name: "Chemist"
   department:
     - Medical
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Scientist
   name: "Scientist"
   department:
     - Science
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Roboticist
   name: "Roboticist"
   department:
     - Science
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Bartender
   name: "Bartender"
   department:
     - Civilian
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Botanist
   name: "Botanist"
   department:
     - Civilian
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Chef
   name: "Chef"
   department:
     - Civilian
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Janitor
   name: "Janitor"
   department:
     - Civilian
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Librarian
   name: "Librarian"
   department:
     - Civilian
 
-- type: job
+- type: role
+  parent: BaseJob
   id: InternalAffairs Agent
   name: "Internal Affairs Agent"
   department:
     - Civilian
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Chaplain
   name: "Chaplain"
   department:
     - Civilian
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Clown
   name: "Clown"
   department:
     - Civilian
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Mime
   name: "Mime"
   department:
     - Civilian
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Assistant
   name: "Assistant"
   department:
     - Civilian
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Quartermaster
   name: "Quartermaster"
   department:
     - Cargo
 
-- type: job
+- type: role
+  parent: BaseJob
   id: CargoTechnician
   name: "Cargo Technician"
   department:
     - Cargo
 
-- type: job
+- type: role
+  parent: BaseJob
   id: ShaftMiner
   name: "Shaft Miner"
   department:
     - Cargo
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Warden
   name: "Warden"
   department:
     - Security
 
-- type: job
+- type: role
+  parent: BaseJob
   id: Detective
   name: "Detective"
   department:
     - Security
 
-- type: job
+- type: role
+  parent: BaseJob
   id: SecurityOfficer
   name: "Security Officer"
   department:
