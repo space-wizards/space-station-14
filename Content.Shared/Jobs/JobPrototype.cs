@@ -8,7 +8,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Jobs
 {
     [Prototype("job")]
-    public class JobsPrototype : IPrototype, IIndexedPrototype
+    public class JobPrototype : IPrototype, IIndexedPrototype
     {
         public string ID { get; private set; }
         public string Name { get; private set; }
