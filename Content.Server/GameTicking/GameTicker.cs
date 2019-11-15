@@ -7,9 +7,11 @@ using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
+using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.Jobs;
 using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -27,6 +29,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timers;
 using Robust.Shared.Timing;
@@ -91,6 +94,7 @@ namespace Content.Server.GameTicking
         [Dependency] private IChatManager _chatManager;
         [Dependency] private IServerNetManager _netManager;
         [Dependency] private IDynamicTypeFactory _dynamicTypeFactory;
+        [Dependency] private IPrototypeManager _prototypeManager;
         [Dependency] private readonly ILocalizationManager _localization;
         [Dependency] private readonly IRobustRandom _robustRandom;
 #pragma warning restore 649
@@ -441,6 +445,8 @@ namespace Content.Server.GameTicking
             var data = session.ContentData();
             data.WipeMind();
             data.Mind = new Mind(session.SessionId);
+            var job = new Job(data.Mind, _prototypeManager.Index<JobPrototype>("Assistant"));
+            data.Mind.AddRole(job);
 
             var mob = _spawnPlayerMob();
             data.Mind.TransferTo(mob);
