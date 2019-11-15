@@ -25,7 +25,7 @@ namespace Content.Server.Mobs.Roles
             var chat = IoCManager.Resolve<IChatManager>();
             chat.DispatchServerMessage(
                 Mind.Session,
-                String.Format("You're new a {0}. Do your best!", Name));
+                String.Format("You're a new {0}. Do your best!", Name));
         }
     }
 

@@ -1,10 +1,10 @@
-- type: role
+- type: job
   id: Captain
   name: "Captain"
   department:
     - Command
 
-- type: role
+- type: job
   id: HeadOfPersonnel
   name: "Head Of Personnel"
   department:
@@ -12,187 +12,187 @@
     - Civilian
     - Cargo
 
-- type: role
+- type: job
   id: HeadOfSecurity
   name: "Head Of Security"
   department:
     - Command
     - Security
 
-- type: role
+- type: job
   id: ChiefEngineer
   name: "Chief Engineer"
   department:
     - Command
     - Engineering
 
-- type: role
+- type: job
   id: ResearchDirector
   name: "Research Director"
   department:
     - Command
     - Science
 
-- type: role
+- type: job
   id: ChiefMedicalOfficer
   name: "Chief Medical Officer"
   department:
     - Command
     - Medical
 
-- type: role
+- type: job
   id: StationEngineer
   name: "Station Engineer"
   department:
     - Engineering
 
-- type: role
+- type: job
   id: AtmosphericTechnician
   name: "Atmospheric Technician"
   department:
     - Engineering
 
-- type: role
+- type: job
   id: Mechanic
   name: "Mechanic"
   department:
     - Engineering
     - Science
 
-- type: role
+- type: job
   id: Medical Doctor
   name: "Medical Doctor"
   department:
     - Medical
 
-- type: role
+- type: job
   id: Geneticist
   name: "Geneticist"
   department:
     - Science
     - Medical
 
-- type: role
+- type: job
   id: Virologist
   name: "Virologist"
   department:
     - Medical
 
-- type: role
+- type: job
   id: Paramedic
   name: "Paramedic"
   department:
     - Medical
 
-- type: role
+- type: job
   id: Chemist
   name: "Chemist"
   department:
     - Medical
 
-- type: role
+- type: job
   id: Scientist
   name: "Scientist"
   department:
     - Science
 
-- type: role
+- type: job
   id: Roboticist
   name: "Roboticist"
   department:
     - Science
 
-- type: role
+- type: job
   id: Bartender
   name: "Bartender"
   department:
     - Civilian
 
-- type: role
+- type: job
   id: Botanist
   name: "Botanist"
   department:
     - Civilian
 
-- type: role
+- type: job
   id: Chef
   name: "Chef"
   department:
     - Civilian
 
-- type: role
+- type: job
   id: Janitor
   name: "Janitor"
   department:
     - Civilian
 
-- type: role
+- type: job
   id: Librarian
   name: "Librarian"
   department:
     - Civilian
 
-- type: role
+- type: job
   id: InternalAffairs Agent
   name: "Internal Affairs Agent"
   department:
     - Civilian
 
-- type: role
+- type: job
   id: Chaplain
   name: "Chaplain"
   department:
     - Civilian
 
-- type: role
+- type: job
   id: Clown
   name: "Clown"
   department:
     - Civilian
 
-- type: role
+- type: job
   id: Mime
   name: "Mime"
   department:
     - Civilian
 
-- type: role
+- type: job
   id: Assistant
   name: "Assistant"
   department:
     - Civilian
 
-- type: role
+- type: job
   id: Quartermaster
   name: "Quartermaster"
   department:
     - Cargo
 
-- type: role
+- type: job
   id: CargoTechnician
   name: "Cargo Technician"
   department:
     - Cargo
 
-- type: role
+- type: job
   id: ShaftMiner
   name: "Shaft Miner"
   department:
     - Cargo
 
-- type: role
+- type: job
   id: Warden
   name: "Warden"
   department:
     - Security
 
-- type: role
+- type: job
   id: Detective
   name: "Detective"
   department:
     - Security
 
-- type: role
+- type: job
   id: SecurityOfficer
   name: "Security Officer"
   department:
