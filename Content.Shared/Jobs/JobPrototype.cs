@@ -12,12 +12,15 @@ namespace Content.Shared.Jobs
     {
         public string ID { get; private set; }
         public string Name { get; private set; }
+
+        public string StartingGear { get; private set; }
         public IEnumerable<string> Department { get; private set; }
 
         public void LoadFrom(YamlMappingNode mapping)
         {
             ID = mapping.GetNode("id").AsString();
             Name = mapping.GetNode("name").ToString();
+            StartingGear = mapping.GetNode("startinggear").ToString();
             Department = mapping.GetNode("department").AllNodes.Select(i => i.ToString());
         }
     }

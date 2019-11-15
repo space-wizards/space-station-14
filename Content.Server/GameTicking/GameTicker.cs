@@ -269,8 +269,7 @@ namespace Content.Server.GameTicking
             var entity = _entityManager.SpawnEntityAt(PlayerPrototypeName, _getLateJoinSpawnPoint());
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
-                //TODO Replace job.Name + "Gear" with a field in job linking to the starting gear
-                var gear = _prototypeManager.Index<StartingGearPrototype>(job.Name + "Gear").Equipment;
+                var gear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear).Equipment;
 
                 foreach (var slotEquipementPair in gear)
                 {

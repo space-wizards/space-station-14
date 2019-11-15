@@ -18,6 +18,8 @@ namespace Content.Server.Mobs.Roles
 
         public override string Name { get; }
 
+        public String StartingGear => _jobPrototype.StartingGear;
+
         public override void Greet()
         {
             base.Greet();

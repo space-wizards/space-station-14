@@ -1,12 +1,14 @@
 - type: job
   id: Captain
   name: "Captain"
+  startinggear: CaptainGear
   department:
     - Command
 
 - type: job
   id: HeadOfPersonnel
   name: "Head Of Personnel"
+  startinggear: HeadOfPersonnelGear
   department:
     - Command
     - Civilian
@@ -15,6 +17,7 @@
 - type: job
   id: HeadOfSecurity
   name: "Head Of Security"
+  startinggear: HeadOfSecurityGear
   department:
     - Command
     - Security
@@ -22,6 +25,7 @@
 - type: job
   id: ChiefEngineer
   name: "Chief Engineer"
+  startinggear: ChiefEngineerGear
   department:
     - Command
     - Engineering
@@ -29,6 +33,7 @@
 - type: job
   id: ResearchDirector
   name: "Research Director"
+  startinggear: ResearchDirectorGear
   department:
     - Command
     - Science
@@ -36,6 +41,7 @@
 - type: job
   id: ChiefMedicalOfficer
   name: "Chief Medical Officer"
+  startinggear: ChiefMedicalOfficerGear
   department:
     - Command
     - Medical
@@ -43,31 +49,36 @@
 - type: job
   id: StationEngineer
   name: "Station Engineer"
+  startinggear: StationEngineerGear
   department:
     - Engineering
 
 - type: job
   id: AtmosphericTechnician
   name: "Atmospheric Technician"
+  startinggear: AtmosphericTechnicianGear
   department:
     - Engineering
 
 - type: job
   id: Mechanic
   name: "Mechanic"
+  startinggear: MechanicGear
   department:
     - Engineering
     - Science
 
 - type: job
-  id: Medical Doctor
+  id: MedicalDoctor
   name: "Medical Doctor"
+  startinggear: MedicalDoctorGear
   department:
     - Medical
 
 - type: job
   id: Geneticist
   name: "Geneticist"
+  startinggear: GeneticistGear
   department:
     - Science
     - Medical
@@ -75,125 +86,146 @@
 - type: job
   id: Virologist
   name: "Virologist"
+  startinggear: VirologistGear
   department:
     - Medical
 
 - type: job
   id: Paramedic
   name: "Paramedic"
+  startinggear: ParamedicGear
   department:
     - Medical
 
 - type: job
   id: Chemist
   name: "Chemist"
+  startinggear: ChemistGear
   department:
     - Medical
 
 - type: job
   id: Scientist
   name: "Scientist"
+  startinggear: ScientistGear
   department:
     - Science
 
 - type: job
   id: Roboticist
   name: "Roboticist"
+  startinggear: RoboticistGear
   department:
     - Science
 
 - type: job
   id: Bartender
   name: "Bartender"
+  startinggear: BartenderGear
   department:
     - Civilian
 
 - type: job
   id: Botanist
   name: "Botanist"
+  startinggear: BotanistGear
   department:
     - Civilian
 
 - type: job
   id: Chef
   name: "Chef"
+  startinggear: ChefGear
   department:
     - Civilian
 
 - type: job
   id: Janitor
   name: "Janitor"
+  startinggear: JanitorGear
   department:
     - Civilian
 
 - type: job
   id: Librarian
   name: "Librarian"
+  startinggear: LibrarianGear
   department:
     - Civilian
 
 - type: job
-  id: InternalAffairs Agent
+  id: InternalAffairsAgent
   name: "Internal Affairs Agent"
+  startinggear: InternalAffairsAgentGear
   department:
     - Civilian
 
 - type: job
   id: Chaplain
   name: "Chaplain"
+  startinggear: ChaplainGear
   department:
     - Civilian
 
 - type: job
   id: Clown
   name: "Clown"
+  startinggear: ClownGear
   department:
     - Civilian
 
 - type: job
   id: Mime
   name: "Mime"
+  startinggear: MimeGear
   department:
     - Civilian
 
 - type: job
   id: Assistant
   name: "Assistant"
+  startinggear: AssistantGear
   department:
     - Civilian
 
 - type: job
   id: Quartermaster
   name: "Quartermaster"
+  startinggear: QuartermasterGear
   department:
     - Cargo
 
 - type: job
   id: CargoTechnician
   name: "Cargo Technician"
+  startinggear: CargoTechnicianGear
   department:
     - Cargo
 
 - type: job
   id: ShaftMiner
   name: "Shaft Miner"
+  startinggear: ShaftMinerGear
   department:
     - Cargo
 
 - type: job
   id: Warden
   name: "Warden"
+  startinggear: WardenGear
   department:
     - Security
 
 - type: job
   id: Detective
   name: "Detective"
+  startinggear: DetectiveGear
   department:
     - Security
 
 - type: job
   id: SecurityOfficer
   name: "Security Officer"
+  startinggear: SecurityOfficerGear
   department:
     - Security
