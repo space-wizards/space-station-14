@@ -264,16 +264,21 @@ namespace Content.Server.GameTicking
             UpdateInfoText();
         }
 
-        private IEntity _spawnPlayerMob()
+        private IEntity _spawnPlayerMob(Job job)
         {
             var entity = _entityManager.SpawnEntityAt(PlayerPrototypeName, _getLateJoinSpawnPoint());
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
-                var uniform = _entityManager.SpawnEntity("UniformAssistant");
-                inventory.Equip(EquipmentSlotDefines.Slots.INNERCLOTHING, uniform.GetComponent<ClothingComponent>());
+                //TODO Replace job.Name + "Gear" with a field in job linking to the starting gear
+                var gear = _prototypeManager.Index<StartingGearPrototype>(job.Name + "Gear").Equipment;
 
-                var shoes = _entityManager.SpawnEntity("ShoesBlack");
-                inventory.Equip(EquipmentSlotDefines.Slots.SHOES, shoes.GetComponent<ClothingComponent>());
+                foreach (var slotEquipementPair in gear)
+                {
+                    EquipmentSlotDefines.Slots slot;
+                    Enum.TryParse(slotEquipementPair.Key.ToUpper(), out slot);
+                    var equipement = _entityManager.SpawnEntity(slotEquipementPair.Value);
+                    inventory.Equip(slot, equipement.GetComponent<ClothingComponent>());
+                }
             }
 
             return entity;
@@ -445,10 +450,11 @@ namespace Content.Server.GameTicking
             var data = session.ContentData();
             data.WipeMind();
             data.Mind = new Mind(session.SessionId);
+            //TODO Replace "Assistant" with the job when char preference are done
             var job = new Job(data.Mind, _prototypeManager.Index<JobPrototype>("Assistant"));
             data.Mind.AddRole(job);
 
-            var mob = _spawnPlayerMob();
+            var mob = _spawnPlayerMob(job);
             data.Mind.TransferTo(mob);
         }
 

@@ -12,7 +12,7 @@ namespace Content.Shared.Jobs
     {
         public string ID { get; private set; }
         public string Name { get; private set; }
-        public IEnumerable<String> Department { get; private set; }
+        public IEnumerable<string> Department { get; private set; }
 
         public void LoadFrom(YamlMappingNode mapping)
         {
