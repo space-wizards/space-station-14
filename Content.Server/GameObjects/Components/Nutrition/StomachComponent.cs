@@ -55,6 +55,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return true;
         }
 
+        //Call the IMetabolizable code for each reagent in _stomachContents
         public void Metabolize(float frameTime)
         {
             if (_stomachContents.CurrentVolume == 0)
