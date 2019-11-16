@@ -273,15 +273,13 @@ namespace Content.Server.GameTicking
 
                 foreach (var (slotStr, equipmentStr) in gear)
                 {
-                    if (Enum.TryParse(slotStr.ToUpper(), out EquipmentSlotDefines.Slots slot))
-                    {
-                        var equipmentEntity = _entityManager.SpawnEntity(equipmentStr);
-                        inventory.Equip(slot, equipmentEntity.GetComponent<ClothingComponent>());
-                    }
-                    else
+                    if (!Enum.TryParse(slotStr.ToUpper(), out EquipmentSlotDefines.Slots slot))
                     {
                         Logger.Error("{0} is an invalid equipment slot.", slotStr);
+                        continue;
                     }
+                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr);
+                    inventory.Equip(slot, equipmentEntity.GetComponent<ClothingComponent>());
                 }
             }
 
