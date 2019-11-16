@@ -27,14 +27,15 @@ namespace Content.Server.Chemistry.Metabolism
             serializer.DataField(ref _hydrationFactor, "nutrimentFactor", 30.0f);
         }
 
+        //Remove reagent at set rate, satiate thirst if a ThirstComponent can be found
         public int Metabolize(IEntity solutionEntity, string reagentId, float frameTime)
         {
-            if (!solutionEntity.TryGetComponent(out ThirstComponent thirst))
-                return 0;
-
             int metabolismAmount = (int)Math.Round(MetabolismRate * frameTime);
-            thirst.UpdateThirst(metabolismAmount * HydrationFactor);
-            return metabolismAmount; //Return amount of reagent to be removed
+            if (solutionEntity.TryGetComponent(out ThirstComponent thirst))
+                thirst.UpdateThirst(metabolismAmount * HydrationFactor);
+
+            //Return amount of reagent to be removed, remove reagent regardless of ThirstComponent presence
+            return metabolismAmount;
         }
     }
 }
