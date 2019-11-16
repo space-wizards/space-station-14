@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
@@ -44,9 +44,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _initialContents, "contents", null);
             serializer.DataField(ref _useSound, "use_sound", "/Audio/items/eatfood.ogg");
             // Default is transfer 30 units
-            serializer.DataField(ref _transferAmount,
-                "transfer_amount",
-                30 / StomachComponent.NutrimentFactor);
+            serializer.DataField(ref _transferAmount, "transfer_amount", 5);
             // E.g. empty chip packet when done
             serializer.DataField(ref _finishPrototype, "spawn_on_finish", null);
         }
@@ -81,8 +79,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _initialContents = null;
             if (_contents.CurrentVolume == 0)
             {
-                _contents.TryAddReagent("chem.Nutriment", 30 / StomachComponent.NutrimentFactor,
-                    out _);
+                _contents.TryAddReagent("chem.Nutriment", 5, out _);
             }
             Owner.TryGetComponent(out AppearanceComponent appearance);
             _appearanceComponent = appearance;
