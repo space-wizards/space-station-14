@@ -10,15 +10,15 @@ namespace Content.Server.Mobs.Roles
     {
         private readonly JobPrototype _jobPrototype;
 
+        public override string Name { get; }
+
+        public String StartingGear => _jobPrototype.StartingGear;
+
         public Job(Mind mind, JobPrototype jobPrototype) : base(mind)
         {
             _jobPrototype = jobPrototype;
             Name = jobPrototype.Name;
         }
-
-        public override string Name { get; }
-
-        public String StartingGear => _jobPrototype.StartingGear;
 
         public override void Greet()
         {

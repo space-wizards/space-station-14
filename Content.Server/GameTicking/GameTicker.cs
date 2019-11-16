@@ -271,12 +271,17 @@ namespace Content.Server.GameTicking
             {
                 var gear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear).Equipment;
 
-                foreach (var slotEquipementPair in gear)
+                foreach (var (slotStr, equipmentStr) in gear)
                 {
-                    EquipmentSlotDefines.Slots slot;
-                    Enum.TryParse(slotEquipementPair.Key.ToUpper(), out slot);
-                    var equipement = _entityManager.SpawnEntity(slotEquipementPair.Value);
-                    inventory.Equip(slot, equipement.GetComponent<ClothingComponent>());
+                    if (Enum.TryParse(slotStr.ToUpper(), out EquipmentSlotDefines.Slots slot))
+                    {
+                        var equipmentEntity = _entityManager.SpawnEntity(equipmentStr);
+                        inventory.Equip(slot, equipmentEntity.GetComponent<ClothingComponent>());
+                    }
+                    else
+                    {
+                        Logger.Error("{0} is an invalid equipment slot.", slotStr);
+                    }
                 }
             }
 

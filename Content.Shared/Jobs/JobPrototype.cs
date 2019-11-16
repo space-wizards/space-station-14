@@ -20,7 +20,7 @@ namespace Content.Shared.Jobs
         {
             ID = mapping.GetNode("id").AsString();
             Name = mapping.GetNode("name").ToString();
-            StartingGear = mapping.GetNode("startinggear").ToString();
+            StartingGear = mapping.GetNode("startingGear").ToString();
             Department = mapping.GetNode("department").AllNodes.Select(i => i.ToString());
         }
     }
