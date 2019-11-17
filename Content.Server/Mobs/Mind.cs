@@ -22,7 +22,7 @@ namespace Content.Server.Mobs
     /// </remarks>
     public sealed class Mind
     {
-        private readonly Dictionary<Type, Role> _roles = new Dictionary<Type, Role>();
+        private readonly ISet<Role> _roles = new HashSet<Role>();
 
         /// <summary>
         ///     Creates the new mind attached to a specific player session.
@@ -66,7 +66,7 @@ namespace Content.Server.Mobs
         ///     An enumerable over all the roles this mind has.
         /// </summary>
         [ViewVariables]
-        public IEnumerable<Role> AllRoles => _roles.Values;
+        public IEnumerable<Role> AllRoles => _roles;
 
         /// <summary>
         ///     The session of the player owning this mind.
@@ -90,47 +90,21 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     Gives this mind a new role.
         /// </summary>
-        /// <typeparam name="T">The type of the role to give.</typeparam>
-        /// <returns>The instance of the role.</returns>
-        /// <exception cref="ArgumentException">
-        ///     Thrown if we already have a role with this type.
-        /// </exception>
-        public T AddRole<T>() where T : Role
-        {
-            return (T)AddRole(typeof(T));
-        }
-
-        /// <summary>
-        ///     Gives this mind a new role.
-        /// </summary>
         /// <param name="t">The type of the role to give.</param>
         /// <returns>The instance of the role.</returns>
         /// <exception cref="ArgumentException">
         ///     Thrown if we already have a role with this type.
         /// </exception>
-        public Role AddRole(Type t)
+        public Role AddRole(Role role)
         {
-            if (_roles.ContainsKey(t))
+            if (_roles.Contains(role))
             {
-                throw new ArgumentException($"We already have this role: {t}");
+                throw new ArgumentException($"We already have this role: {role}");
             }
 
-            var role = (Role)Activator.CreateInstance(t, this);
-            _roles[t] = role;
+            _roles.Add(role);
             role.Greet();
             return role;
-        }
-
-        /// <summary>
-        ///     Removes a role from this mind.
-        /// </summary>
-        /// <typeparam name="T">The type of the role to remove.</typeparam>
-        /// <exception cref="ArgumentException">
-        ///     Thrown if we do not have this role.
-        /// </exception>
-        public void RemoveRole<T>() where T : Role
-        {
-            RemoveRole(typeof(T));
         }
 
         /// <summary>
@@ -140,42 +114,16 @@ namespace Content.Server.Mobs
         /// <exception cref="ArgumentException">
         ///     Thrown if we do not have this role.
         /// </exception>
-        public void RemoveRole(Type t)
+        public void RemoveRole(Role role)
         {
-            if (!_roles.ContainsKey(t))
+            if (!_roles.Contains(role))
             {
-                throw new ArgumentException($"We do not have this role: {t}");
+                throw new ArgumentException($"We do not have this role: {role}");
             }
 
             // This can definitely get more complex removal hooks later,
             // when we need it.
-            _roles.Remove(t);
-        }
-
-        /// <summary>
-        ///     Gets a role of a certain type.
-        /// </summary>
-        /// <typeparam name="T">The type of the role to get.</typeparam>
-        /// <returns>The role's instance.</returns>
-        /// <exception cref="KeyNotFoundException">
-        ///     Thrown if we do not have a role of this type.
-        /// </exception>
-        public T GetRole<T>() where T : Role
-        {
-            return (T)_roles[typeof(T)];
-        }
-
-        /// <summary>
-        ///     Gets a role of a certain type.
-        /// </summary>
-        /// <param name="t">The type of the role to get.</param>
-        /// <returns>The role's instance.</returns>
-        /// <exception cref="KeyNotFoundException">
-        ///     Thrown if we do not have a role of this type.
-        /// </exception>
-        public Role GetRole(Type t)
-        {
-            return _roles[t];
+            _roles.Remove(role);
         }
 
         /// <summary>

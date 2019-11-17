@@ -7,9 +7,11 @@ using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
+using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.Jobs;
 using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -27,6 +29,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timers;
 using Robust.Shared.Timing;
@@ -91,6 +94,7 @@ namespace Content.Server.GameTicking
         [Dependency] private IChatManager _chatManager;
         [Dependency] private IServerNetManager _netManager;
         [Dependency] private IDynamicTypeFactory _dynamicTypeFactory;
+        [Dependency] private IPrototypeManager _prototypeManager;
         [Dependency] private readonly ILocalizationManager _localization;
         [Dependency] private readonly IRobustRandom _robustRandom;
 #pragma warning restore 649
@@ -260,16 +264,23 @@ namespace Content.Server.GameTicking
             UpdateInfoText();
         }
 
-        private IEntity _spawnPlayerMob()
+        private IEntity _spawnPlayerMob(Job job)
         {
             var entity = _entityManager.SpawnEntityAt(PlayerPrototypeName, _getLateJoinSpawnPoint());
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
-                var uniform = _entityManager.SpawnEntity("UniformAssistant");
-                inventory.Equip(EquipmentSlotDefines.Slots.INNERCLOTHING, uniform.GetComponent<ClothingComponent>());
+                var gear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear).Equipment;
 
-                var shoes = _entityManager.SpawnEntity("ShoesBlack");
-                inventory.Equip(EquipmentSlotDefines.Slots.SHOES, shoes.GetComponent<ClothingComponent>());
+                foreach (var (slotStr, equipmentStr) in gear)
+                {
+                    if (!Enum.TryParse(slotStr.ToUpper(), out EquipmentSlotDefines.Slots slot))
+                    {
+                        Logger.Error("{0} is an invalid equipment slot.", slotStr);
+                        continue;
+                    }
+                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr);
+                    inventory.Equip(slot, equipmentEntity.GetComponent<ClothingComponent>());
+                }
             }
 
             return entity;
@@ -441,8 +452,11 @@ namespace Content.Server.GameTicking
             var data = session.ContentData();
             data.WipeMind();
             data.Mind = new Mind(session.SessionId);
+            //TODO Replace "Assistant" with the job when char preference are done
+            var job = new Job(data.Mind, _prototypeManager.Index<JobPrototype>("Assistant"));
+            data.Mind.AddRole(job);
 
-            var mob = _spawnPlayerMob();
+            var mob = _spawnPlayerMob(job);
             data.Mind.TransferTo(mob);
         }
 
