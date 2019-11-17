@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -32,6 +33,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         private PointLightComponent _pointLight;
         private SpriteComponent _spriteComponent;
         private ClothingComponent _clothingComponent;
+        private int _radius;
 
         [ViewVariables]
         private PowerCellComponent Cell
@@ -46,6 +48,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         }
 
         public override string Name => "HandheldLight";
+
+        public override void ExposeData(ObjectSerializer serialzer)
+        {
+            serialzer.DataFieldCached(ref _radius, "radius", 3);
+        }
 
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
@@ -95,6 +102,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             base.Initialize();
 
             _pointLight = Owner.GetComponent<PointLightComponent>();
+            _pointLight.Radius = _radius;
             _spriteComponent = Owner.GetComponent<SpriteComponent>();
             Owner.TryGetComponent(out _clothingComponent);
             _cellContainer =

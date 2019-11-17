@@ -5,6 +5,7 @@
   description: They light the way to freedom
   components:
   - type: HandheldLight
+    radius: 3
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     layers:
