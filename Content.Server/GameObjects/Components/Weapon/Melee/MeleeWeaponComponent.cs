@@ -8,6 +8,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -26,6 +27,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IPhysicsManager _physicsManager;
 #pragma warning restore 649
 
         private int _damage = 1;
@@ -87,8 +89,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                                   location.ToWorld(_mapManager).Position);
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
-            var entities =
-                _serverEntityManager.GetEntitiesInArc(eventArgs.User.Transform.GridPosition, Range, angle, ArcWidth);
+            var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
 
             var hitEntities = new List<IEntity>();
             foreach (var entity in entities)
@@ -119,6 +120,29 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 cooldown.CooldownStart = _lastAttackTime;
                 cooldown.CooldownEnd = _lastAttackTime + TimeSpan.FromSeconds(_cooldownTime);
             }
+        }
+
+        private HashSet<IEntity> ArcRayCast(Vector2 position, Angle angle, IEntity ignore)
+        {
+            // Maybe make this increment count depend on the width/length?
+            const int increments = 5;
+            var widthRad = Angle.FromDegrees(ArcWidth);
+            var increment = widthRad / 5;
+            var baseAngle = angle - widthRad / 2;
+
+            var resSet = new HashSet<IEntity>();
+
+            for (var i = 0; i < 5; i++)
+            {
+                var castAngle = new Angle(baseAngle + increment * i);
+                var res = _physicsManager.IntersectRay(new Ray(position, castAngle.ToVec(), 19), _range, ignore);
+                if (res.HitEntity != null)
+                {
+                    resSet.Add(res.HitEntity);
+                }
+            }
+
+            return resSet;
         }
     }
 }
