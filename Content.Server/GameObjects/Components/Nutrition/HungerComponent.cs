@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _baseDecayRate, "base_decay_rate", 0.5f);
+            serializer.DataField(ref _baseDecayRate, "base_decay_rate", 0.1f);
         }
 
         public void HungerThresholdEffect(bool force = false)
