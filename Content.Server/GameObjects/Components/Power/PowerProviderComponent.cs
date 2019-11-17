@@ -285,7 +285,7 @@ namespace Content.Server.GameObjects.Components.Power
             if (this == device)
                 return false;
 
-            return (device.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).LengthSquared <= _range;
+            return (device.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).Length <= _range;
         }
     }
 }
