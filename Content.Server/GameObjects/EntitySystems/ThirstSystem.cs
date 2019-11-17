@@ -23,8 +23,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     var comp = entity.GetComponent<ThirstComponent>();
                     comp.OnUpdate(_accumulatedFrameTime);
-                    _accumulatedFrameTime = 0.0f;
                 }
+                _accumulatedFrameTime = 0.0f;
             }
         }
     }

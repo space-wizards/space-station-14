@@ -38,17 +38,17 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public Dictionary<ThirstThreshold, float> ThirstThresholds => _thirstThresholds;
         private Dictionary<ThirstThreshold, float> _thirstThresholds = new Dictionary<ThirstThreshold, float>
         {
-            {ThirstThreshold.OverHydrated, 400.0f},
-            {ThirstThreshold.Okay, 300.0f},
-            {ThirstThreshold.Thirsty, 200.0f},
-            {ThirstThreshold.Parched, 100.0f},
+            {ThirstThreshold.OverHydrated, 600.0f},
+            {ThirstThreshold.Okay, 450.0f},
+            {ThirstThreshold.Thirsty, 300.0f},
+            {ThirstThreshold.Parched, 150.0f},
             {ThirstThreshold.Dead, 0.0f},
         };
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _baseDecayRate, "base_decay_rate", 0.5f);
+            serializer.DataField(ref _baseDecayRate, "base_decay_rate", 0.1f);
         }
 
         public void ThirstThresholdEffect(bool force = false)

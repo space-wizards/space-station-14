@@ -23,8 +23,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     var comp = entity.GetComponent<HungerComponent>();
                     comp.OnUpdate(_accumulatedFrameTime);
-                    _accumulatedFrameTime = 0.0f;
                 }
+                _accumulatedFrameTime = 0.0f;
             }
         }
     }
