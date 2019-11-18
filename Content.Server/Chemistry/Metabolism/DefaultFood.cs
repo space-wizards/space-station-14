@@ -2,8 +2,8 @@
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
-using SolutionComponent = Content.Shared.GameObjects.Components.Chemistry.SolutionComponent;
 
 namespace Content.Server.Chemistry.Metabolism
 {
@@ -21,14 +21,14 @@ namespace Content.Server.Chemistry.Metabolism
         private float _nutritionFactor;
         public float NutritionFactor => _nutritionFactor;
 
-        public void ExposeData(ObjectSerializer serializer)
+        void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _metabolismRate, "rate", 1);
             serializer.DataField(ref _nutritionFactor, "nutrimentFactor", 30.0f);
         }
 
         //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
-        public int Metabolize(IEntity solutionEntity, string reagentId, float frameTime)
+        int IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float frameTime)
         {
             int metabolismAmount = (int)Math.Round(MetabolismRate * frameTime);
             if (solutionEntity.TryGetComponent(out HungerComponent hunger))
