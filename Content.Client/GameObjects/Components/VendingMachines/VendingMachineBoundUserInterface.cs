@@ -2,14 +2,7 @@
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Client.GameObjects.Components.VendingMachines
 {

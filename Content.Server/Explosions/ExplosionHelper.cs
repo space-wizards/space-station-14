@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Maps;
@@ -119,7 +116,7 @@ namespace Content.Server.Explosions
             entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/effects/explosion.ogg", coords);
 
             // Knock back cameras of all players in the area.
-            
+
             var playerManager = IoCManager.Resolve<IPlayerManager>();
             //var selfPos = Owner.Transform.WorldPosition; //vec2
             var selfPos = coords.ToWorld(mapManager).Position;

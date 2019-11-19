@@ -5,9 +5,9 @@
   parent: reagent_dispenser_base
   components:
   - type: Sprite
-    texture: Buildings/booze_dispenser.png
+    texture: Buildings/chemicals.rsi/booze_dispenser.png
   - type: Icon
-    texture: Buildings/booze_dispenser.png
+    texture: Buildings/chemicals.rsi/booze_dispenser.png
   - type: ReagentDispenser
     pack: BoozeDispenserInventory
 

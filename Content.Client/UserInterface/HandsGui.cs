@@ -1,10 +1,11 @@
-﻿using Content.Client.GameObjects;
+﻿using System;
+using Content.Client.GameObjects;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.Utility;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
@@ -12,15 +13,18 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface
 {
     public class HandsGui : Control
     {
+        private const int CooldownLevels = 8;
         private const int BoxSpacing = 0;
         private const int BoxSize = 64;
 
@@ -28,11 +32,13 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IResourceCache _resourceCache;
         [Dependency] private readonly ILocalizationManager _loc;
+        [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 0649
 
-        private Texture TextureHandLeft;
-        private Texture TextureHandRight;
-        private Texture TextureHandActive;
+        private readonly Texture TextureHandLeft;
+        private readonly Texture TextureHandRight;
+        private readonly Texture TextureHandActive;
+        private readonly Texture[] TexturesCooldownOverlay;
 
         private IEntity LeftHand;
         private IEntity RightHand;
@@ -42,6 +48,9 @@ namespace Content.Client.UserInterface
         private readonly SpriteView LeftSpriteView;
         private readonly SpriteView RightSpriteView;
         private readonly TextureRect ActiveHandRect;
+
+        private readonly TextureRect CooldownCircleLeft;
+        private readonly TextureRect CooldownCircleRight;
 
         public HandsGui()
         {
@@ -57,6 +66,13 @@ namespace Content.Client.UserInterface
             TextureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
             TextureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
             TextureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
+
+            TexturesCooldownOverlay = new Texture[CooldownLevels];
+            for (var i = 0; i < CooldownLevels; i++)
+            {
+                TexturesCooldownOverlay[i] =
+                    _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/cooldown-{i}.png");
+            }
 
             AddChild(new TextureRect
             {
@@ -102,6 +118,24 @@ namespace Content.Client.UserInterface
             AddChild(RightSpriteView);
             RightSpriteView.Size = _handR.Size;
             RightSpriteView.Position = _handR.TopLeft;
+
+            // Cooldown circles.
+            AddChild(CooldownCircleLeft = new TextureRect
+            {
+                MouseFilter = MouseFilterMode.Ignore,
+                Position = _handL.TopLeft + (8, 8),
+                TextureScale = (2, 2),
+                Visible = false,
+
+            });
+
+            AddChild(CooldownCircleRight = new TextureRect
+            {
+                MouseFilter = MouseFilterMode.Ignore,
+                Position = _handR.TopLeft + (8, 8),
+                TextureScale = (2, 2),
+                Visible = false
+            });
         }
 
         protected override Vector2 CalculateMinimumSize()
@@ -210,8 +244,8 @@ namespace Content.Client.UserInterface
                 return;
             }
 
-            var leftHandContains = _handL.Contains((Vector2i)args.RelativePosition);
-            var rightHandContains = _handR.Contains((Vector2i)args.RelativePosition);
+            var leftHandContains = _handL.Contains((Vector2i) args.RelativePosition);
+            var rightHandContains = _handR.Contains((Vector2i) args.RelativePosition);
 
             string handIndex;
             if (leftHandContains)
@@ -262,8 +296,55 @@ namespace Content.Client.UserInterface
                 }
 
                 var esm = IoCManager.Resolve<IEntitySystemManager>();
-                esm.GetEntitySystem<VerbSystem>().OpenContextMenu(entity, new ScreenCoordinates(args.PointerLocation.Position));
+                esm.GetEntitySystem<VerbSystem>()
+                    .OpenContextMenu(entity, new ScreenCoordinates(args.PointerLocation.Position));
             }
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+
+            UpdateCooldown(CooldownCircleLeft, LeftHand);
+            UpdateCooldown(CooldownCircleRight, RightHand);
+        }
+
+        private void UpdateCooldown(TextureRect cooldownTexture, IEntity entity)
+        {
+            if (entity != null
+                && entity.TryGetComponent(out ItemCooldownComponent cooldown)
+                && cooldown.CooldownStart.HasValue
+                && cooldown.CooldownEnd.HasValue)
+            {
+                var start = cooldown.CooldownStart.Value;
+                var end = cooldown.CooldownEnd.Value;
+
+                var length = (end - start).TotalSeconds;
+                var progress = (_gameTiming.CurTime - start).TotalSeconds;
+                var ratio = (float)(progress / length);
+
+                var textureIndex = CalculateCooldownLevel(ratio);
+                if (textureIndex == CooldownLevels)
+                {
+                    cooldownTexture.Visible = false;
+                }
+                else
+                {
+                    cooldownTexture.Visible = true;
+                    cooldownTexture.Texture = TexturesCooldownOverlay[textureIndex];
+                }
+            }
+            else
+            {
+                cooldownTexture.Visible = false;
+            }
+        }
+
+        internal static int CalculateCooldownLevel(float cooldownValue)
+        {
+            var val = cooldownValue.Clamp(0, 1);
+            val *= CooldownLevels;
+            return (int) Math.Floor(val);
         }
     }
 }

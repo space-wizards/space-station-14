@@ -1,9 +1,7 @@
-using System;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Utility;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 

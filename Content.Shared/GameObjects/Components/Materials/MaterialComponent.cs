@@ -44,12 +44,10 @@ namespace Content.Shared.GameObjects.Components.Materials
             if (serializer.TryReadDataField("materials", out List<MaterialDataEntry> list))
             {
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                int index = 0;
                 foreach (var entry in list)
                 {
                     var proto = protoMan.Index<MaterialPrototype>(entry.Value);
                     _materialTypes[entry.Key] = proto.Material;
-                    index++;
                 }
             }
 

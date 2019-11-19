@@ -9,8 +9,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -21,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// Component that requires power to function
     /// </summary>
     [RegisterComponent]
-    public class PowerDeviceComponent : Component, EntitySystems.IExamine
+    public class PowerDeviceComponent : Component, IExamine
     {
         public override string Name => "PowerDevice";
 

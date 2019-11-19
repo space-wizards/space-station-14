@@ -9,6 +9,7 @@
     texture: Objects/Tools/wirecutter.png
   - type: Icon
     texture: Objects/Tools/wirecutter.png
+  - type: ItemCooldown
   - type: MeleeWeapon
 
 - type: entity
@@ -22,6 +23,7 @@
     texture: Objects/Tools/screwdriver.png
   - type: Icon
     texture: Objects/Tools/screwdriver.png
+  - type: ItemCooldown
   - type: MeleeWeapon
 
 - type: entity
@@ -42,6 +44,7 @@
   - type: Icon
     sprite: Objects/Tools/welder.rsi
     state: welder
+  - type: ItemCooldown
   - type: MeleeWeapon
 
 - type: entity
@@ -55,6 +58,7 @@
     texture: Objects/Tools/wrench.png
   - type: Icon
     texture: Objects/Tools/wrench.png
+  - type: ItemCooldown
   - type: MeleeWeapon
 
 - type: entity
@@ -68,6 +72,7 @@
     texture: Objects/Tools/crowbar.png
   - type: Icon
     texture: Objects/Tools/crowbar.png
+  - type: ItemCooldown
   - type: MeleeWeapon
 
 - type: entity

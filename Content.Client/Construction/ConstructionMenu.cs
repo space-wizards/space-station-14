@@ -225,7 +225,7 @@ namespace Content.Client.Construction
             PopulateTree(string.IsNullOrWhiteSpace(str) ? null : str.ToLowerInvariant());
         }
 
-        void OnBuildPressed(Button.ButtonEventArgs args)
+        void OnBuildPressed(BaseButton.ButtonEventArgs args)
         {
             var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
             if (prototype == null)
@@ -332,7 +332,7 @@ namespace Content.Client.Construction
                     {
                         var found = false;
                         // TODO: don't run ToLowerInvariant() constantly.
-                        if (prototype.Name.ToLowerInvariant().IndexOf(searchTerm) != -1)
+                        if (prototype.Name.ToLowerInvariant().IndexOf(searchTerm, StringComparison.Ordinal) != -1)
                         {
                             found = true;
                         }
@@ -341,7 +341,7 @@ namespace Content.Client.Construction
                             foreach (var keyw in prototype.Keywords.Concat(prototype.CategorySegments))
                             {
                                 // TODO: don't run ToLowerInvariant() constantly.
-                                if (keyw.ToLowerInvariant().IndexOf(searchTerm) != -1)
+                                if (keyw.ToLowerInvariant().IndexOf(searchTerm, StringComparison.Ordinal) != -1)
                                 {
                                     found = true;
                                     break;
@@ -369,7 +369,7 @@ namespace Content.Client.Construction
 
         private static int ComparePrototype(ConstructionPrototype x, ConstructionPrototype y)
         {
-            return x.Name.CompareTo(y.Name);
+            return String.Compare(x.Name, y.Name, StringComparison.Ordinal);
         }
 
         class CategoryNode

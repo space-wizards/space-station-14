@@ -1,11 +1,7 @@
 using System;
-using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Sound;
-using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile

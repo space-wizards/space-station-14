@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Chat;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using Robust.Shared.Localization;
-using Robust.Shared.IoC;
-using Robust.Shared.Input;
 
 namespace Content.Client.Chat
 {
@@ -22,7 +21,7 @@ namespace Content.Client.Chat
 
         private readonly IList<string> _inputHistory = new List<string>();
 
-        private ILocalizationManager localize = IoCManager.Resolve<ILocalizationManager>();
+        private readonly ILocalizationManager localize = IoCManager.Resolve<ILocalizationManager>();
 
         public LineEdit Input { get; private set; }
         public OutputPanel Contents { get; }

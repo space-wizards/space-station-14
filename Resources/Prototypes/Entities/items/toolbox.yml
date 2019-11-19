@@ -6,6 +6,7 @@
     Capacity: 60
   - type: Item
     Size: 9999
+  - type: ItemCooldown
   - type: MeleeWeapon
     hitSound: "/Audio/weapons/smash.ogg"
 

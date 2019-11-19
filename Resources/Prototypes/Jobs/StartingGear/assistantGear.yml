@@ -1,0 +1,6 @@
+- type: startingGear
+  id: AssistantGear
+  equipment:
+    innerclothing: UniformAssistant
+    backpack: BackpackClothing
+    shoes: ShoesBlack

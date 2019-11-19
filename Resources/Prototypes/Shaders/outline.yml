@@ -1,0 +1,7 @@
+- type: shader
+  id: selection_outline
+  kind: source
+  path: "/Shaders/outline.swsl"
+  params:
+    outline_width: 1
+    outline_color: "#FF000055"

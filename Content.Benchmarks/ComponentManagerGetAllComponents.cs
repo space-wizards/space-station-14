@@ -29,7 +29,7 @@ namespace Content.Benchmarks
             dummyReg.SetupGet(p => p.Type).Returns(typeof(DummyComponent));
             dummyReg.SetupGet(p => p.NetID).Returns((uint?) null);
             dummyReg.SetupGet(p => p.NetworkSynchronizeExistence).Returns(false);
-            dummyReg.SetupGet(p => p.References).Returns(new Type[] {typeof(DummyComponent)});
+            dummyReg.SetupGet(p => p.References).Returns(new [] {typeof(DummyComponent)});
 
             var componentFactory = new Mock<IComponentFactory>();
             componentFactory.Setup(p => p.GetComponent<DummyComponent>()).Returns(new DummyComponent());

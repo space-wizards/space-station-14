@@ -32,9 +32,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
         protected override void Startup()
         {
             base.Startup();
-
+            
             _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+        }
+
+        /// <summary>
+        /// Initializes the SolutionComponent if it doesn't have an owner
+        /// </summary>
+        public void InitializeFromPrototype()
+        {
+            // Because Initialize needs an Owner, Startup isn't called, etc.
+            IoCManager.InjectDependencies(this);
+            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
         }
 
         /// <summary>
@@ -193,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        public bool TryAddReagent(string reagentId, int quantity, out int acceptedQuantity, bool skipReactionCheck = false)
+        public bool TryAddReagent(string reagentId, int quantity, out int acceptedQuantity, bool skipReactionCheck = false, bool skipColor = false)
         {
             if (quantity > _maxVolume - _containedSolution.TotalVolume)
             {
@@ -206,20 +216,24 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             _containedSolution.AddReagent(reagentId, acceptedQuantity);
-            RecalculateColor();
+            if (!skipColor) {
+                RecalculateColor();
+            }
             if(!skipReactionCheck)
                 CheckForReaction();
             OnSolutionChanged();
             return true;
         }
 
-        public bool TryAddSolution(Solution solution, bool skipReactionCheck = false)
+        public bool TryAddSolution(Solution solution, bool skipReactionCheck = false, bool skipColor = false)
         {
             if (solution.TotalVolume > (_maxVolume - _containedSolution.TotalVolume))
                 return false;
 
             _containedSolution.AddSolution(solution);
-            RecalculateColor();
+            if (!skipColor) {
+                RecalculateColor();
+            }
             if(!skipReactionCheck)
                 CheckForReaction();
             OnSolutionChanged();

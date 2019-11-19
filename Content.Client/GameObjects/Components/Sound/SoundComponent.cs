@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Sound;
 using Robust.Client.GameObjects.EntitySystems;
@@ -82,7 +81,7 @@ namespace Content.Client.GameObjects.Components.Sound
                     StopScheduledSound(msg.Filename);
                     break;
 
-                case StopAllSoundsMessage msg:
+                case StopAllSoundsMessage _:
                     StopAllSounds();
                     break;
             }

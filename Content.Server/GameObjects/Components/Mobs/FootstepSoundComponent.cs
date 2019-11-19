@@ -1,12 +1,4 @@
 ﻿using Robust.Shared.GameObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Content.Server.Mobs;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {

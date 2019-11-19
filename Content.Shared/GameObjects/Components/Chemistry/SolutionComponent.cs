@@ -17,7 +17,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 #pragma warning restore 649
 
         [ViewVariables]
-        protected Solution _containedSolution;
+        protected Solution _containedSolution = new Solution();
         protected int _maxVolume;
         private SolutionCaps _capabilities;
 
@@ -68,14 +68,14 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         /// <inheritdoc />
         public sealed override Type StateType => typeof(SolutionComponentState);
-        
+
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref _maxVolume, "maxVol", 0);
-            serializer.DataField(ref _containedSolution, "contents", new Solution());
+            serializer.DataField(ref _containedSolution, "contents", _containedSolution);
             serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
         }
 

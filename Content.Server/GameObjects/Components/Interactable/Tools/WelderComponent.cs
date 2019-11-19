@@ -4,7 +4,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -15,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
     /// Tool used to weld metal together, light things on fire, or melt into constituent parts
     /// </summary>
     [RegisterComponent]
-    class WelderComponent : ToolComponent, EntitySystems.IUse, EntitySystems.IExamine
+    class WelderComponent : ToolComponent, IUse, IExamine
     {
         SpriteComponent spriteComponent;
 

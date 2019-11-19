@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace SS14.Launcher
         [Dependency] private readonly IGameController _gameController;
 #pragma warning restore 649
 
-        public static void Main(string[] args)
+        public static void Main()
         {
             FixTlsVersions();
 
@@ -316,7 +317,7 @@ namespace SS14.Launcher
             // I assume .NET Core does not have this issue being disconnected from the OS and all that.
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
+                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
             }
         }
 
@@ -326,7 +327,6 @@ namespace SS14.Launcher
             [Dependency] private readonly IResourceCache _resourceCache;
             [Dependency] private readonly ILocalizationManager _loc;
             [Dependency] private readonly IUriOpener _uriOpener;
-            private bool _progressBarVisible;
 #pragma warning restore 649
 
             public Control RootControl { get; }
@@ -336,10 +336,8 @@ namespace SS14.Launcher
 
             public bool ProgressBarVisible
             {
-                get => _progressBarVisible;
                 set
                 {
-                    _progressBarVisible = value;
                     ProgressBar.Visible = value;
                     StatusLabel.SizeFlagsHorizontal = value ? SizeFlags.Fill : SizeFlags.FillExpand;
                 }

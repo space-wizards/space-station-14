@@ -1,4 +1,8 @@
+﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.Utility;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Materials;
@@ -8,9 +12,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Timers;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
@@ -30,12 +32,15 @@ namespace Content.Server.GameObjects.Components.Research
         public bool Producing { get; private set; } = false;
 
         private LatheRecipePrototype _producingRecipe = null;
+        private PowerDeviceComponent _powerDevice;
+        private bool Powered => _powerDevice.Powered;
 
         public override void Initialize()
         {
             base.Initialize();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(LatheUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -75,7 +80,10 @@ namespace Content.Server.GameObjects.Components.Research
         }
 
         internal bool Produce(LatheRecipePrototype recipe)
-        {
+        {   if(!Powered)
+            {
+                return false;
+            }
             if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent storage)) return false;
 
             _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
@@ -111,7 +119,10 @@ namespace Content.Server.GameObjects.Components.Research
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return;
-
+            if (!Powered)
+            {
+                return;
+            }
             OpenUserInterface(actor.playerSession);
             return;
         }

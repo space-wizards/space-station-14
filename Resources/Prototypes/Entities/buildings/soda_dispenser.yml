@@ -5,9 +5,9 @@
   description: A beverage dispenser with a selection of soda and several other common beverages. Has a single fill slot for containers.
   components:
   - type: Sprite
-    texture: Buildings/soda_dispenser.png
+    texture: Buildings/chemicals.rsi/soda_dispenser.png
   - type: Icon
-    texture: Buildings/soda_dispenser.png
+    texture: Buildings/chemicals.rsi/soda_dispenser.png
   - type: ReagentDispenser
     pack: SodaDispenserInventory
 

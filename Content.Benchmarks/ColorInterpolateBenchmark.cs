@@ -1,12 +1,10 @@
-using System;
-using System.Runtime.CompilerServices;
 #if NETCOREAPP
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 #endif
+using System;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using SysVector4 = System.Numerics.Vector4;

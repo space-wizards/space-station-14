@@ -1,0 +1,258 @@
+- type: entity
+  parent: DrinkFoodContainerBase
+  name: Base can
+  id: DrinkFoodContainerBaseCan
+  abstract: true
+  components:
+  - type: Sound
+  - type: DrinkFoodContainer
+    use_sound: /Audio/items/canopen.ogg
+    capacity: 1
+
+# Below are grouped paired as "unopened" and "opened"
+- type: entity
+  parent: DrinkFoodContainerBaseCan
+  name: Space cola (unopened)
+  id: DrinkFoodContainerColaCanUnopened
+  components:
+  - type: Sound
+  - type: DrinkFoodContainer
+    prototypes: 
+      DrinkColaCan: 100
+  - type: Sprite
+    sprite: Objects/Drinks/cola.rsi
+  - type: Icon
+    sprite: Objects/Drinks/cola.rsi
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkColaCan
+  name: Space cola
+  description: A refreshing beverage.
+  components:
+  - type: Drink    
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 4
+  - type: Sprite
+    sprite: Objects/Drinks/cola.rsi
+  - type: Icon
+    sprite: Objects/Drinks/cola.rsi
+
+
+- type: entity
+  parent: DrinkFoodContainerBaseCan
+  name: Ice tea can (unopened)
+  id: DrinkFoodContainerIceTeaCanUnopened
+  components:
+  - type: Sound
+  - type: DrinkFoodContainer
+    prototypes: 
+      DrinkIceTeaCan: 100
+  - type: Sprite
+    sprite: Objects/Drinks/ice_tea_can.rsi
+  - type: Icon
+    sprite: Objects/Drinks/ice_tea_can.rsi
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkIceTeaCan
+  name: Ice tea can
+  description: ''
+  components:
+  - type: Drink    
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 4
+  - type: Sprite
+    sprite: Objects/Drinks/ice_tea_can.rsi
+  - type: Icon
+    sprite: Objects/Drinks/ice_tea_can.rsi
+
+
+- type: entity
+  parent: DrinkFoodContainerBaseCan
+  name: Lemon-lime can (unopened)
+  id: DrinkFoodContainerLemonLimeCanUnopened
+  components:
+  - type: Sound
+  - type: DrinkFoodContainer
+    prototypes: 
+      DrinkLemonLimeCan: 100
+  - type: Sprite
+    sprite: Objects/Drinks/lemon-lime.rsi
+  - type: Icon
+    sprite: Objects/Drinks/lemon-lime.rsi
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkLemonLimeCan
+  name: Lemon-lime can
+  description: You wanted ORANGE. It gave you Lemon Lime.
+  components:
+  - type: Drink    
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 4
+  - type: Sprite
+    sprite: Objects/Drinks/lemon-lime.rsi
+  - type: Icon
+    sprite: Objects/Drinks/lemon-lime.rsi
+
+
+- type: entity
+  parent: DrinkFoodContainerBaseCan
+  name: Purple can (unopened)
+  id: DrinkFoodContainerPurpleCanUnopened
+  components:
+  - type: Sound
+  - type: DrinkFoodContainer
+    prototypes: 
+      DrinkPurpleCan: 100
+  - type: Sprite
+    sprite: Objects/Drinks/purple_can.rsi
+  - type: Icon
+    sprite: Objects/Drinks/purple_can.rsi
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkPurpleCan
+  name: Purple Can
+  description: ''
+  components:
+  - type: Drink    
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 4
+  - type: Sprite
+    sprite: Objects/Drinks/purple_can.rsi
+  - type: Icon
+    sprite: Objects/Drinks/purple_can.rsi
+
+
+- type: entity
+  parent: DrinkFoodContainerBaseCan
+  name: Space mountain wind can (unopened)
+  id: DrinkFoodContainerSpaceMountainWindCanUnopened
+  components:
+  - type: Sound
+  - type: DrinkFoodContainer
+    prototypes: 
+      DrinkSpaceMountainWindCan: 100
+  - type: Sprite
+    sprite: Objects/Drinks/space_mountain_wind.rsi
+  - type: Icon
+    sprite: Objects/Drinks/space_mountain_wind.rsi
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkSpaceMountainWindCan
+  name: Space mountain wind can
+  description: Blows right through you like a space wind.
+  components:
+  - type: Drink    
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 4
+  - type: Sprite
+    sprite: Objects/Drinks/space_mountain_wind.rsi
+  - type: Icon
+    sprite: Objects/Drinks/space_mountain_wind.rsi
+
+
+- type: entity
+  parent: DrinkFoodContainerBaseCan
+  name: Space-up can (unopened)
+  id: DrinkFoodContainerSpaceUpCanUnopened
+  components:
+  - type: Sound
+  - type: DrinkFoodContainer
+    prototypes: 
+      DrinkSpaceUpCan: 100
+  - type: Sprite
+    sprite: Objects/Drinks/space-up.rsi
+  - type: Icon
+    sprite: Objects/Drinks/space-up.rsi
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkSpaceUpCan
+  name: Space-up can
+  description: Tastes like a hull breach in your mouth.
+  components:
+  - type: Drink    
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 4
+  - type: Sprite
+    sprite: Objects/Drinks/space-up.rsi
+  - type: Icon
+    sprite: Objects/Drinks/space-up.rsi
+
+
+- type: entity
+  parent: DrinkFoodContainerBaseCan
+  name: Starkist can (unopened)
+  id: DrinkFoodContaineStarkistCanUnopened
+  components:
+  - type: Sound
+  - type: DrinkFoodContainer
+    prototypes: 
+      DrinkStarkistCan: 100
+  - type: Sprite
+    sprite: Objects/Drinks/starkist.rsi
+  - type: Icon
+    sprite: Objects/Drinks/starkist.rsi
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkStarkistCan
+  name: Starkist can
+  description: The taste of a star in liquid form. And, a bit of tuna...?
+  components:
+  - type: Drink    
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 4
+  - type: Sprite
+    sprite: Objects/Drinks/starkist.rsi
+  - type: Icon
+    sprite: Objects/Drinks/starkist.rsi
+
+
+- type: entity
+  parent: DrinkFoodContainerBaseCan
+  name: Thirteen loko can (unopened)
+  id: DrinkFoodContaineThirteenLokoCanUnopened
+  components:
+  - type: Sound
+  - type: DrinkFoodContainer
+    prototypes: 
+      DrinkThirteenLokoCan: 100
+  - type: Sprite
+    sprite: Objects/Drinks/thirteen_loko.rsi
+  - type: Icon
+    sprite: Objects/Drinks/thirteen_loko.rsi
+
+- type: entity
+  parent: DrinkBase
+  id: DrinkThirteenLokoCan
+  name: Thirteen loko can
+  description: The MBO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
+  components:
+  - type: Drink    
+    contents:
+      reagents:
+      - ReagentId: chem.H2O
+        Quantity: 4
+  - type: Sprite
+    sprite: Objects/Drinks/thirteen_loko.rsi
+  - type: Icon
+    sprite: Objects/Drinks/thirteen_loko.rsi

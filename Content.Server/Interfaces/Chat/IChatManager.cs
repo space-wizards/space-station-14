@@ -15,6 +15,7 @@ namespace Content.Server.Interfaces.Chat
         void DispatchServerMessage(IPlayerSession player, string message);
 
         void EntitySay(IEntity source, string message);
+        void EntityMe(IEntity source, string action);
 
         void SendOOC(IPlayerSession player, string message);
 

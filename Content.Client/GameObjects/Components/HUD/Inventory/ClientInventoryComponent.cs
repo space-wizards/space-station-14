@@ -1,17 +1,16 @@
-﻿using System;
+﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
+// ReSharper disable once RedundantUsingDirective
+using Robust.Shared.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
