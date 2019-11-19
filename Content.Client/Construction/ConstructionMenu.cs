@@ -19,6 +19,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Construction
 {
@@ -165,16 +166,7 @@ namespace Content.Client.Construction
                         case ConstructionStepEntityPrototype entityProto:
                             var entityPrototype = PrototypeManager.Index<EntityPrototype>(entityProto.EntityID); //Get the entity specified in the step for the recipe.
                             text = entityPrototype.Name; //Text = entity's name.
-                            entityPrototype.Components.TryGetValue("Icon", out YamlDotNet.RepresentationModel.YamlMappingNode node); //Try to get the Icon "Component". Since we are working with yaml and not a real Entity or real Components, this gets messy.
-                            if (node.Children.TryGetValue("sprite", out var spriteString)) //Try to grab the value of the sprite node
-                            {
-                                node.Children.TryGetValue("state", out var stateString); //If we have a sprite node we probably have a state node, hopefully.
-                                icon = ResourceCache.GetResource<RSIResource>("/Textures/" + spriteString.ToString()).RSI[stateString.ToString()].Frame0; //Fuck you, it works.
-                            }
-                            else if(node.Children.TryGetValue("texture", out var textureString))
-                            {
-                                icon = ResourceCache.GetResource<TextureResource>("/Textures/" + textureString.ToString());
-                            }
+                            icon= IconComponent.GetPrototypeIcon(entityPrototype, IoCManager.Resolve<IResourceCache>()).Default; //Grab the texture from their IconComponent in YAML.
                             break;
                     }
 

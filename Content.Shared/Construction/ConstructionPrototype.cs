@@ -175,6 +175,7 @@ namespace Content.Shared.Construction
 
     public abstract class ConstructionStep
     {
+
         public readonly int Amount = 1;
         public readonly string AudioClip = "/audio/items/deconstruct.ogg";
 

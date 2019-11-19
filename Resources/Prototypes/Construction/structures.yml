@@ -4,10 +4,10 @@
   category: Structures
   description: Keeps the air in and the greytide out.
   icon:
-    sprite: Buildings/wall.rsi
+    sprite: Buildings/Walls/solid.rsi
     state: full
   objecttype: Structure
-  result: wall
+  result: solid_wall
   placementmode: SnapgridCenter
   steps:
   - entityID: MetalStack
@@ -25,7 +25,7 @@
   name: Table
   id: table
   category: Structures
-  icon: Objects/Furniture/worktop_single.png
+  icon: Buildings/table_solid.rsi/plain_preview.png
   result: table
   placementmode: SnapgridCenter
   steps:

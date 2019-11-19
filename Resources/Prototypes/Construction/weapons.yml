@@ -4,7 +4,9 @@
   category: Items/Weapons
   keywords: [melee]
   description: A crude spear for when you need to put holes in somebody.
-  icon: Objects/Melee/spear.rsi/spear.png
+  icon: 
+    sprite: Objects/Melee/spear.rsi
+    state: spear
   objecttype: Item
   steps:
   - entityID: MetalStack

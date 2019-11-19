@@ -12,6 +12,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 
 
@@ -103,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         bool TryProcessStep(ConstructionStep step, IEntity slapped)
         {
-            if (step == null || slapped != step)
+            if (step == null)
             {
                 return false;
             }
