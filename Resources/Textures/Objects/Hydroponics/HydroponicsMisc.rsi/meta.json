@@ -1,0 +1,1 @@
+{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "Taken from https://github.com/discordia-space/CEV-Eris", "states": [{"name": "fruit_rind", "directions": 1, "delays": [[1.0]]}, {"name": "fruit_slice", "directions": 1, "delays": [[1.0]]}]}
