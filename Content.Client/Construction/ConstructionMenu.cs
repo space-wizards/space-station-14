@@ -171,6 +171,10 @@ namespace Content.Client.Construction
                                 node.Children.TryGetValue("state", out var stateString); //If we have a sprite node we probably have a state node, hopefully.
                                 icon = ResourceCache.GetResource<RSIResource>("/Textures/" + spriteString.ToString()).RSI[stateString.ToString()].Frame0; //Fuck you, it works.
                             }
+                            else if(node.Children.TryGetValue("texture", out var textureString))
+                            {
+                                icon = ResourceCache.GetResource<TextureResource>("/Textures/" + textureString.ToString());
+                            }
                             break;
                     }
 

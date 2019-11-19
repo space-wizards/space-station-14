@@ -64,6 +64,10 @@ namespace Content.Server.GameObjects.Components.Construction
                 {
                     Sprite.LayerSetSprite(0, stage.Icon);
                 }
+                else
+                {
+                    Sprite.LayerSetSprite(0, Prototype.Icon);
+                }
             }
 
             else if (TryProcessStep(stage.Backward, eventArgs.AttackWith))
@@ -90,81 +94,26 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             Prototype = prototype;
             Stage = 1;
-            Sprite.AddLayerWithSprite(prototype.Stages[1].Icon);
+            if (prototype.Stages[1].Icon != null)
+            {
+                Sprite.AddLayerWithSprite(prototype.Stages[1].Icon);
+            }
+            
         }
 
         bool TryProcessStep(ConstructionStep step, IEntity slapped)
         {
-            if (step == null)
+            if (step == null || slapped != step)
             {
                 return false;
             }
-            var sound = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-            sound.Play(step.AudioClip);
-            return true;
-            //switch (step)
-            //{
-            //    case constructionstepmaterial matstep:
-            //        if (!slapped.trygetcomponent(out stackcomponent stack)
-            //         || !materialstackvalidfor(matstep, stack)
-            //         || !stack.use(matstep.amount))
-            //        {
-            //            return false;
-            //        }
-            //        if (matstep.material == materialtype.cable)
-            //            sound.play("/audio/items/zip.ogg", transform.gridposition);
-            //        else
-            //            sound.play("/audio/items/deconstruct.ogg", transform.gridposition);
-            //        return true;
-            //    case constructionsteptool toolstep:
-            //        switch (toolstep.tool)
-            //        {
-            //            case tooltype.crowbar:
-            //                if (slapped.hascomponent<crowbarcomponent>())
-            //                {
-            //                    sound.play("/audio/items/crowbar.ogg", transform.gridposition);
-            //                    return true;
-            //                }
-            //                return false;
-            //            case tooltype.welder:
-            //                if (slapped.trygetcomponent(out weldercomponent welder) && welder.tryuse(toolstep.amount))
-            //                {
-            //                    if (_random.nextdouble() > 0.5)
-            //                        sound.play("/audio/items/welder.ogg", transform.gridposition);
-            //                    else
-            //                        sound.play("/audio/items/welder2.ogg", transform.gridposition);
-            //                    return true;
-            //                }
-            //                return false;
-            //            case tooltype.wrench:
-            //                if (slapped.hascomponent<wrenchcomponent>())
-            //                {
-            //                    sound.play("/audio/items/ratchet.ogg", transform.gridposition);
-            //                    return true;
-            //                }
-            //                return false;
-            //            case tooltype.screwdriver:
-            //                if (slapped.hascomponent<screwdrivercomponent>())
-            //                {
-            //                    if (_random.nextdouble() > 0.5)
-            //                        sound.play("/audio/items/screwdriver.ogg", transform.gridposition);
-            //                    else
-            //                        sound.play("/audio/items/screwdriver2.ogg", transform.gridposition);
-            //                    return true;
-            //                }
-            //                return false;
-            //            case tooltype.wirecutters:
-            //                if (slapped.hascomponent<wirecuttercomponent>())
-            //                {
-            //                    sound.play("/audio/items/wirecutter.ogg", transform.gridposition);
-            //                    return true;
-            //                }
-            //                return false;
-            //            default:
-            //                throw new notimplementedexception();
-            //        }
-            //    default:
-            //        throw new notimplementedexception();
+            var sound = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();           
+            if(slapped.TryGetComponent(out StackComponent stack))
+            {
+                stack.Use(step.Amount);
             }
+            sound.Play(step.AudioClip, Transform.GridPosition);
+            return true;
+           }
         }
 }

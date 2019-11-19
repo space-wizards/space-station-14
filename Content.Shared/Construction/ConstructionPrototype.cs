@@ -101,35 +101,41 @@ namespace Content.Shared.Construction
                 foreach (var stepMap in mapping.GetNode<YamlSequenceNode>("steps").Cast<YamlMappingNode>())
                 {
                     var step = ReadStepPrototype(stepMap);
-                    _stages.Add(new ConstructionStage(step, nextIcon, nextBackward));
+                    _stages.Add(new ConstructionStage(step, nextIcon, nextBackward)); //For forward steps.
                     if (stepMap.TryGetNode("icon", out var node))
                     {
                         nextIcon = SpriteSpecifier.FromYaml(node);
                     }
-
+                    else
+                    {
+                        nextIcon = _icon;
+                    }
                     if (stepMap.TryGetNode("reverse", out YamlMappingNode revMap))
                     {
                         nextBackward = ReadStepPrototype(revMap);
                     }
                 }
 
-                _stages.Add(new ConstructionStage(null, nextIcon, nextBackward));
+                _stages.Add(new ConstructionStage(null, nextIcon, nextBackward)); //For backward steps.
             }
         }
 
         ConstructionStep ReadStepPrototype(YamlMappingNode step)
         {
             int amount = 1;
-
+            string audioClip = "/audio/items/deconstruct.ogg";
             if (step.TryGetNode("amount", out var node))
             {
                 amount = node.AsInt();
             }
-
+            if (step.TryGetNode("audio", out node))
+            {
+                audioClip = node.AsString();
+            }
             if(step.TryGetNode("entityID", out node))
             {
                 
-                return new ConstructionStepEntityPrototype(node.AsString(), amount);
+                return new ConstructionStepEntityPrototype(node.AsString(), amount, audioClip);
             }
 
             throw new InvalidOperationException("Not enough data specified to determine step.");
@@ -172,17 +178,18 @@ namespace Content.Shared.Construction
         public readonly int Amount = 1;
         public readonly string AudioClip = "/audio/items/deconstruct.ogg";
 
-        protected ConstructionStep(int amount)
+        protected ConstructionStep(int amount, string audioClip)
         {
             Amount = amount;
+            AudioClip = audioClip;
         }
     }
 
     public class ConstructionStepEntityPrototype : ConstructionStep //Let's make construction steps just generic entities instead of hardcoding special cases. That'd be silly.
     {
-        public readonly string EntityID; 
-        
-        public ConstructionStepEntityPrototype(string entity, int amount) : base(amount)
+        public readonly string EntityID;
+
+        public ConstructionStepEntityPrototype(string entity, int amount, string audioClip) : base(amount, audioClip)
         {
             EntityID = entity;
         }

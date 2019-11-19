@@ -16,7 +16,7 @@
     reverse:
       entityID: Wrench
 
-  - entityID: Metal
+  - entityID: MetalStack
     amount: 2
     reverse:
       entityID: Welder
