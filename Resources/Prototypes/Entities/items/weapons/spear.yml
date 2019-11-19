@@ -1,5 +1,6 @@
 - type: entity
   name: Spear
+  desc: For when you can't find a toolbox.
   parent: BaseItem
   id: Spear
   components:
