@@ -1,9 +1,10 @@
 - type: construction
   name: Crude Spear
-  id: spear
+  id: spearConstructionRecipe
   category: Items/Weapons
   keywords: [melee]
   description: A crude spear for when you need to put holes in somebody.
+  result: Spear
   icon: 
     sprite: Objects/Melee/spear.rsi
     state: spear
