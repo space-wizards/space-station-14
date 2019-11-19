@@ -45,6 +45,9 @@ namespace Content.Client.UserInterface.Cargo
                 Value = 1
             };
             Amount.SetButtons(new List<int>() { -100, -10, -1 }, new List<int>() { 1, 10, 100 });
+            Amount.IsValid = (n) => {
+                return (n > 0);
+            };
             gridContainer.AddChild(amountLabel);
             gridContainer.AddChild(Amount);
 

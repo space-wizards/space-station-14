@@ -6,6 +6,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
@@ -49,31 +50,62 @@ namespace Content.Server.GameObjects.Components.Cargo
             BankId = 0;
         }
 
+        /// <summary>
+        ///    Reads data from YAML
+        /// </summary>
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _requestOnly, "requestOnly", false);
+        }
+
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
             var message = serverMsg.Message;
+            if (!Orders.ConnectedToDatabase)
+                return;
             switch (message)
             {
                 case CargoConsoleAddOrderMessage msg:
                 {
-                    _prototypeManager.TryIndex(msg.ProductId, out CargoProductPrototype product);
+                    if (msg.Amount <= 0)
+                        break;
+                    _cargoOrderDataManager.AddOrder(Orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, BankId);
+                    break;
+                }
+                case CargoConsoleRemoveOrderMessage msg:
+                {
+                    _cargoOrderDataManager.RemoveOrder(Orders.Database.Id, msg.OrderNumber);
+                    break;
+                }
+                case CargoConsoleApproveOrderMessage msg:
+                {
+                    if (_requestOnly ||
+                        !Orders.Database.TryGetOrder(msg.OrderNumber, out var order))
+                        break;
+                    _prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
                     if (product == null)
                         break;
-                    if (!_requestOnly && !_galacticBankManager.ChangeBalance(BankId, -product.PointCost))
+                    if (!_galacticBankManager.ChangeBalance(BankId, (-product.PointCost) * order.Amount))
                         break;
-                    _cargoOrderDataManager.AddOrder(Orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, BankId, !_requestOnly);
+                    _cargoOrderDataManager.ApproveOrder(Orders.Database.Id, msg.OrderNumber);
                     break;
                 }
                 case CargoConsoleShuttleMessage _:
                 {
-                    if (!Orders.ConnectedToDatabase)
-                        break;
                     var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(Orders.Database);
+                    // TODO replace with shuttle code
+
+                    // TEMPORARY loop for spawning stuff on top of console
                     foreach (var order in approvedOrders)
                     {
                         if (!_prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product))
                             continue;
-                        Owner.EntityManager.SpawnEntityAt(product.Product, Owner.Transform.GridPosition);
+                        for (var i = 0; i < order.Amount; i++)
+                        {
+                            Owner.EntityManager.SpawnEntityAt(product.Product, Owner.Transform.GridPosition);
+                        }
                     }
                     break;
                 }
@@ -90,9 +122,12 @@ namespace Content.Server.GameObjects.Components.Cargo
             _userInterface.Open(actor.playerSession);
         }
 
+        /// <summary>
+        ///    Sync bank account information
+        /// </summary>
         public void SetState(int id, string name, int balance)
         {
-            _userInterface.SetState(new CargoConsoleInterfaceState(id, name, balance));
+            _userInterface.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Content.Shared.Prototypes.Cargo
         public int PayingAccountId;
         public bool Approved;
 
-        public CargoOrderData(int orderNumber, string requester, string reason, string productId, int amount, int payingAccountId, bool approved)
+        public CargoOrderData(int orderNumber, string requester, string reason, string productId, int amount, int payingAccountId)
         {
             OrderNumber = orderNumber;
             Requester = requester;
@@ -28,7 +28,7 @@ namespace Content.Shared.Prototypes.Cargo
             ProductId = productId;
             Amount = amount;
             PayingAccountId = payingAccountId;
-            Approved = approved;
+            Approved = false;
         }
     }
 }

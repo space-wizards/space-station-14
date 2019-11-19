@@ -1,12 +1,12 @@
-﻿using Content.Server.GameObjects.Components.Cargo;
-using Content.Shared.Prototypes.Cargo;
+﻿using Content.Shared.Prototypes.Cargo;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.Cargo
 {
     public class CargoOrderDatabase
     {
-        private List<CargoOrderData> _orders = new List<CargoOrderData>();
+        private Dictionary<int, CargoOrderData> _orders = new Dictionary<int, CargoOrderData>();
         private int _orderNumber = 0;
 
         public CargoOrderDatabase(int id)
@@ -15,29 +15,41 @@ namespace Content.Server.Cargo
         }
 
         public int Id { get; private set; }
-        public List<CargoOrderData> Orders => _orders;
-
-        public IEnumerator<CargoOrderData> GetEnumerator()
-        {
-            return _orders.GetEnumerator();
-        }
 
         /// <summary>
         ///     Removes all orders from the database.
         /// </summary>
-        public virtual void Clear()
+        public void Clear()
         {
             _orders.Clear();
         }
 
         /// <summary>
-        ///     Adds an order to the database.
+        ///     Returns a list of all orders.
         /// </summary>
-        /// <param name="order">The order to be added.</param>
-        public virtual void AddOrder(CargoOrderData order)
+        /// <returns>A list of orders</returns>
+        public List<CargoOrderData> GetOrders()
         {
-            if (!Contains(order))
-                _orders.Add(order);
+            return _orders.Values.ToList();
+        }
+
+        public bool TryGetOrder(int id, out CargoOrderData order)
+        {
+            if (_orders.TryGetValue(id, out var _order))
+            {
+                order = _order;
+                return true;
+            }
+            order = null;
+            return false;
+        }
+
+        public List<CargoOrderData> SpliceApproved()
+        {
+            var orders = _orders.Values.Where(order => order.Approved).ToList();
+            foreach (var order in orders)
+                _orders.Remove(order.OrderNumber);
+            return orders;
         }
 
         /// <summary>
@@ -49,12 +61,13 @@ namespace Content.Server.Cargo
         /// <param name="amount">The amount of the products requested.</param>
         /// <param name="payingAccountId">The ID of the bank account paying for the order.</param>
         /// <param name="approved">Whether the order will be bought when the orders are processed.</param>
-        public virtual void AddOrder(string requester, string reason, string productId, int amount, int payingAccountId, bool approved)
+        public void AddOrder(string requester, string reason, string productId, int amount, int payingAccountId)
         {
-            var order = new CargoOrderData(_orderNumber, requester, reason, productId, amount, payingAccountId, approved);
+            var order = new CargoOrderData(_orderNumber, requester, reason, productId, amount, payingAccountId);
+            if (Contains(order))
+                return;
+            _orders.Add(_orderNumber, order);
             _orderNumber += 1;
-            if (!Contains(order))
-                _orders.Add(order);
         }
 
         /// <summary>
@@ -62,9 +75,20 @@ namespace Content.Server.Cargo
         /// </summary>
         /// <param name="order">The order to be removed.</param>
         /// <returns>Whether it could be removed or not</returns>
-        public virtual bool RemoveOrder(CargoOrderData order)
+        public bool RemoveOrder(int orderNumber)
         {
-            return _orders.Remove(order);
+            return _orders.Remove(orderNumber);
+        }
+        
+        /// <summary>
+        ///     Approves an order in the database.
+        /// </summary>
+        /// <param name="order">The order to be approved.</param>
+        public void ApproveOrder(int orderNumber)
+        {
+            if (!_orders.TryGetValue(orderNumber, out var order))
+                return;
+            order.Approved = true;
         }
 
         /// <summary>
@@ -72,25 +96,9 @@ namespace Content.Server.Cargo
         /// </summary>
         /// <param name="order">The order to check</param>
         /// <returns>Whether the database contained the order or not.</returns>
-        public virtual bool Contains(CargoOrderData order)
+        public bool Contains(CargoOrderData order)
         {
-            return _orders.Contains(order);
-        }
-
-        /// <summary>
-        ///     Returns a list of all orders.
-        /// </summary>
-        /// <returns>A list of orders</returns>
-        public List<CargoOrderData> GetOrderList()
-        {
-            var list = new List<CargoOrderData>();
-
-            foreach (var order in _orders)
-            {
-                list.Add(order);
-            }
-
-            return list;
+            return _orders.ContainsValue(order);
         }
     }
 }

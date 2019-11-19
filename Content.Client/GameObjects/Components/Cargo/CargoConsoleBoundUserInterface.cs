@@ -2,6 +2,7 @@
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.ViewVariables;
 
@@ -18,8 +19,13 @@ namespace Content.Client.GameObjects.Components.Cargo
         public GalacticMarketComponent Market { get; private set; }
         [ViewVariables]
         public CargoOrderDatabaseComponent Orders { get; private set; }
+        [ViewVariables]
+        public bool RequestOnly { get; private set; }
+        [ViewVariables]
         public int BankId { get; private set; }
+        [ViewVariables]
         public string BankName { get; private set; }
+        [ViewVariables]
         public int BankBalance { get; private set; }
 
         private CargoProductPrototype _product;
@@ -53,11 +59,18 @@ namespace Content.Client.GameObjects.Components.Cargo
             {
                 SendMessage(new SharedCargoConsoleComponent.CargoConsoleShuttleMessage());
             };
-            _menu.Products.OnItemSelected += (args) =>
+            _menu.OnItemSelected += (args) =>
             {
-                _product = _menu.ProductPrototypes[args.ItemIndex];
+                if (!(args.Button.Parent is CargoProductRow row))
+                    return;
+                _product = row.Product;
+                _orderMenu.Requester.Text = null;
+                _orderMenu.Reason.Text = null;
+                _orderMenu.Amount.Value = 1;
                 _orderMenu.OpenCenteredMinSize();
             };
+            _menu.OnOrderApproved += ApproveOrder;
+            _menu.OnOrderCanceled += RemoveOrder;
             _orderMenu.SubmitButton.OnPressed += (args) =>
             {
                 AddOrder();
@@ -74,9 +87,14 @@ namespace Content.Client.GameObjects.Components.Cargo
 
             if (!(state is CargoConsoleInterfaceState cstate))
                 return;
-            BankId = cstate.Id;
-            BankName = cstate.Name;
-            BankBalance = cstate.Balance;
+            if (RequestOnly != cstate.RequestOnly)
+            {
+                RequestOnly = cstate.RequestOnly;
+                _menu.UpdateRequestOnly();
+            }
+            BankId = cstate.BankId;
+            BankName = cstate.BankName;
+            BankBalance = cstate.BankBalance;
             _menu.UpdateBankData();
         }
 
@@ -84,6 +102,9 @@ namespace Content.Client.GameObjects.Components.Cargo
         {
             base.Dispose(disposing);
             if (!disposing) return;
+            Market.OnDatabaseUpdated -= _menu.PopulateProducts;
+            Market.OnDatabaseUpdated -= _menu.PopulateCategories;
+            Orders.OnDatabaseUpdated -= _menu.PopulateOrders;
             _menu?.Dispose();
             _orderMenu?.Dispose();
         }
@@ -92,6 +113,20 @@ namespace Content.Client.GameObjects.Components.Cargo
         {
             SendMessage(new SharedCargoConsoleComponent.CargoConsoleAddOrderMessage(_orderMenu.Requester.Text,
                 _orderMenu.Reason.Text, _product.ID, _orderMenu.Amount.Value));
+        }
+
+        internal void RemoveOrder(BaseButton.ButtonEventArgs args)
+        {
+            if (!(args.Button.Parent.Parent is CargoOrderRow row))
+                return;
+            SendMessage(new SharedCargoConsoleComponent.CargoConsoleRemoveOrderMessage(row.Order.OrderNumber));
+        }
+
+        internal void ApproveOrder(BaseButton.ButtonEventArgs args)
+        {
+            if (!(args.Button.Parent.Parent is CargoOrderRow row))
+                return;
+            SendMessage(new SharedCargoConsoleComponent.CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
         }
     }
 }

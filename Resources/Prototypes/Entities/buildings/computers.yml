@@ -89,6 +89,18 @@
     - key: enum.CargoConsoleUiKey.Key
       type: CargoConsoleBoundUserInterface
 
+- type: entity
+  id: computerSupplyRequest
+  parent: computerSupplyOrdering
+  name: Cargo Request Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: tech_key
+      screen: request
+  - type: CargoConsole
+    requestOnly: true
 
 - type: entity
   id: computerMedicalRecords

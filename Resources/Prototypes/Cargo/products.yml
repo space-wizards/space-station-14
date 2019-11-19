@@ -3,7 +3,7 @@
   id: cargo.dice
   description: Some dice
   icon:
-    sprite: Objects/items/dice.rsi
+    sprite: Objects/Fun/dice.rsi
     state: d2020
   product: d20
   cost: 20
@@ -14,9 +14,9 @@
   name: "Medkit"
   id: cargo.Medkit
   description: Everything you need to patch someone up.
-  icon: Objects/medkit_r.png
+  icon: Objects/Medical/medkit_r.png
   product: Medkit
-  cost: 30
+  cost: 200
   category: Medical
   group: market
 
@@ -25,9 +25,9 @@
   id: cargo.flashlight
   description: Shine a light in the dark
   icon:
-    sprite: Objects/lantern.rsi
+    sprite: Objects/Tools/flashlight.rsi
     state: lantern_off
   product: FlashlightLantern
-  cost: 30
+  cost: 3000
   category: Engineering
   group: market

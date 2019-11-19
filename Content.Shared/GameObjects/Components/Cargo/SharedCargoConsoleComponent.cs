@@ -14,12 +14,12 @@ namespace Content.Shared.GameObjects.Components.Cargo
 {
     public class SharedCargoConsoleComponent : Component
     {
-        public sealed override string Name => "CargoConsole";
-
 #pragma warning disable CS0649
         [Dependency]
         protected IPrototypeManager _prototypeManager;
 #pragma warning restore
+
+        public sealed override string Name => "CargoConsole";
 
         /// <summary>
         ///    Sends away or requests shuttle 
@@ -33,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
         }
 
         /// <summary>
-        ///     Request that the server updates the client.
+        ///     Add order to database.
         /// </summary>
         [Serializable, NetSerializable]
         public class CargoConsoleAddOrderMessage : BoundUserInterfaceMessage
@@ -52,6 +52,34 @@ namespace Content.Shared.GameObjects.Components.Cargo
             }
         }
 
+        /// <summary>
+        ///     Remove order from database.
+        /// </summary>
+        [Serializable, NetSerializable]
+        public class CargoConsoleRemoveOrderMessage : BoundUserInterfaceMessage
+        {
+            public int OrderNumber;
+
+            public CargoConsoleRemoveOrderMessage(int orderNumber)
+            {
+                OrderNumber = orderNumber;
+            }
+        }
+
+        /// <summary>
+        ///     Set order in database as approved.
+        /// </summary>
+        [Serializable, NetSerializable]
+        public class CargoConsoleApproveOrderMessage : BoundUserInterfaceMessage
+        {
+            public int OrderNumber;
+
+            public CargoConsoleApproveOrderMessage(int orderNumber)
+            {
+                OrderNumber = orderNumber;
+            }
+        }
+
         [NetSerializable, Serializable]
         public enum CargoConsoleUiKey
         {
@@ -62,15 +90,17 @@ namespace Content.Shared.GameObjects.Components.Cargo
     [NetSerializable, Serializable]
     public class CargoConsoleInterfaceState : BoundUserInterfaceState
     {
-        public readonly int Id;
-        public readonly string Name;
-        public readonly int Balance;
+        public readonly bool RequestOnly;
+        public readonly int BankId;
+        public readonly string BankName;
+        public readonly int BankBalance;
 
-        public CargoConsoleInterfaceState(int id, string name, int balance)
+        public CargoConsoleInterfaceState(bool requestOnly, int bankId, string bankName, int bankBalance)
         {
-            Id = id;
-            Name = name;
-            Balance = balance;
+            RequestOnly = requestOnly;
+            BankId = bankId;
+            BankName = bankName;
+            BankBalance = bankBalance;
         }
     }
 }

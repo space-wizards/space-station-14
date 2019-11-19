@@ -17,7 +17,7 @@ namespace Content.Server.Cargo
 
         public GalacticBankManager()
         {
-            CreateBankAccount("Orbital Monitor IV Station", 100);
+            CreateBankAccount("Orbital Monitor IV Station", 100000);
         }
 
         public IEnumerable<CargoBankAccount> GetAllBankAccounts()

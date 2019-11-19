@@ -40,11 +40,27 @@ namespace Content.Server.Cargo
         /// <param name="amount">The amount of the products requested.</param>
         /// <param name="payingAccountId">The ID of the bank account paying for the order.</param>
         /// <param name="approved">Whether the order will be bought when the orders are processed.</param>
-        public virtual void AddOrder(int id, string requester, string reason, string productId, int amount, int payingAccountId, bool approved)
+        public virtual void AddOrder(int id, string requester, string reason, string productId, int amount, int payingAccountId)
+        {
+            if (amount < 1 || !TryGetAccount(id, out var account))
+                return;
+            account.AddOrder(requester, reason, productId, amount, payingAccountId);
+            SyncComponentsWithId(id);
+        }
+
+        public void RemoveOrder(int id, int orderNumber)
         {
             if (!TryGetAccount(id, out var account))
                 return;
-            account.AddOrder(requester, reason, productId, amount, payingAccountId, approved);
+            account.RemoveOrder(orderNumber);
+            SyncComponentsWithId(id);
+        }
+
+        public void ApproveOrder(int id, int orderNumber)
+        {
+            if (!TryGetAccount(id, out var account))
+                return;
+            account.ApproveOrder(orderNumber);
             SyncComponentsWithId(id);
         }
 
@@ -60,8 +76,7 @@ namespace Content.Server.Cargo
 
         public List<CargoOrderData> RemoveAndGetApprovedFrom(CargoOrderDatabase database)
         {
-            var approvedOrders = database.Orders.FindAll(o => o.Approved);
-            database.Orders.RemoveAll(o => o.Approved);
+            var approvedOrders = database.SpliceApproved();
             SyncComponentsWithId(database.Id);
             return approvedOrders;
         }
@@ -78,7 +93,7 @@ namespace Content.Server.Cargo
         {
             if (!TryGetAccount(accountId, out var account))
                 return null;
-            return account.GetOrderList();
+            return account.GetOrders();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Cargo
         {
             if (!ConnectedToDatabase)
                 return new CargoOrderDatabaseState(null);
-            return new CargoOrderDatabaseState(Database.Orders);
+            return new CargoOrderDatabaseState(Database.GetOrders());
         }
     }
 }
