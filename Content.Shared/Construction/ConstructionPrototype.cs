@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -11,6 +13,9 @@ namespace Content.Shared.Construction
     [Prototype("construction")]
     public class ConstructionPrototype : IPrototype, IIndexedPrototype
     {
+#pragma warning disable CS0649
+        [Dependency] readonly IPrototypeManager PrototypeManager;
+#pragma warning restore
         private string _name;
         private string _description;
         private SpriteSpecifier _icon;
@@ -120,20 +125,11 @@ namespace Content.Shared.Construction
             {
                 amount = node.AsInt();
             }
-            if (step.TryGetNode("material", out node))
-            {
-                return new ConstructionStepMaterial(
-                    node.AsEnum<ConstructionStepMaterial.MaterialType>(),
-                    amount
-                );
-            }
 
-            if (step.TryGetNode("tool", out node))
+            if(step.TryGetNode("entityID", out node))
             {
-                return new ConstructionStepTool(
-                    node.AsEnum<ConstructionStepTool.ToolType>(),
-                    amount
-                );
+                
+                return new ConstructionStepEntityPrototype(node.AsString(), amount);
             }
 
             throw new InvalidOperationException("Not enough data specified to determine step.");
@@ -174,6 +170,7 @@ namespace Content.Shared.Construction
     public abstract class ConstructionStep
     {
         public readonly int Amount = 1;
+        public readonly string AudioClip = "/audio/items/deconstruct.ogg";
 
         protected ConstructionStep(int amount)
         {
@@ -181,40 +178,13 @@ namespace Content.Shared.Construction
         }
     }
 
-    public class ConstructionStepTool : ConstructionStep
+    public class ConstructionStepEntityPrototype : ConstructionStep //Let's make construction steps just generic entities instead of hardcoding special cases. That'd be silly.
     {
-        public readonly ToolType Tool;
-
-        public ConstructionStepTool(ToolType tool, int amount) : base(amount)
+        public readonly string EntityID; 
+        
+        public ConstructionStepEntityPrototype(string entity, int amount) : base(amount)
         {
-            Tool = tool;
-        }
-
-        public enum ToolType
-        {
-            Wrench,
-            Welder,
-            Screwdriver,
-            Crowbar,
-            Wirecutters,
-        }
-    }
-
-    public class ConstructionStepMaterial : ConstructionStep
-    {
-        public readonly MaterialType Material;
-
-        public ConstructionStepMaterial(MaterialType material, int amount) : base(amount)
-        {
-            Material = material;
-        }
-
-
-        public enum MaterialType
-        {
-            Metal,
-            Glass,
-            Cable,
+            EntityID = entity;
         }
     }
 }

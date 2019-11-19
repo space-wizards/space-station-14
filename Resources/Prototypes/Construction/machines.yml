@@ -11,17 +11,17 @@
 
   result: poweredlight
   steps:
-  - material: Metal
+  - entityID: MetalStack
     amount: 1
     icon:
       sprite: Objects/Lighting/lighting.rsi
       state: construct
 
-  - material: Cable
+  - entityID: CableStack
     amount: 1
     icon:
       sprite: Objects/Lighting/lighting.rsi
       state: empty
 
-  - material: Glass
+  - entityID: GlassStack
     amount: 1

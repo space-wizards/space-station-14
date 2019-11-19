@@ -13,8 +13,7 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.Construction.ConstructionStepMaterial;
-using static Content.Shared.Construction.ConstructionStepTool;
+
 
 namespace Content.Server.GameObjects.Components.Construction
 {
@@ -101,85 +100,71 @@ namespace Content.Server.GameObjects.Components.Construction
                 return false;
             }
             var sound = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-
-            switch (step)
-            {
-                case ConstructionStepMaterial matStep:
-                    if (!slapped.TryGetComponent(out StackComponent stack)
-                     || !MaterialStackValidFor(matStep, stack)
-                     || !stack.Use(matStep.Amount))
-                    {
-                        return false;
-                    }
-                    if (matStep.Material == MaterialType.Cable)
-                        sound.Play("/Audio/items/zip.ogg", Transform.GridPosition);
-                    else
-                        sound.Play("/Audio/items/deconstruct.ogg", Transform.GridPosition);
-                    return true;
-                case ConstructionStepTool toolStep:
-                    switch (toolStep.Tool)
-                    {
-                        case ToolType.Crowbar:
-                            if (slapped.HasComponent<CrowbarComponent>())
-                            {
-                                sound.Play("/Audio/items/crowbar.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Welder:
-                            if (slapped.TryGetComponent(out WelderComponent welder) && welder.TryUse(toolStep.Amount))
-                            {
-                                if (_random.NextDouble() > 0.5)
-                                    sound.Play("/Audio/items/welder.ogg", Transform.GridPosition);
-                                else
-                                    sound.Play("/Audio/items/welder2.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Wrench:
-                            if (slapped.HasComponent<WrenchComponent>())
-                            {
-                                sound.Play("/Audio/items/ratchet.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Screwdriver:
-                            if (slapped.HasComponent<ScrewdriverComponent>())
-                            {
-                                if (_random.NextDouble() > 0.5)
-                                    sound.Play("/Audio/items/screwdriver.ogg", Transform.GridPosition);
-                                else
-                                    sound.Play("/Audio/items/screwdriver2.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Wirecutters:
-                            if (slapped.HasComponent<WirecutterComponent>())
-                            {
-                                sound.Play("/Audio/items/wirecutter.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        default:
-                            throw new NotImplementedException();
-                    }
-                default:
-                    throw new NotImplementedException();
+            sound.Play(step.AudioClip);
+            return true;
+            //switch (step)
+            //{
+            //    case constructionstepmaterial matstep:
+            //        if (!slapped.trygetcomponent(out stackcomponent stack)
+            //         || !materialstackvalidfor(matstep, stack)
+            //         || !stack.use(matstep.amount))
+            //        {
+            //            return false;
+            //        }
+            //        if (matstep.material == materialtype.cable)
+            //            sound.play("/audio/items/zip.ogg", transform.gridposition);
+            //        else
+            //            sound.play("/audio/items/deconstruct.ogg", transform.gridposition);
+            //        return true;
+            //    case constructionsteptool toolstep:
+            //        switch (toolstep.tool)
+            //        {
+            //            case tooltype.crowbar:
+            //                if (slapped.hascomponent<crowbarcomponent>())
+            //                {
+            //                    sound.play("/audio/items/crowbar.ogg", transform.gridposition);
+            //                    return true;
+            //                }
+            //                return false;
+            //            case tooltype.welder:
+            //                if (slapped.trygetcomponent(out weldercomponent welder) && welder.tryuse(toolstep.amount))
+            //                {
+            //                    if (_random.nextdouble() > 0.5)
+            //                        sound.play("/audio/items/welder.ogg", transform.gridposition);
+            //                    else
+            //                        sound.play("/audio/items/welder2.ogg", transform.gridposition);
+            //                    return true;
+            //                }
+            //                return false;
+            //            case tooltype.wrench:
+            //                if (slapped.hascomponent<wrenchcomponent>())
+            //                {
+            //                    sound.play("/audio/items/ratchet.ogg", transform.gridposition);
+            //                    return true;
+            //                }
+            //                return false;
+            //            case tooltype.screwdriver:
+            //                if (slapped.hascomponent<screwdrivercomponent>())
+            //                {
+            //                    if (_random.nextdouble() > 0.5)
+            //                        sound.play("/audio/items/screwdriver.ogg", transform.gridposition);
+            //                    else
+            //                        sound.play("/audio/items/screwdriver2.ogg", transform.gridposition);
+            //                    return true;
+            //                }
+            //                return false;
+            //            case tooltype.wirecutters:
+            //                if (slapped.hascomponent<wirecuttercomponent>())
+            //                {
+            //                    sound.play("/audio/items/wirecutter.ogg", transform.gridposition);
+            //                    return true;
+            //                }
+            //                return false;
+            //            default:
+            //                throw new notimplementedexception();
+            //        }
+            //    default:
+            //        throw new notimplementedexception();
             }
         }
-
-        private static Dictionary<StackType, MaterialType> StackTypeMap
-        = new Dictionary<StackType, MaterialType>
-        {
-            { StackType.Cable, MaterialType.Cable },
-            { StackType.Glass, MaterialType.Glass },
-            { StackType.Metal, MaterialType.Metal }
-        };
-
-        // Really this should check the actual materials at play..
-        public static bool MaterialStackValidFor(ConstructionStepMaterial step, StackComponent stack)
-        {
-            return StackTypeMap.TryGetValue((StackType)stack.StackType, out var should) && should == step.Material;
-        }
-    }
 }

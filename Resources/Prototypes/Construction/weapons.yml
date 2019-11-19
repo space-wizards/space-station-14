@@ -7,12 +7,12 @@
   icon: Objects/Melee/spear.rsi/spear.png
   objecttype: Item
   steps:
-  - material: Metal
+  - entityID: MetalStack
     amount: 1
 
-  - material: Cable
+  - entityID: CableStack
     amount: 3
 
   # Should probably use a shard but y'know.
-  - material: Glass
+  - entityID: GlassStack
     amount: 1

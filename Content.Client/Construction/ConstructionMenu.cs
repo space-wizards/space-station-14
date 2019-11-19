@@ -12,10 +12,13 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Construction
 {
@@ -25,7 +28,6 @@ namespace Content.Client.Construction
         [Dependency] readonly IPrototypeManager PrototypeManager;
         [Dependency] readonly IResourceCache ResourceCache;
 #pragma warning restore
-
         public ConstructorComponent Owner { get; set; }
         private readonly Button BuildButton;
         private readonly Button EraseButton;
@@ -46,7 +48,7 @@ namespace Content.Client.Construction
             Size = (500, 350);
 
             IoCManager.InjectDependencies(this);
-            Placement = (PlacementManager) IoCManager.Resolve<IPlacementManager>();
+            Placement = (PlacementManager)IoCManager.Resolve<IPlacementManager>();
             Placement.PlacementCanceled += OnPlacementCanceled;
 
             Title = "Construction";
@@ -54,9 +56,9 @@ namespace Content.Client.Construction
             var hSplitContainer = new HSplitContainer();
 
             // Left side
-            var recipes = new VBoxContainer {CustomMinimumSize = new Vector2(150.0f, 0.0f)};
-            SearchBar = new LineEdit {PlaceHolder = "Search"};
-            RecipeList = new Tree {SizeFlagsVertical = SizeFlags.FillExpand, HideRoot = true};
+            var recipes = new VBoxContainer { CustomMinimumSize = new Vector2(150.0f, 0.0f) };
+            SearchBar = new LineEdit { PlaceHolder = "Search" };
+            RecipeList = new Tree { SizeFlagsVertical = SizeFlags.FillExpand, HideRoot = true };
             recipes.AddChild(SearchBar);
             recipes.AddChild(RecipeList);
             hSplitContainer.AddChild(recipes);
@@ -67,7 +69,8 @@ namespace Content.Client.Construction
             InfoIcon = new TextureRect();
             InfoLabel = new Label
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsVertical = SizeFlags.ShrinkCenter
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter
             };
             info.AddChild(InfoIcon);
             info.AddChild(InfoLabel);
@@ -83,7 +86,8 @@ namespace Content.Client.Construction
 
             StepList = new ItemList
             {
-                SizeFlagsVertical = SizeFlags.FillExpand, SelectMode = ItemList.ItemListSelectMode.None
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SelectMode = ItemList.ItemListSelectMode.None
             };
             guide.AddChild(StepList);
 
@@ -98,7 +102,9 @@ namespace Content.Client.Construction
             };
             EraseButton = new Button
             {
-                TextAlign = Button.AlignMode.Center, Text = "Clear Ghosts", ToggleMode = true
+                TextAlign = Button.AlignMode.Center,
+                Text = "Clear Ghosts",
+                ToggleMode = true
             };
             buttonsContainer.AddChild(BuildButton);
             buttonsContainer.AddChild(EraseButton);
@@ -128,7 +134,7 @@ namespace Content.Client.Construction
 
         void OnItemSelected()
         {
-            var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
+            var prototype = (ConstructionPrototype)RecipeList.Selected.Metadata;
 
             if (prototype == null)
             {
@@ -152,66 +158,20 @@ namespace Content.Client.Construction
                         continue;
                     }
 
-                    Texture icon;
-                    string text;
+                    Texture icon = null;
+                    string text = "";
                     switch (forward)
                     {
-                        case ConstructionStepMaterial mat:
-                            switch (mat.Material)
+                        case ConstructionStepEntityPrototype entityProto:
+                            var entityPrototype = PrototypeManager.Index<EntityPrototype>(entityProto.EntityID); //Get the entity specified in the step for the recipe.
+                            text = entityPrototype.Name; //Text = entity's name.
+                            entityPrototype.Components.TryGetValue("Icon", out YamlDotNet.RepresentationModel.YamlMappingNode node); //Try to get the Icon "Component". Since we are working with yaml and not a real Entity or real Components, this gets messy.
+                            if (node.Children.TryGetValue("sprite", out var spriteString)) //Try to grab the value of the sprite node
                             {
-                                case ConstructionStepMaterial.MaterialType.Metal:
-                                    icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/sheet_metal.png");
-                                    text = $"Metal x{mat.Amount}";
-                                    break;
-                                case ConstructionStepMaterial.MaterialType.Glass:
-                                    icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/sheet_glass.png");
-                                    text = $"Glass x{mat.Amount}";
-                                    break;
-                                case ConstructionStepMaterial.MaterialType.Cable:
-                                    icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/cable_coil.png");
-                                    text = $"Cable Coil x{mat.Amount}";
-                                    break;
-                                default:
-                                    throw new NotImplementedException();
+                                node.Children.TryGetValue("state", out var stateString); //If we have a sprite node we probably have a state node, hopefully.
+                                icon = ResourceCache.GetResource<RSIResource>("/Textures/" + spriteString.ToString()).RSI[stateString.ToString()].Frame0; //Fuck you, it works.
                             }
-
                             break;
-                        case ConstructionStepTool tool:
-                            switch (tool.Tool)
-                            {
-                                case ConstructionStepTool.ToolType.Wrench:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/wrench.png");
-                                    text = "Wrench";
-                                    break;
-                                case ConstructionStepTool.ToolType.Crowbar:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png");
-                                    text = "Crowbar";
-                                    break;
-                                case ConstructionStepTool.ToolType.Screwdriver:
-                                    icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/screwdriver.png");
-                                    text = "Screwdriver";
-                                    break;
-                                case ConstructionStepTool.ToolType.Welder:
-                                    icon = ResourceCache.GetResource<RSIResource>("/Textures/Objects/tools.rsi")
-                                        .RSI["welder"].Frame0;
-                                    text = $"Welding tool ({tool.Amount} fuel)";
-                                    break;
-                                case ConstructionStepTool.ToolType.Wirecutters:
-                                    icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/wirecutter.png");
-                                    text = "Wirecutters";
-                                    break;
-                                default:
-                                    throw new NotImplementedException();
-                            }
-
-                            break;
-                        default:
-                            throw new NotImplementedException();
                     }
 
                     StepList.AddItem(text, icon, false);
@@ -227,7 +187,7 @@ namespace Content.Client.Construction
 
         void OnBuildPressed(BaseButton.ButtonEventArgs args)
         {
-            var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
+            var prototype = (ConstructionPrototype)RecipeList.Selected.Metadata;
             if (prototype == null)
             {
                 return;

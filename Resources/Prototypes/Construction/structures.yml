@@ -10,16 +10,16 @@
   result: wall
   placementmode: SnapgridCenter
   steps:
-  - material: Metal
+  - entityID: MetalStack
     amount: 2
     icon: Buildings/wall_girder.png
     reverse:
-      tool: Wrench
+      entityID: Wrench
 
-  - material: Metal
+  - entityID: Metal
     amount: 2
     reverse:
-      tool: Welder
+      entityID: Welder
 
 - type: construction
   name: Table
@@ -29,5 +29,5 @@
   result: table
   placementmode: SnapgridCenter
   steps:
-  - material: Metal
+  - entityID: MetalStack
     amount: 2

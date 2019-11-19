@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
@@ -54,10 +54,6 @@ namespace Content.Server.GameObjects.Components.Construction
             }
 
             var stage0 = prototype.Stages[0];
-            if (!(stage0.Forward is ConstructionStepMaterial matStep))
-            {
-                throw new NotImplementedException();
-            }
 
             // Try to find the stack with the material in the user's hand.
             var hands = Owner.GetComponent<HandsComponent>();
@@ -67,15 +63,15 @@ namespace Content.Server.GameObjects.Components.Construction
                 return;
             }
 
-            if (!activeHand.TryGetComponent(out StackComponent stack) || !ConstructionComponent.MaterialStackValidFor(matStep, stack))
+            if (!activeHand.TryGetComponent(out StackComponent stack))
             {
                 return;
             }
 
-            if (!stack.Use(matStep.Amount))
-            {
-                return;
-            }
+            //if (!stack.Use(matStep.Amount))
+            //{
+            //    return;
+            //}
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
             _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", loc);

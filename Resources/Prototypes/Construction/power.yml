@@ -10,13 +10,13 @@
     state: smes
   result: SMES
   steps:
-  - material: Metal
+  - entityID: MetalStack
     amount: 2
     icon:
       sprite: Buildings/smes.rsi
       state: smes
 
-  - material: Cable
+  - entityID: CableStack
     amount: 2
 
 - type: construction
@@ -28,11 +28,11 @@
   icon: Objects/Power/generator.png
   result: Generator
   steps:
-  - material: Metal
+  - entityID: MetalStack
     amount: 2
     icon: Objects/Power/generator.png
 
-  - material: Cable
+  - entityID: CableStack
     amount: 2
 
 - type: construction
@@ -46,11 +46,11 @@
     state: apc0
   result: APC
   steps:
-  - material: Metal
+  - entityID: MetalStack
     amount: 2
     icon:
       sprite: Buildings/apc.rsi
       state: apcmaint
 
-  - material: Cable
+  - entityID: CableStack
     amount: 2
