@@ -130,6 +130,10 @@ namespace Content.Client
                 "HumanInventoryController",
                 "UseDelay",
                 "Pourable"
+                "Mop",
+                "Bucket",
+                "Puddle",
+                "CanSpill",
             };
 
             foreach (var ignoreName in registerIgnore)

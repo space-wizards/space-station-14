@@ -2,16 +2,19 @@
   id: chem.Whiskey
   name: Whiskey
   desc: An alcoholic beverage made from fermented grain mash
+  color: "#664300"
 
 - type: reagent
   id: chem.Ale
   name: Ale
   desc: A type of beer brewed using a warm fermentation method, resulting in a sweet, full-bodied and fruity taste.
+  color: "#664300"
 
 - type: reagent
   id: chem.Wine
   name: Wine
   desc: An alcoholic drink made from fermented grapes
+  color: "#7E4043"
 
 - type: reagent
   id: chem.Cola

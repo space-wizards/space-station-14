@@ -150,8 +150,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         protected void RecalculateColor()
         {
-            if(_containedSolution.TotalVolume == 0)
+            if (_containedSolution.TotalVolume == 0)
+            {
                 SubstanceColor = Color.White;
+                return;
+            }
 
             Color mixColor = default;
             float runningTotalQuantity = 0;
@@ -168,6 +171,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
                 mixColor = BlendRGB(mixColor, proto.SubstanceColor, reagent.Quantity / runningTotalQuantity);
             }
+
+            SubstanceColor = mixColor;
         }
 
          private Color BlendRGB(Color rgb1, Color rgb2, float amount)
@@ -198,7 +203,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
             //TODO: Make me work!
         }
-        
+
         [Serializable, NetSerializable]
         public class SolutionComponentState : ComponentState
         {
