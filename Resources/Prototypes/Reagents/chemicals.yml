@@ -95,3 +95,9 @@
   name: Unstable Mutagen
   desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
   color: "#77b58e"
+
+- type: reagent
+  id: chem.WelderFuel
+  name: Welder Fuel
+  desc: Used to cut holes in walls with a welding tool.
+  colr: "#660000"

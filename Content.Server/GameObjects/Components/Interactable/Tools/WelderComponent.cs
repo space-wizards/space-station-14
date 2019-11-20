@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -19,38 +20,39 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         SpriteComponent spriteComponent;
 
         public override string Name => "Welder";
-
+        private string WelderFuelReagentName;
+        private SolutionComponent solutionComponent;
         /// <summary>
         /// Maximum fuel capacity the welder can hold
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float FuelCapacity
+        public int FuelCapacity
         {
             get => _fuelCapacity;
             set => _fuelCapacity = value;
         }
-        private float _fuelCapacity = 50;
+        private int _fuelCapacity = 50;
 
         /// <summary>
         /// Fuel the welder has to do tasks
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Fuel
+        public int CurrentWelderFuel
         {
-            get => _fuel;
+            get => solutionComponent.GetReagentQuantity(WelderFuelReagentName);
             set => _fuel = value;
         }
-        private float _fuel = 0;
+        private int _fuel = 0;
 
         /// <summary>
         /// Default Cost of using the welder fuel for an action
         /// </summary>
-        public const float DefaultFuelCost = 5;
+        public const int DefaultFuelCost = 5;
 
         /// <summary>
         /// Rate at which we expunge fuel from ourselves when activated
         /// </summary>
-        public const float FuelLossRate = 0.2f;
+        public int FuelLossRate = 1;
 
         /// <summary>
         /// Status of welder, whether it is ignited
@@ -66,14 +68,17 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             base.Initialize();
 
             spriteComponent = Owner.GetComponent<SpriteComponent>();
+            solutionComponent = Owner.GetComponent<SolutionComponent>();
+            WelderFuelReagentName = solutionComponent.ReagentList[0].ReagentId;
+            if(solutionComponent.ContainsReagent(WelderFuelReagentName, out var fuel))
+            {
+                CurrentWelderFuel = fuel;
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            serializer.DataField(ref _fuelCapacity, "Capacity", 50);
-            serializer.DataField(ref _fuel, "Fuel", FuelCapacity);
         }
 
         public void OnUpdate(float frameTime)
@@ -82,29 +87,30 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             {
                 return;
             }
+            solutionComponent.TryRemoveReagent(WelderFuelReagentName, FuelLossRate);
 
-            Fuel = Math.Max(Fuel - (FuelLossRate * frameTime), 0);
 
-            if (Fuel == 0)
+
+            if (CurrentWelderFuel == 0)
             {
                 ToggleStatus();
             }
         }
 
-        public bool TryUse(float value)
+        public bool TryUse(int value)
         {
             if (!Activated || !CanUse(value))
             {
                 return false;
             }
 
-            Fuel -= value;
+            CurrentWelderFuel -= value;
             return true;
         }
 
-        public bool CanUse(float value)
+        public bool CanUse(int value)
         {
-            return Fuel > value;
+            return CurrentWelderFuel >= value;
         }
 
         public override bool CanUse()
@@ -114,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
 
         public bool CanActivate()
         {
-            return Fuel > 0;
+            return CurrentWelderFuel > 0;
         }
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
@@ -159,8 +165,6 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
                 message.AddText(loc.GetString("Not lit\n"));
             }
 
-            message.AddMarkup(loc.GetString("Fuel: [color={0}]{1}/{2}[/color].",
-                Fuel < FuelCapacity / 4f ? "darkorange" : "orange", Math.Round(Fuel), FuelCapacity));
         }
     }
 }

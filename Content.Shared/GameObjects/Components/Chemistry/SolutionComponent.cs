@@ -204,6 +204,19 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return false;
         }
 
+        public int GetReagentQuantity(string reagentId)
+        {
+            int quantity = 0;
+            foreach(var reagent in _containedSolution.Contents)
+            {
+                if(reagent.ReagentId == reagentId)
+                {
+                    quantity =  reagent.Quantity;
+                }
+            }
+            return quantity;
+        }
+
         protected virtual void OnSolutionChanged()
         {
             SolutionChanged?.Invoke();

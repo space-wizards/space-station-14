@@ -28,6 +28,13 @@
     heavyImpactRange: 2
     lightImpactRange: 4
     flashRange: 5
+  - type: FuelTank
+  - type: Solution
+    contents: 
+      reagents:
+      - ReagentId: chem.WelderFuel
+        Quantity: 5000
+    maxVol: 5000
 
   placement:
     snap:
