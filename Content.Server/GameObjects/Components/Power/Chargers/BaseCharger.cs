@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
             if (_powerDevice == null)
             {
-                var exc = new NullReferenceException("Chargers requires a PowerDevice to function");
+                var exc = new InvalidOperationException("Chargers requires a PowerDevice to function");
                 Logger.FatalS("charger", exc.Message);
                 throw exc;
             }
@@ -69,8 +69,9 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
                 return;
             }
             RemoveItem();
-            user.TryGetComponent(out HandsComponent handsComponent);
-            if (heldItem.TryGetComponent(out ItemComponent itemComponent))
+
+            if (user.TryGetComponent(out HandsComponent handsComponent) &&
+                heldItem.TryGetComponent(out ItemComponent itemComponent))
             {
                 handsComponent.PutInHand(itemComponent);
             }
