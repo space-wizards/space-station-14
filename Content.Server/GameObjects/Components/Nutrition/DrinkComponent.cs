@@ -1,5 +1,6 @@
 using System;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Fluids;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
@@ -84,7 +85,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
             }
 
-            _contents.MaxVolume = _initialContents.TotalVolume;
+            if (Owner.TryGetComponent(out CanSpillComponent canSpillComponent))
+            {
+                canSpillComponent.OnSpill += () =>
+                {
+                    if (_despawnOnFinish && UsesLeft() == 0)
+                    {
+                        Owner.Delete();
+                    }
+                };
+            }
         }
 
         protected override void Startup()
@@ -92,6 +102,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             base.Startup();
             if (_initialContents != null)
             {
+                _contents.MaxVolume = _initialContents.TotalVolume;
                 _contents.TryAddSolution(_initialContents, true, true);
             }
             _initialContents = null;

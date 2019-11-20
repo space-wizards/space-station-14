@@ -33,7 +33,7 @@
   - type: Drink    
     contents:
       reagents:
-      - ReagentId: chem.H2O
+      - ReagentId: chem.Cola
         Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/cola.rsi

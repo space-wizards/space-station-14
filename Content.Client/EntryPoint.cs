@@ -119,6 +119,10 @@ namespace Content.Client
                 "Hunger",
                 "Thirst",
                 "Rotatable",
+                "Mop",
+                "Bucket",
+                "Puddle",
+                "CanSpill",
             };
 
             foreach (var ignoreName in registerIgnore)

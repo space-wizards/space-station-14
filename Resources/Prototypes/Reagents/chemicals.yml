@@ -2,6 +2,7 @@
   id: chem.Nutriment
   name: Nutriment
   desc: Generic nutrition
+  color: "#664330"
 
 - type: reagent
   id: chem.H2SO4
@@ -12,6 +13,7 @@
   id: chem.H2O
   name: Water
   desc: A tasty colorless liquid.
+  color: "#0064C8" # Copied from Eris, although on eris it's #0064C877?
 
 - type: reagent
   id: chem.Ice
