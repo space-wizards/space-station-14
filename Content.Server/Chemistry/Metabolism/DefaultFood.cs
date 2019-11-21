@@ -28,9 +28,9 @@ namespace Content.Server.Chemistry.Metabolism
         }
 
         //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
-        int IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float frameTime)
+        int IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            int metabolismAmount = (int)Math.Round(MetabolismRate * frameTime);
+            int metabolismAmount = (int)Math.Round(MetabolismRate * tickTime);
             if (solutionEntity.TryGetComponent(out HungerComponent hunger))
                 hunger.UpdateFood(metabolismAmount * NutritionFactor);
 

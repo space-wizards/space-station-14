@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
@@ -55,8 +56,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return true;
         }
 
-        //Call the IMetabolizable code for each reagent in _stomachContents
-        public void Metabolize(float frameTime)
+        /// <summary>
+        /// Loops through each reagent in _stomachContents, and calls the IMetabolizable for each of them./>
+        /// </summary>
+        /// <param name="tickTime">The time since the last metabolism tick in seconds.</param>
+        public void Metabolize(float tickTime)
         {
             if (_stomachContents.CurrentVolume == 0)
                 return;
@@ -70,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 foreach (var metabolizable in proto.Metabolism)
                 {
-                    _reagentDeltas[reagent.ReagentId] = metabolizable.Metabolize(Owner, reagent.ReagentId, frameTime);
+                    _reagentDeltas[reagent.ReagentId] = metabolizable.Metabolize(Owner, reagent.ReagentId, tickTime);
                 }
             }
 
@@ -82,9 +86,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
         }
 
-        public void OnUpdate(float frameTime)
+        /// <summary>
+        /// Triggers metabolism of the reagents inside _stomachContents. Called by <see cref="StomachSystem"/>
+        /// </summary>
+        /// <param name="tickTime">The time since the last metabolism tick in seconds.</param>
+        public void OnUpdate(float tickTime)
         {
-            Metabolize(frameTime);
+            Metabolize(tickTime);
         }
     }
 }

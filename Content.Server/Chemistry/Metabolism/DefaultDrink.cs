@@ -28,9 +28,9 @@ namespace Content.Server.Chemistry.Metabolism
         }
 
         //Remove reagent at set rate, satiate thirst if a ThirstComponent can be found
-        int IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float frameTime)
+        int IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            int metabolismAmount = (int)Math.Round(MetabolismRate * frameTime);
+            int metabolismAmount = (int)Math.Round(MetabolismRate * tickTime);
             if (solutionEntity.TryGetComponent(out ThirstComponent thirst))
                 thirst.UpdateThirst(metabolismAmount * HydrationFactor);
 
