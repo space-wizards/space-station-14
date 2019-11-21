@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
         private int _initialMaxVolume;
         //Used to track changes to reagent amounts during metabolism
-        private Dictionary<string, int> _reagentDeltas = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _reagentDeltas = new Dictionary<string, int>();
 
         public override void ExposeData(ObjectSerializer serializer)
         {
