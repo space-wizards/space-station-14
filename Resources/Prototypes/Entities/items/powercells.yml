@@ -94,3 +94,95 @@
     visuals:
     - type: PowerCellVisualizer2D
       prefix: s_hy
+
+- type: entity
+  name: Cell Recharger
+  id: PowerCellRecharger
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Power/PowerCells/cell_recharger.rsi
+    drawdepth: Items
+  - type: PowerCellCharger
+    transfer_ratio: 0.10
+    transfer_efficiency: 0.85
+  - type: PowerDevice
+    priority: Low
+  - type: Icon
+    sprite: Objects/Power/PowerCells/cell_recharger.rsi
+    state: empty
+  - type: Appearance
+    visuals:
+    - type: PowerChargerVisualizer2D
+  - type: Wrenchable
+  - type: Physics
+    mass: 5
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      mask: 19
+      layer: 16
+    IsScrapingFloor: true
+
+- type: entity
+  name: Recharger
+  id: WeaponCapacitorRecharger
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Power/PowerCells/recharger.rsi
+    drawdepth: Items
+  - type: WeaponCapacitorCharger
+    transfer_ratio: 0.10
+    transfer_efficiency: 0.85
+  - type: PowerDevice
+    priority: Low
+  - type: Icon
+    sprite: Objects/Power/PowerCells/recharger.rsi
+    state: empty
+  - type: Appearance
+    visuals:
+    - type: PowerChargerVisualizer2D
+  - type: Wrenchable
+  - type: Physics
+    mass: 5
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      mask: 19
+      layer: 16
+    IsScrapingFloor: true
+
+- type: entity
+  name: Wall recharger
+  id: WallWeaponCapacitorRecharger
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Power/PowerCells/wall_recharger.rsi
+    drawdepth: Items
+  - type: WeaponCapacitorCharger
+    transfer_ratio: 0.15
+    transfer_efficiency: 0.95
+  - type: PowerDevice
+    priority: Low
+  - type: Icon
+    sprite: Objects/Power/PowerCells/wall_recharger.rsi
+    state: empty
+  - type: Appearance
+    visuals:
+    - type: PowerChargerVisualizer2D
+  - type: Physics
+    mass: 5
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      mask: 19
+      layer: 16
+    IsScrapingFloor: true
