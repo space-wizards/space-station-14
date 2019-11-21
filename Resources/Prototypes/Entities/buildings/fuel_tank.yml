@@ -35,6 +35,7 @@
       - ReagentId: chem.WelderFuel
         Quantity: 5000
     maxVol: 5000
+    caps: 3
 
   placement:
     snap:

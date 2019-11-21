@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 return false;
             }
             var sound = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-
+            var welderSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<WelderSystem>();
             switch (step)
             {
                 case ConstructionStepMaterial matStep:
@@ -127,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Construction
                             }
                             return false;
                         case ToolType.Welder:
-                            if (slapped.TryGetComponent(out WelderComponent welder) && welder.TryUse(toolStep.Amount))
+                            if (slapped.TryGetComponent(out WelderComponent welder) && welderSystem.WelderTryUse(welder,toolStep.Amount))
                             {
                                 if (_random.NextDouble() > 0.5)
                                     sound.Play("/Audio/items/welder.ogg", Transform.GridPosition);
