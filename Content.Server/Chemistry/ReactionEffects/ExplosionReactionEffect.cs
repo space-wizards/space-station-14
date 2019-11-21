@@ -5,7 +5,7 @@ using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.Chemistry
+namespace Content.Server.Chemistry.ReactionEffects
 {
     class ExplosionReactionEffect : IReactionEffect
     {
