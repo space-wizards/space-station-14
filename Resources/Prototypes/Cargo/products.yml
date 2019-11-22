@@ -1,0 +1,33 @@
+- type: cargoProduct
+  name: "Dice"
+  id: cargo.dice
+  description: Some dice
+  icon:
+    sprite: Objects/Fun/dice.rsi
+    state: d2020
+  product: d20
+  cost: 20
+  category: Other
+  group: market
+
+- type: cargoProduct
+  name: "Medkit"
+  id: cargo.Medkit
+  description: Everything you need to patch someone up.
+  icon: Objects/Medical/medkit_r.png
+  product: Medkit
+  cost: 200
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  name: "Flashlight"
+  id: cargo.flashlight
+  description: Shine a light in the dark
+  icon:
+    sprite: Objects/Tools/flashlight.rsi
+    state: lantern_off
+  product: FlashlightLantern
+  cost: 3000
+  category: Engineering
+  group: market

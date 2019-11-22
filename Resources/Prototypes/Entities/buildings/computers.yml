@@ -69,14 +69,38 @@
 - type: entity
   id: computerSupplyOrdering
   parent: computerBase
-  name: Supply Ordering Computer
+  name: Cargo Ordering Computer
   components:
   - type: Appearance
     visuals:
     - type: ComputerVisualizer2D
       key: tech_key
       screen: supply
+  - type: CargoConsole
+  - type: CargoOrderDatabase
+  - type: GalacticMarket
+    static: true
+    products:
+      - cargo.dice
+      - cargo.flashlight
+      - cargo.Medkit
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Key
+      type: CargoConsoleBoundUserInterface
 
+- type: entity
+  id: computerSupplyRequest
+  parent: computerSupplyOrdering
+  name: Cargo Request Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: tech_key
+      screen: request
+  - type: CargoConsole
+    requestOnly: true
 
 - type: entity
   id: computerMedicalRecords
