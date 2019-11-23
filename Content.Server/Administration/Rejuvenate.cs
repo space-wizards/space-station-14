@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Nutrition;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -45,6 +46,14 @@ namespace Content.Server.Administration
                     return;
                 }
                 damage.HealAllDamage();
+                if (player.AttachedEntity.TryGetComponent(out HungerComponent hunger))
+                {
+                    hunger.ResetFood();
+                }
+                if (player.AttachedEntity.TryGetComponent(out ThirstComponent thirst))
+                {
+                    thirst.ResetThirst();
+                }
                 return;
             }
 
@@ -62,6 +71,14 @@ namespace Content.Server.Administration
                     continue;
                 }
                 damage.HealAllDamage();
+                if (entity.TryGetComponent(out HungerComponent hunger))
+                {
+                    hunger.ResetFood();
+                }
+                if (entity.TryGetComponent(out ThirstComponent thirst))
+                {
+                    thirst.ResetThirst();
+                }
             }
         }
     }
