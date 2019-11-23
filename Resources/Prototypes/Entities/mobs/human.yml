@@ -75,11 +75,10 @@
   - type: Appearance
     visuals:
     - type: SpeciesVisualizer2D
-    - type: HumanoidVisualizer2D
 
   - type: CombatMode
   - type: Teleportable
   - type: Examiner
   - type: CharacterInfo
   - type: FootstepSound
-
+  - type: Hair
