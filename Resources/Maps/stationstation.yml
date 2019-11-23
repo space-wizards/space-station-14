@@ -1833,7 +1833,7 @@ entities:
     pos: -5.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
-- type: computerPowerMonitoring
+- type: computerSupplyRequest
   uid: 153
   components:
   - grid: 0
@@ -1846,7 +1846,7 @@ entities:
       mask: 19
       bounds: -0.5,-0.25,0.5,0.25
     type: Collidable
-- type: computerAlert
+- type: computerSupplyOrdering
   uid: 154
   components:
   - grid: 0

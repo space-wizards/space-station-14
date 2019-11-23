@@ -5,6 +5,7 @@
   keywords: [melee]
   description: A crude spear for when you need to put holes in somebody.
   icon: Objects/Melee/spear.rsi/spear.png
+  result: Spear
   objecttype: Item
   steps:
   - material: Metal
