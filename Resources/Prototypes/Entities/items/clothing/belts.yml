@@ -20,7 +20,14 @@
     sprite: Clothing/belt_utility.rsi
     state: utilitybelt
   - type: Clothing
-    Size: 30
+    Size: 50
     sprite: Clothing/belt_utility.rsi
   - type: Storage
-    Capacity: 30
+    Capacity: 40 # Full tool loadout is 35, plus an extra
+
+- type: entity
+  id: UtilityBeltClothingFilled
+  parent: UtilityBeltClothing
+  components:
+  - type: UtilityBeltClothingFill
+  

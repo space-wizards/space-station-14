@@ -3049,7 +3049,7 @@ entities:
       mask: 5
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
-- type: UtilityBeltClothing
+- type: UtilityBeltClothingFilled
   uid: 260
   components:
   - grid: 0
@@ -3067,7 +3067,7 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- type: UtilityBeltClothing
+- type: UtilityBeltClothingFilled
   uid: 261
   components:
   - grid: 0
