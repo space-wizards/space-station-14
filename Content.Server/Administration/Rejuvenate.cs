@@ -41,7 +41,7 @@ namespace Content.Server.Administration
                     shell.SendText(player, localizationManager.GetString("There's no entity attached to the user."));
                     return;
                 }
-                RejuvenateVerb.PerformRejuvenate(player.AttachedEntity); //removed an if, and the healAll() call
+                RejuvenateVerb.PerformRejuvenate(player.AttachedEntity);
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -52,7 +52,7 @@ namespace Content.Server.Administration
                     shell.SendText(player, localizationManager.GetString("Could not find entity {0}", arg));
                     continue;
                 }
-                RejuvenateVerb.PerformRejuvenate(entity); //remove an if, and the healAll() call
+                RejuvenateVerb.PerformRejuvenate(entity);
             }
         }
     }
