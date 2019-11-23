@@ -5,12 +5,6 @@ using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Server.GlobalVerbs
 {
@@ -41,7 +35,7 @@ namespace Content.Server.GlobalVerbs
             if (user.TryGetComponent<IActorComponent>(out var player))
             {
                 if (groupController.CanCommand(player.playerSession, "rejuvenate"))
-                PerformRejuvenate(target);
+                    PerformRejuvenate(target);
             }
 
         }
