@@ -1,0 +1,8 @@
+// Additively blends the hair color onto the hair sprite.
+
+uniform vec4 hairColor;
+
+void fragment() {
+    COLOR = texture(TEXTURE, UV);
+    COLOR.rgb += hairColor.rgb;
+}
