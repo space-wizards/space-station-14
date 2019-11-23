@@ -9,13 +9,13 @@ using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
 using Content.Client.Sandbox;
 using Content.Client.UserInterface;
+using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Interfaces;
-using Content.Shared.Utility;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
@@ -151,7 +151,7 @@ namespace Content.Client
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
             IoCManager.Register<ISandboxManager, SandboxManager>();
-            IoCManager.Register<IModuleManager, ModuleManager>();
+            IoCManager.Register<IModuleManager, ClientModuleManager>();
 
             if (TestingCallbacks != null)
             {

@@ -4,8 +4,8 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Sandbox;
+using Content.Server.Utility;
 using Content.Shared.Interfaces;
-using Content.Shared.Utility;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
@@ -51,7 +51,7 @@ namespace Content.Server
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IMoMMILink, MoMMILink>();
             IoCManager.Register<ISandboxManager, SandboxManager>();
-            IoCManager.Register<IModuleManager, ModuleManager>();
+            IoCManager.Register<IModuleManager, ServerModuleManager>();
             if (TestingCallbacks != null)
             {
                 var cast = (ServerModuleTestingCallbacks) TestingCallbacks;

@@ -14,11 +14,11 @@ namespace Content.Shared.Interfaces
     public interface IModuleManager
     {
         /// <summary>
-        /// Returns true if the code is being run by Robust.Client, returns false otherwise.
+        /// Returns true if the code is being run by the client, returns false otherwise.
         /// </summary>
         bool IsClientModule();
         /// <summary>
-        /// Returns true if the code is being run by Robust.Server, returns false otherwise.
+        /// Returns true if the code is being run by the server, returns false otherwise.
         /// </summary>
         bool IsServerModule();
     }
