@@ -1,7 +1,5 @@
 ﻿using System;
-using Content.Client.Chat;
 using Content.Client.GameObjects.Components.Actor;
-using Content.Client.GameTicking;
 using Content.Client.Input;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
@@ -15,7 +13,6 @@ using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
-using Content.Shared.Interfaces;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
@@ -143,14 +140,7 @@ namespace Content.Client
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
 
-            IoCManager.Register<IGameHud, GameHud>();
-            IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
-            IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
-            IoCManager.Register<IClientGameTicker, ClientGameTicker>();
-            IoCManager.Register<IParallaxManager, ParallaxManager>();
-            IoCManager.Register<IChatManager, ChatManager>();
-            IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
-            IoCManager.Register<ISandboxManager, SandboxManager>();
+            ClientContentIoC.Register();
 
             if (TestingCallbacks != null)
             {

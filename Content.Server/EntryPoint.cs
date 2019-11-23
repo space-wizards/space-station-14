@@ -1,11 +1,8 @@
 ﻿using Content.Server.Cargo;
-using Content.Server.Chat;
-using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Sandbox;
-using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
@@ -45,14 +42,8 @@ namespace Content.Server
                 factory.RegisterIgnore(ignoreName);
             }
 
-            IoCManager.Register<ISharedNotifyManager, ServerNotifyManager>();
-            IoCManager.Register<IServerNotifyManager, ServerNotifyManager>();
-            IoCManager.Register<IGameTicker, GameTicker>();
-            IoCManager.Register<IChatManager, ChatManager>();
-            IoCManager.Register<IMoMMILink, MoMMILink>();
-            IoCManager.Register<ISandboxManager, SandboxManager>();
-            IoCManager.Register<IGalacticBankManager, GalacticBankManager>();
-            IoCManager.Register<ICargoOrderDataManager, CargoOrderDataManager>();
+            ServerContentIoC.Register();
+
             if (TestingCallbacks != null)
             {
                 var cast = (ServerModuleTestingCallbacks) TestingCallbacks;
