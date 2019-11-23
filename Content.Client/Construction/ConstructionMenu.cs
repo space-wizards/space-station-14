@@ -161,17 +161,17 @@ namespace Content.Client.Construction
                             {
                                 case ConstructionStepMaterial.MaterialType.Metal:
                                     icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/sheet_metal.png");
+                                        "/Textures/Objects/Materials/sheet_metal.png");
                                     text = $"Metal x{mat.Amount}";
                                     break;
                                 case ConstructionStepMaterial.MaterialType.Glass:
                                     icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/sheet_glass.png");
+                                        "/Textures/Objects/Materials/sheet_glass.png");
                                     text = $"Glass x{mat.Amount}";
                                     break;
                                 case ConstructionStepMaterial.MaterialType.Cable:
                                     icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/cable_coil.png");
+                                        "/Textures/Objects/Tools/cable_coil.png");
                                     text = $"Cable Coil x{mat.Amount}";
                                     break;
                                 default:
@@ -183,16 +183,16 @@ namespace Content.Client.Construction
                             switch (tool.Tool)
                             {
                                 case ConstructionStepTool.ToolType.Wrench:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/wrench.png");
+                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.png");
                                     text = "Wrench";
                                     break;
                                 case ConstructionStepTool.ToolType.Crowbar:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/crowbar.png");
+                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.png");
                                     text = "Crowbar";
                                     break;
                                 case ConstructionStepTool.ToolType.Screwdriver:
                                     icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/screwdriver.png");
+                                        "/Textures/Objects/Tools/screwdriver.png");
                                     text = "Screwdriver";
                                     break;
                                 case ConstructionStepTool.ToolType.Welder:
@@ -202,7 +202,7 @@ namespace Content.Client.Construction
                                     break;
                                 case ConstructionStepTool.ToolType.Wirecutters:
                                     icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/wirecutter.png");
+                                        "/Textures/Objects/Tools/wirecutter.png");
                                     text = "Wirecutters";
                                     break;
                                 default:

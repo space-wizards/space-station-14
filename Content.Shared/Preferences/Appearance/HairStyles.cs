@@ -5,6 +5,9 @@ namespace Content.Shared.Preferences.Appearance
 {
     public static class HairStyles
     {
+        public const string DefaultHairStyle = "Bald";
+        public const string DefaultFacialHairStyle = "Shaved";
+
         public static readonly Dictionary<string, string> HairStylesMap = new Dictionary<string, string>
         {
             {"Bald", "bald"},

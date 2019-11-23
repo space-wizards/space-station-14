@@ -1,7 +1,11 @@
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -10,43 +14,35 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [RegisterComponent]
     public class StomachComponent : SharedStomachComponent
     {
-        // Essentially every time it ticks it'll pull out the MetabolisationAmount of reagents and process them.
-        // Generic food goes under "nutriment" like SS13
-        // There's also separate hunger and thirst components which means you can have a stomach
-        // but not require food / water.
-        public static readonly int NutrimentFactor = 30;
-        public static readonly int HydrationFactor = 30;
-        public static readonly int MetabolisationAmount = 5;
+#pragma warning disable 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+#pragma warning restore 649
 
+        [ViewVariables(VVAccess.ReadOnly)]
         private SolutionComponent _stomachContents;
-        public float MetaboliseDelay => _metaboliseDelay;
-        [ViewVariables]
-        private float _metaboliseDelay; // How long between metabolisation for 5 units
-
         public int MaxVolume
         {
             get => _stomachContents.MaxVolume;
             set => _stomachContents.MaxVolume = value;
         }
-
-        private float _metabolisationCounter = 0.0f;
-
         private int _initialMaxVolume;
+        //Used to track changes to reagent amounts during metabolism
+        private readonly Dictionary<string, int> _reagentDeltas = new Dictionary<string, int>();
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _metaboliseDelay, "metabolise_delay", 6.0f);
             serializer.DataField(ref _initialMaxVolume, "max_volume", 20);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            // Shouldn't add to Owner to avoid cross-contamination (e.g. with blood or whatever they made hold other solutions)
+            //Doesn't use Owner.AddComponent<>() to avoid cross-contamination (e.g. with blood or whatever they holds other solutions)
             _stomachContents = new SolutionComponent();
             _stomachContents.InitializeFromPrototype();
             _stomachContents.MaxVolume = _initialMaxVolume;
+            _stomachContents.Owner = Owner; //Manually set owner to avoid crash when VV'ing this
         }
 
         public bool TryTransferSolution(Solution solution)
@@ -61,69 +57,42 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
         /// <summary>
-        /// This is where the magic happens. Make people throw up, increase nutrition, whatever
+        /// Loops through each reagent in _stomachContents, and calls the IMetabolizable for each of them./>
         /// </summary>
-        /// <param name="solution"></param>
-        public void React(Solution solution)
+        /// <param name="tickTime">The time since the last metabolism tick in seconds.</param>
+        public void Metabolize(float tickTime)
         {
-            // TODO: Implement metabolism post from here
-            // https://github.com/space-wizards/space-station-14/issues/170#issuecomment-481835623 as raised by moneyl
-            var hungerUpdate = 0;
-            var thirstUpdate = 0;
-            foreach (var reagent in solution.Contents)
+            if (_stomachContents.CurrentVolume == 0)
+                return;
+
+            //Run metabolism for each reagent, track quantity changes
+            _reagentDeltas.Clear();
+            foreach (var reagent in _stomachContents.ReagentList)
             {
-                switch (reagent.ReagentId)
+                if(!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                    continue;
+
+                foreach (var metabolizable in proto.Metabolism)
                 {
-                    case "chem.Nutriment":
-                        hungerUpdate++;
-                        break;
-                    case "chem.H2O":
-                        thirstUpdate++;
-                        break;
-                    case "chem.Alcohol":
-                        thirstUpdate++;
-                        break;
-                    default:
-                        continue;
+                    _reagentDeltas[reagent.ReagentId] = metabolizable.Metabolize(Owner, reagent.ReagentId, tickTime);
                 }
             }
 
-            // Quantity x restore amount per unit
-            if (hungerUpdate > 0 && Owner.TryGetComponent(out HungerComponent hungerComponent))
+            //Apply changes to quantity afterwards. Can't change the reagent quantities while the iterating the
+            //list of reagents, because that would invalidate the iterator and throw an exception.
+            foreach (var reagentDelta in _reagentDeltas)
             {
-                hungerComponent.UpdateFood(hungerUpdate * NutrimentFactor);
+                _stomachContents.TryRemoveReagent(reagentDelta.Key, reagentDelta.Value);
             }
-
-            if (thirstUpdate > 0 && Owner.TryGetComponent(out ThirstComponent thirstComponent))
-            {
-                thirstComponent.UpdateThirst(thirstUpdate * HydrationFactor);
-            }
-
-            // TODO: Dispose solution?
         }
 
-        public void Metabolise()
+        /// <summary>
+        /// Triggers metabolism of the reagents inside _stomachContents. Called by <see cref="StomachSystem"/>
+        /// </summary>
+        /// <param name="tickTime">The time since the last metabolism tick in seconds.</param>
+        public void OnUpdate(float tickTime)
         {
-            if (_stomachContents.CurrentVolume == 0)
-            {
-                return;
-            }
-
-            var metabolisation = _stomachContents.SplitSolution(MetabolisationAmount);
-
-            React(metabolisation);
-        }
-
-        public void OnUpdate(float frameTime)
-        {
-            _metabolisationCounter += frameTime;
-            if (_metabolisationCounter >= MetaboliseDelay)
-            {
-                // Going to be rounding issues with frametime but no easy way to avoid it with int reagents.
-                // It is a long-term mechanic so shouldn't be a big deal.
-                Metabolise();
-                _metabolisationCounter -= MetaboliseDelay;
-            }
+            Metabolize(tickTime);
         }
     }
 }

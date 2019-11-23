@@ -1,7 +1,7 @@
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Preferences.Appearance;
-using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -24,21 +24,35 @@ namespace Content.Server.GameObjects.Components
 
         private static void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            AppearanceComponent appearance = obj.Session.AttachedEntity.GetComponent<AppearanceComponent>();
+            var hair = obj.Session.AttachedEntity.GetComponent<HairComponent>();
             switch (obj.Message)
             {
                 case HairSelectedMessage msg:
                     var map =
                         msg.IsFacialHair ? HairStyles.FacialHairStylesMap : HairStyles.HairStylesMap;
-                    var visual =
-                        msg.IsFacialHair ? CharacterVisuals.FacialHairStyle : CharacterVisuals.HairStyle;
                     if (!map.ContainsKey(msg.HairName))
                         return;
-                    appearance.SetData(visual, msg.HairName);
+
+                    if (msg.IsFacialHair)
+                    {
+                        hair.FacialHairStyleName = msg.HairName;
+                    }
+                    else
+                    {
+                        hair.HairStyleName = msg.HairName;
+                    }
+
                     break;
                 case HairColorSelectedMessage msg:
-                    appearance.SetData(msg.IsFacialHair ? CharacterVisuals.FacialHairColor : CharacterVisuals.HairColor,
-                        msg.HairColor);
+                    if (msg.IsFacialHair)
+                    {
+                        hair.FacialHairColor = msg.HairColor;
+                    }
+                    else
+                    {
+                        hair.HairColor = msg.HairColor;
+                    }
+
                     break;
             }
         }

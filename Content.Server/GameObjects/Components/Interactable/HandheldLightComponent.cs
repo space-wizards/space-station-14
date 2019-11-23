@@ -44,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return cell;
             }
         }
+        
 
         public override string Name => "HandheldLight";
 

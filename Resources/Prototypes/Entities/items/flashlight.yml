@@ -17,4 +17,5 @@
     state: lantern_off
   - type: PointLight
     enabled: false
+    radius: 3
   - type: Sound
