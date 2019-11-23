@@ -32,5 +32,7 @@
         public const uint OVERLAYEFFECTS = 1027;
         public const uint STOMACH = 1028;
         public const uint ITEMCOOLDOWN = 1029;
+        public const uint CARGO_ORDER_DATABASE = 1030;
+        public const uint GALACTIC_MARKET = 1031;
     }
 }
