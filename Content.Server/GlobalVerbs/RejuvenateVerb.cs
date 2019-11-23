@@ -23,6 +23,9 @@ namespace Content.Server.GlobalVerbs
 
             if (user.TryGetComponent<IActorComponent>(out var player))
             {
+                if (!target.HasComponent<DamageableComponent>() && !target.HasComponent<HungerComponent>() && !target.HasComponent<ThirstComponent>())
+                    return VerbVisibility.Invisible;
+
                 if (groupController.CanCommand(player.playerSession, "rejuvenate"))
                     return VerbVisibility.Visible;
             }
