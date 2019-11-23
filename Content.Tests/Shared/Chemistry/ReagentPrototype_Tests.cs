@@ -7,8 +7,8 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Tests.Shared.Chemistry
 {
-    [TestFixture, Parallelizable, TestOf(typeof(ReagentPrototype))]
-    public class ReagentPrototype_Tests
+    [TestFixture, TestOf(typeof(ReagentPrototype))]
+    public class ReagentPrototype_Tests : ContentUnitTest
     {
         [Test]
         public void DeserializeReagentPrototype()
