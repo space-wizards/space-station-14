@@ -1,6 +1,4 @@
-﻿using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Nutrition;
-using Content.Server.GlobalVerbs;
+﻿using Content.Server.GlobalVerbs;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
