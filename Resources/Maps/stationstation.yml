@@ -1756,7 +1756,7 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- type: Medkit
+- type: MedkitFilled
   uid: 147
   components:
   - grid: 0
@@ -1769,7 +1769,7 @@ entities:
       mask: 5
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
-- type: Medkit
+- type: MedkitFilled
   uid: 148
   components:
   - grid: 0
@@ -8414,7 +8414,7 @@ entities:
       mask: 19
       bounds: -0.5,-0.25,0.5,0.25
     type: Collidable
-- type: Medkit
+- type: MedkitFilled
   uid: 718
   components:
   - grid: 0
@@ -8427,7 +8427,7 @@ entities:
       mask: 5
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
-- type: Medkit
+- type: MedkitFilled
   uid: 719
   components:
   - grid: 0
