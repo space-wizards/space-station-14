@@ -15,6 +15,7 @@ using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Interfaces;
+using Content.Shared.Utility;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
@@ -150,6 +151,7 @@ namespace Content.Client
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
             IoCManager.Register<ISandboxManager, SandboxManager>();
+            IoCManager.Register<IModuleManager, ModuleManager>();
 
             if (TestingCallbacks != null)
             {
