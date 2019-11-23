@@ -46,16 +46,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach(var entity in RelevantEntities)
-            {
-                var fuelTank = entity.GetComponent<FuelTankComponent>();
-                UpdateFuelTank(fuelTank);
-            }
-        }
-
-        private void UpdateFuelTank(FuelTankComponent fuelTank)
-        {
 
         }
+
     }
 }

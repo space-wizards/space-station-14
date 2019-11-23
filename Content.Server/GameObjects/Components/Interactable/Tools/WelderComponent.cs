@@ -15,24 +15,12 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
     /// Tool used to weld metal together, light things on fire, or melt into constituent parts
     /// </summary>
     [RegisterComponent]
-    class WelderComponent : ToolComponent, IUse, IExamine
+    class WelderComponent : ToolComponent, IExamine
     {
         public override string Name => "Welder";
         public string WelderFuelReagentName = "chem.WelderFuel";
         public bool Activated = false;
        
-        public override void Initialize()
-        {
-            base.Initialize();
-         
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-        }
-
-
         void IExamine.Examine(FormattedMessage message)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
@@ -45,12 +33,6 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
                 message.AddText(loc.GetString("Not lit\n"));
             }
 
-        }
-
-        public bool UseEntity(UseEntityEventArgs eventArgs)
-        {
-            //Handled in WelderSystem
-            return false;
         }
     }
 }
