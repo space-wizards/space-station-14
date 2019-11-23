@@ -112,6 +112,27 @@ namespace Content.Server.GameObjects.EntitySystems
                         break;
                     }
 
+                    foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
+                    {
+                        if (globalVerb.GetType().ToString() != use.VerbKey)
+                        {
+                            continue;
+                        }
+
+                        if (globalVerb.RequireInteractionRange)
+                        {
+                            var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
+                                .LengthSquared;
+                            if (distanceSquared > VerbUtility.InteractionRangeSquared)
+                            {
+                                break;
+                            }
+                        }
+
+                        globalVerb.Activate(userEntity, entity);
+                        break;
+                    }
+
                     break;
                 }
             }
