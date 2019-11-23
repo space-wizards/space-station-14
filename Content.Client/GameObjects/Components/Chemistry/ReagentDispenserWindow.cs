@@ -237,7 +237,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 }
 
                 //Check if the reagent is being moused over. If so, color it green.
-                if (proto.ID == highlightedReagentId)
+                if (proto != null && proto.ID == highlightedReagentId)
                 {
                     ContainerInfo.Children.Add(new HBoxContainer
                     {
