@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Nutrition;
+using Content.Server.GlobalVerbs;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -40,21 +41,7 @@ namespace Content.Server.Administration
                     shell.SendText(player, localizationManager.GetString("There's no entity attached to the user."));
                     return;
                 }
-                if (!player.AttachedEntity.TryGetComponent(out DamageableComponent damage))
-                {
-                    shell.SendText(player, localizationManager.GetString("The user's entity does not have a DamageableComponent."));
-                    return;
-                }
-                damage.HealAllDamage();
-                if (player.AttachedEntity.TryGetComponent(out HungerComponent hunger))
-                {
-                    hunger.ResetFood();
-                }
-                if (player.AttachedEntity.TryGetComponent(out ThirstComponent thirst))
-                {
-                    thirst.ResetThirst();
-                }
-                return;
+                RejuvenateVerb.PerformRejuvenate(player.AttachedEntity); //removed an if, and the healAll() call
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -65,20 +52,7 @@ namespace Content.Server.Administration
                     shell.SendText(player, localizationManager.GetString("Could not find entity {0}", arg));
                     continue;
                 }
-                if (!entity.TryGetComponent(out DamageableComponent damage))
-                {
-                    shell.SendText(player, localizationManager.GetString("Entity {0} does not have a DamageableComponent.", arg));
-                    continue;
-                }
-                damage.HealAllDamage();
-                if (entity.TryGetComponent(out HungerComponent hunger))
-                {
-                    hunger.ResetFood();
-                }
-                if (entity.TryGetComponent(out ThirstComponent thirst))
-                {
-                    thirst.ResetThirst();
-                }
+                RejuvenateVerb.PerformRejuvenate(entity); //remove an if, and the healAll() call
             }
         }
     }
