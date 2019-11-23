@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
@@ -163,6 +163,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
                 return;
             }
+        }
+
+        public void ResetFood()
+        {
+            _currentHunger = HungerThresholds[HungerThreshold.Okay];
         }
     }
 
