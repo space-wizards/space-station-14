@@ -16,10 +16,10 @@ namespace Content.Shared.Interfaces
         /// <summary>
         /// Returns true if the code is being run by the client, returns false otherwise.
         /// </summary>
-        bool IsClientModule();
+        bool IsClientModule { get; }
         /// <summary>
         /// Returns true if the code is being run by the server, returns false otherwise.
         /// </summary>
-        bool IsServerModule();
+        bool IsServerModule { get; }
     }
 }

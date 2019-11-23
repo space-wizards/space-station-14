@@ -43,7 +43,7 @@ namespace Content.Shared.Chemistry
             serializer.DataField(ref _description, "desc", string.Empty);
             serializer.DataField(ref _substanceColor, "color", Color.White);
 
-            if (_moduleManager.IsServerModule())
+            if (_moduleManager.IsServerModule)
                 serializer.DataField(ref _metabolism, "metabolism", new List<IMetabolizable> {new DefaultMetabolizable()});
             else
                 _metabolism = new List<IMetabolizable> { new DefaultMetabolizable() };

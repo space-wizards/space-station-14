@@ -9,14 +9,7 @@ namespace Content.Server.Utility
     /// </summary>
     public class ServerModuleManager : IModuleManager
     {
-        bool IModuleManager.IsClientModule()
-        {
-            return false;
-        }
-
-        bool IModuleManager.IsServerModule()
-        {
-            return true;
-        }
+        bool IModuleManager.IsClientModule => false;
+        bool IModuleManager.IsServerModule => true;
     }
 }
