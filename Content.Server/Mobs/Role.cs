@@ -1,9 +1,6 @@
 ﻿// Hey look,
 // Antag Datums.
 
-using System;
-using Content.Server.Mobs.Roles;
-
 namespace Content.Server.Mobs
 {
     /// <summary>
