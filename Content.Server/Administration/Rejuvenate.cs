@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects;
+﻿using Content.Server.GlobalVerbs;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -39,13 +39,7 @@ namespace Content.Server.Administration
                     shell.SendText(player, localizationManager.GetString("There's no entity attached to the user."));
                     return;
                 }
-                if (!player.AttachedEntity.TryGetComponent(out DamageableComponent damage))
-                {
-                    shell.SendText(player, localizationManager.GetString("The user's entity does not have a DamageableComponent."));
-                    return;
-                }
-                damage.HealAllDamage();
-                return;
+                RejuvenateVerb.PerformRejuvenate(player.AttachedEntity);
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -56,12 +50,7 @@ namespace Content.Server.Administration
                     shell.SendText(player, localizationManager.GetString("Could not find entity {0}", arg));
                     continue;
                 }
-                if (!entity.TryGetComponent(out DamageableComponent damage))
-                {
-                    shell.SendText(player, localizationManager.GetString("Entity {0} does not have a DamageableComponent.", arg));
-                    continue;
-                }
-                damage.HealAllDamage();
+                RejuvenateVerb.PerformRejuvenate(entity);
             }
         }
     }

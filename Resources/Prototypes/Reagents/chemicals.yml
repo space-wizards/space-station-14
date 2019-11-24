@@ -2,6 +2,9 @@
   id: chem.Nutriment
   name: Nutriment
   desc: Generic nutrition
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
 
 - type: reagent
   id: chem.H2SO4
@@ -12,6 +15,9 @@
   id: chem.H2O
   name: Water
   desc: A tasty colorless liquid.
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
 
 - type: reagent
   id: chem.Ice

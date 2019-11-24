@@ -73,7 +73,9 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             CloseTooltip();
 
-            var mousePos = _inputManager.MouseScreenPosition;
+            var popupPos = _inputManager.MouseScreenPosition;
+
+
 
             // Actually open the tooltip.
             _examineTooltipOpen = new Popup();
@@ -100,7 +102,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
             const float minWidth = 300;
             var size = Vector2.ComponentMax((minWidth, 0), panel.CombinedMinimumSize);
-            _examineTooltipOpen.Open(UIBox2.FromDimensions(mousePos, size));
+
+            popupPos += Vector2.ComponentMin(Vector2.Zero, _userInterfaceManager.StateRoot.Size - (size + popupPos));
+
+            _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos, size));
 
             if (entity.Uid.IsClientSide())
             {
@@ -130,6 +135,8 @@ namespace Content.Client.GameObjects.EntitySystems
             var richLabel = new RichTextLabel();
             richLabel.SetMessage(response.Message);
             vBox.AddChild(richLabel);
+
+            _examineTooltipOpen.Position += Vector2.ComponentMin(Vector2.Zero,_userInterfaceManager.StateRoot.Size - (panel.Size + _examineTooltipOpen.Position));
         }
 
         public void CloseTooltip()

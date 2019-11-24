@@ -91,7 +91,16 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             Prototype = prototype;
             Stage = 1;
-            Sprite.AddLayerWithSprite(prototype.Stages[1].Icon);
+            if(prototype.Stages[1].Icon != null)
+            {
+                Sprite.AddLayerWithSprite(prototype.Stages[1].Icon);
+            }
+            else
+            {
+                Sprite.AddLayerWithSprite(prototype.Icon);
+            }
+            
+
         }
 
         bool TryProcessStep(ConstructionStep step, IEntity slapped)

@@ -3,6 +3,8 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Maps
 {
@@ -21,6 +23,7 @@ namespace Content.Shared.Maps
         public bool CanCrowbar { get; private set; }
         public string FootstepSounds { get; private set; }
         public float Friction { get; set; }
+        public string ItemDropPrototypeName { get; private set; }
 
         public void AssignTileId(ushort id)
         {
@@ -60,6 +63,16 @@ namespace Content.Shared.Maps
             {
                 Friction = 0;
             }
+
+            if (mapping.TryGetNode("item_drop", out node))
+            {
+                ItemDropPrototypeName = node.ToString();
+            }
+            else
+            {
+                ItemDropPrototypeName = "FloorTileItemSteel";
+            }
         }
+
     }
 }

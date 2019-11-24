@@ -1,5 +1,6 @@
 - type: entity
-  name: Medkit
+  name: Emergency Medical Kit
+  description: An emergency medical kit for those serious boo-boos.
   parent: BaseItem
   id: Medkit
   components:
@@ -7,11 +8,16 @@
     texture: Objects/Medical/medkit_r.png
   - type: Icon
     texture: Objects/Medical/medkit_r.png
-  - type: Healing
-    heal: 100
-    damage: Brute
+  - type: Storage
+    Capacity: 60
   - type: Item
-    Size: 24
+    Size: 9999
+
+- type: entity
+  id: MedkitFilled
+  parent: Medkit
+  components:
+  - type: MedkitFill # 3 Ointment, 3 Roll of Gauze. TODO 1 Health Analyzer once it exists
 
 - type: entity
   name: Medical Stack
@@ -21,7 +27,6 @@
   - type: Stack
   - type: Item
   - type: Healing
-
 
 - type: entity
   name: Ointment
@@ -41,9 +46,8 @@
     count: 5
     stacktype: enum.StackType.Ointment
 
-
 - type: entity
-  name: Brutepack
+  name: Roll of Gauze
   description: Some sterile gauze to wrap around bloody stumps.
   parent: MedicalStack
   id: Brutepack

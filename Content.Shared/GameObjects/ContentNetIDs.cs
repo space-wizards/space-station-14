@@ -28,10 +28,13 @@
         public const uint RESEARCH_CONSOLE = 1023;
         public const uint WIRES = 1024;
         public const uint COMBATMODE = 1025;
-        public const uint INSTRUMENTS = 1026;
-        public const uint STATUSEFFECTS = 1027;
-        public const uint OVERLAYEFFECTS = 1028;
-        public const uint STOMACH = 1029;
-        public const uint ITEMCOOLDOWN = 1030;
+        public const uint STATUSEFFECTS = 1026;
+        public const uint OVERLAYEFFECTS = 1027;
+        public const uint STOMACH = 1028;
+        public const uint ITEMCOOLDOWN = 1029;
+        public const uint CARGO_ORDER_DATABASE = 1030;
+        public const uint GALACTIC_MARKET = 1031;
+        public const uint HAIR = 1032;
+        public const uint INSTRUMENTS = 1033;
     }
 }

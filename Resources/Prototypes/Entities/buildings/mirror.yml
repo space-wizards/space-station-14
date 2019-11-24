@@ -1,0 +1,26 @@
+- type: entity
+  id: mirror
+  name: Mirror
+  components:
+  - type: Sprite
+    sprite: Buildings/mirror.rsi
+    state: mirror
+  - type: Icon
+    sprite: Buildings/mirror.rsi
+    state: mirror
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 19
+      layer: 16
+  - type: Clickable
+  - type: Physics
+    mass: 25
+    Anchored: true
+  - type: SnapGrid
+    offset: Center
+  - type: MagicMirror
+  - type: UserInterface
+    interfaces:
+    - key: enum.MagicMirrorUiKey.Key
+      type: MagicMirrorBoundUserInterface

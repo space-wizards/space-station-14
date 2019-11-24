@@ -56,8 +56,6 @@ namespace Content.Client.UserInterface
         {
             IoCManager.InjectDependencies(this);
 
-            ToolTip = _loc.GetString("Your hands");
-
             _handR = new UIBox2i(0, 0, BoxSize, BoxSize);
             _handL = _handR.Translated((BoxSize + BoxSpacing, 0));
 
@@ -275,6 +273,15 @@ namespace Content.Client.UserInterface
                 {
                     AttackByInHand(handIndex);
                 }
+            }
+
+            else if (args.Function == ContentKeyFunctions.ExamineEntity)
+            {
+                var examine = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ExamineSystem>();
+                if (leftHandContains)
+                    examine.DoExamine(LeftHand);
+                else if (rightHandContains)
+                    examine.DoExamine(RightHand);
             }
 
             else if (args.Function == ContentKeyFunctions.MouseMiddle)
