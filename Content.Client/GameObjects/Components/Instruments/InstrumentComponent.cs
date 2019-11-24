@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Content.Shared.GameObjects.Components.Instruments;
 using OpenTK.Platform.Windows;
 using Robust.Shared.GameObjects;
@@ -18,6 +19,7 @@ using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Timer = Robust.Shared.Timers.Timer;
 
 
 namespace Content.Client.GameObjects.Components.Instruments
@@ -108,7 +110,8 @@ namespace Content.Client.GameObjects.Components.Instruments
                 case InstrumentMidiEventMessage midiEventMessage:
                     // If we're the ones sending the MidiEvents, we ignore this message.
                     if (IsInputOpen || IsMidiOpen) break;
-                    _renderer.SendMidiEvent(midiEventMessage.MidiEvent);
+                    Timer.Spawn((int) (500 + ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds() - midiEventMessage.Timestamp),
+                        () => _renderer.SendMidiEvent(midiEventMessage.MidiEvent));
                     break;
 
                 case InstrumentStopMidiMessage _:
@@ -164,7 +167,8 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <param name="midiEvent">The received midi event</param>
         private void RendererOnMidiEvent(MidiEvent midiEvent)
         {
-            SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent));
+            SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent,
+                ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds()));
         }
     }
 }
