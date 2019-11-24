@@ -10,6 +10,7 @@ namespace Content.Server.Mobs
     /// </summary>
     public abstract class Role
     {
+
         /// <summary>
         ///     The mind owning this role instance.
         /// </summary>
@@ -32,5 +33,9 @@ namespace Content.Server.Mobs
         {
 
         }
+
+        public abstract override int GetHashCode();
+
+        public abstract override bool Equals(object obj);
     }
 }
