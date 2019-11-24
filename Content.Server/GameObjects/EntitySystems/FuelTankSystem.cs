@@ -37,17 +37,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
                
         }
-
         public override void Initialize()
         {
             base.Initialize();
             EntityQuery = new TypeEntityQuery(typeof(FuelTankComponent));
         }
-
-        public override void Update(float frameTime)
-        {
-
-        }
-
     }
 }
