@@ -27,9 +27,9 @@ namespace Content.Shared.GameObjects.Components.Instruments
     public class InstrumentMidiEventMessage : ComponentMessage
     {
         public MidiEvent MidiEvent;
-        public long Timestamp;
+        public double Timestamp;
 
-        public InstrumentMidiEventMessage(MidiEvent midiEvent, long timestamp)
+        public InstrumentMidiEventMessage(MidiEvent midiEvent, double timestamp)
         {
             MidiEvent = midiEvent;
             Timestamp = timestamp;

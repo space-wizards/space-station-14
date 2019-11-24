@@ -16,6 +16,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -35,6 +36,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 #pragma warning disable 649
         [Dependency] private IMidiManager _midiManager;
         [Dependency] private IFileDialogManager _fileDialogManager;
+        [Dependency] private readonly IGameTiming _timing;
 #pragma warning restore 649
 
         private IMidiRenderer _renderer;
@@ -110,7 +112,7 @@ namespace Content.Client.GameObjects.Components.Instruments
                 case InstrumentMidiEventMessage midiEventMessage:
                     // If we're the ones sending the MidiEvents, we ignore this message.
                     if (IsInputOpen || IsMidiOpen) break;
-                    Timer.Spawn((int) (500 + ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds() - midiEventMessage.Timestamp),
+                    Timer.Spawn((int) (500 + _timing.CurTime.TotalMilliseconds - midiEventMessage.Timestamp),
                         () => _renderer.SendMidiEvent(midiEventMessage.MidiEvent));
                     break;
 
@@ -167,8 +169,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <param name="midiEvent">The received midi event</param>
         private void RendererOnMidiEvent(MidiEvent midiEvent)
         {
-            SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent,
-                ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds()));
+            SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent, _timing.CurTime.TotalMilliseconds));
         }
     }
 }
