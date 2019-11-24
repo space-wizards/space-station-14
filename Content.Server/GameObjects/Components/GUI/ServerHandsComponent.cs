@@ -145,6 +145,8 @@ namespace Content.Server.GameObjects
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
             }
 
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
+
             return success;
         }
 

@@ -184,6 +184,60 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
+    ///     This interface gives components behavior when they're held on the selected hand.
+    /// </summary>
+    public interface IHandSelected
+    {
+        void HandSelected(HandSelectedEventArgs eventArgs);
+    }
+
+    public class HandSelectedEventArgs : EventArgs
+    {
+        public HandSelectedEventArgs(IEntity user)
+        {
+            User = user;
+        }
+
+        public IEntity User { get; }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when they're held on a deselected hand.
+    /// </summary>
+    public interface IHandDeselected
+    {
+        void HandDeselected(HandDeselectedEventArgs eventArgs);
+    }
+
+    public class HandDeselectedEventArgs : EventArgs
+    {
+        public HandDeselectedEventArgs(IEntity user)
+        {
+            User = user;
+        }
+
+        public IEntity User { get; }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when they're dropped by a mob.
+    /// </summary>
+    public interface IDropped
+    {
+        void Dropped(DroppedEventArgs eventArgs);
+    }
+
+    public class DroppedEventArgs : EventArgs
+    {
+        public DroppedEventArgs(IEntity user)
+        {
+            User = user;
+        }
+
+        public IEntity User { get; }
+    }
+
+    /// <summary>
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
@@ -512,8 +566,8 @@ namespace Content.Server.GameObjects.EntitySystems
         }
 
         /// <summary>
-        /// Activates the Use behavior of an object
-        /// Verifies that the user is capable of doing the use interaction first
+        /// Activates the Throw behavior of an object
+        /// Verifies that the user is capable of doing the throw interaction first
         /// </summary>
         public bool TryThrowInteraction(IEntity user, IEntity item)
         {
@@ -567,6 +621,86 @@ namespace Content.Server.GameObjects.EntitySystems
                 comp.Land(new LandEventArgs(user, landLocation));
             }
         }
+
+        /// <summary>
+        /// Activates the Dropped behavior of an object
+        /// Verifies that the user is capable of doing the drop interaction first
+        /// </summary>
+        public bool TryDroppedInteraction(IEntity user, IEntity item)
+        {
+            if (user == null || item == null || !ActionBlockerSystem.CanDrop(user)) return false;
+
+            DroppedInteraction(user, item);
+            return true;
+
+        }
+
+        /// <summary>
+        ///     Calls Dropped on all components that implement the IDropped interface
+        ///     on an entity that has been dropped.
+        /// </summary>
+        public void DroppedInteraction(IEntity user, IEntity item)
+        {
+            var dropMsg = new DroppedMessage(user, item);
+            RaiseEvent(dropMsg);
+            if (dropMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = item.GetAllComponents<IDropped>().ToList();
+
+            // Call Land on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.Dropped(new DroppedEventArgs(user));
+            }
+        }
+
+        /// <summary>
+        ///     Calls HandSelected on all components that implement the IHandSelected interface
+        ///     on an item entity on a hand that has just been selected.
+        /// </summary>
+        public void HandSelectedInteraction(IEntity user, IEntity item)
+        {
+            var dropMsg = new HandSelectedMessage(user, item);
+            RaiseEvent(dropMsg);
+            if (dropMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = item.GetAllComponents<IHandSelected>().ToList();
+
+            // Call Land on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.HandSelected(new HandSelectedEventArgs(user));
+            }
+        }
+
+        /// <summary>
+        ///     Calls HandDeselected on all components that implement the IHandDeselected interface
+        ///     on an item entity on a hand that has just been deselected.
+        /// </summary>
+        public void HandDeselectedInteraction(IEntity user, IEntity item)
+        {
+            var dropMsg = new HandDeselectedMessage(user, item);
+            RaiseEvent(dropMsg);
+            if (dropMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = item.GetAllComponents<IHandDeselected>().ToList();
+
+            // Call Land on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.HandDeselected(new HandDeselectedEventArgs(user));
+            }
+        }
+
 
         /// <summary>
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
@@ -880,6 +1014,90 @@ namespace Content.Server.GameObjects.EntitySystems
             User = user;
             Thrown = thrown;
             LandLocation = landLocation;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an entity that was thrown lands.
+    /// </summary>
+    [PublicAPI]
+    public class DroppedMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that dropped the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was dropped.
+        /// </summary>
+        public IEntity Dropped { get; }
+
+        public DroppedMessage(IEntity user, IEntity dropped)
+        {
+            User = user;
+            Dropped = dropped;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an entity item in a hand is selected.
+    /// </summary>
+    [PublicAPI]
+    public class HandSelectedMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that owns the selected hand.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     The item in question.
+        /// </summary>
+        public IEntity Item { get; }
+
+        public HandSelectedMessage(IEntity user, IEntity item)
+        {
+            User = user;
+            Item = item;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when an entity item in a hand is deselected.
+    /// </summary>
+    [PublicAPI]
+    public class HandDeselectedMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that owns the deselected hand.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     The item in question.
+        /// </summary>
+        public IEntity Item { get; }
+
+        public HandDeselectedMessage(IEntity user, IEntity item)
+        {
+            User = user;
+            Item = item;
         }
     }
 

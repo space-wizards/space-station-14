@@ -57,6 +57,11 @@ namespace Content.Server.GameObjects
             return true;
         }
 
+        bool IActionBlocker.CanDrop()
+        {
+            return true;
+        }
+        
         bool IActionBlocker.CanEmote()
         {
             return true;
@@ -103,6 +108,11 @@ namespace Content.Server.GameObjects
             return false;
         }
 
+        bool IActionBlocker.CanDrop()
+        {
+            return false;
+        }
+        
         bool IActionBlocker.CanEmote()
         {
             return false;
@@ -169,6 +179,11 @@ namespace Content.Server.GameObjects
             return false;
         }
 
+        bool IActionBlocker.CanDrop()
+        {
+            return false;
+        }
+        
         bool IActionBlocker.CanEmote()
         {
             return false;

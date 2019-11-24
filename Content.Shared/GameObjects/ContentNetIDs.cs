@@ -35,5 +35,6 @@
         public const uint CARGO_ORDER_DATABASE = 1030;
         public const uint GALACTIC_MARKET = 1031;
         public const uint HAIR = 1032;
+        public const uint INSTRUMENTS = 1033;
     }
 }
