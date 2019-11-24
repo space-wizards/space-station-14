@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Mobs.Roles
 {
-    public class Job : Role, IEquatable<Job>
+    public class Job : Role
     {
         private readonly JobPrototype _jobPrototype;
 
