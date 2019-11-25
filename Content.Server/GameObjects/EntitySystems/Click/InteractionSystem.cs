@@ -347,7 +347,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // Verify player is on the same map as the entity he clicked on
-            if (_mapManager.GetGrid(coordinates.GridID).ParentMap.Index != playerTransform.MapID)
+            if (_mapManager.GetGrid(coordinates.GridID).ParentMapId != playerTransform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
@@ -750,7 +750,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private void DoAttack(IEntity player, GridCoordinates coordinates, EntityUid uid)
         {
             // Verify player is on the same map as the entity he clicked on
-            if (_mapManager.GetGrid(coordinates.GridID).ParentMap.Index != player.Transform.MapID)
+            if (_mapManager.GetGrid(coordinates.GridID).ParentMapId != player.Transform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");

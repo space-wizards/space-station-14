@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Maps;
@@ -26,8 +26,8 @@ namespace Content.IntegrationTests
             server.Post(() =>
             {
                 mapLoader.SaveBlueprint(new GridId(2), "save load save 1.yml");
-                var map = mapManager.CreateMap();
-                var grid = mapLoader.LoadBlueprint(map, "save load save 1.yml");
+                var mapId = mapManager.CreateMap();
+                var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml");
                 mapLoader.SaveBlueprint(grid.Index, "save load save 2.yml");
             });
 
@@ -69,9 +69,9 @@ namespace Content.IntegrationTests
             // Load stationstation.yml as uninitialized map, and save it to ensure it's up to date.
             server.Post(() =>
             {
-                var map = mapManager.CreateMap();
-                pauseMgr.AddUninitializedMap(map);
-                grid = mapLoader.LoadBlueprint(map, "Maps/stationstation.yml");
+                var mapId = mapManager.CreateMap();
+                pauseMgr.AddUninitializedMap(mapId);
+                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
                 mapLoader.SaveBlueprint(grid.Index, "load save ticks save 1.yml");
             });
 
