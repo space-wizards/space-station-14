@@ -34,6 +34,7 @@ namespace Content.Client.GameObjects
         {
             base.OnRemove();
 
+            InterfaceController?.PlayerDetached();
             InterfaceController?.Dispose();
         }
 
