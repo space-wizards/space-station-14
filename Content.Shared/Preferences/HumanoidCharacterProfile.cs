@@ -8,7 +8,7 @@ namespace Content.Shared.Preferences
     {
         private string _name;
         private int _age;
-        private Gender _gender;
+        private Sex _sex;
         private ICharacterAppearance _characterAppearance;
 
         public string Name
@@ -23,10 +23,10 @@ namespace Content.Shared.Preferences
             set => _age = value;
         }
 
-        public Gender Gender
+        public Sex Sex
         {
-            get => _gender;
-            set => _gender = value;
+            get => _sex;
+            set => _sex = value;
         }
 
         public ICharacterAppearance CharacterAppearance
@@ -39,7 +39,7 @@ namespace Content.Shared.Preferences
         {
             serializer.DataField(ref _name, "name", string.Empty, true);
             serializer.DataField(ref _age, "age", 18, true);
-            serializer.DataField(ref _gender, "gender", Gender.Male, true);
+            serializer.DataField(ref _sex, "sex", Sex.Male, true);
             serializer.DataField(ref _characterAppearance, "appearance", null, true);
         }
     }

@@ -124,7 +124,7 @@ namespace Content.Server.Preferences
                         FacialHairColor = Color.Black,
                         HairColor = Color.White
                     },
-                    Gender = Gender.Male,
+                    Sex = Sex.Male,
                     Name = "John Doe"
                 }
             };
