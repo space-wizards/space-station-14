@@ -4,8 +4,8 @@ namespace Content.Client.Interfaces
 {
     public interface IClientPreferencesManager
     {
-        GameSettings GetSettings();
-        PlayerPreferences GetPreferences();
+        GameSettings Settings { get; }
+        PlayerPreferences Preferences { get; }
         void SavePreferences();
     }
 }

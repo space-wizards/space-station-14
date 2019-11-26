@@ -14,23 +14,14 @@ namespace Content.Client
 #pragma warning disable 649
         [Dependency] private readonly IClientNetManager _netManager;
 #pragma warning restore 649
-        private GameSettings _gameSettings;
-        private PlayerPreferences _playerPreferences;
 
-        public GameSettings GetSettings()
-        {
-            return _gameSettings;
-        }
-
-        public PlayerPreferences GetPreferences()
-        {
-            return _playerPreferences;
-        }
+        public GameSettings Settings { get; private set; }
+        public PlayerPreferences Preferences { get; private set; }
 
         public void SavePreferences()
         {
             var msg = _netManager.CreateNetMessage<MsgPreferences>();
-            msg.Preferences = _playerPreferences;
+            msg.Preferences = Preferences;
             _netManager.ClientSendMessage(msg);
         }
 
@@ -41,8 +32,8 @@ namespace Content.Client
 
         private void HandlePreferencesAndSettings(MsgPreferencesAndSettings message)
         {
-            _playerPreferences = message.Preferences;
-            _gameSettings = message.Settings;
+            Preferences = message.Preferences;
+            Settings = message.Settings;
         }
     }
 }
