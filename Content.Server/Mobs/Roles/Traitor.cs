@@ -21,12 +21,12 @@ namespace Content.Server.Mobs.Roles
                 "You're a traitor. Go fuck something up. Or something. I don't care to be honest.");
         }
 
-        public override bool Equals(object o)
+        public override bool Equals(Role role)
         {
-            if (ReferenceEquals(null, o)) return false;
-            if (ReferenceEquals(this, o)) return true;
-            if (o.GetType() != this.GetType()) return false;
-            return Equals((Traitor) o);
+            if (ReferenceEquals(null, role)) return false;
+            if (ReferenceEquals(this, role)) return true;
+            if (role.GetType() != this.GetType()) return false;
+            return Equals((Traitor) role);
         }
 
         public bool Equals(Traitor other)

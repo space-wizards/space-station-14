@@ -1,6 +1,8 @@
 ﻿// Hey look,
 // Antag Datums.
 
+using System;
+
 namespace Content.Server.Mobs
 {
     /// <summary>
@@ -8,7 +10,7 @@ namespace Content.Server.Mobs
     ///     well, IC roles.
     ///     This can be anything and is not necessarily limited to antagonists.
     /// </summary>
-    public abstract class Role
+    public abstract class Role: IEquatable<Role>
     {
 
         /// <summary>
@@ -33,6 +35,7 @@ namespace Content.Server.Mobs
         {
 
         }
-        public abstract override bool Equals(object obj);
+
+        public abstract bool Equals(Role other);
     }
 }

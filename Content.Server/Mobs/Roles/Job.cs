@@ -30,12 +30,12 @@ namespace Content.Server.Mobs.Roles
                 String.Format("You're a new {0}. Do your best!", Name));
         }
 
-        public override bool Equals(object o)
+        public override bool Equals(Role role)
         {
-            if (ReferenceEquals(null, o)) return false;
-            if (ReferenceEquals(this, o)) return true;
-            if (o.GetType() != this.GetType()) return false;
-            return Equals((Job) o);
+            if (ReferenceEquals(null, role)) return false;
+            if (ReferenceEquals(this, role)) return true;
+            if (role.GetType() != this.GetType()) return false;
+            return Equals((Job) role);
         }
 
         public bool Equals(Job other)
