@@ -30,11 +30,6 @@ namespace Content.Server.Mobs.Roles
                 String.Format("You're a new {0}. Do your best!", Name));
         }
 
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
-
         public override bool Equals(object o)
         {
             if (ReferenceEquals(null, o)) return false;

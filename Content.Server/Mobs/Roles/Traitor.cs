@@ -21,11 +21,6 @@ namespace Content.Server.Mobs.Roles
                 "You're a traitor. Go fuck something up. Or something. I don't care to be honest.");
         }
 
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
-
         public override bool Equals(object o)
         {
             if (ReferenceEquals(null, o)) return false;
