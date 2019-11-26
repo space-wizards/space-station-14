@@ -135,13 +135,13 @@ namespace Content.Server.GameObjects.Components.Stack
                     if (stack.AvailableSpace == 0)
                     {
 
-                        Timer.Spawn(300, () => _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is full."));
+                        Timer.Spawn(300, () => _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is now full."));
                     }
 
                 }
                 else if (toTransfer == 0 && stack.AvailableSpace == 0)
                 {
-                    _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is full.");
+                    _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is already full.");
                 }
 
             }
