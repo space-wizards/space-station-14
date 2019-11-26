@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Stack
 
                 if (toTransfer > 0)
                 {
-                    _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "+" + toTransfer.ToString());
+                    _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, $"+{toTransfer}");
 
                     if (stack.AvailableSpace == 0)
                     {
