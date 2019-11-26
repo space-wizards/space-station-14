@@ -22,7 +22,7 @@ namespace Content.Server.Mobs
     /// </remarks>
     public sealed class Mind
     {
-        private readonly ICollection<Role> _roles = new List<Role>();
+        private readonly List<Role> _roles = new List<Role>();
 
         /// <summary>
         ///     Creates the new mind attached to a specific player session.
