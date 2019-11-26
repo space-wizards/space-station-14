@@ -101,6 +101,11 @@ namespace Content.Server.GameObjects
         bool IActionBlocker.CanSpeak()
         {
             return CurrentDamageState.CanSpeak();
+		}
+            
+        bool IActionBlocker.CanDrop()
+        {
+            return CurrentDamageState.CanDrop();
         }
 
         bool IActionBlocker.CanEmote()

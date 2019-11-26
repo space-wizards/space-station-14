@@ -1,0 +1,69 @@
+- type: entity
+  name: BaseInstrument
+  id: BaseInstrument
+  components:
+  - type: Instrument
+    handheld: false
+
+  - type: Clickable
+
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      mask: 19
+      layer: 16
+
+  - type: SnapGrid
+    offset: Center
+
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 50
+
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+
+- type: entity
+  name: Piano
+  parent: BaseInstrument
+  id: PianoInstrument
+  description: Play Needles Piano Now.
+  components:
+  - type: Instrument
+    program: 1
+  - type: Sprite
+    sprite: Objects/Instruments/musician.rsi
+    state: piano
+  - type: Icon
+    sprite: Objects/Instruments/musician.rsi
+    state: piano
+
+- type: entity
+  name: Minimoog
+  parent: BaseInstrument
+  id: MinimoogInstrument
+  components:
+  - type: Instrument
+    program: 7
+  - type: Sprite
+    sprite: Objects/Instruments/musician.rsi
+    state: minimoog
+  - type: Icon
+    sprite: Objects/Instruments/musician.rsi
+    state: minimoog
+
+- type: entity
+  name: Xylophone
+  parent: BaseInstrument
+  id: XylophoneInstrument
+  components:
+  - type: Instrument
+    program: 13
+  - type: Sprite
+    sprite: Objects/Instruments/musician.rsi
+    state: xylophone
+  - type: Icon
+    sprite: Objects/Instruments/musician.rsi
+    state: xylophone

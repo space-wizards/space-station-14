@@ -12,6 +12,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -27,6 +28,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -94,7 +96,19 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!TryGetAttachedComponent(session as IPlayerSession, out HandsComponent handsComp))
                 return;
 
+            var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
+
+            var oldItem = handsComp.GetActiveHand;
+
             handsComp.SwapHands();
+
+            var newItem = handsComp.GetActiveHand;
+
+            if(oldItem != null)
+                interactionSystem.HandDeselectedInteraction(handsComp.Owner, oldItem.Owner);
+
+            if(newItem != null)
+                interactionSystem.HandSelectedInteraction(handsComp.Owner, newItem.Owner);
         }
 
         private bool HandleDrop(ICommonSession session, GridCoordinates coords, EntityUid uid)
@@ -102,14 +116,19 @@ namespace Content.Server.GameObjects.EntitySystems
             var ent = ((IPlayerSession) session).AttachedEntity;
 
             if (ent == null || !ent.IsValid())
-            {
                 return false;
-            }
 
             if (!ent.TryGetComponent(out HandsComponent handsComp))
-            {
                 return false;
-            }
+
+            if (handsComp.GetActiveHand == null)
+                return false;
+
+            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(ent, handsComp.GetActiveHand.Owner))
+                return false;
+                
+            if(handsComp.GetActiveHand != null && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(ent, handsComp.GetActiveHand.Owner))
+            	return false;
 
             if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
             {

@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.GameObjects.Components.Research
 {
     [RegisterComponent]
-    public class TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
+    public class  TechnologyDatabaseComponent : SharedTechnologyDatabaseComponent
     {
         public override ComponentState GetComponentState()
         {

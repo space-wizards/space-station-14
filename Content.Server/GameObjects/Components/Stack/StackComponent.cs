@@ -1,19 +1,28 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Stack
 {
+
     // TODO: Naming and presentation and such could use some improvement.
     [RegisterComponent]
     public class StackComponent : Component, IAttackBy, IExamine
     {
+
+#pragma warning disable 649
+        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
+#pragma warning restore 649
+
         private const string SerializationCache = "stack";
         private int _count = 50;
         private int _maxCount = 50;
@@ -111,6 +120,30 @@ namespace Content.Server.GameObjects.Components.Stack
                 var toTransfer = Math.Min(Count, stack.AvailableSpace);
                 Count -= toTransfer;
                 stack.Add(toTransfer);
+
+                var popupPos = eventArgs.ClickLocation;
+                if (popupPos == GridCoordinates.Nullspace)
+                {
+                    popupPos = eventArgs.User.Transform.GridPosition;
+                }
+
+
+                if (toTransfer > 0)
+                {
+                    _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, $"+{toTransfer}");
+
+                    if (stack.AvailableSpace == 0)
+                    {
+
+                        Timer.Spawn(300, () => _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is now full."));
+                    }
+
+                }
+                else if (toTransfer == 0 && stack.AvailableSpace == 0)
+                {
+                    _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is already full.");
+                }
+
             }
 
             return false;

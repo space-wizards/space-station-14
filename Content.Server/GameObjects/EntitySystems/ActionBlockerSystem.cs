@@ -15,6 +15,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
         bool CanSpeak();
 
+        bool CanDrop();
+
         bool CanEmote();
     }
 
@@ -70,6 +72,16 @@ namespace Content.Server.GameObjects.EntitySystems
             return canspeak;
         }
 
+        public static bool CanDrop(IEntity entity)
+        {
+            bool candrop = true;
+            foreach (var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
+            {
+                candrop &= actionblockercomponents.CanDrop();
+            }
+            return candrop;
+		}
+            
         public static bool CanEmote(IEntity entity)
         {
             bool canemote = true;
