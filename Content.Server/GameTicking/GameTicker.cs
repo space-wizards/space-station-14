@@ -328,12 +328,12 @@ namespace Content.Server.GameTicking
             }
 
             // Delete all maps outside of nullspace.
-            foreach (var map in _mapManager.GetAllMaps().ToList())
+            foreach (var mapId in _mapManager.GetAllMapIds().ToList())
             {
                 // TODO: Maybe something less naive here?
-                if (map.Index != MapId.Nullspace)
+                if (mapId != MapId.Nullspace)
                 {
-                    _mapManager.DeleteMap(map.Index);
+                    _mapManager.DeleteMap(mapId);
                 }
             }
 
@@ -366,9 +366,9 @@ namespace Content.Server.GameTicking
 
         private void _preRoundSetup()
         {
-            var newMap = _mapManager.CreateMap();
+            var newMapId = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var grid = _mapLoader.LoadBlueprint(newMap, MapFile);
+            var grid = _mapLoader.LoadBlueprint(newMapId, MapFile);
 
             _spawnPoint = new GridCoordinates(Vector2.Zero, grid);
 
