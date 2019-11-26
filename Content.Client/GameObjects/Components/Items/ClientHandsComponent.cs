@@ -188,5 +188,14 @@ namespace Content.Client.GameObjects
                 SendNetworkMessage(new ActivateInhandMsg());
             }
         }
+
+        public void SendOpenStorage(string index)
+        {
+            var entity = GetEntity(index);
+            if (entity != null)
+            {
+                SendNetworkMessage(new OpenHandStorageUIMessage(index));
+            }
+        }
     }
 }

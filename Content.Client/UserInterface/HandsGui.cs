@@ -1,9 +1,11 @@
 ﻿using System;
 using Content.Client.GameObjects;
+using Content.Client.GameObjects.Components.Storage;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -230,6 +232,19 @@ namespace Content.Client.UserInterface
             hands.AttackByInHand(hand);
         }
 
+        private void ActivateItemInWorld(string hand)
+        {
+            if (!TryGetHands(out var hands))
+                return;
+            var entity = hands.GetEntity(hand);
+            if (entity == null)
+                return;
+            if (entity.HasComponent<ClientStorageComponent>())
+            {
+               hands.SendOpenStorage(hand);
+            }
+        }
+
         protected override bool HasPoint(Vector2 point)
         {
             return _handL.Contains((Vector2i) point) || _handR.Contains((Vector2i) point);
@@ -239,10 +254,10 @@ namespace Content.Client.UserInterface
         {
             base.KeyBindDown(args);
 
-            if (!args.CanFocus)
-            {
-                return;
-            }
+            //if (!args.CanFocus)
+            //{
+            //    return;
+            //}
 
             var leftHandContains = _handL.Contains((Vector2i) args.RelativePosition);
             var rightHandContains = _handR.Contains((Vector2i) args.RelativePosition);
@@ -298,6 +313,11 @@ namespace Content.Client.UserInterface
                 var esm = IoCManager.Resolve<IEntitySystemManager>();
                 esm.GetEntitySystem<VerbSystem>()
                     .OpenContextMenu(entity, new ScreenCoordinates(args.PointerLocation.Position));
+            }
+
+            else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
+            {
+                ActivateItemInWorld(handIndex);
             }
         }
 

@@ -61,4 +61,16 @@ namespace Content.Shared.GameObjects
             Index = index;
         }
     }
+
+    [Serializable, NetSerializable]
+    public class OpenHandStorageUIMessage : ComponentMessage
+    {
+        public string Index { get; }
+
+        public OpenHandStorageUIMessage(string index)
+        {
+            Directed = true;
+            Index = index;
+        }
+    }
 }

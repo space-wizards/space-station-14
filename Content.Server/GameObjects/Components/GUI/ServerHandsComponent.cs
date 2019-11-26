@@ -509,6 +509,29 @@ namespace Content.Server.GameObjects
 
                     break;
                 }
+
+                case OpenHandStorageUIMessage msg:
+                {
+                    if (!hands.TryGetValue(msg.Index, out var slot))
+                    {
+                        Logger.WarningS("go.comp.hands", "Got a OpenHandStorageUIMessage with invalid hand index '{0}'", msg.Index);
+                        return;
+                    }
+
+                    var playerMan = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMan.GetSessionByChannel(netChannel);
+                    var playerEntity = session.AttachedEntity;
+
+                    if (playerEntity != Owner || slot.ContainedEntity == null)
+                        return;
+
+                    if (slot.ContainedEntity.TryGetComponent<ServerStorageComponent>(out ServerStorageComponent storage))
+                    {
+                        storage.OpenStorageUI(Owner);
+                    }
+
+                    break;
+                }
             }
         }
 
