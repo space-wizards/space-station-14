@@ -286,6 +286,7 @@
   - type: Destructible
     thresholdvalue: 100
     spawnondestroy: girder
+    destroysound: /Audio/effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: solid
