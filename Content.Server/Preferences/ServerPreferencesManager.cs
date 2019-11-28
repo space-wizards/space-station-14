@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Content.Server.Interfaces;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
@@ -81,11 +82,12 @@ namespace Content.Server.Preferences
             }
         }
 
-        // TODO: Check for characters that can't be in file names
-        // Might not be necessary depending on how we do authentication
         private static bool IsValidUsername(string username)
         {
-            return true;
+            if (username.All(char.IsLetterOrDigit))
+                return false;
+            var lowerUsername = username.ToLower();
+            return lowerUsername != "nul" && lowerUsername != "com"; // Reserved on windows
         }
 
         /// <summary>
@@ -167,5 +169,6 @@ namespace Content.Server.Preferences
                 }
             }
         }
+
     }
 }
