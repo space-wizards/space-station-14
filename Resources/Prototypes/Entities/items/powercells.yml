@@ -122,8 +122,8 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
-      mask: 19
-      layer: 16
+      mask: 2
+      layer: 32
     IsScrapingFloor: true
 
 - type: entity
@@ -153,8 +153,8 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
-      mask: 19
-      layer: 16
+      mask: 2
+      layer: 32
     IsScrapingFloor: true
 
 - type: entity
@@ -183,6 +183,6 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
-      mask: 19
-      layer: 16
+      mask: 2
+      layer: 32
     IsScrapingFloor: true

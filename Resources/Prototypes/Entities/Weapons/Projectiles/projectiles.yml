@@ -15,8 +15,8 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.2,0.2,0.2"
-      layer: 1
-      mask: 3
+      layer: 32
+      mask: 30
   - type: Physics
     edgeslide: false
   - type: Projectile

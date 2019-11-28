@@ -35,6 +35,9 @@
     state: tdoppler
   - type: Clickable
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer: 15
   - type: SnapGrid
     offset: Center
   - type: ResearchPointSource

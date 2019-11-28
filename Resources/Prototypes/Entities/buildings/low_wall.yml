@@ -17,7 +17,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 1
+      layer: 20
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

@@ -7,8 +7,7 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.25,0.4,0.25"
-      mask: 19
-      layer: 16
+      layer: 15
     IsScrapingFloor: true
   - type: Physics
     mass: 25

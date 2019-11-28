@@ -44,8 +44,7 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.3, 0.5"
-      mask: 19
-      layer: 16
+      layer: 31
   - type: Sprite
     texture: Objects/Power/generator.png
   - type: Icon
@@ -61,8 +60,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      mask: 19
-      layer: 4
+      layer: 32
   - type: Sprite
     drawdepth: WallMountedItems
     texture: Objects/Power/provider.png
@@ -119,8 +117,7 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
-      mask: 19
-      layer: 16
+      layer: 31
   - type: Sprite
     netsync: false
     sprite: Buildings/smes.rsi
@@ -159,8 +156,7 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.25, 0.5, 0.25"
-      mask: 19
-      layer: 16
+      layer: 31
   - type: Sprite
     texture: Objects/Power/wiredmachine.png
   - type: Icon
@@ -180,8 +176,7 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.25, 0.5, 0.25"
-      mask: 19
-      layer: 16
+      layer: 31
   - type: Sprite
     texture: Objects/Furniture/wirelessmachine.png
   - type: Icon
