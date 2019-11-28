@@ -134,9 +134,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 _requestCancelTokenSource = null;
             }
 
-            foreach(var msg in response.Message.Tags.OfType<FormattedMessage.TagText>())
+            foreach (var msg in response.Message.Tags.OfType<FormattedMessage.TagText>())
             {
-                if(string.IsNullOrWhiteSpace(msg.Text))
+                if (!string.IsNullOrWhiteSpace(msg.Text))
                 {
                     var richLabel = new RichTextLabel();
                     richLabel.SetMessage(response.Message);
