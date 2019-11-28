@@ -107,15 +107,17 @@ namespace Content.Client.UserInterface
 
             var vScrollBarGrabberNormal = new StyleBoxFlat
             {
-                BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginLeftOverride = 10
+                BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginLeftOverride = 10, ContentMarginTopOverride = 10
             };
             var vScrollBarGrabberHover = new StyleBoxFlat
             {
-                BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginLeftOverride = 10
+                BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginLeftOverride = 10,
+                ContentMarginTopOverride = 10
             };
             var vScrollBarGrabberGrabbed = new StyleBoxFlat
             {
-                BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginLeftOverride = 10
+                BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginLeftOverride = 10,
+                ContentMarginTopOverride = 10
             };
 
             var hScrollBarGrabberNormal = new StyleBoxFlat
