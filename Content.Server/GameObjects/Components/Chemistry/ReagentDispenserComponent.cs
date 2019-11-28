@@ -156,11 +156,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             //Need player entity to check if they are still able to use the dispenser
             if (playerEntity == null) 
                 return false;
-            //Get species component that has damage state
-            if (!playerEntity.TryGetComponent(out SpeciesComponent species)) 
-                return false;
             //Check if player can interact in their current state
-            if (!species.CurrentDamageState.CanInteract() || !species.CurrentDamageState.CanUse())
+            if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
                 return false;
 
             return true;
