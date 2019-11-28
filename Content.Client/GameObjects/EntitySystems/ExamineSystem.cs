@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
@@ -18,6 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -132,9 +134,16 @@ namespace Content.Client.GameObjects.EntitySystems
                 _requestCancelTokenSource = null;
             }
 
-            var richLabel = new RichTextLabel();
-            richLabel.SetMessage(response.Message);
-            vBox.AddChild(richLabel);
+            foreach (var msg in response.Message.Tags.OfType<FormattedMessage.TagText>())
+            {
+                if (!string.IsNullOrWhiteSpace(msg.Text))
+                {
+                    var richLabel = new RichTextLabel();
+                    richLabel.SetMessage(response.Message);
+                    vBox.AddChild(richLabel);
+                    break;
+                }
+            }
 
             _examineTooltipOpen.Position += Vector2.ComponentMin(Vector2.Zero,_userInterfaceManager.StateRoot.Size - (panel.Size + _examineTooltipOpen.Position));
         }
