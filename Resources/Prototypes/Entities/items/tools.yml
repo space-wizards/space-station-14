@@ -61,6 +61,17 @@
   - type: ItemCooldown
   - type: MeleeWeapon
 
+- type: sound_collection
+  id: welder_on
+  files:
+  - /Audio/items/lighter1.ogg
+  - /Audio/items/lighter2.ogg
+
+- type: sound_collection
+  id: welder_off
+  files:
+  - /Audio/effects/zzzt.ogg
+
 - type: entity
   name: Crowbar
   parent: BaseItem
