@@ -11,6 +11,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -101,6 +102,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if(!PlayerCanUseDispenser(obj.Session.AttachedEntity))
+                return;
+
             var msg = (UiButtonPressedMessage) obj.Message;
             switch (msg.Button)
             {
@@ -140,6 +144,23 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             ClickSound();
+        }
+
+        /// <summary>
+        /// Checks whether the player entity is able to use the chem dispenser.
+        /// </summary>
+        /// <param name="playerEntity">The player entity.</param>
+        /// <returns>Returns true if the entity can use the dispenser, and false if it cannot.</returns>
+        private bool PlayerCanUseDispenser(IEntity playerEntity)
+        {
+            //Need player entity to check if they are still able to use the dispenser
+            if (playerEntity == null) 
+                return false;
+            //Check if player can interact in their current state
+            if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
+                return false;
+
+            return true;
         }
 
         /// <summary>
