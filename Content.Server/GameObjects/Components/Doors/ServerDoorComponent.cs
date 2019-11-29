@@ -140,7 +140,7 @@ namespace Content.Server.GameObjects
             {
                 collidableComponent.IsHardCollidable = false;
 
-                await Timer.Delay(OpenTimeTwo);
+                await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
                 State = DoorState.Open;
                 SetAppearance(DoorVisualState.Open);
