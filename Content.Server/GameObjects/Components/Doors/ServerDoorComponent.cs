@@ -8,6 +8,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
 using Robust.Shared.Timers;
+using CancellationTokenSource = System.Threading.CancellationTokenSource;
 
 namespace Content.Server.GameObjects
 {
@@ -29,6 +30,7 @@ namespace Content.Server.GameObjects
 
         private CollidableComponent collidableComponent;
         private AppearanceComponent _appearance;
+        private CancellationTokenSource _cancellationTokenSource;
 
         private static readonly TimeSpan CloseTime = TimeSpan.FromSeconds(1.2f);
         private static readonly TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.3f);
@@ -41,10 +43,12 @@ namespace Content.Server.GameObjects
 
             collidableComponent = Owner.GetComponent<CollidableComponent>();
             _appearance = Owner.GetComponent<AppearanceComponent>();
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         public override void OnRemove()
         {
+            _cancellationTokenSource.Cancel();
             collidableComponent = null;
             _appearance = null;
 
@@ -91,6 +95,12 @@ namespace Content.Server.GameObjects
             }
         }
 
+        private void SetAppearance(DoorVisualState state)
+        {
+            if (_appearance != null || Owner.TryGetComponent(out _appearance))
+                _appearance.SetData(DoorVisuals.VisualState, state);
+        }
+
         public virtual bool CanOpen()
         {
             return true;
@@ -124,17 +134,17 @@ namespace Content.Server.GameObjects
             }
 
             State = DoorState.Opening;
-            _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Opening);
+            SetAppearance(DoorVisualState.Opening);
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
                 collidableComponent.IsHardCollidable = false;
 
-                await Timer.Delay(OpenTimeTwo);
+                await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
                 State = DoorState.Open;
-                _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Open);
-            });
+                SetAppearance(DoorVisualState.Open);
+            }, _cancellationTokenSource.Token);
         }
 
         public virtual bool CanClose()
@@ -173,23 +183,23 @@ namespace Content.Server.GameObjects
             State = DoorState.Closing;
             collidableComponent.IsHardCollidable = true;
             OpenTimeCounter = 0;
-            _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closing);
+            SetAppearance(DoorVisualState.Closing);
 
             Timer.Spawn(CloseTime, () =>
             {
                 State = DoorState.Closed;
-                _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
-            });
+                SetAppearance(DoorVisualState.Closed);
+            }, _cancellationTokenSource.Token);
             return true;
         }
 
         public virtual void Deny()
         {
-            _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Deny);
+            SetAppearance(DoorVisualState.Deny);
             Timer.Spawn(DenyTime, () =>
             {
-                _appearance.SetData(DoorVisuals.VisualState, DoorVisualState.Closed);
-            });
+                SetAppearance(DoorVisualState.Closed);
+            }, _cancellationTokenSource.Token);
         }
 
         private const float AUTO_CLOSE_DELAY = 5;
