@@ -34,7 +34,13 @@ namespace Content.Client.GameObjects.EntitySystems
             // Performance: This could be spread over multiple updates, or made parallel.
             while (_dirtyEntities.Count > 0)
             {
-                _dirtyEntities.Dequeue().GetComponent<WindowComponent>().UpdateSprite();
+                var entity = _dirtyEntities.Dequeue();
+                if (entity.Deleted)
+                {
+                    continue;
+                }
+
+                entity.GetComponent<WindowComponent>().UpdateSprite();
             }
         }
     }
