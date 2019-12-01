@@ -1,4 +1,4 @@
-﻿using Content.Server.Cargo;
+using Content.Server.Cargo;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;

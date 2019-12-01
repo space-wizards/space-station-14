@@ -1,7 +1,9 @@
+using Content.Server.Atmos;
 using Content.Server.Cargo;
 using Content.Server.Chat;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.Atmos;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Sandbox;
@@ -24,6 +26,7 @@ namespace Content.Server
             IoCManager.Register<IGalacticBankManager, GalacticBankManager>();
             IoCManager.Register<ICargoOrderDataManager, CargoOrderDataManager>();
             IoCManager.Register<IModuleManager, ServerModuleManager>();
+            IoCManager.Register<IAtmosphereMap, AtmosphereMap>();
         }
     }
 }
