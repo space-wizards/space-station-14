@@ -196,7 +196,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if(colComp.PhysicsShapes.Count == 0)
                     colComp.PhysicsShapes.Add(new PhysShapeAabb());
 
-                colComp.PhysicsShapes[0].CollisionMask |= (int)CollisionGroup.Mob;
+                colComp.PhysicsShapes[0].CollisionMask |= (int)CollisionGroup.MobImpassable;
                 colComp.IsScrapingFloor = false;
             }
 

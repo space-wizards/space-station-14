@@ -11,8 +11,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      mask: 19
-      layer: 16
+      layer: 32
   - type: Clickable
   - type: Physics
     mass: 25

@@ -9,8 +9,8 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
-      mask: 5
-      layer: 8
+      mask: 26
+      layer: 32
     IsScrapingFloor: true
   - type: Physics
     mass: 5

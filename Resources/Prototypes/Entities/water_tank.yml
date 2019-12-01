@@ -12,8 +12,7 @@
 
   - type: Clickable
   - type: Collidable
-    mask: 3
-    layer: 1
+    layer: 31
     shape:
       bounds: "-0.5,-0.25,0.5,0.25"
     IsScrapingFloor: true
