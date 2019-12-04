@@ -182,16 +182,6 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_nazi
-  name: Nazivend
-  components:
-  - type: VendingMachine
-    pack: Nazivend
-  - type: Icon
-    sprite: Buildings/VendingMachines/nazi.rsi
-
-- type: entity
-  parent: VendingMachine
   id: vending_machine_nutri
   name: NutriMax
   components:
@@ -273,10 +263,10 @@
 - type: entity
   parent: VendingMachine
   id: vending_machine_soviet
-  name: KomradeVendtink
+  name: Товарищ-vend
   components:
   - type: VendingMachine
-    pack: KomradeVendtink
+    pack: soviet
   - type: Icon
     sprite: Buildings/VendingMachines/soviet.rsi
 
