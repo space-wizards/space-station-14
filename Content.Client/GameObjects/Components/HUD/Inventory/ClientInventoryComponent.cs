@@ -30,11 +30,16 @@ namespace Content.Client.GameObjects
 
         private ISpriteComponent _sprite;
 
+        private bool _playerAttached = false;
+
         public override void OnRemove()
         {
             base.OnRemove();
 
-            InterfaceController?.PlayerDetached();
+            if (_playerAttached)
+            {
+                InterfaceController?.PlayerDetached();
+            }
             InterfaceController?.Dispose();
         }
 
@@ -153,10 +158,12 @@ namespace Content.Client.GameObjects
             {
                 case PlayerAttachedMsg _:
                     InterfaceController.PlayerAttached();
+                    _playerAttached = true;
                     break;
 
                 case PlayerDetachedMsg _:
                     InterfaceController.PlayerDetached();
+                    _playerAttached = false;
                     break;
             }
         }
