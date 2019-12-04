@@ -31,7 +31,8 @@ namespace Content.Client.GameObjects.Components
             base.Startup();
 
             _snapGrid.OnPositionChanged += SnapGridOnPositionChanged;
-            Owner.EntityManager.RaiseEvent(Owner, new WindowSmoothDirtyEvent());
+            EntityEventArgs toRaise = new WindowSmoothDirtyEvent();
+            Owner.EntityManager.EventBus.RaiseEvent((object) Owner, toRaise);
 
             var state0 = $"{_stateBase}0";
             _sprite.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
@@ -54,7 +55,8 @@ namespace Content.Client.GameObjects.Components
 
         private void SnapGridOnPositionChanged()
         {
-            Owner.EntityManager.RaiseEvent(Owner, new WindowSmoothDirtyEvent());
+            EntityEventArgs toRaise = new WindowSmoothDirtyEvent();
+            Owner.EntityManager.EventBus.RaiseEvent((object) Owner, toRaise);
         }
 
         public void UpdateSprite()
