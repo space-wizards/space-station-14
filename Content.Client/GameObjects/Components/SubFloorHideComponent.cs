@@ -40,6 +40,9 @@ namespace Content.Client.GameObjects.Components
         {
             base.Shutdown();
 
+            if(Owner.Transform.Running == false)
+                return;
+
             _snapGridComponent.OnPositionChanged -= SnapGridOnPositionChanged;
             Owner.EntityManager.EventBus.RaiseEvent(Owner, new SubFloorHideDirtyEvent());
         }
