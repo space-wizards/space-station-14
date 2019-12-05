@@ -10,7 +10,6 @@ namespace Content.Server.GameObjects.Components.Fluids
     public class CanSpillComponent : Component
     {
         public override string Name => "CanSpill";
-        public event Action OnSpill;
         // TODO: If the Owner doesn't have a SolutionComponent straight up just have this remove itself?
 
         /// <summary>
@@ -37,9 +36,10 @@ namespace Content.Server.GameObjects.Components.Fluids
             protected override void Activate(IEntity user, CanSpillComponent component)
             {
                 var solutionComponent = component.Owner.GetComponent<SolutionComponent>();
+                // Need this as when we split the component's owner may be deleted
+                var entityLocation = component.Owner.Transform.GridPosition;
                 var solution = solutionComponent.SplitSolution(solutionComponent.CurrentVolume);
-                SpillHelper.SpillAt(component.Owner, solution, "PuddleSmear");
-                component.OnSpill.Invoke();
+                SpillHelper.SpillAt(entityLocation, solution, "PuddleSmear");
             }
         }
     }

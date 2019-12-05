@@ -10,11 +10,6 @@ namespace Content.Server.GameObjects.Components.Fluids
 {
     public static class SpillHelper
     {
-#pragma warning disable 649
-        [Dependency] private static IEntityManager _entityManager;
-        [Dependency] private static IServerEntityManager _serverEntityManager;
-        [Dependency] private static IMapManager _mapManager;
-#pragma warning restore 649
 
         /// <summary>
         /// Spills the specified solution at the entity's location if possible.
@@ -43,14 +38,11 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            if (_mapManager == null)
-            {
-                _entityManager = IoCManager.Resolve<IEntityManager>();
-                _serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
-                _mapManager = IoCManager.Resolve<IMapManager>();
-            }
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
 
-            var mapGrid = _mapManager.GetGrid(gridCoordinates.GridID);
+            var mapGrid = mapManager.GetGrid(gridCoordinates.GridID);
 
             // If space return early, let that spill go out into the void
             var tileRef = mapGrid.GetTileRef(gridCoordinates);
@@ -61,13 +53,13 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             // Get normalized co-ordinate for spill location and spill it in the centre
             // TODO: Does SnapGrid or something else already do this?
-            var spillTileMapGrid = _mapManager.GetGrid(gridCoordinates.GridID);
+            var spillTileMapGrid = mapManager.GetGrid(gridCoordinates.GridID);
             var spillTileRef = spillTileMapGrid.GetTileRef(gridCoordinates).GridIndices;
             var spillGridCoords = spillTileMapGrid.GridTileToLocal(spillTileRef);
 
             var spilt = false;
 
-            foreach (var spillEntity in _entityManager.GetEntitiesAt(spillGridCoords.Position))
+            foreach (var spillEntity in entityManager.GetEntitiesAt(spillGridCoords.Position))
             {
                 if (!spillEntity.TryGetComponent(out PuddleComponent puddleComponent))
                 {
@@ -89,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            var puddle = _serverEntityManager.SpawnEntityAt(prototype, spillGridCoords);
+            var puddle = serverEntityManager.SpawnEntityAt(prototype, spillGridCoords);
             puddle.GetComponent<PuddleComponent>().TryAddSolution(solution);
         }
 

@@ -85,16 +85,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
             }
 
-            if (Owner.TryGetComponent(out CanSpillComponent canSpillComponent))
+            if (!Owner.HasComponent<ItemComponent>())
             {
-                canSpillComponent.OnSpill += () =>
-                {
-                    if (_despawnOnFinish && UsesLeft() == 0)
-                    {
-                        Owner.Delete();
-                    }
-                };
+                throw new InvalidOperationException();
             }
+
+            _contents.SolutionChanged += HandleFinish;
+
         }
 
         protected override void Startup()
@@ -161,34 +158,51 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     user.PopupMessage(user, _localizationManager.GetString("Can't drink"));
                 }
             }
+        }
 
-            // Drink containers are mostly transient.
-            if (!_despawnOnFinish || UsesLeft() > 0)
+        /// <summary>
+        /// Should be called when the solution changes
+        /// </summary>
+        void HandleFinish()
+        {
+            if (_despawnOnFinish && UsesLeft() == 0)
             {
-                return;
-
+                Owner.Delete();
             }
 
-            Owner.Delete();
-
-            if (_finishPrototype != null)
+            if (_finishPrototype == null)
             {
-                var finisher = Owner.EntityManager.SpawnEntity(_finishPrototype);
-                if (user.TryGetComponent(out HandsComponent handsComponent) && finisher.TryGetComponent(out ItemComponent itemComponent))
-                {
-                    if (handsComponent.CanPutInHand(itemComponent))
-                    {
-                        handsComponent.PutInHand(itemComponent);
-                        return;
-                    }
-                }
-
-                finisher.Transform.GridPosition = user.Transform.GridPosition;
-                if (finisher.TryGetComponent(out DrinkComponent drinkComponent))
-                {
-                    drinkComponent.MaxVolume = MaxVolume;
-                }
                 return;
+            }
+
+            var finisher = Owner.EntityManager.SpawnEntity(_finishPrototype);
+            finisher.TryGetComponent(out ItemComponent itemComponent);
+
+            if (itemComponent.Holder != null &&
+                itemComponent.Holder.TryGetComponent(out HandsComponent handsComponent) &&
+                handsComponent != null &&
+                handsComponent.CanPutInHand(itemComponent))
+            {
+
+                handsComponent.PutInHand(itemComponent);
+                return;
+            }
+
+            if (itemComponent.Holder != null)
+            {
+                finisher.Transform.GridPosition = itemComponent.Holder.Transform.GridPosition;
+            } else if (!Owner.Deleted)
+            {
+                finisher.Transform.GridPosition = Owner.Transform.GridPosition;
+            }
+            else
+            {
+                return;
+            }
+
+            if (finisher.TryGetComponent(out DrinkComponent drinkComponent))
+            {
+                drinkComponent.MaxVolume = MaxVolume;
             }
         }
     }
