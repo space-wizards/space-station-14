@@ -6,6 +6,7 @@ using Content.Client.Interfaces.Chat;
 using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
 using Content.Client.Sandbox;
+using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
@@ -16,6 +17,7 @@ using Content.Shared.GameObjects.Components.VendingMachines;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.State;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
@@ -30,6 +32,8 @@ namespace Content.Client
     {
 #pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IBaseClient _baseClient;
+        [Dependency] private readonly IStateManager _stateManager;
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
 #pragma warning restore 649
 
@@ -161,6 +165,11 @@ namespace Content.Client
             IoCManager.InjectDependencies(this);
 
             _escapeMenuOwner.Initialize();
+
+            _baseClient.PlayerJoinedGame += (sender, args) =>
+            {
+                _stateManager.RequestStateChange<GameScreen>();
+            };
         }
 
         /// <summary>
