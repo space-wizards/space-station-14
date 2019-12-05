@@ -192,7 +192,7 @@ namespace Content.Client.GameTicking
             _lobby = new LobbyGui(_localization, _resourceCache);
             _userInterfaceManager.StateRoot.AddChild(_lobby);
 
-            //_lobby.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide, margin: 20);
+            LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
 
             _chatManager.SetChatBox(_lobby.Chat);
             _lobby.Chat.DefaultChatFormat = "ooc \"{0}\"";
