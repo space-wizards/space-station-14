@@ -31,8 +31,6 @@ namespace Content.Client.Chat
         private readonly IEntity _senderEntity;
         private readonly IChatManager _chatManager;
 
-        private readonly Control _panel;
-
         private float _timeLeft = TotalTime;
 
         public float VerticalOffset { get; set; }
@@ -57,7 +55,7 @@ namespace Content.Client.Chat
             };
             label.SetMessage(text);
 
-            _panel = new PanelContainer
+            var panel = new PanelContainer
             {
                 StyleClasses = { "tooltipBox" },
                 Children = { label },
@@ -65,14 +63,17 @@ namespace Content.Client.Chat
                 ModulateSelfOverride = Color.White.WithAlpha(0.75f)
             };
 
-            AddChild(_panel);
+            AddChild(panel);
 
             ForceRunStyleUpdate();
 
-            _panel.Size = _panel.CombinedMinimumSize;
-            ContentHeight = _panel.Height;
-            Size = (_panel.Width, 0);
+            ContentHeight = panel.CombinedMinimumSize.Y;
             _verticalOffsetAchieved = -ContentHeight;
+        }
+
+        protected override Vector2 CalculateMinimumSize()
+        {
+            return (base.CalculateMinimumSize().X, 0);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -109,10 +110,10 @@ namespace Content.Client.Chat
 
             var lowerCenter = _eyeManager.WorldToScreen(worldPos) / UIScale;
             var screenPos = lowerCenter - (Width / 2, ContentHeight + _verticalOffsetAchieved);
-            Position = screenPos;
+            LayoutContainer.SetPosition(this, screenPos);
 
             var height = (lowerCenter.Y - screenPos.Y).Clamp(0, ContentHeight);
-            Size = (Size.X, height);
+            LayoutContainer.SetSize(this, (Size.X, height));
         }
 
         private void Die()

@@ -49,6 +49,7 @@ namespace Content.Client.UserInterface
                 Texture = windowHeaderTex,
                 PatchMarginBottom = 3,
                 ExpandMarginBottom = 3,
+                ContentMarginBottomOverride = 0
             };
             var windowBackgroundTex = resCache.GetTexture("/Nano/window_background.png");
             var windowBackground = new StyleBoxTexture
@@ -223,14 +224,14 @@ namespace Content.Client.UserInterface
                     new SelectorElement(null, new[] {SS14Window.StyleClassWindowPanel}, null, null),
                     new[]
                     {
-                        new StyleProperty(Panel.StylePropertyPanel, windowBackground),
+                        new StyleProperty(PanelContainer.StylePropertyPanel, windowBackground),
                     }),
                 // Window header.
                 new StyleRule(
-                    new SelectorElement(typeof(Panel), new[] {SS14Window.StyleClassWindowHeader}, null, null),
+                    new SelectorElement(typeof(PanelContainer), new[] {SS14Window.StyleClassWindowHeader}, null, null),
                     new[]
                     {
-                        new StyleProperty(Panel.StylePropertyPanel, windowHeader),
+                        new StyleProperty(PanelContainer.StylePropertyPanel, windowHeader),
                     }),
                 // Window close button base texture.
                 new StyleRule(

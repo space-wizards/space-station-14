@@ -37,21 +37,13 @@ namespace Content.Client.Instruments
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                MarginTop = 5f,
-                MarginLeft = 5f,
-                MarginRight = -5f,
-                MarginBottom = -5f,
             };
-
-            margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var vBox = new VBoxContainer()
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SeparationOverride = 5,
             };
-
-            vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var hBoxTopButtons = new HBoxContainer()
             {

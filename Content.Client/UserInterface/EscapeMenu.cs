@@ -73,8 +73,6 @@ namespace Content.Client.UserInterface
             QuitButton = new Button {Text = "Quit"};
             QuitButton.OnPressed += OnQuitButtonClicked;
             vBox.AddChild(QuitButton);
-
-            Size = CombinedMinimumSize;
         }
 
         private void OnQuitButtonClicked(BaseButton.ButtonEventArgs args)

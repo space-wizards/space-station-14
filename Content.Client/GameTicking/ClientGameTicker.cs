@@ -14,6 +14,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -191,7 +192,7 @@ namespace Content.Client.GameTicking
             _lobby = new LobbyGui(_localization, _resourceCache);
             _userInterfaceManager.StateRoot.AddChild(_lobby);
 
-            _lobby.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide, margin: 20);
+            LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
 
             _chatManager.SetChatBox(_lobby.Chat);
             _lobby.Chat.DefaultChatFormat = "ooc \"{0}\"";
@@ -246,6 +247,11 @@ namespace Content.Client.GameTicking
 
             _gameChat = new ChatBox();
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
+            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
+            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
+            LayoutContainer.SetMarginLeft(_gameChat, -475);
+            LayoutContainer.SetMarginBottom(_gameChat, 235);
+
             _userInterfaceManager.StateRoot.AddChild(_gameHud.RootControl);
             _chatManager.SetChatBox(_gameChat);
             _gameChat.DefaultChatFormat = "say \"{0}\"";
@@ -261,6 +267,7 @@ namespace Content.Client.GameTicking
             {
                 return;
             }
+
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
         }

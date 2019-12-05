@@ -59,15 +59,9 @@ namespace Content.Client.UserInterface.Cargo
             else
                 Title = _loc.GetString("Cargo Shuttle Console");
 
-            var rows = new VBoxContainer
-            {
-                MarginTop = 0
-            };
+            var rows = new VBoxContainer();
 
-            var accountName = new HBoxContainer()
-            {
-                MarginTop = 0
-            };
+            var accountName = new HBoxContainer();
             var accountNameLabel = new Label {
                 Text = _loc.GetString("Account Name: "),
                 StyleClasses = { NanoStyle.StyleClassLabelKeyText }
@@ -286,7 +280,7 @@ namespace Content.Client.UserInterface.Cargo
             _orders.RemoveAllChildren();
             _requests.RemoveAllChildren();
 
-            foreach (var order in Owner.Orders.Orders) 
+            foreach (var order in Owner.Orders.Orders)
             {
                 var row = new CargoOrderRow();
                 row.Order = order;

@@ -82,6 +82,7 @@ namespace Content.Client.UserInterface
 
         public Control HandsContainer { get; private set; }
         public Control InventoryQuickButtonContainer { get; private set; }
+
         public bool CombatPanelVisible
         {
             get => _combatPanelContainer.Visible;
@@ -105,9 +106,8 @@ namespace Content.Client.UserInterface
 
         public void Initialize()
         {
-            RootControl = new Control {MouseFilter = Control.MouseFilterMode.Ignore};
-
-            RootControl.SetAnchorPreset(Control.LayoutPreset.Wide);
+            RootControl = new LayoutContainer {MouseFilter = Control.MouseFilterMode.Ignore};
+            LayoutContainer.SetAnchorPreset(RootControl, LayoutContainer.LayoutPreset.Wide);
 
             var escapeTexture = _resourceCache.GetTexture("/Textures/UserInterface/hamburger.svg.96dpi.png");
             var characterTexture = _resourceCache.GetTexture("/Textures/UserInterface/character.svg.96dpi.png");
@@ -122,7 +122,9 @@ namespace Content.Client.UserInterface
             };
 
             RootControl.AddChild(_topButtonsContainer);
-            _topButtonsContainer.SetAnchorAndMarginPreset(Control.LayoutPreset.TopLeft, margin: 10);
+
+            LayoutContainer.SetAnchorAndMarginPreset(_topButtonsContainer, LayoutContainer.LayoutPreset.TopLeft,
+                margin: 10);
 
             // TODO: Pull key names here from the actual key binding config.
             // Escape
@@ -198,25 +200,22 @@ namespace Content.Client.UserInterface
 
             var inventoryContainer = new HBoxContainer
             {
-                GrowHorizontal = Control.GrowDirection.Begin,
-                GrowVertical = Control.GrowDirection.Begin,
                 SeparationOverride = 10
             };
 
             RootControl.AddChild(inventoryContainer);
-            inventoryContainer.SetAnchorAndMarginPreset(Control.LayoutPreset.BottomRight);
+
+            LayoutContainer.SetGrowHorizontal(inventoryContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetGrowVertical(inventoryContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetAnchorAndMarginPreset(inventoryContainer, LayoutContainer.LayoutPreset.BottomRight);
 
             InventoryQuickButtonContainer = new MarginContainer
             {
-                GrowHorizontal = Control.GrowDirection.Begin,
-                GrowVertical = Control.GrowDirection.Begin,
                 SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
 
             HandsContainer = new MarginContainer
             {
-                GrowHorizontal = Control.GrowDirection.Both,
-                GrowVertical = Control.GrowDirection.Begin,
                 SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
 
@@ -337,7 +336,6 @@ namespace Content.Client.UserInterface
             private static readonly Color ColorHovered = Color.FromHex("#9699bb");
             private static readonly Color ColorPressed = Color.FromHex("#789B8C");
 
-            private readonly VBoxContainer _container;
             private readonly TextureRect _textureRect;
             private readonly Label _label;
 
@@ -345,30 +343,39 @@ namespace Content.Client.UserInterface
             {
                 ToggleMode = true;
 
-                _container = new VBoxContainer {MouseFilter = MouseFilterMode.Ignore};
-                AddChild(_container);
-                _container.AddChild(_textureRect = new TextureRect
+                AddChild(new MarginContainer
                 {
-                    Texture = texture,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                    SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
                     MouseFilter = MouseFilterMode.Ignore,
-                    ModulateSelfOverride = ColorNormal,
-                    CustomMinimumSize = (0, 32),
-                    Stretch = TextureRect.StretchMode.KeepCentered
+                    MarginTopOverride = 4,
+                    Children =
+                    {
+                        new VBoxContainer
+                        {
+                            MouseFilter = MouseFilterMode.Ignore,
+                            Children =
+                            {
+                                (_textureRect = new TextureRect
+                                {
+                                    Texture = texture,
+                                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                    SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
+                                    MouseFilter = MouseFilterMode.Ignore,
+                                    ModulateSelfOverride = ColorNormal,
+                                    CustomMinimumSize = (0, 32),
+                                    Stretch = TextureRect.StretchMode.KeepCentered
+                                }),
+                                (_label = new Label
+                                {
+                                    Text = keyName,
+                                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                                    MouseFilter = MouseFilterMode.Ignore,
+                                    ModulateSelfOverride = ColorNormal,
+                                    StyleClasses = {StyleClassLabelTopButton}
+                                })
+                            }
+                        }
+                    }
                 });
-
-                _container.AddChild(_label = new Label
-                {
-                    Text = keyName,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                    MouseFilter = MouseFilterMode.Ignore,
-                    ModulateSelfOverride = ColorNormal
-                });
-
-                _label.AddStyleClass(StyleClassLabelTopButton);
-
-                _container.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
                 DrawModeChanged();
             }
@@ -376,7 +383,7 @@ namespace Content.Client.UserInterface
             protected override Vector2 CalculateMinimumSize()
             {
                 var styleSize = ActualStyleBox?.MinimumSize ?? Vector2.Zero;
-                return (0, 4) + styleSize + _container?.CombinedMinimumSize ?? Vector2.Zero;
+                return (0, 4) + styleSize + base.CalculateMinimumSize();
             }
 
             protected override void Draw(DrawingHandleScreen handle)
@@ -420,21 +427,15 @@ namespace Content.Client.UserInterface
                 }
             }
 
-            protected override void StylePropertiesChanged()
+            protected override void LayoutUpdateOverride()
             {
-                base.StylePropertiesChanged();
-
-                if (_container == null)
-                {
-                    return;
-                }
-
                 var box = ActualStyleBox ?? new StyleBoxEmpty();
+                var contentBox = box.GetContentBox(PixelSizeBox);
 
-                _container.MarginLeft = box.GetContentMargin(StyleBox.Margin.Left);
-                _container.MarginRight = -box.GetContentMargin(StyleBox.Margin.Right);
-                _container.MarginTop = box.GetContentMargin(StyleBox.Margin.Top) + 4;
-                _container.MarginBottom = -box.GetContentMargin(StyleBox.Margin.Bottom);
+                foreach (var child in Children)
+                {
+                    FitChildInPixelBox(child, (UIBox2i) contentBox);
+                }
             }
         }
     }

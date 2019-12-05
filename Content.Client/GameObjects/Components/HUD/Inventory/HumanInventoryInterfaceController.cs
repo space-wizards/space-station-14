@@ -165,17 +165,16 @@ namespace Content.Client.GameObjects
                 const int width = ButtonSize * 4 + ButtonSeparation * 3 + RightSeparation;
                 const int height = ButtonSize * 4 + ButtonSeparation * 3;
 
-                var windowContents = new Control {CustomMinimumSize = (width, height)};
+                var windowContents = new LayoutContainer {CustomMinimumSize = (width, height)};
                 Contents.AddChild(windowContents);
 
                 void AddButton(Slots slot, string textureName, Vector2 position)
                 {
                     var texture = resourceCache.GetTexture($"/Textures/UserInterface/Inventory/{textureName}.png");
                     var storageTexture = resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
-                    var button = new InventoryButton(slot, texture, storageTexture)
-                    {
-                        Position = position
-                    };
+                    var button = new InventoryButton(slot, texture, storageTexture);
+
+                    LayoutContainer.SetPosition(button, position);
 
                     windowContents.AddChild(button);
                     buttonDict.Add(slot, button);
@@ -206,8 +205,6 @@ namespace Content.Client.GameObjects
                 AddButton(Slots.BELT, "belt", (rSep + 3 * (size + sep), size + sep));
                 AddButton(Slots.POCKET1, "pocket", (rSep + 3 * (size + sep), 2 * (size + sep)));
                 AddButton(Slots.POCKET2, "pocket", (rSep + 3 * (size + sep), 3 * (size + sep)));
-
-                Size = CombinedMinimumSize;
             }
         }
     }
