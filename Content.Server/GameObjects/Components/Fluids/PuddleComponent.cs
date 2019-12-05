@@ -6,6 +6,7 @@ using Content.Shared.Chemistry;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
@@ -54,6 +55,8 @@ namespace Content.Server.GameObjects.Components.Fluids
         private DateTime _lastOverflow = DateTime.Now;
         private SpriteComponent _spriteComponent;
 
+        private SnapGridComponent _snapGrid;
+
         public int MaxVolume
         {
             get => _contents.MaxVolume;
@@ -99,6 +102,8 @@ namespace Content.Server.GameObjects.Components.Fluids
                 _contents.Initialize();
             }
 
+            _snapGrid = Owner.GetComponent<SnapGridComponent>();
+
             // Smaller than 1m^3 for now but realistically this shouldn't be hit
             MaxVolume = 1000;
 
@@ -113,6 +118,17 @@ namespace Content.Server.GameObjects.Components.Fluids
             _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
             _spriteComponent.Rotation = Angle.FromDegrees(robustRandom.Next(0, 359));
             // UpdateAppearance should get called soon after this so shouldn't need to call Dirty() here
+
+            // If we become space then delete
+            _mapManager.TileChanged += (sender, args) =>
+            {
+                if (args.NewTile.GridIndex == Owner.Transform.GridID &&
+                    _snapGrid.Position == args.NewTile.GridIndices &&
+                    args.NewTile.Tile.IsEmpty)
+                {
+                    Owner.Delete();
+                }
+            };
         }
 
         // Flow rate should probably be controlled globally so this is it for now
@@ -224,35 +240,28 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             // Essentially:
             // Spill at least 1 solution to each neighbor (so most of the time each puddle is getting 1 max)
-            // Find empty neighbors and prioritise those over neighbors with puddles already
-            // If there are no empty neighbors then use the existing puddles
-            // Divide the overflow amount between neighbors
-
-            // TODO: Messy?
+            // If there's no puddle at the neighbor then add one.
 
             // Setup
-            var neighborGrids = GetNeighborTileGrids();
-            _mapManager.TryGetGrid(Owner.Transform.GridID, out var grid);
             // If there's more neighbors to spill to then there are reagents to go around (coz integers)
             var overflowAmount = CurrentVolume - OverflowVolume;
-            var remainingReagent = overflowAmount;
 
-            // Essentially it'll prioritise tiles without a nearby puddle first,
-            // and if there are none it'll spill to another nearby puddle
-            var highPriorityPuddleCoords = new List<GridCoordinates>(8);
-            var lowPriorityPuddles = new List<IEntity>(8);
             var neighborPuddles = new List<IEntity>(8);
 
-            // Will overflow to each neighbor; if it already has a puddle entity intersecting then add to that
-            // This is because Tiles aren't exactly entities
+            // Will overflow to each neighbor; if it already has a puddle entity then add to that
 
-            foreach (var neighbor in neighborGrids)
+            foreach (var direction in RandomDirections())
             {
+                // Can't spill < 1 reagent so stop overflowing
+                if (neighborPuddles.Count == overflowAmount)
+                {
+                    break;
+                }
+
                 // If we found an existing puddle on that tile then we don't need to spawn a new one
                 var noSpawn = false;
 
-                var neighborWorldPosition = grid.LocalToWorld(neighbor).Position; // Is this okay?
-                foreach (var entity in _entityManager.GetEntitiesAt(neighborWorldPosition))
+                foreach (var entity in _snapGrid.GetInDir(direction))
                 {
                     // Don't overflow to walls
                     if (entity.TryGetComponent(out CollidableComponent collidableComponent) &&
@@ -269,12 +278,13 @@ namespace Content.Server.GameObjects.Components.Fluids
 
                     // If we've overflowed recently don't include it
                     noSpawn = true;
+                    // TODO: PauseManager
                     if ((DateTime.Now - puddleComponent._lastOverflow).TotalSeconds < 1)
                     {
                         break;
                     }
 
-                    lowPriorityPuddles.Add(entity);
+                    neighborPuddles.Add(entity);
                     break;
                 }
 
@@ -283,26 +293,9 @@ namespace Content.Server.GameObjects.Components.Fluids
                     continue;
                 }
 
+                var grid = DirectionToGrid(direction);
                 // We'll just add the co-ordinates as we need to figure out how many puddles we need to spawn first
-                highPriorityPuddleCoords.Add(neighbor);
-            }
-
-            foreach (var coord in highPriorityPuddleCoords)
-            {
-                if (remainingReagent <= 0)
-                {
-                    break;
-                }
-                remainingReagent--;
-                neighborPuddles.Add(Owner.EntityManager.SpawnEntityAt(Owner.Prototype.ID, coord));
-            }
-
-            // If there's no free tiles to go to then just use an existing one
-            if (neighborPuddles.Count == 0)
-            {
-                // Need to get how many neighbors we can spill to
-                var puddleSpillLeft = lowPriorityPuddles.GetRange(0, Math.Min(remainingReagent, lowPriorityPuddles.Count));
-                neighborPuddles.AddRange(puddleSpillLeft);
+                neighborPuddles.Add(_entityManager.SpawnEntityAt(Owner.Prototype.ID, grid));
             }
 
             if (neighborPuddles.Count == 0)
@@ -315,6 +308,51 @@ namespace Content.Server.GameObjects.Components.Fluids
             SpillToNeighbours(neighborPuddles, spillAmount);
         }
 
+        // TODO: Move the below to SnapGrid?
+        /// <summary>
+        /// Will yield a random direction until none are left
+        /// </summary>
+        /// <returns></returns>
+        private static IEnumerable<Direction> RandomDirections()
+        {
+            var directions = new List<Direction>
+            {
+                Direction.East,
+                Direction.SouthEast,
+                Direction.South,
+                Direction.SouthWest,
+                Direction.West,
+                Direction.NorthWest,
+                Direction.North,
+                Direction.NorthEast,
+            };
+
+            var robustRandom = IoCManager.Resolve<IRobustRandom>();
+            var n = directions.Count;
+
+            while (n > 1)
+            {
+                n--;
+                var k = robustRandom.Next(n + 1);
+                var value = directions[k];
+                directions[k] = directions[n];
+                directions[n] = value;
+            }
+
+            foreach (var direction in directions)
+            {
+                yield return direction;
+            }
+        }
+
+        private GridCoordinates DirectionToGrid(Direction direction)
+        {
+            var ownerGrid = _mapManager.GetGrid(Owner.Transform.GridID);
+            GridCoordinates grid = ownerGrid.GridTileToLocal(_snapGrid.SnapGridPosAt(direction));
+
+            return grid;
+        }
+
         private void SpillToNeighbours(IEnumerable<IEntity> neighbors, int spillAmount)
         {
             foreach (var neighborPuddle in neighbors)
@@ -323,34 +361,6 @@ namespace Content.Server.GameObjects.Components.Fluids
 
                 neighborPuddle.GetComponent<PuddleComponent>().TryAddSolution(solution, false, false);
             }
-        }
-
-        private IEnumerable<GridCoordinates> GetNeighborTileGrids()
-        {
-            // That's when good neighbors
-            // Become good friends
-            Stack<GridCoordinates> neighbors = new Stack<GridCoordinates>();
-
-            _mapManager.TryGetGrid(Owner.Transform.GridID, out var grid);
-            var ownerTile = grid.GetTileRef(Owner.Transform.GridPosition);
-
-            // Will currently also include diagonals
-            for (int x = -1; x < 2; x++)
-            {
-                for (int y = -1; y < 2; y++)
-                {
-                    if (x == 0 && y == 0)
-                    {
-                        continue;
-                    }
-
-                    var neighborIndices = new MapIndices(ownerTile.X + x, ownerTile.Y + y);
-                    var neighborGridCoords = grid.GridTileToLocal(neighborIndices);
-                    neighbors.Push(neighborGridCoords);
-                }
-            }
-
-            return neighbors;
         }
     }
 }

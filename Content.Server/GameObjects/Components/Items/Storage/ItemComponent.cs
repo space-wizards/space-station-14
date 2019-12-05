@@ -28,6 +28,8 @@ namespace Content.Server.GameObjects
 
         private string _equippedPrefix;
 
+        public IEntity Holder { get; private set; }
+
         public string EquippedPrefix
         {
             get
@@ -43,6 +45,7 @@ namespace Content.Server.GameObjects
 
         public void RemovedFromSlot()
         {
+            Holder = null;
             foreach (var component in Owner.GetAllComponents<ISpriteRenderableComponent>())
             {
                 component.Visible = true;
@@ -68,6 +71,7 @@ namespace Content.Server.GameObjects
         {
             var hands = eventArgs.User.GetComponent<IHandsComponent>();
             hands.PutInHand(this, hands.ActiveIndex, fallback: false);
+            Holder = eventArgs.User;
             return true;
         }
 
