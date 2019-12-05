@@ -27,24 +27,24 @@ namespace Content.Client.Research
 
             var margin = new MarginContainer()
             {
-                MarginTop = 5f,
+                /*MarginTop = 5f,
                 MarginLeft = 5f,
                 MarginRight = -5f,
-                MarginBottom = -5f,
+                MarginBottom = -5f,*/
             };
 
-            margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+//            margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var vBox = new VBoxContainer();
 
-            vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+  //          vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var descMargin = new MarginContainer()
             {
-                MarginTop = 5f,
+                /*MarginTop = 5f,
                 MarginLeft = 5f,
                 MarginRight = -5f,
-                MarginBottom = -5f,
+                MarginBottom = -5f,*/
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 2,
             };

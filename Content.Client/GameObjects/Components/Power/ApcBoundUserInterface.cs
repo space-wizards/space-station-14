@@ -21,10 +21,7 @@ namespace Content.Client.GameObjects.Components.Power
         {
             base.Open();
 
-            _window = new ApcWindow
-            {
-                MarginRight = 426.0f, MarginBottom = 270.0f
-            };
+            _window = new ApcWindow();
             _window.OnClose += Close;
             _window.OpenCenteredMinSize();
 

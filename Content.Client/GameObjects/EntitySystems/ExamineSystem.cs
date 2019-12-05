@@ -86,7 +86,7 @@ namespace Content.Client.GameObjects.EntitySystems
             panel.AddStyleClass(StyleClassEntityTooltip);
             panel.ModulateSelfOverride = Color.LightGray.WithAlpha(0.90f);
             _examineTooltipOpen.AddChild(panel);
-            panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
+            //panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
             var vBox = new VBoxContainer();
             panel.AddChild(vBox);
             var hBox = new HBoxContainer { SeparationOverride = 5};
@@ -145,7 +145,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
             }
 
-            _examineTooltipOpen.Position += Vector2.ComponentMin(Vector2.Zero,_userInterfaceManager.StateRoot.Size - (panel.Size + _examineTooltipOpen.Position));
+            //_examineTooltipOpen.Position += Vector2.ComponentMin(Vector2.Zero,_userInterfaceManager.StateRoot.Size - (panel.Size + _examineTooltipOpen.Position));
         }
 
         public void CloseTooltip()

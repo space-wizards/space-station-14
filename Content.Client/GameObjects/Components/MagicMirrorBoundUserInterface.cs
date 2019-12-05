@@ -171,8 +171,6 @@ namespace Content.Client.GameObjects.Components
             };
             facialHairButton.OnPressed += args => _facialHairPickerWindow.Open();
             vBox.AddChild(facialHairButton);
-
-            Size = CombinedMinimumSize;
         }
 
         protected override void Dispose(bool disposing)

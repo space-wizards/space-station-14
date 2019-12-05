@@ -124,8 +124,6 @@ namespace Content.Client.GameObjects.Components.Actor
                 {
                     _contentsVBox.AddChild(element.Scene);
                 }
-
-                Size = CombinedMinimumSize;
             }
         }
     }

@@ -47,21 +47,13 @@ namespace Content.Client.Research
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                MarginTop = 5f,
-                MarginLeft = 5f,
-                MarginRight = -5f,
-                MarginBottom = -5f,
             };
-
-            margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var vBox = new VBoxContainer()
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SeparationOverride = 5,
             };
-
-            vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var hBoxButtons = new HBoxContainer()
             {
@@ -99,8 +91,6 @@ namespace Content.Client.Research
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 3,
             };
-
-            spacer.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var hBoxFilter = new HBoxContainer()
             {

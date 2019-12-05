@@ -198,14 +198,14 @@ namespace Content.Client.GameObjects.EntitySystems
                 vBox.AddChild(panel);
             }
 
-            _currentPopup.Size = vBox.CombinedMinimumSize;
+            //_currentPopup.Size = vBox.CombinedMinimumSize;
 
             // If we're at the bottom of the window and the menu would go below the bottom of the window,
             // shift it up so it extends UP.
             var bottomCoords = vBox.CombinedMinimumSize.Y + _currentPopup.Position.Y;
             if (bottomCoords > _userInterfaceManager.StateRoot.Size.Y)
             {
-                _currentPopup.Position = _currentPopup.Position - new Vector2(0, vBox.CombinedMinimumSize.Y);
+               // _currentPopup.Position = _currentPopup.Position - new Vector2(0, vBox.CombinedMinimumSize.Y);
             }
         }
 

@@ -30,20 +30,20 @@ namespace Content.Client.UserInterface
             };
             back.SetPatchMargin(StyleBox.Margin.All, 10);
 
-            var panel = new Panel
+            var panel = new PanelContainer
             {
                 PanelOverride = back
             };
 
             AddChild(panel);
 
-            panel.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+            //panel.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var vBox = new VBoxContainer {SeparationOverride = 0};
 
-            vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+            //vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
-            vBox.MarginTop = 40;
+            //vBox.MarginTop = 40;
 
             AddChild(vBox);
 
@@ -51,32 +51,32 @@ namespace Content.Client.UserInterface
             {
                 Text = localization.GetString("Lobby"),
                 StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
-                MarginBottom = 40,
-                MarginLeft = 8,
+                /*MarginBottom = 40,
+                MarginLeft = 8,*/
                 VAlign = Label.VAlignMode.Center
             });
 
             AddChild(ServerName = new Label
             {
                 StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
-                MarginBottom = 40,
-                GrowHorizontal = GrowDirection.Both,
+                /*MarginBottom = 40,
+                GrowHorizontal = GrowDirection.Both,*/
                 VAlign = Label.VAlignMode.Center
             });
 
-            ServerName.SetAnchorAndMarginPreset(LayoutPreset.CenterTop);
+            //ServerName.SetAnchorAndMarginPreset(LayoutPreset.CenterTop);
 
             AddChild(LeaveButton = new Button
             {
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                 Text = localization.GetString("Leave"),
                 StyleClasses = {NanoStyle.StyleClassButtonBig},
-                GrowHorizontal = GrowDirection.Begin
+                //GrowHorizontal = GrowDirection.Begin
             });
 
-            LeaveButton.SetAnchorAndMarginPreset(LayoutPreset.TopRight);
+            //LeaveButton.SetAnchorAndMarginPreset(LayoutPreset.TopRight);
 
-            vBox.AddChild(new Panel
+            vBox.AddChild(new PanelContainer
             {
                 PanelOverride = new StyleBoxFlat
                 {
@@ -164,7 +164,7 @@ namespace Content.Client.UserInterface
                 }
             });
 
-            hBox.AddChild(new Panel
+            hBox.AddChild(new PanelContainer
             {
                 PanelOverride = new StyleBoxFlat {BackgroundColor = NanoStyle.NanoGold}, CustomMinimumSize = (2, 0)
             });

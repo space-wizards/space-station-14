@@ -52,6 +52,9 @@ namespace Content.Client.UserInterface
         private readonly TextureRect CooldownCircleLeft;
         private readonly TextureRect CooldownCircleRight;
 
+        private readonly Control _leftContainer;
+        private readonly Control _rightContainer;
+
         public HandsGui()
         {
             IoCManager.InjectDependencies(this);
@@ -72,30 +75,35 @@ namespace Content.Client.UserInterface
                     _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/cooldown-{i}.png");
             }
 
-            AddChild(new TextureRect
+            _leftContainer = new Control {MouseFilter = MouseFilterMode.Ignore};
+            _rightContainer = new Control {MouseFilter = MouseFilterMode.Ignore};
+            var hBox = new HBoxContainer
+            {
+                SeparationOverride = 0,
+                Children = {_rightContainer, _leftContainer},
+                MouseFilter = MouseFilterMode.Ignore
+            };
+
+            AddChild(hBox);
+
+            _leftContainer.AddChild(new TextureRect
             {
                 MouseFilter = MouseFilterMode.Ignore,
                 Texture = TextureHandLeft,
-                Size = _handL.Size,
-                Position = _handL.TopLeft,
                 TextureScale = (2, 2)
             });
 
-            AddChild(new TextureRect
+            _rightContainer.AddChild(new TextureRect
             {
                 MouseFilter = MouseFilterMode.Ignore,
                 Texture = TextureHandRight,
-                Size = _handR.Size,
-                Position = _handR.TopLeft,
                 TextureScale = (2, 2)
             });
 
-            AddChild(ActiveHandRect = new TextureRect
+            _leftContainer.AddChild(ActiveHandRect = new TextureRect
             {
                 MouseFilter = MouseFilterMode.Ignore,
                 Texture = TextureHandActive,
-                Size = _handL.Size,
-                Position = _handL.TopLeft,
                 TextureScale = (2, 2)
             });
 
@@ -104,41 +112,29 @@ namespace Content.Client.UserInterface
                 MouseFilter = MouseFilterMode.Ignore,
                 Scale = (2, 2)
             };
-            AddChild(LeftSpriteView);
-            LeftSpriteView.Size = _handL.Size;
-            LeftSpriteView.Position = _handL.TopLeft;
+            _leftContainer.AddChild(LeftSpriteView);
 
             RightSpriteView = new SpriteView
             {
                 MouseFilter = MouseFilterMode.Ignore,
                 Scale = (2, 2)
             };
-            AddChild(RightSpriteView);
-            RightSpriteView.Size = _handR.Size;
-            RightSpriteView.Position = _handR.TopLeft;
+            _rightContainer.AddChild(RightSpriteView);
 
             // Cooldown circles.
-            AddChild(CooldownCircleLeft = new TextureRect
+            _leftContainer.AddChild(CooldownCircleLeft = new TextureRect
             {
                 MouseFilter = MouseFilterMode.Ignore,
-                Position = _handL.TopLeft + (8, 8),
                 TextureScale = (2, 2),
                 Visible = false,
-
             });
 
-            AddChild(CooldownCircleRight = new TextureRect
+            _rightContainer.AddChild(CooldownCircleRight = new TextureRect
             {
                 MouseFilter = MouseFilterMode.Ignore,
-                Position = _handR.TopLeft + (8, 8),
                 TextureScale = (2, 2),
                 Visible = false
             });
-        }
-
-        protected override Vector2 CalculateMinimumSize()
-        {
-            return new Vector2(BoxSize * 2 + BoxSpacing, BoxSize) * UIScale;
         }
 
         /// <summary>
@@ -169,7 +165,9 @@ namespace Content.Client.UserInterface
             var left = hands.GetEntity("left");
             var right = hands.GetEntity("right");
 
-            ActiveHandRect.Position = hands.ActiveIndex == "left" ? _handL.TopLeft : _handR.TopLeft;
+            ActiveHandRect.Parent.RemoveChild(ActiveHandRect);
+            var parent = hands.ActiveIndex == "left" ? _leftContainer : _rightContainer;
+            parent.AddChild(ActiveHandRect);
 
             if (left != null)
             {
@@ -328,7 +326,7 @@ namespace Content.Client.UserInterface
 
                 var length = (end - start).TotalSeconds;
                 var progress = (_gameTiming.CurTime - start).TotalSeconds;
-                var ratio = (float)(progress / length);
+                var ratio = (float) (progress / length);
 
                 var textureIndex = CalculateCooldownLevel(ratio);
                 if (textureIndex == CooldownLevels)

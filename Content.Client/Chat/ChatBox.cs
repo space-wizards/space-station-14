@@ -50,13 +50,13 @@ namespace Content.Client.Chat
 
         public ChatBox()
         {
-                        MarginLeft = -475.0f;
+            /*MarginLeft = -475.0f;
             MarginTop = 10.0f;
             MarginRight = -10.0f;
             MarginBottom = 235.0f;
 
             AnchorLeft = 1.0f;
-            AnchorRight = 1.0f;
+            AnchorRight = 1.0f;*/
 
             var outerVBox = new VBoxContainer();
 

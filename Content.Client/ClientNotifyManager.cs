@@ -59,7 +59,7 @@ namespace Content.Client
         {
             var label = new PopupLabel {Text = message};
             var minimumSize = label.CombinedMinimumSize;
-            label.InitialPos = label.Position = coordinates.Position - minimumSize / 2;
+            LayoutContainer.SetPosition(label, label.InitialPos = coordinates.Position - minimumSize / 2);
             _userInterfaceManager.PopupRoot.AddChild(label);
             _aliveLabels.Add(label);
         }
@@ -94,7 +94,7 @@ namespace Content.Client
             public void Update(FrameEventArgs eventArgs)
             {
                 _timeLeft += eventArgs.DeltaSeconds;
-                Position = InitialPos - new Vector2(0, 20 * (_timeLeft * _timeLeft + _timeLeft));
+                LayoutContainer.SetPosition(this, InitialPos - (0, 20 * (_timeLeft * _timeLeft + _timeLeft)));
                 if (_timeLeft > 0.5f)
                 {
                     Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(_timeLeft - 0.5f, 3f));

@@ -57,7 +57,7 @@ namespace Content.Client.UserInterface
             return size;
         }
 
-        protected override void SortChildren()
+        protected override void LayoutUpdateOverride()
         {
             var box = SizeBox;
 

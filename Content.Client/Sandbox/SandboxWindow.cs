@@ -38,8 +38,6 @@ namespace Content.Client.Sandbox
                     SpawnTilesButton
                 }
             });
-
-            Size = CombinedMinimumSize;
         }
     }
 }

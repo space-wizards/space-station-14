@@ -81,11 +81,11 @@ namespace Content.Client.Chat
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME, _onChatMessage);
 
-            _speechBubbleRoot = new Control
+            _speechBubbleRoot = new LayoutContainer
             {
                 MouseFilter = Control.MouseFilterMode.Ignore
             };
-            _speechBubbleRoot.SetAnchorPreset(Control.LayoutPreset.Wide);
+            LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
             _userInterfaceManager.StateRoot.AddChild(_speechBubbleRoot);
             _speechBubbleRoot.SetPositionFirst();
         }

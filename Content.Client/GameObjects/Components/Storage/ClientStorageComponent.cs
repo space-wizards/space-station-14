@@ -101,10 +101,10 @@ namespace Content.Client.GameObjects.Components.Storage
             private Label Information;
             public ClientStorageComponent StorageEntity;
 
+            protected override Vector2? CustomSize => (180, 320);
+
             public StorageWindow()
             {
-                Size = (180, 320);
-
                 Title = "Storage Item";
                 RectClipContent = true;
 
@@ -239,14 +239,14 @@ namespace Content.Client.GameObjects.Components.Storage
                     SizeFlagsVertical = SizeFlags.ShrinkCenter,
                     Text = "Size 6",
                     Align = Label.AlignMode.Right,
-                    AnchorLeft = 1.0f,
+                    /*AnchorLeft = 1.0f,
                     AnchorRight = 1.0f,
                     AnchorBottom = 0.5f,
                     AnchorTop = 0.5f,
                     MarginLeft = -38.0f,
                     MarginTop = -7.0f,
                     MarginRight = -5.0f,
-                    MarginBottom = 7.0f
+                    MarginBottom = 7.0f*/
                 };
 
                 EntityControl.AddChild(EntitySize);
