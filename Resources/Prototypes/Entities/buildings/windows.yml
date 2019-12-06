@@ -4,6 +4,7 @@
   description: Don't smudge up the glass down there.
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     netsync: false
     drawdepth: WallTops

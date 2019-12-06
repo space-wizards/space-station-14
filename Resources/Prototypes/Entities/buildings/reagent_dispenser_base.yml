@@ -3,6 +3,7 @@
   id: reagent_dispenser_base
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

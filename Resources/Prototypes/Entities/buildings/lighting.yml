@@ -3,6 +3,7 @@
   name: "Unpowered Light"
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sound
   - type: Sprite
@@ -29,6 +30,7 @@
   parent: wall_light
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     sprite: Buildings/light_tube.rsi
@@ -53,6 +55,7 @@
   parent: wall_light
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     sprite: Buildings/light_small.rsi
     state: off

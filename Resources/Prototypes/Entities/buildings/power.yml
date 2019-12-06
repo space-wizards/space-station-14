@@ -4,6 +4,7 @@
   description: Transfers power, avoid letting things come down it
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     netsync: false
@@ -40,6 +41,7 @@
   description: A portal to hell which summons power from the nether
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -57,6 +59,7 @@
   description: Supplies power directly to nearby objects
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -113,6 +116,7 @@
   description: Stores power in its super-magnetic cells
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -152,6 +156,7 @@
   description: A monstrosity that does nothing but suck up power from the nearby wires
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -172,6 +177,7 @@
   description: A terrifying monstrosity that sucks up power from the wireless transmitters, Tesla would be proud
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

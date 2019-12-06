@@ -25,6 +25,7 @@
   - type: Icon
     texture: Objects/Janitorial/mopbucket.png
   - type: Clickable
+  - type: InteractionOutline
   - type: Solution
     maxVol: 500
     caps: 3

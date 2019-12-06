@@ -3,6 +3,7 @@
   name: Girder
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     texture: Buildings/wall_girder.png
   - type: Icon

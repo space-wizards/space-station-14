@@ -4,6 +4,7 @@
   description: Goes up to about your waist.
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     netsync: false
     color: "#71797a"

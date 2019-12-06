@@ -9,6 +9,7 @@
     sprite: Buildings/research.rsi
     state: server
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: SnapGrid
     offset: Center
@@ -18,7 +19,7 @@
     drawtype: Both
     load: 200
     priority: Low
-    
+
 - type: entity
   id: baseResearchAndDevelopmentPointSource
   name: "Base R&D Point Source"
@@ -34,6 +35,7 @@
     sprite: Buildings/research.rsi
     state: tdoppler
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

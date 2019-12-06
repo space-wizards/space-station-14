@@ -13,6 +13,7 @@
     - !type:PhysShapeAabb
       layer: 32
   - type: Clickable
+  - type: InteractionOutline
   - type: Physics
     mass: 25
     Anchored: true

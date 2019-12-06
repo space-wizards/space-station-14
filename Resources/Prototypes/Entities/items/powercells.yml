@@ -118,6 +118,7 @@
   - type: Physics
     mass: 5
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -149,6 +150,7 @@
   - type: Physics
     mass: 5
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -179,6 +181,7 @@
   - type: Physics
     mass: 5
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

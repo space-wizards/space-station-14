@@ -5,6 +5,7 @@
   - type: Item
     Size: 5
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

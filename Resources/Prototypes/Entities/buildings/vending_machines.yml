@@ -6,6 +6,7 @@
     Anchored: true
   - type: Rotatable
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     sprite: Buildings/VendingMachines/empty.rsi
     layers:

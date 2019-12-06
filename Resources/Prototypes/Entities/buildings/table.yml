@@ -3,6 +3,7 @@
   name: "worktop"
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: PlaceableSurface
   - type: Sprite
     netsync: false

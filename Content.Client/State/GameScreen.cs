@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Client.GameObjects.Components;
+using Content.Client.GameObjects.EntitySystems;
+using Content.Shared.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -63,21 +66,37 @@ namespace Content.Client.State
 
             var mousePosWorld = eyeManager.ScreenToWorld(new ScreenCoordinates(inputManager.MouseScreenPosition));
             var entityToClick = GetEntityUnderPosition(mousePosWorld);
+
+            var inRange = false;
+            if (playerManager.LocalPlayer.ControlledEntity != null && entityToClick != null)
+            {
+                var playerPos = playerManager.LocalPlayer.ControlledEntity.Transform.GridPosition;
+                var entityPos = entityToClick.Transform.GridPosition;
+                var distance = playerPos.Distance(_mapManager, entityPos);
+                inRange = distance <= VerbUtility.InteractionRange;
+            }
+
+            InteractionOutlineComponent outline;
             if (entityToClick == lastHoveredEntity)
             {
+                if (entityToClick != null && entityToClick.TryGetComponent(out outline))
+                {
+                    outline.UpdateInRange(inRange);
+                }
                 return;
             }
 
-            if (lastHoveredEntity != null && !lastHoveredEntity.Deleted)
+            if (lastHoveredEntity != null && !lastHoveredEntity.Deleted &&
+                lastHoveredEntity.TryGetComponent(out outline))
             {
-                lastHoveredEntity.GetComponent<IClientClickableComponent>().OnMouseLeave();
+                outline.OnMouseLeave();
             }
 
             lastHoveredEntity = entityToClick;
 
-            if (lastHoveredEntity != null)
+            if (lastHoveredEntity != null && lastHoveredEntity.TryGetComponent(out outline))
             {
-                lastHoveredEntity.GetComponent<IClientClickableComponent>().OnMouseEnter();
+                outline.OnMouseEnter(inRange);
             }
         }
 
@@ -91,7 +110,8 @@ namespace Content.Client.State
         {
             // Find all the entities intersecting our click
             var worldCoords = coordinates.ToWorld(_mapManager);
-            var entities = _entityManager.GetEntitiesIntersecting(_mapManager.GetGrid(coordinates.GridID).ParentMapId, worldCoords.Position);
+            var entities = _entityManager.GetEntitiesIntersecting(_mapManager.GetGrid(coordinates.GridID).ParentMapId,
+                worldCoords.Position);
 
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(IEntity clicked, int drawDepth)>();
@@ -123,6 +143,7 @@ namespace Content.Client.State
                 {
                     return val;
                 }
+
                 var transx = x.clicked.Transform;
                 var transy = y.clicked.Transform;
                 return transx.GridPosition.Y.CompareTo(transy.GridPosition.Y);
@@ -142,7 +163,8 @@ namespace Content.Client.State
 
             var mousePosWorld = eyeManager.ScreenToWorld(args.PointerLocation);
             var entityToClick = GetEntityUnderPosition(mousePosWorld);
-            var message = new FullInputCmdMessage(timing.CurTick, funcId, args.State, mousePosWorld, args.PointerLocation, entityToClick?.Uid ?? EntityUid.Invalid);
+            var message = new FullInputCmdMessage(timing.CurTick, funcId, args.State, mousePosWorld,
+                args.PointerLocation, entityToClick?.Uid ?? EntityUid.Invalid);
 
             // client side command handlers will always be sent the local player session.
             var session = playerManager.LocalPlayer.Session;

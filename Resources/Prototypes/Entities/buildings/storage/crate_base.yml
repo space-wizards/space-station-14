@@ -16,6 +16,7 @@
     state: crate
 
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -26,7 +27,7 @@
   - type: Physics
     mass: 25
     Anchored: false
-      
+
   - type: EntityStorage
     Capacity: 60
   - type: PlaceableSurface

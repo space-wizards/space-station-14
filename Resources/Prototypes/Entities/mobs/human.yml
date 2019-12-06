@@ -16,6 +16,7 @@
   - type: Inventory
   - type: Constructor
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     netsync: false
     drawdepth: Mobs

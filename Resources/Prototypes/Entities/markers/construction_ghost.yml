@@ -9,6 +9,7 @@
   - type: ConstructionGhost
   - type: Collidable
   - type: Clickable
+  - type: InteractionOutline
 
 - type: entity
   name: somebody-messed-up frame
@@ -18,3 +19,4 @@
   - type: Construction
   - type: Collidable
   - type: Clickable
+  - type: InteractionOutline

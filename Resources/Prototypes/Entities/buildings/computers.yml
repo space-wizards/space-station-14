@@ -6,6 +6,7 @@
     mass: 25
     Anchored: true
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     IsScrapingFloor: true
     shapes:

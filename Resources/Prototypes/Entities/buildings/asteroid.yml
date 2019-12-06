@@ -4,6 +4,7 @@
   components:
   - type: AsteroidRock
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     sprite: Buildings/Walls/asteroid_rock.rsi
     state: 0

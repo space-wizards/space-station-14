@@ -16,6 +16,7 @@
     state: generic_door
 
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

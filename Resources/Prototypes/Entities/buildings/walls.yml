@@ -4,6 +4,7 @@
   description: Keeps the air in and the greytide out.
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     netsync: false
     drawdepth: Walls

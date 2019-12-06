@@ -3,6 +3,7 @@
   name: Catwalk
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     netsync: false

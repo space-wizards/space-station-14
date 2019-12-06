@@ -3,6 +3,7 @@
   name: "Lathe"
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: SnapGrid
     offset: Center

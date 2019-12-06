@@ -35,6 +35,9 @@ namespace Content.Server
                 "LowWall",
                 "Window",
                 "CharacterInfo",
+                "InteractionOutline",
+                "MeleeWeaponArcAnimation",
+                "AnimationsTest",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -49,6 +52,7 @@ namespace Content.Server
                 var cast = (ServerModuleTestingCallbacks) TestingCallbacks;
                 cast.ServerBeforeIoC?.Invoke();
             }
+
             IoCManager.BuildGraph();
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();

@@ -6,6 +6,7 @@
     handheld: false
 
   - type: Clickable
+  - type: InteractionOutline
 
   - type: Collidable
     shapes:
