@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Is the entity Sprinting (running)?
         /// </summary>
         [ViewVariables]
-        public bool Sprinting { get; set; }
+        public bool Sprinting { get; set; } = true;
 
         /// <summary>
         ///     Calculated linear velocity direction of the entity.
