@@ -81,8 +81,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             base.Startup();
 
             SnapGrid.OnPositionChanged += SnapGridOnPositionChanged;
-            EntityEventArgs toRaise = new IconSmoothDirtyEvent(null, SnapGrid.Offset, Mode);
-            Owner.EntityManager.EventBus.RaiseEvent((object) Owner, toRaise);
+            Owner.EntityManager.EventBus.RaiseEvent(Owner, new IconSmoothDirtyEvent(null, SnapGrid.Offset, Mode));
             if (Mode == IconSmoothingMode.Corners)
             {
                 var state0 = $"{StateBase}0";
@@ -204,14 +203,12 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             base.Shutdown();
 
             SnapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
-            EntityEventArgs toRaise = new IconSmoothDirtyEvent(_lastPosition, SnapGrid.Offset, Mode);
-            Owner.EntityManager.EventBus.RaiseEvent((object) Owner, toRaise);
+            Owner.EntityManager.EventBus.RaiseEvent(Owner, new IconSmoothDirtyEvent(_lastPosition, SnapGrid.Offset, Mode));
         }
 
         private void SnapGridOnPositionChanged()
         {
-            EntityEventArgs toRaise = new IconSmoothDirtyEvent(_lastPosition, SnapGrid.Offset, Mode);
-            Owner.EntityManager.EventBus.RaiseEvent((object) Owner, toRaise);
+            Owner.EntityManager.EventBus.RaiseEvent(Owner, new IconSmoothDirtyEvent(_lastPosition, SnapGrid.Offset, Mode));
             _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
         }
 
