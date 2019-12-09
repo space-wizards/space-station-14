@@ -71,6 +71,7 @@ namespace Content.Server
 
             _gameTicker.Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
+            IoCManager.Resolve<IServerPreferencesManager>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

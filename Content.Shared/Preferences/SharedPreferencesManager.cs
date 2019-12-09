@@ -62,38 +62,68 @@ namespace Content.Shared.Preferences
         }
 
         /// <summary>
-        /// The client sends this to store preferences on the server.
+        /// The client sends this to select a character slot.
         /// </summary>
-        protected class MsgPreferences : NetMessage
+        protected class MsgSelectCharacter : NetMessage
         {
             #region REQUIRED
 
             public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgPreferences);
+            public const string NAME = nameof(MsgSelectCharacter);
 
-            public MsgPreferences(INetChannel channel) : base(NAME, GROUP) { }
+            public MsgSelectCharacter(INetChannel channel) : base(NAME, GROUP) { }
 
             #endregion
 
-            public PlayerPreferences Preferences;
+            public int SelectedCharacterIndex;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
+                SelectedCharacterIndex = buffer.ReadInt32();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(SelectedCharacterIndex);
+            }
+        }
+
+        /// <summary>
+        /// The client sends this to update a character profile.
+        /// </summary>
+        protected class MsgUpdateCharacter : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgUpdateCharacter);
+
+            public MsgUpdateCharacter(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public int Slot;
+            public ICharacterProfile Profile;
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                Slot = buffer.ReadInt32();
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
                 var length = buffer.ReadInt32();
                 var bytes = buffer.ReadBytes(length);
                 using (var stream = new MemoryStream(bytes))
                 {
-                    Preferences = serializer.Deserialize<PlayerPreferences>(stream);
+                    Profile = serializer.Deserialize<ICharacterProfile>(stream);
                 }
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
+                buffer.Write(Slot);
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
                 using (var stream = new MemoryStream())
                 {
-                    serializer.Serialize(stream, Preferences);
+                    serializer.Serialize(stream, Profile);
                     buffer.Write((int)stream.Length);
                     buffer.Write(stream.ToArray());
                 }

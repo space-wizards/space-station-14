@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Content.Server.Interfaces;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
@@ -9,10 +8,6 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using YamlDotNet.Core;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.Preferences
 {
@@ -20,26 +15,39 @@ namespace Content.Server.Preferences
     /// Sends <see cref="SharedPreferencesManager.MsgPreferencesAndSettings"/> before the client joins the lobby.
     /// Receives <see cref="SharedPreferencesManager.MsgPreferences"/> at any time.
     /// </summary>
-    public class ServerPreferencesManager : SharedPreferencesManager, IServerPreferencesManager, IPostInjectInit
+    public class ServerPreferencesManager : SharedPreferencesManager, IServerPreferencesManager
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IConfigurationManager _configuration;
         [Dependency] private readonly IResourceManager _resourceManager;
 #pragma warning restore 649
+        private PreferencesDatabase _preferencesDb;
 
-        private const string PrefsPath = "/preferences/";
-        private static readonly ResourcePath PrefsDirPath = new ResourcePath(PrefsPath).ToRootedPath();
-
-        public void PostInject()
+        public void Initialize()
         {
+            _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(nameof(MsgPreferencesAndSettings));
+            _netManager.RegisterNetMessage<MsgSelectCharacter>(nameof(MsgSelectCharacter),
+                HandleSelectCharacterMessage);
+            _netManager.RegisterNetMessage<MsgUpdateCharacter>(nameof(MsgUpdateCharacter),
+                HandleUpdateCharacterMessage);
+
             _configuration.RegisterCVar("game.maxcharacterslots", 10);
-            _netManager.RegisterNetMessage<MsgPreferences>(nameof(MsgPreferences), HandlePreferencesMessage);
+            _configuration.RegisterCVar("game.preferencesdbpath", "preferences.db");
+
+            var configPreferencesDbPath = _configuration.GetCVar<string>("game.preferencesdbpath");
+            var finalPreferencesDbPath = Path.Combine(_resourceManager.UserData.RootDir, configPreferencesDbPath);
+            _preferencesDb = new PreferencesDatabase(finalPreferencesDbPath);
         }
 
-        private void HandlePreferencesMessage(MsgPreferences message)
+        private void HandleSelectCharacterMessage(MsgSelectCharacter message)
         {
-            SavePreferences(message.Preferences, message.MsgChannel.SessionId.Username);
+            _preferencesDb.SaveSelectedCharacterIndex(message.MsgChannel.SessionId.Username, message.SelectedCharacterIndex);
+        }
+
+        private void HandleUpdateCharacterMessage(MsgUpdateCharacter message)
+        {
+            _preferencesDb.SaveCharacterSlot(message.MsgChannel.SessionId.Username, message.Profile, message.Slot);
         }
 
         public void OnClientConnected(IPlayerSession session)
@@ -56,53 +64,19 @@ namespace Content.Server.Preferences
         /// <summary>
         /// Returns the requested <see cref="PlayerPreferences"/> or null if not found.
         /// </summary>
-        private PlayerPreferences GetFromYaml(string username)
+        private PlayerPreferences GetFromSql(string username)
         {
-            var filePath = PrefsDirPath / (username + ".yml");
-            if (!_resourceManager.UserData.Exists(filePath))
-            {
-                return null;
-            }
-
-            using (var file = _resourceManager.UserData.Open(filePath, FileMode.Open))
-            {
-                using (var reader = new StreamReader(file))
-                {
-                    var serializer = YamlObjectSerializer.NewReader(new YamlMappingNode());
-                    var yaml = new YamlStream();
-                    yaml.Load(reader);
-                    if (yaml.Documents.Count == 0)
-                    {
-                        return null;
-                    }
-
-                    return (PlayerPreferences) serializer.NodeToType(typeof(PlayerPreferences),
-                        yaml.Documents[0].RootNode);
-                }
-            }
-        }
-
-        private static bool IsValidUsername(string username)
-        {
-            if (username.All(char.IsLetterOrDigit))
-                return false;
-            var lowerUsername = username.ToLower();
-            return lowerUsername != "nul" && lowerUsername != "com"; // Reserved on windows
+            return _preferencesDb.GetPlayerPreferences(username,
+                _configuration.GetCVar<int>("game.maxcharacterslots"));
         }
 
         /// <summary>
         /// Retrieves preferences for the given username from storage.
-        /// Returns null if the username is invalid.
         /// Creates and saves default preferences if they are not otherwise found, then returns them.
         /// </summary>
         public PlayerPreferences GetPreferences(string username)
         {
-            if (!IsValidUsername(username))
-            {
-                return null;
-            }
-
-            var prefs = GetFromYaml(username);
+            var prefs = GetFromSql(username);
             if (prefs is null)
             {
                 prefs = DefaultPlayerPreferences();
@@ -151,24 +125,13 @@ namespace Content.Server.Preferences
         /// </summary>
         public void SavePreferences(PlayerPreferences prefs, string username)
         {
-            if (!IsValidPlayerPreferences(prefs))
+            _preferencesDb.SaveSelectedCharacterIndex(username, prefs.SelectedCharacterIndex);
+            var index = 0;
+            foreach (var character in prefs.Characters)
             {
-                return;
-            }
-
-            _resourceManager.UserData.CreateDir(PrefsDirPath);
-            var filePath = PrefsDirPath / (username + ".yml");
-            using (var file = _resourceManager.UserData.Open(filePath, FileMode.Create))
-            {
-                using (var writer = new StreamWriter(file))
-                {
-                    var serializer = YamlObjectSerializer.NewWriter(new YamlMappingNode());
-                    var serialized = serializer.TypeToNode(prefs);
-                    var yaml = new YamlStream(new YamlDocument(serialized));
-                    yaml.Save(new YamlMappingFix(new Emitter(writer)), false);
-                }
+                _preferencesDb.SaveCharacterSlot(username, character, index);
+                index++;
             }
         }
-
     }
 }

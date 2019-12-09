@@ -11,6 +11,11 @@
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.30" />
+    <PackageReference Include="dbup-core" Version="4.3.1" />
+    <PackageReference Include="dbup-sqlite" Version="4.3.0" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.0.2" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.112" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="YamlDotNet" Version="6.1.2" />
   </ItemGroup>
@@ -31,5 +36,8 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Condition="'$(UseNetCore)' != 'true'" Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Preferences\Migrations\000_Initial.sql" />
   </ItemGroup>
 </Project>

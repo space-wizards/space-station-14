@@ -7,6 +7,7 @@ namespace Content.Client.Interfaces
         void Initialize();
         GameSettings Settings { get; }
         PlayerPreferences Preferences { get; }
-        void SavePreferences();
+        void SelectCharacter(int slot);
+        void UpdateCharacter(ICharacterProfile profile, int slot);
     }
 }
