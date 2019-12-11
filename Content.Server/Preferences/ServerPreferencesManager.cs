@@ -37,7 +37,10 @@ namespace Content.Server.Preferences
 
             var configPreferencesDbPath = _configuration.GetCVar<string>("game.preferencesdbpath");
             var finalPreferencesDbPath = Path.Combine(_resourceManager.UserData.RootDir, configPreferencesDbPath);
-            _preferencesDb = new PreferencesDatabase(finalPreferencesDbPath);
+
+            var maxCharacterSlots = _configuration.GetCVar<int>("game.maxcharacterslots");
+
+            _preferencesDb = new PreferencesDatabase(finalPreferencesDbPath, maxCharacterSlots);
         }
 
         private void HandleSelectCharacterMessage(MsgSelectCharacter message)
@@ -66,8 +69,7 @@ namespace Content.Server.Preferences
         /// </summary>
         private PlayerPreferences GetFromSql(string username)
         {
-            return _preferencesDb.GetPlayerPreferences(username,
-                _configuration.GetCVar<int>("game.maxcharacterslots"));
+            return _preferencesDb.GetPlayerPreferences(username);
         }
 
         /// <summary>

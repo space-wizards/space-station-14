@@ -1,6 +1,5 @@
 using System;
 using System.Data.SQLite;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using Content.Shared.Preferences;
@@ -15,17 +14,13 @@ namespace Content.Server.Preferences
     public class PreferencesDatabase
     {
         private readonly string _databaseFilePath;
+        private readonly int _maxCharacterSlots;
 
-        public PreferencesDatabase(string databaseFilePath)
+        public PreferencesDatabase(string databaseFilePath, int maxCharacterSlots)
         {
             _databaseFilePath = databaseFilePath;
+            _maxCharacterSlots = maxCharacterSlots;
             CreateDatabaseIfNeeded();
-        }
-
-        private sealed class PlayerPreferencesSql
-        {
-            public int Id { get; set; }
-            public int SelectedCharacterIndex { get; set; }
         }
 
         private string GetDbConnectionString()
@@ -44,22 +39,12 @@ namespace Content.Server.Preferences
             return conn;
         }
 
-        private static string GetCreateTablesQuery()
-        {
-            using (var sqlStream = Assembly.GetExecutingAssembly()
-                .GetManifestResourceStream("Content.Server.Preferences.Migrations.000_Initial.sql"))
-            using (var sqlReader = new StreamReader(sqlStream))
-            {
-                return sqlReader.ReadToEnd();
-            }
-        }
-
         public void CreateDatabaseIfNeeded()
         {
             var upgrader = DeployChanges.To
                 .SQLiteDatabase(GetDbConnectionString())
                 .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-                .LogToConsole() // TODO: write an adapter for our Logger
+                .LogTo(new DatabaseLogger())
                 .Build();
 
             var result = upgrader.PerformUpgrade();
@@ -67,9 +52,6 @@ namespace Content.Server.Preferences
             {
                 Logger.Error(result.Error.ToString());
             }
-
-            //var command = new SQLiteCommand(GetCreateTablesQuery(), connection);
-            //command.ExecuteNonQuery();
         }
 
         private const string PlayerPreferencesQuery =
@@ -80,7 +62,13 @@ namespace Content.Server.Preferences
               FROM HumanoidCharacterProfiles
               WHERE Player = @Id";
 
-        public PlayerPreferences GetPlayerPreferences(string username, int maxCharacterSlots)
+        private sealed class PlayerPreferencesSql
+        {
+            public int Id { get; set; }
+            public int SelectedCharacterIndex { get; set; }
+        }
+
+        public PlayerPreferences GetPlayerPreferences(string username)
         {
             using (var connection = GetDbConnection())
             {
@@ -99,7 +87,7 @@ namespace Content.Server.Preferences
                 cmd.Prepare();
 
                 var reader = cmd.ExecuteReader();
-                var profiles = new ICharacterProfile[maxCharacterSlots];
+                var profiles = new ICharacterProfile[_maxCharacterSlots];
                 while (reader.Read())
                 {
                     profiles[reader.GetInt32(0)] = new HumanoidCharacterProfile
@@ -130,7 +118,15 @@ namespace Content.Server.Preferences
         private const string SaveSelectedCharacterIndexQuery =
             @"UPDATE PlayerPreferences
               SET SelectedCharacterIndex = @SelectedCharacterIndex
-              WHERE Username = @Username";
+              WHERE Username = @Username;
+              
+              -- If no update happened (i.e. the row didn't exist) then insert one // https://stackoverflow.com/a/38463024
+              INSERT INTO PlayerPreferences
+              (SelectedCharacterIndex, Username)
+              SELECT
+              @SelectedCharacterIndex,
+              @Username
+              WHERE (SELECT Changes() = 0);";
 
         public void SaveSelectedCharacterIndex(string username, int index)
         {
@@ -141,7 +137,6 @@ namespace Content.Server.Preferences
             }
         }
 
-        // https://stackoverflow.com/a/38463024
         private const string SaveCharacterSlotQuery =
             @"UPDATE HumanoidCharacterProfiles
               SET
@@ -156,9 +151,11 @@ namespace Content.Server.Preferences
               SkinColor = @SkinColor
               WHERE Slot = @Slot AND Player = (SELECT Id FROM PlayerPreferences WHERE Username = @Username);
               
-              -- If no update happened (i.e. the row didn't exist) then insert one
+              -- If no update happened (i.e. the row didn't exist) then insert one // https://stackoverflow.com/a/38463024
               INSERT INTO HumanoidCharacterProfiles
-              (Name,
+              (Slot,
+              Player,
+              Name,
               Age,
               Sex,
               HairStyleName,
@@ -167,8 +164,10 @@ namespace Content.Server.Preferences
               FacialHairColor,
               EyeColor,
               SkinColor)
-              VALUES
-              (@Name,
+              SELECT
+              @Slot,
+              (SELECT Id FROM PlayerPreferences WHERE Username = @Username),
+              @Name,
               @Age,
               @Sex,
               @HairStyleName,
@@ -176,7 +175,7 @@ namespace Content.Server.Preferences
               @FacialHairStyleName,
               @FacialHairColor,
               @EyeColor,
-              @SkinColor)
+              @SkinColor
               WHERE (SELECT Changes() = 0);";
 
         public void SaveCharacterSlot(string username, ICharacterProfile profile, int slot)
@@ -197,7 +196,7 @@ namespace Content.Server.Preferences
                     Sex = humanoid.Sex.ToString(),
                     HairStyleName = appearance.HairStyleName,
                     HairColor = appearance.HairColor.ToHex(),
-                    FacialHairStyleName = appearance.HairStyleName,
+                    FacialHairStyleName = appearance.FacialHairStyleName,
                     FacialHairColor = appearance.FacialHairColor.ToHex(),
                     EyeColor = appearance.EyeColor.ToHex(),
                     SkinColor = appearance.SkinColor.ToHex(),

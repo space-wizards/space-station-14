@@ -14,14 +14,16 @@ namespace Content.Shared.Preferences
         public Color EyeColor;
         public Color SkinColor;
 
-        public void ExposeData(ObjectSerializer serializer)
+        public bool MemberwiseEquals(ICharacterAppearance maybeOther)
         {
-            serializer.DataField(ref HairStyleName, "hairStyle", string.Empty, true);
-            serializer.DataField(ref HairColor, "hairColor", Color.Black, true);
-            serializer.DataField(ref FacialHairStyleName, "facialHairStyle", string.Empty, true);
-            serializer.DataField(ref FacialHairColor, "facialHairColor", Color.Black, true);
-            serializer.DataField(ref EyeColor, "eyeColor", Color.Black, true);
-            serializer.DataField(ref SkinColor, "skinColor", Color.Pink, true);
+            if (!(maybeOther is HumanoidCharacterAppearance other)) return false;
+            if (HairStyleName != other.HairStyleName) return false;
+            if (HairColor != other.HairColor) return false;
+            if (FacialHairStyleName != other.FacialHairStyleName) return false;
+            if (FacialHairColor != other.FacialHairColor) return false;
+            if (EyeColor != other.EyeColor) return false;
+            if (SkinColor != other.SkinColor) return false;
+            return true;
         }
     }
 }

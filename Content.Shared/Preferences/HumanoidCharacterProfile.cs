@@ -35,12 +35,14 @@ namespace Content.Shared.Preferences
             set => _characterAppearance = value;
         }
 
-        public void ExposeData(ObjectSerializer serializer)
+        public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
-            serializer.DataField(ref _name, "name", string.Empty, true);
-            serializer.DataField(ref _age, "age", 18, true);
-            serializer.DataField(ref _sex, "sex", Sex.Male, true);
-            serializer.DataField(ref _characterAppearance, "appearance", null, true);
+            if (!(maybeOther is HumanoidCharacterProfile other)) return false;
+            if (Name != other.Name) return false;
+            if (Age != other.Age) return false;
+            if (Sex != other.Sex) return false;
+            if (CharacterAppearance is null && other.CharacterAppearance is null) return true;
+            return CharacterAppearance.MemberwiseEquals(other.CharacterAppearance);
         }
     }
 }

@@ -1,6 +1,7 @@
-using Robust.Shared.Interfaces.Serialization;
-
 namespace Content.Shared.Preferences
 {
-    public interface ICharacterProfile : IExposeData { }
+    public interface ICharacterProfile
+    {
+        bool MemberwiseEquals(ICharacterProfile other);
+    }
 }
