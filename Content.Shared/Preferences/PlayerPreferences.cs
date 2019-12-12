@@ -11,7 +11,7 @@ namespace Content.Shared.Preferences
     /// Serialized both over the network and to disk.
     /// </summary>
     [Serializable, NetSerializable]
-    public class PlayerPreferences : IExposeData
+    public class PlayerPreferences
     {
         private List<ICharacterProfile> _characters;
         private int _selectedCharacterIndex;
@@ -37,12 +37,6 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Retrieves the currently selected character.
         /// </summary>
-        private ICharacterProfile SelectedCharacter => Characters.ElementAtOrDefault(SelectedCharacterIndex);
-
-        public void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataField(ref _characters, "characters", new List<ICharacterProfile>(), true);
-            serializer.DataField(ref _selectedCharacterIndex, "selectedCharacter", 0, true);
-        }
+        public ICharacterProfile SelectedCharacter => Characters.ElementAtOrDefault(SelectedCharacterIndex);
     }
 }

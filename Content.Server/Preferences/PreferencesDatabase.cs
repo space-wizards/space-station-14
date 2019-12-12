@@ -1,10 +1,10 @@
 using System;
-using System.Data.SQLite;
 using System.Linq;
 using System.Reflection;
+using Content.Server.Preferences.Migrations;
 using Content.Shared.Preferences;
 using Dapper;
-using DbUp;
+using Microsoft.Data.Sqlite;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using static Content.Shared.Preferences.Sex;
@@ -25,33 +25,23 @@ namespace Content.Server.Preferences
 
         private string GetDbConnectionString()
         {
-            return new SQLiteConnectionStringBuilder
+            return new SqliteConnectionStringBuilder
             {
                 DataSource = _databaseFilePath,
             }.ToString();
         }
 
-        private SQLiteConnection GetDbConnection()
+        private SqliteConnection GetDbConnection()
         {
             var connectionString = GetDbConnectionString();
-            var conn = new SQLiteConnection(connectionString);
+            var conn = new SqliteConnection(connectionString);
             conn.Open();
             return conn;
         }
 
-        public void CreateDatabaseIfNeeded()
+        private void CreateDatabaseIfNeeded()
         {
-            var upgrader = DeployChanges.To
-                .SQLiteDatabase(GetDbConnectionString())
-                .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-                .LogTo(new DatabaseLogger())
-                .Build();
-
-            var result = upgrader.PerformUpgrade();
-            if (!result.Successful)
-            {
-                Logger.Error(result.Error.ToString());
-            }
+            MigrationManager.PerformUpgrade(GetDbConnectionString());
         }
 
         private const string PlayerPreferencesQuery =
@@ -82,7 +72,7 @@ namespace Content.Server.Preferences
 
                 // Using Dapper for ICharacterProfile and ICharacterAppearance is annoying so
                 // we do it manually
-                var cmd = new SQLiteCommand(HumanoidCharactersQuery, connection);
+                var cmd = new SqliteCommand(HumanoidCharactersQuery, connection);
                 cmd.Parameters.AddWithValue("@Id", prefs.Id);
                 cmd.Prepare();
 
