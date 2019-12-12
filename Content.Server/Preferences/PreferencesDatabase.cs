@@ -1,11 +1,9 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using Content.Server.Preferences.Migrations;
 using Content.Shared.Preferences;
 using Dapper;
 using Microsoft.Data.Sqlite;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using static Content.Shared.Preferences.Sex;
 
@@ -170,6 +168,11 @@ namespace Content.Server.Preferences
 
         public void SaveCharacterSlot(string username, ICharacterProfile profile, int slot)
         {
+            if (profile is null)
+            {
+                DeleteCharacterSlot(username, slot);
+                return;
+            }
             if (!(profile is HumanoidCharacterProfile humanoid))
             {
                 // TODO: Handle other ICharacterProfile implementations properly
@@ -193,6 +196,21 @@ namespace Content.Server.Preferences
                     Slot = slot,
                     Username = username
                 });
+            }
+        }
+
+        private const string DeleteCharacterSlotQuery =
+            @"DELETE FROM HumanoidCharacterProfiles
+              WHERE
+              Player = (SELECT Id FROM PlayerPreferences WHERE Username = @Username)
+              AND
+              Slot = @Slot";
+
+        private void DeleteCharacterSlot(string username, int slot)
+        {
+            using (var connection = GetDbConnection())
+            {
+                connection.Execute(DeleteCharacterSlotQuery, new {Username = username, Slot = slot});
             }
         }
     }

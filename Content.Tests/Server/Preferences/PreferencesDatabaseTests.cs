@@ -12,6 +12,25 @@ namespace Content.Tests.Server.Preferences
     {
         private const int MaxCharacterSlots = 10;
 
+        private static ICharacterProfile CharlieCharlieson()
+        {
+            return new HumanoidCharacterProfile
+            {
+                Name = "Charlie Charlieson",
+                Age = 21,
+                Sex = Sex.Male,
+                CharacterAppearance = new HumanoidCharacterAppearance()
+                {
+                    HairStyleName = "Afro",
+                    HairColor = Color.Aqua,
+                    FacialHairStyleName = "Shaved",
+                    FacialHairColor = Color.Aquamarine,
+                    EyeColor = Color.Azure,
+                    SkinColor = Color.Beige
+                }
+            };
+        }
+
         private static PreferencesDatabase GetDb()
         {
             return new PreferencesDatabase(Path.GetTempFileName(), MaxCharacterSlots);
@@ -42,25 +61,24 @@ namespace Content.Tests.Server.Preferences
             var db = GetDb();
             const string username = "charlie";
             const int slot = 0;
-            var originalProfile = new HumanoidCharacterProfile
-            {
-                Name = "Charlie Charlieson",
-                Age = 21,
-                Sex = Sex.Male,
-                CharacterAppearance = new HumanoidCharacterAppearance()
-                {
-                    HairStyleName = "Afro",
-                    HairColor = Color.Aqua,
-                    FacialHairStyleName = "Shaved",
-                    FacialHairColor = Color.Aquamarine,
-                    EyeColor = Color.Azure,
-                    SkinColor = Color.Beige
-                }
-            };
+            var originalProfile = CharlieCharlieson();
             db.SaveSelectedCharacterIndex(username, slot);
             db.SaveCharacterSlot(username, originalProfile, slot);
             var prefs = db.GetPlayerPreferences(username);
             Assert.That(prefs.Characters[slot].MemberwiseEquals(originalProfile));
+        }
+
+        [Test]
+        public void TestDeleteCharacter()
+        {
+            var db = GetDb();
+            const string username = "charlie";
+            const int slot = 0;
+            db.SaveSelectedCharacterIndex(username, slot);
+            db.SaveCharacterSlot(username, CharlieCharlieson(), slot);
+            db.SaveCharacterSlot(username, null, slot);
+            var prefs = db.GetPlayerPreferences(username);
+            Assert.That(prefs.Characters.TrueForAll(character => character is null));
         }
     }
 }
