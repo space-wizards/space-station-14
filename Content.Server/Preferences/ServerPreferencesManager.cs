@@ -74,7 +74,7 @@ namespace Content.Server.Preferences
 
         /// <summary>
         /// Retrieves preferences for the given username from storage.
-        /// Creates and saves default preferences if they are not otherwise found, then returns them.
+        /// Creates and saves default preferences if they are not found, then returns them.
         /// </summary>
         public PlayerPreferences GetPreferences(string username)
         {
@@ -108,18 +108,6 @@ namespace Content.Server.Preferences
             };
             prefs.SelectedCharacterIndex = 0;
             return prefs;
-        }
-
-        private bool IsValidPlayerPreferences(PlayerPreferences prefs)
-        {
-            var configMaxCharacters = _configuration.GetCVar<int>("game.maxcharacterslots");
-            if (prefs.Characters is null)
-                return false;
-            if (prefs.SelectedCharacterIndex > configMaxCharacters)
-                return false;
-            if (prefs.SelectedCharacterIndex >= prefs.Characters.Count)
-                return false;
-            return true;
         }
 
         /// <summary>

@@ -9,6 +9,10 @@ using static Content.Shared.Preferences.Sex;
 
 namespace Content.Server.Preferences
 {
+    /// <summary>
+    /// Provides methods to retrieve and update character preferences.
+    /// Don't use this directly, go through <see cref="ServerPreferencesManager"/> instead.
+    /// </summary>
     public class PreferencesDatabase
     {
         private readonly string _databaseFilePath;
@@ -18,7 +22,7 @@ namespace Content.Server.Preferences
         {
             _databaseFilePath = databaseFilePath;
             _maxCharacterSlots = maxCharacterSlots;
-            CreateDatabaseIfNeeded();
+            MigrationManager.PerformUpgrade(GetDbConnectionString());
         }
 
         private string GetDbConnectionString()
@@ -35,11 +39,6 @@ namespace Content.Server.Preferences
             var conn = new SqliteConnection(connectionString);
             conn.Open();
             return conn;
-        }
-
-        private void CreateDatabaseIfNeeded()
-        {
-            MigrationManager.PerformUpgrade(GetDbConnectionString());
         }
 
         private const string PlayerPreferencesQuery =
@@ -107,7 +106,7 @@ namespace Content.Server.Preferences
             @"UPDATE PlayerPreferences
               SET SelectedCharacterIndex = @SelectedCharacterIndex
               WHERE Username = @Username;
-              
+
               -- If no update happened (i.e. the row didn't exist) then insert one // https://stackoverflow.com/a/38463024
               INSERT INTO PlayerPreferences
               (SelectedCharacterIndex, Username)
@@ -118,6 +117,7 @@ namespace Content.Server.Preferences
 
         public void SaveSelectedCharacterIndex(string username, int index)
         {
+            index = index.Clamp(0, _maxCharacterSlots - 1);
             using (var connection = GetDbConnection())
             {
                 connection.Execute(SaveSelectedCharacterIndexQuery,
@@ -138,7 +138,7 @@ namespace Content.Server.Preferences
               EyeColor = @EyeColor,
               SkinColor = @SkinColor
               WHERE Slot = @Slot AND Player = (SELECT Id FROM PlayerPreferences WHERE Username = @Username);
-              
+
               -- If no update happened (i.e. the row didn't exist) then insert one // https://stackoverflow.com/a/38463024
               INSERT INTO HumanoidCharacterProfiles
               (Slot,
@@ -168,11 +168,14 @@ namespace Content.Server.Preferences
 
         public void SaveCharacterSlot(string username, ICharacterProfile profile, int slot)
         {
+            if (slot < 0 || slot >= _maxCharacterSlots)
+                return;
             if (profile is null)
             {
                 DeleteCharacterSlot(username, slot);
                 return;
             }
+
             if (!(profile is HumanoidCharacterProfile humanoid))
             {
                 // TODO: Handle other ICharacterProfile implementations properly

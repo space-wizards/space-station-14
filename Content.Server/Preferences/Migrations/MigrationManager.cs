@@ -11,8 +11,14 @@ using Robust.Shared.Log;
 
 namespace Content.Server.Preferences.Migrations
 {
-    public class MigrationManager
+    /// <summary>
+    /// Ensures database schemas are up to date.
+    /// </summary>
+    public static class MigrationManager
     {
+        /// <summary>
+        /// Ensures the database schema for the given connection string is up to date.
+        /// </summary>
         public static void PerformUpgrade(string connectionString)
         {
             using (var connection = new SqliteConnection(connectionString))
@@ -26,6 +32,9 @@ namespace Content.Server.Preferences.Migrations
             }
         }
 
+        /// <summary>
+        /// Generated for each SQL file found.
+        /// </summary>
         private class Migration
         {
             public readonly string Id;
@@ -37,6 +46,9 @@ namespace Content.Server.Preferences.Migrations
                 _sql = sql;
             }
 
+            /// <summary>
+            /// Executes the query in <see cref="_sql"/> and logs this in the SchemaVersion table.
+            /// </summary>
             public void Run(IDbConnection connection)
             {
                 connection.Execute(_sql);
@@ -46,12 +58,18 @@ namespace Content.Server.Preferences.Migrations
 
         private const string InsertMigrationLogQuery =
             @"INSERT INTO SchemaVersion (Id) VALUES (@Id)";
+        /// <summary>
+        /// Inserts a <see cref="MigrationLog"/> in the SchemaVersion table.
+        /// </summary>
         private static void InsertMigrationLog(IDbConnection connection, string id)
         {
             Logger.InfoS("db", "Completing migration {0}", id);
             connection.Execute(InsertMigrationLogQuery, new {Id = id});
         }
 
+        /// <summary>
+        /// An entry in the SchemaVersion table.
+        /// </summary>
         [UsedImplicitly]
         private class MigrationLog
         {
@@ -61,12 +79,17 @@ namespace Content.Server.Preferences.Migrations
 
         private const string GetRanMigrationsQuery =
             @"SELECT Id, Timestamp FROM SchemaVersion ORDER BY Id COLLATE NOCASE";
-
+        /// <summary>
+        /// Fetches a collection of <see cref="MigrationLog"/> from the SchemaVersion table and returns it.
+        /// </summary>
         private static IEnumerable<MigrationLog> RanMigrations(IDbConnection connection)
         {
             return connection.Query<MigrationLog>(GetRanMigrationsQuery);
         }
 
+        /// <summary>
+        /// Finds all available migrations, returns those that haven't been run yet.
+        /// </summary>
         private static List<Migration> MigrationsToRun(IDbConnection connection)
         {
             var discoveredMigrations = DiscoverMigrations(connection);
@@ -84,6 +107,9 @@ namespace Content.Server.Preferences.Migrations
             return discoveredMigrations;
         }
 
+        /// <summary>
+        /// Given an embedded resource's full path returns its contents as a string.
+        /// </summary>
         private static string ResourceAssemblyToString(string resourceName)
         {
             using (var stream = Assembly.GetExecutingAssembly()
@@ -94,6 +120,10 @@ namespace Content.Server.Preferences.Migrations
             }
         }
 
+        /// <summary>
+        /// Searches the current assembly for SQL migration files.
+        /// TODO: Filter by subfolder so that different databases use different sets of migrations.
+        /// </summary>
         [NotNull]
         private static List<Migration> DiscoverMigrations(IDbConnection connection)
         {
@@ -128,11 +158,12 @@ namespace Content.Server.Preferences.Migrations
               Timestamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
               )";
 
+        /// <summary>
+        /// Creates the SchemaVersion table if it doesn't exist.
+        /// </summary>
         private static void EnsureSchemaVersionTableExists(IDbConnection connection)
         {
-            var affected = connection.Execute(EnsureSchemaVersionTableExistsQuery);
-            if(affected != 0)
-                Logger.Info("db", "Created SchemaVersion table.");
+            connection.Execute(EnsureSchemaVersionTableExistsQuery);
         }
     }
 }

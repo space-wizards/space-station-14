@@ -80,5 +80,22 @@ namespace Content.Tests.Server.Preferences
             var prefs = db.GetPlayerPreferences(username);
             Assert.That(prefs.Characters.TrueForAll(character => character is null));
         }
+
+        [Test]
+        public void TestInvalidSlot()
+        {
+            var db = GetDb();
+            const string username = "charlie";
+            const int slot = -1;
+
+            db.SaveSelectedCharacterIndex(username, slot);
+            db.SaveCharacterSlot(username, CharlieCharlieson(), slot);
+            var prefs = db.GetPlayerPreferences(username);
+            Assert.AreEqual(prefs.SelectedCharacterIndex, 0);
+
+            db.SaveSelectedCharacterIndex(username, MaxCharacterSlots);
+            prefs = db.GetPlayerPreferences(username);
+            Assert.AreEqual(prefs.SelectedCharacterIndex, MaxCharacterSlots-1);
+        }
     }
 }
