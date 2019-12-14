@@ -15,7 +15,6 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -31,7 +30,6 @@ namespace Content.Client.UserInterface
 #pragma warning disable 0649
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 0649
 
