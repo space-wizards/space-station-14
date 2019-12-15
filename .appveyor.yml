@@ -1,5 +1,5 @@
 version: 1.0.{build}
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 platform: x64
 configuration: Debug
@@ -12,10 +12,9 @@ build:
 before_build:
 - cmd: py -3 -m pip install --user requests
 - cmd: py -3 RUN_THIS.py --no-prompt
-- cmd: nuget restore SpaceStation14.sln
 
 build_script:
-- ps: msbuild SpaceStation14.sln /v:m /nologo /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Platform=x64 /p:Configuration=Debug /p:AppVeyor=yes
+- ps: dotnet build SpaceStation14.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:AppVeyor=yes
 
 test:
   assemblies:

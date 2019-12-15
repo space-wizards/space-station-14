@@ -8,6 +8,8 @@ import sys
 import zipfile
 import argparse
 
+from typing import List, Optional
+
 try:
     from colorama import init, Fore, Style
     init()
@@ -21,7 +23,12 @@ except ImportError:
     Fore = ColorDummy()
     Style = ColorDummy()
 
+
 p = os.path.join
+
+PLATFORM_WINDOWS = "windows"
+PLATFORM_LINUX = "linux"
+PLATFORM_MACOS = "mac"
 
 SHARED_IGNORED_RESOURCES = {
     "ss13model.7z",
@@ -49,23 +56,37 @@ LAUNCHER_RESOURCES = {
     "Fonts",
 }
 
-def main():
+WINDOWS_NATIVES = {
+    "freetype6.dll",
+    "openal32.dll",
+    "swnfd.dll",
+    "glfw3.dll"
+}
+
+LINUX_NATIVES = {
+    "libglfw.so.3",
+    "libswnfd.so"
+}
+
+MAC_NATIVES = {
+    "libglfw.3.dylib",
+    "libswnfd.dylib"
+}
+
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Packages the SS14 content repo for release on all platforms.")
     parser.add_argument("--platform",
                         "-p",
                         action="store",
-                        choices=["windows", "mac", "linux"],
+                        choices=[PLATFORM_WINDOWS, PLATFORM_MACOS, PLATFORM_LINUX],
                         nargs="*",
                         help="Which platform to build for. If not provided, all platforms will be built")
 
-    parser.add_argument("--core", action="store_true", help="Build with .NET Core instead.")
-
     args = parser.parse_args()
     platforms = args.platform
-    core = args.core
     if not platforms:
-        platforms = ["windows", "mac", "linux"]
+        platforms = [PLATFORM_WINDOWS, PLATFORM_MACOS, PLATFORM_LINUX]
 
     if os.path.exists("release"):
         print(Fore.BLUE + Style.DIM +
@@ -74,17 +95,17 @@ def main():
 
     os.mkdir("release")
 
-    if "windows" in platforms:
+    if PLATFORM_WINDOWS in platforms:
         wipe_bin()
-        build_windows(core)
+        build_windows()
 
-    if "linux" in platforms:
+    if PLATFORM_LINUX in platforms:
         wipe_bin()
-        build_linux(core)
+        build_linux()
 
-    if "mac" in platforms:
+    if PLATFORM_MACOS in platforms:
         wipe_bin()
-        build_macos(core)
+        build_macos()
 
 
 def wipe_bin():
@@ -97,25 +118,23 @@ def wipe_bin():
         shutil.rmtree("bin")
 
 
-def build_windows(core):  # type: (bool) -> None
+def build_windows():  # type: () -> None
     # Run a full build.
     print(Fore.GREEN + "Building project for Windows x64..." + Style.RESET_ALL)
-    command = ["msbuild",
+
+    subprocess.run([
+        "dotnet",
+        "build",
         "SpaceStation14.sln",
-        "/m",
-        "/p:Configuration=Release",
-        "/p:Platform=x64",
-        "/nologo",
+        "-c", "Release",
+        "--nologo",
         "/v:m",
         "/p:TargetOS=Windows",
         "/t:Rebuild",
         "/p:FullRelease=True"
-    ]
+    ], check=True)
 
-    if core:
-        command = ["dotnet"] + command + ["/p:UseNetCore=true"]
-
-    subprocess.run(command, check=True)
+    publish_client_server("win-x64", "Windows")
 
     print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
 
@@ -123,7 +142,8 @@ def build_windows(core):  # type: (bool) -> None
         p("release", "SS14.Client_Windows_x64.zip"), "w",
         compression=zipfile.ZIP_DEFLATED)
 
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Client"), "", client_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Client", "win-x64", "publish"), "", client_zip)
+    copy_client_natives(WINDOWS_NATIVES, client_zip, "")
     copy_resources("Resources", client_zip, server=False)
     copy_content_assemblies(p("Resources", "Assemblies"), client_zip, server=False)
     # Cool we're done.
@@ -132,39 +152,27 @@ def build_windows(core):  # type: (bool) -> None
     print(Fore.GREEN + "Packaging Windows x64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_Windows_x64.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Server"), "", server_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "win-x64", "publish"), "", server_zip)
     copy_resources(p("Resources"), server_zip, server=True)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
 
-    print(Fore.GREEN + "Packaging Windows x64 launcher..." + Style.RESET_ALL)
-    launcher_zip = zipfile.ZipFile(p("release", "SS14.Launcher_Windows_x64.zip"), "w",
-                                   compression=zipfile.ZIP_DEFLATED)
-
-    copy_dir_into_zip(p("bin", "SS14.Launcher"), "bin", launcher_zip)
-    copy_launcher_resources(p("bin", "Resources"), launcher_zip)
-    launcher_zip.write(p("BuildFiles", "Windows", "run_me.bat"), "run_me.bat")
-    launcher_zip.close()
-
-
-def build_macos(core):  # type: (bool) -> None
+def build_macos() -> None:
     print(Fore.GREEN + "Building project for macOS x64..." + Style.RESET_ALL)
-    command = ["msbuild",
+
+    subprocess.run([
+        "dotnet",
+        "build",
         "SpaceStation14.sln",
-        "/m",
-        "/p:Configuration=Release",
-        "/p:Platform=x64",
-        "/nologo",
+        "-c", "Release",
+        "--nologo",
         "/v:m",
         "/p:TargetOS=MacOS",
         "/t:Rebuild",
         "/p:FullRelease=True"
-    ]
+    ], check=True)
 
-    if core:
-        command = ["dotnet"] + command + ["/p:UseNetCore=true"]
-
-    subprocess.run(command, check=True)
+    publish_client_server("osx-x64", "MacOS")
 
     print(Fore.GREEN + "Packaging macOS x64 client..." + Style.RESET_ALL)
     # Client has to go in an app bundle.
@@ -173,8 +181,8 @@ def build_macos(core):  # type: (bool) -> None
 
     contents = p("Space Station 14.app", "Contents", "Resources")
     copy_dir_into_zip(p("BuildFiles", "Mac", "Space Station 14.app"), "Space Station 14.app", client_zip)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Client"), contents, client_zip)
-
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Client", "osx-x64", "publish"), contents, client_zip)
+    copy_client_natives(MAC_NATIVES, client_zip, contents)
     copy_resources(p(contents, "Resources"), client_zip, server=False)
     copy_content_assemblies(p(contents, "Resources", "Assemblies"), client_zip, server=False)
     client_zip.close()
@@ -182,42 +190,29 @@ def build_macos(core):  # type: (bool) -> None
     print(Fore.GREEN + "Packaging macOS x64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_macOS_x64.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Server"), "", server_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "osx-x64", "publish"), "", server_zip)
     copy_resources(p("Resources"), server_zip, server=True)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
 
-    print(Fore.GREEN + "Packaging macOS x64 launcher..." + Style.RESET_ALL)
-    launcher_zip = zipfile.ZipFile(p("release", "SS14.Launcher_macOS_x64.zip"), "w",
-                                   compression=zipfile.ZIP_DEFLATED)
 
-    contents = p("Space Station 14 Launcher.app", "Contents", "Resources")
-    copy_dir_into_zip(p("BuildFiles", "Mac", "Space Station 14 Launcher.app"), "Space Station 14 Launcher.app", launcher_zip)
-    copy_dir_into_zip(p("bin", "SS14.Launcher"), contents, launcher_zip)
-
-    copy_launcher_resources(p(contents, "Resources"), launcher_zip)
-    launcher_zip.close()
-
-
-def build_linux(core):  # type: (bool) -> None
+def build_linux() -> None:
     # Run a full build.
     print(Fore.GREEN + "Building project for Linux x64..." + Style.RESET_ALL)
-    command = ["msbuild",
+
+    subprocess.run([
+        "dotnet",
+        "build",
         "SpaceStation14.sln",
-        "/m",
-        "/p:Configuration=Release",
-        "/p:Platform=x64",
-        "/nologo",
+        "-c", "Release",
+        "--nologo",
         "/v:m",
         "/p:TargetOS=Linux",
         "/t:Rebuild",
         "/p:FullRelease=True"
-    ]
+    ], check=True)
 
-    if core:
-        command = ["dotnet"] + command + ["/p:UseNetCore=true"]
-
-    subprocess.run(command, check=True)
+    publish_client_server("linux-x64", "Linux")
 
     print(Fore.GREEN + "Packaging Linux x64 client..." + Style.RESET_ALL)
 
@@ -225,8 +220,9 @@ def build_linux(core):  # type: (bool) -> None
         p("release", "SS14.Client_Linux_x64.zip"), "w",
         compression=zipfile.ZIP_DEFLATED)
 
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Client"), "", client_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Client", "linux-x64", "publish"), "", client_zip)
     copy_resources("Resources", client_zip, server=False)
+    copy_client_natives(LINUX_NATIVES, client_zip, "")
     copy_content_assemblies(p("Resources", "Assemblies"), client_zip, server=False)
     # Cool we're done.
     client_zip.close()
@@ -234,19 +230,24 @@ def build_linux(core):  # type: (bool) -> None
     print(Fore.GREEN + "Packaging Linux x64 server..." + Style.RESET_ALL)
     server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_x64.zip"), "w",
                                  compression=zipfile.ZIP_DEFLATED)
-    copy_dir_into_zip(p("RobustToolbox", "bin", "Server"), "", server_zip)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "linux-x64", "publish"), "", server_zip)
     copy_resources(p("Resources"), server_zip, server=True)
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
 
-    print(Fore.GREEN + "Packaging Linux x64 launcher..." + Style.RESET_ALL)
-    launcher_zip = zipfile.ZipFile(p("release", "SS14.Launcher_Linux_x64.zip"), "w",
-                                   compression=zipfile.ZIP_DEFLATED)
+def publish_client_server(runtime: str, target_os: str) -> None:
+    # Runs dotnet publish on client and server.
+    base = [
+        "dotnet", "publish",
+        "--runtime", runtime,
+        "--no-self-contained",
+        "-c", "Release",
+        f"/p:TargetOS={str}",
+        "/p:FullRelease=True",
+    ]
 
-    copy_dir_into_zip(p("bin", "SS14.Launcher"), "bin", launcher_zip)
-    copy_launcher_resources(p("bin", "Resources"), launcher_zip)
-    launcher_zip.write(p("BuildFiles", "Linux", "SS14.Launcher"), "SS14.Launcher")
-    launcher_zip.close()
+    subprocess.run(base + ["RobustToolbox/Robust.Client/Robust.Client.csproj"], check=True)
+    subprocess.run(base + ["RobustToolbox/Robust.Server/Robust.Server.csproj"], check=True)
 
 def copy_resources(target, zipf, server):
     # Content repo goes FIRST so that it won't override engine files as that's forbidden.
@@ -331,7 +332,7 @@ def copy_content_assemblies(target, zipf, server):
         zipf.write(p(source_dir, x), p(target, x))
 
 
-def copy_dir_or_file(src, dst):
+def copy_dir_or_file(src: str, dst: str):
     """
     Just something from src to dst. If src is a dir it gets copied recursively.
     """
@@ -345,6 +346,10 @@ def copy_dir_or_file(src, dst):
     else:
         raise IOError("{} is neither file nor directory. Can't copy.".format(src))
 
+def copy_client_natives(fileNames: List[str], zipf: zipfile.ZipFile, zipPath: str):
+    for fileName in fileNames:
+        zipf.write(p("RobustToolbox", "bin", "Client", fileName), p(zipPath, fileName))
+        print(f"writing native {fileName}")
 
 if __name__ == '__main__':
     main()
