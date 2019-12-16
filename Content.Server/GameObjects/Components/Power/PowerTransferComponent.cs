@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -137,6 +138,11 @@ namespace Content.Server.GameObjects.Components.Power
             if (eventArgs.AttackWith.TryGetComponent(out WirecutterComponent wirecutter))
             {
                 Owner.Delete();
+                var droppedEnt = Owner.EntityManager.SpawnEntityAt("CableStack", eventArgs.ClickLocation);
+
+                if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
+                    stackComp.Count = 1;
+
                 return true;
             }
             return false;

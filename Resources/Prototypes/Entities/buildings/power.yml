@@ -22,6 +22,9 @@
     key: power_cables
     mode: CardinalFlags
   - type: SubFloorHide
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: CableStack
 
   snap:
   - Wire
