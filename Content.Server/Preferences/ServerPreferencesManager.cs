@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.IO;
 using Content.Server.Interfaces;
 using Content.Shared.Preferences;
@@ -7,13 +6,12 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Preferences
 {
     /// <summary>
     /// Sends <see cref="SharedPreferencesManager.MsgPreferencesAndSettings"/> before the client joins the lobby.
-    /// Receives <see cref="SharedPreferencesManager.MsgPreferences"/> at any time.
+    /// Receives <see cref="SharedPreferencesManager.MsgSelectCharacter"/> and <see cref="SharedPreferencesManager.MsgUpdateCharacter"/> at any time.
     /// </summary>
     public class ServerPreferencesManager : SharedPreferencesManager, IServerPreferencesManager
     {
@@ -81,32 +79,10 @@ namespace Content.Server.Preferences
             var prefs = GetFromSql(username);
             if (prefs is null)
             {
-                prefs = DefaultPlayerPreferences();
+                prefs = PlayerPreferences.Default();  // TODO: Create random character instead
                 SavePreferences(prefs, username);
             }
 
-            return prefs;
-        }
-
-        private PlayerPreferences DefaultPlayerPreferences() // TODO: Create random character instead
-        {
-            var prefs = new PlayerPreferences();
-            prefs.Characters = new List<ICharacterProfile>
-            {
-                new HumanoidCharacterProfile
-                {
-                    Age = 18,
-                    CharacterAppearance = new HumanoidCharacterAppearance
-                    {
-                        EyeColor = Color.Green,
-                        FacialHairColor = Color.Black,
-                        HairColor = Color.White
-                    },
-                    Sex = Sex.Male,
-                    Name = "John Doe"
-                }
-            };
-            prefs.SelectedCharacterIndex = 0;
             return prefs;
         }
 

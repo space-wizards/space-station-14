@@ -7,12 +7,25 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public class HumanoidCharacterAppearance : ICharacterAppearance
     {
-        public string HairStyleName;
-        public Color HairColor;
-        public string FacialHairStyleName;
-        public Color FacialHairColor;
-        public Color EyeColor;
-        public Color SkinColor;
+        public string HairStyleName { get; set; }
+        public Color HairColor { get; set; }
+        public string FacialHairStyleName { get; set; }
+        public Color FacialHairColor { get; set; }
+        public Color EyeColor { get; set; }
+        public Color SkinColor { get; set; }
+
+        public static HumanoidCharacterAppearance Default()
+        {
+            return new HumanoidCharacterAppearance
+            {
+                HairStyleName = "Bald",
+                HairColor = Color.Black,
+                FacialHairStyleName = "Shaved",
+                FacialHairColor = Color.Black,
+                EyeColor = Color.Black,
+                SkinColor = Color.Black
+            };
+        }
 
         public bool MemberwiseEquals(ICharacterAppearance maybeOther)
         {

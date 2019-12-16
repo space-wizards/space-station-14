@@ -13,6 +13,18 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public class PlayerPreferences
     {
+        public static PlayerPreferences Default()
+        {
+            return new PlayerPreferences
+            {
+                Characters = new List<ICharacterProfile>
+                {
+                    HumanoidCharacterProfile.Default()
+                },
+                SelectedCharacterIndex = 0
+            };
+        }
+
         private List<ICharacterProfile> _characters;
         private int _selectedCharacterIndex;
 

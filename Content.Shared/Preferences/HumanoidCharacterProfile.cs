@@ -6,34 +6,21 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public class HumanoidCharacterProfile : ICharacterProfile
     {
-        private string _name;
-        private int _age;
-        private Sex _sex;
-        private ICharacterAppearance _characterAppearance;
-
-        public string Name
+        public static HumanoidCharacterProfile Default()
         {
-            get => _name;
-            set => _name = value;
+            return new HumanoidCharacterProfile
+            {
+                Name = "John Doe",
+                Age = 18,
+                Sex = Sex.Male,
+                CharacterAppearance = HumanoidCharacterAppearance.Default()
+            };
         }
 
-        public int Age
-        {
-            get => _age;
-            set => _age = value;
-        }
-
-        public Sex Sex
-        {
-            get => _sex;
-            set => _sex = value;
-        }
-
-        public ICharacterAppearance CharacterAppearance
-        {
-            get => _characterAppearance;
-            set => _characterAppearance = value;
-        }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public Sex Sex { get; set; }
+        public ICharacterAppearance CharacterAppearance { get; set; }
 
         public bool MemberwiseEquals(ICharacterProfile maybeOther)
         {
@@ -41,7 +28,8 @@ namespace Content.Shared.Preferences
             if (Name != other.Name) return false;
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;
-            if (CharacterAppearance is null && other.CharacterAppearance is null) return true;
+            if (CharacterAppearance is null)
+                return other.CharacterAppearance is null;
             return CharacterAppearance.MemberwiseEquals(other.CharacterAppearance);
         }
     }
