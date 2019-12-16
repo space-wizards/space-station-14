@@ -33,7 +33,7 @@ namespace Content.Client.UserInterface
             return _panel.CombinedMinimumSize;
         }
 
-        protected override void SortChildren()
+        protected override void LayoutUpdateOverride()
         {
             FitChildInBox(_panel, SizeBox);
         }

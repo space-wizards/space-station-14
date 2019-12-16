@@ -4,6 +4,7 @@
   components:
   - type: AsteroidRock
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     sprite: Buildings/Walls/asteroid_rock.rsi
     state: 0
@@ -13,7 +14,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 1
+      layer: 31
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

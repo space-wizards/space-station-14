@@ -3,6 +3,7 @@
   name: Girder
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     texture: Buildings/wall_girder.png
   - type: Icon
@@ -11,8 +12,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      mask: 19
-      layer: 1
+      layer: 31
   - type: Damageable
   - type: Destructible
     thresholdvalue: 50

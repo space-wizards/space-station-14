@@ -42,7 +42,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
             _window = new ReagentDispenserWindow
             {
                 Title = _localizationManager.GetString("Reagent dispenser"),
-                Size = (500, 600)
             };
 
             _window.OpenCenteredMinSize();

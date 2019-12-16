@@ -3,6 +3,7 @@
   name: Thing that heats up on its own and dies
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     texture: Objects/Misc/shoes.png
 

@@ -62,8 +62,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 session => HandleDirChange(session, Direction.South, true),
                 session => HandleDirChange(session, Direction.South, false));
             var runCmdHandler = InputCmdHandler.FromDelegate(
-                session => HandleRunChange(session, true),
-                session => HandleRunChange(session, false));
+                session => HandleRunChange(session, false),
+                session => HandleRunChange(session, true));
 
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
 

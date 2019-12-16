@@ -1,9 +1,16 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Audio;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -17,6 +24,12 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
     class WelderComponent : ToolComponent, IUse, IExamine
     {
         SpriteComponent spriteComponent;
+
+#pragma warning disable 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IRobustRandom _robustRandom;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
 
         public override string Name => "Welder";
 
@@ -133,12 +146,14 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
                 Activated = false;
                 // Layer 1 is the flame.
                 spriteComponent.LayerSetVisible(1, false);
+                PlaySoundCollection("welder_off", -5);
                 return true;
             }
             else if (CanActivate())
             {
                 Activated = true;
                 spriteComponent.LayerSetVisible(1, true);
+                PlaySoundCollection("welder_on", -5);
                 return true;
             }
             else
@@ -161,6 +176,14 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
 
             message.AddMarkup(loc.GetString("Fuel: [color={0}]{1}/{2}[/color].",
                 Fuel < FuelCapacity / 4f ? "darkorange" : "orange", Math.Round(Fuel), FuelCapacity));
+        }
+
+        private void PlaySoundCollection(string name, float volume)
+        {
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(name);
+            var file = _robustRandom.Pick(soundCollection.PickFiles);
+            _entitySystemManager.GetEntitySystem<AudioSystem>()
+                .Play(file, AudioParams.Default.WithVolume(volume));
         }
     }
 }

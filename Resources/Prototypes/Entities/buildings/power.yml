@@ -4,6 +4,7 @@
   description: Transfers power, avoid letting things come down it
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     netsync: false
@@ -21,6 +22,9 @@
     key: power_cables
     mode: CardinalFlags
   - type: SubFloorHide
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: CableStack
 
   snap:
   - Wire
@@ -40,12 +44,12 @@
   description: A portal to hell which summons power from the nether
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.3, 0.5"
-      mask: 19
-      layer: 16
+      layer: 31
   - type: Sprite
     texture: Objects/Power/generator.png
   - type: Icon
@@ -58,11 +62,11 @@
   description: Supplies power directly to nearby objects
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      mask: 19
-      layer: 4
+      layer: 32
   - type: Sprite
     drawdepth: WallMountedItems
     texture: Objects/Power/provider.png
@@ -115,12 +119,12 @@
   description: Stores power in its super-magnetic cells
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
-      mask: 19
-      layer: 16
+      layer: 31
   - type: Sprite
     netsync: false
     sprite: Buildings/smes.rsi
@@ -155,12 +159,12 @@
   description: A monstrosity that does nothing but suck up power from the nearby wires
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.25, 0.5, 0.25"
-      mask: 19
-      layer: 16
+      layer: 31
   - type: Sprite
     texture: Objects/Power/wiredmachine.png
   - type: Icon
@@ -176,12 +180,12 @@
   description: A terrifying monstrosity that sucks up power from the wireless transmitters, Tesla would be proud
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.25, 0.5, 0.25"
-      mask: 19
-      layer: 16
+      layer: 31
   - type: Sprite
     texture: Objects/Furniture/wirelessmachine.png
   - type: Icon

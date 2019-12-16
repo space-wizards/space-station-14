@@ -2,6 +2,8 @@ language: csharp
 
 dist: trusty
 sudo: false
+mono: none
+# dotnet: 3.1.100 # Travis is shitting itself right now and it can't locate .NET Core packages.
 
 os:
 - linux
@@ -20,7 +22,9 @@ cache:
   directories:
   - packages/
   - RobustToolbox/Dependencies/
-  - RobustToolbox/SS14.Client.Godot/.mono/assemblies/
+
+install:
+- curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 3.1.100
 
 #before_install:
 #  - if [ $TRAVIS_OS_NAME = osx ]; then brew update && brew upgrade python; fi
@@ -28,11 +32,9 @@ cache:
 before_script:
 #- "if [ $TRAVIS_OS_NAME = linux ]; then pyenv shell 3.6; fi"
 - "python3.5 -m pip install --user requests"
-- "nuget restore SpaceStation14.sln"
 - "python3.5 RUN_THIS.py --no-prompt"
 
 script:
-- "msbuild /p:Configuration=Debug /p:Platform=x64 /nologo /m SpaceStation14.sln /p:Python=python3.5"
-- "mono packages/nunit.consolerunner/3.10.0/tools/nunit3-console.exe bin/Content.Tests/Content.Tests.dll bin/Content.IntegrationTests/Content.IntegrationTests.dll"
+- "Tools/run_travis.sh"
 
 

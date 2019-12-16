@@ -1,5 +1,6 @@
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface
@@ -25,10 +26,12 @@ If you are not on a QWERTY keyboard, the keys mentioned above are bound to the p
 For example on AZERTY movement is ZQSD, drop is A, W is activate in hand.
 
 Instead of intents, we have ""combat mode"". Hit 1 (on your number row) to toggle it on or off.
-You can't attack anybody with it off, so no more hitting yourself with your own crowbar. 
+You can't attack anybody with it off, so no more hitting yourself with your own crowbar.
 
 If you have any feedback, questions, bug reports, etc..., do not be afraid to tell us!
 You can ask on Discord or heck, just write it in OOC! We'll catch it.";
+
+        protected override Vector2? CustomSize => (300, 400);
 
         public TutorialWindow()
         {

@@ -192,14 +192,27 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void CheckForReaction()
         {
-            //Check the solution for every reaction
-            foreach (var reaction in _reactions)
+            bool checkForNewReaction = false;
+            while (true)
             {
-                if (SolutionValidReaction(reaction, out int unitReactions))
+                //Check the solution for every reaction
+                foreach (var reaction in _reactions)
                 {
-                    PerformReaction(reaction, unitReactions);
-                    break; //Only perform one reaction per solution per update.
+                    if (SolutionValidReaction(reaction, out int unitReactions))
+                    {
+                        PerformReaction(reaction, unitReactions);
+                        checkForNewReaction = true; 
+                        break;
+                    }
                 }
+
+                //Check for a new reaction if a reaction occurs, run loop again.
+                if (checkForNewReaction)
+                {
+                    checkForNewReaction = false;
+                    continue;
+                }
+                return;
             }
         }
 

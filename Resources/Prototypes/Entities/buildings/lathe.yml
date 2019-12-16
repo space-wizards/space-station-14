@@ -3,6 +3,7 @@
   name: "Lathe"
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: SnapGrid
     offset: Center
@@ -32,8 +33,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      mask: 19
-      layer: 16
+      layer: 15
   - type: SnapGrid
     offset: Center
   - type: Lathe
@@ -75,8 +75,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      mask: 19
-      layer: 16
+      layer: 15
   - type: SnapGrid
     offset: Center
   - type: ResearchClient

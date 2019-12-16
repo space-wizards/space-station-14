@@ -11,29 +11,29 @@
     texture: Buildings/watertank.png
 
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
-    mask: 3
-    layer: 1
+    layer: 31
     shape:
       bounds: "-0.5,-0.25,0.5,0.25"
     IsScrapingFloor: true
   - type: Physics
     mass: 15
     Anchored: false
-    
+
   - type: Damageable
   - type: Destructible
     thresholdvalue: 10
-    
+
   - type: Solution
     maxVol: 1500
     caps: 3
-    
+
 
   placement:
     snap:
     - Wall
-    
+
 - type: entity
   parent: watertank
   id: watertank_full
@@ -43,4 +43,3 @@
       reagents:
       - ReagentId: chem.H2O
         Quantity: 1500
-  

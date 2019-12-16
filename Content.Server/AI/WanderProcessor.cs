@@ -126,7 +126,7 @@ namespace Content.Server.AI
             for (var i = 0; i < 3; i++) // you get 3 chances to find a place to walk
             {
                 var dir = new Vector2(Random01(ref rngState) * 2 - 1, Random01(ref rngState) *2 -1);
-                var ray = new Ray(entWorldPos, dir, (int) CollisionGroup.Grid);
+                var ray = new Ray(entWorldPos, dir, (int) CollisionGroup.Impassable);
                 var rayResult = _physMan.IntersectRay(ray, MaxWalkDistance, SelfEntity);
 
                 if (rayResult.DidHitObject && rayResult.Distance > 1) // hit an impassable object

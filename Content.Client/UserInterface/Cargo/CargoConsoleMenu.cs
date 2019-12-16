@@ -1,20 +1,14 @@
 ﻿using Content.Client.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
-using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
-using Content.Client.Utility;
 
 namespace Content.Client.UserInterface.Cargo
 {
@@ -22,7 +16,6 @@ namespace Content.Client.UserInterface.Cargo
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IResourceCache _resourceCache;
 #pragma warning restore 649
 
         protected override Vector2? CustomSize => (400, 600);
@@ -59,15 +52,9 @@ namespace Content.Client.UserInterface.Cargo
             else
                 Title = _loc.GetString("Cargo Shuttle Console");
 
-            var rows = new VBoxContainer
-            {
-                MarginTop = 0
-            };
+            var rows = new VBoxContainer();
 
-            var accountName = new HBoxContainer()
-            {
-                MarginTop = 0
-            };
+            var accountName = new HBoxContainer();
             var accountNameLabel = new Label {
                 Text = _loc.GetString("Account Name: "),
                 StyleClasses = { NanoStyle.StyleClassLabelKeyText }
@@ -286,7 +273,7 @@ namespace Content.Client.UserInterface.Cargo
             _orders.RemoveAllChildren();
             _requests.RemoveAllChildren();
 
-            foreach (var order in Owner.Orders.Orders) 
+            foreach (var order in Owner.Orders.Orders)
             {
                 var row = new CargoOrderRow();
                 row.Order = order;
@@ -395,10 +382,6 @@ namespace Content.Client.UserInterface.Cargo
 
     internal class CargoOrderRow : PanelContainer
     {
-#pragma warning disable 649
-        [Dependency] readonly IResourceCache _resourceCache;
-#pragma warning restore 649
-
         public CargoOrderData Order { get; set; }
         public TextureRect Icon { get; private set; }
         public Label ProductName { get; private set; }

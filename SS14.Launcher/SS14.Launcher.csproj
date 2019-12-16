@@ -18,10 +18,6 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
     <ProjectReference Include="..\RobustToolbox\Robust.Lite\Robust.Lite.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Condition="'$(UseNetCore)' != 'true'" Include="System.IO.Compression" />
-    <Reference Condition="'$(UseNetCore)' != 'true'" Include="System.Net.Http" />
-  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Engine.targets" />
   <PropertyGroup>
     <RobustToolsPath>..\RobustToolbox\Tools\</RobustToolsPath>

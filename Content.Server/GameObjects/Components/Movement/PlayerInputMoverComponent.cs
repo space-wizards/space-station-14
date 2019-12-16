@@ -34,13 +34,13 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Movement speed (m/s) that the entity sprints.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float SprintMoveSpeed { get; set; } = 10.0f;
+        public float SprintMoveSpeed { get; set; } = 7.0f;
 
         /// <summary>
         ///     Is the entity Sprinting (running)?
         /// </summary>
         [ViewVariables]
-        public bool Sprinting { get; set; }
+        public bool Sprinting { get; set; } = true;
 
         /// <summary>
         ///     Calculated linear velocity direction of the entity.

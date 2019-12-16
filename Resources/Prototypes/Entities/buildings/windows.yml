@@ -4,6 +4,7 @@
   description: Don't smudge up the glass down there.
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     netsync: false
     drawdepth: WallTops
@@ -17,7 +18,7 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.3, 0.5"
-      layer: 1
+      layer: 30
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

@@ -1,0 +1,59 @@
+using Robust.Client.Graphics.Shaders;
+using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
+
+namespace Content.Client.GameObjects.Components
+{
+    [RegisterComponent]
+    public class InteractionOutlineComponent : Component
+    {
+        private const string ShaderInRange = "selection_outline_inrange";
+        private const string ShaderOutOfRange = "selection_outline";
+
+        public override string Name => "InteractionOutline";
+
+#pragma warning disable 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+#pragma warning restore 649
+
+        private ShaderInstance _selectionShaderInstance;
+        private ShaderInstance _selectionShaderInRangeInstance;
+
+        /// <inheritdoc />
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _selectionShaderInRangeInstance = _prototypeManager.Index<ShaderPrototype>(ShaderInRange).Instance();
+            _selectionShaderInstance = _prototypeManager.Index<ShaderPrototype>(ShaderOutOfRange).Instance();
+        }
+
+        public void OnMouseEnter(bool inInteractionRange)
+        {
+            if (Owner.TryGetComponent(out ISpriteComponent sprite))
+            {
+                sprite.PostShader = inInteractionRange ? _selectionShaderInRangeInstance : _selectionShaderInstance;
+                sprite.RenderOrder = Owner.EntityManager.CurrentTick.Value;
+            }
+        }
+
+        public void OnMouseLeave()
+        {
+            if (Owner.TryGetComponent(out ISpriteComponent sprite))
+            {
+                sprite.PostShader = null;
+                sprite.RenderOrder = 0;
+            }
+        }
+
+        public void UpdateInRange(bool inInteractionRange)
+        {
+            if (Owner.TryGetComponent(out ISpriteComponent sprite))
+            {
+                sprite.PostShader = inInteractionRange ? _selectionShaderInRangeInstance : _selectionShaderInstance;
+            }
+        }
+    }
+}

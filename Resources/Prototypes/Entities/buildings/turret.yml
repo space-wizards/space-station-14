@@ -3,6 +3,7 @@
   name: Turret Base
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     texture: Buildings/TurrBase.png
@@ -12,6 +13,7 @@
   name: Turret (Gun)
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     drawdepth: WallMountedItems
@@ -26,6 +28,7 @@
   name: Turret (Light)
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     drawdepth: WallMountedItems

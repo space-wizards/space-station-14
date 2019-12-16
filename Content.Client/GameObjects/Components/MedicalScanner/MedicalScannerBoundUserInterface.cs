@@ -18,7 +18,6 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
             _window = new MedicalScannerWindow
             {
                 Title = Owner.Owner.Name,
-                Size = (485, 90),
             };
             _window.OnClose += Close;
             _window.OpenCentered();

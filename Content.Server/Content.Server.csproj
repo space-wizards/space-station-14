@@ -33,9 +33,6 @@
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Condition="'$(UseNetCore)' != 'true'" Include="System.Net.Http" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Preferences\Migrations\000_Initial.sql" />
-  </ItemGroup>
+   </ItemGroup>
 </Project>

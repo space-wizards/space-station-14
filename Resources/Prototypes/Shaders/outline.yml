@@ -5,3 +5,11 @@
   params:
     outline_width: 2
     outline_color: "#FF000055"
+
+- type: shader
+  id: selection_outline_inrange
+  kind: source
+  path: "/Shaders/outline.swsl"
+  params:
+    outline_width: 2
+    outline_color: "#00FF0055"

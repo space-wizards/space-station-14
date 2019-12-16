@@ -406,7 +406,7 @@ namespace SS14.Launcher
 
                 visitWebsiteButton.OnPressed += _ => _uriOpener.OpenUri("https://spacestation14.io");
 
-                RootControl.SetAnchorPreset(LayoutPreset.Wide);
+                //RootControl.SetAnchorPreset(LayoutPreset.Wide);
             }
         }
     }

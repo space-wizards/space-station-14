@@ -6,12 +6,12 @@
     handheld: false
 
   - type: Clickable
+  - type: InteractionOutline
 
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      mask: 19
-      layer: 16
+      layer: 31
 
   - type: SnapGrid
     offset: Center

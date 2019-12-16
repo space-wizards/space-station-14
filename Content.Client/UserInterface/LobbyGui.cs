@@ -22,6 +22,16 @@ namespace Content.Client.UserInterface
 
         public LobbyGui(ILocalizationManager localization, IResourceCache resourceCache)
         {
+            var margin = new MarginContainer
+            {
+                MarginBottomOverride = 20,
+                MarginLeftOverride = 20,
+                MarginRightOverride = 20,
+                MarginTopOverride = 20,
+            };
+
+            AddChild(margin);
+
             var panelTex = resourceCache.GetTexture("/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
@@ -30,53 +40,58 @@ namespace Content.Client.UserInterface
             };
             back.SetPatchMargin(StyleBox.Margin.All, 10);
 
-            var panel = new Panel
+            var panel = new PanelContainer
             {
                 PanelOverride = back
             };
 
-            AddChild(panel);
-
-            panel.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+            margin.AddChild(panel);
 
             var vBox = new VBoxContainer {SeparationOverride = 0};
 
-            vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+            margin.AddChild(vBox);
 
-            vBox.MarginTop = 40;
-
-            AddChild(vBox);
-
-            AddChild(new Label
+            var topHBox = new HBoxContainer
             {
-                Text = localization.GetString("Lobby"),
-                StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
-                MarginBottom = 40,
-                MarginLeft = 8,
-                VAlign = Label.VAlignMode.Center
-            });
+                CustomMinimumSize = (0, 40),
+                Children =
+                {
+                    new MarginContainer
+                    {
+                        MarginLeftOverride = 8,
+                        Children =
+                        {
+                            new Label
+                            {
+                                Text = localization.GetString("Lobby"),
+                                StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
+                                /*MarginBottom = 40,
+                                MarginLeft = 8,*/
+                                VAlign = Label.VAlignMode.Center
+                            }
+                        }
+                    },
+                    (ServerName = new Label
+                    {
+                        StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
+                        /*MarginBottom = 40,
+                        GrowHorizontal = GrowDirection.Both,*/
+                        VAlign = Label.VAlignMode.Center,
+                        SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkCenter
+                    }),
+                    (LeaveButton = new Button
+                    {
+                        SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                        Text = localization.GetString("Leave"),
+                        StyleClasses = {NanoStyle.StyleClassButtonBig},
+                        //GrowHorizontal = GrowDirection.Begin
+                    })
+                }
+            };
 
-            AddChild(ServerName = new Label
-            {
-                StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
-                MarginBottom = 40,
-                GrowHorizontal = GrowDirection.Both,
-                VAlign = Label.VAlignMode.Center
-            });
+            vBox.AddChild(topHBox);
 
-            ServerName.SetAnchorAndMarginPreset(LayoutPreset.CenterTop);
-
-            AddChild(LeaveButton = new Button
-            {
-                SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
-                Text = localization.GetString("Leave"),
-                StyleClasses = {NanoStyle.StyleClassButtonBig},
-                GrowHorizontal = GrowDirection.Begin
-            });
-
-            LeaveButton.SetAnchorAndMarginPreset(LayoutPreset.TopRight);
-
-            vBox.AddChild(new Panel
+            vBox.AddChild(new PanelContainer
             {
                 PanelOverride = new StyleBoxFlat
                 {
@@ -131,7 +146,7 @@ namespace Content.Client.UserInterface
                                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                                                 Align = Label.AlignMode.Right,
                                                 FontColorOverride = Color.DarkGray,
-                                                StyleClasses = { NanoStyle.StyleClassLabelBig }
+                                                StyleClasses = {NanoStyle.StyleClassLabelBig}
                                             }),
                                             (ReadyButton = new Button
                                             {
@@ -164,7 +179,7 @@ namespace Content.Client.UserInterface
                 }
             });
 
-            hBox.AddChild(new Panel
+            hBox.AddChild(new PanelContainer
             {
                 PanelOverride = new StyleBoxFlat {BackgroundColor = NanoStyle.NanoGold}, CustomMinimumSize = (2, 0)
             });

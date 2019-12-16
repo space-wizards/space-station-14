@@ -3,6 +3,7 @@
   id: stool
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     sprite: Buildings/furniture.rsi
@@ -18,6 +19,7 @@
   components:
   - type: Rotatable
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     sprite: Buildings/furniture.rsi
@@ -32,6 +34,7 @@
   components:
   - type: Rotatable
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     sprite: Buildings/furniture.rsi
@@ -45,6 +48,7 @@
   id: chair
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
   - type: Sprite
     sprite: Buildings/furniture.rsi

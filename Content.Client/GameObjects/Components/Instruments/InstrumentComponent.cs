@@ -1,21 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
 using Content.Shared.GameObjects.Components.Instruments;
-using OpenTK.Platform.Windows;
 using Robust.Shared.GameObjects;
 using Robust.Client.Audio.Midi;
-using Robust.Client.GameObjects.EntitySystems;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Client.Interfaces.UserInterface;
-using Robust.Client.Reflection;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Reflection;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -35,7 +25,6 @@ namespace Content.Client.GameObjects.Components.Instruments
 
 #pragma warning disable 649
         [Dependency] private IMidiManager _midiManager;
-        [Dependency] private IFileDialogManager _fileDialogManager;
         [Dependency] private readonly IGameTiming _timing;
 #pragma warning restore 649
 

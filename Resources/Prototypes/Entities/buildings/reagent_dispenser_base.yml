@@ -3,12 +3,12 @@
   id: reagent_dispenser_base
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.25,0.4,0.25"
-      mask: 19
-      layer: 16
+      layer: 15
     IsScrapingFloor: true
   - type: Physics
     mass: 25

@@ -5,7 +5,6 @@ pipeline {
         stage('Setup') {
             steps {
                 sh 'git submodule update --init --recursive'
-                sh 'TMP=~/.cache/NuGet/ nuget restore'
             }
         }
         stage('Build') {

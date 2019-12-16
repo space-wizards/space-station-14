@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Lite", "RobustToolbo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SS14.Launcher", "SS14.Launcher\SS14.Launcher.csproj", "{47B4D2F3-6767-4ACB-A803-972FEF7215E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.GraphicsLibraryFramework", "RobustToolbox\OpenToolkit.GraphicsLibraryFramework\OpenToolkit.GraphicsLibraryFramework.csproj", "{4809F412-3132-419E-BF9D-CCF7593C3533}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -110,6 +112,10 @@ Global
 		{47B4D2F3-6767-4ACB-A803-972FEF7215E9}.Debug|x64.Build.0 = Debug|x64
 		{47B4D2F3-6767-4ACB-A803-972FEF7215E9}.Release|x64.ActiveCfg = Release|x64
 		{47B4D2F3-6767-4ACB-A803-972FEF7215E9}.Release|x64.Build.0 = Release|x64
+		{4809F412-3132-419E-BF9D-CCF7593C3533}.Debug|x64.ActiveCfg = Debug|x64
+		{4809F412-3132-419E-BF9D-CCF7593C3533}.Debug|x64.Build.0 = Debug|x64
+		{4809F412-3132-419E-BF9D-CCF7593C3533}.Release|x64.ActiveCfg = Release|x64
+		{4809F412-3132-419E-BF9D-CCF7593C3533}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,6 +129,7 @@ Global
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{0529F740-0000-0000-0000-000000000000} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{0131AAE0-EF7D-4985-86FD-59EEC31B9A5C} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
+		{4809F412-3132-419E-BF9D-CCF7593C3533} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}
