@@ -223,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 }
 
                 _availableSpawnCount -= 1;
-                bullet = Owner.EntityManager.SpawnEntity(FillType);
+                bullet = Owner.EntityManager.SpawnEntity(FillType, Owner.Transform.GridPosition);
             }
             else
             {

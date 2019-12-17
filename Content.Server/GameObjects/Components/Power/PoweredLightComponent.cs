@@ -202,10 +202,10 @@ namespace Content.Server.GameObjects.Components.Power
                 switch (BulbType)
                 {
                     case LightBulbType.Tube:
-                        _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightTube"));
+                        _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightTube", Owner.Transform.GridPosition));
                         break;
                     case LightBulbType.Bulb:
-                        _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightBulb"));
+                        _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightBulb", Owner.Transform.GridPosition));
                         break;
                 }
             }

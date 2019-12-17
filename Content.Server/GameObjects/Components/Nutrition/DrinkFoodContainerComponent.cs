@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Sound;
@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (_availableSpawnCount > 0)
             {
                 var prototypeName = _getProbItem(_prototypes);
-                item = Owner.EntityManager.SpawnEntity(prototypeName);
+                item = Owner.EntityManager.SpawnEntity(prototypeName, Owner.Transform.GridPosition);
                 _availableSpawnCount -= 1;
 
             }
@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 // Ideally this takes priority to be put into inventory rather than the desired item
                 if (_finishPrototype != null)
                 {
-                    var item = Owner.EntityManager.SpawnEntity(_finishPrototype);
+                    var item = Owner.EntityManager.SpawnEntity(_finishPrototype, Owner.Transform.GridPosition);
                     item.Transform.GridPosition = Owner.Transform.GridPosition;
                     Owner.Delete();
                     if (user.TryGetComponent(out HandsComponent handsComponent) &&

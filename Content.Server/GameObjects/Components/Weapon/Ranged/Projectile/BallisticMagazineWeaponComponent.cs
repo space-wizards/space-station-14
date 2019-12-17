@@ -280,7 +280,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         {
             if (_defaultMagazine != null)
             {
-                var magazine = Owner.EntityManager.SpawnEntity(_defaultMagazine);
+                var magazine = Owner.EntityManager.SpawnEntity(_defaultMagazine, Owner.Transform.GridPosition);
                 InsertMagazine(magazine, false);
             }
         }

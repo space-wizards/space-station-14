@@ -252,7 +252,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 return;
             }
-            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper");
+            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.GridPosition);
             _cellContainer.Insert(cell);
         }
     }

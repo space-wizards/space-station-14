@@ -1,4 +1,4 @@
-using Robust.Server.Interfaces.GameObjects;
+﻿using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 
             void Spawn(string prototype)
             {
-                storage.Insert(_entityManager.SpawnEntity(prototype));
+                storage.Insert(_entityManager.SpawnEntityAt(prototype, Owner.Transform.GridPosition));
             }
 
             Spawn("Screwdriver");

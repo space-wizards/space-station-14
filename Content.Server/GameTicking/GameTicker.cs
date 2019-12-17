@@ -278,7 +278,7 @@ namespace Content.Server.GameTicking
                         Logger.Error("{0} is an invalid equipment slot.", slotStr);
                         continue;
                     }
-                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr);
+                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.GridPosition);
                     inventory.Equip(slot, equipmentEntity.GetComponent<ClothingComponent>());
                 }
             }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Sound;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                     return null;
                 }
 
-                var projectile = Owner.EntityManager.SpawnEntity(bullet.ProjectileType);
+                var projectile = Owner.EntityManager.SpawnEntity(bullet.ProjectileType, Owner.Transform.GridPosition);
                 bullet.Spent = true;
 
                 CycleChamberedBullet(0);
