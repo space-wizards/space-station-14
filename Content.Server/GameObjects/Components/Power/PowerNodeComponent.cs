@@ -39,6 +39,8 @@ namespace Content.Server.GameObjects.Components.Power
 
         public override void Initialize()
         {
+            base.Initialize();
+
             TryCreatePowernetConnection();
         }
 
