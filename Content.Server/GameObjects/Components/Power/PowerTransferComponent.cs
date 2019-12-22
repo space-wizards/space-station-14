@@ -27,9 +27,9 @@ namespace Content.Server.GameObjects.Components.Power
         [ViewVariables]
         public bool Regenerating { get; set; } = false;
 
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
+            base.Startup();
 
             if (Parent == null)
             {
