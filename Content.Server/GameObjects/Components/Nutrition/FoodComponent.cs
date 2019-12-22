@@ -61,7 +61,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 else
                 {
                     _contents = Owner.AddComponent<SolutionComponent>();
-                    _contents.Initialize();
                 }
             }
 
