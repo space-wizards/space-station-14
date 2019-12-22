@@ -122,6 +122,8 @@ namespace Content.Client.UserInterface
             // Cooldown circles.
             _leftContainer.AddChild(CooldownCircleLeft = new TextureRect
             {
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 MouseFilter = MouseFilterMode.Ignore,
                 TextureScale = (2, 2),
                 Visible = false,
@@ -129,6 +131,8 @@ namespace Content.Client.UserInterface
 
             _rightContainer.AddChild(CooldownCircleRight = new TextureRect
             {
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 MouseFilter = MouseFilterMode.Ignore,
                 TextureScale = (2, 2),
                 Visible = false
