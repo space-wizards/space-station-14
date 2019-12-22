@@ -218,6 +218,7 @@ namespace Content.Client
             IoCManager.Resolve<IOverlayManager>().AddOverlay(new ParallaxOverlay());
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
+            IoCManager.Resolve<IClientPreferencesManager>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

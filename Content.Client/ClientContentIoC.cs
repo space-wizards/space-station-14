@@ -25,6 +25,7 @@ namespace Content.Client
             IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();
             IoCManager.Register<ISandboxManager, SandboxManager>();
             IoCManager.Register<IModuleManager, ClientModuleManager>();
+            IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
         }
     }
 }

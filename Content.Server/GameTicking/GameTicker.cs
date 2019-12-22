@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameTicking.GamePresets;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
@@ -97,6 +98,7 @@ namespace Content.Server.GameTicking
         [Dependency] private IPrototypeManager _prototypeManager;
         [Dependency] private readonly ILocalizationManager _localization;
         [Dependency] private readonly IRobustRandom _robustRandom;
+        [Dependency] private readonly IServerPreferencesManager _prefsManager;
 #pragma warning restore 649
 
         public void Initialize()
@@ -475,6 +477,7 @@ namespace Content.Server.GameTicking
         {
             _playersInLobby.Add(session, false);
 
+            _prefsManager.OnClientConnected(session);
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
             _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);

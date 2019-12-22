@@ -2,6 +2,7 @@
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Server.Preferences;
 using Content.Server.Sandbox;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
@@ -74,6 +75,7 @@ namespace Content.Server
 
             _gameTicker.Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
+            IoCManager.Resolve<IServerPreferencesManager>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
