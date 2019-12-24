@@ -73,6 +73,10 @@ MAC_NATIVES = {
     "libswnfd.dylib"
 }
 
+SERVER_EXTRA_CONTENT_ASSEMBLIES = [
+    "Dapper.dll"
+]
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Packages the SS14 content repo for release on all platforms.")
@@ -319,7 +323,7 @@ def copy_dir_into_zip(directory, basepath, zipf):
 def copy_content_assemblies(target, zipf, server):
     if server:
         source_dir = p("bin", "Content.Server")
-        files = ["Content.Shared.dll", "Content.Server.dll"]
+        files = ["Content.Shared.dll", "Content.Server.dll"] + SERVER_EXTRA_CONTENT_ASSEMBLIES
     else:
         source_dir = p("bin", "Content.Client")
         files = ["Content.Shared.dll", "Content.Client.dll"]
