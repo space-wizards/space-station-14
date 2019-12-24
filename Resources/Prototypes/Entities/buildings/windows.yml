@@ -6,6 +6,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
+    color: "#DDDDDD"
     netsync: false
     drawdepth: WallTops
     sprite: Buildings/window.rsi
@@ -32,3 +33,19 @@
   placement:
     snap:
     - Wall
+
+- type: entity
+  id: rwindow
+  name: Reinforced Window
+  parent: window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Buildings/rwindow.rsi
+
+  - type: Window
+    base: rwindow
+
+  - type: Icon
+    sprite: Buildings/rwindow.rsi
+    state: rwindow0
