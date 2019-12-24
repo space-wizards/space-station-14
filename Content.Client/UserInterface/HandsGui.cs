@@ -108,14 +108,16 @@ namespace Content.Client.UserInterface
             LeftSpriteView = new SpriteView
             {
                 MouseFilter = MouseFilterMode.Ignore,
-                Scale = (2, 2)
+                Scale = (2, 2),
+                OverrideDirection = Direction.South
             };
             _leftContainer.AddChild(LeftSpriteView);
 
             RightSpriteView = new SpriteView
             {
                 MouseFilter = MouseFilterMode.Ignore,
-                Scale = (2, 2)
+                Scale = (2, 2),
+                OverrideDirection = Direction.South
             };
             _rightContainer.AddChild(RightSpriteView);
 
