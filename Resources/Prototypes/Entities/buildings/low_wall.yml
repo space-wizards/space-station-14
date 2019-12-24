@@ -33,3 +33,13 @@
   placement:
     snap:
     - Wall
+
+- type: entity
+  id: low_wall_overlay
+  name: Low Wall Overlay
+  abstract: true
+  components:
+  - type: Sprite
+    color: "#71797a"
+    drawdepth: WallMountedItems
+    sprite: Buildings/low_wall.rsi

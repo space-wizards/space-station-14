@@ -2,9 +2,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Content.Client.GameObjects.Components.IconSmoothing;
+using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.GameObjects.Components
@@ -27,20 +29,35 @@ namespace Content.Client.GameObjects.Components
         public CornerFill LastCornerSW { get; private set; }
         public CornerFill LastCornerNW { get; private set; }
 
-        /// <inheritdoc />
+        [ViewVariables]
+        private IEntity _overlayEntity;
+        private ISpriteComponent _overlaySprite;
+
         protected override void Startup()
         {
             base.Startup();
 
+            _overlayEntity = Owner.EntityManager.SpawnEntity("low_wall_overlay", Owner.Transform.GridPosition);
+            _overlayEntity.Transform.AttachParent(Owner);
+
+            _overlaySprite = _overlayEntity.GetComponent<ISpriteComponent>();
+
             var overState0 = $"{StateBase}over_0";
-            Sprite.LayerMapSet(OverCornerLayers.SE, Sprite.AddLayerState(overState0));
-            Sprite.LayerSetDirOffset(OverCornerLayers.SE, DirectionOffset.None);
-            Sprite.LayerMapSet(OverCornerLayers.NE, Sprite.AddLayerState(overState0));
-            Sprite.LayerSetDirOffset(OverCornerLayers.NE, DirectionOffset.CounterClockwise);
-            Sprite.LayerMapSet(OverCornerLayers.NW, Sprite.AddLayerState(overState0));
-            Sprite.LayerSetDirOffset(OverCornerLayers.NW, DirectionOffset.Flip);
-            Sprite.LayerMapSet(OverCornerLayers.SW, Sprite.AddLayerState(overState0));
-            Sprite.LayerSetDirOffset(OverCornerLayers.SW, DirectionOffset.Clockwise);
+            _overlaySprite.LayerMapSet(OverCornerLayers.SE, _overlaySprite.AddLayerState(overState0));
+            _overlaySprite.LayerSetDirOffset(OverCornerLayers.SE, DirectionOffset.None);
+            _overlaySprite.LayerMapSet(OverCornerLayers.NE, _overlaySprite.AddLayerState(overState0));
+            _overlaySprite.LayerSetDirOffset(OverCornerLayers.NE, DirectionOffset.CounterClockwise);
+            _overlaySprite.LayerMapSet(OverCornerLayers.NW, _overlaySprite.AddLayerState(overState0));
+            _overlaySprite.LayerSetDirOffset(OverCornerLayers.NW, DirectionOffset.Flip);
+            _overlaySprite.LayerMapSet(OverCornerLayers.SW, _overlaySprite.AddLayerState(overState0));
+            _overlaySprite.LayerSetDirOffset(OverCornerLayers.SW, DirectionOffset.Clockwise);
+        }
+
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+
+            _overlayEntity.Delete();
         }
 
         internal override void CalculateNewSprite()
@@ -161,10 +178,10 @@ namespace Content.Client.GameObjects.Components
             Sprite.LayerSetState(CornerLayers.SW, $"{StateBase}{(int) cornerSW}");
             Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) cornerNW}");
 
-            Sprite.LayerSetState(OverCornerLayers.NE, $"{StateBase}over_{(int) lowCornerNE}");
-            Sprite.LayerSetState(OverCornerLayers.SE, $"{StateBase}over_{(int) lowCornerSE}");
-            Sprite.LayerSetState(OverCornerLayers.SW, $"{StateBase}over_{(int) lowCornerSW}");
-            Sprite.LayerSetState(OverCornerLayers.NW, $"{StateBase}over_{(int) lowCornerNW}");
+            _overlaySprite.LayerSetState(OverCornerLayers.NE, $"{StateBase}over_{(int) lowCornerNE}");
+            _overlaySprite.LayerSetState(OverCornerLayers.SE, $"{StateBase}over_{(int) lowCornerSE}");
+            _overlaySprite.LayerSetState(OverCornerLayers.SW, $"{StateBase}over_{(int) lowCornerSW}");
+            _overlaySprite.LayerSetState(OverCornerLayers.NW, $"{StateBase}over_{(int) lowCornerNW}");
 
             LastCornerNE = cornerNE;
             LastCornerSE = cornerSE;
