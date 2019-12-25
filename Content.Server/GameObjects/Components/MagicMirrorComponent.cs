@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components
 
         private static void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            var hair = obj.Session.AttachedEntity.GetComponent<HairComponent>();
+            var looks = obj.Session.AttachedEntity.GetComponent<LooksComponent>();
             switch (obj.Message)
             {
                 case HairSelectedMessage msg:
@@ -35,22 +35,22 @@ namespace Content.Server.GameObjects.Components
 
                     if (msg.IsFacialHair)
                     {
-                        hair.FacialHairStyleName = msg.HairName;
+                        looks.Appearance = looks.Appearance.WithFacialHairStyleName(msg.HairName);
                     }
                     else
                     {
-                        hair.HairStyleName = msg.HairName;
+                        looks.Appearance = looks.Appearance.WithHairStyleName(msg.HairName);
                     }
 
                     break;
                 case HairColorSelectedMessage msg:
                     if (msg.IsFacialHair)
                     {
-                        hair.FacialHairColor = msg.HairColor;
+                        looks.Appearance = looks.Appearance.WithFacialHairColor(msg.HairColor);
                     }
                     else
                     {
-                        hair.HairColor = msg.HairColor;
+                        looks.Appearance = looks.Appearance.WithHairColor(msg.HairColor);
                     }
 
                     break;

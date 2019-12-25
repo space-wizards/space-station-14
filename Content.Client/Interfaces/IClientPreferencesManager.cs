@@ -1,13 +1,19 @@
+using System;
 using Content.Shared.Preferences;
 
 namespace Content.Client.Interfaces
 {
     public interface IClientPreferencesManager
     {
-        void Initialize();
         GameSettings Settings { get; }
         PlayerPreferences Preferences { get; }
+        void Initialize();
+        event Action PreferencesChanged;
+        void SelectCharacter(ICharacterProfile profile);
         void SelectCharacter(int slot);
         void UpdateCharacter(ICharacterProfile profile, int slot);
+        void CreateCharacter(ICharacterProfile profile);
+        void DeleteCharacter(ICharacterProfile profile);
+        void DeleteCharacter(int slot);
     }
 }

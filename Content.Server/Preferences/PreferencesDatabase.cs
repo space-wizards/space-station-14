@@ -77,28 +77,23 @@ namespace Content.Server.Preferences
                 var profiles = new ICharacterProfile[_maxCharacterSlots];
                 while (reader.Read())
                 {
-                    profiles[reader.GetInt32(0)] = new HumanoidCharacterProfile
-                    {
-                        Name = reader.GetString(1),
-                        Age = reader.GetInt32(2),
-                        Sex = reader.GetString(3) == "Male" ? Male : Female,
-                        CharacterAppearance = new HumanoidCharacterAppearance
-                        {
-                            HairStyleName = reader.GetString(4),
-                            HairColor = Color.FromHex(reader.GetString(5)),
-                            FacialHairStyleName = reader.GetString(6),
-                            FacialHairColor = Color.FromHex(reader.GetString(7)),
-                            EyeColor = Color.FromHex(reader.GetString(8)),
-                            SkinColor = Color.FromHex(reader.GetString(9))
-                        }
-                    };
+                    profiles[reader.GetInt32(0)] = new HumanoidCharacterProfile(
+                        reader.GetString(1),
+                        reader.GetInt32(2),
+                        reader.GetString(3) == "Male" ? Male : Female,
+                        new HumanoidCharacterAppearance
+                        (
+                            reader.GetString(4),
+                            Color.FromHex(reader.GetString(5)),
+                            reader.GetString(6),
+                            Color.FromHex(reader.GetString(7)),
+                            Color.FromHex(reader.GetString(8)),
+                            Color.FromHex(reader.GetString(9))
+                        )
+                    );
                 }
 
-                return new PlayerPreferences
-                {
-                    SelectedCharacterIndex = prefs.SelectedCharacterIndex,
-                    Characters = profiles.ToList()
-                };
+                return new PlayerPreferences(profiles, prefs.SelectedCharacterIndex);
             }
         }
 
@@ -182,7 +177,7 @@ namespace Content.Server.Preferences
                 throw new NotImplementedException();
             }
 
-            var appearance = (HumanoidCharacterAppearance) humanoid.CharacterAppearance;
+            var appearance = humanoid.Appearance;
             using (var connection = GetDbConnection())
             {
                 connection.Execute(SaveCharacterSlotQuery, new

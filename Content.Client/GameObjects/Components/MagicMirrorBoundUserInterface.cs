@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Components.Renderable;
@@ -30,7 +32,7 @@ namespace Content.Client.GameObjects.Components
         {
             base.Open();
 
-            _window = new MagicMirrorWindow(this,_resourceCache, _localization);
+            _window = new MagicMirrorWindow(this, _resourceCache, _localization);
             _window.OnClose += Close;
             _window.Open();
         }
@@ -56,38 +58,25 @@ namespace Content.Client.GameObjects.Components
         }
     }
 
-    public class FacialHairPickerWindow : HairPickerWindow
+    public enum HairType
     {
-        public FacialHairPickerWindow(IResourceCache resourceCache, ILocalizationManager localization) : base(resourceCache, localization)
-        {
-            Title = "Facial hair";
-        }
-
-        public override void Populate()
-        {
-            var humanFacialHairRSIPath = SharedSpriteComponent.TextureRoot / "Mob/human_facial_hair.rsi";
-            var humanFacialHairRSI = ResourceCache.GetResource<RSIResource>(humanFacialHairRSIPath).RSI;
-            foreach (var (styleName, styleState) in HairStyles.FacialHairStylesMap)
-            {
-                Items.AddItem(styleName, humanFacialHairRSI[styleState].Frame0);
-            }
-        }
+        Hair,
+        FacialHair,
     }
 
-    public class HairPickerWindow : SS14Window
+    public class HairPickerPanel : Control
     {
         public event Action<Color> OnHairColorPicked;
         public event Action<string> OnHairStylePicked;
 
         protected readonly IResourceCache ResourceCache;
         protected readonly ItemList Items;
-        protected override Vector2? CustomSize => (300, 300);
-        public HairPickerWindow(IResourceCache resourceCache, ILocalizationManager localization)
+
+        public HairPickerPanel(IResourceCache resourceCache, ILocalizationManager localization)
         {
-            Title = "Hair";
             ResourceCache = resourceCache;
             var vBox = new VBoxContainer();
-            Contents.AddChild(vBox);
+            AddChild(vBox);
 
             var colorHBox = new HBoxContainer();
             vBox.AddChild(colorHBox);
@@ -115,24 +104,78 @@ namespace Content.Client.GameObjects.Components
             Items = new ItemList
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
+                CustomMinimumSize = (300, 250)
             };
             vBox.AddChild(Items);
             Items.OnItemSelected += ItemSelected;
         }
 
-        public virtual void Populate()
-        {
-            var humanHairRSIPath = SharedSpriteComponent.TextureRoot / "Mob/human_hair.rsi";
-            var humanHairRSI = ResourceCache.GetResource<RSIResource>(humanHairRSIPath).RSI;
-            foreach (var (styleName, styleState) in HairStyles.HairStylesMap)
-            {
-                Items.AddItem(styleName, humanHairRSI[styleState].Frame0);
-            }
-        }
-
         private void ItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
             OnHairStylePicked?.Invoke(Items[args.ItemIndex].Text);
+        }
+
+        public void Populate(HairType hairType)
+        {
+            ResourcePath rsiPath;
+            Dictionary<string, string> map;
+            switch (hairType)
+            {
+                case HairType.Hair:
+                    rsiPath = (SharedSpriteComponent.TextureRoot / "Mob/human_hair.rsi");
+                    map = HairStyles.HairStylesMap;
+                    break;
+                case HairType.FacialHair:
+                    rsiPath = (SharedSpriteComponent.TextureRoot / "Mob/human_facial_hair.rsi");
+                    map = HairStyles.FacialHairStylesMap;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(hairType));
+            }
+
+            Items.Clear();
+            var rsi = ResourceCache.GetResource<RSIResource>(rsiPath).RSI;
+            foreach (var (styleName, styleState) in map)
+            {
+                Items.AddItem(styleName, rsi[styleState].Frame0);
+            }
+        }
+    }
+
+    public class HairPickerWindow : SS14Window
+    {
+        public event Action<Color> OnHairColorPicked;
+        public event Action<string> OnHairStylePicked;
+
+        protected HairPickerPanel Panel;
+        protected override Vector2? CustomSize => (300, 300);
+
+        public HairPickerWindow(IResourceCache resourceCache, ILocalizationManager localization)
+        {
+            Title = "Hair";
+            Panel = new HairPickerPanel(resourceCache, localization);
+            Panel.OnHairColorPicked += args => OnHairColorPicked?.Invoke(args);
+            Panel.OnHairStylePicked += args => OnHairStylePicked?.Invoke(args);
+            Contents.AddChild(Panel);
+        }
+
+        public virtual void Populate()
+        {
+            Panel.Populate(HairType.Hair);
+        }
+    }
+
+    public class FacialHairPickerWindow : HairPickerWindow
+    {
+        public FacialHairPickerWindow(IResourceCache resourceCache, ILocalizationManager localization) : base(
+            resourceCache, localization)
+        {
+            Title = "Facial hair";
+        }
+
+        public override void Populate()
+        {
+            Panel.Populate(HairType.FacialHair);
         }
     }
 
@@ -141,7 +184,8 @@ namespace Content.Client.GameObjects.Components
         private readonly HairPickerWindow _hairPickerWindow;
         private readonly FacialHairPickerWindow _facialHairPickerWindow;
 
-        public MagicMirrorWindow(MagicMirrorBoundUserInterface owner, IResourceCache resourceCache, ILocalizationManager localization)
+        public MagicMirrorWindow(MagicMirrorBoundUserInterface owner, IResourceCache resourceCache,
+            ILocalizationManager localization)
         {
             Title = "Magic Mirror";
 

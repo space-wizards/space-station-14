@@ -22,7 +22,8 @@
     drawdepth: Mobs
 
     layers:
-    - sprite: Mob/human.rsi
+    - map: ["enum.HumanoidVisualLayers.Body"]
+      sprite: Mob/human.rsi
       state: male
     - map: ["enum.Slots.INNERCLOTHING"]
     - map: ["enum.Slots.IDCARD"]

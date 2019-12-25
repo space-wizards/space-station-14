@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using Content.Server.Preferences;
 using Content.Shared.Preferences;
 using NUnit.Framework;
@@ -12,23 +13,21 @@ namespace Content.Tests.Server.Preferences
     {
         private const int MaxCharacterSlots = 10;
 
-        private static ICharacterProfile CharlieCharlieson()
+        private static HumanoidCharacterProfile CharlieCharlieson()
         {
-            return new HumanoidCharacterProfile
-            {
-                Name = "Charlie Charlieson",
-                Age = 21,
-                Sex = Sex.Male,
-                CharacterAppearance = new HumanoidCharacterAppearance()
-                {
-                    HairStyleName = "Afro",
-                    HairColor = Color.Aqua,
-                    FacialHairStyleName = "Shaved",
-                    FacialHairColor = Color.Aquamarine,
-                    EyeColor = Color.Azure,
-                    SkinColor = Color.Beige
-                }
-            };
+            return new HumanoidCharacterProfile(
+                "Charlie Charlieson",
+                21,
+                Sex.Male,
+                new HumanoidCharacterAppearance(
+                    "Afro",
+                    Color.Aqua,
+                    "Shaved",
+                    Color.Aquamarine,
+                    Color.Azure,
+                    Color.Beige
+                    )
+                );
         }
 
         private static PreferencesDatabase GetDb()
@@ -52,7 +51,7 @@ namespace Content.Tests.Server.Preferences
             var prefs = db.GetPlayerPreferences(username);
             Assert.NotNull(prefs);
             Assert.Zero(prefs.SelectedCharacterIndex);
-            Assert.That(prefs.Characters.TrueForAll(character => character is null));
+            Assert.That(prefs.Characters.ToList().TrueForAll(character => character is null));
         }
 
         [Test]
@@ -65,7 +64,7 @@ namespace Content.Tests.Server.Preferences
             db.SaveSelectedCharacterIndex(username, slot);
             db.SaveCharacterSlot(username, originalProfile, slot);
             var prefs = db.GetPlayerPreferences(username);
-            Assert.That(prefs.Characters[slot].MemberwiseEquals(originalProfile));
+            Assert.That(prefs.Characters.ElementAt(slot).MemberwiseEquals(originalProfile));
         }
 
         [Test]
@@ -78,7 +77,7 @@ namespace Content.Tests.Server.Preferences
             db.SaveCharacterSlot(username, CharlieCharlieson(), slot);
             db.SaveCharacterSlot(username, null, slot);
             var prefs = db.GetPlayerPreferences(username);
-            Assert.That(prefs.Characters.TrueForAll(character => character is null));
+            Assert.That(prefs.Characters.ToList().TrueForAll(character => character is null));
         }
 
         [Test]
