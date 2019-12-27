@@ -64,7 +64,7 @@ namespace Content.Client.Parallax
                     using (var data = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Open))
                     using (var reader = new StreamReader(data, EncodingHelpers.UTF8))
                     {
-                        match = reader.ReadToEnd() == contents;
+                        match = reader.ReadToEnd().GetHashCode() == contents.GetHashCode();
                     }
 
                     if (match)
