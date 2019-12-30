@@ -18,7 +18,6 @@ namespace Content.Server.GameObjects.Components.Stack
     [RegisterComponent]
     public class StackComponent : Component, IAttackBy, IExamine
     {
-
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
 #pragma warning restore 649
@@ -122,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Stack
                 stack.Add(toTransfer);
 
                 var popupPos = eventArgs.ClickLocation;
-                if (popupPos == GridCoordinates.Nullspace)
+                if (popupPos == GridCoordinates.InvalidGrid)
                 {
                     popupPos = eventArgs.User.Transform.GridPosition;
                 }

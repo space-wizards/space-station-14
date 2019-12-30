@@ -482,7 +482,7 @@ namespace Content.Server.GameObjects
                         if (used != null)
                         {
                             interactionSystem.Interaction(Owner, used, slot.ContainedEntity,
-                                GridCoordinates.Nullspace);
+                                GridCoordinates.InvalidGrid);
                         }
                         else
                         {
