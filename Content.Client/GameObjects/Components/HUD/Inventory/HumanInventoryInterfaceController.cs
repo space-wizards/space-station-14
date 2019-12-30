@@ -34,6 +34,7 @@ namespace Content.Client.GameObjects
         private InventoryButton _hudButtonPocket2;
         private InventoryButton _hudButtonBelt;
         private InventoryButton _hudButtonBack;
+        private InventoryButton _hudButtonId;
         private Control _quickButtonsContainer;
 
         public HumanInventoryInterfaceController(ClientInventoryComponent owner) : base(owner)
@@ -69,11 +70,13 @@ namespace Content.Client.GameObjects
             AddButton(out _hudButtonPocket2, Slots.POCKET2, "pocket");
             AddButton(out _hudButtonBack, Slots.BACKPACK, "back");
             AddButton(out _hudButtonBelt, Slots.BELT, "belt");
+            AddButton(out _hudButtonId, Slots.IDCARD, "id");
 
             _quickButtonsContainer = new HBoxContainer
             {
                 Children =
                 {
+                    _hudButtonId,
                     _hudButtonBelt,
                     _hudButtonBack,
                     _hudButtonPocket1,
