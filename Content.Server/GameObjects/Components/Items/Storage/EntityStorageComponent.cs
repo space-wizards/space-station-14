@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Storage;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -29,7 +30,19 @@ namespace Content.Server.GameObjects.Components
         private bool IsCollidableWhenOpen;
         private Container Contents;
         private IEntityQuery entityQuery;
+        private bool _locked;
 
+        /// <summary>
+        /// Determines if the storage is locked, meaning it cannot be opened.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Locked
+        {
+            get => _locked;
+            set => _locked = value;
+        }
+
+        /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
@@ -37,18 +50,25 @@ namespace Content.Server.GameObjects.Components
             entityQuery = new IntersectingEntityQuery(Owner);
         }
 
+        /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref StorageCapacityMax, "Capacity", 30);
             serializer.DataField(ref IsCollidableWhenOpen, "IsCollidableWhenOpen", false);
+            serializer.DataField(ref _locked, "locked", false);
         }
 
         [ViewVariables]
         public bool Open { get; private set; }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
+        {
+            ToggleOpen();
+        }
+
+        private void ToggleOpen()
         {
             if (Open)
             {
@@ -58,6 +78,14 @@ namespace Content.Server.GameObjects.Components
             {
                 OpenStorage();
             }
+        }
+
+        private void ToggleLock()
+        {
+            _locked = !_locked;
+
+            if (Owner.TryGetComponent(out SoundComponent soundComponent))
+                soundComponent.Play(_locked ? "/Audio/machines/lockenable.ogg" : "/Audio/machines/lockreset.ogg");
         }
 
         private void CloseStorage()
@@ -95,6 +123,9 @@ namespace Content.Server.GameObjects.Components
 
         private void OpenStorage()
         {
+            if (_locked)
+                return;
+
             Open = true;
             EmptyContents();
             ModifyComponents();
@@ -170,6 +201,7 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
+        /// <inheritdoc />
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
@@ -185,11 +217,13 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
+        /// <inheritdoc />
         public bool Remove(IEntity entity)
         {
             return Contents.CanRemove(entity);
         }
 
+        /// <inheritdoc />
         public bool Insert(IEntity entity)
         {
             // Trying to add while open just dumps it on the ground below us.
@@ -202,6 +236,7 @@ namespace Content.Server.GameObjects.Components
             return Contents.Insert(entity);
         }
 
+        /// <inheritdoc />
         public bool CanInsert(IEntity entity)
         {
             if (Open)
@@ -215,6 +250,53 @@ namespace Content.Server.GameObjects.Components
             }
 
             return Contents.CanInsert(entity);
+        }
+
+        /// <summary>
+        /// Adds a verb that toggles the lock of the storage.
+        /// </summary>
+        [Verb]
+        private sealed class LockToggleVerb : Verb<EntityStorageComponent>
+        {
+            /// <inheritdoc />
+            protected override string GetText(IEntity user, EntityStorageComponent component)
+            {
+                return component._locked ? "Unlock" : "Lock";
+            }
+
+            /// <inheritdoc />
+            protected override VerbVisibility GetVisibility(IEntity user, EntityStorageComponent component)
+            {
+                return VerbVisibility.Visible;
+            }
+
+            /// <inheritdoc />
+            protected override void Activate(IEntity user, EntityStorageComponent component)
+            {
+                component.ToggleLock();
+            }
+        }
+
+        [Verb]
+        private sealed class OpenToggleVerb : Verb<EntityStorageComponent>
+        {
+            /// <inheritdoc />
+            protected override string GetText(IEntity user, EntityStorageComponent component)
+            {
+                return component.Open ? "Close" : "Open";
+            }
+
+            /// <inheritdoc />
+            protected override VerbVisibility GetVisibility(IEntity user, EntityStorageComponent component)
+            {
+                return VerbVisibility.Visible;
+            }
+
+            /// <inheritdoc />
+            protected override void Activate(IEntity user, EntityStorageComponent component)
+            {
+                component.ToggleOpen();
+            }
         }
     }
 }
