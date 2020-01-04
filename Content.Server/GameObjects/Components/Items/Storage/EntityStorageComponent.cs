@@ -31,6 +31,7 @@ namespace Content.Server.GameObjects.Components
         private Container Contents;
         private IEntityQuery entityQuery;
         private bool _locked;
+        private bool _showContents;
 
         /// <summary>
         /// Determines if the storage is locked, meaning it cannot be opened.
@@ -42,12 +43,28 @@ namespace Content.Server.GameObjects.Components
             set => _locked = value;
         }
 
+        /// <summary>
+        /// Determines if the container contents should be drawn when the container is closed.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ShowContents
+        {
+            get => _showContents;
+            set
+            {
+                _showContents = value;
+                Contents.ShowContents = _showContents;
+            }
+        }
+
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
             Contents = ContainerManagerComponent.Ensure<Container>(nameof(EntityStorageComponent), Owner);
             entityQuery = new IntersectingEntityQuery(Owner);
+
+            Contents.ShowContents = _showContents;
         }
 
         /// <inheritdoc />
@@ -58,6 +75,7 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref StorageCapacityMax, "Capacity", 30);
             serializer.DataField(ref IsCollidableWhenOpen, "IsCollidableWhenOpen", false);
             serializer.DataField(ref _locked, "locked", false);
+            serializer.DataField(ref _showContents, "showContents", false);
         }
 
         [ViewVariables]
