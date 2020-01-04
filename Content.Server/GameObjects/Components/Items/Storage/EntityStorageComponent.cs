@@ -32,6 +32,7 @@ namespace Content.Server.GameObjects.Components
         private IEntityQuery entityQuery;
         private bool _locked;
         private bool _showContents;
+        private bool _noDoor;
 
         /// <summary>
         /// Determines if the storage is locked, meaning it cannot be opened.
@@ -57,6 +58,17 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
+        /// <summary>
+        /// Disables door control, and synchronizes the door with the lock. This is used for
+        /// attaching entities to the container without having a toggleable door.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool NoDoor
+        {
+            get => _noDoor;
+            set => _noDoor = value;
+        }
+
         /// <inheritdoc />
         public override void Initialize()
         {
@@ -65,6 +77,9 @@ namespace Content.Server.GameObjects.Components
             entityQuery = new IntersectingEntityQuery(Owner);
 
             Contents.ShowContents = _showContents;
+
+            if (_noDoor && !_locked)
+                Open = true;
         }
 
         /// <inheritdoc />
@@ -76,14 +91,18 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref IsCollidableWhenOpen, "IsCollidableWhenOpen", false);
             serializer.DataField(ref _locked, "locked", false);
             serializer.DataField(ref _showContents, "showContents", false);
+            serializer.DataField(ref _noDoor, "noDoor", false);
         }
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool Open { get; private set; }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            ToggleOpen();
+            if(_noDoor)
+                ToggleLock();
+            else
+                ToggleOpen();
         }
 
         private void ToggleOpen()
@@ -101,6 +120,14 @@ namespace Content.Server.GameObjects.Components
         private void ToggleLock()
         {
             _locked = !_locked;
+
+            if(_noDoor)
+            {
+                if(_locked)
+                    CloseStorage();
+                else
+                    OpenStorage();
+            }
 
             if (Owner.TryGetComponent(out SoundComponent soundComponent))
                 soundComponent.Play(_locked ? "/Audio/machines/lockenable.ogg" : "/Audio/machines/lockreset.ogg");
@@ -315,7 +342,7 @@ namespace Content.Server.GameObjects.Components
             /// <inheritdoc />
             protected override VerbVisibility GetVisibility(IEntity user, EntityStorageComponent component)
             {
-                return VerbVisibility.Visible;
+                return component.NoDoor ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
             /// <inheritdoc />
