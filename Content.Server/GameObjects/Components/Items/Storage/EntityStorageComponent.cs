@@ -203,7 +203,15 @@ namespace Content.Server.GameObjects.Components
             {
                 // Because Insert sets the local position to (0,0), and we want to keep the contents spread out,
                 // we re-apply the world position after inserting.
-                var worldPos = entity.Transform.WorldPosition;
+                Vector2 worldPos;
+                if (entity.HasComponent<IActorComponent>())
+                {
+                    worldPos = Owner.Transform.WorldPosition;
+                }
+                else
+                {
+                    worldPos = entity.Transform.WorldPosition;
+                }
                 Contents.Insert(entity);
                 entity.Transform.WorldPosition = worldPos;
                 return true;
