@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
+﻿using Content.Server.GameObjects.Components.Movement;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -31,5 +32,14 @@ namespace Content.Server.Interfaces.GameObjects.Components.Movement
         GridCoordinates LastPosition { get; set; }
 
         float StepSoundDistance { get; set; }
+
+        /// <summary>
+        ///     Toggles one of the four cardinal directions. Each of the four directions are
+        ///     composed into a single direction vector, <see cref="PlayerInputMoverComponent.VelocityDir"/>. Enabling
+        ///     opposite directions will cancel each other out, resulting in no direction.
+        /// </summary>
+        /// <param name="direction">Direction to toggle.</param>
+        /// <param name="enabled">If the direction is active.</param>
+        void SetVelocityDirection(Direction direction, bool enabled);
     }
 }

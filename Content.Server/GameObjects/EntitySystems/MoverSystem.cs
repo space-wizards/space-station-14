@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
@@ -81,16 +82,18 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void PlayerAttached(object sender, PlayerAttachSystemMessage ev)
         {
-            if (ev.Entity.HasComponent<IMoverComponent>())
+            if (!ev.Entity.HasComponent<IMoverComponent>())
             {
-                ev.Entity.RemoveComponent<IMoverComponent>();
+                ev.Entity.AddComponent<PlayerInputMoverComponent>();
             }
-            ev.Entity.AddComponent<PlayerInputMoverComponent>();
         }
 
         private static void PlayerDetached(object sender, PlayerDetachedSystemMessage ev)
         {
-            ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
+            if(ev.Entity.HasComponent<PlayerInputMoverComponent>())
+            {
+                ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
+            }
         }
 
         /// <inheritdoc />
@@ -174,7 +177,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleDirChange(ICommonSession session, Direction dir, bool state)
         {
-            if(!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
+            if(!TryGetAttachedComponent(session as IPlayerSession, out IMoverComponent moverComp))
                 return;
 
             moverComp.SetVelocityDirection(dir, state);
@@ -189,7 +192,7 @@ namespace Content.Server.GameObjects.EntitySystems
         }
 
         private static bool TryGetAttachedComponent<T>(IPlayerSession session, out T component)
-            where T: Component
+            where T: IComponent
         {
             component = default;
 
