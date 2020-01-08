@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
             switch (message)
             {
-                case FireMessage msg:
+                case SyncFirePosMessage msg:
                     var playerMgr = IoCManager.Resolve<IPlayerManager>();
                     var session = playerMgr.GetSessionByChannel(netChannel);
                     var user = session.AttachedEntity;
