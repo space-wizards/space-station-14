@@ -7,7 +7,7 @@
   - type: Sound
   - type: BallisticMagazineWeapon
     caliber: A762mm
-    magazines: 
+    magazines:
     - A762mm
     default_magazine: magazine_762mm_filled
     auto_eject_magazine: false
@@ -36,7 +36,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A762mm
-    magazines: 
+    magazines:
     - A762mm
     default_magazine: magazine_ak
     sound_gunshot: /Audio/Guns/Gunshots/rifle2.ogg
@@ -69,7 +69,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A762mm
-    magazines: 
+    magazines:
     - A762mm
     default_magazine: magazine_ak
     sound_gunshot: /Audio/Guns/Gunshots/rifle2.ogg
@@ -102,7 +102,7 @@
     firerate: 6
   - type: BallisticMagazineWeapon
     caliber: A10mm
-    magazines: 
+    magazines:
     - A10mmSMG
     default_magazine: magazine_10mm_smg
     sound_gunshot: /Audio/Guns/Gunshots/rifle2.ogg
@@ -135,7 +135,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A24mm
-    magazines: 
+    magazines:
     - A24mm
     default_magazine: magazine_24mm
     auto_eject_magazine: true
@@ -169,7 +169,7 @@
     firerate: 6
   - type: BallisticMagazineWeapon
     caliber: A10mm
-    magazines: 
+    magazines:
     - A10mmSMG
     default_magazine: magazine_10mm_smg
     auto_eject_magazine: true
@@ -202,10 +202,11 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A65mm
-    magazines: 
+    magazines:
     - A65mm
     default_magazine: magazine_65mm
     auto_eject_magazine: true
+    lmg_alarm_animation: true
     sound_auto_eject: /Audio/Guns/EmptyAlarm/lmg_empty_alarm.ogg
     sound_gunshot: /Audio/Guns/Gunshots/rifle.ogg
   - type: Appearance
@@ -236,10 +237,11 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A65mm
-    magazines: 
+    magazines:
     - A65mm
     default_magazine: magazine_65mm
     auto_eject_magazine: true
+    lmg_alarm_animation: true
     sound_auto_eject: /Audio/Guns/EmptyAlarm/lmg_empty_alarm.ogg
     sound_gunshot: /Audio/Guns/Gunshots/rifle.ogg
   - type: Appearance
@@ -270,7 +272,7 @@
     firerate: 6
   - type: BallisticMagazineWeapon
     caliber: A65mm
-    magazines: 
+    magazines:
     - A65mm
     default_magazine: magazine_65mm
     sound_gunshot: /Audio/Guns/Gunshots/rifle2.ogg

@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    internal class HandheldLightComponent : Component, IUse, IExamine, IAttackBy, IMapInit
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IAttackBy, IMapInit
     {
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
@@ -44,9 +45,6 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return cell;
             }
         }
-        
-
-        public override string Name => "HandheldLight";
 
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
@@ -73,7 +71,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             return true;
-
         }
 
         void IExamine.Examine(FormattedMessage message)
@@ -153,6 +150,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 {
                     soundComponent.Play("/Audio/machines/button.ogg");
                 }
+
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
                 return;
             }
@@ -166,6 +164,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 {
                     soundComponent.Play("/Audio/machines/button.ogg");
                 }
+
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
                 return;
             }
@@ -195,6 +194,8 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             var cell = Cell;
             if (cell == null || !cell.TryDeductWattage(Wattage, frameTime)) TurnOff();
+
+            Dirty();
         }
 
         private void EjectCell(IEntity user)
@@ -227,6 +228,23 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
+        public override ComponentState GetComponentState()
+        {
+            if (Cell == null)
+            {
+                return new HandheldLightComponentState(null);
+            }
+
+            if (Cell.AvailableCharge(1) < Wattage)
+            {
+                // Practically zero.
+                // This is so the item status works correctly.
+                return new HandheldLightComponentState(0);
+            }
+
+            return new HandheldLightComponentState(Cell.Charge / Cell.Capacity);
+        }
+
         [Verb]
         public sealed class EjectCellVerb : Verb<HandheldLightComponent>
         {
@@ -252,6 +270,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 return;
             }
+
             var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.GridPosition);
             _cellContainer.Insert(cell);
         }

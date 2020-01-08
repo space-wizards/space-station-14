@@ -5,6 +5,7 @@
   components:
   - type: Stack
   - type: Material
+  - type: ItemStatus
 
 - type: entity
   name: Steel Sheet

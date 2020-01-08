@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
@@ -16,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Stack
 
     // TODO: Naming and presentation and such could use some improvement.
     [RegisterComponent]
-    public class StackComponent : Component, IAttackBy, IExamine
+    public class StackComponent : SharedStackComponent, IAttackBy, IExamine
     {
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
@@ -25,8 +26,6 @@ namespace Content.Server.GameObjects.Components.Stack
         private const string SerializationCache = "stack";
         private int _count = 50;
         private int _maxCount = 50;
-
-        public override string Name => "Stack";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int Count
@@ -39,11 +38,20 @@ namespace Content.Server.GameObjects.Components.Stack
                 {
                     Owner.Delete();
                 }
+                Dirty();
             }
         }
 
         [ViewVariables]
-        public int MaxCount { get => _maxCount; private set => _maxCount = value; }
+        public int MaxCount
+        {
+            get => _maxCount;
+            private set
+            {
+                _maxCount = value;
+                Dirty();
+            }
+        }
 
         [ViewVariables]
         public int AvailableSpace => MaxCount - Count;
@@ -154,6 +162,11 @@ namespace Content.Server.GameObjects.Components.Stack
             message.AddMarkup(loc.GetPluralString(
                 "There is [color=lightgray]1[/color] thing in the stack",
                 "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new StackComponentState(Count, MaxCount);
         }
     }
 
