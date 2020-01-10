@@ -6,6 +6,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
@@ -51,6 +52,14 @@ namespace Content.Server.GameObjects.Components.Movement
                 {
                     physComp = gridEntity.AddComponent<PhysicsComponent>();
                     physComp.Mass = 1;
+                }
+
+                if (!gridEntity.HasComponent<ICollidableComponent>())
+                {
+                    var collideComp = gridEntity.AddComponent<CollidableComponent>();
+                    collideComp.CollisionEnabled = true;
+                    collideComp.IsHardCollidable = true;
+                    collideComp.PhysicsShapes.Add(new PhysShapeGrid(grid));
                 }
 
                 physComp.LinearVelocity = CalcNewVelocity(direction, enabled) * WalkMoveSpeed;
