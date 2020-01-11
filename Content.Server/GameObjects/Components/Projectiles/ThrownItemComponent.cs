@@ -5,14 +5,14 @@ using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    class ThrownItemComponent : ProjectileComponent, ICollideBehavior
+    internal class ThrownItemComponent : ProjectileComponent, ICollideBehavior
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;

@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects
         /// <summary>
         /// Damagestates are reached by reaching a certain damage threshold, they will block actions after being reached
         /// </summary>
-        public DamageState CurrentDamageState { get; private set; } = new NormalState();
+        public IDamageState CurrentDamageState { get; private set; } = new NormalState();
 
         /// <summary>
         /// Damage state enum for current health, set only via change damage state //TODO: SETTER

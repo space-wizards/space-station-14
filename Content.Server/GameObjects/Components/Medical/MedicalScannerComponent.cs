@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Medical
             _userInterface.SetState(newState);
         }
 
-        private MedicalScannerStatus GetStatusFromDamageState(DamageState damageState)
+        private MedicalScannerStatus GetStatusFromDamageState(IDamageState damageState)
         {
             switch (damageState)
             {

@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects
@@ -8,7 +9,7 @@ namespace Content.Server.GameObjects
     /// <summary>
     /// Defines the blocking effect of each damage state, and what effects to apply upon entering or exiting the state
     /// </summary>
-    public interface DamageState : IActionBlocker
+    public interface IDamageState : IActionBlocker
     {
         void EnterState(IEntity entity);
 
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects
     /// <summary>
     /// Standard state that a species is at with no damage or negative effect
     /// </summary>
-    public struct NormalState : DamageState
+    public struct NormalState : IDamageState
     {
         public void EnterState(IEntity entity)
         {
@@ -71,7 +72,7 @@ namespace Content.Server.GameObjects
     /// <summary>
     /// A state in which you are disabled from acting due to damage
     /// </summary>
-    public struct CriticalState : DamageState
+    public struct CriticalState : IDamageState
     {
         public void EnterState(IEntity entity)
         {
@@ -122,7 +123,7 @@ namespace Content.Server.GameObjects
     /// <summary>
     /// A damage state which will allow ghosting out of mobs
     /// </summary>
-    public struct DeadState : DamageState
+    public struct DeadState : IDamageState
     {
         public void EnterState(IEntity entity)
         {

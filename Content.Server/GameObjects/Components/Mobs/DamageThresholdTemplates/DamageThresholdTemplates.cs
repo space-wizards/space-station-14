@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects
         /// <summary>
         /// Map of ALL POSSIBLE damage states to the threshold enum value that will trigger them, normal state wont be triggered by this value but is a default that is fell back onto
         /// </summary>
-        public static Dictionary<ThresholdType, DamageState> StateThresholdMap = new Dictionary<ThresholdType, DamageState>()
+        public static Dictionary<ThresholdType, IDamageState> StateThresholdMap = new Dictionary<ThresholdType, IDamageState>()
         {
             { ThresholdType.None, new NormalState() },
             { ThresholdType.Critical, new CriticalState() },

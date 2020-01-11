@@ -2,14 +2,11 @@
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -20,11 +17,12 @@ namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
     [ComponentReference(typeof(IMoverComponent))]
-    class ShuttleControllerComponent : Component, IMoverComponent
+    internal class ShuttleControllerComponent : Component, IMoverComponent
     {
-        [Dependency] IMapManager mapManager;
-        [Dependency] IEntityManager entityManager;
-        [Dependency] IGameTiming gameTiming;
+#pragma warning disable 649
+        [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IEntityManager _entityManager;
+#pragma warning restore 649
 
         private bool _movingUp;
         private bool _movingDown;
@@ -37,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public float WalkMoveSpeed { get; set; } = 8;
         public float SprintMoveSpeed { get; set; }
         public bool Sprinting { get; set; }
-        public Vector2 VelocityDir { get; }
+        public Vector2 VelocityDir { get; } = Vector2.Zero;
         public GridCoordinates LastPosition { get; set; }
         public float StepSoundDistance { get; set; }
 
@@ -45,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             var gridId = Owner.Transform.GridID;
 
-            if (mapManager.TryGetGrid(gridId, out var grid) && entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
+            if (_mapManager.TryGetGrid(gridId, out var grid) && _entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
                 //TODO: Switch to shuttle component
                 if (!gridEntity.TryGetComponent(out PhysicsComponent physComp))
