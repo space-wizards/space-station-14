@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets"/>
+  <PropertyGroup>
+    <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
+    <TargetFramework>$(TargetFramework)</TargetFramework>
+    <LangVersion>8</LangVersion>
+    <IsPackable>false</IsPackable>
+    <Platforms>x64</Platforms>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\bin\Content.Server.Database\</OutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets"/>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations"/>
+  </ItemGroup>
+
+</Project>
