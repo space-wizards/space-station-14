@@ -101,6 +101,10 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
+  - shapes:
+    - !type:PhysShapeGrid
+      grid: 0
+    type: Collidable
 - uid: 1
   type: LaserItem
   components:

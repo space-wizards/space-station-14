@@ -52,6 +52,7 @@ namespace Content.Server.GameObjects.Components.Movement
                     physComp.Mass = 1;
                 }
 
+                //TODO: Is this always true?
                 if (!gridEntity.HasComponent<ICollidableComponent>())
                 {
                     var collideComp = gridEntity.AddComponent<CollidableComponent>();
