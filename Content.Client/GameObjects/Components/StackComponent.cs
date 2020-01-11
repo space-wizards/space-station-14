@@ -26,6 +26,7 @@ namespace Content.Client.GameObjects.Components
 
             Count = cast.Count;
             MaxCount = cast.MaxCount;
+            _uiUpdateNeeded = true;
         }
 
         private sealed class StatusControl : Control
