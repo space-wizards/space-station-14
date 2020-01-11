@@ -42,6 +42,8 @@ namespace Content.Client.GameObjects.Components.Mobs
                 sprite.LayerSetShader(HumanoidVisualLayers.Hair, _hairShader);
                 sprite.LayerSetShader(HumanoidVisualLayers.FacialHair, _facialHairShader);
             }
+
+            UpdateHairStyle();
         }
 
         public override string FacialHairStyleName
