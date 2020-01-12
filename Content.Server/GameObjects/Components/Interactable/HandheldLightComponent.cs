@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Power;
+﻿using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
@@ -69,6 +69,8 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 soundComponent.Play("/Audio/items/weapons/pistol_magin.ogg");
             }
+
+            Dirty();
 
             return true;
         }
