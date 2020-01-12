@@ -5,8 +5,11 @@ using Content.Client.Interfaces.GameObjects;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
+using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.Interfaces.Graphics.ClientEye;
+using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -32,6 +35,9 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IResourceCache _resourceCache;
         [Dependency] private readonly IGameTiming _gameTiming;
+        [Dependency] private readonly IInputManager _inputManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IEyeManager _eyeManager;
 #pragma warning restore 0649
 
         private readonly Texture TextureHandLeft;
@@ -241,11 +247,20 @@ namespace Content.Client.UserInterface
 
         private void HandKeyBindDown(GUIBoundKeyEventArgs args, string handIndex)
         {
+            args.Handle();
+            if (args.Function == ContentKeyFunctions.MouseMiddle)
+            {
+                args.Handle();
+                SendSwitchHandTo(handIndex);
+                return;
+            }
+
+            if (!TryGetHands(out var hands))
+                return;
+
             if (args.Function == EngineKeyFunctions.Use)
             {
-                if (!TryGetHands(out var hands))
-                    return;
-
+                args.Handle();
                 if (hands.ActiveIndex == handIndex)
                 {
                     UseActiveHand();
@@ -254,35 +269,39 @@ namespace Content.Client.UserInterface
                 {
                     AttackByInHand(handIndex);
                 }
+                return;
             }
-            else if (args.Function == ContentKeyFunctions.ExamineEntity)
+
+            var entity = hands.GetEntity(handIndex);
+            if (entity == null)
+                return;
+            
+            if (args.Function == ContentKeyFunctions.ExamineEntity)
             {
-                var examine = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ExamineSystem>();
-                if (handIndex == HandNameLeft)
-                    examine.DoExamine(LeftHand);
-                else if (handIndex == HandNameRight)
-                    examine.DoExamine(RightHand);
-            }
-            else if (args.Function == ContentKeyFunctions.MouseMiddle)
-            {
-                SendSwitchHandTo(handIndex);
+                args.Handle();
+                _entitySystemManager.GetEntitySystem<ExamineSystem>()
+                    .DoExamine(entity);
             }
             else if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
-                if (!TryGetHands(out var hands))
-                {
-                    return;
-                }
-
-                var entity = hands.GetEntity(handIndex);
-                if (entity == null)
-                {
-                    return;
-                }
-
-                var esm = IoCManager.Resolve<IEntitySystemManager>();
-                esm.GetEntitySystem<VerbSystem>()
+                args.Handle();
+                _entitySystemManager.GetEntitySystem<VerbSystem>()
                     .OpenContextMenu(entity, new ScreenCoordinates(args.PointerLocation.Position));
+            }
+            else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
+            {
+                var inputSys = _entitySystemManager.GetEntitySystem<InputSystem>();
+
+                var func = args.Function;
+                var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
+
+                var mousePosWorld = _eyeManager.ScreenToWorld(args.PointerLocation);
+                var message = new FullInputCmdMessage(_gameTiming.CurTick, funcId, args.State, mousePosWorld,
+                    args.PointerLocation, entity.Uid);
+
+                // client side command handlers will always be sent the local player session.
+                var session = _playerManager.LocalPlayer.Session;
+                inputSys.HandleInputCommand(session, func, message);
             }
         }
 
