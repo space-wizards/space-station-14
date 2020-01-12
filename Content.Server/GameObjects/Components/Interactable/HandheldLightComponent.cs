@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
-        public const float Wattage = 10;
+        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
         [ViewVariables] private ContainerSlot _cellContainer;
         private PointLightComponent _pointLight;
         private SpriteComponent _spriteComponent;
