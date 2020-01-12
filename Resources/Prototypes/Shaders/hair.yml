@@ -1,6 +1,0 @@
-- type: shader
-  id: hair
-  kind: source
-  path: "/Shaders/hair.swsl"
-  params:
-    hairColor: "#000000"
