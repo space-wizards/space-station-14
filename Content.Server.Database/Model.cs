@@ -15,7 +15,7 @@ namespace Content.Server.Database
         {
         }
 
-        public DbSet<Prefs> Preferences { get; set; }
+        public DbSet<Prefs> Preferences { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,9 +28,8 @@ namespace Content.Server.Database
     public class Prefs
     {
         public int PrefsId { get; set; }
-        public string Username { get; set; }
+        public string Username { get; set; } = null!;
         public int SelectedCharacterSlot { get; set; }
-
         public List<HumanoidProfile> HumanoidProfiles { get; } = new List<HumanoidProfile>();
     }
 
@@ -38,15 +37,15 @@ namespace Content.Server.Database
     {
         public int HumanoidProfileId { get; set; }
         public int Slot { get; set; }
-        public string SlotName { get; set; }
-        public string CharacterName { get; set; }
+        public string SlotName { get; set; } = null!;
+        public string CharacterName { get; set; } = null!;
         public int Age { get; set; }
-        public string Sex { get; set; }
-        public string HairName { get; set; }
-        public string HairColor { get; set; }
-        public string FacialHairName { get; set; }
-        public string FacialHairColor { get; set; }
-        public string EyeColor { get; set; }
-        public string SkinColor { get; set; }
+        public string Sex { get; set; } = null!;
+        public string HairName { get; set; } = null!;
+        public string HairColor { get; set; } = null!;
+        public string FacialHairName { get; set; } = null!;
+        public string FacialHairColor { get; set; } = null!;
+        public string EyeColor { get; set; } = null!;
+        public string SkinColor { get; set; } = null!;
     }
 }
