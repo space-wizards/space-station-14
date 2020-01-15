@@ -32,6 +32,13 @@ namespace Content.Client
 {
     public class EntryPoint : GameClient
     {
+#pragma warning disable 649
+        [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IBaseClient _baseClient;
+        [Dependency] private readonly IStateManager _stateManager;
+        [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
+#pragma warning restore 649
+
         public override void Init()
         {
             var factory = IoCManager.Resolve<IComponentFactory>();
@@ -121,7 +128,10 @@ namespace Content.Client
                 "UtilityBeltClothingFill"
             };
 
-            foreach (var ignoreName in registerIgnore) factory.RegisterIgnore(ignoreName);
+            foreach (var ignoreName in registerIgnore)
+            {
+                factory.RegisterIgnore(ignoreName);
+            }
 
             factory.Register<SharedResearchConsoleComponent>();
             factory.Register<SharedLatheComponent>();
@@ -135,8 +145,7 @@ namespace Content.Client
             factory.Register<SharedReagentDispenserComponent>();
 
             prototypes.RegisterIgnore("material");
-            prototypes.RegisterIgnore(
-                "reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
+            prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
 
             ClientContentIoC.Register();
 
@@ -160,11 +169,14 @@ namespace Content.Client
 
             _escapeMenuOwner.Initialize();
 
-            _baseClient.PlayerJoinedGame += (sender, args) => { _stateManager.RequestStateChange<GameScreen>(); };
+            _baseClient.PlayerJoinedGame += (sender, args) =>
+            {
+                _stateManager.RequestStateChange<GameScreen>();
+            };
         }
 
         /// <summary>
-        ///     Subscribe events to the player manager after the player manager is set up
+        /// Subscribe events to the player manager after the player manager is set up
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -175,7 +187,7 @@ namespace Content.Client
         }
 
         /// <summary>
-        ///     Add the character interface master which combines all character interfaces into one window
+        /// Add the character interface master which combines all character interfaces into one window
         /// </summary>
         public static void AttachPlayerToEntity(EntityAttachedEventArgs eventArgs)
         {
@@ -183,7 +195,7 @@ namespace Content.Client
         }
 
         /// <summary>
-        ///     Remove the character interface master from this entity now that we have detached ourselves from it
+        /// Remove the character interface master from this entity now that we have detached ourselves from it
         /// </summary>
         public static void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
         {
@@ -221,11 +233,5 @@ namespace Content.Client
                     break;
             }
         }
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IBaseClient _baseClient;
-        [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
-#pragma warning restore 649
     }
 }

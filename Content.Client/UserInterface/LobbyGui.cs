@@ -13,7 +13,15 @@ namespace Content.Client.UserInterface
 {
     internal sealed class LobbyGui : Control
     {
-        public readonly LobbyCharacterPreviewPanel CharacterPreview;
+        public Label ServerName { get; }
+        public Label StartTime { get; }
+        public Button ReadyButton { get; }
+        public Button ObserveButton { get; }
+        public Button LeaveButton { get; }
+        public ChatBox Chat { get; }
+        public ItemList OnlinePlayerItemList { get; }
+        public ServerInfo ServerInfo { get; }
+        public LobbyCharacterPreviewPanel CharacterPreview { get; }
 
         public LobbyGui(IEntityManager entityManager,
             ILocalizationManager localization,
@@ -25,7 +33,7 @@ namespace Content.Client.UserInterface
                 MarginBottomOverride = 20,
                 MarginLeftOverride = 20,
                 MarginRightOverride = 20,
-                MarginTopOverride = 20
+                MarginTopOverride = 20,
             };
 
             AddChild(margin);
@@ -34,7 +42,7 @@ namespace Content.Client.UserInterface
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,
-                Modulate = new Color(37, 37, 42)
+                Modulate = new Color(37, 37, 42),
             };
             back.SetPatchMargin(StyleBox.Margin.All, 10);
 
@@ -81,7 +89,7 @@ namespace Content.Client.UserInterface
                     {
                         SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                         Text = localization.GetString("Leave"),
-                        StyleClasses = {NanoStyle.StyleClassButtonBig}
+                        StyleClasses = {NanoStyle.StyleClassButtonBig},
                         //GrowHorizontal = GrowDirection.Begin
                     })
                 }
@@ -95,7 +103,7 @@ namespace Content.Client.UserInterface
                 {
                     BackgroundColor = NanoStyle.NanoGold,
                     ContentMarginTopOverride = 2
-                }
+                },
             });
 
             var hBox = new HBoxContainer
@@ -154,7 +162,7 @@ namespace Content.Client.UserInterface
                                                 ToggleMode = true,
                                                 Text = localization.GetString("Ready Up"),
                                                 StyleClasses = {NanoStyle.StyleClassButtonBig}
-                                            })
+                                            }),
                                         }
                                     }
                                 }
@@ -176,7 +184,7 @@ namespace Content.Client.UserInterface
                                 Input = {PlaceHolder = localization.GetString("Say something!")}
                             })
                         }
-                    }
+                    },
                 }
             });
 
@@ -193,7 +201,7 @@ namespace Content.Client.UserInterface
                     {
                         new NanoHeading
                         {
-                            Text = localization.GetString("Online Players")
+                            Text = localization.GetString("Online Players"),
                         },
                         new MarginContainer
                         {
@@ -209,7 +217,7 @@ namespace Content.Client.UserInterface
                         },
                         new NanoHeading
                         {
-                            Text = localization.GetString("Server Info")
+                            Text = localization.GetString("Server Info"),
                         },
                         new MarginContainer
                         {
@@ -222,19 +230,10 @@ namespace Content.Client.UserInterface
                             {
                                 (ServerInfo = new ServerInfo(localization))
                             }
-                        }
+                        },
                     }
                 });
             }
         }
-
-        public Label ServerName { get; }
-        public Label StartTime { get; }
-        public Button ReadyButton { get; }
-        public Button ObserveButton { get; }
-        public Button LeaveButton { get; }
-        public ChatBox Chat { get; }
-        public ItemList OnlinePlayerItemList { get; }
-        public ServerInfo ServerInfo { get; }
     }
 }
