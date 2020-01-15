@@ -33,12 +33,12 @@
     - map: ["enum.Slots.EYES"]
     - map: ["enum.Slots.BELT"]
     - map: ["enum.Slots.BACKPACK"]
-    - map: ["enum.HumanoidVisualLayers.Hair"]
-      state: bald
-      sprite: Mob/human_hair.rsi
     - map: ["enum.HumanoidVisualLayers.FacialHair"]
       state: shaved
       sprite: Mob/human_facial_hair.rsi
+    - map: ["enum.HumanoidVisualLayers.Hair"]
+      state: bald
+      sprite: Mob/human_hair.rsi
     - map: ["enum.Slots.MASK"]
     - map: ["enum.Slots.HEAD"]
     - map: ["hand-left"]
