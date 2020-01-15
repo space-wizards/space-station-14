@@ -32,13 +32,30 @@ namespace Content.Shared.GameObjects.Components
         [Serializable, NetSerializable]
         public class HairColorSelectedMessage : BoundUserInterfaceMessage
         {
-            public readonly Color HairColor;
+            public (byte r, byte g, byte b) HairColor;
             public readonly bool IsFacialHair;
 
-            public HairColorSelectedMessage(Color color, bool isFacialHair)
+            public HairColorSelectedMessage((byte r, byte g, byte b) color, bool isFacialHair)
             {
                 HairColor = color;
                 IsFacialHair = isFacialHair;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class MagicMirrorInitialDataMessage : BoundUserInterfaceMessage
+        {
+            public readonly Color HairColor;
+            public readonly Color FacialHairColor;
+            public readonly string HairName;
+            public readonly string FacialHairName;
+
+            public MagicMirrorInitialDataMessage(Color hairColor, Color facialHairColor, string hairName, string facialHairName)
+            {
+                HairColor = hairColor;
+                FacialHairColor = facialHairColor;
+                HairName = hairName;
+                FacialHairName = facialHairName;
             }
         }
     }

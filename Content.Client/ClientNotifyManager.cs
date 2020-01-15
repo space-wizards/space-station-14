@@ -71,11 +71,6 @@ namespace Content.Client
 
         public void FrameUpdate(FrameEventArgs eventArgs)
         {
-            foreach (var label in _aliveLabels)
-            {
-                label.Update(eventArgs);
-            }
-
             _aliveLabels.RemoveAll(l => l.Disposed);
         }
 
@@ -91,7 +86,7 @@ namespace Content.Client
                 FontColorShadowOverride = Color.Black;
             }
 
-            public void Update(FrameEventArgs eventArgs)
+            protected override void Update(FrameEventArgs eventArgs)
             {
                 _timeLeft += eventArgs.DeltaSeconds;
                 LayoutContainer.SetPosition(this, InitialPos - (0, 20 * (_timeLeft * _timeLeft + _timeLeft)));

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -227,5 +228,45 @@ namespace Content.Shared.Preferences.Appearance
             {"Sideburns", "sideburn"},
             {"Shaved", "shaved"}
         };
+
+        // These comparers put the default hair style (shaved/bald) at the very top.
+        // For in the hair style pickers.
+
+        public static readonly IComparer<KeyValuePair<string, string>> HairStyleComparer =
+            Comparer<KeyValuePair<string, string>>.Create((a, b) =>
+            {
+                var styleA = a.Key;
+                var styleB = b.Key;
+                if (styleA == DefaultHairStyle)
+                {
+                    return -1;
+                }
+
+                if (styleB == DefaultHairStyle)
+                {
+                    return 1;
+                }
+
+                return string.Compare(styleA, styleB, StringComparison.CurrentCulture);
+            });
+
+        public static readonly IComparer<KeyValuePair<string, string>> FacialHairStyleComparer =
+            Comparer<KeyValuePair<string, string>>.Create((a, b) =>
+            {
+                var styleA = a.Key;
+                var styleB = b.Key;
+
+                if (styleA == DefaultFacialHairStyle)
+                {
+                    return -1;
+                }
+
+                if (styleB == DefaultFacialHairStyle)
+                {
+                    return 1;
+                }
+
+                return string.Compare(styleA, styleB, StringComparison.CurrentCulture);
+            });
     }
 }
