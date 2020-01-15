@@ -12,6 +12,10 @@ namespace Content.Client.UserInterface
 {
     public sealed class NanoStyle
     {
+        public const string StyleClassSliderRed = "Red";
+        public const string StyleClassSliderGreen = "Green";
+        public const string StyleClassSliderBlue = "Blue";
+
         public const string StyleClassLabelHeading = "LabelHeading";
         public const string StyleClassLabelHeadingBigger = "LabelHeadingBigger";
         public const string StyleClassLabelSubText = "LabelSubText";
@@ -204,6 +208,43 @@ namespace Content.Client.UserInterface
                 Texture = stripeBackTex,
                 Mode = StyleBoxTexture.StretchMode.Tile
             };
+
+            // Slider
+            var sliderOutlineTex = resCache.GetTexture("/Nano/slider_outline.svg.96dpi.png");
+            var sliderFillTex = resCache.GetTexture("/Nano/slider_fill.svg.96dpi.png");
+            var sliderGrabTex = resCache.GetTexture("/Nano/slider_grabber.svg.96dpi.png");
+
+            var sliderFillBox = new StyleBoxTexture
+            {
+                Texture = sliderFillTex,
+                Modulate = Color.FromHex("#3E6C45")
+            };
+
+            var sliderBackBox = new StyleBoxTexture
+            {
+                Texture = sliderFillTex,
+                Modulate = Color.FromHex("#1E1E22")
+            };
+
+            var sliderForeBox = new StyleBoxTexture
+            {
+                Texture = sliderOutlineTex,
+                Modulate = Color.FromHex("#494949")
+            };
+
+            var sliderGrabBox = new StyleBoxTexture
+            {
+                Texture = sliderGrabTex,
+            };
+
+            sliderFillBox.SetPatchMargin(StyleBox.Margin.All, 12);
+            sliderBackBox.SetPatchMargin(StyleBox.Margin.All, 12);
+            sliderForeBox.SetPatchMargin(StyleBox.Margin.All, 12);
+            sliderGrabBox.SetPatchMargin(StyleBox.Margin.All, 12);
+
+            var sliderFillGreen = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Green};
+            var sliderFillRed = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Red};
+            var sliderFillBlue = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Blue};
 
             Stylesheet = new Stylesheet(new[]
             {
@@ -620,6 +661,30 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty("font", notoSans10),
                 }),
+
+                // Slider
+                new StyleRule(SelectorElement.Type(typeof(Slider)), new []
+                {
+                    new StyleProperty(Slider.StylePropertyBackground, sliderBackBox),
+                    new StyleProperty(Slider.StylePropertyForeground, sliderForeBox),
+                    new StyleProperty(Slider.StylePropertyGrabber, sliderGrabBox),
+                    new StyleProperty(Slider.StylePropertyFill, sliderFillBox),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderRed}, null, null), new []
+                {
+                    new StyleProperty(Slider.StylePropertyFill, sliderFillRed),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderGreen}, null, null), new []
+                {
+                    new StyleProperty(Slider.StylePropertyFill, sliderFillGreen),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderBlue}, null, null), new []
+                {
+                    new StyleProperty(Slider.StylePropertyFill, sliderFillBlue),
+                })
             });
         }
     }
