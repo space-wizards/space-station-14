@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.Preferences.Appearance;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -8,10 +9,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
 {
     public abstract class SharedHairComponent : Component
     {
-        private string _facialHairStyleName;
-        private string _hairStyleName;
-        private Color _hairColor;
-        private Color _facialHairColor;
+        private static readonly Color DefaultHairColor = Color.FromHex("#232323");
+
+        private string _facialHairStyleName = HairStyles.DefaultFacialHairStyle;
+        private string _hairStyleName = HairStyles.DefaultHairStyle;
+        private Color _hairColor = DefaultHairColor;
+        private Color _facialHairColor = DefaultHairColor;
 
         public sealed override string Name => "Hair";
         public sealed override uint? NetID => ContentNetIDs.HAIR;
@@ -74,6 +77,16 @@ namespace Content.Shared.GameObjects.Components.Mobs
             FacialHairStyleName = cast.FacialHairStyleName;
             HairColor = cast.HairColor;
             FacialHairColor = cast.FacialHairColor;
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _hairColor, "hairColor", DefaultHairColor);
+            serializer.DataField(ref _facialHairColor, "facialHairColor", DefaultHairColor);
+            serializer.DataField(ref _hairStyleName, "hairStyle", HairStyles.DefaultHairStyle);
+            serializer.DataField(ref _facialHairStyleName, "facialHairStyle", HairStyles.DefaultFacialHairStyle);
         }
 
         [Serializable, NetSerializable]

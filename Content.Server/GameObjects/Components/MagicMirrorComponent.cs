@@ -1,10 +1,13 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Interfaces;
 using Content.Shared.Preferences.Appearance;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -24,7 +27,11 @@ namespace Content.Server.GameObjects.Components
 
         private static void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            var hair = obj.Session.AttachedEntity.GetComponent<HairComponent>();
+            if (!obj.Session.AttachedEntity.TryGetComponent(out HairComponent hair))
+            {
+                return;
+            }
+
             switch (obj.Message)
             {
                 case HairSelectedMessage msg:
@@ -43,14 +50,18 @@ namespace Content.Server.GameObjects.Components
                     }
 
                     break;
+
                 case HairColorSelectedMessage msg:
+                    var (r, g, b) = msg.HairColor;
+                    var color = new Color(r, g, b);
+
                     if (msg.IsFacialHair)
                     {
-                        hair.FacialHairColor = msg.HairColor;
+                        hair.FacialHairColor = color;
                     }
                     else
                     {
-                        hair.HairColor = msg.HairColor;
+                        hair.HairColor = color;
                     }
 
                     break;
@@ -64,7 +75,18 @@ namespace Content.Server.GameObjects.Components
                 return;
             }
 
+            if (!eventArgs.User.TryGetComponent(out HairComponent hair))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't have any hair!"));
+                return;
+            }
+
             _userInterface.Open(actor.playerSession);
+
+            var msg = new MagicMirrorInitialDataMessage(hair.HairColor, hair.FacialHairColor, hair.HairStyleName,
+                hair.FacialHairStyleName);
+
+            _userInterface.SendMessage(msg, actor.playerSession);
         }
     }
 }
