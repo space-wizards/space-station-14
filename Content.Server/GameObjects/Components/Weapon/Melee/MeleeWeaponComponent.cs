@@ -125,12 +125,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             // Maybe make this increment count depend on the width/length?
             const int increments = 5;
             var widthRad = Angle.FromDegrees(ArcWidth);
-            var increment = widthRad / 5;
+            var increment = widthRad / increments;
             var baseAngle = angle - widthRad / 2;
 
             var resSet = new HashSet<IEntity>();
 
-            for (var i = 0; i < 5; i++)
+            for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
                 var res = _physicsManager.IntersectRay(new Ray(position, castAngle.ToVec(), 19), _range, ignore);
