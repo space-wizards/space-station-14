@@ -1,7 +1,11 @@
-	
-	
-	
-	public partial class BodyPart {
+﻿using System;
+using System.Collections.Generic;
+
+
+namespace Robust.Shared.BodySystem {
+
+
+    public partial class BodyPart {
 		private List<BodyPart> _connections;
 		private BodyManagerComponent _parent;
 		public BodyPart(){
@@ -9,7 +13,7 @@
 		}
 		
         /// <summary>
-        ///     Sets a reference to the parent BodyManagerComponent. You should probably never have to touch this.
+        ///     Sets a reference to the parent BodyManagerComponent. You shouldn't have to touch this: BodyManagerComponent has functions to add limbs.
         /// </summary>					
 		public void SetParent(BodyManagerComponent _parent){ 
 			this._parent = _parent;
@@ -24,14 +28,14 @@
         ///     Returns the current durability of this limb.
         /// </summary>	
 		public float GetDurability(){
-			return durability;
+			return _durability;
 		}
 		        
 		/// <summary>
-        ///     Heals the durability of this limb up to its max.
+        ///     Heals the durability of this limb by the given amount. Only heals up to its max.
         /// </summary>	
 		public void HealDamage(float heal){
-			Clamp(_currentDurability+heal,durability); 
+			Math.Clamp(_currentDurability+heal,int.MinValue,_durability); 
 			DurabilityCheck();
 		}
 		
@@ -44,7 +48,7 @@
 		}
 		
 		private void DurabilityCheck(){
-			if(_currentDurability <= destroyThreshold){
+			if(_currentDurability <= _destroyThreshold){
 				//Destroy
 				DisconnectFromAll();
 			}
@@ -112,10 +116,10 @@
 		private void ConnectionCheck(){
 			if(_parent == null)
 				return;
-			if(_connections.Length == 0 || !ConnectedToCenterPart(new List<BodyPart>())){
-				BodyPartEntity partEntity = Owner.EntityManager.SpawnEntityAt(id, _parent.Transform.GridPosition);
-				partEntity.BodyPartData = this;
-				_parent = null;
+			if(_connections.Count == 0 || !ConnectedToCenterPart(new List<BodyPart>())){
+				//BodyPartEntity partEntity = _parent.Owner.EntityManager.SpawnEntityAt(id, _parent.Owner.Transform.GridPosition); //Spawn a physical limb entity
+				//partEntity.BodyPartData = this;
+				//_parent = null;
 			}
 		}
 		
@@ -124,13 +128,14 @@
         /// </summary>	
 		private bool ConnectedToCenterPart(List<BodyPart> searchedParts){
 			searchedParts.Add(this);
-			foreach(BodyPart connection in connections){
+			foreach(BodyPart connection in _connections){
 				if(connection == _parent.GetCenterBodyPart())
 					return true;
 				else if(!searchedParts.Contains(connection))
-					if(searchedParts.ConnectedToCenterPart(searchedParts))
+					if(connection.ConnectedToCenterPart(searchedParts))
 						return true;
 			}
 			return false;
 		}
-	}
+    }
+}

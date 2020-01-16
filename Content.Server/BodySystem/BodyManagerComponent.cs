@@ -1,33 +1,47 @@
+﻿using System.Collections.Generic;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
-	enum BodyPartCompatability { mechanical, biological, universal };	
-	enum BodyPartType { other, torso, head, arm, hand, leg, foot };	  
+namespace Robust.Shared.BodySystem {
+    public enum BodyPartCompatability { mechanical, biological, universal };	
+	public enum BodyPartType { other, torso, head, arm, hand, leg, foot };	  
 
 	public class BodyManagerComponent : Component {
 		private BodyTemplate _template;
 		private Dictionary<string, BodyPart> _parts;
-		
-		public BodyManagerComponent(BodyTemplate _template){
+
+        public override string Name => "BodyManager";
+
+        public override void ExposeData(ObjectSerializer serializer) {
+            base.ExposeData(serializer);
+            //serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
+        }
+
+        public BodyManagerComponent(BodyTemplate _template){
 			this._template = _template;
+            _parts = new Dictionary<string, BodyPart>();
 		}
 		
         /// <summary>
         ///     Loads the given preset - forcefully sets all limbs on the attached entity to match it!
         /// </summary>		
 		public void LoadBodyPreset(BodyPreset preset){
-			if(_template == null || preset.TemplateID != _template.ID); //Check that the preset's template and our template are equivalent.
+			if(_template == null || preset.TemplateID != _template.ID) //Check that the preset's template and our template are equivalent.
 				return;
 			var prototypeManger = IoCManager.Resolve<IPrototypeManager>();
-			foreach(KeyValuePair<BodyPartType, string> slot in _template.Slots){ //Create all the desired limbs.
-				if(!preset.PartIDs.TryIndex(slot.value, out string partID)){
-					return; //TODO: Throw error! Our template should match the preset template, as we JUST checked above!
+			foreach(KeyValuePair<BodyPartType, string> slot in _template.Slots){ //Iterate through all limb slots in the template.
+				if(!preset.PartIDs.TryGetValue(slot.Value, out string partID)){ //Get the BodyPart ID that the preset defines.
+					return; 
 				}
-				if(!prototypeManger.TryIndex(partID, out BodyPart newPart)){
-					return; //TODO: Throw error! The preset is using an non-existant BodyPart prototype!
+				if(!prototypeManger.TryIndex(partID, out BodyPart newPart)){ //Get the BodyPart corresponding to the BodyPart ID.
+					return;
 				}
-				_parts.Add(slotName, newPart);
+				_parts.Add(slot.Value, newPart); //Add it to our BodyParts.
 			}
-			foreach(KeyValuePair<string, string> connection in _template.Connections){ //Connect all the limbs together.
-				GetBodyPartBySlotName(connection.key).ConnectTo(GetBodyPartBySlotName(connection.value));
+			foreach(KeyValuePair<string, string> connection in _template.Connections){ //Connect all the BodyParts together.
+				GetBodyPartBySlotName(connection.Key).ConnectTo(GetBodyPartBySlotName(connection.Value));
 			}
 		}
 		
@@ -44,25 +58,29 @@
         ///     Returns the central BodyPart of this body based on the BodyTemplate. For humans, this is the torso.
         /// </summary>			
 		public BodyPart GetCenterBodyPart(){
-			return _template.centerSlot;
+			_parts.TryGetValue(_template.CenterSlot, out BodyPart center);
+            return center;
 		}
 		
         /// <summary>
-        ///     Disconnects the given body part, potentially disconnecting other body parts if they were hanging off it.
+        ///     Disconnects the given BodyPart, potentially disconnecting other BodyParts if they were hanging off it.
         /// </summary>
 		public void DisconnectBodyPart(string name){
 			BodyPart part = GetBodyPartBySlotName(name);
-			_parts.Remove(part);
-			part.DisconnectFromAll();
+            if(part != null) { 
+			    _parts.Remove(name);
+			    part.DisconnectFromAll();
+            }
 		}
 		
 		/// <summary>
-        ///     Returns the body part currently in the given BodyTemplate slot (if there is one).
+        ///     Returns the BodyPart currently in the given BodyTemplate slot name (if there is none, returns null).
         /// </summary>		
 		private BodyPart GetBodyPartBySlotName(string slotName){
-			_parts.TryGetValue(slotName, out result);
+			_parts.TryGetValue(slotName, out BodyPart result);
 			return result;
 		}
 		
 
 	}
+}

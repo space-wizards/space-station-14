@@ -1,11 +1,16 @@
-	  
-	  
-	  
-	  
-	
-	enum MechanismType { passive, toggle, active } 
-	  
-	[Prototype("mechanism")]
+﻿using System.Collections.Generic;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
+using YamlDotNet.RepresentationModel;
+
+
+
+
+namespace Robust.Shared.BodySystem {
+    public enum MechanismType { passive, toggle, active }
+
+    [Prototype("mechanism")]
 	public class Mechanism {
 		private string _name;
 		private string _description;
@@ -92,5 +97,5 @@
             serializer.DataField(ref _name, "name", string.Empty);		
 		}		
 	}
+}
 
-	  

@@ -1,6 +1,13 @@
-    
-	
-	[Prototype("bodyTemplate")]
+﻿using System.Collections.Generic;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
+using YamlDotNet.RepresentationModel;
+
+namespace Robust.Shared.BodySystem {
+
+    [Prototype("bodyTemplate")]
     public class BodyTemplate : IPrototype, IIndexedPrototype {
         private string _id;
         private string _name;
@@ -30,9 +37,9 @@
 
             serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _id, "id", string.Empty);
-			serializer.DataField(ref _centerSlot "centerSlot", string.Empty);
+			serializer.DataField(ref _centerSlot, "centerSlot", string.Empty);
             serializer.DataField(ref _slots, "slots", new Dictionary<BodyPartType, string>());
 			serializer.DataField(ref _connections, "connections", new Dictionary<string, string>());
         }
     }
-		  
+}

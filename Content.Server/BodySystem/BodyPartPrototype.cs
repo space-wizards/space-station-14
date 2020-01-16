@@ -1,6 +1,12 @@
+﻿using System.Collections.Generic;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
+using YamlDotNet.RepresentationModel;
 
 
-
+namespace Robust.Shared.BodySystem {
     [Prototype("bodyPart")]
     public partial class BodyPart : IPrototype, IIndexedPrototype {
         private string _id;
@@ -31,10 +37,10 @@
         public string Plural => _plural;  
 		
          /// <summary>
-        ///     Plural version of this body part's name.
+        ///     BodyPartType that this body part is considered. 
         /// </summary>
         [ViewVariables]
-        public string Type => _type;
+        public BodyPartType Type => _type;
 		
         /// <summary>
         ///     Max HP of this body part.
@@ -46,7 +52,7 @@
         ///     Current HP of this body part.
         /// </summary>		
 		[ViewVariables]
-		public int CurrentDurability => _currentDurability;
+		public float CurrentDurability => _currentDurability;
 		
 		/// <summary>
         ///     At what HP this body part is completely destroyed.
@@ -58,7 +64,7 @@
         ///     Armor of the body part against attacks.
         /// </summary>		
 		[ViewVariables]
-		public int Resistance => _resistance;
+		public float Resistance => _resistance;
 		
         /// <summary>
         ///     Determines many things: how many mechanisms can be fit inside a body part, fitting through tiny crevices, etc.
@@ -67,7 +73,7 @@
 		public int Size => _size;
 		
         /// <summary>
-        ///     What types of body parts this body part can attach to. For the most part, the only universal body parts should be bionic interfaces.
+        ///     What types of body parts this body part can attach to. For the most part, most limbs aren't universal and require extra work to attach between types.
         /// </summary>
         [ViewVariables]
         public BodyPartCompatability Compatability => _compatability;
@@ -95,3 +101,4 @@
 			serializer.DataField(ref _properties, "properties", new List<IExposeData>());
         }
     }
+}

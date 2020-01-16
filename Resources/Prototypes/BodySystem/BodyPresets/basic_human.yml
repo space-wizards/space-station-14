@@ -1,6 +1,6 @@
 - type: bodyPreset
   name: "basic human"
-  id: "bodyPreset.basic_human"
+  id: bodyPreset.basic_human
   templateID: bodyTemplate.humanoid
   partIDs:
     head: "bodyPart.head.basic_human"

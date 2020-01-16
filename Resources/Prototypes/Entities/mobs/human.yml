@@ -64,6 +64,10 @@
   - type: Species
     Template: Human
     HeatResistance: 323
+  - type: BodyManager
+    BaseTemplate: bodyTemplate.humanoid
+    BasePreset: bodyPreset.basic_human
+  
   - type: StatusEffectsUI
   - type: OverlayEffectsUI
   - type: HeatResistance
@@ -83,3 +87,4 @@
   - type: CharacterInfo
   - type: FootstepSound
   - type: Hair
+ 
