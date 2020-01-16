@@ -19,7 +19,7 @@ namespace Content.Client.UserInterface
         private readonly VBoxContainer _charactersVBox;
         private readonly Button _createNewCharacterButton;
         private readonly IEntityManager _entityManager;
-        private readonly HumanoidProfileEditorPanel _humanoidProfileEditorPanel;
+        private readonly HumanoidProfileEditor _humanoidProfileEditor;
         private readonly IClientPreferencesManager _preferencesManager;
         public readonly Button CloseButton;
 
@@ -144,9 +144,9 @@ namespace Content.Client.UserInterface
                 PanelOverride = new StyleBoxFlat {BackgroundColor = NanoStyle.NanoGold},
                 CustomMinimumSize = (2, 0)
             });
-            _humanoidProfileEditorPanel = new HumanoidProfileEditorPanel(localization, preferencesManager);
-            _humanoidProfileEditorPanel.OnProfileChanged += newProfile => { UpdateUI(); };
-            hBox.AddChild(_humanoidProfileEditorPanel);
+            _humanoidProfileEditor = new HumanoidProfileEditor(localization, preferencesManager);
+            _humanoidProfileEditor.OnProfileChanged += newProfile => { UpdateUI(); };
+            hBox.AddChild(_humanoidProfileEditor);
 
             UpdateUI();
         }
@@ -175,9 +175,9 @@ namespace Content.Client.UserInterface
                 var characterIndexCopy = characterIndex;
                 characterPickerButton.ActualButton.OnPressed += args =>
                 {
-                    _humanoidProfileEditorPanel.Profile = (HumanoidCharacterProfile) character;
-                    _humanoidProfileEditorPanel.CharacterSlot = characterIndexCopy;
-                    _humanoidProfileEditorPanel.UpdateControls();
+                    _humanoidProfileEditor.Profile = (HumanoidCharacterProfile) character;
+                    _humanoidProfileEditor.CharacterSlot = characterIndexCopy;
+                    _humanoidProfileEditor.UpdateControls();
                     _preferencesManager.SelectCharacter(character);
                 };
                 characterIndex++;

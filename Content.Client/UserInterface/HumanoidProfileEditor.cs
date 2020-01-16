@@ -10,7 +10,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface
 {
-    public class HumanoidProfileEditorPanel : Control
+    public class HumanoidProfileEditor : Control
     {
         private static readonly StyleBoxFlat HighlightedStyle = new StyleBoxFlat
         {
@@ -34,7 +34,7 @@ namespace Content.Client.UserInterface
         public HumanoidCharacterProfile? Profile;
         public event Action<HumanoidCharacterProfile> OnProfileChanged;
 
-        public HumanoidProfileEditorPanel(ILocalizationManager localization,
+        public HumanoidProfileEditor(ILocalizationManager localization,
             IClientPreferencesManager preferencesManager)
         {
             Profile = (HumanoidCharacterProfile?) preferencesManager.Preferences.SelectedCharacter;
