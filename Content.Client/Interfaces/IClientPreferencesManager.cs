@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Preferences;
 
 namespace Content.Client.Interfaces
@@ -8,7 +7,6 @@ namespace Content.Client.Interfaces
         GameSettings Settings { get; }
         PlayerPreferences Preferences { get; }
         void Initialize();
-        event Action PreferencesChanged;
         void SelectCharacter(ICharacterProfile profile);
         void SelectCharacter(int slot);
         void UpdateCharacter(ICharacterProfile profile, int slot);

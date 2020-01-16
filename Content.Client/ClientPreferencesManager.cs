@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Content.Client.Interfaces;
 using Content.Shared.Preferences;
@@ -20,7 +19,6 @@ namespace Content.Client
 
         public GameSettings Settings { get; private set; }
         public PlayerPreferences Preferences { get; private set; }
-        public event Action PreferencesChanged;
 
         public void Initialize()
         {
