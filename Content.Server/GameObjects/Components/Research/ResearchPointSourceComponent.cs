@@ -18,14 +18,14 @@ namespace Content.Server.GameObjects.Components.Research
         public int PointsPerSecond
         {
             get => _pointsPerSecond;
-            set => value = _pointsPerSecond;
+            set => _pointsPerSecond = value;
         }
 
         [ViewVariables]
         public bool Active
         {
             get => _active;
-            set => value = _active;
+            set => _active = value;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
