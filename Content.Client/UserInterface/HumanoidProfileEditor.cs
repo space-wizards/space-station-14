@@ -28,6 +28,8 @@ namespace Content.Client.UserInterface
         private readonly Button _saveButton;
         private readonly Button _sexFemaleButton;
         private readonly Button _sexMaleButton;
+        private readonly HairStylePicker _hairPicker;
+        private readonly FacialHairStylePicker _facialHairPicker;
 
         private bool _isDirty;
         public int CharacterSlot;
@@ -237,10 +239,10 @@ namespace Content.Client.UserInterface
                 panel.SizeFlagsHorizontal = SizeFlags.None;
                 var hairHBox = new HBoxContainer();
 
-                var hairPicker = new HairStylePicker();
-                hairPicker.Populate();
+                _hairPicker = new HairStylePicker();
+                _hairPicker.Populate();
 
-                hairPicker.OnHairStylePicked += newStyle =>
+                _hairPicker.OnHairStylePicked += newStyle =>
                 {
                     if (!Profile.HasValue)
                         return;
@@ -249,7 +251,7 @@ namespace Content.Client.UserInterface
                     IsDirty = true;
                 };
 
-                hairPicker.OnHairColorPicked += newColor =>
+                _hairPicker.OnHairColorPicked += newColor =>
                 {
                     if (!Profile.HasValue)
                         return;
@@ -258,10 +260,10 @@ namespace Content.Client.UserInterface
                     IsDirty = true;
                 };
 
-                var facialHairPicker = new FacialHairStylePicker();
-                facialHairPicker.Populate();
+                _facialHairPicker = new FacialHairStylePicker();
+                _facialHairPicker.Populate();
 
-                facialHairPicker.OnHairStylePicked += newStyle =>
+                _facialHairPicker.OnHairStylePicked += newStyle =>
                 {
                     if (!Profile.HasValue)
                         return;
@@ -270,7 +272,7 @@ namespace Content.Client.UserInterface
                     IsDirty = true;
                 };
 
-                facialHairPicker.OnHairColorPicked += newColor =>
+                _facialHairPicker.OnHairColorPicked += newColor =>
                 {
                     if (!Profile.HasValue)
                         return;
@@ -279,8 +281,8 @@ namespace Content.Client.UserInterface
                     IsDirty = true;
                 };
 
-                hairHBox.AddChild(hairPicker);
-                hairHBox.AddChild(facialHairPicker);
+                hairHBox.AddChild(_hairPicker);
+                hairHBox.AddChild(_facialHairPicker);
 
                 panel.AddChild(hairHBox);
                 vBox.AddChild(panel);
@@ -317,9 +319,19 @@ namespace Content.Client.UserInterface
                 _sexFemaleButton.Pressed = true;
         }
 
+        private void UpdateHairPickers()
+        {
+            _hairPicker.SetInitialData(
+                Profile.Value.Appearance.HairColor,
+                Profile.Value.Appearance.HairStyleName);
+            _facialHairPicker.SetInitialData(
+                Profile.Value.Appearance.FacialHairColor,
+                Profile.Value.Appearance.FacialHairStyleName);
+        }
+
         private void UpdateSaveButton()
         {
-            _saveButton.Disabled = !IsDirty;
+            _saveButton.Disabled = !Profile.HasValue || !IsDirty;
         }
 
         public void UpdateControls()
@@ -328,6 +340,7 @@ namespace Content.Client.UserInterface
             _nameEdit.Text = Profile?.Name;
             UpdateSexControls();
             _ageEdit.Text = Profile?.Age.ToString();
+            UpdateHairPickers();
             UpdateSaveButton();
         }
     }
