@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Runtime;
 using Content.Client.GameObjects.Components;
 using Content.Client.Interfaces;
 using Content.Shared.Preferences;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Localization;
@@ -34,6 +32,7 @@ namespace Content.Client.UserInterface
         private bool _isDirty;
         public int CharacterSlot;
         public HumanoidCharacterProfile? Profile;
+        public event Action<HumanoidCharacterProfile> OnProfileChanged;
 
         public HumanoidProfileEditorPanel(ILocalizationManager localization,
             IClientPreferencesManager preferencesManager)
@@ -331,14 +330,5 @@ namespace Content.Client.UserInterface
             _ageEdit.Text = Profile?.Age.ToString();
             UpdateSaveButton();
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            //TODO FIXME still need this?
-        }
-
-        public event Action<HumanoidCharacterProfile> OnProfileChanged;
     }
 }
