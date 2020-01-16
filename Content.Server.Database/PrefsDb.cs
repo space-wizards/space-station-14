@@ -18,7 +18,10 @@ namespace Content.Server.Database
 
         public Prefs GetPlayerPreferences(string username)
         {
-            return _prefsCtx.Preferences.SingleOrDefault(p => p.Username == username);
+            return _prefsCtx
+                .Preferences
+                .Include(p => p.HumanoidProfiles)
+                .SingleOrDefault(p => p.Username == username);
         }
 
         public void SaveSelectedCharacterIndex(string username, int slot)
@@ -45,6 +48,7 @@ namespace Content.Server.Database
                 .SingleOrDefault(h => h.Slot == newProfile.Slot);
             if (!(oldProfile is null)) prefs.HumanoidProfiles.Remove(oldProfile);
             prefs.HumanoidProfiles.Add(newProfile);
+            _prefsCtx.SaveChanges();
         }
 
         public void DeleteCharacterSlot(string username, int slot)

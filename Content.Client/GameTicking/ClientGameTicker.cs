@@ -192,6 +192,14 @@ namespace Content.Client.GameTicking
 
             _tickerState = TickerState.InLobby;
 
+            _characterSetup = new CharacterSetupGui(_entityManager, _localization, _resourceCache, _preferencesManager);
+            LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
+            _characterSetup.CloseButton.OnPressed += args =>
+            {
+                _lobby.CharacterPreview.UpdateUI();
+                _userInterfaceManager.StateRoot.AddChild(_lobby);
+                _userInterfaceManager.StateRoot.RemoveChild(_characterSetup);
+            };
             _lobby = new LobbyGui(_entityManager, _localization, _resourceCache, _preferencesManager);
             _userInterfaceManager.StateRoot.AddChild(_lobby);
 

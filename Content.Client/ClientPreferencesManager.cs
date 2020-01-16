@@ -43,7 +43,7 @@ namespace Content.Client
 
         public void UpdateCharacter(ICharacterProfile profile, int slot)
         {
-            var characters = Preferences.Characters.ToList();
+            var characters = Preferences.Characters.ToArray();
             characters[slot] = profile;
             Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex);
             var msg = _netManager.CreateNetMessage<MsgUpdateCharacter>();

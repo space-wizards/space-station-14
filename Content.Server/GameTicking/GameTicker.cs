@@ -247,6 +247,8 @@ namespace Content.Server.GameTicking
 
         private void ApplyCharacterProfile(IEntity entity, ICharacterProfile profile)
         {
+            if (profile is null)
+                return;
             entity.GetComponent<LooksComponent>().UpdateFromProfile(profile);
             entity.Name = profile.Name;
         }

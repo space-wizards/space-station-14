@@ -144,10 +144,7 @@ namespace Content.Client.UserInterface
                 PanelOverride = new StyleBoxFlat {BackgroundColor = NanoStyle.NanoGold},
                 CustomMinimumSize = (2, 0)
             });
-            _humanoidProfileEditorPanel = new HumanoidProfileEditorPanel(localization,
-                resourceCache,
-                preferencesManager
-            );
+            _humanoidProfileEditorPanel = new HumanoidProfileEditorPanel(localization, preferencesManager);
             _humanoidProfileEditorPanel.OnProfileChanged += newProfile => { UpdateUI(); };
             hBox.AddChild(_humanoidProfileEditorPanel);
 
@@ -172,10 +169,7 @@ namespace Content.Client.UserInterface
                 var characterPickerButton = new CharacterPickerButton(_entityManager,
                     _preferencesManager,
                     characterButtonsGroup,
-                    character,
-                    character.Name,
-                    character.Name,
-                    "Assistant");
+                    character);
                 _charactersVBox.AddChild(characterPickerButton);
 
                 var characterIndexCopy = characterIndex;
@@ -197,21 +191,19 @@ namespace Content.Client.UserInterface
         private class CharacterPickerButton : Control
         {
             public readonly Button ActualButton;
+            private IEntity _previewDummy;
 
             public CharacterPickerButton(
                 IEntityManager entityManager,
                 IClientPreferencesManager preferencesManager,
                 ButtonGroup group,
-                ICharacterProfile profile,
-                string slotName,
-                string characterName,
-                string jobTitle)
+                ICharacterProfile profile)
             {
-                var previewDummy = entityManager.SpawnEntityAt("HumanMob_Content",
+                _previewDummy = entityManager.SpawnEntityAt("HumanMob_Content",
                     new MapCoordinates(Vector2.Zero, MapId.Nullspace));
-                previewDummy.GetComponent<LooksComponent>().UpdateFromProfile(profile);
+                _previewDummy.GetComponent<LooksComponent>().UpdateFromProfile(profile);
 
-                var spriteComponent = previewDummy.GetComponent<SpriteComponent>();
+                var isSelectedCharacter = profile == preferencesManager.Preferences.SelectedCharacter;
 
                 ActualButton = new Button
                 {
@@ -220,25 +212,26 @@ namespace Content.Client.UserInterface
                     ToggleMode = true,
                     Group = group
                 };
+                if (isSelectedCharacter)
+                    ActualButton.Pressed = true;
                 AddChild(ActualButton);
 
                 var view = new SpriteView
                 {
-                    Sprite = spriteComponent,
+                    Sprite = _previewDummy.GetComponent<SpriteComponent>(),
                     Scale = (2, 2),
                     MouseFilter = MouseFilterMode.Ignore,
                     OverrideDirection = Direction.South
                 };
-                if (slotName != characterName) slotName = $"({slotName}) {characterName}";
 
                 var descriptionLabel = new Label
                 {
-                    Text = $"{slotName}\n{jobTitle}"
+                    Text = $"{profile.Name}\nAssistant" //TODO implement job selection
                 };
                 var deleteButton = new Button
                 {
                     Text = "Delete",
-                    Visible = profile != preferencesManager.Preferences.SelectedCharacter,
+                    Visible = !isSelectedCharacter,
                     SizeFlagsHorizontal = SizeFlags.ShrinkEnd
                 };
                 deleteButton.OnPressed += args =>
@@ -261,6 +254,14 @@ namespace Content.Client.UserInterface
                 };
 
                 AddChild(internalHBox);
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                if (!disposing) return;
+                _previewDummy.Delete();
+                _previewDummy = null;
             }
         }
     }

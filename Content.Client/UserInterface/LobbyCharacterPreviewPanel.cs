@@ -14,7 +14,7 @@ namespace Content.Client.UserInterface
     public class LobbyCharacterPreviewPanel : Control
     {
         private readonly IClientPreferencesManager _preferencesManager;
-        private readonly IEntity _previewDummy;
+        private IEntity _previewDummy;
         private readonly Label _summaryLabel;
 
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
@@ -68,7 +68,9 @@ namespace Content.Client.UserInterface
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (disposing) _previewDummy.Delete();
+            if (!disposing) return;
+            _previewDummy.Delete();
+            _previewDummy = null;
         }
 
         private static SpriteView MakeSpriteView(IEntity entity, Direction direction)
@@ -83,11 +85,17 @@ namespace Content.Client.UserInterface
 
         public void UpdateUI()
         {
-            var selectedCharacter = (HumanoidCharacterProfile) _preferencesManager.Preferences.SelectedCharacter;
-            _summaryLabel.Text = selectedCharacter.Summary;
-            _previewDummy
-                .GetComponent<LooksComponent>()
-                .Appearance = (HumanoidCharacterAppearance) selectedCharacter.CharacterAppearance;
+            if (!(_preferencesManager.Preferences.SelectedCharacter is HumanoidCharacterProfile selectedCharacter))
+            {
+                _summaryLabel.Text = string.Empty;
+            }
+            else
+            {
+                _summaryLabel.Text = selectedCharacter.Summary;
+                _previewDummy
+                    .GetComponent<LooksComponent>()
+                    .Appearance = (HumanoidCharacterAppearance) selectedCharacter.CharacterAppearance;
+            }
         }
     }
 }

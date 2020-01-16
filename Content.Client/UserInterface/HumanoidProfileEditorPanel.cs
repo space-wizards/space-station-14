@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime;
 using Content.Client.GameObjects.Components;
 using Content.Client.Interfaces;
 using Content.Shared.Preferences;
@@ -23,9 +24,6 @@ namespace Content.Client.UserInterface
         };
 
         private readonly LineEdit _ageEdit;
-        private readonly FacialHairPickerWindow _facialHairPickerWindow;
-
-        private readonly HairPickerWindow _hairPickerWindow;
 
         private readonly LineEdit _nameEdit;
         private readonly IClientPreferencesManager _preferencesManager;
@@ -35,43 +33,14 @@ namespace Content.Client.UserInterface
 
         private bool _isDirty;
         public int CharacterSlot;
-        public HumanoidCharacterProfile Profile;
+        public HumanoidCharacterProfile? Profile;
 
         public HumanoidProfileEditorPanel(ILocalizationManager localization,
-            IResourceCache resourceCache,
             IClientPreferencesManager preferencesManager)
         {
-            Profile = (HumanoidCharacterProfile) preferencesManager.Preferences.SelectedCharacter;
+            Profile = (HumanoidCharacterProfile?) preferencesManager.Preferences.SelectedCharacter;
             CharacterSlot = preferencesManager.Preferences.SelectedCharacterIndex;
             _preferencesManager = preferencesManager;
-            _hairPickerWindow = new HairPickerWindow(resourceCache, localization);
-            _hairPickerWindow.Populate();
-            _hairPickerWindow.OnHairStylePicked += newStyle =>
-            {
-                Profile = Profile.WithCharacterAppearance(
-                    Profile.Appearance.WithHairStyleName(newStyle));
-                IsDirty = true;
-            };
-            _hairPickerWindow.OnHairColorPicked += newColor =>
-            {
-                Profile = Profile.WithCharacterAppearance(
-                    Profile.Appearance.WithHairColor(newColor));
-                IsDirty = true;
-            };
-            _facialHairPickerWindow = new FacialHairPickerWindow(resourceCache, localization);
-            _facialHairPickerWindow.Populate();
-            _facialHairPickerWindow.OnHairStylePicked += newStyle =>
-            {
-                Profile = Profile.WithCharacterAppearance(
-                    Profile.Appearance.WithFacialHairStyleName(newStyle));
-                IsDirty = true;
-            };
-            _facialHairPickerWindow.OnHairColorPicked += newColor =>
-            {
-                Profile = Profile.WithCharacterAppearance(
-                    Profile.Appearance.WithFacialHairColor(newColor));
-                IsDirty = true;
-            };
 
             var margin = new MarginContainer
             {
@@ -129,7 +98,7 @@ namespace Content.Client.UserInterface
                 };
                 _nameEdit.OnTextChanged += args =>
                 {
-                    Profile = Profile.WithName(args.Text);
+                    Profile = Profile?.WithName(args.Text);
                     IsDirty = true;
                 };
                 var nameRandomButton = new Button
@@ -169,7 +138,7 @@ namespace Content.Client.UserInterface
                 };
                 _sexMaleButton.OnPressed += args =>
                 {
-                    Profile = Profile.WithSex(Sex.Male);
+                    Profile = Profile?.WithSex(Sex.Male);
                     IsDirty = true;
                 };
                 _sexFemaleButton = new Button
@@ -179,7 +148,7 @@ namespace Content.Client.UserInterface
                 };
                 _sexFemaleButton.OnPressed += args =>
                 {
-                    Profile = Profile.WithSex(Sex.Female);
+                    Profile = Profile?.WithSex(Sex.Female);
                     IsDirty = true;
                 };
                 hBox.AddChild(sexLabel);
@@ -202,7 +171,7 @@ namespace Content.Client.UserInterface
                 {
                     if (!int.TryParse(args.Text, out var newAge))
                         return;
-                    Profile = Profile.WithAge(newAge);
+                    Profile = Profile?.WithAge(newAge);
                     IsDirty = true;
                 };
                 hBox.AddChild(ageLabel);
@@ -253,8 +222,8 @@ namespace Content.Client.UserInterface
                 _saveButton.OnPressed += args =>
                 {
                     IsDirty = false;
-                    _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
-                    OnProfileChanged?.Invoke(Profile);
+                    _preferencesManager.UpdateCharacter(Profile.Value, CharacterSlot);
+                    OnProfileChanged?.Invoke(Profile.Value);
                 };
                 panel.AddChild(_saveButton);
                 rightColumn.AddChild(panel);
@@ -267,52 +236,54 @@ namespace Content.Client.UserInterface
             {
                 var panel = HighlightedContainer();
                 panel.SizeFlagsHorizontal = SizeFlags.None;
-                var hairVBox = new VBoxContainer();
-                var hairButtonGroup = new ButtonGroup();
-                var hairButtonHBox = new HBoxContainer();
-                var hairButton = new Button
-                {
-                    Text = localization.GetString("Hair"),
-                    Group = hairButtonGroup,
-                    Pressed = true
-                };
-                var facialHairButton = new Button
-                {
-                    Text = localization.GetString("Facial Hair"),
-                    Group = hairButtonGroup
-                };
+                var hairHBox = new HBoxContainer();
 
-                var hairPanel = new HairPickerPanel(resourceCache, localization);
-                hairPanel.Populate(HairType.Hair);
+                var hairPicker = new HairStylePicker();
+                hairPicker.Populate();
 
-                hairPanel.OnHairStylePicked += newStyle =>
+                hairPicker.OnHairStylePicked += newStyle =>
                 {
-                    Profile = Profile.WithCharacterAppearance(
-                        hairButton.Pressed
-                            ? Profile.Appearance.WithHairStyleName(newStyle)
-                            : Profile.Appearance.WithFacialHairStyleName(newStyle));
+                    if (!Profile.HasValue)
+                        return;
+                    Profile = Profile.Value.WithCharacterAppearance(
+                        Profile.Value.Appearance.WithHairStyleName(newStyle));
                     IsDirty = true;
                 };
 
-                hairPanel.OnHairColorPicked += newColor =>
+                hairPicker.OnHairColorPicked += newColor =>
                 {
-                    Profile = Profile.WithCharacterAppearance(
-                        hairButton.Pressed
-                            ? Profile.Appearance.WithHairColor(newColor)
-                            : Profile.Appearance.WithFacialHairColor(newColor));
+                    if (!Profile.HasValue)
+                        return;
+                    Profile = Profile?.WithCharacterAppearance(
+                        Profile.Value.Appearance.WithHairColor(newColor));
                     IsDirty = true;
                 };
 
-                hairButton.OnPressed += args => { hairPanel.Populate(HairType.Hair); };
-                facialHairButton.OnPressed += args => { hairPanel.Populate(HairType.FacialHair); };
+                var facialHairPicker = new FacialHairStylePicker();
+                facialHairPicker.Populate();
 
-                hairButtonHBox.AddChild(hairButton);
-                hairButtonHBox.AddChild(facialHairButton);
+                facialHairPicker.OnHairStylePicked += newStyle =>
+                {
+                    if (!Profile.HasValue)
+                        return;
+                    Profile = Profile.Value.WithCharacterAppearance(
+                        Profile.Value.Appearance.WithFacialHairStyleName(newStyle));
+                    IsDirty = true;
+                };
 
-                hairVBox.AddChild(hairButtonHBox);
-                hairVBox.AddChild(hairPanel);
+                facialHairPicker.OnHairColorPicked += newColor =>
+                {
+                    if (!Profile.HasValue)
+                        return;
+                    Profile = Profile?.WithCharacterAppearance(
+                        Profile.Value.Appearance.WithFacialHairColor(newColor));
+                    IsDirty = true;
+                };
 
-                panel.AddChild(hairVBox);
+                hairHBox.AddChild(hairPicker);
+                hairHBox.AddChild(facialHairPicker);
+
+                panel.AddChild(hairHBox);
                 vBox.AddChild(panel);
             }
 
@@ -341,7 +312,7 @@ namespace Content.Client.UserInterface
 
         private void UpdateSexControls()
         {
-            if (Profile.Sex == Sex.Male)
+            if (Profile.Value.Sex == Sex.Male)
                 _sexMaleButton.Pressed = true;
             else
                 _sexFemaleButton.Pressed = true;
@@ -354,9 +325,10 @@ namespace Content.Client.UserInterface
 
         public void UpdateControls()
         {
-            _nameEdit.Text = Profile.Name;
+            if (!Profile.HasValue) return;
+            _nameEdit.Text = Profile?.Name;
             UpdateSexControls();
-            _ageEdit.Text = Profile.Age.ToString();
+            _ageEdit.Text = Profile?.Age.ToString();
             UpdateSaveButton();
         }
 
@@ -364,8 +336,7 @@ namespace Content.Client.UserInterface
         {
             base.Dispose(disposing);
             if (!disposing) return;
-            _hairPickerWindow.Dispose();
-            _facialHairPickerWindow.Dispose();
+            //TODO FIXME still need this?
         }
 
         public event Action<HumanoidCharacterProfile> OnProfileChanged;

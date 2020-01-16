@@ -52,7 +52,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 HairStyles.HairStylesMap[hairStyle]);
 
             var facialHairStyle = Appearance.FacialHairStyleName;
-            if (string.IsNullOrWhiteSpace(facialHairStyle) || !HairStyles.FacialHairStylesMap.ContainsKey(hairStyle))
+            if (string.IsNullOrWhiteSpace(facialHairStyle) || !HairStyles.FacialHairStylesMap.ContainsKey(facialHairStyle))
                 facialHairStyle = HairStyles.DefaultFacialHairStyle;
             sprite.LayerSetState(HumanoidVisualLayers.FacialHair,
                 HairStyles.FacialHairStylesMap[facialHairStyle]);

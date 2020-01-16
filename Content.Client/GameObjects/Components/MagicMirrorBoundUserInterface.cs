@@ -69,15 +69,14 @@ namespace Content.Client.GameObjects.Components
 
     public class FacialHairStylePicker : HairStylePicker
     {
-        public FacialHairPickerWindow(IResourceCache resourceCache, ILocalizationManager localization) : base(resourceCache, localization)
-        {
-            Title = "Facial hair";
-        }
-
         public override void Populate()
         {
             var humanFacialHairRSIPath = SharedSpriteComponent.TextureRoot / "Mob/human_facial_hair.rsi";
-            var humanFacialHairRSI = ResourceCache.GetResource<RSIResource>(humanFacialHairRSIPath).RSI;
+            var humanFacialHairRSI = ResC.GetResource<RSIResource>(humanFacialHairRSIPath).RSI;
+
+            var styles = HairStyles.FacialHairStylesMap.ToList();
+            styles.Sort(HairStyles.FacialHairStyleComparer);
+
             foreach (var (styleName, styleState) in HairStyles.FacialHairStylesMap)
             {
                 Items.AddItem(styleName, humanFacialHairRSI[styleState].Frame0);
@@ -85,7 +84,7 @@ namespace Content.Client.GameObjects.Components
         }
     }
 
-    public class HairPickerWindow : SS14Window
+    public class HairStylePicker : Control
     {
         public event Action<Color> OnHairColorPicked;
         public event Action<string> OnHairStylePicked;
