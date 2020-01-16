@@ -24,33 +24,27 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     [RegisterComponent]
     public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackBy, IMapInit
     {
+        private const float BulletOffset = 0.2f;
+
         public override string Name => "BallisticMagazineWeapon";
+        public override uint? NetID => ContentNetIDs.BALLISTIC_MAGAZINE_WEAPON;
 
-        [ViewVariables]
-        private string _defaultMagazine;
+        [ViewVariables] private string _defaultMagazine;
 
-        [ViewVariables]
-        private ContainerSlot _magazineSlot;
+        [ViewVariables] private ContainerSlot _magazineSlot;
         private List<BallisticMagazineType> _magazineTypes;
 
-        [ViewVariables]
-        public List<BallisticMagazineType> MagazineTypes => _magazineTypes;
-        [ViewVariables]
-        private IEntity Magazine => _magazineSlot.ContainedEntity;
+        [ViewVariables] public List<BallisticMagazineType> MagazineTypes => _magazineTypes;
+        [ViewVariables] private IEntity Magazine => _magazineSlot.ContainedEntity;
 
 #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _bulletDropRandom;
 #pragma warning restore 649
-        [ViewVariables]
-        private string _magInSound;
-        [ViewVariables]
-        private string _magOutSound;
-        [ViewVariables]
-        private string _autoEjectSound;
-        [ViewVariables]
-        private bool _autoEjectMagazine;
-        [ViewVariables]
-        private AppearanceComponent _appearance;
+        [ViewVariables] private string _magInSound;
+        [ViewVariables] private string _magOutSound;
+        [ViewVariables] private string _autoEjectSound;
+        [ViewVariables] private bool _autoEjectMagazine;
+        [ViewVariables] private AppearanceComponent _appearance;
 
         private static readonly Direction[] _randomBulletDirs =
         {
@@ -67,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             base.ExposeData(serializer);
 
             serializer.DataField(ref _magazineTypes, "magazines",
-                            new List<BallisticMagazineType>{BallisticMagazineType.Unspecified});
+                new List<BallisticMagazineType> {BallisticMagazineType.Unspecified});
             serializer.DataField(ref _defaultMagazine, "default_magazine", null);
             serializer.DataField(ref _autoEjectMagazine, "auto_eject_magazine", false);
             serializer.DataField(ref _autoEjectSound, "sound_auto_eject", null);
@@ -137,6 +131,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
 
             _updateAppearance();
+            Dirty();
             return true;
         }
 
@@ -153,15 +148,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 entity.Transform.GridPosition = Owner.Transform.GridPosition;
                 if (_magOutSound != null)
                 {
-                    Owner.GetComponent<SoundComponent>().Play(_magOutSound);
+                    Owner.GetComponent<SoundComponent>().Play(_magOutSound, AudioParams.Default.WithVolume(20));
                 }
 
                 _updateAppearance();
+                Dirty();
                 entity.GetComponent<BallisticMagazineComponent>().OnAmmoCountChanged -= _magazineAmmoCountChanged;
                 return true;
             }
 
             _updateAppearance();
+            Dirty();
             return false;
         }
 
@@ -171,7 +168,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
             // Eject chambered bullet.
             var entity = RemoveFromChamber(chamber);
-            entity.Transform.GridPosition = Owner.Transform.GridPosition;
+            var offsetPos = (CalcBulletOffset(), CalcBulletOffset());
+            entity.Transform.GridPosition = Owner.Transform.GridPosition.Offset(offsetPos);
             entity.Transform.LocalRotation = _bulletDropRandom.Pick(_randomBulletDirs).ToAngle();
             var effect = $"/Audio/Guns/Casings/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
             Owner.GetComponent<SoundComponent>().Play(effect, AudioParams.Default.WithVolume(-3));
@@ -187,15 +185,29 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
                 if (magComponent.CountLoaded == 0 && _autoEjectMagazine)
                 {
-                    EjectMagazine();
-                    if (_autoEjectSound != null)
-                    {
-                        Owner.GetComponent<SoundComponent>().Play(_autoEjectSound, AudioParams.Default.WithVolume(-5));
-                    }
+                    DoAutoEject();
                 }
             }
 
+            Dirty();
             _updateAppearance();
+        }
+
+        private float CalcBulletOffset()
+        {
+            return _bulletDropRandom.NextFloat() * (BulletOffset * 2) - BulletOffset;
+        }
+
+        private void DoAutoEject()
+        {
+            SendNetworkMessage(new BmwComponentAutoEjectedMessage());
+            EjectMagazine();
+            if (_autoEjectSound != null)
+            {
+                Owner.GetComponent<SoundComponent>().Play(_autoEjectSound, AudioParams.Default.WithVolume(-5));
+            }
+
+            Dirty();
         }
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
@@ -237,6 +249,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         private void _magazineAmmoCountChanged()
         {
+            Dirty();
             _updateAppearance();
         }
 
@@ -255,6 +268,21 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 _appearance.SetData(BallisticMagazineWeaponVisuals.AmmoLeft, 0);
                 _appearance.SetData(BallisticMagazineWeaponVisuals.MagazineLoaded, false);
             }
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            var chambered = GetChambered(0) != null;
+
+            (int, int)? count = null;
+
+            if (Magazine != null)
+            {
+                var magComponent = Magazine.GetComponent<BallisticMagazineComponent>();
+                count = (magComponent.CountLoaded, magComponent.Capacity);
+            }
+
+            return new BallisticMagazineWeaponComponentState(chambered, count);
         }
 
         [Verb]

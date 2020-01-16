@@ -27,7 +27,7 @@
   - type: MeleeWeapon
 
 - type: entity
-  name: Welder
+  name: Welding Tool
   parent: BaseItem
   id: Welder
   description: Melts anything as long as it's fueled, don't forget your eye protection!
@@ -46,6 +46,7 @@
     state: welder
   - type: ItemCooldown
   - type: MeleeWeapon
+  - type: ItemStatus
 
 - type: entity
   name: Wrench

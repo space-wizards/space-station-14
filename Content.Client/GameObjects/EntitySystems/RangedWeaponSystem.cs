@@ -68,7 +68,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             if (weapon.Automatic || canFireSemi)
             {
-                weapon.TryFire(worldPos);
+                weapon.SyncFirePos(worldPos);
             }
         }
     }

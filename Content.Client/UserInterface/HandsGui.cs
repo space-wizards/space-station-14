@@ -23,9 +23,10 @@ namespace Content.Client.UserInterface
 {
     public class HandsGui : Control
     {
+        private const string HandNameLeft = "left";
+        private const string HandNameRight = "right";
+
         private const int CooldownLevels = 8;
-        private const int BoxSpacing = 0;
-        private const int BoxSize = 64;
 
 #pragma warning disable 0649
         [Dependency] private readonly IPlayerManager _playerManager;
@@ -40,8 +41,6 @@ namespace Content.Client.UserInterface
 
         private IEntity LeftHand;
         private IEntity RightHand;
-        private UIBox2i _handL;
-        private UIBox2i _handR;
 
         private readonly SpriteView LeftSpriteView;
         private readonly SpriteView RightSpriteView;
@@ -53,12 +52,12 @@ namespace Content.Client.UserInterface
         private readonly Control _leftContainer;
         private readonly Control _rightContainer;
 
+        private readonly ItemStatusPanel _rightStatusPanel;
+        private readonly ItemStatusPanel _leftStatusPanel;
+
         public HandsGui()
         {
             IoCManager.InjectDependencies(this);
-
-            _handR = new UIBox2i(0, 0, BoxSize, BoxSize);
-            _handL = _handR.Translated((BoxSize + BoxSpacing, 0));
 
             MouseFilter = MouseFilterMode.Stop;
 
@@ -73,30 +72,37 @@ namespace Content.Client.UserInterface
                     _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/cooldown-{i}.png");
             }
 
+            _rightStatusPanel = new ItemStatusPanel(true);
+            _leftStatusPanel = new ItemStatusPanel(false);
+
             _leftContainer = new Control {MouseFilter = MouseFilterMode.Ignore};
             _rightContainer = new Control {MouseFilter = MouseFilterMode.Ignore};
             var hBox = new HBoxContainer
             {
                 SeparationOverride = 0,
-                Children = {_rightContainer, _leftContainer},
+                Children = {_rightStatusPanel, _rightContainer, _leftContainer, _leftStatusPanel},
                 MouseFilter = MouseFilterMode.Ignore
             };
 
             AddChild(hBox);
 
-            _leftContainer.AddChild(new TextureRect
+            var textureLeft = new TextureRect
             {
-                MouseFilter = MouseFilterMode.Ignore,
                 Texture = TextureHandLeft,
                 TextureScale = (2, 2)
-            });
+            };
+            textureLeft.OnKeyBindDown += args => HandKeyBindDown(args, HandNameLeft);
 
-            _rightContainer.AddChild(new TextureRect
+            _leftContainer.AddChild(textureLeft);
+
+            var textureRight = new TextureRect
             {
-                MouseFilter = MouseFilterMode.Ignore,
                 Texture = TextureHandRight,
                 TextureScale = (2, 2)
-            });
+            };
+            textureRight.OnKeyBindDown += args => HandKeyBindDown(args, HandNameRight);
+
+            _rightContainer.AddChild(textureRight);
 
             _leftContainer.AddChild(ActiveHandRect = new TextureRect
             {
@@ -127,6 +133,7 @@ namespace Content.Client.UserInterface
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 MouseFilter = MouseFilterMode.Ignore,
+                Stretch = TextureRect.StretchMode.KeepCentered,
                 TextureScale = (2, 2),
                 Visible = false,
             });
@@ -136,6 +143,7 @@ namespace Content.Client.UserInterface
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 MouseFilter = MouseFilterMode.Ignore,
+                Stretch = TextureRect.StretchMode.KeepCentered,
                 TextureScale = (2, 2),
                 Visible = false
             });
@@ -166,12 +174,13 @@ namespace Content.Client.UserInterface
             if (!TryGetHands(out var hands))
                 return;
 
-            var left = hands.GetEntity("left");
-            var right = hands.GetEntity("right");
+            var left = hands.GetEntity(HandNameLeft);
+            var right = hands.GetEntity(HandNameRight);
 
             ActiveHandRect.Parent.RemoveChild(ActiveHandRect);
-            var parent = hands.ActiveIndex == "left" ? _leftContainer : _rightContainer;
+            var parent = hands.ActiveIndex == HandNameLeft ? _leftContainer : _rightContainer;
             parent.AddChild(ActiveHandRect);
+            ActiveHandRect.SetPositionInParent(1);
 
             if (left != null)
             {
@@ -230,42 +239,12 @@ namespace Content.Client.UserInterface
             hands.AttackByInHand(hand);
         }
 
-        protected override bool HasPoint(Vector2 point)
+        private void HandKeyBindDown(GUIBoundKeyEventArgs args, string handIndex)
         {
-            return _handL.Contains((Vector2i) point) || _handR.Contains((Vector2i) point);
-        }
-
-        protected override void KeyBindDown(GUIBoundKeyEventArgs args)
-        {
-            base.KeyBindDown(args);
-
-            if (!args.CanFocus)
-            {
-                return;
-            }
-
-            var leftHandContains = _handL.Contains((Vector2i) args.RelativePosition);
-            var rightHandContains = _handR.Contains((Vector2i) args.RelativePosition);
-
-            string handIndex;
-            if (leftHandContains)
-            {
-                handIndex = "left";
-            }
-            else if (rightHandContains)
-            {
-                handIndex = "right";
-            }
-            else
-            {
-                return;
-            }
-
             if (args.Function == EngineKeyFunctions.Use)
             {
                 if (!TryGetHands(out var hands))
                     return;
-
 
                 if (hands.ActiveIndex == handIndex)
                 {
@@ -276,21 +255,18 @@ namespace Content.Client.UserInterface
                     AttackByInHand(handIndex);
                 }
             }
-
             else if (args.Function == ContentKeyFunctions.ExamineEntity)
             {
                 var examine = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ExamineSystem>();
-                if (leftHandContains)
+                if (handIndex == HandNameLeft)
                     examine.DoExamine(LeftHand);
-                else if (rightHandContains)
+                else if (handIndex == HandNameRight)
                     examine.DoExamine(RightHand);
             }
-
             else if (args.Function == ContentKeyFunctions.MouseMiddle)
             {
                 SendSwitchHandTo(handIndex);
             }
-
             else if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
                 if (!TryGetHands(out var hands))
@@ -316,6 +292,9 @@ namespace Content.Client.UserInterface
 
             UpdateCooldown(CooldownCircleLeft, LeftHand);
             UpdateCooldown(CooldownCircleRight, RightHand);
+
+            _rightStatusPanel.Update(RightHand);
+            _leftStatusPanel.Update(LeftHand);
         }
 
         private void UpdateCooldown(TextureRect cooldownTexture, IEntity entity)

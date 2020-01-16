@@ -12,6 +12,10 @@ namespace Content.Client.UserInterface
 {
     public sealed class NanoStyle
     {
+        public const string StyleClassSliderRed = "Red";
+        public const string StyleClassSliderGreen = "Green";
+        public const string StyleClassSliderBlue = "Blue";
+
         public const string StyleClassLabelHeading = "LabelHeading";
         public const string StyleClassLabelHeadingBigger = "LabelHeadingBigger";
         public const string StyleClassLabelSubText = "LabelSubText";
@@ -30,11 +34,14 @@ namespace Content.Client.UserInterface
         public const string StyleClassPowerStateLow = "PowerStateLow";
         public const string StyleClassPowerStateGood = "PowerStateGood";
 
+        public const string StyleClassItemStatus = "ItemStatus";
+
         public Stylesheet Stylesheet { get; }
 
         public NanoStyle()
         {
             var resCache = IoCManager.Resolve<IResourceCache>();
+            var notoSans8 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 8);
             var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
             var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
             var notoSansBold12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 12);
@@ -108,7 +115,8 @@ namespace Content.Client.UserInterface
 
             var vScrollBarGrabberNormal = new StyleBoxFlat
             {
-                BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginLeftOverride = 10, ContentMarginTopOverride = 10
+                BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginLeftOverride = 10,
+                ContentMarginTopOverride = 10
             };
             var vScrollBarGrabberHover = new StyleBoxFlat
             {
@@ -175,7 +183,7 @@ namespace Content.Client.UserInterface
             var itemListItemBackground = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)};
             itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
-            var itemListItemBackgroundTransparent = new StyleBoxFlat { BackgroundColor = Color.Transparent };
+            var itemListItemBackgroundTransparent = new StyleBoxFlat {BackgroundColor = Color.Transparent};
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
@@ -200,6 +208,43 @@ namespace Content.Client.UserInterface
                 Texture = stripeBackTex,
                 Mode = StyleBoxTexture.StretchMode.Tile
             };
+
+            // Slider
+            var sliderOutlineTex = resCache.GetTexture("/Nano/slider_outline.svg.96dpi.png");
+            var sliderFillTex = resCache.GetTexture("/Nano/slider_fill.svg.96dpi.png");
+            var sliderGrabTex = resCache.GetTexture("/Nano/slider_grabber.svg.96dpi.png");
+
+            var sliderFillBox = new StyleBoxTexture
+            {
+                Texture = sliderFillTex,
+                Modulate = Color.FromHex("#3E6C45")
+            };
+
+            var sliderBackBox = new StyleBoxTexture
+            {
+                Texture = sliderFillTex,
+                Modulate = Color.FromHex("#1E1E22")
+            };
+
+            var sliderForeBox = new StyleBoxTexture
+            {
+                Texture = sliderOutlineTex,
+                Modulate = Color.FromHex("#494949")
+            };
+
+            var sliderGrabBox = new StyleBoxTexture
+            {
+                Texture = sliderGrabTex,
+            };
+
+            sliderFillBox.SetPatchMargin(StyleBox.Margin.All, 12);
+            sliderBackBox.SetPatchMargin(StyleBox.Margin.All, 12);
+            sliderForeBox.SetPatchMargin(StyleBox.Margin.All, 12);
+            sliderGrabBox.SetPatchMargin(StyleBox.Margin.All, 12);
+
+            var sliderFillGreen = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Green};
+            var sliderFillRed = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Red};
+            var sliderFillBlue = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Blue};
 
             Stylesheet = new Stylesheet(new[]
             {
@@ -437,7 +482,7 @@ namespace Content.Client.UserInterface
                         itemListBackgroundSelected)
                 }),
 
-                new StyleRule(new SelectorElement(typeof(ItemList), new []{"transparentItemList"}, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(ItemList), new[] {"transparentItemList"}, null, null), new[]
                 {
                     new StyleProperty(ItemList.StylePropertyBackground,
                         new StyleBoxFlat {BackgroundColor = Color.Transparent}),
@@ -482,11 +527,12 @@ namespace Content.Client.UserInterface
                 }),
 
                 // Bigger Label
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeadingBigger}, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSansBold20),
-                    new StyleProperty(Label.StylePropertyFontColor, NanoGold),
-                }),
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeadingBigger}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Label.StylePropertyFont, notoSansBold20),
+                        new StyleProperty(Label.StylePropertyFontColor, NanoGold),
+                    }),
 
                 // Small Label
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSubText}, null, null), new[]
@@ -496,17 +542,18 @@ namespace Content.Client.UserInterface
                 }),
 
                 // Label Key
-                new StyleRule(new SelectorElement(typeof(Label), new []{StyleClassLabelKeyText}, null, null), new []
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelKeyText}, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyFont, notoSansBold12),
                     new StyleProperty(Label.StylePropertyFontColor, NanoGold)
                 }),
 
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSecondaryColor}, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSans12),
-                    new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
-                }),
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSecondaryColor}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(Label.StylePropertyFont, notoSans12),
+                        new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
+                    }),
 
                 // Big Button
                 new StyleRule(new SelectorElement(typeof(Button), new[] {StyleClassButtonBig}, null, null), new[]
@@ -596,7 +643,7 @@ namespace Content.Client.UserInterface
                 // StripeBack
                 new StyleRule(
                     SelectorElement.Type(typeof(StripeBack)),
-                    new []
+                    new[]
                     {
                         new StyleProperty(StripeBack.StylePropertyBackground, stripeBack),
                     }),
@@ -604,10 +651,40 @@ namespace Content.Client.UserInterface
                 // StyleClassLabelBig
                 new StyleRule(
                     SelectorElement.Class(StyleClassLabelBig),
-                    new []
+                    new[]
                     {
                         new StyleProperty("font", notoSans16),
                     }),
+
+                // StyleClassItemStatus
+                new StyleRule(SelectorElement.Class(StyleClassItemStatus), new[]
+                {
+                    new StyleProperty("font", notoSans10),
+                }),
+
+                // Slider
+                new StyleRule(SelectorElement.Type(typeof(Slider)), new []
+                {
+                    new StyleProperty(Slider.StylePropertyBackground, sliderBackBox),
+                    new StyleProperty(Slider.StylePropertyForeground, sliderForeBox),
+                    new StyleProperty(Slider.StylePropertyGrabber, sliderGrabBox),
+                    new StyleProperty(Slider.StylePropertyFill, sliderFillBox),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderRed}, null, null), new []
+                {
+                    new StyleProperty(Slider.StylePropertyFill, sliderFillRed),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderGreen}, null, null), new []
+                {
+                    new StyleProperty(Slider.StylePropertyFill, sliderFillGreen),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderBlue}, null, null), new []
+                {
+                    new StyleProperty(Slider.StylePropertyFill, sliderFillBlue),
+                })
             });
         }
     }

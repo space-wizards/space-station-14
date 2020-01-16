@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
@@ -322,7 +323,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (userEntity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
             {
-                DoAttack(userEntity, coords, uid);
+                DoAttack(userEntity, coords);
             }
             else
             {
@@ -747,7 +748,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private void DoAttack(IEntity player, GridCoordinates coordinates, EntityUid uid)
+        private void DoAttack(IEntity player, GridCoordinates coordinates)
         {
             // Verify player is on the same map as the entity he clicked on
             if (_mapManager.GetGrid(coordinates.GridID).ParentMapId != player.Transform.MapID)

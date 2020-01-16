@@ -84,5 +84,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float StepSoundDistance { get; set; }
+
+        public void SetVelocityDirection(Direction direction, bool enabled) { }
     }
 }

@@ -214,11 +214,6 @@ namespace Content.Client.UserInterface
                 SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
 
-            HandsContainer = new MarginContainer
-            {
-                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
-            };
-
             _combatPanelContainer = new VBoxContainer
             {
                 Children =
@@ -235,9 +230,20 @@ namespace Content.Client.UserInterface
             _combatModeButton.OnToggled += args => OnCombatModeChanged?.Invoke(args.Pressed);
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
-            inventoryContainer.Children.Add(HandsContainer);
             inventoryContainer.Children.Add(InventoryQuickButtonContainer);
             inventoryContainer.Children.Add(_combatPanelContainer);
+
+
+            HandsContainer = new MarginContainer
+            {
+                SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
+            };
+
+            RootControl.AddChild(HandsContainer);
+
+            LayoutContainer.SetAnchorAndMarginPreset(HandsContainer, LayoutContainer.LayoutPreset.CenterBottom);
+            LayoutContainer.SetGrowHorizontal(HandsContainer, LayoutContainer.GrowDirection.Both);
+            LayoutContainer.SetGrowVertical(HandsContainer, LayoutContainer.GrowDirection.Begin);
         }
 
         private void ButtonTutorialOnOnToggled()

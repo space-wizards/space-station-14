@@ -51,4 +51,5 @@
   - restartround
   - respawn
   - rejuvenate
+  - addcomp
   CanViewVar: true

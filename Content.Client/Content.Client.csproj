@@ -33,4 +33,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Animations" />
+  </ItemGroup>
 </Project>

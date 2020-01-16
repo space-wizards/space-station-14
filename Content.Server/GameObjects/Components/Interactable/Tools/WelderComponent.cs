@@ -1,6 +1,8 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
+using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
@@ -32,6 +34,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
 #pragma warning restore 649
 
         public override string Name => "Welder";
+        public override uint? NetID => ContentNetIDs.WELDER;
 
         /// <summary>
         /// Maximum fuel capacity the welder can hold
@@ -40,8 +43,13 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         public float FuelCapacity
         {
             get => _fuelCapacity;
-            set => _fuelCapacity = value;
+            set
+            {
+                _fuelCapacity = value;
+                Dirty();
+            }
         }
+
         private float _fuelCapacity = 50;
 
         /// <summary>
@@ -51,9 +59,15 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         public float Fuel
         {
             get => _fuel;
-            set => _fuel = value;
+            set
+            {
+                _fuel = value;
+                Dirty();
+            }
         }
+
         private float _fuel = 0;
+        private bool _activated = false;
 
         /// <summary>
         /// Default Cost of using the welder fuel for an action
@@ -69,7 +83,15 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         /// Status of welder, whether it is ignited
         /// </summary>
         [ViewVariables]
-        public bool Activated { get; private set; } = false;
+        public bool Activated
+        {
+            get => _activated;
+            private set
+            {
+                _activated = value;
+                Dirty();
+            }
+        }
 
         //private string OnSprite { get; set; }
         //private string OffSprite { get; set; }
@@ -87,6 +109,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
 
             serializer.DataField(ref _fuelCapacity, "Capacity", 50);
             serializer.DataField(ref _fuel, "Fuel", FuelCapacity);
+            serializer.DataField(ref _activated, "Activated", false);
         }
 
         public void OnUpdate(float frameTime)
@@ -184,6 +207,11 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
             var file = _robustRandom.Pick(soundCollection.PickFiles);
             _entitySystemManager.GetEntitySystem<AudioSystem>()
                 .Play(file, AudioParams.Default.WithVolume(volume));
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new WelderComponentState(FuelCapacity, Fuel, Activated);
         }
     }
 }
