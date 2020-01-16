@@ -1,0 +1,16 @@
+- type: bodyPreset
+  name: "basic human"
+  id: "bodyPreset.basic_human"
+  templateID: bodyTemplate.humanoid
+  partIDs:
+    head: "bodyPart.head.basic_human"
+    torso: "bodyPart.torso.basic_human"
+    right arm: "bodyPart.arm.basic_human"
+    left_arm: "bodyPart.arm.basic_human"
+    right_hand: "bodyPart.hand.basic_human"
+    left_hand: "bodyPart.hand.basic_human"
+    right_leg: "bodyPart.leg.basic_human"
+    left_leg: "bodyPart.leg.basic_human"
+    right_foot: "bodyPart.foot.basic_human"
+    left_foot: "bodyPart.foot.basic_human"
+      

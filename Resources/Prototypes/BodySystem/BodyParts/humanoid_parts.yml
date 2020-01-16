@@ -1,0 +1,81 @@
+- type: bodyPart
+  id: bodyPart.torso.basic_human
+  name: "torso"
+  plural: "torsos"
+  type: BodyPartType.torso
+  durability: 100
+  destroyThreshold: -150
+  resistance: 4.0
+  size: 14
+  compatability: BodyPartCompatability.biological
+
+
+
+- type: bodyPart
+  id: bodyPart.head.basic_human
+  name: "head"
+  plural: "heads"
+  type: BodyPartType.head
+  durability: 50
+  destroyThreshold: -120
+  resistance: 7.0
+  size: 7
+  compatability: BodyPartCompatability.biological	
+  
+
+
+
+- type: bodyPart
+  id: bodyPart.arm.basic_human
+  name: "arm"
+  plural: "arms"
+  type: BodyPartType.arm
+  durability: 40
+  destroyThreshold: -80
+  resistance: 3.0
+  size: 5
+  compatability: BodyPartCompatability.biological	
+  properties:
+    - !type:ArmLength
+      length: 2.4
+  
+  
+  
+- type: bodyPart
+  id: bodyPart.hand.basic_human
+  name: "hand"
+  plural: "hands"
+  type: BodyPartType.hand
+  durability: 30
+  destroyThreshold: -60
+  resistance: 2.0
+  size: 3
+  compatability: BodyPartCompatability.biological	
+    
+       
+      
+- type: bodyPart
+  id: bodyPart.leg.basic_human
+  name: "leg"
+  plural: "legs"
+  type: BodyPartType.leg
+  durability: 45
+  destroyThreshold: -90
+  resistance: 2.0
+  size: 6
+  compatability: BodyPartCompatability.biological	
+     
+     
+     
+- type: bodyPart
+  id: bodyPart.foot.basic_human
+  name: "foot"
+  plural: "feet"
+  type: BodyPartType.foot
+  durability: 30
+  destroyThreshold: -60
+  resistance: 3.0
+  size: 2
+  compatability: BodyPartCompatability.biological	
+
+      
