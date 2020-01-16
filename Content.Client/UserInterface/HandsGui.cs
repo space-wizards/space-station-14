@@ -1,15 +1,12 @@
 ﻿using System;
 using Content.Client.GameObjects;
-using Content.Client.GameObjects.EntitySystems;
+using Content.Client.Interfaces;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -18,7 +15,6 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
@@ -35,9 +31,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IResourceCache _resourceCache;
         [Dependency] private readonly IGameTiming _gameTiming;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager;
 #pragma warning restore 0649
 
         private readonly Texture TextureHandLeft;
@@ -275,34 +269,8 @@ namespace Content.Client.UserInterface
             var entity = hands.GetEntity(handIndex);
             if (entity == null)
                 return;
-            
-            if (args.Function == ContentKeyFunctions.ExamineEntity)
-            {
-                args.Handle();
-                _entitySystemManager.GetEntitySystem<ExamineSystem>()
-                    .DoExamine(entity);
-            }
-            else if (args.Function == ContentKeyFunctions.OpenContextMenu)
-            {
-                args.Handle();
-                _entitySystemManager.GetEntitySystem<VerbSystem>()
-                    .OpenContextMenu(entity, new ScreenCoordinates(args.PointerLocation.Position));
-            }
-            else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
-            {
-                var inputSys = _entitySystemManager.GetEntitySystem<InputSystem>();
 
-                var func = args.Function;
-                var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
-
-                var mousePosWorld = _eyeManager.ScreenToWorld(args.PointerLocation);
-                var message = new FullInputCmdMessage(_gameTiming.CurTick, funcId, args.State, mousePosWorld,
-                    args.PointerLocation, entity.Uid);
-
-                // client side command handlers will always be sent the local player session.
-                var session = _playerManager.LocalPlayer.Session;
-                inputSys.HandleInputCommand(session, func, message);
-            }
+            _itemSlotManager.OnButtonPressed(args, entity);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)

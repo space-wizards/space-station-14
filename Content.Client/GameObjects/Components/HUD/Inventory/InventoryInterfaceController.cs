@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Client.GameObjects.Components.HUD;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;

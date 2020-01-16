@@ -16,7 +16,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using Content.Client.GameObjects.Components.HUD;
 using Content.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 
@@ -108,7 +107,6 @@ namespace Content.Client.GameObjects
 
             foreach (var button in buttons)
             {
-                button.Item = entity;
                 button.SpriteView.Sprite = sprite;
                 button.OnPressed = (e) => HandleInventoryKeybind(e, slot);
                 button.StorageButton.Visible = hasInventory;
@@ -135,7 +133,9 @@ namespace Content.Client.GameObjects
             if (!_inventoryButtons.TryGetValue(slot, out var buttons))
                 return;
             var mousePosWorld = _eyeManager.ScreenToWorld(args.Event.PointerLocation);
-            if (_itemSlotManager.OnButtonPressed(args, buttons[0].Item))
+            if (!Owner.TryGetSlot(slot, out var item))
+                return;
+            if (_itemSlotManager.OnButtonPressed(args.Event, item))
                 return;
 
             base.HandleInventoryKeybind(args, slot);
@@ -143,7 +143,6 @@ namespace Content.Client.GameObjects
 
         private void ClearButton(ItemSlotButton button, Slots slot)
         {
-            button.Item = null;
             button.SpriteView.Sprite = null;
             button.OnPressed = (e) => AddToInventory(e, slot);
             button.StorageButton.Visible = false;

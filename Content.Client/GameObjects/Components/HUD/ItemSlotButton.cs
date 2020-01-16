@@ -2,14 +2,11 @@
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Client.GameObjects.Components.HUD
+namespace Content.Client.GameObjects
 {
-    public class ItemSlotButton : MarginContainer
+    public sealed class ItemSlotButton : MarginContainer
     {
-        public IEntity Item { get; set; }
-
         public BaseButton Button { get; }
         public SpriteView SpriteView { get; }
         public BaseButton StorageButton { get; }
@@ -19,7 +16,6 @@ namespace Content.Client.GameObjects.Components.HUD
 
         public ItemSlotButton(Texture texture, Texture storageTexture)
         {
-            Item = null;
             CustomMinimumSize = (64, 64);
 
             AddChild(Button = new TextureButton
@@ -29,7 +25,7 @@ namespace Content.Client.GameObjects.Components.HUD
                 EnableAllKeybinds = true
             });
 
-            Button.OnButtonDown += OnButtonPressed;
+            Button.OnPressed += OnButtonPressed;
 
             AddChild(SpriteView = new SpriteView
             {
@@ -66,6 +62,5 @@ namespace Content.Client.GameObjects.Components.HUD
                 OnPressed?.Invoke(args);
             }
         }
-
     }
 }

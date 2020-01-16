@@ -1,11 +1,10 @@
-﻿using System;
-using Content.Client.GameObjects.EntitySystems;
+﻿using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Player;
-using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
@@ -29,33 +28,33 @@ namespace Content.Client.Interfaces
 
         }
 
-        public bool OnButtonPressed(BaseButton.ButtonEventArgs args, IEntity item)
+        public bool OnButtonPressed(GUIBoundKeyEventArgs args, IEntity item)
         {
-            args.Event.Handle();
+            args.Handle();
 
             if (item == null)
                 return false;
 
-            if (args.Event.Function == ContentKeyFunctions.ExamineEntity)
+            if (args.Function == ContentKeyFunctions.ExamineEntity)
             {
                 _entitySystemManager.GetEntitySystem<ExamineSystem>()
                     .DoExamine(item);
             }
-            else if (args.Event.Function == ContentKeyFunctions.OpenContextMenu)
+            else if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
                 _entitySystemManager.GetEntitySystem<VerbSystem>()
-                                    .OpenContextMenu(item, new ScreenCoordinates(args.Event.PointerLocation.Position));
+                                    .OpenContextMenu(item, new ScreenCoordinates(args.PointerLocation.Position));
             }
-            else if (args.Event.Function == ContentKeyFunctions.ActivateItemInWorld)
+            else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {
                 var inputSys = _entitySystemManager.GetEntitySystem<InputSystem>();
 
-                var func = args.Event.Function;
-                var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
+                var func = args.Function;
+                var funcId = _inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
-                var mousePosWorld = _eyeManager.ScreenToWorld(args.Event.PointerLocation);
-                var message = new FullInputCmdMessage(_gameTiming.CurTick, funcId, args.Event.State, mousePosWorld,
-                    args.Event.PointerLocation, item.Uid);
+                var mousePosWorld = _eyeManager.ScreenToWorld(args.PointerLocation);
+                var message = new FullInputCmdMessage(_gameTiming.CurTick, funcId, BoundKeyState.Down, mousePosWorld,
+                    args.PointerLocation, item.Uid);
 
                 // client side command handlers will always be sent the local player session.
                 var session = _playerManager.LocalPlayer.Session;
