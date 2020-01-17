@@ -1,8 +1,14 @@
-﻿using Content.Client.GameObjects.EntitySystems;
+﻿using System;
+using Content.Client.GameObjects;
+using Content.Client.GameObjects.EntitySystems;
+using Content.Client.Utility;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.GameObjects.EntitySystems;
+using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
@@ -10,8 +16,9 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
-namespace Content.Client.Interfaces
+namespace Content.Client.UserInterface
 {
     public class ItemSlotManager : IItemSlotManager
     {
@@ -21,11 +28,20 @@ namespace Content.Client.Interfaces
         [Dependency] private readonly IInputManager _inputManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IEyeManager _eyeManager;
+        [Dependency] private readonly IResourceCache _resourceCache;
 #pragma warning restore 0649
+
+        private const int CooldownLevels = 8;
+
+        private readonly Texture[] TexturesCooldownOverlay = new Texture[CooldownLevels];
 
         public void Initialize()
         {
-
+            for (var i = 0; i < CooldownLevels; i++)
+            {
+                TexturesCooldownOverlay[i] =
+                    _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/cooldown-{i}.png");
+            }
         }
 
         public bool OnButtonPressed(GUIBoundKeyEventArgs args, IEntity item)
@@ -65,6 +81,46 @@ namespace Content.Client.Interfaces
                 return false;
             }
             return true;
+        }
+
+        public void UpdateCooldown(ItemSlotButton button, IEntity entity)
+        {
+            var cooldownTexture = button.CooldownCircle;
+
+            if (entity != null
+                && entity.TryGetComponent(out ItemCooldownComponent cooldown)
+                && cooldown.CooldownStart.HasValue
+                && cooldown.CooldownEnd.HasValue)
+            {
+                var start = cooldown.CooldownStart.Value;
+                var end = cooldown.CooldownEnd.Value;
+
+                var length = (end - start).TotalSeconds;
+                var progress = (_gameTiming.CurTime - start).TotalSeconds;
+                var ratio = (float)(progress / length);
+
+                var textureIndex = CalculateCooldownLevel(ratio);
+                if (textureIndex == CooldownLevels)
+                {
+                    cooldownTexture.Visible = false;
+                }
+                else
+                {
+                    cooldownTexture.Visible = true;
+                    cooldownTexture.Texture = TexturesCooldownOverlay[textureIndex];
+                }
+            }
+            else
+            {
+                cooldownTexture.Visible = false;
+            }
+        }
+
+        internal static int CalculateCooldownLevel(float cooldownValue)
+        {
+            var val = cooldownValue.Clamp(0, 1);
+            val *= CooldownLevels;
+            return (int)Math.Floor(val);
         }
     }
 }

@@ -1,21 +1,14 @@
-﻿using System;
-using Content.Client.GameObjects;
-using Content.Client.Interfaces;
+﻿using Content.Client.GameObjects;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.Utility;
-using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
-using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface
@@ -25,16 +18,11 @@ namespace Content.Client.UserInterface
         private const string HandNameLeft = "left";
         private const string HandNameRight = "right";
 
-        private const int CooldownLevels = 8;
-
 #pragma warning disable 0649
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IGameTiming _gameTiming;
         [Dependency] private readonly IItemSlotManager _itemSlotManager;
 #pragma warning restore 0649
-
-        private readonly Texture[] TexturesCooldownOverlay;
 
         private IEntity LeftHand;
         private IEntity RightHand;
@@ -57,13 +45,6 @@ namespace Content.Client.UserInterface
             var textureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
             var textureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
             var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
-
-            TexturesCooldownOverlay = new Texture[CooldownLevels];
-            for (var i = 0; i < CooldownLevels; i++)
-            {
-                TexturesCooldownOverlay[i] =
-                    _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/cooldown-{i}.png");
-            }
 
             _rightStatusPanel = new ItemStatusPanel(true);
             _leftStatusPanel = new ItemStatusPanel(false);
@@ -203,49 +184,11 @@ namespace Content.Client.UserInterface
         {
             base.FrameUpdate(args);
 
-            UpdateCooldown(_leftButton.CooldownCircle, LeftHand);
-            UpdateCooldown(_rightButton.CooldownCircle, RightHand);
+            _itemSlotManager.UpdateCooldown(_leftButton, LeftHand);
+            _itemSlotManager.UpdateCooldown(_rightButton, RightHand);
 
             _rightStatusPanel.Update(RightHand);
             _leftStatusPanel.Update(LeftHand);
-        }
-
-        private void UpdateCooldown(TextureRect cooldownTexture, IEntity entity)
-        {
-            if (entity != null
-                && entity.TryGetComponent(out ItemCooldownComponent cooldown)
-                && cooldown.CooldownStart.HasValue
-                && cooldown.CooldownEnd.HasValue)
-            {
-                var start = cooldown.CooldownStart.Value;
-                var end = cooldown.CooldownEnd.Value;
-
-                var length = (end - start).TotalSeconds;
-                var progress = (_gameTiming.CurTime - start).TotalSeconds;
-                var ratio = (float) (progress / length);
-
-                var textureIndex = CalculateCooldownLevel(ratio);
-                if (textureIndex == CooldownLevels)
-                {
-                    cooldownTexture.Visible = false;
-                }
-                else
-                {
-                    cooldownTexture.Visible = true;
-                    cooldownTexture.Texture = TexturesCooldownOverlay[textureIndex];
-                }
-            }
-            else
-            {
-                cooldownTexture.Visible = false;
-            }
-        }
-
-        internal static int CalculateCooldownLevel(float cooldownValue)
-        {
-            var val = cooldownValue.Clamp(0, 1);
-            val *= CooldownLevels;
-            return (int) Math.Floor(val);
         }
     }
 }

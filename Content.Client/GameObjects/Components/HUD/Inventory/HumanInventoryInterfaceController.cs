@@ -16,8 +16,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using Content.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.ClientEye;
+using Content.Client.UserInterface;
 
 namespace Content.Client.GameObjects
 {
