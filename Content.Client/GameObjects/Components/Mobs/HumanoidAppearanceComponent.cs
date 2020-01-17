@@ -38,6 +38,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void UpdateLooks()
         {
+            if (Appearance is null) return;
             var sprite = Owner.GetComponent<SpriteComponent>();
 
             sprite.LayerSetColor(HumanoidVisualLayers.Hair, Appearance.HairColor);

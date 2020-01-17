@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Preferences
 {
     [Serializable, NetSerializable]
-    public readonly struct HumanoidCharacterProfile : ICharacterProfile
+    public class HumanoidCharacterProfile : ICharacterProfile
     {
         public HumanoidCharacterProfile(string name,
             int age,

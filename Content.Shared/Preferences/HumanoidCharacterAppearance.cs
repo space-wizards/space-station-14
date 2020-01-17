@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Preferences
 {
     [Serializable, NetSerializable]
-    public readonly struct HumanoidCharacterAppearance : ICharacterAppearance
+    public class HumanoidCharacterAppearance : ICharacterAppearance
     {
         public HumanoidCharacterAppearance(string hairStyleName,
             Color hairColor,
