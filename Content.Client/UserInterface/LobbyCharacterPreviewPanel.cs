@@ -93,7 +93,7 @@ namespace Content.Client.UserInterface
             {
                 _summaryLabel.Text = selectedCharacter.Summary;
                 _previewDummy
-                    .GetComponent<LooksComponent>()
+                    .GetComponent<HumanoidAppearanceComponent>()
                     .Appearance = (HumanoidCharacterAppearance) selectedCharacter.CharacterAppearance;
             }
         }

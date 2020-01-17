@@ -6,7 +6,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
-    public abstract class SharedLooksComponent : Component
+    public abstract class SharedHumanoidAppearanceComponent : Component
     {
         private HumanoidCharacterAppearance _appearance;
         private Sex _sex;

@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components
 
         private static void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!obj.Session.AttachedEntity.TryGetComponent(out LooksComponent looks))
+            if (!obj.Session.AttachedEntity.TryGetComponent(out HumanoidAppearanceComponent looks))
             {
                 return;
             }
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components
                 return;
             }
 
-            if (!eventArgs.User.TryGetComponent(out LooksComponent looks))
+            if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent looks))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't have any hair!"));
                 return;

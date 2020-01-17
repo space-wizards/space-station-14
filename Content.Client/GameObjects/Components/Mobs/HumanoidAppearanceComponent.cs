@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public sealed class LooksComponent : SharedLooksComponent
+    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent
     {
         public override HumanoidCharacterAppearance Appearance
         {

@@ -249,7 +249,7 @@ namespace Content.Server.GameTicking
         {
             if (profile is null)
                 return;
-            entity.GetComponent<LooksComponent>().UpdateFromProfile(profile);
+            entity.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
             entity.Name = profile.Name;
         }
 

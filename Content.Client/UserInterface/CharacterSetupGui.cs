@@ -201,7 +201,7 @@ namespace Content.Client.UserInterface
             {
                 _previewDummy = entityManager.SpawnEntityAt("HumanMob_Content",
                     new MapCoordinates(Vector2.Zero, MapId.Nullspace));
-                _previewDummy.GetComponent<LooksComponent>().UpdateFromProfile(profile);
+                _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
 
                 var isSelectedCharacter = profile == preferencesManager.Preferences.SelectedCharacter;
 
