@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
@@ -16,24 +17,23 @@ namespace Content.Server.GameObjects.Components.Research
 
         public override string Name => "ResearchServer";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string ServerName => _serverName;
+        [ViewVariables(VVAccess.ReadWrite)] public string ServerName => _serverName;
 
         private string _serverName = "RDSERVER";
         private float _timer = 0f;
         public TechnologyDatabaseComponent Database { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        private int _points = 0;
+        [ViewVariables(VVAccess.ReadWrite)] private int _points = 0;
 
-        [ViewVariables(VVAccess.ReadOnly)]
-        public int Id { get; private set; }
+        [ViewVariables(VVAccess.ReadOnly)] public int Id { get; private set; }
 
         // You could optimize research by keeping a list of unlocked recipes too.
         [ViewVariables(VVAccess.ReadOnly)]
         public IReadOnlyList<TechnologyPrototype> UnlockedTechnologies => Database.Technologies;
+
         [ViewVariables(VVAccess.ReadOnly)]
         public List<ResearchPointSourceComponent> PointSources { get; } = new List<ResearchPointSourceComponent>();
+
         [ViewVariables(VVAccess.ReadOnly)]
         public List<ResearchClientComponent> Clients { get; } = new List<ResearchClientComponent>();
 
@@ -51,14 +51,23 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 var points = 0;
 
-                foreach (var source in PointSources)
+                if (CanRun)
                 {
-                    if (source.Active) points += source.PointsPerSecond;
+                    foreach (var source in PointSources)
+                    {
+                        if (source.CanProduce) points += source.PointsPerSecond;
+                    }
                 }
 
                 return points;
             }
         }
+
+        /// <remarks>If no <see cref="PowerDeviceComponent"/> is found, it's assumed power is not required.</remarks>
+        [ViewVariables]
+        public bool CanRun => _powerDevice is null || _powerDevice.Powered;
+
+        private PowerDeviceComponent _powerDevice;
 
         public override void Initialize()
         {
@@ -66,6 +75,7 @@ namespace Content.Server.GameObjects.Components.Research
             Id = ServerCount++;
             IoCManager.Resolve<IEntitySystemManager>()?.GetEntitySystem<ResearchSystem>()?.RegisterServer(this);
             Database = Owner.GetComponent<TechnologyDatabaseComponent>();
+            Owner.TryGetComponent(out _powerDevice);
         }
 
         /// <inheritdoc />
@@ -84,7 +94,8 @@ namespace Content.Server.GameObjects.Components.Research
 
         public bool CanUnlockTechnology(TechnologyPrototype technology)
         {
-            if (!Database.CanUnlockTechnology(technology) || _points < technology.RequiredPoints || Database.IsTechnologyUnlocked(technology)) return false;
+            if (!Database.CanUnlockTechnology(technology) || _points < technology.RequiredPoints ||
+                Database.IsTechnologyUnlocked(technology)) return false;
             return true;
         }
 
@@ -98,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Research
         {
             if (!CanUnlockTechnology(technology)) return false;
             var result = Database.UnlockTechnology(technology);
-            if(result)
+            if (result)
                 _points -= technology.RequiredPoints;
             return result;
         }
@@ -151,6 +162,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         public void Update(float frameTime)
         {
+            if (!CanRun) return;
             _timer += frameTime;
             if (_timer < 1f) return;
             _timer = 0f;

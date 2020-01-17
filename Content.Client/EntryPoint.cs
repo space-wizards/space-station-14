@@ -218,6 +218,7 @@ namespace Content.Client
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
+            IoCManager.Resolve<IItemSlotManager>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
