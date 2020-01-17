@@ -49,6 +49,6 @@ namespace Content.Server.Database
         public string SkinColor { get; set; } = null!;
 
         public int PrefsId { get; set; }
-        public Prefs Prefs { get; set; }
+        public Prefs Prefs { get; set; } = null!;
     }
 }
