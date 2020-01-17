@@ -2,6 +2,7 @@
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects
 {
@@ -10,6 +11,7 @@ namespace Content.Client.GameObjects
         public BaseButton Button { get; }
         public SpriteView SpriteView { get; }
         public BaseButton StorageButton { get; }
+        public TextureRect CooldownCircle { get; }
 
         public Action<BaseButton.ButtonEventArgs> OnPressed { get; set; }
         public Action<BaseButton.ButtonEventArgs> OnStoragePressed { get; set; }
@@ -30,7 +32,8 @@ namespace Content.Client.GameObjects
             AddChild(SpriteView = new SpriteView
             {
                 MouseFilter = MouseFilterMode.Ignore,
-                Scale = (2, 2)
+                Scale = (2, 2),
+                OverrideDirection = Direction.South
             });
 
             AddChild(StorageButton = new TextureButton
@@ -44,6 +47,16 @@ namespace Content.Client.GameObjects
             });
 
             StorageButton.OnPressed += OnStorageButtonPressed;
+
+            AddChild(CooldownCircle = new TextureRect
+            {
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                MouseFilter = MouseFilterMode.Ignore,
+                Stretch = TextureRect.StretchMode.KeepCentered,
+                TextureScale = (2, 2),
+                Visible = false,
+            });
         }
 
         private void OnButtonPressed(BaseButton.ButtonEventArgs args)
