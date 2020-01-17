@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Research
 
                 foreach (var source in PointSources)
                 {
-                    if (source.Active) points += source.PointsPerSecond;
+                    if (source.CanProduce) points += source.PointsPerSecond;
                 }
 
                 return points;
