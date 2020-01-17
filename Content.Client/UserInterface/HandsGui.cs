@@ -34,23 +34,15 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IItemSlotManager _itemSlotManager;
 #pragma warning restore 0649
 
-        private readonly Texture TextureHandLeft;
-        private readonly Texture TextureHandRight;
-        private readonly Texture TextureHandActive;
         private readonly Texture[] TexturesCooldownOverlay;
 
         private IEntity LeftHand;
         private IEntity RightHand;
 
-        private readonly SpriteView LeftSpriteView;
-        private readonly SpriteView RightSpriteView;
         private readonly TextureRect ActiveHandRect;
 
-        private readonly TextureRect CooldownCircleLeft;
-        private readonly TextureRect CooldownCircleRight;
-
-        private readonly Control _leftContainer;
-        private readonly Control _rightContainer;
+        private readonly ItemSlotButton _leftButton;
+        private readonly ItemSlotButton _rightButton;
 
         private readonly ItemStatusPanel _rightStatusPanel;
         private readonly ItemStatusPanel _leftStatusPanel;
@@ -61,9 +53,10 @@ namespace Content.Client.UserInterface
 
             MouseFilter = MouseFilterMode.Stop;
 
-            TextureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
-            TextureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
-            TextureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
+            var textureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
+            var textureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
+            var textureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
+            var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
 
             TexturesCooldownOverlay = new Texture[CooldownLevels];
             for (var i = 0; i < CooldownLevels; i++)
@@ -75,77 +68,26 @@ namespace Content.Client.UserInterface
             _rightStatusPanel = new ItemStatusPanel(true);
             _leftStatusPanel = new ItemStatusPanel(false);
 
-            _leftContainer = new Control {MouseFilter = MouseFilterMode.Ignore};
-            _rightContainer = new Control {MouseFilter = MouseFilterMode.Ignore};
+            _leftButton = new ItemSlotButton(textureHandLeft, storageTexture);
+            _rightButton = new ItemSlotButton(textureHandRight, storageTexture);
             var hBox = new HBoxContainer
             {
                 SeparationOverride = 0,
-                Children = {_rightStatusPanel, _rightContainer, _leftContainer, _leftStatusPanel},
+                Children = {_rightStatusPanel, _rightButton, _leftButton, _leftStatusPanel},
                 MouseFilter = MouseFilterMode.Ignore
             };
 
             AddChild(hBox);
 
-            var textureLeft = new TextureRect
+            _leftButton.OnPressed += args => HandKeyBindDown(args.Event, HandNameLeft);
+            _rightButton.OnPressed += args => HandKeyBindDown(args.Event, HandNameRight);
+
+            // Active hand
+            _leftButton.AddChild(ActiveHandRect = new TextureRect
             {
-                Texture = TextureHandLeft,
+                MouseFilter = MouseFilterMode.Ignore,
+                Texture = textureHandActive,
                 TextureScale = (2, 2)
-            };
-            textureLeft.OnKeyBindDown += args => HandKeyBindDown(args, HandNameLeft);
-
-            _leftContainer.AddChild(textureLeft);
-
-            var textureRight = new TextureRect
-            {
-                Texture = TextureHandRight,
-                TextureScale = (2, 2)
-            };
-            textureRight.OnKeyBindDown += args => HandKeyBindDown(args, HandNameRight);
-
-            _rightContainer.AddChild(textureRight);
-
-            _leftContainer.AddChild(ActiveHandRect = new TextureRect
-            {
-                MouseFilter = MouseFilterMode.Ignore,
-                Texture = TextureHandActive,
-                TextureScale = (2, 2)
-            });
-
-            LeftSpriteView = new SpriteView
-            {
-                MouseFilter = MouseFilterMode.Ignore,
-                Scale = (2, 2),
-                OverrideDirection = Direction.South
-            };
-            _leftContainer.AddChild(LeftSpriteView);
-
-            RightSpriteView = new SpriteView
-            {
-                MouseFilter = MouseFilterMode.Ignore,
-                Scale = (2, 2),
-                OverrideDirection = Direction.South
-            };
-            _rightContainer.AddChild(RightSpriteView);
-
-            // Cooldown circles.
-            _leftContainer.AddChild(CooldownCircleLeft = new TextureRect
-            {
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                MouseFilter = MouseFilterMode.Ignore,
-                Stretch = TextureRect.StretchMode.KeepCentered,
-                TextureScale = (2, 2),
-                Visible = false,
-            });
-
-            _rightContainer.AddChild(CooldownCircleRight = new TextureRect
-            {
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                MouseFilter = MouseFilterMode.Ignore,
-                Stretch = TextureRect.StretchMode.KeepCentered,
-                TextureScale = (2, 2),
-                Visible = false
             });
         }
 
@@ -178,7 +120,7 @@ namespace Content.Client.UserInterface
             var right = hands.GetEntity(HandNameRight);
 
             ActiveHandRect.Parent.RemoveChild(ActiveHandRect);
-            var parent = hands.ActiveIndex == HandNameLeft ? _leftContainer : _rightContainer;
+            var parent = hands.ActiveIndex == HandNameLeft ? _leftButton : _rightButton;
             parent.AddChild(ActiveHandRect);
             ActiveHandRect.SetPositionInParent(1);
 
@@ -189,96 +131,80 @@ namespace Content.Client.UserInterface
                     LeftHand = left;
                     if (LeftHand.TryGetComponent(out ISpriteComponent sprite))
                     {
-                        LeftSpriteView.Sprite = sprite;
+                        _leftButton.SpriteView.Sprite = sprite;
                     }
                 }
             }
             else
             {
                 LeftHand = null;
-                LeftSpriteView.Sprite = null;
+                _leftButton.SpriteView.Sprite = null;
             }
 
             if (right != null)
             {
-                RightHand = right;
-                if (RightHand.TryGetComponent(out ISpriteComponent sprite))
+                if (right != RightHand)
                 {
-                    RightSpriteView.Sprite = sprite;
+                    RightHand = right;
+                    if (RightHand.TryGetComponent(out ISpriteComponent sprite))
+                    {
+                        _rightButton.SpriteView.Sprite = sprite;
+                    }
                 }
             }
             else
             {
                 RightHand = null;
-                RightSpriteView.Sprite = null;
+                _rightButton.SpriteView.Sprite = null;
             }
-        }
-
-        private void SendSwitchHandTo(string index)
-        {
-            if (!TryGetHands(out IHandsComponent hands))
-                return;
-
-            hands.SendChangeHand(index);
-        }
-
-        private void UseActiveHand()
-        {
-            if (!TryGetHands(out IHandsComponent hands))
-                return;
-
-            //Todo: remove hands interface, so weird
-            ((HandsComponent) hands).UseActiveHand();
-        }
-
-        private void AttackByInHand(string hand)
-        {
-            if (!TryGetHands(out var hands))
-                return;
-
-            hands.AttackByInHand(hand);
         }
 
         private void HandKeyBindDown(GUIBoundKeyEventArgs args, string handIndex)
         {
             args.Handle();
-            if (args.Function == ContentKeyFunctions.MouseMiddle)
-            {
-                args.Handle();
-                SendSwitchHandTo(handIndex);
-                return;
-            }
 
             if (!TryGetHands(out var hands))
                 return;
 
-            if (args.Function == EngineKeyFunctions.Use)
+            if (args.Function == ContentKeyFunctions.MouseMiddle)
             {
-                args.Handle();
-                if (hands.ActiveIndex == handIndex)
-                {
-                    UseActiveHand();
-                }
-                else
-                {
-                    AttackByInHand(handIndex);
-                }
+                hands.SendChangeHand(handIndex);
                 return;
             }
 
             var entity = hands.GetEntity(handIndex);
             if (entity == null)
+            {
+                if (args.CanFocus && hands.ActiveIndex != handIndex)
+                {
+                    hands.SendChangeHand(handIndex);
+                }
+                return;
+            }
+
+            if (_itemSlotManager.OnButtonPressed(args, entity))
                 return;
 
-            _itemSlotManager.OnButtonPressed(args, entity);
+            if (args.CanFocus)
+            {
+                if (hands.ActiveIndex == handIndex)
+                {
+                    hands.UseActiveHand();
+                }
+                else
+                {
+                    hands.AttackByInHand(handIndex);
+                }
+                return;
+            }
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
 
-            UpdateCooldown(CooldownCircleLeft, LeftHand);
-            UpdateCooldown(CooldownCircleRight, RightHand);
+            UpdateCooldown(_leftButton.CooldownCircle, LeftHand);
+            UpdateCooldown(_rightButton.CooldownCircle, RightHand);
 
             _rightStatusPanel.Update(RightHand);
             _leftStatusPanel.Update(LeftHand);
