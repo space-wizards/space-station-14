@@ -22,7 +22,7 @@ namespace Content.Client.UserInterface
             IClientPreferencesManager preferencesManager)
         {
             _preferencesManager = preferencesManager;
-            _previewDummy = entityManager.SpawnEntityAt("HumanMob_Content",
+            _previewDummy = entityManager.SpawnEntityAt("HumanMob_Dummy",
                 new MapCoordinates(Vector2.Zero, MapId.Nullspace));
 
             var header = new NanoHeading

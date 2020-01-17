@@ -199,7 +199,7 @@ namespace Content.Client.UserInterface
                 ButtonGroup group,
                 ICharacterProfile profile)
             {
-                _previewDummy = entityManager.SpawnEntityAt("HumanMob_Content",
+                _previewDummy = entityManager.SpawnEntityAt("HumanMob_Dummy",
                     new MapCoordinates(Vector2.Zero, MapId.Nullspace));
                 _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
 
