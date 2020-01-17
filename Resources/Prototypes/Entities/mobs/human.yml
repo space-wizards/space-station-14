@@ -83,4 +83,4 @@
   - type: Examiner
   - type: CharacterInfo
   - type: FootstepSound
-  - type: Hair
+  - type: HumanoidAppearance
