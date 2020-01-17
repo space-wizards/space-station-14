@@ -1,4 +1,4 @@
-using Content.Client.Chat;
+﻿using Content.Client.Chat;
 using Content.Client.GameTicking;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
@@ -26,6 +26,7 @@ namespace Content.Client
             IoCManager.Register<ISandboxManager, SandboxManager>();
             IoCManager.Register<IModuleManager, ClientModuleManager>();
             IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
+            IoCManager.Register<IItemSlotManager, ItemSlotManager>();
         }
     }
 }

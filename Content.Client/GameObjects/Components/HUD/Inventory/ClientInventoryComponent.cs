@@ -14,6 +14,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
+using Content.Shared.GameObjects.Components.Inventory;
+using System;
 
 namespace Content.Client.GameObjects
 {
@@ -166,6 +168,11 @@ namespace Content.Client.GameObjects
                     _playerAttached = false;
                     break;
             }
+        }
+
+        public bool TryGetSlot(Slots slot, out IEntity item)
+        {
+            return _slots.TryGetValue(slot, out item);
         }
     }
 }
