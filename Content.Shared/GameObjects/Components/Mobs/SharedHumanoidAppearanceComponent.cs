@@ -13,7 +13,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public sealed override string Name => "Hair";
         public sealed override uint? NetID => ContentNetIDs.HAIR;
-        public sealed override Type StateType => typeof(LooksComponentState);
+        public sealed override Type StateType => typeof(HumanoidAppearanceComponentState);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual HumanoidCharacterAppearance Appearance
@@ -39,12 +39,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public override ComponentState GetComponentState()
         {
-            return new LooksComponentState(Appearance, Sex);
+            return new HumanoidAppearanceComponentState(Appearance, Sex);
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cast = (LooksComponentState) curState;
+            var cast = (HumanoidAppearanceComponentState) curState;
             Appearance = cast.Appearance;
             Sex = cast.Sex;
         }
@@ -58,9 +58,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         [Serializable]
         [NetSerializable]
-        private sealed class LooksComponentState : ComponentState
+        private sealed class HumanoidAppearanceComponentState : ComponentState
         {
-            public LooksComponentState(HumanoidCharacterAppearance appearance, Sex sex) : base(ContentNetIDs.HAIR)
+            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex) : base(ContentNetIDs.HAIR)
             {
                 Appearance = appearance;
                 Sex = sex;
