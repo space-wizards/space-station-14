@@ -77,7 +77,7 @@ namespace Content.Client.GameObjects.Components
             var styles = HairStyles.FacialHairStylesMap.ToList();
             styles.Sort(HairStyles.FacialHairStyleComparer);
 
-            foreach (var (styleName, styleState) in styles)
+            foreach (var (styleName, styleState) in HairStyles.FacialHairStylesMap)
             {
                 Items.AddItem(styleName, humanFacialHairRSI[styleState].Frame0);
             }
@@ -141,6 +141,7 @@ namespace Content.Client.GameObjects.Components
             Items = new ItemList
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
+                CustomMinimumSize = (300, 250)
             };
             vBox.AddChild(Items);
             Items.OnItemSelected += ItemSelected;

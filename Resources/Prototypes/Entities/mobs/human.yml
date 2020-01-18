@@ -22,7 +22,8 @@
     drawdepth: Mobs
 
     layers:
-    - sprite: Mob/human.rsi
+    - map: ["enum.HumanoidVisualLayers.Body"]
+      sprite: Mob/human.rsi
       state: male
     - map: ["enum.Slots.INNERCLOTHING"]
     - map: ["enum.Slots.IDCARD"]
@@ -82,4 +83,71 @@
   - type: Examiner
   - type: CharacterInfo
   - type: FootstepSound
-  - type: Hair
+  - type: HumanoidAppearance
+
+- type: entity
+  save: false
+  name: Urist McHands
+  id: HumanMob_Dummy
+  description: A dummy human meant to be used in character setup
+  components:
+    - type: Hands
+      hands:
+        - left
+        - right
+    # Organs
+    - type: Stomach
+
+    - type: Inventory
+    - type: Sprite
+      netsync: false
+      drawdepth: Mobs
+
+      layers:
+        - map: ["enum.HumanoidVisualLayers.Body"]
+          sprite: Mob/human.rsi
+          state: male
+        - map: ["enum.Slots.INNERCLOTHING"]
+        - map: ["enum.Slots.IDCARD"]
+        - map: ["enum.Slots.GLOVES"]
+        - map: ["enum.Slots.SHOES"]
+        - map: ["enum.Slots.EARS"]
+        - map: ["enum.Slots.OUTERCLOTHING"]
+        - map: ["enum.Slots.EYES"]
+        - map: ["enum.Slots.BELT"]
+        - map: ["enum.Slots.BACKPACK"]
+        - map: ["enum.HumanoidVisualLayers.FacialHair"]
+          state: shaved
+          sprite: Mob/human_facial_hair.rsi
+        - map: ["enum.HumanoidVisualLayers.Hair"]
+          state: bald
+          sprite: Mob/human_hair.rsi
+        - map: ["enum.Slots.MASK"]
+        - map: ["enum.Slots.HEAD"]
+        - map: ["hand-left"]
+        - map: ["hand-right"]
+
+    - type: Icon
+      sprite: Mob/human.rsi
+      state: male
+
+    - type: Physics
+      mass: 85
+
+    - type: Collidable
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+          mask: 30
+          layer: 4
+
+    - type: Species
+      Template: Human
+      HeatResistance: 323
+    - type: Damageable
+
+    - type: Appearance
+      visuals:
+        - type: SpeciesVisualizer2D
+
+    - type: HumanoidAppearance

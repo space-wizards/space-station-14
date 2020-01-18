@@ -47,5 +47,8 @@ namespace Content.Server.Database
         public string FacialHairColor { get; set; } = null!;
         public string EyeColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
+
+        public int PrefsId { get; set; }
+        public Prefs Prefs { get; set; } = null!;
     }
 }

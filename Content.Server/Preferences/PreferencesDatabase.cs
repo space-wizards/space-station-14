@@ -29,27 +29,28 @@ namespace Content.Server.Preferences
 
             var profiles = new ICharacterProfile[_maxCharacterSlots];
             foreach (var profile in prefs.HumanoidProfiles)
-                profiles[profile.Slot] = new HumanoidCharacterProfile
-                {
-                    Name = profile.CharacterName,
-                    Age = profile.Age,
-                    Sex = profile.Sex == "Male" ? Male : Female,
-                    CharacterAppearance = new HumanoidCharacterAppearance
-                    {
-                        HairStyleName = profile.HairName,
-                        HairColor = Color.FromHex(profile.HairColor),
-                        FacialHairStyleName = profile.FacialHairName,
-                        FacialHairColor = Color.FromHex(profile.FacialHairColor),
-                        EyeColor = Color.FromHex(profile.EyeColor),
-                        SkinColor = Color.FromHex(profile.SkinColor)
-                    }
-                };
+            {
+                profiles[profile.Slot] = new HumanoidCharacterProfile(
+                    profile.CharacterName,
+                    profile.Age,
+                    profile.Sex == "Male" ? Male : Female,
+                    new HumanoidCharacterAppearance
+                    (
+                        profile.HairName,
+                        Color.FromHex(profile.HairColor),
+                        profile.FacialHairName,
+                        Color.FromHex(profile.FacialHairColor),
+                        Color.FromHex(profile.EyeColor),
+                        Color.FromHex(profile.SkinColor)
+                    )
+                );
+            }
 
             return new PlayerPreferences
-            {
-                SelectedCharacterIndex = prefs.SelectedCharacterSlot,
-                Characters = profiles.ToList()
-            };
+            (
+                profiles,
+                prefs.SelectedCharacterSlot
+            );
         }
 
         public void SaveSelectedCharacterIndex(string username, int index)
@@ -71,10 +72,10 @@ namespace Content.Server.Preferences
             if (!(profile is HumanoidCharacterProfile humanoid))
                 // TODO: Handle other ICharacterProfile implementations properly
                 throw new NotImplementedException();
-
             var appearance = (HumanoidCharacterAppearance) humanoid.CharacterAppearance;
             _prefsDb.SaveCharacterSlot(username, new HumanoidProfile
             {
+                SlotName = humanoid.Name,
                 CharacterName = humanoid.Name,
                 Age = humanoid.Age,
                 Sex = humanoid.Sex.ToString(),

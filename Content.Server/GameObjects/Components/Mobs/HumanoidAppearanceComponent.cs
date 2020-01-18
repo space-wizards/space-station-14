@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public sealed class HairComponent : SharedHairComponent
+    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent
     {
 
     }

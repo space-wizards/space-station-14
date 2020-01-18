@@ -1,9 +1,11 @@
 using Content.Client.Chat;
+using Content.Client.Interfaces;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
@@ -19,8 +21,12 @@ namespace Content.Client.UserInterface
         public ChatBox Chat { get; }
         public ItemList OnlinePlayerItemList { get; }
         public ServerInfo ServerInfo { get; }
+        public LobbyCharacterPreviewPanel CharacterPreview { get; }
 
-        public LobbyGui(ILocalizationManager localization, IResourceCache resourceCache)
+        public LobbyGui(IEntityManager entityManager,
+            ILocalizationManager localization,
+            IResourceCache resourceCache,
+            IClientPreferencesManager preferencesManager)
         {
             var margin = new MarginContainer
             {
@@ -107,17 +113,20 @@ namespace Content.Client.UserInterface
             };
             vBox.AddChild(hBox);
 
+            CharacterPreview = new LobbyCharacterPreviewPanel(
+                entityManager,
+                localization,
+                preferencesManager)
+            {
+                SizeFlagsHorizontal = SizeFlags.None
+            };
             hBox.AddChild(new VBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SeparationOverride = 0,
                 Children =
                 {
-                    new Placeholder(resourceCache)
-                    {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        PlaceholderText = localization.GetString("Character UI\nPlaceholder")
-                    },
+                    CharacterPreview,
 
                     new StripeBack
                     {
