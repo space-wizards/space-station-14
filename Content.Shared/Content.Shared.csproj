@@ -27,5 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GameObjects\Components\Trigger\" />
+    <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>
 </Project>
