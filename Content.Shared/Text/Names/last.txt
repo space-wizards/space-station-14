@@ -1,6 +1,5 @@
 Ackerley
 Adams
-Adams
 Addison
 Agg
 Aggley
@@ -13,8 +12,6 @@ Allen
 Alliman
 Altmann
 Anderson
-Anderson
-Anderson
 Andreev
 Ann
 Archibald
@@ -26,7 +23,6 @@ Aultman
 Auman
 Baer
 Bailey
-Baker
 Baker
 Barnes
 Barrett
@@ -44,10 +40,7 @@ Beck
 Beedell
 Begum
 Bell
-Bell
 Benford
-Bennett
-Bennett
 Bennett
 Berkheimer
 Best
@@ -90,7 +83,6 @@ Caldwell
 Callison
 Camp
 Campbell
-Campbell
 Carmichael
 Carr
 Carter
@@ -104,7 +96,6 @@ Christman
 Christopher
 Clark
 Clarke
-Clarke
 Clewett
 Coates
 Coldsmith
@@ -117,14 +108,11 @@ Costello
 Cowart
 Cowper
 Cox
-Cox
-Cox
 Cressman
 Curry
 Cypret
 David
 Davies
-Davis
 Davis
 Dawkins
 Day
@@ -146,7 +134,6 @@ Easter
 Echard
 Eckhardstein
 Edwards
-Edwards
 Eggbert
 Ehret
 Elderson
@@ -155,7 +142,6 @@ Elliott
 Ellis
 Enderly
 Endsley
-Evans
 Evans
 Ewing
 Faqua
@@ -168,7 +154,6 @@ Fields
 Finlay
 Fischer
 Fiscina
-Fisher
 Fisher
 Fitzgerald
 Fleming
@@ -188,13 +173,11 @@ Garratt
 Garrison
 Gettemy
 Gibson
-Gibson
 Glover
 Goebbles
 Goodman
 Graham
 Gray
-Green
 Green
 Greenawalt
 Greene
@@ -203,7 +186,6 @@ Gregory
 Griffiths
 Gronko
 Guess
-Hall
 Hall
 Hanford
 Hardie
@@ -226,7 +208,6 @@ Henry
 Hice
 Highlands
 Hill
-Hill
 Hincken
 Hirleman
 Hoenshell
@@ -242,9 +223,7 @@ Howard
 Howe
 Huey
 Hughes
-Hughes
 Hujsak
-Hunt
 Hunt
 Hunter
 Hussain
@@ -255,9 +234,6 @@ Isaman
 Isemann
 Ivanov
 Jackson
-Jackson
-James
-James
 James
 Jardine
 Jenkins
@@ -266,7 +242,6 @@ Jerome
 Jesse
 Jewell
 Joghs
-Johnson
 Johnson
 Jones
 Jowers
@@ -288,7 +263,6 @@ Khan
 Kiefer
 Kifer
 Kimple
-King
 King
 Kirkson
 Knapenberger
@@ -333,7 +307,6 @@ Marshall
 Martins
 Mary
 Mason
-Mason
 Mathews
 Matthews
 McDonald
@@ -354,18 +327,14 @@ Meyers
 Mikhaylov
 Mildred
 Miller
-Miller
 Millhouse
 Mills
 Milne
 Mingle
 Minnie
 Mitchell
-Mitchell
-Mitchell
 Moberly
 Moon
-Moore
 Moore
 Morgan
 Morris
@@ -376,8 +345,6 @@ Muggins
 Mull
 Muller
 Murphy
-Murray
-Murray
 Murray
 Nash
 Neely
@@ -425,7 +392,6 @@ Powell
 Power
 Powers
 Pratt
-Pratt
 Prechtl
 Prescott
 Prevatt
@@ -450,7 +416,6 @@ Reid
 Reighner
 Rhinehart
 Richards
-Richards
 Richardson
 Richter
 Rifler
@@ -459,10 +424,7 @@ Riker
 Ringer
 Roadman
 Roberts
-Roberts
-Roberts
 Robertson
-Robinson
 Robinson
 Roby
 Rockwell
@@ -484,7 +446,6 @@ Scherer
 Schmidt
 Schofield
 Schrader
-Scott
 Scott
 Sealis
 Seelig
@@ -509,7 +470,6 @@ Sloan
 Smail
 Smirnov
 Smith
-Smith
 Snyder
 Sommer
 Spock
@@ -523,7 +483,6 @@ Staymates
 Steele
 Stephenson
 Stern
-Stewart
 Stewart
 Stocker
 Stone
@@ -546,14 +505,12 @@ Teagarden
 Tedrow
 Tennant
 Thomas
-Thomas
 Thomlinson
 Thompson
 Thomson
 Thorley
 Tilton
 Tireman
-Todd
 Todd
 Treeby
 Trovato
@@ -568,10 +525,8 @@ Waldron
 Walker
 Wallick
 Ward
-Ward
 Wardle
 Warren
-Watson
 Watson
 Webb
 Weeter
@@ -583,9 +538,7 @@ Wentzel
 Werner
 Werry
 Wheeler
-Wheeler
 Whirlow
-White
 White
 Whiteman
 Whittier
@@ -603,15 +556,12 @@ Wise
 Wolfe
 Wolff
 Wood
-Wood
-Woodward
 Woodward
 Woodworth
 Woolery
 Woollard
 Wright
 Yeskey
-Young
 Young
 Zadovsky
 Zalack

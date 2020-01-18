@@ -16,12 +16,9 @@ Alayna
 Alejandra
 Alessandra
 Alexa
-Alexa
 Alexandra
 Alexandria
-Alexandria
 Alexia
-Alexis
 Alexis
 Alexus
 Alfreda
@@ -63,7 +60,6 @@ Anastasia
 Anaya
 Andrea
 Angel
-Angel
 Angela
 Angelica
 Angelina
@@ -73,7 +69,6 @@ Aniyah
 Anjelica
 Anna
 Annabelle
-Anne
 Anne
 Annie
 Annika
@@ -93,7 +88,6 @@ Asia
 Astor
 Athena
 Aubree
-Aubrey
 Aubrey
 Aubrie
 Audrey
@@ -128,11 +122,9 @@ Brielle
 Brittani
 Brittany
 Brooke
-Brooke
 Brooklyn
 Brooklynn
 Brynn
-Cadence
 Cadence
 Caitlin
 Caitlyn
@@ -147,7 +139,6 @@ Camryn
 Candace
 Candice
 Cara
-Carly
 Carly
 Carlyle
 Carmen
@@ -188,14 +179,12 @@ Corrine
 Courtney
 Crystal
 Cynthia
-Cynthia
 Daisy
 Dakota
 Dalya
 Dana
 Danica
 Daniela
-Daniella
 Daniella
 Danielle
 Danika
@@ -214,7 +203,6 @@ Denise
 Denys
 Desiree
 Destiny
-Diamond
 Diamond
 Diana
 Dina
@@ -235,9 +223,7 @@ Eliana
 Elise
 Eliza
 Elizabeth
-Elizabeth
 Ella
-Elle
 Elle
 Ellie
 Emely
@@ -247,12 +233,10 @@ Emilee
 Emilia
 Emily
 Emma
-Emma
 Erica
 Erika
 Erin
 Ermintrude
-Esmeralda
 Esmeralda
 Esther
 Estrella
@@ -298,10 +282,8 @@ Guadalupe
 Gwenda
 Gwenevere
 Hadley
-Hadley
 Haidee
 Hailee
-Hailey
 Hailey
 Hal
 Haleigh
@@ -314,15 +296,12 @@ Harper
 Hayden
 Haylee
 Hayley
-Hayley
 Haylie
 Hazel
-Heather
 Heather
 Heaven
 Hedley
 Heidi
-Helen
 Helen
 Hepsie
 Holly
@@ -354,7 +333,6 @@ Jalen
 Jamie
 Jane
 Janelle
-Janelle
 Janette
 Janie
 Janina
@@ -363,7 +341,6 @@ Janiya
 Janiyah
 Jaslene
 Jasmin
-Jasmine
 Jasmine
 Jayda
 Jayden
@@ -385,7 +362,6 @@ Jere
 Jeri
 Jessica
 Jillian
-Jillian
 Jillie
 Jimena
 Joanna
@@ -401,7 +377,6 @@ Josepha
 Josephine
 Josie
 Joye
-Julia
 Julia
 Juliana
 Julianna
@@ -441,11 +416,9 @@ Kaydence
 Kayla
 Kaylee
 Kayleigh
-Kayleigh
 Kaylie
 Kaylin
 Keegan
-Keira
 Keira
 Keith
 Kellie
@@ -549,7 +522,6 @@ Madilyn
 Madison
 Madisyn
 Madyson
-Madyson
 Maegan
 Maggie
 Makayla
@@ -608,7 +580,6 @@ Monna
 Morgan
 Muriel
 Mya
-Mya
 Mylee
 Myriam
 Myrtie
@@ -655,7 +626,6 @@ Peregrine
 Perla
 Peyton
 Pheobe
-Phoebe
 Phoebe
 Phyliss
 Phyllida
@@ -722,7 +692,6 @@ Shana
 Shanika
 Shannah
 Shannon
-Shannon
 Shantae
 Sharalyn
 Sharla
@@ -740,7 +709,6 @@ Skyler
 Sofia
 Sophia
 Sophie
-Sophie
 Star
 Stella
 Steph
@@ -755,7 +723,6 @@ Susannah
 Suzan
 Suzy
 Sydney
-Sydney
 Talia
 Tamika
 Tania
@@ -768,10 +735,8 @@ Taylor
 Teagan
 Tessa
 Tiffany
-Tiffany
 Tolly
 Topaz
-Tori
 Tori
 Tracee
 Tracey
@@ -797,7 +762,6 @@ Wisdom
 Wynonna
 Wynter
 Ximena
-Yasmin
 Yasmin
 Yolanda
 Ysabel

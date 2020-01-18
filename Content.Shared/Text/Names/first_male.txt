@@ -1,7 +1,6 @@
 Aaden
 Aaron
 Abel
-Abel
 Abraham
 Adam
 Adan
@@ -11,13 +10,11 @@ Adrian
 Aidan
 Aiden
 Alan
-Alan
 Albert
 Alberto
 Alden
 Alec
 Alejandro
-Alex
 Alex
 Alexander
 Alexis
@@ -26,7 +23,6 @@ Alfredo
 Alger
 Ali
 Alijah
-Allen
 Allen
 Alvin
 Amari
@@ -47,7 +43,6 @@ Armando
 Arnie
 Art
 Arthur
-Arthur
 Arturo
 Asher
 Ashton
@@ -64,7 +59,6 @@ Benjamin
 Bennett
 Bill
 Blake
-Blake
 Braden
 Bradley
 Brady
@@ -74,10 +68,8 @@ Brandon
 Braxton
 Brayan
 Brayden
-Brayden
 Braydon
 Braylon
-Brendan
 Brendan
 Brenden
 Brennan
@@ -85,15 +77,12 @@ Brett
 Brian
 Brick
 Brock
-Brock
 Brodie
 Brody
 Bronte
 Bruce
-Bruce
 Bryan
 Bryant
-Bryce
 Bryce
 Brycen
 Bryson
@@ -101,7 +90,6 @@ Buck
 Burt
 Butch
 Byrne
-Byron
 Byron
 Cade
 Caden
@@ -113,10 +101,8 @@ Cameron
 Camron
 Camryn
 Carl
-Carl
 Carlos
 Carson
-Carter
 Carter
 Casey
 Cash
@@ -127,7 +113,6 @@ Cesar
 Chad
 Chance
 Chandler
-Charles
 Charles
 Charlie
 Charlton
@@ -150,7 +135,6 @@ Colby
 Cole
 Colin
 Collin
-Collin
 Colten
 Colton
 Conner
@@ -169,13 +153,10 @@ Dakota
 Dallas
 Dalton
 Damian
-Damian
-Damien
 Damien
 Damon
 Dane
 Daniel
-Danny
 Danny
 Dante
 Darcey
@@ -197,14 +178,11 @@ Dennis
 Derek
 Derrick
 Desmond
-Desmond
-Devin
 Devin
 Devon
 Diego
 Dillon
 Dirk
-Dominic
 Dominic
 Dominick
 Donald
@@ -220,7 +198,6 @@ Dustin
 Dylan
 Easton
 Eddie
-Edgar
 Edgar
 Eduardo
 Edward
@@ -238,7 +215,6 @@ Emanuel
 Emerson
 Emiliano
 Emilio
-Emmanuel
 Emmanuel
 Enrique
 Eric
@@ -263,7 +239,6 @@ Flip
 Francis
 Francisco
 Frank
-Frank
 Frankie
 Franklin
 Fridge
@@ -274,7 +249,6 @@ Gage
 Gannon
 Garret
 Garrett
-Gary
 Gary
 Gavin
 George
@@ -308,12 +282,10 @@ Hector
 Henderson
 Henry
 Holden
-Holden
 Homer
 Horatio
 Hudson
 Huffie
-Hugo
 Hugo
 Hungry
 Hunter
@@ -332,13 +304,11 @@ Jace
 Jack
 Jackson
 Jacob
-Jacob
 Jacoby
 Jaden
 Jadon
 Jaiden
 Jaime
-Jake
 Jake
 Jakob
 Jalen
@@ -360,7 +330,6 @@ Jaxson
 Jay
 Jayce
 Jayden
-Jaydon
 Jaydon
 Jaye
 Jaylen
@@ -387,15 +356,11 @@ Joel
 Joey
 Johan
 John
-John
 Johnathan
-Johnathan
-Johnny
 Johnny
 Jonah
 Jonas
 Jonathan
-Jonathon
 Jonathon
 Jordan
 Jorge
@@ -403,7 +368,6 @@ Jose
 Joseph
 Josh
 Joshua
-Josiah
 Josiah
 Josue
 Juan
@@ -452,7 +416,6 @@ Larry
 Launce
 Lawrence
 Leland
-Leland
 Lennox
 Lenny
 Leo
@@ -474,13 +437,10 @@ Lou
 Louis
 Luca
 Lucas
-Lucas
 Luis
 Lukas
 Luke
-Luke
 Maddox
-Malachi
 Malachi
 Malcolm
 Malik
@@ -503,7 +463,6 @@ Matthew
 Maurice
 Mauricio
 Max
-Max
 Maximilian
 Maximus
 Maxwell
@@ -512,7 +471,6 @@ Mekhi
 Melvin
 Melvyn
 Micah
-Michael
 Michael
 Micheal
 Miguel
@@ -532,7 +490,6 @@ Nasir
 Nat
 Nathan
 Nathaniel
-Nathaniel
 Nehemiah
 Nelson
 Nicholas
@@ -540,8 +497,6 @@ Nick
 Nickolas
 Nicolas
 Nikolas
-Nikolas
-Noah
 Noah
 Noel
 Nolan
@@ -559,7 +514,6 @@ Owen
 Pablo
 Paget
 Parker
-Patrick
 Patrick
 Patton
 Paul
@@ -584,7 +538,6 @@ Randy
 Rastus
 Raul
 Raymond
-Raymond
 Rayner
 Reece
 Reed
@@ -594,7 +547,6 @@ Reuben
 Reynard
 Ricardo
 Richard
-Richard
 Ricky
 Riley
 River
@@ -603,7 +555,6 @@ Roberto
 Rocco
 Rodger
 Rodrigo
-Roger
 Roger
 Roman
 Romayne
@@ -629,7 +580,6 @@ Samuel
 Santiago
 Saul
 Sawyer
-Sawyer
 Scott
 Scotty
 Sean
@@ -638,12 +588,10 @@ Sergio
 Seth
 Seymour
 Shane
-Shane
 Shaun
 Shawn
 Shiloh
 Silas
-Simon
 Simon
 Skyler
 Sloan
@@ -661,14 +609,12 @@ Tamsin
 Tanner
 Tate
 Taylor
-Taylor
 Tel
 Terrell
 Terry
 Theodore
 Thomas
 Tim
-Timothy
 Timothy
 Titus
 Todd
@@ -698,14 +644,12 @@ Vincent
 Vinny
 Walker
 Walter
-Walter
 Ward
 Warner
 Wayne
 Wesley
 Weston
 Whitaker
-William
 William
 Willy
 Woodrow
@@ -718,7 +662,6 @@ Zachary
 Zack
 Zackary
 Zander
-Zane
 Zane
 Zayden
 Zeke
