@@ -496,7 +496,7 @@ namespace Content.Server.GameObjects
                     break;
                 }
 
-                case ActivateInhandMsg msg:
+                case UseInHandMsg msg:
                 {
                     var playerMan = IoCManager.Resolve<IPlayerManager>();
                     var session = playerMan.GetSessionByChannel(netChannel);
@@ -509,6 +509,21 @@ namespace Content.Server.GameObjects
                         interactionSystem.TryUseInteraction(Owner, used);
                     }
 
+                    break;
+                }
+
+                case ActivateInHandMsg msg:
+                {
+                    var playerMan = IoCManager.Resolve<IPlayerManager>();
+                    var session = playerMan.GetSessionByChannel(netChannel);
+                    var playerEntity = session.AttachedEntity;
+                    var used = GetHand(msg.Index)?.Owner;
+
+                    if (playerEntity == Owner && used != null)
+                    {
+                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                        interactionSystem.TryInteractionActivate(Owner, used);
+                    }
                     break;
                 }
             }

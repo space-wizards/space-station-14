@@ -1,11 +1,13 @@
 ﻿using System;
 using Content.Client.GameObjects;
+using Content.Client.GameObjects.Components.Storage;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
+using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -33,15 +35,32 @@ namespace Content.Client.UserInterface
 
         private const int CooldownLevels = 8;
 
-        private readonly Texture[] TexturesCooldownOverlay = new Texture[CooldownLevels];
+        private readonly Texture[] _texturesCooldownOverlay = new Texture[CooldownLevels];
 
         public void Initialize()
         {
             for (var i = 0; i < CooldownLevels; i++)
             {
-                TexturesCooldownOverlay[i] =
+                _texturesCooldownOverlay[i] =
                     _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/cooldown-{i}.png");
             }
+        }
+
+        public bool SetItemSlot(ItemSlotButton button, IEntity entity)
+        {
+            if (entity == null)
+            {
+                button.SpriteView.Sprite = null;
+                button.StorageButton.Visible = false;
+            }
+            else
+            {
+                if (!entity.TryGetComponent(out ISpriteComponent sprite))
+                    return false;
+                button.SpriteView.Sprite = sprite;
+                button.StorageButton.Visible = entity.HasComponent<ClientStorageComponent>();
+            }
+            return true;
         }
 
         public bool OnButtonPressed(GUIBoundKeyEventArgs args, IEntity item)
@@ -107,7 +126,7 @@ namespace Content.Client.UserInterface
                 else
                 {
                     cooldownTexture.Visible = true;
-                    cooldownTexture.Texture = TexturesCooldownOverlay[textureIndex];
+                    cooldownTexture.Texture = _texturesCooldownOverlay[textureIndex];
                 }
             }
             else
