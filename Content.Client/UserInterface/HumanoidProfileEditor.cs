@@ -2,11 +2,15 @@
 using Content.Client.GameObjects.Components;
 using Content.Client.Interfaces;
 using Content.Shared.Preferences;
+using Content.Shared.Text;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 
 namespace Content.Client.UserInterface
 {
@@ -35,6 +39,12 @@ namespace Content.Client.UserInterface
         public int CharacterSlot;
         public HumanoidCharacterProfile Profile;
         public event Action<HumanoidCharacterProfile> OnProfileChanged;
+
+        private void NameChanged(string newName)
+        {
+            Profile = Profile?.WithName(newName);
+            IsDirty = true;
+        }
 
         public HumanoidProfileEditor(ILocalizationManager localization,
             IClientPreferencesManager preferencesManager)
@@ -99,14 +109,22 @@ namespace Content.Client.UserInterface
                 };
                 _nameEdit.OnTextChanged += args =>
                 {
-                    Profile = Profile?.WithName(args.Text);
-                    IsDirty = true;
+                    NameChanged(args.Text);
                 };
                 var nameRandomButton = new Button
                 {
                     Text = localization.GetString("Randomize"),
-                    Disabled = true,
-                    ToolTip = "Not implemented yet!"
+                };
+                nameRandomButton.OnPressed += args =>
+                {
+                    var random = IoCManager.Resolve<IRobustRandom>();
+                    var firstName = random.Pick(
+                        Profile.Sex == Sex.Male
+                            ? Names.MaleFirstNames
+                            : Names.FemaleFirstNames);
+                    var lastName = random.Pick(Names.LastNames);
+                    _nameEdit.Text = $"{firstName} {lastName}";
+                    NameChanged(_nameEdit.Text);
                 };
                 hBox.AddChild(nameLabel);
                 hBox.AddChild(_nameEdit);
