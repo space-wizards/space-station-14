@@ -107,6 +107,12 @@ binds:
 - function: TextCursorRight
   type: state
   key: Right
+- function: TextCursorBegin
+  type: state
+  key: Home
+- function: TextCursorEnd
+  type: state
+  key: End
   canRepeat: true
 - function: TextBackspace
   type: state
