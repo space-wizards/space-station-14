@@ -92,9 +92,8 @@ namespace Content.Client.UserInterface
             else
             {
                 _summaryLabel.Text = selectedCharacter.Summary;
-                _previewDummy
-                    .GetComponent<HumanoidAppearanceComponent>()
-                    .Appearance = (HumanoidCharacterAppearance) selectedCharacter.CharacterAppearance;
+                var component = _previewDummy.GetComponent<HumanoidAppearanceComponent>();
+                component.UpdateFromProfile(selectedCharacter);
             }
         }
     }
