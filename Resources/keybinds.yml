@@ -107,6 +107,7 @@ binds:
 - function: TextCursorRight
   type: state
   key: Right
+  canRepeat: true
 - function: TextCursorBegin
   type: state
   key: Home
