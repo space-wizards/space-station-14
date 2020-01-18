@@ -331,7 +331,7 @@ namespace Content.Client.UserInterface
 
         private void UpdateSaveButton()
         {
-            _saveButton.Disabled = !(Profile is null) || !IsDirty;
+            _saveButton.Disabled = Profile is null || !IsDirty;
         }
 
         public void UpdateControls()
