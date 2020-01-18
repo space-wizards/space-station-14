@@ -74,7 +74,7 @@ MAC_NATIVES = {
 }
 
 SERVER_EXTRA_CONTENT_ASSEMBLIES = [
-    "Dapper.dll"
+    "Content.Server.Database.dll"
 ]
 
 def main() -> None:
@@ -87,8 +87,14 @@ def main() -> None:
                         nargs="*",
                         help="Which platform to build for. If not provided, all platforms will be built")
 
+    parser.add_argument("--skip-build",
+                        action="store_true",
+                        help=argparse.SUPPRESS)
+
     args = parser.parse_args()
     platforms = args.platform
+    skip_build = args.skip_build
+
     if not platforms:
         platforms = [PLATFORM_WINDOWS, PLATFORM_MACOS, PLATFORM_LINUX]
 
@@ -100,16 +106,19 @@ def main() -> None:
     os.mkdir("release")
 
     if PLATFORM_WINDOWS in platforms:
-        wipe_bin()
-        build_windows()
+        if not skip_build:
+            wipe_bin()
+        build_windows(skip_build)
 
     if PLATFORM_LINUX in platforms:
-        wipe_bin()
-        build_linux()
+        if not skip_build:
+            wipe_bin()
+        build_linux(skip_build)
 
     if PLATFORM_MACOS in platforms:
-        wipe_bin()
-        build_macos()
+        if not skip_build:
+            wipe_bin()
+        build_macos(skip_build)
 
 
 def wipe_bin():
@@ -122,23 +131,24 @@ def wipe_bin():
         shutil.rmtree("bin")
 
 
-def build_windows():  # type: () -> None
+def build_windows(skip_build: bool) -> None:
     # Run a full build.
     print(Fore.GREEN + "Building project for Windows x64..." + Style.RESET_ALL)
 
-    subprocess.run([
-        "dotnet",
-        "build",
-        "SpaceStation14.sln",
-        "-c", "Release",
-        "--nologo",
-        "/v:m",
-        "/p:TargetOS=Windows",
-        "/t:Rebuild",
-        "/p:FullRelease=True"
-    ], check=True)
+    if not skip_build:
+        subprocess.run([
+            "dotnet",
+            "build",
+            "SpaceStation14.sln",
+            "-c", "Release",
+            "--nologo",
+            "/v:m",
+            "/p:TargetOS=Windows",
+            "/t:Rebuild",
+            "/p:FullRelease=True"
+        ], check=True)
 
-    publish_client_server("win-x64", "Windows")
+        publish_client_server("win-x64", "Windows")
 
     print(Fore.GREEN + "Packaging Windows x64 client..." + Style.RESET_ALL)
 
@@ -161,22 +171,23 @@ def build_windows():  # type: () -> None
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
 
-def build_macos() -> None:
+def build_macos(skip_build: bool) -> None:
     print(Fore.GREEN + "Building project for macOS x64..." + Style.RESET_ALL)
 
-    subprocess.run([
-        "dotnet",
-        "build",
-        "SpaceStation14.sln",
-        "-c", "Release",
-        "--nologo",
-        "/v:m",
-        "/p:TargetOS=MacOS",
-        "/t:Rebuild",
-        "/p:FullRelease=True"
-    ], check=True)
+    if not skip_build:
+        subprocess.run([
+            "dotnet",
+            "build",
+            "SpaceStation14.sln",
+            "-c", "Release",
+            "--nologo",
+            "/v:m",
+            "/p:TargetOS=MacOS",
+            "/t:Rebuild",
+            "/p:FullRelease=True"
+        ], check=True)
 
-    publish_client_server("osx-x64", "MacOS")
+        publish_client_server("osx-x64", "MacOS")
 
     print(Fore.GREEN + "Packaging macOS x64 client..." + Style.RESET_ALL)
     # Client has to go in an app bundle.
@@ -200,23 +211,24 @@ def build_macos() -> None:
     server_zip.close()
 
 
-def build_linux() -> None:
+def build_linux(skip_build: bool) -> None:
     # Run a full build.
     print(Fore.GREEN + "Building project for Linux x64..." + Style.RESET_ALL)
 
-    subprocess.run([
-        "dotnet",
-        "build",
-        "SpaceStation14.sln",
-        "-c", "Release",
-        "--nologo",
-        "/v:m",
-        "/p:TargetOS=Linux",
-        "/t:Rebuild",
-        "/p:FullRelease=True"
-    ], check=True)
+    if not skip_build:
+        subprocess.run([
+            "dotnet",
+            "build",
+            "SpaceStation14.sln",
+            "-c", "Release",
+            "--nologo",
+            "/v:m",
+            "/p:TargetOS=Linux",
+            "/t:Rebuild",
+            "/p:FullRelease=True"
+        ], check=True)
 
-    publish_client_server("linux-x64", "Linux")
+        publish_client_server("linux-x64", "Linux")
 
     print(Fore.GREEN + "Packaging Linux x64 client..." + Style.RESET_ALL)
 
@@ -324,6 +336,10 @@ def copy_content_assemblies(target, zipf, server):
     if server:
         source_dir = p("bin", "Content.Server")
         files = ["Content.Shared.dll", "Content.Server.dll"] + SERVER_EXTRA_CONTENT_ASSEMBLIES
+        for filename in os.listdir(source_dir):
+            if filename.startswith("Microsoft."):
+                files.append(filename)
+
     else:
         source_dir = p("bin", "Content.Client")
         files = ["Content.Shared.dll", "Content.Client.dll"]
