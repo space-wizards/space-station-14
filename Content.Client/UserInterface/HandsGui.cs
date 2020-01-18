@@ -24,8 +24,8 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IItemSlotManager _itemSlotManager;
 #pragma warning restore 0649
 
-        private IEntity LeftHand;
-        private IEntity RightHand;
+        private IEntity _leftHand;
+        private IEntity _rightHand;
 
         private readonly TextureRect ActiveHandRect;
 
@@ -61,7 +61,9 @@ namespace Content.Client.UserInterface
             AddChild(hBox);
 
             _leftButton.OnPressed += args => HandKeyBindDown(args.Event, HandNameLeft);
+            _leftButton.OnStoragePressed += args => _OnStoragePressed(args.Event, HandNameLeft);
             _rightButton.OnPressed += args => HandKeyBindDown(args.Event, HandNameRight);
+            _rightButton.OnStoragePressed += args => _OnStoragePressed(args.Event, HandNameRight);
 
             // Active hand
             _leftButton.AddChild(ActiveHandRect = new TextureRect
@@ -105,38 +107,16 @@ namespace Content.Client.UserInterface
             parent.AddChild(ActiveHandRect);
             ActiveHandRect.SetPositionInParent(1);
 
-            if (left != null)
+            if (left != _leftHand)
             {
-                if (left != LeftHand)
-                {
-                    LeftHand = left;
-                    if (LeftHand.TryGetComponent(out ISpriteComponent sprite))
-                    {
-                        _leftButton.SpriteView.Sprite = sprite;
-                    }
-                }
-            }
-            else
-            {
-                LeftHand = null;
-                _leftButton.SpriteView.Sprite = null;
+                _leftHand = left;
+                _itemSlotManager.SetItemSlot(_leftButton, _leftHand);
             }
 
-            if (right != null)
+            if (right != _rightHand)
             {
-                if (right != RightHand)
-                {
-                    RightHand = right;
-                    if (RightHand.TryGetComponent(out ISpriteComponent sprite))
-                    {
-                        _rightButton.SpriteView.Sprite = sprite;
-                    }
-                }
-            }
-            else
-            {
-                RightHand = null;
-                _rightButton.SpriteView.Sprite = null;
+                _rightHand = right;
+                _itemSlotManager.SetItemSlot(_rightButton, _rightHand);
             }
         }
 
@@ -180,15 +160,24 @@ namespace Content.Client.UserInterface
             }
         }
 
+        private void _OnStoragePressed(GUIBoundKeyEventArgs args, string handIndex)
+        {
+            if (!args.CanFocus)
+                return;
+            if (!TryGetHands(out var hands))
+                return;
+            hands.ActivateItemInHand(handIndex);
+        }
+
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
 
-            _itemSlotManager.UpdateCooldown(_leftButton, LeftHand);
-            _itemSlotManager.UpdateCooldown(_rightButton, RightHand);
+            _itemSlotManager.UpdateCooldown(_leftButton, _leftHand);
+            _itemSlotManager.UpdateCooldown(_rightButton, _rightHand);
 
-            _rightStatusPanel.Update(RightHand);
-            _leftStatusPanel.Update(LeftHand);
+            _rightStatusPanel.Update(_rightHand);
+            _leftStatusPanel.Update(_leftHand);
         }
     }
 }

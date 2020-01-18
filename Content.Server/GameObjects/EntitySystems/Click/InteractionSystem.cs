@@ -281,6 +281,20 @@ namespace Content.Server.GameObjects.EntitySystems
             return true;
         }
 
+        /// <summary>
+        /// Activates the Activate behavior of an object
+        /// Verifies that the user is capable of doing the use interaction first
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="used"></param>
+        public void TryInteractionActivate(IEntity user, IEntity used)
+        {
+            if (user != null && used != null && ActionBlockerSystem.CanUse(user))
+            {
+                InteractionActivate(user, used);
+            }
+        }
+
         private void InteractionActivate(IEntity user, IEntity used)
         {
             var activateMsg = new ActivateInWorldMessage(user, used);

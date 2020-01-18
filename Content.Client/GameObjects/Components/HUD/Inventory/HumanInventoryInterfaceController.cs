@@ -1,12 +1,7 @@
 ﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
 // ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Utility;
 using JetBrains.Annotations;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -16,8 +11,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using Robust.Client.Interfaces.Graphics.ClientEye;
 using Content.Client.UserInterface;
+using System.Collections.Generic;
 
 namespace Content.Client.GameObjects
 {
@@ -29,7 +24,6 @@ namespace Content.Client.GameObjects
         [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IResourceCache _resourceCache;
         [Dependency] private readonly IItemSlotManager _itemSlotManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
 #pragma warning restore 649
 
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
@@ -98,18 +92,12 @@ namespace Content.Client.GameObjects
             base.AddToSlot(slot, entity);
 
             if (!_inventoryButtons.TryGetValue(slot, out var buttons))
-            {
                 return;
-            }
-
-            entity.TryGetComponent(out ISpriteComponent sprite);
-            var hasInventory = entity.HasComponent<ClientStorageComponent>();
 
             foreach (var button in buttons)
             {
-                button.SpriteView.Sprite = sprite;
+                _itemSlotManager.SetItemSlot(button, entity);
                 button.OnPressed = (e) => HandleInventoryKeybind(e, slot);
-                button.StorageButton.Visible = hasInventory;
             }
         }
 
@@ -132,7 +120,6 @@ namespace Content.Client.GameObjects
         {
             if (!_inventoryButtons.TryGetValue(slot, out var buttons))
                 return;
-            var mousePosWorld = _eyeManager.ScreenToWorld(args.Event.PointerLocation);
             if (!Owner.TryGetSlot(slot, out var item))
                 return;
             if (_itemSlotManager.OnButtonPressed(args.Event, item))
@@ -143,9 +130,8 @@ namespace Content.Client.GameObjects
 
         private void ClearButton(ItemSlotButton button, Slots slot)
         {
-            button.SpriteView.Sprite = null;
             button.OnPressed = (e) => AddToInventory(e, slot);
-            button.StorageButton.Visible = false;
+            _itemSlotManager.SetItemSlot(button, null);
         }
 
         public override void PlayerAttached()
@@ -161,7 +147,6 @@ namespace Content.Client.GameObjects
 
             _gameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
 
-            //foreach (var button in _inventoryButtons.Values.SelectMany(l => l))
             foreach (var (slot, list) in _inventoryButtons)
             {
                 foreach (var button in list)
