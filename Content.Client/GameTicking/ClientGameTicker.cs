@@ -258,6 +258,8 @@ namespace Content.Client.GameTicking
 
             _tickerState = TickerState.InGame;
 
+            _characterSetup.Parent?.RemoveChild(_characterSetup);
+
             if (_lobby != null)
             {
                 _lobby.Dispose();
