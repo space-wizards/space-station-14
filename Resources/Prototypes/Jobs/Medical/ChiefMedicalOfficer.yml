@@ -3,7 +3,13 @@
 - type: job
   id: ChiefMedicalOfficer
   name: "Chief Medical Officer"
-  startingGear: ChiefMedicalOfficerGear
+  head: true
+  positions: 1
+  startingGear: AssistantGear
   department:
   - Command
   - Medical
+
+  access:
+  - medical
+  - command

@@ -1,7 +1,13 @@
 - type: job
   id: ResearchDirector
   name: "Research Director"
-  startingGear: ResearchDirectorGear
+  head: true
+  positions: 1
+  startingGear: AssistantGear
   department:
   - Command
   - Science
+
+  access:
+  - research
+  - command

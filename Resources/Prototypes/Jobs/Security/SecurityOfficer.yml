@@ -1,6 +1,12 @@
 - type: job
   id: SecurityOfficer
   name: "Security Officer"
-  startingGear: SecurityOfficerGear
+  positions: 3
+  spawnPositions: 2
+  startingGear: AssistantGear
   department:
   - Security
+
+  access:
+  - security
+  - maintenance

@@ -1,7 +1,18 @@
 - type: job
   id: HeadOfPersonnel
   name: "Head Of Personnel"
-  startingGear: HeadOfPersonnelGear
+  head: true
+  positions: 1
+  startingGear: AssistantGear
   department:
   - Command
   - Civilian
+
+  access:
+  - command
+  - idCard
+  - security # HoPcurity strikes again
+  - service
+  - cargo
+  - maintenance
+  # I mean they'll give themselves the rest of the access levels *anyways*.

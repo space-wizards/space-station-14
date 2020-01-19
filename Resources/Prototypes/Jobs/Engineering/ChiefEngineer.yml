@@ -1,7 +1,14 @@
 - type: job
   id: ChiefEngineer
   name: "Chief Engineer"
-  startingGear: ChiefEngineerGear
+  head: true
+  positions: 1
+  startingGear: StationEngineerGear
   department:
   - Command
   - Engineering
+
+  access:
+  - maintenance
+  - engineering
+  - command

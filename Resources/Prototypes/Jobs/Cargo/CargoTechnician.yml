@@ -1,6 +1,8 @@
 - type: job
   id: CargoTechnician
   name: "Cargo Technician"
-  startingGear: CargoTechnicianGear
+  positions: 2
+  spawnPositions: 1
+  startingGear: AssistantGear
   department:
   - Cargo

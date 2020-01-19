@@ -1,6 +1,15 @@
 - type: job
   id: Clown
   name: "Clown"
+  positions: 1
   startingGear: ClownGear
   department:
   - Civilian
+
+- type: startingGear
+  id: ClownGear
+  equipment:
+    innerclothing: UniformClown
+    backpack: ClownPack
+    shoes: ShoesClown
+    mask: MaskClown

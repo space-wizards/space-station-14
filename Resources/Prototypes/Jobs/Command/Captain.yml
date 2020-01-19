@@ -1,6 +1,22 @@
 - type: job
   id: Captain
   name: "Captain"
-  startingGear: CaptainGear
+  head: true
+  positions: 1
+  startingGear: AssistantGear
   department:
   - Command
+
+  access:
+  # All of em.
+  # Could probably do with some kind of wildcard or whatever to automate this.
+  - captain
+  - idCard
+  - command
+  - security
+  - engineering
+  - medical
+  - cargo
+  - research
+  - service
+  - maintenance

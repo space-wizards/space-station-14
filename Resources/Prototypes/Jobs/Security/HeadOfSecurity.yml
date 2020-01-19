@@ -1,7 +1,14 @@
 - type: job
   id: HeadOfSecurity
   name: "Head Of Security"
-  startingGear: HeadOfSecurityGear
+  head: true
+  positions: 1
+  startingGear: AssistantGear
   department:
   - Command
   - Security
+
+  access:
+  - command
+  - security
+  - maintenance
