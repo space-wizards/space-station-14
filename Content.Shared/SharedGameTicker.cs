@@ -7,6 +7,11 @@ namespace Content.Shared
 {
     public abstract class SharedGameTicker
     {
+        // See ideally these would be pulled from the job definition or something.
+        // But this is easier, and at least it isn't hardcoded.
+        public const string OverflowJob = "Assistant";
+        public const string OverflowJobName = "Assistant";
+
         protected class MsgTickerJoinLobby : NetMessage
         {
             #region REQUIRED
