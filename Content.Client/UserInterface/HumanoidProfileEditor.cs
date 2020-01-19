@@ -354,12 +354,7 @@ namespace Content.Client.UserInterface
                     Text = localization.GetString("Save"),
                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter
                 };
-                _saveButton.OnPressed += args =>
-                {
-                    IsDirty = false;
-                    _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
-                    OnProfileChanged?.Invoke(Profile);
-                };
+                _saveButton.OnPressed += args => { Save(); };
                 panel.AddChild(_saveButton);
                 rightColumn.AddChild(panel);
             }
@@ -369,6 +364,13 @@ namespace Content.Client.UserInterface
             UpdateControls();
 
             IsDirty = false;
+        }
+
+        public void Save()
+        {
+            IsDirty = false;
+            _preferencesManager.UpdateCharacter(Profile, CharacterSlot);
+            OnProfileChanged?.Invoke(Profile);
         }
 
         private bool IsDirty

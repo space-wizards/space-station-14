@@ -153,6 +153,11 @@ namespace Content.Client.UserInterface
             UpdateUI();
         }
 
+        public void Save()
+        {
+            _humanoidProfileEditor.Save();
+        }
+
         private void UpdateUI()
         {
             var numberOfFullSlots = 0;

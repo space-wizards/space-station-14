@@ -198,6 +198,7 @@ namespace Content.Client.GameTicking
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
             _characterSetup.CloseButton.OnPressed += args =>
             {
+                _characterSetup.Save();
                 _lobby.CharacterPreview.UpdateUI();
                 _userInterfaceManager.StateRoot.AddChild(_lobby);
                 _userInterfaceManager.StateRoot.RemoveChild(_characterSetup);
