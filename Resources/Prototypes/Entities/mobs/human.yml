@@ -84,6 +84,7 @@
   - type: CharacterInfo
   - type: FootstepSound
   - type: HumanoidAppearance
+  - type: HumanInventoryController
 
 - type: entity
   save: false
