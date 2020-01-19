@@ -21,6 +21,7 @@ namespace Content.Server.Database
             return _prefsCtx
                 .Preferences
                 .Include(p => p.HumanoidProfiles)
+                .ThenInclude(h => h.Jobs)
                 .SingleOrDefault(p => p.Username == username);
         }
 

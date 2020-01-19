@@ -47,8 +47,27 @@ namespace Content.Server.Database
         public string FacialHairColor { get; set; } = null!;
         public string EyeColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
+        public List<Job> Jobs { get; } = new List<Job>();
 
         public int PrefsId { get; set; }
         public Prefs Prefs { get; set; } = null!;
+    }
+
+    public class Job
+    {
+        public int JobId { get; set; }
+        public HumanoidProfile Profile { get; set; } = null!;
+
+        public string JobName { get; set; } = null!;
+        public DbJobPriority Priority { get; set; }
+    }
+
+    public enum DbJobPriority
+    {
+        // These enum values HAVE to match the ones in JobPriority in Shared.
+        Never = 0,
+        Low = 1,
+        Medium = 2,
+        High = 3
     }
 }

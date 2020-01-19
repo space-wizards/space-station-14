@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Client.Interfaces;
+using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Content.Shared.Text;
 using Robust.Client.Graphics.Drawing;
@@ -10,6 +13,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Client.UserInterface
@@ -34,6 +38,7 @@ namespace Content.Client.UserInterface
         private readonly Button _sexMaleButton;
         private readonly HairStylePicker _hairPicker;
         private readonly FacialHairStylePicker _facialHairPicker;
+        private readonly List<JobPrioritySelector> _jobPriorities;
 
         private bool _isDirty;
         public int CharacterSlot;
@@ -47,7 +52,7 @@ namespace Content.Client.UserInterface
         }
 
         public HumanoidProfileEditor(ILocalizationManager localization,
-            IClientPreferencesManager preferencesManager)
+            IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager)
         {
             Profile = (HumanoidCharacterProfile) preferencesManager.Preferences.SelectedCharacter;
             CharacterSlot = preferencesManager.Preferences.SelectedCharacterIndex;
@@ -90,9 +95,6 @@ namespace Content.Client.UserInterface
 
             #endregion Randomize
 
-            var middleColumn = new VBoxContainer();
-            leftColumn.AddChild(middleColumn);
-
             #region Name
 
             {
@@ -130,76 +132,190 @@ namespace Content.Client.UserInterface
                 hBox.AddChild(_nameEdit);
                 hBox.AddChild(nameRandomButton);
                 panel.AddChild(hBox);
-                middleColumn.AddChild(panel);
+                leftColumn.AddChild(panel);
             }
 
             #endregion Name
 
-            var sexAndAgeRow = new HBoxContainer
-            {
-                SeparationOverride = 10
-            };
-            middleColumn.AddChild(sexAndAgeRow);
+            var tabContainer = new TabContainer {SizeFlagsVertical = SizeFlags.FillExpand};
+            vBox.AddChild(tabContainer);
 
-            #region Sex
+            #region Appearance
 
             {
-                var panel = HighlightedContainer();
-                var hBox = new HBoxContainer();
-                var sexLabel = new Label {Text = localization.GetString("Sex:")};
+                var appearanceVBox = new VBoxContainer();
+                tabContainer.AddChild(appearanceVBox);
+                tabContainer.SetTabTitle(0, Loc.GetString("Appearance"));
 
-                var sexButtonGroup = new ButtonGroup();
+                var sexAndAgeRow = new HBoxContainer
+                {
+                    SeparationOverride = 10
+                };
 
-                _sexMaleButton = new Button
+                appearanceVBox.AddChild(sexAndAgeRow);
+
+                #region Sex
+
                 {
-                    Text = localization.GetString("Male"),
-                    Group = sexButtonGroup
-                };
-                _sexMaleButton.OnPressed += args =>
+                    var panel = HighlightedContainer();
+                    var hBox = new HBoxContainer();
+                    var sexLabel = new Label {Text = localization.GetString("Sex:")};
+
+                    var sexButtonGroup = new ButtonGroup();
+
+                    _sexMaleButton = new Button
+                    {
+                        Text = localization.GetString("Male"),
+                        Group = sexButtonGroup
+                    };
+                    _sexMaleButton.OnPressed += args =>
+                    {
+                        Profile = Profile?.WithSex(Sex.Male);
+                        IsDirty = true;
+                    };
+                    _sexFemaleButton = new Button
+                    {
+                        Text = localization.GetString("Female"),
+                        Group = sexButtonGroup
+                    };
+                    _sexFemaleButton.OnPressed += args =>
+                    {
+                        Profile = Profile?.WithSex(Sex.Female);
+                        IsDirty = true;
+                    };
+                    hBox.AddChild(sexLabel);
+                    hBox.AddChild(_sexMaleButton);
+                    hBox.AddChild(_sexFemaleButton);
+                    panel.AddChild(hBox);
+                    sexAndAgeRow.AddChild(panel);
+                }
+
+                #endregion Sex
+
+                #region Age
+
                 {
-                    Profile = Profile?.WithSex(Sex.Male);
-                    IsDirty = true;
-                };
-                _sexFemaleButton = new Button
+                    var panel = HighlightedContainer();
+                    var hBox = new HBoxContainer();
+                    var ageLabel = new Label {Text = localization.GetString("Age:")};
+                    _ageEdit = new LineEdit {CustomMinimumSize = (40, 0)};
+                    _ageEdit.OnTextChanged += args =>
+                    {
+                        if (!int.TryParse(args.Text, out var newAge))
+                            return;
+                        Profile = Profile?.WithAge(newAge);
+                        IsDirty = true;
+                    };
+                    hBox.AddChild(ageLabel);
+                    hBox.AddChild(_ageEdit);
+                    panel.AddChild(hBox);
+                    sexAndAgeRow.AddChild(panel);
+                }
+
+                #endregion Age
+
+                #region Hair
+
                 {
-                    Text = localization.GetString("Female"),
-                    Group = sexButtonGroup
-                };
-                _sexFemaleButton.OnPressed += args =>
-                {
-                    Profile = Profile?.WithSex(Sex.Female);
-                    IsDirty = true;
-                };
-                hBox.AddChild(sexLabel);
-                hBox.AddChild(_sexMaleButton);
-                hBox.AddChild(_sexFemaleButton);
-                panel.AddChild(hBox);
-                sexAndAgeRow.AddChild(panel);
+                    var panel = HighlightedContainer();
+                    panel.SizeFlagsHorizontal = SizeFlags.None;
+                    var hairHBox = new HBoxContainer();
+
+                    _hairPicker = new HairStylePicker();
+                    _hairPicker.Populate();
+
+                    _hairPicker.OnHairStylePicked += newStyle =>
+                    {
+                        if (Profile is null)
+                            return;
+                        Profile = Profile.WithCharacterAppearance(
+                            Profile.Appearance.WithHairStyleName(newStyle));
+                        IsDirty = true;
+                    };
+
+                    _hairPicker.OnHairColorPicked += newColor =>
+                    {
+                        if (Profile is null)
+                            return;
+                        Profile = Profile.WithCharacterAppearance(
+                            Profile.Appearance.WithHairColor(newColor));
+                        IsDirty = true;
+                    };
+
+                    _facialHairPicker = new FacialHairStylePicker();
+                    _facialHairPicker.Populate();
+
+                    _facialHairPicker.OnHairStylePicked += newStyle =>
+                    {
+                        if (Profile is null)
+                            return;
+                        Profile = Profile.WithCharacterAppearance(
+                            Profile.Appearance.WithFacialHairStyleName(newStyle));
+                        IsDirty = true;
+                    };
+
+                    _facialHairPicker.OnHairColorPicked += newColor =>
+                    {
+                        if (Profile is null)
+                            return;
+                        Profile = Profile.WithCharacterAppearance(
+                            Profile.Appearance.WithFacialHairColor(newColor));
+                        IsDirty = true;
+                    };
+
+                    hairHBox.AddChild(_hairPicker);
+                    hairHBox.AddChild(_facialHairPicker);
+
+                    panel.AddChild(hairHBox);
+                    appearanceVBox.AddChild(panel);
+                }
+
+                #endregion Hair
             }
 
-            #endregion Sex
+            #endregion
 
-            #region Age
+            #region Jobs
 
             {
-                var panel = HighlightedContainer();
-                var hBox = new HBoxContainer();
-                var ageLabel = new Label {Text = localization.GetString("Age:")};
-                _ageEdit = new LineEdit {CustomMinimumSize = (40, 0)};
-                _ageEdit.OnTextChanged += args =>
+                var jobList = new VBoxContainer();
+
+                tabContainer.AddChild(new ScrollContainer
                 {
-                    if (!int.TryParse(args.Text, out var newAge))
-                        return;
-                    Profile = Profile?.WithAge(newAge);
-                    IsDirty = true;
-                };
-                hBox.AddChild(ageLabel);
-                hBox.AddChild(_ageEdit);
-                panel.AddChild(hBox);
-                sexAndAgeRow.AddChild(panel);
+                    Children = {jobList}
+                });
+
+                tabContainer.SetTabTitle(1, Loc.GetString("Jobs"));
+
+                _jobPriorities = new List<JobPrioritySelector>();
+
+                foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
+                {
+                    var selector = new JobPrioritySelector(job);
+                    jobList.AddChild(selector);
+                    _jobPriorities.Add(selector);
+
+                    selector.PriorityChanged += priority =>
+                    {
+                        Profile = Profile.WithJobPriority(job.ID, priority);
+                        IsDirty = true;
+
+                        if (priority == JobPriority.High)
+                        {
+                            // Lower any other high priorities to medium.
+                            foreach (var jobSelector in _jobPriorities)
+                            {
+                                if (jobSelector != selector && jobSelector.Priority == JobPriority.High)
+                                {
+                                    jobSelector.Priority = JobPriority.Medium;
+                                }
+                            }
+                        }
+                    };
+                }
             }
 
-            #endregion Age
+            #endregion
 
             var rightColumn = new VBoxContainer();
             middleContainer.AddChild(rightColumn);
@@ -250,65 +366,9 @@ namespace Content.Client.UserInterface
 
             #endregion Save
 
-            #region Hair
-
-            {
-                var panel = HighlightedContainer();
-                panel.SizeFlagsHorizontal = SizeFlags.None;
-                var hairHBox = new HBoxContainer();
-
-                _hairPicker = new HairStylePicker();
-                _hairPicker.Populate();
-
-                _hairPicker.OnHairStylePicked += newStyle =>
-                {
-                    if (Profile is null)
-                        return;
-                    Profile = Profile.WithCharacterAppearance(
-                        Profile.Appearance.WithHairStyleName(newStyle));
-                    IsDirty = true;
-                };
-
-                _hairPicker.OnHairColorPicked += newColor =>
-                {
-                    if (Profile is null)
-                        return;
-                    Profile = Profile.WithCharacterAppearance(
-                        Profile.Appearance.WithHairColor(newColor));
-                    IsDirty = true;
-                };
-
-                _facialHairPicker = new FacialHairStylePicker();
-                _facialHairPicker.Populate();
-
-                _facialHairPicker.OnHairStylePicked += newStyle =>
-                {
-                    if (Profile is null)
-                        return;
-                    Profile = Profile.WithCharacterAppearance(
-                        Profile.Appearance.WithFacialHairStyleName(newStyle));
-                    IsDirty = true;
-                };
-
-                _facialHairPicker.OnHairColorPicked += newColor =>
-                {
-                    if (Profile is null)
-                        return;
-                    Profile = Profile.WithCharacterAppearance(
-                        Profile.Appearance.WithFacialHairColor(newColor));
-                    IsDirty = true;
-                };
-
-                hairHBox.AddChild(_hairPicker);
-                hairHBox.AddChild(_facialHairPicker);
-
-                panel.AddChild(hairHBox);
-                vBox.AddChild(panel);
-            }
-
-            #endregion Hair
-
             UpdateControls();
+
+            IsDirty = false;
         }
 
         private bool IsDirty
@@ -360,6 +420,58 @@ namespace Content.Client.UserInterface
             _ageEdit.Text = Profile?.Age.ToString();
             UpdateHairPickers();
             UpdateSaveButton();
+            UpdateJobPriorities();
+        }
+
+        private void UpdateJobPriorities()
+        {
+            foreach (var prioritySelector in _jobPriorities)
+            {
+                var jobId = prioritySelector.Job.ID;
+
+                var priority = Profile.JobPriorities.GetValueOrDefault(jobId, JobPriority.Never);
+
+                prioritySelector.Priority = priority;
+            }
+        }
+
+        private class JobPrioritySelector : Control
+        {
+            public JobPrototype Job { get; }
+            private readonly OptionButton _optionButton;
+
+            public JobPriority Priority
+            {
+                get => (JobPriority) _optionButton.SelectedId;
+                set => _optionButton.SelectId((int) value);
+            }
+
+            public event Action<JobPriority> PriorityChanged;
+
+            public JobPrioritySelector(JobPrototype job)
+            {
+                Job = job;
+                _optionButton = new OptionButton();
+                _optionButton.AddItem(Loc.GetString("High"), (int) JobPriority.High);
+                _optionButton.AddItem(Loc.GetString("Medium"), (int) JobPriority.Medium);
+                _optionButton.AddItem(Loc.GetString("Low"), (int) JobPriority.Low);
+                _optionButton.AddItem(Loc.GetString("Never"), (int) JobPriority.Never);
+
+                _optionButton.OnItemSelected += args =>
+                {
+                    _optionButton.SelectId(args.Id);
+                    PriorityChanged?.Invoke(Priority);
+                };
+
+                AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        new Label {Text = job.Name, CustomMinimumSize = (175, 0)},
+                        _optionButton
+                    }
+                });
+            }
         }
     }
 }

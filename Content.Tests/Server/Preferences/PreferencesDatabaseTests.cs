@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Content.Server.Preferences;
@@ -26,7 +27,11 @@ namespace Content.Tests.Server.Preferences
                     Color.Aquamarine,
                     Color.Azure,
                     Color.Beige
-                    )
+                    ),
+                new Dictionary<string, JobPriority>
+                {
+                    {"Assistant", JobPriority.High}
+                }
                 );
         }
 

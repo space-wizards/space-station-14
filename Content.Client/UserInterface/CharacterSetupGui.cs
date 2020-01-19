@@ -11,6 +11,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
@@ -26,7 +27,8 @@ namespace Content.Client.UserInterface
         public CharacterSetupGui(IEntityManager entityManager,
             ILocalizationManager localization,
             IResourceCache resourceCache,
-            IClientPreferencesManager preferencesManager)
+            IClientPreferencesManager preferencesManager,
+            IPrototypeManager prototypeManager)
         {
             _entityManager = entityManager;
             _preferencesManager = preferencesManager;
@@ -144,7 +146,7 @@ namespace Content.Client.UserInterface
                 PanelOverride = new StyleBoxFlat {BackgroundColor = NanoStyle.NanoGold},
                 CustomMinimumSize = (2, 0)
             });
-            _humanoidProfileEditor = new HumanoidProfileEditor(localization, preferencesManager);
+            _humanoidProfileEditor = new HumanoidProfileEditor(localization, preferencesManager, prototypeManager);
             _humanoidProfileEditor.OnProfileChanged += newProfile => { UpdateUI(); };
             hBox.AddChild(_humanoidProfileEditor);
 

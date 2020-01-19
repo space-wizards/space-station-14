@@ -19,6 +19,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -40,6 +41,7 @@ namespace Content.Client.GameTicking
         [Dependency] private IGameHud _gameHud;
         [Dependency] private IEntityManager _entityManager;
         [Dependency] private IClientPreferencesManager _preferencesManager;
+        [Dependency] private IPrototypeManager _prototypeManager;
 #pragma warning restore 649
 
         [ViewVariables] private bool _areWeReady;
@@ -192,7 +194,7 @@ namespace Content.Client.GameTicking
 
             _tickerState = TickerState.InLobby;
 
-            _characterSetup = new CharacterSetupGui(_entityManager, _localization, _resourceCache, _preferencesManager);
+            _characterSetup = new CharacterSetupGui(_entityManager, _localization, _resourceCache, _preferencesManager, _prototypeManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
             _characterSetup.CloseButton.OnPressed += args =>
             {

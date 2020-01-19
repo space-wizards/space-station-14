@@ -30,6 +30,8 @@ namespace Content.Server.Preferences
             var profiles = new ICharacterProfile[_maxCharacterSlots];
             foreach (var profile in prefs.HumanoidProfiles)
             {
+                var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
+
                 profiles[profile.Slot] = new HumanoidCharacterProfile(
                     profile.CharacterName,
                     profile.Age,
@@ -42,7 +44,8 @@ namespace Content.Server.Preferences
                         Color.FromHex(profile.FacialHairColor),
                         Color.FromHex(profile.EyeColor),
                         Color.FromHex(profile.SkinColor)
-                    )
+                    ),
+                    jobs
                 );
             }
 
@@ -73,7 +76,7 @@ namespace Content.Server.Preferences
                 // TODO: Handle other ICharacterProfile implementations properly
                 throw new NotImplementedException();
             var appearance = (HumanoidCharacterAppearance) humanoid.CharacterAppearance;
-            _prefsDb.SaveCharacterSlot(username, new HumanoidProfile
+            var entity = new HumanoidProfile
             {
                 SlotName = humanoid.Name,
                 CharacterName = humanoid.Name,
@@ -86,7 +89,13 @@ namespace Content.Server.Preferences
                 EyeColor = appearance.EyeColor.ToHex(),
                 SkinColor = appearance.SkinColor.ToHex(),
                 Slot = slot
-            });
+            };
+            entity.Jobs.AddRange(
+                humanoid.JobPriorities
+                    .Where(j => j.Value != JobPriority.Never)
+                    .Select(j => new Job {JobName = j.Key, Priority = (DbJobPriority) j.Value})
+            );
+            _prefsDb.SaveCharacterSlot(username, entity);
         }
 
         private void DeleteCharacterSlot(string username, int slot)
