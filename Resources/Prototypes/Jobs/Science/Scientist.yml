@@ -1,0 +1,6 @@
+- type: job
+  id: Scientist
+  name: "Scientist"
+  startingGear: ScientistGear
+  department:
+  - Science

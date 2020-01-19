@@ -1,0 +1,6 @@
+- type: job
+  id: Clown
+  name: "Clown"
+  startingGear: ClownGear
+  department:
+  - Civilian

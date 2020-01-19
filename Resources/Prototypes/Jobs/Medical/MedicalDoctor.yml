@@ -1,0 +1,6 @@
+- type: job
+  id: MedicalDoctor
+  name: "Medical Doctor"
+  startingGear: MedicalDoctorGear
+  department:
+  - Medical

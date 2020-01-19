@@ -1,0 +1,6 @@
+- type: job
+  id: CargoTechnician
+  name: "Cargo Technician"
+  startingGear: CargoTechnicianGear
+  department:
+  - Cargo

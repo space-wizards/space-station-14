@@ -1,0 +1,7 @@
+- type: job
+  id: HeadOfSecurity
+  name: "Head Of Security"
+  startingGear: HeadOfSecurityGear
+  department:
+  - Command
+  - Security

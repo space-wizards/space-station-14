@@ -1,0 +1,6 @@
+- type: job
+  id: Captain
+  name: "Captain"
+  startingGear: CaptainGear
+  department:
+  - Command

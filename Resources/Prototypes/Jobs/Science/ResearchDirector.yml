@@ -1,0 +1,7 @@
+- type: job
+  id: ResearchDirector
+  name: "Research Director"
+  startingGear: ResearchDirectorGear
+  department:
+  - Command
+  - Science

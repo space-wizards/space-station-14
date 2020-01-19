@@ -1,0 +1,7 @@
+- type: job
+  id: HeadOfPersonnel
+  name: "Head Of Personnel"
+  startingGear: HeadOfPersonnelGear
+  department:
+  - Command
+  - Civilian

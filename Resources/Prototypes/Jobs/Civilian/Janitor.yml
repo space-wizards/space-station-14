@@ -1,0 +1,6 @@
+- type: job
+  id: Janitor
+  name: "Janitor"
+  startingGear: JanitorGear
+  department:
+  - Civilian

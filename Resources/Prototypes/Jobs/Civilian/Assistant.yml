@@ -1,6 +1,14 @@
+- type: job
+  id: Assistant
+  name: "Assistant"
+  startingGear: AssistantGear
+  department:
+  - Civilian
+
 - type: startingGear
   id: AssistantGear
   equipment:
     innerclothing: UniformAssistant
     backpack: BackpackClothing
     shoes: ShoesBlack
+

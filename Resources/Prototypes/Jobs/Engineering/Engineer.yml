@@ -1,0 +1,13 @@
+- type: job
+  id: StationEngineer
+  name: "Station Engineer"
+  startingGear: StationEngineerGear
+  department:
+  - Engineering
+
+- type: startingGear
+  id: StationEngineerGear
+  equipment:
+    innerclothing: UniformEngineering
+    backpack: BackpackEngineering
+    shoes: ShoesWorkboots
