@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
@@ -13,6 +12,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Access
 {
@@ -23,6 +23,7 @@ namespace Content.Server.GameObjects.Components.Access
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
 
         private BoundUserInterface _userInterface;
@@ -93,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Access
             targetIdComponent.FullName = newFullName;
             targetIdComponent.JobTitle = newJobTitle;
 
-            if (!newAccessList.TrueForAll(x => SharedAccess.AllAccess.Contains(x)))
+            if (!newAccessList.TrueForAll(x => _prototypeManager.HasIndex<AccessLevelPrototype>(x)))
             {
                 Logger.Warning($"Tried to write unknown access tag.");
                 return;

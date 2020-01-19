@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Access.SharedIdCardConsoleComponent;
 
 namespace Content.Client.GameObjects.Components.Access
@@ -40,7 +41,7 @@ namespace Content.Client.GameObjects.Components.Access
 
         protected override Vector2? CustomSize => (650, 270);
 
-        public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, ILocalizationManager loc)
+        public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, ILocalizationManager loc, IPrototypeManager prototypeManager)
         {
             _loc = loc;
             _owner = owner;
@@ -126,20 +127,21 @@ namespace Content.Client.GameObjects.Components.Access
             {
                 var grid = new GridContainer
                 {
-                    Columns = 4,
+                    Columns = 5,
                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter
                 };
                 vBox.AddChild(grid);
 
-                foreach (var accessName in SharedAccess.AllAccess)
+                foreach (var accessLevel in prototypeManager.EnumeratePrototypes<AccessLevelPrototype>())
                 {
                     var newButton = new Button
                     {
-                        Text = accessName,
+                        Text = accessLevel.Name,
                         ToggleMode = true,
                     };
                     grid.AddChild(newButton);
-                    _accessButtons.Add(accessName, newButton);
+                    _accessButtons.Add(accessLevel.ID, newButton);
+                    newButton.OnPressed += _ => SubmitData();
                 }
             }
 
