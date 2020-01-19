@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameTicking.GamePresets;
@@ -41,7 +42,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
-    public class GameTicker : SharedGameTicker, IGameTicker
+    public partial class GameTicker : SharedGameTicker, IGameTicker
     {
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
@@ -51,6 +52,7 @@ namespace Content.Server.GameTicking
         private const float LobbyDuration = 20;
 
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
+        [ViewVariables] private readonly List<ManifestEntry> _manifest = new List<ManifestEntry>();
 
         // Value is whether they're ready.
         [ViewVariables]
@@ -88,7 +90,7 @@ namespace Content.Server.GameTicking
         {
             DebugTools.Assert(!_initialized);
 
-            _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
+            _configurationManager.RegisterCVar("game.lobbyenabled", true, CVar.ARCHIVE);
             _playerManager.PlayerStatusChanged += _handlePlayerStatusChanged;
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
@@ -99,6 +101,8 @@ namespace Content.Server.GameTicking
             RestartRound();
 
             _initialized = true;
+
+            JobControllerInit();
         }
 
         public void Update(FrameEventArgs frameEventArgs)
@@ -143,15 +147,47 @@ namespace Content.Server.GameTicking
             var preset = MakeGamePreset();
             preset.Start();
 
-            foreach (var (playerSession, ready) in _playersInLobby.ToList())
+            List<IPlayerSession> readyPlayers;
+            if (LobbyEnabled)
             {
-                if (LobbyEnabled && !ready) continue;
+                readyPlayers = _playersInLobby.Where(p => p.Value).Select(p => p.Key).ToList();
+            }
+            else
+            {
+                readyPlayers = _playersInLobby.Keys.ToList();
+            }
 
-                _spawnPlayer(playerSession);
+            // Get the profiles for each player for easier lookup.
+            var profiles = readyPlayers.ToDictionary(p => p, GetPlayerProfile);
+
+            var assignedJobs = AssignJobs(readyPlayers, profiles);
+
+            // For players without jobs, give them the overflow job if they have that set...
+            foreach (var player in readyPlayers)
+            {
+                if (assignedJobs.ContainsKey(player))
+                {
+                    continue;
+                }
+
+                var profile = profiles[player];
+                if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
+                {
+                    assignedJobs.Add(player, OverflowJob);
+                }
+            }
+
+            // Spawn everybody in!
+            foreach (var (player, job) in assignedJobs)
+            {
+                SpawnPlayer(player, job);
             }
 
             _sendStatusToAll();
         }
+
+        private HumanoidCharacterProfile GetPlayerProfile(IPlayerSession p) =>
+            (HumanoidCharacterProfile) _prefsManager.GetPreferences(p.SessionId.Username).SelectedCharacter;
 
         public void EndRound()
         {
@@ -168,7 +204,7 @@ namespace Content.Server.GameTicking
             if (LobbyEnabled)
                 _playerJoinLobby(targetPlayer);
             else
-                _spawnPlayer(targetPlayer);
+                SpawnPlayer(targetPlayer);
         }
 
         public void MakeObserve(IPlayerSession player)
@@ -182,7 +218,7 @@ namespace Content.Server.GameTicking
         {
             if (!_playersInLobby.ContainsKey(player)) return;
 
-            _spawnPlayer(player);
+            SpawnPlayer(player);
         }
 
         public void ToggleReady(IPlayerSession player, bool ready)
@@ -308,6 +344,9 @@ namespace Content.Server.GameTicking
 
                 _playerJoinLobby(player);
             }
+
+            _spawnedPositions.Clear();
+            _manifest.Clear();
         }
 
         private void _preRoundSetup()
@@ -359,13 +398,13 @@ namespace Content.Server.GameTicking
                             return;
                         }
 
-                        _spawnPlayer(session);
+                        SpawnPlayer(session);
                     }
                     else
                     {
                         if (data.Mind.CurrentEntity == null)
                         {
-                            _spawnPlayer(session);
+                            SpawnPlayer(session);
                         }
                         else
                         {
@@ -387,22 +426,56 @@ namespace Content.Server.GameTicking
             }
         }
 
-        private void _spawnPlayer(IPlayerSession session)
+        private void SpawnPlayer(IPlayerSession session, string jobId = null)
         {
+            var character = (HumanoidCharacterProfile) _prefsManager
+                .GetPreferences(session.SessionId.Username)
+                .SelectedCharacter;
+
             _playerJoinGame(session);
+
             var data = session.ContentData();
             data.WipeMind();
             data.Mind = new Mind(session.SessionId);
-            //TODO Replace "Assistant" with the job when char preference are done
-            var job = new Job(data.Mind, _prototypeManager.Index<JobPrototype>("Assistant"));
+
+            if (jobId == null)
+            {
+                // Pick best job best on prefs.
+                jobId = PickBestAvailableJob(character);
+            }
+
+            var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
+            var job = new Job(data.Mind, jobPrototype);
             data.Mind.AddRole(job);
 
             var mob = _spawnPlayerMob(job);
             data.Mind.TransferTo(mob);
-            var character = _prefsManager
-                .GetPreferences(session.SessionId.Username)
-                .SelectedCharacter;
             ApplyCharacterProfile(mob, character);
+
+            AddManifestEntry(character.Name, jobId);
+            AddSpawnedPosition(jobId);
+            EquipIdCard(mob, character.Name, jobPrototype);
+        }
+
+        private void EquipIdCard(IEntity mob, string characterName, JobPrototype jobPrototype)
+        {
+            var card = _entityManager.SpawnEntity("IDCardStandard", mob.Transform.GridPosition);
+
+            var inventory = mob.GetComponent<InventoryComponent>();
+            inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, card.GetComponent<ClothingComponent>());
+
+            var cardComponent = card.GetComponent<IdCardComponent>();
+            cardComponent.FullName = characterName;
+            cardComponent.JobTitle = jobPrototype.Name;
+
+            var access = card.GetComponent<AccessComponent>();
+            access.Tags.Clear();
+            access.Tags.AddRange(jobPrototype.Access);
+        }
+
+        private void AddManifestEntry(string characterName, string jobId)
+        {
+            _manifest.Add(new ManifestEntry(characterName, jobId));
         }
 
         private void _spawnObserver(IPlayerSession session)
