@@ -48,6 +48,9 @@ namespace Content.Server.Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("PreferenceUnavailable")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("PrefsId")
                         .HasColumnType("INTEGER");
 

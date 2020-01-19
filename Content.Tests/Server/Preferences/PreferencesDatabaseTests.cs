@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Content.Server.Preferences;
+using Content.Shared;
 using Content.Shared.Preferences;
 using NUnit.Framework;
 using Robust.Shared.Maths;
@@ -27,12 +28,13 @@ namespace Content.Tests.Server.Preferences
                     Color.Aquamarine,
                     Color.Azure,
                     Color.Beige
-                    ),
+                ),
                 new Dictionary<string, JobPriority>
                 {
-                    {"Assistant", JobPriority.High}
-                }
-                );
+                    {SharedGameTicker.OverflowJob, JobPriority.High}
+                },
+                PreferenceUnavailableMode.StayInLobby
+            );
         }
 
         private static PreferencesDatabase GetDb()
@@ -99,7 +101,7 @@ namespace Content.Tests.Server.Preferences
 
             db.SaveSelectedCharacterIndex(username, MaxCharacterSlots);
             prefs = db.GetPlayerPreferences(username);
-            Assert.AreEqual(prefs.SelectedCharacterIndex, MaxCharacterSlots-1);
+            Assert.AreEqual(prefs.SelectedCharacterIndex, MaxCharacterSlots - 1);
         }
     }
 }

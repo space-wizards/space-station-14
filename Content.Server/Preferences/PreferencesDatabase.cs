@@ -45,7 +45,8 @@ namespace Content.Server.Preferences
                         Color.FromHex(profile.EyeColor),
                         Color.FromHex(profile.SkinColor)
                     ),
-                    jobs
+                    jobs,
+                    (PreferenceUnavailableMode) profile.PreferenceUnavailable
                 );
             }
 
@@ -88,7 +89,8 @@ namespace Content.Server.Preferences
                 FacialHairColor = appearance.FacialHairColor.ToHex(),
                 EyeColor = appearance.EyeColor.ToHex(),
                 SkinColor = appearance.SkinColor.ToHex(),
-                Slot = slot
+                Slot = slot,
+                PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable
             };
             entity.Jobs.AddRange(
                 humanoid.JobPriorities

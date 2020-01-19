@@ -10,32 +10,41 @@ namespace Content.Shared.Preferences
     {
         private readonly Dictionary<string, JobPriority> _jobPriorities;
 
-        private HumanoidCharacterProfile(string name,
+        private HumanoidCharacterProfile(
+            string name,
             int age,
             Sex sex,
             HumanoidCharacterAppearance appearance,
-            Dictionary<string, JobPriority> jobPriorities)
+            Dictionary<string, JobPriority> jobPriorities,
+            PreferenceUnavailableMode preferenceUnavailable)
         {
             Name = name;
             Age = age;
             Sex = sex;
             Appearance = appearance;
             _jobPriorities = jobPriorities;
+            PreferenceUnavailable = preferenceUnavailable;
         }
 
-        public HumanoidCharacterProfile(string name,
+        public HumanoidCharacterProfile(
+            string name,
             int age,
             Sex sex,
             HumanoidCharacterAppearance appearance,
-            IReadOnlyDictionary<string, JobPriority> jobPriorities)
-            : this(name, age, sex, appearance, new Dictionary<string, JobPriority>(jobPriorities))
+            IReadOnlyDictionary<string, JobPriority> jobPriorities,
+            PreferenceUnavailableMode preferenceUnavailable)
+            : this(name, age, sex, appearance, new Dictionary<string, JobPriority>(jobPriorities),
+                preferenceUnavailable)
         {
         }
 
         public static HumanoidCharacterProfile Default()
         {
             return new HumanoidCharacterProfile("John Doe", 18, Sex.Male, HumanoidCharacterAppearance.Default(),
-                new Dictionary<string, JobPriority>());
+                new Dictionary<string, JobPriority>
+                {
+                    {SharedGameTicker.OverflowJob, JobPriority.High}
+                }, PreferenceUnavailableMode.StayInLobby);
         }
 
         public string Name { get; }
@@ -44,30 +53,37 @@ namespace Content.Shared.Preferences
         public ICharacterAppearance CharacterAppearance => Appearance;
         public HumanoidCharacterAppearance Appearance { get; }
         public IReadOnlyDictionary<string, JobPriority> JobPriorities => _jobPriorities;
+        public PreferenceUnavailableMode PreferenceUnavailable { get; }
 
         public HumanoidCharacterProfile WithName(string name)
         {
-            return new HumanoidCharacterProfile(name, Age, Sex, Appearance, _jobPriorities);
+            return new HumanoidCharacterProfile(name, Age, Sex, Appearance, _jobPriorities, PreferenceUnavailable);
         }
 
         public HumanoidCharacterProfile WithAge(int age)
         {
-            return new HumanoidCharacterProfile(Name, age, Sex, Appearance, _jobPriorities);
+            return new HumanoidCharacterProfile(Name, age, Sex, Appearance, _jobPriorities, PreferenceUnavailable);
         }
 
         public HumanoidCharacterProfile WithSex(Sex sex)
         {
-            return new HumanoidCharacterProfile(Name, Age, sex, Appearance, _jobPriorities);
+            return new HumanoidCharacterProfile(Name, Age, sex, Appearance, _jobPriorities, PreferenceUnavailable);
         }
 
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
-            return new HumanoidCharacterProfile(Name, Age, Sex, appearance, _jobPriorities);
+            return new HumanoidCharacterProfile(Name, Age, Sex, appearance, _jobPriorities, PreferenceUnavailable);
         }
 
         public HumanoidCharacterProfile WithJobPriorities(IReadOnlyDictionary<string, JobPriority> jobPriorities)
         {
-            return new HumanoidCharacterProfile(Name, Age, Sex, Appearance, new Dictionary<string, JobPriority>(jobPriorities));
+            return new HumanoidCharacterProfile(
+                Name,
+                Age,
+                Sex,
+                Appearance,
+                new Dictionary<string, JobPriority>(jobPriorities),
+                PreferenceUnavailable);
         }
 
         public HumanoidCharacterProfile WithJobPriority(string jobId, JobPriority priority)
@@ -82,7 +98,12 @@ namespace Content.Shared.Preferences
                 dictionary[jobId] = priority;
             }
 
-            return new HumanoidCharacterProfile(Name, Age, Sex, Appearance, dictionary);
+            return new HumanoidCharacterProfile(Name, Age, Sex, Appearance, dictionary, PreferenceUnavailable);
+        }
+
+        public HumanoidCharacterProfile WithPreferenceUnavailable(PreferenceUnavailableMode mode)
+        {
+            return new HumanoidCharacterProfile(Name, Age, Sex, Appearance, _jobPriorities, mode);
         }
 
         public string Summary =>
@@ -94,6 +115,7 @@ namespace Content.Shared.Preferences
             if (Name != other.Name) return false;
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;
+            if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
         }

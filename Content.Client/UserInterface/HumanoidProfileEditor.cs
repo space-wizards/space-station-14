@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Client.Interfaces;
+using Content.Shared;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Content.Shared.Text;
@@ -39,6 +40,7 @@ namespace Content.Client.UserInterface
         private readonly HairStylePicker _hairPicker;
         private readonly FacialHairStylePicker _facialHairPicker;
         private readonly List<JobPrioritySelector> _jobPriorities;
+        private readonly OptionButton _preferenceUnavailableButton;
 
         private bool _isDirty;
         public int CharacterSlot;
@@ -109,10 +111,7 @@ namespace Content.Client.UserInterface
                     CustomMinimumSize = (270, 0),
                     SizeFlagsVertical = SizeFlags.ShrinkCenter
                 };
-                _nameEdit.OnTextChanged += args =>
-                {
-                    NameChanged(args.Text);
-                };
+                _nameEdit.OnTextChanged += args => { NameChanged(args.Text); };
                 var nameRandomButton = new Button
                 {
                     Text = localization.GetString("Randomize"),
@@ -280,12 +279,41 @@ namespace Content.Client.UserInterface
             {
                 var jobList = new VBoxContainer();
 
-                tabContainer.AddChild(new ScrollContainer
+                var jobVBox = new VBoxContainer
                 {
-                    Children = {jobList}
-                });
+                    Children =
+                    {
+                        (_preferenceUnavailableButton = new OptionButton()),
+                        new ScrollContainer
+                        {
+                            SizeFlagsVertical = SizeFlags.FillExpand,
+                            Children =
+                            {
+                                jobList
+                            }
+                        }
+                    }
+                };
+
+                tabContainer.AddChild(jobVBox);
 
                 tabContainer.SetTabTitle(1, Loc.GetString("Jobs"));
+
+                _preferenceUnavailableButton.AddItem(
+                    Loc.GetString("Stay in lobby if preference unavailable."),
+                    (int) PreferenceUnavailableMode.StayInLobby);
+                _preferenceUnavailableButton.AddItem(
+                    Loc.GetString("Be an {0} if preference unavailable.",
+                        Loc.GetString(SharedGameTicker.OverflowJobName)),
+                    (int) PreferenceUnavailableMode.SpawnAsOverflow);
+
+                _preferenceUnavailableButton.OnItemSelected += args =>
+                {
+                    _preferenceUnavailableButton.SelectId(args.Id);
+
+                    Profile = Profile.WithPreferenceUnavailable((PreferenceUnavailableMode) args.Id);
+                    IsDirty = true;
+                };
 
                 _jobPriorities = new List<JobPrioritySelector>();
 
@@ -423,6 +451,8 @@ namespace Content.Client.UserInterface
             UpdateHairPickers();
             UpdateSaveButton();
             UpdateJobPriorities();
+
+            _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
 
         private void UpdateJobPriorities()
