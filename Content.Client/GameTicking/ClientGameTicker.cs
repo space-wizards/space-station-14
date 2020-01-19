@@ -220,6 +220,7 @@ namespace Content.Client.GameTicking
 
             _lobby.CharacterPreview.CharacterSetupButton.OnPressed += args =>
             {
+                SetReady(false);
                 _userInterfaceManager.StateRoot.RemoveChild(_lobby);
                 _userInterfaceManager.StateRoot.AddChild(_characterSetup);
             };
@@ -237,17 +238,22 @@ namespace Content.Client.GameTicking
 
             _lobby.ReadyButton.OnToggled += args =>
             {
-                if (_gameStarted)
-                {
-                    return;
-                }
-
-                _console.ProcessCommand($"toggleready {args.Pressed}");
+                SetReady(args.Pressed);
             };
 
             _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
 
             _updatePlayerList();
+        }
+
+        private void SetReady(bool newReady)
+        {
+            if (_gameStarted)
+            {
+                return;
+            }
+
+            _console.ProcessCommand($"toggleready {newReady}");
         }
 
         private void _joinGame(MsgTickerJoinGame message)
