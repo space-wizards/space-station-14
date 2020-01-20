@@ -268,7 +268,7 @@ namespace Content.Server.GameTicking
                 foreach (var (slot, equipmentStr) in gear)
                 {
                     var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.GridPosition);
-                    inventory.Equip(slot, equipmentEntity.GetComponent<ClothingComponent>());
+                    inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
                 }
             }
 
