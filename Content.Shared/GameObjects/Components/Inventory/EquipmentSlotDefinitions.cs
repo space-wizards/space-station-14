@@ -6,13 +6,28 @@ namespace Content.Shared.GameObjects.Components.Inventory
 {
     public static class EquipmentSlotDefines
     {
+        public static IReadOnlyCollection<Slots> AllSlots { get; }
+
+        static EquipmentSlotDefines()
+        {
+            var output = new Slots[(int)Slots.LAST - (int)Slots.HEAD];
+
+            // The index stuff is to jump over NONE.
+            for (var i = 0; i < output.Length; i++)
+            {
+                output[i] = (Slots)(i+1);
+            }
+
+            AllSlots = output;
+        }
+
         /// <summary>
         ///     Uniquely identifies a single slot in an inventory.
         /// </summary>
         [Serializable, NetSerializable]
         public enum Slots
         {
-            NONE,
+            NONE = 0,
             HEAD,
             EYES,
             EARS,
@@ -29,7 +44,12 @@ namespace Content.Shared.GameObjects.Components.Inventory
             POCKET3,
             POCKET4,
             EXOSUITSLOT1,
-            EXOSUITSLOT2
+            EXOSUITSLOT2,
+
+            /// <summary>
+            ///     Not a real slot.
+            /// </summary>
+            LAST
         }
 
         /// <summary>

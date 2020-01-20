@@ -209,6 +209,10 @@ namespace Content.Client.UserInterface
                 _previewDummy = entityManager.SpawnEntityAt("HumanMob_Dummy",
                     new MapCoordinates(Vector2.Zero, MapId.Nullspace));
                 _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
+                if (profile is HumanoidCharacterProfile humanoid)
+                {
+                    LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, humanoid);
+                }
 
                 var isSelectedCharacter = profile == preferencesManager.Preferences.SelectedCharacter;
 
@@ -239,7 +243,7 @@ namespace Content.Client.UserInterface
                 {
                     Text = "Delete",
                     Visible = !isSelectedCharacter,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd
+                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand
                 };
                 deleteButton.OnPressed += args =>
                 {

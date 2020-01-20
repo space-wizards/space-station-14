@@ -108,24 +108,44 @@ namespace Content.Client.GameObjects
 
         private void _setSlot(Slots slot, IEntity entity)
         {
-            if (_sprite != null && entity.TryGetComponent(out ClothingComponent clothing))
+            SetSlotVisuals(slot, entity);
+
+            InterfaceController?.AddToSlot(slot, entity);
+        }
+
+        internal void SetSlotVisuals(Slots slot, IEntity entity)
+        {
+            if (_sprite == null)
+            {
+                return;
+            }
+
+            if (entity != null && entity.TryGetComponent(out ClothingComponent clothing))
             {
                 var flag = SlotMasks[slot];
                 var data = clothing.GetEquippedStateInfo(flag);
-                if (data == null)
-                {
-                    _sprite.LayerSetVisible(slot, false);
-                }
-                else
+                if (data != null)
                 {
                     var (rsi, state) = data.Value;
                     _sprite.LayerSetVisible(slot, true);
                     _sprite.LayerSetRSI(slot, rsi);
                     _sprite.LayerSetState(slot, state);
+                    return;
                 }
             }
 
-            InterfaceController?.AddToSlot(slot, entity);
+            _sprite.LayerSetVisible(slot, false);
+        }
+
+        internal void ClearAllSlotVisuals()
+        {
+            foreach (var slot in InventoryInstance.SlotMasks)
+            {
+                if (slot != Slots.NONE)
+                {
+                    _sprite.LayerSetVisible(slot, false);
+                }
+            }
         }
 
         private void _clearSlot(Slots slot)

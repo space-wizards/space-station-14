@@ -1,13 +1,20 @@
-﻿using Content.Client.GameObjects.Components.Mobs;
+﻿using System.Linq;
+using Content.Client.GameObjects;
+using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
+using Content.Shared;
+using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
@@ -94,6 +101,33 @@ namespace Content.Client.UserInterface
                 _summaryLabel.Text = selectedCharacter.Summary;
                 var component = _previewDummy.GetComponent<HumanoidAppearanceComponent>();
                 component.UpdateFromProfile(selectedCharacter);
+
+                GiveDummyJobClothes(_previewDummy, selectedCharacter);
+            }
+        }
+
+        public static void GiveDummyJobClothes(IEntity dummy, HumanoidCharacterProfile profile)
+        {
+            var protoMan = IoCManager.Resolve<IPrototypeManager>();
+            var entityMan = IoCManager.Resolve<IEntityManager>();
+
+            var inventory = dummy.GetComponent<ClientInventoryComponent>();
+
+            var highPriorityJob = profile.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
+
+            var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.OverflowJob);
+            var gear = protoMan.Index<StartingGearPrototype>(job.StartingGear);
+
+            inventory.ClearAllSlotVisuals();
+
+            foreach (var (slot, itemType) in gear.Equipment)
+            {
+                var item = entityMan
+                    .SpawnEntityAt(itemType, new MapCoordinates(Vector2.Zero, MapId.Nullspace));
+
+                inventory.SetSlotVisuals(slot, item);
+
+                item.Delete();
             }
         }
     }
