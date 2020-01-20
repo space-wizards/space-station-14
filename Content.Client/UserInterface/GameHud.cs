@@ -12,6 +12,7 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Control;
 
 namespace Content.Client.UserInterface
 {
@@ -236,6 +237,7 @@ namespace Content.Client.UserInterface
 
             HandsContainer = new MarginContainer
             {
+                MouseFilter = MouseFilterMode.Ignore,
                 SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
 

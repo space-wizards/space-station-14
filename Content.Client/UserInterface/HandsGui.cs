@@ -39,7 +39,7 @@ namespace Content.Client.UserInterface
         {
             IoCManager.InjectDependencies(this);
 
-            MouseFilter = MouseFilterMode.Stop;
+            MouseFilter = MouseFilterMode.Ignore;
 
             var textureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
             var textureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
