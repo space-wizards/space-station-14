@@ -90,7 +90,7 @@ namespace Content.Server.GameTicking
         {
             DebugTools.Assert(!_initialized);
 
-            _configurationManager.RegisterCVar("game.lobbyenabled", true, CVar.ARCHIVE);
+            _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
             _playerManager.PlayerStatusChanged += _handlePlayerStatusChanged;
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
