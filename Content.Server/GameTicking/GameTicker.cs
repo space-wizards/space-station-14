@@ -322,11 +322,7 @@ namespace Content.Server.GameTicking
                 // FIXME: Actually, definitely.
                 entity.Delete();
 
-            // Delete all maps outside of nullspace.
-            foreach (var mapId in _mapManager.GetAllMapIds().ToList())
-                // TODO: Maybe something less naive here?
-                if (mapId != MapId.Nullspace)
-                    _mapManager.DeleteMap(mapId);
+            _mapManager.Restart();
 
             // Delete the minds of everybody.
             // TODO: Maybe move this into a separate manager?

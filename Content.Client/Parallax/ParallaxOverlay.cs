@@ -1,4 +1,4 @@
-using Content.Client.Interfaces.Parallax;
+﻿using Content.Client.Interfaces.Parallax;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
@@ -52,7 +52,7 @@ namespace Content.Client.Parallax
             var screenHandle = (DrawingHandleScreen) handle;
 
             var (sizeX, sizeY) = _parallaxTexture.Size;
-            var (posX, posY) = _eyeManager.ScreenToWorld(Vector2.Zero).ToWorld(_mapManager).Position;
+            var (posX, posY) = _eyeManager.ScreenToMap(Vector2.Zero).Position;
             var (ox, oy) = (Vector2i) new Vector2(-posX / Slowness, posY / Slowness);
             ox = MathHelper.Mod(ox, sizeX);
             oy = MathHelper.Mod(oy, sizeY);

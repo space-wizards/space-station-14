@@ -173,6 +173,11 @@ namespace Content.Client
             {
                 _stateManager.RequestStateChange<GameScreen>();
             };
+
+            _baseClient.PlayerJoinedServer += (sender, args) =>
+            {
+                IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
+            };
         }
 
         /// <summary>
@@ -217,7 +222,6 @@ namespace Content.Client
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
-            IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
             IoCManager.Resolve<IItemSlotManager>().Initialize();
         }
 
