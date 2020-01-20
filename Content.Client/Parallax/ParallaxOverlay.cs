@@ -4,7 +4,6 @@ using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -17,7 +16,6 @@ namespace Content.Client.Parallax
         [Dependency] private readonly IParallaxManager _parallaxManager;
         [Dependency] private readonly IEyeManager _eyeManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
         public override bool AlwaysDirty => true;
