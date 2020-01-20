@@ -8,7 +8,7 @@ using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
-namespace Content.IntegrationTests
+namespace Content.IntegrationTests.Tests
 {
     /// <summary>
     ///     Tests that the

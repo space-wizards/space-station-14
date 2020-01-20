@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Shared.Exceptions;
 
-namespace Content.IntegrationTests
+namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     public class StartTest : ContentIntegrationTest

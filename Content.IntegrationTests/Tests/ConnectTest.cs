@@ -7,7 +7,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 
-namespace Content.IntegrationTests
+namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     public class ConnectTest : ContentIntegrationTest
