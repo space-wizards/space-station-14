@@ -3,7 +3,7 @@
   name: "Captain"
   head: true
   positions: 1
-  startingGear: AssistantGear
+  startingGear: CaptainGear
   department:
   - Command
 
@@ -20,3 +20,12 @@
   - research
   - service
   - maintenance
+
+- type: startingGear
+  id: CaptainGear
+  equipment:
+    innerclothing: UniformCaptain
+    backpack: BackpackCaptain
+    shoes: ShoesBlack
+    head: HatCaptain
+    eyes: SunGlasses
