@@ -58,7 +58,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task LoadSaveTicksSaveStationStation()
         {
-            var server = StartServer();
+            var server = StartServerDummyTicker();
             await server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
