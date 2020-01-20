@@ -44,7 +44,8 @@ namespace Content.Client.GameObjects.Components.Mobs
             sprite.LayerSetColor(HumanoidVisualLayers.Hair, Appearance.HairColor);
             sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, Appearance.FacialHairColor);
 
-            sprite.LayerSetState(HumanoidVisualLayers.Body, Sex == Sex.Male ? "male" : "female");
+            sprite.LayerSetState(HumanoidVisualLayers.Chest, Sex == Sex.Male ? "human_chest_m" : "human_chest_f");
+            sprite.LayerSetState(HumanoidVisualLayers.Head, Sex == Sex.Male ? "human_head_m" : "human_head_f");
 
             var hairStyle = Appearance.HairStyleName;
             if (string.IsNullOrWhiteSpace(hairStyle) || !HairStyles.HairStylesMap.ContainsKey(hairStyle))

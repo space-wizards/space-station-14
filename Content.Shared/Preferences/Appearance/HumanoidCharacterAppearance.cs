@@ -4,6 +4,13 @@ namespace Content.Shared.Preferences.Appearance
     {
         Hair,
         FacialHair,
-        Body
+        Chest,
+        Head,
+        RArm,
+        LArm,
+        RHand,
+        LHand,
+        RLeg,
+        LLeg,
     }
 }
