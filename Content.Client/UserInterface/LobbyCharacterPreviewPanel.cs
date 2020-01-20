@@ -29,8 +29,7 @@ namespace Content.Client.UserInterface
             IClientPreferencesManager preferencesManager)
         {
             _preferencesManager = preferencesManager;
-            _previewDummy = entityManager.SpawnEntityAt("HumanMob_Dummy",
-                new MapCoordinates(Vector2.Zero, MapId.Nullspace));
+            _previewDummy = entityManager.SpawnEntityAt("HumanMob_Dummy", MapCoordinates.Nullspace);
 
             var header = new NanoHeading
             {
@@ -122,8 +121,7 @@ namespace Content.Client.UserInterface
 
             foreach (var (slot, itemType) in gear.Equipment)
             {
-                var item = entityMan
-                    .SpawnEntityAt(itemType, new MapCoordinates(Vector2.Zero, MapId.Nullspace));
+                var item = entityMan.SpawnEntityAt(itemType, MapCoordinates.Nullspace);
 
                 inventory.SetSlotVisuals(slot, item);
 
