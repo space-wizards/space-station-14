@@ -336,6 +336,7 @@ namespace Content.Client.UserInterface
                                 if (jobSelector != selector && jobSelector.Priority == JobPriority.High)
                                 {
                                     jobSelector.Priority = JobPriority.Medium;
+                                    Profile = Profile.WithJobPriority(jobSelector.Job.ID, JobPriority.Medium);
                                 }
                             }
                         }
