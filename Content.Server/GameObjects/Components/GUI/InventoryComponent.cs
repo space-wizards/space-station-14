@@ -98,22 +98,7 @@ namespace Content.Server.GameObjects
                     "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
             }
 
-            var pass = false;
-
-            if (item is ClothingComponent clothing)
-            {
-                if (clothing.SlotFlags != SlotFlags.PREVENTEQUIP && (clothing.SlotFlags & SlotMasks[slot]) != 0)
-                {
-                    pass = true;
-                }
-            }
-
-            if (Owner.TryGetComponent(out IInventoryController controller))
-            {
-                pass = controller.CanEquip(slot, item.Owner, pass);
-            }
-
-            if (!pass)
+            if (!CanEquip(slot, item))
             {
                 return false;
             }
@@ -130,16 +115,36 @@ namespace Content.Server.GameObjects
             return true;
         }
 
+        public bool Equip(Slots slot, IEntity entity) => Equip(slot, entity.GetComponent<ItemComponent>());
+
+
         /// <summary>
         ///     Checks whether an item can be put in the specified slot.
         /// </summary>
         /// <param name="slot">The slot to check for.</param>
         /// <param name="item">The item to check for.</param>
         /// <returns>True if the item can be inserted into the specified slot.</returns>
-        public bool CanEquip(Slots slot, ClothingComponent item)
+        public bool CanEquip(Slots slot, ItemComponent item)
         {
-            return SlotContainers[slot].CanInsert(item.Owner);
+            var pass = false;
+
+            if (item is ClothingComponent clothing)
+            {
+                if (clothing.SlotFlags != SlotFlags.PREVENTEQUIP && (clothing.SlotFlags & SlotMasks[slot]) != 0)
+                {
+                    pass = true;
+                }
+            }
+
+            if (Owner.TryGetComponent(out IInventoryController controller))
+            {
+                pass = controller.CanEquip(slot, item.Owner, pass);
+            }
+
+            return pass && SlotContainers[slot].CanInsert(item.Owner);
         }
+
+        public bool CanEquip(Slots slot, IEntity entity) => CanEquip(slot, entity.GetComponent<ItemComponent>());
 
         /// <summary>
         ///     Drops the item in a slot.
