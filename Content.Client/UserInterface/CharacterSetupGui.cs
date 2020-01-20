@@ -1,6 +1,8 @@
-﻿using Content.Client.GameObjects.Components.Mobs;
+﻿using System.Linq;
+using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
 using Content.Client.Utility;
+using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics.Drawing;
@@ -8,6 +10,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -209,7 +212,8 @@ namespace Content.Client.UserInterface
                 _previewDummy = entityManager.SpawnEntityAt("HumanMob_Dummy",
                     new MapCoordinates(Vector2.Zero, MapId.Nullspace));
                 _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
-                if (profile is HumanoidCharacterProfile humanoid)
+                var humanoid = profile as HumanoidCharacterProfile;
+                if (humanoid != null)
                 {
                     LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, humanoid);
                 }
@@ -235,9 +239,18 @@ namespace Content.Client.UserInterface
                     OverrideDirection = Direction.South
                 };
 
+                var description = profile.Name;
+
+                var highPriorityJob = humanoid?.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
+                if (highPriorityJob != null)
+                {
+                    var jobName = IoCManager.Resolve<IPrototypeManager>().Index<JobPrototype>(highPriorityJob).Name;
+                    description = $"{description}\n{jobName}";
+                }
+
                 var descriptionLabel = new Label
                 {
-                    Text = $"{profile.Name}\nAssistant" //TODO implement job selection
+                    Text = description
                 };
                 var deleteButton = new Button
                 {
