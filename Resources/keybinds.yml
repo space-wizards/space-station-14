@@ -141,3 +141,7 @@ binds:
 - function: TextScrollToBottom
   type: state
   key: PageDown
+- function: TextDelete
+  type: state
+  key: Delete
+  canRepeat: true
