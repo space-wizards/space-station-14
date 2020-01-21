@@ -11,7 +11,12 @@ namespace Content.IntegrationTests
     public class DummyGameTicker : SharedGameTicker, IGameTicker
     {
         public GameRunLevel RunLevel { get; } = GameRunLevel.InRound;
-        public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
+
+        public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged
+        {
+            add { }
+            remove { }
+        }
 
         public void Initialize()
         {
