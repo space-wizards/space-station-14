@@ -34,10 +34,11 @@ namespace Content.Server.Explosions
 
             foreach (var entity in entitiesAll)
             {
-                //if (entity == Owner)
-                //    continue;
+                if (entity.Deleted)
+                    continue;
                 if (!entity.Transform.IsMapTransform)
                     continue;
+
                 var distanceFromEntity = (int)entity.Transform.GridPosition.Distance(mapManager, coords);
                 var exAct = entitySystemManager.GetEntitySystem<ActSystem>();
                 var severity = ExplosionSeverity.Destruction;
