@@ -125,7 +125,9 @@ namespace Content.Client
                 "MedkitFill",
                 "FloorTile",
                 "FootstepSound",
-                "UtilityBeltClothingFill"
+                "UtilityBeltClothingFill",
+                "ShuttleController",
+                "HumanInventoryController"
             };
 
             foreach (var ignoreName in registerIgnore)
