@@ -12,5 +12,6 @@ namespace Content.Shared.Preferences.Appearance
         LHand,
         RLeg,
         LLeg,
+        StencilMask
     }
 }

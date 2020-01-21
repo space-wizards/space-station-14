@@ -58,7 +58,18 @@
       sprite: Mob/human.rsi
       state: human_l_leg
 
+    - shader: stencilClear
+      sprite: Mob/human.rsi
+      state: human_l_leg
+    - shader: stencilMask
+      map: ["enum.HumanoidVisualLayers.StencilMask"]
+      sprite: Mob/masking_helpers.rsi
+      state: female_full
+      visible: false
+
     - map: ["enum.Slots.INNERCLOTHING"]
+      shader: stencilDraw
+
     - map: ["enum.Slots.IDCARD"]
     - map: ["enum.Slots.GLOVES"]
     - map: ["enum.Slots.SHOES"]
@@ -174,7 +185,16 @@
         sprite: Mob/human.rsi
         state: human_l_leg
 
+      - shader: stencilClear
+      - shader: stencilMask
+        map: ["enum.HumanoidVisualLayers.StencilMask"]
+        sprite: Mob/masking_helpers.rsi
+        state: female_full
+        visible: false
+
       - map: ["enum.Slots.INNERCLOTHING"]
+        shader: stencilDraw
+
       - map: ["enum.Slots.IDCARD"]
       - map: ["enum.Slots.GLOVES"]
       - map: ["enum.Slots.SHOES"]

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects;
+using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -14,8 +15,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
-using Content.Shared.GameObjects.Components.Inventory;
-using System;
 
 namespace Content.Client.GameObjects
 {
@@ -130,6 +129,17 @@ namespace Content.Client.GameObjects
                     _sprite.LayerSetVisible(slot, true);
                     _sprite.LayerSetRSI(slot, rsi);
                     _sprite.LayerSetState(slot, state);
+
+                    if (slot == Slots.INNERCLOTHING)
+                    {
+                        _sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothing.FemaleMask switch
+                        {
+                            FemaleClothingMask.NoMask => "female_none",
+                            FemaleClothingMask.UniformTop => "female_top",
+                            _ => "female_full",
+                        });
+                    }
+
                     return;
                 }
             }

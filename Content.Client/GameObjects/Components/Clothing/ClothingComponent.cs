@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Clothing
@@ -12,12 +13,27 @@ namespace Content.Client.GameObjects.Components.Clothing
     [ComponentReference(typeof(ItemComponent))]
     public class ClothingComponent : ItemComponent
     {
+        private FemaleClothingMask _femaleMask;
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
         public override Type StateType => typeof(ClothingComponentState);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string ClothingEquippedPrefix { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public FemaleClothingMask FemaleMask
+        {
+            get => _femaleMask;
+            set => _femaleMask = value;
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _femaleMask, "femaleMask", FemaleClothingMask.UniformFull);
+        }
 
         public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot)
         {
@@ -46,5 +62,12 @@ namespace Content.Client.GameObjects.Components.Clothing
             ClothingEquippedPrefix = clothingComponentState.ClothingEquippedPrefix;
             EquippedPrefix = clothingComponentState.EquippedPrefix;
         }
+    }
+
+    public enum FemaleClothingMask
+    {
+        NoMask = 0,
+        UniformFull,
+        UniformTop
     }
 }

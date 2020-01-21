@@ -91,6 +91,7 @@
 
   - type: Clothing
     sprite: Clothing/uniform_clown.rsi
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
@@ -141,4 +142,4 @@
     state: captain
 
   - type: Clothing
-    sprite: Clothing/captain_uniform.rsi            
+    sprite: Clothing/captain_uniform.rsi

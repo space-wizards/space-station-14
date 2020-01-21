@@ -47,6 +47,8 @@ namespace Content.Client.GameObjects.Components.Mobs
             sprite.LayerSetState(HumanoidVisualLayers.Chest, Sex == Sex.Male ? "human_chest_m" : "human_chest_f");
             sprite.LayerSetState(HumanoidVisualLayers.Head, Sex == Sex.Male ? "human_head_m" : "human_head_f");
 
+            sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, Sex == Sex.Female);
+
             var hairStyle = Appearance.HairStyleName;
             if (string.IsNullOrWhiteSpace(hairStyle) || !HairStyles.HairStylesMap.ContainsKey(hairStyle))
                 hairStyle = HairStyles.DefaultHairStyle;

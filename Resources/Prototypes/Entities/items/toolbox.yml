@@ -17,7 +17,14 @@
   description: A bright red toolbox, stocked with emergency tools
   components:
   - type: Sprite
-    texture: Objects/Tools/toolbox_r.png
+    layers:
+    - shader: stencilClear
+    - texture: Objects/Tools/wrench.png
+      shader: stencilMask
+
+    - texture: Objects/Tools/toolbox_r.png
+      shader: stencilDraw
+
   - type: Icon
     texture: Objects/Tools/toolbox_r.png
 
