@@ -116,7 +116,7 @@ namespace Content.Client.UserInterface
 
             hBox.AddChild(new MarginContainer
             {
-                CustomMinimumSize = (420, 0),
+                CustomMinimumSize = (330, 0),
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 MarginTopOverride = 5,
                 MarginLeftOverride = 5,
@@ -249,13 +249,14 @@ namespace Content.Client.UserInterface
 
                 var descriptionLabel = new Label
                 {
-                    Text = description
+                    Text = description,
+                    ClipText = true,
+                    SizeFlagsHorizontal = SizeFlags.FillExpand
                 };
                 var deleteButton = new Button
                 {
                     Text = "Delete",
                     Visible = !isSelectedCharacter,
-                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand
                 };
                 deleteButton.OnPressed += args =>
                 {
