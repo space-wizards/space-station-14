@@ -575,7 +575,6 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var useMsg = new UseInHandMessage(user, used);
-
             RaiseEvent(useMsg);
             if (useMsg.Handled)
             {
