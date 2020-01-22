@@ -1,6 +1,11 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System;
+using CancellationTokenSource = System.Threading.CancellationTokenSource;
+using Content.Shared.GameObjects.Components.Items;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
+using Robust.Shared.IoC;
+using Robust.Shared.Interfaces.Timing;
 
 namespace Content.Server.GameObjects.Components.Timing
 {
@@ -12,11 +17,17 @@ namespace Content.Server.GameObjects.Components.Timing
     {
         public override string Name => "UseDelay";
 
+        private TimeSpan _lastUseTime;
+
         /// <summary>
         /// The time, in milliseconds, between an object's use and when it can be used again
         /// </summary>
-        public int _delay;
-        public bool _activeDelay;
+        private int _delay;
+        public int Delay { get => _delay; set => _delay = value; }
+
+        public bool ActiveDelay{ get; private set; }
+
+        private CancellationTokenSource cancellationTokenSource;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -26,13 +37,42 @@ namespace Content.Server.GameObjects.Components.Timing
 
         public void BeginDelay()
         {
-            if (_activeDelay)
+            if (ActiveDelay)
             {
                 return;
             }
 
-            _activeDelay = true;
-            Timer.Spawn(_delay, () => _activeDelay = false);
+            ActiveDelay = true;
+
+            cancellationTokenSource = new CancellationTokenSource();
+
+            Timer.Spawn(Delay, () => ActiveDelay = false, cancellationTokenSource.Token);
+
+            _lastUseTime = IoCManager.Resolve<IGameTiming>().CurTime;
+
+            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
+            {
+                cooldown.CooldownStart = _lastUseTime;
+                cooldown.CooldownEnd = _lastUseTime + TimeSpan.FromMilliseconds(Delay);
+            }
+
+        }
+
+        public void Cancel()
+        {
+            cancellationTokenSource.Cancel();
+            ActiveDelay = false;
+
+            if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
+            {
+                cooldown.CooldownEnd = IoCManager.Resolve<IGameTiming>().CurTime;
+            }
+        }
+
+        public void Restart()
+        {
+            cancellationTokenSource.Cancel();
+            BeginDelay();
         }
     }
 }

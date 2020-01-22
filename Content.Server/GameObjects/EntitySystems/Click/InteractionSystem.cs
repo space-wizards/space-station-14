@@ -564,7 +564,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
             {
-                if (delayComponent._activeDelay)
+                if (delayComponent.ActiveDelay)
                 {
                     return;
                 }
