@@ -230,6 +230,10 @@ namespace Content.Server.GameObjects
 
             var inventorySlot = hands[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+
+            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+                return false;
+
             if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
             {
                 return false;
