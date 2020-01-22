@@ -44,6 +44,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.GraphicsLibrary
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Server.Database", "Content.Server.Database\Content.Server.Database.csproj", "{45C9B43F-305D-4651-9863-F6384CBC847F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{50404922-9637-4394-BF59-165D0850ADC8}"
+ProjectSection(SolutionItems) = preProject
+	RobustToolbox\MSBuild\Robust.DefineConstants.targets = RobustToolbox\MSBuild\Robust.DefineConstants.targets
+	RobustToolbox\MSBuild\Robust.Engine.targets = RobustToolbox\MSBuild\Robust.Engine.targets
+	RobustToolbox\MSBuild\Robust.Properties.targets = RobustToolbox\MSBuild\Robust.Properties.targets
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -123,6 +130,7 @@ Global
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{0529F740-0000-0000-0000-000000000000} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{4809F412-3132-419E-BF9D-CCF7593C3533} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
+		{50404922-9637-4394-BF59-165D0850ADC8} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}
