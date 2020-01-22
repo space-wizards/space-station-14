@@ -564,14 +564,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
             {
-                if (delayComponent.ActiveDelay)
-                {
-                    return;
-                }
-                else
-                {
-                    delayComponent.BeginDelay();
-                }
+                delayComponent.BeginDelay();
             }
 
             var useMsg = new UseInHandMessage(user, used);
