@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Sound;
+using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Input;
 using JetBrains.Annotations;
@@ -560,7 +562,21 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public void UseInteraction(IEntity user, IEntity used)
         {
+
+            if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
+            {
+                if (delayComponent._activeDelay)
+                {
+                    return;
+                }
+                else
+                {
+                    delayComponent.BeginDelay();
+                }
+            }
+
             var useMsg = new UseInHandMessage(user, used);
+
             RaiseEvent(useMsg);
             if (useMsg.Handled)
             {
