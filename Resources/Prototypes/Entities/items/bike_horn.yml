@@ -23,4 +23,4 @@
 
   - type: Timing
   - type: UseDelay
-    delay: 500
+    delay: 0.5
