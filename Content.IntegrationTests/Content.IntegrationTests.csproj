@@ -27,8 +27,5 @@
     <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Engine.targets" />
-  <PropertyGroup>
-    <RobustToolsPath>..\RobustToolbox\Tools\</RobustToolsPath>
-  </PropertyGroup>
-  <Target Name="RobustAfterBuild" DependsOnTargets="CopyMiscDependencies;CopySwnfd" AfterTargets="Build" />
+  <Target Name="ContentAfterBuild" DependsOnTargets="ClientAfterBuild" AfterTargets="Build" />
 </Project>
