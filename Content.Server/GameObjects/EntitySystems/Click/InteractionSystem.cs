@@ -678,9 +678,9 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public void HandSelectedInteraction(IEntity user, IEntity item)
         {
-            var dropMsg = new HandSelectedMessage(user, item);
-            RaiseEvent(dropMsg);
-            if (dropMsg.Handled)
+            var handSelectedMsg = new HandSelectedMessage(user, item);
+            RaiseEvent(handSelectedMsg);
+            if (handSelectedMsg.Handled)
             {
                 return;
             }
@@ -700,9 +700,9 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public void HandDeselectedInteraction(IEntity user, IEntity item)
         {
-            var dropMsg = new HandDeselectedMessage(user, item);
-            RaiseEvent(dropMsg);
-            if (dropMsg.Handled)
+            var handDeselectedMsg = new HandDeselectedMessage(user, item);
+            RaiseEvent(handDeselectedMsg);
+            if (handDeselectedMsg.Handled)
             {
                 return;
             }
