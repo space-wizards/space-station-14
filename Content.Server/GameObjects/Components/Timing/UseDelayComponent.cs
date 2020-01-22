@@ -19,10 +19,10 @@ namespace Content.Server.GameObjects.Components.Timing
 
         private TimeSpan _lastUseTime;
 
+        private int _delay;
         /// <summary>
         /// The time, in milliseconds, between an object's use and when it can be used again
         /// </summary>
-        private int _delay;
         public int Delay { get => _delay; set => _delay = value; }
 
         public bool ActiveDelay{ get; private set; }
@@ -72,6 +72,7 @@ namespace Content.Server.GameObjects.Components.Timing
         public void Restart()
         {
             cancellationTokenSource.Cancel();
+            ActiveDelay = false;
             BeginDelay();
         }
     }
