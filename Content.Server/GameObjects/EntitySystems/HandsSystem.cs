@@ -125,12 +125,6 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
-            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(ent, handsComp.GetActiveHand.Owner))
-                return false;
-                
-            if(handsComp.GetActiveHand != null && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(ent, handsComp.GetActiveHand.Owner))
-            	return false;
-
             if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
             {
                 handsComp.Drop(handsComp.ActiveIndex, coords);
