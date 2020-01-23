@@ -8,15 +8,15 @@ namespace Content.Server.Mobs.Roles
 {
     public class Job : Role
     {
-        private readonly JobPrototype _jobPrototype;
+        public JobPrototype Prototype { get; }
 
         public override string Name { get; }
 
-        public String StartingGear => _jobPrototype.StartingGear;
+        public String StartingGear => Prototype.StartingGear;
 
         public Job(Mind mind, JobPrototype jobPrototype) : base(mind)
         {
-            _jobPrototype = jobPrototype;
+            Prototype = jobPrototype;
             Name = jobPrototype.Name;
         }
 

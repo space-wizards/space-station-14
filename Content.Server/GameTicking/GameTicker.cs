@@ -180,7 +180,7 @@ namespace Content.Server.GameTicking
             // Spawn everybody in!
             foreach (var (player, job) in assignedJobs)
             {
-                SpawnPlayer(player, job);
+                SpawnPlayer(player, job, false);
             }
 
             _sendStatusToAll();
@@ -258,9 +258,9 @@ namespace Content.Server.GameTicking
             UpdateInfoText();
         }
 
-        private IEntity _spawnPlayerMob(Job job)
+        private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
         {
-            var entity = _entityManager.SpawnEntityAt(PlayerPrototypeName, _getLateJoinSpawnPoint());
+            var entity = _entityManager.SpawnEntityAt(PlayerPrototypeName, lateJoin ? _getLateJoinSpawnPoint() : _getJobSpawnPoint(job.Prototype.ID));
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
                 var gear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear).Equipment;
@@ -271,7 +271,6 @@ namespace Content.Server.GameTicking
                     inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
                 }
             }
-
             return entity;
         }
 
@@ -297,6 +296,22 @@ namespace Content.Server.GameTicking
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.LateJoin) possiblePoints.Add(entity.Transform.GridPosition);
+            }
+
+            if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
+
+            return location;
+        }
+
+        private GridCoordinates _getJobSpawnPoint(string jobId)
+        {
+            var location = _spawnPoint;
+
+            var possiblePoints = new List<GridCoordinates>();
+            foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
+            {
+                var point = entity.GetComponent<SpawnPointComponent>();
+                if (point.SpawnType == SpawnPointType.Job && point.Job.ID == jobId) possiblePoints.Add(entity.Transform.GridPosition);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -416,7 +431,7 @@ namespace Content.Server.GameTicking
             }
         }
 
-        private void SpawnPlayer(IPlayerSession session, string jobId = null)
+        private void SpawnPlayer(IPlayerSession session, string jobId = null, bool lateJoin = true)
         {
             var character = (HumanoidCharacterProfile) _prefsManager
                 .GetPreferences(session.SessionId.Username)
@@ -438,7 +453,7 @@ namespace Content.Server.GameTicking
             var job = new Job(data.Mind, jobPrototype);
             data.Mind.AddRole(job);
 
-            var mob = _spawnPlayerMob(job);
+            var mob = _spawnPlayerMob(job, lateJoin);
             data.Mind.TransferTo(mob);
             ApplyCharacterProfile(mob, character);
 
