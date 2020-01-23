@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -44,9 +45,13 @@ namespace Content.Server.GameObjects.Components.Power
             if (found)
                 return;
 
+            bool hasItemSpriteComp = Owner.TryGetComponent(out SpriteComponent itemSpriteComp);
+
+            if (Owner.TryGetComponent(out StackComponent stack) && !stack.Use(1))
+                return;
+
             var newWire = _entityManager.SpawnEntityAt("Wire", grid.GridTileToLocal(snapPos));
-            if (newWire.TryGetComponent(out SpriteComponent wireSpriteComp)
-                && Owner.TryGetComponent(out SpriteComponent itemSpriteComp))
+            if (newWire.TryGetComponent(out SpriteComponent wireSpriteComp) && hasItemSpriteComp)
             {
                 wireSpriteComp.Color = itemSpriteComp.Color;
             }
