@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Markers
         private string _jobId;
         public SpawnPointType SpawnType => _spawnType;
         public JobPrototype Job => string.IsNullOrEmpty(_jobId) ? null
-            : _prototypeManager.Index(typeof(JobPrototype), _jobId) as JobPrototype;
+            : _prototypeManager.Index<JobPrototype>(_jobId);
 
         public override void ExposeData(ObjectSerializer serializer)
         {
