@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
@@ -564,7 +564,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
             {
-                delayComponent.BeginDelay();
+                if(delayComponent.ActiveDelay)
+                    return;
+                else
+                    delayComponent.BeginDelay();
             }
 
             var useMsg = new UseInHandMessage(user, used);
