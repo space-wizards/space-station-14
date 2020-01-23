@@ -36,6 +36,8 @@ namespace Content.Client.GameObjects.Components.Actor
         /// </remarks>
         public SS14Window Window { get; private set; }
 
+        private List<ICharacterUI> _uiComponents;
+
         /// <summary>
         /// Create the window with all character UIs and bind it to a keypress
         /// </summary>
@@ -44,13 +46,13 @@ namespace Content.Client.GameObjects.Components.Actor
             base.Initialize();
 
             //Use all the character ui interfaced components to create the character window
-            var uiComponents = Owner.GetAllComponents<ICharacterUI>().ToList();
-            if (uiComponents.Count == 0)
+            _uiComponents = Owner.GetAllComponents<ICharacterUI>().ToList();
+            if (_uiComponents.Count == 0)
             {
                 return;
             }
 
-            Window = new CharacterWindow(uiComponents);
+            Window = new CharacterWindow(_uiComponents);
             Window.OnClose += () => _gameHud.CharacterButtonDown = false;
         }
 
@@ -61,7 +63,15 @@ namespace Content.Client.GameObjects.Components.Actor
         {
             base.OnRemove();
 
-            Window?.Dispose();
+            foreach (var component in _uiComponents)
+            {
+                // Make sure these don't get deleted when the window is disposed.
+                component.Scene.Orphan();
+            }
+
+            _uiComponents = null;
+
+            Window?.Close();
             Window = null;
 
             var inputMgr = IoCManager.Resolve<IInputManager>();
