@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Maths;
 
 namespace Content.Shared.Preferences.Appearance
 {
@@ -268,5 +269,15 @@ namespace Content.Shared.Preferences.Appearance
 
                 return string.Compare(styleA, styleB, StringComparison.CurrentCulture);
             });
+
+        public static IReadOnlyList<Color> RealisticHairColors = new List<Color>
+        {
+            Color.Yellow,
+            Color.Black,
+            Color.SandyBrown,
+            Color.Brown,
+            Color.Wheat,
+            Color.Gray
+        };
     }
 }

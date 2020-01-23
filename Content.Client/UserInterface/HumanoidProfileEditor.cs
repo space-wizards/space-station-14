@@ -6,7 +6,6 @@ using Content.Client.Interfaces;
 using Content.Shared;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
-using Content.Shared.Text;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -15,11 +14,10 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Client.UserInterface
 {
-    public class HumanoidProfileEditor : Control
+    public partial class HumanoidProfileEditor : Control
     {
         private static readonly StyleBoxFlat HighlightedStyle = new StyleBoxFlat
         {
@@ -31,7 +29,6 @@ namespace Content.Client.UserInterface
         };
 
         private readonly LineEdit _ageEdit;
-
         private readonly LineEdit _nameEdit;
         private readonly IClientPreferencesManager _preferencesManager;
         private readonly Button _saveButton;
@@ -47,15 +44,10 @@ namespace Content.Client.UserInterface
         public HumanoidCharacterProfile Profile;
         public event Action<HumanoidCharacterProfile> OnProfileChanged;
 
-        private void NameChanged(string newName)
-        {
-            Profile = Profile?.WithName(newName);
-            IsDirty = true;
-        }
-
         public HumanoidProfileEditor(ILocalizationManager localization,
             IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager)
         {
+            _random = IoCManager.Resolve<IRobustRandom>();
             Profile = (HumanoidCharacterProfile) preferencesManager.Preferences.SelectedCharacter;
             CharacterSlot = preferencesManager.Preferences.SelectedCharacterIndex;
             _preferencesManager = preferencesManager;
@@ -87,10 +79,9 @@ namespace Content.Client.UserInterface
                 var panel = HighlightedContainer();
                 var randomizeEverythingButton = new Button
                 {
-                    Text = localization.GetString("Randomize everything"),
-                    Disabled = true,
-                    ToolTip = "Not yet implemented!"
+                    Text = localization.GetString("Randomize everything")
                 };
+                randomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
                 panel.AddChild(randomizeEverythingButton);
                 leftColumn.AddChild(panel);
             }
@@ -111,22 +102,12 @@ namespace Content.Client.UserInterface
                     CustomMinimumSize = (270, 0),
                     SizeFlagsVertical = SizeFlags.ShrinkCenter
                 };
-                _nameEdit.OnTextChanged += args => { NameChanged(args.Text); };
+                _nameEdit.OnTextChanged += args => { SetName(args.Text); };
                 var nameRandomButton = new Button
                 {
                     Text = localization.GetString("Randomize"),
                 };
-                nameRandomButton.OnPressed += args =>
-                {
-                    var random = IoCManager.Resolve<IRobustRandom>();
-                    var firstName = random.Pick(
-                        Profile.Sex == Sex.Male
-                            ? Names.MaleFirstNames
-                            : Names.FemaleFirstNames);
-                    var lastName = random.Pick(Names.LastNames);
-                    _nameEdit.Text = $"{firstName} {lastName}";
-                    NameChanged(_nameEdit.Text);
-                };
+                nameRandomButton.OnPressed += args => RandomizeName();
                 hBox.AddChild(nameLabel);
                 hBox.AddChild(_nameEdit);
                 hBox.AddChild(nameRandomButton);
@@ -169,8 +150,7 @@ namespace Content.Client.UserInterface
                     };
                     _sexMaleButton.OnPressed += args =>
                     {
-                        Profile = Profile?.WithSex(Sex.Male);
-                        IsDirty = true;
+                        SetSex(Sex.Male);
                     };
                     _sexFemaleButton = new Button
                     {
@@ -179,8 +159,7 @@ namespace Content.Client.UserInterface
                     };
                     _sexFemaleButton.OnPressed += args =>
                     {
-                        Profile = Profile?.WithSex(Sex.Female);
-                        IsDirty = true;
+                        SetSex(Sex.Female);
                     };
                     hBox.AddChild(sexLabel);
                     hBox.AddChild(_sexMaleButton);
@@ -202,8 +181,7 @@ namespace Content.Client.UserInterface
                     {
                         if (!int.TryParse(args.Text, out var newAge))
                             return;
-                        Profile = Profile?.WithAge(newAge);
-                        IsDirty = true;
+                        SetAge(newAge);
                     };
                     hBox.AddChild(ageLabel);
                     hBox.AddChild(_ageEdit);
@@ -395,6 +373,24 @@ namespace Content.Client.UserInterface
             IsDirty = false;
         }
 
+        private void SetAge(int newAge)
+        {
+            Profile = Profile?.WithAge(newAge);
+            IsDirty = true;
+        }
+
+        private void SetSex(Sex newSex)
+        {
+            Profile = Profile?.WithSex(newSex);
+            IsDirty = true;
+        }
+
+        private void SetName(string newName)
+        {
+            Profile = Profile?.WithName(newName);
+            IsDirty = true;
+        }
+
         public void Save()
         {
             IsDirty = false;
@@ -420,6 +416,16 @@ namespace Content.Client.UserInterface
             };
         }
 
+        private void UpdateNameEdit()
+        {
+            _nameEdit.Text = Profile.Name;
+        }
+
+        private void UpdateAgeEdit()
+        {
+            _ageEdit.Text = Profile.Age.ToString();
+        }
+
         private void UpdateSexControls()
         {
             if (Profile.Sex == Sex.Male)
@@ -430,10 +436,10 @@ namespace Content.Client.UserInterface
 
         private void UpdateHairPickers()
         {
-            _hairPicker.SetInitialData(
+            _hairPicker.SetData(
                 Profile.Appearance.HairColor,
                 Profile.Appearance.HairStyleName);
-            _facialHairPicker.SetInitialData(
+            _facialHairPicker.SetData(
                 Profile.Appearance.FacialHairColor,
                 Profile.Appearance.FacialHairStyleName);
         }
@@ -446,9 +452,9 @@ namespace Content.Client.UserInterface
         public void UpdateControls()
         {
             if (Profile is null) return;
-            _nameEdit.Text = Profile?.Name;
+            UpdateNameEdit();
             UpdateSexControls();
-            _ageEdit.Text = Profile?.Age.ToString();
+            UpdateAgeEdit();
             UpdateHairPickers();
             UpdateSaveButton();
             UpdateJobPriorities();

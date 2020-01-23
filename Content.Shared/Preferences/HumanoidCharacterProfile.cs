@@ -9,6 +9,8 @@ namespace Content.Shared.Preferences
     public class HumanoidCharacterProfile : ICharacterProfile
     {
         private readonly Dictionary<string, JobPriority> _jobPriorities;
+        public static int MinimumAge = 18;
+        public static int MaximumAge = 90;
 
         private HumanoidCharacterProfile(
             string name,
