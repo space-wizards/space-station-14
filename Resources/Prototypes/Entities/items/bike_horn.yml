@@ -21,6 +21,5 @@
   - type: EmitSoundOnUse
     sound: /Audio/items/bikehorn.ogg
 
-  - type: Timing
   - type: UseDelay
     delay: 0.5
