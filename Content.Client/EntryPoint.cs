@@ -127,7 +127,8 @@ namespace Content.Client
                 "FootstepSound",
                 "UtilityBeltClothingFill",
                 "ShuttleController",
-                "HumanInventoryController"
+                "HumanInventoryController",
+                "UseDelay"
             };
 
             foreach (var ignoreName in registerIgnore)
