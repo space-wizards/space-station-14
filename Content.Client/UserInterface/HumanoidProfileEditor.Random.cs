@@ -3,7 +3,6 @@ using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
 using Content.Shared.Text;
 using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Client.UserInterface
@@ -45,21 +44,23 @@ namespace Content.Client.UserInterface
         private void RandomizeAppearance()
         {
             var newHairStyle = _random.Pick(HairStyles.HairStylesMap.Keys.ToList());
-            var newAppearance = Profile.Appearance.WithHairStyleName(newHairStyle);
 
             var newFacialHairStyle = Profile.Sex == Sex.Female
                 ? HairStyles.DefaultFacialHairStyle
                 : _random.Pick(HairStyles.FacialHairStylesMap.Keys.ToList());
-            newAppearance = newAppearance.WithFacialHairStyleName(newFacialHairStyle);
 
-            var newHairColor = new Color(
-                _random.NextFloat(),
-                _random.NextFloat(),
-                _random.NextFloat());
-            newAppearance = newAppearance.WithHairColor(newHairColor);
-            newAppearance = newAppearance.WithFacialHairColor(newHairColor);
+            var newHairColor = _random.Pick(HairStyles.RealisticHairColors);
+            newHairColor = newHairColor
+                .WithRed(newHairColor.R + _random.Next(-25, 25) / 100f)
+                .WithGreen(newHairColor.G + _random.Next(-25, 25) / 100f)
+                .WithBlue(newHairColor.B + _random.Next(-25, 25) / 100f);
 
-            Profile = Profile.WithCharacterAppearance(newAppearance);
+            Profile = Profile.WithCharacterAppearance(
+                Profile.Appearance
+                    .WithHairStyleName(newHairStyle)
+                    .WithFacialHairStyleName(newFacialHairStyle)
+                    .WithHairColor(newHairColor)
+                    .WithFacialHairColor(newHairColor));
             UpdateHairPickers();
         }
     }
