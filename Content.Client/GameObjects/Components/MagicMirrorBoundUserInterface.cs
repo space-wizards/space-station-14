@@ -97,7 +97,7 @@ namespace Content.Client.GameObjects.Components
 
         private Color _lastColor;
 
-        public void SetInitialData(Color color, string styleName)
+        public void SetData(Color color, string styleName)
         {
             _lastColor = color;
 
@@ -107,10 +107,7 @@ namespace Content.Client.GameObjects.Components
 
             foreach (var item in Items)
             {
-                if (item.Text == styleName)
-                {
-                    item.Selected = true;
-                }
+                item.Selected = item.Text == styleName;
             }
 
             UpdateStylePickerColor();
@@ -301,8 +298,8 @@ namespace Content.Client.GameObjects.Components
 
         public void SetInitialData(MagicMirrorInitialDataMessage initialData)
         {
-            _facialHairStylePicker.SetInitialData(initialData.FacialHairColor, initialData.FacialHairName);
-            _hairStylePicker.SetInitialData(initialData.HairColor, initialData.HairName);
+            _facialHairStylePicker.SetData(initialData.FacialHairColor, initialData.FacialHairName);
+            _hairStylePicker.SetData(initialData.HairColor, initialData.HairName);
         }
     }
 }

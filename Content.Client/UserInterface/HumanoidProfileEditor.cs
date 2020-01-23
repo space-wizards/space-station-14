@@ -436,10 +436,10 @@ namespace Content.Client.UserInterface
 
         private void UpdateHairPickers()
         {
-            _hairPicker.SetInitialData(
+            _hairPicker.SetData(
                 Profile.Appearance.HairColor,
                 Profile.Appearance.HairStyleName);
-            _facialHairPicker.SetInitialData(
+            _facialHairPicker.SetData(
                 Profile.Appearance.FacialHairColor,
                 Profile.Appearance.FacialHairStyleName);
         }
