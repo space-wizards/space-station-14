@@ -38,15 +38,6 @@ namespace Content.Shared.Preferences
 
         public int FirstEmptySlot => IndexOfCharacter(null);
 
-        public static PlayerPreferences Default()
-        {
-            return new PlayerPreferences(new List<ICharacterProfile>
-                {
-                    HumanoidCharacterProfile.Default()
-                },
-                0);
-        }
-
         public int IndexOfCharacter(ICharacterProfile profile)
         {
             return _characters.FindIndex(x => x == profile);

@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using Content.Server.Database;
 using Content.Server.Interfaces;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
@@ -31,14 +33,42 @@ namespace Content.Server.Preferences
                 HandleUpdateCharacterMessage);
 
             _configuration.RegisterCVar("game.maxcharacterslots", 10);
-            _configuration.RegisterCVar("game.preferencesdbpath", "preferences.db");
+            _configuration.RegisterCVar("database.prefs_engine", "sqlite");
+            _configuration.RegisterCVar("database.prefs_sqlite_dbpath", "preferences.db");
+            _configuration.RegisterCVar("database.prefs_pg_host", "localhost");
+            _configuration.RegisterCVar("database.prefs_pg_port", 5432);
+            _configuration.RegisterCVar("database.prefs_pg_database", "ss14_prefs");
+            _configuration.RegisterCVar("database.prefs_pg_username", string.Empty);
+            _configuration.RegisterCVar("database.prefs_pg_password", string.Empty);
 
-            var configPreferencesDbPath = _configuration.GetCVar<string>("game.preferencesdbpath");
-            var finalPreferencesDbPath = Path.Combine(_resourceManager.UserData.RootDir, configPreferencesDbPath);
+            var engine = _configuration.GetCVar<string>("database.prefs_engine").ToLower();
+            IDatabaseConfiguration dbConfig;
+            switch (engine)
+            {
+                case "sqlite":
+                    var configPreferencesDbPath = _configuration.GetCVar<string>("database.prefs_sqlite_dbpath");
+                    var finalPreferencesDbPath =
+                        Path.Combine(_resourceManager.UserData.RootDir, configPreferencesDbPath);
+                    dbConfig = new SqliteConfiguration(
+                        finalPreferencesDbPath
+                    );
+                    break;
+                case "postgres":
+                    dbConfig = new PostgresConfiguration(
+                        _configuration.GetCVar<string>("database.prefs_pg_host"),
+                        _configuration.GetCVar<int>("database.prefs_pg_port"),
+                        _configuration.GetCVar<string>("database.prefs_pg_database"),
+                        _configuration.GetCVar<string>("database.prefs_pg_username"),
+                        _configuration.GetCVar<string>("database.prefs_pg_password")
+                    );
+                    break;
+                default:
+                    throw new NotImplementedException("Unknown database engine {engine}.");
+            }
 
             var maxCharacterSlots = _configuration.GetCVar<int>("game.maxcharacterslots");
 
-            _preferencesDb = new PreferencesDatabase(finalPreferencesDbPath, maxCharacterSlots);
+            _preferencesDb = new PreferencesDatabase(dbConfig, maxCharacterSlots);
         }
 
         private void HandleSelectCharacterMessage(MsgSelectCharacter message)
@@ -79,25 +109,12 @@ namespace Content.Server.Preferences
             var prefs = GetFromSql(username);
             if (prefs is null)
             {
-                prefs = PlayerPreferences.Default();  // TODO: Create random character instead
-                SavePreferences(prefs, username);
+                _preferencesDb.SaveSelectedCharacterIndex(username, 0);
+                _preferencesDb.SaveCharacterSlot(username, HumanoidCharacterProfile.Default(), 0);
+                prefs = GetFromSql(username);
             }
 
             return prefs;
-        }
-
-        /// <summary>
-        /// Saves the given preferences to storage.
-        /// </summary>
-        public void SavePreferences(PlayerPreferences prefs, string username)
-        {
-            _preferencesDb.SaveSelectedCharacterIndex(username, prefs.SelectedCharacterIndex);
-            var index = 0;
-            foreach (var character in prefs.Characters)
-            {
-                _preferencesDb.SaveCharacterSlot(username, character, index);
-                index++;
-            }
         }
     }
 }
