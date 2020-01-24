@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Content.Server.Database.Migrations
 {
-    [DbContext(typeof(PreferencesDbContext))]
+    [DbContext(typeof(SqlitePreferencesDbContext))]
     [Migration("20200119103426_preferenceUnavailable")]
     partial class preferenceUnavailable
     {

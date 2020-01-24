@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Content.Server.Database.Migrations
 {
-    [DbContext(typeof(PreferencesDbContext))]
-    partial class PreferencesDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(SqlitePreferencesDbContext))]
+    partial class SqlitePreferencesDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
