@@ -8,6 +8,8 @@
   - Command
   - Engineering
 
+  icon: "ChiefEngineer"
+
   access:
   - maintenance
   - engineering

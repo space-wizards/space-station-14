@@ -6,6 +6,8 @@
   department:
   - Civilian
 
+  icon: "Janitor"
+
   access:
   - service
   - maintenance

@@ -8,6 +8,8 @@
   - Command
   - Science
 
+  icon: "ResearchDirector"
+
   access:
   - research
   - command

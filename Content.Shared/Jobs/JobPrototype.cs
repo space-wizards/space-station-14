@@ -39,6 +39,8 @@ namespace Content.Shared.Jobs
 
         public string StartingGear { get; private set; }
 
+        public string Icon { get; private set; }
+
         public IReadOnlyCollection<string> Department { get; private set; }
         public IReadOnlyCollection<string> Access { get; private set; }
 
@@ -71,6 +73,11 @@ namespace Content.Shared.Jobs
             else
             {
                 Access = Array.Empty<string>();
+            }
+
+            if (mapping.TryGetNode("icon", out var iconNode))
+            {
+                Icon = iconNode.AsString();
             }
         }
     }

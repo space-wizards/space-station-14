@@ -7,6 +7,8 @@
   department:
   - Security
 
+  icon: "SecurityOfficer"
+
   access:
   - security
   - maintenance

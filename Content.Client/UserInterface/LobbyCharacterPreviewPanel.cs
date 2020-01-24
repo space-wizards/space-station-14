@@ -3,7 +3,6 @@ using Content.Client.GameObjects;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
 using Content.Shared;
-using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Client.Interfaces.GameObjects.Components;

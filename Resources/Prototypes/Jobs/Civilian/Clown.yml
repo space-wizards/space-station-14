@@ -6,6 +6,8 @@
   department:
   - Civilian
 
+  icon: "Clown"
+
 - type: startingGear
   id: ClownGear
   equipment:

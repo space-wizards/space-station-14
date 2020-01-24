@@ -7,6 +7,8 @@
   department:
   - Command
 
+  icon: "Captain"
+
   access:
   # All of em.
   # Could probably do with some kind of wildcard or whatever to automate this.
