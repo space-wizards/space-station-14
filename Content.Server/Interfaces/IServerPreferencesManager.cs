@@ -8,6 +8,5 @@ namespace Content.Server.Interfaces
         void Initialize();
         void OnClientConnected(IPlayerSession session);
         PlayerPreferences GetPreferences(string username);
-        void SavePreferences(PlayerPreferences prefs, string username);
     }
 }

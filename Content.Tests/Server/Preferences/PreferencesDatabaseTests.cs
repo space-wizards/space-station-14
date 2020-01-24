@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Content.Server.Database;
 using Content.Server.Preferences;
 using Content.Shared;
 using Content.Shared.Preferences;
@@ -39,7 +40,7 @@ namespace Content.Tests.Server.Preferences
 
         private static PreferencesDatabase GetDb()
         {
-            return new PreferencesDatabase(Path.GetTempFileName(), MaxCharacterSlots);
+            return new PreferencesDatabase(new SqliteConfiguration(Path.GetTempFileName()), MaxCharacterSlots);
         }
 
         [Test]
