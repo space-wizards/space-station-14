@@ -19,7 +19,6 @@ namespace Content.Server.GameObjects
     {
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
-        public override Type StateType => typeof(ClothingComponentState);
 
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 

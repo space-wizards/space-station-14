@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
@@ -21,7 +20,6 @@ namespace Content.Server.GameObjects
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
-        public override Type StateType => typeof(ItemComponentState);
 
         #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _robustRandom;

@@ -13,7 +13,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public sealed override string Name => "HumanoidAppearance";
         public sealed override uint? NetID => ContentNetIDs.HUMANOID_APPEARANCE;
-        public sealed override Type StateType => typeof(HumanoidAppearanceComponentState);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual HumanoidCharacterAppearance Appearance

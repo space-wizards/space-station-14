@@ -12,7 +12,6 @@ namespace Content.Shared.GameObjects.Components.Items
     public sealed class ItemCooldownComponent : Component
     {
         public override string Name => "ItemCooldown";
-        public override Type StateType => typeof(ItemCooldownComponentState);
         public override uint? NetID => ContentNetIDs.ITEMCOOLDOWN;
 
         private TimeSpan? _cooldownEnd;

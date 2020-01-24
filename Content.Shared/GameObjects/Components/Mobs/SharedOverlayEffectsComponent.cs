@@ -11,7 +11,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         public override string Name => "OverlayEffectsUI";
         public sealed override uint? NetID => ContentNetIDs.OVERLAYEFFECTS;
-        public sealed override Type StateType => typeof(OverlayEffectComponentState);
     }
 
     public enum ScreenEffects

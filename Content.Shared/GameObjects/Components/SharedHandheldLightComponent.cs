@@ -8,7 +8,6 @@ namespace Content.Shared.GameObjects.Components
     {
         public sealed override string Name => "HandheldLight";
         public sealed override uint? NetID => ContentNetIDs.HANDHELD_LIGHT;
-        public sealed override Type StateType => typeof(HandheldLightComponentState);
 
         [Serializable, NetSerializable]
         protected sealed class HandheldLightComponentState : ComponentState

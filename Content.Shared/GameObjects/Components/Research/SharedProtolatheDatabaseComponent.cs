@@ -14,7 +14,6 @@ namespace Content.Shared.GameObjects.Components.Research
     {
         public override string Name => "ProtolatheDatabase";
         public sealed override uint? NetID => ContentNetIDs.PROTOLATHE_DATABASE;
-        public sealed override Type StateType => typeof(ProtolatheDatabaseState);
 
         private List<LatheRecipePrototype> _protolatheRecipes = new List<LatheRecipePrototype>();
 

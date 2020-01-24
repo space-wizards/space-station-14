@@ -8,7 +8,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         public sealed override uint? NetID => ContentNetIDs.COMBATMODE;
         public override string Name => "CombatMode";
-        public sealed override Type StateType => typeof(CombatModeComponentState);
 
         [Serializable, NetSerializable]
         protected sealed class CombatModeComponentState : ComponentState
