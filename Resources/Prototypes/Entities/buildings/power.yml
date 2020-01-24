@@ -17,6 +17,7 @@
   - type: Icon
     texture: Objects/Power/eightdirwire.png
   - type: PowerTransfer
+    wiretype: 0
   - type: SnapGrid
     offset: Center
   - type: IconSmooth
@@ -39,6 +40,8 @@
   components:
   - type: Sprite
     color: Blue
+  - type: PowerTransfer
+    wiretype: 1
 
 - type: entity
   id: Generator
