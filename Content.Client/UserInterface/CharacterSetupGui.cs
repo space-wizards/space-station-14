@@ -189,6 +189,7 @@ namespace Content.Client.UserInterface
                     _humanoidProfileEditor.CharacterSlot = characterIndexCopy;
                     _humanoidProfileEditor.UpdateControls();
                     _preferencesManager.SelectCharacter(character);
+                    UpdateUI();
                 };
                 characterIndex++;
             }
