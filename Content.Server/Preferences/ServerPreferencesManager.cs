@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Interfaces;
 using Content.Shared.Preferences;
@@ -23,8 +24,9 @@ namespace Content.Server.Preferences
         [Dependency] private readonly IResourceManager _resourceManager;
 #pragma warning restore 649
         private PreferencesDatabase _preferencesDb;
+        private Task<PreferencesDatabase> _prefsDbLoadTask;
 
-        public void Initialize()
+        public void StartInit()
         {
             _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(nameof(MsgPreferencesAndSettings));
             _netManager.RegisterNetMessage<MsgSelectCharacter>(nameof(MsgSelectCharacter),
@@ -68,7 +70,16 @@ namespace Content.Server.Preferences
 
             var maxCharacterSlots = _configuration.GetCVar<int>("game.maxcharacterslots");
 
-            _preferencesDb = new PreferencesDatabase(dbConfig, maxCharacterSlots);
+            // Actually loading the preferences database takes a while,
+            // because EFCore has to initialize and run migrations.
+            // We load it in the thread pool here and then fetch the .Result in FinishInit.
+            // This means it'll run in parallel with other loading like prototypes & map load.
+            _prefsDbLoadTask = Task.Run(() => new PreferencesDatabase(dbConfig, maxCharacterSlots));
+        }
+
+        public void FinishInit()
+        {
+            _preferencesDb = _prefsDbLoadTask.Result;
         }
 
         private void HandleSelectCharacterMessage(MsgSelectCharacter message)
