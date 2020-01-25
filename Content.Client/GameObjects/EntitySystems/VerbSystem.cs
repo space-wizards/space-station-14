@@ -107,7 +107,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 button.OnPressed += _ => OnContextButtonPressed(entity);
             }
 
-            _currentPopup.UserInterfaceManager.StateRoot.AddChild(_currentPopup);
+            _currentPopup.UserInterfaceManager.ModalRoot.AddChild(_currentPopup);
 
             var size = _currentPopup.List.CombinedMinimumSize;
             var box = UIBox2.FromDimensions(args.ScreenCoordinates.Position, size);
@@ -197,16 +197,6 @@ namespace Content.Client.GameObjects.EntitySystems
                 var panel = new PanelContainer();
                 panel.AddChild(new Label {Text = "No verbs!"});
                 vBox.AddChild(panel);
-            }
-
-            //_currentPopup.Size = vBox.CombinedMinimumSize;
-
-            // If we're at the bottom of the window and the menu would go below the bottom of the window,
-            // shift it up so it extends UP.
-            var bottomCoords = vBox.CombinedMinimumSize.Y + _currentPopup.Position.Y;
-            if (bottomCoords > _userInterfaceManager.StateRoot.Size.Y)
-            {
-               // _currentPopup.Position = _currentPopup.Position - new Vector2(0, vBox.CombinedMinimumSize.Y);
             }
         }
 
