@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -104,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                             continue;
                         for (var i = 0; i < order.Amount; i++)
                         {
-                            Owner.EntityManager.SpawnEntityAt(product.Product, Owner.Transform.GridPosition);
+                            Owner.EntityManager.SpawnEntity(product.Product, Owner.Transform.GridPosition);
                         }
                     }
                     break;

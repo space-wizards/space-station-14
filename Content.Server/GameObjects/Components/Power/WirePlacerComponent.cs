@@ -4,8 +4,10 @@ using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -50,7 +52,8 @@ namespace Content.Server.GameObjects.Components.Power
             if (Owner.TryGetComponent(out StackComponent stack) && !stack.Use(1))
                 return;
 
-            var newWire = _entityManager.SpawnEntityAt("Wire", grid.GridTileToLocal(snapPos));
+            GridCoordinates coordinates = grid.GridTileToLocal(snapPos);
+            var newWire = _entityManager.SpawnEntity("Wire", coordinates);
             if (newWire.TryGetComponent(out SpriteComponent wireSpriteComp) && hasItemSpriteComp)
             {
                 wireSpriteComp.Color = itemSpriteComp.Color;

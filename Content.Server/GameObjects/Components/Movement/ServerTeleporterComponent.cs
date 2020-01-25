@@ -235,11 +235,11 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                 // Call Delete here as the teleporter should have control over portal longevity
                 // Departure portal
-                var departurePortal = _serverEntityManager.SpawnEntityAt("Portal", user.Transform.GridPosition);
+                var departurePortal = _serverEntityManager.SpawnEntity("Portal", user.Transform.GridPosition);
                 departurePortal.TryGetComponent<ServerPortalComponent>(out var departureComponent);
 
                 // Arrival portal
-                var arrivalPortal = _serverEntityManager.SpawnEntityAt("Portal", targetGrid);
+                var arrivalPortal = _serverEntityManager.SpawnEntity("Portal", targetGrid);
                 arrivalPortal.TryGetComponent<ServerPortalComponent>(out var arrivalComponent);
 
                 // Connect. TODO: If the OnUpdate in ServerPortalComponent is changed this may need to change as well.

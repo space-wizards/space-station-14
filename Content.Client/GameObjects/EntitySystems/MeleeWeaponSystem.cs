@@ -1,4 +1,4 @@
-using Content.Client.GameObjects.Components.Mobs;
+﻿using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Weapons.Melee;
 using Content.Shared.GameObjects.Components.Weapons.Melee;
 using JetBrains.Annotations;
@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
             lunge.SetData(msg.Angle);
 
-            var entity = EntityManager.SpawnEntityAt("WeaponArc", attacker.Transform.GridPosition);
+            var entity = EntityManager.SpawnEntity("WeaponArc", attacker.Transform.GridPosition);
             entity.Transform.LocalRotation = msg.Angle;
 
             var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();
