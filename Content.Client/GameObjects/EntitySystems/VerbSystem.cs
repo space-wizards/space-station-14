@@ -67,7 +67,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _currentEntity = entity.Uid;
             _currentPopup = new VerbPopup();
-            _currentPopup.UserInterfaceManager.StateRoot.AddChild(_currentPopup);
+            _currentPopup.UserInterfaceManager.ModalRoot.AddChild(_currentPopup);
             _currentPopup.OnPopupHide += _closeContextMenu;
 
             _currentPopup.List.AddChild(new Label {Text = "Waiting on Server..."});
