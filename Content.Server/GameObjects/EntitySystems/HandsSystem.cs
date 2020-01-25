@@ -198,7 +198,7 @@ namespace Content.Server.GameObjects.EntitySystems
             projComp.IgnoreEntity(plyEnt);
 
             var transform = plyEnt.Transform;
-            var dirVec = (coords.ToWorld(_mapManager).Position - transform.WorldPosition).Normalized;
+            var dirVec = (coords.ToMapPos(_mapManager) - transform.WorldPosition).Normalized;
 
             if (!throwEnt.TryGetComponent(out PhysicsComponent physComp))
                 physComp = throwEnt.AddComponent<PhysicsComponent>();
