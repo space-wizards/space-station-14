@@ -83,7 +83,7 @@ binds:
   canFocus: true
 - function: ToggleCombatMode
   type: State
-  key: Num1
+  key: R
 - function: OpenCraftingMenu
   type: state
   key: G
