@@ -114,7 +114,7 @@ namespace Content.Server.AI
                 var ray = new Ray(myTransform.WorldPosition, dir.Normalized, (int)(CollisionGroup.MobImpassable | CollisionGroup.Impassable));
 
                 // cast the ray
-                var result = _physMan.IntersectRay(ray, maxRayLen);
+                var result = _physMan.IntersectRay(myTransform.MapID, ray, maxRayLen, SelfEntity);
 
                 // add to visible list
                 if (result.HitEntity == entity)

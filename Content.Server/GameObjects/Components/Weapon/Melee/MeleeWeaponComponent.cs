@@ -129,10 +129,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             var resSet = new HashSet<IEntity>();
 
+            var mapId = Owner.Transform.MapID;
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = _physicsManager.IntersectRay(new Ray(position, castAngle.ToVec(), 19), _range, ignore);
+                var res = _physicsManager.IntersectRay(mapId, new Ray(position, castAngle.ToVec(), 19), _range, ignore);
                 if (res.HitEntity != null)
                 {
                     resSet.Add(res.HitEntity);
