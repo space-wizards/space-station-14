@@ -3,7 +3,7 @@
   name: "Security Officer"
   positions: 3
   spawnPositions: 2
-  startingGear: AssistantGear
+  startingGear: SecurityOfficerGear
   department:
   - Security
 
@@ -12,3 +12,12 @@
   access:
   - security
   - maintenance
+
+- type: startingGear
+  id: SecurityOfficerGear
+  equipment:
+    innerclothing: UniformSec
+    backpack: SecPack
+    shoes: ShoesJackboots
+    eyes: SecGlasses
+    outerclothing: OuterclothingArmorsec
