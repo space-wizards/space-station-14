@@ -116,6 +116,16 @@
 
 - type: entity
   parent: IDCardStandard
+  id: JanitorIDCard
+  name: Service Identification Card
+  components:
+  - type: IdCard
+    jobTitle: Janitor
+  - type: Access
+    tags: ["service"]
+
+- type: entity
+  parent: IDCardStandard
   id: AssistantIDCard
   name: Assistant Identification Card
   components:

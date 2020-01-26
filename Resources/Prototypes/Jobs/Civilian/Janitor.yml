@@ -2,7 +2,7 @@
   id: Janitor
   name: "Janitor"
   positions: 1
-  startingGear: AssistantGear
+  startingGear: JanitorGear
   department:
   - Civilian
 
@@ -11,3 +11,11 @@
   access:
   - service
   - maintenance
+
+- type: startingGear
+  id: JanitorGear
+  equipment:
+    innerclothing: JanitorUniform
+    backpack: BackpackClothing
+    shoes: ShoesGaloshes
+    head: HatPurplesoft
