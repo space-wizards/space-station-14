@@ -101,7 +101,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             // Up.
-            if (_timeHeld >= AttackTimeThreshold)
+            if (UseOrAttackIsDown && _timeHeld >= AttackTimeThreshold)
             {
                 // Attack.
                 SendMsg(ContentKeyFunctions.Attack, BoundKeyState.Down);
