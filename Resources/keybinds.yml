@@ -1,6 +1,6 @@
 version: 1 # Not used right now, whatever.
 binds:
-- function: Use
+- function: UseOrAttack
   type: state
   key: MouseLeft
   canFocus: true
