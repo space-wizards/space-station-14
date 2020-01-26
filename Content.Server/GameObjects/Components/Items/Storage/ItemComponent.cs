@@ -4,6 +4,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -84,7 +85,7 @@ namespace Content.Server.GameObjects
 
             protected override VerbVisibility GetVisibility(IEntity user, ItemComponent component)
             {
-                if (user.TryGetComponent(out HandsComponent hands) && hands.IsHolding(component.Owner))
+                if (ContainerHelpers.IsInContainer(component.Owner))
                 {
                     return VerbVisibility.Invisible;
                 }
