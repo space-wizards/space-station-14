@@ -3,6 +3,7 @@
   name: Urist McHands
   id: HumanMob_Content
   description: A miserable pile of secrets
+  drawdepth: Mobs
   components:
   - type: Hands
     hands:
@@ -19,7 +20,6 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
-    drawdepth: Mobs
 
     layers:
     - map: ["enum.HumanoidVisualLayers.Chest"]
