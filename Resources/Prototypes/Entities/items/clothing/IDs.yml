@@ -6,7 +6,9 @@
   abstract: true
   components:
   - type: Sprite
-    drawdepth: FloorObjects
+    sprite: Clothing/id_cards.rsi
+  - type: Icon
+    sprite: Clothing/id_cards.rsi
   - type: Clothing
     Slots:
     - idcard
@@ -23,13 +25,11 @@
   name: Assistant ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: default
             - state: assigned
             - state: idassistant
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: default
   - type: IdCard
     jobTitle: Assistant
@@ -42,20 +42,18 @@
   name: Captain ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: gold
             - state: assigned
             - state: idcaptain
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: gold
   - type: Clothing
     HeldPrefix: gold
   - type: IdCard
     jobTitle: Captain
   - type: Access
-    tags: ["captain", "command"]
+    tags: ["maintenance", "cargo", "engineering", "medical", "research", "security", "service", "captain", "command"]
 
 - type: entity
   parent: IDCardStandard
@@ -63,13 +61,11 @@
   name: Security ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: default
             - state: assigned
             - state: idsecurityofficer
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idsecurityofficer
   - type: IdCard
     jobTitle: Security Officer
@@ -82,13 +78,11 @@
   name: Engineer ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: default
             - state: assigned
             - state: idstationengineer
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idstationengineer
   - type: IdCard
     jobTitle: Engineer
@@ -101,13 +95,11 @@
   name: Medical ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: default
             - state: assigned
             - state: idmedicaldoctor
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idmedicaldoctor
   - type: IdCard
     jobTitle: Doctor
@@ -120,13 +112,11 @@
   name: Cargo ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: default
             - state: assigned
             - state: idcargotechnician
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idcargotechnician
   - type: IdCard
     jobTitle: Cargo Technician
@@ -139,13 +129,11 @@
   name: Research ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: default
             - state: assigned
             - state: idscientist
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idscientist
   - type: IdCard
     jobTitle: Scientist
@@ -158,13 +146,11 @@
   name: Clown ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: default
             - state: assigned
             - state: idclown
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idclown
   - type: IdCard
     jobTitle: Clown
@@ -177,13 +163,11 @@
   name: Janitor ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: default
             - state: assigned
             - state: idjanitor
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idjanitor
   - type: IdCard
     jobTitle: Janitor
@@ -196,13 +180,11 @@
   name: Head of Personnel ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: silver
             - state: assigned
             - state: idheadofpersonnel
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idheadofpersonnel
   - type: Clothing
     HeldPrefix: silver
@@ -217,13 +199,11 @@
   name: Chief Engineer ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: silver
             - state: assigned
             - state: idchiefengineer
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idchiefengineer
   - type: Clothing
     HeldPrefix: silver
@@ -238,13 +218,11 @@
   name: Chief Medical Officer ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: silver
             - state: assigned
             - state: idchiefmedicalofficer
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idchiefmedicalofficer
   - type: Clothing
     HeldPrefix: silver
@@ -259,13 +237,11 @@
   name: Research Director ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: silver
             - state: assigned
             - state: idresearchdirector
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idresearchdirector
   - type: Clothing
     HeldPrefix: silver
@@ -280,13 +256,11 @@
   name: Head of Security ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: silver
             - state: assigned
             - state: idheadofsecurity
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idheadofsecurity
   - type: Clothing
     HeldPrefix: silver
@@ -301,13 +275,11 @@
   name: Command Officer ID Card
   components:
   - type: Sprite
-    sprite: Clothing/id_cards.rsi
     layers:
             - state: gold
             - state: assigned
             - state: idcentcom
   - type: Icon
-    sprite: Clothing/id_cards.rsi
     state: idcentcom
   - type: Clothing
     HeldPrefix: gold
