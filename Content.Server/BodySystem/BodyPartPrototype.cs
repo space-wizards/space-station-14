@@ -8,7 +8,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Robust.Shared.BodySystem {
     [Prototype("bodyPart")]
-    public partial class BodyPart : IPrototype, IIndexedPrototype {
+    public class BodyPartPrototype : IPrototype, IIndexedPrototype {
         private string _id;
         private string _name;
 		private string _plural;
@@ -48,12 +48,6 @@ namespace Robust.Shared.BodySystem {
 		[ViewVariables]
 		public int Durability => _durability;
 		
-        /// <summary>
-        ///     Current HP of this body part.
-        /// </summary>		
-		[ViewVariables]
-		public float CurrentDurability => _currentDurability;
-		
 		/// <summary>
         ///     At what HP this body part is completely destroyed.
         /// </summary>		
@@ -91,13 +85,13 @@ namespace Robust.Shared.BodySystem {
             serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _plural, "plural", string.Empty);
-			serializer.DataField(ref _type, "type", BodyPartType.other);
+			serializer.DataField(ref _type, "type", BodyPartType.Other);
 			serializer.DataField(ref _durability, "durability", 50);
 			_currentDurability = (float)_durability;
 			serializer.DataField(ref _destroyThreshold, "destroyThreshold", -50);
 			serializer.DataField(ref _resistance, "resistance", 0f);
 			serializer.DataField(ref _size, "size", 0);
-			serializer.DataField(ref _compatability, "compatability", BodyPartCompatability.universal);
+			serializer.DataField(ref _compatability, "compatability", BodyPartCompatability.Universal);
 			serializer.DataField(ref _properties, "properties", new List<IExposeData>());
         }
     }

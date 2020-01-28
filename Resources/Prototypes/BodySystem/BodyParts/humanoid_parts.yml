@@ -1,32 +1,32 @@
 - type: bodyPart
-  id: bodyPart.torso.basic_human
+  id: bodyPart.Torso.BasicHuman
   name: "torso"
   plural: "torsos"
-  type: BodyPartType.torso
+  type: BodyPartType.Torso
   durability: 100
   destroyThreshold: -150
   resistance: 4.0
   size: 14
-  compatability: BodyPartCompatability.biological
+  compatability: BodyPartCompatability.Biological
 
 
 
 - type: bodyPart
-  id: bodyPart.head.basic_human
+  id: bodyPart.Head.BasicHuman
   name: "head"
   plural: "heads"
-  type: BodyPartType.head
+  type: BodyPartType.Head
   durability: 50
   destroyThreshold: -120
   resistance: 7.0
   size: 7
-  compatability: BodyPartCompatability.biological	
+  compatability: BodyPartCompatability.Biological	
   
 
 
 
 - type: bodyPart
-  id: bodyPart.arm.basic_human
+  id: bodyPart.Arm.BasicHuman
   name: "arm"
   plural: "arms"
   type: BodyPartType.arm
@@ -34,7 +34,7 @@
   destroyThreshold: -80
   resistance: 3.0
   size: 5
-  compatability: BodyPartCompatability.biological	
+  compatability: BodyPartCompatability.Biological	
   properties:
     - !type:ArmLength
       length: 2.4
@@ -42,40 +42,40 @@
   
   
 - type: bodyPart
-  id: bodyPart.hand.basic_human
+  id: bodyPart.Hand.BasicHuman
   name: "hand"
   plural: "hands"
-  type: BodyPartType.hand
+  type: BodyPartType.Hand
   durability: 30
   destroyThreshold: -60
   resistance: 2.0
   size: 3
-  compatability: BodyPartCompatability.biological	
+  compatability: BodyPartCompatability.Biological	
     
        
       
 - type: bodyPart
-  id: bodyPart.leg.basic_human
+  id: bodyPart.Leg.BasicHuman
   name: "leg"
   plural: "legs"
-  type: BodyPartType.leg
+  type: BodyPartType.Leg
   durability: 45
   destroyThreshold: -90
   resistance: 2.0
   size: 6
-  compatability: BodyPartCompatability.biological	
+  compatability: BodyPartCompatability.Biological	
      
      
      
 - type: bodyPart
-  id: bodyPart.foot.basic_human
+  id: bodyPart.Foot.BasicHuman
   name: "foot"
   plural: "feet"
-  type: BodyPartType.foot
+  type: BodyPartType.Foot
   durability: 30
   destroyThreshold: -60
   resistance: 3.0
   size: 2
-  compatability: BodyPartCompatability.biological	
+  compatability: BodyPartCompatability.Biological	
 
       

@@ -1,18 +1,18 @@
 - type: bodyTemplate
-  id: bodyTemplate.humanoid
+  id: bodyTemplate.Humanoid
   name: "humanoid"
   centerSlot: "torso"
   slots: 
-    BodyPartType.head: "head"
-    BodyPartType.torso: "torso"
-    BodyPartType.arm: "left arm"
-    BodyPartType.arm: "right arm"
-    BodyPartType.hand: "left hand"
-    BodyPartType.hand: "right hand"
-    BodyPartType.leg: "left leg"
-    BodyPartType.leg: "right leg"
-    BodyPartType.foot: "left foot"
-    BodyPartType.foot: "right foot"
+    BodyPartType.Head: "head"
+    BodyPartType.Torso: "torso"
+    BodyPartType.Arm: "left arm"
+    BodyPartType.Arm: "right arm"
+    BodyPartType.Hand: "left hand"
+    BodyPartType.Hand: "right hand"
+    BodyPartType.Leg: "left leg"
+    BodyPartType.Leg: "right leg"
+    BodyPartType.Foot: "left foot"
+    BodyPartType.Foot: "right foot"
   connections:
     head: "torso"
     torso: "left arm"
