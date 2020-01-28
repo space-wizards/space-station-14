@@ -350,8 +350,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             //Add poured solution to this solution. Notify player with popup
             _containedSolution.AddSolution(removedSolution);
             _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                _localizationManager.GetString("{0}u of solution transferred from {1} to {2}.",
-                    removedSolution.TotalVolume, attackEntity.Name, Owner.Name));
+                _localizationManager.GetString("Transferred {0}u", removedSolution.TotalVolume));
 
             //Force drinks to update if they are empty. Without this empty drinks require an additional click before disappearing
             if (attackSolution.CurrentVolume == 0)
