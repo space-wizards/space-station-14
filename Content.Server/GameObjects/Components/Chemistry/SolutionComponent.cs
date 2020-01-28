@@ -358,7 +358,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 if (attackEntity.TryGetComponent<DrinkComponent>(out var drinkComponent))
                 {
-                    drinkComponent.UseDrink(eventArgs.User, false);
+                    drinkComponent.Finish(eventArgs.User);
                 }
             }
 

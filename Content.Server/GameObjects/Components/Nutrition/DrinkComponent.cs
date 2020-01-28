@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             UseDrink(eventArgs.Attacked);
         }
 
-        public void UseDrink(IEntity user, bool useSoundOverride = true)
+        private void UseDrink(IEntity user)
         {
             if (user == null)
             {
@@ -141,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 var split = _contents.SplitSolution(transferAmount);
                 if (stomachComponent.TryTransferSolution(split))
                 {
-                    if (_useSound != null && useSoundOverride)
+                    if (_useSound != null)
                     {
                         Owner.GetComponent<SoundComponent>()?.Play(_useSound);
                         user.PopupMessage(user, _localizationManager.GetString("Slurp"));
@@ -155,12 +155,20 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
             }
 
+            Finish(user);
+        }
+
+        /// <summary>
+        /// Trigger finish behavior in the drink if applicable.
+        /// Depending on the drink this will either delete it,
+        /// or convert it to another entity, like an empty variant.
+        /// </summary>
+        /// <param name="user">The entity that is using the drink</param>
+        public void Finish(IEntity user)
+        {
             // Drink containers are mostly transient.
             if (!_despawnOnFinish || UsesLeft() > 0)
-            {
                 return;
-
-            }
 
             Owner.Delete();
 
@@ -181,7 +189,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 {
                     drinkComponent.MaxVolume = MaxVolume;
                 }
-                return;
             }
         }
     }
