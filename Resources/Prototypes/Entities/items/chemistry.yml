@@ -11,6 +11,7 @@
   - type: Solution
     maxVol: 50
     caps: 19
+  - type: Pourable
     transferAmount: 5
 
 - type: entity
@@ -26,6 +27,7 @@
   - type: Solution
     maxVol: 100
     caps: 19
+  - type: Pourable
     transferAmount: 5
 
 - type: entity
@@ -41,4 +43,5 @@
   - type: Solution
     maxVol: 5
     caps: 19
+  - type: Pourable
     transferAmount: 5

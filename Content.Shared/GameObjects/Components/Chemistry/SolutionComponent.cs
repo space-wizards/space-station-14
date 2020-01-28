@@ -44,6 +44,12 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public int CurrentVolume => _containedSolution.TotalVolume;
 
         /// <summary>
+        ///     The volume without reagents remaining in the container.
+        /// </summary>
+        [ViewVariables]
+        public int EmptyVolume => MaxVolume - CurrentVolume;
+
+        /// <summary>
         ///     The current blended color of all the reagents in the container.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
@@ -57,16 +63,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             get => _capabilities;
             set => _capabilities = value;
-        }
-
-        /// <summary>
-        ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
-        /// </summary>
-        [ViewVariables]
-        public int TransferAmount
-        {
-            get => _transferAmount;
-            set => _transferAmount = value;
         }
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
@@ -94,7 +90,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             serializer.DataField(ref _maxVolume, "maxVol", 0);
             serializer.DataField(ref _containedSolution, "contents", _containedSolution);
             serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
-            serializer.DataField(ref _transferAmount, "transferAmount", 5);
         }
 
         /// <inheritdoc />
