@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
         private Powernet.Priority _priority = Powernet.Priority.Medium;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool IsPowerCut
         {
             get => _isPowerCut;

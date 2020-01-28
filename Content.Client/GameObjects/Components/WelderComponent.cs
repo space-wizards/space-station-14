@@ -17,7 +17,6 @@ namespace Content.Client.GameObjects.Components
     {
         public override string Name => "Welder";
         public override uint? NetID => ContentNetIDs.WELDER;
-        public override Type StateType => typeof(WelderComponentState);
 
         [ViewVariables] public float FuelCapacity { get; private set; }
         [ViewVariables] public float Fuel { get; private set; }

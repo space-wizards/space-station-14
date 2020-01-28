@@ -1,0 +1,16 @@
+- type: entity
+  parent: ShoesBase
+  id: ShoesJackboots
+  name: Jackboots
+  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/jackboots.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/jackboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/jackboots.rsi
+  - type: Sound
+  - type: FootstepModifier
+    footstepSoundCollection: footstep_heavy
+

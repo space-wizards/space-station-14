@@ -1,0 +1,15 @@
+- type: job
+  id: ResearchDirector
+  name: "Research Director"
+  head: true
+  positions: 1
+  startingGear: AssistantGear
+  department:
+  - Command
+  - Science
+
+  icon: "ResearchDirector"
+
+  access:
+  - research
+  - command

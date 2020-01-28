@@ -5,9 +5,9 @@ namespace Content.Server.Interfaces
 {
     public interface IServerPreferencesManager
     {
-        void Initialize();
+        void FinishInit();
         void OnClientConnected(IPlayerSession session);
         PlayerPreferences GetPreferences(string username);
-        void SavePreferences(PlayerPreferences prefs, string username);
+        void StartInit();
     }
 }

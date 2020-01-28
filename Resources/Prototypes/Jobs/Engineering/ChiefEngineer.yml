@@ -1,0 +1,16 @@
+- type: job
+  id: ChiefEngineer
+  name: "Chief Engineer"
+  head: true
+  positions: 1
+  startingGear: StationEngineerGear
+  department:
+  - Command
+  - Engineering
+
+  icon: "ChiefEngineer"
+
+  access:
+  - maintenance
+  - engineering
+  - command

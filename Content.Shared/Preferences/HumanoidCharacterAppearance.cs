@@ -7,24 +7,69 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public class HumanoidCharacterAppearance : ICharacterAppearance
     {
-        public string HairStyleName { get; set; }
-        public Color HairColor { get; set; }
-        public string FacialHairStyleName { get; set; }
-        public Color FacialHairColor { get; set; }
-        public Color EyeColor { get; set; }
-        public Color SkinColor { get; set; }
+        public HumanoidCharacterAppearance(string hairStyleName,
+            Color hairColor,
+            string facialHairStyleName,
+            Color facialHairColor,
+            Color eyeColor,
+            Color skinColor)
+        {
+            HairStyleName = hairStyleName;
+            HairColor = hairColor;
+            FacialHairStyleName = facialHairStyleName;
+            FacialHairColor = facialHairColor;
+            EyeColor = eyeColor;
+            SkinColor = skinColor;
+        }
+
+        public string HairStyleName { get; }
+        public Color HairColor { get; }
+        public string FacialHairStyleName { get; }
+        public Color FacialHairColor { get; }
+        public Color EyeColor { get; }
+        public Color SkinColor { get; }
+
+        public HumanoidCharacterAppearance WithHairStyleName(string newName)
+        {
+            return new HumanoidCharacterAppearance(newName, HairColor, FacialHairStyleName, FacialHairColor, EyeColor, SkinColor);
+        }
+
+        public HumanoidCharacterAppearance WithHairColor(Color newColor)
+        {
+            return new HumanoidCharacterAppearance(HairStyleName, newColor, FacialHairStyleName, FacialHairColor, EyeColor, SkinColor);
+        }
+
+        public HumanoidCharacterAppearance WithFacialHairStyleName(string newName)
+        {
+            return new HumanoidCharacterAppearance(HairStyleName, HairColor, newName, FacialHairColor, EyeColor, SkinColor);
+        }
+
+        public HumanoidCharacterAppearance WithFacialHairColor(Color newColor)
+        {
+            return new HumanoidCharacterAppearance(HairStyleName, HairColor, FacialHairStyleName, newColor, EyeColor, SkinColor);
+        }
+
+        public HumanoidCharacterAppearance WithEyeColor(Color newColor)
+        {
+            return new HumanoidCharacterAppearance(HairStyleName, HairColor, FacialHairStyleName, FacialHairColor, newColor, SkinColor);
+        }
+
+        public HumanoidCharacterAppearance WithSkinColor(Color newColor)
+        {
+            return new HumanoidCharacterAppearance(HairStyleName, HairColor, FacialHairStyleName, FacialHairColor, EyeColor, newColor);
+        }
 
         public static HumanoidCharacterAppearance Default()
         {
             return new HumanoidCharacterAppearance
-            {
-                HairStyleName = "Bald",
-                HairColor = Color.Black,
-                FacialHairStyleName = "Shaved",
-                FacialHairColor = Color.Black,
-                EyeColor = Color.Black,
-                SkinColor = Color.Black
-            };
+            (
+                "Bald",
+                Color.Black,
+                "Shaved",
+                Color.Black,
+                Color.Black,
+                Color.Black
+            );
         }
 
         public bool MemberwiseEquals(ICharacterAppearance maybeOther)

@@ -12,5 +12,7 @@ namespace Content.Client.Interfaces.GameObjects
 
         void SendChangeHand(string index);
         void AttackByInHand(string index);
+        void UseActiveHand();
+        void ActivateItemInHand(string handIndex);
     }
 }

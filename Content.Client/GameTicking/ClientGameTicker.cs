@@ -13,12 +13,13 @@ using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -38,16 +39,20 @@ namespace Content.Client.GameTicking
         [Dependency] private IResourceCache _resourceCache;
         [Dependency] private IPlayerManager _playerManager;
         [Dependency] private IGameHud _gameHud;
+        [Dependency] private IEntityManager _entityManager;
+        [Dependency] private IClientPreferencesManager _preferencesManager;
+        [Dependency] private IPrototypeManager _prototypeManager;
 #pragma warning restore 649
 
         [ViewVariables] private bool _areWeReady;
-        [ViewVariables] private bool _initialized;
-        [ViewVariables] private TickerState _tickerState;
+        [ViewVariables] private CharacterSetupGui _characterSetup;
         [ViewVariables] private ChatBox _gameChat;
-        [ViewVariables] private LobbyGui _lobby;
         [ViewVariables] private bool _gameStarted;
-        [ViewVariables] private DateTime _startTime;
+        [ViewVariables] private bool _initialized;
+        [ViewVariables] private LobbyGui _lobby;
         [ViewVariables] private string _serverInfoBlob;
+        [ViewVariables] private DateTime _startTime;
+        [ViewVariables] private TickerState _tickerState;
 
         public void Initialize()
         {
@@ -189,7 +194,16 @@ namespace Content.Client.GameTicking
 
             _tickerState = TickerState.InLobby;
 
-            _lobby = new LobbyGui(_localization, _resourceCache);
+            _characterSetup = new CharacterSetupGui(_entityManager, _localization, _resourceCache, _preferencesManager, _prototypeManager);
+            LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
+            _characterSetup.CloseButton.OnPressed += args =>
+            {
+                _characterSetup.Save();
+                _lobby.CharacterPreview.UpdateUI();
+                _userInterfaceManager.StateRoot.AddChild(_lobby);
+                _userInterfaceManager.StateRoot.RemoveChild(_characterSetup);
+            };
+            _lobby = new LobbyGui(_entityManager, _localization, _resourceCache, _preferencesManager);
             _userInterfaceManager.StateRoot.AddChild(_lobby);
 
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
@@ -204,6 +218,13 @@ namespace Content.Client.GameTicking
 
             _updateLobbyUi();
 
+            _lobby.CharacterPreview.CharacterSetupButton.OnPressed += args =>
+            {
+                SetReady(false);
+                _userInterfaceManager.StateRoot.RemoveChild(_lobby);
+                _userInterfaceManager.StateRoot.AddChild(_characterSetup);
+            };
+
             _lobby.ObserveButton.OnPressed += args => _console.ProcessCommand("observe");
             _lobby.ReadyButton.OnPressed += args =>
             {
@@ -217,17 +238,22 @@ namespace Content.Client.GameTicking
 
             _lobby.ReadyButton.OnToggled += args =>
             {
-                if (_gameStarted)
-                {
-                    return;
-                }
-
-                _console.ProcessCommand($"toggleready {args.Pressed}");
+                SetReady(args.Pressed);
             };
 
             _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
 
             _updatePlayerList();
+        }
+
+        private void SetReady(bool newReady)
+        {
+            if (_gameStarted)
+            {
+                return;
+            }
+
+            _console.ProcessCommand($"toggleready {newReady}");
         }
 
         private void _joinGame(MsgTickerJoinGame message)

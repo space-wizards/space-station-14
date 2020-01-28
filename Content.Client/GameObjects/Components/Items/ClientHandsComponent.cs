@@ -185,8 +185,15 @@ namespace Content.Client.GameObjects
         {
             if (GetEntity(ActiveIndex) != null)
             {
-                SendNetworkMessage(new ActivateInhandMsg());
+                SendNetworkMessage(new UseInHandMsg());
             }
+        }
+
+        public void ActivateItemInHand(string handIndex)
+        {
+            if (GetEntity(handIndex) == null)
+                return;
+            SendNetworkMessage(new ActivateInHandMsg(handIndex));
         }
     }
 }

@@ -6,10 +6,28 @@ namespace Content.Shared.GameObjects.Components.Inventory
 {
     public static class EquipmentSlotDefines
     {
+        public static IReadOnlyCollection<Slots> AllSlots { get; }
+
+        static EquipmentSlotDefines()
+        {
+            var output = new Slots[(int)Slots.LAST - (int)Slots.HEAD];
+
+            // The index stuff is to jump over NONE.
+            for (var i = 0; i < output.Length; i++)
+            {
+                output[i] = (Slots)(i+1);
+            }
+
+            AllSlots = output;
+        }
+
+        /// <summary>
+        ///     Uniquely identifies a single slot in an inventory.
+        /// </summary>
         [Serializable, NetSerializable]
         public enum Slots
         {
-            NONE,
+            NONE = 0,
             HEAD,
             EYES,
             EARS,
@@ -26,9 +44,17 @@ namespace Content.Shared.GameObjects.Components.Inventory
             POCKET3,
             POCKET4,
             EXOSUITSLOT1,
-            EXOSUITSLOT2
+            EXOSUITSLOT2,
+
+            /// <summary>
+            ///     Not a real slot.
+            /// </summary>
+            LAST
         }
 
+        /// <summary>
+        ///     Defines what slot types an item can fit into.
+        /// </summary>
         [Serializable, NetSerializable]
         [Flags]
         public enum SlotFlags
@@ -55,46 +81,52 @@ namespace Content.Shared.GameObjects.Components.Inventory
             EXOSUITSTORAGE = 1 << 14
         }
 
-        public static Dictionary<Slots, string> SlotNames = new Dictionary<Slots, string>()
+        public static readonly IReadOnlyDictionary<Slots, string> SlotNames = new Dictionary<Slots, string>()
         {
-            {Slots.HEAD, "Head" },
-            {Slots.EYES, "Eyes" },
-            {Slots.EARS, "Ears" },
-            {Slots.MASK, "Mask" },
-            {Slots.OUTERCLOTHING, "Outer Clothing" },
-            {Slots.INNERCLOTHING, "Inner Clothing" },
-            {Slots.BACKPACK, "Backpack" },
-            {Slots.BELT, "Belt" },
-            {Slots.GLOVES, "Gloves" },
-            {Slots.SHOES, "Shoes" },
-            {Slots.IDCARD, "Id Card" },
-            {Slots.POCKET1, "Left Pocket" },
-            {Slots.POCKET2, "Right Pocket" },
-            {Slots.POCKET3, "Up Pocket" },
-            {Slots.POCKET4, "Down Pocket" },
-            {Slots.EXOSUITSLOT1, "Suit Storage" },
-            {Slots.EXOSUITSLOT2, "Backup Storage" }
+            {Slots.HEAD, "Head"},
+            {Slots.EYES, "Eyes"},
+            {Slots.EARS, "Ears"},
+            {Slots.MASK, "Mask"},
+            {Slots.OUTERCLOTHING, "Outer Clothing"},
+            {Slots.INNERCLOTHING, "Inner Clothing"},
+            {Slots.BACKPACK, "Backpack"},
+            {Slots.BELT, "Belt"},
+            {Slots.GLOVES, "Gloves"},
+            {Slots.SHOES, "Shoes"},
+            {Slots.IDCARD, "Id Card"},
+            {Slots.POCKET1, "Left Pocket"},
+            {Slots.POCKET2, "Right Pocket"},
+            {Slots.POCKET3, "Up Pocket"}, // What?
+            {Slots.POCKET4, "Down Pocket"}, // I, uh, what?
+            {Slots.EXOSUITSLOT1, "Suit Storage"},
+            {Slots.EXOSUITSLOT2, "Backup Storage"}
         };
 
-        public static Dictionary<Slots, SlotFlags> SlotMasks = new Dictionary<Slots, SlotFlags>()
+        /// <summary>
+        ///     Defines which slot types fit in which slots.
+        /// </summary>
+        /// <remarks>
+        ///     Note that this is not exhaustive. Inventory implementations can provide additional behavior.
+        /// </remarks>
+        public static readonly IReadOnlyDictionary<Slots, SlotFlags> SlotMasks = new Dictionary<Slots, SlotFlags>()
         {
-            {Slots.HEAD, SlotFlags.HEAD },
-            {Slots.EYES, SlotFlags.EYES },
-            {Slots.EARS, SlotFlags.EARS },
-            {Slots.MASK, SlotFlags.MASK },
-            {Slots.OUTERCLOTHING, SlotFlags.OUTERCLOTHING },
-            {Slots.INNERCLOTHING, SlotFlags.INNERCLOTHING },
-            {Slots.BACKPACK, SlotFlags.BACK },
-            {Slots.BELT, SlotFlags.BELT },
-            {Slots.GLOVES, SlotFlags.GLOVES },
-            {Slots.SHOES, SlotFlags.FEET },
-            {Slots.IDCARD, SlotFlags.IDCARD },
-            {Slots.POCKET1, SlotFlags.POCKET },
-            {Slots.POCKET2, SlotFlags.POCKET },
-            {Slots.POCKET3, SlotFlags.POCKET },
-            {Slots.POCKET4, SlotFlags.POCKET },
-            {Slots.EXOSUITSLOT1, SlotFlags.EXOSUITSTORAGE },
-            {Slots.EXOSUITSLOT2, SlotFlags.EXOSUITSTORAGE }
+            {Slots.HEAD, SlotFlags.HEAD},
+            {Slots.EYES, SlotFlags.EYES},
+            {Slots.EARS, SlotFlags.EARS},
+            {Slots.MASK, SlotFlags.MASK},
+            {Slots.OUTERCLOTHING, SlotFlags.OUTERCLOTHING},
+            {Slots.INNERCLOTHING, SlotFlags.INNERCLOTHING},
+            {Slots.BACKPACK, SlotFlags.BACK},
+            {Slots.BELT, SlotFlags.BELT},
+            {Slots.GLOVES, SlotFlags.GLOVES},
+            {Slots.SHOES, SlotFlags.FEET},
+            {Slots.IDCARD, SlotFlags.IDCARD},
+            {Slots.POCKET1, SlotFlags.POCKET},
+            {Slots.POCKET2, SlotFlags.POCKET},
+            {Slots.POCKET3, SlotFlags.POCKET},
+            {Slots.POCKET4, SlotFlags.POCKET},
+            {Slots.EXOSUITSLOT1, SlotFlags.EXOSUITSTORAGE},
+            {Slots.EXOSUITSLOT2, SlotFlags.EXOSUITSTORAGE}
         };
     }
 }

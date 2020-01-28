@@ -70,7 +70,6 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
 
         public override string Name => "BallisticMagazineWeapon";
         public override uint? NetID => ContentNetIDs.BALLISTIC_MAGAZINE_WEAPON;
-        public override Type StateType => typeof(BallisticMagazineWeaponComponentState);
 
         private StatusControl _statusControl;
 

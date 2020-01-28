@@ -77,7 +77,7 @@ namespace Content.Client.GameObjects.Components
             var styles = HairStyles.FacialHairStylesMap.ToList();
             styles.Sort(HairStyles.FacialHairStyleComparer);
 
-            foreach (var (styleName, styleState) in styles)
+            foreach (var (styleName, styleState) in HairStyles.FacialHairStylesMap)
             {
                 Items.AddItem(styleName, humanFacialHairRSI[styleState].Frame0);
             }
@@ -97,7 +97,7 @@ namespace Content.Client.GameObjects.Components
 
         private Color _lastColor;
 
-        public void SetInitialData(Color color, string styleName)
+        public void SetData(Color color, string styleName)
         {
             _lastColor = color;
 
@@ -107,10 +107,7 @@ namespace Content.Client.GameObjects.Components
 
             foreach (var item in Items)
             {
-                if (item.Text == styleName)
-                {
-                    item.Selected = true;
-                }
+                item.Selected = item.Text == styleName;
             }
 
             UpdateStylePickerColor();
@@ -141,6 +138,7 @@ namespace Content.Client.GameObjects.Components
             Items = new ItemList
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
+                CustomMinimumSize = (300, 250)
             };
             vBox.AddChild(Items);
             Items.OnItemSelected += ItemSelected;
@@ -300,8 +298,8 @@ namespace Content.Client.GameObjects.Components
 
         public void SetInitialData(MagicMirrorInitialDataMessage initialData)
         {
-            _facialHairStylePicker.SetInitialData(initialData.FacialHairColor, initialData.FacialHairName);
-            _hairStylePicker.SetInitialData(initialData.HairColor, initialData.HairName);
+            _facialHairStylePicker.SetData(initialData.FacialHairColor, initialData.FacialHairName);
+            _hairStylePicker.SetData(initialData.HairColor, initialData.HairName);
         }
     }
 }

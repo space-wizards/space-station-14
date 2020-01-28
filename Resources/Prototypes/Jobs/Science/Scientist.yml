@@ -1,0 +1,13 @@
+- type: job
+  id: Scientist
+  name: "Scientist"
+  positions: 3
+  spawnPositions: 2
+  startingGear: AssistantGear
+  department:
+  - Science
+
+  icon: "Scientist"
+
+  access:
+  - research

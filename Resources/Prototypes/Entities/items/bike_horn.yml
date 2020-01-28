@@ -15,7 +15,11 @@
   - type: Item
     Size: 5
     sprite: Objects/Fun/bikehorn.rsi
+  - type: ItemCooldown
 
   - type: Sound
   - type: EmitSoundOnUse
     sound: /Audio/items/bikehorn.ogg
+
+  - type: UseDelay
+    delay: 0.5

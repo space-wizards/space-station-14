@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Shared.GameObjects;
+﻿using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -18,7 +17,6 @@ namespace Content.Client.GameObjects
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
-        public override Type StateType => typeof(ItemComponentState);
 
         [ViewVariables] protected ResourcePath RsiPath;
 

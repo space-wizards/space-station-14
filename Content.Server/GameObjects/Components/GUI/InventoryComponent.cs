@@ -1,13 +1,9 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -92,34 +88,35 @@ namespace Content.Server.GameObjects
         ///     This will fail if there is already an item in the specified slot.
         /// </remarks>
         /// <param name="slot">The slot to put the item in.</param>
-        /// <param name="clothing">The item to insert into the slot.</param>
+        /// <param name="item">The item to insert into the slot.</param>
         /// <returns>True if the item was successfully inserted, false otherwise.</returns>
-        public bool Equip(Slots slot, ClothingComponent clothing)
+        public bool Equip(Slots slot, ItemComponent item)
         {
-            if (clothing == null)
+            if (item == null)
             {
-                throw new ArgumentNullException(nameof(clothing),
+                throw new ArgumentNullException(nameof(item),
                     "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
             }
 
-            if (clothing.SlotFlags == SlotFlags.PREVENTEQUIP //Flag to prevent equipping at all
-                || (clothing.SlotFlags & SlotMasks[slot]) == 0
-            ) //Does the clothing flag have any of our requested slot flags
+            if (!CanEquip(slot, item))
             {
                 return false;
             }
 
             var inventorySlot = SlotContainers[slot];
-            if (!inventorySlot.Insert(clothing.Owner))
+            if (!inventorySlot.Insert(item.Owner))
             {
                 return false;
             }
 
-            clothing.EquippedToSlot();
+            item.EquippedToSlot();
 
             Dirty();
             return true;
         }
+
+        public bool Equip(Slots slot, IEntity entity) => Equip(slot, entity.GetComponent<ItemComponent>());
+
 
         /// <summary>
         ///     Checks whether an item can be put in the specified slot.
@@ -127,10 +124,27 @@ namespace Content.Server.GameObjects
         /// <param name="slot">The slot to check for.</param>
         /// <param name="item">The item to check for.</param>
         /// <returns>True if the item can be inserted into the specified slot.</returns>
-        public bool CanEquip(Slots slot, ClothingComponent item)
+        public bool CanEquip(Slots slot, ItemComponent item)
         {
-            return SlotContainers[slot].CanInsert(item.Owner);
+            var pass = false;
+
+            if (item is ClothingComponent clothing)
+            {
+                if (clothing.SlotFlags != SlotFlags.PREVENTEQUIP && (clothing.SlotFlags & SlotMasks[slot]) != 0)
+                {
+                    pass = true;
+                }
+            }
+
+            if (Owner.TryGetComponent(out IInventoryController controller))
+            {
+                pass = controller.CanEquip(slot, item.Owner, pass);
+            }
+
+            return pass && SlotContainers[slot].CanInsert(item.Owner);
         }
+
+        public bool CanEquip(Slots slot, IEntity entity) => CanEquip(slot, entity.GetComponent<ItemComponent>());
 
         /// <summary>
         ///     Drops the item in a slot.
@@ -256,7 +270,7 @@ namespace Content.Server.GameObjects
                 {
                     var hands = Owner.GetComponent<HandsComponent>();
                     var activeHand = hands.GetActiveHand;
-                    if (activeHand != null && activeHand.Owner.TryGetComponent(out ClothingComponent clothing))
+                    if (activeHand != null && activeHand.Owner.TryGetComponent(out ItemComponent clothing))
                     {
                         hands.Drop(hands.ActiveIndex);
                         if (!Equip(msg.Inventoryslot, clothing))

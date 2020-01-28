@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components
 
         private static void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!obj.Session.AttachedEntity.TryGetComponent(out HairComponent hair))
+            if (!obj.Session.AttachedEntity.TryGetComponent(out HumanoidAppearanceComponent looks))
             {
                 return;
             }
@@ -42,11 +42,11 @@ namespace Content.Server.GameObjects.Components
 
                     if (msg.IsFacialHair)
                     {
-                        hair.FacialHairStyleName = msg.HairName;
+                        looks.Appearance = looks.Appearance.WithFacialHairStyleName(msg.HairName);
                     }
                     else
                     {
-                        hair.HairStyleName = msg.HairName;
+                        looks.Appearance = looks.Appearance.WithHairStyleName(msg.HairName);
                     }
 
                     break;
@@ -57,11 +57,11 @@ namespace Content.Server.GameObjects.Components
 
                     if (msg.IsFacialHair)
                     {
-                        hair.FacialHairColor = color;
+                        looks.Appearance = looks.Appearance.WithFacialHairColor(color);
                     }
                     else
                     {
-                        hair.HairColor = color;
+                        looks.Appearance = looks.Appearance.WithHairColor(color);
                     }
 
                     break;
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components
                 return;
             }
 
-            if (!eventArgs.User.TryGetComponent(out HairComponent hair))
+            if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent looks))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't have any hair!"));
                 return;
@@ -83,8 +83,8 @@ namespace Content.Server.GameObjects.Components
 
             _userInterface.Open(actor.playerSession);
 
-            var msg = new MagicMirrorInitialDataMessage(hair.HairColor, hair.FacialHairColor, hair.HairStyleName,
-                hair.FacialHairStyleName);
+            var msg = new MagicMirrorInitialDataMessage(looks.Appearance.HairColor, looks.Appearance.FacialHairColor, looks.Appearance.HairStyleName,
+                looks.Appearance.FacialHairStyleName);
 
             _userInterface.SendMessage(msg, actor.playerSession);
         }

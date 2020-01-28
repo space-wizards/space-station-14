@@ -1,0 +1,16 @@
+- type: job
+  id: HeadOfSecurity
+  name: "Head Of Security"
+  head: true
+  positions: 1
+  startingGear: AssistantGear
+  department:
+  - Command
+  - Security
+
+  icon: "HeadOfSecurity"
+
+  access:
+  - command
+  - security
+  - maintenance

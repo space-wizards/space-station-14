@@ -1,0 +1,11 @@
+- type: job
+  id: CargoTechnician
+  name: "Cargo Technician"
+  positions: 2
+  spawnPositions: 1
+  startingGear: AssistantGear
+  department:
+  - Cargo
+
+  icon: "CargoTechnician"
+

@@ -1,0 +1,13 @@
+- type: job
+  id: MedicalDoctor
+  name: "Medical Doctor"
+  positions: 3
+  spawnPositions: 2
+  startingGear: AssistantGear
+  department:
+  - Medical
+
+  icon: "MedicalDoctor"
+
+  access:
+  - medical

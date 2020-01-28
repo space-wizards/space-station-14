@@ -83,7 +83,7 @@ def install_hooks():
 
     for filename in os.listdir(str(hooks_source_dir)):
         print("Copying hook {}".format(filename))
-        shutil.copyfile(str(hooks_source_dir/filename),
+        shutil.copy2(str(hooks_source_dir/filename),
                         str(hooks_target_dir/filename))
 
 

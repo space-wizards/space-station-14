@@ -1,11 +1,7 @@
 ﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
 // ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;using System.Collections.Generic;
-using System.Linq;
-using Content.Client.GameObjects.Components.Storage;
 using Content.Client.Utility;
 using JetBrains.Annotations;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -15,6 +11,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using Content.Client.UserInterface;
+using System.Collections.Generic;
 
 namespace Content.Client.GameObjects
 {
@@ -25,16 +23,17 @@ namespace Content.Client.GameObjects
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IResourceCache _resourceCache;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager;
 #pragma warning restore 649
 
-        private readonly Dictionary<Slots, List<InventoryButton>> _inventoryButtons
-            = new Dictionary<Slots, List<InventoryButton>>();
+        private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
+            = new Dictionary<Slots, List<ItemSlotButton>>();
 
-        private InventoryButton _hudButtonPocket1;
-        private InventoryButton _hudButtonPocket2;
-        private InventoryButton _hudButtonBelt;
-        private InventoryButton _hudButtonBack;
-        private InventoryButton _hudButtonId;
+        private ItemSlotButton _hudButtonPocket1;
+        private ItemSlotButton _hudButtonPocket2;
+        private ItemSlotButton _hudButtonBelt;
+        private ItemSlotButton _hudButtonBack;
+        private ItemSlotButton _hudButtonId;
         private Control _quickButtonsContainer;
 
         public HumanInventoryInterfaceController(ClientInventoryComponent owner) : base(owner)
@@ -46,22 +45,22 @@ namespace Content.Client.GameObjects
             base.Initialize();
 
             _window = new HumanInventoryWindow(_loc, _resourceCache);
-            _window.OnClose += () => GameHud.InventoryButtonDown = false;
+            _window.OnClose += () => _gameHud.InventoryButtonDown = false;
             foreach (var (slot, button) in _window.Buttons)
             {
-                button.OnPressed = AddToInventory;
-                button.OnStoragePressed = OpenStorage;
-                _inventoryButtons.Add(slot, new List<InventoryButton> {button});
+                button.OnPressed = (e) => AddToInventory(e, slot);
+                button.OnStoragePressed = (e) => OpenStorage(e, slot);
+                _inventoryButtons.Add(slot, new List<ItemSlotButton> {button});
             }
 
-            void AddButton(out InventoryButton variable, Slots slot, string textureName)
+            void AddButton(out ItemSlotButton variable, Slots slot, string textureName)
             {
                 var texture = _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/{textureName}.png");
                 var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
-                variable = new InventoryButton(slot, texture, storageTexture)
+                variable = new ItemSlotButton(texture, storageTexture)
                 {
-                    OnPressed = AddToInventory,
-                    OnStoragePressed = OpenStorage
+                    OnPressed = (e) => AddToInventory(e, slot),
+                    OnStoragePressed = (e) => OpenStorage(e, slot)
                 };
                 _inventoryButtons[slot].Add(variable);
             }
@@ -93,18 +92,12 @@ namespace Content.Client.GameObjects
             base.AddToSlot(slot, entity);
 
             if (!_inventoryButtons.TryGetValue(slot, out var buttons))
-            {
                 return;
-            }
-
-            entity.TryGetComponent(out ISpriteComponent sprite);
-            var hasInventory = entity.HasComponent<ClientStorageComponent>();
 
             foreach (var button in buttons)
             {
-                button.SpriteView.Sprite = sprite;
-                button.OnPressed = HandleInventoryKeybind;
-                button.StorageButton.Visible = hasInventory;
+                _itemSlotManager.SetItemSlot(button, entity);
+                button.OnPressed = (e) => HandleInventoryKeybind(e, slot);
             }
         }
 
@@ -119,33 +112,47 @@ namespace Content.Client.GameObjects
 
             foreach (var button in buttons)
             {
-                ClearButton(button);
+                ClearButton(button, slot);
             }
         }
 
-        private void ClearButton(InventoryButton button)
+        protected override void HandleInventoryKeybind(BaseButton.ButtonEventArgs args, Slots slot)
         {
-            button.SpriteView.Sprite = null;
-            button.OnPressed = AddToInventory;
-            button.StorageButton.Visible = false;
+            if (!_inventoryButtons.TryGetValue(slot, out var buttons))
+                return;
+            if (!Owner.TryGetSlot(slot, out var item))
+                return;
+            if (_itemSlotManager.OnButtonPressed(args.Event, item))
+                return;
+
+            base.HandleInventoryKeybind(args, slot);
+        }
+
+        private void ClearButton(ItemSlotButton button, Slots slot)
+        {
+            button.OnPressed = (e) => AddToInventory(e, slot);
+            _itemSlotManager.SetItemSlot(button, null);
         }
 
         public override void PlayerAttached()
         {
             base.PlayerAttached();
 
-            GameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
+            _gameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
         }
 
         public override void PlayerDetached()
         {
             base.PlayerDetached();
 
-            GameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
+            _gameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
 
-            foreach (var button in _inventoryButtons.Values.SelectMany(l => l))
+            foreach (var (slot, list) in _inventoryButtons)
             {
-                ClearButton(button);
+                foreach (var button in list)
+                {
+                    ClearButton(button, slot);
+                }
             }
         }
 
@@ -155,14 +162,14 @@ namespace Content.Client.GameObjects
             private const int ButtonSeparation = 2;
             private const int RightSeparation = 2;
 
-            public IReadOnlyDictionary<Slots, InventoryButton> Buttons { get; }
+            public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
 
             public HumanInventoryWindow(ILocalizationManager loc, IResourceCache resourceCache)
             {
                 Title = loc.GetString("Your Inventory");
                 Resizable = false;
 
-                var buttonDict = new Dictionary<Slots, InventoryButton>();
+                var buttonDict = new Dictionary<Slots, ItemSlotButton>();
                 Buttons = buttonDict;
 
                 const int width = ButtonSize * 4 + ButtonSeparation * 3 + RightSeparation;
@@ -175,7 +182,7 @@ namespace Content.Client.GameObjects
                 {
                     var texture = resourceCache.GetTexture($"/Textures/UserInterface/Inventory/{textureName}.png");
                     var storageTexture = resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
-                    var button = new InventoryButton(slot, texture, storageTexture);
+                    var button = new ItemSlotButton(texture, storageTexture);
 
                     LayoutContainer.SetPosition(button, position);
 

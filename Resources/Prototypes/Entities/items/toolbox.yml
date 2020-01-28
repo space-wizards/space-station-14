@@ -18,6 +18,7 @@
   components:
   - type: Sprite
     texture: Objects/Tools/toolbox_r.png
+
   - type: Icon
     texture: Objects/Tools/toolbox_r.png
 

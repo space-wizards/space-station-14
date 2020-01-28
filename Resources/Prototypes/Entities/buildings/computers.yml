@@ -144,7 +144,7 @@
   name: ID Card Computer
   components:
   - type: AccessReader
-    necessary: ["command"]
+    necessary: ["idCard"]
   - type: IdCardConsole
   - type: UserInterface
     interfaces:

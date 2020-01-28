@@ -22,7 +22,9 @@ using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -123,7 +125,10 @@ namespace Content.Client
                 "MedkitFill",
                 "FloorTile",
                 "FootstepSound",
-                "UtilityBeltClothingFill"
+                "UtilityBeltClothingFill",
+                "ShuttleController",
+                "HumanInventoryController",
+                "UseDelay"
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -171,6 +176,11 @@ namespace Content.Client
             {
                 _stateManager.RequestStateChange<GameScreen>();
             };
+
+            _baseClient.PlayerJoinedServer += (sender, args) =>
+            {
+                IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
+            };
         }
 
         /// <summary>
@@ -215,6 +225,7 @@ namespace Content.Client
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
+            IoCManager.Resolve<IItemSlotManager>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

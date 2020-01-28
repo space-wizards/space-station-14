@@ -1,0 +1,20 @@
+- type: job
+  id: HeadOfPersonnel
+  name: "Head Of Personnel"
+  head: true
+  positions: 1
+  startingGear: AssistantGear
+  department:
+  - Command
+  - Civilian
+
+  icon: "HeadOfPersonnel"
+
+  access:
+  - command
+  - idCard
+  - security # HoPcurity strikes again
+  - service
+  - cargo
+  - maintenance
+  # I mean they'll give themselves the rest of the access levels *anyways*.

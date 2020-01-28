@@ -28,6 +28,8 @@ namespace Content.Shared.GameObjects
 
         private static readonly Dictionary<Slots, int> _slotDrawingOrder = new Dictionary<Slots, int>
         {
+            {Slots.POCKET1, 12},
+            {Slots.POCKET2, 11},
             {Slots.HEAD, 10},
             {Slots.MASK, 9},
             {Slots.EARS, 8},
@@ -46,7 +48,7 @@ namespace Content.Shared.GameObjects
             Slots.EYES, Slots.HEAD, Slots.EARS,
             Slots.OUTERCLOTHING, Slots.MASK, Slots.INNERCLOTHING,
             Slots.BACKPACK, Slots.BELT, Slots.GLOVES,
-            Slots.NONE, Slots.SHOES, Slots.IDCARD
+            Slots.NONE, Slots.SHOES, Slots.IDCARD, Slots.POCKET1, Slots.POCKET2
         };
 
         public override int SlotDrawingOrder(Slots slot)

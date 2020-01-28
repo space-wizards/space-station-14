@@ -67,9 +67,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public sealed override uint? NetID => ContentNetIDs.SOLUTION;
 
         /// <inheritdoc />
-        public sealed override Type StateType => typeof(SolutionComponentState);
-
-        /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);

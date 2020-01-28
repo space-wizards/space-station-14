@@ -1,0 +1,17 @@
+# Best job.
+
+- type: job
+  id: ChiefMedicalOfficer
+  name: "Chief Medical Officer"
+  head: true
+  positions: 1
+  startingGear: AssistantGear
+  department:
+  - Command
+  - Medical
+
+  icon: "ChiefMedicalOfficer"
+
+  access:
+  - medical
+  - command

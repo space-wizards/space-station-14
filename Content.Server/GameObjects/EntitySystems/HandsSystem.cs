@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -125,12 +124,6 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
-            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(ent, handsComp.GetActiveHand.Owner))
-                return false;
-                
-            if(handsComp.GetActiveHand != null && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(ent, handsComp.GetActiveHand.Owner))
-            	return false;
-
             if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
             {
                 handsComp.Drop(handsComp.ActiveIndex, coords);
@@ -177,7 +170,7 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 stackComp.Use(1);
-                throwEnt = throwEnt.EntityManager.SpawnEntityAt(throwEnt.Prototype.ID, plyEnt.Transform.GridPosition);
+                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, plyEnt.Transform.GridPosition);
 
                 // can only throw one item at a time, regardless of what the prototype stack size is.
                 if (throwEnt.TryGetComponent<StackComponent>(out var newStackComp))
@@ -205,7 +198,7 @@ namespace Content.Server.GameObjects.EntitySystems
             projComp.IgnoreEntity(plyEnt);
 
             var transform = plyEnt.Transform;
-            var dirVec = (coords.ToWorld(_mapManager).Position - transform.WorldPosition).Normalized;
+            var dirVec = (coords.ToMapPos(_mapManager) - transform.WorldPosition).Normalized;
 
             if (!throwEnt.TryGetComponent(out PhysicsComponent physComp))
                 physComp = throwEnt.AddComponent<PhysicsComponent>();

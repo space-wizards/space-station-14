@@ -12,6 +12,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
@@ -103,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 Producing = false;
                 _producingRecipe = null;
-                Owner.EntityManager.SpawnEntityAt(recipe.Result, Owner.Transform.GridPosition);
+                Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.GridPosition);
                 _userInterface.SendMessage(new LatheStoppedProducingRecipeMessage());
             });
 

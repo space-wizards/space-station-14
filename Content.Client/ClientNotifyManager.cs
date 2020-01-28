@@ -71,12 +71,20 @@ namespace Content.Client
 
         public void FrameUpdate(FrameEventArgs eventArgs)
         {
+            _aliveLabels.ForEach(l =>
+            {
+                if (l.TimeLeft > 3f)
+                {
+                    l.Dispose();
+                }
+            });
+
             _aliveLabels.RemoveAll(l => l.Disposed);
         }
 
         private class PopupLabel : Label
         {
-            private float _timeLeft;
+            public float TimeLeft { get; private set; }
             public Vector2 InitialPos { get; set; }
 
             public PopupLabel()
@@ -88,15 +96,11 @@ namespace Content.Client
 
             protected override void Update(FrameEventArgs eventArgs)
             {
-                _timeLeft += eventArgs.DeltaSeconds;
-                LayoutContainer.SetPosition(this, InitialPos - (0, 20 * (_timeLeft * _timeLeft + _timeLeft)));
-                if (_timeLeft > 0.5f)
+                TimeLeft += eventArgs.DeltaSeconds;
+                LayoutContainer.SetPosition(this, InitialPos - (0, 20 * (TimeLeft * TimeLeft + TimeLeft)));
+                if (TimeLeft > 0.5f)
                 {
-                    Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(_timeLeft - 0.5f, 3f));
-                    if (_timeLeft > 3f)
-                    {
-                        Dispose();
-                    }
+                    Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(TimeLeft - 0.5f, 3f));
                 }
             }
         }
