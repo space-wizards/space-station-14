@@ -20,7 +20,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         protected Solution _containedSolution = new Solution();
         protected int _maxVolume;
         private SolutionCaps _capabilities;
-        private int _transferAmount;
 
         /// <summary>
         /// Triggered when the solution contents change.

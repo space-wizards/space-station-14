@@ -19,7 +19,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// (DrinkComponent adds a SolutionComponent if one isn't present).
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IAttackBy))]
     class PourableComponent : Component, IAttackBy
     {
 #pragma warning disable 649
