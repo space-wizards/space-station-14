@@ -80,6 +80,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 else
                 {
                     _contents = Owner.AddComponent<SolutionComponent>();
+                    //Ensure SolutionComponent supports click transferring if custom one not set
+                    _contents.TransferAmount = 5;
+                    _contents.Capabilities = SolutionCaps.PourIn
+                                             | SolutionCaps.PourOut
+                                             | SolutionCaps.Injectable;
                 }
             }
 
@@ -117,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             UseDrink(eventArgs.Attacked);
         }
 
-        void UseDrink(IEntity user)
+        public void UseDrink(IEntity user, bool useSoundOverride = true)
         {
             if (user == null)
             {
@@ -136,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 var split = _contents.SplitSolution(transferAmount);
                 if (stomachComponent.TryTransferSolution(split))
                 {
-                    if (_useSound != null)
+                    if (_useSound != null && useSoundOverride)
                     {
                         Owner.GetComponent<SoundComponent>()?.Play(_useSound);
                         user.PopupMessage(user, _localizationManager.GetString("Slurp"));

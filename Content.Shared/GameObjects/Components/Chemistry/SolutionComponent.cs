@@ -20,6 +20,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         protected Solution _containedSolution = new Solution();
         protected int _maxVolume;
         private SolutionCaps _capabilities;
+        private int _transferAmount;
 
         /// <summary>
         /// Triggered when the solution contents change.
@@ -58,7 +59,26 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             set => _capabilities = value;
         }
 
+        /// <summary>
+        ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
+        /// </summary>
+        [ViewVariables]
+        public int TransferAmount
+        {
+            get => _transferAmount;
+            set => _transferAmount = value;
+        }
+
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
+
+        /// <summary>
+        /// Shortcut for Capabilities PourIn flag to avoid binary operators.
+        /// </summary>
+        public bool CanPourIn => (Capabilities & SolutionCaps.PourIn) != 0;
+        /// <summary>
+        /// Shortcut for Capabilities PourOut flag to avoid binary operators.
+        /// </summary>
+        public bool CanPourOut => (Capabilities & SolutionCaps.PourOut) != 0;
 
         /// <inheritdoc />
         public override string Name => "Solution";
@@ -74,6 +94,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             serializer.DataField(ref _maxVolume, "maxVol", 0);
             serializer.DataField(ref _containedSolution, "contents", _containedSolution);
             serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
+            serializer.DataField(ref _transferAmount, "transferAmount", 5);
         }
 
         /// <inheritdoc />
@@ -108,11 +129,20 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return true;
         }
 
-        public bool TryRemoveSolution(int quantity)
+        /// <summary>
+        /// Attempt to remove the specified quantity from this solution
+        /// </summary>
+        /// <param name="quantity">Quantity of this solution to remove</param>
+        /// <param name="removedSolution">Out arg. The removed solution. Useful for adding removed solution
+        /// into other solutions. For example, when pouring from one container to another.</param>
+        /// <returns>Whether or not the solution was successfully removed</returns>
+        public bool TryRemoveSolution(int quantity, out Solution removedSolution)
         {
-            if (CurrentVolume == 0) return false;
+            removedSolution = new Solution();
+            if (CurrentVolume == 0)
+                return false;
 
-            _containedSolution.RemoveSolution(quantity);
+            _containedSolution.RemoveSolution(quantity, out removedSolution);
             OnSolutionChanged();
             return true;
         }

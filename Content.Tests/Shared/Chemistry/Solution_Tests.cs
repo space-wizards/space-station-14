@@ -141,10 +141,14 @@ namespace Content.Tests.Shared.Chemistry
         {
             var solution = new Solution("water", 700);
 
-            solution.RemoveSolution(500);
+            solution.RemoveSolution(500,  out var removedSolution);
 
+            //Check that edited solution is correct
             Assert.That(solution.GetReagentQuantity("water"), Is.EqualTo(200));
             Assert.That(solution.TotalVolume, Is.EqualTo(200));
+            //Check that removed solution is correct
+            Assert.That(removedSolution.GetReagentQuantity("water"), Is.EqualTo(500));
+            Assert.That(removedSolution.TotalVolume, Is.EqualTo(500));
         }
 
         [Test]
@@ -152,10 +156,14 @@ namespace Content.Tests.Shared.Chemistry
         {
             var solution = new Solution("water", 800);
 
-            solution.RemoveSolution(1000);
+            solution.RemoveSolution(1000, out var removedSolution);
 
+            //Check that edited solution is correct
             Assert.That(solution.GetReagentQuantity("water"), Is.EqualTo(0));
             Assert.That(solution.TotalVolume, Is.EqualTo(0));
+            //Check that removed solution is correct
+            Assert.That(removedSolution.GetReagentQuantity("water"), Is.EqualTo(800));
+            Assert.That(removedSolution.TotalVolume, Is.EqualTo(800));
         }
 
         [Test]
@@ -165,11 +173,15 @@ namespace Content.Tests.Shared.Chemistry
             solution.AddReagent("water", 1000);
             solution.AddReagent("fire", 2000);
 
-            solution.RemoveSolution(1500);
+            solution.RemoveSolution(1500, out var removedSolution);
 
             Assert.That(solution.GetReagentQuantity("water"), Is.EqualTo(500));
             Assert.That(solution.GetReagentQuantity("fire"), Is.EqualTo(1000));
             Assert.That(solution.TotalVolume, Is.EqualTo(1500));
+
+            Assert.That(removedSolution.GetReagentQuantity("water"), Is.EqualTo(500));
+            Assert.That(removedSolution.GetReagentQuantity("fire"), Is.EqualTo(1000));
+            Assert.That(removedSolution.TotalVolume, Is.EqualTo(1500));
         }
 
         [Test]
@@ -177,10 +189,13 @@ namespace Content.Tests.Shared.Chemistry
         {
             var solution = new Solution("water", 800);
 
-            solution.RemoveSolution(-200);
+            solution.RemoveSolution(-200, out var removedSolution);
 
             Assert.That(solution.GetReagentQuantity("water"), Is.EqualTo(800));
             Assert.That(solution.TotalVolume, Is.EqualTo(800));
+
+            Assert.That(removedSolution.GetReagentQuantity("water"), Is.EqualTo(0));
+            Assert.That(removedSolution.TotalVolume, Is.EqualTo(0));
         }
 
         [Test]

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Content.Server.Chemistry;
+using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -18,12 +21,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
     ///     Shared ECS component that manages a liquid solution of reagents.
     /// </summary>
     [RegisterComponent]
-    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine
+    [ComponentReference(typeof(IAttackBy))]
+    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine, IAttackBy
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IServerNotifyManager _notifyManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         private IEnumerable<ReactionPrototype> _reactions;
@@ -316,6 +322,47 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             //Play reaction sound client-side
             _audioSystem.Play("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
+        }
+
+        /// <summary>
+        /// Called when the owner of this component is attacked by
+        /// another entity. Currently used for click solution transfer behavior.
+        /// Eg: Clicking one beaker with another to transfer chems from one
+        /// to the other.
+        /// </summary>
+        /// <param name="eventArgs">Attack event args</param>
+        /// <returns></returns>
+        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        {
+            //Check if this solution supports being poured into
+            if (!CanPourIn)
+                return false;
+
+            //Check if attack entity has a solution component, and can pour. Remove pour amount from attack entity if viable.
+            var attackEntity = eventArgs.AttackWith;
+            if (!attackEntity.TryGetComponent<SolutionComponent>(out var attackSolution))
+                return false;
+            if (!attackSolution.CanPourOut)
+                return false;
+            if (!attackSolution.TryRemoveSolution(attackSolution.TransferAmount, out var removedSolution))
+                return false;
+
+            //Add poured solution to this solution. Notify player with popup
+            _containedSolution.AddSolution(removedSolution);
+            _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
+                _localizationManager.GetString("{0}u of solution transferred from {1} to {2}.",
+                    removedSolution.TotalVolume, attackEntity.Name, Owner.Name));
+
+            //Force drinks to update if they are empty. Without this empty drinks require an additional click before disappearing
+            if (attackSolution.CurrentVolume == 0)
+            {
+                if (attackEntity.TryGetComponent<DrinkComponent>(out var drinkComponent))
+                {
+                    drinkComponent.UseDrink(eventArgs.User, false);
+                }
+            }
+
+            return true;
         }
     }
 }
