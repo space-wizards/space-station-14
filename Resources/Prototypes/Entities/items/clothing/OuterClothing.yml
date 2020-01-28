@@ -1843,3 +1843,18 @@
     sprite: Clothing/OuterClothing/xenos.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/xenos.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingHoSTrenchcoat
+  name: Head of Security Trenchcoat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/hos_trenchcoat.rsi
+    state: hos_trenchcoat
+  - type: Icon
+    sprite: Clothing/OuterClothing/hos_trenchcoat.rsi
+    state: hos_trenchcoat
+  - type: Clothing
+    sprite: Clothing/OuterClothing/hos_trenchcoat.rsi

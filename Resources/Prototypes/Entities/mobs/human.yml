@@ -41,14 +41,6 @@
       color: "#e8b59b"
       sprite: Mob/human.rsi
       state: human_l_arm
-    - map: ["enum.HumanoidVisualLayers.LHand"]
-      color: "#e8b59b"
-      sprite: Mob/human.rsi
-      state: human_l_hand
-    - map: ["enum.HumanoidVisualLayers.RHand"]
-      color: "#e8b59b"
-      sprite: Mob/human.rsi
-      state: human_r_hand
     - map: ["enum.HumanoidVisualLayers.RLeg"]
       color: "#e8b59b"
       sprite: Mob/human.rsi
@@ -69,6 +61,15 @@
 
     - map: ["enum.Slots.INNERCLOTHING"]
       shader: stencilDraw
+
+    - map: ["enum.HumanoidVisualLayers.LHand"]
+      color: "#e8b59b"
+      sprite: Mob/human.rsi
+      state: human_l_hand
+    - map: ["enum.HumanoidVisualLayers.RHand"]
+      color: "#e8b59b"
+      sprite: Mob/human.rsi
+      state: human_r_hand
 
     - map: ["enum.Slots.IDCARD"]
     - map: ["enum.Slots.GLOVES"]
@@ -168,14 +169,6 @@
         color: "#e8b59b"
         sprite: Mob/human.rsi
         state: human_l_arm
-      - map: ["enum.HumanoidVisualLayers.LHand"]
-        color: "#e8b59b"
-        sprite: Mob/human.rsi
-        state: human_l_hand
-      - map: ["enum.HumanoidVisualLayers.RHand"]
-        color: "#e8b59b"
-        sprite: Mob/human.rsi
-        state: human_r_hand
       - map: ["enum.HumanoidVisualLayers.RLeg"]
         color: "#e8b59b"
         sprite: Mob/human.rsi
@@ -194,6 +187,15 @@
 
       - map: ["enum.Slots.INNERCLOTHING"]
         shader: stencilDraw
+
+      - map: ["enum.HumanoidVisualLayers.LHand"]
+        color: "#e8b59b"
+        sprite: Mob/human.rsi
+        state: human_l_hand
+      - map: ["enum.HumanoidVisualLayers.RHand"]
+        color: "#e8b59b"
+        sprite: Mob/human.rsi
+        state: human_r_hand
 
       - map: ["enum.Slots.IDCARD"]
       - map: ["enum.Slots.GLOVES"]

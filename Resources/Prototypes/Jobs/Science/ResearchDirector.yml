@@ -3,7 +3,7 @@
   name: "Research Director"
   head: true
   positions: 1
-  startingGear: AssistantGear
+  startingGear: ResearchDirectorGear
   department:
   - Command
   - Science
@@ -13,3 +13,11 @@
   access:
   - research
   - command
+
+- type: startingGear
+  id: ResearchDirectorGear
+  equipment:
+    innerclothing: UniformResearchDirector
+    backpack: BackpackClothing
+    shoes: ShoesBrown
+    outerclothing: OuterclothingLabcoatgenopen

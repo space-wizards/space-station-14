@@ -299,6 +299,21 @@
   parent: HatBase
 
 - type: entity
+  id: HatBeretHoS
+  name: Beret HoS
+  description: ''
+  components:
+  - sprite: Clothing/Head/beret_hos.rsi
+    type: Sprite
+    state: beret_hos
+  - sprite: Clothing/Head/beret_hos.rsi
+    type: Icon
+    state: beret_hos
+  - sprite: Clothing/Head/beret_hos.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
   id: HatBeretNavyHos
   name: Beret Navy HoS
   description: ''

@@ -3,7 +3,7 @@
   name: "Head Of Security"
   head: true
   positions: 1
-  startingGear: AssistantGear
+  startingGear: HoSGear
   department:
   - Command
   - Security
@@ -14,3 +14,13 @@
   - command
   - security
   - maintenance
+
+- type: startingGear
+  id: HoSGear
+  equipment:
+    innerclothing: UniformHoS
+    backpack: SecPack
+    shoes: ShoesJackboots
+    outerclothing: OuterclothingHoSTrenchcoat
+    eyes: SecGlasses
+    head: HatBeretHoS
