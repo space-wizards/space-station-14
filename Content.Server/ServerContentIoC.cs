@@ -1,5 +1,7 @@
+using Content.Server.Administration;
 using Content.Server.Cargo;
 using Content.Server.Chat;
+using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -25,7 +27,9 @@ namespace Content.Server
             IoCManager.Register<IGalacticBankManager, GalacticBankManager>();
             IoCManager.Register<ICargoOrderDataManager, CargoOrderDataManager>();
             IoCManager.Register<IModuleManager, ServerModuleManager>();
+            IoCManager.Register<IDatabaseManager, DatabaseManager>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
+            IoCManager.Register<IBanDatabase, BanDatabase>();
         }
     }
 }

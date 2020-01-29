@@ -5,7 +5,7 @@ namespace Content.Server.Database
 {
     public interface IDatabaseConfiguration
     {
-        DbContextOptions<PreferencesDbContext> Options { get; }
+        DbContextOptions<T> MakeOptions<T>() where T : DbContext;
     }
 
     public class PostgresConfiguration : IDatabaseConfiguration
@@ -29,22 +29,19 @@ namespace Content.Server.Database
             _password = password;
         }
 
-        public DbContextOptions<PreferencesDbContext> Options
+        public DbContextOptions<T> MakeOptions<T>() where T : DbContext
         {
-            get
+            var optionsBuilder = new DbContextOptionsBuilder<T>();
+            var connectionString = new NpgsqlConnectionStringBuilder
             {
-                var optionsBuilder = new DbContextOptionsBuilder<PreferencesDbContext>();
-                var connectionString = new NpgsqlConnectionStringBuilder
-                {
-                    Host = _host,
-                    Port = _port,
-                    Database = _database,
-                    Username = _username,
-                    Password = _password
-                }.ConnectionString;
-                optionsBuilder.UseNpgsql(connectionString);
-                return optionsBuilder.Options;
-            }
+                Host = _host,
+                Port = _port,
+                Database = _database,
+                Username = _username,
+                Password = _password
+            }.ConnectionString;
+            optionsBuilder.UseNpgsql(connectionString);
+            return optionsBuilder.Options;
         }
     }
 
@@ -57,14 +54,11 @@ namespace Content.Server.Database
             _databaseFilePath = databaseFilePath;
         }
 
-        public DbContextOptions<PreferencesDbContext> Options
+        public DbContextOptions<T> MakeOptions<T>() where T : DbContext
         {
-            get
-            {
-                var optionsBuilder = new DbContextOptionsBuilder<PreferencesDbContext>();
-                optionsBuilder.UseSqlite($"Data Source={_databaseFilePath}");
-                return optionsBuilder.Options;
-            }
+            var optionsBuilder = new DbContextOptionsBuilder<T>();
+            optionsBuilder.UseSqlite($"Data Source={_databaseFilePath}");
+            return optionsBuilder.Options;
         }
     }
 }

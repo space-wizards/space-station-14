@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace Content.Server.Database
+namespace Content.Server.Database.Preferences
 {
     public class PrefsDb
     {
@@ -13,8 +13,9 @@ namespace Content.Server.Database
             _prefsCtx = dbConfig switch
             {
                 SqliteConfiguration sqlite => (PreferencesDbContext) new SqlitePreferencesDbContext(
-                    sqlite.Options),
-                PostgresConfiguration postgres => new PostgresPreferencesDbContext(postgres.Options),
+                    sqlite.MakeOptions<PreferencesDbContext>()),
+                PostgresConfiguration postgres => new PostgresPreferencesDbContext(
+                    postgres.MakeOptions<PreferencesDbContext>()),
                 _ => throw new NotImplementedException()
             };
             _prefsCtx.Database.Migrate();

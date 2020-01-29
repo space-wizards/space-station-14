@@ -1,13 +1,9 @@
-using System;
-using System.IO;
 using System.Threading.Tasks;
-using Content.Server.Database;
 using Content.Server.Interfaces;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Preferences
@@ -21,7 +17,7 @@ namespace Content.Server.Preferences
 #pragma warning disable 649
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IConfigurationManager _configuration;
-        [Dependency] private readonly IResourceManager _resourceManager;
+        [Dependency] private readonly IDatabaseManager _dbManager;
 #pragma warning restore 649
         private PreferencesDatabase _preferencesDb;
         private Task<PreferencesDatabase> _prefsDbLoadTask;
@@ -35,46 +31,13 @@ namespace Content.Server.Preferences
                 HandleUpdateCharacterMessage);
 
             _configuration.RegisterCVar("game.maxcharacterslots", 10);
-            _configuration.RegisterCVar("database.prefs_engine", "sqlite");
-            _configuration.RegisterCVar("database.prefs_sqlite_dbpath", "preferences.db");
-            _configuration.RegisterCVar("database.prefs_pg_host", "localhost");
-            _configuration.RegisterCVar("database.prefs_pg_port", 5432);
-            _configuration.RegisterCVar("database.prefs_pg_database", "ss14_prefs");
-            _configuration.RegisterCVar("database.prefs_pg_username", string.Empty);
-            _configuration.RegisterCVar("database.prefs_pg_password", string.Empty);
-
-            var engine = _configuration.GetCVar<string>("database.prefs_engine").ToLower();
-            IDatabaseConfiguration dbConfig;
-            switch (engine)
-            {
-                case "sqlite":
-                    var configPreferencesDbPath = _configuration.GetCVar<string>("database.prefs_sqlite_dbpath");
-                    var finalPreferencesDbPath =
-                        Path.Combine(_resourceManager.UserData.RootDir, configPreferencesDbPath);
-                    dbConfig = new SqliteConfiguration(
-                        finalPreferencesDbPath
-                    );
-                    break;
-                case "postgres":
-                    dbConfig = new PostgresConfiguration(
-                        _configuration.GetCVar<string>("database.prefs_pg_host"),
-                        _configuration.GetCVar<int>("database.prefs_pg_port"),
-                        _configuration.GetCVar<string>("database.prefs_pg_database"),
-                        _configuration.GetCVar<string>("database.prefs_pg_username"),
-                        _configuration.GetCVar<string>("database.prefs_pg_password")
-                    );
-                    break;
-                default:
-                    throw new NotImplementedException("Unknown database engine {engine}.");
-            }
-
             var maxCharacterSlots = _configuration.GetCVar<int>("game.maxcharacterslots");
 
             // Actually loading the preferences database takes a while,
             // because EFCore has to initialize and run migrations.
             // We load it in the thread pool here and then fetch the .Result in FinishInit.
             // This means it'll run in parallel with other loading like prototypes & map load.
-            _prefsDbLoadTask = Task.Run(() => new PreferencesDatabase(dbConfig, maxCharacterSlots));
+            _prefsDbLoadTask = Task.Run(() => new PreferencesDatabase(_dbManager.DbConfig, maxCharacterSlots));
         }
 
         public void FinishInit()

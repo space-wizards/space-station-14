@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace Content.Server.Database
+namespace Content.Server.Database.Preferences
 {
     public class PostgresPreferencesDbContext : PreferencesDbContext
     {
