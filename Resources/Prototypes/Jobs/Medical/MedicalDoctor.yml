@@ -3,7 +3,7 @@
   name: "Medical Doctor"
   positions: 3
   spawnPositions: 2
-  startingGear: AssistantGear
+  startingGear: DoctorGear
   department:
   - Medical
 
@@ -11,3 +11,11 @@
 
   access:
   - medical
+
+- type: startingGear
+  id: DoctorGear
+  equipment:
+    innerclothing: UniformMedicalDoctor
+    backpack: BackpackMedical
+    shoes: ShoesWhite
+    outerclothing: OuterclothingLabcoatmedspecopen

@@ -3,7 +3,7 @@
   name: "Scientist"
   positions: 3
   spawnPositions: 2
-  startingGear: AssistantGear
+  startingGear: ScientistGear
   department:
   - Science
 
@@ -11,3 +11,11 @@
 
   access:
   - research
+
+- type: startingGear
+  id: ScientistGear
+  equipment:
+    innerclothing: UniformScientist
+    backpack: BackpackClothing
+    shoes: ShoesWhite
+    outerclothing: OuterclothingLabcoattoxopen

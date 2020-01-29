@@ -3,9 +3,15 @@
   name: "Cargo Technician"
   positions: 2
   spawnPositions: 1
-  startingGear: AssistantGear
+  startingGear: CargoTechGear
   department:
   - Cargo
 
   icon: "CargoTechnician"
 
+- type: startingGear
+  id: CargoTechGear
+  equipment:
+    innerclothing: UniformCargoTech
+    backpack: BackpackClothing
+    shoes: ShoesBlack

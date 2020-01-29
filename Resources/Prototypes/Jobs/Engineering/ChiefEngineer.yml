@@ -3,7 +3,7 @@
   name: "Chief Engineer"
   head: true
   positions: 1
-  startingGear: StationEngineerGear
+  startingGear: ChiefEngineerGear
   department:
   - Command
   - Engineering
@@ -14,3 +14,11 @@
   - maintenance
   - engineering
   - command
+
+- type: startingGear
+  id: ChiefEngineerGear
+  equipment:
+    head: HatHardhatWhite
+    innerclothing: UniformChiefEngineer
+    backpack: BackpackEngineering
+    shoes: ShoesBrown

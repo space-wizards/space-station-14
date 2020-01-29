@@ -3,7 +3,7 @@
   name: "Head Of Personnel"
   head: true
   positions: 1
-  startingGear: AssistantGear
+  startingGear: HoPGear
   department:
   - Command
   - Civilian
@@ -18,3 +18,11 @@
   - cargo
   - maintenance
   # I mean they'll give themselves the rest of the access levels *anyways*.
+
+- type: startingGear
+  id: HoPGear
+  equipment:
+    innerclothing: UniformHoP
+    backpack: BackpackClothing
+    shoes: ShoesBrown
+    head: HatHopcap
