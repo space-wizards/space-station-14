@@ -2,14 +2,16 @@
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Content.Server.Database.Migrations
 {
-    [DbContext(typeof(PreferencesDbContext))]
-    partial class PreferencesDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(SqlitePreferencesDbContext))]
+    [Migration("20200118020532_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,9 +50,6 @@ namespace Content.Server.Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PreferenceUnavailable")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("PrefsId")
                         .HasColumnType("INTEGER");
 
@@ -74,29 +73,6 @@ namespace Content.Server.Database.Migrations
                     b.HasIndex("PrefsId");
 
                     b.ToTable("HumanoidProfile");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Job", b =>
-                {
-                    b.Property<int>("JobId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("JobName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProfileHumanoidProfileId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("JobId");
-
-                    b.HasIndex("ProfileHumanoidProfileId");
-
-                    b.ToTable("Job");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Prefs", b =>
@@ -125,15 +101,6 @@ namespace Content.Server.Database.Migrations
                     b.HasOne("Content.Server.Database.Prefs", "Prefs")
                         .WithMany("HumanoidProfiles")
                         .HasForeignKey("PrefsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Job", b =>
-                {
-                    b.HasOne("Content.Server.Database.HumanoidProfile", "Profile")
-                        .WithMany("Jobs")
-                        .HasForeignKey("ProfileHumanoidProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

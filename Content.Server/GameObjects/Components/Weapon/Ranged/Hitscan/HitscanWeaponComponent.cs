@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var angle = new Angle(clickLocation.Position - userPosition);
 
             var ray = new Ray(userPosition, angle.ToVec(), (int)(CollisionGroup.Impassable | CollisionGroup.MobImpassable));
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ray, MaxLength, user);
+            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user);
 
             Hit(rayCastResults, energyModifier);
             AfterEffects(user, rayCastResults, angle, energyModifier);

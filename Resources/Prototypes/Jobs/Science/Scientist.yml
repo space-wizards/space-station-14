@@ -7,5 +7,7 @@
   department:
   - Science
 
+  icon: "Scientist"
+
   access:
   - research

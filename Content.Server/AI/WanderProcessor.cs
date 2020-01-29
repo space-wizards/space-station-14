@@ -127,7 +127,7 @@ namespace Content.Server.AI
             {
                 var dir = new Vector2(Random01(ref rngState) * 2 - 1, Random01(ref rngState) *2 -1).Normalized;
                 var ray = new Ray(entWorldPos, dir, (int) CollisionGroup.Impassable);
-                var rayResult = _physMan.IntersectRay(ray, MaxWalkDistance, SelfEntity);
+                var rayResult = _physMan.IntersectRay(SelfEntity.Transform.MapID, ray, MaxWalkDistance, SelfEntity);
 
                 if (rayResult.DidHitObject && rayResult.Distance > 1) // hit an impassable object
                 {

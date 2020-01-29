@@ -6,3 +6,6 @@
   startingGear: AssistantGear
   department:
   - Cargo
+
+  icon: "CargoTechnician"
+

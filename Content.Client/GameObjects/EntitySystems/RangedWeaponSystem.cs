@@ -1,5 +1,6 @@
 ﻿using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Client.Interfaces.GameObjects;
+using Content.Shared.Input;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
@@ -20,6 +21,7 @@ namespace Content.Client.GameObjects.EntitySystems
 #pragma warning restore 649
 
         private InputSystem _inputSystem;
+        private CombatModeSystem _combatModeSystem;
         private bool _isFirstShot;
         private bool _blocked;
 
@@ -29,6 +31,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             IoCManager.InjectDependencies(this);
             _inputSystem = EntitySystemManager.GetEntitySystem<InputSystem>();
+            _combatModeSystem = EntitySystemManager.GetEntitySystem<CombatModeSystem>();
         }
 
         public override void Update(float frameTime)
@@ -36,8 +39,8 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Update(frameTime);
 
             var canFireSemi = _isFirstShot;
-            var state = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
-            if (state != BoundKeyState.Down)
+            var state = _inputSystem.CmdStates.GetState(ContentKeyFunctions.Attack);
+            if (!_combatModeSystem.UseOrAttackIsDown && state != BoundKeyState.Down)
             {
                 _isFirstShot = true;
                 _blocked = false;

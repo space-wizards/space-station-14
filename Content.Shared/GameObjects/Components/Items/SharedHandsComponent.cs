@@ -9,7 +9,6 @@ namespace Content.Shared.GameObjects
     {
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
-        public sealed override Type StateType => typeof(HandsComponentState);
     }
 
     // The IDs of the items get synced over the network.

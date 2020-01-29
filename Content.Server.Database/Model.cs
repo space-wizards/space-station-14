@@ -3,16 +3,53 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
 {
-    public class PreferencesDbContext : DbContext
+    public class PostgresPreferencesDbContext : PreferencesDbContext
     {
         // This is used by the "dotnet ef" CLI tool.
-        public PreferencesDbContext() :
-            base(new DbContextOptionsBuilder().UseSqlite("Data Source=:memory:").Options)
+        public PostgresPreferencesDbContext()
         {
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            if(!InitializedWithOptions)
+                options.UseNpgsql("dummy connection string");
+        }
 
+        public PostgresPreferencesDbContext(DbContextOptions<PreferencesDbContext> options) : base(options)
+        {
+        }
+    }
+
+    public class SqlitePreferencesDbContext : PreferencesDbContext
+    {
+        public SqlitePreferencesDbContext()
+        {
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            if (!InitializedWithOptions)
+                options.UseSqlite("dummy connection string");
+        }
+
+        public SqlitePreferencesDbContext(DbContextOptions<PreferencesDbContext> options) : base(options)
+        {
+        }
+    }
+
+    public abstract class PreferencesDbContext : DbContext
+    {
+        /// <summary>
+        /// The "dotnet ef" CLI tool uses the parameter-less constructor.
+        /// When that happens we want to supply the <see cref="DbContextOptions"/> via <see cref="DbContext.OnConfiguring"/>.
+        /// To use the context within the application, the options need to be passed the constructor instead.
+        /// </summary>
+        protected readonly bool InitializedWithOptions;
+        public PreferencesDbContext()
+        {
+        }
         public PreferencesDbContext(DbContextOptions<PreferencesDbContext> options) : base(options)
         {
+            InitializedWithOptions = true;
         }
 
         public DbSet<Prefs> Preferences { get; set; } = null!;

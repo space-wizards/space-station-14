@@ -260,7 +260,8 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
         {
-            var entity = _entityManager.SpawnEntityAt(PlayerPrototypeName, lateJoin ? _getLateJoinSpawnPoint() : _getJobSpawnPoint(job.Prototype.ID));
+            GridCoordinates coordinates = lateJoin ? _getLateJoinSpawnPoint() : _getJobSpawnPoint(job.Prototype.ID);
+            var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
                 var gear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear).Equipment;
@@ -284,7 +285,8 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnObserverMob()
         {
-            return _entityManager.SpawnEntityAt(ObserverPrototypeName, _getLateJoinSpawnPoint());
+            GridCoordinates coordinates = _getLateJoinSpawnPoint();
+            return _entityManager.SpawnEntity(ObserverPrototypeName, coordinates);
         }
 
         private GridCoordinates _getLateJoinSpawnPoint()

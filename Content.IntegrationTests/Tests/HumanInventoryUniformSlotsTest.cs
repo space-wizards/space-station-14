@@ -36,11 +36,11 @@ namespace Content.IntegrationTests.Tests
 
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
-                human = entityMan.SpawnEntityAt("HumanMob_Content", MapCoordinates.Nullspace);
-                uniform = entityMan.SpawnEntityAt("JanitorUniform", MapCoordinates.Nullspace);
-                idCard = entityMan.SpawnEntityAt("IDCardStandard", MapCoordinates.Nullspace);
-                pocketItem = entityMan.SpawnEntityAt("FlashlightLantern", MapCoordinates.Nullspace);
-                var tooBigItem = entityMan.SpawnEntityAt("RedToolboxItem", MapCoordinates.Nullspace);
+                human = entityMan.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                uniform = entityMan.SpawnEntity("JanitorUniform", MapCoordinates.Nullspace);
+                idCard = entityMan.SpawnEntity("IDCardStandard", MapCoordinates.Nullspace);
+                pocketItem = entityMan.SpawnEntity("FlashlightLantern", MapCoordinates.Nullspace);
+                var tooBigItem = entityMan.SpawnEntity("RedToolboxItem", MapCoordinates.Nullspace);
 
                 inventory = human.GetComponent<InventoryComponent>();
 

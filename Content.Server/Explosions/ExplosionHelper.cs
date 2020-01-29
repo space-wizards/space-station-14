@@ -119,8 +119,6 @@ namespace Content.Server.Explosions
             // Knock back cameras of all players in the area.
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            //var selfPos = Owner.Transform.WorldPosition; //vec2
-            var selfPos = coords.ToWorld(mapManager).Position;
             foreach (var player in playerManager.GetAllPlayers())
             {
                 if (player.AttachedEntity == null
@@ -131,7 +129,7 @@ namespace Content.Server.Explosions
                 }
 
                 var playerPos = player.AttachedEntity.Transform.WorldPosition;
-                var delta = selfPos - playerPos;
+                var delta = coords.ToMapPos(mapManager) - playerPos;
                 var distance = delta.LengthSquared;
 
                 var effect = 1 / (1 + 0.2f * distance);

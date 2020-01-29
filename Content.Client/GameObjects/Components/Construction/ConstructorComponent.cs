@@ -78,7 +78,7 @@ namespace Content.Client.GameObjects.Components.Construction
         public void SpawnGhost(ConstructionPrototype prototype, GridCoordinates loc, Direction dir)
         {
             var entMgr = IoCManager.Resolve<IClientEntityManager>();
-            var ghost = entMgr.SpawnEntityAt("constructionghost", loc);
+            var ghost = entMgr.SpawnEntity("constructionghost", loc);
             var comp = ghost.GetComponent<ConstructionGhostComponent>();
             comp.Prototype = prototype;
             comp.Master = this;

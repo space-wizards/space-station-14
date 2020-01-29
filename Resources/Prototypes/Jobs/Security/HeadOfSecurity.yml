@@ -8,6 +8,8 @@
   - Command
   - Security
 
+  icon: "HeadOfSecurity"
+
   access:
   - command
   - security

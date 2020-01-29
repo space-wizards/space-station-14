@@ -83,8 +83,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return;
             }
             var location = eventArgs.User.Transform.GridPosition;
-            var angle = new Angle(eventArgs.ClickLocation.ToWorld(_mapManager).Position -
-                                  location.ToWorld(_mapManager).Position);
+            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(_mapManager) - location.ToMapPos(_mapManager));
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
@@ -130,10 +129,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             var resSet = new HashSet<IEntity>();
 
+            var mapId = Owner.Transform.MapID;
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = _physicsManager.IntersectRay(new Ray(position, castAngle.ToVec(), 19), _range, ignore);
+                var res = _physicsManager.IntersectRay(mapId, new Ray(position, castAngle.ToVec(), 19), _range, ignore);
                 if (res.HitEntity != null)
                 {
                     resSet.Add(res.HitEntity);

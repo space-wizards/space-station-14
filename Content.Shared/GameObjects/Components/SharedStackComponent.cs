@@ -8,7 +8,6 @@ namespace Content.Shared.GameObjects.Components
     {
         public sealed override string Name => "Stack";
         public sealed override uint? NetID => ContentNetIDs.STACK;
-        public sealed override Type StateType => typeof(StackComponentState);
 
         [Serializable, NetSerializable]
         protected sealed class StackComponentState : ComponentState

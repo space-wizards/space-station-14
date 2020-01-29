@@ -3,7 +3,6 @@ using Content.Client.GameObjects;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
 using Content.Shared;
-using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -29,7 +28,7 @@ namespace Content.Client.UserInterface
             IClientPreferencesManager preferencesManager)
         {
             _preferencesManager = preferencesManager;
-            _previewDummy = entityManager.SpawnEntityAt("HumanMob_Dummy", MapCoordinates.Nullspace);
+            _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
 
             var header = new NanoHeading
             {
@@ -121,7 +120,7 @@ namespace Content.Client.UserInterface
 
             foreach (var (slot, itemType) in gear.Equipment)
             {
-                var item = entityMan.SpawnEntityAt(itemType, MapCoordinates.Nullspace);
+                var item = entityMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
 
                 inventory.SetSlotVisuals(slot, item);
 

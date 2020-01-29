@@ -10,7 +10,6 @@ namespace Content.Shared.GameObjects.Components.Cargo
     {
         public sealed override string Name => "CargoOrderDatabase";
         public sealed override uint? NetID => ContentNetIDs.CARGO_ORDER_DATABASE;
-        public sealed override Type StateType => typeof(CargoOrderDatabaseState);
     }
 
     [NetSerializable, Serializable]

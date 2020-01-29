@@ -16,10 +16,10 @@ namespace Content.Server.Preferences
         private readonly int _maxCharacterSlots;
         private readonly PrefsDb _prefsDb;
 
-        public PreferencesDatabase(string databaseFilePath, int maxCharacterSlots)
+        public PreferencesDatabase(IDatabaseConfiguration dbConfig, int maxCharacterSlots)
         {
             _maxCharacterSlots = maxCharacterSlots;
-            _prefsDb = new PrefsDb(databaseFilePath);
+            _prefsDb = new PrefsDb(dbConfig);
         }
 
         public PlayerPreferences GetPlayerPreferences(string username)

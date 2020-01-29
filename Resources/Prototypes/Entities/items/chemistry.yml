@@ -11,6 +11,8 @@
   - type: Solution
     maxVol: 50
     caps: 19
+  - type: Pourable
+    transferAmount: 5
 
 - type: entity
   name: Large Beaker
@@ -25,6 +27,8 @@
   - type: Solution
     maxVol: 100
     caps: 19
+  - type: Pourable
+    transferAmount: 5
 
 - type: entity
   name: Dropper
@@ -39,3 +43,5 @@
   - type: Solution
     maxVol: 5
     caps: 19
+  - type: Pourable
+    transferAmount: 5

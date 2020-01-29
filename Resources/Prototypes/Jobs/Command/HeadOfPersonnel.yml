@@ -8,6 +8,8 @@
   - Command
   - Civilian
 
+  icon: "HeadOfPersonnel"
+
   access:
   - command
   - idCard

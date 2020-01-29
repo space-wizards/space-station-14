@@ -13,8 +13,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         public override string Name => "StatusEffectsUI";
         public override uint? NetID => ContentNetIDs.STATUSEFFECTS;
-        public sealed override Type StateType => typeof(StatusEffectComponentState);
-
     }
 
     [Serializable, NetSerializable]

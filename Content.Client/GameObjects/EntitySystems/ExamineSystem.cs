@@ -73,15 +73,14 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public async void DoExamine(IEntity entity)
         {
+            const float minWidth = 300;
             CloseTooltip();
 
             var popupPos = _inputManager.MouseScreenPosition;
 
-
-
             // Actually open the tooltip.
             _examineTooltipOpen = new Popup();
-            _userInterfaceManager.StateRoot.AddChild(_examineTooltipOpen);
+            _userInterfaceManager.ModalRoot.AddChild(_examineTooltipOpen);
             var panel = new PanelContainer();
             panel.AddStyleClass(StyleClassEntityTooltip);
             panel.ModulateSelfOverride = Color.LightGray.WithAlpha(0.90f);
@@ -89,7 +88,7 @@ namespace Content.Client.GameObjects.EntitySystems
             //panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
             var vBox = new VBoxContainer();
             panel.AddChild(vBox);
-            var hBox = new HBoxContainer { SeparationOverride = 5};
+            var hBox = new HBoxContainer {SeparationOverride = 5};
             vBox.AddChild(hBox);
             if (entity.TryGetComponent(out ISpriteComponent sprite))
             {
@@ -102,10 +101,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 SizeFlagsHorizontal = Control.SizeFlags.FillExpand,
             });
 
-            const float minWidth = 300;
             var size = Vector2.ComponentMax((minWidth, 0), panel.CombinedMinimumSize);
-
-            popupPos += Vector2.ComponentMin(Vector2.Zero, _userInterfaceManager.StateRoot.Size - (size + popupPos));
 
             _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos, size));
 
@@ -144,8 +140,6 @@ namespace Content.Client.GameObjects.EntitySystems
                     break;
                 }
             }
-
-            //_examineTooltipOpen.Position += Vector2.ComponentMin(Vector2.Zero,_userInterfaceManager.StateRoot.Size - (panel.Size + _examineTooltipOpen.Position));
         }
 
         public void CloseTooltip()

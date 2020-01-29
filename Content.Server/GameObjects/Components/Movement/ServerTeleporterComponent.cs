@@ -86,8 +86,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (_teleporterType == TeleporterType.Directed)
             {
-                var userTarget = eventArgs.ClickLocation.ToWorld(_mapManager);
-                TryDirectedTeleport(eventArgs.User, userTarget);
+                TryDirectedTeleport(eventArgs.User, eventArgs.ClickLocation.ToMap(_mapManager));
             }
 
             if (_teleporterType == TeleporterType.Random)
@@ -96,10 +95,10 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        public void TryDirectedTeleport(IEntity user, GridCoordinates grid)
+        public void TryDirectedTeleport(IEntity user, MapCoordinates mapCoords)
         {
             // Checks
-            if (user.Transform.GridPosition.Distance(_mapManager, grid) > _range)
+            if ((user.Transform.WorldPosition - mapCoords.Position).LengthSquared > (_range * _range))
             {
                 return;
             }
@@ -110,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
             if (_avoidCollidable)
             {
-                foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(grid))
+                foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(mapCoords))
                 {
                     // Added this component to avoid stacking portals and causing shenanigans
                     // TODO: Doesn't do a great job of stopping stacking portals for directed
@@ -132,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 return;
             }
 
-            Timer.Spawn(TimeSpan.FromSeconds(_chargeTime), () => Teleport(user, new Vector2(grid.X, grid.Y)));
+            Timer.Spawn(TimeSpan.FromSeconds(_chargeTime), () => Teleport(user, mapCoords.Position));
             StartCooldown();
         }
 
@@ -235,11 +234,11 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                 // Call Delete here as the teleporter should have control over portal longevity
                 // Departure portal
-                var departurePortal = _serverEntityManager.SpawnEntityAt("Portal", user.Transform.GridPosition);
+                var departurePortal = _serverEntityManager.SpawnEntity("Portal", user.Transform.GridPosition);
                 departurePortal.TryGetComponent<ServerPortalComponent>(out var departureComponent);
 
                 // Arrival portal
-                var arrivalPortal = _serverEntityManager.SpawnEntityAt("Portal", targetGrid);
+                var arrivalPortal = _serverEntityManager.SpawnEntity("Portal", targetGrid);
                 arrivalPortal.TryGetComponent<ServerPortalComponent>(out var arrivalComponent);
 
                 // Connect. TODO: If the OnUpdate in ServerPortalComponent is changed this may need to change as well.

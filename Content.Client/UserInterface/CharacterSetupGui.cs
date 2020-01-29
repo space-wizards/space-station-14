@@ -189,6 +189,7 @@ namespace Content.Client.UserInterface
                     _humanoidProfileEditor.CharacterSlot = characterIndexCopy;
                     _humanoidProfileEditor.UpdateControls();
                     _preferencesManager.SelectCharacter(character);
+                    UpdateUI();
                 };
                 characterIndex++;
             }
@@ -209,7 +210,7 @@ namespace Content.Client.UserInterface
                 ButtonGroup group,
                 ICharacterProfile profile)
             {
-                _previewDummy = entityManager.SpawnEntityAt("HumanMob_Dummy", MapCoordinates.Nullspace);
+                _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
                 _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
                 var humanoid = profile as HumanoidCharacterProfile;
                 if (humanoid != null)

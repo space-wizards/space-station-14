@@ -68,6 +68,8 @@ namespace Content.Server
 
             var logManager = IoCManager.Resolve<ILogManager>();
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
+
+            IoCManager.Resolve<IServerPreferencesManager>().StartInit();
         }
 
         public override void PostInit()
@@ -76,7 +78,7 @@ namespace Content.Server
 
             _gameTicker.Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
-            IoCManager.Resolve<IServerPreferencesManager>().Initialize();
+            IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

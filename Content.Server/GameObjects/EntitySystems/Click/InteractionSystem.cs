@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
@@ -257,6 +257,8 @@ namespace Content.Server.GameObjects.EntitySystems
             var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
             inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
                 new PointerInputCmdHandler(HandleUseItemInHand));
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.Attack,
+                new PointerInputCmdHandler(HandleAttack));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
                 new PointerInputCmdHandler(HandleActivateItemInWorld));
         }
@@ -313,6 +315,37 @@ namespace Content.Server.GameObjects.EntitySystems
             activateComp.Activate(new ActivateEventArgs {User = user});
         }
 
+        private bool HandleAttack(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        {
+            // client sanitization
+            if (!_mapManager.GridExists(coords.GridID))
+            {
+                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return true;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent attack with client-side entity. Session={session}, Uid={uid}");
+                return true;
+            }
+
+            var userEntity = ((IPlayerSession) session).AttachedEntity;
+
+            if (userEntity == null || !userEntity.IsValid())
+            {
+                return true;
+            }
+
+            if (userEntity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
+            {
+                DoAttack(userEntity, coords);
+            }
+
+            return true;
+        }
+
         private bool HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             // client sanitization
@@ -336,14 +369,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return true;
             }
 
-            if (userEntity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
-            {
-                DoAttack(userEntity, coords);
-            }
-            else
-            {
-                UserInteraction(userEntity, coords, uid);
-            }
+            UserInteraction(userEntity, coords, uid);
 
             return true;
         }
@@ -408,7 +434,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // Check if ClickLocation is in object bounds here, if not lets log as warning and see why
             if (attacked.TryGetComponent(out ICollidableComponent collideComp))
             {
-                if (!collideComp.WorldAABB.Contains(coordinates.ToWorld(_mapManager).Position))
+                if (!collideComp.WorldAABB.Contains(coordinates.ToMapPos(_mapManager)))
                 {
                     Logger.WarningS("system.interaction",
                         $"Player {player.Name} clicked {attacked.Name} outside of its bounding box component somehow");
@@ -561,10 +587,9 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public void UseInteraction(IEntity user, IEntity used)
         {
-
             if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
             {
-                if(delayComponent.ActiveDelay)
+                if (delayComponent.ActiveDelay)
                     return;
                 else
                     delayComponent.BeginDelay();
@@ -600,7 +625,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             ThrownInteraction(user, item);
             return true;
-
         }
 
         /// <summary>
@@ -657,7 +681,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             DroppedInteraction(user, item);
             return true;
-
         }
 
         /// <summary>

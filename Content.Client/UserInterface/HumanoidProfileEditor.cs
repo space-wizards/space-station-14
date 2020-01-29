@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Client.Interfaces;
+using Content.Client.Utility;
 using Content.Shared;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Utility;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
+using static Content.Client.StaticIoC;
 
 namespace Content.Client.UserInterface
 {
@@ -148,19 +152,13 @@ namespace Content.Client.UserInterface
                         Text = localization.GetString("Male"),
                         Group = sexButtonGroup
                     };
-                    _sexMaleButton.OnPressed += args =>
-                    {
-                        SetSex(Sex.Male);
-                    };
+                    _sexMaleButton.OnPressed += args => { SetSex(Sex.Male); };
                     _sexFemaleButton = new Button
                     {
                         Text = localization.GetString("Female"),
                         Group = sexButtonGroup
                     };
-                    _sexFemaleButton.OnPressed += args =>
-                    {
-                        SetSex(Sex.Female);
-                    };
+                    _sexFemaleButton.OnPressed += args => { SetSex(Sex.Female); };
                     hBox.AddChild(sexLabel);
                     hBox.AddChild(_sexMaleButton);
                     hBox.AddChild(_sexFemaleButton);
@@ -502,10 +500,23 @@ namespace Content.Client.UserInterface
                     PriorityChanged?.Invoke(Priority);
                 };
 
+                var icon = new TextureRect
+                {
+                    TextureScale = (2, 2),
+                    Stretch = TextureRect.StretchMode.KeepCentered
+                };
+
+                if (job.Icon != null)
+                {
+                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/job_icons.rsi"), job.Icon);
+                    icon.Texture = specifier.Frame0();
+                }
+
                 AddChild(new HBoxContainer
                 {
                     Children =
                     {
+                        icon,
                         new Label {Text = job.Name, CustomMinimumSize = (175, 0)},
                         _optionButton
                     }

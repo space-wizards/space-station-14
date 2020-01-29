@@ -12,6 +12,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Construction.ConstructionStepMaterial;
 using static Content.Shared.Construction.ConstructionStepTool;
@@ -54,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 {
                     // Oh boy we get to finish construction!
                     var entMgr = IoCManager.Resolve<IServerEntityManager>();
-                    var ent = entMgr.SpawnEntityAt(Prototype.Result, Transform.GridPosition);
+                    var ent = entMgr.SpawnEntity(Prototype.Result, Transform.GridPosition);
                     ent.GetComponent<ITransformComponent>().LocalRotation = Transform.LocalRotation;
                     Owner.Delete();
                     return true;

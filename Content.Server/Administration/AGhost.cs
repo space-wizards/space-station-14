@@ -3,6 +3,7 @@ using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Server.Administration
 {
@@ -30,8 +31,7 @@ namespace Content.Server.Administration
             else
             {
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var ghost = entityManager.SpawnEntityAt("AdminObserver",
-                    player.AttachedEntity.Transform.GridPosition);
+                var ghost = entityManager.SpawnEntity("AdminObserver", player.AttachedEntity.Transform.GridPosition);
 
                 mind.Visit(ghost);
             }

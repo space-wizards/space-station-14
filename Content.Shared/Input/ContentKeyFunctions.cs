@@ -5,6 +5,8 @@ namespace Content.Shared.Input
     [KeyFunctions]
     public static class ContentKeyFunctions
     {
+        public static readonly BoundKeyFunction UseOrAttack = "UseOrAttack";
+        public static readonly BoundKeyFunction Attack = "Attack";
         public static readonly BoundKeyFunction ActivateItemInHand = "ActivateItemInHand";
         public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld"; // default action on world entity
         public static readonly BoundKeyFunction Drop = "Drop";

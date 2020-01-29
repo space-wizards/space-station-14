@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Shared.GameObjects;
+﻿using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
@@ -16,7 +15,6 @@ namespace Content.Client.GameObjects.Components.Clothing
         private FemaleClothingMask _femaleMask;
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
-        public override Type StateType => typeof(ClothingComponentState);
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string ClothingEquippedPrefix { get; set; }

@@ -337,7 +337,7 @@ def copy_content_assemblies(target, zipf, server):
         source_dir = p("bin", "Content.Server")
         files = ["Content.Shared.dll", "Content.Server.dll"] + SERVER_EXTRA_CONTENT_ASSEMBLIES
         for filename in os.listdir(source_dir):
-            if filename.startswith("Microsoft."):
+            if filename.startswith("Microsoft.") or filename.startswith("Npgsql."):
                 files.append(filename)
 
     else:

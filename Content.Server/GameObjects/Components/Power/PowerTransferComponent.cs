@@ -4,8 +4,10 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -140,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Power
             if (eventArgs.AttackWith.TryGetComponent(out WirecutterComponent wirecutter))
             {
                 Owner.Delete();
-                var droppedEnt = Owner.EntityManager.SpawnEntityAt("CableStack", eventArgs.ClickLocation);
+                var droppedEnt = Owner.EntityManager.SpawnEntity("CableStack", eventArgs.ClickLocation);
 
                 if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
                     stackComp.Count = 1;

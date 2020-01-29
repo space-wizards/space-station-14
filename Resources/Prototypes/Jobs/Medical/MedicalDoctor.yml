@@ -7,5 +7,7 @@
   department:
   - Medical
 
+  icon: "MedicalDoctor"
+
   access:
   - medical

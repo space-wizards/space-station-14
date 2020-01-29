@@ -66,6 +66,11 @@ namespace Content.Server.GameObjects
         // Hey, it's descriptive.
         private void DropIdAndPocketsIfWeNoLongerHaveAUniform()
         {
+            if (Deleted)
+            {
+                return;
+            }
+
             if (_inventory.GetSlotItem(Slots.INNERCLOTHING) != null)
             {
                 return;
