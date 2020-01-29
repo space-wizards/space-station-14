@@ -136,8 +136,9 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                physics.LinearVelocity = (mover.VelocityDir * (mover.Sprinting ? mover.SprintMoveSpeed : mover.WalkMoveSpeed)).Rotate(transform.Parent.WorldRotation);
+                physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.SprintMoveSpeed : mover.WalkMoveSpeed);
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
+
                 // Handle footsteps.
                 var distance = transform.GridPosition.Distance(_mapManager, mover.LastPosition);
                 mover.StepSoundDistance += distance;
