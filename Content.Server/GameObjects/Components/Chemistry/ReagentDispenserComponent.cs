@@ -109,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             switch (msg.Button)
             {
                 case UiButton.Eject:
-                    TryEject();
+                    TryEject(obj.Session.AttachedEntity);
                     break;
                 case UiButton.Clear:
                     TryClear();
@@ -189,14 +189,22 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         /// <summary>
         /// If this component contains an entity with a <see cref="SolutionComponent"/>, eject it.
+        /// Tries to eject into user's hands first, then ejects onto dispenser if both hands are full.
         /// </summary>
-        private void TryEject()
+        private void TryEject(IEntity user)
         {
-            if (!HasBeaker) return;
+            if (!HasBeaker)
+                return;
+
+            var beaker = _beakerContainer.ContainedEntity;
             Solution.SolutionChanged -= HandleSolutionChangedEvent;
             _beakerContainer.Remove(_beakerContainer.ContainedEntity);
-
             UpdateUserInterface();
+
+            if(!user.TryGetComponent<HandsComponent>(out var hands) || !beaker.TryGetComponent<ItemComponent>(out var item))
+                return;
+            if (hands.CanPutInHand(item))
+                hands.PutInHand(item);
         }
 
         /// <summary>
