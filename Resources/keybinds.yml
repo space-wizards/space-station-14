@@ -9,6 +9,7 @@ binds:
   key: F3
 - function: HideUI
   type: Toggle
+  mod1: Shift
   key: F4
 - function: MoveUp
   type: State
