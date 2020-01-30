@@ -1,4 +1,5 @@
 ﻿using Content.Client.UserInterface;
+using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.Placement;
@@ -40,11 +41,11 @@ namespace Content.Client.Sandbox
 
             _gameHud.SandboxButtonToggled = SandboxButtonPressed;
 
-            _inputManager.SetInputCommand(EngineKeyFunctions.OpenEntitySpawnWindow,
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
                 InputCmdHandler.FromDelegate(session => ToggleEntitySpawnWindow()));
-            _inputManager.SetInputCommand(EngineKeyFunctions.OpenSandboxWindow,
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenSandboxWindow,
                 InputCmdHandler.FromDelegate(session => ToggleSandboxWindow()));
-            _inputManager.SetInputCommand(EngineKeyFunctions.OpenTileSpawnWindow,
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenTileSpawnWindow,
                 InputCmdHandler.FromDelegate(session => ToggleTilesWindow()));
         }
 
