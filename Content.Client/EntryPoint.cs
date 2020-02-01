@@ -167,7 +167,6 @@ namespace Content.Client
             var stylesheet = new NanoStyle();
 
             IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
-            IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
 
             IoCManager.InjectDependencies(this);
 
