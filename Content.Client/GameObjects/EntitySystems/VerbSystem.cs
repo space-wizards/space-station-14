@@ -34,7 +34,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
 #pragma warning restore 649
 
         private VerbPopup _currentPopup;
