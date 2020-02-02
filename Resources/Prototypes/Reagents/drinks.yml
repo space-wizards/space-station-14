@@ -20,6 +20,7 @@
   id: chem.Cola
   name: Cola
   desc: A sweet, carbonated soft drink. Caffeine free.
+  color: "#100800"
   metabolism:
     - !type:DefaultDrink
       rate: 1
@@ -28,6 +29,7 @@
   id: chem.Coffee
   name: Coffee
   desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
+  color: "#482000"
   metabolism:
     - !type:DefaultDrink
       rate: 1
@@ -36,6 +38,7 @@
   id: chem.Tea
   name: Tea
   desc: A made by boiling leaves of the tea tree, Camellia sinensis.
+  color: "#101000"
   metabolism:
     - !type:DefaultDrink
       rate: 1

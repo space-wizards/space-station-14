@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             return true;
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        public bool AttackBy(AttackByEventArgs eventArgs)
         {
             if (!eventArgs.AttackWith.TryGetComponent(out MopComponent mopComponent))
             {

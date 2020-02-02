@@ -13,6 +13,7 @@
     spill_sound: /Audio/effects/Fluids/splat.ogg
     recolor: true
   - type: Sound
+  - type: InteractionOutline
   - type: Clickable
   - type: Collidable
     shapes:

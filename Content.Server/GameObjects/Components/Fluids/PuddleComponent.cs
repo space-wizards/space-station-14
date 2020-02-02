@@ -6,6 +6,7 @@ using Content.Shared.Chemistry;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -34,12 +35,6 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         // TODO: 'leaves fluidtracks', probably in a separate component for stuff like gibb chunks?;
         // TODO: Add stuff like slipping -> probably in a separate component (for stuff like bananas) and using BumpEntMsg
-
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
 
         // based on behaviour (e.g. someone being punched vs slashed with a sword would have different blood sprite)
         // to check for low volumes for evaporation or whatever
@@ -118,17 +113,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
             _spriteComponent.Rotation = Angle.FromDegrees(robustRandom.Next(0, 359));
             // UpdateAppearance should get called soon after this so shouldn't need to call Dirty() here
-
-            // If we become space then delete
-            _mapManager.TileChanged += (sender, args) =>
-            {
-                if (args.NewTile.GridIndex == Owner.Transform.GridID &&
-                    _snapGrid.Position == args.NewTile.GridIndices &&
-                    args.NewTile.Tile.IsEmpty)
-                {
-                    Owner.Delete();
-                }
-            };
         }
 
         // Flow rate should probably be controlled globally so this is it for now
@@ -157,7 +141,8 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play(_spillSound);
+            var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+            entitySystemManager.GetEntitySystem<AudioSystem>().Play(_spillSound);
             return true;
         }
 
@@ -295,7 +280,8 @@ namespace Content.Server.GameObjects.Components.Fluids
 
                 var grid = DirectionToGrid(direction);
                 // We'll just add the co-ordinates as we need to figure out how many puddles we need to spawn first
-                neighborPuddles.Add(_entityManager.SpawnEntityAt(Owner.Prototype.ID, grid));
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                neighborPuddles.Add(entityManager.SpawnEntity(Owner.Prototype.ID, grid));
             }
 
             if (neighborPuddles.Count == 0)
@@ -315,7 +301,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <returns></returns>
         private static IEnumerable<Direction> RandomDirections()
         {
-            var directions = new List<Direction>
+            var directions = new[]
             {
                 Direction.East,
                 Direction.SouthEast,
@@ -328,7 +314,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             };
 
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            var n = directions.Count;
+            var n = directions.Length;
 
             while (n > 1)
             {
@@ -347,7 +333,8 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         private GridCoordinates DirectionToGrid(Direction direction)
         {
-            var ownerGrid = _mapManager.GetGrid(Owner.Transform.GridID);
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            var ownerGrid = mapManager.GetGrid(Owner.Transform.GridID);
             GridCoordinates grid = ownerGrid.GridTileToLocal(_snapGrid.SnapGridPosAt(direction));
 
             return grid;

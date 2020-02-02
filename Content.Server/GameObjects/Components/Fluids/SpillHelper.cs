@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            var puddle = serverEntityManager.SpawnEntityAt(prototype, spillGridCoords);
+            var puddle = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
             puddle.GetComponent<PuddleComponent>().TryAddSolution(solution);
         }
 

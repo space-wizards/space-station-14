@@ -6,6 +6,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -90,7 +91,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
             }
 
-            _contents.MaxVolume = _initialContents.TotalVolume;
+            if (_initialContents != null)
+            {
+                _contents.MaxVolume = _initialContents.TotalVolume;
+            }
+
             _contents.SolutionChanged += HandleSolutionChangedEvent;
         }
 
@@ -144,9 +149,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 var split = _contents.SplitSolution(transferAmount);
                 if (stomachComponent.TryTransferSolution(split))
                 {
+                    // When we split Finish gets called which may delete the can so need to use the entity system for sound
                     if (_useSound != null)
                     {
-                        Owner.GetComponent<SoundComponent>()?.Play(_useSound);
+                        var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+                        var audioSystem = entitySystemManager.GetEntitySystem<AudioSystem>();
+                        audioSystem.Play(_useSound);
                         user.PopupMessage(user, _localizationManager.GetString("Slurp"));
                     }
                 }
@@ -170,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void Finish(IEntity user)
         {
             // Drink containers are mostly transient.
-            if (!_despawnOnFinish || UsesLeft() > 0)
+            if (!_despawnOnFinish || UsesLeft() > 0 || Owner.Deleted)
                 return;
 
             var gridPos = Owner.Transform.GridPosition;
