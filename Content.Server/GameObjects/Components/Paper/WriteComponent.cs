@@ -4,7 +4,8 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    public class WriteComponent : SharedWriteComponent
+    public class WriteComponent : Component
     {
+        public override string Name => "Write";
     }
 }
