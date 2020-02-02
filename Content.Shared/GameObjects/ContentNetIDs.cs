@@ -40,5 +40,6 @@
         public const uint STACK = 1035;
         public const uint HANDHELD_LIGHT = 1036;
         public const uint BALLISTIC_MAGAZINE_WEAPON = 1037;
+        public const uint PAPER = 1038;
     }
 }
