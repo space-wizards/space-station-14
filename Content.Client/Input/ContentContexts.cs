@@ -38,6 +38,10 @@ namespace Content.Client.Input
             ghost.AddFunction(EngineKeyFunctions.MoveRight);
             ghost.AddFunction(EngineKeyFunctions.Run);
             ghost.AddFunction(ContentKeyFunctions.OpenContextMenu);
+
+            common.AddFunction(ContentKeyFunctions.OpenEntitySpawnWindow);
+            common.AddFunction(ContentKeyFunctions.OpenSandboxWindow);
+            common.AddFunction(ContentKeyFunctions.OpenTileSpawnWindow);
         }
     }
 }
