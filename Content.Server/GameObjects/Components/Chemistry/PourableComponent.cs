@@ -76,11 +76,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     _localizationManager.GetString("Container is full"));
                 return false;
             }
-            //Remove transfer amount from attacker
-            if (!attackSolution.TryRemoveSolution(realTransferAmount, out var removedSolution))
-                return false;
 
-            //Add poured solution to this solution
+            //Move units from attackSolution to targetSolution
+            var removedSolution = attackSolution.SplitSolution(realTransferAmount);
             if (!targetSolution.TryAddSolution(removedSolution))
                 return false;
 
