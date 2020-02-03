@@ -432,7 +432,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 28
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 8.5,-8.5
@@ -473,7 +473,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 31
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -6.5,-11.5
@@ -1165,7 +1165,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 92
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -6.5,-6.5
@@ -1175,7 +1175,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 93
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -7.5,-6.5
@@ -1185,7 +1185,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 94
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -8.5,-6.5
@@ -1195,7 +1195,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 95
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -8.5,-5.5
@@ -1205,7 +1205,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 96
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -8.5,-4.5
@@ -1215,7 +1215,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 97
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -8.5,-3.5
@@ -1225,7 +1225,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 98
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -8.5,-2.5
@@ -1235,7 +1235,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 99
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -8.5,-1.5
@@ -1245,7 +1245,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 100
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -6.5,-7.5
@@ -1255,7 +1255,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 101
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -6.5,-8.5
@@ -1265,7 +1265,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 102
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -6.5,-9.5
@@ -1275,7 +1275,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 103
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -6.5,-10.5
@@ -1285,7 +1285,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 104
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 4.5,-8.5
@@ -1295,7 +1295,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 105
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 4.5,-9.5
@@ -1305,7 +1305,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 106
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 4.5,-10.5
@@ -1315,7 +1315,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 107
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 4.5,-11.5
@@ -1325,7 +1325,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 108
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 5.5,-8.5
@@ -1335,7 +1335,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 109
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,-8.5
@@ -1345,7 +1345,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 110
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 7.5,-8.5
@@ -1375,7 +1375,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 113
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 3.5,-11.5
@@ -1385,7 +1385,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 114
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,-11.5
@@ -1395,7 +1395,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 115
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 1.5,-11.5
@@ -1405,7 +1405,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 116
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 0.5,-11.5
@@ -1415,7 +1415,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 117
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -0.5,-11.5
@@ -1425,7 +1425,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 118
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -1.5,-11.5
@@ -1435,7 +1435,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 119
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -2.5,-11.5
@@ -1445,7 +1445,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 120
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -3.5,-11.5
@@ -1455,7 +1455,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 121
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -4.5,-11.5
@@ -1465,7 +1465,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 122
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -5.5,-11.5
@@ -1475,7 +1475,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 123
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 1.5,-12.5
@@ -1485,7 +1485,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 124
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 1.5,-13.5
@@ -1495,7 +1495,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 125
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,-13.5
@@ -1505,7 +1505,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 126
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -2.5,-12.5
@@ -1515,7 +1515,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 127
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -2.5,-13.5
@@ -1525,7 +1525,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 128
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -3.5,-13.5
@@ -1535,7 +1535,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 129
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -1.5,-13.5
@@ -1951,7 +1951,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 163
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -6.5,-12.5
@@ -1961,7 +1961,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 164
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -6.5,-13.5
@@ -1971,7 +1971,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 165
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 5.5,-11.5
@@ -1981,7 +1981,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 166
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 5.5,-12.5
@@ -1991,7 +1991,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 167
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 5.5,-13.5
@@ -2157,7 +2157,7 @@ entities:
       bounds: -0.5,-0.5,0.3,0.5
     type: Collidable
 - uid: 184
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 3.5,-13.5
@@ -2167,7 +2167,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 185
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 0.5,-13.5
@@ -2379,7 +2379,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 204
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -8.5,-0.5
@@ -2389,7 +2389,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 205
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -8.5,0.5
@@ -2399,7 +2399,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 206
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -9.5,0.5
@@ -2409,7 +2409,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 207
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -9.5,1.5
@@ -2610,7 +2610,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.3
     type: Collidable
 - uid: 224
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -9.5,2.5
@@ -2620,7 +2620,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 225
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -9.5,3.5
@@ -2630,7 +2630,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 226
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -8.5,3.5
@@ -2640,7 +2640,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 227
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -7.5,3.5
@@ -2650,7 +2650,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 228
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -6.5,3.5
@@ -2660,7 +2660,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 229
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -5.5,3.5
@@ -2670,7 +2670,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 230
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -4.5,3.5
@@ -2680,7 +2680,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 231
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -3.5,3.5
@@ -2690,7 +2690,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 232
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -2.5,3.5
@@ -2700,7 +2700,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 233
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -1.5,3.5
@@ -2710,7 +2710,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 234
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -0.5,3.5
@@ -2720,7 +2720,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 235
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 0.5,3.5
@@ -4212,7 +4212,7 @@ entities:
       layer: 20
     type: Collidable
 - uid: 357
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -9.5,4.5
@@ -4222,7 +4222,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 358
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -13.5,-7.5
@@ -4232,7 +4232,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 359
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -9.5,3.5
@@ -4420,7 +4420,7 @@ entities:
     - Screwdriver
     - Welder
     - Wrench
-    - CableStack
+    - HVCableStack
     - Crowbar
     - Multitool
     type: LatheDatabase
@@ -4446,7 +4446,7 @@ entities:
     - Screwdriver
     - Welder
     - Wrench
-    - CableStack
+    - HVCableStack
     - Crowbar
     - Multitool
     type: LatheDatabase
@@ -4472,7 +4472,7 @@ entities:
     - Screwdriver
     - Welder
     - Wrench
-    - CableStack
+    - HVCableStack
     - Crowbar
     - Multitool
     type: LatheDatabase
@@ -4660,7 +4660,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 386
-  type: CableStack
+  type: HVCableStack
   components:
   - parent: 0
     pos: -15.5,-0.5
@@ -4673,7 +4673,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 387
-  type: CableStack
+  type: HVCableStack
   components:
   - parent: 0
     pos: -15.5,-0.5
@@ -4686,7 +4686,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 388
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -14.5,-7.5
@@ -4696,7 +4696,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 389
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -12.5,-7.5
@@ -4805,7 +4805,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.3
     type: Collidable
 - uid: 398
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -16.5,-2.5
@@ -4815,7 +4815,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 399
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -15.5,-2.5
@@ -4825,7 +4825,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 400
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -14.5,-2.5
@@ -4835,7 +4835,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 401
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -13.5,-2.5
@@ -4845,7 +4845,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 402
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -13.5,-3.5
@@ -4855,7 +4855,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 403
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -13.5,-4.5
@@ -4865,7 +4865,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 404
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -13.5,-5.5
@@ -4875,7 +4875,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 405
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -13.5,-6.5
@@ -4885,7 +4885,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 406
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -12.5,-6.5
@@ -4895,7 +4895,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 407
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -11.5,-6.5
@@ -4905,7 +4905,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 408
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -10.5,-6.5
@@ -4915,7 +4915,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 409
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: -9.5,-6.5
@@ -4958,7 +4958,7 @@ entities:
       layer: 20
     type: Collidable
 - uid: 413
-  type: CableStack
+  type: HVCableStack
   components:
   - parent: 0
     pos: -15.5,0.5
@@ -4971,7 +4971,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 414
-  type: CableStack
+  type: HVCableStack
   components:
   - parent: 0
     pos: -15.5,0.5
@@ -6981,7 +6981,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 594
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 1.5,3.5
@@ -6991,7 +6991,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 595
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,3.5
@@ -7001,7 +7001,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 596
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,4.5
@@ -7011,7 +7011,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 597
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,5.5
@@ -7021,7 +7021,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 598
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,10.5
@@ -7031,7 +7031,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 599
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,6.5
@@ -7041,7 +7041,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 600
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,7.5
@@ -7051,7 +7051,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 601
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,8.5
@@ -7061,7 +7061,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 602
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,9.5
@@ -7071,7 +7071,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 603
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 3.5,10.5
@@ -7081,7 +7081,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 604
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 4.5,10.5
@@ -7091,7 +7091,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 605
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 5.5,10.5
@@ -7101,7 +7101,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 606
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 5.5,9.5
@@ -7111,7 +7111,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 607
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,9.5
@@ -7121,7 +7121,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 608
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 7.5,9.5
@@ -7131,7 +7131,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 609
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 8.5,9.5
@@ -7141,7 +7141,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 610
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 9.5,9.5
@@ -7151,7 +7151,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 611
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 10.5,9.5
@@ -7161,7 +7161,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 612
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 11.5,9.5
@@ -7171,7 +7171,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 613
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 12.5,9.5
@@ -7181,7 +7181,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 614
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 12.5,10.5
@@ -7191,7 +7191,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 615
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 13.5,10.5
@@ -7201,7 +7201,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 616
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 14.5,10.5
@@ -7211,7 +7211,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 617
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 15.5,10.5
@@ -7221,7 +7221,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 618
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,10.5
@@ -7231,7 +7231,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 619
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,9.5
@@ -7241,7 +7241,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 620
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,8.5
@@ -7251,7 +7251,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 621
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,7.5
@@ -7261,7 +7261,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 622
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,6.5
@@ -7271,7 +7271,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 623
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,5.5
@@ -7281,7 +7281,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 624
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,4.5
@@ -7291,7 +7291,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 625
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,3.5
@@ -7301,7 +7301,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 626
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,2.5
@@ -7311,7 +7311,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 627
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 17.5,2.5
@@ -7321,7 +7321,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 628
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 18.5,2.5
@@ -7331,7 +7331,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 629
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 18.5,3.5
@@ -7352,7 +7352,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.3
     type: Collidable
 - uid: 631
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 1.5,2.5
@@ -7362,7 +7362,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 632
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 1.5,1.5
@@ -7432,7 +7432,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.3
     type: Collidable
 - uid: 638
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 13.5,6.5
@@ -7451,7 +7451,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.3
     type: Collidable
 - uid: 640
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 25.5,4.5
@@ -7553,7 +7553,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 647
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 27.5,8.5
@@ -7563,7 +7563,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 648
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 26.5,8.5
@@ -7573,7 +7573,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 649
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 15.5,8.5
@@ -7582,7 +7582,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 650
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 14.5,8.5
@@ -7591,7 +7591,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 651
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 13.5,8.5
@@ -7600,7 +7600,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 652
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 15.5,6.5
@@ -7609,7 +7609,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 653
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 14.5,6.5
@@ -7629,7 +7629,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.3
     type: Collidable
 - uid: 655
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 19.5,2.5
@@ -7638,7 +7638,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 656
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 20.5,2.5
@@ -7647,7 +7647,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 657
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 21.5,2.5
@@ -7656,7 +7656,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 658
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 22.5,2.5
@@ -7665,7 +7665,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 659
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 23.5,2.5
@@ -7674,7 +7674,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 660
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 24.5,2.5
@@ -7683,7 +7683,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 661
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 25.5,2.5
@@ -7692,7 +7692,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 662
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 25.5,3.5
@@ -7762,7 +7762,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 667
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 30.5,2.5
@@ -7772,7 +7772,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 668
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 29.5,2.5
@@ -7846,7 +7846,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.3
     type: Collidable
 - uid: 674
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,1.5
@@ -7856,7 +7856,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 675
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,0.5
@@ -7866,7 +7866,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 676
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,-0.5
@@ -7876,7 +7876,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 677
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,-1.5
@@ -7886,7 +7886,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 678
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,-2.5
@@ -7896,7 +7896,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 679
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,-3.5
@@ -7906,7 +7906,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 680
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 17.5,-3.5
@@ -7916,7 +7916,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 681
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 18.5,-3.5
@@ -7926,7 +7926,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 682
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 19.5,-3.5
@@ -7936,7 +7936,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 683
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 20.5,-3.5
@@ -7946,7 +7946,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 684
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 20.5,-4.5
@@ -7956,7 +7956,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 685
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 20.5,-5.5
@@ -7966,7 +7966,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 686
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 20.5,-6.5
@@ -7976,7 +7976,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 687
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 21.5,-3.5
@@ -7986,7 +7986,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 688
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 22.5,-3.5
@@ -7996,7 +7996,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 689
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 23.5,-3.5
@@ -8006,7 +8006,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 690
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 24.5,-3.5
@@ -8016,7 +8016,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 691
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 25.5,-3.5
@@ -8026,7 +8026,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 692
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 26.5,-3.5
@@ -8036,7 +8036,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 693
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 27.5,-3.5
@@ -8046,7 +8046,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 694
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 28.5,-3.5
@@ -8056,7 +8056,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 695
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 29.5,-3.5
@@ -8066,7 +8066,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 696
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 30.5,-3.5
@@ -8076,7 +8076,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 697
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 30.5,-4.5
@@ -8086,7 +8086,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 698
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 30.5,-5.5
@@ -8096,7 +8096,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 699
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 30.5,-6.5
@@ -8179,7 +8179,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 705
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 26.5,2.5
@@ -8189,7 +8189,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 706
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 27.5,2.5
@@ -8199,7 +8199,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 707
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 28.5,2.5
@@ -8209,7 +8209,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 708
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 28.5,8.5
@@ -8219,7 +8219,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 709
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 25.5,5.5
@@ -8229,7 +8229,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 710
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 25.5,6.5
@@ -8239,7 +8239,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 711
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 25.5,7.5
@@ -8249,7 +8249,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 712
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 25.5,8.5
@@ -9822,7 +9822,7 @@ entities:
       layer: 31
     type: Collidable
 - uid: 846
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,11.5
@@ -9832,7 +9832,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 847
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,12.5
@@ -9842,7 +9842,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 848
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,13.5
@@ -9852,7 +9852,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 849
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 3.5,13.5
@@ -9862,7 +9862,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 850
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 4.5,13.5
@@ -9872,7 +9872,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 851
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,27.5
@@ -9882,7 +9882,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 852
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,28.5
@@ -9892,7 +9892,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 853
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 5.5,14.5
@@ -9902,7 +9902,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 854
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 5.5,15.5
@@ -9912,7 +9912,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 855
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 5.5,16.5
@@ -9922,7 +9922,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 856
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,16.5
@@ -9932,7 +9932,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 857
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,17.5
@@ -9942,7 +9942,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 858
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,18.5
@@ -9952,7 +9952,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 859
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,19.5
@@ -9962,7 +9962,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 860
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,20.5
@@ -9972,7 +9972,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 861
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,21.5
@@ -9982,7 +9982,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 862
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,22.5
@@ -9992,7 +9992,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 863
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,23.5
@@ -10002,7 +10002,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 864
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,24.5
@@ -10012,7 +10012,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 865
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,25.5
@@ -10022,7 +10022,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 866
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 6.5,26.5
@@ -10032,7 +10032,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 867
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 5.5,13.5
@@ -10224,7 +10224,7 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 881
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 3.5,-12.5
@@ -10234,7 +10234,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 882
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,-12.5
@@ -10526,7 +10526,7 @@ entities:
     - Screwdriver
     - Welder
     - Wrench
-    - CableStack
+    - HVCableStack
     - Crowbar
     - Multitool
     type: ProtolatheDatabase
@@ -10553,7 +10553,7 @@ entities:
     - Screwdriver
     - Welder
     - Wrench
-    - CableStack
+    - HVCableStack
     - Crowbar
     - Multitool
     type: LatheDatabase
@@ -10578,7 +10578,7 @@ entities:
     - Screwdriver
     - Welder
     - Wrench
-    - CableStack
+    - HVCableStack
     - Crowbar
     - Multitool
     type: LatheDatabase
@@ -10638,7 +10638,7 @@ entities:
       layer: 20
     type: Collidable
 - uid: 909
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 2.5,14.5
@@ -10648,7 +10648,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 910
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 1.5,14.5
@@ -10691,7 +10691,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.3
     type: Collidable
 - uid: 914
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 7.5,20.5
@@ -10701,7 +10701,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 915
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 8.5,20.5
@@ -10711,7 +10711,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 916
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 9.5,20.5
@@ -10721,7 +10721,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 917
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 10.5,20.5
@@ -10731,7 +10731,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 918
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 11.5,20.5
@@ -10741,7 +10741,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 919
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 12.5,20.5
@@ -10751,7 +10751,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 920
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 13.5,20.5
@@ -10761,7 +10761,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 921
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 14.5,20.5
@@ -10771,7 +10771,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 922
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 14.5,19.5
@@ -10781,7 +10781,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 923
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 15.5,20.5
@@ -10791,7 +10791,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 924
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,20.5
@@ -10801,7 +10801,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 925
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,21.5
@@ -10811,7 +10811,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 926
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,22.5
@@ -10821,7 +10821,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 927
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,23.5
@@ -10831,7 +10831,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 928
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,24.5
@@ -10841,7 +10841,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 929
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,25.5
@@ -10851,7 +10851,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 930
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,26.5
@@ -10861,7 +10861,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 931
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 16.5,27.5
@@ -10871,7 +10871,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 932
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 17.5,26.5
@@ -10881,7 +10881,7 @@ entities:
     - !type:PhysShapeAabb {}
     type: Collidable
 - uid: 933
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 18.5,26.5
@@ -10939,7 +10939,7 @@ entities:
       bounds: -0.5,-0.5,0.3,0.5
     type: Collidable
 - uid: 938
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 0.5,-12.5
@@ -10989,7 +10989,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.3
     type: Collidable
 - uid: 942
-  type: Wire
+  type: HVWire
   components:
   - parent: 0
     pos: 7.5,18.5
@@ -11046,7 +11046,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 947
-  type: CableStack
+  type: HVCableStack
   components:
   - parent: 0
     pos: 10.561831,21.767809
@@ -11058,7 +11058,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 948
-  type: CableStack
+  type: HVCableStack
   components:
   - parent: 0
     pos: 10.577456,21.424059

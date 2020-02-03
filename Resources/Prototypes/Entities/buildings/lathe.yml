@@ -51,7 +51,7 @@
       - Screwdriver
       - Welder
       - Wrench
-      - CableStack
+      - HVCableStack
       - Crowbar
       - Multitool
   - type: Appearance
@@ -93,7 +93,7 @@
       - Screwdriver
       - Welder
       - Wrench
-      - CableStack
+      - HVCableStack
       - Crowbar
       - Multitool
   - type: UserInterface

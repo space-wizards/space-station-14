@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
             {
                 if (random.Prob(0.3f))
                 {
-                    Spawn("CableStack");
+                    Spawn("HVCableStack");
                 }
             }
         }
