@@ -267,6 +267,8 @@ namespace Content.Client.UserInterface
             {
                 _tutorialWindow.OpenCentered();
                 _buttonTutorial.Pressed = true;
+                //Fixes scrollbar not showing up until window is resized/scrolled.
+                _tutorialWindow.ForceRunLayoutUpdate();
             }
         }
 
