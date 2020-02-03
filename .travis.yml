@@ -1,9 +1,6 @@
-language: csharp
-
-dist: trusty
+language: generic
+dist: bionic
 sudo: false
-mono: none
-# dotnet: 3.1.100 # Travis is shitting itself right now and it can't locate .NET Core packages.
 
 os:
 - linux
@@ -11,11 +8,8 @@ os:
 
 addons:
   apt:
-    #sources:
-    #- deadsnakes
-
     packages:
-    - python3.5
+    - python3
     - python3-pip
 
 cache:
@@ -30,9 +24,8 @@ install:
 #  - if [ $TRAVIS_OS_NAME = osx ]; then brew update && brew upgrade python; fi
 
 before_script:
-#- "if [ $TRAVIS_OS_NAME = linux ]; then pyenv shell 3.6; fi"
-- "python3.5 -m pip install --user requests"
-- "python3.5 RUN_THIS.py --no-prompt"
+- "python3.6 -m pip install --user requests"
+- "python3.6 RUN_THIS.py --no-prompt"
 
 script:
 - "Tools/run_travis.sh"
