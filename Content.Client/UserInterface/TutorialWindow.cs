@@ -17,21 +17,6 @@ namespace Content.Client.UserInterface
         private const string IntroContents = @"Hi and welcome to Space Station 14! This tutorial will assume that you know a bit about how SS13 plays. It's mostly intended to lay out the controls and their differences from SS13.
 ";
 
-        private const string ControlsContents = @"Just like in any game, WASD is movement. If that does not work, the server probably broke. Clicking on things ""interacts"" in some object-defined sense with it, with your active hand. X switches hands. Z uses the item in your hand. Q drops items. T focuses chat. C opens your inventory.
-
-New to SS14: You can press ""E"" to activate objects. This functions similarly to clicking with an empty hand most of the time: opens interfaces, etc. The difference is that it works even without an empty hand. No longer do you need to drop your tools to use a computer!
-
-You can talk in OOC by prefixing the message with \[ or /ooc.
-
-Instead of intents, we have ""combat mode"". Hit ""R"" to toggle it on or off. You can't attack anybody with it off, so no more hitting yourself with your own crowbar.
-
-You can toggle the sandbox window with ""B"", the entity spawner with ""F5"", and the tile spawner with ""F6"".
-
-Currently death is a black screen with a circle around your player. You can use the sandbox panel to respawn if you die.
-
-If you are not on a QWERTY keyboard, the keys mentioned above are bound to the physical location on your keyboard, not what letter they correspond to. For example on AZERTY movement is ZQSD, drop is A, W is activate in hand.
-";
-
         private const string QuickControlsContents = @"Movement: [color=#a4885c]WASD[/color]
 Switch hands: [color=#a4885c]X[/color]
 Use held item: [color=#a4885c]Z[/color]
@@ -51,6 +36,10 @@ Toggle debug overlay: [color=#a4885c]F3[/color]
 Toggle entity spawner: [color=#a4885c]F5[/color]
 Toggle tile spawner: [color=#a4885c]F6[/color]
 Toggle sandbox window: [color=#a4885c]B[/color]
+Talk in OOC: [color=#a4885c]Prefix chat message in \[ or /ooc[/color]
+Respawn: [color=#a4885c]Button in sandbox menu[/color]
+
+If you are not on a QWERTY keyboard, the keys mentioned above are bound to the physical location on your keyboard, not what letter they correspond to. For example on AZERTY movement is ZQSD, drop is A, W is activate in hand.
 ";
         private const string FeedbackContents = @"If you have any feedback, questions, bug reports, etc..., do not be afraid to tell us! You can ask on Discord or heck, just write it in OOC! We'll catch it.";
 
@@ -75,7 +64,6 @@ Toggle sandbox window: [color=#a4885c]B[/color]
             //Controls
             VBox.AddChild(new Label{FontOverride = headerFont, Text = "Controls"});
             AddFormattedText(QuickControlsContents);
-            AddFormattedText(ControlsContents);
 
             //Feedback
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "Feedback" });
