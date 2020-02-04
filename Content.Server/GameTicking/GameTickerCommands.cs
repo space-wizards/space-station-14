@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
@@ -192,6 +192,9 @@ namespace Content.Server.GameTicking
                     break;
                 case "Sandbox":
                     presetType = typeof(PresetSandbox);
+                    break;
+                case "Traitor":
+                    presetType = typeof(PresetTraitor);
                     break;
                 default:
                     shell.SendText(player, "That is not a valid game preset!");

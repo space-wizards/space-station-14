@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Robust.Server.Interfaces.Player;
@@ -33,5 +33,6 @@ namespace Content.Server.Interfaces.GameTicking
         IEnumerable<GameRule> ActiveGameRules { get; }
 
         void SetStartPreset(Type type);
+        void AddPresetRole(string presetId, int percent);
     }
 }

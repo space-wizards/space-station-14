@@ -160,6 +160,7 @@ namespace Content.Server.GameTicking
             // Get the profiles for each player for easier lookup.
             var profiles = readyPlayers.ToDictionary(p => p, GetPlayerProfile);
 
+            var assignedAntags = AssignAntagRoles(readyPlayers, profiles);
             var assignedJobs = AssignJobs(readyPlayers, profiles);
 
             // For players without jobs, give them the overflow job if they have that set...
@@ -180,7 +181,10 @@ namespace Content.Server.GameTicking
             // Spawn everybody in!
             foreach (var (player, job) in assignedJobs)
             {
-                SpawnPlayer(player, job, false);
+                if (assignedAntags.ContainsKey(player))
+                    SpawnPlayer(player, job, assignedAntags[player], false);
+                else
+                    SpawnPlayer(player, job, null, false);
             }
 
             _sendStatusToAll();
@@ -353,6 +357,7 @@ namespace Content.Server.GameTicking
             }
 
             _spawnedPositions.Clear();
+            _presetRoles.Clear();
             _manifest.Clear();
         }
 
@@ -433,7 +438,7 @@ namespace Content.Server.GameTicking
             }
         }
 
-        private void SpawnPlayer(IPlayerSession session, string jobId = null, bool lateJoin = true)
+        private void SpawnPlayer(IPlayerSession session, string jobId = null, List<string> antagRoles = null, bool lateJoin = true)
         {
             var character = (HumanoidCharacterProfile) _prefsManager
                 .GetPreferences(session.SessionId.Username)
@@ -454,6 +459,15 @@ namespace Content.Server.GameTicking
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(data.Mind, jobPrototype);
             data.Mind.AddRole(job);
+
+            if (antagRoles != null)
+            {
+                foreach (var roleId in antagRoles)
+                {
+                    var traitor = new Traitor(data.Mind);
+                    data.Mind.AddRole(traitor);
+                }
+            }
 
             var mob = _spawnPlayerMob(job, lateJoin);
             data.Mind.TransferTo(mob);
