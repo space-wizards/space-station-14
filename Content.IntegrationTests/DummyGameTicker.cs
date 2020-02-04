@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
@@ -66,6 +66,10 @@ namespace Content.IntegrationTests
         public IEnumerable<GameRule> ActiveGameRules { get; } = Array.Empty<GameRule>();
 
         public void SetStartPreset(Type type)
+        {
+        }
+
+        public void AddPresetRole(string presetId, int percent)
         {
         }
     }
