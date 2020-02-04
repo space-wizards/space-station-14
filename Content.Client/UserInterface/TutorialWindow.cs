@@ -36,10 +36,11 @@ Toggle debug overlay: [color=#a4885c]F3[/color]
 Toggle entity spawner: [color=#a4885c]F5[/color]
 Toggle tile spawner: [color=#a4885c]F6[/color]
 Toggle sandbox window: [color=#a4885c]B[/color]
-Talk in OOC: [color=#a4885c]Prefix chat message in \[ or /ooc[/color]
-Respawn: [color=#a4885c]Button in sandbox menu[/color]
 
 If you are not on a QWERTY keyboard, the keys mentioned above are bound to the physical location on your keyboard, not what letter they correspond to. For example on AZERTY movement is ZQSD, drop is A, W is activate in hand.
+";
+
+        private const string GameplayContents = @"Some notes on gameplay. To talk in OOC, prefix your chat message with \[ or /ooc. Death is currently show as a black circle around the player. You can respawn via the respawn button in the sandbox menu. Instead of intents, we have ""combat mode"". Check controls above for it's keybind. You can't attack anybody with it off, so no more hitting yourself with your own crowbar.
 ";
         private const string FeedbackContents = @"If you have any feedback, questions, bug reports, etc..., do not be afraid to tell us! You can ask on Discord or heck, just write it in OOC! We'll catch it.";
 
@@ -64,6 +65,10 @@ If you are not on a QWERTY keyboard, the keys mentioned above are bound to the p
             //Controls
             VBox.AddChild(new Label{FontOverride = headerFont, Text = "Controls"});
             AddFormattedText(QuickControlsContents);
+
+            //Gameplay
+            VBox.AddChild(new Label { FontOverride = headerFont, Text = "Gameplay" });
+            AddFormattedText(GameplayContents);
 
             //Feedback
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "Feedback" });
