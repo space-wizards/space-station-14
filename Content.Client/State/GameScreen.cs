@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
@@ -70,10 +69,9 @@ namespace Content.Client.State
             var inRange = false;
             if (playerManager.LocalPlayer.ControlledEntity != null && entityToClick != null)
             {
-                var playerPos = playerManager.LocalPlayer.ControlledEntity.Transform.GridPosition;
-                var entityPos = entityToClick.Transform.GridPosition;
-                var distance = playerPos.Distance(_mapManager, entityPos);
-                inRange = distance <= VerbUtility.InteractionRange;
+                var playerPos = playerManager.LocalPlayer.ControlledEntity.Transform.WorldPosition;
+                var entityPos = entityToClick.Transform.WorldPosition;
+                inRange = (entityPos - playerPos).Length <= VerbUtility.InteractionRange;
             }
 
             InteractionOutlineComponent outline;
