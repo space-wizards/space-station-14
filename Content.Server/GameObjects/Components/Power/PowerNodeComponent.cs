@@ -2,6 +2,7 @@
 using System.Linq;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
@@ -60,19 +61,21 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 return;
             }
-            var _emanager = IoCManager.Resolve<IServerEntityManager>();
-            var position = Owner.GetComponent<ITransformComponent>().WorldPosition;
-            var wires = _emanager.GetEntitiesIntersecting(Owner)
-                        .Where(x => x.HasComponent<PowerTransferComponent>())
-                        .OrderByDescending(x => (x.GetComponent<ITransformComponent>().WorldPosition - position).Length);
-            var choose = wires.FirstOrDefault();
-            if (choose != null)
+
+            var position = Owner.Transform.WorldPosition;
+
+            var sgc = Owner.GetComponent<SnapGridComponent>();
+            var wire = sgc.GetCardinalNeighborCells()
+                .SelectMany(x => x.GetLocal()).Distinct()
+                .Select(x => x.TryGetComponent<PowerTransferComponent>(out var c) ? c : null)
+                .Where(x => x != null).Distinct()
+                .ToArray()
+                .OrderByDescending(x => (x.Owner.Transform.WorldPosition - position).Length)
+                .FirstOrDefault();
+
+            if (wire?.Parent != null)
             {
-                var transfer = choose.GetComponent<PowerTransferComponent>();
-                if (transfer.Parent != null)
-                {
-                    ConnectToPowernet(transfer.Parent);
-                }
+                ConnectToPowernet(wire.Parent);
             }
         }
 
