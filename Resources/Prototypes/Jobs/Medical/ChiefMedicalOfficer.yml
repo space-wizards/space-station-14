@@ -5,7 +5,7 @@
   name: "Chief Medical Officer"
   head: true
   positions: 1
-  startingGear: AssistantGear
+  startingGear: CMOGear
   department:
   - Command
   - Medical
@@ -15,3 +15,11 @@
   access:
   - medical
   - command
+
+- type: startingGear
+  id: CMOGear
+  equipment:
+    innerclothing: UniformCMO
+    backpack: BackpackMedical
+    shoes: ShoesBrown
+    outerclothing: OuterclothingLabcoatcmo

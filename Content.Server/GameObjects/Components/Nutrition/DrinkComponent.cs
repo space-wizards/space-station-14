@@ -80,10 +80,18 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 else
                 {
                     _contents = Owner.AddComponent<SolutionComponent>();
+                    //Ensure SolutionComponent supports click transferring if custom one not set
+                    _contents.Capabilities = SolutionCaps.PourIn
+                                             | SolutionCaps.PourOut
+                                             | SolutionCaps.Injectable;
+
+                    var pourable = Owner.AddComponent<PourableComponent>();
+                    pourable.TransferAmount = 5;
                 }
             }
 
             _contents.MaxVolume = _initialContents.TotalVolume;
+            _contents.SolutionChanged += HandleSolutionChangedEvent;
         }
 
         protected override void Startup()
@@ -117,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             UseDrink(eventArgs.Attacked);
         }
 
-        void UseDrink(IEntity user)
+        private void UseDrink(IEntity user)
         {
             if (user == null)
             {
@@ -150,34 +158,53 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
             }
 
+            Finish(user);
+        }
+
+        /// <summary>
+        /// Trigger finish behavior in the drink if applicable.
+        /// Depending on the drink this will either delete it,
+        /// or convert it to another entity, like an empty variant.
+        /// </summary>
+        /// <param name="user">The entity that is using the drink</param>
+        public void Finish(IEntity user)
+        {
             // Drink containers are mostly transient.
             if (!_despawnOnFinish || UsesLeft() > 0)
-            {
                 return;
 
-            }
-
+            var gridPos = Owner.Transform.GridPosition;
+            _contents.SolutionChanged -= HandleSolutionChangedEvent;
             Owner.Delete();
 
-            if (_finishPrototype != null)
-            {
-                var finisher = Owner.EntityManager.SpawnEntity(_finishPrototype, Owner.Transform.GridPosition);
-                if (user.TryGetComponent(out HandsComponent handsComponent) && finisher.TryGetComponent(out ItemComponent itemComponent))
-                {
-                    if (handsComponent.CanPutInHand(itemComponent))
-                    {
-                        handsComponent.PutInHand(itemComponent);
-                        return;
-                    }
-                }
-
-                finisher.Transform.GridPosition = user.Transform.GridPosition;
-                if (finisher.TryGetComponent(out DrinkComponent drinkComponent))
-                {
-                    drinkComponent.MaxVolume = MaxVolume;
-                }
+            if (_finishPrototype == null || user == null)
                 return;
+
+            var finisher = Owner.EntityManager.SpawnEntity(_finishPrototype, Owner.Transform.GridPosition);
+            if (user.TryGetComponent(out HandsComponent handsComponent) && finisher.TryGetComponent(out ItemComponent itemComponent))
+            {
+                if (handsComponent.CanPutInHand(itemComponent))
+                {
+                    handsComponent.PutInHand(itemComponent);
+                    return;
+                }
             }
+
+            finisher.Transform.GridPosition = gridPos;
+            if (finisher.TryGetComponent(out DrinkComponent drinkComponent))
+            {
+                drinkComponent.MaxVolume = MaxVolume;
+            }
+        }
+
+        /// <summary>
+        /// Updates drink state when the solution is changed by something other
+        /// than this component. Without this some drinks won't properly delete
+        /// themselves without additional clicks/uses after them being emptied.
+        /// </summary>
+        private void HandleSolutionChangedEvent()
+        {
+            Finish(null);
         }
     }
 }

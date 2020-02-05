@@ -1,9 +1,12 @@
-using Content.Client.UserInterface;
+﻿using Content.Client.UserInterface;
+using Content.Shared.Input;
 using Content.Shared.Sandbox;
+using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -22,32 +25,48 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IResourceCache _resourceCache;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
+        [Dependency] private readonly IInputManager _inputManager;
 #pragma warning restore 649
 
         private bool _sandboxAllowed;
         private SandboxWindow _window;
+        private EntitySpawnWindow _spawnWindow;
+        private TileSpawnWindow _tilesSpawnWindow;
+        private bool _sandboxWindowToggled = false;
 
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus),
                 message => SetAllowed(message.SandboxAllowed));
 
-            _gameHud.SandboxButtonToggled = SandboxButtonToggled;
+            _gameHud.SandboxButtonToggled = SandboxButtonPressed;
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
+                InputCmdHandler.FromDelegate(session => ToggleEntitySpawnWindow()));
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenSandboxWindow,
+                InputCmdHandler.FromDelegate(session => ToggleSandboxWindow()));
+            _inputManager.SetInputCommand(ContentKeyFunctions.OpenTileSpawnWindow,
+                InputCmdHandler.FromDelegate(session => ToggleTilesWindow()));
         }
 
-        private void SandboxButtonToggled(bool newValue)
+        private void SandboxButtonPressed(bool newValue)
         {
-            if (newValue)
-            {
-                if (_sandboxAllowed)
-                {
-                    OpenWindow();
-                }
-            }
+            _sandboxWindowToggled = newValue;
+            UpdateSandboxWindowVisibility();
+        }
+
+        private void ToggleSandboxWindow()
+        {
+            _sandboxWindowToggled = !_sandboxWindowToggled;
+            UpdateSandboxWindowVisibility();
+        }
+
+        private void UpdateSandboxWindowVisibility()
+        {
+            if (_sandboxWindowToggled && _sandboxAllowed)
+                OpenWindow();
             else
-            {
                 _window?.Close();
-            }
         }
 
         private void SetAllowed(bool newAllowed)
@@ -82,7 +101,7 @@ namespace Content.Client.Sandbox
             _window.SpawnTilesButton.OnPressed += OnSpawnTilesButtonClicked;
             _window.SpawnEntitiesButton.OnPressed += OnSpawnEntitiesButtonClicked;
 
-            _window.Open();
+            _window.OpenCentered();
         }
 
         private void WindowOnOnClose()
@@ -98,14 +117,44 @@ namespace Content.Client.Sandbox
 
         private void OnSpawnEntitiesButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            var window = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
-            window.OpenToLeft();
+            ToggleEntitySpawnWindow();
         }
 
         private void OnSpawnTilesButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            var window = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
-            window.OpenToLeft();
+            ToggleTilesWindow();
+        }
+
+        private void ToggleEntitySpawnWindow()
+        {
+            if(_spawnWindow == null)
+                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
+
+            if (_spawnWindow.IsOpen)
+            {
+                _spawnWindow.Close();
+            }
+            else
+            {
+                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
+                _spawnWindow.OpenToLeft();
+            }
+        }
+
+        private void ToggleTilesWindow()
+        {
+            if(_tilesSpawnWindow == null)
+                _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
+
+            if (_tilesSpawnWindow.IsOpen)
+            {
+                _tilesSpawnWindow.Close();
+            }
+            else
+            {
+                _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
+                _tilesSpawnWindow.OpenToLeft();
+            }
         }
     }
 }
