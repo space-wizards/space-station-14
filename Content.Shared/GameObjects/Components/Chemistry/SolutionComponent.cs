@@ -127,16 +127,13 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// Attempt to remove the specified quantity from this solution
         /// </summary>
         /// <param name="quantity">Quantity of this solution to remove</param>
-        /// <param name="removedSolution">Out arg. The removed solution. Useful for adding removed solution
-        /// into other solutions. For example, when pouring from one container to another.</param>
         /// <returns>Whether or not the solution was successfully removed</returns>
-        public bool TryRemoveSolution(int quantity, out Solution removedSolution)
+        public bool TryRemoveSolution(int quantity)
         {
-            removedSolution = new Solution();
             if (CurrentVolume == 0)
                 return false;
 
-            _containedSolution.RemoveSolution(quantity, out removedSolution);
+            _containedSolution.RemoveSolution(quantity);
             OnSolutionChanged();
             return true;
         }
