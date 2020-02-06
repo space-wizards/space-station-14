@@ -1,6 +1,7 @@
 - type: entity
   name: BaseInstrument
   id: BaseInstrument
+  abstract: true
   components:
   - type: Instrument
     handheld: false

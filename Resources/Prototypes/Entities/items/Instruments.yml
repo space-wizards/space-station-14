@@ -2,6 +2,7 @@
   name: BaseHandheldInstrument
   parent: BaseItem
   id: BaseHandheldInstrument
+  abstract: true
   components:
   - type: Instrument
     handheld: true

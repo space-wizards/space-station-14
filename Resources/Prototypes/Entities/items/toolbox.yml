@@ -1,6 +1,7 @@
 - type: entity
   id: ToolboxBase
   parent: BaseItem
+  abstract: true
   components:
   - type: Storage
     Capacity: 60

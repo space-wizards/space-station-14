@@ -1,6 +1,7 @@
 - type: entity
   id: computerBase
   name: Computer
+  abstract: true
   components:
   - type: Physics
     mass: 25

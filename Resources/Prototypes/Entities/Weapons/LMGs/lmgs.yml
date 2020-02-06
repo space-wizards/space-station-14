@@ -3,6 +3,7 @@
   parent: BaseItem
   id: lmg_base
   description: A rooty tooty point and shooty.
+  abstract: true
   components:
   - type: Sound
   - type: RangedWeapon

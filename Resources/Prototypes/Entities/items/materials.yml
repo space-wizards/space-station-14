@@ -1,6 +1,7 @@
 - type: entity
   name: Material Stack
   id: MaterialStack
+  abstract: true
   parent: BaseItem
   components:
   - type: Stack

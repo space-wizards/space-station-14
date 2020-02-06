@@ -1,6 +1,7 @@
 - type: entity
   id: BaseLathe
   name: "Lathe"
+  abstract: true
   components:
   - type: Clickable
   - type: InteractionOutline

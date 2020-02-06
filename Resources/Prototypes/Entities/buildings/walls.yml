@@ -2,6 +2,7 @@
   id: base_wall
   name: BaseWall
   description: Keeps the air in and the greytide out.
+  abstract: true
   components:
   - type: Clickable
   - type: InteractionOutline
