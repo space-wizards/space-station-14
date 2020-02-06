@@ -3,6 +3,7 @@
   id: bullet_base
   name: bullet_base
   description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Sprite
     directional: false
@@ -27,13 +28,14 @@
   id: ProjectileBullet
   name: ProjectileBullet
   parent: bullet_base
-# Placeholder bullet
+  abstract: true
 
 - type: entity
   id: bullet_basef
   name: Base Bullet Flash
   parent: bullet_base
   description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 20
@@ -45,6 +47,7 @@
   name: Base Bullet High-Velocity
   parent: bullet_base
   description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 27
@@ -56,6 +59,7 @@
   name: Base Bullet L
   parent: bullet_base
   description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 15
@@ -67,6 +71,7 @@
   name: Base Bullet Practice
   parent: bullet_base
   description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 20
@@ -78,6 +83,7 @@
   name: Base Bullet Rubber
   parent: bullet_base
   description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 20

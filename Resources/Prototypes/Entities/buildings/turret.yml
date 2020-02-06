@@ -1,6 +1,7 @@
 - type: entity
   id: TurretBase
   name: Turret Base
+  abstract: true
   components:
   - type: Clickable
   - type: InteractionOutline

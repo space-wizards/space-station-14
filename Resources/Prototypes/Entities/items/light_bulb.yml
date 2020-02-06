@@ -18,6 +18,7 @@
   parent: BaseItem
   name: BaseLightbulb
   id: BaseLightbulb
+  abstract: true
   components:
   - type: LightBulb
 

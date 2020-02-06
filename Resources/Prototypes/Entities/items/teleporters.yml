@@ -2,6 +2,7 @@
   name: "BaseHandTele"
   parent: BaseItem
   id: BaseHandTele
+  abstract: true
   components:
   - type: Sprite
     netsync: false
