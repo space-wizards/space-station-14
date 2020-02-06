@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "PowerProvider";
 
         /// <inheritdoc />
-        public override DrawTypes DrawType { get; protected set; } = DrawTypes.Node;
+        protected override DrawTypes DefaultDrawType => DrawTypes.Node;
 
         protected override bool SaveLoad => false;
 
@@ -198,9 +198,9 @@ namespace Content.Server.GameObjects.Components.Power
             base.PowernetConnect(sender, eventarg);
 
             //Find devices within range to take under our control
-            var _emanager = IoCManager.Resolve<IServerEntityManager>();
+            var entMgr = IoCManager.Resolve<IServerEntityManager>();
             var position = Owner.GetComponent<ITransformComponent>().WorldPosition;
-            var entities = _emanager.GetEntitiesInRange(Owner, PowerRange)
+            var entities = entMgr.GetEntitiesInRange(Owner, PowerRange)
                 .Where(x => x.HasComponent<PowerDeviceComponent>());
 
 
@@ -252,8 +252,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (DeviceLoadList.Contains(device))
             {
-                TheoreticalLoad -= oldLoad;
-                TheoreticalLoad += device.Load;
+                TheoreticalLoad = TheoreticalLoad - oldLoad + device.Load;
             }
         }
 
