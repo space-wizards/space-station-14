@@ -146,6 +146,12 @@ namespace Content.Server.GameTicking
             }
 
             var ticker = IoCManager.Resolve<IGameTicker>();
+            if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
+            {
+                shell.SendText(player, "Round has not started.");
+                return;
+            }
+
             ticker.MakeJoinGame(player);
         }
     }
