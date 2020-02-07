@@ -43,8 +43,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
         private Solution _initialContents; // This is just for loading from yaml
+        private int _maxVolume;
 
         private bool _despawnOnFinish;
+
+        private bool _drinking;
 
         public int UsesLeft()
         {
@@ -61,6 +64,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _initialContents, "contents", null);
+            serializer.DataField(ref _maxVolume, "max_volume", 0);
             serializer.DataField(ref _useSound, "use_sound", "/Audio/items/drink.ogg");
             // E.g. cola can when done or clear bottle, whatever
             // Currently this will enforce it has the same volume but this may change.
@@ -90,7 +94,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
             }
 
-            _contents.MaxVolume = _initialContents.TotalVolume;
+            _drinking = false;
+            if (_maxVolume != 0)
+                _contents.MaxVolume = _maxVolume;
+            else
+                _contents.MaxVolume = _initialContents.TotalVolume;
             _contents.SolutionChanged += HandleSolutionChangedEvent;
         }
 
@@ -140,6 +148,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (user.TryGetComponent(out StomachComponent stomachComponent))
             {
+                _drinking = true;
                 var transferAmount = Math.Min(_transferAmount, _contents.CurrentVolume);
                 var split = _contents.SplitSolution(transferAmount);
                 if (stomachComponent.TryTransferSolution(split))
@@ -156,6 +165,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     _contents.TryAddSolution(split);
                     user.PopupMessage(user, _localizationManager.GetString("Can't drink"));
                 }
+                _drinking = false;
             }
 
             Finish(user);
@@ -170,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void Finish(IEntity user)
         {
             // Drink containers are mostly transient.
-            if (!_despawnOnFinish || UsesLeft() > 0)
+            if (_drinking || !_despawnOnFinish || UsesLeft() > 0)
                 return;
 
             var gridPos = Owner.Transform.GridPosition;
