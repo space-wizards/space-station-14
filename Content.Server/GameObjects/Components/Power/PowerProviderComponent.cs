@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -284,7 +285,8 @@ namespace Content.Server.GameObjects.Components.Power
             if (this == device)
                 return false;
 
-            return (device.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).Length <= _range;
+            return device.Owner.Transform.MapID == Owner.Transform.MapID &&
+                (device.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).Length <= _range;
         }
     }
 }
