@@ -5,9 +5,10 @@
   name: Base cup
   abstract: true
   components:
-  - type: Drink   
+  - type: Drink
     max_volume: 4
     despawn_empty: false
+  - type: Sound
   - type: Sprite
     state: icon
   - type: Icon
@@ -19,7 +20,7 @@
   name: Golden cup
   description: A golden cup
   components:
-  - type: Drink   
+  - type: Drink
     max_volume: 10
   - type: Sprite
     sprite: Objects/Drinks/golden_cup.rsi
@@ -32,7 +33,7 @@
   name: Insulated pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
-  - type: Drink  
+  - type: Drink
     max_volume: 15
   - type: Sprite
     sprite: Objects/Drinks/pitcher.rsi
@@ -51,7 +52,7 @@
   name: Mug
   description: A plain white mug.
   components:
-  - type: Drink    
+  - type: Drink
     max_volume: 4
   - type: Sprite
     sprite: Objects/Drinks/mug.rsi
@@ -70,7 +71,7 @@
   name: Mug Black
   description: A sleek black mug.
   components:
-  - type: Drink  
+  - type: Drink
     max_volume: 4
   - type: Sprite
     sprite: Objects/Drinks/mug_black.rsi
@@ -89,7 +90,7 @@
   name: Mug Blue
   description: A blue and black mug.
   components:
-  - type: Drink  
+  - type: Drink
     max_volume: 4
   - type: Sprite
     sprite: Objects/Drinks/mug_blue.rsi
@@ -108,7 +109,7 @@
   name: Mug Green
   description: A pale green and pink mug.
   components:
-  - type: Drink  
+  - type: Drink
     max_volume: 4
   - type: Sprite
     sprite: Objects/Drinks/mug_green.rsi
@@ -127,7 +128,7 @@
   name: Mug Heart
   description: A white mug, it prominently features a red heart.
   components:
-  - type: Drink 
+  - type: Drink
     max_volume: 4
   - type: Sprite
     sprite: Objects/Drinks/mug_heart.rsi
@@ -146,7 +147,7 @@
   name: Mug Metal
   description: A metal mug. You're not sure which metal.
   components:
-  - type: Drink  
+  - type: Drink
     max_volume: 4
   - type: Sprite
     sprite: Objects/Drinks/mug_metal.rsi
@@ -165,7 +166,7 @@
   name: Mug Moebius
   description: A mug with a Moebius Laboratories logo on it. Not even your morning coffee is safe from corporate advertising.
   components:
-  - type: Drink   
+  - type: Drink
     max_volume: 4
   - type: Sprite
     sprite: Objects/Drinks/mug_moebius.rsi
@@ -184,7 +185,7 @@
   name: "#1 mug"
   description: "A white mug, it prominently features a #1."
   components:
-  - type: Drink  
+  - type: Drink
     max_volume: 4
   - type: Sprite
     sprite: Objects/Drinks/mug_one.rsi
@@ -203,7 +204,7 @@
   name: Mug Rainbow
   description: A rainbow mug. The colors are almost as blinding as a welder.
   components:
-  - type: Drink   
+  - type: Drink
     max_volume: 4
   - type: Sprite
     sprite: Objects/Drinks/mug_rainbow.rsi
@@ -222,7 +223,7 @@
   name: Mug Red
   description: A red and black mug.
   components:
-  - type: Drink 
+  - type: Drink
     max_volume: 4
   - type: Sprite
     sprite: Objects/Drinks/mug_red.rsi
