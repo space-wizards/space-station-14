@@ -2,6 +2,10 @@
   id: low_wall
   name: Low Wall
   description: Goes up to about your waist.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -29,10 +33,6 @@
   - type: LowWall
     key: walls
     base: metal_
-
-  placement:
-    snap:
-    - Wall
 
 - type: entity
   id: low_wall_overlay

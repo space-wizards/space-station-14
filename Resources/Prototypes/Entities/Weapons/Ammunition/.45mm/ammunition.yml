@@ -3,6 +3,7 @@
   id: magazine_45mm_empty
   name: ".45mm magazine - empty"
   parent: BaseItem
+  abstract: true
   components:
   - type: BallisticMagazine
     caliber: A45mm
@@ -15,6 +16,7 @@
   id: magazine_45mm_smg_empty
   name: ".45mm SMG magazine - empty"
   parent: BaseItem
+  abstract: true
   components:
   - type: BallisticMagazine
     caliber: A45mm
