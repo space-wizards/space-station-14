@@ -2,6 +2,8 @@
   id: Wire
   name: Wire
   description: Transfers power, avoid letting things come down it
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -42,6 +44,8 @@
   id: Generator
   name: Generator
   description: A portal to hell which summons power from the nether
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -55,11 +59,15 @@
   - type: Icon
     texture: Objects/Power/generator.png
   - type: PowerGenerator
+  - type: SnapGrid
+    offset: Center
 
 - type: entity
   id: WPPnobattery
   name: WPPnobattery
   description: Supplies power directly to nearby objects
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -76,6 +84,8 @@
     range: 8
     priority: Provider
     load: 0
+  - type: SnapGrid
+    offset: Center
 
 - type: entity
   parent: WPPnobattery
@@ -117,6 +127,8 @@
   id: SMES
   name: Smes
   description: Stores power in its super-magnetic cells
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -145,6 +157,8 @@
   - type: Appearance
     visuals:
     - type: SmesVisualizer2D
+  - type: SnapGrid
+    offset: Center
 
 - type: entity
   id: smes_dry
@@ -157,6 +171,8 @@
   id: WiredMachine
   name: WiredMachine
   description: A monstrosity that does nothing but suck up power from the nearby wires
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -173,11 +189,15 @@
     drawtype: Node
     load: 100
     priority: High
+  - type: SnapGrid
+    offset: Center
 
 - type: entity
   id: WirelessMachine
   name: WirelessMachine
   description: A terrifying monstrosity that sucks up power from the wireless transmitters, Tesla would be proud
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -194,3 +214,5 @@
     drawtype: Both
     load: 200
     priority: Low
+  - type: SnapGrid
+    offset: Center
