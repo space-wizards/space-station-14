@@ -26,7 +26,7 @@
   - type: SubFloorHide
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: CableStack
+    spawnondestroy: CableStack1
 
   snap:
   - Wire

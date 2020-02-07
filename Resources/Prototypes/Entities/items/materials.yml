@@ -69,3 +69,11 @@
   - type: Icon
     texture: Objects/Tools/cable_coil.png
   - type: WirePlacer
+
+- type: entity
+  id: CableStack1
+  name: Cable Stack 1
+  parent: CableStack
+  components:
+  - type: Stack
+    count: 1
