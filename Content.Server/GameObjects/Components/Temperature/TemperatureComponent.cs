@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects
         public override string Name => "Temperature";
 
         /// <inheritdoc />
-        public override uint? NetID => ContentNetIDs.TEMPERATURE;
+        //public override uint? NetID => ContentNetIDs.TEMPERATURE;
 
         //TODO: should be programmatic instead of how it currently is
         [ViewVariables]
