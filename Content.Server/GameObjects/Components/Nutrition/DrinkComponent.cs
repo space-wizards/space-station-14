@@ -47,6 +47,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         private bool _despawnOnFinish;
 
+        private bool _drinking;
+
         public int UsesLeft()
         {
             // In case transfer amount exceeds volume left
@@ -92,6 +94,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
             }
 
+            _drinking = false;
             if (_maxVolume != 0)
                 _contents.MaxVolume = _maxVolume;
             else
@@ -145,6 +148,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (user.TryGetComponent(out StomachComponent stomachComponent))
             {
+                _drinking = true;
                 var transferAmount = Math.Min(_transferAmount, _contents.CurrentVolume);
                 var split = _contents.SplitSolution(transferAmount);
                 if (stomachComponent.TryTransferSolution(split))
@@ -161,6 +165,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     _contents.TryAddSolution(split);
                     user.PopupMessage(user, _localizationManager.GetString("Can't drink"));
                 }
+                _drinking = false;
             }
 
             Finish(user);
@@ -175,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void Finish(IEntity user)
         {
             // Drink containers are mostly transient.
-            if (!_despawnOnFinish || UsesLeft() > 0)
+            if (_drinking || !_despawnOnFinish || UsesLeft() > 0)
                 return;
 
             var gridPos = Owner.Transform.GridPosition;
