@@ -179,6 +179,23 @@
     sprite: Objects/Food/baguette.rsi
 
 - type: entity
+  name: Bread (slice)
+  parent: FoodBase
+  id: FoodBreadSlice
+  description: 
+  components:
+  - type: Food
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 8
+    spawn_on_finish: TrashPlate
+  - type: Sprite
+    sprite: Objects/Food/breadslice.rsi
+  - type: Icon
+    sprite: Objects/Food/breadslice.rsi
+
+- type: entity
   name: Banana bread (slice)
   parent: FoodBase
   id: FoodBananaBreadSlice

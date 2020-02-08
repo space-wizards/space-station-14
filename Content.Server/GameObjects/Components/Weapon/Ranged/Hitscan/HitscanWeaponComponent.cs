@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 
-            var ray = new Ray(userPosition, angle.ToVec(), (int)(CollisionGroup.Impassable | CollisionGroup.MobImpassable));
+            var ray = new CollisionRay(userPosition, angle.ToVec(), (int)(CollisionGroup.Impassable | CollisionGroup.MobImpassable));
             var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user);
 
             Hit(rayCastResults, energyModifier);

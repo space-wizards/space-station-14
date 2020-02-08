@@ -3,6 +3,7 @@
   id: magazine_50_empty
   name: ".50 cal magazine - empty"
   parent: BaseItem
+  abstract: true
   components:
   - type: BallisticMagazine
     caliber: A50

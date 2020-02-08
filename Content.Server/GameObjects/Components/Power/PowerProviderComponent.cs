@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -23,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "PowerProvider";
 
         /// <inheritdoc />
-        public override DrawTypes DrawType { get; protected set; } = DrawTypes.Node;
+        protected override DrawTypes DefaultDrawType => DrawTypes.Node;
 
         protected override bool SaveLoad => false;
 
@@ -198,9 +199,9 @@ namespace Content.Server.GameObjects.Components.Power
             base.PowernetConnect(sender, eventarg);
 
             //Find devices within range to take under our control
-            var _emanager = IoCManager.Resolve<IServerEntityManager>();
+            var entMgr = IoCManager.Resolve<IServerEntityManager>();
             var position = Owner.GetComponent<ITransformComponent>().WorldPosition;
-            var entities = _emanager.GetEntitiesInRange(Owner, PowerRange)
+            var entities = entMgr.GetEntitiesInRange(Owner, PowerRange)
                 .Where(x => x.HasComponent<PowerDeviceComponent>());
 
 
@@ -252,8 +253,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (DeviceLoadList.Contains(device))
             {
-                TheoreticalLoad -= oldLoad;
-                TheoreticalLoad += device.Load;
+                TheoreticalLoad = TheoreticalLoad - oldLoad + device.Load;
             }
         }
 
@@ -285,7 +285,8 @@ namespace Content.Server.GameObjects.Components.Power
             if (this == device)
                 return false;
 
-            return (device.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).Length <= _range;
+            return device.Owner.Transform.MapID == Owner.Transform.MapID &&
+                (device.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).Length <= _range;
         }
     }
 }

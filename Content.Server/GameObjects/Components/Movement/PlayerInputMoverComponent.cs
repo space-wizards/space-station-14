@@ -1,9 +1,11 @@
 ﻿using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -14,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Movement
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IMoverComponent))]
-    public class PlayerInputMoverComponent : Component, IMoverComponent
+    public class PlayerInputMoverComponent : Component, IMoverComponent, ICollideSpecial
     {
         private bool _movingUp;
         private bool _movingDown;
@@ -117,5 +119,21 @@ namespace Content.Server.GameObjects.Components.Movement
             if (VelocityDir.LengthSquared > 1.0e-6)
                 VelocityDir = VelocityDir.Normalized;
         }
+
+        /// <summary>
+        /// Special collision override, can be used to give custom behaviors deciding when to collide
+        /// </summary>
+        /// <param name="collidedwith"></param>
+        /// <returns></returns>
+        bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
+        {
+            // Don't collid with other mobs
+            if (collidedwith.Owner.TryGetComponent<SpeciesComponent>(out var collidedSpeciesComponent))
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

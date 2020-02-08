@@ -3,6 +3,7 @@
   id: magazine_32_empty
   name: ".32 magazine - empty"
   parent: BaseItem
+  abstract: true
   components:
   - type: BallisticMagazine
     caliber: A32

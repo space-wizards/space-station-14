@@ -33,5 +33,6 @@ namespace Content.Server.Interfaces.GameTicking
         IEnumerable<GameRule> ActiveGameRules { get; }
 
         void SetStartPreset(Type type);
+        void SetStartPreset(string type);
     }
 }

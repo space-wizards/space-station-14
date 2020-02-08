@@ -3,6 +3,7 @@
   id: magazine_762mm_empty
   name: "7.62mm magazine - empty"
   parent: BaseItem
+  abstract: true
   components:
   - type: BallisticMagazine
     caliber: A762mm

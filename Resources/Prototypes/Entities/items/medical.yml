@@ -23,6 +23,7 @@
   name: Medical Stack
   id: MedicalStack
   parent: BaseItem
+  abstract: true
   components:
   - type: Stack
   - type: Item

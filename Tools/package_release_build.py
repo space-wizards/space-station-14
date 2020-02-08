@@ -35,7 +35,9 @@ SHARED_IGNORED_RESOURCES = {
     "ResourcePack.zip",
     "buildResourcePack.py",
     "CONTENT_GOES_HERE",
-    ".gitignore"
+    ".gitignore",
+    ".directory",
+    ".DS_Store"
 }
 CLIENT_IGNORED_RESOURCES = {
     "Maps",

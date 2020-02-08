@@ -1,6 +1,7 @@
 - type: entity
   name: "Item"
   id: BaseItem
+  abstract: true
   components:
   - type: Item
     Size: 5

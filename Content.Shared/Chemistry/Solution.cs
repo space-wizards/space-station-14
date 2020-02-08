@@ -129,11 +129,8 @@ namespace Content.Shared.Chemistry
         /// Remove the specified quantity from this solution.
         /// </summary>
         /// <param name="quantity">The quantity of this solution to remove</param>
-        /// <param name="removedSolution">Out arg. The removed solution. Useful for adding removed solution
-        /// into other solutions. For example, when pouring from one container to another.</param>
-        public void RemoveSolution(int quantity, out Solution removedSolution)
+        public void RemoveSolution(int quantity)
         {
-            removedSolution = new Solution();
             if(quantity <= 0)
                 return;
 
@@ -141,7 +138,6 @@ namespace Content.Shared.Chemistry
 
             if (ratio <= 0)
             {
-                removedSolution = this.Clone(); //Todo: Check if clone necessary
                 RemoveAllSolution();
                 return;
             }
@@ -156,7 +152,6 @@ namespace Content.Shared.Chemistry
                 var newQuantity = (int)Math.Floor(oldQuantity * ratio);
 
                 _contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
-                removedSolution.AddReagent(reagent.ReagentId, oldQuantity - newQuantity);
             }
 
             TotalVolume = (int)Math.Floor(TotalVolume * ratio);

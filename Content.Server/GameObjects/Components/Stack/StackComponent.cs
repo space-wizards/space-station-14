@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Stack
 
                         Timer.Spawn(300, () => _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is now full."));
                     }
-
+                    return true;
                 }
                 else if (toTransfer == 0 && stack.AvailableSpace == 0)
                 {
