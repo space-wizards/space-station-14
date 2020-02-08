@@ -1,4 +1,4 @@
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
@@ -14,6 +14,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         public string ProjectileType => _projectileType;
         public BallisticCaliber Caliber => _caliber;
+
+        public float TimeLeft { get; set; } = 10;
+
         public bool Spent
         {
             get => _spent;
