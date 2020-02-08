@@ -14,6 +14,10 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
+using HttpListener = Mono.Net.HttpListener;
+using HttpListenerContext = Mono.Net.HttpListenerContext;
+using HttpListenerRequest = Mono.Net.HttpListenerRequest;
+using HttpListenerResponse = Mono.Net.HttpListenerResponse;
 
 namespace Content.Server
 {
