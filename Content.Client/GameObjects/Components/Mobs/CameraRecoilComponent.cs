@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -42,6 +42,9 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         public override void Kick(Vector2 recoil)
         {
+            if(float.IsNaN(recoil.X) || float.IsNaN(recoil.Y))
+                return;
+
             // Use really bad math to "dampen" kicks when we're already kicked.
             var existing = _currentKick.Length;
             var dampen = existing/KickMagnitudeMax;
