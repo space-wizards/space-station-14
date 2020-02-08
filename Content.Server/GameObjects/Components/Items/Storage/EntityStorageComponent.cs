@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
@@ -80,6 +81,11 @@ namespace Content.Server.GameObjects.Components
 
             if (_noDoor && !_locked)
                 Open = true;
+
+            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
+            {
+                placeableSurfaceComponent.IsPlaceable = Open;
+            }
         }
 
         /// <inheritdoc />
@@ -147,7 +153,7 @@ namespace Content.Server.GameObjects.Components
                 // only items that can be stored in an inventory, or a player, can be eaten by a locker
                 if(!entity.HasComponent<StoreableComponent>() && !entity.HasComponent<IActorComponent>())
                     continue;
-                
+
                 if (!AddToContents(entity))
                 {
                     continue;
