@@ -4,7 +4,7 @@
   description: "A vending machine containing religious supplies and clothing. A label reads: \"A holy vendor for a pious man.\""
   spriteName: chapel
   startinginventory:
-    OuterclothingChaplainhoodie:1
+    OuterclothingChaplainhoodie: 1
     OuterclothingAcolyte: 4
     OuterclothingBedsheet: 4
     OuterclothingBlackhoodie: 1
