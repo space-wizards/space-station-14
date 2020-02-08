@@ -8,6 +8,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Sandbox
 {
@@ -23,6 +24,7 @@ namespace Content.Server.Sandbox
 
         private bool _isSandboxEnabled;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool IsSandboxEnabled
         {
             get => _isSandboxEnabled;
