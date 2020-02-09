@@ -30,11 +30,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
             Spawn("Screwdriver");
             Spawn("Crowbar");
             Spawn("Wirecutter");
-            Spawn("CableStack");
-            Spawn("CableStack");
+            Spawn("HVCableStack");
+            Spawn("MVCableStack");
 
             // 5% chance for a pair of fancy insulated gloves, else just a third cable coil.
-            Spawn(random.Prob(0.05f) ? "GlovesYellow" : "CableStack");
+            Spawn(random.Prob(0.05f) ? "GlovesYellow" : "HVCableStack");
         }
     }
 }

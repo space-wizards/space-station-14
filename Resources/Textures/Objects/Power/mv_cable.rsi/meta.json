@@ -6,67 +6,67 @@
 	},
 	"states": [
 		{
-			"name": "cable_0",
+			"name": "mvcable_0",
 			"directions": 1
 		},
 		{
-			"name": "cable_1",
+			"name": "mvcable_1",
 			"directions": 1
 		},
 		{
-			"name": "cable_2",
+			"name": "mvcable_2",
 			"directions": 1
 		},
 		{
-			"name": "cable_3",
+			"name": "mvcable_3",
 			"directions": 1
 		},
 		{
-			"name": "cable_4",
+			"name": "mvcable_4",
 			"directions": 1
 		},
 		{
-			"name": "cable_5",
+			"name": "mvcable_5",
 			"directions": 1
 		},
 		{
-			"name": "cable_6",
+			"name": "mvcable_6",
 			"directions": 1
 		},
 		{
-			"name": "cable_7",
+			"name": "mvcable_7",
 			"directions": 1
 		},
 		{
-			"name": "cable_8",
+			"name": "mvcable_8",
 			"directions": 1
 		},
 		{
-			"name": "cable_9",
+			"name": "mvcable_9",
 			"directions": 1
 		},
 		{
-			"name": "cable_10",
+			"name": "mvcable_10",
 			"directions": 1
 		},
 		{
-			"name": "cable_11",
+			"name": "mvcable_11",
 			"directions": 1
 		},
 		{
-			"name": "cable_12",
+			"name": "mvcable_12",
 			"directions": 1
 		},
 		{
-			"name": "cable_13",
+			"name": "mvcable_13",
 			"directions": 1
 		},
 		{
-			"name": "cable_14",
+			"name": "mvcable_14",
 			"directions": 1
 		},
 		{
-			"name": "cable_15",
+			"name": "mvcable_15",
 			"directions": 1
 		},
 	]

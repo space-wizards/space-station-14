@@ -33,9 +33,9 @@
     glass: 30
 
 - type: latheRecipe
-  id: CableStack
+  id: HVCableStack
   icon: Objects/Tools/cable_coil.png
-  result: CableStack
+  result: HVCableStack
   completetime: 500
   materials:
     steel: 50

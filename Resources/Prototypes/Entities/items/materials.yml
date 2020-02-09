@@ -57,23 +57,26 @@
     count: 1
 
 - type: entity
-  name: Cable Coil
-  id: CableStack
+  name: HV Cable Coil
+  id: HVCableStack
   parent: BaseItem
   components:
   - type: Stack
     stacktype: enum.StackType.Cable
   - type: Sprite
     texture: Objects/Tools/cable_coil.png
-    color: red
+    color: orange
   - type: Icon
     texture: Objects/Tools/cable_coil.png
   - type: WirePlacer
+    wiretype: 2
 
 - type: entity
-  id: CableStack1
-  name: Cable Stack 1
-  parent: CableStack
+  name: MV Cable Coil
+  id: MVCableStack
+  parent: HVCableStack
   components:
-  - type: Stack
-    count: 1
+   - type: Sprite
+     color: red
+   - type: WirePlacer
+     wiretype: 1

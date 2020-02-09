@@ -1,7 +1,7 @@
 - type: entity
-  id: Wire
-  name: Wire
-  description: Transfers power, avoid letting things come down it
+  id: HVWire
+  name: HV Wire
+  description: Transfers large amounts of power. Avoid direct contact.
   placement:
     mode: SnapgridCenter
   components:
@@ -11,34 +11,44 @@
   - type: Sprite
     netsync: false
     drawdepth: BelowFloor
-    color: Red
-    sprite: Objects/Power/power_cable.rsi
-    state: cable_0
+    sprite: Objects/Power/hv_cable.rsi
+    state: hvcable_0
   - type: Icon
     texture: Objects/Power/eightdirwire.png
   - type: PowerTransfer
+    wiretype: 2
   - type: SnapGrid
     offset: Center
   - type: IconSmooth
-    base: cable_
-    key: power_cables
+    base: hvcable_
+    key: hv_cables
     mode: CardinalFlags
   - type: SubFloorHide
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: CableStack1
+    spawnondestroy: HVCableStack
 
   snap:
-  - Wire
+  - HVWire
 
 - type: entity
-  parent: Wire
-  id: BlueWire
-  name: BlueWire
-  description: Transfers power, and puts on a good show of it
+  parent: HVWire
+  id: MVWire
+  name: MV Wire
+  description: Transfers power around the station.
   components:
   - type: Sprite
-    color: Blue
+    sprite: Objects/Power/mv_cable.rsi
+    state: mvcable_0
+    color: Red
+  - type: IconSmooth  
+    base: mvcable_
+    key: mv_cables
+  - type: PowerTransfer
+    wiretype: 1
+
+  snap:
+  - MVWire
 
 - type: entity
   id: Generator
@@ -214,5 +224,32 @@
     drawtype: Both
     load: 200
     priority: Low
+  - type: SnapGrid
+    offset: Center
+
+- type: entity
+  id: LVMachine
+  name: LVMachine
+  description: Succy boy
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.25, 0.5, 0.25"
+      layer: 31
+  - type: Sprite
+    texture: Objects/Power/wiredmachine.png
+  - type: Icon
+    texture: Objects/Power/wiredmachine.png
+  - type: PowerDevice
+    drawtype: Node
+    load: 100
+    priority: High
+  - type: PowerNode
+    wiretype: 0
   - type: SnapGrid
     offset: Center
