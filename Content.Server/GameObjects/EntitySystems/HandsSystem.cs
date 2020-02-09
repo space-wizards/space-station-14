@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces.GameObjects;
@@ -15,8 +15,10 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -124,18 +126,25 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
-            if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
-            {
-                handsComp.Drop(handsComp.ActiveIndex, coords);
-            }
-            else
-            {
-                var entCoords = ent.Transform.GridPosition.Position;
-                var entToDesiredDropCoords = coords.Position - entCoords;
-                var clampedDropCoords = ((entToDesiredDropCoords.Normalized * InteractionSystem.InteractionRange) + entCoords);
+            var dir = (coords.Position - ent.Transform.GridPosition.Position);
+            var ray = new CollisionRay(ent.Transform.GridPosition.Position, dir.Normalized, (int) CollisionGroup.Impassable);
+            var rayResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ent.Transform.MapID, ray, dir.Length, ent);
 
-                handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(clampedDropCoords, coords.GridID));
-            }
+            if(!rayResults.DidHitObject)
+                if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
+                {
+                    handsComp.Drop(handsComp.ActiveIndex, coords);
+                }
+                else
+                {
+                    var entCoords = ent.Transform.GridPosition.Position;
+                    var entToDesiredDropCoords = coords.Position - entCoords;
+                    var clampedDropCoords = ((entToDesiredDropCoords.Normalized * InteractionSystem.InteractionRange) + entCoords);
+
+                    handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(clampedDropCoords, coords.GridID));
+                }
+            else
+                handsComp.Drop(handsComp.ActiveIndex, ent.Transform.GridPosition);
 
             return true;
         }
