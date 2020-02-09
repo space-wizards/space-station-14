@@ -16,7 +16,7 @@
   - type: Icon
     texture: Objects/Power/eightdirwire.png
   - type: PowerTransfer
-    wiretype: 1
+    wiretype: 2
   - type: SnapGrid
     offset: Center
   - type: IconSmooth
@@ -45,7 +45,7 @@
     base: mvcable_
     key: mv_cables
   - type: PowerTransfer
-    wiretype: 0
+    wiretype: 1
 
   snap:
   - MVWire
@@ -224,5 +224,32 @@
     drawtype: Both
     load: 200
     priority: Low
+  - type: SnapGrid
+    offset: Center
+
+- type: entity
+  id: LVMachine
+  name: LVMachine
+  description: Succy boy
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.25, 0.5, 0.25"
+      layer: 31
+  - type: Sprite
+    texture: Objects/Power/wiredmachine.png
+  - type: Icon
+    texture: Objects/Power/wiredmachine.png
+  - type: PowerDevice
+    drawtype: Node
+    load: 100
+    priority: High
+  - type: PowerNode
+    wiretype: 0
   - type: SnapGrid
     offset: Center

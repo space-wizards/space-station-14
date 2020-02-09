@@ -69,7 +69,7 @@
   - type: Icon
     texture: Objects/Tools/cable_coil.png
   - type: WirePlacer
-    wiretype: 1
+    wiretype: 2
 
 - type: entity
   name: MV Cable Coil
@@ -79,4 +79,4 @@
    - type: Sprite
      color: red
    - type: WirePlacer
-     wiretype: 0
+     wiretype: 1

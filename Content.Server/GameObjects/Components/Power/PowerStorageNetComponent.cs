@@ -45,9 +45,10 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (!Owner.TryGetComponent(out PowerNodeComponent node))
             {
-                Owner.AddComponent<PowerNodeComponent>();
-                node = Owner.GetComponent<PowerNodeComponent>();
+                node = Owner.AddComponent<PowerNodeComponent>();
+                node.NodeWireType = PowerTransferComponent.WireType.HVWire;
             }
+            
             node.OnPowernetConnect += PowernetConnect;
             node.OnPowernetDisconnect += PowernetDisconnect;
             node.OnPowernetRegenerate += PowernetRegenerate;

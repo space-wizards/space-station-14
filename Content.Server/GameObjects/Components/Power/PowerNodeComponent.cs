@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.Sound;
 using Microsoft.EntityFrameworkCore.Query;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -41,12 +50,16 @@ namespace Content.Server.GameObjects.Components.Power
         public event EventHandler<PowernetEventArgs> OnPowernetRegenerate;
 
         public PowerTransferComponent.WireType NodeWireType { get => _nodewiretype; set => _nodewiretype = value; }
+        public float Range { get => _range; set => _range = value; }
 
         private PowerTransferComponent.WireType _nodewiretype;
+        private float _range;
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _nodewiretype, "wiretype", PowerTransferComponent.WireType.HVWire);
+            serializer.DataField(ref _range, "range", 5f);
+
         }
 
         protected override void Startup()
@@ -75,20 +88,40 @@ namespace Content.Server.GameObjects.Components.Power
 
             var position = Owner.Transform.WorldPosition;
 
-            var sgc = Owner.GetComponent<SnapGridComponent>();
-            var wire = sgc.GetCardinalNeighborCells()
-                .SelectMany(x => x.GetLocal()).Distinct()
-                .Select(x => x.TryGetComponent<PowerTransferComponent>(out var c) ? c : null)
-                .Where(x => x != null).Distinct()
-                .ToArray()
-                .OrderByDescending(x => (x.Owner.Transform.WorldPosition - position).Length)
-                .FirstOrDefault();
-
-            if (wire?.Parent != null)
+            if(NodeWireType == PowerTransferComponent.WireType.HVWire)
             {
-                ConnectToPowernet(wire.Parent);
+                var sgc = Owner.GetComponent<SnapGridComponent>();
+                var wire = sgc.GetCardinalNeighborCells()
+                    .SelectMany(x => x.GetLocal()).Distinct()
+                    .Select(x => x.TryGetComponent<PowerTransferComponent>(out var c) ? c : null)
+                    .Where(x => x != null).Distinct()
+                    .ToArray()
+                    .OrderByDescending(x => (x.Owner.Transform.WorldPosition - position).Length)
+                    .FirstOrDefault();
+
+                if (wire?.Parent != null)
+                {
+                    ConnectToPowernet(wire.Parent);
                 }
             }
+
+            else
+            {
+                var temp = IoCManager.Resolve<IEntityManager>().GetEntitiesInRange(Owner, Range);
+                var wire = IoCManager.Resolve<IEntityManager>().GetEntitiesInRange(Owner, Range)
+                    .Select(x => x.TryGetComponent<PowerTransferComponent>(out var c) ? c : null)
+                    .Where(c => c != null && c.Type.Equals(PowerTransferComponent.WireType.MVWire))
+                    .ToArray()
+                    .OrderByDescending(x => (x.Owner.Transform.WorldPosition - position).Length)
+                    .FirstOrDefault();
+
+                if (wire?.Parent != null)
+                {
+                    ConnectToPowernet(wire.Parent);
+                }
+            }
+
+        }
 
         /// <summary>
         /// Triggers event telling power components that we connected to a powernet

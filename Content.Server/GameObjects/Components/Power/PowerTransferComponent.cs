@@ -6,7 +6,6 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -34,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Power
         [ViewVariables]
         public WireType Type { get => _type; set => _type = value; }
 
-        public enum WireType { MVWire, HVWire }
+        public enum WireType {LVWire, MVWire, HVWire }
 
 
         private WireType _type;
@@ -80,8 +79,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 foreach (var wire in wires)
                 {
-                    var ptc = wire.GetComponent<PowerTransferComponent>();
-                    if (ptc.CanConnectTo(Type))
+                    if (wire.CanConnectTo(Type))
                     {
                         ConnectToPowernet(wire.Parent);
                         break;
@@ -95,14 +93,33 @@ namespace Content.Server.GameObjects.Components.Power
                 }
             }
 
-            //Find nodes intersecting us and if not already assigned to a powernet assign them to us
-            var nodes = entMgr.GetEntitiesInRange(Owner, 5f)
-                        .Select(x => x.TryGetComponent(out PowerNodeComponent pnc) ? pnc : null)
-                        .Where(x => x != null);
+            var snapgrid = Owner.GetComponent<SnapGridComponent>();
+            var neighbornodes = snapgrid.GetCardinalNeighborCells()
+                .SelectMany(x => x.GetLocal()).Distinct()
+                .Select(x => x.TryGetComponent(out PowerNodeComponent pnc) ? pnc : null)
+                .Where(x => x != null)
+                .Where(pnc => pnc.NodeWireType.Equals(Type));
 
-            foreach (var node in nodes)
+            foreach (var node in neighbornodes)
             {
-                if (node.NodeWireType.Equals(Type))
+                if (node.Parent == null)
+                {
+                    node.ConnectToPowernet(Parent);
+                }
+                else if (node.Parent.Dirty)
+                {
+                    node.RegeneratePowernet(Parent);
+                }
+            }
+
+            if (Type.Equals(WireType.MVWire))
+            {
+                var rangenodes = IoCManager.Resolve<IEntityManager>()
+                    .GetEntitiesInRange(Owner.Transform.GridPosition, 5f) //Range hardcoded for now
+                    .Select(x => x.TryGetComponent<PowerNodeComponent>(out var c) ? c : null)
+                    .Where(c => c != null && c.NodeWireType.Equals(WireType.LVWire));
+
+                foreach (var node in rangenodes)
                 {
                     if (node.Parent == null)
                     {
@@ -118,13 +135,12 @@ namespace Content.Server.GameObjects.Components.Power
             //spread powernet to nearby wires which haven't got one yet, and tell them to spread as well
             foreach (var wire in wires)
             {
-                var ptc = wire.GetComponent<PowerTransferComponent>();
-                if ((ptc.Parent == null || Regenerating) && ptc.Type == Type)
+                if ((wire.Parent == null || Regenerating) && wire.Type == Type)
                 {
                     wire.ConnectToPowernet(Parent);
                     wire.SpreadPowernet();
                 }
-                else if (ptc.Parent != Parent && !ptc.Parent.Dirty && ptc.Type == Type)
+                else if (wire.Parent != Parent && !wire.Parent.Dirty && wire.Type == Type)
                 {
                     Parent.MergePowernets(wire.Parent);
                 }
@@ -163,7 +179,6 @@ namespace Content.Server.GameObjects.Components.Power
             if (eventArgs.AttackWith.TryGetComponent(out WirecutterComponent wirecutter))
             {
                 Owner.Delete();
-                var droppedEnt = Owner.EntityManager.SpawnEntity("CableStack", eventArgs.ClickLocation);
 
                 var droptype = "HVCableStack";
 
@@ -172,7 +187,7 @@ namespace Content.Server.GameObjects.Components.Power
                     droptype = "MVCableStack";
                 }
 
-                var droppedEnt = Owner.EntityManager.SpawnEntityAt(droptype, eventArgs.ClickLocation);
+                var droppedEnt = Owner.EntityManager.SpawnEntity(droptype, eventArgs.ClickLocation);
 
                 if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
                     stackComp.Count = 1;
