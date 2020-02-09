@@ -14,6 +14,10 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class YSortSystem : EntitySystem
     {
+#pragma warning disable 649
+        [Dependency] private IEyeManager _eyeManager;
+#pragma warning restore 649
+
         public override void Initialize()
         {
             base.Initialize();
@@ -29,7 +33,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 var sprite = entity.GetComponent<SpriteComponent>();
                 if(!ysort.Enabled && ysort.OldPosition != entity.Transform.GridPosition) continue;
                 ysort.OldPosition = entity.Transform.GridPosition;
-                sprite.RenderOrder = (uint)((-entity.Transform.GridPosition.Y*EyeManager.PIXELSPERMETER)+ysort.Offset);
+                sprite.RenderOrder = (uint) (_eyeManager.WorldToScreen(entity.Transform.GridPosition).Y + ysort.Offset);
             }
         }
     }
