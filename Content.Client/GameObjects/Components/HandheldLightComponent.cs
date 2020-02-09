@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -22,7 +22,8 @@ namespace Content.Client.GameObjects.Components
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cast = (HandheldLightComponentState) curState;
+            if (!(curState is HandheldLightComponentState cast))
+                return;
 
             Charge = cast.Charge;
         }

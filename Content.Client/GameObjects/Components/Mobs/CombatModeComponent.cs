@@ -31,7 +31,8 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            var state = (CombatModeComponentState) curState;
+            if (!(curState is CombatModeComponentState state))
+                return;
 
             IsInCombatMode = state.IsInCombatMode;
             ActiveZone = state.TargetingZone;
