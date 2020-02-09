@@ -1,6 +1,7 @@
-using Content.Client.UserInterface;
+﻿using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -12,6 +13,10 @@ namespace Content.Client.GameObjects.Components.Mobs
     [RegisterComponent]
     public sealed class CombatModeComponent : SharedCombatModeComponent
     {
+#pragma warning disable 649
+        [Dependency] private readonly IPlayerManager _playerManager;
+#pragma warning restore 649
+
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IsInCombatMode { get; private set; }
 
@@ -30,7 +35,10 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             IsInCombatMode = state.IsInCombatMode;
             ActiveZone = state.TargetingZone;
-            UpdateHud();
+            if (Owner == _playerManager.LocalPlayer.ControlledEntity)
+            {
+                UpdateHud();
+            }
         }
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
