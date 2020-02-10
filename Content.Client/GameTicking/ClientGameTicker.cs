@@ -92,6 +92,7 @@ namespace Content.Client.GameTicking
         {
             if (e.NewLevel != ClientRunLevel.Initialize)
             {
+                _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat, null);
                 return;
             }
 
@@ -289,7 +290,7 @@ namespace Content.Client.GameTicking
 
         private void _focusChat(ChatBox chat)
         {
-            if (_userInterfaceManager.KeyboardFocused != null)
+            if (chat == null || _userInterfaceManager.KeyboardFocused != null)
             {
                 return;
             }
