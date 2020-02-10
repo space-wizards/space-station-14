@@ -1,4 +1,5 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Movement;
+﻿
+using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -6,6 +7,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.IoC;
+using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -16,6 +20,11 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IMoverComponent))]
     public class PlayerInputMoverComponent : Component, IMoverComponent
     {
+
+#pragma warning disable 649
+        [Dependency] private readonly IConfigurationManager _configurationManager;
+#pragma warning restore 649
+
         private bool _movingUp;
         private bool _movingDown;
         private bool _movingLeft;
@@ -51,6 +60,17 @@ namespace Content.Server.GameObjects.Components.Movement
         public GridCoordinates LastPosition { get; set; }
 
         public float StepSoundDistance { get; set; }
+
+        /// <summary>
+        ///     Whether or not the player can move diagonally.
+        /// </summary>
+        [ViewVariables] public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>("game.diagonalmovement");
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
+        }
 
         /// <inheritdoc />
         public override void OnAdd()
@@ -108,8 +128,11 @@ namespace Content.Server.GameObjects.Components.Movement
             x += _movingRight ? 1 : 0;
 
             var y = 0;
-            y -= _movingDown ? 1 : 0;
-            y += _movingUp ? 1 : 0;
+            if (DiagonalMovementEnabled || (!_movingLeft && !_movingRight))
+            {
+                y -= _movingDown ? 1 : 0;
+                y += _movingUp ? 1 : 0;
+            }
 
             VelocityDir = new Vector2(x, y);
 
