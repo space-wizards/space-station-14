@@ -215,9 +215,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             physComp.LinearVelocity = dirVec * spd;
 
-            var humanDir = new Angle(dirVec).GetCardinalDir().ToAngle();
-
-            transform.LocalRotation = humanDir;
+            transform.LocalRotation = new Angle(dirVec).GetCardinalDir().ToAngle();
 
             return true;
         }
