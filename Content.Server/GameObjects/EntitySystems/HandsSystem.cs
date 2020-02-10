@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces.GameObjects;
@@ -215,12 +215,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
             physComp.LinearVelocity = dirVec * spd;
 
-            var wHomoDir = Vector3.UnitX;
+            var humanDir = new Angle(dirVec).GetCardinalDir().ToAngle();
 
-            transform.InvWorldMatrix.Transform(ref wHomoDir, out var lHomoDir);
-
-            lHomoDir.Normalize();
-            transform.LocalRotation = new Angle(lHomoDir.Xy);
+            transform.LocalRotation = humanDir;
 
             return true;
         }
