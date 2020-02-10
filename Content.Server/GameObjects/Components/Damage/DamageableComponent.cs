@@ -36,6 +36,7 @@ namespace Content.Server.GameObjects
         Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
+        public event EventHandler<DamageEventArgs> Damaged;
 
         public override ComponentState GetComponentState()
         {
@@ -62,6 +63,7 @@ namespace Content.Server.GameObjects
             foreach (var damagebehavior in Owner.GetAllComponents<IOnDamageBehavior>())
             {
                 AddThresholdsFrom(damagebehavior);
+                Damaged += damagebehavior.OnDamaged;
             }
 
             RecalculateComponentThresholds();
@@ -129,6 +131,8 @@ namespace Content.Server.GameObjects
 
             int changeSign = Math.Sign(change);
 
+            Damaged?.Invoke(this, new DamageEventArgs(damageType, change));
+
             foreach (var threshold in Thresholds[damageType])
             {
                 var value = threshold.Value;
@@ -162,6 +166,9 @@ namespace Content.Server.GameObjects
             }
 
             List<DamageThreshold> thresholds = onDamageBehavior.GetAllDamageThresholds();
+
+            if (thresholds == null)
+                return;
 
             foreach (DamageThreshold threshold in thresholds)
             {

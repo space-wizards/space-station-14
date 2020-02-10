@@ -60,5 +60,24 @@ namespace Content.Server.GameObjects
             ExcessDamage = excess;
         }
     }
+
+    public class DamageEventArgs : EventArgs
+    {
+        /// <summary>
+        ///     Type of damage.
+        /// </summary>
+        public DamageType Type { get; }
+
+        /// <summary>
+        ///     Change in damage.
+        /// </summary>
+        public int Damage { get; }
+
+        public DamageEventArgs(DamageType type, int damage)
+        {
+            Type = type;
+            Damage = damage;
+        }
+    }
 }
 
