@@ -6,7 +6,7 @@
   abstract: true
   components:
   - type: AmmoBox
-    caliber: A45
+    caliber: A45mm
     capacity: 30
   - type: Sprite 
     netsync: false
@@ -19,7 +19,7 @@
   components:
   - type: AmmoBox
     fill: ammo_casing_45
-    caliber: A45
+    caliber: A45mm
     capacity: 30
   - type: Icon
     sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45.rsi
@@ -40,7 +40,7 @@
   components:
   - type: AmmoBox
     fill: ammo_casing_45_flash
-    caliber: A45
+    caliber: A45mm
     capacity: 30
   - type: Icon
     sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45-flash.rsi
@@ -63,7 +63,7 @@
   components:
   - type: AmmoBox
     fill: ammo_casing_45_p
-    caliber: A45
+    caliber: A45mm
     capacity: 30
   - type: Icon
     sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45-practice.rsi
@@ -84,7 +84,7 @@
   components:
   - type: AmmoBox
     fill: ammo_casing_45_r
-    caliber: A45
+    caliber: A45mm
     capacity: 30
   - type: Icon
     sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45-rubber.rsi

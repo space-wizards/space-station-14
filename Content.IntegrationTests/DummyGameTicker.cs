@@ -68,5 +68,9 @@ namespace Content.IntegrationTests
         public void SetStartPreset(Type type)
         {
         }
+
+        public void SetStartPreset(string type)
+        {
+        }
     }
 }

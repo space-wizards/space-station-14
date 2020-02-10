@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Mobs
@@ -42,6 +43,12 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         public override void Kick(Vector2 recoil)
         {
+            if (float.IsNaN(recoil.X) || float.IsNaN(recoil.Y))
+            {
+                Logger.Error($"CameraRecoilComponent on entity {Owner.Uid} passed a NaN recoil value. Ignoring.");
+                return;
+            }
+
             // Use really bad math to "dampen" kicks when we're already kicked.
             var existing = _currentKick.Length;
             var dampen = existing/KickMagnitudeMax;

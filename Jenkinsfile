@@ -13,5 +13,11 @@ pipeline {
                 archiveArtifacts artifacts: 'release/*.zip'
             }
         }
+        stage('Generate checksums') {
+            steps {
+                sh 'Tools/generate_hashes.ps1'
+                archiveArtifacts artifacts: 'release/*.zip.sha256'
+            }
+        }
     }
 }

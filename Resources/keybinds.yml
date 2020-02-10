@@ -146,3 +146,12 @@ binds:
   type: state
   key: Delete
   canRepeat: true
+- function: OpenEntitySpawnWindow
+  type: state
+  key: F5
+- function: OpenTileSpawnWindow
+  type: state
+  key: F6
+- function: OpenSandboxWindow
+  type: state
+  key: B

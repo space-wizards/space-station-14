@@ -53,3 +53,4 @@
   - rejuvenate
   - addcomp
   CanViewVar: true
+  CanAdminPlace: true

@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: PowerCellSmallBase
   abstract: true
   parent: BaseItem
@@ -7,6 +7,8 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.15,-0.3,0.2,0.3"
+      mask: 26
+      layer: 32
   - type: PowerCell
   - type: Appearance
   - type: Sprite

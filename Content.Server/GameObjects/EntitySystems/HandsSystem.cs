@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces.GameObjects;
@@ -130,7 +130,11 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                handsComp.Drop(handsComp.ActiveIndex);
+                var entCoords = ent.Transform.GridPosition.Position;
+                var entToDesiredDropCoords = coords.Position - entCoords;
+                var clampedDropCoords = ((entToDesiredDropCoords.Normalized * InteractionSystem.InteractionRange) + entCoords);
+
+                handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(clampedDropCoords, coords.GridID));
             }
 
             return true;

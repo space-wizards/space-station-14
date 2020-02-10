@@ -2,6 +2,7 @@
 - type: entity
   name: Base empty bottle
   parent: BaseItem
+  abstract: true
   id: DrinkBottleBase
   components:
   - type: Sound

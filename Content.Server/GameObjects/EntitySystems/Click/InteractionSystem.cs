@@ -17,6 +17,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -408,6 +409,8 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return;
             }
+
+            playerTransform.LocalRotation = new Angle(coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position);
 
             // TODO: Check if client should be able to see that object to click on it in the first place
 
