@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects
 
             _secondsSinceLastDamageUpdate += frameTime;
 
-            Owner.TryGetComponent<DamageableComponent>(out DamageableComponent component);
+            Owner.TryGetComponent(out DamageableComponent component);
 
             while (_secondsSinceLastDamageUpdate >= 1)
             {

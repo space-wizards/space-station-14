@@ -71,9 +71,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 if (entity.TryGetComponent(out DamageableComponent damage))
                 {
-                    foreach (var damageType in _damages)
+                    Owner.EntityManager.TryGetEntity(Shooter, out var shooter);
+
+                    foreach (var (damageType, amount) in _damages)
                     {
-                        damage.TakeDamage(damageType.Key, damageType.Value);
+
+                        damage.TakeDamage(damageType, amount, Owner, shooter);
                     }
                 }
 
