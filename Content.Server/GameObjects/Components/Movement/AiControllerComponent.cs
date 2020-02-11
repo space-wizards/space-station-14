@@ -81,6 +81,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public Vector2 VelocityDir { get; set; }
 
         public GridCoordinates LastPosition { get; set; }
+        public GridCoordinates TargetPosition { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float StepSoundDistance { get; set; }

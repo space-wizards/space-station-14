@@ -30,6 +30,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Movement
         Vector2 VelocityDir { get; }
 
         GridCoordinates LastPosition { get; set; }
+        GridCoordinates TargetPosition { get; set; }
 
         float StepSoundDistance { get; set; }
 
