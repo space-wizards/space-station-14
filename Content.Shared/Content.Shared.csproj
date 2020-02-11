@@ -16,13 +16,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj">
-      <Private>false</Private>
+      <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\RobustToolbox\Robust.Serializer\Robust.Serializer.csproj" />
     <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj">
-      <Private>false</Private>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj">
-      <Private>false</Private>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
