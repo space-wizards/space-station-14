@@ -1,0 +1,37 @@
+- type: entity
+  name: Paper
+  parent: BaseItem
+  id: Paper
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: Icon
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper
+  - type: Paper
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+
+- type: entity
+  name: Pen
+  parent: BaseItem
+  id: Pen
+  description: 'A dark ink pen'
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/bureaucracy.rsi
+      state: pen
+    - type: Icon
+      sprite: Objects/Misc/bureaucracy.rsi
+      state: pen
+    - type: Item
+      sprite: Objects/Misc/bureaucracy.rsi
+      state: pen
+    - type: Write
