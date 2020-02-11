@@ -43,11 +43,23 @@ namespace Content.Server.GameObjects
         private int StorageCapacityMax = 10000;
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
+        private bool _occlusion;
+        public bool Occlusion
+        {
+            get => _occlusion;
+            set
+            {
+                _occlusion = value;
+                storage.Occlusion = value;
+            }
+        }
+
         public override void Initialize()
         {
             base.Initialize();
 
             storage = ContainerManagerComponent.Ensure<Container>("storagebase", Owner);
+            storage.Occlusion = Occlusion;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -56,6 +68,7 @@ namespace Content.Server.GameObjects
 
             serializer.DataField(ref StorageCapacityMax, "Capacity", 10000);
             serializer.DataField(ref StorageUsed, "used", 0);
+            serializer.DataField(ref _occlusion, "occlusion", true);
         }
 
         /// <summary>
