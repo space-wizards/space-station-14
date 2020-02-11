@@ -6,7 +6,7 @@
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 
-namespace Robust.Shared.BodySystem {
+namespace Content.Shared.BodySystem {
     /// <summary>
     ///     Interface for a mechanism effect.
     /// </summary>			  

@@ -6,13 +6,13 @@ using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
 
-namespace Robust.Shared.BodySystem {
+namespace Content.Shared.BodySystem {
     [Prototype("bodyPart")]
     public class BodyPartPrototype : IPrototype, IIndexedPrototype {
         private string _id;
         private string _name;
 		private string _plural;
-		private BodyPartType _type;
+		private BodyPartType _partType;
 		private int _durability;
 		private float _currentDurability;
 		private int _destroyThreshold;
@@ -40,7 +40,7 @@ namespace Robust.Shared.BodySystem {
         ///     BodyPartType that this body part is considered. 
         /// </summary>
         [ViewVariables]
-        public BodyPartType Type => _type;
+        public BodyPartType PartType => _partType;
 		
         /// <summary>
         ///     Max HP of this body part.
@@ -85,7 +85,7 @@ namespace Robust.Shared.BodySystem {
             serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _plural, "plural", string.Empty);
-			serializer.DataField(ref _type, "type", BodyPartType.Other);
+			serializer.DataField(ref _partType, "partType", BodyPartType.Other);
 			serializer.DataField(ref _durability, "durability", 50);
 			_currentDurability = (float)_durability;
 			serializer.DataField(ref _destroyThreshold, "destroyThreshold", -50);

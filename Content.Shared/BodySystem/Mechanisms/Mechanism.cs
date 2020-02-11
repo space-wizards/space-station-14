@@ -7,12 +7,13 @@ using YamlDotNet.RepresentationModel;
 
 
 
-namespace Robust.Shared.BodySystem {
+namespace Content.Shared.BodySystem {
     public enum MechanismType { passive, toggle, active }
 
     [Prototype("mechanism")]
-	public class Mechanism {
-		private string _name;
+	public class Mechanism : IPrototype, IIndexedPrototype {
+        private string _id;
+        private string _name;
 		private string _description;
 		private string _examineMessage;
 		private int _durability;
@@ -20,19 +21,15 @@ namespace Robust.Shared.BodySystem {
 		private int _destroyThreshold;
 		private int _resistance;
 		private int _size;
-		private BodyPartCompatability _compatability;
+        private List<string> _implantableParts;
+        private BodyPartCompatability _compatability;
 		private MechanismType _type;
-		private List<IMechanismEffect> _onTick;
-		private List<IMechanismEffect> _onInstall;
-		private List<IMechanismEffect> _onUninstall;
-		private List<IMechanismEffect> _onToggleOn;
-		private List<IMechanismEffect> _onToggleOff;
-		private List<IMechanismEffect> _onActivate;
-		private List<IMechanismEffect> _onDestroy;
-		private List<IMechanismEffect> _onBreak;
-		private List<IMechanismEffect> _onRepair;
-		
-		[ViewVariables]
+
+
+        [ViewVariables]
+        public string ID => _id;
+
+        [ViewVariables]
         public string Name => _name;
 		
 		/// <summary>
@@ -77,7 +74,10 @@ namespace Robust.Shared.BodySystem {
         /// </summary>		
 		[ViewVariables]
 		public int Size => _size;
-		
+
+        [ViewVariables]
+        public List<string> ImplantableParts => _implantableParts;
+
         /// <summary>
         ///     What kind of BodyParts this mechanism can be installed into.
         /// </summary>
@@ -94,8 +94,14 @@ namespace Robust.Shared.BodySystem {
         public virtual void LoadFrom(YamlMappingNode mapping){
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
-            serializer.DataField(ref _name, "name", string.Empty);		
-		}		
+            serializer.DataField(ref _id, "id", string.Empty);
+            serializer.DataField(ref _name, "name", string.Empty);
+            serializer.DataField(ref _description, "description", string.Empty);
+            serializer.DataField(ref _durability, "durability", 0);
+            serializer.DataField(ref _size, "size", 2);
+            serializer.DataField(ref _compatability, "compatability", BodyPartCompatability.Universal);
+            serializer.DataField(ref _implantableParts, "implantableParts", new List<string>());
+        }		
 	}
 }
 

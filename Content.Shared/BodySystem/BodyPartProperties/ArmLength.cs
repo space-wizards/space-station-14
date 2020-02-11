@@ -3,7 +3,7 @@
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
-namespace Robust.Shared.BodySystem {
+namespace Content.Shared.BodySystem {
     class ArmLength : IExposeData {
 		private float _length;
 		

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-namespace Robust.Shared.BodySystem {
+namespace Content.Shared.BodySystem {
     /// <summary>
     ///     Stores data on what BodyParts should fill a BodyTemplate. Used for loading complete body presets, like a "basic human" with all human limbs.
     /// </summary>			

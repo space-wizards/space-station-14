@@ -1,9 +1,11 @@
 ﻿using Robust.Shared.Interfaces.Serialization;
 using System;
 using System.Collections.Generic;
+    public enum BodyPartCompatability { Mechanical, Biological, Universal };
+    public enum BodyPartType { Other, Torso, Head, Arm, Hand, Leg, Foot };
 
 
-namespace Robust.Shared.BodySystem {
+namespace Content.Shared.BodySystem {
 
 
     public class BodyPart {
@@ -40,7 +42,7 @@ namespace Robust.Shared.BodySystem {
             ID = data.ID;
             Name = data.Name;
             Plural = data.Plural;
-            Type = data.Type;
+            Type = data.PartType;
             Durability = data.Durability;
             CurrentDurability = Durability; //Starts at full HP.
             DestroyThreshold = data.DestroyThreshold;
@@ -151,7 +153,7 @@ namespace Robust.Shared.BodySystem {
         }
 
         /// <summary>
-        ///     Recursive search that returns whether this BodyPart is connected to the _parent's center BodyPart. Not efficient, but most bodies don't have a ton of BodyParts.
+        ///     Recursive search that returns whether this BodyPart is connected to the _parent's center BodyPart. Not efficient (O(n^2)), but most bodies don't have a ton of BodyParts.
         /// </summary>	
         private bool ConnectedToCenterPart(List<BodyPart> searchedParts) {
             if (_parent == null)

@@ -4,24 +4,41 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using System;
 using System.Collections.Generic;
+using Content.Shared.BodySystem;
+using Robust.Shared.ViewVariables;
 
-namespace Robust.Shared.BodySystem {
+namespace Content.Shared.BodySystem {
     public enum BodyPartCompatability { Mechanical, Biological, Universal };
     public enum BodyPartType { Other, Torso, Head, Arm, Hand, Leg, Foot };
 
+}
+
+namespace Content.Shared.BodySystem {
+    [RegisterComponent]
     public class BodyManagerComponent : Component {
+
+        [ViewVariables(VVAccess.ReadWrite)]
         private BodyTemplate _template;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         private Dictionary<string, BodyPart> _parts = new Dictionary<string, BodyPart>();
 
-        public override string Name => "BodyManager";
+        private IPrototypeManager _prototypeManager;
+
+        public sealed override string Name => "BodyManager";
 
         public override void ExposeData(ObjectSerializer serializer) {
             base.ExposeData(serializer);
-            //serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
+            string templateName = "";
+            serializer.DataField(ref templateName, "BaseTemplate", "bodyTemplate.Humanoid");
+            if(_prototypeManager.TryIndex(templateName, out BodyTemplate templateData))
+                Startup(templateData);
+            else
+                throw new InvalidOperationException("No BodyTemplate was found with the name " + templateName + " while loading a new BodyTemplate!"); //Should never happen unless you fuck up the prototype.
         }
 
         public BodyManagerComponent() {
-
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         }
 
         public void Startup(BodyTemplate _template) {
@@ -35,21 +52,21 @@ namespace Robust.Shared.BodySystem {
         public void LoadBodyPreset(BodyPreset preset) {
             if (_template == null || preset.TemplateID != _template.ID) //Check that the preset's template and our template are equivalent.
                 return;
-            var prototypeManger = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var(type, slotName) in _template.Slots) { //Iterate through all limb slots in the template.
+            foreach (var(slotName, type) in _template.Slots) { //Iterate through all limb slots in the template.
                 if (!preset.PartIDs.TryGetValue(slotName, out string partID)) { //Get the BodyPart ID that the preset defines.
                     throw new InvalidOperationException("Current template and preset template are not equivalent!"); //This should never happen - we just checked that the templates are equal above.
 
                 }
-                if (!prototypeManger.TryIndex(partID, out BodyPart newPart)) { //Get the BodyPart corresponding to the BodyPart ID.
-                    return;
+                if (!_prototypeManager.TryIndex(partID, out BodyPartPrototype newPartData)) { //Get the BodyPart corresponding to the BodyPart ID.
                     throw new InvalidOperationException("BodyPart prototype with ID " + partID + " does not exist!"); //If this happens, that means the prototype with this BodyPart ID doesn't exist in Resources. Which should never happen unless you change shit or fucked up the prototype. 
                 }
-                _parts.Add(slotName, newPart); //Add it to our BodyParts.
+                _parts.Add(slotName, new BodyPart(newPartData)); //Add it to our BodyParts.
             }
-            foreach(var(firstID, secondID) in _template.Connections) { //Connect all the BodyParts together.
-                if(TryGetLimb(firstID, out BodyPart first) && TryGetLimb(secondID, out BodyPart second))
-                    first.ConnectTo(second);
+            foreach(var(firstID, connectionsList) in _template.Connections) { //Connect all the BodyParts together.
+                foreach (var secondID in connectionsList) {
+                    if (TryGetLimb(firstID, out BodyPart first) && TryGetLimb(secondID, out BodyPart second))
+                        first.ConnectTo(second);
+                }
             }
         }
 
