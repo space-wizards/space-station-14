@@ -128,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Movement
             x += _movingRight ? 1 : 0;
 
             var y = 0;
-            if (DiagonalMovementEnabled || (!_movingLeft && !_movingRight))
+            if (DiagonalMovementEnabled || x == 0)
             {
                 y -= _movingDown ? 1 : 0;
                 y += _movingUp ? 1 : 0;
