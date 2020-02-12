@@ -1,10 +1,6 @@
-﻿using System;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -20,10 +16,6 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IMoverComponent))]
     public class PlayerInputMoverComponent : Component, IMoverComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IConfigurationManager _configurationManager;
-#pragma warning restore 649
-
         private bool _movingUp;
         private bool _movingDown;
         private bool _movingLeft;
@@ -60,19 +52,6 @@ namespace Content.Server.GameObjects.Components.Movement
         public GridCoordinates TargetPosition { get; set; }
 
         public float StepSoundDistance { get; set; }
-
-        /// <summary>
-        ///     Whether or not movement is tile-bound.
-        /// </summary>
-        private bool PixelMovementEnabled => _configurationManager.GetCVar<bool>("game.pixelmovement");
-
-        /// <inheritdoc />
-        public override void Initialize()
-        {
-            base.Initialize();
-            TargetPosition = Owner.Transform.GridPosition;
-            _configurationManager.RegisterCVar("game.pixelmovement", false, CVar.ARCHIVE);
-        }
 
         /// <inheritdoc />
         public override void OnAdd()
@@ -128,26 +107,16 @@ namespace Content.Server.GameObjects.Components.Movement
             var x = 0;
             x -= _movingLeft ? 1 : 0;
             x += _movingRight ? 1 : 0;
-            if(x == 0 && TargetPosition.X != LastPosition.X)
-            {
-                x = (int) MathF.Round(LastPosition.X - TargetPosition.X);
-            }
 
             var y = 0;
             y -= _movingDown ? 1 : 0;
             y += _movingUp ? 1 : 0;
-            if (y == 0 && TargetPosition.Y != LastPosition.Y)
-            {
-                y = (int) MathF.Round(LastPosition.Y - TargetPosition.Y);
-            }
 
             VelocityDir = new Vector2(x, y);
 
             // can't normalize zero length vector
             if (VelocityDir.LengthSquared > 1.0e-6)
                 VelocityDir = VelocityDir.Normalized;
-
-            TargetPosition = LastPosition.Offset(VelocityDir);
         }
     }
 }
