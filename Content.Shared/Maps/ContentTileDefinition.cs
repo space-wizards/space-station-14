@@ -1,4 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -18,8 +21,9 @@ namespace Content.Shared.Maps
         public ushort TileId { get; private set; }
         public string DisplayName { get; private set; }
         public string SpriteName { get; private set; }
+        public static Dictionary<string, List<string>> BaseTurfs { get; private set; } = new Dictionary<string, List<string>>();
+        //public static List<string> BaseTurfs { get; private set; }
         public bool IsSubFloor { get; private set; }
-        public string SubFloor { get; private set; }
         public bool CanCrowbar { get; private set; }
         public string FootstepSounds { get; private set; }
         public float Friction { get; set; }
@@ -36,13 +40,19 @@ namespace Content.Shared.Maps
             DisplayName = mapping.GetNode("display_name").ToString();
             SpriteName = mapping.GetNode("texture").ToString();
 
+            if (!BaseTurfs.ContainsKey(Name))
+            {
+                List<string> baseTurfsList;
+                if (mapping.TryGetNode("base_turfs", out YamlSequenceNode baseTurfNode))
+                    baseTurfsList = baseTurfNode.Select(i => i.ToString()).ToList();
+                else
+                    baseTurfsList = new List<string>();
+                BaseTurfs.Add(Name, baseTurfsList);
+            }
+            
             if (mapping.TryGetNode("is_subfloor", out var node))
             {
                 IsSubFloor = node.AsBool();
-            }
-            if (mapping.TryGetNode("subfloor", out var another_node))
-            {
-                SubFloor = another_node.AsString();
             }
 
             if (mapping.TryGetNode("can_crowbar", out node))

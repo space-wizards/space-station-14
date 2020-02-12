@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
@@ -76,28 +77,30 @@ namespace Content.Server.Explosions
             foreach (var tile in tiles)
             {
                 var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
-                var tileDef = (ContentTileDefinition)tileDefinitionManager[tile.Tile.TypeId];
+                ContentTileDefinition tileDef = (ContentTileDefinition)tileDefinitionManager[tile.Tile.TypeId];
+                ContentTileDefinition.BaseTurfs.TryGetValue(tileDef.Name, out List<string> BaseTurfs);
                 var distanceFromTile = (int)tileLoc.Distance(mapManager, coords);
-                if (!string.IsNullOrWhiteSpace(tileDef.SubFloor))
+                if (BaseTurfs.Count == 0)
+                    continue;
                 {
                     if (distanceFromTile < devastationRange)
-                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager["space"].TileId));
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[BaseTurfs[1]].TileId));
                     if (distanceFromTile < heavyImpactRange)
                     {
                         if (robustRandom.Prob(80))
                         {
-                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[tileDef.SubFloor].TileId));
+                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[BaseTurfs[BaseTurfs.Count - 1]].TileId));
                         }
                         else
                         {
-                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager["space"].TileId));
+                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[BaseTurfs[1]].TileId));
                         }
                     }
                     if (distanceFromTile < lightImpactRange)
                     {
                         if (robustRandom.Prob(50))
                         {
-                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[tileDef.SubFloor].TileId));
+                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[BaseTurfs[BaseTurfs.Count - 1]].TileId));
                         }
                     }
                 }
