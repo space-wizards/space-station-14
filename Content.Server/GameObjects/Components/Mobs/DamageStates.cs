@@ -62,7 +62,12 @@ namespace Content.Server.GameObjects
         {
             return true;
         }
-        
+
+        bool IActionBlocker.CanPickup()
+        {
+            return true;
+        }
+
         bool IActionBlocker.CanEmote()
         {
             return true;
@@ -113,7 +118,12 @@ namespace Content.Server.GameObjects
         {
             return false;
         }
-        
+
+        bool IActionBlocker.CanPickup()
+        {
+            return false;
+        }
+
         bool IActionBlocker.CanEmote()
         {
             return false;
@@ -184,7 +194,12 @@ namespace Content.Server.GameObjects
         {
             return false;
         }
-        
+
+        bool IActionBlocker.CanPickup()
+        {
+            return false;
+        }
+
         bool IActionBlocker.CanEmote()
         {
             return false;

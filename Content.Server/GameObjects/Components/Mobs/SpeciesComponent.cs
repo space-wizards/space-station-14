@@ -107,6 +107,11 @@ namespace Content.Server.GameObjects
             return CurrentDamageState.CanDrop();
         }
 
+        bool IActionBlocker.CanPickup()
+        {
+            return CurrentDamageState.CanPickup();
+        }
+
         bool IActionBlocker.CanEmote()
         {
             return CurrentDamageState.CanEmote();

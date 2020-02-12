@@ -126,11 +126,16 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
+            var hitImpassable = false;
             var dir = (coords.Position - ent.Transform.GridPosition.Position);
-            var ray = new CollisionRay(ent.Transform.GridPosition.Position, dir.Normalized, (int) CollisionGroup.Impassable);
-            var rayResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ent.Transform.MapID, ray, dir.Length, ent);
+            if (dir.Length > 0f)
+            {
+                var ray = new CollisionRay(ent.Transform.GridPosition.Position, dir.Normalized, (int) CollisionGroup.Impassable);
+                var rayResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ent.Transform.MapID, ray, dir.Length, ent);
+                hitImpassable = rayResults.DidHitObject;
+            }
 
-            if(!rayResults.DidHitObject)
+            if(!hitImpassable)
                 if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
                 {
                     handsComp.Drop(handsComp.ActiveIndex, coords);

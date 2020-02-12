@@ -2,11 +2,14 @@
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -24,6 +27,8 @@ namespace Content.Server.GameObjects
 
         #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _robustRandom;
+        [Dependency] private readonly IPhysicsManager _physicsManager;
+        [Dependency] private readonly IMapManager _mapManager;
         #pragma warning restore 649
 
         private string _equippedPrefix;
@@ -64,8 +69,28 @@ namespace Content.Server.GameObjects
             serializer.DataField(ref _equippedPrefix, "HeldPrefix", null);
         }
 
+        public bool CanPickup(IEntity user)
+        {
+            var coords = Owner.Transform.GridPosition;
+
+            if (!ActionBlockerSystem.CanPickup(user)) return false;
+
+            var hitImpassable = false;
+            var dir = (coords.Position - user.Transform.GridPosition.Position);
+            if (dir.Length > 0f)
+            {
+                var ray = new CollisionRay(user.Transform.GridPosition.Position, dir.Normalized, (int) CollisionGroup.Impassable);
+                var rayResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, dir.Length, user);
+                hitImpassable = rayResults.DidHitObject;
+            }
+
+            return !hitImpassable;
+        }
+
         public bool AttackHand(AttackHandEventArgs eventArgs)
         {
+            if (!CanPickup(eventArgs.User)) return false;
+
             var hands = eventArgs.User.GetComponent<IHandsComponent>();
             hands.PutInHand(this, hands.ActiveIndex, fallback: false);
             return true;
@@ -85,7 +110,7 @@ namespace Content.Server.GameObjects
 
             protected override VerbVisibility GetVisibility(IEntity user, ItemComponent component)
             {
-                if (ContainerHelpers.IsInContainer(component.Owner))
+                if (ContainerHelpers.IsInContainer(component.Owner) || !component.CanPickup(user))
                 {
                     return VerbVisibility.Invisible;
                 }
