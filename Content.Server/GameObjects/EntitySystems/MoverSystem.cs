@@ -141,7 +141,11 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
             {
-                if (physics.LinearVelocity != Vector2.Zero)
+                if (!PixelMovementEnabled && transform.GridPosition.Distance(_mapManager, mover.TargetPosition) > 0)
+                {
+                    physics.LinearVelocity = Vector2((int) MathF.Round(LastPosition.X - TargetPosition.X), (int) MathF.Round(LastPosition.Y - TargetPosition.Y));
+                }
+                else if (physics.LinearVelocity != Vector2.Zero)
                     physics.LinearVelocity = Vector2.Zero;
             }
             else
@@ -153,6 +157,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 var distance = transform.GridPosition.Distance(_mapManager, mover.LastPosition);
                 mover.StepSoundDistance += distance;
                 mover.LastPosition = transform.GridPosition;
+                mover.TargetPosition = mover.LastPosition.Offset(mover.VelocityDir);
                 float distanceNeeded;
                 if (mover.Sprinting)
                 {
