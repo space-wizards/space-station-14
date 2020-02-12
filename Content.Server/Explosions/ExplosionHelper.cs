@@ -80,11 +80,11 @@ namespace Content.Server.Explosions
                 ContentTileDefinition tileDef = (ContentTileDefinition)tileDefinitionManager[tile.Tile.TypeId];
                 ContentTileDefinition.BaseTurfs.TryGetValue(tileDef.Name, out List<string> BaseTurfs);
                 var distanceFromTile = (int)tileLoc.Distance(mapManager, coords);
-                if (BaseTurfs.Count == 0)
+                if (!BaseTurfs.Any())
                     continue;
                 {
                     if (distanceFromTile < devastationRange)
-                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[BaseTurfs[1]].TileId));
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[BaseTurfs[0]].TileId));
                     if (distanceFromTile < heavyImpactRange)
                     {
                         if (robustRandom.Prob(80))
@@ -93,7 +93,7 @@ namespace Content.Server.Explosions
                         }
                         else
                         {
-                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[BaseTurfs[1]].TileId));
+                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[BaseTurfs[0]].TileId));
                         }
                     }
                     if (distanceFromTile < lightImpactRange)
