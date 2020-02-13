@@ -224,12 +224,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             physComp.LinearVelocity = dirVec * spd;
 
-            var wHomoDir = Vector3.UnitX;
-
-            transform.InvWorldMatrix.Transform(ref wHomoDir, out var lHomoDir);
-
-            lHomoDir.Normalize();
-            transform.LocalRotation = new Angle(lHomoDir.Xy);
+            transform.LocalRotation = new Angle(dirVec).GetCardinalDir().ToAngle();
 
             return true;
         }
