@@ -184,8 +184,8 @@ namespace Content.Server.GameObjects
                     bruteDamage += 30;
                     break;
             }
-            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage);
-            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage, eventArgs.Source);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage, eventArgs.Source);
         }
     }
 
