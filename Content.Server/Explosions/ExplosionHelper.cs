@@ -90,10 +90,10 @@ namespace Content.Server.Explosions
                 }
                 else if (distanceFromTile < heavyImpactRange)
                 {
-                   if (robustRandom.Prob(80))
-                   {
-                       mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[baseTurfs.Count - 1]].TileId));
-                   }
+                    if (robustRandom.Prob(80))
+                    {
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[baseTurfs.Count - 1]].TileId));
+                    }
                     else
                     {
                         mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[0]].TileId));
