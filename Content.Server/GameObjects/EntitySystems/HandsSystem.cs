@@ -175,8 +175,8 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!handsComp.ThrowItem())
                 return false;
 
-            // pop off an item, or throw the single item in hand.
-            if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2)
+            // throw the item, split off from a stack if it's meant to be thrown individually
+            if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2 || !stackComp.ThrowIndividually)
             {
                 handsComp.Drop(handsComp.ActiveIndex);
             }
