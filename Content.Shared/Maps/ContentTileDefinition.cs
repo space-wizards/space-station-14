@@ -22,7 +22,6 @@ namespace Content.Shared.Maps
         public string DisplayName { get; private set; }
         public string SpriteName { get; private set; }
         public static Dictionary<string, List<string>> BaseTurfs { get; private set; } = new Dictionary<string, List<string>>();
-        //public static List<string> BaseTurfs { get; private set; }
         public bool IsSubFloor { get; private set; }
         public bool CanCrowbar { get; private set; }
         public string FootstepSounds { get; private set; }
