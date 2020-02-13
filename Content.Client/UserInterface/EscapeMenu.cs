@@ -1,10 +1,12 @@
-﻿using Robust.Client.Console;
+﻿using Content.Client.Sandbox;
+using Robust.Client.Console;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 
@@ -19,6 +21,8 @@ namespace Content.Client.UserInterface
         private readonly IResourceCache _resourceCache;
         private readonly IConfigurationManager _configSystem;
         private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly ISandboxManager _sandboxManager;
+        [Dependency] private readonly IClientConGroupController _conGroupController;
 
         private BaseButton QuitButton;
         private BaseButton OptionsButton;
@@ -41,7 +45,14 @@ namespace Content.Client.UserInterface
             _prototypeManager = prototypeManager;
             _resourceCache = resourceCache;
 
+            IoCManager.InjectDependencies(this);
+
+            _sandboxManager.AllowedChanged += AllowedChanged;
+            _conGroupController.ConGroupUpdated += UpdateSpawnButtonStates;
+
             PerformLayout();
+
+            UpdateSpawnButtonStates();
         }
 
         private void PerformLayout()
@@ -88,7 +99,8 @@ namespace Content.Client.UserInterface
 
         private void OnSpawnEntitiesButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            var window = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localizationManager);
+            var window = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache,
+                _localizationManager);
             window.OpenToLeft();
         }
 
@@ -96,6 +108,20 @@ namespace Content.Client.UserInterface
         {
             var window = new TileSpawnWindow(__tileDefinitionManager, _placementManager, _resourceCache);
             window.OpenToLeft();
+        }
+
+        private void UpdateSpawnButtonStates()
+        {
+            if (_conGroupController.CanAdminPlace() || _sandboxManager.SandboxAllowed)
+            {
+                SpawnEntitiesButton.Disabled = false;
+                SpawnTilesButton.Disabled = false;
+            }
+            else
+            {
+                SpawnEntitiesButton.Disabled = true;
+                SpawnTilesButton.Disabled = true;
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -106,5 +132,15 @@ namespace Content.Client.UserInterface
                 optionsMenu.Dispose();
             }
         }
+
+        public override void Close()
+        {
+            base.Close();
+
+            _sandboxManager.AllowedChanged -= AllowedChanged;
+            _conGroupController.ConGroupUpdated -= UpdateSpawnButtonStates;
+        }
+
+        private void AllowedChanged(bool newAllowed) => UpdateSpawnButtonStates();
     }
 }

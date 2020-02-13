@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.Animations;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
@@ -99,7 +99,8 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cast = (BallisticMagazineWeaponComponentState) curState;
+            if (!(curState is BallisticMagazineWeaponComponentState cast))
+                return;
 
             Chambered = cast.Chambered;
             MagazineCount = cast.MagazineCount;

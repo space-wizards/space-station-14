@@ -24,5 +24,6 @@
   - type: SnapGrid
     offset: Center
   placement:
+    mode: SnapgridCenter
     snap:
     - Wall

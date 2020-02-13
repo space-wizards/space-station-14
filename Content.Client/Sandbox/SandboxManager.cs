@@ -1,4 +1,5 @@
-﻿using Content.Client.UserInterface;
+﻿using System;
+using Content.Client.UserInterface;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Interfaces.Input;
@@ -28,7 +29,10 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IInputManager _inputManager;
 #pragma warning restore 649
 
-        private bool _sandboxAllowed;
+        public bool SandboxAllowed { get; private set; }
+
+        public event Action<bool> AllowedChanged;
+
         private SandboxWindow _window;
         private EntitySpawnWindow _spawnWindow;
         private TileSpawnWindow _tilesSpawnWindow;
@@ -63,7 +67,7 @@ namespace Content.Client.Sandbox
 
         private void UpdateSandboxWindowVisibility()
         {
-            if (_sandboxWindowToggled && _sandboxAllowed)
+            if (_sandboxWindowToggled && SandboxAllowed)
                 OpenWindow();
             else
                 _window?.Close();
@@ -71,12 +75,12 @@ namespace Content.Client.Sandbox
 
         private void SetAllowed(bool newAllowed)
         {
-            if (newAllowed == _sandboxAllowed)
+            if (newAllowed == SandboxAllowed)
             {
                 return;
             }
 
-            _sandboxAllowed = newAllowed;
+            SandboxAllowed = newAllowed;
             _gameHud.SandboxButtonVisible = newAllowed;
 
             if (!newAllowed)
@@ -84,6 +88,8 @@ namespace Content.Client.Sandbox
                 // Sandbox permission revoked, close window.
                 _window?.Close();
             }
+
+            AllowedChanged?.Invoke(newAllowed);
         }
 
         private void OpenWindow()

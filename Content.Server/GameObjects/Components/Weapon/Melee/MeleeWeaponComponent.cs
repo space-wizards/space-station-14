@@ -102,7 +102,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
 
             var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
-            audioSystem.Play(hitEntities.Count > 0  ? _hitSound : "/Audio/weapons/punchmiss.ogg");
+            var emitter = hitEntities.Count == 0 ? eventArgs.User : hitEntities[0];
+            audioSystem.Play(hitEntities.Count > 0 ? _hitSound : "/Audio/weapons/punchmiss.ogg", emitter);
 
             if (Arc != null)
             {
@@ -133,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), 19), _range, ignore);
+                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), 23), _range, ignore);
                 if (res.HitEntity != null)
                 {
                     resSet.Add(res.HitEntity);

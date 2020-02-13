@@ -20,6 +20,12 @@ namespace Content.Server.Explosions
 {
     public static class ExplosionHelper
     {
+        /// <summary>
+        /// Distance used for camera shake when distance from explosion is (0.0, 0.0).
+        /// Avoids getting NaN values down the line from doing math on (0.0, 0.0).
+        /// </summary>
+        private static Vector2 _epicenterDistance = (0.1f, 0.1f);
+
         public static void SpawnExplosion(GridCoordinates coords, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
         {
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
@@ -130,8 +136,11 @@ namespace Content.Server.Explosions
 
                 var playerPos = player.AttachedEntity.Transform.WorldPosition;
                 var delta = coords.ToMapPos(mapManager) - playerPos;
-                var distance = delta.LengthSquared;
+                //Change if zero. Will result in a NaN later breaking camera shake if not changed
+                if (delta.EqualsApprox((0.0f, 0.0f)))
+                    delta = _epicenterDistance;
 
+                var distance = delta.LengthSquared;
                 var effect = 1 / (1 + 0.2f * distance);
                 if (effect > 0.01f)
                 {
