@@ -66,6 +66,8 @@ namespace Content.Client.UserInterface
             windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
 
+            var textureInvertedTriangle = resCache.GetTexture("/nano/inverted_triangle.svg.png");
+
             // Button styles.
             var buttonTex = resCache.GetTexture("/Nano/button.svg.96dpi.png");
             var buttonNormal = new StyleBoxTexture
@@ -684,7 +686,30 @@ namespace Content.Client.UserInterface
                 new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderBlue}, null, null), new []
                 {
                     new StyleProperty(Slider.StylePropertyFill, sliderFillBlue),
-                })
+                }),
+
+                new StyleRule(new SelectorElement(typeof(TextureRect), new[] {OptionButton.StyleClassOptionTriangle}, null, null), new[]
+                {
+                    new StyleProperty(TextureRect.StylePropertyTexture, textureInvertedTriangle),
+                    //new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#FFFFFF")),
+                }),
+                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
+                }),
+                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
+                }),
+                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
+                }),
+                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
+                    new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
+                }),
             });
         }
     }
