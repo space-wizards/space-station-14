@@ -84,12 +84,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private class AddAiCommand : IClientCommand
         {
-#pragma warning disable 649
-            [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
-
-            public AddAiCommand() => IoCManager.InjectDependencies(this);
-
             public string Command => "addai";
             public string Description => "Add an ai component with a given processor to an entity.";
             public string Help => "Usage: addai <processorId> <entityId>"
@@ -107,7 +101,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 var processorId = args[0];
                 var entId = new EntityUid(int.Parse(args[1]));
                 var ent = IoCManager.Resolve<IEntityManager>().GetEntity(entId);
-                var aiSystem = _entitySystemManager.GetEntitySystem<AiSystem>();
+                var aiSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiSystem>();
 
                 if (!aiSystem.ProcessorTypeExists(processorId))
                 {
