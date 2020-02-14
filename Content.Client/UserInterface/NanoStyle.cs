@@ -307,37 +307,28 @@ namespace Content.Client.UserInterface
                     }),
 
                 // Regular buttons!
-                new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassNormal}),
-                    new[]
-                    {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonNormal),
-                    }),
-                new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassHover}),
-                    new[]
-                    {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
-                    }),
-                new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassPressed}),
-                    new[]
-                    {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonPressed),
-                    }),
-                new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassDisabled}),
-                    new[]
-                    {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonDisabled),
-                        new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
-                    }),
+                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
+                }),
+                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
+                }),
+                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
+                }),
+                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
+                    new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
+                }),
 
                 // Main menu: Make those buttons bigger.
-                new StyleRule(
-                    new SelectorChild(
-                        new SelectorElement(null, null, "mainMenuVBox", null),
-                        new SelectorElement(typeof(Button), null, null, null)),
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(Button), null, "mainMenu", null),
+                    new SelectorElement(typeof(Label), null, null, null)),
                     new[]
                     {
                         new StyleProperty("font", notoSansBold16),
@@ -436,15 +427,14 @@ namespace Content.Client.UserInterface
                     }),
 
                 // CheckBox
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new[]
-                {
-                    new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureUnchecked),
-                }),
-
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, new[] {Button.StylePseudoClassPressed}),
-                    new[]
+                new StyleRule(new SelectorElement(typeof(TextureRect), null, CheckBox.StyleIdentifierCheckBoxUnchecked, null), new[]
                     {
-                        new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureChecked),
+                        new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureUnchecked),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(TextureRect), null, CheckBox.StyleIdentifierCheckBoxChecked, null), new[]
+                    {
+                        new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureChecked),
                     }),
 
                 new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new[]
@@ -558,10 +548,13 @@ namespace Content.Client.UserInterface
                     }),
 
                 // Big Button
-                new StyleRule(new SelectorElement(typeof(Button), new[] {StyleClassButtonBig}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans16)
-                }),
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(Button), new[] {StyleClassButtonBig}, null, null),
+                    new SelectorElement(typeof(Label), null, null, null)),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSans16)
+                    }),
 
                 //APC and SMES power state label colors
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateNone}, null, null), new[]
@@ -692,23 +685,6 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty(TextureRect.StylePropertyTexture, textureInvertedTriangle),
                     //new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#FFFFFF")),
-                }),
-                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
-                }),
-                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
-                }),
-                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
-                }),
-                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
-                    new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                 }),
             });
         }
