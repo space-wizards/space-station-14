@@ -307,23 +307,35 @@ namespace Content.Client.UserInterface
                     }),
 
                 // Regular buttons!
-                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
                 {
                     new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
                 }),
-                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
                 {
                     new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
                 }),
-                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
                 {
                     new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
                 }),
-                new StyleRule( new SelectorElement(typeof(ContainerButton), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
                 {
                     new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
-                    new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                 }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] { Button.StyleClassButton }, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
+                }),
+
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),
+                    new SelectorElement(typeof(Label), null, null, null)),
+                    new[]
+                    {
+                        new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
+                    }),
 
                 // Main menu: Make those buttons bigger.
                 new StyleRule(new SelectorChild(
@@ -427,19 +439,19 @@ namespace Content.Client.UserInterface
                     }),
 
                 // CheckBox
-                new StyleRule(new SelectorElement(typeof(TextureRect), null, CheckBox.StyleIdentifierCheckBoxUnchecked, null), new[]
-                    {
-                        new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureUnchecked),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(TextureRect), null, CheckBox.StyleIdentifierCheckBoxChecked, null), new[]
-                    {
-                        new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureChecked),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { CheckBox.StyleClassCheckBox }, null, null), new[]
                 {
-                    new StyleProperty(CheckBox.StylePropertyHSeparation, 3),
+                    new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureUnchecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { CheckBox.StyleClassCheckBox, CheckBox.StyleClassCheckBoxChecked }, null, null), new[]
+                {
+                    new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureChecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(HBoxContainer), new [] { CheckBox.StyleClassCheckBox }, null, null), new[]
+                {
+                    new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),
 
                 // Tooltip
@@ -681,10 +693,33 @@ namespace Content.Client.UserInterface
                     new StyleProperty(Slider.StylePropertyFill, sliderFillBlue),
                 }),
 
+                // OptionButton
+                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
+                }),
+                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
+                }),
+                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
+                }),
+                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
+                }),
+
                 new StyleRule(new SelectorElement(typeof(TextureRect), new[] {OptionButton.StyleClassOptionTriangle}, null, null), new[]
                 {
                     new StyleProperty(TextureRect.StylePropertyTexture, textureInvertedTriangle),
                     //new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#FFFFFF")),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] { OptionButton.StyleClassOptionButton }, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
                 }),
             });
         }
