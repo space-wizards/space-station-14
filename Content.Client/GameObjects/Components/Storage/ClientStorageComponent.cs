@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Storage;
+using Content.Client.Interfaces.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -99,6 +101,7 @@ namespace Content.Client.GameObjects.Components.Storage
             private Control VSplitContainer;
             private VBoxContainer EntityList;
             private Label Information;
+            private Button AddItemButton;
             public ClientStorageComponent StorageEntity;
 
             protected override Vector2? CustomSize => (180, 320);
@@ -129,6 +132,16 @@ namespace Content.Client.GameObjects.Components.Storage
                 };
                 listScrollContainer.AddChild(EntityList);
                 VSplitContainer.AddChild(listScrollContainer);
+
+                AddItemButton = new Button
+                {
+                    Text = "Add Item",
+                    ToggleMode = false,
+                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                };
+                AddItemButton.OnPressed += OnAddItemButtonPressed;
+                VSplitContainer.AddChild(AddItemButton);
+
                 Contents.AddChild(VSplitContainer);
             }
 
@@ -190,6 +203,19 @@ namespace Content.Client.GameObjects.Components.Storage
                 var control = (EntityButton) args.Button.Parent;
                 args.Button.Pressed = false;
                 StorageEntity.Interact(control.EntityuID);
+            }
+
+            /// <summary>
+            /// Function assigned to button that adds items to the storage entity.
+            /// </summary>
+            private void OnAddItemButtonPressed(BaseButton.ButtonEventArgs args)
+            {
+                var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
+
+                if (controlledEntity.TryGetComponent(out IHandsComponent hands))
+                {
+                    StorageEntity.SendNetworkMessage(new InsertEntityMessage());
+                }
             }
         }
 
