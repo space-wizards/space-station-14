@@ -37,16 +37,35 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <inheritdoc />
         public override string Name => "PlayerInputMover";
 
+
+        private float _baseWalkSpeed = DefaultBaseWalkSpeed;
         /// <summary>
         ///     Movement speed (m/s) that the entity walks, before modifiers
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseWalkSpeed {get; set;} = DefaultBaseWalkSpeed;
+        public float BaseWalkSpeed {
+            get{
+                return _baseWalkSpeed;
+            }
+            set{
+               MarkMovementSpeedModifiersDirty();
+                _baseWalkSpeed = value;
+            }
+        }
+        private float _baseSprintSpeed = DefaultBaseSprintSpeed;
         /// <summary>
         ///     Movement speed (m/s) that the entity sprints, before modifiers
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseSprintSpeed {get; set;} = DefaultBaseSprintSpeed;
+        public float BaseSprintSpeed {
+            get{
+                return _baseSprintSpeed;
+            }
+            set{
+               MarkMovementSpeedModifiersDirty();
+                _baseSprintSpeed = value;
+            }
+        }
 
         private float _currentWalkSpeed;
         /// <summary>
