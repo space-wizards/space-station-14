@@ -14,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public sealed class ThirstComponent : Component
+    public sealed class ThirstComponent : Component, IMoveSpeedModifier
     {
         #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
@@ -61,8 +61,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     Owner.TryGetComponent(out PlayerInputMoverComponent playerSpeedupComponent))
                 {
                     // TODO shitcode: Come up something better
-                    playerSpeedupComponent.WalkMoveSpeed = playerSpeedupComponent.WalkMoveSpeed * 2;
-                    playerSpeedupComponent.SprintMoveSpeed = playerSpeedupComponent.SprintMoveSpeed * 4;
+                    playerSpeedupComponent.MarkMovementSpeedModifiersDirty();
                 }
 
                 // Update UI
@@ -89,11 +88,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
                         return;
 
                     case ThirstThreshold.Parched:
-                        // TODO: If something else bumps this could cause mega-speed.
-                        // If some form of speed update system if multiple things are touching it use that.
                         if (Owner.TryGetComponent(out PlayerInputMoverComponent playerInputMoverComponent)) {
-                            playerInputMoverComponent.WalkMoveSpeed = playerInputMoverComponent.WalkMoveSpeed / 2;
-                            playerInputMoverComponent.SprintMoveSpeed = playerInputMoverComponent.SprintMoveSpeed / 4;
+                            playerInputMoverComponent.MarkMovementSpeedModifiersDirty();
                         }
                         _lastThirstThreshold = _currentThirstThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;
@@ -163,6 +159,23 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     return;
                 }
                 return;
+            }
+        }
+
+        float IMoveSpeedModifier.SprintSpeedModifier{
+            get{
+                if (_currentThirstThreshold == ThirstThreshold.Parched){
+                    return 0.25f;
+                }
+                return 1.0f;
+            }
+        }
+        float IMoveSpeedModifier.WalkSpeedModifier{
+            get{
+                if (_currentThirstThreshold == ThirstThreshold.Parched){
+                    return 0.5f;
+                }
+                return 1.0f;
             }
         }
 

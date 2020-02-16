@@ -14,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public sealed class HungerComponent : Component
+    public sealed class HungerComponent : Component, IMoveSpeedModifier
     {
         #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
@@ -60,9 +60,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
                     Owner.TryGetComponent(out PlayerInputMoverComponent playerSpeedupComponent))
                 {
-                    // TODO shitcode: Come up something better
-                    playerSpeedupComponent.WalkMoveSpeed = playerSpeedupComponent.WalkMoveSpeed * 2;
-                    playerSpeedupComponent.SprintMoveSpeed = playerSpeedupComponent.SprintMoveSpeed * 4;
+                    playerSpeedupComponent.MarkMovementSpeedModifiersDirty();
                 }
 
                 // Update UI
@@ -92,8 +90,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                         // TODO: If something else bumps this could cause mega-speed.
                         // If some form of speed update system if multiple things are touching it use that.
                         if (Owner.TryGetComponent(out PlayerInputMoverComponent playerInputMoverComponent)) {
-                            playerInputMoverComponent.WalkMoveSpeed = playerInputMoverComponent.WalkMoveSpeed / 2;
-                            playerInputMoverComponent.SprintMoveSpeed = playerInputMoverComponent.SprintMoveSpeed / 4;
+                            playerInputMoverComponent.MarkMovementSpeedModifiersDirty();
                         }
                         _lastHungerThreshold = _currentHungerThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;
@@ -168,6 +165,23 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void ResetFood()
         {
             _currentHunger = HungerThresholds[HungerThreshold.Okay];
+        }
+
+        float IMoveSpeedModifier.WalkSpeedModifier{
+            get{
+                if (_currentHungerThreshold == HungerThreshold.Starving){
+                    return 0.5f;
+                }
+                return 1.0f;
+            }
+        }
+        float IMoveSpeedModifier.SprintSpeedModifier{
+            get{
+                if (_currentHungerThreshold == HungerThreshold.Starving){
+                    return 0.5f;
+                }
+                return 1.0f;
+            }
         }
     }
 
