@@ -1,7 +1,7 @@
 - type: entity
   id: HVWire
   name: HV Wire
-  description: Transfers large amounts of power. Avoid direct contact.
+  description: Transfers power, avoid letting things come down it
   placement:
     mode: SnapgridCenter
   components:
@@ -12,7 +12,7 @@
     netsync: false
     drawdepth: BelowFloor
     sprite: Objects/Power/hv_cable.rsi
-    state: hvcable_0
+    state: cable_0
   - type: Icon
     texture: Objects/Power/eightdirwire.png
   - type: PowerTransfer
@@ -20,7 +20,7 @@
   - type: SnapGrid
     offset: Center
   - type: IconSmooth
-    base: hvcable_
+    base: cable_
     key: hv_cables
     mode: CardinalFlags
   - type: SubFloorHide
@@ -29,18 +29,18 @@
     spawnondestroy: HVCableStack
 
   snap:
-  - HVWire
+  - Wire
 
 - type: entity
-  parent: HVWire
+  parent: Wire
   id: MVWire
-  name: MV Wire
-  description: Transfers power around the station.
+  name: MVWire
+  description: Transfers power between MV devices
   components:
   - type: Sprite
+    color: Blue
     sprite: Objects/Power/mv_cable.rsi
     state: mvcable_0
-    color: Red
   - type: IconSmooth  
     base: mvcable_
     key: mv_cables
@@ -49,6 +49,22 @@
 
   snap:
   - MVWire
+
+- type: entity
+  parent: Wire
+  id: LVWire
+  name: LVWire
+  description: Transfers power between LV devices
+  components:
+  - type: Sprite
+    color: Green
+    sprite: Objects/Power/mv_cable.rsi
+    state: mvcable_0
+  - type: IconSmooth  
+    base: lvcable_
+    key: lv_cables
+  - type: PowerTransfer
+    wiretype: 0
 
 - type: entity
   id: Generator

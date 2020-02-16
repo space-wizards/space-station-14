@@ -169,9 +169,9 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
 
-        public bool CanConnectTo(WireType volt)
+        public bool CanConnectTo(WireType voltage)
         {
-            return Parent != null && Parent.Dirty == false && !Regenerating && Type.Equals(volt);
+            return Parent != null && Parent.Dirty == false && !Regenerating && Type.Equals(voltage);
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)
@@ -181,6 +181,20 @@ namespace Content.Server.GameObjects.Components.Power
                 Owner.Delete();
 
                 var droptype = "HVCableStack";
+
+                switch (Type)
+                {
+                    case WireType.HVWire:
+                        droptype = "HVCableStack";
+                        break;
+                    case WireType.MVWire:
+                        droptype = "MVCableStack";
+                        break;
+                    case WireType.LVWire:
+                        droptype = "LVCableStack";
+                        break;
+                }
+
 
                 if(Type.Equals(0))
                 {
