@@ -16,9 +16,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [RegisterComponent]
     public sealed class HungerComponent : Component, IMoveSpeedModifier
     {
-        #pragma warning disable 649
+#pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
-        #pragma warning restore 649
+#pragma warning restore 649
 
         public override string Name => "Hunger";
 
@@ -53,7 +53,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void HungerThresholdEffect(bool force = false)
         {
-            if (_currentHungerThreshold != _lastHungerThreshold || force) {
+            if (_currentHungerThreshold != _lastHungerThreshold || force)
+            {
                 Logger.InfoS("hunger", $"Updating hunger state for {Owner.Name}");
 
                 // Revert slow speed if required
@@ -89,7 +90,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     case HungerThreshold.Starving:
                         // TODO: If something else bumps this could cause mega-speed.
                         // If some form of speed update system if multiple things are touching it use that.
-                        if (Owner.TryGetComponent(out PlayerInputMoverComponent playerInputMoverComponent)) {
+                        if (Owner.TryGetComponent(out PlayerInputMoverComponent playerInputMoverComponent))
+                        {
                             playerInputMoverComponent.MarkMovementSpeedModifiersDirty();
                         }
                         _lastHungerThreshold = _currentHungerThreshold;
@@ -167,17 +169,23 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _currentHunger = HungerThresholds[HungerThreshold.Okay];
         }
 
-        float IMoveSpeedModifier.WalkSpeedModifier{
-            get{
-                if (_currentHungerThreshold == HungerThreshold.Starving){
+        float IMoveSpeedModifier.WalkSpeedModifier
+        {
+            get
+            {
+                if (_currentHungerThreshold == HungerThreshold.Starving)
+                {
                     return 0.5f;
                 }
                 return 1.0f;
             }
         }
-        float IMoveSpeedModifier.SprintSpeedModifier{
-            get{
-                if (_currentHungerThreshold == HungerThreshold.Starving){
+        float IMoveSpeedModifier.SprintSpeedModifier
+        {
+            get
+            {
+                if (_currentHungerThreshold == HungerThreshold.Starving)
+                {
                     return 0.5f;
                 }
                 return 1.0f;

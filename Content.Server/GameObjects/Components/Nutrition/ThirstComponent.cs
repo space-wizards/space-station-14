@@ -16,9 +16,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [RegisterComponent]
     public sealed class ThirstComponent : Component, IMoveSpeedModifier
     {
-        #pragma warning disable 649
+#pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
-        #pragma warning restore 649
+#pragma warning restore 649
 
         public override string Name => "Thirst";
 
@@ -53,7 +53,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void ThirstThresholdEffect(bool force = false)
         {
-            if (_currentThirstThreshold != _lastThirstThreshold || force) {
+            if (_currentThirstThreshold != _lastThirstThreshold || force)
+            {
                 Logger.InfoS("thirst", $"Updating Thirst state for {Owner.Name}");
 
                 // Revert slow speed if required
@@ -88,7 +89,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
                         return;
 
                     case ThirstThreshold.Parched:
-                        if (Owner.TryGetComponent(out PlayerInputMoverComponent playerInputMoverComponent)) {
+                        if (Owner.TryGetComponent(out PlayerInputMoverComponent playerInputMoverComponent))
+                        {
                             playerInputMoverComponent.MarkMovementSpeedModifiersDirty();
                         }
                         _lastThirstThreshold = _currentThirstThreshold;
@@ -162,17 +164,23 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
         }
 
-        float IMoveSpeedModifier.SprintSpeedModifier{
-            get{
-                if (_currentThirstThreshold == ThirstThreshold.Parched){
+        float IMoveSpeedModifier.SprintSpeedModifier
+        {
+            get
+            {
+                if (_currentThirstThreshold == ThirstThreshold.Parched)
+                {
                     return 0.25f;
                 }
                 return 1.0f;
             }
         }
-        float IMoveSpeedModifier.WalkSpeedModifier{
-            get{
-                if (_currentThirstThreshold == ThirstThreshold.Parched){
+        float IMoveSpeedModifier.WalkSpeedModifier
+        {
+            get
+            {
+                if (_currentThirstThreshold == ThirstThreshold.Parched)
+                {
                     return 0.5f;
                 }
                 return 1.0f;
