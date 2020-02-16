@@ -6,17 +6,22 @@ using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.GameObjects;
-using Robust.Shared.ContentPack;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Serialization;
+using Robust.Shared.IoC;
+using Robust.Server.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct
     {
+
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+
         /// <summary>
         /// Damagestates are reached by reaching a certain damage threshold, they will block actions after being reached
         /// </summary>
@@ -133,6 +138,15 @@ namespace Content.Server.GameObjects
             {
                 DamageTemplate.ChangeHudState(damage);
             }
+        }
+       void IOnDamageBehavior.OnDamaged(object obj, DamageEventArgs e)
+       {
+            if (!ActionBlockerSystem.CanSpeak(Owner))
+            {
+                return;
+            }
+
+            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/effects/vocals/humanoids/pain.ogg", Owner, AudioParams.Default);
         }
 
         private bool CanReceiveStatusEffect(IEntity user)
