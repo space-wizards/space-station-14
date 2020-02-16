@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (Owner.TryGetComponent(out SpriteComponent sprite))
             {
-                sprite.LayerSetState(0, "paper_words");
+                sprite.LayerSetState(1, "paper_words");
             }
 
             UpdateUserInterface();

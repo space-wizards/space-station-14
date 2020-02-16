@@ -2,15 +2,14 @@
   name: Paper
   parent: BaseItem
   id: Paper
-  description: ''
+  description: 'A piece of white paper'
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: paper
+    layers:
+    - state: paper_words
+    - state: paper
   - type: Icon
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: paper
-  - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     state: paper
   - type: Paper
@@ -25,13 +24,10 @@
   id: Pen
   description: 'A dark ink pen'
   components:
-    - type: Sprite
-      sprite: Objects/Misc/bureaucracy.rsi
-      state: pen
-    - type: Icon
-      sprite: Objects/Misc/bureaucracy.rsi
-      state: pen
-    - type: Item
-      sprite: Objects/Misc/bureaucracy.rsi
-      state: pen
-    - type: Write
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen
+  - type: Icon
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: pen
+  - type: Write
