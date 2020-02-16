@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Input;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
@@ -14,6 +15,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -248,6 +250,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IPhysicsManager _physicsManager;
 #pragma warning restore 649
 
         public const float InteractionRange = 2;
@@ -262,6 +265,34 @@ namespace Content.Server.GameObjects.EntitySystems
                 new PointerInputCmdHandler(HandleAttack));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
                 new PointerInputCmdHandler(HandleActivateItemInWorld));
+        }
+
+        /// <summary>
+        ///     Checks that these coordinates are within a certain distance without any
+        ///     entity that matches the collision mask obstructing them.
+        ///     If the <paramref name="range"/> is zero or negative,
+        ///     this method will only check if nothing obstructs the two sets of coordinates..
+        /// </summary>
+        /// <param name="mapManager">Map manager containing the two GridIds.</param>
+        /// <param name="coords">Set of coordinates to use.</param>
+        /// <param name="otherCoords">Other set of coordinates to use.</param>
+        /// <param name="range">maximum distance between the two sets of coordinates.</param>
+        /// <param name="collisionMask">the mask to check for collisions</param>
+        /// <param name="ignoredEnt">the entity to be ignored when checking for collisions.</param>
+        /// <returns>True if the two points are within a given range without being obstructed.</returns>
+        public bool InRangeUnobstructed(GridCoordinates coords, GridCoordinates otherCoords, float range = InteractionRange, int collisionMask = (int)CollisionGroup.Impassable, IEntity ignoredEnt = null)
+        {
+            if (range > 0f && !coords.InRange(_mapManager, otherCoords, range))
+            {
+                return false;
+            }
+
+            var dir = (otherCoords.Position - coords.Position);
+            if (!(dir.Length > 0f)) return true;
+            var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
+            var rayResults = _physicsManager.IntersectRay(_mapManager.GetGrid(coords.GridID).ParentMapId, ray, dir.Length, ignoredEnt);
+
+            return !rayResults.DidHitObject;
         }
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
