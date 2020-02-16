@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 damageableComponent.TakeDamage(DamageType.Heat, 20, Owner);
                 var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
-                audioSystem.Play("/Audio/effects/sear.ogg", Owner);
+                audioSystem.Play("/Audio/effects/hiss.ogg", Owner);
             }
 
             void Eject()

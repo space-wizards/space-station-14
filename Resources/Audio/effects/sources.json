@@ -2,5 +2,6 @@
     "description": "Using a .json makes it easier to tell if sounds have duplicate sources",
     "effects": {
 		"sear.ogg": "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/weapons/sear.ogg"
+		"hiss.ogg": "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/items/welder.ogg"
     }
 }
