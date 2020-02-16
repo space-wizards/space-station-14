@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
                 if (entity.TryGetComponent(out DamageableComponent damageComponent))
                 {
-                    damageComponent.TakeDamage(DamageType.Brute, Damage);
+                    damageComponent.TakeDamage(DamageType.Brute, Damage, Owner, eventArgs.User);
                     hitEntities.Add(entity);
                 }
             }

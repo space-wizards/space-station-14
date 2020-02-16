@@ -5,6 +5,7 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -36,6 +37,7 @@ namespace Content.Server.GameObjects
         Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
+        public event EventHandler<DamageEventArgs> Damaged;
 
         public override ComponentState GetComponentState()
         {
@@ -62,13 +64,14 @@ namespace Content.Server.GameObjects
             foreach (var damagebehavior in Owner.GetAllComponents<IOnDamageBehavior>())
             {
                 AddThresholdsFrom(damagebehavior);
+                Damaged += damagebehavior.OnDamaged;
             }
 
             RecalculateComponentThresholds();
         }
 
         /// <inheritdoc />
-        public void TakeDamage(DamageType damageType, int amount)
+        public void TakeDamage(DamageType damageType, int amount, IEntity source = null, IEntity sourceMob = null)
         {
             if (damageType == DamageType.Total)
             {
@@ -88,6 +91,8 @@ namespace Content.Server.GameObjects
             _currentDamage[damageType] = Math.Max(0, _currentDamage[damageType] + amount);
             UpdateForDamageType(damageType, oldValue);
 
+            Damaged?.Invoke(this, new DamageEventArgs(damageType, amount, source, sourceMob));
+
             if (Resistances.AppliesToTotal(damageType))
             {
                 oldTotalValue = _currentDamage[DamageType.Total];
@@ -97,13 +102,13 @@ namespace Content.Server.GameObjects
         }
 
         /// <inheritdoc />
-        public void TakeHealing(DamageType damageType, int amount)
+        public void TakeHealing(DamageType damageType, int amount, IEntity source = null, IEntity sourceMob = null)
         {
             if (damageType == DamageType.Total)
             {
                 throw new ArgumentException("Cannot heal for DamageType.Total");
             }
-            TakeDamage(damageType, -amount);
+            TakeDamage(damageType, -amount, source, sourceMob);
         }
 
         public void HealAllDamage()
@@ -162,6 +167,9 @@ namespace Content.Server.GameObjects
             }
 
             List<DamageThreshold> thresholds = onDamageBehavior.GetAllDamageThresholds();
+
+            if (thresholds == null)
+                return;
 
             foreach (DamageThreshold threshold in thresholds)
             {
