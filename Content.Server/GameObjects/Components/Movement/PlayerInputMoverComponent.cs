@@ -22,6 +22,8 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IMoverComponent))]
     public class PlayerInputMoverComponent : Component, IMoverComponent, ICollideSpecial
     {
+        const float DefaultBaseWalkSpeed = 4.0f;
+        const float DefaultBaseSprintSpeed = 7.0f;
 
 #pragma warning disable 649
         [Dependency] private readonly IConfigurationManager _configurationManager;
@@ -36,16 +38,44 @@ namespace Content.Server.GameObjects.Components.Movement
         public override string Name => "PlayerInputMover";
 
         /// <summary>
-        ///     Movement speed (m/s) that the entity walks.
+        ///     Movement speed (m/s) that the entity walks, before modifiers
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WalkMoveSpeed { get; set; } = 4.0f;
+        public float BaseWalkSpeed {get; set;} = DefaultBaseWalkSpeed;
+        /// <summary>
+        ///     Movement speed (m/s) that the entity sprints, before modifiers
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BaseSprintSpeed {get; set;} = DefaultBaseSprintSpeed;
 
+        private float _currentWalkSpeed;
+        /// <summary>
+        ///     Movement speed (m/s) that the entity walks, after modifiers
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float CurrentWalkSpeed {
+            get {
+                RecalculateMovementSpeed();
+                return _currentWalkSpeed;
+            }
+        }
+
+        private float _currentSprintSpeed;
         /// <summary>
         ///     Movement speed (m/s) that the entity sprints.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float SprintMoveSpeed { get; set; } = 7.0f;
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float CurrentSprintSpeed {
+            get{
+                RecalculateMovementSpeed();
+                return _currentSprintSpeed;
+            }
+        }
+
+        /// <summary>
+        ///     Do we need to recalculate walk/sprint speed due to modifier changes?
+        /// </summary>
+        private bool _movementModifiersDirty = true;
 
         /// <summary>
         ///     Is the entity Sprinting (running)?
@@ -89,13 +119,21 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.ExposeData(serializer);
 
-            serializer.DataReadWriteFunction("wspd", 4.0f, value => WalkMoveSpeed = value, () => WalkMoveSpeed);
-            serializer.DataReadWriteFunction("rspd", 10.0f, value => SprintMoveSpeed = value, () => SprintMoveSpeed);
+            //only save the base speeds - the current speeds are transient.
+            serializer.DataReadWriteFunction("wspd", 4.0f, value => BaseWalkSpeed = value, () => BaseWalkSpeed);
+            serializer.DataReadWriteFunction("rspd", 10.0f, value => BaseSprintSpeed = value, () => BaseSprintSpeed);
 
             // The velocity and moving directions is usually set from player or AI input,
             // so we don't want to save/load these derived fields.
         }
 
+
+        /// <summary>
+        ///     tells the component to recalculate movement speed when next used
+        /// </summary>
+        public void MarkMovementSpeedModifiersDirty(){
+            _movementModifiersDirty = true;
+        }
         /// <summary>
         ///     Toggles one of the four cardinal directions. Each of the four directions are
         ///     composed into a single direction vector, <see cref="VelocityDir"/>. Enabling
@@ -144,13 +182,31 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
         /// <summary>
+        ///     Recalculate movement speed with current modifiers, or return early if no change
+        /// </summary>
+        private void RecalculateMovementSpeed(){
+            if (!_movementModifiersDirty)
+                return;
+            var movespeedModifiers =  Owner.GetAllComponents<IMoveSpeedModifier>();
+            float walkSpeed = BaseWalkSpeed;
+            float sprintSpeed = BaseWalkSpeed;
+            foreach (var component in movespeedModifiers){
+                walkSpeed *= component.WalkSpeedModifier;
+                sprintSpeed *= component.SprintSpeedModifier;
+            }
+            _currentWalkSpeed = walkSpeed;
+            _currentSprintSpeed = sprintSpeed;
+            _movementModifiersDirty = false;
+        }
+
+        /// <summary>
         /// Special collision override, can be used to give custom behaviors deciding when to collide
         /// </summary>
         /// <param name="collidedwith"></param>
         /// <returns></returns>
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
-            // Don't collid with other mobs
+            // Don't collide with other mobs
             if (collidedwith.Owner.TryGetComponent<SpeciesComponent>(out var collidedSpeciesComponent))
             {
                 return true;
@@ -158,5 +214,9 @@ namespace Content.Server.GameObjects.Components.Movement
             return false;
         }
 
+    }
+    interface IMoveSpeedModifier{
+            float WalkSpeedModifier {get;}
+            float SprintSpeedModifier {get;}
     }
 }

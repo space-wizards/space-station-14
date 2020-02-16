@@ -60,13 +60,13 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Movement speed (m/s) that the entity walks.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WalkMoveSpeed { get; set; } = 4.0f;
+        public float CurrentWalkSpeed { get; set; } = 4.0f;
 
         /// <summary>
         ///     Movement speed (m/s) that the entity sprints.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float SprintMoveSpeed { get; set; } = 10.0f;
+        public float CurrentSprintSpeed { get; set; } = 10.0f;
 
         /// <summary>
         ///     Is the entity Sprinting (running)?
