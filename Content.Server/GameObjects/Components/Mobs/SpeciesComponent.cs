@@ -19,8 +19,9 @@ namespace Content.Server.GameObjects
     [RegisterComponent]
     public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct
     {
-
+        #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        #pragma warning restore 649
 
         /// <summary>
         /// Damagestates are reached by reaching a certain damage threshold, they will block actions after being reached
