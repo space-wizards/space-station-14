@@ -120,8 +120,8 @@ namespace Content.Server.GameObjects.Components.Movement
             base.ExposeData(serializer);
 
             //only save the base speeds - the current speeds are transient.
-            serializer.DataReadWriteFunction("wspd", 4.0f, value => BaseWalkSpeed = value, () => BaseWalkSpeed);
-            serializer.DataReadWriteFunction("rspd", 10.0f, value => BaseSprintSpeed = value, () => BaseSprintSpeed);
+            serializer.DataReadWriteFunction("wspd", DefaultBaseWalkSpeed, value => BaseWalkSpeed = value, () => BaseWalkSpeed);
+            serializer.DataReadWriteFunction("rspd", DefaultBaseSprintSpeed, value => BaseSprintSpeed = value, () => BaseSprintSpeed);
 
             // The velocity and moving directions is usually set from player or AI input,
             // so we don't want to save/load these derived fields.
