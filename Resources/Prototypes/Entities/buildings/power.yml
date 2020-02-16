@@ -12,7 +12,7 @@
     netsync: false
     drawdepth: BelowFloor
     sprite: Objects/Power/hv_cable.rsi
-    state: cable_0
+    state: hvcable_0
   - type: Icon
     texture: Objects/Power/eightdirwire.png
   - type: PowerTransfer
@@ -20,7 +20,7 @@
   - type: SnapGrid
     offset: Center
   - type: IconSmooth
-    base: cable_
+    base: hvcable_
     key: hv_cables
     mode: CardinalFlags
   - type: SubFloorHide
@@ -32,7 +32,7 @@
   - Wire
 
 - type: entity
-  parent: Wire
+  parent: HVWire
   id: MVWire
   name: MVWire
   description: Transfers power between MV devices
@@ -51,7 +51,7 @@
   - MVWire
 
 - type: entity
-  parent: Wire
+  parent: HVWire
   id: LVWire
   name: LVWire
   description: Transfers power between LV devices
