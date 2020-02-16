@@ -29,6 +29,7 @@ namespace Content.Server.GameObjects
         [Dependency] private readonly IRobustRandom _robustRandom;
         [Dependency] private readonly IPhysicsManager _physicsManager;
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         #pragma warning restore 649
 
         private string _equippedPrefix;
@@ -74,17 +75,8 @@ namespace Content.Server.GameObjects
             var coords = Owner.Transform.GridPosition;
 
             if (!ActionBlockerSystem.CanPickup(user)) return false;
-
-            var hitImpassable = false;
-            var dir = (coords.Position - user.Transform.GridPosition.Position);
-            if (dir.Length > 0f)
-            {
-                var ray = new CollisionRay(user.Transform.GridPosition.Position, dir.Normalized, (int) CollisionGroup.Impassable);
-                var rayResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, dir.Length, user);
-                hitImpassable = rayResults.DidHitObject;
-            }
-
-            return !hitImpassable;
+            return _entitySystemManager.GetEntitySystem<InteractionSystem>()
+                .InRangeUnobstructed(coords, user.Transform.GridPosition, ignoredEnt:Owner);
         }
 
         public bool AttackHand(AttackHandEventArgs eventArgs)

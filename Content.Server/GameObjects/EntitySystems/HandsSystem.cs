@@ -31,6 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -126,16 +127,9 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
-            var hitImpassable = false;
-            var dir = (coords.Position - ent.Transform.GridPosition.Position);
-            if (dir.Length > 0f)
-            {
-                var ray = new CollisionRay(ent.Transform.GridPosition.Position, dir.Normalized, (int) CollisionGroup.Impassable);
-                var rayResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ent.Transform.MapID, ray, dir.Length, ent);
-                hitImpassable = rayResults.DidHitObject;
-            }
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
 
-            if(!hitImpassable)
+            if(interactionSystem.InRangeUnobstructed(coords, ent.Transform.GridPosition, 0f, ignoredEnt:ent))
                 if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
                 {
                     handsComp.Drop(handsComp.ActiveIndex, coords);
