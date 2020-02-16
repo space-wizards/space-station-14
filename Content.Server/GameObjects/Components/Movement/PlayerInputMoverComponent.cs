@@ -43,12 +43,15 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Movement speed (m/s) that the entity walks, before modifiers
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseWalkSpeed {
-            get{
+        public float BaseWalkSpeed
+        {
+            get
+            {
                 return _baseWalkSpeed;
             }
-            set{
-               MarkMovementSpeedModifiersDirty();
+            set
+            {
+                MarkMovementSpeedModifiersDirty();
                 _baseWalkSpeed = value;
             }
         }
@@ -57,12 +60,15 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Movement speed (m/s) that the entity sprints, before modifiers
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseSprintSpeed {
-            get{
+        public float BaseSprintSpeed
+        {
+            get
+            {
                 return _baseSprintSpeed;
             }
-            set{
-               MarkMovementSpeedModifiersDirty();
+            set
+            {
+                MarkMovementSpeedModifiersDirty();
                 _baseSprintSpeed = value;
             }
         }
@@ -72,8 +78,10 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Movement speed (m/s) that the entity walks, after modifiers
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
-        public float CurrentWalkSpeed {
-            get {
+        public float CurrentWalkSpeed
+        {
+            get
+            {
                 RecalculateMovementSpeed();
                 return _currentWalkSpeed;
             }
@@ -84,8 +92,10 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Movement speed (m/s) that the entity sprints.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
-        public float CurrentSprintSpeed {
-            get{
+        public float CurrentSprintSpeed
+        {
+            get
+            {
                 RecalculateMovementSpeed();
                 return _currentSprintSpeed;
             }
@@ -150,7 +160,8 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <summary>
         ///     tells the component to recalculate movement speed when next used
         /// </summary>
-        public void MarkMovementSpeedModifiersDirty(){
+        public void MarkMovementSpeedModifiersDirty()
+        {
             _movementModifiersDirty = true;
         }
         /// <summary>
@@ -203,13 +214,15 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <summary>
         ///     Recalculate movement speed with current modifiers, or return early if no change
         /// </summary>
-        private void RecalculateMovementSpeed(){
+        private void RecalculateMovementSpeed()
+        {
             if (!_movementModifiersDirty)
                 return;
-            var movespeedModifiers =  Owner.GetAllComponents<IMoveSpeedModifier>();
+            var movespeedModifiers = Owner.GetAllComponents<IMoveSpeedModifier>();
             float walkSpeed = BaseWalkSpeed;
             float sprintSpeed = BaseWalkSpeed;
-            foreach (var component in movespeedModifiers){
+            foreach (var component in movespeedModifiers)
+            {
                 walkSpeed *= component.WalkSpeedModifier;
                 sprintSpeed *= component.SprintSpeedModifier;
             }
@@ -234,8 +247,9 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
     }
-    interface IMoveSpeedModifier{
-            float WalkSpeedModifier {get;}
-            float SprintSpeedModifier {get;}
+    interface IMoveSpeedModifier
+    {
+        float WalkSpeedModifier { get; }
+        float SprintSpeedModifier { get; }
     }
 }
