@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             var position = Owner.Transform.WorldPosition;
 
-            if(NodeWireType == PowerTransferComponent.WireType.HVWire)
+            if(NodeWireType != PowerTransferComponent.WireType.LVWire)
             {
                 var sgc = Owner.GetComponent<SnapGridComponent>();
                 var wire = sgc.GetCardinalNeighborCells()
