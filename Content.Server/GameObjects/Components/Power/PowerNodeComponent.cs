@@ -1,22 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.Sound;
-using Microsoft.EntityFrameworkCore.Query;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.GameObjects.EntitySystemMessages;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Power
 {
