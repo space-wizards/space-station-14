@@ -61,8 +61,8 @@
     sprite: Objects/Power/mv_cable.rsi
     state: mvcable_0
   - type: IconSmooth  
-    base: lvcable_
-    key: lv_cables
+    base: mvcable_
+    key: mv_cables
   - type: PowerTransfer
     wiretype: 0
 

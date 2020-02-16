@@ -195,12 +195,6 @@ namespace Content.Server.GameObjects.Components.Power
                         break;
                 }
 
-
-                if(Type.Equals(0))
-                {
-                    droptype = "MVCableStack";
-                }
-
                 var droppedEnt = Owner.EntityManager.SpawnEntity(droptype, eventArgs.ClickLocation);
 
                 if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
