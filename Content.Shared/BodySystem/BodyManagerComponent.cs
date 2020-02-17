@@ -39,10 +39,6 @@ namespace Content.Shared.BodySystem {
         public Dictionary<string, BodyPart> Parts => _parts;
         public sealed override string Name => "BodyManager";
 
-        public BodyManagerComponent() {
-            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        }
-
         public override void ExposeData(ObjectSerializer serializer) {
             base.ExposeData(serializer);
 
