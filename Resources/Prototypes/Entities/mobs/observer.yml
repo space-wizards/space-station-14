@@ -12,3 +12,4 @@
     context: "ghost"
   - type: Examiner
     DoRangeCheck: false
+  - type: IgnorePause

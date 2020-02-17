@@ -79,11 +79,17 @@ namespace Content.Server.GameObjects.EntitySystems
             throw new ArgumentException($"Processor type {name} could not be found.", nameof(name));
         }
 
+        public bool ProcessorTypeExists(string name) => _processorTypes.ContainsKey(name);
+
+
         private class AddAiCommand : IClientCommand
         {
             public string Command => "addai";
             public string Description => "Add an ai component with a given processor to an entity.";
-            public string Help => "addai <processorId> <entityId>";
+            public string Help => "Usage: addai <processorId> <entityId>"
+                                + "\n    processorId: Class that inherits AiLogicProcessor and has an AiLogicProcessor attribute."
+                                + "\n    entityID: Uid of entity to add the AiControllerComponent to. Open its VV menu to find this.";
+
             public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
             {
                 if(args.Length != 2)
@@ -95,7 +101,13 @@ namespace Content.Server.GameObjects.EntitySystems
                 var processorId = args[0];
                 var entId = new EntityUid(int.Parse(args[1]));
                 var ent = IoCManager.Resolve<IEntityManager>().GetEntity(entId);
+                var aiSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiSystem>();
 
+                if (!aiSystem.ProcessorTypeExists(processorId))
+                {
+                    shell.SendText(player, "Invalid processor type. Processor must inherit AiLogicProcessor and have an AiLogicProcessor attribute.");
+                    return;
+                }
                 if (ent.HasComponent<AiControllerComponent>())
                 {
                     shell.SendText(player, "Entity already has an AI component.");

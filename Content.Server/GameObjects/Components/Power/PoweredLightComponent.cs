@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             void Burn()
             {
-                damageableComponent.TakeDamage(DamageType.Heat, 20);
+                damageableComponent.TakeDamage(DamageType.Heat, 20, Owner);
             }
 
             void Eject()

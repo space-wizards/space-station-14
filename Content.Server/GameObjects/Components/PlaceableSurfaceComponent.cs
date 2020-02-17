@@ -20,9 +20,12 @@ namespace Content.Server.GameObjects.Components
         }
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!IsPlaceable)
+                return false;
+
             if(!eventArgs.User.TryGetComponent<HandsComponent>(out var handComponent))
             {
-                return true;
+                return false;
             }
             handComponent.Drop(eventArgs.AttackWith);
             eventArgs.AttackWith.Transform.WorldPosition = eventArgs.ClickLocation.Position;

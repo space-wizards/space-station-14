@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
@@ -146,25 +147,8 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            if (!eventArgs.User.TryGetComponent(out HandsComponent hands))
-            {
-                return false;
-            }
-
-            //Check that we can drop the item from our hands first otherwise we obviously cant put it inside
-            if (CanInsert(hands.GetActiveHand.Owner) &&  hands.Drop(hands.ActiveIndex))
-            {
-                if (Insert(eventArgs.AttackWith))
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                Owner.PopupMessage(eventArgs.User, "Can't insert.");
-            }
-            return false;
-        }
+            return PlayerInsertEntity(eventArgs.User);
+         }
 
         /// <summary>
         /// Sends a message to open the storage UI
@@ -309,6 +293,22 @@ namespace Content.Server.GameObjects
                     }
                     break;
                 }
+                case InsertEntityMessage _:
+                {
+                    _ensureInitialCalculated();
+                    var playerEntity = _playerManager.GetSessionByChannel(netChannel).AttachedEntity;
+                    var storageTransform = Owner.GetComponent<ITransformComponent>();
+                    var playerTransform = playerEntity.GetComponent<ITransformComponent>();
+                    // TODO: Replace by proper entity range check once it is implemented.
+                    if (playerTransform.GridPosition.InRange(_mapManager,
+                                                             storageTransform.GridPosition,
+                                                             InteractionSystem.InteractionRange))
+                    {
+                        PlayerInsertEntity(playerEntity);
+                    }
+
+                    break;
+                }
                 case CloseStorageUIMessage _:
                 {
                     var session = _playerManager.GetSessionByChannel(netChannel);
@@ -355,6 +355,32 @@ namespace Content.Server.GameObjects
             {
                 Remove(entity);
             }
+        }
+
+        /// <summary>
+        /// Inserts an entity into the storage component from the players active hand.
+        /// </summary>
+        private bool PlayerInsertEntity(IEntity player)
+        {
+            if (!player.TryGetComponent(out IHandsComponent hands) || hands.GetActiveHand == null)
+                return false;
+
+            var toInsert = hands.GetActiveHand;
+
+            if (hands.Drop(toInsert.Owner))
+            {
+                if (Insert(toInsert.Owner))
+                {
+                    return true;
+                }
+                else
+                {
+                    hands.PutInHand(toInsert);
+                }
+            }
+
+            Owner.PopupMessage(player, "Can't insert.");
+            return false;
         }
     }
 }

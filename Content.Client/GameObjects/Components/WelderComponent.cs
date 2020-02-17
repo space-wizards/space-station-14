@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects;
@@ -26,7 +26,8 @@ namespace Content.Client.GameObjects.Components
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cast = (WelderComponentState) curState;
+            if (!(curState is WelderComponentState cast))
+                return;
 
             FuelCapacity = cast.FuelCapacity;
             Fuel = cast.Fuel;
