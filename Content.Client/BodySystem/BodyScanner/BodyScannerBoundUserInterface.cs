@@ -14,7 +14,7 @@ namespace Content.Client.BodySystem
         private BodyScannerDisplay _display;
 
         [ViewVariables]
-        private BodyTemplatePrototype _template;
+        private BodyTemplate _template;
 
         [ViewVariables]
         private Dictionary<string, BodyPart> _parts;

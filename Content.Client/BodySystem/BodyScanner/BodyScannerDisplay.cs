@@ -30,8 +30,9 @@ namespace Content.Client.UserInterface
             Title = _loc.GetString("Body Scanner");
         }
 
-        public void UpdateDisplay(BodyTemplatePrototype _template, Dictionary<string, BodyPart> _parts)
+        public void UpdateDisplay(BodyTemplate _template, Dictionary<string, BodyPart> _parts)
         {
+            //TODO: Actually build a display here
             if (_template != null)
                 Title = _template.Name;
             else
