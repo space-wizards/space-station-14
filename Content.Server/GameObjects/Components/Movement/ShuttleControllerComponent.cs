@@ -15,6 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
+    [ComponentReference(typeof(MoverComponent))]
     internal class ShuttleControllerComponent : MoverComponent
     {
 #pragma warning disable 649
