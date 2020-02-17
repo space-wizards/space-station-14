@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Movement;
-using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Robust.Server.AI;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -102,9 +101,9 @@ namespace Content.Server.GameObjects.EntitySystems
                     return;
                 }
 
-                if (ent.HasComponent<IMoverComponent>())
+                if (ent.HasComponent<MoverComponent>())
                 {
-                    ent.RemoveComponent<IMoverComponent>();
+                    ent.RemoveComponent<MoverComponent>();
                 }
 
                 var comp = ent.AddComponent<AiControllerComponent>();

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Server.AI;
 using Robust.Server.Interfaces.GameObjects;
@@ -106,7 +106,7 @@ namespace Content.Server.AI
             foreach (var entity in ents)
             {
                 // filter to "people" entities (entities with controllers)
-                if (!entity.HasComponent<IMoverComponent>())
+                if (!entity.HasComponent<MoverComponent>())
                     continue;
 
                 // build the ray

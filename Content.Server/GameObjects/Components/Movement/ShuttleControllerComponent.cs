@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
@@ -16,13 +15,16 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IMoverComponent))]
-    internal class ShuttleControllerComponent : Component, IMoverComponent
+    internal class ShuttleControllerComponent : MoverComponent
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IEntityManager _entityManager;
 #pragma warning restore 649
+
+        public ShuttleControllerComponent(){
+            BaseWalkSpeed = 8.0f;
+        }
 
         private bool _movingUp;
         private bool _movingDown;
@@ -31,15 +33,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public override string Name => "ShuttleController";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentWalkSpeed { get; set; } = 8;
-        public float CurrentSprintSpeed { get; set; }
-        public bool Sprinting { get; set; }
-        public Vector2 VelocityDir { get; } = Vector2.Zero;
-        public GridCoordinates LastPosition { get; set; }
-        public float StepSoundDistance { get; set; }
-
-        public void SetVelocityDirection(Direction direction, bool enabled)
+        public override void SetVelocityDirection(Direction direction, bool enabled)
         {
             var gridId = Owner.Transform.GridID;
 

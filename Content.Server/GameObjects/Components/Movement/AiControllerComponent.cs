@@ -1,5 +1,4 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Movement;
-using Robust.Server.AI;
+﻿using Robust.Server.AI;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -9,8 +8,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
-    [RegisterComponent, ComponentReference(typeof(IMoverComponent))]
-    public class AiControllerComponent : Component, IMoverComponent
+    [RegisterComponent]
+    [ComponentReference(typeof(MoverComponent))]
+    public class AiControllerComponent : MoverComponent
     {
         private string _logicName;
         private float _visionRadius;
@@ -56,35 +56,7 @@ namespace Content.Server.GameObjects.Components.Movement
             serializer.DataField(ref _visionRadius, "vision", 8.0f);
         }
 
-        /// <summary>
-        ///     Movement speed (m/s) that the entity walks.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentWalkSpeed { get; set; } = 4.0f;
 
-        /// <summary>
-        ///     Movement speed (m/s) that the entity sprints.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentSprintSpeed { get; set; } = 10.0f;
-
-        /// <summary>
-        ///     Is the entity Sprinting (running)?
-        /// </summary>
-        [ViewVariables]
-        public bool Sprinting { get; set; }
-
-        /// <summary>
-        ///     Calculated linear velocity direction of the entity.
-        /// </summary>
-        [ViewVariables]
-        public Vector2 VelocityDir { get; set; }
-
-        public GridCoordinates LastPosition { get; set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float StepSoundDistance { get; set; }
-
-        public void SetVelocityDirection(Direction direction, bool enabled) { }
+        public override void SetVelocityDirection(Direction direction, bool enabled) { }
     }
 }

@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
-using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Maps;
@@ -48,7 +47,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
-            EntityQuery = new TypeEntityQuery(typeof(IMoverComponent));
+            EntityQuery = new TypeEntityQuery(typeof(MoverComponent));
 
             var moveUpCmdHandler = InputCmdHandler.FromDelegate(
                 session => HandleDirChange(session, Direction.North, true),
@@ -82,7 +81,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void PlayerAttached(object sender, PlayerAttachSystemMessage ev)
         {
-            if (!ev.Entity.HasComponent<IMoverComponent>())
+            if (!ev.Entity.HasComponent<MoverComponent>())
             {
                 ev.Entity.AddComponent<PlayerInputMoverComponent>();
             }
@@ -120,14 +119,14 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     continue;
                 }
-                var mover = entity.GetComponent<IMoverComponent>();
+                var mover = entity.GetComponent<MoverComponent>();
                 var physics = entity.GetComponent<PhysicsComponent>();
 
                 UpdateKinematics(entity.Transform, mover, physics);
             }
         }
 
-        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics)
+        private void UpdateKinematics(ITransformComponent transform, MoverComponent mover, PhysicsComponent physics)
         {
             if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
             {
@@ -177,7 +176,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleDirChange(ICommonSession session, Direction dir, bool state)
         {
-            if(!TryGetAttachedComponent(session as IPlayerSession, out IMoverComponent moverComp))
+            if(!TryGetAttachedComponent(session as IPlayerSession, out MoverComponent moverComp))
                 return;
 
             moverComp.SetVelocityDirection(dir, state);
