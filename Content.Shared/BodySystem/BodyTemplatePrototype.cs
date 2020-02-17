@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -8,11 +9,11 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.BodySystem {
 
     /// <summary>
-    ///     This class represents a standard format of a body. For instance, a "humanoid" has two arms, each connected to a torso and
-    ///     so on. It is a prototype, so you can load templates from YAML.
+    ///    Prototype for the BodyTemplate class.
     /// </summary>	
     [Prototype("bodyTemplate")]
-    public class BodyTemplate : IPrototype, IIndexedPrototype {
+    [NetSerializable, Serializable]
+    public class BodyTemplatePrototype : IPrototype, IIndexedPrototype {
         private string _id;
         private string _name;
 		private string _centerSlot;
@@ -24,24 +25,15 @@ namespace Content.Shared.BodySystem {
 
         [ViewVariables]
         public string Name => _name;
-		
+				
         [ViewVariables]
         public string CenterSlot => _centerSlot;
-
-        /// <summary>
-        ///     Maps all parts on this template to its BodyPartType. For instance, "right arm" is mapped to "BodyPartType.arm" on the humanoid template.
-        /// </summary>			
+	
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots => _slots;
-
-        /// <summary>
-        ///     Maps limb name to the list of their connections. For instance on the humanoid template, "torso" is mapped to a list containing "right arm", "left arm",
-        ///     "left leg", and "right leg". Only one of the limbs in a connection has to map it. e.g. humanoid template maps "head" to "torso" and not the other way around.
-        /// </summary>			
+	
         [ViewVariables]
         public Dictionary<string, List<string>> Connections => _connections;
-
-
 
         public virtual void LoadFrom(YamlMappingNode mapping){
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -49,8 +41,32 @@ namespace Content.Shared.BodySystem {
             serializer.DataField(ref _id, "id", string.Empty);
 			serializer.DataField(ref _centerSlot, "centerSlot", string.Empty);
             serializer.DataField(ref _slots, "slots", new Dictionary<string, BodyPartType>());
-
             serializer.DataField(ref _connections, "connections", new Dictionary<string, List<string>>());
+
+
+            //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
+            //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
+            Dictionary<string, List<string>> cleanedConnections = new Dictionary<string, List<string>>();
+            foreach (var (targetSlotName, slotType) in _slots)
+            {
+                List<string> tempConnections = new List<string>();
+                foreach (var (slotName, slotConnections) in _connections)
+                {
+                    if (slotName == targetSlotName){
+                        foreach (string connection in slotConnections) {
+                            if (!tempConnections.Contains(connection))
+                                tempConnections.Add(connection);
+                        }
+                    }
+                    else if (slotConnections.Contains(slotName))
+                    {
+                        tempConnections.Add(slotName);
+                    }
+                }
+                if(tempConnections.Count > 0)
+                    cleanedConnections.Add(targetSlotName, tempConnections);
+            }
+            _connections = cleanedConnections;
         }
     }
 }

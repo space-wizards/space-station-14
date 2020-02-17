@@ -22,7 +22,7 @@ namespace Content.Shared.BodySystem {
 		private int _resistance;
 		private int _size;
         private List<string> _implantableParts;
-        private BodyPartCompatability _compatability;
+        private BodyPartCompatibility _compatability;
 		private MechanismType _type;
 
 
@@ -82,7 +82,7 @@ namespace Content.Shared.BodySystem {
         ///     What kind of BodyParts this mechanism can be installed into.
         /// </summary>
         [ViewVariables]
-        public BodyPartCompatability Compatability => _compatability;
+        public BodyPartCompatibility Compatability => _compatability;
 		
         /// <summary>
         ///     How this mechanism works - active, passive, or toggleable.
@@ -99,7 +99,7 @@ namespace Content.Shared.BodySystem {
             serializer.DataField(ref _description, "description", string.Empty);
             serializer.DataField(ref _durability, "durability", 0);
             serializer.DataField(ref _size, "size", 2);
-            serializer.DataField(ref _compatability, "compatability", BodyPartCompatability.Universal);
+            serializer.DataField(ref _compatability, "compatability", BodyPartCompatibility.Universal);
             serializer.DataField(ref _implantableParts, "implantableParts", new List<string>());
         }		
 	}

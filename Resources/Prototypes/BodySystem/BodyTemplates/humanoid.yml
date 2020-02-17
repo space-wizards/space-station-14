@@ -3,23 +3,31 @@
   name: "humanoid"
   centerSlot: "torso"
   slots: 
-    BodyPartType.Head: "head"
-    BodyPartType.Torso: "torso"
-    BodyPartType.Arm: "left arm"
-    BodyPartType.Arm: "right arm"
-    BodyPartType.Hand: "left hand"
-    BodyPartType.Hand: "right hand"
-    BodyPartType.Leg: "left leg"
-    BodyPartType.Leg: "right leg"
-    BodyPartType.Foot: "left foot"
-    BodyPartType.Foot: "right foot"
+    head: Head
+    torso: Torso
+    left arm: Arm
+    right arm: Arm
+    left hand: Hand
+    right hand: Hand
+    left leg: Leg
+    right leg: Leg
+    left foot: Foot
+    right foot: Foot
   connections:
-    head: "torso"
-    torso: "left arm"
-    torso: "right arm"
-    torso: "left leg"
-    torso: "right leg"
-    left arm: "left hand"
-    right arm: "right hand"
-    left leg: "left foot"
-    right leg: "right foot"
+    head:
+      - torso
+    torso:
+      - left arm
+      - right arm
+      - left leg
+      - right leg
+    left arm:
+      - left hand
+    right arm: 
+      - right hand
+    left leg: 
+      - left foot
+    right leg: 
+      - right foot
+      
+      

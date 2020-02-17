@@ -156,7 +156,23 @@
     - type: ComputerVisualizer2D
       key: id_key
       screen: id
-
+      
+- type: entity
+  id: computerBodyScanner
+  parent: computerBase
+  name: Body Scanner Computer
+  components:
+  - type: BodyScanner
+  - type: UserInterface
+    interfaces:
+    - key: enum.BodyScannerUiKey.Key
+      type: BodyScannerBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: generic_key
+      screen: generic
+      
 - type: entity
   id: computerComms
   parent: computerBase
@@ -167,3 +183,19 @@
     - type: ComputerVisualizer2D
       key: generic_key
       screen: comm
+
+  - type: CargoConsole
+  - type: CargoOrderDatabase
+  - type: GalacticMarket
+    static: true
+    products:
+      - cargo.dice
+      - cargo.flashlight
+      - cargo.Medkit
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Key
+      type: BodyScannerBoundUserInterface
+
+
+
