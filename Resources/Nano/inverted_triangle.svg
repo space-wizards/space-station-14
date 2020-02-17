@@ -9,16 +9,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="12mm"
-   height="8mm"
+   width="12"
+   height="8"
    viewBox="0 0 12 8"
    version="1.1"
    id="svg5650"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="inverted_triangle.svg"
    inkscape:export-filename="H:\Code\GitHub\space-station-14\Resources\Nano\inverted_triangle.svg.png"
-   inkscape:export-xdpi="25.400002"
-   inkscape:export-ydpi="25.400002">
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs5644" />
   <sodipodi:namedview
@@ -28,21 +28,22 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.919596"
-     inkscape:cx="32.033905"
-     inkscape:cy="16.120257"
-     inkscape:document-units="mm"
+     inkscape:zoom="31.678384"
+     inkscape:cx="8.8993386"
+     inkscape:cy="4.276435"
+     inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:snap-bbox="true"
      inkscape:snap-page="true"
      inkscape:pagecheckerboard="true"
-     inkscape:window-width="1440"
-     inkscape:window-height="837"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="1280"
+     inkscape:window-height="961"
+     inkscape:window-x="1432"
+     inkscape:window-y="-2"
+     inkscape:window-maximized="1"
+     units="px" />
   <metadata
      id="metadata5647">
     <rdf:RDF>
@@ -60,7 +61,7 @@
      inkscape:groupmode="layer"
      id="layer1"
      style="display:inline;opacity:1"
-     transform="translate(-1.9860501e-8,-288.99999)">
+     transform="translate(-1.0101525,-296.07106)">
     <path
        sodipodi:type="star"
        style="fill:#fffcff;fill-opacity:1;stroke:none;stroke-width:3.62899995;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -77,7 +78,7 @@
        inkscape:randomized="0"
        d="m 17.490662,295.18551 -14.3478554,0 7.1739274,-12.42561 z"
        inkscape:transform-center-y="1.3333296"
-       transform="matrix(0.83636193,0,0,-0.64383171,-2.6285238,479.04978)"
+       transform="matrix(0.83636193,0,0,-0.64383171,-1.6183713,486.12085)"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
   </g>
