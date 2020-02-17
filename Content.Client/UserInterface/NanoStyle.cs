@@ -66,6 +66,8 @@ namespace Content.Client.UserInterface
             windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
 
+            var textureInvertedTriangle = resCache.GetTexture("/nano/inverted_triangle.svg.png");
+
             // Button styles.
             var buttonTex = resCache.GetTexture("/Nano/button.svg.96dpi.png");
             var buttonNormal = new StyleBoxTexture
@@ -305,37 +307,40 @@ namespace Content.Client.UserInterface
                     }),
 
                 // Regular buttons!
-                new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassNormal}),
+                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
+                }),
+                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
+                }),
+                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
+                }),
+                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] { Button.StyleClassButton }, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
+                }),
+
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),
+                    new SelectorElement(typeof(Label), null, null, null)),
                     new[]
                     {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonNormal),
-                    }),
-                new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassHover}),
-                    new[]
-                    {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
-                    }),
-                new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassPressed}),
-                    new[]
-                    {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonPressed),
-                    }),
-                new StyleRule(
-                    new SelectorElement(typeof(Button), null, null, new[] {Button.StylePseudoClassDisabled}),
-                    new[]
-                    {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonDisabled),
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
 
                 // Main menu: Make those buttons bigger.
-                new StyleRule(
-                    new SelectorChild(
-                        new SelectorElement(null, null, "mainMenuVBox", null),
-                        new SelectorElement(typeof(Button), null, null, null)),
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(Button), null, "mainMenu", null),
+                    new SelectorElement(typeof(Label), null, null, null)),
                     new[]
                     {
                         new StyleProperty("font", notoSansBold16),
@@ -434,20 +439,19 @@ namespace Content.Client.UserInterface
                     }),
 
                 // CheckBox
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { CheckBox.StyleClassCheckBox }, null, null), new[]
                 {
-                    new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureUnchecked),
+                    new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureUnchecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, new[] {Button.StylePseudoClassPressed}),
-                    new[]
-                    {
-                        new StyleProperty(CheckBox.StylePropertyIcon, checkBoxTextureChecked),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(CheckBox), null, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(TextureRect), new [] { CheckBox.StyleClassCheckBox, CheckBox.StyleClassCheckBoxChecked }, null, null), new[]
                 {
-                    new StyleProperty(CheckBox.StylePropertyHSeparation, 3),
+                    new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureChecked),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(HBoxContainer), new [] { CheckBox.StyleClassCheckBox }, null, null), new[]
+                {
+                    new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),
 
                 // Tooltip
@@ -556,10 +560,13 @@ namespace Content.Client.UserInterface
                     }),
 
                 // Big Button
-                new StyleRule(new SelectorElement(typeof(Button), new[] {StyleClassButtonBig}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans16)
-                }),
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(Button), new[] {StyleClassButtonBig}, null, null),
+                    new SelectorElement(typeof(Label), null, null, null)),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSans16)
+                    }),
 
                 //APC and SMES power state label colors
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateNone}, null, null), new[]
@@ -684,7 +691,36 @@ namespace Content.Client.UserInterface
                 new StyleRule(new SelectorElement(typeof(Slider), new []{StyleClassSliderBlue}, null, null), new []
                 {
                     new StyleProperty(Slider.StylePropertyFill, sliderFillBlue),
-                })
+                }),
+
+                // OptionButton
+                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
+                }),
+                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
+                }),
+                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
+                }),
+                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(TextureRect), new[] {OptionButton.StyleClassOptionTriangle}, null, null), new[]
+                {
+                    new StyleProperty(TextureRect.StylePropertyTexture, textureInvertedTriangle),
+                    //new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#FFFFFF")),
+                }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] { OptionButton.StyleClassOptionButton }, null, null), new[]
+                {
+                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
+                }),
             });
         }
     }
