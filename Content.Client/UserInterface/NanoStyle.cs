@@ -66,7 +66,7 @@ namespace Content.Client.UserInterface
             windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
 
-            var textureInvertedTriangle = resCache.GetTexture("/nano/inverted_triangle.svg.png");
+            var textureInvertedTriangle = resCache.GetTexture("/Nano/inverted_triangle.svg.png");
 
             // Button styles.
             var buttonTex = resCache.GetTexture("/Nano/button.svg.96dpi.png");
