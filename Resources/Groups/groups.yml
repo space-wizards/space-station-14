@@ -52,5 +52,6 @@
   - respawn
   - rejuvenate
   - addcomp
+  - controlmob
   CanViewVar: true
   CanAdminPlace: true
