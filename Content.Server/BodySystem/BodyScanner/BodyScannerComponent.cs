@@ -34,6 +34,7 @@ namespace Content.Server.BodySystem
         {
 
         }
+
         /// <summary>
         ///    Reads data from YAML
         /// </summary>

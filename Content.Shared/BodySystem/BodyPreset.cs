@@ -20,7 +20,7 @@ namespace Content.Shared.BodySystem {
         public string Name => _name;
 
         /// <summary>
-        ///     Maps a template slot to the BodyPart that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
+        ///     Maps a template slot to the ID of the BodyPart that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>		
         [ViewVariables]
 		public Dictionary<string, string> PartIDs => _partIDs;

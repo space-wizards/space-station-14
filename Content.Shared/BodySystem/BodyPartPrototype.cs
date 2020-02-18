@@ -24,8 +24,9 @@ namespace Content.Shared.BodySystem {
 		private int _destroyThreshold;
 		private float _resistance;
 		private int _size;
-		private BodyPartCompatibility _compatability;
+		private BodyPartCompatibility _compatibility;
 		private List<IExposeData> _properties;
+        private List<string> _mechanisms;
 
         [ViewVariables]
         public string ID => _id;
@@ -52,10 +53,13 @@ namespace Content.Shared.BodySystem {
 		public int Size => _size;
 		
         [ViewVariables]
-        public BodyPartCompatibility Compatability => _compatability;
+        public BodyPartCompatibility Compatibility => _compatibility;
 		
         [ViewVariables]
         public List<IExposeData> Properties => _properties;
+
+        [ViewVariables]
+        public List<string> Mechanisms => _mechanisms;
 
         public virtual void LoadFrom(YamlMappingNode mapping){
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -68,8 +72,9 @@ namespace Content.Shared.BodySystem {
 			serializer.DataField(ref _destroyThreshold, "destroyThreshold", -50);
 			serializer.DataField(ref _resistance, "resistance", 0f);
 			serializer.DataField(ref _size, "size", 0);
-			serializer.DataField(ref _compatability, "compatability", BodyPartCompatibility.Universal);
+			serializer.DataField(ref _compatibility, "compatibility", BodyPartCompatibility.Universal);
 			serializer.DataField(ref _properties, "properties", new List<IExposeData>());
+            serializer.DataField(ref _mechanisms, "mechanisms", new List<string>());
         }
     }
 }
