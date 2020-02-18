@@ -6,7 +6,7 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent]
     public class MovementSpeedModifierComponent : Component
     {
-        public override string Name => "MovementSlowdown";
+        public override string Name => "MovementSpeedModifier";
 
         private float _cachedWalkSpeedModifier = 1.0f;
         public float WalkSpeedModifier

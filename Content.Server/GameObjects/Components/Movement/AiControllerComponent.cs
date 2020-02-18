@@ -57,16 +57,49 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
         /// <summary>
-        ///     Movement speed (m/s) that the entity walks.
+        ///     Movement speed (m/s) that the entity walks, before modifiers
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentWalkSpeed { get; set; } = PlayerInputMoverComponent.DefaultBaseWalkSpeed;
+        public float BaseWalkSpeed { get; set; } = PlayerInputMoverComponent.DefaultBaseWalkSpeed;
 
         /// <summary>
-        ///     Movement speed (m/s) that the entity sprints.
+        ///     Movement speed (m/s) that the entity sprints, before modifiers
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentSprintSpeed { get; set; } = PlayerInputMoverComponent.DefaultBaseSprintSpeed;
+        public float BaseSprintSpeed { get; set; } = PlayerInputMoverComponent.DefaultBaseSprintSpeed;
+
+        /// <summary>
+        ///     Movement speed (m/s) that the entity walks, after modifiers
+        /// </summary>
+        [ViewVariables]
+        public float CurrentWalkSpeed
+        {
+            get
+            {
+                float speed = BaseWalkSpeed;
+                if (Owner.TryGetComponent<MovementSpeedModifierComponent>(out MovementSpeedModifierComponent component))
+                {
+                    speed *= component.WalkSpeedModifier;
+                }
+                return speed;
+            }
+        }
+        /// <summary>
+        ///     Movement speed (m/s) that the entity walks, after modifiers
+        /// </summary>
+        [ViewVariables]
+        public float CurrentSprintSpeed
+        {
+            get
+            {
+                float speed = BaseSprintSpeed;
+                if (Owner.TryGetComponent<MovementSpeedModifierComponent>(out MovementSpeedModifierComponent component))
+                {
+                    speed *= component.SprintSpeedModifier;
+                }
+                return speed;
+            }
+        }
 
         /// <summary>
         ///     Is the entity Sprinting (running)?

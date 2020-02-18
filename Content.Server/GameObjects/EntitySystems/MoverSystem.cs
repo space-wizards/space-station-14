@@ -84,7 +84,6 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (!ev.Entity.HasComponent<IMoverComponent>())
             {
-                ev.Entity.AddComponent<MovementSpeedModifierComponent>();
                 ev.Entity.AddComponent<PlayerInputMoverComponent>();
             }
         }
@@ -93,7 +92,6 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
             {
-                ev.Entity.RemoveComponent<MovementSpeedModifierComponent>();
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
         }
