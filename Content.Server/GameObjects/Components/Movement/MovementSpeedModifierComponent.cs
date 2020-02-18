@@ -56,6 +56,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 _cachedWalkSpeedModifier = walkSpeedModifier;
                 _cachedSprintSpeedModifier = sprintSpeedModifier;
             }
+            _movespeedModifiersNeedRefresh = false;
         }
     }
 
