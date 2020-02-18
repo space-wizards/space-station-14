@@ -59,10 +59,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 // Revert slow speed if required
                 if (_lastThirstThreshold == ThirstThreshold.Parched && _currentThirstThreshold != ThirstThreshold.Dead &&
-                    Owner.TryGetComponent(out PlayerInputMoverComponent playerSpeedupComponent))
+                    Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent))
                 {
-                    // TODO shitcode: Come up something better
-                    playerSpeedupComponent.MarkMovementSpeedModifiersDirty();
+                    movementSlowdownComponent.RefreshMovementSpeedModifiers();
                 }
 
                 // Update UI
@@ -89,9 +88,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
                         return;
 
                     case ThirstThreshold.Parched:
-                        if (Owner.TryGetComponent(out PlayerInputMoverComponent playerInputMoverComponent))
+                        if (Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent1))
                         {
-                            playerInputMoverComponent.MarkMovementSpeedModifiersDirty();
+                            movementSlowdownComponent1.RefreshMovementSpeedModifiers();
                         }
                         _lastThirstThreshold = _currentThirstThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;

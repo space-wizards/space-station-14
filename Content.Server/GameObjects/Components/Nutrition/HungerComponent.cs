@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private HungerThreshold _currentHungerThreshold;
         private HungerThreshold _lastHungerThreshold;
         public float CurrentHunger => _currentHunger;
-        [ViewVariables] private float _currentHunger;
+        [ViewVariables(VVAccess.ReadWrite)] private float _currentHunger;
 
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
         private Dictionary<HungerThreshold, float> _hungerThresholds = new Dictionary<HungerThreshold, float>
@@ -59,9 +59,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 // Revert slow speed if required
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
-                    Owner.TryGetComponent(out PlayerInputMoverComponent playerSpeedupComponent))
+                    Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent))
                 {
-                    playerSpeedupComponent.MarkMovementSpeedModifiersDirty();
+                    movementSlowdownComponent.RefreshMovementSpeedModifiers();
                 }
 
                 // Update UI
@@ -90,9 +90,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     case HungerThreshold.Starving:
                         // TODO: If something else bumps this could cause mega-speed.
                         // If some form of speed update system if multiple things are touching it use that.
-                        if (Owner.TryGetComponent(out PlayerInputMoverComponent playerInputMoverComponent))
+                        if (Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent1))
                         {
-                            playerInputMoverComponent.MarkMovementSpeedModifiersDirty();
+                            movementSlowdownComponent1.RefreshMovementSpeedModifiers();
                         }
                         _lastHungerThreshold = _currentHungerThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;

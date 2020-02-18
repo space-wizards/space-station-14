@@ -84,14 +84,16 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (!ev.Entity.HasComponent<IMoverComponent>())
             {
+                ev.Entity.AddComponent<MovementSpeedModifierComponent>();
                 ev.Entity.AddComponent<PlayerInputMoverComponent>();
             }
         }
 
         private static void PlayerDetached(object sender, PlayerDetachedSystemMessage ev)
         {
-            if(ev.Entity.HasComponent<PlayerInputMoverComponent>())
+            if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
             {
+                ev.Entity.RemoveComponent<MovementSpeedModifierComponent>();
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
         }
@@ -177,7 +179,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleDirChange(ICommonSession session, Direction dir, bool state)
         {
-            if(!TryGetAttachedComponent(session as IPlayerSession, out IMoverComponent moverComp))
+            if (!TryGetAttachedComponent(session as IPlayerSession, out IMoverComponent moverComp))
                 return;
 
             moverComp.SetVelocityDirection(dir, state);
@@ -185,14 +187,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleRunChange(ICommonSession session, bool running)
         {
-            if(!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
+            if (!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
                 return;
 
             moverComp.Sprinting = running;
         }
 
         private static bool TryGetAttachedComponent<T>(IPlayerSession session, out T component)
-            where T: IComponent
+            where T : IComponent
         {
             component = default;
 
