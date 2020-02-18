@@ -1,12 +1,14 @@
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
+using Content.Server.Players;
 using Content.Shared.GameObjects;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 
 namespace Content.Server.GlobalVerbs
 {
@@ -35,11 +37,14 @@ namespace Content.Server.GlobalVerbs
 
         public override void Activate(IEntity user, IEntity target)
         {
-            var userMind = user.GetComponent<MindComponent>();
+            var userMind = user.GetComponent<IActorComponent>().playerSession.ContentData().Mind;
             var targetMind = target.GetComponent<MindComponent>();
 
+            if(userMind.IsVisitingEntity)
+                userMind.UnVisit();
+
             targetMind.Mind?.TransferTo(null);
-            userMind.Mind?.TransferTo(target);
+            userMind.TransferTo(target);
         }
     }
 }
