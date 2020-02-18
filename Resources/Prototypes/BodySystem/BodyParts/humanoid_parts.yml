@@ -1,40 +1,44 @@
 - type: bodyPart
   id: bodyPart.Torso.BasicHuman
-  name: "torso"
-  plural: "torsos"
+  name: "human torso"
+  plural: "human torsos"
   partType: Torso
   durability: 100
   destroyThreshold: -150
   resistance: 4.0
   size: 14
-  compatability: Biological
-
+  compatibility: Biological
+  mechanisms:
+    - mechanism.Heart.BasicHuman
+    - mechanism.Lungs.BasicHuman
+    - mechanism.Kidney.BasicHuman
+    - mechanism.Kidney.BasicHuman
 
 
 - type: bodyPart
   id: bodyPart.Head.BasicHuman
   name: "head"
-  plural: "heads"
+  plural: "human heads"
   partType: Head
   durability: 50
   destroyThreshold: -120
   resistance: 7.0
   size: 7
-  compatability: Biological	
+  compatibility: Biological	
   
 
 
 
 - type: bodyPart
   id: bodyPart.Arm.BasicHuman
-  name: "arm"
-  plural: "arms"
+  name: "human arm"
+  plural: "human arms"
   partType: Arm
   durability: 40
   destroyThreshold: -80
   resistance: 3.0
   size: 5
-  compatability: Biological	
+  compatibility: Biological	
   properties:
     - !type:ArmLength
       length: 2.4
@@ -43,39 +47,39 @@
   
 - type: bodyPart
   id: bodyPart.Hand.BasicHuman
-  name: "hand"
-  plural: "hands"
+  name: "human hand"
+  plural: "human hands"
   partType: Hand
   durability: 30
   destroyThreshold: -60
   resistance: 2.0
   size: 3
-  compatability: Biological	
+  compatibility: Biological	
     
        
       
 - type: bodyPart
   id: bodyPart.Leg.BasicHuman
-  name: "leg"
-  plural: "legs"
+  name: "human leg"
+  plural: "human legs"
   partType: Leg
   durability: 45
   destroyThreshold: -90
   resistance: 2.0
   size: 6
-  compatability: Biological	
+  compatibility: Biological	
      
      
      
 - type: bodyPart
   id: bodyPart.Foot.BasicHuman
-  name: "foot"
-  plural: "feet"
+  name: "human foot"
+  plural: "human feet"
   partType: Foot
   durability: 30
   destroyThreshold: -60
   resistance: 3.0
   size: 2
-  compatability: Biological	
+  compatibility: Biological	
 
       
