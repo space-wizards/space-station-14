@@ -113,7 +113,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Glass Crate"
+  name: "Glass Sheet Crate"
   id: cargo.glass
   description: 50 sheets of glass.
   icon:
@@ -124,7 +124,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Cable Crate"
+  name: "Cable Coil Crate"
   id: cargo.cable
   description: 50 coils of cable.
   icon:
@@ -135,3 +135,35 @@
   category: Engineering
   group: market
 
+- type: cargoProduct
+  name: "Steel Sheet Crate"
+  id: cargo.steel
+  description: 50 sheets of steel.
+  icon:
+    sprite: Objects/Materials/sheet_metal.png
+  product: crate_steel
+  cost: 50
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  name: "Blue Mechanical Toolbox"
+  id: cargo.btoolbox
+  description: A blue toolbox, full of all things mechanical-related.
+  icon:
+    sprite: Objects/Tools/Toolbox_b.png
+  product: crate_btoolbox
+  cost: 100
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  name: "Yellow Electrical Toolbox"
+  id: cargo.ytoolbox
+  description: A yellow toolbox, full of all things electrical-related.
+  icon:
+    sprite: Objects/Tools/Toolbox_y.png
+  product: crate_ytoolbox
+  cost: 100
+  category: Engineering
+  group: market

@@ -181,6 +181,7 @@
 
 - type: entity
   id: crate_bikehorn
+  description: HONK!
   name: Bike Horn Crate (x5)
   parent: crate_generic
   components:
@@ -240,3 +241,40 @@
     - type: StorageFill
       contents:
         - CableStack
+
+- type: entity
+  id: crate_steel
+  name: Steel Sheet Crate (x50)
+  parent: crate_generic
+  components:
+    - type: StorageFill
+      contents:
+        - MetalStack
+
+- type: entity
+  id: crate_btoolbox
+  name: Blue Mechanical Toolbox
+  parent: crate_generic
+  components:
+    - type: StorageFill
+      contents:
+        - BlueToolboxItemFilled
+
+- type: entity
+  id: crate_ytoolbox
+  name: Yellow Electrical Toolbox
+  parent: crate_generic
+  components:
+    - type: StorageFill
+      contents:
+        - YellowToolboxItemFilled
+
+- type: entity
+  id: crate_toolbox
+  name: Toolbox Crate
+  parent: crate_generic
+  components:
+    - type: StorageFill
+      contents:
+        - Yellow Electrical Toolbox
+        - Blue Mechanical Toolbox
