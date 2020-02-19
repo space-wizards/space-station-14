@@ -17,7 +17,7 @@ namespace Content.Client.Chat
 
         public delegate void FilterToggledHandler(ChatBox chatBox, BaseButton.ButtonToggledEventArgs e);
 
-        private readonly ILocalizationManager localize = IoCManager.Resolve<ILocalizationManager>();
+        private readonly ILocalizationManager _localize = IoCManager.Resolve<ILocalizationManager>();
 
         public HistoryLineEdit Input { get; private set; }
         public OutputPanel Contents { get; }
@@ -74,7 +74,7 @@ namespace Content.Client.Chat
 
             AllButton = new Button
             {
-                Text = localize.GetString("All"),
+                Text = _localize.GetString("All"),
                 Name = "ALL",
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand,
                 ToggleMode = true,
@@ -82,14 +82,14 @@ namespace Content.Client.Chat
 
             LocalButton = new Button
             {
-                Text = localize.GetString("Local"),
+                Text = _localize.GetString("Local"),
                 Name = "Local",
                 ToggleMode = true,
             };
 
             OOCButton = new Button
             {
-                Text = localize.GetString("OOC"),
+                Text = _localize.GetString("OOC"),
                 Name = "OOC",
                 ToggleMode = true,
             };
