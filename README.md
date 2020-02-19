@@ -19,7 +19,7 @@ The IRC is setup to relay back and forth to the Discord server so [IRC nerds](ht
 
 ## Documentation
 
-We have various documentation articles about various systems on the GitHub wikis of this repo and RobustToolbox.
+We have various documentation articles about various systems on both content pack and engine on HackMD wiki.
 
 * [Robust Toolbox & Space Station 14 HackMD Wiki](https://hackmd.io/@ss14/docs/)
 
