@@ -90,3 +90,48 @@
   category: Other
   group: blackmarket
 
+- type: cargoProduct
+  name: "Fuel Tank"
+  id: cargo.fueltank
+  description: Movable fuel tank for welders. No boom boom.
+  icon:
+    sprite: Buildings/weldtank.png
+  product: crate_fueltank
+  cost: 200
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  name: "Medical Scanner"
+  id: cargo.medscanner
+  description: Scans patients. First we stick this probe...
+  icon:
+    sprite: Buildings/medical_scanner.rsi
+  product: crate_medscanner
+  cost: 400
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  name: "Glass Crate"
+  id: cargo.glass
+  description: 50 sheets of glass.
+  icon:
+    sprite: Objects/Materials/sheet_glass.png
+  product: crate_glass
+  cost: 50
+  category: Engineering
+  group: market
+
+- type: cargoProduct
+  name: "Cable Crate"
+  id: cargo.cable
+  description: 50 coils of cable.
+  icon:
+    sprite: Objects/Tools/cable_coil.png
+    color: yellow
+  product: crate_cable
+  cost: 50
+  category: Engineering
+  group: market
+

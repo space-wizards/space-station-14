@@ -204,3 +204,39 @@
         - Cleaver
         - Cleaver
         - Cleaver
+
+- type: entity
+  id: crate_fueltank
+  name: Fuel Tank
+  parent: crate_generic
+  components:
+    - type: StorageFill
+      contents:
+        - Fuel Tank
+
+- type: entity
+  id: crate_medscanner
+  name: Medical Scanner
+  parent: crate_generic
+  components:
+    - type: StorageFill
+      contents:
+        - Medical Scanner
+
+- type: entity
+  id: crate_glass
+  name: Glass Sheet Crate (x50)
+  parent: crate_generic
+  components:
+    - type: StorageFill
+      contents:
+        - GlassStack
+
+- type: entity
+  id: crate_cable
+  name: Cable Coil Crate (x50)
+  parent: crate_generic
+  components:
+    - type: StorageFill
+      contents:
+        - CableStack
