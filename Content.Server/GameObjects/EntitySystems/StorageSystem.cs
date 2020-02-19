@@ -14,16 +14,10 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
-            EntityQuery = new TypeEntityQuery(typeof(ServerStorageComponent));
-        }
-
-        /// <inheritdoc />
-        public override void SubscribeEvents()
-        {
-            base.SubscribeEvents();
-
             SubscribeEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
             SubscribeEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
+
+            EntityQuery = new TypeEntityQuery(typeof(ServerStorageComponent));
         }
 
         /// <inheritdoc />

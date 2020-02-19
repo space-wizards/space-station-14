@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
@@ -6,7 +6,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using static Content.Shared.GameObjects.EntitySystemMessages.CombatModeSystemMessages;
@@ -24,17 +23,45 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
+            SubscribeEvent<SetTargetZoneMessage>(SetTargetZoneHandler);
+            SubscribeEvent<SetCombatModeActiveMessage>(SetCombatModeActiveHandler);
+
             var inputSystem = EntitySystemManager.GetEntitySystem<InputSystem>();
             inputSystem.BindMap.BindFunction(ContentKeyFunctions.ToggleCombatMode,
                 InputCmdHandler.FromDelegate(CombatModeToggled));
         }
 
-        public override void RegisterMessageTypes()
+        private void SetCombatModeActiveHandler(object sender, SetCombatModeActiveMessage ev)
         {
-            base.RegisterMessageTypes();
+            if (!TryGetCombatComponent(ev, out var combatModeComponent))
+                return;
 
-            RegisterMessageType<SetTargetZoneMessage>();
-            RegisterMessageType<SetCombatModeActiveMessage>();
+            combatModeComponent.IsInCombatMode = ev.Active;
+        }
+
+        private void SetTargetZoneHandler(object sender, SetTargetZoneMessage ev)
+        {
+            if (!TryGetCombatComponent(ev, out var combatModeComponent))
+                return;
+
+            combatModeComponent.ActiveZone = ev.TargetZone;
+        }
+
+        private bool TryGetCombatComponent(EntitySystemMessage ev, out CombatModeComponent combatModeComponent)
+        {
+            if (ev.NetChannel == null)
+            {
+                combatModeComponent = default;
+                return false;
+            }
+
+            var player = _playerManager.GetSessionByChannel(ev.NetChannel);
+            if (player.AttachedEntity != null && player.AttachedEntity.TryGetComponent(out combatModeComponent))
+                return true;
+
+            combatModeComponent = default;
+            return false;
+
         }
 
         private static void CombatModeToggled(ICommonSession session)
@@ -48,29 +75,6 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             combatModeComponent.IsInCombatMode = !combatModeComponent.IsInCombatMode;
-        }
-
-        public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
-        {
-            base.HandleNetMessage(channel, message);
-
-            var player = _playerManager.GetSessionByChannel(channel);
-            if (player.AttachedEntity == null
-                || !player.AttachedEntity.TryGetComponent(out CombatModeComponent combatModeComponent))
-            {
-                return;
-            }
-
-            switch (message)
-            {
-                case SetTargetZoneMessage setTargetZone:
-                    combatModeComponent.ActiveZone = setTargetZone.TargetZone;
-                    break;
-
-                case SetCombatModeActiveMessage setActive:
-                    combatModeComponent.IsInCombatMode = setActive.Active;
-                    break;
-            }
         }
     }
 }

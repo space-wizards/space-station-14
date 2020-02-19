@@ -41,6 +41,9 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
+            SubscribeEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
+            SubscribeEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
+
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
             input.BindMap.BindFunction(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands));
             input.BindMap.BindFunction(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop));
@@ -60,13 +63,6 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             base.Shutdown();
-        }
-
-        /// <inheritdoc />
-        public override void SubscribeEvents()
-        {
-            SubscribeEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
-            SubscribeEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
         }
 
         private static void HandleContainerModified(object sender, ContainerModifiedMessage args)

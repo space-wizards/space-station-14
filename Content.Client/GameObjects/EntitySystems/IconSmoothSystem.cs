@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.IconSmoothing;
 using JetBrains.Annotations;
@@ -27,16 +27,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private int _generation;
 
-        public override void SubscribeEvents()
-        {
-            base.SubscribeEvents();
-
-            SubscribeEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
-        }
-
+        /// <inheritdoc />
         public override void Initialize()
         {
-            base.Initialize();
+            SubscribeEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
 
             IoCManager.InjectDependencies(this);
         }

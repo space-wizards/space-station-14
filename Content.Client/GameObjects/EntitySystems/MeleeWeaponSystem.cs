@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -24,28 +23,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Initialize()
         {
-            base.Initialize();
-
+            SubscribeEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
             EntityQuery = new TypeEntityQuery(typeof(MeleeWeaponArcAnimationComponent));
-        }
-
-        public override void RegisterMessageTypes()
-        {
-            base.RegisterMessageTypes();
-
-            RegisterMessageType<PlayMeleeWeaponAnimationMessage>();
-        }
-
-        public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
-        {
-            base.HandleNetMessage(channel, message);
-
-            switch (message)
-            {
-                case PlayMeleeWeaponAnimationMessage playMsg:
-                    PlayWeaponArc(playMsg);
-                    break;
-            }
         }
 
         public override void FrameUpdate(float frameTime)
@@ -58,7 +37,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        private void PlayWeaponArc(PlayMeleeWeaponAnimationMessage msg)
+        private void PlayWeaponArc(object sender, PlayMeleeWeaponAnimationMessage msg)
         {
             if (!_prototypeManager.TryIndex(msg.ArcPrototype, out MeleeWeaponAnimationPrototype weaponArc))
             {
