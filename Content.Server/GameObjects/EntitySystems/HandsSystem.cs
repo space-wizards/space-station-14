@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        private static void HandleContainerModified(object sender, ContainerModifiedMessage args)
+        private static void HandleContainerModified(ContainerModifiedMessage args)
         {
             if (args.Container.Owner.TryGetComponent(out IHandsComponent handsComponent))
             {

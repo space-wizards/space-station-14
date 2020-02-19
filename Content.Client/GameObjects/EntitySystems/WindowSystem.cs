@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -19,11 +19,11 @@ namespace Content.Client.GameObjects.EntitySystems
             SubscribeEvent<WindowSmoothDirtyEvent>(HandleDirtyEvent);
         }
 
-        private void HandleDirtyEvent(object sender, WindowSmoothDirtyEvent ev)
+        private void HandleDirtyEvent(WindowSmoothDirtyEvent ev)
         {
-            if (sender is IEntity senderEnt && senderEnt.HasComponent<WindowComponent>())
+            if (ev.Sender.HasComponent<WindowComponent>())
             {
-                _dirtyEntities.Enqueue(senderEnt);
+                _dirtyEntities.Enqueue(ev.Sender);
             }
         }
 
@@ -50,5 +50,11 @@ namespace Content.Client.GameObjects.EntitySystems
     /// </summary>
     public sealed class WindowSmoothDirtyEvent : EntitySystemMessage
     {
+        public IEntity Sender { get; }
+
+        public WindowSmoothDirtyEvent(IEntity sender)
+        {
+            Sender = sender;
+        }
     }
 }

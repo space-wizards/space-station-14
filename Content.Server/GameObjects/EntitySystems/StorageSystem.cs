@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void HandleEntityRemovedFromContainer(object sender, EntRemovedFromContainerMessage message)
+        private static void HandleEntityRemovedFromContainer(EntRemovedFromContainerMessage message)
         {
             var oldParentEntity = message.Container.Owner;
 
@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void HandleEntityInsertedIntoContainer(object sender, EntInsertedIntoContainerMessage message)
+        private static void HandleEntityInsertedIntoContainer(EntInsertedIntoContainerMessage message)
         {
             var oldParentEntity = message.Container.Owner;
 

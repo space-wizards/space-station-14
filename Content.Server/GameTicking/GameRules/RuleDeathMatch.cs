@@ -46,7 +46,7 @@ namespace Content.Server.GameTicking.GameRules
             _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
         }
 
-        private void _onMobDamageStateChanged(object sender, MobDamageStateChangedMessage message)
+        private void _onMobDamageStateChanged(MobDamageStateChangedMessage message)
         {
             _runDelayedCheck();
         }

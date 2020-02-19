@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeEvent<ExamineSystemMessages.RequestExamineInfoMessage>((sender, ev) => ExamineInfoRequest(ev));
+            SubscribeEvent<ExamineSystemMessages.RequestExamineInfoMessage>(ExamineInfoRequest);
 
             IoCManager.InjectDependencies(this);
         }

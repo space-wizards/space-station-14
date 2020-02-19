@@ -20,8 +20,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeEvent<RequestVerbsMessage>((sender, ev) => RequestVerbs(ev));
-            SubscribeEvent<UseVerbMessage>((sender, ev) => UseVerb(ev));
+            SubscribeEvent<RequestVerbsMessage>(RequestVerbs);
+            SubscribeEvent<UseVerbMessage>(UseVerb);
 
             IoCManager.InjectDependencies(this);
         }

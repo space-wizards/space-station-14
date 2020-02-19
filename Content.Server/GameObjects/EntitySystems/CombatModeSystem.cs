@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 InputCmdHandler.FromDelegate(CombatModeToggled));
         }
 
-        private void SetCombatModeActiveHandler(object sender, SetCombatModeActiveMessage ev)
+        private void SetCombatModeActiveHandler(SetCombatModeActiveMessage ev)
         {
             if (!TryGetCombatComponent(ev, out var combatModeComponent))
                 return;
@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems
             combatModeComponent.IsInCombatMode = ev.Active;
         }
 
-        private void SetTargetZoneHandler(object sender, SetTargetZoneMessage ev)
+        private void SetTargetZoneHandler(SetTargetZoneMessage ev)
         {
             if (!TryGetCombatComponent(ev, out var combatModeComponent))
                 return;

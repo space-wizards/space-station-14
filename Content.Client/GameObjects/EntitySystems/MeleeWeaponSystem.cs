@@ -37,7 +37,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        private void PlayWeaponArc(object sender, PlayMeleeWeaponAnimationMessage msg)
+        private void PlayWeaponArc(PlayMeleeWeaponAnimationMessage msg)
         {
             if (!_prototypeManager.TryIndex(msg.ArcPrototype, out MeleeWeaponAnimationPrototype weaponArc))
             {

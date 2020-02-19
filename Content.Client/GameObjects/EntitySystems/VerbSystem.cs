@@ -112,7 +112,7 @@ namespace Content.Client.GameObjects.EntitySystems
             OpenContextMenu(entity, new ScreenCoordinates(_inputManager.MouseScreenPosition));
         }
 
-        private void FillEntityPopup(object sender, VerbSystemMessages.VerbsResponseMessage msg)
+        private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
         {
             if (_currentEntity != msg.Entity || !_entityManager.TryGetEntity(_currentEntity, out var entity))
             {
