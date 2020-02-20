@@ -231,7 +231,6 @@ namespace Content.Client.UserInterface
                 {
                     Sprite = _previewDummy.GetComponent<SpriteComponent>(),
                     Scale = (2, 2),
-                    MouseFilter = MouseFilterMode.Ignore,
                     OverrideDirection = Direction.South
                 };
 
@@ -264,7 +263,6 @@ namespace Content.Client.UserInterface
                 var internalHBox = new HBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    MouseFilter = MouseFilterMode.Ignore,
                     SeparationOverride = 0,
                     Children =
                     {

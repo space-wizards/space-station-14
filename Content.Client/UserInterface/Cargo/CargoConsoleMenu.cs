@@ -345,14 +345,12 @@ namespace Content.Client.UserInterface.Cargo
 
             var hBox = new HBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                MouseFilter = MouseFilterMode.Ignore
+                SizeFlagsHorizontal = SizeFlags.FillExpand
             };
 
             Icon = new TextureRect
             {
                 CustomMinimumSize = new Vector2(32.0f, 32.0f),
-                MouseFilter = MouseFilterMode.Ignore,
                 RectClipContent = true
             };
             hBox.AddChild(Icon);
@@ -366,7 +364,6 @@ namespace Content.Client.UserInterface.Cargo
             var panel = new PanelContainer
             {
                 PanelOverride = new StyleBoxFlat { BackgroundColor = new Color(37, 37, 42) },
-                MouseFilter = MouseFilterMode.Ignore
             };
             PointCost = new Label
             {
@@ -396,13 +393,11 @@ namespace Content.Client.UserInterface.Cargo
             var hBox = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                MouseFilter = MouseFilterMode.Ignore
             };
 
             Icon = new TextureRect
             {
                 CustomMinimumSize = new Vector2(32.0f, 32.0f),
-                MouseFilter = MouseFilterMode.Ignore,
                 RectClipContent = true
             };
             hBox.AddChild(Icon);
