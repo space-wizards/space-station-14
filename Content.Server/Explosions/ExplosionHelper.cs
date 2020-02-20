@@ -78,12 +78,12 @@ namespace Content.Server.Explosions
             {
                 var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
-                ContentTileDefinition.BaseTurfs.TryGetValue(tileDef.Name, out var baseTurfs);
-                var distanceFromTile = (int) tileLoc.Distance(mapManager, coords);
-                if (!baseTurfs.Any())
+                var baseTurfs = tileDef.BaseTurfs;
+                if (baseTurfs.Count == 0)
                 {
                     continue;
                 }
+                var distanceFromTile = (int) tileLoc.Distance(mapManager, coords);
                 if (distanceFromTile < devastationRange)
                 {
                     mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[0]].TileId));
@@ -92,7 +92,7 @@ namespace Content.Server.Explosions
                 {
                     if (robustRandom.Prob(80))
                     {
-                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[baseTurfs.Count - 1]].TileId));
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[^1]].TileId));
                     }
                     else
                     {
@@ -103,7 +103,7 @@ namespace Content.Server.Explosions
                 {
                     if (robustRandom.Prob(50))
                     {
-                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[baseTurfs.Count - 1]].TileId));
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[^1]].TileId));
                     }
                 }
             }
