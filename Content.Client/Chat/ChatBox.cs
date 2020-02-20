@@ -43,6 +43,7 @@ namespace Content.Client.Chat
 
             AnchorLeft = 1.0f;
             AnchorRight = 1.0f;*/
+            MouseFilter = MouseFilterMode.Stop;
 
             var outerVBox = new VBoxContainer();
 
