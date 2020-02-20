@@ -38,7 +38,7 @@ namespace Content.Shared.Maps
             Name = mapping.GetNode("name").ToString();
             DisplayName = mapping.GetNode("display_name").ToString();
             SpriteName = mapping.GetNode("texture").ToString();
-            
+
             if (mapping.TryGetNode("is_subfloor", out var node))
             {
                 IsSubFloor = node.AsBool();
