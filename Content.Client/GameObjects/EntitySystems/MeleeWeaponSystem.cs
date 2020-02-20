@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Initialize()
         {
-            SubscribeEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
+            SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
             EntityQuery = new TypeEntityQuery(typeof(MeleeWeaponArcAnimationComponent));
         }
 

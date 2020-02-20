@@ -40,7 +40,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
+            SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
 
             IoCManager.InjectDependencies(this);
 

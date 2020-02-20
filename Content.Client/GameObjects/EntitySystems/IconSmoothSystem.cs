@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
-            SubscribeEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
+            SubscribeLocalEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
 
             IoCManager.InjectDependencies(this);
         }

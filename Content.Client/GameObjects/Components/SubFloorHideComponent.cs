@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.Components
             base.Startup();
 
             _snapGridComponent.OnPositionChanged += SnapGridOnPositionChanged;
-            Owner.EntityManager.EventBus.RaiseEvent(new SubFloorHideDirtyEvent(Owner));
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SubFloorHideDirtyEvent(Owner));
         }
 
         /// <inheritdoc />
@@ -45,12 +45,12 @@ namespace Content.Client.GameObjects.Components
                 return;
 
             _snapGridComponent.OnPositionChanged -= SnapGridOnPositionChanged;
-            Owner.EntityManager.EventBus.RaiseEvent(new SubFloorHideDirtyEvent(Owner));
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SubFloorHideDirtyEvent(Owner));
         }
 
         private void SnapGridOnPositionChanged()
         {
-            Owner.EntityManager.EventBus.RaiseEvent(new SubFloorHideDirtyEvent(Owner));
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SubFloorHideDirtyEvent(Owner));
         }
     }
 

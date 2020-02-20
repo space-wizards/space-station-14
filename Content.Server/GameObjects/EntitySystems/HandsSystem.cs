@@ -41,8 +41,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
-            SubscribeEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
 
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
             input.BindMap.BindFunction(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands));

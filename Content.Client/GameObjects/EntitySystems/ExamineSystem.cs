@@ -111,7 +111,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 _requestCancelTokenSource = new CancellationTokenSource();
                 response =
-                    await AwaitNetMessage<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
+                    await AwaitNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
                         .Token);
             }
             catch (TaskCanceledException)

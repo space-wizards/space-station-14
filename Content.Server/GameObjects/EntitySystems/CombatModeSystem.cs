@@ -23,8 +23,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeEvent<SetTargetZoneMessage>(SetTargetZoneHandler);
-            SubscribeEvent<SetCombatModeActiveMessage>(SetCombatModeActiveHandler);
+            SubscribeNetworkEvent<SetTargetZoneMessage>(SetTargetZoneHandler);
+            SubscribeNetworkEvent<SetCombatModeActiveMessage>(SetCombatModeActiveHandler);
 
             var inputSystem = EntitySystemManager.GetEntitySystem<InputSystem>();
             inputSystem.BindMap.BindFunction(ContentKeyFunctions.ToggleCombatMode,

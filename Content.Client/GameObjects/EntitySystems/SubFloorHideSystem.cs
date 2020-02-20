@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _mapManager.GridChanged += MapManagerOnGridChanged;
             _mapManager.TileChanged += MapManagerOnTileChanged;
 
-            SubscribeEvent<SubFloorHideDirtyEvent>(HandleDirtyEvent);
+            SubscribeLocalEvent<SubFloorHideDirtyEvent>(HandleDirtyEvent);
         }
 
         private void HandleDirtyEvent(SubFloorHideDirtyEvent ev)

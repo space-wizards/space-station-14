@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            SubscribeEvent<WindowSmoothDirtyEvent>(HandleDirtyEvent);
+            SubscribeLocalEvent<WindowSmoothDirtyEvent>(HandleDirtyEvent);
         }
 
         private void HandleDirtyEvent(WindowSmoothDirtyEvent ev)
