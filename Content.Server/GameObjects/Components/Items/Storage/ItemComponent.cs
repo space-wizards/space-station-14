@@ -1,4 +1,7 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using System;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Destructible;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
@@ -7,12 +10,15 @@ using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
@@ -20,7 +26,7 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(StoreableComponent))]
-    public class ItemComponent : StoreableComponent, IAttackHand
+    public class ItemComponent : StoreableComponent, IAttackHand, IExAct
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -140,6 +146,57 @@ namespace Content.Server.GameObjects
                 var size = 15.0F;
                 return (_robustRandom.NextFloat() * size) - size / 2;
             }
+        }
+
+        public void OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            //TODO: create helper function for throwing so i don't have to copypaste this code from hands code
+            var sourceLocation = eventArgs.Source;
+            var targetLocation = eventArgs.Target.Transform.GridPosition;
+            var dirVec = (targetLocation.ToMapPos(_mapManager) - sourceLocation.ToMapPos(_mapManager)).Normalized;
+
+            var throwForce = 1.0f;
+
+            switch (eventArgs.Severity)
+            {
+                case ExplosionSeverity.Destruction:
+                    throwForce = 3.0f;
+                    break;
+                case ExplosionSeverity.Heavy:
+                    throwForce = 2.0f;
+                    break;
+                case ExplosionSeverity.Light:
+                    throwForce = 1.0f;
+                    break;
+            }
+
+            if (!Owner.TryGetComponent(out CollidableComponent colComp))
+                return;
+
+            colComp.CollisionEnabled = true;
+
+            if (!Owner.TryGetComponent(out ThrownItemComponent projComp))
+            {
+                projComp = Owner.AddComponent<ThrownItemComponent>();
+
+                if(colComp.PhysicsShapes.Count == 0)
+                    colComp.PhysicsShapes.Add(new PhysShapeAabb());
+
+                colComp.PhysicsShapes[0].CollisionMask |= (int)CollisionGroup.MobImpassable;
+                colComp.IsScrapingFloor = false;
+            }
+            if (!Owner.TryGetComponent(out PhysicsComponent physComp))
+                physComp = Owner.AddComponent<PhysicsComponent>();
+            
+            var a = throwForce / (float) Math.Max(0.001, physComp.Mass);
+
+            var timing = IoCManager.Resolve<IGameTiming>();
+            var spd = a / (1f / timing.TickRate);
+
+            physComp.LinearVelocity = dirVec * spd;
+
+            Owner.Transform.LocalRotation = new Angle(dirVec).GetCardinalDir().ToAngle();
+
         }
     }
 }

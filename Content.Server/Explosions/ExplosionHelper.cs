@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Maps;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -65,7 +66,7 @@ namespace Content.Server.Explosions
                     continue;
                 }
                 //exAct.HandleExplosion(Owner, entity, severity);
-                exAct.HandleExplosion(null, entity, severity);
+                exAct.HandleExplosion(coords, entity, severity);
             }
 
             //Tile damage calculation mockup
@@ -76,29 +77,34 @@ namespace Content.Server.Explosions
             foreach (var tile in tiles)
             {
                 var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
-                var tileDef = (ContentTileDefinition)tileDefinitionManager[tile.Tile.TypeId];
-                var distanceFromTile = (int)tileLoc.Distance(mapManager, coords);
-                if (!string.IsNullOrWhiteSpace(tileDef.SubFloor))
+                var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
+                var distanceFromTile = (int) tileLoc.Distance(mapManager, coords);
+                if (distanceFromTile < devastationRange || string.IsNullOrWhiteSpace(tileDef.SubFloor))
                 {
-                    if (distanceFromTile < devastationRange)
-                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager["space"].TileId));
-                    if (distanceFromTile < heavyImpactRange)
+                    mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager["space"].TileId));
+                }
+
+                else if (distanceFromTile < heavyImpactRange)
+                {
+                    if (robustRandom.Prob(0.8f))
                     {
-                        if (robustRandom.Prob(80))
-                        {
-                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[tileDef.SubFloor].TileId));
-                        }
-                        else
-                        {
-                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager["space"].TileId));
-                        }
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[tileDef.SubFloor].TileId));
                     }
-                    if (distanceFromTile < lightImpactRange)
+                    else
                     {
-                        if (robustRandom.Prob(50))
-                        {
-                            mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[tileDef.SubFloor].TileId));
-                        }
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager["space"].TileId));
+                    }
+                }
+
+                else if (distanceFromTile < lightImpactRange)
+                {
+                    if (robustRandom.Prob(0.5f))
+                    {
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[tileDef.SubFloor].TileId));
+                    }
+                    else
+                    {
+
                     }
                 }
             }
