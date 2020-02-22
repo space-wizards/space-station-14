@@ -9,15 +9,12 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.State;
-using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
-using Robust.Client.State.States;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -43,6 +40,8 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
+            SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
+
             IoCManager.InjectDependencies(this);
 
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
@@ -50,24 +49,17 @@ namespace Content.Client.GameObjects.EntitySystems
                 new PointerInputCmdHandler(OnOpenContextMenu));
         }
 
-        public override void RegisterMessageTypes()
-        {
-            base.RegisterMessageTypes();
-
-            RegisterMessageType<VerbSystemMessages.VerbsResponseMessage>();
-        }
-
         public void OpenContextMenu(IEntity entity, ScreenCoordinates screenCoordinates)
         {
             if (_currentPopup != null)
             {
-                _closeContextMenu();
+                CloseContextMenu();
             }
 
             _currentEntity = entity.Uid;
             _currentPopup = new VerbPopup();
             _currentPopup.UserInterfaceManager.ModalRoot.AddChild(_currentPopup);
-            _currentPopup.OnPopupHide += _closeContextMenu;
+            _currentPopup.OnPopupHide += CloseContextMenu;
 
             _currentPopup.List.AddChild(new Label {Text = "Waiting on Server..."});
             RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
@@ -81,7 +73,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             if (_currentPopup != null)
             {
-                _closeContextMenu();
+                CloseContextMenu();
                 return true;
             }
 
@@ -98,7 +90,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             _currentPopup = new VerbPopup();
-            _currentPopup.OnPopupHide += _closeContextMenu;
+            _currentPopup.OnPopupHide += CloseContextMenu;
             foreach (var entity in entities)
             {
                 var button = new Button {Text = entity.Name};
@@ -120,19 +112,7 @@ namespace Content.Client.GameObjects.EntitySystems
             OpenContextMenu(entity, new ScreenCoordinates(_inputManager.MouseScreenPosition));
         }
 
-        public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
-        {
-            base.HandleNetMessage(channel, message);
-
-            switch (message)
-            {
-                case VerbSystemMessages.VerbsResponseMessage resp:
-                    _fillEntityPopup(resp);
-                    break;
-            }
-        }
-
-        private void _fillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
+        private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
         {
             if (_currentEntity != msg.Entity || !_entityManager.TryGetEntity(_currentEntity, out var entity))
             {
@@ -153,7 +133,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     button.OnPressed += _ =>
                     {
                         RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(_currentEntity, data.Key));
-                        _closeContextMenu();
+                        CloseContextMenu();
                     };
                 }
 
@@ -210,7 +190,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 button.OnPressed += _ =>
                 {
-                    _closeContextMenu();
+                    CloseContextMenu();
                     try
                     {
                         action.Invoke();
@@ -224,7 +204,7 @@ namespace Content.Client.GameObjects.EntitySystems
             return button;
         }
 
-        private void _closeContextMenu()
+        private void CloseContextMenu()
         {
             _currentPopup?.Dispose();
             _currentPopup = null;
