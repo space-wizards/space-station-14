@@ -41,6 +41,9 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
+
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
             input.BindMap.BindFunction(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands));
             input.BindMap.BindFunction(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop));
@@ -62,14 +65,7 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        /// <inheritdoc />
-        public override void SubscribeEvents()
-        {
-            SubscribeEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
-            SubscribeEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
-        }
-
-        private static void HandleContainerModified(object sender, ContainerModifiedMessage args)
+        private static void HandleContainerModified(ContainerModifiedMessage args)
         {
             if (args.Container.Owner.TryGetComponent(out IHandsComponent handsComponent))
             {

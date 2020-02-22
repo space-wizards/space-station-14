@@ -333,7 +333,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private void InteractionActivate(IEntity user, IEntity used)
         {
             var activateMsg = new ActivateInWorldMessage(user, used);
-            RaiseEvent(activateMsg);
+            RaiseLocalEvent(activateMsg);
             if (activateMsg.Handled)
             {
                 return;
@@ -509,7 +509,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private void InteractAfterAttack(IEntity user, IEntity weapon, GridCoordinates clickLocation)
         {
             var message = new AfterAttackMessage(user, weapon, null, clickLocation);
-            RaiseEvent(message);
+            RaiseLocalEvent(message);
             if (message.Handled)
             {
                 return;
@@ -531,7 +531,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
             var attackMsg = new AttackByMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(attackMsg);
+            RaiseLocalEvent(attackMsg);
             if (attackMsg.Handled)
             {
                 return;
@@ -553,7 +553,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(afterAtkMsg);
+            RaiseLocalEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
             {
                 return;
@@ -579,7 +579,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void Interaction(IEntity user, IEntity attacked)
         {
             var message = new AttackHandMessage(user, attacked);
-            RaiseEvent(message);
+            RaiseLocalEvent(message);
             if (message.Handled)
             {
                 return;
@@ -630,7 +630,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var useMsg = new UseInHandMessage(user, used);
-            RaiseEvent(useMsg);
+            RaiseLocalEvent(useMsg);
             if (useMsg.Handled)
             {
                 return;
@@ -668,7 +668,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void ThrownInteraction(IEntity user, IEntity thrown)
         {
             var throwMsg = new ThrownMessage(user, thrown);
-            RaiseEvent(throwMsg);
+            RaiseLocalEvent(throwMsg);
             if (throwMsg.Handled)
             {
                 return;
@@ -690,7 +690,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void LandInteraction(IEntity user, IEntity landing, GridCoordinates landLocation)
         {
             var landMsg = new LandMessage(user, landing, landLocation);
-            RaiseEvent(landMsg);
+            RaiseLocalEvent(landMsg);
             if (landMsg.Handled)
             {
                 return;
@@ -724,7 +724,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void DroppedInteraction(IEntity user, IEntity item)
         {
             var dropMsg = new DroppedMessage(user, item);
-            RaiseEvent(dropMsg);
+            RaiseLocalEvent(dropMsg);
             if (dropMsg.Handled)
             {
                 return;
@@ -746,7 +746,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void HandSelectedInteraction(IEntity user, IEntity item)
         {
             var handSelectedMsg = new HandSelectedMessage(user, item);
-            RaiseEvent(handSelectedMsg);
+            RaiseLocalEvent(handSelectedMsg);
             if (handSelectedMsg.Handled)
             {
                 return;
@@ -768,7 +768,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void HandDeselectedInteraction(IEntity user, IEntity item)
         {
             var handDeselectedMsg = new HandDeselectedMessage(user, item);
-            RaiseEvent(handDeselectedMsg);
+            RaiseLocalEvent(handDeselectedMsg);
             if (handDeselectedMsg.Handled)
             {
                 return;
@@ -791,7 +791,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
             var rangedMsg = new RangedAttackMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(rangedMsg);
+            RaiseLocalEvent(rangedMsg);
             if (rangedMsg.Handled)
                 return;
 
@@ -812,7 +812,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(afterAtkMsg);
+            RaiseLocalEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
                 return;
 

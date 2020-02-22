@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Shared", "Content.Shared\Content.Shared.csproj", "{26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Shared", "Content.Shared\Content.Shared.csproj", "{26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Server", "Content.Server\Content.Server.csproj", "{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Server", "Content.Server\Content.Server.csproj", "{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{59250BAF-0000-0000-0000-000000000000} = {59250BAF-0000-0000-0000-000000000000}
 		{26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5} = {26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Client", "Content.Client\Content.Client.csproj", "{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Client", "Content.Client\Content.Client.csproj", "{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}"
 	ProjectSection(ProjectDependencies) = postProject
 		{59250BAF-0000-0000-0000-000000000000} = {59250BAF-0000-0000-0000-000000000000}
 	EndProjectSection
@@ -20,36 +20,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Checker", "Build Chec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildChecker", "BuildChecker\BuildChecker.csproj", "{C899FCA4-7037-4E49-ABC2-44DE72487110}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Tests", "Content.Tests\Content.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Tests", "Content.Tests\Content.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RobustToolbox", "RobustToolbox", "{83B4CBBA-547A-42F0-A7CD-8A67D93196CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lidgren.Network", "RobustToolbox\Lidgren.Network\Lidgren.Network.csproj", "{59250BAF-0000-0000-0000-000000000000}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lidgren.Network", "RobustToolbox\Lidgren.Network\Lidgren.Network.csproj", "{59250BAF-0000-0000-0000-000000000000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Client", "RobustToolbox\Robust.Client\Robust.Client.csproj", "{83429BD6-6358-4B18-BE51-401DF8EA2673}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Client", "RobustToolbox\Robust.Client\Robust.Client.csproj", "{83429BD6-6358-4B18-BE51-401DF8EA2673}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Server", "RobustToolbox\Robust.Server\Robust.Server.csproj", "{B04AAE71-0000-0000-0000-000000000000}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Server", "RobustToolbox\Robust.Server\Robust.Server.csproj", "{B04AAE71-0000-0000-0000-000000000000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared.Maths", "RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj", "{93F23A82-00C5-4572-964E-E7C9457726D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Shared.Maths", "RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj", "{93F23A82-00C5-4572-964E-E7C9457726D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.UnitTesting", "RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj", "{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.UnitTesting", "RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj", "{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared", "RobustToolbox\Robust.Shared\Robust.Shared.csproj", "{0529F740-0000-0000-0000-000000000000}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Shared", "RobustToolbox\Robust.Shared\Robust.Shared.csproj", "{0529F740-0000-0000-0000-000000000000}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.IntegrationTests", "Content.IntegrationTests\Content.IntegrationTests.csproj", "{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Benchmarks", "Content.Benchmarks\Content.Benchmarks.csproj", "{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Benchmarks", "Content.Benchmarks\Content.Benchmarks.csproj", "{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.GraphicsLibraryFramework", "RobustToolbox\OpenToolkit.GraphicsLibraryFramework\OpenToolkit.GraphicsLibraryFramework.csproj", "{4809F412-3132-419E-BF9D-CCF7593C3533}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.GraphicsLibraryFramework", "RobustToolbox\OpenToolkit.GraphicsLibraryFramework\OpenToolkit.GraphicsLibraryFramework.csproj", "{4809F412-3132-419E-BF9D-CCF7593C3533}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Server.Database", "Content.Server.Database\Content.Server.Database.csproj", "{45C9B43F-305D-4651-9863-F6384CBC847F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Server.Database", "Content.Server.Database\Content.Server.Database.csproj", "{45C9B43F-305D-4651-9863-F6384CBC847F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{50404922-9637-4394-BF59-165D0850ADC8}"
-ProjectSection(SolutionItems) = preProject
-	RobustToolbox\MSBuild\Robust.DefineConstants.targets = RobustToolbox\MSBuild\Robust.DefineConstants.targets
-	RobustToolbox\MSBuild\Robust.Engine.targets = RobustToolbox\MSBuild\Robust.Engine.targets
-	RobustToolbox\MSBuild\Robust.Properties.targets = RobustToolbox\MSBuild\Robust.Properties.targets
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		RobustToolbox\MSBuild\Robust.DefineConstants.targets = RobustToolbox\MSBuild\Robust.DefineConstants.targets
+		RobustToolbox\MSBuild\Robust.Engine.targets = RobustToolbox\MSBuild\Robust.Engine.targets
+		RobustToolbox\MSBuild\Robust.Properties.targets = RobustToolbox\MSBuild\Robust.Properties.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,41 +70,41 @@ Global
 		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Release|x64.ActiveCfg = Release|x64
 		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Release|x64.Build.0 = Release|x64
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Debug|x64.Build.0 = Debug|Any CPU
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Release|x64.ActiveCfg = Debug|Any CPU
 		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Release|x64.Build.0 = Debug|Any CPU
-		{C899FCA4-7037-4E49-ABC2-44DE72487110}.Debug|x64.Build.0 = Debug|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|x64.ActiveCfg = Debug|x64
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|x64.Build.0 = Debug|x64
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|x64.ActiveCfg = Release|x64
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|x64.Build.0 = Release|x64
-		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|x64.ActiveCfg = Debug|x64
-		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|x64.Build.0 = Debug|x64
-		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Release|x64.ActiveCfg = Release|x64
-		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Release|x64.Build.0 = Release|x64
-		{93F23A82-00C5-4572-964E-E7C9457726D4}.Debug|x64.ActiveCfg = Debug|x64
-		{93F23A82-00C5-4572-964E-E7C9457726D4}.Debug|x64.Build.0 = Debug|x64
-		{93F23A82-00C5-4572-964E-E7C9457726D4}.Release|x64.ActiveCfg = Release|x64
-		{93F23A82-00C5-4572-964E-E7C9457726D4}.Release|x64.Build.0 = Release|x64
-		{0529F740-0000-0000-0000-000000000000}.Debug|x64.ActiveCfg = Debug|x64
-		{0529F740-0000-0000-0000-000000000000}.Debug|x64.Build.0 = Debug|x64
-		{0529F740-0000-0000-0000-000000000000}.Release|x64.ActiveCfg = Release|x64
-		{0529F740-0000-0000-0000-000000000000}.Release|x64.Build.0 = Release|x64
-		{B04AAE71-0000-0000-0000-000000000000}.Debug|x64.ActiveCfg = Debug|x64
-		{B04AAE71-0000-0000-0000-000000000000}.Debug|x64.Build.0 = Debug|x64
-		{B04AAE71-0000-0000-0000-000000000000}.Release|x64.ActiveCfg = Release|x64
-		{B04AAE71-0000-0000-0000-000000000000}.Release|x64.Build.0 = Release|x64
+		{59250BAF-0000-0000-0000-000000000000}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{59250BAF-0000-0000-0000-000000000000}.Debug|x64.Build.0 = Debug|Any CPU
+		{59250BAF-0000-0000-0000-000000000000}.Release|x64.ActiveCfg = Release|Any CPU
+		{59250BAF-0000-0000-0000-000000000000}.Release|x64.Build.0 = Release|Any CPU
 		{83429BD6-6358-4B18-BE51-401DF8EA2673}.Debug|x64.ActiveCfg = Debug|x64
 		{83429BD6-6358-4B18-BE51-401DF8EA2673}.Debug|x64.Build.0 = Debug|x64
 		{83429BD6-6358-4B18-BE51-401DF8EA2673}.Release|x64.ActiveCfg = Release|x64
 		{83429BD6-6358-4B18-BE51-401DF8EA2673}.Release|x64.Build.0 = Release|x64
-		{59250BAF-0000-0000-0000-000000000000}.Release|x64.ActiveCfg = Release|Any CPU
-		{59250BAF-0000-0000-0000-000000000000}.Release|x64.Build.0 = Release|Any CPU
-		{59250BAF-0000-0000-0000-000000000000}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{59250BAF-0000-0000-0000-000000000000}.Debug|x64.Build.0 = Debug|Any CPU
+		{B04AAE71-0000-0000-0000-000000000000}.Debug|x64.ActiveCfg = Debug|x64
+		{B04AAE71-0000-0000-0000-000000000000}.Debug|x64.Build.0 = Debug|x64
+		{B04AAE71-0000-0000-0000-000000000000}.Release|x64.ActiveCfg = Release|x64
+		{B04AAE71-0000-0000-0000-000000000000}.Release|x64.Build.0 = Release|x64
+		{93F23A82-00C5-4572-964E-E7C9457726D4}.Debug|x64.ActiveCfg = Debug|x64
+		{93F23A82-00C5-4572-964E-E7C9457726D4}.Debug|x64.Build.0 = Debug|x64
+		{93F23A82-00C5-4572-964E-E7C9457726D4}.Release|x64.ActiveCfg = Release|x64
+		{93F23A82-00C5-4572-964E-E7C9457726D4}.Release|x64.Build.0 = Release|x64
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}.Debug|x64.ActiveCfg = Debug|x64
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}.Debug|x64.Build.0 = Debug|x64
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}.Release|x64.ActiveCfg = Release|x64
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}.Release|x64.Build.0 = Release|x64
+		{0529F740-0000-0000-0000-000000000000}.Debug|x64.ActiveCfg = Debug|x64
+		{0529F740-0000-0000-0000-000000000000}.Debug|x64.Build.0 = Debug|x64
+		{0529F740-0000-0000-0000-000000000000}.Release|x64.ActiveCfg = Release|x64
+		{0529F740-0000-0000-0000-000000000000}.Release|x64.Build.0 = Release|x64
+		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|x64.ActiveCfg = Debug|x64
+		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Debug|x64.Build.0 = Debug|x64
+		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Release|x64.ActiveCfg = Release|x64
+		{AB7AF1C8-30FF-4436-9DF0-179BE5B0C132}.Release|x64.Build.0 = Release|x64
 		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Debug|x64.ActiveCfg = Debug|x64
 		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Debug|x64.Build.0 = Debug|x64
 		{7AC832A1-2461-4EB5-AC26-26F6AFFA9E46}.Release|x64.ActiveCfg = Release|x64
@@ -113,10 +113,10 @@ Global
 		{4809F412-3132-419E-BF9D-CCF7593C3533}.Debug|x64.Build.0 = Debug|x64
 		{4809F412-3132-419E-BF9D-CCF7593C3533}.Release|x64.ActiveCfg = Release|x64
 		{4809F412-3132-419E-BF9D-CCF7593C3533}.Release|x64.Build.0 = Release|x64
-		{45C9B43F-305D-4651-9863-F6384CBC847F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{45C9B43F-305D-4651-9863-F6384CBC847F}.Debug|x64.Build.0 = Debug|Any CPU
-		{45C9B43F-305D-4651-9863-F6384CBC847F}.Release|x64.ActiveCfg = Release|Any CPU
-		{45C9B43F-305D-4651-9863-F6384CBC847F}.Release|x64.Build.0 = Release|Any CPU
+		{45C9B43F-305D-4651-9863-F6384CBC847F}.Debug|x64.ActiveCfg = Debug|x64
+		{45C9B43F-305D-4651-9863-F6384CBC847F}.Debug|x64.Build.0 = Debug|x64
+		{45C9B43F-305D-4651-9863-F6384CBC847F}.Release|x64.ActiveCfg = Release|x64
+		{45C9B43F-305D-4651-9863-F6384CBC847F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

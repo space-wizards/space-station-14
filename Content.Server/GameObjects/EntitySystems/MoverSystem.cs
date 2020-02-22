@@ -74,13 +74,13 @@ namespace Content.Server.GameObjects.EntitySystems
             input.BindMap.BindFunction(EngineKeyFunctions.MoveDown, moveDownCmdHandler);
             input.BindMap.BindFunction(EngineKeyFunctions.Run, runCmdHandler);
 
-            SubscribeEvent<PlayerAttachSystemMessage>(PlayerAttached);
-            SubscribeEvent<PlayerDetachedSystemMessage>(PlayerDetached);
+            SubscribeLocalEvent<PlayerAttachSystemMessage>(PlayerAttached);
+            SubscribeLocalEvent<PlayerDetachedSystemMessage>(PlayerDetached);
 
             _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
         }
 
-        private static void PlayerAttached(object sender, PlayerAttachSystemMessage ev)
+        private static void PlayerAttached(PlayerAttachSystemMessage ev)
         {
             if (!ev.Entity.HasComponent<IMoverComponent>())
             {
@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void PlayerDetached(object sender, PlayerDetachedSystemMessage ev)
+        private static void PlayerDetached(PlayerDetachedSystemMessage ev)
         {
             if(ev.Entity.HasComponent<PlayerInputMoverComponent>())
             {

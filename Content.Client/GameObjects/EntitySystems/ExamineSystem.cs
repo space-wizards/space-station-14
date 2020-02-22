@@ -46,13 +46,6 @@ namespace Content.Client.GameObjects.EntitySystems
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine));
         }
 
-        public override void RegisterMessageTypes()
-        {
-            base.RegisterMessageTypes();
-
-            RegisterMessageType<ExamineSystemMessages.ExamineInfoResponseMessage>();
-        }
-
         private bool HandleExamine(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             if (!uid.IsValid() || !_entityManager.TryGetEntity(uid, out var examined))
@@ -118,7 +111,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 _requestCancelTokenSource = new CancellationTokenSource();
                 response =
-                    await AwaitNetMessage<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
+                    await AwaitNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
                         .Token);
             }
             catch (TaskCanceledException)
