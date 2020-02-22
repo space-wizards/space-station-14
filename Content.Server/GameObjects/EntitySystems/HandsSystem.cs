@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces.GameObjects;
@@ -15,8 +15,10 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -29,6 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -124,18 +127,23 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
-            if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
-            {
-                handsComp.Drop(handsComp.ActiveIndex, coords);
-            }
-            else
-            {
-                var entCoords = ent.Transform.GridPosition.Position;
-                var entToDesiredDropCoords = coords.Position - entCoords;
-                var clampedDropCoords = ((entToDesiredDropCoords.Normalized * InteractionSystem.InteractionRange) + entCoords);
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
 
-                handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(clampedDropCoords, coords.GridID));
-            }
+            if(interactionSystem.InRangeUnobstructed(coords, ent.Transform.GridPosition, 0f, ignoredEnt:ent))
+                if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
+                {
+                    handsComp.Drop(handsComp.ActiveIndex, coords);
+                }
+                else
+                {
+                    var entCoords = ent.Transform.GridPosition.Position;
+                    var entToDesiredDropCoords = coords.Position - entCoords;
+                    var clampedDropCoords = ((entToDesiredDropCoords.Normalized * InteractionSystem.InteractionRange) + entCoords);
+
+                    handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(clampedDropCoords, coords.GridID));
+                }
+            else
+                handsComp.Drop(handsComp.ActiveIndex, ent.Transform.GridPosition);
 
             return true;
         }
@@ -166,8 +174,8 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!handsComp.ThrowItem())
                 return false;
 
-            // pop off an item, or throw the single item in hand.
-            if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2)
+            // throw the item, split off from a stack if it's meant to be thrown individually
+            if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2 || !stackComp.ThrowIndividually)
             {
                 handsComp.Drop(handsComp.ActiveIndex);
             }
@@ -215,12 +223,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             physComp.LinearVelocity = dirVec * spd;
 
-            var wHomoDir = Vector3.UnitX;
-
-            transform.InvWorldMatrix.Transform(ref wHomoDir, out var lHomoDir);
-
-            lHomoDir.Normalize();
-            transform.LocalRotation = new Angle(lHomoDir.Xy);
+            transform.LocalRotation = new Angle(dirVec).GetCardinalDir().ToAngle();
 
             return true;
         }

@@ -26,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Stack
         private const string SerializationCache = "stack";
         private int _count = 50;
         private int _maxCount = 50;
+        private bool _throwIndividually = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int Count
@@ -49,6 +50,17 @@ namespace Content.Server.GameObjects.Components.Stack
             private set
             {
                 _maxCount = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ThrowIndividually
+        {
+            get => _throwIndividually;
+            private set
+            {
+                _throwIndividually = value;
                 Dirty();
             }
         }
