@@ -65,6 +65,7 @@
   - rmrole
   - showtime
   - group
+  - addai
   CanViewVar: true
   CanAdminPlace: true
 
