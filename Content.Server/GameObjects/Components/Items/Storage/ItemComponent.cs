@@ -27,8 +27,6 @@ namespace Content.Server.GameObjects
 
         #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _robustRandom;
-        [Dependency] private readonly IPhysicsManager _physicsManager;
-        [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         #pragma warning restore 649
 
