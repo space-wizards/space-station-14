@@ -1,0 +1,15 @@
+- type: bodyPreset
+  name: "basic dog"
+  id: bodyPreset.BasicDog
+  partIDs:
+    head: bodyPart.Head.BasicHuman
+    torso: bodyPart.Torso.BasicHuman
+    left front leg: Leg
+    left front paw: Foot
+    right front leg: Leg
+    right front paw: Foot
+    left hind leg: Leg
+    left hind paw: Foot
+    right hind leg: Leg  
+    right hind paw: Foot
+      

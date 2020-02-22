@@ -50,10 +50,16 @@ namespace Content.Shared.BodySystem
         public int MaxDurability;
 
         /// <summary>
-        ///     Current HP of this body part.
+        ///     Current HP of this body part based on sum of all damage types.
         /// </summary>		
-		[ViewVariables]
-        public float CurrentDurability;
+        [ViewVariables]
+        public int CurrentDurability => MaxDurability - CurrentDamages.Damage;
+
+        /// <summary>
+        ///     Current damage dealt to this BodyPart.
+        /// </summary>		
+        [ViewVariables]
+        public AbstractDamageContainer CurrentDamages;
 
         /// <summary>
         ///     At what HP this body part is completely destroyed.
@@ -108,7 +114,6 @@ namespace Content.Shared.BodySystem
         /// </summary>
         public bool AddMechanism(Mechanism mechanism)
         {
-
             return false;
         }
 
@@ -117,51 +122,9 @@ namespace Content.Shared.BodySystem
         /// </summary>
         public Mechanism RemoveMechanism(Mechanism mechanism)
         {
-
             return null;
         }
 
-        /// <summary>
-        ///     Returns the current durability of this limb.
-        /// </summary>	
-		public float GetDurability()
-        {
-            return MaxDurability;
-        }
-
-        /// <summary>
-        ///     Heals the durability of this limb by the given amount. Only heals up to its max.
-        /// </summary>	
-        public void HealDamage(float heal)
-        {
-            Math.Clamp(CurrentDurability + heal, int.MinValue, MaxDurability);
-            DurabilityCheck();
-        }
-
-        /// <summary>
-        ///     Damages this limb, potentially breaking or destroying it.
-        /// </summary>	
-        public void DealDamage(float dmg)
-        {
-            CurrentDurability -= dmg;
-            DurabilityCheck();
-        }
-
-        private void DurabilityCheck()
-        {
-            if (CurrentDurability <= DestroyThreshold)
-            {
-                //Destroy
-            }
-            else if (CurrentDurability <= 0)
-            {
-                //Be broken
-            }
-            else
-            {
-                //Be normal
-            }
-        }
 
 
         /// <summary>
@@ -173,7 +136,7 @@ namespace Content.Shared.BodySystem
             Plural = data.Plural;
             PartType = data.PartType;
             MaxDurability = data.Durability;
-            CurrentDurability = MaxDurability;
+            CurrentDamages = new BiologicalDamageContainer();
             Resistance = data.Resistance;
             Size = data.Size;
             Compatibility = data.Compatibility;

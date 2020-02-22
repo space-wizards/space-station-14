@@ -11,6 +11,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using static Robust.Client.UserInterface.Controls.ItemList;
 
 namespace Content.Client.UserInterface
@@ -107,7 +108,7 @@ namespace Content.Client.UserInterface
             {
                 _slots.Add(key);    //We have to do this since ItemLists only return the index of what item is selected and dictionaries don't allow you to explicitly grab things by index.
                                     //So we put the contents of the dictionary into a list so that we can grab the list by index. I don't know either.
-                BodyPartList.AddItem(StringHelpers.CapitalizeAllWords(key));
+                BodyPartList.AddItem(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(key));
             }
         }
 
@@ -120,7 +121,7 @@ namespace Content.Client.UserInterface
         }
         private void UpdateBodyPartBox(BodyPart part, string slotName)
         {
-            BodyPartLabel.Text = StringHelpers.CapitalizeAllWords(slotName) + ": " + StringHelpers.CapitalizeAllWords(part.Name);
+            BodyPartLabel.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(slotName) + ": " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(part.Name);
             BodyPartHealth.Text = part.CurrentDurability + "/" + part.MaxDurability;
 
             MechanismList.Clear();
