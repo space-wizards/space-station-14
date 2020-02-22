@@ -64,6 +64,7 @@
   - addrole
   - rmrole
   - showtime
+  - group
   CanViewVar: true
   CanAdminPlace: true
 
