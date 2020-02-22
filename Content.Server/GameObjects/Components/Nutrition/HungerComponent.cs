@@ -14,11 +14,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public sealed class HungerComponent : Component
+    public sealed class HungerComponent : Component, IMoveSpeedModifier
     {
-        #pragma warning disable 649
+#pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
-        #pragma warning restore 649
+#pragma warning restore 649
 
         public override string Name => "Hunger";
 
@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private HungerThreshold _currentHungerThreshold;
         private HungerThreshold _lastHungerThreshold;
         public float CurrentHunger => _currentHunger;
-        [ViewVariables] private float _currentHunger;
+        [ViewVariables(VVAccess.ReadWrite)] private float _currentHunger;
 
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
         private Dictionary<HungerThreshold, float> _hungerThresholds = new Dictionary<HungerThreshold, float>
@@ -53,16 +53,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void HungerThresholdEffect(bool force = false)
         {
-            if (_currentHungerThreshold != _lastHungerThreshold || force) {
+            if (_currentHungerThreshold != _lastHungerThreshold || force)
+            {
                 Logger.InfoS("hunger", $"Updating hunger state for {Owner.Name}");
 
                 // Revert slow speed if required
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
-                    Owner.TryGetComponent(out PlayerInputMoverComponent playerSpeedupComponent))
+                    Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent))
                 {
-                    // TODO shitcode: Come up something better
-                    playerSpeedupComponent.WalkMoveSpeed = playerSpeedupComponent.WalkMoveSpeed * 2;
-                    playerSpeedupComponent.SprintMoveSpeed = playerSpeedupComponent.SprintMoveSpeed * 4;
+                    movementSlowdownComponent.RefreshMovementSpeedModifiers();
                 }
 
                 // Update UI
@@ -91,9 +90,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     case HungerThreshold.Starving:
                         // TODO: If something else bumps this could cause mega-speed.
                         // If some form of speed update system if multiple things are touching it use that.
-                        if (Owner.TryGetComponent(out PlayerInputMoverComponent playerInputMoverComponent)) {
-                            playerInputMoverComponent.WalkMoveSpeed = playerInputMoverComponent.WalkMoveSpeed / 2;
-                            playerInputMoverComponent.SprintMoveSpeed = playerInputMoverComponent.SprintMoveSpeed / 4;
+                        if (Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent1))
+                        {
+                            movementSlowdownComponent1.RefreshMovementSpeedModifiers();
                         }
                         _lastHungerThreshold = _currentHungerThreshold;
                         _actualDecayRate = _baseDecayRate * 0.6f;
@@ -168,6 +167,29 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void ResetFood()
         {
             _currentHunger = HungerThresholds[HungerThreshold.Okay];
+        }
+
+        float IMoveSpeedModifier.WalkSpeedModifier
+        {
+            get
+            {
+                if (_currentHungerThreshold == HungerThreshold.Starving)
+                {
+                    return 0.5f;
+                }
+                return 1.0f;
+            }
+        }
+        float IMoveSpeedModifier.SprintSpeedModifier
+        {
+            get
+            {
+                if (_currentHungerThreshold == HungerThreshold.Starving)
+                {
+                    return 0.5f;
+                }
+                return 1.0f;
+            }
         }
     }
 
