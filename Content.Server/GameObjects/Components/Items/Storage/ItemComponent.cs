@@ -150,7 +150,6 @@ namespace Content.Server.GameObjects
 
         public void OnExplosion(ExplosionEventArgs eventArgs)
         {
-            //TODO: create helper function for throwing so i don't have to copypaste this code from hands code
             var sourceLocation = eventArgs.Source;
             var targetLocation = eventArgs.Target.Transform.GridPosition;
             var dirVec = (targetLocation.ToMapPos(_mapManager) - sourceLocation.ToMapPos(_mapManager)).Normalized;
