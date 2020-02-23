@@ -13,22 +13,8 @@ namespace Content.Server.Administration
     class ControlMob : IClientCommand
     {
         public string Command => "controlmob";
-        public string Description
-        {
-            get
-            {
-                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                return localizationManager.GetString("Transfers user mind to the specified entity.");
-            }
-        }
-        public string Help
-        {
-            get
-            {
-                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                return localizationManager.GetString("Usage: controlmob <mobUid>.");
-            }
-        }
+        public string Description => Loc.GetString("Transfers user mind to the specified entity.");
+        public string Help => Loc.GetString("Usage: controlmob <mobUid>.");
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
@@ -38,11 +24,9 @@ namespace Content.Server.Administration
                 return;
             }
 
-            var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-
             if (args.Length != 1)
             {
-                shell.SendText(player, localizationManager.GetString("Wrong number of arguments."));
+                shell.SendText(player, Loc.GetString("Wrong number of arguments."));
                 return;
             }
 
@@ -50,9 +34,9 @@ namespace Content.Server.Administration
             var mind = player.ContentData().Mind;
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!int.TryParse(args[0], out int targetId))
+            if (!int.TryParse(args[0], out var targetId))
             {
-                shell.SendText(player, localizationManager.GetString("Argument must be a number."));
+                shell.SendText(player, Loc.GetString("Argument must be a number."));
                 return;
             }
 
@@ -60,14 +44,14 @@ namespace Content.Server.Administration
 
             if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
             {
-                shell.SendText(player, localizationManager.GetString("Invalid entity ID."));
+                shell.SendText(player, Loc.GetString("Invalid entity ID."));
                 return;
             }
 
             var target = entityManager.GetEntity(eUid);
             if (!target.TryGetComponent(out MindComponent mindComponent))
             {
-                shell.SendText(player, localizationManager.GetString("Target entity is not a mob!"));
+                shell.SendText(player, Loc.GetString("Target entity is not a mob!"));
                 return;
             }
 
