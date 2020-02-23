@@ -50,3 +50,13 @@
 
   placement:
     mode: SnapgridCenter
+
+- type: entity
+  id: airlock_glass
+  parent: airlock
+  components:
+  - type: Airlock
+    occludes: false
+
+  - type: Occluder
+    enabled: false

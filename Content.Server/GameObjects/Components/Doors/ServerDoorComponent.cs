@@ -8,7 +8,9 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
+using Robust.Shared.ViewVariables;
 using CancellationTokenSource = System.Threading.CancellationTokenSource;
 
 namespace Content.Server.GameObjects
@@ -37,6 +39,16 @@ namespace Content.Server.GameObjects
         private static readonly TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.3f);
         private static readonly TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.9f);
         private static readonly TimeSpan DenyTime = TimeSpan.FromSeconds(0.45f);
+
+        [ViewVariables]
+        private bool _occludes;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _occludes, "occludes", true);
+        }
 
         public override void Initialize()
         {
@@ -136,7 +148,7 @@ namespace Content.Server.GameObjects
 
             State = DoorState.Opening;
             SetAppearance(DoorVisualState.Opening);
-            if (Owner.TryGetComponent(out OccluderComponent occluder))
+            if (_occludes && Owner.TryGetComponent(out OccluderComponent occluder))
             {
                 occluder.Enabled = false;
             }
@@ -194,7 +206,7 @@ namespace Content.Server.GameObjects
             {
                 State = DoorState.Closed;
                 SetAppearance(DoorVisualState.Closed);
-                if (Owner.TryGetComponent(out OccluderComponent occluder))
+                if (_occludes && Owner.TryGetComponent(out OccluderComponent occluder))
                 {
                     occluder.Enabled = true;
                 }
