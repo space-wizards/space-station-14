@@ -74,13 +74,13 @@ namespace Content.Server.GameObjects.EntitySystems
             input.BindMap.BindFunction(EngineKeyFunctions.MoveDown, moveDownCmdHandler);
             input.BindMap.BindFunction(EngineKeyFunctions.Run, runCmdHandler);
 
-            SubscribeEvent<PlayerAttachSystemMessage>(PlayerAttached);
-            SubscribeEvent<PlayerDetachedSystemMessage>(PlayerDetached);
+            SubscribeLocalEvent<PlayerAttachSystemMessage>(PlayerAttached);
+            SubscribeLocalEvent<PlayerDetachedSystemMessage>(PlayerDetached);
 
             _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
         }
 
-        private static void PlayerAttached(object sender, PlayerAttachSystemMessage ev)
+        private static void PlayerAttached(PlayerAttachSystemMessage ev)
         {
             if (!ev.Entity.HasComponent<IMoverComponent>())
             {
@@ -88,9 +88,9 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void PlayerDetached(object sender, PlayerDetachedSystemMessage ev)
+        private static void PlayerDetached(PlayerDetachedSystemMessage ev)
         {
-            if(ev.Entity.HasComponent<PlayerInputMoverComponent>())
+            if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
             {
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.SprintMoveSpeed : mover.WalkMoveSpeed);
+                physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
 
                 // Handle footsteps.
@@ -177,7 +177,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleDirChange(ICommonSession session, Direction dir, bool state)
         {
-            if(!TryGetAttachedComponent(session as IPlayerSession, out IMoverComponent moverComp))
+            if (!TryGetAttachedComponent(session as IPlayerSession, out IMoverComponent moverComp))
                 return;
 
             moverComp.SetVelocityDirection(dir, state);
@@ -185,14 +185,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleRunChange(ICommonSession session, bool running)
         {
-            if(!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
+            if (!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
                 return;
 
             moverComp.Sprinting = running;
         }
 
         private static bool TryGetAttachedComponent<T>(IPlayerSession session, out T component)
-            where T: IComponent
+            where T : IComponent
         {
             component = default;
 

@@ -12,12 +12,12 @@ namespace Content.Server.Interfaces.GameObjects.Components.Movement
         /// <summary>
         ///     Movement speed (m/s) that the entity walks.
         /// </summary>
-        float WalkMoveSpeed { get; set; }
+        float CurrentWalkSpeed { get; }
 
         /// <summary>
         ///     Movement speed (m/s) that the entity sprints.
         /// </summary>
-        float SprintMoveSpeed { get; set; }
+        float CurrentSprintSpeed { get; }
 
         /// <summary>
         ///     Is the entity Sprinting (running)?
