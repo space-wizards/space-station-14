@@ -1,16 +1,19 @@
-- type: tile
+﻿- type: tile
   name: plating
   display_name: Plating
   texture: plating
+  base_turfs:
+  - space
   is_subfloor: true
   footstep_sounds: footstep_plating
   friction: 0.5
-  subfloor: space
 
 - type: tile
   name: underplating
   display_name: Underplating
   texture: underplating
+  base_turfs:
+  - space
   is_subfloor: true
   footstep_sounds: footstep_plating
   friction: 0.5

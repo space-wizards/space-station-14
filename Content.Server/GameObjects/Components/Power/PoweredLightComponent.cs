@@ -4,6 +4,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -25,6 +26,10 @@ namespace Content.Server.GameObjects.Components.Power
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
 
         private TimeSpan _lastThunk;
+
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
 
         private LightBulbType BulbType = LightBulbType.Tube;
 
@@ -74,6 +79,8 @@ namespace Content.Server.GameObjects.Components.Power
             void Burn()
             {
                 damageableComponent.TakeDamage(DamageType.Heat, 20, Owner);
+                var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+                audioSystem.Play("/Audio/effects/lightburn.ogg", Owner);
             }
 
             void Eject()

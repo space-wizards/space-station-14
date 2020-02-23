@@ -53,15 +53,6 @@
             ]
         },
         {
-            "name": "pk-5",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
             "name": "pk",
             "directions": 1,
             "delays": [
