@@ -43,5 +43,10 @@
     interfaces:
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+
+  - type: Occluder
+  - type: SnapGrid
+    offset: Center
+
   placement:
     mode: SnapgridCenter

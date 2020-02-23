@@ -136,6 +136,10 @@ namespace Content.Server.GameObjects
 
             State = DoorState.Opening;
             SetAppearance(DoorVisualState.Opening);
+            if (Owner.TryGetComponent(out OccluderComponent occluder))
+            {
+                occluder.Enabled = false;
+            }
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
@@ -190,6 +194,10 @@ namespace Content.Server.GameObjects
             {
                 State = DoorState.Closed;
                 SetAppearance(DoorVisualState.Closed);
+                if (Owner.TryGetComponent(out OccluderComponent occluder))
+                {
+                    occluder.Enabled = true;
+                }
             }, _cancellationTokenSource.Token);
             return true;
         }

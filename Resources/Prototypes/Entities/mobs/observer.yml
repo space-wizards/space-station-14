@@ -8,6 +8,7 @@
     mass: 5
   - type: Eye
     zoom: 0.5, 0.5
+    drawFov: false
   - type: Input
     context: "ghost"
   - type: Examiner
