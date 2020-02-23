@@ -11,13 +11,14 @@
   mechanisms:
     - mechanism.Heart.BasicHuman
     - mechanism.Lungs.BasicHuman
+    - mechanism.Liver.BasicHuman
     - mechanism.Kidney.BasicHuman
     - mechanism.Kidney.BasicHuman
 
 
 - type: bodyPart
   id: bodyPart.Head.BasicHuman
-  name: "head"
+  name: "human head"
   plural: "human heads"
   partType: Head
   durability: 50
@@ -25,7 +26,9 @@
   resistance: 7.0
   size: 7
   compatibility: Biological	
-  
+  mechanisms:
+    - mechanism.Brain.BasicHuman
+    - mechanism.Eyes.BasicHuman
 
 
 

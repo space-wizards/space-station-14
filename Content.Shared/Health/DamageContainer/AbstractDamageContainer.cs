@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,16 +23,20 @@ namespace Content.Shared.BodySystem
     /// <summary>
     ///     Abstract class for all damage container classes.
     /// </summary>
+    [NetSerializable, Serializable]
     public abstract class AbstractDamageContainer
     {
-        protected readonly List<DamageClass> SupportedDamageClasses;
+        [ViewVariables]
+        abstract public List<DamageClass> SupportedDamageClasses { get; }
 
-        private Dictionary<DamageType, int> _damageList;
+        private Dictionary<DamageType, int> _damageList = new Dictionary<DamageType, int>();
+        [ViewVariables]
         public Dictionary<DamageType, int> DamageList => _damageList;
 
         /// <summary>
         ///     Sum of all damages kept on record.
         /// </summary>
+       [ViewVariables]
         public int Damage
         {
             get

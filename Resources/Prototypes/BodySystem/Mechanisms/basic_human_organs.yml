@@ -1,4 +1,20 @@
 - type: mechanism
+  id: mechanism.Brain.BasicHuman
+  name: "Human Brain"
+  description: "The source of incredible, unending intelligence. Honk."
+  durability: 10
+  size: 1
+  compatibility: Biological
+  
+- type: mechanism
+  id: mechanism.Eyes.BasicHuman
+  name: "Human Eyes"
+  description: "Ocular organ capable of turning light into a colorful visual."
+  durability: 10
+  size: 1
+  compatibility: Biological
+
+- type: mechanism
   id: mechanism.Heart.BasicHuman
   name: "Human Heart"
   description: "Pumps blood throughout a body. Essential for any entity with blood."
@@ -11,6 +27,14 @@
   name: "Human Lungs"
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
   durability: 13
+  size: 1
+  compatibility: Biological
+
+- type: mechanism
+  id: mechanism.Liver.BasicHuman
+  name: "Human Liver"
+  description: "Filters impurities out of a bloodstream and provides other important functionality to a human."
+  durability: 15
   size: 1
   compatibility: Biological
 

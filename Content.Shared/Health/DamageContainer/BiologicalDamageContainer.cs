@@ -5,9 +5,12 @@ using System.Linq;
 
 namespace Content.Shared.BodySystem
 {
+    [NetSerializable, Serializable]
     public class BiologicalDamageContainer : AbstractDamageContainer
     {
-        private readonly List<DamageClass> SupportedDamageClasses = new List<DamageClass> { DamageClass.Brute, DamageClass.Burn, DamageClass.Toxin, DamageClass.Airloss };
+        public override List<DamageClass> SupportedDamageClasses {
+            get { return new List<DamageClass> { DamageClass.Brute, DamageClass.Burn, DamageClass.Toxin, DamageClass.Airloss }; }
+        }
     }
 }
 
