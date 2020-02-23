@@ -23,7 +23,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         /// <summary>
@@ -160,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (realTransferAmount <= 0)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                    _localizationManager.GetString("Container full."));
+                    Loc.GetString("Container full."));
                 return;
             }
 
@@ -172,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                _localizationManager.GetString("Injected {0}u", removedSolution.TotalVolume));
+                Loc.GetString("Injected {0}u", removedSolution.TotalVolume));
             Dirty();
         }
 
@@ -188,7 +187,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (realTransferAmount <= 0)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                    _localizationManager.GetString("Container full."));
+                    Loc.GetString("Container full."));
                 return;
             }
 
@@ -200,7 +199,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                _localizationManager.GetString("Injected {0}u", removedSolution.TotalVolume));
+                Loc.GetString("Injected {0}u", removedSolution.TotalVolume));
             Dirty();
         }
 
@@ -216,7 +215,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (realTransferAmount <= 0)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                    _localizationManager.GetString("Container empty"));
+                    Loc.GetString("Container empty"));
                 return;
             }
 
@@ -228,7 +227,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                _localizationManager.GetString("Drew {0}u", removedSolution.TotalVolume));
+                Loc.GetString("Drew {0}u", removedSolution.TotalVolume));
             Dirty();
         }
 

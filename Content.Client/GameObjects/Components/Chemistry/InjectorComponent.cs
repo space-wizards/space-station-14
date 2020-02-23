@@ -62,12 +62,18 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 {
                     return;
                 }
-
+                
                 _parent._uiUpdateNeeded = false;
 
                 //Update current volume and injector state
+                var modeStringLocalized = _parent.CurrentMode switch
+                {
+                    InjectorToggleMode.Draw => Loc.GetString("Draw"),
+                    InjectorToggleMode.Inject => Loc.GetString("Inject"),
+                    _ => Loc.GetString("Invalid")
+                };
                 _label.SetMarkup(Loc.GetString("Volume: [color=white]{0}/{1}[/color] | [color=white]{2}[/color]",
-                    _parent.CurrentVolume, _parent.TotalVolume, _parent.CurrentMode.ToString()));
+                    _parent.CurrentVolume, _parent.TotalVolume, modeStringLocalized));
             }
         }
     }
