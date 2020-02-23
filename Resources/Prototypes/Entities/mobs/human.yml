@@ -9,6 +9,7 @@
     hands:
     - left
     - right
+  - type: MovementSpeedModifier
   - type: Hunger
   - type: Thirst
   # Organs

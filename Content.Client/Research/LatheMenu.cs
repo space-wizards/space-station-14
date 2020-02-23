@@ -65,7 +65,7 @@ namespace Content.Client.Research
             QueueButton = new Button()
             {
                 Text = "Queue",
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
@@ -73,7 +73,7 @@ namespace Content.Client.Research
             ServerConnectButton = new Button()
             {
                 Text = "Server list",
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
@@ -81,7 +81,7 @@ namespace Content.Client.Research
             ServerSyncButton  = new Button()
             {
                 Text = "Sync",
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
             };
@@ -111,7 +111,7 @@ namespace Content.Client.Research
             var filterButton = new Button()
             {
                 Text = "Filter",
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsStretchRatio = 1,
                 Disabled = true,

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.IconSmoothing;
 using JetBrains.Annotations;
@@ -27,16 +27,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private int _generation;
 
-        public override void SubscribeEvents()
-        {
-            base.SubscribeEvents();
-
-            SubscribeEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
-        }
-
+        /// <inheritdoc />
         public override void Initialize()
         {
-            base.Initialize();
+            SubscribeLocalEvent<IconSmoothDirtyEvent>(HandleDirtyEvent);
 
             IoCManager.InjectDependencies(this);
         }
@@ -59,11 +53,12 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        private void HandleDirtyEvent(object sender, IconSmoothDirtyEvent ev)
+        private void HandleDirtyEvent(IconSmoothDirtyEvent ev)
         {
             // Yes, we updates ALL smoothing entities surrounding us even if they would never smooth with us.
             // This is simpler to implement. If you want to optimize it be my guest.
-            if (sender is IEntity senderEnt && senderEnt.IsValid() &&
+            var senderEnt = ev.Sender;
+            if (senderEnt.IsValid() &&
                 senderEnt.TryGetComponent(out IconSmoothComponent iconSmooth)
                 && iconSmooth.Running)
             {
@@ -143,15 +138,17 @@ namespace Content.Client.GameObjects.EntitySystems
     /// </summary>
     public sealed class IconSmoothDirtyEvent : EntitySystemMessage
     {
-        public IconSmoothDirtyEvent((GridId grid, MapIndices pos)? lastPosition, SnapGridOffset offset, IconSmoothingMode mode)
+        public IconSmoothDirtyEvent(IEntity sender, (GridId grid, MapIndices pos)? lastPosition, SnapGridOffset offset, IconSmoothingMode mode)
         {
             LastPosition = lastPosition;
             Offset = offset;
             Mode = mode;
+            Sender = sender;
         }
 
         public (GridId grid, MapIndices pos)? LastPosition { get; }
         public SnapGridOffset Offset { get; }
         public IconSmoothingMode Mode { get; }
+        public IEntity Sender { get; }
     }
 }

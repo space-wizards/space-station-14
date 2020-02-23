@@ -98,13 +98,13 @@ namespace Content.Client.UserInterface.Cargo
             CallShuttleButton = new Button()
             {
                 Text = _loc.GetString("Call Shuttle"),
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand
             };
             PermissionsButton = new Button()
             {
                 Text = _loc.GetString("Permissions"),
-                TextAlign = Button.AlignMode.Center
+                TextAlign = Label.AlignMode.Center
             };
             buttons.AddChild(CallShuttleButton);
             buttons.AddChild(PermissionsButton);

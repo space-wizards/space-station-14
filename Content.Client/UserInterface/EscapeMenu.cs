@@ -21,8 +21,10 @@ namespace Content.Client.UserInterface
         private readonly IResourceCache _resourceCache;
         private readonly IConfigurationManager _configSystem;
         private readonly ILocalizationManager _localizationManager;
+#pragma warning disable 649
         [Dependency] private readonly ISandboxManager _sandboxManager;
         [Dependency] private readonly IClientConGroupController _conGroupController;
+#pragma warning restore 649
 
         private BaseButton QuitButton;
         private BaseButton OptionsButton;

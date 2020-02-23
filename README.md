@@ -19,10 +19,9 @@ The IRC is setup to relay back and forth to the Discord server so [IRC nerds](ht
 
 ## Documentation
 
-We have various documentation articles about various systems on the GitHub wikis of this repo and RobustToolbox.
+We have various documentation articles about various systems on both content pack and engine on HackMD wiki.
 
-* [RobustToolbox Wiki](https://github.com/space-wizards/RobustToolbox/wiki)
-* [Space-Station-14 Wiki](https://github.com/space-wizards/space-station-14/wiki)
+* [Robust Toolbox & Space Station 14 HackMD Wiki](https://hackmd.io/@ss14/docs/)
 
 ## Contributing
 
@@ -30,4 +29,4 @@ We are happy to accept contributions from anybody. Get in Discord or IRC if you 
 
 ## Building
 
-[See the relevant wiki page](https://github.com/space-wizards/space-station-14/wiki/Getting-Started)
+[See the relevant HackMD wiki page](https://hackmd.io/@ss14/docs/%2FBZkI4RlUQbm09QWrXCZ3kg)

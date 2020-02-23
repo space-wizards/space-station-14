@@ -1,7 +1,7 @@
 - type: entity
   name: BaseLMG
   parent: BaseItem
-  id: lmg_base
+  id: LmgBase
   description: A rooty tooty point and shooty.
   abstract: true
   components:
@@ -24,17 +24,17 @@
 
 - type: entity
   name: L6
-  parent: lmg_base
-  id: lmg_l6
+  parent: LmgBase
+  id: LmgL6
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
     netsync: false
     sprite: Objects/Guns/LMGs/l6.rsi
-    state: l6-5
+    state: l6-4
   - type: Icon
     sprite: Objects/Guns/LMGs/l6.rsi
-    state: l6-5
+    state: l6-4
   - type: RangedWeapon
     spreadstddev: 30
     automatic: true
@@ -48,24 +48,24 @@
     visuals:
     - type: BallisticMagazineWeaponVisualizer2D
       base_state: l6
-      steps: 6
+      steps: 5
   - type: Item
     Size: 24
     sprite: Objects/Guns/LMGs/l6.rsi
 
 - type: entity
   name: PK
-  parent: lmg_base
-  id: lmg_pk
+  parent: LmgBase
+  id: LmgPk
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
     netsync: false
     sprite: Objects/Guns/LMGs/pk.rsi
-    state: pk-5
+    state: pk-4
   - type: Icon
     sprite: Objects/Guns/LMGs/pk.rsi
-    state: pk-5
+    state: pk-4
   - type: RangedWeapon
     spreadstddev: 10
     automatic: true
@@ -79,7 +79,7 @@
     visuals:
     - type: BallisticMagazineWeaponVisualizer2D
       base_state: pk
-      steps: 6
+      steps: 5
   - type: Item
     Size: 24
     sprite: Objects/Guns/LMGs/pk.rsi

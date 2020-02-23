@@ -56,7 +56,7 @@ namespace Content.Client.UserInterface.Cargo
             SubmitButton = new Button()
             {
                 Text = _loc.GetString("OK"),
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
             };
             vBox.AddChild(SubmitButton);
 
