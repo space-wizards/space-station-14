@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Destructible;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Throw;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Physics;
@@ -34,6 +35,7 @@ namespace Content.Server.GameObjects
         #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _robustRandom;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IMapManager _mapManager;
         #pragma warning restore 649
 
         private string _equippedPrefix;
@@ -168,33 +170,7 @@ namespace Content.Server.GameObjects
                     break;
             }
 
-            if (!Owner.TryGetComponent(out CollidableComponent colComp))
-                return;
-
-            colComp.CollisionEnabled = true;
-
-            if (!Owner.TryGetComponent(out ThrownItemComponent projComp))
-            {
-                projComp = Owner.AddComponent<ThrownItemComponent>();
-
-                if(colComp.PhysicsShapes.Count == 0)
-                    colComp.PhysicsShapes.Add(new PhysShapeAabb());
-
-                colComp.PhysicsShapes[0].CollisionMask |= (int)CollisionGroup.MobImpassable;
-                colComp.IsScrapingFloor = false;
-            }
-            if (!Owner.TryGetComponent(out PhysicsComponent physComp))
-                physComp = Owner.AddComponent<PhysicsComponent>();
-            
-            var a = throwForce / (float) Math.Max(0.001, physComp.Mass);
-
-            var timing = IoCManager.Resolve<IGameTiming>();
-            var spd = a / (1f / timing.TickRate);
-
-            physComp.LinearVelocity = dirVec * spd;
-
-            Owner.Transform.LocalRotation = new Angle(dirVec).GetCardinalDir().ToAngle();
-
+            ThrowHelper.Throw(Owner, throwForce, targetLocation, sourceLocation, true);
         }
     }
 }

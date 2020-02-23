@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Throw;
 using Content.Shared.Input;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -185,41 +186,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     newStackComp.Count = 1;
             }
 
-            if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
-                return true;
-
-            colComp.CollisionEnabled = true;
-            // I can now collide with player, so that i can do damage.
-
-            if (!throwEnt.TryGetComponent(out ThrownItemComponent projComp))
-            {
-                projComp = throwEnt.AddComponent<ThrownItemComponent>();
-
-                if(colComp.PhysicsShapes.Count == 0)
-                    colComp.PhysicsShapes.Add(new PhysShapeAabb());
-
-                colComp.PhysicsShapes[0].CollisionMask |= (int)CollisionGroup.MobImpassable;
-                colComp.IsScrapingFloor = false;
-            }
-
-            projComp.User = plyEnt;
-            projComp.IgnoreEntity(plyEnt);
-
-            var transform = plyEnt.Transform;
-            var dirVec = (coords.ToMapPos(_mapManager) - transform.WorldPosition).Normalized;
-
-            if (!throwEnt.TryGetComponent(out PhysicsComponent physComp))
-                physComp = throwEnt.AddComponent<PhysicsComponent>();
-
-            // TODO: Move this into PhysicsSystem, we need an ApplyForce function.
-            var a = ThrowForce / (float) Math.Max(0.001, physComp.Mass); // a = f / m
-
-            var timing = IoCManager.Resolve<IGameTiming>();
-            var spd = a / (1f / timing.TickRate); // acceleration is applied in 1 tick instead of 1 second, scale appropriately
-
-            physComp.LinearVelocity = dirVec * spd;
-
-            transform.LocalRotation = new Angle(dirVec).GetCardinalDir().ToAngle();
+            ThrowHelper.Throw(throwEnt, ThrowForce, coords, plyEnt.Transform.GridPosition, false, plyEnt);
 
             return true;
         }
