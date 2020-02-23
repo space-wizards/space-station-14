@@ -1,7 +1,7 @@
 - type: entity
   name: BasePistol
   parent: BaseItem
-  id: pistol_base
+  id: PistolBase
   description: A rooty tooty point and shooty.
   abstract: true
   components:
@@ -20,8 +20,8 @@
 
 - type: entity
   name: Clarissa
-  parent: pistol_base
-  id: pistol_clarissa
+  parent: PistolBase
+  id: PistolClarissa
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -52,8 +52,8 @@
 
 - type: entity
   name: Clarissa (Silenced)
-  parent: pistol_base
-  id: pistol_clarissa_s
+  parent: PistolBase
+  id: PistolClarissaS
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -84,8 +84,8 @@
 
 - type: entity
   name: Deagle
-  parent: pistol_base
-  id: pistol_deagle
+  parent: PistolBase
+  id: PistolDeagle
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -120,8 +120,8 @@
 
 - type: entity
   name: Deckard
-  parent: pistol_base
-  id: pistol_deckard
+  parent: PistolBase
+  id: PistolDeckard
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -155,8 +155,8 @@
 
 - type: entity
   name: Giskard
-  parent: pistol_base
-  id: pistol_giskard
+  parent: PistolBase
+  id: PistolGiskard
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -187,8 +187,8 @@
 
 - type: entity
   name: Giskard (Silenced)
-  parent: pistol_base
-  id: pistol_giskard_s
+  parent: PistolBase
+  id: PistolGiskardS
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -219,8 +219,8 @@
 
 - type: entity
   name: Gyro pistol
-  parent: pistol_base
-  id: pistol_gyro
+  parent: PistolBase
+  id: PistolGyro
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -256,8 +256,8 @@
 
 - type: entity
   name: IH machine pistol
-  parent: pistol_base
-  id: pistol_ihmp
+  parent: PistolBase
+  id: PistolIhmp
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -290,8 +290,8 @@
 
 - type: entity
   name: IH machine pistol (Silenced)
-  parent: pistol_base
-  id: pistol_ihmp_s
+  parent: PistolBase
+  id: PistolIhmpS
   description: Pewsh pewsh
   components:
   - type: Sprite
@@ -324,8 +324,8 @@
 
 - type: entity
   name: IH sidearm
-  parent: pistol_base
-  id: pistol_ihsidearm
+  parent: PistolBase
+  id: PistolIhSidearm
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -357,8 +357,8 @@
 
 - type: entity
   name: IH sidearm (Silenced)
-  parent: pistol_base
-  id: pistol_ihsidearm_s
+  parent: PistolBase
+  id: PistolIhSidearmS
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -390,8 +390,8 @@
 
 - type: entity
   name: Lamia
-  parent: pistol_base
-  id: pistol_lamia
+  parent: PistolBase
+  id: PistolLamia
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -427,8 +427,8 @@
 
 - type: entity
   name: Makarov
-  parent: pistol_base
-  id: pistol_makarov
+  parent: PistolBase
+  id: PistolMakarov
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -459,8 +459,8 @@
 
 - type: entity
   name: Makarov (Silenced)
-  parent: pistol_base
-  id: pistol_makarov_s
+  parent: PistolBase
+  id: PistolMakarovS
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -491,8 +491,8 @@
 
 - type: entity
   name: Mk 58
-  parent: pistol_base
-  id: pistol_mk58
+  parent: PistolBase
+  id: PistolMk58
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -523,8 +523,8 @@
 
 - type: entity
   name: Mk 58 (Wood)
-  parent: pistol_base
-  id: pistol_mk58_w
+  parent: PistolBase
+  id: PistolMk58W
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
@@ -555,8 +555,8 @@
 
 - type: entity
   name: Olivaw civil
-  parent: pistol_base
-  id: pistol_olivawcivil
+  parent: PistolBase
+  id: PistolOlivawCivil
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite

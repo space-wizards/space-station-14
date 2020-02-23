@@ -32,8 +32,8 @@ namespace Content.Server.GameObjects.Components.Movement
         public override string Name => "ShuttleController";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WalkMoveSpeed { get; set; } = 8;
-        public float SprintMoveSpeed { get; set; }
+        public float CurrentWalkSpeed { get; set; } = 8;
+        public float CurrentSprintSpeed { get; set; }
         public bool Sprinting { get; set; }
         public Vector2 VelocityDir { get; } = Vector2.Zero;
         public GridCoordinates LastPosition { get; set; }
@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Movement
                     collideComp.PhysicsShapes.Add(new PhysShapeGrid(grid));
                 }
 
-                physComp.LinearVelocity = CalcNewVelocity(direction, enabled) * WalkMoveSpeed;
+                physComp.LinearVelocity = CalcNewVelocity(direction, enabled) * CurrentWalkSpeed;
             }
         }
 
