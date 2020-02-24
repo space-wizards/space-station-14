@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Maps;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -66,7 +67,7 @@ namespace Content.Server.Explosions
                 }
                 var exAct = entitySystemManager.GetEntitySystem<ActSystem>();
                 //exAct.HandleExplosion(Owner, entity, severity);
-                exAct.HandleExplosion(null, entity, severity);
+                exAct.HandleExplosion(coords, entity, severity);
             }
 
             //Tile damage calculation mockup
@@ -88,9 +89,10 @@ namespace Content.Server.Explosions
                 {
                     mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[0]].TileId));
                 }
+
                 else if (distanceFromTile < heavyImpactRange)
                 {
-                    if (robustRandom.Prob(80))
+                    if (robustRandom.Prob(0.8f))
                     {
                         mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[^1]].TileId));
                     }
@@ -99,9 +101,10 @@ namespace Content.Server.Explosions
                         mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[0]].TileId));
                     }
                 }
+
                 else if (distanceFromTile < lightImpactRange)
                 {
-                    if (robustRandom.Prob(50))
+                    if (robustRandom.Prob(0.5f))
                     {
                         mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[^1]].TileId));
                     }
