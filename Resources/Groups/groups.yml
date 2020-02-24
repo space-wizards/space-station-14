@@ -55,6 +55,7 @@
   - respawn
   - rejuvenate
   - addcomp
+  - controlmob
   - kick
   - listplayers
   - loc
@@ -94,6 +95,7 @@
   - respawn
   - rejuvenate
   - addcomp
+  - controlmob
   - kick
   - listplayers
   - loc
