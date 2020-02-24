@@ -20,12 +20,12 @@ namespace Content.Shared.BodySystem {
         private string _name;
 		private string _description;
 		private string _examineMessage;
+        private string _spritePath;
 		private int _durability;
 		private int _destroyThreshold;
 		private int _resistance;
 		private int _size;
         private BodyPartCompatibility _compatibility;
-
 
         [ViewVariables]
         public string ID => _id;
@@ -38,8 +38,11 @@ namespace Content.Shared.BodySystem {
   
 		[ViewVariables]
 		public string ExamineMessage => _examineMessage;
-		
-		[ViewVariables]
+
+        [ViewVariables]
+        public string SpritePath => _spritePath;
+
+        [ViewVariables]
 		public int Durability => _durability;
 				
 		[ViewVariables]
@@ -52,9 +55,7 @@ namespace Content.Shared.BodySystem {
 		public int Size => _size;
 
         [ViewVariables]
-        public BodyPartCompatibility Compatibility => _compatibility;
-			
-		
+        public BodyPartCompatibility Compatibility => _compatibility;	
 		
         public virtual void LoadFrom(YamlMappingNode mapping){
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -63,6 +64,7 @@ namespace Content.Shared.BodySystem {
             serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _description, "description", string.Empty);
             serializer.DataField(ref _examineMessage, "examineMessage", string.Empty);
+            serializer.DataField(ref _spritePath, "spritePath", string.Empty);
             serializer.DataField(ref _durability, "durability", 0);
             serializer.DataField(ref _destroyThreshold, "destroyThreshold", 0);
             serializer.DataField(ref _resistance, "resistance", 0);

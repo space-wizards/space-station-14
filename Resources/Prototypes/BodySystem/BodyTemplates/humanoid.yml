@@ -6,12 +6,12 @@
     head: Head
     torso: Torso
     left arm: Arm
-    right arm: Arm
     left hand: Hand
+    right arm: Arm
     right hand: Hand
     left leg: Leg
-    right leg: Leg
     left foot: Foot
+    right leg: Leg
     right foot: Foot
   connections:
     head:

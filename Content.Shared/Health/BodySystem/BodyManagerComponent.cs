@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.BodySystem {
     public enum BodyPartCompatibility { Mechanical, Biological, Universal };
@@ -103,7 +104,7 @@ namespace Content.Shared.BodySystem {
 
 
         /// <summary>
-        ///     Disconnects the given BodyPart, potentially dropping other BodyParts if they were hanging off it.
+        ///     Disconnects the BodyPart in the given slot name, potentially dropping other BodyParts if they were hanging off it. 
         /// </summary>
         public void DisconnectBodyPart(string name, bool dropEntity) {
             TryGetLimb(name, out BodyPart part);
@@ -121,10 +122,8 @@ namespace Content.Shared.BodySystem {
                 }
                 if(dropEntity)
                 {
-                    //TODO: Add limb entities and make this pseudocode work
-                    //BodyPartEntity partEntity = Owner.EntityManager.SpawnEntityAt(id, _parent.Owner.Transform.GridPosition);
-                    //partEntity.BodyPartData = this;
-                    //_parent = null;
+                    var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
+                    partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
                 }
             }
         }

@@ -38,6 +38,12 @@ namespace Content.Shared.BodySystem
         public string Plural;
 
         /// <summary>
+        ///     Path to the RSI sprite that represents this mechanism.
+        /// </summary>			  
+        [ViewVariables]
+        public string SpritePath;
+
+        /// <summary>
         ///     BodyPartType that this body part is considered. 
         /// </summary>
         [ViewVariables]
@@ -135,6 +141,7 @@ namespace Content.Shared.BodySystem
             Name = data.Name;
             Plural = data.Plural;
             PartType = data.PartType;
+            SpritePath = data.SpritePath;
             MaxDurability = data.Durability;
             CurrentDamages = new BiologicalDamageContainer();
             Resistance = data.Resistance;

@@ -2,6 +2,7 @@
   id: bodyPart.Torso.BasicHuman
   name: "human torso"
   plural: "human torsos"
+  spritePath: "Objects/Fun/dice.rsi"
   partType: Torso
   durability: 100
   destroyThreshold: -150
@@ -20,6 +21,7 @@
   id: bodyPart.Head.BasicHuman
   name: "human head"
   plural: "human heads"
+  spritePath: "Objects/Fun/dice.rsi"
   partType: Head
   durability: 50
   destroyThreshold: -120
@@ -36,6 +38,7 @@
   id: bodyPart.Arm.BasicHuman
   name: "human arm"
   plural: "human arms"
+  spritePath: "Objects/Fun/dice.rsi"
   partType: Arm
   durability: 40
   destroyThreshold: -80
@@ -52,6 +55,7 @@
   id: bodyPart.Hand.BasicHuman
   name: "human hand"
   plural: "human hands"
+  spritePath: "Objects/Fun/dice.rsi"
   partType: Hand
   durability: 30
   destroyThreshold: -60
@@ -65,6 +69,7 @@
   id: bodyPart.Leg.BasicHuman
   name: "human leg"
   plural: "human legs"
+  spritePath: "Objects/Fun/dice.rsi"
   partType: Leg
   durability: 45
   destroyThreshold: -90
@@ -78,6 +83,7 @@
   id: bodyPart.Foot.BasicHuman
   name: "human foot"
   plural: "human feet"
+  spritePath: "Objects/Fun/dice.rsi"
   partType: Foot
   durability: 30
   destroyThreshold: -60

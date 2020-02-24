@@ -1,0 +1,13 @@
+- type: entity
+  name: "BaseDroppedBodyPart"
+  parent: BaseItem
+  id: BaseDroppedBodyPart
+  #abstract: true
+  components:
+  - type: DroppedBodyPart
+  - type: Sprite
+    texture: Objects/Medical/medkit_r.png
+    state: d1212
+  - type: Icon
+    texture: Objects/Medical/medkit_r.png
+    state: d1212

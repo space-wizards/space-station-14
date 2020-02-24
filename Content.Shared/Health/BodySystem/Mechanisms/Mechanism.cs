@@ -32,6 +32,12 @@ namespace Content.Shared.BodySystem {
 		public string ExamineMessage;
 
         /// <summary>
+        ///     Path to the RSI sprite that represents this mechanism.
+        /// </summary>			  
+        [ViewVariables]
+        public string SpritePath;
+
+        /// <summary>
         ///     Max HP of this mechanism.
         /// </summary>		
 		[ViewVariables]
@@ -72,7 +78,6 @@ namespace Content.Shared.BodySystem {
             LoadFromPrototype(data);
         }
 
-
         /// <summary>
         ///    Loads the given MechanismPrototype - current data on this Mechanism will be overwritten!
         /// </summary>	
@@ -81,6 +86,7 @@ namespace Content.Shared.BodySystem {
             Name = data.Name;
             Description = data.Description;
             ExamineMessage = data.ExamineMessage;
+            SpritePath = data.SpritePath;
             MaxDurability = data.Durability;
             CurrentDurability = MaxDurability;
             DestroyThreshold = data.DestroyThreshold;
