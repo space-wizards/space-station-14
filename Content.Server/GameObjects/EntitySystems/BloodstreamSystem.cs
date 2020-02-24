@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Nutrition;
+﻿using Content.Server.GameObjects.Components.Metabolism;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -6,26 +6,26 @@ using Robust.Shared.GameObjects.Systems;
 namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
-    /// Triggers digestion updates on <see cref="StomachComponent"/>
+    /// Triggers metabolism updates for <see cref="BloodstreamComponent"/>
     /// </summary>
     [UsedImplicitly]
-    public class StomachSystem : EntitySystem
+    public class BloodstreamSystem : EntitySystem
     {
         private float _accumulatedFrameTime;
         public override void Initialize()
         {
-            EntityQuery = new TypeEntityQuery(typeof(StomachComponent));
+            EntityQuery = new TypeEntityQuery(typeof(BloodstreamComponent));
         }
 
         public override void Update(float frameTime)
         {
-            //Update at most once per second
+            //Trigger metabolism updates at most once per second
             _accumulatedFrameTime += frameTime;
             if (_accumulatedFrameTime > 1.0f)
             {
                 foreach (var entity in RelevantEntities)
                 {
-                    var comp = entity.GetComponent<StomachComponent>();
+                    var comp = entity.GetComponent<BloodstreamComponent>();
                     comp.OnUpdate(_accumulatedFrameTime);
                 }
                 _accumulatedFrameTime = 0.0f;

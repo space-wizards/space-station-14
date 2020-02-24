@@ -131,7 +131,8 @@ namespace Content.Client
                 "UseDelay",
                 "Pourable",
                 "Paper",
-                "Write"
+                "Write",
+                "Bloodstream"
             };
 
             foreach (var ignoreName in registerIgnore)

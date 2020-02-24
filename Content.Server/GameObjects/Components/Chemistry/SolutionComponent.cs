@@ -35,7 +35,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
         protected override void Startup()
         {
             base.Startup();
-            
+            Init();
+        }
+
+        public void Init()
+        {
             _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
         }

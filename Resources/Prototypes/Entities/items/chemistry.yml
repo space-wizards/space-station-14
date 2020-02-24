@@ -10,7 +10,7 @@
     texture: Objects/Chemistry/chemicals.rsi/beaker.png
   - type: Solution
     maxVol: 50
-    caps: 19
+    caps: 27
   - type: Pourable
     transferAmount: 5
 
@@ -26,7 +26,7 @@
     texture: Objects/Chemistry/chemicals.rsi/beakerlarge.png
   - type: Solution
     maxVol: 100
-    caps: 19
+    caps: 27
   - type: Pourable
     transferAmount: 5
 
@@ -45,3 +45,19 @@
     caps: 19
   - type: Pourable
     transferAmount: 5
+
+- type: entity
+  name: Syringe
+  parent: BaseItem
+  description: Used to draw blood samples from mobs, or to inject them with reagents
+  id: Syringe
+  components:
+  - type: Sprite
+    texture: Objects/Chemistry/chemicals.rsi/syringeproj.png
+  - type: Icon
+    texture: Objects/Chemistry/chemicals.rsi/syringeproj.png
+  - type: Solution
+    maxVol: 15
+    caps: 19
+  - type: Injector
+    injectOnly: false
