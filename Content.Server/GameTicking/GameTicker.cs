@@ -13,7 +13,6 @@ using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
-using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Maps;
@@ -39,6 +38,7 @@ using Robust.Shared.Timers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameTicking
 {
@@ -481,10 +481,14 @@ namespace Content.Server.GameTicking
 
         private void EquipIdCard(IEntity mob, string characterName, JobPrototype jobPrototype)
         {
-            var card = _entityManager.SpawnEntity("IDCardStandard", mob.Transform.GridPosition);
-
             var inventory = mob.GetComponent<InventoryComponent>();
-            inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, card.GetComponent<ClothingComponent>());
+
+            if (!inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent cardItem))
+            {
+                return;
+            }
+
+            var card = cardItem.Owner;
 
             var cardComponent = card.GetComponent<IdCardComponent>();
             cardComponent.FullName = characterName;
