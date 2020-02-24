@@ -85,19 +85,29 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <summary>
         /// Toggle between draw/inject state if applicable
         /// </summary>
-        private void Toggle()
+        private void Toggle(IEntity user)
         {
             if (_injectOnly)
             {
                 return;
             }
 
-            _toggleState = _toggleState switch
+            string msg;
+            switch (_toggleState)
             {
-                InjectorToggleMode.Inject => InjectorToggleMode.Draw,
-                InjectorToggleMode.Draw => InjectorToggleMode.Inject,
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                case InjectorToggleMode.Inject:
+                    _toggleState = InjectorToggleMode.Draw;
+                    msg = "Now drawing";
+                    break;
+                case InjectorToggleMode.Draw:
+                    _toggleState = InjectorToggleMode.Inject;
+                    msg = "Now injecting";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            _notifyManager.PopupMessage(Owner, user, Loc.GetString(msg));
 
             Dirty();
         }
@@ -143,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <returns></returns>
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            Toggle();
+            Toggle(eventArgs.User);
             return true;
         }
 
