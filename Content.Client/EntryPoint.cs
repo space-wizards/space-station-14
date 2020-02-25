@@ -132,7 +132,10 @@ namespace Content.Client
                 "Pourable",
                 "Paper",
                 "Write",
-                "Bloodstream"
+                "Bloodstream",
+                "Mind",
+                "MovementSpeedModifier",
+                "StorageFill"
             };
 
             foreach (var ignoreName in registerIgnore)
