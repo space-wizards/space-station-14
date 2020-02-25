@@ -13,8 +13,7 @@
     - mechanism.Heart.BasicHuman
     - mechanism.Lungs.BasicHuman
     - mechanism.Liver.BasicHuman
-    - mechanism.Kidney.BasicHuman
-    - mechanism.Kidney.BasicHuman
+    - mechanism.Kidneys.BasicHuman
 
 
 - type: bodyPart

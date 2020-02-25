@@ -32,7 +32,7 @@ namespace Content.Shared.BodySystem {
 		public string ExamineMessage;
 
         /// <summary>
-        ///     Path to the RSI sprite that represents this mechanism.
+        ///     Path to the .png that represents this mechanism (NOT .rsi folder).
         /// </summary>			  
         [ViewVariables]
         public string SpritePath;

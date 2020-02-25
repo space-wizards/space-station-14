@@ -21,7 +21,8 @@ namespace Content.Shared.BodySystem {
 		private string _description;
 		private string _examineMessage;
         private string _spritePath;
-		private int _durability;
+        private string _spriteState;
+        private int _durability;
 		private int _destroyThreshold;
 		private int _resistance;
 		private int _size;
@@ -65,6 +66,7 @@ namespace Content.Shared.BodySystem {
             serializer.DataField(ref _description, "description", string.Empty);
             serializer.DataField(ref _examineMessage, "examineMessage", string.Empty);
             serializer.DataField(ref _spritePath, "spritePath", string.Empty);
+            serializer.DataField(ref _spriteState, "spriteState", string.Empty);
             serializer.DataField(ref _durability, "durability", 0);
             serializer.DataField(ref _destroyThreshold, "destroyThreshold", 0);
             serializer.DataField(ref _resistance, "resistance", 0);

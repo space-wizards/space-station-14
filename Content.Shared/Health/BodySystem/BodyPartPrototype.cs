@@ -20,7 +20,8 @@ namespace Content.Shared.BodySystem {
         private string _name;
 		private string _plural;
         private string _spritePath;
-		private BodyPartType _partType;
+        private string _spriteState;
+        private BodyPartType _partType;
 		private int _durability;
 		private int _destroyThreshold;
 		private float _resistance;
@@ -40,7 +41,10 @@ namespace Content.Shared.BodySystem {
 
         [ViewVariables]
         public string SpritePath => _spritePath;
-		
+
+        [ViewVariables]
+        public string SpriteState => _spriteState;
+
         [ViewVariables]
         public BodyPartType PartType => _partType;
 		
@@ -72,6 +76,7 @@ namespace Content.Shared.BodySystem {
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _plural, "plural", string.Empty);
             serializer.DataField(ref _spritePath, "spritePath", string.Empty);
+            serializer.DataField(ref _spriteState, "spriteState", string.Empty);
             serializer.DataField(ref _partType, "partType", BodyPartType.Other);
 			serializer.DataField(ref _durability, "durability", 50);
 			serializer.DataField(ref _destroyThreshold, "destroyThreshold", -50);

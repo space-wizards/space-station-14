@@ -6,11 +6,13 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
-using Robust.Client.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
 
 namespace Content.Shared.BodySystem {
 
+    /// <summary>
+    ///    Component containing the data for a dropped BodyPart entity.
+    /// </summary>	
     [RegisterComponent]
     public class DroppedBodyPartComponent : Component {
 
@@ -22,14 +24,16 @@ namespace Content.Shared.BodySystem {
         public sealed override string Name => "DroppedBodyPart";
 
         [ViewVariables]
-        private BodyPart _containedBodyPart;
+        private BodyPart _containedMechanism;
 
         public void TransferBodyPartData(BodyPart data)
         {
-            _containedBodyPart = data;
-            Owner.Name = _containedBodyPart.Name;
-            if(Owner.TryGetComponent<ISpriteComponent>(out ISpriteComponent test))
-                test.LayerSetState(0, _containedBodyPart.SpritePath);
+            _containedMechanism = data;
+            Owner.Name = _containedMechanism.Name;
+            if (Owner.TryGetComponent<SpriteComponent>(out SpriteComponent component))
+            {
+                component.LayerSetTexture(0, data.SpritePath);
+            }
         }
     }
 }

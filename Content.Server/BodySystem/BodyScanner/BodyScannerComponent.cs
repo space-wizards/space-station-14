@@ -54,7 +54,11 @@ namespace Content.Server.BodySystem
             if(attempt != null)
                 _userInterface.SetState(new BodyScannerInterfaceState(attempt.Template, attempt.Parts));
             _userInterface.Open(actor.playerSession);
-            attempt.DisconnectBodyPart("right arm", true);
+            //attempt.DisconnectBodyPart("right arm", true);
+            attempt.TryGetLimb("torso", out BodyPart test);
+            Mechanism test2 = test.Mechanisms[0];
+            test.RemoveMechanism(test2, attempt.Owner.Transform.GridPosition);
+            
         }
 
     }

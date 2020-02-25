@@ -1,6 +1,7 @@
 - type: mechanism
   id: mechanism.Brain.BasicHuman
   name: "Human Brain"
+  spritePath: Objects\BodySystem\Organs\brain_human.png
   description: "The source of incredible, unending intelligence. Honk."
   durability: 10
   size: 1
@@ -9,6 +10,7 @@
 - type: mechanism
   id: mechanism.Eyes.BasicHuman
   name: "Human Eyes"
+  spritePath: Objects\BodySystem\Organs\eyes_human.png
   description: "Ocular organ capable of turning light into a colorful visual."
   durability: 10
   size: 1
@@ -17,6 +19,7 @@
 - type: mechanism
   id: mechanism.Heart.BasicHuman
   name: "Human Heart"
+  spritePath: Objects\BodySystem\Organs\heart_human.png
   description: "Pumps blood throughout a body. Essential for any entity with blood."
   durability: 10
   size: 1
@@ -25,6 +28,7 @@
 - type: mechanism
   id: mechanism.Lungs.BasicHuman
   name: "Human Lungs"
+  spritePath: Objects\BodySystem\Organs\lungs_human.png
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
   durability: 13
   size: 1
@@ -33,14 +37,16 @@
 - type: mechanism
   id: mechanism.Liver.BasicHuman
   name: "Human Liver"
+  spritePath: Objects\BodySystem\Organs\liver_human.png
   description: "Filters impurities out of a bloodstream and provides other important functionality to a human."
   durability: 15
   size: 1
   compatibility: Biological
 
 - type: mechanism
-  id: mechanism.Kidney.BasicHuman
-  name: "Human Kidney"
+  id: mechanism.Kidneys.BasicHuman
+  name: "Human Kidneys"
+  spritePath: Objects\BodySystem\Organs\kidneys_human.png
   description: "Filters toxins out of a bloodstream."
   durability: 20
   size: 1

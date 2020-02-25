@@ -1,5 +1,8 @@
-﻿using Robust.Shared.Interfaces.Serialization;
+﻿using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -38,10 +41,16 @@ namespace Content.Shared.BodySystem
         public string Plural;
 
         /// <summary>
-        ///     Path to the RSI sprite that represents this mechanism.
+        ///     Path to the RSI that represents this BodyPart.
         /// </summary>			  
         [ViewVariables]
         public string SpritePath;
+
+        /// <summary>
+        ///     RSI state that represents this BodyPart.
+        /// </summary>			  
+        [ViewVariables]
+        public string SpriteState;
 
         /// <summary>
         ///     BodyPartType that this body part is considered. 
@@ -120,15 +129,23 @@ namespace Content.Shared.BodySystem
         /// </summary>
         public bool AddMechanism(Mechanism mechanism)
         {
-            return false;
+            //TODO: Add size shit
+            _mechanisms.Add(mechanism);
+            return true;
         }
 
         /// <summary>
-        ///     Removes a mechanism from this BodyPart. Returns the removed Mechanism if successful, null if not successful.
+        ///     Removes a given mechanism from this BodyPart and places an entity at the location if given a non-null GridCoordinates. 
         /// </summary>
-        public Mechanism RemoveMechanism(Mechanism mechanism)
+        public DroppedMechanismComponent RemoveMechanism(Mechanism mechanism, GridCoordinates location)
         {
-            return null;
+            if (!_mechanisms.Contains(mechanism))
+                throw new ArgumentException("The given mechanism " + mechanism.Name + " does not exist within this BodyPart " + Name + "!");
+            _mechanisms.Remove(mechanism);
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var mechanismEntity = entityManager.SpawnEntity("BaseDroppedMechanism", location);
+            mechanismEntity.GetComponent<DroppedMechanismComponent>().TransferMechanismData(mechanism);
+            return mechanismEntity.GetComponent<DroppedMechanismComponent>();
         }
 
 
@@ -142,6 +159,7 @@ namespace Content.Shared.BodySystem
             Plural = data.Plural;
             PartType = data.PartType;
             SpritePath = data.SpritePath;
+            SpriteState = data.SpriteState;
             MaxDurability = data.Durability;
             CurrentDamages = new BiologicalDamageContainer();
             Resistance = data.Resistance;

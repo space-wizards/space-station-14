@@ -16,6 +16,9 @@ namespace Content.Shared.BodySystem {
 
 namespace Content.Shared.BodySystem {
 
+    /// <summary>
+    ///     Component representing the limbs 
+    /// </summary>
     [RegisterComponent]
     public class BodyManagerComponent : Component {
 
@@ -84,50 +87,13 @@ namespace Content.Shared.BodySystem {
         }
 
         /// <summary>
-        ///     Performs a check to change the parent Entity's species based on what limbs it has. 
-        /// </summary>
-        public void SpeciesCheck()
-        {
-            throw new NotImplementedException();
-            //TODO: Make this work.
-        }
-
-        /// <summary>
-        ///     Returns the central BodyPart of this body based on the BodyTemplate. For humans, this is the torso.
+        ///     Returns the central BodyPart of this body based on the BodyTemplate. For humans, this is the torso. Returns null if not found.
         /// </summary>			
-        public BodyPart GetCenterBodyPart() {
+        public BodyPart GetCenterBodyPart()
+        {
             _parts.TryGetValue(_template.CenterSlot, out BodyPart center);
             return center;
         }
-
-
-
-
-        /// <summary>
-        ///     Disconnects the BodyPart in the given slot name, potentially dropping other BodyParts if they were hanging off it. 
-        /// </summary>
-        public void DisconnectBodyPart(string name, bool dropEntity) {
-            TryGetLimb(name, out BodyPart part);
-            if(part != null) {
-                _parts.Remove(name);
-                if (TryGetLimbConnections(name, out List<string> connections)) //Call disconnect on all limbs that were hanging off this limb.
-                {
-                    foreach (string connectionName in connections) //This loop is an unoptimized travesty. TODO: optimize to be less shit
-                    { 
-                        if (TryGetLimb(connectionName, out BodyPart result) && !ConnectedToCenterPart(result))
-                        {
-                            DisconnectBodyPart(connectionName, dropEntity);
-                        }
-                    }
-                }
-                if(dropEntity)
-                {
-                    var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
-                    partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
-                }
-            }
-        }
-
         /// <summary>
         ///     Recursive search that returns whether a given BodyPart is connected to the center BodyPart. Not efficient (O(n^2)), but most bodies don't have a ton of BodyParts.
         /// </summary>	
@@ -142,10 +108,54 @@ namespace Content.Shared.BodySystem {
             return false;
         }
 
+
+        /// <summary>
+        ///     Grabs all limbs of the given type in this body.
+        /// </summary>	
+        public List<BodyPart> GetBodyPartsOfType(BodyPartType type)
+        {
+            List<BodyPart> toReturn = new List<BodyPart>();
+            foreach (var(slotName, bodyPart) in _parts) {
+                if (bodyPart.PartType == type)
+                    toReturn.Add(bodyPart);
+            }
+            return toReturn;
+        }
+
+
+
+        /// <summary>
+        ///     Disconnects the BodyPart in the given slot name, potentially dropping other BodyParts if they were hanging off it. 
+        /// </summary>
+        public void DisconnectBodyPart(string name, bool dropEntity)
+        {
+            TryGetLimb(name, out BodyPart part);
+            if (part != null)
+            {
+                _parts.Remove(name);
+                if (TryGetLimbConnections(name, out List<string> connections)) //Call disconnect on all limbs that were hanging off this limb.
+                {
+                    foreach (string connectionName in connections) //This loop is an unoptimized travesty. TODO: optimize to be less shit
+                    {
+                        if (TryGetLimb(connectionName, out BodyPart result) && !ConnectedToCenterPart(result))
+                        {
+                            DisconnectBodyPart(connectionName, dropEntity);
+                        }
+                    }
+                }
+                if (dropEntity)
+                {
+                    var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
+                    partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
+                }
+            }
+        }
+
         /// <summary>
         ///     Grabs the BodyPart in the given slotName if there is one. Returns true if a BodyPart is found, false otherwise.
         /// </summary>		
-        public bool TryGetLimb(string slotName, out BodyPart result) {
+        public bool TryGetLimb(string slotName, out BodyPart result)
+        {
             return _parts.TryGetValue(slotName, out result);
         }
 

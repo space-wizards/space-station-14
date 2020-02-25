@@ -1,0 +1,17 @@
+- type: entity
+  name: "BaseDroppedBodyPart"
+  parent: BaseItem
+  id: BaseDroppedBodyPart
+  components:
+  - type: DroppedBodyPart
+  - type: Sprite
+  - type: Icon
+    
+- type: entity
+  name: "BaseDroppedMechanism"
+  parent: BaseItem
+  id: BaseDroppedMechanism
+  components:
+  - type: DroppedMechanism
+  - type: Sprite
+  - type: Icon
