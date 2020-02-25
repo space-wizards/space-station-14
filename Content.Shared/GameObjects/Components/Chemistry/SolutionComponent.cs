@@ -173,6 +173,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
                 mixColor = BlendRGB(mixColor, proto.SubstanceColor, reagent.Quantity / runningTotalQuantity);
             }
+
+            SubstanceColor = mixColor;
         }
 
          private Color BlendRGB(Color rgb1, Color rgb2, float amount)

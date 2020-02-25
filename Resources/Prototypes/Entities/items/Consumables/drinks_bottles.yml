@@ -6,7 +6,8 @@
   components:
   - type: Drink  
     max_volume: 10
-    spawn_on_finish: DrinkBottleAbsinthe  
+    spawn_on_finish: DrinkBottleAbsinthe
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -25,6 +26,7 @@
   - type: Drink    
     max_volume: 10
     spawn_on_finish: DrinkBottleAlcoClear
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -43,6 +45,7 @@
   - type: Drink  
     max_volume: 10
     spawn_on_finish: DrinkBottleAle
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -61,6 +64,7 @@
   - type: Drink  
     max_volume: 10
     spawn_on_finish: DrinkBottleAlcoClear  
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -79,6 +83,7 @@
   - type: Drink
     max_volume: 10
     spawn_on_finish: DrinkBottleCognac
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -97,6 +102,7 @@
   - type: Drink   
     max_volume: 10
     spawn_on_finish: DrinkBottleGin
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -115,6 +121,7 @@
   - type: Drink  
     max_volume: 10
     spawn_on_finish: DrinkBottleGoldschlager  
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -133,6 +140,7 @@
   - type: Drink
     max_volume: 10
     spawn_on_finish: DrinkBottleKahlua
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -151,6 +159,7 @@
   - type: Drink  
     max_volume: 10
     spawn_on_finish: DrinkBottlePatron  
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -169,6 +178,7 @@
   - type: Drink   
     max_volume: 10
     spawn_on_finish: DrinkBottlePoisonWine 
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -187,6 +197,7 @@
   - type: Drink  
     max_volume: 10
     spawn_on_finish: DrinkBottleRum
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -205,6 +216,7 @@
   - type: Drink   
     max_volume: 10
     spawn_on_finish: DrinkBottleTequila
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -223,6 +235,7 @@
   - type: Drink    
     max_volume: 10
     spawn_on_finish: DrinkBottleVermouth
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -241,6 +254,7 @@
   - type: Drink   
     max_volume: 10
     spawn_on_finish: DrinkBottleVodka
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -259,6 +273,7 @@
   - type: Drink  
     max_volume: 10
     spawn_on_finish: DrinkBottleWhiskey
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -277,6 +292,7 @@
   - type: Drink  
     max_volume: 10
     spawn_on_finish: DrinkBottleWine
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O

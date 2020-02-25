@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
@@ -6,6 +7,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -97,8 +99,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _drinking = false;
             if (_maxVolume != 0)
                 _contents.MaxVolume = _maxVolume;
-            else
+            else if (_initialContents != null)
                 _contents.MaxVolume = _initialContents.TotalVolume;
+            else
+                _contents.MaxVolume = _contents.ReagentList.Sum(r => r.Quantity);
             _contents.SolutionChanged += HandleSolutionChangedEvent;
         }
 
@@ -153,9 +157,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 var split = _contents.SplitSolution(transferAmount);
                 if (stomachComponent.TryTransferSolution(split))
                 {
+                    // When we split Finish gets called which may delete the can so need to use the entity system for sound
                     if (_useSound != null)
                     {
-                        Owner.GetComponent<SoundComponent>()?.Play(_useSound);
+                        var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+                        var audioSystem = entitySystemManager.GetEntitySystem<AudioSystem>();
+                        audioSystem.Play(_useSound);
                         user.PopupMessage(user, _localizationManager.GetString("Slurp"));
                     }
                 }

@@ -30,10 +30,10 @@
   name: Space cola
   description: A refreshing beverage.
   components:
-  - type: Drink    
+  - type: Solution
     contents:
       reagents:
-      - ReagentId: chem.H2O
+      - ReagentId: chem.Cola
         Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/cola.rsi
@@ -61,7 +61,7 @@
   name: Ice tea can
   description: ''
   components:
-  - type: Drink    
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -92,7 +92,7 @@
   name: Lemon-lime can
   description: You wanted ORANGE. It gave you Lemon Lime.
   components:
-  - type: Drink    
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -123,7 +123,7 @@
   name: Purple Can
   description: ''
   components:
-  - type: Drink    
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -154,7 +154,7 @@
   name: Space mountain wind can
   description: Blows right through you like a space wind.
   components:
-  - type: Drink    
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -185,7 +185,7 @@
   name: Space-up can
   description: Tastes like a hull breach in your mouth.
   components:
-  - type: Drink    
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -216,7 +216,7 @@
   name: Starkist can
   description: The taste of a star in liquid form. And, a bit of tuna...?
   components:
-  - type: Drink    
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
@@ -247,7 +247,7 @@
   name: Thirteen loko can
   description: The MBO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
-  - type: Drink    
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.H2O
