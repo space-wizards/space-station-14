@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             base.Initialize();
 
             var rangedWeapon = Owner.GetComponent<RangedWeaponComponent>();
-            rangedWeapon.FireHandler = Fire;
+            rangedWeapon.FireHandler = FireAtClickLocation;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -55,17 +55,24 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             serializer.DataField(ref _soundGunshot, "sound_gunshot", "/Audio/Guns/Gunshots/smg.ogg");
         }
 
-        private void Fire(IEntity user, GridCoordinates clickLocation)
+        private void FireAtClickLocation(IEntity user, GridCoordinates clickLocation)
         {
-            var projectile = GetFiredProjectile();
-            if (projectile == null)
+            var angle = GetAngleFromClickLocation(user, clickLocation);
+            FireAtAngle(user, angle);
+        }
+        private Angle GetAngleFromClickLocation(IEntity user, GridCoordinates clickLocation)
+        {
+            var userPosition = user.Transform.GridPosition; //Remember world positions are ephemeral and can only be used instantaneously
+            return new Angle(clickLocation.Position - userPosition.Position);
+        }
+
+        private void FireAtAngle(IEntity user, Angle angle)
+        {
+            if (GetFiredProjectile() == null)
             {
                 return;
             }
-
-            var userPosition = user.Transform.GridPosition; //Remember world positions are ephemeral and can only be used instantaneously
-            var angle = new Angle(clickLocation.Position - userPosition.Position);
-
+            var projectile = GetFiredProjectile();
             if (user.TryGetComponent(out CameraRecoilComponent recoil))
             {
                 var recoilVec = angle.ToVec() * -0.15f;
@@ -77,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 angle += Angle.FromDegrees(_spreadRandom.NextGaussian(0, SpreadStdDev));
             }
 
-            projectile.Transform.GridPosition = userPosition;
+            projectile.Transform.GridPosition = user.Transform.GridPosition;
 
             //Give it the velocity we fire from this weapon, and make sure it doesn't shoot our character
             projectile.GetComponent<ProjectileComponent>().IgnoreEntity(user);
@@ -126,5 +133,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         A20mm,
         // 24mm
         A24mm,
+        // 12g
+        A12g,
     }
 }

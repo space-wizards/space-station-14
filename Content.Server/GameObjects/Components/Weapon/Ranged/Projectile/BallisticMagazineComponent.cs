@@ -278,5 +278,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         // 24mm
         A24mm,
+
+        // 12g
+        A12g,
     }
 }
