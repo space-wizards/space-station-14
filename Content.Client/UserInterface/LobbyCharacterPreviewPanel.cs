@@ -24,7 +24,6 @@ namespace Content.Client.UserInterface
         private readonly Label _summaryLabel;
 
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
-            ILocalizationManager localization,
             IClientPreferencesManager preferencesManager)
         {
             _preferencesManager = preferencesManager;
@@ -32,12 +31,12 @@ namespace Content.Client.UserInterface
 
             var header = new NanoHeading
             {
-                Text = localization.GetString("Character setup")
+                Text = Loc.GetString("Character setup")
             };
 
             CharacterSetupButton = new Button
             {
-                Text = localization.GetString("Customize"),
+                Text = Loc.GetString("Customize"),
                 SizeFlagsHorizontal = SizeFlags.None
             };
 

@@ -178,11 +178,6 @@ namespace Content.Client
 
             _escapeMenuOwner.Initialize();
 
-            _baseClient.PlayerJoinedGame += (sender, args) =>
-            {
-                _stateManager.RequestStateChange<GameScreen>();
-            };
-
             _baseClient.PlayerJoinedServer += (sender, args) =>
             {
                 IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
@@ -242,7 +237,6 @@ namespace Content.Client
             {
                 case ModUpdateLevel.FramePreEngine:
                     IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(frameEventArgs);
-                    IoCManager.Resolve<IClientGameTicker>().FrameUpdate(frameEventArgs);
                     IoCManager.Resolve<IChatManager>().FrameUpdate(frameEventArgs);
                     break;
             }
