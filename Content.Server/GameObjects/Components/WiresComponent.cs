@@ -114,6 +114,11 @@ namespace Content.Server.GameObjects.Components
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(WiresUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
 
             foreach (var wiresProvider in Owner.GetAllComponents<IWires>())
             {
