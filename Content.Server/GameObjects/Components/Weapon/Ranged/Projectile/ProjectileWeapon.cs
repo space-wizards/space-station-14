@@ -68,11 +68,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         private void FireAtAngle(IEntity user, Angle angle)
         {
-            if (GetFiredProjectile() == null)
+            var projectile = GetFiredProjectile();
+            if (projectile == null)
             {
                 return;
             }
-            var projectile = GetFiredProjectile();
             if (user.TryGetComponent(out CameraRecoilComponent recoil))
             {
                 var recoilVec = angle.ToVec() * -0.15f;
