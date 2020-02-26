@@ -292,7 +292,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
             var rayResults = _physicsManager.IntersectRay(_mapManager.GetGrid(coords.GridID).ParentMapId, ray, dir.Length, ignoredEnt);
 
-            return !rayResults.DidHitObject;
+            return !rayResults.DidHitObject || !rayResults.HitEntity.GetComponent<CollidableComponent>().IsHardCollidable;
         }
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
