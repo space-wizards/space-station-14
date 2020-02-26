@@ -290,9 +290,9 @@ namespace Content.Server.GameObjects.EntitySystems
             var dir = (otherCoords.Position - coords.Position);
             if (!(dir.Length > 0f)) return true;
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRay(_mapManager.GetGrid(coords.GridID).ParentMapId, ray, dir.Length, ignoredEnt);
+            var rayResults = _physicsManager.IntersectRay(_mapManager.GetGrid(coords.GridID).ParentMapId, ray, dir.Length, ignoredEnt, true);
 
-            return !rayResults.DidHitObject || !rayResults.HitEntity.GetComponent<CollidableComponent>().IsHardCollidable;
+            return !rayResults.DidHitObject;
         }
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
