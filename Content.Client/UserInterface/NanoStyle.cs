@@ -307,19 +307,19 @@ namespace Content.Client.UserInterface
                     }),
 
                 // Regular buttons!
-                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
                 {
                     new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
                 }),
-                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
                 {
                     new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
                 }),
-                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
                 {
                     new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
                 }),
-                new StyleRule(new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
                 {
                     new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
                 }),
