@@ -11,6 +11,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
@@ -43,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             base.Initialize();
 
             var rangedWeapon = Owner.GetComponent<RangedWeaponComponent>();
-            rangedWeapon.FireHandler = FireAtClickLocation;
+            rangedWeapon.FireHandler = FireProjectile;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -55,24 +56,45 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             serializer.DataField(ref _soundGunshot, "sound_gunshot", "/Audio/Guns/Gunshots/smg.ogg");
         }
 
-        private void FireAtClickLocation(IEntity user, GridCoordinates clickLocation)
+        protected virtual void FireProjectile(IEntity user, GridCoordinates clickLocation) { }
+
+        private void FireFromChamberAtClickLocation(IEntity user, GridCoordinates clickLocation)
+        {
+            var projectiles = GetFiredProjectile();
+            if (projectiles == null)
+            {
+                return;
+            }
+            foreach (var projectile in projectiles)
+            FireAtClickLocation(user, clickLocation, projectile);
+        }
+
+        protected void FireAtClickLocation(IEntity user, GridCoordinates clickLocation, IEntity projectile)
         {
             var angle = GetAngleFromClickLocation(user, clickLocation);
-            FireAtAngle(user, angle);
+            FireAtAngle(user, angle, projectile);
         }
-        private Angle GetAngleFromClickLocation(IEntity user, GridCoordinates clickLocation)
+
+        protected Angle GetAngleFromClickLocation(IEntity user, GridCoordinates clickLocation)
         {
             var userPosition = user.Transform.GridPosition; //Remember world positions are ephemeral and can only be used instantaneously
             return new Angle(clickLocation.Position - userPosition.Position);
         }
 
-        private void FireAtAngle(IEntity user, Angle angle)
+        protected List<double> Linspace(double start, double end, int intervals)
         {
-            var projectile = GetFiredProjectile();
-            if (projectile == null)
+            var linspace = new List<double> { };
+            linspace.Add(start);
+            for (var i = 1; i < intervals - 1; i++)
             {
-                return;
+                linspace.Add(start + (end - start) * i / (intervals - 1));
             }
+            linspace.Add(end);
+            return linspace;
+        }
+
+        protected void FireAtAngle(IEntity user, Angle angle, IEntity projectile)
+        {
             if (user.TryGetComponent(out CameraRecoilComponent recoil))
             {
                 var recoilVec = angle.ToVec() * -0.15f;
@@ -103,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         /// <summary>
         ///     Try to get a projectile for firing. If null, nothing will be fired.
         /// </summary>
-        protected abstract IEntity GetFiredProjectile();
+        protected abstract List<IEntity> GetFiredProjectile();
     }
 
     public enum BallisticCaliber

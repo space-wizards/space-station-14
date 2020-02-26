@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Sound;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
@@ -15,6 +18,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         protected abstract int ChamberCount { get; }
 
         private string _soundGunEmpty;
+        private Angle _sprayAngle;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -22,6 +26,27 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _soundGunEmpty, "sound_empty", null);
+            serializer.DataField(ref _sprayAngle, "sprayangle", 0);
+        }
+
+        protected override void FireProjectile(IEntity user, GridCoordinates clickLocation)
+        {
+            var projectiles = GetFiredProjectile();
+            var pellets = projectiles.Count;
+            if (pellets > 1 & _sprayAngle > 0)
+            {
+                var angle = GetAngleFromClickLocation(user, clickLocation);
+                var anglelist = Linspace(angle - _sprayAngle, angle + _sprayAngle, pellets);
+                for (var i = 0; i < pellets ; i++)
+                {
+                    FireAtAngle(user, anglelist[i], projectiles[i]);
+                }
+                return;
+            }
+            foreach (var projectile in projectiles)
+            {
+                FireAtClickLocation(user, clickLocation, projectile);
+            }
         }
 
         public override void Initialize()
@@ -59,8 +84,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return true;
         }
 
-        protected sealed override IEntity GetFiredProjectile()
+        protected sealed override List<IEntity> GetFiredProjectile()
         {
+            var projectiles = new List<IEntity>();
             void PlayEmpty()
             {
                 if (_soundGunEmpty != null)
@@ -75,20 +101,23 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 if (bullet.Spent)
                 {
                     PlayEmpty();
-                    return null;
+                    return projectiles;
                 }
 
-                var projectile = Owner.EntityManager.SpawnEntity(bullet.ProjectileType, Owner.Transform.GridPosition);
-                bullet.Spent = true;
-
                 CycleChamberedBullet(0);
-
                 // Load a new bullet into the chamber from magazine.
-                return projectile;
-            }
+                var bulletquantity = bullet.BulletQuantity;
 
+                for (var i = 0; i < bulletquantity; i++)
+                {
+                    var projec = Owner.EntityManager.SpawnEntity(bullet.ProjectileType, Owner.Transform.GridPosition);
+                    projectiles.Add(projec);
+                }
+                bullet.Spent = true;
+                return projectiles;
+            }
             PlayEmpty();
-            return null;
+            return projectiles;
         }
 
         protected virtual void CycleChamberedBullet(int chamber)

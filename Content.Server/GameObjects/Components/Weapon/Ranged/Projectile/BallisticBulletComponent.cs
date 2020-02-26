@@ -1,4 +1,4 @@
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
@@ -11,6 +11,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         private BallisticCaliber _caliber;
         private string _projectileType;
         private bool _spent;
+        private int _bulletQuantity;
+        public int BulletQuantity { get => _bulletQuantity; }
 
         public string ProjectileType => _projectileType;
         public BallisticCaliber Caliber => _caliber;
@@ -19,7 +21,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             get => _spent;
             set => _spent = value;
         }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -27,6 +28,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _projectileType, "projectile", null);
             serializer.DataField(ref _spent, "spent", false);
+            serializer.DataField(ref _bulletQuantity, "bulletquantity", 1);
         }
     }
 }

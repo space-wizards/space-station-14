@@ -8,11 +8,12 @@
   - type: Sound
   - type: RangedWeapon
     automatic: false
-    firerate: 1
+    firerate: 20
   - type: BallisticMagazineWeapon
     caliber: A12g
     magazines:
     - A12g
+    sprayangle : 20
     default_magazine: magazine_12g_shotgun
     auto_eject_magazine: false
     sound_auto_eject: /Audio/Guns/EmptyAlarm/smg_empty_alarm.ogg
@@ -35,8 +36,8 @@
     sprite: Objects/Guns/SMGs/c20r.rsi
     state: c20r-5
   - type: RangedWeapon
-    automatic: true
-    firerate: 8
+    automatic: false
+    firerate: 1
   - type: BallisticMagazineWeapon
     caliber: A12g
     magazines:
