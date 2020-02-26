@@ -141,6 +141,7 @@ namespace Content.Client.UserInterface
             {
                 preferencesManager.CreateCharacter(HumanoidCharacterProfile.Default());
                 UpdateUI();
+                args.Event.Handle();
             };
 
             hBox.AddChild(new PanelContainer
@@ -179,13 +180,14 @@ namespace Content.Client.UserInterface
                 _charactersVBox.AddChild(characterPickerButton);
 
                 var characterIndexCopy = characterIndex;
-                characterPickerButton.ActualButton.OnPressed += args =>
+                characterPickerButton.OnPressed += args =>
                 {
                     _humanoidProfileEditor.Profile = (HumanoidCharacterProfile) character;
                     _humanoidProfileEditor.CharacterSlot = characterIndexCopy;
                     _humanoidProfileEditor.UpdateControls();
                     _preferencesManager.SelectCharacter(character);
                     UpdateUI();
+                    args.Event.Handle();
                 };
                 characterIndex++;
             }
@@ -195,9 +197,8 @@ namespace Content.Client.UserInterface
             _charactersVBox.AddChild(_createNewCharacterButton);
         }
 
-        private class CharacterPickerButton : Control
+        private class CharacterPickerButton : ContainerButton
         {
-            public readonly Button ActualButton;
             private IEntity _previewDummy;
 
             public CharacterPickerButton(
@@ -206,6 +207,10 @@ namespace Content.Client.UserInterface
                 ButtonGroup group,
                 ICharacterProfile profile)
             {
+                AddStyleClass(StyleClassButton);
+                ToggleMode = true;
+                Group = group;
+
                 _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
                 _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
                 var humanoid = profile as HumanoidCharacterProfile;
@@ -216,16 +221,8 @@ namespace Content.Client.UserInterface
 
                 var isSelectedCharacter = profile == preferencesManager.Preferences.SelectedCharacter;
 
-                ActualButton = new Button
-                {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    ToggleMode = true,
-                    Group = group
-                };
                 if (isSelectedCharacter)
-                    ActualButton.Pressed = true;
-                AddChild(ActualButton);
+                    Pressed = true;
 
                 var view = new SpriteView
                 {
