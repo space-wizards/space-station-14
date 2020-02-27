@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 }
             }
 
-            _updateAppearance();
+            UpdateAppearance();
 
             OnAmmoCountChanged?.Invoke();
             _appearance.SetData(BallisticMagazineVisuals.AmmoCapacity, Capacity);
@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         public void AddBullet(IEntity bullet)
         {
-            if (!bullet.TryGetComponent(out BallisticBulletComponent component))
+            if (!bullet.TryGetComponent(out AmmoComponent component))
             {
                 throw new ArgumentException("entity isn't a bullet.", nameof(bullet));
             }
@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
             _bulletContainer.Insert(bullet);
             _loadedBullets.Push(bullet);
-            _updateAppearance();
+            UpdateAppearance();
             OnAmmoCountChanged?.Invoke();
         }
 
@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 _bulletContainer.Remove(bullet);
             }
 
-            _updateAppearance();
+            UpdateAppearance();
             OnAmmoCountChanged?.Invoke();
             return bullet;
         }
@@ -224,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return false;
         }
 
-        private void _updateAppearance()
+        private void UpdateAppearance()
         {
             _appearance.SetData(BallisticMagazineVisuals.AmmoLeft, CountLoaded);
         }

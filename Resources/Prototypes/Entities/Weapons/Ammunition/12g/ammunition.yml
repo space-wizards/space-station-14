@@ -35,7 +35,7 @@
       base_state: 12mml
       steps: 2
 
-# Casings - magazines above here
+# Casings
 - type: entity
   id: ammo_casing_12g
   name: "12g casing"
