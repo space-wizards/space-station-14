@@ -846,16 +846,24 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return;
             }
-
-            var item = hands.GetActiveHand?.Owner;
-
-            // TODO: If item is null we need some kinda unarmed combat.
-            if (!ActionBlockerSystem.CanInteract(player) || item == null)
+            
+            if (!ActionBlockerSystem.CanInteract(player))
             {
                 return;
             }
 
+            var item = hands.GetActiveHand?.Owner;
             var eventArgs = new AttackEventArgs(player, coordinates);
+
+            if (item == null)
+            {
+                if (player.TryGetComponent<UnarmedComponent>(out var unarmed))
+                {
+                    unarmed.DoUnarmedAttack(eventArgs);
+                }
+                return;
+            }
+
             foreach (var attackComponent in item.GetAllComponents<IAttack>())
             {
                 attackComponent.Attack(eventArgs);

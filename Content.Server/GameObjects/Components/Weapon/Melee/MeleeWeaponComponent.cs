@@ -74,8 +74,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _hitSound, "hitSound", "/Audio/weapons/genhit1.ogg");
             serializer.DataField(ref _cooldownTime, "cooldownTime", 1f);
         }
+        
+        void IAttack.Attack(AttackEventArgs eventArgs) => DoAttack(eventArgs);
 
-        void IAttack.Attack(AttackEventArgs eventArgs)
+        protected void DoAttack(AttackEventArgs eventArgs)
         {
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
             var span = curTime - _lastAttackTime;

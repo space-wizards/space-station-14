@@ -19,7 +19,11 @@
     digestionDelay: 20
   - type: Bloodstream
     maxVolume: 250
-
+  - type: Unarmed
+    damage: 5
+    range: 1.5
+    arcwidth: 10
+    arc: fist
   - type: Inventory
   - type: Constructor
   - type: Clickable
@@ -246,3 +250,10 @@
         - type: SpeciesVisualizer2D
 
     - type: HumanoidAppearance
+
+- type: MeleeWeaponAnimation
+  id: fist
+  state: fist
+  length: 0.10
+  speed: 6
+  arcType: Poke
