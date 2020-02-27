@@ -44,7 +44,7 @@
   - type: BallisticBullet
     caliber: A12g
     projectile: pellet_12g
-    bulletquantity : 6
+    projectilesfired : 6
   - type: Sprite
     sprite: Objects/Guns/Ammunition/ammo_casing.rsi
     state: s-casing

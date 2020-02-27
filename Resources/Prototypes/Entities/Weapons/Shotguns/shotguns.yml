@@ -13,7 +13,6 @@
     caliber: A12g
     magazines:
     - A12g
-    sprayangle : 20
     default_magazine: magazine_12g_shotgun
     auto_eject_magazine: false
     sound_auto_eject: /Audio/Guns/EmptyAlarm/smg_empty_alarm.ogg
@@ -26,7 +25,6 @@
   name: Magazine Fed Shotgun
   parent: BaseShotgun
   id: MagazineFedShotgun
-  description: A rooty tooty point and shooty.
   components:
   - type: Sprite
     netsync: false
@@ -35,15 +33,6 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/c20r.rsi
     state: c20r-5
-  - type: RangedWeapon
-    automatic: false
-    firerate: 1
-  - type: BallisticMagazineWeapon
-    caliber: A12g
-    magazines:
-    - A12g
-    default_magazine: magazine_12g_shotgun
-    auto_eject_magazine: true
   - type: Appearance
     visuals:
     - type: BallisticMagazineWeaponVisualizer2D

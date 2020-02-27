@@ -187,7 +187,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 magazineComponent.AddBullet(bullet);
                 return;
             }
-            if (!bullet.TryGetComponent(out BallisticBulletComponent component))
+            if (!bullet.TryGetComponent(out AmmoComponent component))
             {
                 throw new ArgumentException("entity isn't a bullet.", nameof(bullet));
             }

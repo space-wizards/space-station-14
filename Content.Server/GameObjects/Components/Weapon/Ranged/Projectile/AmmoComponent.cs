@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         public override string Name => "BallisticBullet";
 
         /// <summary>
-        ///     Cartridge calibre, restricts what AmmoMagazineWeapons this ammo can be fired from.
+        ///     Cartridge calibre, restricts what AmmoWeapons this ammo can be fired from.
         /// </summary>
         private BallisticCaliber _caliber;
         public BallisticCaliber Caliber => _caliber;

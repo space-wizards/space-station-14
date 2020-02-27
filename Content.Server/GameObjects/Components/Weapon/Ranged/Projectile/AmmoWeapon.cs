@@ -5,6 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables; //todo: add VV view/edit to ammogun properties
+using System;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
@@ -81,6 +82,24 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 c.Slot.Remove(loaded);
             }
             return loaded;
+        }
+
+        protected bool LoadIntoChamber(int chamber, IEntity bullet)
+        {
+            if (!bullet.TryGetComponent(out AmmoComponent component))
+            {
+                throw new ArgumentException("entity isn't a bullet.", nameof(bullet));
+            }
+            if (component.Caliber != Caliber)
+            {
+                throw new ArgumentException("entity is of the wrong caliber.", nameof(bullet));
+            }
+            if (GetChambered(chamber) != null)
+            {
+                return false;
+            }
+            Chambers[chamber].Slot.Insert(bullet);
+            return true;
         }
 
         private void PlayEmptySound() => Owner.GetComponent<SoundComponent>().Play(_soundGunEmpty);

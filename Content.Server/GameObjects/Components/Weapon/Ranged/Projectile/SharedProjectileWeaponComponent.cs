@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         /// <summary>
         ///     Fires projectile from an entity at a coordinate.
         /// </summary>
-        protected void FireAtCoord(IEntity source, GridCoordinates coord, string projectileType, float spreadStdDev = 0, int projectilesFired = 1, float evenSpreadAngle = 0, float velocity = 0)
+        protected void FireAtCoord(IEntity source, GridCoordinates coord, string projectileType, double spreadStdDev, int projectilesFired = 1, double evenSpreadAngle = 0, float velocity = 0)
         {
             var angle = GetAngleFromClickLocation(source, coord);
             FireAtAngle(source, angle, projectileType, spreadStdDev, projectilesFired, evenSpreadAngle, velocity);
@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         /// <summary>
         ///     Fires projectile in the direction of an angle.
         /// </summary>
-        protected void FireAtAngle(IEntity source, Angle angle, string projectileType = null, float spreadStdDev = 0, int projectilesFired = 1, float evenSpreadAngle = 0, float velocity = 0)
+        protected void FireAtAngle(IEntity source, Angle angle, string projectileType = null, double spreadStdDev = 0, int projectilesFired = 1, double evenSpreadAngle = 0, float velocity = 0)
         {
             List<Angle> sprayanglechange = null;
             if (evenSpreadAngle != 0 & projectilesFired > 1)
@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             var linspace = new List<Angle> { };
             for (var i = 0; i <= intervals - 1; i++)
             {
-                linspace.Add(start + (end - start) * i / (intervals - 1));
+                linspace.Add(Angle.FromDegrees(start + (end - start) * i / (intervals - 1)));
             }
             return linspace;
         }
