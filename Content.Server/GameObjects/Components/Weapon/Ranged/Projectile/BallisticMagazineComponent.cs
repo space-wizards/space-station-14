@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         public void AddBullet(IEntity bullet)
         {
-            if (!bullet.TryGetComponent(out AmmoComponent component))
+            if (!bullet.TryGetComponent(out BallisticBulletComponent component))
             {
                 throw new ArgumentException("entity isn't a bullet.", nameof(bullet));
             }

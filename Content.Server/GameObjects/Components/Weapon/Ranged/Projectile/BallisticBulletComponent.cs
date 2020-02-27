@@ -8,9 +8,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     ///     Passes information about the projectiles to be fired by AmmoWeapons
     /// </summary>
     [RegisterComponent]
-    public class AmmoComponent : Component
+    public class BallisticBulletComponent : Component
     {
-        public override string Name => "Ammo";
+        public override string Name => "BallisticBullet";
 
         private BallisticCaliber _caliber;
         /// <summary>

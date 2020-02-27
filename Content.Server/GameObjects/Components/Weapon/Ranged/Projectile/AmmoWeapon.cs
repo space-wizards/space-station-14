@@ -9,7 +9,7 @@ using System;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
     /// <summary>
-    ///     Handles firing projectiles from a contained <see cref="AmmoComponent" />.
+    ///     Handles firing projectiles from a contained <see cref="BallisticBulletComponent" />.
     /// </summary>
     public abstract class AmmoWeaponComponent : SharedProjectileWeaponComponent
     {
@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         /// </summary>
         protected void TryShoot(IEntity user, GridCoordinates clickLocation)
         {
-            var ammo = GetChambered(FirstChamber)?.GetComponent<AmmoComponent>();
+            var ammo = GetChambered(FirstChamber)?.GetComponent<BallisticBulletComponent>();
             CycleChamberedBullet(FirstChamber);
             if (ammo == null | ammo?.Spent == true | ammo?.Caliber != Caliber)
             {
@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         protected bool LoadIntoChamber(int chamber, IEntity bullet)
         {
-            if (!bullet.TryGetComponent(out AmmoComponent component))
+            if (!bullet.TryGetComponent(out BallisticBulletComponent component))
             {
                 throw new ArgumentException("entity isn't a bullet.", nameof(bullet));
             }
