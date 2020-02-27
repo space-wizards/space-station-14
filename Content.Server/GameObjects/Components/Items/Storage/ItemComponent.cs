@@ -78,11 +78,16 @@ namespace Content.Server.GameObjects
 
         public bool CanPickup(IEntity user)
         {
-            var coords = Owner.Transform.GridPosition;
-
             if (!ActionBlockerSystem.CanPickup(user)) return false;
+
+            if (user.Transform.MapID != Owner.Transform.MapID)
+                return false;
+
+            var userPos = user.Transform.MapPosition;
+            var itemPos = Owner.Transform.WorldPosition;
+
             return _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .InRangeUnobstructed(coords, user.Transform.GridPosition, ignoredEnt:Owner);
+                .InRangeUnobstructed(userPos, itemPos, ignoredEnt: Owner);
         }
 
         public bool AttackHand(AttackHandEventArgs eventArgs)

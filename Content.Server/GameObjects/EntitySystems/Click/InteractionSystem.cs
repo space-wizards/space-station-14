@@ -273,24 +273,26 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     If the <paramref name="range"/> is zero or negative,
         ///     this method will only check if nothing obstructs the two sets of coordinates..
         /// </summary>
-        /// <param name="mapManager">Map manager containing the two GridIds.</param>
         /// <param name="coords">Set of coordinates to use.</param>
         /// <param name="otherCoords">Other set of coordinates to use.</param>
         /// <param name="range">maximum distance between the two sets of coordinates.</param>
         /// <param name="collisionMask">the mask to check for collisions</param>
         /// <param name="ignoredEnt">the entity to be ignored when checking for collisions.</param>
+        /// <param name="mapManager">Map manager containing the two GridIds.</param>
         /// <returns>True if the two points are within a given range without being obstructed.</returns>
-        public bool InRangeUnobstructed(GridCoordinates coords, GridCoordinates otherCoords, float range = InteractionRange, int collisionMask = (int)CollisionGroup.Impassable, IEntity ignoredEnt = null)
+        public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,
+            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null)
         {
-            if (range > 0f && !coords.InRange(_mapManager, otherCoords, range))
-            {
-                return false;
-            }
+            var dir = otherCoords - coords.Position;
 
-            var dir = (otherCoords.Position - coords.Position);
-            if (!(dir.Length > 0f)) return true;
+            if (dir.LengthSquared.Equals(0f))
+                return true;
+
+            if (range > 0f && !(dir.LengthSquared <= range*range))
+                return false;
+
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRay(_mapManager.GetGrid(coords.GridID).ParentMapId, ray, dir.Length, ignoredEnt);
+            var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt);
 
             return !rayResults.DidHitObject;
         }
