@@ -2,13 +2,14 @@
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables; //todo: add VV view/edit to ammogun properties
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
     /// <summary>
-    ///     Weapons that fire projectiles from  an <see cref="AmmoComponent" />.
+    ///     Handles firing projectiles from a contained <see cref="AmmoComponent" />.
     /// </summary>
     public abstract class AmmoWeaponComponent : SharedProjectileWeaponComponent
     {
@@ -21,14 +22,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         private float _spreadStdDev_Gun;
         private float _evenSpreadAngle_Gun;
         private float _velocity_Gun;
+        protected BallisticCaliber Caliber;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _soundGunEmpty, "sound_empty", "/Audio/Guns/Empty/empty.ogg");
             serializer.DataField(ref _spreadStdDev_Gun, "spreadstddev", 3);
-            serializer.DataField(ref _evenSpreadAngle_Gun, "evenspread", 0);
+            serializer.DataField(ref _evenSpreadAngle_Gun, "evenspread", 20);
             serializer.DataField(ref _velocity_Gun, "gunvelocity", 0);
+            serializer.DataField(ref Caliber, "caliber", BallisticCaliber.Unspecified);
         }
 
         public override void Initialize()
@@ -48,8 +51,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         /// </summary>
         protected void TryShoot(IEntity user, GridCoordinates clickLocation)
         {
-            var ammo = GetChamberedAmmo();
-            if(ammo == null | ammo?.Spent == true)
+            var ammo = GetChambered(FirstChamber)?.GetComponent<AmmoComponent>();
+            CycleChamberedBullet(FirstChamber);
+            if (ammo == null | ammo?.Spent == true | ammo?.Caliber != Caliber)
             {
                 PlayEmptySound();
                 return;
@@ -62,19 +66,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         }
 
         protected IEntity GetChambered(int chamber) => Chambers[chamber].Slot.ContainedEntity;
-
-        /// <summary>
-        ///     Returns AmmoComponent of chambered ammo
-        /// </summary>
-        private AmmoComponent GetChamberedAmmo()
-        {
-            var bullet = GetChambered(FirstChamber)?.GetComponent<AmmoComponent>();
-            if (bullet != null)
-            {
-                CycleChamberedBullet(FirstChamber);
-            }
-            return bullet;
-        }
 
         /// <summary>
         ///     Loads the next ammo casing into the chamber.
