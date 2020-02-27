@@ -2,7 +2,6 @@
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables; //todo: add VV view/edit to ammogun properties
 using System;
@@ -16,14 +15,41 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     {
         protected Chamber[] Chambers;
         protected abstract int ChamberCount { get; }
+
+        protected BallisticCaliber Caliber ;
+        /// <summary>
+        ///     What type of ammo this gun can fire.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public BallisticCaliber GunCaliber { get => Caliber; set => Caliber = value; }
+
+        private string _soundGunEmpty;
         /// <summary>
         ///     Sound played when trying to shoot if there is no ammo available.
         /// </summary>
-        private string _soundGunEmpty;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string SoundGunEmpty { get => _soundGunEmpty; set => _soundGunEmpty = value; }
+
         private float _spreadStdDev_Gun;
+        /// <summary>
+        ///     Increases the standard deviation of the ammo being fired.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float SpreadStdDev_Gun { get => _spreadStdDev_Gun; set => _spreadStdDev_Gun = value; }
+
         private float _evenSpreadAngle_Gun;
+        /// <summary>
+        ///     Increases the evenspread of the ammo being fired.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float EvenSpreadAngle_Gun { get => _evenSpreadAngle_Gun; set => _evenSpreadAngle_Gun = value; }
+
         private float _velocity_Gun;
-        protected BallisticCaliber Caliber;
+        /// <summary>
+        ///     Increases the velocity of the ammo being fired.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float Velocity_Gun { get => _velocity_Gun; set => _velocity_Gun = value; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -61,9 +87,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
             ammo.Spent = true;
             var total_stdev = _spreadStdDev_Gun + ammo.SpreadStdDev_Ammo;
-            var final_spreadangle = _evenSpreadAngle_Gun + ammo.EvenSpreadAngle_Ammo;
+            var final_evenspread = _evenSpreadAngle_Gun + ammo.EvenSpreadAngle_Ammo;
             var final_velocity = _velocity_Gun + ammo.Velocity_Ammo;
-            FireAtCoord(user, clickLocation, ammo.ProjectileID, total_stdev, ammo.ProjectilesFired, final_spreadangle, final_velocity);
+            FireAtCoord(user, clickLocation, ammo.ProjectileID, total_stdev, ammo.ProjectilesFired, final_evenspread, final_velocity);
         }
 
         protected IEntity GetChambered(int chamber) => Chambers[chamber].Slot.ContainedEntity;

@@ -127,24 +127,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return true;
         }
 
-        public bool LoadIntoChamber(int chamber, IEntity bullet)
-        {
-            if (!bullet.TryGetComponent(out AmmoComponent component))
-            {
-                throw new ArgumentException("entity isn't a bullet.", nameof(bullet));
-            }
-            if (component.Caliber != Caliber)
-            {
-                throw new ArgumentException("entity is of the wrong caliber.", nameof(bullet));
-            }
-            if (GetChambered(chamber) != null)
-            {
-                return false;
-            }
-            Chambers[chamber].Slot.Insert(bullet);
-            return true;
-        }
-
         public bool EjectMagazine(bool playSound = true)
         {
             var entity = Magazine;

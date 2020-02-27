@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
@@ -20,6 +21,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     public abstract class SharedProjectileWeaponComponent : Component
     {
         private string _soundGunshot;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string SoundGunshot
+        { get => _soundGunshot; set => _soundGunshot = value; }
 
 #pragma warning disable 649
         [Dependency] private IRobustRandom _spreadRandom;

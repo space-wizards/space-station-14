@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
@@ -11,51 +12,54 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     {
         public override string Name => "BallisticBullet";
 
+        private BallisticCaliber _caliber;
         /// <summary>
         ///     Cartridge calibre, restricts what AmmoWeapons this ammo can be fired from.
         /// </summary>
-        private BallisticCaliber _caliber;
-        public BallisticCaliber Caliber => _caliber;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public BallisticCaliber Caliber { get => _caliber; set => _caliber = value; }
 
+        private string _projectileID;
         /// <summary>
         ///     YAML ID of the projectiles to be created when firing this ammo.
         /// </summary>
-        private string _projectileID;
-        public string ProjectileID => _projectileID;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string ProjectileID { get => _projectileID; set => _projectileID = value; }
 
+        private int _projectilesFired;
         /// <summary>
         ///     How many copies of the projectile are shot.
         /// </summary>
-        private int _projectilesFired;
-        public int ProjectilesFired => _projectilesFired;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int ProjectilesFired { get => _projectilesFired; set => _projectilesFired = value; }
 
+        private float _spreadStdDev_Ammo;
         /// <summary>
         ///     Weapons that fire projectiles from ammo types.
         /// </summary>
-        private float _spreadStdDev_Ammo;
-        public float SpreadStdDev_Ammo => _spreadStdDev_Ammo;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float SpreadStdDev_Ammo { get => _spreadStdDev_Ammo; set => _spreadStdDev_Ammo = value; }
 
+        private float _evenSpreadAngle_Ammo;
         /// <summary>
         ///     Arc angle of shotgun pellet spreads, only used if multiple projectiles are being fired.
         /// </summary>
-        private float _evenSpreadAngle_Ammo;
-        public float EvenSpreadAngle_Ammo => _evenSpreadAngle_Ammo;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float EvenSpreadAngle_Ammo { get => _evenSpreadAngle_Ammo; set => _evenSpreadAngle_Ammo = value; }
 
+        private float _velocity_Ammo;
         /// <summary>
         ///     Adds additional velocity to the projectile, on top of what it already has.
         /// </summary>
-        private float _velocity_Ammo;
-        public float Velocity_Ammo => _velocity_Ammo;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float Velocity_Ammo { get => _velocity_Ammo; set => _velocity_Ammo = value; }
 
+        private bool _spent;
         /// <summary>
         ///     If the ammo cartridge has been shot already.
         /// </summary>
-        private bool _spent;
-        public bool Spent
-        {
-            get => _spent;
-            set => _spent = value;
-        }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Spent { get => _spent; set => _spent = value; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
