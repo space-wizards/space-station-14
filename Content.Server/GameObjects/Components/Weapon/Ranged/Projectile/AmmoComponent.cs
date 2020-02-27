@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     [RegisterComponent]
     public class AmmoComponent : Component
     {
-        public override string Name => "BallisticBullet";
+        public override string Name => "Ammo";
 
         private BallisticCaliber _caliber;
         /// <summary>
