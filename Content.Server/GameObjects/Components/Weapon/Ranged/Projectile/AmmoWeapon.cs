@@ -3,7 +3,7 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables; //todo: add VV view/edit to ammogun properties
+using Robust.Shared.ViewVariables;
 using System;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
