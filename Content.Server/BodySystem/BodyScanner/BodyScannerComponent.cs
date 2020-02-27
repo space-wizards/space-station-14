@@ -52,13 +52,13 @@ namespace Content.Server.BodySystem
             }
             actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent attempt);
             if(attempt != null)
-                _userInterface.SetState(new BodyScannerInterfaceState(attempt.Template, attempt.Parts));
+                _userInterface.SetState(new BodyScannerInterfaceState(attempt.Template, attempt.PartDictionary));
             _userInterface.Open(actor.playerSession);
             //attempt.DisconnectBodyPart("right arm", true);
-            attempt.TryGetLimb("torso", out BodyPart test);
-            Mechanism test2 = test.Mechanisms[0];
-            test.RemoveMechanism(test2, attempt.Owner.Transform.GridPosition);
-            
+
+            //attempt.TryGetLimb("torso", out BodyPart test);
+            //Mechanism test2 = test.Mechanisms[0];
+            //test.RemoveMechanism(test2, attempt.Owner.Transform.GridPosition);
         }
 
     }

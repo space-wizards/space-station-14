@@ -1,0 +1,16 @@
+{
+	"version": 1, 
+	"size": {
+		"x": 32, 
+		"y": 32
+	}, 
+	"states": [
+		{
+			"name": "scalpel", 
+			"directions": 1, 
+			"delays": [
+				[1.0]
+			]
+		}
+	]
+}

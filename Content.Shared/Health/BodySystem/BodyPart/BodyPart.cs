@@ -9,8 +9,6 @@ using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 
-public enum BodyPartCompatibility { Mechanical, Biological, Universal };
-public enum BodyPartType { Other, Torso, Head, Arm, Hand, Leg, Foot };
 
 
 namespace Content.Shared.BodySystem
@@ -27,6 +25,12 @@ namespace Content.Shared.BodySystem
 
         [ViewVariables]
         private List<Mechanism> _mechanisms = new List<Mechanism>();
+
+        [ViewVariables]
+        private ISurgeryData _surgeryData;
+
+        [ViewVariables]
+        private int _sizeUsed = 0;
 
         /// <summary>
         ///     Body part name.
@@ -117,35 +121,37 @@ namespace Content.Shared.BodySystem
         {
             LoadFromPrototype(data);
         }
-        public BodyPart(BodyPart duplicate)
-        {
-
-        }
-
-
 
         /// <summary>
-        ///     Attempts to add a mechanism to this BodyPart. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart)
+        ///     Attempts to perform surgery on this BodyPart with the given tool. Returns false if there was an error, true if successful.
         /// </summary>
-        public bool AddMechanism(Mechanism mechanism)
+        public bool AttemptSurgery(SurgeryToolType toolType)
         {
-            //TODO: Add size shit
+            return _surgeryData.AttemptSurgery(toolType);
+        }
+
+        /// <summary>
+        ///     Attempts to add a Mechanism. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart)
+        /// </summary>
+        public bool InstallMechanism(Mechanism mechanism)
+        {
+            if (_sizeUsed + mechanism.Size > Size)
+                return false; //No space
             _mechanisms.Add(mechanism);
+            _sizeUsed += mechanism.Size;
             return true;
         }
 
         /// <summary>
-        ///     Removes a given mechanism from this BodyPart and places an entity at the location if given a non-null GridCoordinates. 
+        ///     Removes a given Mechanism from this BodyPart. Returns false if there was an error (like the given mechanism not actually being inside this BodyPart).
         /// </summary>
-        public DroppedMechanismComponent RemoveMechanism(Mechanism mechanism, GridCoordinates location)
+        public bool RemoveMechanism(Mechanism mechanism)
         {
             if (!_mechanisms.Contains(mechanism))
-                throw new ArgumentException("The given mechanism " + mechanism.Name + " does not exist within this BodyPart " + Name + "!");
+                return false;
             _mechanisms.Remove(mechanism);
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mechanismEntity = entityManager.SpawnEntity("BaseDroppedMechanism", location);
-            mechanismEntity.GetComponent<DroppedMechanismComponent>().TransferMechanismData(mechanism);
-            return mechanismEntity.GetComponent<DroppedMechanismComponent>();
+            _sizeUsed -= mechanism.Size;
+            return true;
         }
 
 
@@ -171,7 +177,7 @@ namespace Content.Shared.BodySystem
             {
                 if (!prototypeManager.TryIndex(mechanismPrototypeID, out MechanismPrototype mechanismData))
                 {
-                    throw new InvalidOperationException("No MechanismPrototype was found with the name " + mechanismPrototypeID + " while loading a BodyPartprototype!");
+                    throw new InvalidOperationException("No MechanismPrototype was found with the name " + mechanismPrototypeID + " while loading a BodyPartPrototype!");
                 }
                 _mechanisms.Add(new Mechanism(mechanismData));
             }

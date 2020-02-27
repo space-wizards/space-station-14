@@ -27,7 +27,9 @@ namespace Content.Shared.BodySystem {
         [ViewVariables]
         private Mechanism _containedMechanism;
 
-        public void TransferMechanismData(Mechanism data)
+        public Mechanism ContainedMechanism => _containedMechanism;
+
+        public void Initialize(Mechanism data)
         {
             _containedMechanism = data;
             Owner.Name = _containedMechanism.Name;

@@ -1,0 +1,18 @@
+- type: entity
+  name: Scalpel
+  parent: BaseItem
+  id: Scalpel
+  desc: A surgical tool used to make incisions into flesh.
+  components:
+  - type: SurgeryTool
+    surgeryToolClass: incision
+    baseOperateTime: 3
+  - type: Sprite
+    sprite: Objects/Surgery/scalpel.rsi
+    state: scalpel
+  - type: Icon
+    sprite: Objects/Surgery/scalpel.rsi
+    state: scalpel
+
+  - type: ItemCooldown
+  - type: MeleeWeapon
