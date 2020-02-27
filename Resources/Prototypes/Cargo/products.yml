@@ -70,7 +70,9 @@
   name: "Bike Horn"
   id: cargo.bikehorn
   description: HONK!
-  icon: Objects/Fun/bikehorn.rsi
+  icon:
+    sprite: Objects/Fun/bikehorn.rsi
+    state: icon
   product: crate_bikehorn
   cost: 300
   category: Other
@@ -102,7 +104,9 @@
   name: "Medical Scanner"
   id: cargo.medscanner
   description: Scans patients. First we stick this probe...
-  icon: Buildings/medical_scanner.rsi
+  icon:
+    sprite: Buildings/medical_scanner.rsi
+    state: scanner_open
   product: crate_medscanner
   cost: 400
   category: Medical
