@@ -11,6 +11,7 @@
     firerate: 20
   - type: BallisticMagazineWeapon
     caliber: A12g
+    evenspread : 40
     magazines:
     - A12g
     default_magazine: magazine_12g_shotgun

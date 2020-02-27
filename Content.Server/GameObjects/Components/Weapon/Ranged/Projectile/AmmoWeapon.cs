@@ -55,8 +55,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _soundGunEmpty, "sound_empty", "/Audio/Guns/Empty/empty.ogg");
-            serializer.DataField(ref _spreadStdDev_Gun, "spreadstddev", 3);
-            serializer.DataField(ref _evenSpreadAngle_Gun, "evenspread", 20);
+            serializer.DataField(ref _spreadStdDev_Gun, "spreadstddev", 0);
+            serializer.DataField(ref _evenSpreadAngle_Gun, "evenspread", 0);
             serializer.DataField(ref _velocity_Gun, "gunvelocity", 0);
             serializer.DataField(ref Caliber, "caliber", BallisticCaliber.Unspecified);
         }
