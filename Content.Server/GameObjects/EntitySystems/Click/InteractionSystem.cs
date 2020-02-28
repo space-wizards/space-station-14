@@ -292,7 +292,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
 
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt);
+            var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt, true);
 
             return !rayResults.DidHitObject;
         }
