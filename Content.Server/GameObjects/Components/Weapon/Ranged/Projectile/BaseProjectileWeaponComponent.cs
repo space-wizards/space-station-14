@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     /// <summary>
     ///     Methods to shoot projectiles.
     /// </summary>
-    public abstract class SharedProjectileWeaponComponent : Component
+    public abstract class BaseProjectileWeaponComponent : Component
     {
         private string _soundGunshot;
         [ViewVariables(VVAccess.ReadWrite)]

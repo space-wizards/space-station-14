@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     ///      Guns that have a magazine.
     /// </summary>
     [RegisterComponent]
-    public class BallisticMagazineWeaponComponent : AmmoWeaponComponent, IUse, IAttackBy, IMapInit
+    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackBy, IMapInit
     {
         private const float BulletOffset = 0.2f;
 
@@ -56,8 +56,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             Direction.South,
             Direction.West
         };
-
-        protected override int ChamberCount => 1;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -99,10 +97,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             if (!MagazineTypes.Contains(magazinetype.MagazineType))
             {
                 throw new ArgumentException("Wrong magazine type", nameof(magazine));
-            }
-            if (magazinetype.Caliber != Caliber)
-            {
-                throw new ArgumentException("Wrong caliber", nameof(magazine));
             }
             if (!_magazineSlot.Insert(magazine))
             {
@@ -226,7 +220,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 Owner.PopupMessage(eventArgs.User, "Already got a magazine.");
                 return false;
             }
-            if (!MagazineTypes.Contains(component.MagazineType) || component.Caliber != Caliber)
+            if (!MagazineTypes.Contains(component.MagazineType))
             {
                 Owner.PopupMessage(eventArgs.User, "Magazine doesn't fit.");
                 return false;

@@ -11,17 +11,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     /// <summary>
     ///     Handles firing projectiles from a contained <see cref="BallisticBulletComponent" />.
     /// </summary>
-    public abstract class AmmoWeaponComponent : SharedProjectileWeaponComponent
+    public abstract class BallisticWeaponComponent : BaseProjectileWeaponComponent
     {
-        protected Chamber[] Chambers;
-        protected abstract int ChamberCount { get; }
+        private Chamber[] _chambers;
 
-        protected BallisticCaliber Caliber ;
+        /// <summary>
+        ///     Number of chambers created during initialization.
+        /// </summary>
+        private int _chamberCount;
+
+        [ViewVariables]
+        private BallisticCaliber _caliber ;
         /// <summary>
         ///     What type of ammo this gun can fire.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public BallisticCaliber GunCaliber { get => Caliber; set => Caliber = value; }
 
         private string _soundGunEmpty;
         /// <summary>
@@ -30,46 +33,47 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         [ViewVariables(VVAccess.ReadWrite)]
         public string SoundGunEmpty { get => _soundGunEmpty; set => _soundGunEmpty = value; }
 
-        private float _spreadStdDev_Gun;
+        private float _spreadStdDevGun;
         /// <summary>
         ///     Increases the standard deviation of the ammo being fired.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float SpreadStdDev_Gun { get => _spreadStdDev_Gun; set => _spreadStdDev_Gun = value; }
+        public float SpreadStdDevGun { get => _spreadStdDevGun; set => _spreadStdDevGun = value; }
 
-        private float _evenSpreadAngle_Gun;
+        private float _evenSpreadAngleGun;
         /// <summary>
         ///     Increases the evenspread of the ammo being fired.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float EvenSpreadAngle_Gun { get => _evenSpreadAngle_Gun; set => _evenSpreadAngle_Gun = value; }
+        public float EvenSpreadAngleGun { get => _evenSpreadAngleGun; set => _evenSpreadAngleGun = value; }
 
-        private float _velocity_Gun;
+        private float _velocityGun;
         /// <summary>
         ///     Increases the velocity of the ammo being fired.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Velocity_Gun { get => _velocity_Gun; set => _velocity_Gun = value; }
+        public float VelocityGun { get => _velocityGun; set => _velocityGun = value; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _soundGunEmpty, "sound_empty", "/Audio/Guns/Empty/empty.ogg");
-            serializer.DataField(ref _spreadStdDev_Gun, "spreadstddev", 0);
-            serializer.DataField(ref _evenSpreadAngle_Gun, "evenspread", 0);
-            serializer.DataField(ref _velocity_Gun, "gunvelocity", 0);
-            serializer.DataField(ref Caliber, "caliber", BallisticCaliber.Unspecified);
+            serializer.DataField(ref _spreadStdDevGun, "spreadstddev", 0);
+            serializer.DataField(ref _evenSpreadAngleGun, "evenspread", 0);
+            serializer.DataField(ref _velocityGun, "gunvelocity", 0);
+            serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
+            serializer.DataField(ref _chamberCount, "chambers", 1);
         }
 
         public override void Initialize()
         {
             base.Initialize();
             Owner.GetComponent<RangedWeaponComponent>().FireHandler = TryShoot;
-            Chambers = new Chamber[ChamberCount];
-            for (var i = 0; i < Chambers.Length; i++)
+            _chambers = new Chamber[_chamberCount];
+            for (var i = 0; i < _chambers.Length; i++)
             {
                 var container = ContainerManagerComponent.Ensure<ContainerSlot>($"ballistics_chamber_{i}", Owner);
-                Chambers[i] = new Chamber(container);
+                _chambers[i] = new Chamber(container);
             }
         }
 
@@ -80,19 +84,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         {
             var ammo = GetChambered(FirstChamber)?.GetComponent<BallisticBulletComponent>();
             CycleChamberedBullet(FirstChamber);
-            if (ammo == null | ammo?.Spent == true | ammo?.Caliber != Caliber)
+            if (ammo == null || ammo?.Spent == true || ammo?.Caliber != _caliber)
             {
                 PlayEmptySound();
                 return;
             }
             ammo.Spent = true;
-            var total_stdev = _spreadStdDev_Gun + ammo.SpreadStdDev_Ammo;
-            var final_evenspread = _evenSpreadAngle_Gun + ammo.EvenSpreadAngle_Ammo;
-            var final_velocity = _velocity_Gun + ammo.Velocity_Ammo;
+            var total_stdev = _spreadStdDevGun + ammo.SpreadStdDev_Ammo;
+            var final_evenspread = _evenSpreadAngleGun + ammo.EvenSpreadAngle_Ammo;
+            var final_velocity = _velocityGun + ammo.Velocity_Ammo;
             FireAtCoord(user, clickLocation, ammo.ProjectileID, total_stdev, ammo.ProjectilesFired, final_evenspread, final_velocity);
         }
 
-        protected IEntity GetChambered(int chamber) => Chambers[chamber].Slot.ContainedEntity;
+        protected IEntity GetChambered(int chamber) => _chambers[chamber].Slot.ContainedEntity;
 
         /// <summary>
         ///     Loads the next ammo casing into the chamber.
@@ -101,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         public IEntity RemoveFromChamber(int chamber)
         {
-            var c = Chambers[chamber];
+            var c = _chambers[chamber];
             var loaded = c.Slot.ContainedEntity;
             if (loaded != null)
             {
@@ -116,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             {
                 throw new ArgumentException("entity isn't a bullet.", nameof(bullet));
             }
-            if (component.Caliber != Caliber)
+            if (component.Caliber != _caliber)
             {
                 throw new ArgumentException("entity is of the wrong caliber.", nameof(bullet));
             }
@@ -124,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             {
                 return false;
             }
-            Chambers[chamber].Slot.Insert(bullet);
+            _chambers[chamber].Slot.Insert(bullet);
             return true;
         }
 
