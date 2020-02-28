@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects
             var itemPos = Owner.Transform.WorldPosition;
 
             return _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .InRangeUnobstructed(userPos, itemPos, ignoredEnt: Owner);
+                .InRangeUnobstructed(userPos, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
         }
 
         public bool AttackHand(AttackHandEventArgs eventArgs)

@@ -279,9 +279,10 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="collisionMask">the mask to check for collisions</param>
         /// <param name="ignoredEnt">the entity to be ignored when checking for collisions.</param>
         /// <param name="mapManager">Map manager containing the two GridIds.</param>
+        /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
         /// <returns>True if the two points are within a given range without being obstructed.</returns>
         public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,
-            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null)
+            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null, bool insideBlockerValid = false)
         {
             var dir = otherCoords - coords.Position;
 
@@ -294,7 +295,9 @@ namespace Content.Server.GameObjects.EntitySystems
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
             var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt, true);
 
-            return !rayResults.DidHitObject;
+
+
+            return !rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && rayResults.Distance < 1f);
         }
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
