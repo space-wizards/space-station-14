@@ -124,119 +124,119 @@
   name: Flashlight Crate (x5)
   parent: crate_generic
   components:
-    - type: StorageFill
-      contents:
-        - Flashlight
-        - Flashlight
-        - Flashlight
-        - Flashlight
-        - Flashlight
+  - type: StorageFill
+    contents:
+      - FlashlightLantern
+      - FlashlightLantern
+      - FlashlightLantern
+      - FlashlightLantern
+      - FlashlightLantern
 
 - type: entity
   id: crate_light_bulb
   name: Light Bulb Crate (x10)
   parent: crate_generic
   components:
-    - type: StorageFill
-      contents:
-        - Light Bulb
-        - Light Bulb
-        - Light Bulb
-        - Light Bulb
-        - Light Bulb
-        - Light Bulb
-        - Light Bulb
-        - Light Bulb
-        - Light Bulb
-        - Light Bulb
+  - type: StorageFill
+    contents:
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
 
 - type: entity
   id: crate_fire_extinguisher
   name: Fire Extinguisher Crate (x3)
   parent: crate_generic
   components:
-    - type: StorageFill
-      contents:
-        - Fire Extinguisher
-        - Fire Extinguisher
-        - Fire Extinguisher
+  - type: StorageFill
+    contents:
+      - fire_extinguisher
+      - fire_extinguisher
+      - fire_extinguisher
 
 - type: entity
   id: crate_pen
   name: Pen Crate (x10)
   parent: crate_generic
   components:
-    - type: StorageFill
-      contents:
-        - Pen
-        - Pen
-        - Pen
-        - Pen
-        - Pen
-        - Pen
-        - Pen
-        - Pen
-        - Pen
-        - Pen
+  - type: StorageFill
+    contents:
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
 
 - type: entity
   id: crate_bikehorn
   name: Bike Horn Crate (x5)
   parent: crate_generic
   components:
-    - type: StorageFill
-      contents:
-        - Bike Horn
-        - Bike Horn
-        - Bike Horn
-        - Bike Horn
-        - Bike Horn
+  - type: StorageFill
+    contents:
+      - BikeHorn
+      - BikeHorn
+      - BikeHorn
+      - BikeHorn
+      - BikeHorn
 
 - type: entity
   id: crate_cleaver
   name: Cleaver Crate (x5)
   parent: crate_generic
   components:
-    - type: StorageFill
-      contents:
-        - Cleaver
-        - Cleaver
-        - Cleaver
-        - Cleaver
-        - Cleaver
+  - type: StorageFill
+    contents:
+      - ButchCleaver
+      - ButchCleaver
+      - ButchCleaver
+      - ButchCleaver
+      - ButchCleaver
 
 - type: entity
   id: crate_fueltank
   name: Fuel Tank
   parent: crate_generic
   components:
-    - type: StorageFill
-      contents:
-        - Fuel Tank
+  - type: StorageFill
+    contents:
+      - weldtank
 
 - type: entity
   id: crate_medscanner
   name: Medical Scanner
   parent: crate_generic
   components:
-    - type: StorageFill
-      contents:
-        - Medical Scanner
+  - type: StorageFill
+    contents:
+      - medical_scanner
 
 - type: entity
   id: crate_glass
   name: Glass Sheet Crate (x50)
   parent: crate_generic
   components:
-    - type: StorageFill
-      contents:
-        - GlassStack
+  - type: StorageFill
+    contents:
+      - GlassStack
 
 - type: entity
   id: crate_cable
   name: Cable Coil Crate (x50)
   parent: crate_generic
   components:
-    - type: StorageFill
-      contents:
-        - CableStack
+  - type: StorageFill
+    contents:
+      - CableStack
