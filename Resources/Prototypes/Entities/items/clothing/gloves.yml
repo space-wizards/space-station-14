@@ -169,32 +169,6 @@
 
 - type: entity
   parent: GlovesBase
-  id: GlovesChalAppara1
-  name: Chal Appara 1 gloves
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Gloves/chal_appara_1.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/chal_appara_1.rsi
-  - type: Clothing
-    sprite: Clothing/Gloves/chal_appara_1.rsi
-
-- type: entity
-  parent: GlovesBase
-  id: GlovesChalAppara12
-  name: Chal Appara 12 gloves
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Gloves/chal_appara_12.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/chal_appara_12.rsi
-  - type: Clothing
-    sprite: Clothing/Gloves/chal_appara_12.rsi
-
-- type: entity
-  parent: GlovesBase
   id: GlovesEngineeringRig
   name: Engineering Rig gloves
   description: ''
