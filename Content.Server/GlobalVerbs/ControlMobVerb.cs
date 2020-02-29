@@ -40,9 +40,6 @@ namespace Content.Server.GlobalVerbs
             var userMind = user.GetComponent<IActorComponent>().playerSession.ContentData().Mind;
             var targetMind = target.GetComponent<MindComponent>();
 
-            if(userMind.IsVisitingEntity)
-                userMind.UnVisit();
-
             targetMind.Mind?.TransferTo(null);
             userMind.TransferTo(target);
         }
