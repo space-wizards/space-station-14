@@ -194,10 +194,12 @@ entities:
     pos: -2.67511,-10.351
     rot: -1.5707963267949 rad
     type: Transform
-  - shapes:
+  - type: Collidable
+    shapes:
     - !type:PhysShapeAabb
-      bounds: -0.15,-0.3,0.2,0.3
-    type: Collidable
+      bounds: "-0.15,-0.3,0.2,0.3"
+      mask: 26
+      layer: 32
 - uid: 8
   type: PowerCellSmallHigh
   components:
@@ -205,10 +207,12 @@ entities:
     pos: -2.55011,-10.6635
     rot: -1.5707963267949 rad
     type: Transform
-  - shapes:
+  - type: Collidable
+    shapes:
     - !type:PhysShapeAabb
-      bounds: -0.15,-0.3,0.2,0.3
-    type: Collidable
+      bounds: "-0.15,-0.3,0.2,0.3"
+      mask: 26
+      layer: 32
 - uid: 9
   type: OuterclothingVest
   components:
