@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components
             {
                 if (entity.TryGetComponent(out DamageableComponent damage))
                 {
-                    damage.TakeDamage(DamageType.Brute, 10);
+                    damage.TakeDamage(DamageType.Brute, 10, Owner, User);
                 }
             }
 

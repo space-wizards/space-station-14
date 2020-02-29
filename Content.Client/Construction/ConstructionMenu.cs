@@ -91,14 +91,14 @@ namespace Content.Client.Construction
             BuildButton = new Button
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 Text = "Build!",
                 Disabled = true,
                 ToggleMode = false
             };
             EraseButton = new Button
             {
-                TextAlign = Button.AlignMode.Center, Text = "Clear Ghosts", ToggleMode = true
+                TextAlign = Label.AlignMode.Center, Text = "Clear Ghosts", ToggleMode = true
             };
             buttonsContainer.AddChild(BuildButton);
             buttonsContainer.AddChild(EraseButton);

@@ -17,7 +17,7 @@
   - type: PointLight
     radius: 8
     energy: 1.2
-    #offset: "0, -16"
+    offset: "0.5, 0"
     color: "#DCDCC6"
 
   placement:
@@ -67,6 +67,7 @@
   - type: PointLight
     energy: 1.0
     enabled: false
+    offset: "-0.5, 0"
 
   - type: PowerDevice
     priority: Low

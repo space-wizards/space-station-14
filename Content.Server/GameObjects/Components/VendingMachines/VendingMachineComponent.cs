@@ -166,8 +166,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
             Timer.Spawn(_animationDuration, () =>
             {
-                TrySetVisualState(VendingMachineVisualState.Normal);
                 _ejecting = false;
+                TrySetVisualState(VendingMachineVisualState.Normal);
                 Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPosition);
             });
         }

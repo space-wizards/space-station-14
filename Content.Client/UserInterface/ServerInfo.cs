@@ -13,7 +13,7 @@ namespace Content.Client.UserInterface
 
         private readonly RichTextLabel _richTextLabel;
 
-        public ServerInfo(ILocalizationManager localization)
+        public ServerInfo()
         {
             _richTextLabel = new RichTextLabel
             {
@@ -26,10 +26,10 @@ namespace Content.Client.UserInterface
 
             var uriOpener = IoCManager.Resolve<IUriOpener>();
 
-            var discordButton = new Button {Text = localization.GetString("Join us on Discord!")};
+            var discordButton = new Button {Text = Loc.GetString("Join us on Discord!")};
             discordButton.OnPressed += args => uriOpener.OpenUri(DiscordUrl);
 
-            var websiteButton = new Button {Text = localization.GetString("Website")};
+            var websiteButton = new Button {Text = Loc.GetString("Website")};
             websiteButton.OnPressed += args => uriOpener.OpenUri(WebsiteUrl);
 
             buttons.AddChild(discordButton);

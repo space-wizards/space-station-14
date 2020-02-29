@@ -56,7 +56,7 @@ namespace Content.Client.Instruments
             midiInputButton = new Button()
             {
                 Text = "MIDI Input",
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
                 ToggleMode = true,
@@ -74,7 +74,7 @@ namespace Content.Client.Instruments
             var midiFileButton = new Button()
             {
                 Text = "Open File",
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
             };
@@ -92,7 +92,7 @@ namespace Content.Client.Instruments
             midiLoopButton = new Button()
             {
                 Text = "Loop",
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
                 ToggleMode = true,
@@ -111,7 +111,7 @@ namespace Content.Client.Instruments
             midiStopButton = new Button()
             {
                 Text = "Stop",
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
                 Disabled = !_owner.Instrument.IsMidiOpen,

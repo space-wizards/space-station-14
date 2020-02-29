@@ -106,7 +106,7 @@ entities:
       grid: 0
     type: Collidable
 - uid: 1
-  type: LaserItem
+  type: LaserGun
   components:
   - parent: 0
     pos: -1.47174,4.550247
@@ -121,7 +121,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 2
-  type: LaserItem
+  type: LaserGun
   components:
   - parent: 0
     pos: -0.6748645,4.487747
@@ -3177,7 +3177,7 @@ entities:
       bounds: -0.25,-0.25,0.25,0.25
     type: Collidable
 - uid: 269
-  type: smg_c20r
+  type: SmgC20r
   components:
   - parent: 0
     pos: -2.524035,7.579326
@@ -3201,7 +3201,7 @@ entities:
     - A10mmSMG
     type: BallisticMagazineWeapon
 - uid: 270
-  type: smg_c20r
+  type: SmgC20r
   components:
   - parent: 0
     pos: -1.94591,7.485576

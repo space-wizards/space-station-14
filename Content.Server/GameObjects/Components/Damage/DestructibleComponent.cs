@@ -91,10 +91,11 @@ namespace Content.Server.GameObjects.Components.Destructible
                     _actSystem.HandleDestruction(Owner, false);
                     break;
                 case ExplosionSeverity.Heavy:
-                    _actSystem.HandleDestruction(Owner, true);
+                    var spawnWreckOnHeavy = prob.Prob(0.5f);
+                    _actSystem.HandleDestruction(Owner, spawnWreckOnHeavy);
                     break;
                 case ExplosionSeverity.Light:
-                    if (prob.Prob(40))
+                    if (prob.Prob(0.4f))
                         _actSystem.HandleDestruction(Owner, true);
                     break;
             }

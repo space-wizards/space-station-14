@@ -1,0 +1,10 @@
+- type: entity
+  id: pellet_12g
+  name: 12g Pellet
+  parent: bullet_base
+  description: If you can see this you're dead!
+  components:
+  - type: Projectile
+    velocity: 20
+    damages:
+      Brute: 10

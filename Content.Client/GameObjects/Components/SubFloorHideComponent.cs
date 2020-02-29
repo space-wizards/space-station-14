@@ -1,6 +1,7 @@
 ﻿using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -32,7 +33,7 @@ namespace Content.Client.GameObjects.Components
             base.Startup();
 
             _snapGridComponent.OnPositionChanged += SnapGridOnPositionChanged;
-            Owner.EntityManager.EventBus.RaiseEvent(Owner, new SubFloorHideDirtyEvent());
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SubFloorHideDirtyEvent(Owner));
         }
 
         /// <inheritdoc />
@@ -44,14 +45,22 @@ namespace Content.Client.GameObjects.Components
                 return;
 
             _snapGridComponent.OnPositionChanged -= SnapGridOnPositionChanged;
-            Owner.EntityManager.EventBus.RaiseEvent(Owner, new SubFloorHideDirtyEvent());
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SubFloorHideDirtyEvent(Owner));
         }
 
         private void SnapGridOnPositionChanged()
         {
-            Owner.EntityManager.EventBus.RaiseEvent(Owner, new SubFloorHideDirtyEvent());
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new SubFloorHideDirtyEvent(Owner));
         }
     }
 
-    internal sealed class SubFloorHideDirtyEvent : EntitySystemMessage { }
+    internal sealed class SubFloorHideDirtyEvent : EntitySystemMessage
+    {
+        public IEntity Sender { get; }
+
+        public SubFloorHideDirtyEvent(IEntity sender)
+        {
+            Sender = sender;
+        }
+    }
 }
