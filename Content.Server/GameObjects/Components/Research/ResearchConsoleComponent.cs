@@ -51,6 +51,12 @@ namespace Content.Server.GameObjects.Components.Research
                 return;
             }
 
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
+            {
+                return;
+            }
+
             if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)) return;
 
             switch (message.Message)

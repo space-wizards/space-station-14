@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.Components
         [Dependency] private readonly IRobustRandom _random;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
         private AudioSystem _audioSystem;
         private AppearanceComponent _appearance;
@@ -225,6 +226,12 @@ namespace Content.Server.GameObjects.Components
         {
             var playerEntity = serverMsg.Session.AttachedEntity;
             if (playerEntity == null || !ActionBlockerSystem.CanInteract(playerEntity))
+            {
+                return;
+            }
+
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: true))
             {
                 return;
             }

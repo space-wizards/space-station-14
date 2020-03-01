@@ -8,12 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Robust.Shared.Map;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -24,6 +19,7 @@ namespace Content.Server.GameObjects.Components.Cargo
 #pragma warning disable 649
         [Dependency] private readonly IGalacticBankManager _galacticBankManager;
         [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         [ViewVariables]
@@ -65,6 +61,12 @@ namespace Content.Server.GameObjects.Components.Cargo
         {
             var playerEntity = serverMsg.Session.AttachedEntity;
             if (playerEntity == null || !ActionBlockerSystem.CanInteract(playerEntity))
+            {
+                return;
+            }
+
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
             {
                 return;
             }

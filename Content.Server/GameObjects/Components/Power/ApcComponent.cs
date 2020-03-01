@@ -6,6 +6,8 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -16,6 +18,10 @@ namespace Content.Server.GameObjects.Components.Power
         PowerStorageComponent Storage;
         AppearanceComponent Appearance;
         private PowerProviderComponent _provider;
+
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
 
         ApcChargeState LastChargeState;
         private float _lastCharge = 0f;
@@ -37,6 +43,12 @@ namespace Content.Server.GameObjects.Components.Power
         {
             var playerEntity = serverMsg.Session.AttachedEntity;
             if (playerEntity == null || !ActionBlockerSystem.CanInteract(playerEntity))
+            {
+                return;
+            }
+
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: true))
             {
                 return;
             }

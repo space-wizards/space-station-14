@@ -34,6 +34,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         [ViewVariables] private BoundUserInterface _userInterface;
@@ -159,7 +160,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             //Check if player can interact in their current state
             if (!ActionBlockerSystem.CanInteract(playerEntity))
                 return false;
-
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
+            {
+                return false; ;
+            }
             return true;
         }
 

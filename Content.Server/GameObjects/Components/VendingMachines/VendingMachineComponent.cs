@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -27,6 +28,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
     {
 #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
         private AppearanceComponent _appearance;
         private BoundUserInterface _userInterface;
@@ -123,6 +125,12 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         {
             var playerEntity = serverMsg.Session.AttachedEntity;
             if (playerEntity == null || !ActionBlockerSystem.CanInteract(playerEntity))
+            {
+                return;
+            }
+
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: true))
             {
                 return;
             }

@@ -84,6 +84,12 @@ namespace Content.Server.GameObjects.Components.Research
                 return;
             }
 
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
+            {
+                return;
+            }
+
             switch (msg.Message)
             {
                 case ResearchClientSyncMessage _:

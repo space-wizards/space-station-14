@@ -12,9 +12,10 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.IoC;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Research
 {
@@ -25,6 +26,9 @@ namespace Content.Server.GameObjects.Components.Research
         public const int VolumePerSheet = 3750;
 
         private BoundUserInterface _userInterface;
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
 
         [ViewVariables]
         public Queue<LatheRecipePrototype> Queue { get; } = new Queue<LatheRecipePrototype>();
@@ -48,6 +52,12 @@ namespace Content.Server.GameObjects.Components.Research
         {
             var playerEntity = message.Session.AttachedEntity;
             if (playerEntity == null || !ActionBlockerSystem.CanInteract(playerEntity))
+            {
+                return;
+            }
+
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
             {
                 return;
             }
