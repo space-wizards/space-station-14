@@ -111,6 +111,8 @@ namespace Content.Server.GameObjects
                 return "Pick Up";
             }
 
+            protected override string GetCategory(IEntity user, ItemComponent component) => "";
+
             protected override VerbVisibility GetVisibility(IEntity user, ItemComponent component)
             {
                 if (ContainerHelpers.IsInContainer(component.Owner) || !component.CanPickup(user))

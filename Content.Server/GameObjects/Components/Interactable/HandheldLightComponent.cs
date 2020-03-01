@@ -255,6 +255,8 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return component.Cell == null ? "Eject cell (cell missing)" : "Eject cell";
             }
 
+            protected override string GetCategory(IEntity user, HandheldLightComponent component) => "";
+
             protected override VerbVisibility GetVisibility(IEntity user, HandheldLightComponent component)
             {
                 return component.Cell == null ? VerbVisibility.Disabled : VerbVisibility.Visible;

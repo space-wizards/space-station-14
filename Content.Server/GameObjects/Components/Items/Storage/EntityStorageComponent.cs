@@ -323,6 +323,8 @@ namespace Content.Server.GameObjects.Components
                 return component._locked ? "Unlock" : "Lock";
             }
 
+            protected override string GetCategory(IEntity user, EntityStorageComponent component) => "";
+
             /// <inheritdoc />
             protected override VerbVisibility GetVisibility(IEntity user, EntityStorageComponent component)
             {
@@ -344,6 +346,8 @@ namespace Content.Server.GameObjects.Components
             {
                 return component.Open ? "Close" : "Open";
             }
+
+            protected override string GetCategory(IEntity user, EntityStorageComponent component) => "";
 
             /// <inheritdoc />
             protected override VerbVisibility GetVisibility(IEntity user, EntityStorageComponent component)

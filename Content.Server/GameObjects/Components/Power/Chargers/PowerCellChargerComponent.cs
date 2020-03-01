@@ -67,6 +67,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
                 return $"Insert {handsComponent.GetActiveHand.Owner.Name}";
             }
 
+            protected override string GetCategory(IEntity user, PowerCellChargerComponent component) => "";
+
             protected override VerbVisibility GetVisibility(IEntity user, PowerCellChargerComponent component)
             {
                 if (!user.TryGetComponent(out HandsComponent handsComponent))
@@ -110,6 +112,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
                 }
                 return $"Eject {component._container.ContainedEntity.Name}";
             }
+
+            protected override string GetCategory(IEntity user, PowerCellChargerComponent component) => "";
 
             protected override VerbVisibility GetVisibility(IEntity user, PowerCellChargerComponent component)
             {

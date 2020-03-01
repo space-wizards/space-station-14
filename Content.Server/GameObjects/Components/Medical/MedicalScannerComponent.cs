@@ -121,6 +121,8 @@ namespace Content.Server.GameObjects.Components.Medical
                 return "Enter";
             }
 
+            protected override string GetCategory(IEntity user, MedicalScannerComponent component) => "";
+
             protected override VerbVisibility GetVisibility(IEntity user, MedicalScannerComponent component)
             {
                 return component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
@@ -139,6 +141,8 @@ namespace Content.Server.GameObjects.Components.Medical
             {
                 return "Eject";
             }
+
+            protected override string GetCategory(IEntity user, MedicalScannerComponent component) => "";
 
             protected override VerbVisibility GetVisibility(IEntity user, MedicalScannerComponent component)
             {
