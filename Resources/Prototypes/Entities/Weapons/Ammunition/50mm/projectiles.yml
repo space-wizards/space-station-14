@@ -1,50 +1,50 @@
 - type: entity
-  id: bullet_65mm
-  name: 6.5mm Bullet
+  id: bullet_50
+  name: .50 cal Bullet
   parent: bullet_base
   abstract: true
   components:
   - type: Projectile
     velocity: 20
     damages:
-      Brute: 18
+      Brute: 50
 
 - type: entity
-  id: bullet_65mmf
-  name: 6.5mm Bullet (Flash)
+  id: bullet_50f
+  name: .50 cal Bullet (Flash)
   parent: bullet_basef
   abstract: true
   components:
   - type: Projectile
     velocity: 20
     damages:
-      Brute: 18
+      Brute: 50
 
 - type: entity
-  id: bullet_65mmhv
-  name: 6.5mm Bullet (High-Velocity)
+  id: bullet_50hv
+  name: .50 cal Bullet (High-Velocity)
   parent: bullet_basehv
   abstract: true
   components:
   - type: Projectile
     velocity: 30
     damages:
-      Brute: 22
+      Brute: 60
 
 - type: entity
-  id: bullet_65mml
-  name: 6.5mm Bullet (L)
+  id: bullet_50l
+  name: .50 cal Bullet (L)
   parent: bullet_basel
   abstract: true
   components:
   - type: Projectile
     velocity: 20
     damages:
-      Brute: 18
+      Brute: 50
 
 - type: entity
-  id: bullet_65mmp
-  name: 6.5mm Bullet (Practice)
+  id: bullet_50p
+  name: .50 cal Bullet (Practice)
   parent: bullet_basep
   abstract: true
   components:
@@ -54,12 +54,12 @@
       Brute: 0
 
 - type: entity
-  id: bullet_65mmr
-  name: 6.5mm Bullet (Rubber)
+  id: bullet_50r
+  name: .50 cal Bullet (Rubber)
   parent: bullet_baser
   abstract: true
   components:
   - type: Projectile
     velocity: 20
     damages:
-      Brute: 3
+      Brute: 7
