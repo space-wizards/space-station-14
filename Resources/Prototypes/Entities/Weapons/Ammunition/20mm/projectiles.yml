@@ -2,7 +2,7 @@
   id: bullet_20mm
   name: 20mm Bullet
   parent: bullet_base
-  description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 20
