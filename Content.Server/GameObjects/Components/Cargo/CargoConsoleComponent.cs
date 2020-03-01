@@ -63,6 +63,12 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            var playerEntity = serverMsg.Session.AttachedEntity;
+            if (playerEntity == null || !ActionBlockerSystem.CanInteract(playerEntity))
+            {
+                return;
+            }
+
             var message = serverMsg.Message;
             if (!Orders.ConnectedToDatabase)
                 return;

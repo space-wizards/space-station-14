@@ -46,6 +46,12 @@ namespace Content.Server.GameObjects.Components.Research
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
+            var playerEntity = message.Session.AttachedEntity;
+            if (playerEntity == null || !ActionBlockerSystem.CanInteract(playerEntity))
+            {
+                return;
+            }
+
             switch (message.Message)
             {
                 case LatheQueueRecipeMessage msg:

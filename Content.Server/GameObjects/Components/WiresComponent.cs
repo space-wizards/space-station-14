@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable.Tools;
@@ -223,6 +223,12 @@ namespace Content.Server.GameObjects.Components
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            var playerEntity = serverMsg.Session.AttachedEntity;
+            if (playerEntity == null || !ActionBlockerSystem.CanInteract(playerEntity))
+            {
+                return;
+            }
+
             var message = serverMsg.Message;
             switch (message)
             {

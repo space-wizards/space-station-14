@@ -157,7 +157,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (playerEntity == null) 
                 return false;
             //Check if player can interact in their current state
-            if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
+            if (!ActionBlockerSystem.CanInteract(playerEntity))
                 return false;
 
             return true;

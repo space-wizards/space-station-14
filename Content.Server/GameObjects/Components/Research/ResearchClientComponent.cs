@@ -78,6 +78,12 @@ namespace Content.Server.GameObjects.Components.Research
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage msg)
         {
+            var playerEntity = msg.Session.AttachedEntity;
+            if (playerEntity == null || !ActionBlockerSystem.CanInteract(playerEntity))
+            {
+                return;
+            }
+
             switch (msg.Message)
             {
                 case ResearchClientSyncMessage _:

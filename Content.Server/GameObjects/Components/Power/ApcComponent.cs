@@ -35,6 +35,12 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            var playerEntity = serverMsg.Session.AttachedEntity;
+            if (playerEntity == null || !ActionBlockerSystem.CanInteract(playerEntity))
+            {
+                return;
+            }
+
             var obj = serverMsg.Message;
             if (obj is ApcToggleMainBreakerMessage)
             {
