@@ -162,7 +162,9 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public void EjectBody()
         {
-            _bodyContainer.Remove(_bodyContainer.ContainedEntity, _ejectOffset);
+            var containedEntity = _bodyContainer.ContainedEntity;
+            _bodyContainer.Remove(containedEntity);
+            containedEntity.Transform.WorldPosition += _ejectOffset;
             UpdateUserInterface();
             UpdateAppearance();
         }
