@@ -31,9 +31,10 @@ namespace Content.Server.GameObjects.Components.Construction
 
         SpriteComponent Sprite;
         ITransformComponent Transform;
-        #pragma warning disable 649
+#pragma warning disable 649
         [Dependency] private IRobustRandom _random;
-        #pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
 
         public override void Initialize()
         {
@@ -46,6 +47,13 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            var playerEntity = eventArgs.User;
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: true))
+            {
+                return false;
+            }
+
             var stage = Prototype.Stages[Stage];
 
             if (TryProcessStep(stage.Forward, eventArgs.AttackWith))
