@@ -853,7 +853,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var item = hands.GetActiveHand?.Owner;
 
             // TODO: If item is null we need some kinda unarmed combat.
-            if (!ActionBlockerSystem.CanInteract(player) || item == null)
+            if (!ActionBlockerSystem.CanAttack(player) || item == null)
             {
                 return;
             }

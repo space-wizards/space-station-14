@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
         private bool UserCanFire(IEntity user)
         {
-            return UserCanFireHandler == null || UserCanFireHandler(user);
+            return (UserCanFireHandler == null || UserCanFireHandler(user)) && ActionBlockerSystem.CanAttack(user);
         }
 
         private void Fire(IEntity user, GridCoordinates clickLocation)
