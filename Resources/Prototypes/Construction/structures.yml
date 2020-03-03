@@ -38,7 +38,7 @@
   name: Window
   id: window
   category: Structures
-  description: Like a wall, but opaque!
+  description: Clear.
   icon:
     sprite: Buildings/window.rsi
     state: full
@@ -76,7 +76,7 @@
   name: Rein Window
   id: rwindow
   category: Structures
-  description: A much stronger window, but still opaque.
+  description: Clear but tough.
   icon:
     sprite: Buildings/rwindow.rsi
     state: full
