@@ -81,7 +81,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Rifles/black-AK.rsi
+    sprite: Objects/Guns/Rifles/black-ak.rsi
 
 - type: entity
   name: Carbine
