@@ -1,0 +1,56 @@
+using System.Threading;
+using Content.Server.Players;
+using Content.Shared.Observer;
+using Robust.Server.GameObjects;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Log;
+using Robust.Shared.ViewVariables;
+using Timer = Robust.Shared.Timers.Timer;
+
+
+namespace Content.Server.Observer
+{
+    [RegisterComponent]
+    public class GhostComponent : SharedGhostComponent
+    {
+        private bool _canReturnToBody = true;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override bool CanReturnToBody
+        {
+            get => _canReturnToBody;
+            set
+            {
+                _canReturnToBody = value;
+                Dirty();
+            }
+        }
+
+        public override ComponentState GetComponentState() => new GhostComponentState(CanReturnToBody);
+
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
+            IComponent component = null)
+        {
+            base.HandleMessage(message, netChannel, component);
+
+            switch (message)
+            {
+                case ReturnToBodyComponentMessage reenter:
+                    if (!Owner.TryGetComponent(out IActorComponent actor) || !CanReturnToBody) break;
+                    if (netChannel == null || netChannel == actor.playerSession.ConnectedClient)
+                    {
+                        actor.playerSession.ContentData().Mind.UnVisit();
+                    }
+                    break;
+                case PlayerDetachedMsg _:
+                    Timer.Spawn(100, Owner.Delete);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+}

@@ -5,6 +5,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Observer
 {
@@ -12,6 +14,14 @@ namespace Content.Client.Observer
     public class GhostComponent : SharedGhostComponent
     {
         private GhostGui _gui;
+        private bool _canReturnToBody = true;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public override bool CanReturnToBody
+        {
+            get => _canReturnToBody;
+            set {}
+        }
 
 #pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud;
@@ -34,7 +44,7 @@ namespace Content.Client.Observer
                 case PlayerAttachedMsg _:
                     if (_gui == null)
                     {
-                        _gui = new GhostGui();
+                        _gui = new GhostGui(this);
                     }
                     else
                     {
@@ -48,6 +58,19 @@ namespace Content.Client.Observer
                     _gui.Parent?.RemoveChild(_gui);
                     break;
             }
+        }
+
+        public void SendReturnToBodyMessage() => SendNetworkMessage(new ReturnToBodyComponentMessage());
+
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+
+            if (!(curState is GhostComponentState state)) return;
+
+            _canReturnToBody = state.CanReturnToBody;
+            if (_gui == null) return;
+            _gui.ReturnToBody.Disabled = !_canReturnToBody;
         }
     }
 }
