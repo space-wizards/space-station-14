@@ -101,7 +101,7 @@ namespace Content.Shared.GameObjects
         }
 
         /// <inheritdoc />
-        public override string GetCategory(IEntity user, IComponent component)
+        public sealed override string GetCategory(IEntity user, IComponent component)
         {
             return GetCategory(user, (T) component);
         }
