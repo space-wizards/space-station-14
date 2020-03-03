@@ -3,6 +3,7 @@ using System.Threading;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Research;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timers;
@@ -19,6 +20,10 @@ namespace Content.Server.GameObjects.Components.Research
         public static int ServerCount = 0;
 
         public override string Name => "ResearchServer";
+
+#pragma warning disable 649
+        [Dependency] private IPauseManager _pauseManager;
+#pragma warning restore 649
 
         [ViewVariables(VVAccess.ReadWrite)] public string ServerName => _serverName;
 
@@ -169,7 +174,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         private void OnResearchPointGet()
         {
-            if (!CanRun) return;
+            if (!CanRun || _pauseManager.IsEntityPaused(Owner)) return;
             _points += PointsPerSecond;
         }
     }
