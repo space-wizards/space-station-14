@@ -3,14 +3,18 @@ using Content.Server.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timers;
+using Robust.Shared.IoC;
+using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     public class ResearchSystem : EntitySystem
     {
-        public const float ResearchConsoleUIUpdateTime = 30f;
+        public const int ResearchConsoleUIUpdateTimeMs = 30000;
 
-        private float _timer = ResearchConsoleUIUpdateTime;
+        private Timer _timer;
+
         private readonly List<ResearchServerComponent> _servers = new List<ResearchServerComponent>();
         private readonly IEntityQuery ConsoleQuery;
         public IReadOnlyList<ResearchServerComponent> Servers => _servers;
@@ -18,6 +22,8 @@ namespace Content.Server.GameObjects.EntitySystems
         public ResearchSystem()
         {
             ConsoleQuery = new TypeEntityQuery(typeof(ResearchConsoleComponent));
+            _timer = new Timer(ResearchConsoleUIUpdateTimeMs, true, OnConsoleUIUpdate);
+            IoCManager.Resolve<ITimerManager>().AddTimer(_timer);
         }
 
         public bool RegisterServer(ResearchServerComponent server)
@@ -66,23 +72,11 @@ namespace Content.Server.GameObjects.EntitySystems
             return list;
         }
 
-        public override void Update(float frameTime)
+        private void OnConsoleUIUpdate()
         {
-            _timer += frameTime;
-
-            foreach (var server in _servers)
+            foreach (var console in EntityManager.GetEntities(ConsoleQuery))
             {
-                server.Update(frameTime);
-            }
-
-            if (_timer >= ResearchConsoleUIUpdateTime)
-            {
-                foreach (var console in EntityManager.GetEntities(ConsoleQuery))
-                {
-                    console.GetComponent<ResearchConsoleComponent>().UpdateUserInterface();
-                }
-
-                _timer = 0f;
+                console.GetComponent<ResearchConsoleComponent>().UpdateUserInterface();
             }
         }
     }

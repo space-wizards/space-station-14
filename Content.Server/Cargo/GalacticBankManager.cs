@@ -2,22 +2,38 @@
 using Robust.Shared.Timing;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using Robust.Shared.Interfaces.Timers;
+using Robust.Shared.IoC;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.Cargo
 {
     public class GalacticBankManager : IGalacticBankManager
     {
-        private readonly float DELAY = 10f;
-        private readonly int POINT_INCREASE = 10;
+        private const int Delay = 10000;
+        private const int PointIncrease = 10;
 
         private int _index = 0;
-        private float _timer = 10f;
+        private Timer _timer;
+        private CancellationTokenSource _timerCancellation = new CancellationTokenSource();
         private readonly Dictionary<int, CargoBankAccount> _accounts = new Dictionary<int, CargoBankAccount>();
         private readonly List<CargoConsoleComponent> _components = new List<CargoConsoleComponent>();
 
         public GalacticBankManager()
         {
             CreateBankAccount("Orbital Monitor IV Station", 100000);
+            _timer = new Timer(Delay, true, OnPointIncrease);
+            IoCManager.Resolve<ITimerManager>().AddTimer(_timer, _timerCancellation.Token);
+        }
+
+        private void OnPointIncrease()
+        {
+            foreach (var account in GetAllBankAccounts())
+            {
+                account.Balance += PointIncrease;
+            }
+            SyncComponents();
         }
 
         public IEnumerable<CargoBankAccount> GetAllBankAccounts()
@@ -27,7 +43,7 @@ namespace Content.Server.Cargo
 
         public void Shutdown()
         {
-            throw new System.NotImplementedException();
+            _timerCancellation.Cancel();
         }
 
         public void CreateBankAccount(string name, int balance = 0)
@@ -51,19 +67,6 @@ namespace Content.Server.Cargo
             }
             account = null;
             return false;
-        }
-
-        public void Update(FrameEventArgs frameEventArgs)
-        {
-            _timer += frameEventArgs.DeltaSeconds;
-            if (_timer < DELAY)
-                return;
-            _timer -= DELAY;
-            foreach (var account in GetAllBankAccounts())
-            {
-                account.Balance += POINT_INCREASE;
-            }
-            SyncComponents();
         }
 
         private void SyncComponents()

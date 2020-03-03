@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timers;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Research
 {
@@ -19,8 +22,9 @@ namespace Content.Server.GameObjects.Components.Research
 
         [ViewVariables(VVAccess.ReadWrite)] public string ServerName => _serverName;
 
+        private Timer _timer;
+        private CancellationTokenSource _timerCancellation = new CancellationTokenSource();
         private string _serverName = "RDSERVER";
-        private float _timer = 0f;
         public TechnologyDatabaseComponent Database { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)] private int _points = 0;
@@ -76,12 +80,15 @@ namespace Content.Server.GameObjects.Components.Research
             IoCManager.Resolve<IEntitySystemManager>()?.GetEntitySystem<ResearchSystem>()?.RegisterServer(this);
             Database = Owner.GetComponent<TechnologyDatabaseComponent>();
             Owner.TryGetComponent(out _powerDevice);
+            _timer = new Timer(1000, true, OnResearchPointGet);
+            IoCManager.Resolve<ITimerManager>().AddTimer(_timer, _timerCancellation.Token);
         }
 
         /// <inheritdoc />
         protected override void Shutdown()
         {
             base.Shutdown();
+            _timerCancellation.Cancel();
             IoCManager.Resolve<IEntitySystemManager>()?.GetEntitySystem<ResearchSystem>()?.UnregisterServer(this);
         }
 
@@ -160,12 +167,9 @@ namespace Content.Server.GameObjects.Components.Research
             Clients.Remove(client);
         }
 
-        public void Update(float frameTime)
+        private void OnResearchPointGet()
         {
             if (!CanRun) return;
-            _timer += frameTime;
-            if (_timer < 1f) return;
-            _timer = 0f;
             _points += PointsPerSecond;
         }
     }

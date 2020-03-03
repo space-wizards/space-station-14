@@ -9,8 +9,6 @@ namespace Content.Server.Cargo
         IEnumerable<CargoBankAccount> GetAllBankAccounts();
 
         void Shutdown();
-        void Update(FrameEventArgs frameEventArgs);
-
         void CreateBankAccount(string name, int balance);
         CargoBankAccount GetBankAccount(int id);
         void AddComponent(CargoConsoleComponent cargoConsoleComponent);

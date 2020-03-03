@@ -86,14 +86,6 @@ namespace Content.Server
             base.Update(level, frameEventArgs);
 
             _gameTicker.Update(frameEventArgs);
-            switch (level)
-            {
-                case ModUpdateLevel.PreEngine:
-                {
-                    IoCManager.Resolve<IGalacticBankManager>().Update(frameEventArgs);
-                    break;
-                }
-            }
         }
     }
 }
