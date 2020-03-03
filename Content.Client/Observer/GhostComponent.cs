@@ -69,8 +69,7 @@ namespace Content.Client.Observer
             if (!(curState is GhostComponentState state)) return;
 
             _canReturnToBody = state.CanReturnToBody;
-            if (_gui == null) return;
-            _gui.ReturnToBody.Disabled = !_canReturnToBody;
+            _gui?.Update();
         }
     }
 }

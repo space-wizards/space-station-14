@@ -1,3 +1,4 @@
+using System.Data;
 using Content.Client.Observer;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -21,6 +22,13 @@ namespace Content.Client.UserInterface
             ReturnToBody.OnPressed += (args) => { owner.SendReturnToBodyMessage(); };
 
             AddChild(ReturnToBody);
+
+            Update();
+        }
+
+        public void Update()
+        {
+            ReturnToBody.Disabled = !_owner.CanReturnToBody;
         }
     }
 }
