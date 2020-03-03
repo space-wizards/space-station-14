@@ -37,7 +37,7 @@ namespace Content.Shared.GameObjects
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="component">The component instance for which this verb is being loaded.</param>
         /// <returns>The category of this verb.</returns>
-        public abstract string GetCategory(IEntity user, IComponent component);
+        public virtual string GetCategory(IEntity user, IComponent component)  => "";
 
         /// <summary>
         ///     Gets the visibility level of this verb in the right click menu.
@@ -77,7 +77,7 @@ namespace Content.Shared.GameObjects
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="component">The component instance for which this verb is being loaded.</param>
         /// <returns>The category of this verb.</returns>
-        protected abstract string GetCategory(IEntity user, T component);
+        protected virtual string GetCategory(IEntity user, T component) => "";
 
         /// <summary>
         ///     Gets the visibility level of this verb in the right click menu.

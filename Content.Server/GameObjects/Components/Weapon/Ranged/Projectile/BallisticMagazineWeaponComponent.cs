@@ -271,8 +271,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 return component.Magazine == null ? "Eject magazine (magazine missing)" : "Eject magazine";
             }
 
-            protected override string GetCategory(IEntity user, BallisticMagazineWeaponComponent component) => "";
-
             protected override VerbVisibility GetVisibility(IEntity user, BallisticMagazineWeaponComponent component)
             {
                 return component.Magazine == null ? VerbVisibility.Disabled : VerbVisibility.Visible;

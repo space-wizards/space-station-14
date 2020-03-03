@@ -74,8 +74,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return $"Transfer liquid from [{heldEntityName}] to [{myName}].";
             }
 
-            protected override string GetCategory(IEntity user, SolutionComponent component) => "";
-
             protected override VerbVisibility GetVisibility(IEntity user, SolutionComponent component)
             {
                 if (user.TryGetComponent<HandsComponent>(out var hands))
@@ -155,8 +153,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
                 return $"Transfer liquid from [{myName}] to [{heldEntityName}].";
             }
-
-            protected override string GetCategory(IEntity user, SolutionComponent component) => "";
 
             protected override VerbVisibility GetVisibility(IEntity user, SolutionComponent component)
             {

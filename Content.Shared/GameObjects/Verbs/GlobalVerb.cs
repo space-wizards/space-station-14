@@ -32,7 +32,7 @@ namespace Content.Shared.GameObjects
         /// </summary>
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <returns>The category of this verb.</returns>
-        public abstract string GetCategory(IEntity user, IEntity target);
+        public virtual string GetCategory(IEntity user, IEntity target) => "";
 
         /// <summary>
         ///     Gets the visibility level of this verb in the right click menu.
