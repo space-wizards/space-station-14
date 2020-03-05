@@ -465,6 +465,8 @@
     sprite: Clothing/Gloves/leather.rsi
   - type: Clothing
     sprite: Clothing/Gloves/leather.rsi
+    HeatResistance: 1400
+    
 
 - type: entity
   parent: GlovesBase
