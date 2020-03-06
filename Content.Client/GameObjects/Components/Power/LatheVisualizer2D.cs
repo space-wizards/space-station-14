@@ -14,19 +14,50 @@ namespace Content.Client.GameObjects.Components.Power
         private const string AnimationKey = "lathe_animation";
 
         private Animation BuildingAnimation;
-        private Animation InsertingAnimation;
-        private Animation ReloadingAnimation;
+        private Animation InsertingMetalAnimation;
+        private Animation InsertingGlassAnimation;
 
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
 
-            BuildingAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
+            BuildingAnimation = new Animation {Length = TimeSpan.FromSeconds(1.35f)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 BuildingAnimation.AnimationTracks.Add(flick);
-                flick.LayerKey = LatheVisualLayers.Building;
-                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("autolathe_building", 0.5f));
+                flick.LayerKey = LatheVisualLayers.Base;
+                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("autolathe_building", 0f));
+
+                var flickUnlit = new AnimationTrackSpriteFlick();
+                BuildingAnimation.AnimationTracks.Add(flickUnlit);
+                flickUnlit.LayerKey = LatheVisualLayers.BaseUnlit;
+                flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("autolathe_building_unlit", 0f));
+            }
+
+            InsertingMetalAnimation = new Animation {Length = TimeSpan.FromSeconds(0.9f)};
+            {
+                var flick = new AnimationTrackSpriteFlick();
+                InsertingMetalAnimation.AnimationTracks.Add(flick);
+                flick.LayerKey = LatheVisualLayers.Base;
+                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("autolathe_inserting_metal_plate", 0f));
+
+                var flickUnlit = new AnimationTrackSpriteFlick();
+                InsertingMetalAnimation.AnimationTracks.Add(flickUnlit);
+                flickUnlit.LayerKey = LatheVisualLayers.BaseUnlit;
+                flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("autolathe_inserting_unlit", 0f));
+            }
+
+            InsertingGlassAnimation = new Animation {Length = TimeSpan.FromSeconds(0.9f)};
+            {
+                var flick = new AnimationTrackSpriteFlick();
+                InsertingGlassAnimation.AnimationTracks.Add(flick);
+                flick.LayerKey = LatheVisualLayers.Base;
+                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("autolathe_inserting_glass_plate", 0f));
+
+                var flickUnlit = new AnimationTrackSpriteFlick();
+                InsertingGlassAnimation.AnimationTracks.Add(flickUnlit);
+                flickUnlit.LayerKey = LatheVisualLayers.BaseUnlit;
+                flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("autolathe_inserting_unlit", 0f));
             }
         }
 
@@ -52,17 +83,30 @@ namespace Content.Client.GameObjects.Components.Power
             switch (state)
             {
                 case LatheVisualState.Base:
-                    sprite.LayerSetVisible(LatheVisualLayers.Building, false);
-                    sprite.LayerSetVisible(LatheVisualLayers.Inserting, false);
-                    sprite.LayerSetVisible(LatheVisualLayers.Reloading, false);
+                    sprite.LayerSetState(LatheVisualLayers.Base, "autolathe");
+                    sprite.LayerSetState(LatheVisualLayers.BaseUnlit, "autolathe_unlit");
+                    if (animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Stop(AnimationKey);
+                    }
                     break;
-                case LatheVisualState.Building:
-                case LatheVisualState.Inserting:
-                case LatheVisualState.Reloading:
-                    // if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    // {
-                    //     //animPlayer.Play();
-                    // }
+                case LatheVisualState.Producing:
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(BuildingAnimation, AnimationKey);
+                    }
+                    break;
+                case LatheVisualState.InsertingMetal:
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(InsertingMetalAnimation, AnimationKey);
+                    }
+                    break;
+                case LatheVisualState.InsertingGlass:
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(InsertingGlassAnimation, AnimationKey);
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -72,8 +116,7 @@ namespace Content.Client.GameObjects.Components.Power
 
     public enum LatheVisualLayers
     {
-        Building,
-        Inserting,
-        Reloading
+        Base,
+        BaseUnlit
     }
 }

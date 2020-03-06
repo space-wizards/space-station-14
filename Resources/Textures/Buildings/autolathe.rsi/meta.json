@@ -58,7 +58,7 @@
             ]
         },
         {
-            "name": "autolathe_inserting",
+            "name": "autolathe_inserting_metal_plate",
             "directions": 1,
             "delays": [
                 [
@@ -101,7 +101,7 @@
             ]
         },
         {
-            "name": "autolathe_r",
+            "name": "autolathe_inserting_glass_plate",
             "directions": 1,
             "delays": [
                 [

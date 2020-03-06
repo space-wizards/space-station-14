@@ -25,14 +25,10 @@
     sprite: Buildings/autolathe.rsi
     layers:
     - state: autolathe
+      map: ["enum.LatheVisualLayers.Base", "enum.PowerDeviceVisualLayers.Powered"]
     - state: autolathe_unlit
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: autolathe_building
-      map: ["enum.LatheVisualLayers.Building"]
-    - state: autolathe_inserting
-      map: ["enum.LatheVisualLayers.Inserting"]
-    - state: autolathe_r
-      map: ["enum.LatheVisualLayers.Reloading"]
+      shader: unshaded
+      map: ["enum.LatheVisualLayers.BaseUnlit", "enum.PowerDeviceVisualLayers.Powered"]
   - type: Icon
     sprite: Buildings/autolathe.rsi
     state: autolathe
@@ -62,8 +58,6 @@
   - type: Appearance
     visuals:
     - type: PowerDeviceVisualizer2D
-  - type: Appearance
-    visuals:
     - type: LatheVisualizer2D
 
 - type: entity

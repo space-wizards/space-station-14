@@ -7,8 +7,8 @@ namespace Content.Shared.GameObjects.Components.Power
     public enum LatheVisualState
     {
         Base,
-        Building,
-        Inserting,
-        Reloading
+        Producing,
+        InsertingMetal,
+        InsertingGlass
     }
 }
