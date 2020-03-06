@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Damage
                     _actSystem.HandleBreakage(Owner);
                     break;
                 case ExplosionSeverity.Light:
-                    if(prob.Prob(40))
+                    if(prob.Prob(0.4f))
                         _actSystem.HandleBreakage(Owner);
                     break;
             }

@@ -49,7 +49,7 @@
     sprite: Buildings/airlock_medical.rsi
 
 - type: entity
-  parent: airlock
+  parent: airlock_glass
   id: airlock_medical_glass
   name: Glass Medical Airlock
   components:
@@ -58,6 +58,7 @@
 
   - type: Icon
     sprite: Buildings/airlock_medical_glass.rsi
+
 
 - type: entity
   parent: airlock
@@ -71,7 +72,7 @@
     sprite: Buildings/airlock_science.rsi
 
 - type: entity
-  parent: airlock
+  parent: airlock_glass
   id: airlock_science_glass
   name: Glass Science Airlock
   components:

@@ -74,6 +74,14 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// Shortcut for Capabilities PourOut flag to avoid binary operators.
         /// </summary>
         public bool CanPourOut => (Capabilities & SolutionCaps.PourOut) != 0;
+        /// <summary>
+        /// Shortcut for Capabilities Injectable flag
+        /// </summary>
+        public bool Injectable => (Capabilities & SolutionCaps.Injectable) != 0;
+        /// <summary>
+        /// Shortcut for Capabilities Injector flag
+        /// </summary>
+        public bool Injector => (Capabilities & SolutionCaps.Injector) != 0;
 
         /// <inheritdoc />
         public override string Name => "Solution";

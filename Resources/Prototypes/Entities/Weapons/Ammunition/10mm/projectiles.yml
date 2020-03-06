@@ -2,7 +2,7 @@
   id: bullet_10mm
   name: 10mm Bullet
   parent: bullet_base
-  description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 20
@@ -13,7 +13,7 @@
   id: bullet_10mmf
   name: 10mm Bullet (Flash)
   parent: bullet_base
-  description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 20
@@ -24,7 +24,7 @@
   id: bullet_10mmhv
   name: 10mm Bullet (High-Velocity)
   parent: bullet_base
-  description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 30
@@ -35,7 +35,7 @@
   id: bullet_10mml
   name: 10mm Bullet (L)
   parent: bullet_base
-  description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 20
@@ -46,7 +46,7 @@
   id: bullet_10mmp
   name: 10mm Bullet (Practice)
   parent: bullet_base
-  description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 20
@@ -57,7 +57,7 @@
   id: bullet_10mmr
   name: 10mm Bullet (Rubber)
   parent: bullet_base
-  description: If you can see this you're dead!
+  abstract: true
   components:
   - type: Projectile
     velocity: 20

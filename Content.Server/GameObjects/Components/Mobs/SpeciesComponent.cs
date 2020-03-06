@@ -117,6 +117,11 @@ namespace Content.Server.GameObjects
             return CurrentDamageState.CanEmote();
         }
 
+        bool IActionBlocker.CanAttack()
+        {
+            return CurrentDamageState.CanAttack();
+        }
+
         List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
         {
             var thresholdlist = DamageTemplate.DamageThresholds;
@@ -190,8 +195,8 @@ namespace Content.Server.GameObjects
                     bruteDamage += 30;
                     break;
             }
-            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage, eventArgs.Source);
-            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage, eventArgs.Source);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage, null);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage, null);
         }
     }
 

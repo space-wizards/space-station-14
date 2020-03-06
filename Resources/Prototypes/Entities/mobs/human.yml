@@ -5,6 +5,7 @@
   description: A miserable pile of secrets
   drawdepth: Mobs
   components:
+  - type: Mind
   - type: Hands
     hands:
     - left
@@ -14,6 +15,10 @@
   - type: Thirst
   # Organs
   - type: Stomach
+    maxVolume: 100
+    digestionDelay: 20
+  - type: Bloodstream
+    maxVolume: 250
 
   - type: Inventory
   - type: Constructor

@@ -25,7 +25,7 @@
   name: Table
   id: table
   category: Structures
-  icon: 
+  icon:
     sprite: Buildings/table_solid.rsi
     state: plain_preview
   result: table

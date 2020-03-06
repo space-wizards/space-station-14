@@ -4,6 +4,7 @@
   save: false
   description: Boo!
   components:
+  - type: Mind
   - type: Physics
     mass: 5
   - type: Eye

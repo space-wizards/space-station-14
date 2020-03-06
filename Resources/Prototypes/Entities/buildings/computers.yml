@@ -83,8 +83,17 @@
     static: true
     products:
       - cargo.dice
-      - cargo.flashlight
       - cargo.Medkit
+      - cargo.flashlight
+      - cargo.lightblub
+      - cargo.fireextinguisher
+      - cargo.pen
+      - cargo.bikehorn
+      - cargo.cleaver
+      - cargo.fueltank
+      - cargo.medscanner
+      - cargo.glass
+      - cargo.cable
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Key
