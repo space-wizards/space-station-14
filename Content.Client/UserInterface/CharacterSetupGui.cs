@@ -28,7 +28,6 @@ namespace Content.Client.UserInterface
         public readonly Button CloseButton;
 
         public CharacterSetupGui(IEntityManager entityManager,
-            ILocalizationManager localization,
             IResourceCache resourceCache,
             IClientPreferencesManager preferencesManager,
             IPrototypeManager prototypeManager)
@@ -67,7 +66,7 @@ namespace Content.Client.UserInterface
             CloseButton = new Button
             {
                 SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkEnd,
-                Text = localization.GetString("Save and close"),
+                Text = Loc.GetString("Save and close"),
                 StyleClasses = {NanoStyle.StyleClassButtonBig}
             };
 
@@ -83,7 +82,7 @@ namespace Content.Client.UserInterface
                         {
                             new Label
                             {
-                                Text = localization.GetString("Character Setup"),
+                                Text = Loc.GetString("Character Setup"),
                                 StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
                                 VAlign = Label.VAlignMode.Center,
                                 SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkCenter
@@ -149,17 +148,14 @@ namespace Content.Client.UserInterface
                 PanelOverride = new StyleBoxFlat {BackgroundColor = NanoStyle.NanoGold},
                 CustomMinimumSize = (2, 0)
             });
-            _humanoidProfileEditor = new HumanoidProfileEditor(localization, preferencesManager, prototypeManager);
+            _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager);
             _humanoidProfileEditor.OnProfileChanged += newProfile => { UpdateUI(); };
             hBox.AddChild(_humanoidProfileEditor);
 
             UpdateUI();
         }
 
-        public void Save()
-        {
-            _humanoidProfileEditor.Save();
-        }
+        public void Save() => _humanoidProfileEditor.Save();
 
         private void UpdateUI()
         {

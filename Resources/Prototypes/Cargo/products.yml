@@ -48,8 +48,7 @@
   name: "Fire Extinguisher"
   id: cargo.fireextinguisher
   description: Puts out fires. Or propels you in space.
-  icon:
-    sprite: Objects/Misc/fire_extinguisher.png
+  icon: Objects/Misc/fire_extinguisher.png
   product: crate_fire_extinguisher
   cost: 300
   category: Other
@@ -73,6 +72,7 @@
   description: HONK!
   icon:
     sprite: Objects/Fun/bikehorn.rsi
+    state: icon
   product: crate_bikehorn
   cost: 300
   category: Other
@@ -94,8 +94,7 @@
   name: "Fuel Tank"
   id: cargo.fueltank
   description: Movable fuel tank for welders. No boom boom.
-  icon:
-    sprite: Buildings/weldtank.png
+  icon: Buildings/weldtank.png
   product: crate_fueltank
   cost: 200
   category: Engineering
@@ -107,6 +106,7 @@
   description: Scans patients. First we stick this probe...
   icon:
     sprite: Buildings/medical_scanner.rsi
+    state: scanner_open
   product: crate_medscanner
   cost: 400
   category: Medical
@@ -116,8 +116,7 @@
   name: "Glass Crate"
   id: cargo.glass
   description: 50 sheets of glass.
-  icon:
-    sprite: Objects/Materials/sheet_glass.png
+  icon: Objects/Materials/sheet_glass.png
   product: crate_glass
   cost: 50
   category: Engineering
@@ -127,9 +126,7 @@
   name: "Cable Crate"
   id: cargo.cable
   description: 50 coils of cable.
-  icon:
-    sprite: Objects/Tools/cable_coil.png
-    color: yellow
+  icon: Objects/Tools/cable_coil.png
   product: crate_cable
   cost: 50
   category: Engineering

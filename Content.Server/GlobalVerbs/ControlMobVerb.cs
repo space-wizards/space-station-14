@@ -16,6 +16,8 @@ namespace Content.Server.GlobalVerbs
     public class ControlMobVerb : GlobalVerb
     {
         public override string GetText(IEntity user, IEntity target) => "Control Mob";
+        public override string GetCategory(IEntity user, IEntity target) => "Debug";
+
         public override bool RequireInteractionRange => false;
 
         public override VerbVisibility GetVisibility(IEntity user, IEntity target)
@@ -39,9 +41,6 @@ namespace Content.Server.GlobalVerbs
         {
             var userMind = user.GetComponent<IActorComponent>().playerSession.ContentData().Mind;
             var targetMind = target.GetComponent<MindComponent>();
-
-            if(userMind.IsVisitingEntity)
-                userMind.UnVisit();
 
             targetMind.Mind?.TransferTo(null);
             userMind.TransferTo(target);

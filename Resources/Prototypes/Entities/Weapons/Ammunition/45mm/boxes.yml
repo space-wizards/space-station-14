@@ -8,7 +8,7 @@
   - type: AmmoBox
     caliber: A45mm
     capacity: 30
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 # Ammo boxes
@@ -18,7 +18,7 @@
   parent: box_45_empty
   components:
   - type: AmmoBox
-    fill: ammo_casing_45
+    fill: ammo_casing_45mm
     caliber: A45mm
     capacity: 30
   - type: Icon
@@ -39,7 +39,7 @@
   parent: box_45_empty
   components:
   - type: AmmoBox
-    fill: ammo_casing_45_flash
+    fill: ammo_casing_45mm_flash
     caliber: A45mm
     capacity: 30
   - type: Icon
@@ -62,7 +62,7 @@
   parent: box_45_empty
   components:
   - type: AmmoBox
-    fill: ammo_casing_45_p
+    fill: ammo_casing_45mm_p
     caliber: A45mm
     capacity: 30
   - type: Icon
@@ -83,7 +83,7 @@
   parent: box_45_empty
   components:
   - type: AmmoBox
-    fill: ammo_casing_45_r
+    fill: ammo_casing_45mm_r
     caliber: A45mm
     capacity: 30
   - type: Icon

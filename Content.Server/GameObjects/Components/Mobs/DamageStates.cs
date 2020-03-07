@@ -72,6 +72,11 @@ namespace Content.Server.GameObjects
         {
             return true;
         }
+
+        bool IActionBlocker.CanAttack()
+        {
+            return true;
+        }
     }
 
     /// <summary>
@@ -125,6 +130,11 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanEmote()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanAttack()
         {
             return false;
         }
@@ -201,6 +211,11 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanEmote()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanAttack()
         {
             return false;
         }

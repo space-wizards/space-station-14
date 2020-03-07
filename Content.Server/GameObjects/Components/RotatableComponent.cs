@@ -40,6 +40,8 @@ namespace Content.Server.GameObjects.Components
                 return "Rotate clockwise";
             }
 
+            protected override string GetCategory(IEntity user, RotatableComponent component) => "Rotate";
+
             protected override VerbVisibility GetVisibility(IEntity user, RotatableComponent component)
             {
                 return VerbVisibility.Visible;
@@ -58,6 +60,8 @@ namespace Content.Server.GameObjects.Components
             {
                 return "Rotate counter-clockwise";
             }
+
+            protected override string GetCategory(IEntity user, RotatableComponent component) => "Rotate";
 
             protected override VerbVisibility GetVisibility(IEntity user, RotatableComponent component)
             {

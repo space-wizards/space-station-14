@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
                 // TODO: These keys being giant strings is inefficient as hell.
                 data.Add(new VerbsResponseMessage.VerbData(verb.GetText(userEntity, component),
-                    $"{component.GetType()}:{verb.GetType()}",
+                    $"{component.GetType()}:{verb.GetType()}", verb.GetCategory(userEntity, component),
                     vis == VerbVisibility.Visible));
             }
 
@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
 
                 data.Add(new VerbsResponseMessage.VerbData(globalVerb.GetText(userEntity, entity),
-                    globalVerb.GetType().ToString(), vis == VerbVisibility.Visible));
+                    globalVerb.GetType().ToString(), globalVerb.GetCategory(userEntity, entity), vis == VerbVisibility.Visible));
             }
 
             var response = new VerbsResponseMessage(data, req.EntityUid);

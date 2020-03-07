@@ -28,6 +28,13 @@ namespace Content.Shared.GameObjects
         public abstract string GetText(IEntity user, IEntity target);
 
         /// <summary>
+        ///     Gets the category of this verb.
+        /// </summary>
+        /// <param name="user">The entity of the user opening this menu.</param>
+        /// <returns>The category of this verb.</returns>
+        public virtual string GetCategory(IEntity user, IEntity target) => "";
+
+        /// <summary>
         ///     Gets the visibility level of this verb in the right click menu.
         /// </summary>
         /// <param name="user">The entity of the user opening this menu.</param>

@@ -21,6 +21,7 @@ namespace Content.Shared.Construction
         private string _id;
         private string _result;
         private string _placementMode;
+        private bool _canBuildInImpassable;
 
         /// <summary>
         ///     Friendly name displayed in the construction GUI.
@@ -36,6 +37,11 @@ namespace Content.Shared.Construction
         ///     Texture path inside the construction GUI.
         /// </summary>
         public SpriteSpecifier Icon => _icon;
+
+        /// <summary>
+        ///     If you can start building or complete steps on impassable terrain.
+        /// </summary>
+        public bool CanBuildInImpassable => _canBuildInImpassable;
 
         /// <summary>
         ///     A list of keywords that are used for searching.
@@ -81,6 +87,7 @@ namespace Content.Shared.Construction
             ser.DataField(ref _type, "objecttype", ConstructionType.Structure);
             ser.DataField(ref _result, "result", null);
             ser.DataField(ref _placementMode, "placementmode", "PlaceFree");
+            ser.DataField(ref _canBuildInImpassable, "canbuildinimpassable", false);
 
             _keywords = ser.ReadDataField<List<string>>("keywords", new List<string>());
             {

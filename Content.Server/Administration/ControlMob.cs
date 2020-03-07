@@ -55,9 +55,6 @@ namespace Content.Server.Administration
                 return;
             }
 
-            if(mind.IsVisitingEntity)
-                mind.UnVisit();
-
             mindComponent.Mind?.TransferTo(null);
             mind.TransferTo(target);
 
