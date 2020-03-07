@@ -280,4 +280,3 @@ BuildFiles/Windows/Godot/*
 
 # Working on the tools scripts is getting annoying okay?
 .mypy_cache/
-RobustToolbox
