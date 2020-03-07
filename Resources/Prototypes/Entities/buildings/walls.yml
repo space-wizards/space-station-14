@@ -13,8 +13,10 @@
   - type: Sprite
     netsync: false
     drawdepth: Walls
+
   - type: Icon
     state: full
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -26,6 +28,7 @@
   - type: Occluder
     sizeX: 32
     sizeY: 32
+
   - type: SnapGrid
     offset: Center
 

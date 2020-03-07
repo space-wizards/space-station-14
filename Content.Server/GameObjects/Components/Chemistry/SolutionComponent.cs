@@ -208,7 +208,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     if (SolutionValidReaction(reaction, out int unitReactions))
                     {
                         PerformReaction(reaction, unitReactions);
-                        checkForNewReaction = true; 
+                        checkForNewReaction = true;
                         break;
                     }
                 }
