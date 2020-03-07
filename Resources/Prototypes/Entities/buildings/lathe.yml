@@ -25,10 +25,10 @@
     sprite: Buildings/autolathe.rsi
     layers:
     - state: autolathe
-      map: ["enum.LatheVisualLayers.Base", "enum.PowerDeviceVisualLayers.Powered"]
+      map: ["enum.LatheVisualLayers.Base"]
     - state: autolathe_unlit
       shader: unshaded
-      map: ["enum.LatheVisualLayers.BaseUnlit", "enum.PowerDeviceVisualLayers.Powered"]
+      map: ["enum.LatheVisualLayers.BaseUnlit"]
   - type: Icon
     sprite: Buildings/autolathe.rsi
     state: autolathe
@@ -57,7 +57,6 @@
       - Multitool
   - type: Appearance
     visuals:
-    - type: PowerDeviceVisualizer2D
     - type: LatheVisualizer2D
 
 - type: entity

@@ -50,7 +50,6 @@ namespace Content.Server.GameObjects.Components.Research
         private bool Powered => _powerDevice.Powered;
 
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
-        private static readonly TimeSpan ProductionTime = TimeSpan.FromSeconds(1.35f);
 
         public override void Initialize()
         {
@@ -127,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Research
                 Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.GridPosition);
                 _userInterface.SendMessage(new LatheStoppedProducingRecipeMessage());
                 State = LatheState.Base;
-                SetAppearance(LatheVisualState.Base);
+                SetAppearance(LatheVisualState.Idle);
             });
 
             return true;
@@ -189,7 +188,7 @@ namespace Content.Server.GameObjects.Components.Research
             Timer.Spawn(InsertionTime, async () =>
             {
                 State = LatheState.Base;
-                SetAppearance(LatheVisualState.Base);
+                SetAppearance(LatheVisualState.Idle);
             });
 
             eventArgs.AttackWith.Delete();

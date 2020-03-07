@@ -6,7 +6,7 @@ namespace Content.Shared.GameObjects.Components.Power
     [Serializable, NetSerializable]
     public enum LatheVisualState
     {
-        Base,
+        Idle,
         Producing,
         InsertingMetal,
         InsertingGlass
