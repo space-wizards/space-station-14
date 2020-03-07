@@ -25,10 +25,10 @@
     sprite: Buildings/autolathe.rsi
     layers:
     - state: autolathe
-      map: ["enum.LatheVisualLayers.Base"]
+      map: ["enum.AutolatheVisualLayers.Base"]
     - state: autolathe_unlit
       shader: unshaded
-      map: ["enum.LatheVisualLayers.BaseUnlit"]
+      map: ["enum.AutolatheVisualLayers.BaseUnlit"]
   - type: Icon
     sprite: Buildings/autolathe.rsi
     state: autolathe
@@ -57,7 +57,7 @@
       - Multitool
   - type: Appearance
     visuals:
-    - type: LatheVisualizer2D
+    - type: AutolatheVisualizer2D
 
 - type: entity
   parent: BaseLathe
@@ -68,9 +68,10 @@
     sprite: Buildings/research.rsi
     layers:
     - state: protolathe
+      map: ["enum.ProtolatheVisualLayers.Base", "enum.ProtolatheVisualLayers.AnimationLayer"]
     - state: protolathe_unlit
       shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
   - type: Icon
     sprite: Buildings/research.rsi
     state: protolathe
@@ -105,4 +106,4 @@
       type: ResearchClientBoundUserInterface
   - type: Appearance
     visuals:
-    - type: PowerDeviceVisualizer2D
+    - type: ProtolatheVisualizer2D

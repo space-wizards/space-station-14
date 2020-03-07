@@ -9,9 +9,9 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
 {
-    public class LatheVisualizer2D : AppearanceVisualizer
+    public class AutolatheVisualizer2D : AppearanceVisualizer
     {
-        private const string AnimationKey = "lathe_animation";
+        private const string AnimationKey = "autolathe_animation";
 
         private Animation _buildingAnimation;
         private Animation _insertingMetalAnimation;
@@ -21,23 +21,23 @@ namespace Content.Client.GameObjects.Components.Power
         {
             base.LoadData(node);
 
-            _buildingAnimation = populateAnimation("autolathe_building", "autolathe_building_unlit", 0.5f);
-            _insertingMetalAnimation = populateAnimation("autolathe_inserting_metal_plate", "autolathe_inserting_unlit", 0.9f);
-            _insertingGlassAnimation = populateAnimation("autolathe_inserting_glass_plate", "autolathe_inserting_unlit", 0.9f);
+            _buildingAnimation = PopulateAnimation("autolathe_building", "autolathe_building_unlit", 0.5f);
+            _insertingMetalAnimation = PopulateAnimation("autolathe_inserting_metal_plate", "autolathe_inserting_unlit", 0.9f);
+            _insertingGlassAnimation = PopulateAnimation("autolathe_inserting_glass_plate", "autolathe_inserting_unlit", 0.9f);
         }
 
-        private Animation populateAnimation(string sprite, string spriteUnlit, float length)
+        private Animation PopulateAnimation(string sprite, string spriteUnlit, float length)
         {
             var animation = new Animation {Length = TimeSpan.FromSeconds(length)};
 
             var flick = new AnimationTrackSpriteFlick();
             animation.AnimationTracks.Add(flick);
-            flick.LayerKey = LatheVisualLayers.Base;
+            flick.LayerKey = AutolatheVisualLayers.Base;
             flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(sprite, 0f));
 
             var flickUnlit = new AnimationTrackSpriteFlick();
             animation.AnimationTracks.Add(flickUnlit);
-            flickUnlit.LayerKey = LatheVisualLayers.BaseUnlit;
+            flickUnlit.LayerKey = AutolatheVisualLayers.BaseUnlit;
             flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(spriteUnlit, 0f));
 
             return animation;
@@ -70,8 +70,8 @@ namespace Content.Client.GameObjects.Components.Power
                         animPlayer.Stop(AnimationKey);
                     }
 
-                    sprite.LayerSetState(LatheVisualLayers.Base, "autolathe");
-                    sprite.LayerSetState(LatheVisualLayers.BaseUnlit, "autolathe_unlit");
+                    sprite.LayerSetState(AutolatheVisualLayers.Base, "autolathe");
+                    sprite.LayerSetState(AutolatheVisualLayers.BaseUnlit, "autolathe_unlit");
                     break;
                 case LatheVisualState.Producing:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
@@ -96,9 +96,9 @@ namespace Content.Client.GameObjects.Components.Power
             }
 
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
-            sprite.LayerSetVisible(LatheVisualLayers.BaseUnlit, glowingPartsVisible);
+            sprite.LayerSetVisible(AutolatheVisualLayers.BaseUnlit, glowingPartsVisible);
         }
-        public enum LatheVisualLayers
+        public enum AutolatheVisualLayers
         {
             Base,
             BaseUnlit
