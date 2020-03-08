@@ -77,6 +77,22 @@
 
 - type: entity
   parent: UniformBase
+  id: UniformRobotics
+  name: Robotics Jumpsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_robotics.rsi
+    state: robotics
+
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_robotics.rsi
+    state: robotics
+
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_robotics.rsi
+
+- type: entity
+  parent: UniformBase
   id: UniformClown
   name: Clown Suit
   description: HONK!

@@ -65,6 +65,32 @@
   parent: HatBase
 
 - type: entity
+  id: whitecatears
+  name: White Cat Ears
+  description: ''
+  components:
+  - sprite: Clothing/Head/catearswhite.rsi
+    type: Sprite
+  - sprite: Clothing/Head/catearswhite.rsi
+    type: Icon
+  - sprite: Clothing/Head/catearswhite.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: greencatears
+  name: Green Cat Ears
+  description: ''
+  components:
+  - sprite: Clothing/Head/catearsgreen.rsi
+    type: Sprite
+  - sprite: Clothing/Head/catearsgreen.rsi
+    type: Icon
+  - sprite: Clothing/Head/catearsgreen.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
   id: HatAssetProtectionRigSealed
   name: Asset Protection Rig (Sealed)
   description: ''
