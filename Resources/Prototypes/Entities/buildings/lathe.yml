@@ -68,10 +68,12 @@
     sprite: Buildings/research.rsi
     layers:
     - state: protolathe
-      map: ["enum.ProtolatheVisualLayers.Base", "enum.ProtolatheVisualLayers.AnimationLayer"]
+      map: ["enum.ProtolatheVisualLayers.Base"]
     - state: protolathe_unlit
       shader: unshaded
       map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
+    - state: protolathe
+      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
   - type: Icon
     sprite: Buildings/research.rsi
     state: protolathe

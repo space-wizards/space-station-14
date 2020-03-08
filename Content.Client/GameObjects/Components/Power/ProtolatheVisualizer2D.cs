@@ -56,7 +56,7 @@ namespace Content.Client.GameObjects.Components.Power
             {
                 state = LatheVisualState.Idle;
             }
-
+            sprite.LayerSetVisible(ProtolatheVisualLayers.AnimationLayer, true);
             switch (state)
             {
                 case LatheVisualState.Idle:
@@ -67,6 +67,7 @@ namespace Content.Client.GameObjects.Components.Power
 
                     sprite.LayerSetState(ProtolatheVisualLayers.Base, "protolathe");
                     sprite.LayerSetState(ProtolatheVisualLayers.BaseUnlit, "protolathe_unlit");
+                    sprite.LayerSetVisible(ProtolatheVisualLayers.AnimationLayer, false);
                     break;
                 case LatheVisualState.Producing:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
