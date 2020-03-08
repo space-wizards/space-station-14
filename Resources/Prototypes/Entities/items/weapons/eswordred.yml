@@ -1,0 +1,31 @@
+- type: entity
+  name: Red eSword
+  parent: BaseItem
+  id: Redesword
+  components:
+  - type: Sprite
+    sprite: Objects/Melee/eswordred.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Objects/Melee/eswordred.rsi
+    state: icon
+
+  - type: MeleeWeapon
+    range: 1.5
+    arcwidth: 10
+    arc: spear
+
+  - type: Item
+    Size: 24
+    sprite: Objects/Melee/eswordred.rsi
+    prefix: inhand
+
+  - type: ItemCooldown
+
+- type: MeleeWeaponAnimation
+  id: spear
+  state: icon
+  length: 0.10
+  speed: 6
+  arcType: Poke
