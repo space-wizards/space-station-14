@@ -1,7 +1,7 @@
 - type: entity
-  name: Red eSword
+  name: Red Esword
   parent: BaseItem
-  id: Redesword
+  id: redesword
   components:
   - type: Sprite
     sprite: Objects/Melee/eswordred.rsi
@@ -24,7 +24,7 @@
   - type: ItemCooldown
 
 - type: MeleeWeaponAnimation
-  id: spear
+  id: redesword
   state: icon
   length: 0.10
   speed: 6

@@ -48,6 +48,15 @@
   - type: MeleeWeapon
   - type: ItemStatus
 
+  - type: Item
+    Size: 24
+    sprite: Objects/Tools/welder.rsi
+    layers:
+    - state: inhand
+    - state: inhand_welder_flame
+      shader: unshaded
+      visible: false
+
 - type: entity
   name: Wrench
   parent: BaseItem

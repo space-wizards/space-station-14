@@ -24,7 +24,7 @@
   - type: ItemCooldown
 
 - type: MeleeWeaponAnimation
-  id: spear
+  id: blueesword
   state: icon
   length: 0.10
   speed: 6

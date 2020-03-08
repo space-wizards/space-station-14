@@ -1,14 +1,14 @@
 - type: entity
-  name: Katana
+  name: Fireaxe
   parent: BaseItem
-  id: katana
+  id: fireaxe
   components:
   - type: Sprite
-    sprite: Objects/Melee/katana.rsi
+    sprite: Objects/Melee/fireaxe.rsi
     state: icon
 
   - type: Icon
-    sprite: Objects/Melee/katana.rsi
+    sprite: Objects/Melee/fireaxe.rsi
     state: icon
 
   - type: MeleeWeapon
@@ -18,14 +18,16 @@
 
   - type: Item
     Size: 24
-    sprite: Objects/Melee/katana.rsi
+    sprite: Objects/Melee/fireaxe.rsi
     prefix: inhand
 
   - type: ItemCooldown
 
 - type: MeleeWeaponAnimation
-  id: katana
+  id: fireaxe
   state: icon
   length: 0.10
   speed: 6
   arcType: Poke
+
+# The 2handed sprites are in fireaxe.rsi as well as the offhand sprites if someone decides to add them.

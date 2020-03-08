@@ -1,7 +1,7 @@
 - type: entity
   name: Purple Esword
   parent: BaseItem
-  id: Purpleesword
+  id: purpleesword
   components:
   - type: Sprite
     sprite: Objects/Melee/eswordpurple.rsi
@@ -24,7 +24,7 @@
   - type: ItemCooldown
 
 - type: MeleeWeaponAnimation
-  id: spear
+  id: purpleesword
   state: icon
   length: 0.10
   speed: 6
