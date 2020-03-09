@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects;
 using Content.Shared.GameObjects;
+using Content.Shared.Prototypes;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.Interfaces.GameObjects
