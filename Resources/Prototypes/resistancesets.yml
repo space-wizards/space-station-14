@@ -1,0 +1,28 @@
+- type: resistanceset
+  id: defaultresistance
+  resistancesets:
+  - damagetype: Total
+  - damagetype: Acid
+  - damagetype: Brute
+  - damagetype: Heat
+  - damagetype: Cold
+  - damagetype: Toxic
+  - damagetype: Electric
+
+- type: resistanceset
+  id: invincible
+  resistancesets:
+  - damagetype: Total
+    coefficient: 0
+  - damagetype: Acid
+    coefficient: 0
+  - damagetype: Brute
+    coefficient: 0
+  - damagetype: Heat
+    coefficient: 0
+  - damagetype: Cold
+    coefficient: 0
+  - damagetype: Toxic
+    coefficient: 0
+  - damagetype: Electric
+    coefficient: 0

@@ -6,6 +6,8 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -28,7 +30,7 @@ namespace Content.Server.GameObjects
         /// Affects receiving damage of various types.
         /// </summary>
         [ViewVariables]
-        public ResistanceSet Resistances { get; private set; }
+        public ResistanceSetPrototype Resistances { get; private set; }
 
         [ViewVariables]
         public IReadOnlyDictionary<DamageType, int> CurrentDamage => _currentDamage;
@@ -47,11 +49,11 @@ namespace Content.Server.GameObjects
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
             // TODO: Writing.
-            serializer.DataReadFunction("resistanceset", "honk", name =>
+            serializer.DataReadFunction("resistanceset", "defaultresistance", name =>
             {
-                Resistances = ResistanceSet.GetResistanceSet(name);
+                var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                Resistances = protoMan.Index<ResistanceSetPrototype>(name);
             });
         }
 

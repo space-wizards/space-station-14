@@ -8,7 +8,7 @@ namespace Content.Server.Interfaces.GameObjects
     public interface IDamageableComponent : IComponent
     {
         event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
-        ResistanceSet Resistances { get; }
+        ResistanceSetPrototype Resistances { get; }
 
         /// <summary>
         /// The function that handles receiving damage.
