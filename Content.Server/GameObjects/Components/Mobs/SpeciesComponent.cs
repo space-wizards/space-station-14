@@ -117,6 +117,11 @@ namespace Content.Server.GameObjects
             return CurrentDamageState.CanEmote();
         }
 
+        bool IActionBlocker.CanAttack()
+        {
+            return CurrentDamageState.CanAttack();
+        }
+
         List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
         {
             var thresholdlist = DamageTemplate.DamageThresholds;

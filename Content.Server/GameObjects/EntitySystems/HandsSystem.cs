@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
 
-            if(interactionSystem.InRangeUnobstructed(coords, ent.Transform.GridPosition, 0f, ignoredEnt:ent))
+            if(interactionSystem.InRangeUnobstructed(coords.ToMap(_mapManager), ent.Transform.WorldPosition, 0f, ignoredEnt: ent))
                 if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
                 {
                     handsComp.Drop(handsComp.ActiveIndex, coords);

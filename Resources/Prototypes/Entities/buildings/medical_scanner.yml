@@ -21,7 +21,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.5,-0.25,0.5,0.25"
+      bounds: "-0.5,0,0.5,1"
       layer: 15
     IsScrapingFloor: true
   - type: Physics

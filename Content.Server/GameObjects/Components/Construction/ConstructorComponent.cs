@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Construction
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
-
             switch (message)
             {
                 case TryStartStructureConstructionMessage tryStart:
@@ -43,7 +42,9 @@ namespace Content.Server.GameObjects.Components.Construction
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
             var transform = Owner.Transform;
-            if (!loc.InRange(_mapManager, transform.GridPosition, InteractionSystem.InteractionRange))
+
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (!interactionSystem.InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: true))
             {
                 return;
             }

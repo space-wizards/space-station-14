@@ -1,6 +1,6 @@
 - type: entity
-  id: bullet_20mm
-  name: 20mm Bullet
+  id: pellet_12g
+  name: 12g Pellet
   parent: bullet_base
   abstract: true
   components:

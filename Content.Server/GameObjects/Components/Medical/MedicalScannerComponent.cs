@@ -9,6 +9,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Medical
@@ -20,6 +21,7 @@ namespace Content.Server.GameObjects.Components.Medical
         private AppearanceComponent _appearance;
         private BoundUserInterface _userInterface;
         private ContainerSlot _bodyContainer;
+        private readonly Vector2 _ejectOffset = new Vector2(-0.5f, 0f);
         public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
         public override void Initialize()
@@ -61,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
             var dmgDict = new Dictionary<string, int>();
 
-            foreach (var dmgType in (DamageType[])Enum.GetValues(typeof(DamageType)))
+            foreach (var dmgType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
             {
                 if (damageable.CurrentDamage.TryGetValue(dmgType, out var amount))
                 {
@@ -70,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
 
             return new MedicalScannerBoundUserInterfaceState(
-                deathThresholdValue-currentHealth,
+                deathThresholdValue - currentHealth,
                 deathThresholdValue,
                 dmgDict);
         }
@@ -160,7 +162,9 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public void EjectBody()
         {
-            _bodyContainer.Remove(_bodyContainer.ContainedEntity);
+            var containedEntity = _bodyContainer.ContainedEntity;
+            _bodyContainer.Remove(containedEntity);
+            containedEntity.Transform.WorldPosition += _ejectOffset;
             UpdateUserInterface();
             UpdateAppearance();
         }
