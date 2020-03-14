@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
+using Content.Shared.Maths;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -32,11 +33,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         private string _finishPrototype;
 
-        public int TransferAmount => _transferAmount;
+        public decimal TransferAmount => _transferAmount;
         [ViewVariables]
-        private int _transferAmount = 2;
+        private decimal _transferAmount = 2;
 
-        public int MaxVolume
+        public decimal MaxVolume
         {
             get => _contents.MaxVolume;
             set => _contents.MaxVolume = value;
@@ -56,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 return 0;
             }
-            return Math.Max(1, _contents.CurrentVolume / _transferAmount);
+            return Math.Max(1, (int)Math.Ceiling(_contents.CurrentVolume / _transferAmount));
         }
 
 

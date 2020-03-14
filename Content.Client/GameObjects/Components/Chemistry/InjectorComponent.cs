@@ -16,8 +16,8 @@ namespace Content.Client.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class InjectorComponent : SharedInjectorComponent, IItemStatus
     {
-        [ViewVariables] private int CurrentVolume { get; set; }
-        [ViewVariables] private int TotalVolume { get; set; }
+        [ViewVariables] private decimal CurrentVolume { get; set; }
+        [ViewVariables] private decimal TotalVolume { get; set; }
         [ViewVariables] private InjectorToggleMode CurrentMode { get; set; }
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
 
@@ -28,9 +28,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
         //Handle net updates
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cast = (InjectorComponentState)curState;
-            if (cast != null)
+            if(curState.GetType() == typeof(InjectorComponentState))
             {
+                var cast = (InjectorComponentState) curState;
                 CurrentVolume = cast.CurrentVolume;
                 TotalVolume = cast.TotalVolume;
                 CurrentMode = cast.CurrentMode;

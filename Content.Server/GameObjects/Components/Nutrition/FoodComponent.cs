@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 return 0;
             }
-            return Math.Max(1, _contents.CurrentVolume / _transferAmount);
+            return Math.Max(1, (int)Math.Ceiling(_contents.CurrentVolume / _transferAmount));
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

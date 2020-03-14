@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
 
             //Get transfer amount. May be smaller than _transferAmount if not enough room
-            int realTransferAmount = Math.Min(attackPourable.TransferAmount, targetSolution.EmptyVolume);
+            decimal realTransferAmount = Math.Min(attackPourable.TransferAmount, targetSolution.EmptyVolume);
             if (realTransferAmount <= 0) //Special message if container is full
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,

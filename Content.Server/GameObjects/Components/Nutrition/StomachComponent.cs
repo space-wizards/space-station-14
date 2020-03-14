@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// <summary>
         /// Max volume of internal solution storage
         /// </summary>
-        public int MaxVolume
+        public decimal MaxVolume
         {
             get => _stomachContents.MaxVolume;
             set => _stomachContents.MaxVolume = value;
@@ -141,10 +141,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private class ReagentDelta
         {
             public readonly string ReagentId;
-            public readonly int Quantity;
+            public readonly decimal Quantity;
             public float Lifetime { get; private set; }
 
-            public ReagentDelta(string reagentId, int quantity)
+            public ReagentDelta(string reagentId, decimal quantity)
             {
                 ReagentId = reagentId;
                 Quantity = quantity;

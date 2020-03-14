@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// <summary>
         /// Empty volume of internal solution
         /// </summary>
-        public int EmptyVolume => _internalSolution.EmptyVolume;
+        public decimal EmptyVolume => _internalSolution.EmptyVolume;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 //Run metabolism code for each reagent
                 foreach (var metabolizable in proto.Metabolism)
                 {
-                    int reagentDelta = metabolizable.Metabolize(Owner, reagent.ReagentId, tickTime);
+                    var reagentDelta = metabolizable.Metabolize(Owner, reagent.ReagentId, tickTime);
                     _internalSolution.TryRemoveReagent(reagent.ReagentId, reagentDelta);
                 }
             }

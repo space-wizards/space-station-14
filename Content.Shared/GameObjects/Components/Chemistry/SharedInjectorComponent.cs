@@ -18,11 +18,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         [Serializable, NetSerializable]
         protected sealed class InjectorComponentState : ComponentState
         {
-            public int CurrentVolume { get; }
-            public int TotalVolume { get; }
+            public decimal CurrentVolume { get; }
+            public decimal TotalVolume { get; }
             public InjectorToggleMode CurrentMode { get; }
 
-            public InjectorComponentState(int currentVolume, int totalVolume, InjectorToggleMode currentMode) : base(ContentNetIDs.REAGENT_INJECTOR)
+            public InjectorComponentState(decimal currentVolume, decimal totalVolume, InjectorToggleMode currentMode) : base(ContentNetIDs.REAGENT_INJECTOR)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;

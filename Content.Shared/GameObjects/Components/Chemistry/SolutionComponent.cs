@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 
         [ViewVariables]
         protected Solution _containedSolution = new Solution();
-        protected int _maxVolume;
+        protected decimal _maxVolume;
         private SolutionCaps _capabilities;
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ///     The maximum volume of the container.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public int MaxVolume
+        public decimal MaxVolume
         {
             get => _maxVolume;
             set => _maxVolume = value; // Note that the contents won't spill out if the capacity is reduced.
@@ -40,13 +40,13 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ///     The total volume of all the of the reagents in the container.
         /// </summary>
         [ViewVariables]
-        public int CurrentVolume => _containedSolution.TotalVolume;
+        public decimal CurrentVolume => _containedSolution.TotalVolume;
 
         /// <summary>
         ///     The volume without reagents remaining in the container.
         /// </summary>
         [ViewVariables]
-        public int EmptyVolume => MaxVolume - CurrentVolume;
+        public decimal EmptyVolume => MaxVolume - CurrentVolume;
 
         /// <summary>
         ///     The current blended color of all the reagents in the container.
@@ -122,7 +122,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             OnSolutionChanged();
         }
 
-        public bool TryRemoveReagent(string reagentId, int quantity)
+        public bool TryRemoveReagent(string reagentId, decimal quantity)
         {
             if (!ContainsReagent(reagentId, out var currentQuantity)) return false;
 
@@ -146,7 +146,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return true;
         }
 
-        public Solution SplitSolution(int quantity)
+        public Solution SplitSolution(decimal quantity)
         {
             var solutionSplit = _containedSolution.SplitSolution(quantity);
             OnSolutionChanged();
@@ -159,7 +159,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
                 SubstanceColor = Color.White;
 
             Color mixColor = default;
-            float runningTotalQuantity = 0;
+            var runningTotalQuantity = 0M;
 
             foreach (var reagent in _containedSolution)
             {
@@ -171,7 +171,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
                 if (mixColor == default)
                     mixColor = proto.SubstanceColor;
 
-                mixColor = BlendRGB(mixColor, proto.SubstanceColor, reagent.Quantity / runningTotalQuantity);
+                mixColor = BlendRGB(mixColor, proto.SubstanceColor, (float) (reagent.Quantity / runningTotalQuantity));
             }
         }
 
@@ -216,7 +216,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// <param name="reagentId">The reagent to check for.</param>
         /// <param name="quantity">Output the quantity of the reagent if it is contained, 0 if it isn't.</param>
         /// <returns>Return true if the solution contains the reagent.</returns>
-        public bool ContainsReagent(string reagentId, out int quantity)
+        public bool ContainsReagent(string reagentId, out decimal quantity)
         {
             foreach (var reagent in _containedSolution.Contents)
             {

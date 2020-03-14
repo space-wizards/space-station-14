@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// attempt to inject it's entire contents upon use.
         /// </summary>
         [ViewVariables]
-        private int _transferAmount;
+        private decimal _transferAmount;
 
         /// <summary>
         /// Initial storage volume of the injector
@@ -165,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Get transfer amount. May be smaller than _transferAmount if not enough room
-            int realTransferAmount = Math.Min(_transferAmount, targetBloodstream.EmptyVolume);
+            decimal realTransferAmount = Math.Min(_transferAmount, targetBloodstream.EmptyVolume);
             if (realTransferAmount <= 0)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
@@ -193,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Get transfer amount. May be smaller than _transferAmount if not enough room
-            int realTransferAmount = Math.Min(_transferAmount, targetSolution.EmptyVolume);
+            decimal realTransferAmount = Math.Min(_transferAmount, targetSolution.EmptyVolume);
             if (realTransferAmount <= 0)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
@@ -221,7 +221,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Get transfer amount. May be smaller than _transferAmount if not enough room
-            int realTransferAmount = Math.Min(_transferAmount, targetSolution.CurrentVolume);
+            decimal realTransferAmount = Math.Min(_transferAmount, targetSolution.CurrentVolume);
             if (realTransferAmount <= 0)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
