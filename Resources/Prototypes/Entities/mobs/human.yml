@@ -26,7 +26,7 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
-
+    drawdepth: Mobs
     layers:
     - map: ["enum.HumanoidVisualLayers.Chest"]
       color: "#e8b59b"
