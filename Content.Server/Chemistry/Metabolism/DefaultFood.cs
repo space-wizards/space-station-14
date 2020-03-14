@@ -1,9 +1,8 @@
-﻿using System;
-using Content.Server.GameObjects.Components.Nutrition;
+﻿using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces.Chemistry;
-using Content.Shared.Maths;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Chemistry.Metabolism
@@ -14,6 +13,9 @@ namespace Content.Server.Chemistry.Metabolism
     /// </summary>
     class DefaultFood : IMetabolizable
     {
+#pragma warning disable 649
+        [Dependency] private readonly IRounderForReagents _rounder;
+#pragma warning restore 649
         //Rate of metabolism in units / second
         private decimal _metabolismRate;
         public decimal MetabolismRate => _metabolismRate;
@@ -31,7 +33,7 @@ namespace Content.Server.Chemistry.Metabolism
         //Remove reagent at set rate, satiate hunger if a HungerComponent can be found
         decimal IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            var metabolismAmount = (MetabolismRate * (decimal) tickTime).RoundForReagents();
+            var metabolismAmount = _rounder.Round(MetabolismRate * (decimal) tickTime);
             if (solutionEntity.TryGetComponent(out HungerComponent hunger))
                 hunger.UpdateFood((float)(metabolismAmount * NutritionFactor));
 

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Maths;
+﻿using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Chemistry
 {
@@ -15,6 +16,9 @@ namespace Content.Shared.Chemistry
     /// </summary>
     public class Solution : IExposeData, IEnumerable<Solution.ReagentQuantity>
     {
+#pragma warning disable 649
+        [Dependency] private readonly IRounderForReagents _rounder;
+#pragma warning restore 649
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
         private List<ReagentQuantity> _contents = new List<ReagentQuantity>(2);
@@ -63,7 +67,7 @@ namespace Content.Shared.Chemistry
         /// <param name="quantity">The quantity in milli-units.</param>
         public void AddReagent(string reagentId, decimal quantity)
         {
-            quantity = quantity.RoundForReagents();
+            quantity = _rounder.Round(quantity);
             if (quantity <= 0)
                 return;
 
@@ -111,7 +115,7 @@ namespace Content.Shared.Chemistry
 
                 var curQuantity = reagent.Quantity;
 
-                var newQuantity = (curQuantity - quantity).RoundForReagents();
+                var newQuantity = _rounder.Round(curQuantity - quantity);
                 if (newQuantity <= 0)
                 {
                     _contents.RemoveSwap(i);
@@ -136,7 +140,7 @@ namespace Content.Shared.Chemistry
             if(quantity <= 0)
                 return;
 
-            var ratio = (TotalVolume - quantity).RoundForReagents() / TotalVolume;
+            var ratio = _rounder.Round(TotalVolume - quantity) / TotalVolume;
 
             if (ratio <= 0)
             {
@@ -151,12 +155,12 @@ namespace Content.Shared.Chemistry
 
                 // quantity taken is always a little greedy, so fractional quantities get rounded up to the nearest
                 // whole unit. This should prevent little bits of chemical remaining because of float rounding errors.
-                var newQuantity = (oldQuantity * ratio).RoundForReagents();
+                var newQuantity = _rounder.Round(oldQuantity * ratio);
 
                 _contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
             }
 
-            TotalVolume = (TotalVolume * ratio).RoundForReagents();
+            TotalVolume = _rounder.Round(TotalVolume * ratio);
         }
 
         public void RemoveAllSolution()

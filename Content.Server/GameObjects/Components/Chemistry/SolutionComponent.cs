@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using Content.Server.Chemistry;
-using Content.Server.GameObjects.Components.Nutrition;
+﻿using Content.Server.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
-using Content.Shared.Maths;
+using Content.Shared.Interfaces.Chemistry;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,6 +10,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -25,6 +22,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine
     {
 #pragma warning disable 649
+        [Dependency] private readonly IRounderForReagents _rounder;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -226,8 +224,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public bool TryAddReagent(string reagentId, decimal quantity, out decimal acceptedQuantity, bool skipReactionCheck = false, bool skipColor = false)
         {
-            quantity = quantity.RoundForReagents();
-            var toAcceptQuantity = (_maxVolume - _containedSolution.TotalVolume).RoundForReagents();
+            quantity = _rounder.Round(quantity);
+            var toAcceptQuantity = _rounder.Round(MaxVolume - ContainedSolution.TotalVolume);
             if (quantity > toAcceptQuantity)
             {
                 acceptedQuantity = toAcceptQuantity;
@@ -238,7 +236,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 acceptedQuantity = quantity;
             }
 
-            _containedSolution.AddReagent(reagentId, acceptedQuantity);
+            ContainedSolution.AddReagent(reagentId, acceptedQuantity);
             if (!skipColor) {
                 RecalculateColor();
             }
@@ -250,10 +248,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public bool TryAddSolution(Solution solution, bool skipReactionCheck = false, bool skipColor = false)
         {
-            if (solution.TotalVolume > (_maxVolume - _containedSolution.TotalVolume))
+            if (solution.TotalVolume > (MaxVolume - ContainedSolution.TotalVolume))
                 return false;
 
-            _containedSolution.AddSolution(solution);
+            ContainedSolution.AddSolution(solution);
             if (!skipColor) {
                 RecalculateColor();
             }
@@ -279,7 +277,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     return false;
                 }
-                var currentUnitReactions = (reagentQuantity / reactant.Value.Amount).RoundForReagents();
+                var currentUnitReactions = _rounder.Round(reagentQuantity / reactant.Value.Amount);
                 if (currentUnitReactions < unitReactions)
                 {
                     unitReactions = currentUnitReactions;
@@ -309,7 +307,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 if (!reactant.Value.Catalyst)
                 {
-                    var amountToRemove = (unitReactions * reactant.Value.Amount).RoundForReagents();
+                    var amountToRemove = _rounder.Round(unitReactions * reactant.Value.Amount);
                     TryRemoveReagent(reactant.Key, amountToRemove);
                 }
             }

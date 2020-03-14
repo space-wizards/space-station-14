@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.Chemistry;
+﻿using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System;
+using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components.Chemistry
 {
@@ -17,8 +17,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 #pragma warning restore 649
 
         [ViewVariables]
-        protected Solution _containedSolution = new Solution();
-        protected decimal _maxVolume;
+        protected Solution ContainedSolution = new Solution();
+        private decimal _maxVolume;
         private SolutionCaps _capabilities;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         ///     The total volume of all the of the reagents in the container.
         /// </summary>
         [ViewVariables]
-        public decimal CurrentVolume => _containedSolution.TotalVolume;
+        public decimal CurrentVolume => ContainedSolution.TotalVolume;
 
         /// <summary>
         ///     The volume without reagents remaining in the container.
@@ -64,7 +64,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             set => _capabilities = value;
         }
 
-        public IReadOnlyList<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
+        public IReadOnlyList<Solution.ReagentQuantity> ReagentList => ContainedSolution.Contents;
 
         /// <summary>
         /// Shortcut for Capabilities PourIn flag to avoid binary operators.
@@ -94,8 +94,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _maxVolume, "maxVol", 0);
-            serializer.DataField(ref _containedSolution, "contents", _containedSolution);
+            serializer.DataField(ref _maxVolume, "maxVol", 0M);
+            serializer.DataField(ref ContainedSolution, "contents", ContainedSolution);
             serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
         }
 
@@ -112,13 +112,13 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             base.Shutdown();
 
-            _containedSolution.RemoveAllSolution();
-            _containedSolution = new Solution();
+            ContainedSolution.RemoveAllSolution();
+            ContainedSolution = new Solution();
         }
 
         public void RemoveAllSolution()
         {
-            _containedSolution.RemoveAllSolution();
+            ContainedSolution.RemoveAllSolution();
             OnSolutionChanged();
         }
 
@@ -126,7 +126,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             if (!ContainsReagent(reagentId, out var currentQuantity)) return false;
 
-            _containedSolution.RemoveReagent(reagentId, quantity);
+            ContainedSolution.RemoveReagent(reagentId, quantity);
             OnSolutionChanged();
             return true;
         }
@@ -141,27 +141,27 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             if (CurrentVolume == 0)
                 return false;
 
-            _containedSolution.RemoveSolution(quantity);
+            ContainedSolution.RemoveSolution(quantity);
             OnSolutionChanged();
             return true;
         }
 
         public Solution SplitSolution(decimal quantity)
         {
-            var solutionSplit = _containedSolution.SplitSolution(quantity);
+            var solutionSplit = ContainedSolution.SplitSolution(quantity);
             OnSolutionChanged();
             return solutionSplit;
         }
 
         protected void RecalculateColor()
         {
-            if(_containedSolution.TotalVolume == 0)
+            if(ContainedSolution.TotalVolume == 0)
                 SubstanceColor = Color.White;
 
             Color mixColor = default;
             var runningTotalQuantity = 0M;
 
-            foreach (var reagent in _containedSolution)
+            foreach (var reagent in ContainedSolution)
             {
                 runningTotalQuantity += reagent.Quantity;
 
@@ -218,7 +218,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         /// <returns>Return true if the solution contains the reagent.</returns>
         public bool ContainsReagent(string reagentId, out decimal quantity)
         {
-            foreach (var reagent in _containedSolution.Contents)
+            foreach (var reagent in ContainedSolution.Contents)
             {
                 if (reagent.ReagentId == reagentId)
                 {
