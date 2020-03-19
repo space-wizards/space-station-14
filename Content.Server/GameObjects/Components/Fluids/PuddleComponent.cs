@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -39,8 +39,6 @@ namespace Content.Server.GameObjects.Components.Fluids
         // based on behaviour (e.g. someone being punched vs slashed with a sword would have different blood sprite)
         // to check for low volumes for evaporation or whatever
 
-        // TODO: If the underlying tile becomes space then this should be deleted
-        // it doesn't seem like there's an existing event for it.
         public override string Name => "Puddle";
 
         private CancellationTokenSource _evaporationToken;
@@ -106,8 +104,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             _spriteComponent = Owner.GetComponent<SpriteComponent>();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var randomVariant = robustRandom.Next(0, _spriteVariants - 1);
-            // TODO: This is ugly
-            string[] splitRSI = _spriteComponent.BaseRSIPath.Split("/".ToCharArray());
+            string[] splitRSI = _spriteComponent.BaseRSIPath.Split(ResourcePath.SYSTEM_SEPARATOR);
             var baseName = splitRSI[splitRSI.Length - 1].Replace(".rsi", "");
 
             _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
@@ -192,19 +189,11 @@ namespace Content.Server.GameObjects.Components.Fluids
             Color newColor;
             if (_recolor)
             {
-                newColor = new Color(
-                    _contents.SubstanceColor.R,
-                    _contents.SubstanceColor.G,
-                    _contents.SubstanceColor.B,
-                    cappedScale);
+                newColor = _contents.SubstanceColor.WithAlpha(cappedScale);
             }
             else
             {
-                newColor = new Color(
-                    _spriteComponent.Color.R,
-                    _spriteComponent.Color.G,
-                    _spriteComponent.Color.B,
-                    cappedScale);
+                newColor = _spriteComponent.Color.WithAlpha(cappedScale);
             }
 
             _spriteComponent.Color = newColor;
@@ -250,7 +239,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 {
                     // Don't overflow to walls
                     if (entity.TryGetComponent(out CollidableComponent collidableComponent) &&
-                        collidableComponent.CollisionLayer == 1)
+                        collidableComponent.CollisionLayer == (int) CollisionGroup.Impassable)
                     {
                         noSpawn = true;
                         break;
