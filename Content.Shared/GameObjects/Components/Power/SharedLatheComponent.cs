@@ -4,9 +4,11 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Power
 {
     [Serializable, NetSerializable]
-    public enum PowerDeviceVisuals
+    public enum LatheVisualState
     {
-        VisualState,
-        Powered
+        Idle,
+        Producing,
+        InsertingMetal,
+        InsertingGlass
     }
 }

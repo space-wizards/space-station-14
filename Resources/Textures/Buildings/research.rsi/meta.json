@@ -259,7 +259,7 @@
             ]
         },
         {
-            "name": "protolathe_n",
+            "name": "protolathe_building",
             "directions": 1,
             "delays": [
                 [
@@ -314,7 +314,7 @@
             ]
         },
         {
-            "name": "protolathe_t",
+            "name": "protolathe_open",
             "directions": 1,
             "delays": [
                 [
