@@ -172,7 +172,7 @@ namespace Content.Shared.Chemistry
         public Solution SplitSolution(decimal quantity)
         {
             if (quantity <= 0)
-                return new Solution();
+                return IoCManager.InjectDependencies(new Solution());
 
             Solution newSolution;
 
@@ -183,7 +183,7 @@ namespace Content.Shared.Chemistry
                 return newSolution;
             }
 
-            newSolution = new Solution();
+            newSolution = IoCManager.InjectDependencies(new Solution());
             var newTotalVolume = 0M;
             var ratio = (TotalVolume - quantity) / TotalVolume;
 
@@ -235,7 +235,7 @@ namespace Content.Shared.Chemistry
         public Solution Clone()
         {
             var volume = 0M;
-            var newSolution = new Solution();
+            var newSolution = IoCManager.InjectDependencies(new Solution());
 
             for (var i = 0; i < _contents.Count; i++)
             {

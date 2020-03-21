@@ -17,7 +17,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 #pragma warning restore 649
 
         [ViewVariables]
-        protected Solution ContainedSolution = new Solution();
+        protected Solution ContainedSolution;
         private decimal _maxVolume;
         private SolutionCaps _capabilities;
 
@@ -95,15 +95,20 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             base.ExposeData(serializer);
 
             serializer.DataField(ref _maxVolume, "maxVol", 0M);
-            serializer.DataField(ref ContainedSolution, "contents", ContainedSolution);
+            serializer.DataField(ref ContainedSolution, "contents", IoCManager.InjectDependencies(new Solution()));
             serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
+        }
+
+        public virtual void Init()
+        {
+            ContainedSolution = IoCManager.InjectDependencies(new Solution());
         }
 
         /// <inheritdoc />
         protected override void Startup()
         {
             base.Startup();
-
+            
             RecalculateColor();
         }
 
@@ -113,7 +118,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             base.Shutdown();
 
             ContainedSolution.RemoveAllSolution();
-            ContainedSolution = new Solution();
+            ContainedSolution = IoCManager.InjectDependencies(new Solution());
         }
 
         public void RemoveAllSolution()

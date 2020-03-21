@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables] private string _packPrototypeId;
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
-        [ViewVariables] private int DispenseAmount = 10;
+        [ViewVariables] private decimal _dispenseAmount = 10;
 
         [ViewVariables]
         private SolutionComponent Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
@@ -115,22 +115,22 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     TryClear();
                     break;
                 case UiButton.SetDispenseAmount1:
-                    DispenseAmount = 1;
+                    _dispenseAmount = 1;
                     break;
                 case UiButton.SetDispenseAmount5:
-                    DispenseAmount = 5;
+                    _dispenseAmount = 5;
                     break;
                 case UiButton.SetDispenseAmount10:
-                    DispenseAmount = 10;
+                    _dispenseAmount = 10;
                     break;
                 case UiButton.SetDispenseAmount25:
-                    DispenseAmount = 25;
+                    _dispenseAmount = 25;
                     break;
                 case UiButton.SetDispenseAmount50:
-                    DispenseAmount = 50;
+                    _dispenseAmount = 50;
                     break;
                 case UiButton.SetDispenseAmount100:
-                    DispenseAmount = 100;
+                    _dispenseAmount = 100;
                     break;
                 case UiButton.Dispense:
                     if (HasBeaker)
@@ -173,12 +173,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (beaker == null)
             {
                 return new ReagentDispenserBoundUserInterfaceState(false, 0, 0,
-                    "", Inventory, Owner.Name, null, DispenseAmount);
+                    "", Inventory, Owner.Name, null, _dispenseAmount);
             }
 
             var solution = beaker.GetComponent<SolutionComponent>();
             return new ReagentDispenserBoundUserInterfaceState(true, solution.CurrentVolume, solution.MaxVolume,
-                beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), DispenseAmount);
+                beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), _dispenseAmount);
         }
 
         private void UpdateUserInterface()
@@ -228,7 +228,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!HasBeaker) return;
 
             var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
-            solution.TryAddReagent(Inventory[dispenseIndex].ID, DispenseAmount, out _);
+            solution.TryAddReagent(Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
         }

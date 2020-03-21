@@ -28,13 +28,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public override string Name => "Pourable";
 
-        private int _transferAmount;
+        private decimal _transferAmount;
 
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
         /// </summary>
         [ViewVariables]
-        public int TransferAmount
+        public decimal TransferAmount
         {
             get => _transferAmount;
             set => _transferAmount = value;
@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _transferAmount, "transferAmount", 5);
+            serializer.DataField(ref _transferAmount, "transferAmount", 5.0M);
         }
 
         /// <summary>

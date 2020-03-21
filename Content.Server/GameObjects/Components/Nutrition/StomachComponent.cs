@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
 
             //Add reagents ready for transfer to bloodstream to transferSolution
-            var transferSolution = new Solution();
+            var transferSolution = IoCManager.InjectDependencies(new Solution());
             foreach (var delta in _reagentDeltas.ToList()) //Use ToList here to remove entries while iterating
             {
                 //Increment lifetime of reagents
