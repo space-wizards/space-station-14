@@ -10,6 +10,11 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Deconstruction
+    gotoprototype: wall
+    gotostage: 1
+    decontool: Welder
+    toolamount: 4
   - type: Sprite
     netsync: false
     drawdepth: Walls

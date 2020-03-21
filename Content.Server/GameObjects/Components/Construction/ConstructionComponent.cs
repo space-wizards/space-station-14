@@ -205,5 +205,21 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             return StackTypeMap.TryGetValue((StackType)stack.StackType, out var should) && should == step.Material;
         }
+
+        public void SetStage(int NewStage)
+        {
+            Stage = NewStage;
+            if(Stage == 0)
+            {
+                Owner.Delete();
+            }
+
+            var stage = Prototype.Stages[Stage];
+
+            if (stage.Icon != null)
+            {
+                Sprite.LayerSetSprite(0, stage.Icon);
+            }
+        }
     }
 }
