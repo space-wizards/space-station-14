@@ -62,38 +62,42 @@ namespace Content.Server.GameObjects.Components.Research
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            switch (message.Message)
-            {
-                case LatheQueueRecipeMessage msg:
-                    _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
-                    if (recipe != null)
-                        for (var i = 0; i < msg.Quantity; i++)
-                        {
-                            Queue.Enqueue(recipe);
-                            _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
-                        }
-                    break;
-                case LatheSyncRequestMessage msg:
-                    if (!Owner.TryGetComponent(out MaterialStorageComponent storage)) return;
-                    _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
-                    if (_producingRecipe != null)
-                        _userInterface.SendMessage(new LatheProducingRecipeMessage(_producingRecipe.ID));
-                    break;
+            if (!Powered)
+                return;
+                switch (message.Message)
+                {
+                    case LatheQueueRecipeMessage msg:
+                        _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
+                        if (recipe != null)
+                            for (var i = 0; i < msg.Quantity; i++)
+                            {
+                                Queue.Enqueue(recipe);
+                                _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
+                            }
+                        break;
+                    case LatheSyncRequestMessage msg:
+                        if (!Owner.TryGetComponent(out MaterialStorageComponent storage)) return;
+                        _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
+                        if (_producingRecipe != null)
+                            _userInterface.SendMessage(new LatheProducingRecipeMessage(_producingRecipe.ID));
+                        break;
 
-                case LatheServerSelectionMessage msg:
-                    if (!Owner.TryGetComponent(out ResearchClientComponent researchClient)) return;
-                    researchClient.OpenUserInterface(message.Session);
-                    break;
+                    case LatheServerSelectionMessage msg:
+                        if (!Owner.TryGetComponent(out ResearchClientComponent researchClient)) return;
+                        researchClient.OpenUserInterface(message.Session);
+                        break;
 
-                case LatheServerSyncMessage msg:
-                    if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)
-                    ||  !Owner.TryGetComponent(out ProtolatheDatabaseComponent protoDatabase)) return;
+                    case LatheServerSyncMessage msg:
+                        if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)
+                        || !Owner.TryGetComponent(out ProtolatheDatabaseComponent protoDatabase)) return;
 
-                    if(database.SyncWithServer())
-                        protoDatabase.Sync();
+                        if (database.SyncWithServer())
+                            protoDatabase.Sync();
 
-                    break;
-            }
+                        break;
+                }
+            
+
         }
 
         internal bool Produce(LatheRecipePrototype recipe)

@@ -11,7 +11,7 @@
       map: ["enum.MedicalScannerVisualLayers.Machine"]
     - state: scanner_terminal_blue
       map: ["enum.MedicalScannerVisualLayers.Terminal"]
-
+  - type: PowerDevice
   - type: Icon
     sprite: Buildings/medical_scanner.rsi
     state: scanner_open
