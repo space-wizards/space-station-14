@@ -1,0 +1,73 @@
+- type: entity
+  parent: BaseItem
+  id: esword_parent
+  description: If you see this you are a thief or a traitor. Either way you should feel bad about yourself!
+  abstract: true
+  components:
+  - type: Sprite
+    state: icon
+  - type: Icon
+    state: icon
+  - type: MeleeWeapon
+    range: 1.5
+    arcwidth: 10
+    arc: spear
+  - type: Item
+    Size: 24
+    prefix: inhand
+  - type: ItemCooldown
+  - type: MeleeWeaponAnimation
+    id: esword_parent
+    state: icon
+    length: 0.10
+    speed: 6
+    arcType: Poke
+
+- type: entity
+  name: Blue Esword
+  parent: esword_parent
+  id: blueesword
+  components:
+  - type: Sprite
+    sprite: Objects/Melee/eswordblue.rsi
+  - type: Icon
+    sprite: Objects/Melee/eswordblue.rsi
+  - type: Item
+    sprite: Objects/Melee/eswordblue.rsi
+
+- type: entity
+  name: Green Esword
+  parent: esword_parent
+  id: greenesword
+  components:
+  - type: Sprite
+    sprite: Objects/Melee/eswordgreen.rsi
+  - type: Icon
+    sprite: Objects/Melee/eswordgreen.rsi
+  - type: Item
+    sprite: Objects/Melee/eswordgreen.rsi
+
+- type: entity
+  name: Purple Esword
+  parent: esword_parent
+  id: purpleesword
+  components:
+  - type: Sprite
+    sprite: Objects/Melee/eswordpurple.rsi
+  - type: Icon
+    sprite: Objects/Melee/eswordpurple.rsi
+  - type: Item
+    sprite: Objects/Melee/eswordpurple.rsi
+
+- type: entity
+  name: Red Esword
+  parent: esword_parent
+  id: redesword
+  components:
+  - type: Sprite
+    sprite: Objects/Melee/eswordred.rsi
+  - type: Icon
+    sprite: Objects/Melee/eswordred.rsi
+  - type: Item
+    sprite: Objects/Melee/eswordred.rsi
+
