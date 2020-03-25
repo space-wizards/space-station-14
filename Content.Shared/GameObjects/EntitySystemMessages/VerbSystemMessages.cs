@@ -35,12 +35,14 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
             {
                 public readonly string Text;
                 public readonly string Key;
+                public readonly string Category;
                 public readonly bool Available;
 
-                public VerbData(string text, string key, bool available)
+                public VerbData(string text, string key, string category, bool available)
                 {
                     Text = text;
                     Key = key;
+                    Category = category;
                     Available = available;
                 }
             }

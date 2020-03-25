@@ -15,6 +15,8 @@ namespace Content.Server.GlobalVerbs
     class RejuvenateVerb : GlobalVerb
     {
         public override string GetText(IEntity user, IEntity target) => "Rejuvenate";
+        public override string GetCategory(IEntity user, IEntity target) => "Debug";
+
         public override bool RequireInteractionRange => false;
 
         public override VerbVisibility GetVisibility(IEntity user, IEntity target)

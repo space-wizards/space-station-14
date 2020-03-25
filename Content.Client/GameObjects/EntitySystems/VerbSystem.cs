@@ -121,7 +121,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             DebugTools.AssertNotNull(_currentPopup);
 
-            var buttons = new List<Button>();
+            var buttons = new Dictionary<string, List<Button>>();
 
             var vBox = _currentPopup.List;
             vBox.DisposeAllChildren();
@@ -137,7 +137,10 @@ namespace Content.Client.GameObjects.EntitySystems
                     };
                 }
 
-                buttons.Add(button);
+                if(!buttons.ContainsKey(data.Category))
+                    buttons[data.Category] = new List<Button>();
+
+                buttons[data.Category].Add(button);
             }
 
             var user = GetUserEntity();
@@ -148,7 +151,13 @@ namespace Content.Client.GameObjects.EntitySystems
                     continue;
 
                 var disabled = verb.GetVisibility(user, component) != VerbVisibility.Visible;
-                buttons.Add(CreateVerbButton(verb.GetText(user, component), disabled, verb.ToString(),
+                var category = verb.GetCategory(user, component);
+
+
+                if(!buttons.ContainsKey(category))
+                    buttons[category] = new List<Button>();
+
+                buttons[category].Add(CreateVerbButton(verb.GetText(user, component), disabled, verb.ToString(),
                     entity.ToString(), () => verb.Activate(user, component)));
             }
             //Get global verbs. Visible for all entities regardless of their components.
@@ -158,17 +167,33 @@ namespace Content.Client.GameObjects.EntitySystems
                     continue;
 
                 var disabled = globalVerb.GetVisibility(user, entity) != VerbVisibility.Visible;
-                buttons.Add(CreateVerbButton(globalVerb.GetText(user, entity), disabled, globalVerb.ToString(),
+                var category = globalVerb.GetCategory(user, entity);
+
+                if(!buttons.ContainsKey(category))
+                    buttons[category] = new List<Button>();
+
+                buttons[category].Add(CreateVerbButton(globalVerb.GetText(user, entity), disabled, globalVerb.ToString(),
                     entity.ToString(), () => globalVerb.Activate(user, entity)));
             }
 
             if (buttons.Count > 0)
             {
-                buttons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
-
-                foreach (var button in buttons)
+                foreach (var (category, verbs) in buttons)
                 {
-                    vBox.AddChild(button);
+                    if (string.IsNullOrEmpty(category))
+                        continue;
+
+                    vBox.AddChild(CreateCategoryButton(category, verbs));
+                }
+
+                if (buttons.ContainsKey(""))
+                {
+                    buttons[""].Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
+
+                    foreach (var verb in buttons[""])
+                    {
+                        vBox.AddChild(verb);
+                    }
                 }
             }
             else
@@ -201,6 +226,25 @@ namespace Content.Client.GameObjects.EntitySystems
                     }
                 };
             }
+            return button;
+        }
+
+        private Button CreateCategoryButton(string text, List<Button> verbButtons)
+        {
+            verbButtons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
+
+            var button = new Button
+            {
+                Text = $"{text}...",
+            };
+            button.OnPressed += _ =>
+                {
+                    _currentPopup.List.DisposeAllChildren();
+                    foreach (var verb in verbButtons)
+                    {
+                        _currentPopup.List.AddChild(verb);
+                    }
+                };
             return button;
         }
 

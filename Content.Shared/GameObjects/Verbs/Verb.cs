@@ -32,6 +32,14 @@ namespace Content.Shared.GameObjects
         public abstract string GetText(IEntity user, IComponent component);
 
         /// <summary>
+        ///     Gets the category of this verb.
+        /// </summary>
+        /// <param name="user">The entity of the user opening this menu.</param>
+        /// <param name="component">The component instance for which this verb is being loaded.</param>
+        /// <returns>The category of this verb.</returns>
+        public virtual string GetCategory(IEntity user, IComponent component)  => "";
+
+        /// <summary>
         ///     Gets the visibility level of this verb in the right click menu.
         /// </summary>
         /// <param name="user">The entity of the user opening this menu.</param>
@@ -64,6 +72,14 @@ namespace Content.Shared.GameObjects
         protected abstract string GetText(IEntity user, T component);
 
         /// <summary>
+        ///     Gets the category of this verb.
+        /// </summary>
+        /// <param name="user">The entity of the user opening this menu.</param>
+        /// <param name="component">The component instance for which this verb is being loaded.</param>
+        /// <returns>The category of this verb.</returns>
+        protected virtual string GetCategory(IEntity user, T component) => "";
+
+        /// <summary>
         ///     Gets the visibility level of this verb in the right click menu.
         /// </summary>
         /// <param name="user">The entity of the user opening this menu.</param>
@@ -82,6 +98,12 @@ namespace Content.Shared.GameObjects
         public sealed override string GetText(IEntity user, IComponent component)
         {
             return GetText(user, (T) component);
+        }
+
+        /// <inheritdoc />
+        public sealed override string GetCategory(IEntity user, IComponent component)
+        {
+            return GetCategory(user, (T) component);
         }
 
         /// <inheritdoc />
