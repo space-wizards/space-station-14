@@ -1,4 +1,5 @@
-﻿using Content.Client.UserInterface;
+﻿using System;
+using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -6,7 +7,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -15,29 +15,25 @@ namespace Content.Client.GameObjects.Components.Mobs
     {
 #pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
-#pragma warning restore 649
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool IsInCombatMode { get; private set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public TargetingZone ActiveZone { get; private set; }
-
-#pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud;
 #pragma warning restore 649
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override bool IsInCombatMode
         {
-            base.HandleComponentState(curState, nextState);
-
-            if (!(curState is CombatModeComponentState state))
-                return;
-
-            IsInCombatMode = state.IsInCombatMode;
-            ActiveZone = state.TargetingZone;
-            if (Owner == _playerManager.LocalPlayer.ControlledEntity)
+            get => base.IsInCombatMode;
+            set
             {
+                base.IsInCombatMode = value;
+                UpdateHud();
+            }
+        }
+
+        public override TargetingZone ActiveZone
+        {
+            get => base.ActiveZone;
+            set
+            {
+                base.ActiveZone = value;
                 UpdateHud();
             }
         }
@@ -61,6 +57,11 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void UpdateHud()
         {
+            if (Owner != _playerManager.LocalPlayer.ControlledEntity)
+            {
+                return;
+            }
+
             _gameHud.CombatModeActive = IsInCombatMode;
             _gameHud.TargetingZone = ActiveZone;
         }

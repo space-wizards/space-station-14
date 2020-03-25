@@ -2,15 +2,16 @@ using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -19,7 +20,8 @@ using static Content.Client.StaticIoC;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
-    public sealed class CombatModeSystem : EntitySystem
+    [UsedImplicitly]
+    public sealed class CombatModeSystem : SharedCombatModeSystem
     {
         private const float AttackTimeThreshold = 0.15f;
 
@@ -44,8 +46,22 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _inputSystem = EntitySystemManager.GetEntitySystem<InputSystem>();
             _inputSystem.BindMap.BindFunction(ContentKeyFunctions.UseOrAttack, new InputHandler(this));
-
+            _inputSystem.BindMap.BindFunction(ContentKeyFunctions.ToggleCombatMode,
+                InputCmdHandler.FromDelegate(CombatModeToggled, handle: false));
             _overlayManager.AddOverlay(new CombatModeOverlay(this));
+        }
+
+        private void CombatModeToggled(ICommonSession session)
+        {
+            var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
+
+            if (player.ControlledEntity == null ||
+                !player.ControlledEntity.TryGetComponent(out CombatModeComponent combatModeComponent))
+            {
+                return;
+            }
+
+            combatModeComponent.IsInCombatMode = !combatModeComponent.IsInCombatMode;
         }
 
         public override void Shutdown()
@@ -68,12 +84,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void OnTargetingZoneChanged(TargetingZone obj)
         {
-            RaiseNetworkEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
+            EntityManager.RaisePredictiveEvent(new SetTargetZoneMessage(obj));
         }
 
         private void OnCombatModeChanged(bool obj)
         {
-            RaiseNetworkEvent(new CombatModeSystemMessages.SetCombatModeActiveMessage(obj));
+            EntityManager.RaisePredictiveEvent(new SetCombatModeActiveMessage(obj));
 
             // Just in case.
             UseOrAttackIsDown = false;

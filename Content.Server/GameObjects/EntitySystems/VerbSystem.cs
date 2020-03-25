@@ -2,6 +2,7 @@
 using System.Reflection;
 using Content.Shared.GameObjects;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -13,7 +14,6 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         #pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
         #pragma warning restore 649
 
         public override void Initialize()
@@ -26,18 +26,14 @@ namespace Content.Server.GameObjects.EntitySystems
             IoCManager.InjectDependencies(this);
         }
 
-        private void UseVerb(UseVerbMessage use)
+        private void UseVerb(UseVerbMessage use, EntitySessionEventArgs eventArgs)
         {
-            var channel = use.NetChannel;
-            if(channel == null)
-                return;
-
             if (!_entityManager.TryGetEntity(use.EntityUid, out var entity))
             {
                 return;
             }
 
-            var session = _playerManager.GetSessionByChannel(channel);
+            var session = eventArgs.SenderSession;
             var userEntity = session.AttachedEntity;
 
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
@@ -83,19 +79,16 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private void RequestVerbs(RequestVerbsMessage req)
+        private void RequestVerbs(RequestVerbsMessage req, EntitySessionEventArgs eventArgs)
         {
-            var channel = req.NetChannel;
-            if (channel == null)
-                return;
+            var player = (IPlayerSession) eventArgs.SenderSession;
 
             if (!_entityManager.TryGetEntity(req.EntityUid, out var entity))
             {
                 return;
             }
 
-            var session = _playerManager.GetSessionByChannel(channel);
-            var userEntity = session.AttachedEntity;
+            var userEntity = player.AttachedEntity;
 
             var data = new List<VerbsResponseMessage.VerbData>();
             //Get verbs, component dependent.
@@ -125,7 +118,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var response = new VerbsResponseMessage(data, req.EntityUid);
-            RaiseNetworkEvent(response, channel);
+            RaiseNetworkEvent(response, player.ConnectedClient);
         }
     }
 }
