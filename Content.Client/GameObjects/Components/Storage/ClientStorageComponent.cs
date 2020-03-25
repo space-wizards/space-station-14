@@ -242,23 +242,22 @@ namespace Content.Client.GameObjects.Components.Storage
                 };
                 AddChild(ActualButton);
 
-                var hBoxContainer = new HBoxContainer {MouseFilter = MouseFilterMode.Ignore};
+                var hBoxContainer = new HBoxContainer();
                 EntitySpriteView = new SpriteView
                 {
-                    CustomMinimumSize = new Vector2(32.0f, 32.0f), MouseFilter = MouseFilterMode.Ignore
+                    CustomMinimumSize = new Vector2(32.0f, 32.0f)
                 };
                 EntityName = new Label
                 {
                     SizeFlagsVertical = SizeFlags.ShrinkCenter,
                     Text = "Backpack",
-                    MouseFilter = MouseFilterMode.Ignore
                 };
                 hBoxContainer.AddChild(EntitySpriteView);
                 hBoxContainer.AddChild(EntityName);
 
                 EntityControl = new Control
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand, MouseFilter = MouseFilterMode.Ignore
+                    SizeFlagsHorizontal = SizeFlags.FillExpand
                 };
                 EntitySize = new Label
                 {

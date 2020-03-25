@@ -107,7 +107,7 @@ namespace Content.Client.UserInterface
 
         public void Initialize()
         {
-            RootControl = new LayoutContainer {MouseFilter = Control.MouseFilterMode.Ignore};
+            RootControl = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(RootControl, LayoutContainer.LayoutPreset.Wide);
 
             var escapeTexture = _resourceCache.GetTexture("/Textures/UserInterface/hamburger.svg.96dpi.png");
@@ -237,7 +237,6 @@ namespace Content.Client.UserInterface
 
             HandsContainer = new MarginContainer
             {
-                MouseFilter = MouseFilterMode.Ignore,
                 SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
 
@@ -353,13 +352,11 @@ namespace Content.Client.UserInterface
 
                 AddChild(new MarginContainer
                 {
-                    MouseFilter = MouseFilterMode.Ignore,
                     MarginTopOverride = 4,
                     Children =
                     {
                         new VBoxContainer
                         {
-                            MouseFilter = MouseFilterMode.Ignore,
                             Children =
                             {
                                 (_textureRect = new TextureRect
@@ -367,7 +364,6 @@ namespace Content.Client.UserInterface
                                     Texture = texture,
                                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                                     SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
-                                    MouseFilter = MouseFilterMode.Ignore,
                                     ModulateSelfOverride = ColorNormal,
                                     CustomMinimumSize = (0, 32),
                                     Stretch = TextureRect.StretchMode.KeepCentered
@@ -376,7 +372,6 @@ namespace Content.Client.UserInterface
                                 {
                                     Text = keyName,
                                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                    MouseFilter = MouseFilterMode.Ignore,
                                     ModulateSelfOverride = ColorNormal,
                                     StyleClasses = {StyleClassLabelTopButton}
                                 })

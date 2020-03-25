@@ -1,4 +1,4 @@
-using Content.Client.Interfaces.Chat;
+﻿using Content.Client.Interfaces.Chat;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -44,14 +44,12 @@ namespace Content.Client.Chat
             _senderEntity = senderEntity;
             _eyeManager = eyeManager;
 
-            MouseFilter = MouseFilterMode.Ignore;
             // Use text clipping so new messages don't overlap old ones being pushed up.
             RectClipContent = true;
 
             var label = new RichTextLabel
             {
                 MaxWidth = 256,
-                MouseFilter = MouseFilterMode.Ignore
             };
             label.SetMessage(text);
 
@@ -59,7 +57,6 @@ namespace Content.Client.Chat
             {
                 StyleClasses = { "tooltipBox" },
                 Children = { label },
-                MouseFilter = MouseFilterMode.Ignore,
                 ModulateSelfOverride = Color.White.WithAlpha(0.75f)
             };
 
