@@ -5,23 +5,26 @@
   abstract: true
   components:
   - type: Sprite
-    state: icon
+    sprite: Objects/Melee/eswords.rsi
   - type: Icon
-    state: icon
+    sprite: Objects/Melee/eswords.rsi
   - type: MeleeWeapon
-    range: 1.5
+    range: 1
     arcwidth: 10
     arc: spear
   - type: Item
+    sprite: Objects/Melee/eswords.rsi
     Size: 24
-    prefix: inhand
   - type: ItemCooldown
-  - type: MeleeWeaponAnimation
-    id: esword_parent
-    state: icon
-    length: 0.10
-    speed: 6
-    arcType: Poke
+- type: MeleeWeaponAnimation
+  id: esword
+  length: 0.10
+  speed: 6
+  arcType: Poke
+- type: sound_collection
+  id: esword_hit
+  files:
+  - /Audio/items/blade1.ogg
 
 - type: entity
   name: Blue Esword
@@ -29,11 +32,15 @@
   id: blueesword
   components:
   - type: Sprite
-    sprite: Objects/Melee/eswordblue.rsi
+    state: iconblue
   - type: Icon
-    sprite: Objects/Melee/eswordblue.rsi
+    state: iconblue
   - type: Item
-    sprite: Objects/Melee/eswordblue.rsi
+    HeldPrefix: blue
+- type: MeleeWeaponAnimation
+  parent: esword
+  id: esword_blue
+  state: iconblue
 
 - type: entity
   name: Green Esword
@@ -41,11 +48,15 @@
   id: greenesword
   components:
   - type: Sprite
-    sprite: Objects/Melee/eswordgreen.rsi
+    state: icongreen
   - type: Icon
-    sprite: Objects/Melee/eswordgreen.rsi
+    state: icongreen
   - type: Item
-    sprite: Objects/Melee/eswordgreen.rsi
+    HeldPrefix: green
+- type: MeleeWeaponAnimation
+  parent: esword
+  id: esword_green
+  state: icongreen
 
 - type: entity
   name: Purple Esword
@@ -53,11 +64,15 @@
   id: purpleesword
   components:
   - type: Sprite
-    sprite: Objects/Melee/eswordpurple.rsi
+    state: iconpurple
   - type: Icon
-    sprite: Objects/Melee/eswordpurple.rsi
+    state: iconpurple
   - type: Item
-    sprite: Objects/Melee/eswordpurple.rsi
+    HeldPrefix: purple
+- type: MeleeWeaponAnimation
+  parent: esword
+  id: esword_purple
+  state: iconpurple
 
 - type: entity
   name: Red Esword
@@ -65,9 +80,12 @@
   id: redesword
   components:
   - type: Sprite
-    sprite: Objects/Melee/eswordred.rsi
+    state: iconred
   - type: Icon
-    sprite: Objects/Melee/eswordred.rsi
+    state: iconred
   - type: Item
-    sprite: Objects/Melee/eswordred.rsi
-
+    HeldPrefix: red
+- type: MeleeWeaponAnimation
+  parent: esword
+  id: esword_red
+  state: iconred
