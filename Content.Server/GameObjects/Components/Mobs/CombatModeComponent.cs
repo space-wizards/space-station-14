@@ -9,6 +9,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     ///     using *everything* as a weapon.
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(SharedCombatModeComponent))]
     public sealed class CombatModeComponent : SharedCombatModeComponent
     {
     }

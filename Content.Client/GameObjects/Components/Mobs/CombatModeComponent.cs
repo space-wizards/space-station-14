@@ -11,6 +11,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.GameObjects.Components.Mobs
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedCombatModeComponent))]
     public sealed class CombatModeComponent : SharedCombatModeComponent
     {
 #pragma warning disable 649
