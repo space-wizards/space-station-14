@@ -1,0 +1,124 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"b" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"c" = (
+/obj/structure/table,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"d" = (
+/obj/machinery/computer/shuttle/mining/common,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"e" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/mining)
+"f" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"g" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/mining)
+"h" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Lavaland Shuttle Airlock"
+	},
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "mining_common";
+	name = "lavaland shuttle";
+	port_direction = 4;
+	width = 7
+	},
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"i" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"j" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"k" = (
+/obj/structure/ore_box,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"l" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"Q" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/mining)
+
+(1,1,1) = {"
+a
+a
+b
+a
+b
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+e
+g
+f
+i
+a
+"}
+(3,1,1) = {"
+b
+d
+Q
+e
+f
+j
+l
+"}
+(4,1,1) = {"
+a
+c
+e
+e
+f
+k
+a
+"}
+(5,1,1) = {"
+a
+a
+b
+h
+b
+a
+a
+"}

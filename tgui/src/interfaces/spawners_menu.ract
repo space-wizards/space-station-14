@@ -1,0 +1,18 @@
+{{#each data.spawners}}
+  <ui-display title='{{name}}' button>
+    {{#partial button}}
+       <ui-button action='jump' params='{"name" : {{name}}}'>
+	     Jump
+        </ui-button>
+        <ui-button action='spawn' params='{"name" : {{name}}}'>
+	      Spawn
+        </ui-button>
+    {{/partial}}
+  <ui-section label='Description'>
+    <span>{{{desc}}}</span>
+  </ui-section>
+  <ui-section label='Spawners left'>
+    <span>{{amount_left}}</span>
+   </ui-section>
+  </ui-display>
+{{/each}}

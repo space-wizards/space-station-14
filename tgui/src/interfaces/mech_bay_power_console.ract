@@ -1,0 +1,40 @@
+<script>
+  component.exports = {
+    data: {
+      mechChargeState(charge) {
+	    let maxcharge = this.get('data.recharge_port.mech.cell.maxcharge')
+		if(charge >= (maxcharge/1.5)) return 'good'
+		else if(charge >= (maxcharge/3)) return 'average'
+		else return 'bad'
+        },
+	  mechHealthState(health) {
+	    let maxhealth = this.get('data.recharge_port.mech.maxhealth')
+	    if(health > (maxhealth/1.5)) return 'good'
+		else if(health > (maxhealth/3)) return 'average'
+		else return 'bad'
+	    }
+      }
+    }
+</script>
+
+<ui-display title='Mech Status'>
+  {{#if data.recharge_port}}
+	{{#if data.recharge_port.mech}}
+	  <ui-section label='Integrity'>
+	    <ui-bar min='0' max='{{adata.recharge_port.mech.maxhealth}}' value='{{adata.recharge_port.mech.health}}'state='{{mechHealthState(adata.recharge_port.mech.health)}}'>{{Math.round(adata.recharge_port.mech.health)}}/{{adata.recharge_port.mech.maxhealth}}</ui-bar>
+      </ui-section>
+	  {{#if data.recharge_port.mech.cell}}
+		<ui-section label='Power'>
+		<ui-bar min='0' max='{{adata.recharge_port.mech.cell.maxcharge}}' value='{{adata.recharge_port.mech.cell.charge}}'state='{{mechChargeState(adata.recharge_port.mech.cell.charge)}}'>{{Math.round(adata.recharge_port.mech.cell.charge)}}/{{Math.round(adata.recharge_port.mech.cell.maxcharge)}}</ui-bar>
+		</ui-section>
+	  {{else}}
+		<ui-section label='Power'><span class='bad'>Cell Missing</span></ui-section>
+	  {{/if}}
+	{{else}}
+	  <ui-section>Mech Not Found</ui-section>
+	{{/if}}
+  {{else}}
+    <ui-section>Recharging Port Not Found</ui-section>
+	<ui-button icon='refresh' action='reconnect'>Reconnect</ui-button>
+  {{/if}}
+</ui-display>

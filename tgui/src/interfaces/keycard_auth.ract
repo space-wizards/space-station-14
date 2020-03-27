@@ -1,0 +1,17 @@
+{{#if data.waiting}}
+	<ui-notice>
+		<span>Waiting for another device to confirm your request...</span>
+	</ui-notice>
+{{else}}
+	<ui-display>
+		<ui-section>
+			{{#if data.auth_required}}
+				<ui-button icon='check' action='auth_swipe'>Authorize {{data.auth_required}}</ui-button>
+			{{else}}
+				<ui-button icon='warning' state='{{data.red_alert ? 'disabled' : null}}' action='red_alert'>Red Alert</ui-button>
+				<ui-button icon='wrench' state='{{data.emergency_maint ? 'disabled' : null}}' action='emergency_maint'>Emergency Maintenance Access</ui-button>
+				<ui-button icon='warning' state='null' action='bsa_unlock'>Bluespace Artillery Unlock</ui-button>
+			{{/if}}
+		</ui-section>
+	</ui-display>
+{{/if}}

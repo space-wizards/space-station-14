@@ -1,0 +1,178 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"b" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"c" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/mining)
+"d" = (
+/obj/machinery/computer/shuttle/mining/common,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/mining)
+"e" = (
+/obj/structure/table,
+/obj/item/radio,
+/obj/item/radio/intercom{
+	pixel_y = 22
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/mining)
+"f" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/mining)
+"g" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/mining)
+"h" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/mining)
+"i" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"j" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/mining)
+"k" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/mining)
+"l" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/mining)
+"m" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Lavaland Shuttle Airlock"
+	},
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "mining_common";
+	name = "lavaland shuttle";
+	port_direction = 4;
+	width = 7
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"n" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/mining)
+"o" = (
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/mining)
+"p" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating,
+/area/space)
+"q" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/mining)
+"r" = (
+/obj/structure/sign/warning/fire,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"s" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+
+(1,1,1) = {"
+a
+a
+b
+i
+b
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+f
+j
+n
+o
+r
+"}
+(3,1,1) = {"
+b
+d
+g
+k
+n
+p
+s
+"}
+(4,1,1) = {"
+a
+e
+h
+l
+n
+q
+r
+"}
+(5,1,1) = {"
+a
+a
+b
+m
+b
+a
+a
+"}

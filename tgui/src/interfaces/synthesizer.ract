@@ -1,0 +1,12 @@
+<ui-display title='Select' button> 
+	<ui-section>
+		{{#each data.possible_amounts}}
+			<ui-button icon='plus' state='{{data.amount == . ? "selected" : null}}' action='amount' params='{"target": {{.}}}'>{{.}}</ui-button>
+		{{/each}}
+	</ui-section>
+	<ui-section>
+		{{#each data.chemicals}}
+			<ui-button grid icon='tint' state='{{data.current_reagent == id ? "selected" : null}}' action='select' params='{"reagent": "{{id}}"}'>{{title}}</ui-button>
+		{{/each}}
+	</ui-section>
+</ui-display>

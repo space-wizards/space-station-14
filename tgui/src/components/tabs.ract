@@ -1,0 +1,27 @@
+<link rel='ractive' href='components/tabs/tab.ract'>
+
+<script>
+  component.exports = {
+    oninit () {
+      this.set('active', this.findComponent('tab').get('name'))
+      this.on('switch', event => {
+        this.set('active', event.node.textContent.trim()) // Hack but it works...
+      })
+
+      this.observe('active', (newkey, oldkey, path) => {
+        for (let tab of this.findAllComponents('tab')) {
+          tab.set('shown', (tab.get('name') === newkey))
+        }
+      })
+    }
+  }
+</script>
+
+<header>
+  {{#each tabs}}
+    <ui-button pane='{{.}}' on-press='switch'>{{.}}</ui-button>
+  {{/each}}
+</header>
+<ui-display>
+  {{>content}}
+</ui-display>

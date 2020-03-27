@@ -1,0 +1,228 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"c" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"d" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Shuttle Airlock"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/abandoned)
+"e" = (
+/turf/open/floor/plasteel/dark,
+/area/shuttle/abandoned)
+"f" = (
+/turf/open/floor/plasteel,
+/area/shuttle/abandoned)
+"g" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"h" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/glass,
+/obj/item/gun/medbeam,
+/turf/open/floor/plating/abductor,
+/area/shuttle/abandoned)
+"i" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/plating/abductor,
+/area/shuttle/abandoned)
+"j" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/table/glass,
+/obj/machinery/recharger,
+/obj/item/gun/energy/laser/retro,
+/turf/open/floor/plating/abductor,
+/area/shuttle/abandoned)
+"k" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"l" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/shuttle/abandoned)
+"m" = (
+/obj/machinery/computer/shuttle/white_ship,
+/turf/open/floor/plating/abductor,
+/area/shuttle/abandoned)
+"n" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/plating/abductor,
+/area/shuttle/abandoned)
+"o" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Shuttle Airlock"
+	},
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 4;
+	height = 9;
+	id = "whiteship";
+	launch_status = 0;
+	name = "White Ship";
+	port_direction = 4;
+	width = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/abandoned)
+"p" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/table/glass,
+/obj/item/tank/internals/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/suit/space/hardsuit/engine/elite,
+/turf/open/floor/plating/abductor,
+/area/shuttle/abandoned)
+"q" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/shuttle/abandoned)
+"r" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/table/glass,
+/obj/item/clothing/shoes/magboots,
+/turf/open/floor/plating/abductor,
+/area/shuttle/abandoned)
+"s" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+
+(1,1,1) = {"
+a
+a
+b
+g
+d
+g
+b
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+e
+f
+e
+b
+b
+a
+"}
+(3,1,1) = {"
+b
+b
+e
+e
+f
+e
+e
+b
+b
+"}
+(4,1,1) = {"
+c
+e
+e
+h
+l
+p
+e
+e
+s
+"}
+(5,1,1) = {"
+d
+f
+f
+i
+m
+q
+f
+f
+d
+"}
+(6,1,1) = {"
+c
+e
+e
+j
+n
+r
+e
+e
+s
+"}
+(7,1,1) = {"
+b
+b
+e
+e
+f
+e
+e
+b
+b
+"}
+(8,1,1) = {"
+a
+b
+b
+e
+f
+e
+b
+b
+a
+"}
+(9,1,1) = {"
+a
+a
+b
+k
+o
+k
+b
+a
+a
+"}

@@ -1,0 +1,16 @@
+<script>
+component.exports = {
+  oninit () {
+    this.observe('value', (newkey, oldkey, keypath) => {
+      const { min, max } = this.get()
+      const value = Math.clamp(min, max, newkey)
+      this.animate('percentage', Math.round((value - min) / (max - min) * 100))
+    })
+  }
+}
+</script>
+
+<div class='bar'>
+  <div class='barFill {{state}}' style='width: {{percentage}}%'></div>
+  <span class='barText'>{{yield}}</span>
+</div>

@@ -1,0 +1,53 @@
+<ui-display title='Occupant'>
+  <ui-section label='Occupant'>
+	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
+  </ui-section>
+  {{#if data.hasOccupant}}
+    <ui-section label='State'>
+      <span class='{{data.occupant.statstate}}'>{{data.occupant.stat}}</span>
+  	</ui-section>
+  	<ui-section label='Temperature'>
+  	  <span class='{{data.occupant.temperaturestatus}}'>{{data.occupant.bodyTemperature}} K</span>
+  	</ui-section>
+    <ui-section label='Health'>
+      <ui-bar min='{{data.occupant.minHealth}}' max='{{data.occupant.maxHealth}}' value='{{data.occupant.health}}'
+        state='{{data.occupant.health >= 0 ? "good" : "average"}}'>{{data.occupant.health}}</ui-bar>
+    </ui-section>
+    {{#each [{label: "Brute", type: "bruteLoss"}, {label: "Respiratory", type: "oxyLoss"}, {label: "Toxin", type: "toxLoss"}, {label: "Burn", type: "fireLoss"}]}}
+      <ui-section label='{{label}}'>
+        <ui-bar min='0' max='{{data.occupant.maxHealth}}' value='{{data.occupant[type]}}' state='bad'>{{data.occupant[type]}}</ui-bar>
+      </ui-section>
+    {{/each}}
+  {{/if}}
+</ui-display>
+<ui-display title='Cell'>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.isOperating ? "power-off" : "close"}}'
+      style='{{data.isOperating ? "selected" : null}}'
+      state='{{data.isOpen ? "disabled" : null}}'
+      action='power'>{{data.isOperating ? "On" : "Off"}}</ui-button>
+  </ui-section>
+  <ui-section label='Temperature'>
+		<span class='{{data.temperaturestatus}}'>{{data.cellTemperature}} K</span>
+	</ui-section>
+	<ui-section label='Door'>
+    <ui-button icon='{{data.isOpen ? "unlock" : "lock"}}' action='door'>{{data.isOpen ? "Open" : "Closed"}}</ui-button>
+    <ui-button icon='{{data.autoEject ? "sign-out" : "sign-in"}}' action='autoeject'>{{data.autoEject ? "Auto" : "Manual"}}</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display title='Beaker' button>
+  {{#partial button}}
+    <ui-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='ejectbeaker'>Eject</ui-button>
+  {{/partial}}
+  <ui-section label='Contents'>
+    {{#if data.isBeakerLoaded}}
+      {{#each adata.beakerContents}}
+        <span class='highlight' intro-outro='fade'>{{volume}} units of {{name}}</span><br/>
+      {{else}}
+        <span class='bad'>Beaker Empty</span>
+      {{/each}}
+    {{else}}
+      <span class='average'>No Beaker</span>
+    {{/if}}
+  </ui-section>
+</ui-display>

@@ -1,0 +1,51 @@
+This file contains a list of maps for use in map rotation.
+#Lines starting with # are ignored.
+Lines not inside map blocks are also ignored
+Duplicated entries use the latter one.
+All whitespace at the start and end of lines is ignored. (including indentation, thats just for show)
+Format:
+#map [map name] (name of .json file in _maps folder without the .json part)
+	minplayers [number] (0 or less disables this requirement)
+	maxplayers [number] (0 or less disables this requirement)
+	default (The last map with this defined will get all votes of players who have not explicitly voted for a map)
+	voteweight [number] (How much to count each player vote as, defaults to 1, setting to 0.5 counts each vote as half a vote, 2 as double, etc, Setting to 0 disables the map but allows players to still pick it)
+	disabled (disables the map)
+	votable (is this map votable)
+endmap
+
+map boxstation
+	#default
+	#voteweight 1.5
+	votable
+endmap
+
+map metastation
+	minplayers 25
+	#voteweight 0.5
+	votable
+endmap
+
+map pubbystation
+	votable
+endmap
+
+map deltastation
+	minplayers 50
+	votable
+endmap
+
+map donutstation
+	minplayers 50
+	votable
+endmap
+
+map kilostation
+	minplayers 25
+	votable
+endmap
+
+map runtimestation
+endmap
+
+map multiz_debug
+endmap

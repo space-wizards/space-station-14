@@ -1,0 +1,128 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"h" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/item/storage/pod{
+	pixel_x = -24
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"r" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"u" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/pod_1)
+"A" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/item/radio/intercom{
+	pixel_x = 30
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"B" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/pod_1)
+"C" = (
+/obj/machinery/computer/shuttle/monastery_shuttle,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"H" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"J" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/status_display/evac{
+	pixel_x = -32
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"L" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"M" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/status_display/evac{
+	pixel_x = 32
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"O" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Shuttle Airlock"
+	},
+/obj/docking_port/mobile/pod{
+	dwidth = 2;
+	height = 6;
+	id = "pod1";
+	port_direction = 2;
+	width = 5
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"W" = (
+/turf/template_noop,
+/area/template_noop)
+"Z" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/pod_1)
+
+(1,1,1) = {"
+W
+B
+B
+u
+B
+Z
+"}
+(2,1,1) = {"
+B
+B
+J
+L
+h
+Z
+"}
+(3,1,1) = {"
+u
+C
+r
+r
+r
+O
+"}
+(4,1,1) = {"
+B
+B
+M
+H
+A
+Z
+"}
+(5,1,1) = {"
+W
+B
+B
+u
+B
+Z
+"}

@@ -1,0 +1,88 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Elevator Access"
+	},
+/obj/docking_port/mobile/elevator{
+	dir = 4;
+	height = 6;
+	id = "snowdin_excavation";
+	name = "excavation elevator";
+	width = 6
+	},
+/turf/open/floor/plating,
+/area/shuttle/snowdin/elevator1)
+"b" = (
+/obj/structure/window/reinforced/fulltile/ice,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/snowdin/elevator1)
+"c" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Elevator Access"
+	},
+/turf/open/floor/plating,
+/area/shuttle/snowdin/elevator1)
+"d" = (
+/turf/closed/wall/ice,
+/area/shuttle/snowdin/elevator1)
+"e" = (
+/turf/open/floor/engine,
+/area/shuttle/snowdin/elevator1)
+"f" = (
+/obj/machinery/computer/shuttle/snowdin/mining{
+	name = "Excavation Elevator Console";
+	possible_destinations = "snowdin_excavation_top;snowdin_excavation_down";
+	shuttleId = "snowdin_excavation"
+	},
+/turf/open/floor/engine,
+/area/shuttle/snowdin/elevator1)
+
+(1,1,1) = {"
+d
+b
+c
+a
+b
+d
+"}
+(2,1,1) = {"
+b
+e
+e
+e
+e
+b
+"}
+(3,1,1) = {"
+c
+e
+e
+e
+e
+c
+"}
+(4,1,1) = {"
+c
+e
+e
+e
+e
+c
+"}
+(5,1,1) = {"
+b
+f
+e
+e
+e
+b
+"}
+(6,1,1) = {"
+d
+b
+c
+c
+b
+d
+"}

@@ -1,0 +1,29 @@
+<ui-display title='Thermostat'>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.isActive ? "power-off" : "close"}}'
+		style='{{data.isActive ? "selected" : null}}'
+		state='{{data.isBeakerLoaded ? null : "disabled"}}'
+		action='power'>{{data.isActive ? "On" : "Off"}}</ui-button>
+  </ui-section>
+  <ui-section label='Target'>
+	  <ui-button icon='pencil' action='temperature' params='{"target": "input"}'>{{Math.round(adata.targetTemp)}} K</ui-button>
+  </ui-section>
+</ui-display>
+<ui-display title='Beaker' button>
+  {{#partial button}}
+    <ui-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='eject'>Eject</ui-button>
+  {{/partial}}
+  <ui-section label='Contents'>
+    {{#if data.isBeakerLoaded}}
+      <span>Temperature: {{Math.round(adata.currentTemp)}} K</span>
+      <br />
+      {{#each adata.beakerContents}}
+        <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br/>
+      {{else}}
+        <span class='bad'>Beaker Empty</span>
+      {{/each}}
+    {{else}}
+      <span class='average'>No Beaker</span>
+    {{/if}}
+  </ui-section>
+</ui-display>

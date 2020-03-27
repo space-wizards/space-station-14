@@ -1,0 +1,10 @@
+body {padding:0px;margin:0px;}
+#top {position:fixed;top:5px;left:10%;width:80%;text-align:center;background-color:#fff;border:2px solid #ccc;}
+#main {position:relative;top:10px;left:3%;width:96%;text-align:center;z-index:0;}
+#searchable {table-layout:fixed;width:100%;text-align:center;"#f4f4f4";}
+tr.norm {background-color:#f4f4f4;}
+tr.title {background-color:#ccc;}
+tr.alt {background-color:#e7e7e7;}
+.small {font-size:80%;}
+a {text-decoration:none;}
+a:hover {color:#d3d;}

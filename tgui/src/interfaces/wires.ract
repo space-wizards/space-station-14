@@ -1,0 +1,16 @@
+<ui-display>
+  {{#each data.wires}}
+    <ui-section label='{{color}}{{wire ? " (" + wire + ")" : ""}}' labelcolor='{{color}}' candystripe right>
+      <ui-button action='cut' params='{"wire":"{{color}}"}'>{{cut ? "Mend" : "Cut"}}</ui-button>
+      <ui-button action='pulse' params='{"wire":"{{color}}"}'>Pulse</ui-button>
+      <ui-button action='attach' params='{"wire":"{{color}}"}'>{{attached ? "Detach" : "Attach"}}</ui-button>
+    </ui-section>
+  {{/each}}
+</ui-display>
+{{#if data.status}}
+  <ui-display>
+    {{#each data.status}}
+      <ui-section>{{.}}</ui-section>
+    {{/each}}
+  </ui-display>
+{{/if}}

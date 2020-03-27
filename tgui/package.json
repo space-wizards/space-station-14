@@ -1,0 +1,67 @@
+{
+  "name": "tgui",
+  "private": true,
+  "scripts": {
+    "build": "gulp --min",
+    "watch": "gulp watch"
+  },
+  "dependencies": {
+    "autoprefixer": "6.7.7",
+    "babel-core": "6.26.3",
+    "babel-plugin-external-helpers": "6.22.0",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-es2015-loose": "7.0.0",
+    "babel-register": "6.26.0",
+    "babelify": "7.2.0",
+    "babelify-external-helpers": "1.1.0",
+    "browserify": "13.0.0",
+    "bundle-collapser": "1.2.1",
+    "cached-path-relative": "1.0.2",
+    "cssnano": "^4.1.10",
+    "dom4": "1.7.0",
+    "es3ify": "0.2.1",
+    "fg-loadcss": "1.0.0-0",
+    "gulp": "^4.0.2",
+    "gulp-bytediff": "1.0.0",
+    "gulp-if": "3.0.0",
+    "gulp-load-plugins": "^1.6.0",
+    "gulp-postcss": "6.1.0",
+    "gulp-size": "2.0.0",
+    "gulp-sourcemaps": "1.6.0",
+    "gulp-stylus": "2.7.0",
+    "gulp-uglify": "3.0.2",
+    "gulplog": "1.0.0",
+    "html5shiv": "3.7.3",
+    "ie8": "0.8.1",
+    "lodash": "^4.17.15",
+    "minimist": "1.2.0",
+    "paths-js": "0.4.10",
+    "pleeease-filters": "2.0.0",
+    "postcss": "7.0.18",
+    "postcss-color-rgba-fallback": "2.2.0",
+    "postcss-filter-gradient": "0.2.2",
+    "postcss-font-weights": "2.0.1",
+    "postcss-opacity": "5.0.0",
+    "ractive": "0.7.3",
+    "ractive-componentify": "0.2.4",
+    "ractive-events-keys": "0.2.1",
+    "ractive-transitions-fade": "0.3.1",
+    "require-globify": "1.3.0",
+    "stylus": "0.54.7",
+    "vinyl-buffer": "1.0.1",
+    "vinyl-source-stream": "2.0.0",
+    "watchify": "^3.11.1"
+  },
+  "browser": {
+    "ractive": "ractive/ractive-legacy.runtime"
+  },
+  "require-globify": {
+    "appliesTo": {
+      "includeExtensions": [
+        ".js",
+        ".ract"
+      ]
+    }
+  }
+}

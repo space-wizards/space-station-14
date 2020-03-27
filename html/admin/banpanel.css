@@ -1,0 +1,107 @@
+.column {
+    float: left;
+    flex-wrap: wrap;
+}
+
+.left {
+    width: 280px;
+}
+
+.middle {
+    width: 80px;
+}
+
+.right {
+    width: 150px;
+}
+
+.row {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.reason {
+    resize: none;
+    min-height: 40px;
+    width: 340px;
+}
+
+.rolegroup {
+    padding: 3px;
+    width: 430px;
+    border: none;
+    text-align: center;
+    outline: none;
+    display: inline-block;
+}
+
+.long {
+    width: 860px;
+}
+
+.content {
+    text-align: center;
+}
+
+.command {
+    background-color: #948f02;
+}
+
+.security {
+    background-color: #a30000;
+}
+
+.engineering {
+    background-color: #fb5613;
+}
+
+.medical {
+    background-color: #337296;
+}
+
+.science {
+    background-color: #993399;
+}
+
+.supply {
+    background-color: #a8732b;
+}
+
+.silicon {
+    background-color: #ff00ff;
+}
+
+.abstract {
+    background-color: #708090;
+}
+
+.civilian {
+    background-color: #6eaa2c;
+}
+
+.ghostandotherroles {
+    background-color: #5c00e6;
+}
+
+.antagonistpositions {
+    background-color: #6d3f40;
+}
+
+.inputbox {
+    position: absolute;
+    top: 0px;
+    left: 4px;
+    width: 14px;
+    height: 14px;
+    background: #e6e6e6;
+}
+
+.select {
+    position: relative;
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}

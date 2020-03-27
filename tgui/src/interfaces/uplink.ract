@@ -1,0 +1,43 @@
+<script>
+  component.exports = {
+    data: {
+    },
+    oninit () {
+      this.on({
+        hover (event) {
+          const uses = this.get('data.telecrystals')
+          if (uses >= event.context.params.cost)
+            this.set('hovered', event.context.params)
+        },
+        unhover (event) {
+          this.set('hovered')
+        }
+      })
+    }
+  }
+</script>
+
+<ui-display title='Uplink' button>
+  {{#partial button}}
+    {{#if data.lockable}}
+      <ui-button icon='lock' action='lock'>Lock</ui-button>
+    {{/if}}
+  {{/partial}}
+  <ui-section label='Telecrystals' right>
+    <span class='{{data.telecrystals > 0 ? "good" : "bad"}}'>{{data.telecrystals}} TC</span>
+  </ui-section>
+</ui-display>
+{{#each data.categories}}
+  <ui-display>
+	<ui-button action='select' params='{"category": "{{name}}"}'>{{name}}</ui-button>
+	{{#each items}}
+	  <ui-section label='{{name}}' candystripe right>
+		<ui-button tooltip='{{name}}: {{desc}}' tooltip-side='left'
+		  state='{{data.telecrystals < cost || (data.telecrystals - hovered.cost < cost && hovered.item != name) ? "disabled" : null}}'
+		  action='buy' params='{"category": "{{category}}", "item": {{name}}, "cost": {{cost}}}'
+		  on-hover='hover' on-unhover='unhover'>{{cost}} TC</ui-button>
+	  </ui-section>
+	{{/each}}
+  </ui-display>
+{{/each}}
+

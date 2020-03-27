@@ -1,0 +1,125 @@
+<ui-display title='Nanite Cloud Console'>
+<ui-display title='Program Disk'>
+	{{#if data.has_disk}}
+		<ui-button icon='eject' action='eject'>Eject Disk</ui-button><br>
+		{{#if data.has_program}}
+			<ui-section>
+				<ui-section label='Program Name'>{{data.disk.name}}</ui-section>
+				<ui-section label='Description'>{{data.disk.desc}}</ui-section>
+				<ui-section label='Activation Status'>{{data.disk.activated ? "Active" : "Inactive" }}</ui-section>
+        {{#if data.disk.timer_trigger_delay}}
+          <ui-section label='Trigger Delay'>{{data.disk.timer_trigger_delay}} seconds</ui-section>
+        {{/if}}
+        {{#if data.disk.timer_trigger}}
+          <ui-section label='Trigger Repeat Timer'>{{data.disk.timer_trigger}} seconds</ui-section>
+        {{/if}}
+        {{#if data.disk.timer_restart}}
+          <ui-section label='Restart Timer'>{{data.disk.timer_restart}} seconds</ui-section>
+        {{/if}}
+        {{#if data.disk.timer_shutdown}}
+          <ui-section label='Shutdown Timer'>{{data.disk.timer_shutdown}} seconds</ui-section>
+        {{/if}}
+				{{#if data.disk.activation_code}}
+					<ui-section label='Activation Code'>{{data.disk.activation_code}}</ui-section>
+				{{/if}}
+				{{#if data.disk.deactivation_code}}
+					<ui-section label='Deactivation Code'>{{data.disk.deactivation_code}}</ui-section>
+				{{/if}}
+				{{#if data.disk.kill_code}}
+					<ui-section label='Kill Code'>{{data.disk.kill_code}}</ui-section>
+				{{/if}}
+				{{#if data.disk.trigger_code}}
+					<ui-section label='Trigger Code'>{{data.disk.trigger_code}}</ui-section>
+				{{/if}}
+				{{#if data.disk.has_extra_settings}}
+					{{#each data.disk.extra_settings}}
+					  <ui-section label='{{name}}'>{{value}}</ui-section>
+					{{/each}}
+				{{/if}}
+			</ui-section>
+		{{else}}
+			<ui-notice>No program detected.</ui-notice>
+		{{/if}}
+	{{else}}
+		<ui-notice>Insert disk.</ui-notice>
+	{{/if}}
+</ui-display>
+<ui-display title='Cloud Storage'>
+	{{#if !data.current_view}}
+		<ui-button icon='plus-circle' action='create_backup'>Create New Backup</ui-button>
+		<ui-display title='Active Backups'>
+			{{#each data.cloud_backups}}
+				<ui-button action='set_view' params='{"view": "{{cloud_id}}"}'>Backup #{{cloud_id}}</ui-button>
+			{{/each}}
+		</ui-display>
+	{{else}}
+		<ui-button icon='undo' action='set_view' params='{"view": "0"}'>Return</ui-button>
+		{{#if !data.cloud_backup}}
+			<ui-notice>ERROR: Backup not found.</ui-notice>
+		{{else}}
+			<ui-display title='Backup #{{data.current_view}}'>
+				{{#if data.has_program}}
+					<ui-button icon='upload' action='upload_program' style='selected'>Upload Program From Disk</ui-button><br>
+				{{/if}}
+				{{#each data.cloud_programs}}
+					<hr>
+					<ui-section>
+						<h3>{{name}}</h3>
+						<div style="float:right">
+							<ui-button icon='minus-circle' action='remove_program' style='danger' params='{"program_id": "{{id}}"}'>Uninstall</ui-button>
+							{{#if data.disk.can_rule}}
+								<ui-button icon='ruler' action='add_rule' params='{"program_id": "{{id}}"}'>Add Rule from Disk</ui-button>
+							{{/if}}
+						</div>
+					</ui-section>
+					<ui-section>
+						<ui-section label='Description'>{{desc}}</ui-section>
+						<ui-section label='Activation Status'>{{activated ? "Active" : "Inactive" }}</ui-section>
+						<ui-section label='Nanites Consumed'>{{use_rate}}/s</ui-section>
+						{{#if can_trigger}}
+							<ui-section label='Trigger Cost'>{{trigger_cost}}</ui-section>
+							<ui-section label='Trigger Cooldown'>{{trigger_cooldown}} seconds</ui-section>
+              {{#if timer_trigger_delay}}
+                <ui-section label='Trigger Delay'>{{timer_trigger_delay}} seconds</ui-section>
+              {{/if}}
+              {{#if timer_trigger}}
+                <ui-section label='Trigger Repeat Timer'>{{timer_trigger}} seconds</ui-section>
+              {{/if}}
+						{{/if}}
+						{{#if timer_restart}}
+							<ui-section label='Restart Timer'>{{timer_restart}} seconds</ui-section>
+            {{/if}}
+            {{#if timer_shutdown}}
+							<ui-section label='Shutdown Timer'>{{timer_shutdown}} seconds</ui-section>
+						{{/if}}
+            
+						{{#if activation_code}}
+							<ui-section label='Activation Code'>{{activation_code}}</ui-section>
+						{{/if}}
+						{{#if deactivation_code}}
+							<ui-section label='Deactivation Code'>{{deactivation_code}}</ui-section>
+						{{/if}}
+						{{#if kill_code}}
+							<ui-section label='Kill Code'>{{kill_code}}</ui-section>
+						{{/if}}
+						{{#if trigger_code}}
+							<ui-section label='Trigger Code'>{{trigger_code}}</ui-section>
+						{{/if}}
+						{{#if has_extra_settings}}
+							{{#each extra_settings}}
+							  <ui-section label='{{name}}'>{{value}}</ui-section>
+							{{/each}}
+						{{/if}}
+						{{#if has_rules}}
+							<ui-section label='Rules'>
+								{{#each rules}}
+									{{display}} (<ui-button icon='minus-circle' action='remove_rule' style='danger' params='{"program_id": "{{program_id}}", "rule_id": "{{id}}"}'>Remove</ui-button>)<br>
+								{{/each}}
+							</ui-section>
+						{{/if}}
+					</ui-section>
+				{{/each}}
+			</ui-display>
+		{{/if}}
+	{{/if}}
+</ui-display>

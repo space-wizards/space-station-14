@@ -1,0 +1,54 @@
+<ui-notice>
+  <span>The regulator {{data.holding ? "is" : "is not"}} connected to a tank.</span>
+</ui-notice>
+<ui-display title='Status' button>
+  <ui-section label='Pressure'>
+    <span>{{Math.round(adata.pressure)}} kPa</span>
+  </ui-section>
+  <ui-section label='Port'>
+    <span class='{{data.connected ? "good" : "average"}}'>{{data.connected ? "Connected" : "Not Connected"}}</span>
+  </ui-section>
+</ui-display>
+<ui-display title='Pump'>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.on ? "power-off" : "close"}}'
+      style='{{data.on ? "selected" : "null"}}'
+      action='power'>{{data.on ? "On" : "Off"}}</ui-button>
+  </ui-section>
+  <ui-section label='Direction'>
+    <ui-button icon='{{data.direction == "out" ? "sign-out" : "sign-in"}}'
+      action='direction'>{{data.direction == "out" ? "Out" : "In"}}</ui-button>
+  </ui-section>
+  <ui-section label='Target Pressure'>
+    <ui-bar min='{{data.min_pressure}}' max='{{data.max_pressure}}'
+      value='{{data.target_pressure}}'>{{Math.round(adata.target_pressure)}} kPa</ui-bar>
+  </ui-section>
+  <ui-section label='Pressure Regulator'>
+    <ui-button icon='refresh' state='{{data.target_pressure != data.default_pressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "reset"}'>Reset</ui-button>
+    <ui-button icon='minus' state='{{data.target_pressure > data.min_pressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "min"}'>Min</ui-button>
+    <ui-button icon='pencil' action='pressure' params='{"pressure": "input"}'>Set</ui-button>
+    <ui-button icon='plus' state='{{data.target_pressure < data.max_pressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "max"}'>Max</ui-button>
+  </ui-section>
+</ui-display>
+<ui-display title='Holding Tank' button>
+  {{#partial button}}
+    {{#if data.holding}}
+      <ui-button icon='eject' style='{{data.on ? "danger" : null}}' action='eject'>Eject</ui-button>
+    {{/if}}
+  {{/partial}}
+  {{#if data.holding}}
+		<ui-section label='Label'>
+			{{data.holding.name}}
+		</ui-section>
+		<ui-section label='Pressure'>
+			{{Math.round(adata.holding.pressure)}} kPa
+		</ui-section>
+	{{else}}
+		<ui-section>
+			<span class='average'>No Holding Tank</span>
+		</ui-section>
+	{{/if}}
+</ui-display>

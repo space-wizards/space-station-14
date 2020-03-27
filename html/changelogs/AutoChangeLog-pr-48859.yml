@@ -1,0 +1,6 @@
+author: "Archanial"
+delete-after: True
+changes: 
+  - rscadd: "Operation tables and stasis beds now link to operation computer when built"
+  - tweak: "Stasis beds needs to be placed on the next tile to a computer"
+  - bugfix: "Stasis bed will now display patient's data onto the computer"

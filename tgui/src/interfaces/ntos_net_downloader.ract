@@ -1,0 +1,90 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+	<i>Welcome to software download utility. Please select which software you wish to download.</i><hr>
+	{{#if data.error}}
+		<ui-display title='Download Error'>
+			<ui-section label='Information'>
+				{{data.error}}
+			</ui-section>
+			<ui-section label='Reset Program'>
+				<ui-button icon='times' action='PRG_reseterror'>
+				RESET
+				</ui-button>
+			</ui-section>
+		</ui-display>
+	{{else}} 
+		{{#if data.downloadname}}
+			<ui-display title='Download Running'>
+				<i>Please wait...</i>
+				<ui-section label='File name'>
+					{{data.downloadname}}
+				</ui-section>
+				<ui-section label='File description'>
+					{{data.downloaddesc}}
+				</ui-section>
+				<ui-section label='File size'>
+					{{data.downloadsize}}GQ
+				</ui-section>
+				<ui-section label='Transfer Rate'>
+					{{data.downloadspeed}} GQ/s
+				</ui-section>
+				<ui-section label='Download progress'>
+					<ui-bar min='0' max='{{adata.downloadsize}}' value='{{adata.downloadcompletion}}' state='good'>{{Math.round(adata.downloadcompletion)}}GQ / {{adata.downloadsize}}GQ</ui-bar>
+				</ui-section>
+			</ui-display>
+		{{/if}}
+	{{/if}}
+	{{#if !data.downloadname}}
+		{{#if !data.error}}
+			<ui-display title='File System'>
+				<ui-section label='Used Capacity'>
+					<ui-bar min='0' max='{{adata.disk_size}}' value='{{adata.disk_used}}' state='good'>{{Math.round(adata.disk_used)}}GQ / {{adata.disk_size}}GQ</ui-bar>
+				</ui-section>
+			</ui-display>
+			
+			<ui-display title='Primary Software Repository'>
+				{{#each data.downloadable_programs}}
+					<ui-subdisplay title='{{filedesc}}'>
+						<div style='display: table-caption; margin-left: 3px'>{{fileinfo}}</div>
+						
+						<ui-section label='File name'>
+							{{filename}} ({{size}} GQ)
+						</ui-section>
+						<ui-section label='Compatibility'>
+							{{compatibility}}
+						</ui-section>
+						<ui-button icon='signal' action='PRG_downloadfile' params='{"filename": "{{filename}}"}'>
+							DOWNLOAD
+						</ui-button>
+					</ui-subdisplay>
+					<br>
+				{{/each}}
+			</ui-display>
+			
+			{{#if data.hackedavailable}}
+				<ui-display title='UNKNOWN Software Repository'>
+					<i>Please note that Nanotrasen does not recommend download of software from non-official servers.</i>
+					{{#each data.hacked_programs}}
+						<ui-subdisplay title='{{filedesc}}'>
+							<div style='display: table-caption; margin-left: 3px'>{{fileinfo}}</div>
+							
+							<ui-section label='File name'>
+								{{filename}} ({{size}} GQ)
+							</ui-section>
+							<ui-section label='Compatibility'>
+								{{compatibility}}
+							</ui-section>
+							<ui-button icon='signal' action='PRG_downloadfile' params='{"filename": "{{filename}}"}'>
+								DOWNLOAD
+							</ui-button>
+						</ui-subdisplay>
+						<br>
+					{{/each}}
+				</ui-display>
+			{{/if}}
+		{{/if}}
+	{{/if}}
+	<br><br><hr><i>NTOS v2.0.4b Copyright Nanotrasen 2557 - 2559</i>
+</ui-display>

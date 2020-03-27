@@ -1,0 +1,167 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aA" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Shuttle turret control";
+	pixel_x = 32;
+	pixel_y = -28;
+	req_access = null;
+	req_access_txt = "150"
+	},
+/obj/structure/cable,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
+	environment_smash = 0
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/caravan/syndicate1)
+"fh" = (
+/obj/machinery/camera/xray{
+	c_tag = "External View";
+	dir = 4;
+	network = list("caravansyndicate1");
+	pixel_x = 32
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/caravan/syndicate1)
+"fp" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/caravan/syndicate1)
+"qx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/shuttle/caravan/syndicate1{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/caravan/syndicate1)
+"uW" = (
+/obj/machinery/button/door{
+	id = "caravansyndicate1_bolt";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -25;
+	req_access_txt = "150";
+	specialfunctions = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/syndicate1,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/caravan/syndicate1)
+"vD" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 4
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/syndicate1)
+"vK" = (
+/obj/machinery/power/apc/highcap/fifteen_k{
+	dir = 8;
+	name = "Syndicate Fighter APC";
+	pixel_x = -25;
+	req_access_txt = "150"
+	},
+/obj/machinery/computer/security{
+	dir = 1;
+	network = list("caravansyndicate1")
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/caravan/syndicate1)
+"wV" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate1_bolt";
+	name = "External Airlock";
+	normalspeed = 0;
+	req_access_txt = "150"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/docking_port/mobile{
+	callTime = 50;
+	dir = 4;
+	dwidth = 4;
+	height = 5;
+	id = "caravansyndicate1";
+	ignitionTime = 25;
+	name = "Syndicate Fighter";
+	port_direction = 2;
+	preferred_direction = 4;
+	width = 9
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/caravan/syndicate1)
+"Jv" = (
+/turf/template_noop,
+/area/template_noop)
+"YP" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 8
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/syndicate1)
+"YX" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/syndicate1)
+
+(1,1,1) = {"
+Jv
+Jv
+YP
+fp
+wV
+fp
+YP
+Jv
+Jv
+"}
+(2,1,1) = {"
+Jv
+YP
+fp
+uW
+aA
+vK
+fp
+YP
+Jv
+"}
+(3,1,1) = {"
+YX
+fp
+fp
+fp
+qx
+fp
+fp
+fp
+YX
+"}
+(4,1,1) = {"
+fp
+YX
+Jv
+vD
+fh
+vD
+Jv
+YX
+fp
+"}
+(5,1,1) = {"
+vD
+Jv
+Jv
+Jv
+Jv
+Jv
+Jv
+Jv
+vD
+"}

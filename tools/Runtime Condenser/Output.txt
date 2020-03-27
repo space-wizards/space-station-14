@@ -1,0 +1,438 @@
+Note: The source file, src and usr are all from the FIRST of the identical runtimes. Everything else is cropped.
+
+Total unique runtimes: 28
+Total runtimes: 124723
+
+Total unique hard deletions: 108
+Total hard deletions: 1080
+
+** Runtimes **
+
+The following runtime has occurred 123121 time(s).
+runtime error: Component is missing a pipenet! Rebuilding...
+
+
+The following runtime has occurred 709 time(s).
+runtime error: wrong type of value for list
+proc name: updateghostimages (/mob/dead/observer/proc/updateghostimages)
+  source file: observer.dm,488
+  usr: (src)
+  src: Argon IXV (/mob/dead/observer)
+  src.loc: the asteroid sand (217,137,8) (/turf/open/floor/plating/asteroid)
+
+
+The following runtime has occurred 696 time(s).
+runtime error: Cannot read null.air
+proc name: return air (/obj/machinery/atmospherics/pipe/return_air)
+  source file: pipes.dm,58
+  usr: null
+  src: the air supply pipe (/obj/machinery/atmospherics/pipe/manifold4w/supply/visible)
+  src.loc: the floor (169,130,1) (/turf/open/floor/plasteel)
+
+
+The following runtime has occurred 48 time(s).
+runtime error: bad resource file
+proc name: send asset (/proc/send_asset)
+  source file: asset_cache.dm,44
+  usr: Mariabella Pycroft-Crane (/mob/living/carbon/human)
+  src: null
+
+
+The following runtime has occurred 30 time(s).
+runtime error: list index out of bounds
+proc name: GetGreaterChild (/Heap/proc/GetGreaterChild)
+  source file: heap.dm,62
+  usr: null
+  src: /Heap (/Heap)
+
+
+The following runtime has occurred 21 time(s).
+runtime error: undefined proc or verb /turf/closed/wall/shuttle/high pressure movements().
+
+
+The following runtime has occurred 15 time(s).
+runtime error: Simple animal being instantiated in nullspace
+proc name: stack trace (/proc/stack_trace)
+  source file: unsorted.dm,1358
+  usr: the Securitron (/mob/living/simple_animal/bot/secbot)
+  src: null
+
+
+The following runtime has occurred 12 time(s).
+runtime error: Cannot read null.viewavail
+proc name: record (/obj/machinery/computer/monitor/proc/record)
+  source file: monitor.dm,41
+  usr: null
+  src: Engineering Power Monitoring C... (/obj/machinery/computer/monitor)
+  src.loc: space (154,151,1) (/turf/open/space)
+
+
+The following runtime has occurred 11 time(s).
+runtime error: Cannot read null.selection_color
+proc name: SetChoices (/datum/preferences/proc/SetChoices)
+  source file: preferences.dm,543
+  usr: Sweetestbro (/mob/new_player)
+  src: /datum/preferences (/datum/preferences)
+
+
+The following runtime has occurred 10 time(s).
+runtime error: Cannot execute null.add turf().
+proc name: process cell (/turf/open/process_cell)
+  source file: LINDA_turf_tile.dm,172
+  usr: null
+  src: the plating (102,135,1) (/turf/open/floor/plating)
+
+
+The following runtime has occurred 9 time(s).
+runtime error: Cannot read null.thrownby
+proc name: hitby (/mob/living/carbon/human/hitby)
+  source file: human_defense.dm,353
+  usr: the monkey (662) (/mob/living/carbon/monkey)
+  src: Sydney Hujsak (/mob/living/carbon/human)
+
+
+The following runtime has occurred 8 time(s).
+runtime error: Cannot execute null.HasProximity().
+proc name: Entered (/turf/Entered)
+  source file: turf.dm,95
+  usr: 0
+  src: the floor (99,147,1) (/turf/open/floor/plasteel)
+
+
+The following runtime has occurred 5 time(s).
+runtime error: bad client
+proc name: open (/datum/browser/proc/open)
+  source file: browser.dm,106
+  usr: Timothy Catleay (/mob/living/carbon/human)
+  src: /datum/browser (/datum/browser)
+
+
+The following runtime has occurred 4 time(s).
+runtime error: return_file_text(): File not found
+
+
+The following runtime has occurred 4 time(s).
+runtime error: Cannot execute null.merge().
+proc name: assume air (/turf/open/assume_air)
+  source file: LINDA_turf_tile.dm,56
+  usr: null
+  src: the engraved floor (95,49,5) (/turf/open/floor/engine/cult)
+
+
+The following runtime has occurred 3 time(s).
+runtime error: Cannot read null.gases
+proc name: tile graphic (/turf/open/proc/tile_graphic)
+  source file: LINDA_turf_tile.dm,110
+  usr: null
+  src: the floor (81,52,5) (/turf/open/floor/plasteel/freezer)
+
+
+The following runtime has occurred 3 time(s).
+runtime error: undefined proc or verb /turf/closed/wall/high pressure movements().
+
+
+The following runtime has occurred 2 time(s).
+runtime error: Cannot modify null.loc.
+proc name: ui act (/obj/machinery/suit_storage_unit/ui_act)
+  source file: suit_storage_unit.dm,359
+  usr: Cy Carter (/mob/living/carbon/human)
+  src: the suit storage unit (/obj/machinery/suit_storage_unit/standard_unit)
+
+
+The following runtime has occurred 2 time(s).
+runtime error: Cannot execute null.remove().
+proc name: remove air (/turf/open/remove_air)
+  source file: LINDA_turf_tile.dm,62
+  usr: null
+  src: the engraved floor (171,210,5) (/turf/open/floor/engine/cult)
+
+
+The following runtime has occurred 2 time(s).
+runtime error: Cannot execute null.return pressure().
+proc name: update pressure (/obj/mecha/working/ripley/proc/update_pressure)
+  source file: ripley.dm,150
+  usr: 0
+  src: the APLU \"Ripley\" (/obj/mecha/working/ripley)
+  src.loc: the floor (88,45,5) (/turf/open/floor/plasteel/freezer)
+
+
+The following runtime has occurred 1 time(s).
+runtime error: list index out of bounds
+proc name: Topic (/datum/song/Topic)
+  source file: musician.dm,208
+  usr: Francisco Luque (/mob/living/carbon/human)
+  src: Untitled (/datum/song/handheld)
+
+
+The following runtime has occurred 1 time(s).
+runtime error: undefined proc or verb /turf/closed/wall/r_wall/high pressure movements().
+
+
+The following runtime has occurred 1 time(s).
+runtime error: bad client
+proc name: show (/datum/html_interface/proc/show)
+  source file: html_interface.dm,227
+  usr: Mariabella Pycroft-Crane (/mob/living/carbon/human)
+  src: /datum/html_interface/nanotras... (/datum/html_interface/nanotrasen)
+
+
+The following runtime has occurred 1 time(s).
+runtime error: Cannot execute null.GetAtmosAdjacentTurfs().
+proc name: spread smoke (/obj/effect/particle_effect/smoke/proc/spread_smoke)
+  source file: effects_smoke.dm,74
+  usr: null
+  src: the smoke (/obj/effect/particle_effect/smoke)
+  src.loc: null
+
+
+The following runtime has occurred 1 time(s).
+runtime error: Cannot read null.pipe_vision_img
+proc name: add ventcrawl (/mob/living/proc/add_ventcrawl)
+  source file: ventcrawling.dm,94
+  usr: (src)
+  src: the monkey (809) (/mob/living/carbon/monkey)
+  src.loc: the Cloning Lab vent pump #1 (/obj/machinery/atmospherics/components/unary/vent_pump)
+
+
+The following runtime has occurred 1 time(s).
+runtime error: Cannot execute null.s click().
+proc name: Click (/obj/screen/grab/Click)
+  source file: screen_objects.dm,167
+  usr: Hisstian Weston Chandler (/mob/living/carbon/human)
+  src: the disarm/kill (/obj/screen/grab)
+
+
+The following runtime has occurred 1 time(s).
+runtime error: list index out of bounds
+proc name: mod list add (/client/proc/mod_list_add)
+  source file: modifyvariables.dm,161
+  usr: the potted plant (/mob/dead/observer)
+  src: MimicFaux (/client)
+
+
+The following runtime has occurred 1 time(s).
+runtime error: Cannot execute null.get reagent amount().
+proc name: get fuel (/obj/item/weapon/weldingtool/proc/get_fuel)
+  source file: tools.dm,334
+  usr: null
+  src: the welding tool (/obj/item/weapon/weldingtool)
+  src.loc: null
+
+
+
+** Hard deletions **
+/obj/structure/lattice - 499 time(s).
+
+/mob/new_player - 91 time(s).
+
+/image - 87 time(s).
+
+/mob/dead/observer - 42 time(s).
+
+/datum/mind - 36 time(s).
+
+/obj/item/radio/integrated/signal - 31 time(s).
+
+/obj/effect/ebeam - 24 time(s).
+
+/obj/machinery/camera - 15 time(s).
+
+/obj/machinery/atmospherics/components/binary/pump - 14 time(s).
+
+/obj/effect/decal/cleanable/trail_holder - 10 time(s).
+
+/obj/screen/buildmode/bdir - 10 time(s).
+
+/obj/screen/buildmode/help - 10 time(s).
+
+/obj/screen/buildmode/mode - 10 time(s).
+
+/obj/screen/buildmode/quit - 10 time(s).
+
+/obj/effect/landmark/start - 8 time(s).
+
+/obj/machinery/status_display - 7 time(s).
+
+/obj/item/stack/sheet/cardboard - 7 time(s).
+
+/datum/gas_mixture - 6 time(s).
+
+/obj/machinery/requests_console - 6 time(s).
+
+/obj/machinery/airalarm - 5 time(s).
+
+/obj/machinery/atmospherics/components/unary/vent_pump - 5 time(s).
+
+/obj/item/organ/hivelord_core/legion - 5 time(s).
+
+/obj/item/weapon/electronics/airlock - 5 time(s).
+
+/obj/effect/mist - 5 time(s).
+
+/obj/machinery/camera/portable - 5 time(s).
+
+/obj/machinery/porta_turret - 4 time(s).
+
+/obj/machinery/atmospherics/components/unary/portables_connector/visible - 4 time(s).
+
+/obj/effect/decal/cleanable/blood/gibs - 4 time(s).
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber - 4 time(s).
+
+/obj/item/weapon/tank/internals/oxygen - 3 time(s).
+
+/obj/item/device/assembly/signaler - 3 time(s).
+
+/datum/event - 3 time(s).
+
+/obj/effect/decal/cleanable/blood/footprints - 3 time(s).
+
+/obj/machinery/camera/emp_proof - 3 time(s).
+
+/obj/item/weapon/tank/internals/plasma - 3 time(s).
+
+/obj/machinery/camera_assembly - 3 time(s).
+
+/obj/machinery/camera/motion - 3 time(s).
+
+/obj/machinery/atmospherics/pipe/simple/supply/hidden - 2 time(s).
+
+/obj/item/mecha_parts/chassis/ripley - 2 time(s).
+
+/obj/item/stack/sheet/metal - 2 time(s).
+
+/obj/machinery/door/airlock/external - 2 time(s).
+
+/obj/machinery/suit_storage_unit/engine - 2 time(s).
+
+/obj/item/weapon/stock_parts/cell - 2 time(s).
+
+/obj/machinery/computer/communications - 2 time(s).
+
+/obj/item/clothing/tie/petcollar - 2 time(s).
+
+/obj/machinery/atmospherics/components/binary/passive_gate - 2 time(s).
+
+/obj/machinery/power/apc - 2 time(s).
+
+/obj/structure/table/glass - 2 time(s).
+
+/obj/item/stack/cable_coil - 2 time(s).
+
+/obj/effect/decal/cleanable/blood/gibs/core - 2 time(s).
+
+/obj/machinery/atmospherics/components/unary/heat_exchanger - 2 time(s).
+
+/obj/item/mecha_parts/chassis/firefighter - 2 time(s).
+
+/obj/machinery/porta_turret/ai - 2 time(s).
+
+/obj/structure/closet/secure_closet/brig - 1 time(s).
+
+/obj/effect/landmark/river_waypoint - 1 time(s).
+
+/obj/item/clothing/head/chaplain_hood - 1 time(s).
+
+/obj/machinery/door/window/eastleft - 1 time(s).
+
+/obj/item/weapon/staff/broom - 1 time(s).
+
+/obj/machinery/door/window - 1 time(s).
+
+/obj/machinery/computer/pandemic - 1 time(s).
+
+/obj/machinery/door/airlock/research - 1 time(s).
+
+/obj/machinery/portable_atmospherics/pump - 1 time(s).
+
+/obj/machinery/suit_storage_unit/ce - 1 time(s).
+
+/obj/machinery/power/grounding_rod - 1 time(s).
+
+/mob/camera/aiEye - 1 time(s).
+
+/datum/data/record - 1 time(s).
+
+/obj/machinery/firealarm - 1 time(s).
+
+/obj/machinery/porta_turret_cover - 1 time(s).
+
+/obj/mecha/working/ripley - 1 time(s).
+
+/obj/machinery/portable_atmospherics/scrubber - 1 time(s).
+
+/obj/effect/decal/cleanable/robot_debris/old - 1 time(s).
+
+/obj/machinery/biogenerator - 1 time(s).
+
+/obj/machinery/plantgenes - 1 time(s).
+
+/datum/reagents - 1 time(s).
+
+/obj/machinery/vending/hydronutrients - 1 time(s).
+
+/obj/machinery/recycler - 1 time(s).
+
+/obj/item/weapon/tank/jetpack/suit - 1 time(s).
+
+/obj/machinery/vending/hydroseeds - 1 time(s).
+
+/obj/structure/table/optable - 1 time(s).
+
+/obj/item/device/pda/ai/pai - 1 time(s).
+
+/obj/item/stack/sheet/mineral/plasma - 1 time(s).
+
+/obj/machinery/chem_dispenser/drinks/beer - 1 time(s).
+
+/obj/structure/closet/crate - 1 time(s).
+
+/obj/item/stack/sheet/animalhide/monkey - 1 time(s).
+
+/obj/effect/hallucination/simple/singularity - 1 time(s).
+
+/obj - 1 time(s).
+
+/obj/item/clothing/head/explorer - 1 time(s).
+
+/obj/screen/grab - 1 time(s).
+
+/obj/item/weapon/grab - 1 time(s).
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater - 1 time(s).
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer - 1 time(s).
+
+/obj/machinery/door/poddoor - 1 time(s).
+
+/obj/item/weapon/cartridge/hos - 1 time(s).
+
+/obj/item/device/pda/heads/hos - 1 time(s).
+
+/obj/item/ammo_casing/energy/electrode - 1 time(s).
+
+/obj/effect/mob_spawn/human/alive/space_bar_patron - 1 time(s).
+
+/obj/effect/blob/core - 1 time(s).
+
+/obj/machinery/clonepod - 1 time(s).
+
+/obj/item/weapon/reagent_containers/spray/mister/janitor - 1 time(s).
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf - 1 time(s).
+
+/obj/item/weapon/card/id/syndicate - 1 time(s).
+
+/obj/item/device/radio - 1 time(s).
+
+/obj/machinery/r_n_d/circuit_imprinter - 1 time(s).
+
+/obj/machinery/door/window/brigdoor - 1 time(s).
+
+/obj/machinery/computer/rdconsole/core - 1 time(s).
+
+/obj/structure/cable/yellow - 1 time(s).
+
+/obj/machinery/disposal/bin - 1 time(s).
+
+/obj/effect/mob_spawn/human/prisoner_transport - 1 time(s).

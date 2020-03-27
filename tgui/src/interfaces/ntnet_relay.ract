@@ -1,0 +1,22 @@
+<ui-display title='Relay'>
+	{{#if data.dos_crashed}}
+		<h2>NETWORK BUFFERS OVERLOADED</h2>
+		<h3>Overload Recovery Mode</h3>
+		<i>This system is suffering temporary outage due to overflow of traffic buffers. Until buffered traffic is processed, all further requests will be dropped. Frequent occurences of this error may indicate insufficient hardware capacity of your network. Please contact your network planning department for instructions on how to resolve this issue.</i>
+		<h3>ADMINISTRATIVE OVERRIDE</h3>
+		<b> CAUTION - Data loss may occur </b>
+		<ui-button icon='signal' action='restart'>
+				Purge buffered traffic
+		</ui-button>
+	{{else}}
+		<ui-section label='Relay status'>
+			<ui-button icon='power-off' action='toggle'>
+					{{data.enabled ? "ENABLED" : "DISABLED"}}
+			</ui-button>
+		</ui-section>
+			
+		<ui-section label='Network buffer status'>
+			{{data.dos_overload}} / {{data.dos_capacity}} GQ
+		</ui-section>
+	{{/if}}
+</ui-display>

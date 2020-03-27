@@ -1,0 +1,7 @@
+<ui-display title='Stored Items'>
+	{{#each data.mobs}}
+		<ui-section label='{{name}}'>
+			<ui-button action="release_items" params='{"mobref":{{mob}}}' state={{data.can_reclaim ? null : 'disabled'}}>Drop Items</ui-button>
+		</ui-section>
+	{{/each}}
+</ui-display>

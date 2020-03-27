@@ -1,0 +1,14 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+{{#each data.alarms:class}}
+  <ui-display title='{{class}} Alarms'>
+    <ul>
+      {{#each .}}
+        <li>{{.}}</li>
+      {{else}}
+        <li>System Nominal</li>
+      {{/each}}
+    </ul>
+  </ui-display>
+{{/each}}

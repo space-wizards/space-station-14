@@ -1,0 +1,6 @@
+<ui-display title='Splitter' button> 
+	<ui-section>
+		<ui-button action='set_amount' params='{"target": "straight"}'>Straight {{data.straight}}</ui-button>
+		<ui-button action='set_amount' params='{"target": "side"}'>Side {{data.side}}</ui-button>
+	</ui-section>
+</ui-display>

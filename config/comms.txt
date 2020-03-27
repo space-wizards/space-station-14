@@ -1,0 +1,17 @@
+## Communication key for receiving data through world/Topic(), you don't want to give this out
+#COMMS_KEY default_pwd
+
+## World address and port for server receiving cross server messages
+## Use '+' to denote spaces in ServerName
+## Repeat this entry to add more servers
+#CROSS_SERVER ServerName byond:\\address:port
+
+## Name that the server calls itself in communications
+#CROSS_COMMS_NAME
+
+## Hub address for tracking stats
+## example: Hubmakerckey.Hubname
+#MEDAL_HUB_ADDRESS
+
+## Password for the hub page
+#MEDAL_HUB_PASSWORD

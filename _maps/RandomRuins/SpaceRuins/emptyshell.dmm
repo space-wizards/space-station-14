@@ -1,0 +1,349 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/turf/closed/wall/r_wall,
+/area/ruin/unpowered)
+"d" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"e" = (
+/obj/effect/spawner/lootdrop/crate_spawner,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"f" = (
+/obj/item/ammo_box/magazine/sniper_rounds,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"g" = (
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"h" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"i" = (
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"j" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"k" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"l" = (
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"m" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 4;
+	name = "4maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Q" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+Q
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+Q
+Q
+Q
+a
+a
+Q
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+Q
+a
+a
+Q
+i
+i
+Q
+a
+a
+a
+Q
+a
+"}
+(4,1,1) = {"
+a
+Q
+Q
+c
+c
+c
+i
+i
+i
+i
+c
+c
+c
+a
+a
+"}
+(5,1,1) = {"
+a
+Q
+c
+c
+c
+c
+c
+j
+j
+c
+c
+c
+c
+c
+Q
+"}
+(6,1,1) = {"
+a
+a
+c
+c
+c
+d
+d
+d
+d
+d
+l
+c
+c
+c
+Q
+"}
+(7,1,1) = {"
+a
+a
+c
+c
+d
+d
+h
+d
+d
+d
+d
+d
+c
+c
+a
+"}
+(8,1,1) = {"
+a
+a
+c
+c
+e
+d
+d
+h
+k
+d
+e
+d
+c
+c
+a
+"}
+(9,1,1) = {"
+a
+Q
+c
+c
+d
+d
+d
+d
+d
+d
+d
+d
+c
+c
+a
+"}
+(10,1,1) = {"
+b
+a
+c
+c
+d
+d
+d
+g
+d
+d
+d
+d
+c
+c
+a
+"}
+(11,1,1) = {"
+a
+Q
+c
+c
+f
+d
+d
+d
+d
+d
+m
+d
+c
+c
+a
+"}
+(12,1,1) = {"
+a
+a
+c
+c
+d
+g
+d
+d
+d
+h
+d
+e
+c
+c
+a
+"}
+(13,1,1) = {"
+a
+a
+c
+c
+c
+d
+d
+d
+d
+d
+d
+c
+c
+c
+a
+"}
+(14,1,1) = {"
+a
+Q
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+Q
+a
+Q
+Q
+Q
+a
+Q
+Q
+Q
+a
+Q
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+Q
+Q
+a
+Q
+Q
+Q
+a
+a
+a
+a
+"}

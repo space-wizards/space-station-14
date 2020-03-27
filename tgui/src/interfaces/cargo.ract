@@ -1,0 +1,104 @@
+<script>
+  component.exports = {
+    computed: {
+      tabs () {
+        return Object.keys(this.get('data.supplies'))
+      }
+    }
+  }
+</script>
+<ui-display title='Cargo'>
+  <ui-section label='Shuttle'>
+    {{#if data.docked && !data.requestonly}}
+      <ui-button action='send'>{{data.location}}</ui-button>
+    {{else}}
+      <span>{{data.location}}</span>
+    {{/if}}
+  </ui-section>
+  <ui-section label='Credits'>
+    <span>{{Math.floor(adata.points)}}</span>
+  </ui-section>
+  <ui-section label='CentCom Message'>
+      <span>{{data.message}}</span>
+  </ui-section>
+  {{#if data.loan && !data.requestonly}}
+    <ui-section label='Loan'>
+      {{#if !data.loan_dispatched}}
+        <ui-button
+         state='{{data.away && data.docked ? null : "disabled"}}'
+         action='loan'>Loan Shuttle</ui-button>
+      {{else}}
+        <span class='bad'>Loaned to CentCom</span>
+      {{/if}}
+    </ui-section>
+  {{/if}}
+</ui-display>
+<ui-tabs tabs='{{tabs}}'>
+  {{#each data.supplies}}
+    <tab name='{{name}}'>
+	  <ui-button tooltip='Pay with your bank account instead of the cargo budget. Costs 10% extra for handling fees.' tooltip-side='right' 
+	  		icon='{{data.self_paid ? "check-square-o" : "square-o"}}' action='toggleprivate'>Buy privately</ui-button>
+      {{#each packs}}
+        <ui-section label='{{name}}' candystripe nowrap>
+		  {{#if small_item}}
+			<div class='content'>Small Item</div>
+		  {{else}}
+			<div class='content'> </div>
+		  {{/if}}
+		  {{#if access}}
+			<div class='content'>Restrictions Apply</div>
+		  {{else}}
+			<div class='content'> </div>
+		  {{/if}}
+		  <ui-button tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}"}'>{{data.self_paid ? Math.round(cost*1.1) : cost}} Credits</ui-button>
+        </ui-section>
+      {{/each}}
+    </tab>
+  {{/each}}
+</ui-tabs>
+<ui-display title='Requests' button>
+  {{#partial button}}
+    {{#if !data.requestonly}}
+      <ui-button icon='close' state='{{data.requests.length ? null : "disabled"}}' action='denyall'>Clear</ui-button>
+    {{/if}}
+  {{/partial}}
+  {{#each data.requests}}
+    <ui-section candystripe nowrap>
+      <div class='content'>#{{id}}</div>
+      <div class='content'>{{object}}</div>
+      <div class='content'>{{cost}} Credits</div>
+      <div class='content'>By {{orderer}}</div>
+      <div class='content'>Comment: {{reason}}</div>
+      {{#if !data.requestonly}}
+        <div class='content'>
+          <ui-button icon='check' action='approve' params='{"id": "{{id}}"}'/>
+          <ui-button icon='close' action='deny' params='{"id": "{{id}}"}'/>
+        </div>
+      {{/if}}
+    </ui-section>
+    {{else}}
+      <span>No Requests</span>
+    {{/each}}
+</ui-display>
+{{#if !data.requestonly}}
+  <ui-display title='Cart' button>
+    {{#partial button}}
+      <ui-button icon='close' state='{{data.cart.length ? null : "disabled"}}' action='clear'>Clear</ui-button>
+    {{/partial}}
+    {{#each data.cart}}
+      <ui-section candystripe nowrap>
+        <div class='content'>#{{id}}</div>
+        <div class='content'>{{object}}</div>
+        <div class='content'>{{cost}} Credits</div>
+        <div class='content'>
+          <ui-button icon='minus' action='remove' params='{"id": "{{id}}"}'/>
+        </div>
+        {{#if paid}}
+    			<div class='content'><b>(Paid privately)</b></div>
+    		{{/if}}
+      </ui-section>
+    {{else}}
+      <span>Nothing in Cart</span>
+    {{/each}}
+  </ui-display>
+{{/if}}

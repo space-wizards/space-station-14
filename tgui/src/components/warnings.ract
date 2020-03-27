@@ -1,0 +1,47 @@
+<script>
+  const versions = [11, 10, 9, 8]
+
+  component.exports = {
+    data: {
+      userAgent: navigator.userAgent
+    },
+    computed: {
+      ie () {
+        if (document.documentMode) return document.documentMode
+        for (let version in versions) {
+          const div = document.createElement('div')
+          div.innerHTML = `<!--[if IE ${version}]><span></span><![endif]-->`
+          if (div.getElementsByTagName('span').length) return version
+        }
+        return undefined
+      }
+    },
+    oninit () {
+      this.on('debug', () => this.toggle('debug'))
+    }
+  }
+</script>
+
+
+{{#if config.fancy && ie && ie < 11}}
+  <ui-notice>
+    <span>You have an old (IE{{ie}}), end-of-life (click 'EOL Info' for more information) version of Internet Explorer installed.</span><br/>
+    <span>To upgrade, click 'Upgrade IE' to download IE11 from Microsoft.</span><br/>
+    <span>If you are unable to upgrade directly, click 'IE VMs' to download a VM with IE11 or Edge from Microsoft.</span><br/>
+    <span>Otherwise, click 'No Frills' below to disable potentially incompatible features (and this message).</span>
+    <hr/>
+    <ui-button icon='close' action='tgui:nofrills'>No Frills</ui-button>
+    <ui-button action='tgui:link' params='{"url": "http://windows.microsoft.com/en-us/internet-explorer/download-ie"}'>
+      Upgrade IE</ui-button>
+    <ui-button action='tgui:link' params='{"url": "https://dev.windows.com/en-us/microsoft-edge/tools/vms"}'>
+      IE VMs</ui-button>
+    <ui-button icon='info' action='tgui:link' params='{"url": "https://support.microsoft.com/en-us/lifecycle#gp/Microsoft-Internet-Explorer"}'>
+      EOL Info</ui-button>
+    <ui-button icon='bug' on-press='debug'>Debug Info</ui-button>
+    {{#if debug}}
+      <hr/>
+      <span>Detected: IE{{ie}}</span><br/>
+      <span>User Agent: {{userAgent}}</span>
+    {{/if}}
+  </ui-notice>
+{{/if}}

@@ -1,0 +1,11 @@
+<div class='subdisplay'>
+  {{#if title}}
+    <header>
+      <h4>{{title}}</h4>
+      {{#if button}}{{yield button}}{{/if}}
+    </header>
+  {{/if}}
+  <article>
+    {{yield}}
+  </article>
+</div>

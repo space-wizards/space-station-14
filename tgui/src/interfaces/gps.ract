@@ -1,0 +1,30 @@
+<ui-display title='Controls'>
+<ui-section label='Power'>
+	<ui-button icon="power-off" style='{{data.power ? "selected" : "danger"}}' action='power'>{{data.power ? "Enabled" : "Disabled"}}</ui-button>
+</ui-section>
+<ui-section label='Tag'>
+	<ui-button icon='pencil' action='rename'>{{data.tag}}</ui-button>
+</ui-section>
+<ui-section label='Scanning mode'>
+	<ui-button icon={{data.updating ? "unlock" : "lock"}} style= {{data.updating ? null : "danger"}} action='updating' tooltip='Toggle between automatic scanning or scan only when a button is pressed.' tooltip-side='right'>{{data.updating ? "AUTO" : "MANUAL"}}</ui-button>
+</ui-section>
+<ui-section label='Detection range'>
+	<ui-button icon='refresh' style= {{data.globalmode ? null : "selected"}} action='globalmode' tooltip='Local sector or whole region scanning.' tooltip-side='right'>{{data.globalmode ? "MAXIMUM" : "LOCAL"}}</ui-button>
+</ui-section>
+</ui-display>
+{{#if data.power}}
+	<ui-display title='Current Location'>
+		<span>{{data.current}}</span>
+	</ui-display>
+
+	<ui-display title='Detected Signals'>
+	{{#each data.signals}}
+		<ui-section label={{entrytag}}>
+		<span>{{area}} ({{coord}}) </span>
+		{{#if direction}}
+			<span>Dist: {{dist}}m Dir: {{degrees}}° ({{direction}})</span>
+		{{/if}}
+		</ui-section>
+	{{/each}}
+	</ui-display>
+{{/if}}

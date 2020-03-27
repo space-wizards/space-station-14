@@ -1,0 +1,103 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+
+	{{#if data.error}}
+	<div class='item'>
+		<h2>An error has occurred during operation...</h2>
+		<b>Additional information: </b>{{data.error}}<br>
+		<ui-button action='PRG_reset'>Clear</ui-button>
+	</div>
+	{{elseif data.downloading}}
+		<h2>Download in progress...</h2>
+		<div class="itemLabel">
+			Downloaded file: 
+		</div>
+		<div class="itemContent">
+			{{data.download_name}}
+		</div>	
+		<div class="itemLabel">
+			Download progress: 
+		</div>
+		<div class="itemContent">
+			{{data.download_progress}} / {{data.download_size}} GQ
+		</div>
+		<div class="itemLabel">
+			Transfer speed: 
+		</div>
+		<div class="itemContent">
+			{{data.download_netspeed}}GQ/s
+		</div>
+		<div class="itemLabel">
+			Controls: 
+		</div>
+		<div class="itemContent">
+			<ui-button action='PRG_reset'>Abort download</ui-button>
+		</div>
+	{{elseif data.uploading}}
+		<h2>Server enabled</h2>
+		<div class="itemLabel">
+			Connected clients: 
+		</div>
+		<div class="itemContent">
+			{{data.upload_clients}}
+		</div>
+		<div class="itemLabel">
+			Provided file: 
+		</div>
+		<div class="itemContent">
+			{{data.upload_filename}}
+		</div>
+		<div class="itemLabel">
+			Server password: 
+		</div>
+		<div class="itemContent">
+			{{#if data.upload_haspassword}}
+				ENABLED
+			{{else}}
+				DISABLED
+			{{/if}}
+		</div>
+		<div class="itemLabel">
+			Commands: 
+		</div>
+		<div class="itemContent">
+			<ui-button action='PRG_setpassword'>Set password</ui-button>
+			<ui-button action='PRG_reset'>Exit server</ui-button>
+		</div>
+	{{elseif data.upload_filelist}}
+		<h2>File transfer server ready. Select file to upload: </h2>
+		<table>
+		<tr><th>File name<th>File size<th>Controls
+		{{#each data.upload_filelist}}
+			<tr><td>{{filename}}
+			<td>{{size}}GQ
+			<td><ui-button action='PRG_uploadfile' params='{"id": "{{uid}}"}'>Select</ui-button>
+		{{/each}}
+		</table>
+		<hr>
+		<ui-button action='PRG_setpassword'>Set password</ui-button>
+		<ui-button action='PRG_reset'>Return</ui-button>
+	{{else}}
+		<h2>Available files:</h2>
+		<table border="1" style="border-collapse: collapse"><tr><th>Server UID<th>File Name<th>File Size<th>Password Protection<th>Operations
+			{{#each data.servers}}
+				<tr><td>{{uid}}
+				<td>{{filename}}
+				<td>{{size}}GQ
+				{{#if haspassword}}
+					<td>Enabled
+				{{/if}}
+				{{#if !haspassword}}
+					<td>Disabled
+				{{/if}}
+				
+				<td><ui-button action='PRG_downloadfile' params='{"id": "{{uid}}"}'>Download</ui-button>
+			{{/each}}
+		</table>
+		<hr>
+		<ui-button action='PRG_uploadmenu'>Send file</ui-button>
+	{{/if}}
+
+</ui-display>

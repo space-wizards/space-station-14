@@ -1,0 +1,18 @@
+<ui-display title='Cell Timer' button>
+  {{#partial button}}
+    <ui-button icon='clock-o' style='{{data.timing ? "selected" : null}}' action='{{data.timing ? "stop" : "start"}}'>{{data.timing ? "Stop" : "Start"}}</ui-button>
+    <ui-button icon='lightbulb-o' action='flash' style='{{data.flash_charging ? "disabled" : null}}'>{{data.flash_charging ? "Recharging" : "Flash"}}</ui-button>
+  {{/partial}}
+  <ui-section>
+    <ui-button icon='fast-backward' action='time' params='{"adjust": -600}'></ui-button>
+    <ui-button icon='backward' action='time' params='{"adjust": -100}'></ui-button>
+    <span>{{text.zeroPad(data.minutes, 2)}}:{{text.zeroPad(data.seconds, 2)}}</span>
+    <ui-button icon='forward' action='time' params='{"adjust": 100}'></ui-button>
+    <ui-button icon='fast-forward' action='time' params='{"adjust": 600}'></ui-button>
+  </ui-section>
+  <ui-section>
+      <ui-button icon='hourglass-start' action='preset' params='{"preset": "short"}'>Short</ui-button>
+      <ui-button icon='hourglass-start' action='preset' params='{"preset": "medium"}'>Medium</ui-button>
+      <ui-button icon='hourglass-start' action='preset' params='{"preset": "long"}'>Long</ui-button>
+  </ui-section>
+</ui-display>

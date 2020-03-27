@@ -1,0 +1,11 @@
+context = selector()
+
+div.subdisplay
+  width: 100%
+  margin: 0
+
+  header
+    @extend {context} div.display header
+
+  article
+    @extend {context} div.display article

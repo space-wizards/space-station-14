@@ -1,0 +1,22 @@
+<ui-display title='Recipient Contents'>
+	<ui-section>
+		<ui-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='ejectBeaker'>Eject</ui-button>
+		<ui-button icon='circle' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='input'>Input</ui-button>
+		<ui-button icon='circle' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='amount'>{{data.amount}}U</ui-button>
+		<ui-button icon='plus' state='{{data.isBeakerLoaded ? "disabled" : null}}' action='makecup'>Create Beaker</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display title='Recipient'>
+	<ui-section label='Contents'>
+		{{#if data.isBeakerLoaded}}
+			<span>{{Math.round(adata.beakerCurrentVolume)}}/{{data.beakerMaxVolume}} Units</span>
+			{{#each adata.beakerContents}}
+				<span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 2)}} units of {{name}}</span><br/>
+			{{else}}
+				<span class='bad'>Recipient Empty</span>
+			{{/each}}
+		{{else}}
+			<span class='average'>No Recipient</span>
+		{{/if}}
+	</ui-section>
+</ui-display>

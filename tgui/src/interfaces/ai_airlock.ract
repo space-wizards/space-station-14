@@ -1,0 +1,131 @@
+<script>
+component.exports = {
+	data: {
+		powerState (status) {
+			switch (status) {
+				case 2: return 'good'
+				case 1: return 'average'
+				default: return 'bad'
+			}
+		},
+		shockState (status) {
+			switch (status) {
+				case 2: return 'good'
+				case 1: return 'average'
+				default: return 'bad'
+			}
+		}
+	}
+}
+</script>
+
+<ui-display title='Power Status'>
+	<ui-section label='Main'>
+		<span class='{{powerState(data.power.main)}}'>{{data.power.main ? "Online" : "Offline"}}</span>
+		{{#if !data.wires.main_1 || !data.wires.main_2}}
+			[ <span class="bad">Wires have been cut</span> ]
+		{{else}}
+			{{#if data.power.main_timeleft > 0}}
+				[ {{data.power.main_timeleft}} seconds left ]
+			{{/if}}
+		{{/if}}
+		<div style='float:right'>
+			<ui-button icon='lightbulb-o' action='disrupt-main' state='{{data.power.main ? null : "disabled"}}'>Disrupt</ui-button>
+		</div>
+	</ui-section>
+	<ui-section label='Backup'>
+		<span class='{{powerState(data.power.backup)}}'>{{data.power.backup ? "Online" : "Offline"}}</span>
+		{{#if !data.wires.backup_1 || !data.wires.backup_2}}
+			[ <span class="bad">Wires have been cut</span> ]
+		{{else}}
+			{{#if data.power.backup_timeleft > 0}}
+				[ {{data.power.backup_timeleft}} seconds left ]
+			{{/if}}
+		{{/if}}
+		<div style='float:right'>
+			<ui-button icon='lightbulb-o' action='disrupt-backup' state='{{data.power.backup ? null : "disabled"}}'>Disrupt</ui-button>
+		</div>
+	</ui-section>
+	<ui-section label='Electrify'>
+		<span class='{{shockState(data.shock)}}'>{{data.shock == 2 ? "Safe" : "Electrified"}}</span>
+		{{#if !data.wires.shock}}
+			[ <span class="bad">Wires have been cut</span> ]
+		{{else}}
+			{{#if data.shock_timeleft > 0}}
+				[ <span class="bad">{{data.shock_timeleft}} seconds left</span> ]
+			{{/if}}
+			{{#if data.shock_timeleft == -1}}
+				[ <span class="bad">Permanent</span> ]
+			{{/if}}
+		{{/if}}
+		<div style='float:right'>
+			<ui-button icon='wrench' action='shock-restore' state='{{data.wires.shock && data.shock==0 ? null : "disabled"}}'>Restore</ui-button>
+			<ui-button icon='bolt' action='shock-temp' state='{{!data.wires.shock}}'>Set (Temporary)</ui-button>
+			<ui-button icon='bolt' action='shock-perm'state='{{!data.wires.shock}}'>Set (Permanent)</ui-button>
+		</div>
+	</ui-section>
+</ui-display>
+<ui-display title='Access & Door Control'>
+	<ui-section label='ID Scan'>
+		{{#if !data.wires.id_scanner}}
+			[ <span class="bad">Wires have been cut</span> ]
+		{{/if}}
+		<div style='float:right'>
+			<ui-button state='{{!data.wires.id_scanner}}' icon='power-off' action='idscan-on' style='{{data.id_scanner ? "selected" : ""}}'>Enabled</ui-button>
+			<ui-button state='{{!data.wires.id_scanner}}' icon='close' action='idscan-off' style='{{data.id_scanner ? "" : "selected"}}'>Disabled</ui-button>
+		</div>
+	</ui-section>
+	<ui-section label='Emergency Access'>
+		<div style='float:right'>
+			<ui-button icon='power-off' action='emergency-on' style='{{data.emergency ? "selected" : ""}}'>Enabled</ui-button>
+			<ui-button icon='close' action='emergency-off' style='{{data.emergency ? "" : "selected"}}'>Disabled</ui-button>
+		</div>
+	</ui-section>
+	<br />
+	<ui-section label='Door bolts'>
+		{{#if !data.wires.bolts}}
+			[ <span class="bad">Wires have been cut</span> ]
+		{{/if}}
+		<div style='float:right'>
+			<ui-button state='{{!data.wires.bolts}}'icon='unlock' action='bolt-raise' style='{{data.locked ? "" : "selected"}}'>Raised</ui-button>
+			<ui-button state='{{!data.wires.bolts}}'icon='lock' action='bolt-drop' style='{{data.locked ? "selected" : ""}}'>Dropped</ui-button>
+		</div>
+	</ui-section>
+	<ui-section label='Door bolt lights'>
+		{{#if !data.wires.lights}}
+			[ <span class="bad">Wires have been cut</span> ]
+		{{/if}}
+		<div style='float:right'>
+			<ui-button state='{{!data.wires.lights}}' icon='power-off' action='light-on' style='{{data.lights ? "selected" : ""}}'>Enabled</ui-button>
+			<ui-button state='{{!data.wires.lights}}' icon='close' action='light-off' style='{{data.lights ? "" : "selected"}}'>Disabled</ui-button>
+		</div>
+	</ui-section>
+	<ui-section label='Door force sensors'>
+		{{#if !data.wires.safe}}
+			[ <span class="bad">Wires have been cut</span> ]
+		{{/if}}
+		<div style='float:right'>
+			<ui-button state='{{!data.wires.safe}}' icon='power-off' action='safe-on' style='{{data.safe ? "selected" : ""}}'>Enabled</ui-button>
+			<ui-button state='{{!data.wires.safe}}' icon='close' action='safe-off' style='{{data.safe ? "" : "selected"}}'>Disabled</ui-button>
+		</div>
+	</ui-section>
+	<ui-section label='Door timing safety'>
+		{{#if !data.wires.timing}}
+			[ <span class="bad">Wires have been cut</span> ]
+		{{/if}}
+		<div style='float:right'>
+			<ui-button state='{{!data.wires.timing}}' icon='power-off' action='speed-on' style='{{data.speed ? "selected" : ""}}'>Enabled</ui-button>
+			<ui-button state='{{!data.wires.timing}}' icon='close' action='speed-off' style='{{data.speed ? "" : "selected"}}'>Disabled</ui-button>
+		</div>
+	</ui-section>
+	<br />
+	<ui-section label='Door control'>
+		{{#if data.locked || data.welded}}
+			[ <span class="bad">Door is {{(data.locked ? "bolted" : "") + (data.locked && data.welded ? " and " : "") + (data.welded ? "welded" : "")}}</span> ]
+		{{/if}}
+		<div style='float:right'>
+			<ui-button state='{{(data.locked || data.welded) || (data.opened && "disabled")}}' icon='sign-out' action='open-close'>Open door</ui-button>
+			<ui-button state='{{(data.locked || data.welded) || (!data.opened && "disabled")}}' icon='sign-in' action='open-close'>Close door</ui-button>
+		</div>
+	</ui-section>
+</ui-display>

@@ -1,0 +1,81 @@
+<script>
+  import { UI_INTERACTIVE } from 'util/constants'
+  import { act } from 'util/byond'
+
+  component.exports = {
+    computed: {
+      clickable () {
+        if (this.get('enabled') && (!this.get('state') || this.get('state') == "toggle")) {
+          return true
+        }
+        return false
+      },
+      enabled () {
+        if (this.get('config.status') === UI_INTERACTIVE) {
+          return true
+        }
+        return false
+      },
+      styles () {
+        let extra = ''
+        if (this.get('class'))
+          extra += ' ' + this.get('class');
+        if (this.get('tooltip-side'))
+          extra = ` tooltip-${this.get('tooltip-side')}`
+        if (this.get('grid'))
+          extra += ' gridable'
+        const state = this.get('state')
+        const style = this.get('style')
+        const active_class = this.get('enabled') ? 'active' : 'inactive'
+        if (!state) {
+          return `${active_class} normal ${style} ${extra}`
+        } else {
+          return `${active_class} ${state} ${extra}`
+        }
+      }
+		},
+    oninit () {
+      this.on('press', (event) => {
+        const { action, params } = this.get()
+        act(this.get('config.ref'), action, params)
+        event.node.blur()
+      })
+    },
+		data: {
+			iconStackToHTML(icon_stack){ //turns a string such as 'square-o 2x, twitter 1x' into fully valid fontawesome syntax+HTML
+				let resultHTML = '';
+				let icons = icon_stack.split(',');
+				if(icons.length){
+					resultHTML += '<span class=\"fa-stack\">';
+					for (let iconinfo of icons){
+						let regex = /([\w\-]+)\s*(\dx)/g;
+						let components = regex.exec(iconinfo);
+						let icon = components[1]; //0 is the entire string
+						let size = components[2];
+						resultHTML += '<i class=\"fa fa-' + icon + ' fa-stack-' + size + '\"></i>';
+					}
+				}
+				if(resultHTML){
+					resultHTML += '</span>';
+				}
+				return resultHTML;
+			}
+		}
+  }
+</script>
+
+<span class='button {{styles}}'
+  unselectable='on'
+  {{#clickable}}tabindex='0'{{/}}
+  data-tooltip='{{tooltip}}'
+  on-mouseover-mousemove='hover'
+  on-mouseleave='unhover'
+  on-click-enter='{{#clickable}}press{{/}}'>
+  {{#if icon}}
+    <i class='fa fa-{{icon}}'></i>
+  {{/if}}
+  {{#if icon_stack}}
+     {{{iconStackToHTML(icon_stack)}}}
+  {{/if}}
+  {{yield}}
+</span>

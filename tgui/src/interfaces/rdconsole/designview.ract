@@ -1,0 +1,48 @@
+{{#if data.design_selected}}
+	<ui-display title='{{data.sdesign_name}}'>
+		<ui-section title='Description'>{{data.sdesign_desc}}</ui-section>
+	</ui-display>
+	<ui-display title='Lathe Types'>
+		{{#if (data.sdesign_buildtype & 1)}}
+			<ui-section title='Circuit Imprinter'></ui-section>
+		{{/if}}
+		{{#if (data.sdesign_buildtype & 2)}}
+			<ui-section title='Protolathe'></ui-section>
+		{{/if}}
+		{{#if (data.sdesign_buildtype & 4)}}
+			<ui-section title='Autolathe'></ui-section>
+		{{/if}}
+		{{#if (data.sdesign_buildtype & 8)}}
+			<ui-section title='Crafting Fabricator'></ui-section>
+		{{/if}}
+		{{#if (data.sdesign_buildtype & 16)}}
+			<ui-section title='Exosuit Fabricator'></ui-section>
+		{{/if}}
+		{{#if (data.sdesign_buildtype & 32)}}
+			<ui-section title='Biogenerator'></ui-section>
+		{{/if}}
+		{{#if (data.sdesign_buildtype & 64)}}
+			<ui-section title='Limb Grower'></ui-section>
+		{{/if}}
+		{{#if (data.sdesign_buildtype & 128)}}
+			<ui-section title='Ore Smelter'></ui-section>
+		{{/if}}
+	</ui-display>
+	<ui-display title='Materials'>
+		{{#each data.sdesign_materials}}
+			<ui-section title='{{matname}}'>{{matamt}} cm^3</ui-section>
+		{{/each}}
+	</ui-display>
+{{/if}}
+{{#if !data.design_selected}}
+	<ui-display title='No Design Selected.'></ui-display>
+{{/if}}
+
+
+
+
+
+
+
+
+

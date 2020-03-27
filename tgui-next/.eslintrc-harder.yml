@@ -1,0 +1,14 @@
+rules:
+  ## Enforce a maximum cyclomatic complexity allowed in a program
+  complexity: [error, { max: 25 }]
+  ## Enforce consistent brace style for blocks
+  brace-style: [error, stroustrup, { allowSingleLine: false }]
+  ## Enforce the consistent use of either backticks, double, or single quotes
+  quotes: [error, single, {
+    avoidEscape: true,
+    allowTemplateLiterals: true,
+  }]
+  react/jsx-closing-bracket-location: [error, {
+    selfClosing: after-props,
+    nonEmpty: after-props,
+  }]

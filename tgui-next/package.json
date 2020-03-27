@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "tgui-next",
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "eslint packages && cd packages/tgui && npx webpack --mode=production",
+    "watch": "cd packages/tgui-dev-server && node --experimental-modules index.js",
+    "analyze": "cd packages/tgui && npx webpack --mode=production --env.analyze=1",
+    "lint": "eslint packages"
+  },
+  "dependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "eslint-plugin-react": "^7.17.0"
+  }
+}

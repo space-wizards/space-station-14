@@ -1,0 +1,21 @@
+// DM Environment file for Redirect_Tgstation.dme.
+// All manual changes should be made outside the BEGIN_ and END_ blocks.
+// New source code should be placed in .dm files: choose File/New --> Code File.
+
+// BEGIN_INTERNALS
+// END_INTERNALS
+
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+
+// BEGIN_INCLUDE
+#include "Configurations.dm"
+#include "Redirector.dm"
+#include "textprocs.dm"
+#include "skin.dmf"
+// END_INCLUDE
+

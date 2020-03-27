@@ -1,0 +1,429 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"c" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"d" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"e" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"f" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"g" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"h" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"i" = (
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"j" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"k" = (
+/obj/structure/window/reinforced,
+/turf/template_noop,
+/area/space/nearstation)
+"l" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"m" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"n" = (
+/obj/structure/table,
+/obj/item/candle{
+	pixel_y = 5
+	},
+/obj/item/trash/plate{
+	pixel_x = 10
+	},
+/obj/item/trash/plate{
+	pixel_x = -10
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"o" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"p" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"q" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+"r" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/dinner_for_two)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+k
+c
+p
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+k
+l
+p
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+k
+l
+p
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+k
+l
+p
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+f
+g
+c
+g
+f
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+f
+i
+i
+i
+i
+q
+f
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+f
+h
+i
+i
+i
+i
+i
+i
+f
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+b
+b
+b
+b
+g
+i
+i
+i
+m
+i
+i
+i
+g
+b
+b
+b
+b
+"}
+(9,1,1) = {"
+c
+e
+e
+e
+c
+i
+i
+i
+n
+i
+i
+i
+c
+e
+e
+e
+c
+"}
+(10,1,1) = {"
+d
+d
+d
+d
+g
+i
+i
+i
+o
+i
+i
+i
+g
+d
+d
+d
+d
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+f
+i
+i
+i
+i
+i
+i
+r
+f
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+f
+j
+i
+i
+i
+i
+f
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+f
+g
+c
+g
+f
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+k
+l
+p
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+k
+l
+p
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+k
+l
+p
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+k
+c
+p
+a
+a
+a
+a
+a
+a
+a
+"}

@@ -1,0 +1,412 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral/random/no_caves,
+/area/ruin/unpowered/no_grav)
+"c" = (
+/turf/closed/mineral/random/high_chance,
+/area/ruin/unpowered/no_grav)
+"d" = (
+/turf/closed/mineral/random/no_caves,
+/area/ruin/unpowered)
+"e" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"f" = (
+/turf/closed/mineral/random/high_chance,
+/area/ruin/unpowered)
+"g" = (
+/turf/closed/mineral/bananium,
+/area/ruin/unpowered)
+"h" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered)
+"i" = (
+/turf/open/floor/plating/asteroid,
+/area/ruin/unpowered)
+"j" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"k" = (
+/obj/item/stack/sheet/mineral/bananium{
+	amount = 15
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"m" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/shard,
+/obj/effect/mob_spawn/human/clown{
+	brute_damage = 120;
+	oxy_damage = 75
+	},
+/obj/item/paper/fluff/ruins/asteroid4/extraction,
+/obj/item/stack/sheet/mineral/bananium{
+	amount = 15
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"n" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/storage/pod{
+	pixel_x = -26
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+"o" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/closed/wall/mineral/titanium/overspace,
+/area/ruin/unpowered)
+"p" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Escape Pod Airlock"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+c
+c
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+a
+a
+"}
+(2,1,1) = {"
+b
+c
+c
+b
+e
+e
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+a
+a
+"}
+(3,1,1) = {"
+b
+c
+c
+b
+e
+e
+e
+a
+a
+a
+b
+b
+b
+b
+b
+a
+a
+b
+"}
+(4,1,1) = {"
+b
+b
+b
+b
+b
+e
+e
+a
+a
+a
+a
+a
+b
+b
+b
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+b
+b
+b
+b
+b
+e
+e
+a
+a
+a
+a
+a
+a
+a
+a
+b
+a
+"}
+(6,1,1) = {"
+a
+b
+c
+b
+b
+b
+e
+e
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+b
+b
+b
+b
+b
+e
+e
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+h
+h
+h
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+b
+b
+b
+b
+a
+a
+a
+a
+a
+d
+d
+h
+h
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+b
+c
+c
+a
+a
+a
+a
+d
+d
+d
+d
+d
+d
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+d
+d
+g
+j
+j
+j
+o
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+f
+f
+g
+g
+k
+m
+n
+p
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+f
+f
+d
+i
+j
+j
+j
+o
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+d
+d
+d
+d
+d
+d
+d
+a
+a
+f
+f
+d
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+d
+d
+d
+d
+d
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+d
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

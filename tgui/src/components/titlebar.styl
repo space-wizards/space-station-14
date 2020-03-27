@@ -1,0 +1,65 @@
+context = selector()
+
+$titleButton
+  display: inline-block
+  position: relative
+  padding: 7px // To make a bigger clickable area.
+  margin: -7px
+
+  color: titlebar-color-button;
+
+  &:hover
+    color: lighten(titlebar-color-button, button-lighten-hover)
+
+header.titlebar
+  position: fixed;
+  z-index: 1
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 32px;
+
+  background-color: titlebar-color-background
+  border-bottom: 1px solid titlebar-color-coreshadow
+  box-shadow: 0 3px 3px titlebar-color-shadow
+
+  .statusicon
+    position: absolute
+    top: 4px
+    left: 12px
+    transition: color 0.5s
+
+  .title
+    position: absolute
+    top: 6px
+    left: 46px
+
+    color: titlebar-color-text
+    font-size: 16px
+    white-space: nowrap
+
+  .minimize
+    @extend {context} $titleButton
+    position: absolute
+    top: 6px
+    right: 46px
+  .close
+    @extend {context} $titleButton
+    position: absolute
+    top: 4px
+    right: 12px
+
+header.titlebar
+  .statusicon.no-icons
+    font-size: 20px
+    &::after
+      content: "O"
+  .minimize.no-icons
+    top: -2px
+    font-size: 20px
+    &::after
+      content: "—"
+  .close.no-icons
+    font-size: 20px
+    &::after
+      content: "X"

@@ -1,0 +1,85 @@
+<ui-display title='Nanite Chamber Console'>
+{{#if data.status_msg}}
+	<ui-notice>{{data.status_msg}}</ui-notice>
+{{else}}
+	<ui-display title='Chamber'>
+	<ui-section><ui-button icon={{data.locked ? 'lock-open' : 'lock'}} action='toggle_lock'>{{data.locked ? "Unlock" : "Lock" }} Chamber</ui-button><br></ui-section>
+	<ui-section><b>Occupant:</b> {{data.occupant_name}}</ui-section>
+	{{#if !data.has_nanites}}
+			<ui-section><ui-notice>No nanites detected.</ui-notice></ui-section>
+			<ui-section><ui-button icon='syringe' action='nanite_injection'>Implant Nanites</ui-button></ui-section>
+	{{else}}
+		<ui-display title='Nanites'>
+			<ui-section>
+				<ui-section label='Nanite Volume'>{{data.nanite_volume}}</ui-section>
+				<ui-section label='Growth Rate'>{{data.regen_rate}}</ui-section>
+				<ui-section label='Safety Threshold'>{{data.safety_threshold}} <ui-button icon='pencil' action='set_safety'>Set</ui-button> </ui-section>
+				<ui-section label='Cloud ID'>{{data.cloud_id ? data.cloud_id : "No Cloud" }} <ui-button icon='pencil' action='set_cloud'>Set</ui-button> </ui-section>
+			</ui-section>
+      <ui-button icon='delete' style='danger' action='remove_nanites'>Destroy Nanites</ui-button>
+			<ui-display title='Programs'>
+				{{#each data.mob_programs}}
+					<ui-display title='{{name}}' button>
+					<ui-section label='Description'>{{desc}}</ui-section>
+					{{#if data.scan_level >= 2}}
+						<ui-section label='Activation Status'>{{activated ? "Active" : "Inactive" }}</ui-section>
+						<ui-section label='Nanites Consumed'>{{use_rate}}/s</ui-section>
+						{{#if can_trigger}}
+							<ui-section label='Trigger Cost'>{{trigger_cost}}</ui-section>
+							<ui-section label='Trigger Cooldown'>{{trigger_cooldown}} seconds</ui-section>
+              {{#if timer_trigger_delay}}
+                <ui-section label='Trigger Delay'>{{timer_trigger_delay}} seconds</ui-section>
+              {{/if}}
+              {{#if timer_trigger}}
+                <ui-section label='Trigger Repeat Timer'>{{timer_trigger}} seconds</ui-section>
+              {{/if}}
+						{{/if}}
+						{{#if timer_restart}}
+							<ui-section label='Restart Timer'>{{timer_restart}} seconds</ui-section>
+            {{/if}}
+            {{#if timer_shutdown}}
+							<ui-section label='Shutdown Timer'>{{timer_shutdown}} seconds</ui-section>
+						{{/if}}
+          {{/if}}
+          {{#if data.scan_level >= 3}}
+            {{#if has_extra_settings}}
+              {{#each extra_settings}}
+                <ui-section label='{{name}}'>{{value}}</ui-section>
+              {{/each}}
+            {{/if}}
+            {{#if has_rules}}
+              <ui-section label='Rules'>
+                {{#each rules}}
+                  {{display}} <br>
+                {{/each}}
+              </ui-section>
+            {{/if}}
+          {{/if}}
+            {{#if data.scan_level >= 4}}
+              {{#if activation_code}}
+                <ui-section label='Activation Code'>{{activation_code}}</ui-section>
+              {{/if}}
+              {{#if deactivation_code}}
+                <ui-section label='Deactivation Code'>{{deactivation_code}}</ui-section>
+              {{/if}}
+              {{#if kill_code}}
+                <ui-section label='Kill Code'>{{kill_code}}</ui-section>
+              {{/if}}
+              {{#if trigger_code}}
+                <ui-section label='Trigger Code'>{{trigger_code}}</ui-section>
+              {{/if}}
+              {{#if has_rules}}
+                <ui-section label='Rules'>
+                  {{#each rules}}
+                    {{display}}<br>
+                  {{/each}}
+                </ui-section>
+              {{/if}}
+            {{/if}}
+					</ui-display>
+				{{/each}}
+			</ui-display>
+		</ui-display>
+	{{/if}}
+	</ui-display>
+{{/if}}

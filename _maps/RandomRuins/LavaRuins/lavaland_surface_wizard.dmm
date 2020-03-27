@@ -1,0 +1,755 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"b" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"c" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/structure/stone_tile/slab,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"e" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"f" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"g" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"h" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"i" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"j" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"k" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"l" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"m" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"n" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"o" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"p" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/table/bronze,
+/obj/item/disk/design_disk/adv/knight_gear,
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"q" = (
+/obj/structure/table/bronze,
+/obj/item/stack/sheet/mineral/runite{
+	amount = 5
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"r" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/table/bronze,
+/obj/item/stack/sheet/mineral/runite{
+	amount = 5
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"s" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"t" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"u" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"v" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"w" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
+"x" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"y" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"z" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"A" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"B" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"C" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"D" = (
+/turf/closed/indestructible/riveted/boss,
+/area/lavaland/surface/outdoors)
+"E" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"F" = (
+/obj/structure/stone_tile/slab,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"G" = (
+/turf/closed/indestructible/riveted/boss/see_through,
+/area/lavaland/surface/outdoors)
+"H" = (
+/obj/structure/necropolis_gate,
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/boss,
+/area/lavaland/surface/outdoors)
+"I" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"J" = (
+/obj/structure/fluff/divine/convertaltar,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"K" = (
+/mob/living/simple_animal/hostile/dark_wizard,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(2,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(3,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(4,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(5,1,1) = {"
+c
+c
+a
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+c
+c
+a
+a
+a
+c
+c
+a
+a
+c
+c
+a
+a
+a
+a
+a
+b
+b
+a
+a
+"}
+(7,1,1) = {"
+c
+c
+c
+a
+d
+a
+a
+a
+a
+a
+a
+a
+F
+a
+b
+b
+b
+b
+b
+a
+"}
+(8,1,1) = {"
+c
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+D
+b
+b
+b
+b
+b
+b
+a
+"}
+(9,1,1) = {"
+c
+c
+a
+a
+a
+a
+e
+j
+o
+t
+y
+D
+D
+b
+K
+b
+b
+b
+K
+a
+"}
+(10,1,1) = {"
+c
+c
+a
+a
+a
+a
+f
+k
+p
+u
+z
+D
+G
+b
+b
+b
+b
+b
+b
+a
+"}
+(11,1,1) = {"
+c
+c
+a
+a
+a
+a
+g
+l
+q
+v
+A
+E
+H
+b
+b
+b
+J
+b
+b
+a
+"}
+(12,1,1) = {"
+c
+c
+a
+a
+a
+a
+h
+m
+r
+w
+B
+D
+G
+b
+b
+b
+b
+b
+b
+a
+"}
+(13,1,1) = {"
+c
+c
+a
+a
+a
+a
+i
+n
+s
+x
+C
+D
+D
+b
+K
+b
+b
+b
+K
+a
+"}
+(14,1,1) = {"
+c
+c
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+D
+b
+b
+b
+b
+b
+b
+a
+"}
+(15,1,1) = {"
+c
+c
+c
+a
+d
+a
+a
+a
+a
+a
+a
+a
+I
+a
+b
+b
+b
+b
+b
+a
+"}
+(16,1,1) = {"
+c
+c
+a
+a
+a
+a
+c
+c
+c
+a
+a
+a
+a
+a
+a
+a
+b
+b
+a
+a
+"}
+(17,1,1) = {"
+c
+c
+a
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+a
+c
+"}
+(18,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(19,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}
+(20,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+"}

@@ -1,0 +1,15 @@
+<ui-display title='Available for Research'>
+	{{#each data.techweb_avail}}
+		<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.snode_id == id ? "selected" : null}}'>{{display_name}}</ui-button>
+	{{/each}}
+</ui-display>
+<ui-display title='Locked Nodes'>
+	{{#each data.techweb_locked}}
+		<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.snode_id == id ? "selected" : null}}'>{{display_name}}</ui-button>	
+	{{/each}}
+</ui-display>
+<ui-display title='Researched Nodes'>
+	{{#each data.techweb_researched}}
+		<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.snode_id == id ? "selected" : null}}'>{{display_name}}</ui-button>	
+	{{/each}}
+</ui-display>

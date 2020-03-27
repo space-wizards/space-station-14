@@ -1,0 +1,272 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
+"e" = (
+/obj/machinery/conveyor{
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"f" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"g" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"h" = (
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"i" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"j" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"k" = (
+/obj/machinery/conveyor{
+	dir = 6;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"l" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor2";
+	name = "supply dock loading door"
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"n" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"o" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"p" = (
+/obj/machinery/button/door{
+	id = "QMLoaddoor2";
+	name = "Loading Doors";
+	pixel_x = 24;
+	pixel_y = 8
+	},
+/obj/machinery/button/door{
+	id = "QMLoaddoor";
+	name = "Loading Doors";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/obj/machinery/conveyor_switch/oneway{
+	id = "cargoshuttle"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"q" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
+	},
+/obj/docking_port/mobile/supply{
+	dwidth = 3;
+	width = 10
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"r" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "supply dock loading door"
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"u" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"w" = (
+/turf/template_noop,
+/area/template_noop)
+"x" = (
+/obj/structure/shuttle/engine/propulsion/burst/left,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"y" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"z" = (
+/obj/structure/shuttle/engine/propulsion/burst/right,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"A" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"B" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"G" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"P" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"R" = (
+/obj/machinery/conveyor{
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+
+(1,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+w
+"}
+(2,1,1) = {"
+b
+e
+P
+R
+n
+B
+n
+g
+b
+x
+"}
+(3,1,1) = {"
+b
+f
+P
+G
+n
+n
+n
+g
+u
+y
+"}
+(4,1,1) = {"
+b
+A
+P
+G
+n
+n
+n
+g
+u
+y
+"}
+(5,1,1) = {"
+b
+f
+h
+j
+n
+n
+n
+g
+u
+y
+"}
+(6,1,1) = {"
+b
+f
+i
+k
+n
+p
+n
+g
+b
+z
+"}
+(7,1,1) = {"
+b
+b
+b
+l
+o
+b
+q
+r
+b
+w
+"}

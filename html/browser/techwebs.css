@@ -1,0 +1,20 @@
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:hover::before {
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    padding: 0 4px;
+    margin-top: 1px;
+    border: 1px solid #40628a;
+    background: black;
+    color: white;
+    content: attr(data-tooltip);
+    min-width: 160px;
+}
+
+.technode {
+    width: 256px;
+}

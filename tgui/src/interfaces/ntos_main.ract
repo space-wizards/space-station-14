@@ -1,0 +1,19 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+	<i>No program loaded. Please select program from list below.</i>
+	<table>
+		{{#each data.programs}}
+			<tr><td><ui-button action='PC_runprogram' params='{"name": "{{name}}"}'>
+				{{desc}}
+			</ui-button>
+			<td><ui-button state='{{running ? null : "disabled"}}' icon='close' action='PC_killprogram' params='{"name": "{{name}}"}'></ui-button>
+		{{/each}}
+	</table>
+	<br><br>
+	{{#if data.has_light}}
+		<ui-button action='PC_toggle_light' style='{{data.light_on ? "selected" : null}}'>Toggle Flashlight</ui-button><br>
+		<ui-button action='PC_light_color'>Change Flashlight Color <span style='border:1px solid #161616; background-color: {{data.comp_light_color}};'>&nbsp;&nbsp;&nbsp;</span></ui-button>
+	{{/if}}
+</ui-display>

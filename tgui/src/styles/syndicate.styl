@@ -1,0 +1,31 @@
+body.syndicate
+  color-good               = pale-green
+  color-highlight          = black
+  background-color-start   = #750000
+  background-color-end     = #340404
+  rule-color-normal        = dark-gray
+  titlebar-color-text      = pale-red
+  titlebar-color-button    = pale-red
+  display-color-background = alpha(#000, 0.5)
+  display-color-shadow     = alpha(#000, 0.75)
+  notice-color-first       = #750000
+  notice-color-second      = #910101
+  section-color-label      = white
+  bar-color-normal         = black
+  bar-color-good           = pale-green
+  bar-color-border         = black
+  button-color-normal      = dark-green
+  button-color-disabled    = gray
+  button-color-selected    = dark-red
+  button-color-caution     = yellow-orange
+  button-color-danger      = yellow
+  input-color-text         = white
+  input-color-background   = dark-red
+
+  background: data-url('images/syndicate.svg') no-repeat fixed center/70% 70%,
+    linear-gradient(to bottom,
+      background-color-start 0%,
+      background-color-end 100%)
+  @import "util/*"
+  @import "components/*"
+  @import "interfaces/*"

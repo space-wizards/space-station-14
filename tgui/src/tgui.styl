@@ -1,0 +1,134 @@
+@charset "utf-8"
+
+white = white
+pale-red = #e74242
+red = #b00e0e
+dark-red = #9d0808
+yellow-orange = #be6209
+yellow = #9a9d00
+pale-green = #73E573
+green = #2f943c
+grass-green = #537d29
+dark-green = #397439
+royal-blue = #40628a
+pale-blue = #8ba5c4
+black = black
+black-gray = #161616
+dark-gray = #272727
+gray = #363636
+light-gray = #999999
+
+// Branding Colors
+color-normal    = royal-blue
+color-good      = grass-green
+color-average   = yellow-orange
+color-bad       = red
+color-highlight = pale-blue
+
+// Text
+text-color-normal  = white
+text-color-inverse = black
+
+// Background
+background-color-start = #2a2a2a
+background-color-end   = #202020
+
+// Rules (<hr/> etc)
+rule-color-normal = royal-blue
+rule-color-dark   = dark-gray
+rule-size         = 2px
+
+// Titlebar
+titlebar-color-text       = pale-blue
+titlebar-color-button     = pale-blue
+titlebar-color-background = gray
+titlebar-color-coreshadow = black-gray
+titlebar-color-shadow     = alpha(#000, 0.1)
+
+// Resize
+resize-color = gray
+
+// Display
+display-color-title      = white
+display-color-background = alpha(#000, 0.33)
+display-color-shadow     = alpha(#000, 0.5)
+
+// Notice
+notice-color-first  = #bb9b68
+notice-color-second = #b1905d
+notice-color-border = dark-gray
+
+// Section
+section-color-label = pale-blue
+section-color-candystripe = alpha(#000, 0.2)
+
+// Bar
+bar-color-normal     = color-normal
+bar-color-good       = color-good
+bar-color-average    = color-average
+bar-color-bad        = color-bad
+bar-color-border     = royal-blue
+bar-color-background = dark-gray
+
+// Buttons
+button-color-normal        = royal-blue
+button-color-disabled      = light-gray
+button-color-selected      = green
+button-color-caution       = yellow
+button-color-danger        = dark-red
+button-color-border        = dark-gray
+button-lighten-hover       = 15%
+button-desaturate-inactive = 50%
+
+// Input
+input-color-text         = black
+input-color-placeholder  = light-gray
+input-color-border       = dark-gray
+input-color-background   = white
+
+// Tooltips
+tooltip-color-border = dark-gray
+tooltip-color-background = gray
+
+html, body
+  box-sizing: border-box
+  height: 100%
+  margin: 0
+
+html
+  overflow: hidden
+  cursor: default // Reset the cursor.
+
+body
+  overflow: auto
+
+  font-family: Verdana, Geneva, sans-serif
+  font-size: 12px
+  color: text-color-normal
+
+  background-color: background-color-start
+  background-image: linear-gradient(to bottom,
+    background-color-start 0%,
+    background-color-end 100%)
+
+*, *:before, *:after
+  box-sizing: inherit
+
+$h
+  display: inline-block
+  margin: 0
+  padding: 6px 0
+h1
+  @extend $h
+  font-size: 18px
+h2
+  @extend $h
+  font-size: 16px
+h3
+  @extend $h
+  font-size: 14px
+h4
+  @extend $h
+  font-size: 12px
+
+@require "styles/*"

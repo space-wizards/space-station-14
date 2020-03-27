@@ -1,0 +1,485 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
+"c" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plasteel/elevatorshaft,
+/area/shuttle/escape)
+"d" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"e" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"f" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"g" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/lighter{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"h" = (
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"i" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"j" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"k" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"l" = (
+/obj/machinery/computer/security{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"m" = (
+/obj/machinery/computer/crew{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"n" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey,
+/obj/machinery/light,
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"o" = (
+/obj/machinery/computer/communications{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"p" = (
+/obj/machinery/door/airlock/gold{
+	req_access_txt = "19"
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/escape)
+"q" = (
+/obj/structure/statue/plasma/scientist{
+	anchored = 1;
+	oreAmount = 50
+	},
+/turf/open/floor/light/colour_cycle,
+/area/shuttle/escape)
+"r" = (
+/turf/open/floor/mineral/plasma,
+/area/shuttle/escape)
+"s" = (
+/turf/open/floor/mineral/silver,
+/area/shuttle/escape)
+"t" = (
+/turf/open/floor/light/colour_cycle,
+/area/shuttle/escape)
+"u" = (
+/obj/docking_port/mobile/emergency{
+	name = "Disco Inferno"
+	},
+/obj/machinery/door/airlock/gold{
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100);
+	heat_proof = 1;
+	resistance_flags = 2
+	},
+/turf/open/floor/mineral/plasma,
+/area/shuttle/escape)
+"v" = (
+/obj/machinery/jukebox/disco/indestructible,
+/turf/open/floor/light/colour_cycle,
+/area/shuttle/escape)
+"w" = (
+/obj/machinery/door/airlock/gold,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"x" = (
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"y" = (
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"z" = (
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"A" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/drinks/bottle/cognac,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"B" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"C" = (
+/obj/machinery/computer/slot_machine,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"D" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"E" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"F" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"G" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"H" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/coin/plasma,
+/obj/item/coin/plasma,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"I" = (
+/obj/machinery/computer/slot_machine{
+	dir = 3
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"J" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"K" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/drinks/bottle/absinthe,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"L" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/drinks/bottle/lizardwine,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"M" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"N" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"O" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+c
+b
+u
+b
+c
+c
+c
+b
+O
+b
+w
+b
+c
+b
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+b
+O
+q
+r
+r
+r
+r
+j
+r
+r
+r
+r
+q
+c
+x
+C
+I
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+h
+m
+c
+r
+r
+r
+r
+s
+j
+s
+r
+r
+r
+r
+c
+x
+D
+D
+M
+N
+"}
+(4,1,1) = {"
+c
+d
+i
+i
+c
+r
+r
+r
+j
+j
+t
+j
+j
+r
+r
+r
+c
+x
+x
+x
+M
+N
+"}
+(5,1,1) = {"
+c
+e
+j
+j
+c
+r
+r
+s
+j
+t
+t
+t
+j
+s
+r
+r
+c
+y
+E
+y
+M
+N
+"}
+(6,1,1) = {"
+c
+f
+j
+n
+c
+r
+j
+j
+t
+t
+v
+t
+t
+j
+j
+r
+c
+z
+F
+J
+M
+N
+"}
+(7,1,1) = {"
+c
+e
+j
+j
+p
+r
+r
+s
+j
+t
+t
+t
+j
+s
+r
+r
+c
+y
+G
+y
+M
+N
+"}
+(8,1,1) = {"
+c
+g
+k
+k
+c
+r
+r
+r
+j
+j
+t
+j
+j
+r
+r
+r
+c
+x
+x
+x
+M
+N
+"}
+(9,1,1) = {"
+b
+b
+l
+o
+c
+r
+r
+r
+r
+s
+j
+s
+r
+r
+r
+r
+c
+A
+x
+K
+M
+N
+"}
+(10,1,1) = {"
+a
+b
+b
+b
+O
+q
+r
+r
+r
+r
+j
+r
+r
+r
+r
+q
+c
+B
+H
+L
+b
+b
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+c
+b
+b
+b
+c
+c
+c
+b
+b
+b
+c
+b
+c
+b
+a
+"}

@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscadd: "Added alt click actions to the All-In-One Grinder and Biogenerator, ejects beaker and puts it in your hand."

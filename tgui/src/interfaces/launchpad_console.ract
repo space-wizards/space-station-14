@@ -1,0 +1,56 @@
+{{#if data.screen == "empty"}}
+	<ui-notice>
+		<p>No launchpad connected.</p>
+	</ui-notice>
+{{elseif data.screen == "select"}}
+	<ui-display title='Launchpad Selection'>
+		{{#each data.launchpads}}
+			<ui-button action='select_pad' params='{"id": "{{id}}"}' state='{{inactive ? "disabled" : null}}'>{{name}}</ui-button><br>
+		{{/each}}
+	</ui-display>
+{{elseif data.screen == "control"}}
+	<ui-display title='Controls'>
+		<ui-button icon="return" action='return'>Return</ui-button>
+		{{#if data.pad_active}}
+			<ui-section label="Launchpad">
+			<span><b>{{data.pad_name}}</b></span><br>
+			<ui-button icon="pencil" action='rename'>Rename</ui-button>
+			<ui-button icon="remove" style="danger" action='remove'>Remove</ui-button>
+			</ui-section>
+
+			<ui-section label='Set Target'>
+				<table>
+				<tr>
+					<td style="width:25px!important"><ui-button action='up-left'>↖</ui-button></td>
+					<td style="width:25px!important; text-align:center"><ui-button action='up'>↑</ui-button></td>
+					<td style="width:25px!important; text-align:right"><ui-button action='up-right'>↗</ui-button></td>
+				</tr>
+				<tr>
+					<td style="width:25px!important"><ui-button action='left' style="width:35px!important">←</ui-button></td>
+					<td style="width:25px!important; text-align:center"><ui-button action='reset'>R</ui-button></td>
+					<td style="width:25px!important; text-align:right"><ui-button action='right'>→</ui-button></td>
+				</tr>
+				<tr>
+					<td style="width:25px!important"><ui-button action='down-left'>↙</ui-button></td>
+					<td style="width:25px!important; text-align:center"><ui-button action='down'>↓</ui-button></td>
+					<td style="width:25px!important; text-align:right"><ui-button action='down-right'>↘</ui-button></td>
+				</tr>
+				</table>
+				<hr>
+				<ui-button action='manual_x'>Set X</ui-button><ui-button action='manual_y'>Set Y</ui-button>
+			</ui-section>
+			<ui-section label='Current Target'>
+				<span>{{data.abs_y}} {{data.north_south}}</span><br>
+				<span>{{data.abs_x}} {{data.east_west}}</span>
+			</ui-section>
+			<ui-section label='Activate'>
+				<ui-button action='launch' tooltip='Teleport everything on the pad to the target.' tooltip-side='down'>Launch</ui-button>
+				<ui-button action='pull' tooltip='Teleport everything from the target to the pad.' tooltip-side='down'>Pull</ui-button>
+			</ui-section>
+		{{else}}
+			<ui-notice>
+				<p>Launchpad not responding.</p>
+			</ui-notice>
+		{{/if}}
+	</ui-display>
+{{/if}}

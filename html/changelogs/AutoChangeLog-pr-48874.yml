@@ -1,0 +1,4 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - tweak: "passive vent now shares temperature too, this stops it from getting stuck when heating/cooling."

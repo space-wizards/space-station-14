@@ -1,0 +1,47 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/lavaland/surface/outdoors)
+"b" = (
+/obj/effect/sliding_puzzle/lavaland,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"c" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+c
+c
+a
+"}
+(3,1,1) = {"
+a
+c
+b
+c
+a
+"}
+(4,1,1) = {"
+a
+c
+c
+c
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+"}

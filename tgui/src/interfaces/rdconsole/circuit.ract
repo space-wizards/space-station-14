@@ -1,0 +1,57 @@
+{{#if data.circuit_linked}}
+	{{#if data.circuitbusy}}
+		<ui-display title='Circuit Imprinter Busy!'></ui-display>
+	{{else}}
+		<ui-display>
+			<ui-section>Search Available Designs:
+			<input value={{textsearch}} placeholder="Type Here" class="text"/>
+			 <ui-button action='textSearch' params='{"latheType" : "circuit", "inputText" : {{textsearch}}}'>Search</ui-button>
+			</ui-section>
+			<ui-section>Materials: {{data.circuitmats}} / {{data.circuitmaxmats}}</ui-section>
+			<ui-section>Reagents: {{data.circuitchems}} / {{data.circuitmaxchems}}</ui-section>
+		<ui-display>
+
+		<ui-tabs tabs='{{data.lathe_tabs}}'>
+			<tab name='Category List'>
+				{{#each data.circuitcats}}
+					<ui-button action='switchcat' state='{{data.circuitcat == "{{name}}"? "selected" : null}}' params='{"type" : "circuit", "cat" : "{{name}}"}'>{{name}}</ui-button>
+				{{/each}}
+			</tab>
+			<tab name='Selected Category'>
+				{{#each data.circuitdes}}
+					<ui-section>{{name}}{{matstring}}
+						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "circuit", "id" : "{{id}}"}'>Print</ui-button>
+					</ui-section>
+				{{/each}}
+			</tab>
+			<tab name='Search Results'>
+				{{#each data.circuitmatch}}
+					<ui-section>{{name}}{{matstring}}
+						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "circuit", "id" : "{{id}}"}'>Print</ui-button>
+					</ui-section>
+				{{/each}}
+			</tab>
+			<tab name='Materials'>
+				{{#each data.circuitmat_list}}
+					<ui-section>{{name}} : {{amount}} cm3 - 
+					{{#if sheets > 0}}
+						<input value={{number}} placeholder='1-{{sheets}}' class="number"/>
+						<ui-button action='releasemats' params='{"latheType" : "circuit", "mat_id" : {{mat_id}}, "sheets" : {{number}}}'>Release</ui-button>
+					{{/if}}
+					</ui-section>
+				{{/each}}
+			</tab>
+			<tab name='Chemicals'>
+				{{#each data.circuitchem_list}}
+					<ui-section>{{name}} : {{amount}} - 
+						<ui-button action='purgechem' params='{"latheType" : "circuit", "name" : {{name}}, "id" : {{reagentid}}}'>Purge</ui-button>
+					</ui-section>
+				{{/each}}
+			
+			</tab>
+		</ui-tabs>
+	{{/if}}
+{{else}}
+	<ui-display title='No Linked Circuit Imprinter'></ui-display>
+{{/if}}
+

@@ -1,0 +1,79 @@
+﻿Legendary
+Epic
+Rare
+Common
+Elusive
+Lackluster
+Bloody
+Strange
+Unremarkable
+Scarcely Lethal
+Mildly Menacing
+Truly Feared
+Wicked
+Nasty
+Normal
+Unique
+Vintage
+Genuine
+Unusual
+Haunted
+Big
+Small
+The
+Savage
+Hungry
+Sated
+Despicable
+Nice
+Helpful
+Rogue
+Spotted
+Deep Blue
+Quick
+Slow
+Beloved
+Aggressive
+Angry
+Bewildered
+Clumsy
+Defeated
+Grumpy
+Itchy
+Scratchy
+Lazy
+Mysterious
+Repulsive
+Thoughtless
+Broad
+Chubby
+Crooked
+Curved
+Deep
+Flat
+High
+Hollow
+Low
+Narrow
+Round
+Shallow
+Robust
+Skinny
+Square Nose
+Steep Nose
+Renegade
+Ancient
+Old
+Fast
+Brief
+Short
+Frustratingly Elusive
+Curvy
+Fitted
+Forked
+Rugged
+Sinuous
+Slimy
+Sweeping
+Twisted
+Crooked

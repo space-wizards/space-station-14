@@ -1,0 +1,26 @@
+{{#if data.node_selected}}
+	<ui-display title='{{data.snode_name}}'>
+		<ui-section title='Description'>Description: {{data.snode_desc}}</ui-section>
+		<ui-section title='Point Cost'>Point Cost: {{data.snode_cost}}</ui-section>
+		<ui-section title='Export Price'>Export Price: {{data.snode_export}}</ui-section>
+		<ui-button action='research_node' params='{"id"="{{id}}"}' state='{{data.snode_researched? "disabled" : null}}'>{{data.snode_researched? "Researched" : "Research Node"}}</ui-button>
+	</ui-display>
+	<ui-display title='Prerequisites'>
+		{{#each data.node_prereqs}}
+			<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.snode_id == id ? "selected" : null}}'>{{display_name}}</ui-button>	
+		{{/each}}
+	</ui-display>
+	<ui-display title='Unlocks'>
+		{{#each data.node_unlocks}}
+			<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.snode_id == id ? "selected" : null}}'>{{display_name}}</ui-button>	
+		{{/each}}
+	</ui-display>
+	<ui-display title='Designs'>
+		{{#each data.node_designs}}
+			<ui-button action='select_design' params='{"id": "{{id}}"}' state='{{data.sdesign_id == id ? "selected" : null}}'>{{name}}</ui-button>	
+		{{/each}}
+	</ui-display>
+{{/if}}
+{{#if !data.node_selected}}
+	<ui-display title='No Node Selected.'></ui-display>
+{{/if}}

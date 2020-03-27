@@ -1,0 +1,473 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"c" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"d" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"e" = (
+/obj/item/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/structure/table,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"f" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"g" = (
+/obj/machinery/stasis,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"h" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"i" = (
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"j" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"k" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"l" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_x = 28
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"m" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"n" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"o" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Cell";
+	req_access_txt = "2"
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"p" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Escape Shuttle Infirmary"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"q" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"r" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"s" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"t" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"u" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"x" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"y" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"z" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"A" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"B" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	dir = 8;
+	dwidth = 8;
+	height = 9;
+	name = "Mini emergency shuttle";
+	width = 21
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"D" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/crowbar,
+/obj/item/extinguisher,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"E" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"G" = (
+/obj/structure/table/optable,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"H" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"I" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Escape Shuttle Cockpit";
+	req_access_txt = "19"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"J" = (
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"K" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"L" = (
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 24
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"M" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"N" = (
+/obj/machinery/computer/security{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"O" = (
+/obj/machinery/computer/crew{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"P" = (
+/obj/machinery/computer/communications{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Q" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/fire,
+/obj/item/extinguisher,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"R" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"S" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"T" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/crowbar,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"W" = (
+/obj/structure/table,
+/obj/item/clothing/suit/apron/surgical,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"X" = (
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+n
+n
+n
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(2,1,1) = {"
+b
+b
+e
+k
+X
+p
+f
+M
+M
+M
+M
+M
+f
+M
+M
+D
+b
+J
+O
+q
+b
+"}
+(3,1,1) = {"
+c
+d
+W
+X
+X
+n
+f
+f
+f
+f
+f
+f
+f
+f
+f
+r
+b
+K
+K
+Q
+n
+"}
+(4,1,1) = {"
+c
+d
+G
+l
+g
+n
+f
+K
+K
+K
+y
+K
+K
+K
+f
+r
+H
+t
+f
+R
+n
+"}
+(5,1,1) = {"
+c
+d
+b
+b
+b
+q
+t
+x
+n
+n
+z
+n
+n
+R
+f
+f
+I
+f
+f
+S
+n
+"}
+(6,1,1) = {"
+c
+d
+h
+h
+n
+r
+f
+M
+M
+M
+A
+M
+M
+M
+f
+E
+b
+L
+f
+R
+n
+"}
+(7,1,1) = {"
+c
+d
+i
+i
+o
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+r
+b
+M
+M
+T
+n
+"}
+(8,1,1) = {"
+b
+b
+j
+m
+n
+s
+f
+K
+K
+K
+K
+K
+f
+K
+K
+D
+b
+N
+P
+q
+b
+"}
+(9,1,1) = {"
+a
+b
+b
+b
+b
+b
+u
+b
+b
+n
+b
+b
+B
+b
+b
+b
+b
+b
+b
+b
+a
+"}

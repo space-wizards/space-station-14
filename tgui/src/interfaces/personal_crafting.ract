@@ -1,0 +1,172 @@
+<script>
+  import { filterMulti } from 'util/filter'
+  component.exports = {
+    data: {
+      filter: '',
+			tooltiptext(req_text, catalyst_text, tool_text){
+				//This function is to get around the issue where you can't embed moustache variables within moustache statements
+				//It's also less cramped than the tooltip attribute of the button tag :P
+				let text = ""
+				if(req_text){
+					text += "REQUIREMENTS: " + req_text + " "
+				}
+				if(catalyst_text){
+					text += "CATALYSTS: " + catalyst_text + " "
+				}
+				if(tool_text){
+					text += "TOOLS: " + tool_text
+				}
+				return text
+			}
+    },
+    oninit () {
+      this.on({
+        hover (event) {
+          this.set('hovered', event.context.params)
+        },
+        unhover (event) {
+          this.set('hovered')
+        }
+      })
+      this.observe('filter', (newkey, oldkey, keypath) => {
+				let categories = null
+				if(this.get('data.display_compact')){
+					//This doesn't work, but it's necessary to not cause a script error with compact mode
+					//Also hidden in compact mode
+					categories = this.findAll('.section') 
+				} else {
+					categories = this.findAll('.display:not(:first-child)')
+				}
+        filterMulti(categories, this.get('filter').toLowerCase())
+      }, { init: false })
+    }
+  }
+</script>
+
+
+
+<ui-display title='{{data.category}}{{#if data.subcategory}} : {{data.subcategory}} {{/if}}'>
+	{{#if data.busy}}
+		<ui-section>
+			Crafting... <i class='fa-spin fa fa-spinner'></i>
+		</ui-section>
+	{{else}}
+		<ui-section>
+			<table style='width:100%'>
+				<tr>
+					<td style='width:150px!important'>
+						<ui-button icon='arrow-left' action='backwardCat'>
+							{{data.prev_cat}}
+						</ui-button>
+					</td>
+					<td style='width:150px!important'>
+						<ui-button icon='arrow-right' action='forwardCat'>
+						{{data.next_cat}}
+						</ui-button>
+					</td>
+					<td style='float:right!important'>
+					{{#if data.display_craftable_only}}
+						<ui-button icon='lock' action='toggle_recipes'>
+							Showing Craftable Recipes
+						</ui-button>
+					{{else}}
+						<ui-button icon='unlock' action='toggle_recipes'>
+							Showing All Recipes
+						</ui-button>
+					{{/if}}
+					</td>
+					<td style='float:right!important'>
+						<ui-button icon='{{data.display_compact ? "check-square-o" : "square-o"}}' action='toggle_compact'>
+							Compact
+						</ui-button>
+					</td>
+				</tr>
+				<tr>
+				{{#if data.subcategory}}
+					<td style='width:150px!important'>
+						<ui-button icon='arrow-left' action='backwardSubCat'>
+							{{data.prev_subcat}}
+						</ui-button>
+					</td>
+					<td style='width:150px!important'>
+						<ui-button icon='arrow-right' action='forwardSubCat'>
+							{{data.next_subcat}}
+						</ui-button>
+					</td>
+				{{/if}}
+				</tr>
+			</table>
+			{{#if config.fancy}}
+				{{^data.display_compact}} {{! This doesn't work in compact mode, so let's hide it}}
+					<ui-input value='{{filter}}' placeholder='Filter..'/>
+				{{/data.display_compact}}
+			{{/if}}
+		</ui-section>
+			{{#if data.display_compact}}
+				<ui-display>
+				{{#each data.can_craft}}
+					<ui-section label='{{name}}'>
+						<ui-button tooltip='{{tooltiptext(req_text, catalyst_text, tool_text)}}' tooltip-side='right' action='make' params='{"recipe": "{{ref}}"}' on-hover='hover' on-unhover='unhover' icon='gears'>
+							Craft
+						</ui-button>
+					</ui-section>
+				{{/each}}
+				{{^data.display_craftable_only}}
+					{{#each data.cant_craft}}
+						<ui-section label='{{name}}'>
+							<ui-button tooltip='{{tooltiptext(req_text, catalyst_text, tool_text)}}' tooltip-side='right' state='disabled' on-hover='hover' on-unhover='unhover' icon='gears'>
+								Craft
+							</ui-button>
+						</ui-section>
+					{{/each}}
+				{{/data.display_craftable_only}}
+				</ui-display>
+			{{else}}
+				{{#each data.can_craft}}
+					<ui-display title='{{name}}'>
+						{{#if req_text}}
+							<ui-section label='Requirements'>
+								{{req_text}}
+							</ui-section>
+						{{/if}}
+						{{#if catalyst_text}}
+							<ui-section label='Catalysts'>
+								{{catalyst_text}}
+							</ui-section>
+						{{/if}}
+						{{#if tool_text}}
+							<ui-section label='Tools'>
+								{{tool_text}}
+							</ui-section>
+						{{/if}}
+						<ui-section>
+							<ui-button icon='gears' action='make' params='{"recipe": "{{ref}}"}'>
+								Craft
+							</ui-button>
+						</ui-section>
+					</ui-display>
+				{{/each}}
+				{{^data.display_craftable_only}}
+					{{#each data.cant_craft}}
+						<ui-display title='{{name}}'>
+							{{#if req_text}}
+								<ui-section label='Requirements'>
+									{{req_text}}
+								</ui-section>
+							{{/if}}
+							{{#if catalyst_text}}
+								<ui-section label='Catalysts'>
+									{{catalyst_text}}
+								</ui-section>
+							{{/if}}
+							{{#if tool_text}}
+								<ui-section label='Tools'>
+									{{tool_text}}
+								</ui-section>
+							{{/if}}
+						</ui-display>
+					{{/each}}
+				{{/data.display_craftable_only}}
+			{{/if}}
+	{{/if}}
+</ui-display>

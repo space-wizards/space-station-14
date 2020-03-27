@@ -1,0 +1,33 @@
+div.display
+  width: 100%
+  padding: 4px
+  margin: 6px 0
+  
+  &.tabular
+    padding 0px
+    margin 0px
+
+  background-color: display-color-background // Transparent background.
+  box-shadow: inset 0 0 5px display-color-shadow
+
+  header
+    display: block
+    position: relative
+    width: 100%
+    padding: 0 4px
+    margin-bottom: 6px
+
+    color: display-color-title
+
+    border-bottom: rule-size solid rule-color-normal
+
+    .buttonRight
+      position: absolute
+      bottom: 6px
+      right: 4px
+
+  article
+    display: table
+    width: 100%
+
+    border-collapse: collapse;

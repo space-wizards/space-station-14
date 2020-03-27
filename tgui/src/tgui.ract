@@ -1,0 +1,57 @@
+<link rel='ractive' href='components/resize.ract'>
+<link rel='ractive' href='components/titlebar.ract'>
+<link rel='ractive' href='components/warnings.ract'>
+
+<script>
+import { winset } from 'util/byond'
+
+component.exports = {
+  components: {
+    'ui-bar': require('components/bar'),
+    'ui-button': require('components/button'),
+    'ui-display': require('components/display'),
+    'ui-input': require('components/input'),
+    'ui-linegraph': require('components/linegraph'),
+    'ui-notice': require('components/notice'),
+    'ui-section': require('components/section'),
+    'ui-subdisplay': require('components/subdisplay'),
+    'ui-tabs': require('components/tabs'),
+  },
+  events: {
+    enter: require('ractive-events-keys').enter,
+    space: require('ractive-events-keys').space,
+  },
+  transitions: {
+    fade: require('ractive-transitions-fade'),
+  },
+  onconfig () {
+    const requested  = this.get('config.interface')
+    const interfaces = require('interfaces/**/*.ract', { mode: 'hash' })
+    if (requested in interfaces) {
+      this.components.interface = interfaces[requested] // Use the interface specified in the config...
+      document.body.classList.add(requested) //Name of the interface class for interface-level css
+    } else {
+      this.components.interface = interfaces.error // ...unless it does not exist.
+    }
+  },
+  oninit () {
+    this.observe('config.style', (newkey, oldkey, keypath) => {
+      if (newkey) document.body.classList.add(newkey)
+      if (oldkey) document.body.classList.remove(oldkey)
+    })
+  },
+  oncomplete () {
+    // Give focus back to the map.
+    winset('mapwindow.map', 'focus', true)
+  }
+}
+</script>
+
+<titlebar>{{{config.title}}}</titlebar>
+<main>
+  <warnings/>
+  <interface/>
+</main>
+{{#if config.fancy}}
+  <resize/>
+{{/if}}

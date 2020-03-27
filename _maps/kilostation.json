@@ -1,0 +1,11 @@
+{
+    "map_name": "Kilo Station",
+    "map_path": "map_files/KiloStation",
+    "map_file": "KiloStation.dmm",
+    "shuttles": {
+	    "emergency": "emergency_kilo",
+	    "ferry": "ferry_kilo",
+	    "cargo": "cargo_kilo",
+	    "whiteship": "whiteship_kilo"
+    }
+}

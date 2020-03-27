@@ -1,0 +1,47 @@
+<link rel='ractive' href='./rdconsole/rdheader.ract'>
+<link rel='ractive' href='./rdconsole/techweb.ract'>
+<link rel='ractive' href='./rdconsole/nodeview.ract'>
+<link rel='ractive' href='./rdconsole/designview.ract'>
+<link rel='ractive' href='./rdconsole/diskopstech.ract'>
+<link rel='ractive' href='./rdconsole/diskopsdesign.ract'>
+<link rel='ractive' href='./rdconsole/destruct.ract'>
+<link rel='ractive' href='./rdconsole/protolathe.ract'>
+<link rel='ractive' href='./rdconsole/circuit.ract'>
+<link rel='ractive' href='./rdconsole/settings.ract'>
+<rdheader/>
+{{#if data.locked}}
+	<ui-display title='CONSOLE LOCKED'>
+		<ui-button action='Unlock'>Unlock</ui-button>
+	</ui-display>
+{{/if}}
+{{#if !data.locked}}
+	<ui-tabs tabs='{{data.tabs}}'>
+		<tab name='Technology'>
+			<techweb/>
+		</tab>
+		<tab name='View Node'>
+			<nodeview/>
+		</tab>
+		<tab name='View Design'>
+			<designview/>
+		</tab>
+		<tab name='Disk Operations - Design'>
+			<diskopsdesign/>
+		</tab>
+		<tab name='Disk Operations - Technology'>
+			<diskopstech/>
+		</tab>
+		<tab name='Deconstructive Analyzer'>
+			<destruct/>
+		</tab>
+		<tab name='Protolathe'>
+			<protolathe/>
+		</tab>
+		<tab name='Circuit Imprinter'>
+			<circuit/>
+		</tab>
+		<tab name='Settings'>
+			<settings/>
+		</tab>
+	</ui-tabs>
+{{/if}}

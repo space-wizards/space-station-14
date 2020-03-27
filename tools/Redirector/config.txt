@@ -1,0 +1,12 @@
+[SERVERS]
+## Simply enter a list of servers to poll. Be sure to specify a server name in parentheses.
+
+(Sibyl #1) byond://game.nanotrasen.com:1337
+
+(Sibyl #2) byond://game.nanotrasen.com:2337
+
+
+[ADMINS]
+## Specify some standard Windows filepaths (you may use relative paths) for admin txt lists to poll.
+
+C:\SS13\config\admins.txt

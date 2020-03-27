@@ -1,0 +1,81 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral,
+/area/space)
+"c" = (
+/turf/closed/mineral/random/low_chance,
+/area/space)
+
+(1,1,1) = {"
+a
+a
+b
+c
+b
+b
+b
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+c
+c
+c
+c
+a
+"}
+(3,1,1) = {"
+b
+b
+c
+c
+c
+c
+b
+b
+"}
+(4,1,1) = {"
+b
+b
+c
+c
+c
+c
+c
+b
+"}
+(5,1,1) = {"
+a
+c
+c
+c
+c
+c
+b
+a
+"}
+(6,1,1) = {"
+a
+a
+c
+b
+c
+b
+b
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+b
+b
+b
+a
+a
+"}

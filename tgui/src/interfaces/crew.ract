@@ -1,0 +1,138 @@
+<script>
+	component.exports = {
+		data:{
+			isHead (ijob) { return ijob % 10 == 0 },
+			dept_class(ijob){
+				if (ijob == 0)	{ return "dept-cap"; } // captain
+				else if	(ijob >= 10 && ijob < 20)	{ return "dept-sec"; } // security
+				else if (ijob >= 20 && ijob < 30)	{ return "dept-med"; } // medical
+				else if (ijob >= 30 && ijob < 40)	{ return "dept-sci"; } // science
+				else if (ijob >= 40 && ijob < 50)	{ return "dept-eng"; } // engineering
+				else if (ijob >= 50 && ijob < 60)	{ return "dept-cargo"; } // cargo
+				else if (ijob >= 200 && ijob < 230)	{ return "dept-cent"; } // CentCom
+				else { return "dept-other"; } // other / unknown
+				},
+			health_state(oxy,tox,burn,brute){
+				var avg_dam	=  oxy + tox + burn + brute;
+				if		(avg_dam <= 0)	{  return "health-5"; }
+				else if (avg_dam <= 25)	{  return "health-4"; }
+				else if (avg_dam <= 50)	{  return "health-3"; }
+				else if (avg_dam <= 75)	{  return "health-2"; }
+				else					{  return "health-0"; }
+			}
+		}
+	}
+</script>
+
+<ui-display>
+	<ui-section>
+		<table class='crew'>
+		<thead>
+		<tr>
+			<th>Name</th>
+			<th>Status</th>
+			<th>Vitals</th>
+			<th>Position</th>
+			{{#if data.link_allowed}}
+				<th>Tracking</th>
+			{{/if}}
+		</tr>
+		</thead>
+		<tbody>
+		{{#each data.sensors}}
+			<tr>
+				<td>
+					<span class='{{isHead(ijob) ? "bold " :""}}{{dept_class(ijob)}}'>
+						{{name}} ({{assignment}})
+					<span>
+				</td>
+				<td>
+					{{#if oxydam != null}}
+						<span class='health {{health_state(oxydam,toxdam,burndam,brutedam)}}'></span>
+					{{else}}
+						{{#if life_status}}
+							<span class='health health-5'></span>
+						{{else}}
+							<span class='health health-0'></span>
+						{{/if}}
+					{{/if}}
+				</td>
+				<td>
+					{{#if oxydam != null}}
+						<span>
+						(
+							<span class='oxy'>{{oxydam}}</span>
+							/
+							<span class='toxin'>{{toxdam}}</span>
+							/
+							<span class='burn'>{{burndam}}</span>
+							/
+							<span class='brute'>{{brutedam}}</span>
+						)
+						</span>
+					{{else}}
+						{{#if life_status}}
+							<span>Alive</span>
+						{{else}}
+							<span>Dead</span>
+						{{/if}}
+					{{/if}}
+				</td>
+				<td>
+				{{#if pos_x != null}}
+					<span>{{area}}</span>
+				{{else}}
+					<span>N/A</span>
+				{{/if}}
+				</td>
+				{{#if data.link_allowed }}
+					<td>
+						<ui-button action='select_person' state='{{can_track ? null : "disabled"}}' params='{"name":"{{name}}"}'>Track</ui-button>
+					</td>
+				{{/if}}
+			</tr>
+		{{/each}}
+		</tbody>
+		</table>
+	</ui-section>
+</ui-display>
+
+<style>
+	.health {
+			width: 16px;
+			height: 16px;
+			background-color: #FFF;
+			border: 1px solid #434343;
+			position: relative;
+			top: 2px;
+			display: inline-block;
+	}
+	.health-5 { background-color: #17d568; }
+	.health-4 { background-color: #2ecc71; }
+	.health-3 { background-color: #e67e22; }
+	.health-2 { background-color: #ed5100; }
+	.health-1 { background-color: #e74c3c; }
+	.health-0 { background-color: #ed2814; }
+
+	.dept-cap {color : #C06616;}
+	.dept-sec {color : #E74C3C;}
+	.dept-med {color : #3498DB;}
+	.dept-sci {color : #9B59B6;}
+	.dept-eng {color : #F1C40F;}
+	.dept-cargo {color : #F39C12;}
+	.dept-cent {color : #00C100;}
+	.dept-other {color: #C38312;}
+
+	.oxy { color : #3498db; }
+	.toxin { color : #2ecc71; }
+	.burn { color : #e67e22; }
+	.brute { color : #e74c3c; }
+
+	table.crew{
+		border-collapse: collapse;
+	}
+
+	table.crew td {
+		padding : 0px 10px;
+	}
+</style>

@@ -1,0 +1,52 @@
+{
+    "boomer": [
+	"@pick(kids) these days have it too easy!",
+	"Do I look like I know what a @pick(file) is!?",
+	"How do I open a @pick(file) again?",
+	"Unlike you snowflakes, I'm not offended so easily.",
+	"Back in my day...",
+	"When I was your age...",
+	"This generation can't take a joke.",
+	"Why are @pick(kids) these days so @pick(sad) all the time?",
+	"These damn @pick(kids) need to get a @pick(impossible) for once!",
+	"It's simply a matter of showing up, looking the manager in the eye, giving him a firm handshake and telling him you want the job.",
+	"You'll never get anywhere in life without a degree.",
+	"@pick(expense) isn't really that expensive.",
+	"When I was a kid I had to walk to school uphill both ways!"
+    ],
+
+	"expense": [
+	"Healthcare",
+	"College",
+	"A car",
+	"A house",
+	"Food"
+	],
+	
+    "kids": [
+	"kids",
+	"millenials",
+	"snowflakes"
+    ],
+
+    "file": [
+	"JPEG",
+	"PDF",
+	"DMI",
+	"JSON"
+    ],
+
+    "sad": [
+	"sad",
+	"depressed",
+	"sad and depressed"
+    ],
+
+    "impossible": [
+	"job",
+	"house",
+	"job and a house",
+	"life"
+    ]
+
+}

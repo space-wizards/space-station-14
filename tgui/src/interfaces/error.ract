@@ -1,0 +1,3 @@
+<ui-notice>
+  <span>The requested interface ({{config.interface}}) was not found. Does it exist?</span>
+</ui-notice>

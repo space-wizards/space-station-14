@@ -1,0 +1,24 @@
+<ui-tabs tabs='{{data.templates_tabs}}'>
+  {{#each data.templates}}
+    <tab name='{{port_id}}'>
+      {{#each templates}}
+        <ui-display title='{{name}}'>
+          {{#if description}}
+            <ui-section label='Description'>{{description}}</ui-section>
+          {{/if}}
+          {{#if admin_notes}}
+            <ui-section label='Admin Notes'>{{admin_notes}}</ui-section>
+          {{/if}}
+
+          <ui-button action='select_template'
+            params='{"shuttle_id": "{{shuttle_id}}"}'
+            state='{{data.selected.shuttle_id == shuttle_id ?
+              "selected" : null}}'>
+            {{data.selected.shuttle_id == shuttle_id ? "Selected" : "Select"}}
+          </ui-button>
+
+        </ui-display>
+      {{/each}}
+    </tab>
+  {{/each}}
+</ui-tabs>

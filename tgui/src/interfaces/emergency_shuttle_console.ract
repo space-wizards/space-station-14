@@ -1,0 +1,30 @@
+<ui-notice>
+    <span>Time Until Launch: {{data.timer_str}}</span>
+</ui-notice>
+<ui-notice>
+		<span>Engines: {{data.engines_started ? 'Online' : 'Idle'}}</span>
+</ui-notice>
+<ui-display title='Early Launch'>
+	<span>Authorizations Remaining:
+	{{data.emagged ? "ERROR" : data.authorizations_remaining}}</span>
+	<ui-button icon="exclamation-triangle" action='authorize'
+		style='danger'
+		state='{{data.enabled ? null : 'disabled'}}'>
+		AUTHORIZE
+	</ui-button>
+	<ui-button icon="minus" action='repeal'
+		state='{{data.enabled ? null : 'disabled'}}'>
+		Repeal
+	</ui-button>
+	<ui-button icon="close" action='abort'
+		state='{{data.enabled ? null : 'disabled'}}'>
+		Repeal All
+	</ui-button>
+</ui-display>
+<ui-display title='Authorizations'>
+	{{#each data.authorizations}}
+		<ui-section candystripe nowrap>{{name}} ({{job}})</ui-section>
+	{{else}}
+		<ui-section candystripe nowrap>No authorizations.</ui-section>
+	{{/each}}
+</ui-display>

@@ -1,0 +1,29 @@
+<script>
+import { winset } from 'util/byond'
+import { resize } from 'util/dragresize'
+
+component.exports = {
+  oninit () {
+    const onresize = resize.bind(this);
+    const onrelease = () => {
+      this.set({
+        resize: false,
+        x: null,
+        y: null,
+      });
+      document.removeEventListener('mousemove', onresize);
+      document.removeEventListener('mouseup', onrelease);
+    };
+
+    this.on('resize', () => {
+      this.toggle('resize');
+      document.addEventListener('mousemove', onresize);
+      document.addEventListener('mouseup', onrelease);
+    });
+  }
+}
+</script>
+
+{{#if config.fancy}}
+  <div class='resize' on-mousedown='resize'></div>
+{{/if}}

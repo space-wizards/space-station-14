@@ -1,0 +1,113 @@
+{{#if data.mode == 1}}
+	<ui-display title='Beaker' button>
+		{{#partial button}}
+			<ui-button icon='remove' state='{{data.has_beaker && !data.beaker_empty ? null : "disabled"}}' action='empty_eject_beaker'>
+				Empty and Eject
+			</ui-button>
+			<ui-button icon='trash' state='{{data.has_beaker && !data.beaker_empty ? null : "disabled"}}' action='empty_beaker'>
+				Empty
+			</ui-button>
+			<ui-button icon='eject' state='{{data.has_beaker ? null : "disabled"}}' action='eject_beaker'>
+				Eject
+			</ui-button>
+		{{/partial}}
+		{{#if data.has_beaker}}
+			<ui-section>
+				{{#if data.beaker_empty}}
+					<span class='bad'>The beaker is empty!</span>
+				{{else}}
+					<ui-subdisplay title='Blood'>
+						{{#if data.has_blood}}
+							<ui-section label='Blood DNA'>{{data.blood.dna}}</ui-section>
+							<ui-section label='Blood type'>{{data.blood.type}}</ui-section>
+						{{else}}
+							<ui-section>
+								<span class='average'>No blood sample detected.</span>
+							</ui-section>
+						{{/if}}
+					</ui-subdisplay>
+				{{/if}}
+			</ui-section>
+		{{else}}
+			<ui-section>
+				<span class='bad'>No beaker loaded.</span>
+			</ui-section>
+		{{/if}}
+	</ui-display>
+	{{#if data.has_blood}}
+		<ui-display title='Diseases'>
+			{{#each data.viruses}}
+				<ui-display title='{{name}}' button>
+					{{#partial button}}
+						{{#if is_adv}}
+							<ui-button icon='pencil' action='rename_disease' state='{{can_rename ? "" : "disabled"}}' params='{"index": {{index}}}'>
+								Name advanced disease
+							</ui-button>
+						{{/if}}
+						<ui-button icon='flask' action='create_culture_bottle' state='{{data.is_ready ? "" : "disabled"}}' params='{"index": {{index}}}'>
+							Create virus culture bottle
+						</ui-button>
+					{{/partial}}
+					<ui-section label='Disease agent'>{{agent}}</ui-section>
+					<ui-section label='Description'>{{description}}</ui-section>
+					<ui-section label='Spread'>{{spread}}</ui-section>
+					<ui-section label='Possible cure'>{{cure}}	</ui-section>
+					{{#if is_adv}}
+						<ui-section label='Symptoms'>
+							{{#each symptoms}}
+								<ui-button action='symptom_details' state="" params='{"picked_symptom": {{sym_index}}, "index": {{index}}}'>
+									{{name}}
+								</ui-button><br />
+							{{/each}}
+						</ui-section>
+						<ui-section label='Resistance'>{{resistance}}</ui-section>
+						<ui-section label='Stealth'>{{stealth}}</ui-section>
+						<ui-section label='Stage speed'>{{stage_speed}}</ui-section>
+						<ui-section label='Transmittability'>{{transmission}}</ui-section>
+					{{/if}}
+				</ui-display>
+			{{else}}
+				<ui-section>
+					<span class='average'>No detectable virus in the blood sample.</span>
+				</ui-section>
+			{{/each}}
+		</ui-display>
+		<ui-display title='Antibodies'>
+			{{#each data.resistances}}
+				<ui-section label='{{name}}'>
+						<ui-button icon='eyedropper' state='{{data.is_ready ? "" : "disabled"}}' action='create_vaccine_bottle' params='{"index": {{id}}}'>
+							Create vaccine bottle
+						</ui-button>
+				</ui-section>
+			{{else}}
+				<ui-section>
+					<span class='average'>No antibodies detected in the blood sample.</span>
+				</ui-section>
+			{{/each}}
+		</ui-display>
+	{{/if}}
+{{else}}
+	<ui-button icon='undo' state="" action='back'>
+		Back
+	</ui-button>
+	{{#with data.symptom}}
+			<ui-display title='{{name}}'>
+			<ui-section>
+				{{desc}}
+			{{#if neutered}}
+				<br/>
+				<b>This symptom has been neutered, and has no effect. It will still affect the virus' statistics.</b>
+			{{/if}}
+			</ui-section>
+			<ui-section>
+				<ui-section label='Level'>{{level}}</ui-section>
+				<ui-section label='Resistance'>{{resistance}}</ui-section>
+				<ui-section label='Stealth'>{{stealth}}</ui-section>
+				<ui-section label='Stage speed'>{{stage_speed}}</ui-section>
+				<ui-section label='Transmittability'>{{transmission}}</ui-section>
+			</ui-section>
+			<ui-subdisplay title='Effect Thresholds'>
+				<ui-section>{{{threshold_desc}}}</ui-section>
+			</ui-subdisplay>
+	{{/with}}
+{{/if}}

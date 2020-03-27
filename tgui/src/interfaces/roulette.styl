@@ -1,0 +1,55 @@
+&.roulette
+
+	.number .button
+		width 32px
+		height 32px
+		font-size 16px
+		margin 4px
+		margin-left 2px
+		border none
+		color white
+	
+	.number.red
+		button-color-normal = #AA1818
+		button-color-selected = #CFBA47
+		@import "util/*"
+		@import "components/*"
+
+	.number.black
+		button-color-normal	= #1A1A1A
+		@import "util/*"
+		@import "components/*"
+	
+	.image_button
+		color none
+		width 32px
+		height 72px
+		font-size 16px
+		margin 4px
+		padding 0px
+		border none
+
+	.amount
+		.button
+			height 32px
+			font-size 16px
+			margin 4px
+			color white
+			width 90%
+			margin-top 8px
+			border-style ridge
+			border-color #06541f
+		button-color-normal = #146630
+		@import "util/*"
+		@import "components/*"
+
+	.display
+		padding 4px
+		margin 8px
+		width 200px
+		border-style ridge
+		color white
+		background-color #097a2d
+		border-color #06541f
+	
+

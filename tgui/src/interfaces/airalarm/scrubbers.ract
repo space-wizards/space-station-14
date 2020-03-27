@@ -1,0 +1,29 @@
+<link rel='ractive' href='./back.ract'>
+<link rel='ractive' href='../scrubbing_types.ract' name='filters'>
+
+<ui-display title='Scrubber Controls' button>
+  {{#partial button}}
+    <back/>
+  {{/partial}}
+  {{#each data.scrubbers}}
+    <ui-subdisplay title='{{long_name}}'>
+      <ui-section label='Power'>
+        <ui-button icon='{{power ? "power-off" : "close"}}' style='{{power ? "selected" : null}}'
+          action='power' params='{"id_tag": "{{id_tag}}", "val": {{+!power}}}'>{{power ? "On" : "Off"}}</ui-button>
+      </ui-section>
+      <ui-section label='Mode'>
+        <ui-button icon='{{scrubbing ? "filter" : "sign-in"}}' style='{{scrubbing ? null : "danger"}}'
+          action='scrubbing' params='{"id_tag": "{{id_tag}}", "val": {{+!scrubbing}}}'>{{scrubbing ? "Scrubbing" : "Siphoning"}}</ui-button>
+      </ui-section>
+      <ui-section label='Range'>
+        <ui-button icon='{{widenet ? "expand" : "compress"}}' style='{{widenet ? "selected" : null}}'
+          action='widenet' params='{"id_tag": "{{id_tag}}", "val": {{+!widenet}}}'>{{widenet ? "Expanded" : "Normal"}}</ui-button>
+      </ui-section>
+      <ui-section label='Filters'>
+        <filters/>
+      </ui-section>
+    </ui-subdisplay>
+  {{else}}
+    <span class='bad'>Error: No scrubbers connected.</span>
+  {{/each}}
+</ui-display>

@@ -1,0 +1,41 @@
+{{#if data.occupied && data.safeties}}
+  <ui-notice>
+    <span>Biological entity detected in contents. Please remove.</span>
+  </ui-notice>
+{{/if}}
+{{#if data.uv_active}}
+  <ui-notice>
+    <span>Contents are being decontaminated. Please wait.</span>
+  </ui-notice>
+{{else}}
+  <ui-display title='Storage' button>
+    {{#partial button}}
+      {{#if !data.open}}<ui-button icon='{{data.locked ? "unlock" : "lock"}}' action='lock'>{{data.locked ? 'Unlock' : 'Lock'}}</ui-button>{{/if}}
+      {{#if !data.locked}}<ui-button icon='{{data.open ? "sign-out" : "sign-in"}}' action='door'>{{data.open ? 'Close' : 'Open'}}</ui-button>{{/if}}
+    {{/partial}}
+    {{#if data.locked}}
+      <ui-notice>
+        <span>Unit Locked</span>
+      </ui-notice>
+    {{elseif data.open}}
+        <ui-section label='Helmet'>
+          <ui-button icon='{{data.helmet ? "square" : "square-o"}}'state='{{data.helmet ? null : "disabled"}}'
+            action='dispense' params='{"item": "helmet"}'>{{data.helmet || "Empty"}}</ui-button>
+        </ui-section>
+        <ui-section label='Suit'>
+          <ui-button icon='{{data.suit ? "square" : "square-o"}}' state='{{data.suit ? null : "disabled"}}'
+            action='dispense' params='{"item": "suit"}'>{{data.suit || "Empty"}}</ui-button>
+        </ui-section>
+        <ui-section label='Mask'>
+          <ui-button icon='{{data.mask ? "square" : "square-o"}}' state='{{data.mask ? null : "disabled"}}'
+            action='dispense' params='{"item": "mask"}'>{{data.mask || "Empty"}}</ui-button>
+        </ui-section>
+        <ui-section label='Storage'>
+          <ui-button icon='{{data.storage ? "square" : "square-o"}}' state='{{data.storage ? null : "disabled"}}'
+            action='dispense' params='{"item": "storage"}'>{{data.storage || "Empty"}}</ui-button>
+        </ui-section>
+    {{else}}
+      <ui-button icon='recycle' state='{{data.occupied && data.safeties ? "disabled" : null}}' action='uv'>Decontaminate</ui-button>
+    {{/if}}
+  </ui-display>
+{{/if}}

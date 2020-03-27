@@ -1,0 +1,33 @@
+<ui-display>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.on ? "power-off" : "close"}}' style='{{data.on ? "selected" : null}}'
+      action='power'>{{data.on ? "On" : "Off"}}</ui-button>
+  </ui-section>
+  <ui-section label='Output Pressure'>
+    <ui-button icon='pencil' action='pressure' params='{"pressure": "input"}'>Set</ui-button>
+    <ui-button icon='plus' state='{{data.set_pressure == data.max_pressure ? "disabled" : null}}' action='pressure' params='{"pressure": "max"}'>Max</ui-button>
+    <span>{{Math.round(adata.set_pressure)}} kPa</span>
+  </ui-section>
+  <ui-section label='Node 1'>
+    <ui-button icon='fast-backward' state='{{data.node1_concentration == 0 ? "disabled" : null}}'
+      action='node1' params='{"concentration": -0.1}'/>
+    <ui-button icon='backward' state='{{data.node1_concentration == 0 ? "disabled" : null}}'
+      action='node1' params='{"concentration": -0.01}'/>
+    <ui-button icon='forward' state='{{data.node1_concentration == 100 ? "disabled" : null}}'
+      action='node1' params='{"concentration": 0.01}'/>
+    <ui-button icon='fast-forward' state='{{data.node1_concentration == 100 ? "disabled" : null}}'
+      action='node1' params='{"concentration": 0.1}'/>
+    <span>{{Math.round(adata.node1_concentration)}}%</span>
+  </ui-section>
+  <ui-section label='Node 2'>
+    <ui-button icon='fast-backward' state='{{data.node2_concentration == 0 ? "disabled" : null}}'
+      action='node2' params='{"concentration": -0.1}'/>
+    <ui-button icon='backward' state='{{data.node2_concentration == 0 ? "disabled" : null}}'
+      action='node2' params='{"concentration": -0.01}'/>
+    <ui-button icon='forward' state='{{data.node2_concentration == 100 ? "disabled" : null}}'
+      action='node2' params='{"concentration": 0.01}'/>
+    <ui-button icon='fast-forward' state='{{data.node2_concentration == 100 ? "disabled" : null}}'
+      action='node2' params='{"concentration": 0.1}'/>
+    <span>{{Math.round(adata.node2_concentration)}}%</span>
+  </ui-section>
+</ui-display>

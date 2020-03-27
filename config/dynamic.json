@@ -1,0 +1,50 @@
+{
+	"Dynamic": {},
+	"Roundstart": {
+		"Traitors": {
+			"cost": 10,
+			"scaling_cost": 10,
+			"weight": 5,
+			"required_candidates": 1,
+			"high_population_requirement": 10,
+			"minimum_required_age": 0,
+			"requirements": [
+				10,
+				10,
+				10,
+				10,
+				10,
+				10,
+				10,
+				10,
+				10,
+				10
+			],
+			"antag_cap": [
+				1,
+				1,
+				1,
+				2,
+				2,
+				2,
+				3,
+				3,
+				3,
+				3
+			],
+			"protected_roles": [
+				"Security Officer",
+				"Warden",
+				"Detective",
+				"Head of Security",
+				"Captain"
+			],
+			"restricted_roles": [
+				"Cyborg"
+			],
+			"autotraitor_cooldown": 450
+		}
+	},
+	"Midround": {},
+	"Latejoin": {}
+}

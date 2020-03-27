@@ -1,0 +1,44 @@
+/$cell
+  display: table-cell
+  margin: 0
+  text-align: left
+  vertical-align: middle
+  padding: 3px 2px
+
+section
+  display: table-row
+  width: 100%
+
+  &:not(:first-child)
+    padding-top: 4px
+
+  &.candystripe:nth-child(even)
+    background-color: section-color-candystripe
+
+  .label
+    @extend $cell
+    width: 1%
+    padding-right: 32px
+    white-space: nowrap
+
+    color: section-color-label
+
+  .content
+    @extend $cell
+    &:not(:last-child)
+      padding-right: 16px
+
+  .line
+    @extend $cell
+    width: 100%
+
+  .cell
+    @extend $cell
+    &:not(:first-child)
+      text-align: center
+      padding-top: 0px
+    span.button
+      width: 75px
+  &:not(:last-child)
+      padding-right: 4px
+  

@@ -1,0 +1,2005 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/turf/closed/mineral/random/no_caves,
+/area/ruin/unpowered/no_grav)
+"ac" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"ad" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/cat_man)
+"ae" = (
+/obj/structure/closet/crate,
+/obj/item/storage/toolbox,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"af" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ag" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ah" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ai" = (
+/obj/structure/janitorialcart,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aj" = (
+/obj/structure/table,
+/obj/item/reagent_containers/spray/cleaner,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ak" = (
+/obj/structure/mopbucket,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"al" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"am" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"an" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ao" = (
+/obj/machinery/atmospherics/pipe/manifold/green/hidden{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ap" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aq" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Misc Supplies";
+	req_access_txt = "201"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ar" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Custodial Supplies";
+	req_access_txt = "201"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"as" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden,
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/cat_man)
+"at" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"au" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"av" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aw" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"ax" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"ay" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"az" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/dogbed{
+	name = "kitty bed"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aD" = (
+/obj/structure/bed/dogbed{
+	name = "kitty bed"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aE" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aF" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"aG" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"aH" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"aI" = (
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"aJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/glass/bowl,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/glass/bowl,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aM" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aN" = (
+/obj/machinery/door/airlock{
+	name = "Private Quarters"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"aO" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"aP" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "meow";
+	name = "kitty protection door"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor/preopen{
+	id = "meow";
+	name = "kitty protection door"
+	},
+/obj/machinery/door/window{
+	name = "kitty door";
+	req_access_txt = "200"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aR" = (
+/obj/structure/bed/dogbed{
+	name = "kitty bed"
+	},
+/mob/living/simple_animal/pet/cat/space,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"aS" = (
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"aT" = (
+/obj/structure/dresser,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"aU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"aV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"aW" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"aX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	desc = "A slab of cat meat. Tastes like furball.";
+	name = "cat meat"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aY" = (
+/obj/structure/bed/dogbed{
+	name = "kitty bed"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/human/corpse/damaged{
+	head = /obj/item/clothing/head/kitty
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"aZ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ba" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"bb" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/closet/cabinet,
+/obj/item/gps{
+	gpstag = "kitty"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"bc" = (
+/obj/machinery/button/door{
+	id = "meow";
+	name = "Emergency Kitty Lockdown";
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bd" = (
+/obj/structure/table/reinforced,
+/obj/item/hemostat,
+/obj/item/cautery{
+	pixel_x = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"be" = (
+/obj/item/organ/tail/cat,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plasteel/white/corner,
+/area/ruin/space/has_grav/powered/cat_man)
+"bf" = (
+/turf/open/floor/plasteel/white/side,
+/area/ruin/space/has_grav/powered/cat_man)
+"bg" = (
+/turf/open/floor/plasteel/white/corner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered/cat_man)
+"bh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor/preopen{
+	id = "meow";
+	name = "kitty protection door"
+	},
+/obj/machinery/door/window/westleft{
+	name = "kitty door";
+	req_access_txt = "200"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/cattoy,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bm" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/cat_man)
+"bn" = (
+/obj/machinery/atmospherics/pipe/manifold/green/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bo" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"bp" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"bq" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"br" = (
+/obj/structure/table/reinforced,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bs" = (
+/mob/living/simple_animal/hostile/cat_butcherer,
+/turf/open/floor/plasteel/white/side{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/cat_man)
+"bt" = (
+/obj/structure/table/optable,
+/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/item/organ/ears/cat,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/powered/cat_man)
+"bu" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/surgical_drapes,
+/turf/open/floor/plasteel/white/side{
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered/cat_man)
+"bv" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bw" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"bx" = (
+/obj/structure/rack,
+/obj/item/melee/baton/cattleprod,
+/obj/item/melee/baton/cattleprod,
+/obj/item/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"by" = (
+/obj/structure/bed,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/cat_man)
+"bz" = (
+/obj/structure/table/reinforced,
+/obj/item/retractor,
+/obj/item/razor,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bA" = (
+/turf/open/floor/plasteel/white/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/cat_man)
+"bB" = (
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/ruin/space/has_grav/powered/cat_man)
+"bC" = (
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/powered/cat_man)
+"bD" = (
+/obj/structure/bed/dogbed{
+	name = "kitty bed"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bJ" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bK" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bL" = (
+/obj/structure/chair,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bM" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bN" = (
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor/preopen{
+	id = "meow";
+	name = "kitty protection door"
+	},
+/obj/machinery/door/window/northleft{
+	name = "kitty door";
+	req_access_txt = "200"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/cattoy,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bR" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bS" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bT" = (
+/obj/machinery/light,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/powered/cat_man)
+"bU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/dogbed{
+	name = "kitty bed"
+	},
+/obj/effect/mob_spawn/human/corpse/damaged{
+	head = /obj/item/clothing/head/kitty
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	desc = "A slab of cat meat. Tastes like furball.";
+	name = "cat meat"
+	},
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bY" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access_txt = "201"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"bZ" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ca" = (
+/obj/machinery/atmospherics/pipe/manifold/green/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"cb" = (
+/obj/machinery/atmospherics/pipe/manifold/green/hidden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"cc" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"cd" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ce" = (
+/obj/machinery/atmospherics/pipe/simple/dark/hidden{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"cf" = (
+/obj/machinery/atmospherics/components/binary/valve{
+	name = "kitty sleep gas"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"cg" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Portable Atmos Equipment";
+	req_access_txt = "201"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/cat_man)
+"ch" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ci" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/dark/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"cj" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 5
+	},
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"ck" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"cl" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
+	dir = 8;
+	id_tag = "n2o_out_cat";
+	name = "n2o out"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/cat_man)
+"cm" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/cat_man)
+"cn" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/cat_man)
+"co" = (
+/obj/machinery/atmospherics/pipe/simple/dark/hidden,
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/cat_man)
+"cp" = (
+/obj/machinery/door/airlock{
+	name = "Limb Storage";
+	req_access_txt = "200"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/space/has_grav/powered/cat_man)
+"cq" = (
+/obj/machinery/atmospherics/miner/n2o,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/cat_man)
+"cr" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/cat_man)
+"cs" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
+	dir = 1;
+	id_tag = "o2_out_cat";
+	name = "freezer vent"
+	},
+/obj/structure/closet/crate/freezer{
+	name = "cat hide"
+	},
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/obj/item/stack/sheet/animalhide/human,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/space/has_grav/powered/cat_man)
+"ct" = (
+/turf/open/floor/plasteel/freezer,
+/area/ruin/space/has_grav/powered/cat_man)
+"cu" = (
+/obj/structure/closet/crate/freezer{
+	name = "cat ears"
+	},
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/space/has_grav/powered/cat_man)
+"cv" = (
+/obj/structure/closet/crate/freezer{
+	name = "cat meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	desc = "A slab of cat meat. Tastes like furball.";
+	name = "cat meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	desc = "A slab of cat meat. Tastes like furball.";
+	name = "cat meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	desc = "A slab of cat meat. Tastes like furball.";
+	name = "cat meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	desc = "A slab of cat meat. Tastes like furball.";
+	name = "cat meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	desc = "A slab of cat meat. Tastes like furball.";
+	name = "cat meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	desc = "A slab of cat meat. Tastes like furball.";
+	name = "cat meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	desc = "A slab of cat meat. Tastes like furball.";
+	name = "cat meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	desc = "A slab of cat meat. Tastes like furball.";
+	name = "cat meat"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/space/has_grav/powered/cat_man)
+"cw" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/space/has_grav/powered/cat_man)
+"cx" = (
+/obj/structure/closet/crate/freezer{
+	name = "cat tails"
+	},
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/space/has_grav/powered/cat_man)
+"Bl" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"RT" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"Sl" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ab
+ab
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ad
+au
+ad
+ab
+ab
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ab
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ad
+av
+ad
+ab
+ad
+aZ
+aZ
+aZ
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+ab
+ab
+ad
+ad
+ad
+ad
+Sl
+ad
+ad
+ad
+ba
+bo
+bw
+ad
+bJ
+aI
+aF
+ad
+aZ
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+ab
+ab
+ab
+ad
+ae
+ah
+ad
+aw
+aF
+ad
+aR
+aS
+bp
+bx
+ad
+bK
+aI
+aG
+RT
+ah
+Bl
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(10,1,1) = {"
+ab
+ab
+ab
+ab
+ad
+af
+ah
+aq
+aw
+aG
+aN
+aS
+aS
+aS
+aS
+ad
+bL
+aI
+aH
+ad
+aZ
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+ab
+ab
+ab
+ad
+ad
+ad
+ad
+ax
+aH
+ad
+aT
+bb
+aS
+by
+ad
+bM
+aI
+bT
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+ab
+ab
+ad
+ag
+aj
+ad
+aw
+aG
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+aI
+aG
+ad
+ad
+ad
+ad
+ad
+ab
+ab
+ac
+ab
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+ab
+ab
+ad
+ah
+ah
+ar
+aw
+aI
+aO
+aI
+bc
+bq
+aI
+aI
+bN
+aI
+aG
+bY
+ay
+cd
+ch
+ad
+ad
+ad
+ad
+ab
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+ab
+ab
+ab
+ad
+ai
+ak
+ad
+ad
+ad
+ad
+aw
+bd
+br
+bz
+aG
+ad
+ad
+ad
+ad
+ah
+ce
+ci
+co
+cs
+cv
+ad
+ab
+ab
+aa
+"}
+(15,1,1) = {"
+aa
+ab
+ab
+ab
+ad
+ad
+ad
+ad
+ay
+ay
+aP
+aw
+be
+bs
+bA
+aG
+aP
+bP
+bU
+as
+bZ
+ay
+ah
+cp
+ct
+cw
+ad
+ab
+ab
+aa
+"}
+(16,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ad
+al
+as
+az
+aJ
+aP
+aw
+bf
+bt
+bB
+bE
+aP
+bQ
+bV
+ad
+ca
+cf
+cj
+ad
+cu
+cx
+ad
+ab
+ab
+aa
+"}
+(17,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ad
+am
+ad
+aA
+aK
+aQ
+aU
+bg
+bu
+bC
+aG
+bO
+aK
+bW
+ad
+an
+ad
+ck
+ad
+ad
+ad
+ad
+ab
+ab
+aa
+"}
+(18,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ad
+an
+ad
+ad
+ad
+ad
+aV
+aI
+aI
+aI
+bF
+ad
+ad
+ad
+ad
+an
+ad
+cl
+cm
+ad
+ab
+ab
+ab
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ad
+ao
+as
+aB
+ay
+aQ
+aW
+bh
+bv
+bh
+bG
+bO
+ay
+bX
+as
+cb
+ad
+cm
+cq
+ad
+ab
+ab
+ab
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ad
+an
+ad
+aC
+aJ
+ad
+aP
+bi
+ad
+bi
+aP
+ad
+aJ
+bV
+ad
+an
+ad
+ad
+ad
+ad
+ab
+ab
+ab
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ad
+an
+ad
+aD
+aL
+ad
+ay
+bj
+ad
+ay
+ay
+ad
+aK
+aD
+ad
+am
+cg
+cm
+cr
+ad
+ab
+ab
+ab
+ab
+ab
+"}
+(22,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ad
+am
+ad
+ad
+ad
+ad
+aX
+bk
+ad
+aL
+bH
+ad
+ad
+ad
+ad
+an
+ad
+cn
+cr
+ad
+ab
+ab
+ab
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+ab
+ab
+ad
+ap
+at
+aE
+aM
+ad
+aY
+bl
+ad
+bD
+bI
+ad
+bR
+aE
+aE
+cc
+ad
+ad
+ad
+ad
+ab
+ab
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+ab
+ab
+ad
+ad
+ad
+ad
+am
+ad
+ad
+bm
+ad
+ad
+bm
+ad
+am
+ad
+ad
+ad
+ad
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ad
+ap
+at
+aE
+bn
+aE
+at
+bn
+aE
+bS
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

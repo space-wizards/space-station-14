@@ -1,0 +1,696 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/open/space,
+/area/ruin/powered/shuttle/medium_3)
+"c" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/shuttle/medium_3)
+"d" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/powered/shuttle/medium_3)
+"h" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered/shuttle/medium_3)
+"j" = (
+/obj/machinery/door/airlock/external/glass,
+/turf/open/floor/plating,
+/area/ruin/powered/shuttle/medium_3)
+"k" = (
+/obj/machinery/power/smes/magical,
+/turf/open/floor/plasteel,
+/area/ruin/powered/shuttle/medium_3)
+"l" = (
+/turf/open/floor/plasteel,
+/area/ruin/powered/shuttle/medium_3)
+"m" = (
+/turf/open/floor/plating,
+/area/ruin/powered/shuttle/medium_3)
+"n" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/open/space,
+/area/ruin/powered/shuttle/medium_3)
+"o" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/powered/shuttle/medium_3)
+"p" = (
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/plasteel,
+/area/ruin/powered/shuttle/medium_3)
+"q" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/powered/shuttle/medium_3)
+"r" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/open/space,
+/area/ruin/powered/shuttle/medium_3)
+"t" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/powered/shuttle/medium_3)
+"v" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_3)
+"w" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_3)
+"x" = (
+/obj/structure/chair/comfy{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_3)
+"z" = (
+/obj/machinery/sleeper,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_3)
+"A" = (
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_3)
+"C" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_3)
+"D" = (
+/obj/structure/table,
+/obj/item/storage/firstaid,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_3)
+"E" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/ruin/powered/shuttle/medium_3)
+"F" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/space,
+/area/ruin/powered/shuttle/medium_3)
+"G" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/shuttle/medium_3)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+n
+a
+a
+a
+a
+n
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+n
+c
+o
+a
+a
+a
+a
+o
+c
+n
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+c
+o
+c
+c
+c
+a
+a
+c
+c
+c
+o
+c
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+c
+c
+c
+c
+c
+c
+a
+a
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+c
+c
+h
+h
+c
+c
+c
+j
+j
+c
+c
+c
+h
+h
+c
+c
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+c
+c
+h
+k
+l
+G
+h
+G
+m
+m
+G
+h
+G
+l
+k
+h
+c
+c
+a
+a
+"}
+(7,1,1) = {"
+a
+b
+d
+c
+h
+l
+l
+l
+l
+p
+l
+l
+p
+l
+l
+l
+l
+h
+c
+E
+F
+a
+"}
+(8,1,1) = {"
+a
+c
+c
+c
+c
+G
+l
+l
+l
+G
+t
+t
+G
+l
+l
+l
+G
+c
+c
+c
+c
+a
+"}
+(9,1,1) = {"
+b
+d
+c
+c
+c
+h
+l
+l
+G
+z
+C
+C
+D
+G
+l
+l
+h
+c
+c
+c
+E
+F
+"}
+(10,1,1) = {"
+a
+a
+c
+c
+c
+G
+p
+G
+v
+G
+C
+C
+G
+A
+G
+p
+G
+c
+c
+c
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+j
+m
+l
+t
+w
+w
+l
+l
+A
+A
+t
+l
+m
+j
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+j
+m
+l
+t
+x
+w
+l
+l
+A
+A
+t
+l
+m
+j
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+c
+c
+c
+G
+p
+G
+w
+G
+A
+A
+G
+A
+G
+p
+G
+c
+c
+c
+a
+a
+"}
+(14,1,1) = {"
+b
+d
+c
+c
+c
+h
+l
+l
+G
+A
+A
+A
+A
+G
+l
+l
+h
+c
+c
+c
+E
+F
+"}
+(15,1,1) = {"
+a
+c
+c
+c
+c
+G
+l
+l
+l
+G
+t
+t
+G
+l
+l
+l
+G
+c
+c
+c
+c
+a
+"}
+(16,1,1) = {"
+a
+b
+d
+c
+h
+l
+l
+l
+l
+p
+l
+l
+p
+l
+l
+l
+l
+h
+c
+E
+F
+a
+"}
+(17,1,1) = {"
+a
+a
+c
+c
+h
+k
+l
+G
+h
+G
+m
+m
+G
+h
+G
+l
+k
+h
+c
+c
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+c
+c
+h
+h
+c
+c
+c
+j
+j
+c
+c
+c
+h
+h
+c
+c
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+c
+c
+c
+c
+c
+c
+a
+a
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+c
+q
+c
+c
+c
+a
+a
+c
+c
+c
+q
+c
+a
+a
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+a
+a
+a
+r
+c
+q
+a
+a
+a
+a
+q
+c
+r
+a
+a
+a
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+r
+a
+a
+a
+a
+r
+a
+a
+a
+a
+a
+a
+a
+a
+"}

@@ -1,0 +1,541 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/shuttle/engine/propulsion/burst/left{
+	dir = 8
+	},
+/turf/open/space,
+/area/ruin/powered/shuttle/medium_1)
+"c" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/powered/shuttle/medium_1)
+"d" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/powered/shuttle/medium_1)
+"f" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered/shuttle/medium_1)
+"h" = (
+/obj/machinery/door/airlock/external/glass,
+/turf/open/floor/plating,
+/area/ruin/powered/shuttle/medium_1)
+"i" = (
+/turf/closed/wall/mineral/titanium/overspace,
+/area/ruin/powered/shuttle/medium_1)
+"j" = (
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_1)
+"k" = (
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_1)
+"l" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/regular,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_1)
+"m" = (
+/obj/machinery/sleeper,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_1)
+"n" = (
+/turf/open/floor/plasteel,
+/area/ruin/powered/shuttle/medium_1)
+"o" = (
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/plasteel,
+/area/ruin/powered/shuttle/medium_1)
+"p" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_1)
+"q" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_1)
+"r" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_1)
+"s" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/powered/shuttle/medium_1)
+"t" = (
+/obj/machinery/power/smes/magical,
+/turf/open/floor/plasteel,
+/area/ruin/powered/shuttle/medium_1)
+"u" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ruin/powered/shuttle/medium_1)
+"v" = (
+/obj/structure/chair/comfy{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/shuttle/medium_1)
+"w" = (
+/obj/structure/shuttle/engine/propulsion/burst/right{
+	dir = 8
+	},
+/turf/open/space,
+/area/ruin/powered/shuttle/medium_1)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+i
+h
+f
+h
+i
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+f
+n
+n
+n
+f
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+i
+f
+f
+o
+f
+o
+f
+f
+i
+a
+a
+a
+"}
+(4,1,1) = {"
+b
+b
+b
+f
+j
+f
+n
+n
+n
+f
+j
+f
+w
+w
+w
+"}
+(5,1,1) = {"
+c
+c
+c
+f
+j
+k
+n
+t
+n
+k
+j
+f
+c
+c
+c
+"}
+(6,1,1) = {"
+d
+d
+f
+f
+k
+f
+f
+f
+f
+f
+k
+f
+f
+d
+d
+"}
+(7,1,1) = {"
+d
+d
+f
+j
+j
+f
+j
+j
+j
+f
+j
+j
+f
+d
+d
+"}
+(8,1,1) = {"
+d
+d
+f
+j
+j
+k
+j
+j
+j
+k
+j
+j
+f
+d
+d
+"}
+(9,1,1) = {"
+d
+d
+f
+j
+j
+f
+j
+j
+j
+f
+j
+j
+f
+d
+a
+"}
+(10,1,1) = {"
+a
+d
+f
+f
+f
+f
+k
+f
+k
+f
+f
+f
+f
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+h
+j
+k
+j
+j
+u
+j
+j
+k
+j
+h
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+h
+j
+f
+j
+j
+u
+j
+j
+f
+j
+h
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+i
+f
+f
+f
+k
+f
+k
+f
+f
+f
+i
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+f
+l
+p
+u
+j
+j
+f
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+f
+m
+p
+u
+j
+j
+f
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+f
+f
+k
+f
+k
+f
+f
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+f
+j
+j
+f
+j
+j
+f
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+f
+j
+j
+f
+j
+j
+f
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+i
+f
+k
+f
+k
+f
+i
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+f
+q
+q
+q
+f
+a
+a
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+a
+a
+f
+q
+v
+q
+f
+a
+a
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+a
+f
+r
+r
+r
+f
+a
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+i
+s
+s
+s
+i
+a
+a
+a
+a
+a
+"}

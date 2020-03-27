@@ -1,0 +1,41 @@
+.top{font-family:Tahoma,sans-serif;font-size:12px;}
+h2{font-family:Tahoma,sans-serif;}
+a img {border:none;}
+.bgimages16 li {
+	padding:2px 10px 2px 30px;
+	background-position:6px center;
+	background-repeat:no-repeat;
+	border:1px solid #ddd;
+	border-left:4px solid #999;
+	margin-bottom:2px;
+}
+.bugfix {background-image:url(bug-minus.png)}
+.wip {background-image:url(hard-hat-exclamation.png)}
+.tweak {background-image:url(wrench-screwdriver.png)}
+.soundadd {background-image:url(music-plus.png)}
+.sounddel {background-image:url(music-minus.png)}
+.rscdel {background-image:url(cross-circle.png)}
+.rscadd {background-image:url(tick-circle.png)}
+.imageadd {background-image:url(image-plus.png)}
+.imagedel {background-image:url(image-minus.png)}
+.spellcheck {background-image:url(spell-check.png)}
+.experiment {background-image:url(burn-exclamation.png)}
+.refactor {background-image:url(burn-exclamation.png)}
+.code_imp {background-image:url(coding.png)}
+.config {background-image:url(chrome-wrench.png)}
+.admin {background-image:url(ban.png)}
+.server {background-image:url(hard-hat-exclamation.png)}
+.balance {background-image:url(scales.png)}
+.sansserif {font-family:Tahoma,sans-serif;font-size:12px;}
+.commit {margin-bottom:20px;font-size:100%;font-weight:normal;}
+.changes {list-style:none;margin:5px 0;padding:0 0 0 25px;font-size:0.8em;}
+.date {margin:10px 0;color:blue;border-bottom:2px solid #00f;width:60%;padding:2px 0;font-size:1em;font-weight:bold;}	
+.author {padding-left:10px;margin:0;font-weight:bold;font-size:0.9em;}
+.drop {cursor:pointer;border:1px solid #999;display:inline;font-size:0.9em;padding:1px 20px 1px 5px;line-height:16px;}
+.hidden {display:none;}
+.indrop {margin:2px 0 0 0;clear:both;background:#fff;border:1px solid #ddd;padding:5px 10px;}
+.indrop p {margin:0;font-size:0.8em;line-height:16px;margin:1px 0;}
+.indrop img {margin-right:5px;vertical-align:middle;}
+.closed {background:url(chevron-expand.png) right center no-repeat;}
+.open {background:url(chevron.png) right center no-repeat;}
+.lic {font-size:9px;}

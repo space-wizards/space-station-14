@@ -1,0 +1,15 @@
+version: '{build}'
+skip_branch_with_pr: true
+shallow_clone: true
+branches:
+  except:
+    - ___TGS3TempBranch
+    - ___TGSTempBranch
+cache:
+  - C:\byond\ -> dependencies.sh
+build_script:
+  - ps: tools/appveyor/build.ps1
+  - ps: "$deployPath = $env:APPVEYOR_BUILD_FOLDER + '/deploy'; bash tools/deploy.sh $deployPath" 
+  - ps: "[System.IO.Compression.ZipFile]::CreateFromDirectory($env:APPVEYOR_BUILD_FOLDER + '/deploy', $env:APPVEYOR_BUILD_FOLDER + '/deploy.zip')"
+artifacts:
+  - path: deploy.zip

@@ -1,0 +1,353 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/mineral/titanium/overspace,
+/area/ruin/space/has_grav/powered/mechtransport)
+"c" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/mechtransport)
+"d" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/powered/mechtransport)
+"f" = (
+/obj/structure/closet/crate/secure/loot,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/mechtransport)
+"g" = (
+/obj/structure/closet/crate/secure/loot,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/mechtransport)
+"h" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "mechaship1";
+	name = "Mecha Cargo Ship Doors"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/mechtransport)
+"i" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/mechtransport)
+"j" = (
+/obj/machinery/computer/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/mechtransport)
+"k" = (
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/mechtransport)
+"l" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/mechtransport)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/mechtransport)
+"n" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/mechtransport)
+"p" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Cockpit";
+	req_access_txt = "101"
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/has_grav/powered/mechtransport)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/mineral/titanium/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"s" = (
+/turf/open/floor/mineral/titanium/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"u" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/mineral/titanium/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"v" = (
+/obj/structure/mecha_wreckage/phazon,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"w" = (
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"x" = (
+/obj/structure/mecha_wreckage/ripley/firefighter,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"z" = (
+/obj/structure/mecha_wreckage/ripley,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"A" = (
+/obj/mecha/working/ripley{
+	ruin_mecha = 1
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"B" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"C" = (
+/obj/effect/decal/cleanable/robot_debris/up,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"D" = (
+/obj/machinery/door/poddoor{
+	id = "mechaship1";
+	name = "Cargo Bay Door"
+	},
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"E" = (
+/obj/effect/decal/cleanable/robot_debris,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"F" = (
+/obj/structure/mecha_wreckage/durand,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"G" = (
+/obj/item/stack/tile/plasteel,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"H" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"I" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/has_grav/powered/mechtransport)
+"J" = (
+/obj/machinery/computer/mecha{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/has_grav/powered/mechtransport)
+"K" = (
+/obj/effect/decal/cleanable/robot_debris/gib,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"L" = (
+/obj/effect/decal/cleanable/robot_debris,
+/obj/item/stack/tile/plasteel,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"M" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav/powered/mechtransport)
+"N" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav/powered/mechtransport)
+"O" = (
+/obj/structure/mecha_wreckage/odysseus,
+/turf/open/floor/mineral/titanium/yellow/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"P" = (
+/obj/item/stack/sheet/metal,
+/turf/template_noop,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Q" = (
+/obj/structure/mecha_wreckage/gygax,
+/turf/open/floor/mineral/titanium/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"R" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav/powered/mechtransport)
+"S" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"T" = (
+/turf/template_noop,
+/area/ruin/space/has_grav/powered/mechtransport)
+"V" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/ruin/space/has_grav/powered/mechtransport)
+"X" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/template_noop,
+/area/ruin/space/has_grav/powered/mechtransport)
+
+(1,1,1) = {"
+a
+a
+a
+b
+d
+d
+d
+d
+G
+I
+M
+P
+T
+T
+T
+"}
+(2,1,1) = {"
+b
+d
+d
+d
+r
+v
+B
+E
+H
+S
+H
+I
+R
+V
+T
+"}
+(3,1,1) = {"
+c
+f
+k
+p
+s
+w
+w
+F
+w
+H
+N
+I
+I
+T
+T
+"}
+(4,1,1) = {"
+c
+g
+l
+d
+t
+w
+C
+G
+F
+w
+G
+H
+P
+T
+T
+"}
+(5,1,1) = {"
+c
+h
+m
+d
+s
+x
+w
+w
+y
+K
+O
+s
+S
+I
+T
+"}
+(6,1,1) = {"
+c
+i
+n
+d
+t
+y
+z
+w
+H
+L
+O
+H
+H
+T
+T
+"}
+(7,1,1) = {"
+c
+j
+J
+d
+t
+z
+w
+w
+y
+w
+w
+Q
+d
+b
+X
+"}
+(8,1,1) = {"
+b
+d
+d
+d
+u
+A
+y
+w
+w
+B
+y
+s
+d
+d
+X
+"}
+(9,1,1) = {"
+a
+a
+a
+b
+d
+d
+D
+D
+D
+D
+D
+d
+b
+b
+X
+"}

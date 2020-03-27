@@ -1,0 +1,26 @@
+{{#if data.notice}}
+  <ui-notice>
+    {{data.notice}}
+  </ui-notice>
+{{/if}}
+<ui-display title='Bluespace Artillery Control' button>
+  {{#if data.connected}}
+    <ui-section label='Target'>
+      <ui-button icon='crosshairs' action='recalibrate'>{{data.target}}</ui-button>
+    </ui-section>
+    <ui-section label='Controls'>
+	  {{#if !data.unlocked}}
+		  <ui-notice>
+			  <span>Bluespace Artillery firing protocols must be globally unlocked from two keycard authentication devices first!</span>
+		  </ui-notice>
+	  {{else}}
+		  <ui-button icon='warning' state='{{data.ready ? null : "disabled"}}' action='fire'>FIRE!</ui-button>
+	  {{/if}}
+    </ui-section>
+  {{/if}}
+  {{#if !data.connected}}
+    <ui-section label='Maintenance'>
+        <ui-button icon='wrench' action='build'>Complete Deployment.</ui-button>
+    </ui-section>
+  {{/if}}
+</ui-display>

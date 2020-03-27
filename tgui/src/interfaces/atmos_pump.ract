@@ -1,0 +1,19 @@
+<ui-display>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.on ? "power-off" : "close"}}' style='{{data.on ? "selected" : null}}'
+      action='power'>{{data.on ? "On" : "Off"}}</ui-button>
+  </ui-section>
+  {{#if data.max_rate}}
+    <ui-section label='Transfer Rate'>
+      <ui-button icon='pencil' action='rate' params='{"rate": "input"}'>Set</ui-button>
+      <ui-button icon='plus' state='{{data.rate == data.max_rate ? "disabled" : null}}' action='rate' params='{"rate": "max"}'>Max</ui-button>
+      <span>{{Math.round(adata.rate)}} L/s</span>
+    </ui-section>
+  {{else}}
+    <ui-section label='Output Pressure'>
+      <ui-button icon='pencil' action='pressure' params='{"pressure": "input"}'>Set</ui-button>
+      <ui-button icon='plus' state='{{data.pressure == data.max_pressure ? "disabled" : null}}' action='pressure' params='{"pressure": "max"}'>Max</ui-button>
+      <span>{{Math.round(adata.pressure)}} kPa</span>
+    </ui-section>
+  {{/if}}
+</ui-display>

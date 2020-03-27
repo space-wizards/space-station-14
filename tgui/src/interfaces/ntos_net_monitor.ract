@@ -1,0 +1,93 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+
+	<ui-display title='WIRELESS CONNECTIVITY'>
+
+		<ui-section label='Active NTNetRelays'>
+			<b>{{data.ntnetrelays}}</b>
+		</ui-section>
+		{{#if data.ntnetrelays}}
+			<ui-section label='System status'>
+					<b>{{data.ntnetstatus ? "ENABLED" : "DISABLED"}}</b>
+			</ui-section>
+			<ui-section label='Control'>
+
+			<ui-button icon='plus' action='toggleWireless'>
+				TOGGLE
+			</ui-button>
+			</ui-section>
+			<br><br>
+			<i>Caution - Disabling wireless transmitters when using wireless device may prevent you from re-enabling them again!</i>
+		{{else}}
+			<br><p>Wireless coverage unavailable, no relays are connected.</p>
+		{{/if}}
+	</ui-display>
+
+
+	<ui-display title='FIREWALL CONFIGURATION'>
+
+	<table>
+		<tr>
+			<th>PROTOCOL
+			<th>STATUS
+			<th>CONTROL
+		<tr>
+			<td>Software Downloads
+			<td>{{data.config_softwaredownload ? 'ENABLED' : 'DISABLED'}}
+			<td> <ui-button action='toggle_function' params='{"id": "1"}'>TOGGLE</ui-button>
+		<tr>
+			<td>Peer to Peer Traffic
+			<td>{{data.config_peertopeer ? 'ENABLED' : 'DISABLED'}}
+			<td><ui-button action='toggle_function' params='{"id": "2"}'>TOGGLE</ui-button>
+		<tr>
+			<td>Communication Systems
+			<td>{{data.config_communication ? 'ENABLED' : 'DISABLED'}}
+			<td><ui-button action='toggle_function' params='{"id": "3"}'>TOGGLE</ui-button>
+		<tr>
+			<td>Remote System Control
+			<td>{{data.config_systemcontrol ? 'ENABLED' : 'DISABLED'}}
+			<td><ui-button action='toggle_function' params='{"id": "4"}'>TOGGLE</ui-button>
+	</table>
+	</ui-display>
+
+	<ui-display title='SECURITY SYSTEMS'>
+
+		{{#if data.idsalarm}}
+			<ui-notice>
+				<h1>NETWORK INCURSION DETECTED</h1>
+			</ui-notice>
+				<i>An abnormal activity has been detected in the network. Please verify system logs for more information</i>
+			
+		{{/if}}
+		<ui-section label='Intrusion Detection System'>
+			<b>{{data.idsstatus ? 'ENABLED' : 'DISABLED'}}</b>
+		</ui-section>
+		
+		<ui-section label='Maximal Log Count'>
+			<b>{{data.ntnetmaxlogs}}</b>
+		</ui-section>
+		
+		<ui-section label='Controls'>
+		</ui-section>
+			<table>
+			<tr><td><ui-button action='resetIDS'>RESET IDS</ui-button>
+			<tr><td><ui-button action='toggleIDS'>TOGGLE IDS</ui-button>
+			<tr><td><ui-button action='updatemaxlogs'>SET LOG LIMIT</ui-button>
+			<tr><td><ui-button action='purgelogs'>PURGE LOGS</ui-button>
+			</table>
+
+		<ui-subdisplay title='System Logs'>
+		<div class="statusDisplay" style="overflow: auto;">
+		<div class="item">
+			<div class="itemContent" style="width: 100%;">
+				{{#each data.ntnetlogs}}
+					{{entry}}<br>
+				{{/each}}
+			</div>
+		</div>
+        </div>
+	</ui-display>
+		
+</ui-display>

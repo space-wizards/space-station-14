@@ -1,0 +1,11 @@
+<ui-display title='Pill Press' button> 
+    <ui-display title='Pill Size'>
+        <span> Current Pill Volume: </span> <ui-button action='change_pill_size'>{{data.pill_size}}</ui-button>
+    </ui-display>
+	<ui-display title='Cosmetic'>
+        <span> Pill Name: </span> <ui-button action='change_pill_name'>{{data.pill_name}}</ui-button> <br>
+        {{#each data.pill_styles}}
+				<ui-button state='{{id==data.pill_style ? "selected" : null}}' action='change_pill_style' params='{"id": "{{id}}"}'>{{{htmltag}}}</ui-button>
+		{{/each}}
+	</ui-display>
+</ui-display>

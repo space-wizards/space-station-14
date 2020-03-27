@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="font-awesome.css" />
+	<link id="sheetofstyles" rel="stylesheet" type="text/css" href="browserOutput_white.css" />
+	<link rel="stylesheet" type="text/css" href="spritesheet_chat.css" />
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="json2.min.js"></script>
+</head>
+<body>
+	<div id="loading">
+		<i class="fas fa-spinner fa-2x"></i>
+		<div>
+			Loading...<br><br>
+			If this takes longer than 30 seconds, it will automatically reload a maximum of 5 times.<br>
+			If it <b>still</b> doesn't work, use the bug report button at the top right of the window.
+		</div>
+	</div>
+	<div id="messages">
+
+	</div>
+	<div id="userBar" style="display: none;">
+		<div id="ping">
+			<i class="fas fa-circle" id="pingDot"></i>
+			<span class="ms" id="pingMs">--ms</span>
+		</div>
+		<div id="darkmodething">
+			<a href="#" class="subCell toggle" id="darkmodetoggle" title="Darkmode"><i class="fas fa-adjust"></i></a>
+		</div>
+		<div id="audio">
+			<a href="#" class="subCell toggle" id="toggleAudio" title="Audio"><i class="fas fa-volume-up"></i></a>
+		</div>
+		<div id="options">
+			<a href="#" class="subCell toggle" id="toggleOptions" title="Options"><i class="fas fa-cog"></i></a>
+		</div>
+		<div class="sub" id="subOptions">
+			<a href="#" class="subCell decreaseFont topCell" id="decreaseFont"><span>Decrease font size</span> <i class="fas fa-font"></i></a>
+			<a href="#" class="subCell increaseFont" id="increaseFont"><span>Increase font size</span> <i class="fas fa-font"></i></a>
+			<a href="#" class="subCell decreaseLineHeight" id="decreaseLineHeight"><span>Decrease line height</span> <i class="fas fa-text-height"></i></a>
+			<a href="#" class="subCell increaseLineHeight" id="increaseLineHeight"><span>Increase line height</span> <i class="fas fa-text-height"></i></a>
+			<a href="#" class="subCell togglePing" id="togglePing"><span>Toggle ping display</span> <i class="fas fa-circle"></i></a>
+			<a href="#" class="subCell highlightTerm" id="highlightTerm"><span>Highlight string</span> <i class="fas fa-tag"></i></a>
+			<a href="#" class="subCell saveLog" id="saveLog"><span>Save chat log</span> <i class="fas fa-save"></i></a>
+			<a href="#" class="subCell toggleCombine" id="toggleCombine"><span>Toggle line combining</span> <i class="fas fa-filter"></i></a>
+			<a href="#" class="subCell clearMessages" id="clearMessages"><span>Clear all messages</span> <i class="fas fa-eraser"></i></a>
+		</div>
+		<div class="sub" id="subAudio">
+			<span class="subCell topCell" id="musicVolumeSpan"><input type="range" class="hidden" id="musicVolume"><span id="musicVolumeText">Admin music volume</span><i class="fas fa-music"></i></span>
+		</div>
+	</div>
+	<audio class="hidden" id="adminMusic" autoplay></audio>
+	<script type="text/javascript" src="browserOutput.js"></script>
+</body>
+</html>

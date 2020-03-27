@@ -1,0 +1,10 @@
+ambidet1.ogg is Fast Talking by Kevin Macleod. It has been licensed under the CC-BY 3.0 license.
+	It has been cropped for use ingame.
+ambidet2.ogg is Night on the Docks, Piano by Kevin Macleod. It has been licensed under CC-BY 3.0 license.
+	It has been cropped for use ingame, and also fades in.
+aurora_caelus.ogg is Music for Manatees, by Kevin Macleod. It has been licensed under CC-BY 3.0 license.
+	It has been cropped for use ingame, and also fades out.
+title0.ogg is Endless Space by Solus. It has been licensed under CC-BY 3.0 license. Source file downloaded from https://www.newgrounds.com/audio/listen/74946
+title1.ogg is Flip-Flap created by Jakub "AceMan" Szeląg and taken from http://www.modules.pl/?id=module&mod=453
+title2.ogg is Robocop Theme (gameboy) remixed by Eric Schumacker
+title3.ogg is Tintin On The Moon remixed by Cuboos https://tgstation13.org/phpBB/viewtopic.php?f=10&t=2157 (assumed CC under allowing it to be submitted to the github, see thread)

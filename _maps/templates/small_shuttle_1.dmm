@@ -1,0 +1,147 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/mineral/titanium/overspace,
+/area/space)
+"c" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating/airless,
+/area/space)
+"d" = (
+/turf/closed/wall/mineral/titanium,
+/area/space)
+"f" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"g" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"j" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"l" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"m" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"n" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/space)
+"p" = (
+/obj/structure/shuttle/engine/propulsion/left,
+/turf/open/floor/plating/airless,
+/area/space)
+"q" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/space)
+"r" = (
+/obj/structure/shuttle/engine/propulsion/right,
+/turf/open/floor/plating/airless,
+/area/space)
+
+(1,1,1) = {"
+a
+a
+a
+b
+d
+d
+j
+j
+d
+d
+b
+"}
+(2,1,1) = {"
+b
+d
+d
+d
+l
+l
+f
+f
+f
+n
+p
+"}
+(3,1,1) = {"
+c
+f
+f
+d
+f
+f
+f
+f
+f
+n
+q
+"}
+(4,1,1) = {"
+c
+g
+f
+j
+f
+f
+f
+f
+f
+n
+q
+"}
+(5,1,1) = {"
+c
+f
+f
+d
+f
+f
+f
+f
+f
+n
+q
+"}
+(6,1,1) = {"
+b
+d
+d
+d
+m
+m
+f
+f
+f
+n
+r
+"}
+(7,1,1) = {"
+a
+a
+a
+b
+d
+d
+j
+j
+d
+d
+b
+"}

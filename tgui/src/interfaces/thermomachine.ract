@@ -1,0 +1,25 @@
+<ui-display title='Status'>
+    <ui-section label='Temperature'>
+        <span>{{Math.fixed(adata.temperature, 2)}} K</span>
+    </ui-section>
+    <ui-section label='Pressure'>
+        <span>{{Math.fixed(adata.pressure, 2)}} kPa</span>
+    </ui-section>
+</ui-display>
+<ui-display title='Controls'>
+    <ui-section label='Power'>
+        <ui-button icon='{{data.on ? "power-off" : "close"}}' style="{{data.on ? "selected" : null}}"
+            action='power'>{{data.on ? "On": "Off"}}</ui-button>
+    </ui-section>
+    <ui-section label='Target Temperature'>
+        <ui-button icon='fast-backward' state='{{data.target == data.min ? "disabled" : null}}'
+            action='target' params='{"adjust": -20}'/>
+        <ui-button icon='backward' state='{{data.target == data.min ? "disabled" : null}}'
+            action='target' params='{"adjust": -5}'/>
+        <ui-button icon='pencil' action='target' params='{"target": "input"}'>{{Math.fixed(adata.target, 2)}}</ui-button>
+        <ui-button icon='forward' state='{{data.target == data.max ? "disabled" : null}}'
+            action='target' params='{"adjust": 5}'/>
+        <ui-button icon='fast-forward' state='{{data.target == data.max ? "disabled" : null}}'
+            action='target' params='{"adjust": 20}'/>
+    </ui-section>
+</ui-display>

@@ -1,0 +1,25 @@
+
+{{#if data.destroy_linked}}
+	{{#if data.destroybusy}}
+		<ui-display title='Destructive Analyzer Busy!'></ui-display>
+	{{else}}
+		{{#if !data.destroy_loaded}}
+			<ui-display title='Destructive Analyzer Unloaded'></ui-display>
+		{{else}}
+			<ui-display title='Loaded Item'>
+			<ui-section title='Name'>{{data.destroy_name}}</ui-section>
+			</ui-display>
+			<ui-display title='Boost Nodes'>
+				{{#each data.boost_paths}}
+					<ui-section title='{{name}} | {{value}}'>
+						<ui-button state='{{allow? null : "disabled"}}' action='deconstruct' params='{"id":{{id}}}'>Deconstruct and Boost</ui-button>
+					</ui-section>
+				{{/each}}
+			</ui-display>
+			<ui-button action='eject_da'>Eject Item</ui-button>
+		{{/if}}
+	{{/if}}
+{{else}}
+	<ui-display title='No Linked Destructive Analyzer'></ui-display>
+{{/if}}
+

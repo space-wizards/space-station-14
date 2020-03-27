@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+}
+
+.searchbar {
+    overflow: hidden;
+    background-color: #272727;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+    line-height: 30px;
+    z-index: 1;
+}
+
+.main {
+    padding: 16px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.banbox {
+    position: relative;
+    width: 90%;
+    display: table;
+    flex-direction: column;
+    border: 1px solid #161616;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.header {
+    width: 100%;
+    background-color:rgba(0,0,0,0.3);
+}
+
+.container {
+    display: table;
+    width: 100%;
+}
+
+.reason {
+    display: table-cell;
+    width: 90%;
+}
+
+.edit {
+    display: table-cell;
+    width: 10%;
+}
+
+.banned {
+    background-color:#ff5555;
+}
+
+.unbanned {
+    background-color:#00b75c;
+}

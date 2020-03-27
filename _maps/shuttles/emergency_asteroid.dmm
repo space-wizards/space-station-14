@@ -1,0 +1,877 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ac" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"ad" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ae" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"ah" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ai" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"aj" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	dwidth = 10;
+	height = 13;
+	name = "Asteroid emergency shuttle";
+	width = 28
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"al" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"am" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"an" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"ap" = (
+/obj/structure/ore_box,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"aq" = (
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"ar" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"at" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"av" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"aw" = (
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"ax" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"az" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"aB" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/escape)
+"aE" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/item/radio/intercom{
+	dir = 8;
+	name = "Station Intercom (General)";
+	pixel_x = -28
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"aF" = (
+/obj/machinery/suit_storage_unit,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"aG" = (
+/obj/machinery/door/airlock/mining{
+	name = "Emergency Shuttle Storage"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"aH" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"aI" = (
+/obj/structure/closet,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aJ" = (
+/obj/structure/table,
+/obj/item/extinguisher,
+/obj/item/crowbar,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aK" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aL" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aM" = (
+/obj/structure/closet/emcloset,
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 23
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aN" = (
+/obj/structure/bed/roller,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aP" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Emergency Shuttle Brig";
+	req_access_txt = "2"
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"aQ" = (
+/obj/structure/bed,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"aR" = (
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aS" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aT" = (
+/obj/structure/chair/office/light{
+	name = "Chief Engineer"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aU" = (
+/obj/structure/chair/office/light{
+	name = "Captain"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aV" = (
+/obj/structure/chair/office/light{
+	name = "Head of Security"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aW" = (
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 23
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"aX" = (
+/obj/machinery/status_display/ai,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"aY" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aZ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ba" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bb" = (
+/obj/machinery/computer/security{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"bc" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bd" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"be" = (
+/obj/structure/table,
+/obj/item/folder/blue,
+/obj/item/pen,
+/obj/machinery/recharger,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bf" = (
+/obj/machinery/ai_slipper,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bg" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Emergency Shuttle Cockpit";
+	req_access_txt = "19"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bi" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"bj" = (
+/obj/machinery/computer/communications{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bk" = (
+/obj/structure/chair/office/light{
+	dir = 1;
+	name = "Research Director"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bl" = (
+/obj/structure/chair/office/light{
+	dir = 1;
+	name = "Head of Personnel"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bm" = (
+/obj/structure/chair/office/light{
+	dir = 1;
+	name = "Chief Medical Officer"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bn" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bp" = (
+/obj/machinery/computer/crew{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bq" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Escape Shuttle Infirmary";
+	req_access_txt = "5"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"br" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Escape Shuttle Infirmary"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bs" = (
+/obj/structure/bed,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bt" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/structure/mirror{
+	pixel_x = -30
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bu" = (
+/obj/machinery/door/airlock{
+	name = "Emergency Shuttle Restroom"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bv" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bw" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bx" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"by" = (
+/obj/structure/table,
+/obj/item/extinguisher,
+/obj/item/crowbar,
+/obj/machinery/recharger,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bz" = (
+/obj/machinery/stasis,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bC" = (
+/obj/item/radio/intercom{
+	dir = 8;
+	name = "Station Intercom (General)";
+	pixel_x = -28
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bD" = (
+/obj/structure/closet/secure_closet/medical2,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bE" = (
+/obj/structure/toilet{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bF" = (
+/obj/structure/table,
+/obj/item/retractor,
+/obj/item/hemostat,
+/obj/item/scalpel,
+/obj/item/surgicaldrill,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bG" = (
+/obj/structure/table/optable,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bH" = (
+/obj/structure/table,
+/obj/item/circular_saw,
+/obj/item/cautery{
+	pixel_x = 4
+	},
+/obj/item/surgical_drapes,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bI" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bJ" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"bK" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bM" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"bN" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bP" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Jx" = (
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"JM" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+aa
+aa
+ac
+am
+ac
+ad
+ad
+bI
+ac
+am
+ac
+aa
+aa
+"}
+(2,1,1) = {"
+ac
+am
+ac
+an
+ac
+aR
+aS
+bj
+ac
+an
+ac
+am
+ac
+"}
+(3,1,1) = {"
+ac
+an
+ac
+ac
+ac
+at
+at
+at
+ac
+ac
+ac
+an
+ac
+"}
+(4,1,1) = {"
+ac
+ac
+az
+aF
+ac
+aT
+bc
+bk
+ac
+bt
+az
+ac
+ac
+"}
+(5,1,1) = {"
+ad
+ap
+aq
+bJ
+ac
+aU
+bd
+bl
+ac
+bN
+bu
+bE
+ad
+"}
+(6,1,1) = {"
+ae
+aq
+aq
+aq
+ac
+aV
+be
+bm
+ac
+Jx
+ac
+ac
+ac
+"}
+(7,1,1) = {"
+ad
+ar
+aq
+aq
+ac
+aW
+bf
+bn
+ac
+Jx
+bu
+bE
+ad
+"}
+(8,1,1) = {"
+ac
+ac
+ac
+aG
+ac
+aX
+bg
+bi
+az
+bu
+az
+ac
+ac
+"}
+(9,1,1) = {"
+aa
+ac
+ac
+aH
+at
+at
+at
+at
+at
+at
+ac
+ac
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+ac
+aI
+at
+aY
+aY
+aY
+at
+bv
+ac
+aa
+aa
+"}
+(11,1,1) = {"
+ah
+ah
+aB
+aJ
+at
+aZ
+ah
+aK
+at
+aL
+ac
+aa
+aa
+"}
+(12,1,1) = {"
+ai
+at
+at
+at
+at
+aZ
+ah
+aK
+at
+bP
+ac
+aa
+aa
+"}
+(13,1,1) = {"
+ah
+ah
+aB
+bK
+at
+aZ
+ah
+aK
+at
+bw
+ac
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+ad
+aK
+at
+aZ
+ah
+aK
+at
+aZ
+ad
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+ad
+aK
+at
+at
+at
+at
+at
+aZ
+ad
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+ad
+aK
+at
+aZ
+ah
+aK
+at
+aZ
+ad
+aa
+aa
+"}
+(17,1,1) = {"
+ah
+ah
+aB
+bK
+at
+aZ
+ah
+aK
+at
+bx
+ac
+aa
+aa
+"}
+(18,1,1) = {"
+aj
+at
+at
+at
+at
+aZ
+ah
+aK
+at
+bP
+ac
+aa
+aa
+"}
+(19,1,1) = {"
+ah
+ah
+aB
+aL
+at
+aZ
+ah
+aK
+at
+by
+ac
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+ac
+aM
+at
+ba
+ba
+ba
+at
+aI
+ac
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+ac
+ac
+aN
+at
+at
+at
+at
+at
+aN
+ac
+ac
+aa
+"}
+(22,1,1) = {"
+ac
+ac
+ac
+ad
+aP
+ad
+bi
+ad
+br
+ad
+ac
+ac
+ac
+"}
+(23,1,1) = {"
+ac
+av
+aE
+av
+aw
+bb
+ac
+bp
+Jx
+Jx
+bC
+bF
+ac
+"}
+(24,1,1) = {"
+al
+aw
+aw
+aw
+aw
+aw
+ad
+Jx
+Jx
+Jx
+Jx
+bG
+ad
+"}
+(25,1,1) = {"
+ac
+ax
+ax
+ax
+aw
+bM
+ac
+bN
+Jx
+bz
+bD
+bH
+ac
+"}
+(26,1,1) = {"
+ac
+ac
+ac
+ac
+ad
+aP
+ac
+bq
+ad
+JM
+ac
+ac
+ac
+"}
+(27,1,1) = {"
+aa
+aa
+ac
+ac
+aQ
+aw
+ad
+Jx
+bs
+ac
+ac
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+ac
+ac
+ad
+ac
+ad
+ac
+ac
+aa
+aa
+aa
+"}

@@ -1,0 +1,300 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/wood,
+/area/shuttle/escape)
+"b" = (
+/obj/machinery/light_switch,
+/turf/closed/wall/mineral/wood,
+/area/shuttle/escape)
+"c" = (
+/obj/docking_port/mobile/emergency{
+	dwidth = 1;
+	height = 10;
+	name = "Oh Hi Mark";
+	width = 12
+	},
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"d" = (
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"e" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"f" = (
+/obj/structure/chair/comfy/teal,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"g" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"h" = (
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"i" = (
+/obj/structure/table/reinforced,
+/obj/item/kitchen/knife,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"j" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"k" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/vending/boozeomat{
+	req_access = null
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"l" = (
+/obj/machinery/computer/security/wooden_tv,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"m" = (
+/obj/structure/table/glass,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"n" = (
+/obj/structure/chair/comfy/teal{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"o" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/snacks/store/cake/birthday,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"p" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"q" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"r" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"s" = (
+/obj/machinery/door/window{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"t" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"u" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"v" = (
+/obj/structure/chair/office,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"w" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/mob_spawn/human/corpse,
+/obj/item/gun/ballistic/automatic/pistol/m1911,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/cakeslice/birthday,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"x" = (
+/obj/structure/bed,
+/obj/item/bedsheet/red,
+/obj/item/paper/fluff/shuttles/daniel,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"y" = (
+/obj/item/twohanded/required/kirbyplants,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"z" = (
+/obj/structure/table/wood,
+/obj/item/papercutter,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"A" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"B" = (
+/obj/machinery/light,
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"C" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"D" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"E" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall/mineral/wood,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+c
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+b
+d
+d
+d
+d
+u
+d
+y
+a
+"}
+(3,1,1) = {"
+a
+e
+l
+h
+h
+d
+d
+z
+a
+"}
+(4,1,1) = {"
+a
+f
+m
+m
+h
+d
+v
+A
+a
+"}
+(5,1,1) = {"
+a
+g
+n
+n
+h
+d
+d
+B
+a
+"}
+(6,1,1) = {"
+a
+h
+h
+h
+h
+d
+d
+d
+a
+"}
+(7,1,1) = {"
+a
+i
+o
+q
+s
+a
+E
+C
+a
+"}
+(8,1,1) = {"
+a
+j
+j
+j
+j
+a
+w
+h
+a
+"}
+(9,1,1) = {"
+a
+k
+p
+r
+t
+a
+x
+D
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

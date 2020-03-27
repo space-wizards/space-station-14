@@ -1,0 +1,46 @@
+<ui-display title='Status'>
+  <ui-section label='Generated Power'>
+    {{Math.round(adata.generated)}}W
+  </ui-section>
+  <ui-section label='Orientation'>
+    <span>{{Math.round(adata.angle)}}&deg; ({{data.direction}})</span>
+  </ui-section>
+  <ui-section label='Adjust Angle'>
+    <ui-button icon='step-backward' action='angle' params='{"adjust": -15}'>15&deg;</ui-button>
+    <ui-button icon='backward' action='angle' params='{"adjust": -5}'>5&deg;</ui-button>
+    <ui-button icon='forward' action='angle' params='{"adjust": 5}'>5&deg;</ui-button>
+    <ui-button icon='step-forward' action='angle' params='{"adjust": 15}'>15&deg;</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display title='Tracking'>
+  <ui-section label='Tracker Mode'>
+    <ui-button icon='close' state='{{data.tracking_state == 0 ? "selected" : null}}'
+      action='tracking' params='{"mode": 0}'>Off</ui-button>
+    <ui-button icon='clock-o' state='{{data.tracking_state == 1 ? "selected" : null}}'
+      action='tracking' params='{"mode": 1}'>Timed</ui-button>
+    <ui-button icon='refresh' state='{{data.connected_tracker ? data.tracking_state == 2 ? "selected" : null : "disabled"}}'
+      action='tracking' params='{"mode": 2}'>Auto</ui-button>
+	</ui-section>
+  <ui-section label='Tracking Rate'>
+		<span>{{Math.round(adata.tracking_rate)}}&deg;/h ({{data.rotating_way}})</span>
+	</ui-section>
+  <ui-section label='Adjust Rate'>
+    <ui-button icon='fast-backward' action='rate' params='{"adjust": -180}'>180&deg;</ui-button>
+    <ui-button icon='step-backward' action='rate' params='{"adjust": -30}'>30&deg;</ui-button>
+    <ui-button icon='backward' action='rate' params='{"adjust": -5}'>5&deg;</ui-button>
+    <ui-button icon='forward' action='rate' params='{"adjust": 5}'>5&deg;</ui-button>
+    <ui-button icon='step-forward' action='rate' params='{"adjust": 30}'>30&deg;</ui-button>
+    <ui-button icon='fast-forward' action='rate' params='{"adjust": 180}'>180&deg;</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display title="Devices" button>
+  {{#partial button}}
+    <ui-button icon='refresh' action='refresh'>Refresh</ui-button>
+  {{/partial}}
+	<ui-section label='Solar Tracker'>
+    <span class='{{data.connected_tracker ? "good" : "bad"}}'>{{data.connected_tracker ? "" : "Not "}}Found</span>
+	</ui-section>
+	<ui-section label='Solar Panels'>
+		<span class='{{data.connected_panels ? "good" : "bad"}}'>{{Math.round(adata.connected_panels)}} Panels Connected</span>
+	</ui-section>
+</ui-display>

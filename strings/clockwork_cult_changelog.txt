@@ -1,0 +1,1 @@
+Stargazers have been removed. Integration cogs are now the primary way of creating power.

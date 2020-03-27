@@ -1,0 +1,288 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"c" = (
+/obj/structure/sign/mining/survival{
+	pixel_y = -32
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"d" = (
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/ruin/powered)
+"e" = (
+/obj/structure/sign/mining/survival{
+	dir = 4;
+	pixel_x = 32
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"f" = (
+/obj/structure/fans,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"g" = (
+/obj/machinery/smartfridge/survival_pod/empty,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"h" = (
+/obj/item/gps/computer,
+/obj/structure/tubes,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"i" = (
+/obj/structure/sign/mining/survival{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"j" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"k" = (
+/obj/machinery/sleeper/survival_pod,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"l" = (
+/obj/item/pickaxe,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"m" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/black,
+/obj/structure/tubes,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"n" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"o" = (
+/obj/effect/decal/cleanable/blood,
+/mob/living/simple_animal/hostile/asteroid/goliath/beast{
+	health = 0
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"p" = (
+/obj/structure/table/survival_pod,
+/obj/item/kitchen/knife/combat/survival,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"q" = (
+/obj/effect/mob_spawn/human/miner/explorer{
+	brute_damage = 150;
+	oxy_damage = 50
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"r" = (
+/obj/structure/tubes,
+/obj/item/crowbar,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"s" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"t" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/machinery/door/airlock/survival_pod/glass,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"u" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"v" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"w" = (
+/obj/structure/sign/mining/survival{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"x" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"y" = (
+/obj/structure/sign/mining{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"z" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"A" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+b
+b
+e
+b
+e
+b
+b
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+b
+d
+d
+d
+d
+d
+b
+a
+a
+"}
+(4,1,1) = {"
+a
+b
+c
+d
+f
+k
+p
+d
+w
+b
+b
+"}
+(5,1,1) = {"
+a
+b
+b
+d
+g
+l
+q
+t
+x
+b
+b
+"}
+(6,1,1) = {"
+b
+b
+c
+d
+h
+m
+r
+d
+y
+b
+b
+"}
+(7,1,1) = {"
+a
+b
+b
+d
+d
+d
+d
+d
+z
+j
+j
+"}
+(8,1,1) = {"
+a
+a
+b
+b
+i
+b
+i
+u
+A
+b
+b
+"}
+(9,1,1) = {"
+a
+a
+b
+b
+j
+n
+s
+v
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+o
+j
+b
+a
+a
+a
+"}

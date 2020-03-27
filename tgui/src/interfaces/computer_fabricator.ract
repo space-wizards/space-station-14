@@ -1,0 +1,89 @@
+
+<ui-button icon='circle' action='clean_order'>Clear Order</ui-button><br><br>
+<i>Your new computer device you always dreamed of is just four steps away...</i><hr>
+{{#if data.state == 0}} <!-- Device type selection -->
+<div class='item'>
+	<h2>Step 1: Select your device type</h2>
+	<ui-button icon='calc' action='pick_device' params='{"pick" : "1"}'>Laptop</ui-button> 
+	<ui-button icon='calc' action='pick_device' params='{"pick" : "2"}'>LTablet</ui-button>
+</div>
+{{elseif data.state == 1}}
+<div class='item'>
+	<h2>Step 2: Personalise your device</h2>
+	<table>
+		<tr>
+			<td><b>Current Price:</b>
+			<td>{{data.totalprice}}C
+		</tr>
+		<tr>	
+			<td><b>Battery:</b>
+			<td><ui-button action='hw_battery' params='{"battery" : "1"}' state='{{data.hw_battery == 1 ? "selected" : null}}'>Standard</ui-button>
+			<td><ui-button action='hw_battery' params='{"battery" : "2"}' state='{{data.hw_battery == 2 ? "selected" : null}}'>Upgraded</ui-button>
+			<td><ui-button action='hw_battery' params='{"battery" : "3"}' state='{{data.hw_battery == 3 ? "selected" : null}}'>Advanced</ui-button>
+		</tr>
+		<tr>
+			<td><b>Hard Drive:</b>
+			<td><ui-button action='hw_disk' params='{"disk" : "1"}' state='{{data.hw_disk == 1 ? "selected" : null}}'>Standard</ui-button>
+			<td><ui-button action='hw_disk' params='{"disk" : "2"}' state='{{data.hw_disk == 2 ? "selected" : null}}'>Upgraded</ui-button>
+			<td><ui-button action='hw_disk' params='{"disk" : "3"}' state='{{data.hw_disk == 3 ? "selected" : null}}'>Advanced</ui-button>
+		</tr>
+		<tr>
+			<td><b>Network Card:</b>
+			<td><ui-button action='hw_netcard' params='{"netcard" : "0"}' state='{{data.hw_netcard == 0 ? "selected" : null}}'>None</ui-button>
+			<td><ui-button action='hw_netcard' params='{"netcard" : "1"}' state='{{data.hw_netcard == 1 ? "selected" : null}}'>Standard</ui-button>
+			<td><ui-button action='hw_netcard' params='{"netcard" : "2"}' state='{{data.hw_netcard == 2 ? "selected" : null}}'>Advanced</ui-button>
+		</tr>
+		<tr>
+			<td><b>Nano Printer:</b>
+			<td><ui-button action='hw_nanoprint' params='{"print" : "0"}' state='{{data.hw_nanoprint == 0 ? "selected" : null}}'>None</ui-button>
+			<td><ui-button action='hw_nanoprint' params='{"print" : "1"}' state='{{data.hw_nanoprint == 1 ? "selected" : null}}'>Standard</ui-button>
+		</tr>
+		<tr>
+			<td><b>Card Reader:</b>
+			<td><ui-button action='hw_card' params='{"card" : "0"}' state='{{data.hw_card == 0 ? "selected" : null}}'>None</ui-button>
+			<td><ui-button action='hw_card' params='{"card" : "1"}' state='{{data.hw_card == 1 ? "selected" : null}}'>Standard</ui-button>
+		</tr>
+		</table>
+		
+		{{#if data.devtype != 2}} {{! No tablets}}
+			<table>
+				<tr>
+					<td><b>Processor Unit:</b>
+					<td><ui-button action='hw_cpu' params='{"cpu" : "1"}' state='{{data.hw_cpu == 1 ? "selected" : null}}'>Standard</ui-button>
+					<td><ui-button action='hw_cpu' params='{"cpu" : "2"}' state='{{data.hw_cpu == 2 ? "selected" : null}}'>Advanced</ui-button>
+				</tr>
+				<tr>
+					<td><b>Tesla Relay:</b>
+					<td><ui-button action='hw_tesla' params='{"tesla" : "0"}' state='{{data.hw_tesla == 0 ? "selected" : null}}'>None</ui-button>
+					<td><ui-button action='hw_tesla' params='{"tesla" : "1"}' state='{{data.hw_tesla == 1 ? "selected" : null}}'>Standard</ui-button>
+				</tr>
+			</table>
+		{{/if}}
+		<table>
+			<tr>
+				<td><b>Confirm Order:</b>
+				<td><ui-button action='confirm_order'>CONFIRM</ui-button>
+			</tr>
+		</table>
+	
+	<hr>
+	<b>Battery</b> allows your device to operate without external utility power source. Advanced batteries increase battery life.<br>
+	<b>Hard Drive</b> stores file on your device. Advanced drives can store more files, but use more power, shortening battery life.<br>
+	<b>Network Card</b> allows your device to wirelessly connect to stationwide NTNet network. Basic cards are limited to on-station use, while advanced cards can operate anywhere near the station, which includes the asteroid outposts.<br>
+	<b>Processor Unit</b> is critical for your device's functionality. It allows you to run programs from your hard drive. Advanced CPUs use more power, but allow you to run more programs on background at once.<br>
+	<b>Tesla Relay</b> is an advanced wireless power relay that allows your device to connect to nearby area power controller to provide alternative power source. This component is currently unavailable on tablet computers due to size restrictions.<br>
+	<b>Nano Printer</b> is device that allows for various paperwork manipulations, such as, scanning of documents or printing new ones. This device was certified EcoFriendlyPlus and is capable of recycling existing paper for printing purposes.<br>
+	<b>Card Reader</b> adds a slot that allows you to manipulate RFID cards. Please note that this is not necessary to allow the device to read your identification, it is just necessary to manipulate other cards.
+</div>
+{{elseif data.state == 2}}
+	<h2>Step 3: Payment</h2>
+	<b>Your device is now ready for fabrication..</b><br>
+	<i>Please ensure the required amount of credits are in the machine, then press purchase.</i><br>
+	<i>Current credits: <b>{{data.credits}}C</b></i><br>
+	<i>Total price: <b>{{data.totalprice}}C</b></i><br><br>
+	<ui-button action='purchase' state='{{data.credits >= data.totalprice ? null : "disabled"}}'>PURCHASE</ui-button>
+	
+{{elseif data.state == 3}}
+	<h2>Step 4: Thank you for your purchase</h2><br>
+	<b>Should you experience any issues with your new device, contact your local network admin for assistance.</b>
+{{/if}}

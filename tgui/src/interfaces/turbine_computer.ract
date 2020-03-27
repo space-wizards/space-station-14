@@ -1,0 +1,51 @@
+<script>
+component.exports = {
+	data: {
+		powerState (status) {
+			switch (status) {
+				case 1: return 'good'
+				default: return 'bad'
+			}
+		}
+	}
+}
+</script>
+<ui-notice>
+	<ui-section label='Reconnect'>
+		<div style='float:right'>
+			<ui-button icon='refresh' action='reconnect'>Reconnect</ui-button>
+		</div>
+	</ui-section>
+</ui-notice>
+<ui-display title='Turbine Controller'>
+	<ui-section label='Status'>
+		{{#if data.broken}}
+			<span class='bad'>Broken</span>
+		{{else}}
+			<span class='{{powerState(data.online)}}'>{{data.online && !(data.compressor_broke || data.turbine_broke) ? "Online" : "Offline"}}</span>
+		{{/if}}
+		<div style='float:right'>
+			<ui-button icon='power-off' action='power-on' state='{{data.broken}}' style='{{data.online ? "selected" : ""}}'>On</ui-button>
+			<ui-button icon='close' action='power-off' state='{{data.broken}}' style='{{data.online ? "" : "selected"}}'>Off</ui-button>
+		</div>
+		{{#if data.compressor_broke}}
+			<br>
+			[ <span class='bad'>Compressor is inoperable</span> ]
+		{{/if}}
+		{{#if data.turbine_broke}}
+			<br>
+			[ <span class='bad'>Turbine is inoperable</span> ]
+		{{/if}}
+	</ui-section>
+</ui-display>
+<ui-display title='Status'>
+	<ui-section label='Turbine Speed'>
+		<span>{{data.broken ? "--" : data.rpm}} RPM</span>
+	</ui-section>
+	<ui-section label='Internal Temp'>
+		<span>{{data.broken ? "--" : data.temp}} K</span>
+	</ui-section>
+	<ui-section label='Generated Power'>
+		<span>{{data.broken ? "--" : data.power}}</span>
+	</ui-section>
+</ui-display>

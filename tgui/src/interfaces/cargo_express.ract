@@ -1,0 +1,50 @@
+
+<script>
+    component.exports = {
+      computed: {
+        tabs () {
+          return Object.keys(this.get('data.supplies'))
+        }
+      }
+    }
+</script>
+
+<ui-notice>
+  {{#if data.siliconUser }}
+    <ui-section label='Interface Lock'>
+      <ui-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</ui-button>
+    </ui-section>
+  {{else}}
+    <span>Swipe a QM-Level ID card to {{data.locked ? "unlock" : "lock"}} this interface.</span>
+  {{/if}}
+</ui-notice>
+
+{{#if !data.locked }}
+  <ui-display title='Express Cargo Console'>
+
+    <ui-section label='Landing Location'>
+      <ui-button state='{{data.usingBeacon ? null : "selected"}}' action='LZCargo'> Cargo Bay</ui-button>
+      <ui-button state='{{data.hasBeacon ? data.usingBeacon ? "selected" : null : "disabled"}}' action='LZBeacon'> {{data.beaconzone}} ({{data.beaconName}})</ui-button>
+      <ui-button state='{{data.canBuyBeacon ? null : "disabled"}}' action='printBeacon'> {{data.printMsg}}</ui-button>
+    </ui-section>
+
+    <ui-section label='Credits'>
+      <span>{{Math.floor(adata.points)}}</span>
+    </ui-section>
+
+    <ui-section label='Notice'>
+      <span>{{data.message}}</span>
+    </ui-section>
+  </ui-display>
+  <ui-tabs tabs='{{tabs}}'>
+    {{#each data.supplies}}
+      <tab name='{{name}}'>
+        {{#each packs}}
+          <ui-section label='{{name}}' candystripe right>
+            <ui-button state='{{data.canBeacon ? null : "disabled"}}' tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}"}'>{{cost}} Credits {{data.beaconError}}</ui-button>
+          </ui-section>
+        {{/each}}
+      </tab>
+    {{/each}}
+  </ui-tabs>
+{{/if}}

@@ -1,0 +1,5 @@
+<!-- Most valid html will work in here, excluding images. -->
+
+<h1>Welcome to Space Station 13!</h1>
+
+<i>This server is running a /tg/station 13 Git build.</i>

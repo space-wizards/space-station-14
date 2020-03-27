@@ -1,0 +1,101 @@
+<ui-display>
+	<ui-section>
+		This machine only accepts ore. Gibtonite and Slag are not accepted.
+	</ui-section>
+	<ui-section>
+		Current unclaimed points: {{data.unclaimedPoints}}
+			<ui-button action='Claim'>
+				Claim Points
+			</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display>
+	{{#if data.hasDisk}}
+		<ui-section>
+			<ui-button action="diskEject" icon="eject">
+				Eject Disk
+			</ui-button>
+		</ui-section>
+		{{#each data.diskDesigns}}
+			<ui-section class=candystripe>
+				<ui-button action="diskUpload" state={{(canupload) ? null : 'disabled'}}  icon="upload" align="right" params='{ "design" : "{{index}}" }'>
+					Upload
+				</ui-button>
+				File {{index}}: {{name}}
+			</ui-section>
+		{{/each}}
+	{{else}}
+		<ui-section>
+			<ui-button action="diskInsert" icon="floppy-o">
+				Insert Disk
+			</ui-button>
+		</ui-section>
+	{{/if}}
+</ui-display>
+{{#if data.disconnected}}
+	<ui-display>
+		<ui-section>
+			<b>Warning</b>: {{data.disconnected}}. Please contact the quartermaster.
+		</ui-section>
+	</ui-display>
+{{/if}}
+{{#if data.materials || data.alloys}}
+	<div class="display tabular">
+		<section class="candystripe">
+				<section class="cell">
+					Mineral
+				</section>
+				<section class="cell">
+					Sheets
+				</section>
+				<section class="cell">
+				</section>
+				<section class="cell">
+				</section>
+				<section class="cell">
+					Ore Value
+				</section>
+			</section>
+		{{#each data.materials}}
+			<section class="candystripe">
+				<section class="cell">
+					{{name}}
+				</section>
+				<section class="cell" align='right'>
+					{{amount}}
+				</section>
+				<section class="cell">
+					<input value={{sheets}} placeholder='###' class="number"/>
+				</section>
+				<section class="cell" align='right'>
+					<ui-button class='center' grid action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{ "id" : {{id}}, "sheets" : {{sheets}} }' >
+						Release
+					</ui-button>
+				</section>
+				<section class="cell" align='right'>
+					{{value}}
+				</section>
+			</section>
+		{{/each}}
+		{{#each data.alloys}}
+			<section class="candystripe">
+				<section class="cell">
+					{{name}}
+				</section>
+				<section class="cell" align='right'>
+					{{amount}}
+				</section>
+				<section class="cell">
+					<input value={{sheets}} placeholder='###' class="number"/>
+				</section>
+				<section class="cell" align='right'>
+					<ui-button class='center' grid action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{ "id" : {{id}}, "sheets" : {{sheets}} }'>
+						Smelt
+					</ui-button>
+				</section>
+				<section class="cell" align='right'>
+				</section>
+			</section>
+		{{/each}}
+	</div>
+{{/if}}

@@ -1,0 +1,42 @@
+<ui-display title='Occupant'>
+  <ui-section label='Occupant'>
+	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
+  </ui-section>
+  {{#if data.occupied}}
+    <ui-section label='State'>
+      <span class='{{data.occupant.statstate}}'>{{data.occupant.stat}}</span>
+  	</ui-section>
+    <ui-section label='Health'>
+      <ui-bar min='{{data.occupant.minHealth}}' max='{{data.occupant.maxHealth}}' value='{{data.occupant.health}}'
+        state='{{data.occupant.health >= 0 ? "good" : "average"}}'>{{Math.round(adata.occupant.health)}}</ui-bar>
+    </ui-section>
+    {{#each [{label: "Brute", type: "bruteLoss"}, {label: "Respiratory", type: "oxyLoss"}, {label: "Toxin", type: "toxLoss"}, {label: "Burn", type: "fireLoss"}]}}
+      <ui-section label='{{label}}'>
+        <ui-bar min='0' max='{{data.occupant.maxHealth}}' value='{{data.occupant[type]}}' state='bad'>{{Math.round(adata.occupant[type])}}</ui-bar>
+      </ui-section>
+    {{/each}}
+    <ui-section label='Cells'>
+        <span class='{{data.occupant.cloneLoss ? "bad" : "good"}}'>{{data.occupant.cloneLoss ? "Damaged" : "Healthy"}}</span>
+    </ui-section>
+    <ui-section label='Brain'>
+        <span class='{{data.occupant.brainLoss ? "bad" : "good"}}'>{{data.occupant.brainLoss ? "Abnormal" : "Healthy"}}</span>
+    </ui-section>
+    <ui-section label='Bloodstream'>
+        {{#each adata.occupant.reagents}}
+          <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 1)}} units of {{name}}</span><br/>
+        {{else}}
+          <span class='good'>Pure</span>
+        {{/each}}
+    </ui-section>
+  {{/if}}
+</ui-display>
+<ui-display title='Controls'>
+	<ui-section label='Door'>
+    <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
+	</ui-section>
+  <ui-section label='Inject'>
+    {{#each data.chems}}
+      <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
+    {{/each}}
+  </ui-section>
+</ui-display>

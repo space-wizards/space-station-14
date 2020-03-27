@@ -1,0 +1,45 @@
+## MySQL Connection Configuration
+## This is used for stats, feedback gathering,
+## administration, and the in game library.
+
+## Should SQL be enabled? Uncomment to enable
+#SQL_ENABLED
+
+## Server the MySQL database can be found at.
+## Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
+ADDRESS localhost
+
+## MySQL server port (default is 3306).
+PORT 3306
+
+## Database for all SQL functions, not just feedback.
+FEEDBACK_DATABASE feedback
+
+## Prefix to be added to the name of every table, older databases will require this be set to erro_
+## Note, this does not change the table names in the database, you will have to do that yourself.
+##IE:
+##	FEEDBACK_TABLEPREFIX
+##	FEEDBACK_TABLEPREFIX SS13_
+## Remove "SS13_" if you are using the standard schema file.
+FEEDBACK_TABLEPREFIX SS13_
+
+## Username/Login used to access the database.
+FEEDBACK_LOGIN username
+
+## Password used to access the database.
+FEEDBACK_PASSWORD password
+
+## Time in seconds for asynchronous queries to timeout
+## Set to 0 for infinite
+ASYNC_QUERY_TIMEOUT 10
+
+## Time in seconds for blocking queries to execute before slow query timeout 
+## Set to 0 for infinite
+## Must be less than or equal to ASYNC_QUERY_TIMEOUT
+BLOCKING_QUERY_TIMEOUT 5
+
+## The maximum number of additional threads BSQL is allowed to run at once
+BSQL_THREAD_LIMIT 50
+
+## Uncomment to enable verbose BSQL communication logs
+#BSQL_DEBUG

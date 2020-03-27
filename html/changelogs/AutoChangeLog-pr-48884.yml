@@ -1,0 +1,4 @@
+author: "kittymaster0"
+delete-after: True
+changes: 
+  - bugfix: "fixes missing floor under window in plumbing area on box"

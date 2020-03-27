@@ -1,0 +1,49 @@
+<ui-display title='Nanite Program Hub'>
+{{#if data.has_disk}}
+	<ui-display title='Program Disk'>
+		<ui-section>
+			<ui-button icon='eject' action='eject'>Eject Disk</ui-button>
+			<ui-button icon='minus-circle' action='clear'>Delete Program</ui-button>
+		</ui-section>
+		{{#if data.has_program}}
+			<ui-section label='Program Name'>{{data.disk.name}}</ui-section>
+			<ui-section label='Description'>{{data.disk.desc}}</ui-section>
+		{{else}}
+			<ui-notice>No program installed.</ui-notice>
+		{{/if}}
+	</ui-display>
+{{else}}
+	<ui-notice>Insert disk.</ui-notice>
+{{/if}}
+<br>
+<ui-display title='Programs'>
+	<ui-section>
+		<ui-button icon='undo' action='set_category' params='{"category": "Main"}'>Return</ui-button>
+		<ui-button icon='align-justify ' action='toggle_details'>{{data.detail_view ? "Compact View" : "Detailed View" }}</ui-button>
+	</ui-section>
+	{{#if data.category == "Main"}}
+		<ui-display>
+			{{#each data.categories}}
+				<ui-section><ui-button action='set_category' params='{"category": "{{name}}"}'>{{name}}</ui-button></ui-section>
+			{{/each}}
+		</ui-display>
+	{{else}}
+		<ui-display title='{{data.category}}'>
+			{{#each data.program_list}}
+				{{#if data.detail_view}}
+					<ui-display>
+						<ui-section><b>{{name}}</b></ui-section>
+						<ui-section>{{desc}}</ui-section>
+						<ui-section>
+							<ui-button icon='download' action='download' params='{"program_id": "{{id}}"}' state='{{data.has_disk ? null : "disabled"}}'>
+								Download
+							</ui-button>
+						</ui-section>
+					</ui-display>
+				{{else}}
+					<ui-section><ui-button action='download' params='{"program_id": "{{id}}"}'>{{name}}</ui-button></ui-section>
+				{{/if}}
+			{{/each}}
+		</ui-display>
+	{{/if}}
+</ui-display>

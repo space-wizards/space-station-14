@@ -1,0 +1,46 @@
+<ui-display title='{{data.borg.name}}' button>
+	{{#partial button}}
+		<ui-button icon='pencil' action='rename'>Rename</ui-button>
+	{{/partial}}
+	<ui-section label='Status'>
+			<ui-button icon='{{data.borg.emagged ? "check-square-o" : "square-o"}}' style='{{data.borg.emagged ? "selected" : null}}' action='toggle_emagged'>Emagged</ui-button>
+			<ui-button icon='{{data.borg.lockdown ? "check-square-o" : "square-o"}}' style='{{data.borg.lockdown ? "selected" : null}}' action='toggle_lockdown'>Locked down</ui-button>
+			<ui-button icon='{{data.borg.scrambledcodes ? "check-square-o" : "square-o"}}' style='{{data.borg.scrambledcodes ? "selected" : null}}' action='toggle_scrambledcodes'>Scrambled codes</ui-button>
+	</ui-section>
+	<ui-section label='Charge'>
+		{{#if !data.cell.missing}}
+			<ui-bar min='0' max='{{data.cell.maxcharge}}' value='{{data.cell.charge}}'>{{Math.round(data.cell.charge)}} / {{Math.round(data.cell.maxcharge)}}</ui-bar>
+		{{else}}
+			<span class='warning'>Cell missing</span><br/>
+		{{/if}}
+		<ui-button icon='pencil' action='set_charge'>Set</ui-button><ui-button icon='eject' action='change_cell'>Change</ui-button><ui-button icon='trash' class='bad' action='remove_cell'>Remove</ui-button>
+	</ui-section>
+	<ui-section label='Radio channels'>
+		{{#each data.channels}}
+			<ui-button icon='{{installed ? "check-square-o" : "square-o"}}' style='{{installed ? "selected" : null}}'  action='toggle_radio' params='{"channel": "{{name}}"}'>{{name}}</ui-button>
+		{{/each}}
+	</ui-section>
+	<ui-section label='Module'>
+		{{#each data.modules}}
+			<ui-button icon='{{data.borg.active_module == type ? "check-square-o" : "square-o"}}' style='{{data.borg.active_module == type ? "selected" : null}}' action='setmodule' params='{"module": "{{type}}"}'>{{name}}</ui-button>
+		{{/each}}
+	</ui-section>
+	<ui-section label='Upgrades'>
+		{{#each data.upgrades}}
+			<ui-button icon='{{installed ? "check-square-o" : "square-o"}}' style='{{installed ? "selected" : null}}' action='toggle_upgrade' params='{"upgrade": "{{type}}"}'>{{name}}</ui-button>
+		{{/each}}
+	</ui-section>
+	<ui-section label='Master AI'>
+		{{#each data.ais}}
+			<ui-button icon='{{connected ? "check-square-o" : "square-o"}}' style='{{connected ? "selected" : null}}' action='slavetoai' params='{"slavetoai": "{{ref}}"}'>{{name}}</ui-button>
+		{{/each}}
+	</ui-section>
+</ui-display>
+<ui-display title='Laws' button>
+	{{#partial button}}
+		<ui-button icon='{{data.borg.lawupdate ? "check-square-o" : "square-o"}}' style='{{data.borg.lawupdate ? "selected" : null}}' action='toggle_lawupdate'>Lawsync</ui-button>
+	{{/partial}}
+	{{#each data.laws}}
+		<p>{{this}}</p>
+	{{/each}}
+</ui-display>

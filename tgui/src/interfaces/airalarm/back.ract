@@ -1,0 +1,1 @@
+<ui-button icon='arrow-left' action='tgui:view' params='{"screen": "home"}'>Back</ui-button>

@@ -1,0 +1,5 @@
+## Custom antag reputation values
+## List of job titles followed by antag rep value, all prefixed with ANTAG_REP. See code/modules/jobs/job_types for titles
+## e.g. 
+## ANTAG_REP Captain 10
+## ANTAG_REP Assistant 0

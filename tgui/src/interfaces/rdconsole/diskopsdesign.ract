@@ -1,0 +1,34 @@
+
+{{#if !data.ddisk}}
+	<ui-display title='No Design Disk Loaded'></ui-display>
+{{else}}
+	{{#if data.ddisk_update}}
+		<ui-display title='Design Disk Updating'></ui-display>
+	{{else}}
+		{{#if !data.ddisk_upload}}
+			<ui-display title='Design Disk'>
+				<ui-section title='Disk Space'>Disk Capacity: {{data.ddisk_size}} blueprints.</ui-section>
+				<ui-section title='Disk IO'><ui-button action='ddisk_upall'>Upload all designs</ui-button></ui-section>
+				<ui-section title='Clear Disk'><ui-button action='clear_designdisk' style='danger'>WIPE ALL DATA</ui-button></ui-section>
+				<ui-section title='Eject Disk'><ui-button action='eject_designdisk'>Eject Disk</ui-button></ui-section>
+			</ui-display>
+			<ui-display title='Disk Contents'>
+				{{#each data.ddisk_designs}}
+					<ui-section title='Number'>#{{pos}}: 
+						{{#if id == "null"}}
+							<ui-button action='upload_empty_ddisk_slot' params='{"slot": "{{pos}}"}'>Upload to Empty Slot</ui-button>
+						{{else}}
+							<ui-button action='select_design' params='{"id": "{{id}}"}' state='{{data.sdesign_id == id ? "selected" : null}}'>{{name}}</ui-button>
+							<ui-button action='ddisk_erasepos' style='danger' params='{"id": "{{id}}"}' state='{{id == "null"? "disabled" : null}}'>Delete Slot</ui-button>
+						{{/if}}
+					</ui-section>
+				{{/each}}
+			</ui-display>
+		{{else}}
+			<ui-display title='Upload Design to Disk'><ui-section>Available Designs:</ui-section></ui-display>
+			{{#each data.ddisk_possible_designs}}
+				<ui-section><ui-button action='ddisk_uploaddesign' params='{"id": "{{id}}"}'>{{name}}</ui-button></ui-section>
+			{{/each}}
+		{{/if}}
+	{{/if}}
+{{/if}}

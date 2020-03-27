@@ -1,0 +1,153 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"b" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"c" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"d" = (
+/turf/open/space/basic,
+/area/space)
+"e" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"f" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"g" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"i" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"j" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"k" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"m" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	port_direction = 2;
+	preferred_direction = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+e
+b
+m
+a
+d
+d
+d
+a
+e
+b
+e
+a
+"}
+(2,1,1) = {"
+b
+f
+i
+j
+b
+d
+d
+d
+b
+f
+i
+j
+b
+"}
+(3,1,1) = {"
+c
+f
+g
+j
+c
+d
+d
+d
+c
+f
+g
+j
+c
+"}
+(4,1,1) = {"
+b
+f
+g
+j
+b
+d
+d
+d
+b
+f
+g
+j
+b
+"}
+(5,1,1) = {"
+b
+b
+k
+b
+b
+d
+d
+d
+b
+b
+k
+b
+b
+"}
+(6,1,1) = {"
+d
+b
+c
+b
+d
+d
+d
+d
+d
+b
+c
+b
+d
+"}

@@ -1,0 +1,55 @@
+div[data-tooltip], span[data-tooltip]
+  position: relative
+
+  &::after
+    position: absolute
+    display: block
+    z-index: 2
+    width: 250px
+    padding: 10px
+    transform: translateX(-50%)
+    pointer-events: none
+  
+    visibility: hidden
+    opacity: 0
+
+    white-space: normal
+    text-align: left
+    content: attr(data-tooltip)
+
+    transition: all .5s
+    border: 1px solid tooltip-color-border
+    background-color: tooltip-color-background
+
+  &:hover::after
+    pointer-events: none
+    visibility: visible
+    opacity: 1
+
+  &.tooltip-top::after
+    bottom: 100%
+    left: 50%
+    transform: translateX(-50%) translateY(8px)
+  &.tooltip-top:hover::after
+    transform: translateX(-50%) translateY(-8px)
+
+  &.tooltip-bottom::after
+    top: 100%
+    left: 50%
+    transform: translateX(-50%) translateY(-8px)
+  &.tooltip-bottom:hover::after
+    transform: translateX(-50%) translateY(8px)
+
+  &.tooltip-left::after
+    top: 50%
+    right: 100%
+    transform: translateX(8px) translateY(-50%)
+  &.tooltip-left:hover::after
+    transform: translateX(-8px) translateY(-50%)
+
+  &.tooltip-right::after
+    top: 50%
+    left: 100%
+    transform: translateX(-8px) translateY(-50%)
+  &.tooltip-right:hover::after
+    transform: translateX(8px) translateY(-50%)

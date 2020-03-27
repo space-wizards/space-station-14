@@ -1,0 +1,35 @@
+{{#if data.has_cap}}
+<ui-display>
+	<ui-section label='Cap'>
+		<ui-button icon='{{data.is_capped ? "power-off" : "close"}}' style='{{data.is_capped ? null : "selected"}}'
+			action='toggle_cap'>
+			{{data.is_capped ? "On": "Off"}}</ui-button>
+	</ui-section>
+</ui-display>
+{{/if}}
+<ui-display>
+	{{!<ui-section label='Current Colour'>{{{current_colour}</span>
+	</ui-section>}}
+{{#if data.can_change_colour}}
+	<ui-section>
+		<ui-button action='select_colour'>Select New Colour</ui-button>
+	</ui-section>
+{{/if}}
+</ui-display>
+<ui-display title='Stencil'>
+  {{#each data.drawables}}
+	<ui-section label='{{name}}'>
+		{{#each items}}
+      <ui-button action='select_stencil' params='{"item":"{{item}}"}'
+				style='{{item == data.selected_stencil ? "selected" : null}}'>
+			{{item}}
+			</ui-button>
+		{{/each}}
+	</ui-section>
+	{{/each}}
+</ui-display>
+<ui-display title="Text Mode">
+	<ui-section label='Current Buffer'>{{data.text_buffer}}
+	</ui-section>
+	<ui-section><ui-button action='enter_text'>New Text</ui-button></ui-section>
+</ui-display>

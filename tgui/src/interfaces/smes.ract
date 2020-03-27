@@ -1,0 +1,70 @@
+<script>
+  component.exports = {
+    computed: {
+      capacityPercentState () {
+        const charge = this.get('data.capacityPercent')
+        if (charge > 50) return 'good'
+        else if (charge > 15) return 'average'
+        else return 'bad'
+      },
+      inputState () {
+        if (this.get('data.capacityPercent') >= 100) return 'good'
+        else if (this.get('data.inputting')) return 'average'
+        else return 'bad'
+      },
+      outputState () {
+        if (this.get('data.outputting')) return 'good'
+        else if (this.get('data.charge') > 0) return 'average'
+        else return 'bad'
+      }
+    }
+  }
+</script>
+
+<ui-display title='Storage'>
+  <ui-section label='Stored Energy'>
+    <ui-bar min='0' max='100' value='{{data.capacityPercent}}' state='{{capacityPercentState}}'>{{Math.fixed(adata.capacityPercent)}}%</ui-bar>
+  </ui-section>
+</ui-display>
+<ui-display title='Input'>
+  <ui-section label='Charge Mode'>
+    <ui-button icon='{{data.inputAttempt ? "refresh" : "close"}}' style='{{data.inputAttempt ? "selected" : null}}'
+      action='tryinput'>{{data.inputAttempt ? "Auto" : "Off"}}</ui-button>
+    &nbsp;
+    [<span class='{{inputState}}'>{{data.capacityPercent >= 100 ? "Fully Charged" : data.inputting ? "Charging" : "Not Charging"}}</span>]
+	</ui-section>
+  <ui-section label='Target Input'>
+    <ui-bar min='0' max='{{data.inputLevelMax}}' value='{{data.inputLevel}}'>{{adata.inputLevel_text}}</ui-bar>
+	</ui-section>
+  <ui-section label='Adjust Input'>
+    <ui-button icon='fast-backward' state='{{data.inputLevel == 0 ? "disabled" : null}}' action='input' params='{"target": "min"}'/>
+    <ui-button icon='backward' state='{{data.inputLevel == 0 ? "disabled" : null}}' action='input' params='{"adjust": -10000}'/>
+    <ui-button icon='pencil' action='input' params='{"target": "input"}'>Set</ui-button>
+    <ui-button icon='forward' state='{{data.inputLevel == data.inputLevelMax ? "disabled" : null}}' action='input' params='{"adjust": 10000}'/>
+    <ui-button icon='fast-forward' state='{{data.inputLevel == data.inputLevelMax ? "disabled" : null}}' action='input' params='{"target": "max"}'/>
+  </ui-section>
+  <ui-section label='Available'>
+		<span>{{adata.inputAvailable}}</span>
+	</ui-section>
+</ui-display>
+<ui-display title='Output'>
+  <ui-section label='Output Mode'>
+    <ui-button icon='{{data.outputAttempt ? "power-off" : "close"}}' style='{{data.outputAttempt ? "selected" : null}}'
+      action='tryoutput'>{{data.outputAttempt ? "On" : "Off"}}</ui-button>
+    &nbsp;
+    [<span class='{{outputState}}'>{{data.outputting ? "Sending" : data.charge > 0 ? "Not Sending" : "No Charge"}}</span>]
+	</ui-section>
+  <ui-section label='Target Output'>
+    <ui-bar min='0' max='{{data.outputLevelMax}}' value='{{data.outputLevel}}'>{{adata.outputLevel_text}}</ui-bar>
+	</ui-section>
+  <ui-section label='Adjust Output'>
+    <ui-button icon='fast-backward' state='{{data.outputLevel == 0 ? "disabled" : null}}' action='output' params='{"target": "min"}'/>
+    <ui-button icon='backward' state='{{data.outputLevel == 0 ? "disabled" : null}}' action='output' params='{"adjust": -10000}'/>
+    <ui-button icon='pencil' action='output' params='{"target": "input"}'>Set</ui-button>
+    <ui-button icon='forward' state='{{data.outputLevel == data.outputLevelMax ? "disabled" : null}}' action='output' params='{"adjust": 10000}'/>
+    <ui-button icon='fast-forward' state='{{data.outputLevel == data.outputLevelMax ? "disabled" : null}}' action='output' params='{"target": "max"}'/>
+  </ui-section>
+  <ui-section label='Outputting'>
+		<span>{{adata.outputUsed}}</span>
+	</ui-section>
+</ui-display>

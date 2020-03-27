@@ -1,0 +1,10 @@
+* text=auto
+
+## Enforce text mode and LF line breaks
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+
+## Treat bundles as binary and ignore them during conflicts
+*.bundle.* binary merge=tgui-merge-bundle

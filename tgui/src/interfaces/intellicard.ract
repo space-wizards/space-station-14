@@ -1,0 +1,42 @@
+<script>
+  component.exports = {
+    computed: {
+      healthState () {
+        const health = this.get('data.health')
+        if (health > 70) return 'good'
+        else if (health > 50) return 'average'
+        else return 'bad'
+      }
+    }
+  }
+</script>
+
+{{#if data.wiping}}
+  <ui-notice>
+    <span>Wipe in progress!</span>
+  </ui-notice>
+{{/if}}
+<ui-display title={{data.name || "Empty Card"}} button>
+  {{#partial button}}
+    {{#if data.name}}
+      <ui-button icon='trash' state='{{data.isDead ? "disabled" : null}}' action='wipe'>{{data.wiping ? "Stop Wiping" : "Wipe"}} AI</ui-button>
+    {{/if}}
+  {{/partial}}
+  {{#if data.name}}
+    <ui-section label='Status'>
+        <span class='{{data.isDead || data.isBraindead ? "bad" : "good"}}'>{{data.isDead || data.isBraindead ? "Offline" : "Operational"}}</span>
+    </ui-section>
+    <ui-section label='Software Integrity'>
+      <ui-bar min='0' max='100' value='{{data.health}}' state='{{healthState}}'>{{Math.round(adata.health)}}%</ui-bar>
+    </ui-section>
+    <ui-section label='Laws'>
+      {{#each data.laws}}
+        <span class='highlight'>{{.}}</span><br/>
+      {{/each}}
+    </ui-section>
+    <ui-section label='Settings'>
+      <ui-button icon='signal' style='{{data.wireless ? "selected" : null}}' action="wireless">Wireless Activity</ui-button>
+      <ui-button icon='microphone' style='{{data.radio ? "selected" : null}}' action="radio">Subspace Radio</ui-button>
+    </ui-section>
+  {{/if}}
+</ui-display>

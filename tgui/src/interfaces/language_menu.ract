@@ -1,0 +1,48 @@
+<ui-display title="Known Languages">
+  {{#each data.languages}}
+    <ui-section label={{name}}>
+      <span>{{desc}}</span>
+      <span>Key: ,{{key}}</span>
+      {{#if shadow}}
+        <span>(gained from mob)</span>
+      {{/if}}
+      <span>{{can_speak ? "Can Speak" : "Cannot Speak"}}</span>
+      {{#if data.is_living}}
+        <ui-button
+          action='select_default'
+          params='{"language_name":"{{name}}"}'
+          style='{{is_default ? "selected" : can_speak ? null : "disabled"}}'
+        >{{is_default ? "Default Language" : "Select as Default"}}
+      </ui-button>
+      {{/if}}
+      {{#if data.admin_mode}}
+        {{#if shadow}}
+          <ui-button action='grant_language' params='{"language_name":"{{name}}"}'>Grant</ui-button>
+        {{else}}
+          <ui-button action='remove_language' params='{"language_name":"{{name}}"}'>Remove</ui-button>
+        {{/if}}
+      {{/if}}
+    </ui-section>
+  {{/each}}
+</ui-display>
+{{#if data.admin_mode}}
+  {{#if data.is_living}}
+    <ui-button
+      action='toggle_omnitongue'
+      style='{{data.omnitongue ? "selected" : null}}'
+      >Omnitongue {{data.omnitongue ? "Enabled" : "Disabled"}}
+      </ui-button>
+  {{/if}}
+  <ui-display title="Unknown Languages">
+    {{#each data.unknown_languages}}
+      <ui-section label={{name}}>
+        <span>{{desc}}</span>
+        <span>Key: ,{{key}}</span>
+        <ui-button
+          action='grant_language'
+          params='{"language_name":"{{name}}"}'
+        >Grant</ui-button>
+      </ui-section>
+    {{/each}}
+  </ui-display>
+{{/if}}

@@ -1,0 +1,75 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+
+	{{#if data.error}}
+		<h2>An error has occurred and this program can not continue.</h2>
+		Additional information: {{data.error}}<br>
+		<i>Please try again. If the problem persists contact your system administrator for assistance.</i>
+		<ui-button action='PRG_closefile'>Restart program</ui-button>
+	{{else}}
+		{{#if data.filename}}
+			<h2>Viewing file {{data.filename}}</h2>
+			<div class='item'>
+			<ui-button action='PRG_closefile'>CLOSE</ui-button>
+			<ui-button action='PRG_edit'>EDIT</ui-button>
+			<ui-button action='PRG_printfile'>PRINT</ui-button>
+			</div><hr>
+			{{{data.filedata}}}
+		{{else}}
+			<h2>Available files (local):</h2>
+			<table>
+				<tr>
+					<th>File name</th>
+					<th>File type</th>
+					<th>File size (GQ)</th>
+					<th>Operations</th>
+				</tr>
+				{{#each data.files}}
+					<tr>
+						<td>{{name}}</td>
+						<td>.{{type}}</td>
+						<td>{{size}}GQ</td>
+						<td>
+							<ui-button action='PRG_openfile' params='{"name": "{{name}}"}'>VIEW</ui-button>
+							<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_deletefile' params='{"name": "{{name}}"}'>DELETE</ui-button>
+							<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_rename' params='{"name": "{{name}}"}'>RENAME</ui-button>
+							<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_clone' params='{"name": "{{name}}"}'>CLONE</ui-button>
+							{{#if data.usbconnected}}
+								<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_copytousb' params='{"name": "{{name}}"}'>EXPORT</ui-button>
+							{{/if}}
+						</td>
+					</tr>
+				{{/each}}
+			</table>
+			{{#if data.usbconnected}}
+			<h2>Available files (portable device):</h2>
+			<table>
+				<tr>
+					<th>File name</th>
+					<th>File type</th>
+					<th>File size (GQ)</th>
+					<th>Operations</th>
+				</tr>
+				{{#each data.usbfiles}}
+					<tr>
+						<td>{{name}}</td>
+						<td>.{{type}}</td>
+						<td>{{size}}GQ</td>
+						<td>
+							<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_usbdeletefile' params='{"name": "{{name}}"}'>DELETE</ui-button>
+							{{#if data.usbconnected}}
+								<ui-button state='{{undeletable ? "disabled" : null}}' action='PRG_copyfromusb' params='{"name": "{{name}}"}'>IMPORT</ui-button>
+							{{/if}}
+						</td>
+					</tr>
+				{{/each}}
+			</table>
+			{{/if}}
+			<ui-button action='PRG_newtextfile'>NEW DATA FILE</ui-button>
+		{{/if}}
+		
+	{{/if}}
+
+</ui-display>

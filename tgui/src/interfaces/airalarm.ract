@@ -1,0 +1,51 @@
+<link rel='ractive' href='./airalarm/scrubbers.ract'>
+<link rel='ractive' href='./airalarm/status.ract'>
+<link rel='ractive' href='./airalarm/thresholds.ract'>
+<link rel='ractive' href='./airalarm/modes.ract'>
+<link rel='ractive' href='./airalarm/vents.ract'>
+
+<ui-notice>
+  {{#if data.siliconUser}}
+    <ui-section label='Interface Lock'>
+      <ui-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</ui-button>
+    </ui-section>
+  {{else}}
+    <span>Swipe an ID card to {{data.locked ? "unlock" : "lock"}} this interface.</span>
+  {{/if}}
+</ui-notice>
+<status/>
+{{#if !data.locked || data.siliconUser}}
+  {{#if config.screen == "home"}}
+      <ui-display title='Air Controls'>
+        <ui-section>
+          <ui-button icon='{{data.atmos_alarm ? "exclamation-triangle" : "exclamation"}}' style='{{data.atmos_alarm ? "caution" : null}}'
+              action='{{data.atmos_alarm ? "reset" : "alarm"}}'>Area Atmosphere Alarm</ui-button>
+        </ui-section>
+        <ui-section>
+          <ui-button icon='{{data.mode == 3 ? "exclamation-triangle" : "exclamation"}}' style='{{data.mode == 3 ? "danger" : null}}'
+            action='mode' params='{"mode": {{data.mode == 3 ? 1 : 3}}}'>Panic Siphon</ui-button>
+        </ui-section>
+        <br/>
+        <ui-section>
+          <ui-button icon='sign-out' action='tgui:view' params='{"screen": "vents"}'>Vent Controls</ui-button>
+        </ui-section>
+        <ui-section>
+          <ui-button icon='filter' action='tgui:view' params='{"screen": "scrubbers"}'>Scrubber Controls</ui-button>
+        </ui-section>
+        <ui-section>
+          <ui-button icon='cog' action='tgui:view' params='{"screen": "modes"}'>Operating Mode</ui-button>
+        </ui-section>
+        <ui-section>
+          <ui-button icon='bar-chart' action='tgui:view' params='{"screen": "thresholds"}'>Alarm Thresholds</ui-button>
+        </ui-section>
+      </ui-display>
+  {{elseif config.screen == "vents"}}
+    <vents/>
+  {{elseif config.screen == "scrubbers"}}
+    <scrubbers/>
+  {{elseif config.screen == "modes"}}
+    <modes/>
+  {{elseif config.screen == "thresholds"}}
+    <thresholds/>
+  {{/if}}
+{{/if}}

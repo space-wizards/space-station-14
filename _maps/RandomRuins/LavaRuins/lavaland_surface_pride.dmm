@@ -1,0 +1,300 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"b" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"c" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"e" = (
+/obj/structure/mirror{
+	pixel_x = -32
+	},
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
+"f" = (
+/obj/structure/mirror{
+	pixel_x = 32
+	},
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
+"g" = (
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
+"j" = (
+/obj/structure/mirror{
+	pixel_x = -32
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
+"k" = (
+/obj/structure/mirror{
+	pixel_x = 32
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
+"l" = (
+/obj/structure/mirror{
+	pixel_x = -32
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
+"m" = (
+/obj/structure/mirror{
+	pixel_x = 32
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
+"r" = (
+/obj/machinery/light/small,
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
+"G" = (
+/turf/closed/wall/mineral/diamond,
+/area/ruin/powered/pride)
+"O" = (
+/obj/structure/mirror/magic/pride,
+/turf/closed/wall/mineral/diamond,
+/area/ruin/powered/pride)
+"Y" = (
+/obj/machinery/door/airlock/diamond,
+/turf/open/floor/mineral/silver{
+	blocks_air = 1
+	},
+/area/ruin/powered/pride)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}
+(3,1,1) = {"
+b
+c
+c
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+c
+a
+"}
+(4,1,1) = {"
+c
+c
+G
+G
+G
+j
+e
+e
+l
+e
+e
+l
+e
+e
+l
+e
+e
+G
+c
+a
+"}
+(5,1,1) = {"
+c
+G
+G
+G
+G
+G
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+r
+G
+a
+a
+"}
+(6,1,1) = {"
+c
+G
+G
+G
+G
+G
+O
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+Y
+a
+a
+"}
+(7,1,1) = {"
+c
+G
+G
+G
+G
+G
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+r
+G
+c
+a
+"}
+(8,1,1) = {"
+c
+c
+G
+G
+G
+k
+f
+f
+m
+f
+f
+m
+f
+f
+m
+f
+f
+G
+c
+a
+"}
+(9,1,1) = {"
+b
+c
+c
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
+c
+a
+"}
+(10,1,1) = {"
+b
+b
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}

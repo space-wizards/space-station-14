@@ -1,0 +1,27 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+	<div class='item'>
+		<div class='itemLabel'>
+			Payload status:
+		</div>
+		<div class='itemContent'>
+			{{#if data.armed}}
+				ARMED
+			{{else}}
+				DISARMED
+			{{/if}}
+		</div>
+		<div class='itemLabel'>
+			Controls:
+		</div>
+		<div class='itemContent'>
+			<table>
+			<tr><td><ui-button action='PRG_obfuscate'>OBFUSCATE PROGRAM NAME</ui-button>
+			<tr><td><ui-button action='PRG_arm' state='{{data.armed ? "danger" : null}}'>{{data.armed ? "DISARM" : "ARM"}}</ui-button>
+			<ui-button icon='radiation' state='{{data.armed ? null : "disabled"}}' action='PRG_activate'>ACTIVATE</ui-button>
+			</table>
+		</div>
+	</div>
+</ui-display>

@@ -1,0 +1,44 @@
+<link rel='ractive' href='./scrubbing_types.ract' name='filters'>
+
+<ui-notice>
+  <span>The regulator {{data.holding ? "is" : "is not"}} connected to a tank.</span>
+</ui-notice>
+<ui-display title='Status' button>
+  <ui-section label='Pressure'>
+    <span>{{Math.round(adata.pressure)}} kPa</span>
+  </ui-section>
+  <ui-section label='Port'>
+    <span class='{{data.connected ? "good" : "average"}}'>{{data.connected ? "Connected" : "Not Connected"}}</span>
+  </ui-section>
+</ui-display>
+<ui-display title='Filter'>
+  <ui-section label='Power'>
+    <ui-button icon='{{data.on ? "power-off" : "close"}}'
+      style='{{data.on ? "selected" : "null"}}'
+      action='power'>{{data.on ? "On" : "Off"}}</ui-button>
+  </ui-section>
+</ui-display>
+<ui-display title='Holding Tank' button>
+  {{#partial button}}
+    {{#if data.holding}}
+      <ui-button icon='eject' style='{{data.on ? "danger" : null}}' action='eject'>Eject</ui-button>
+    {{/if}}
+  {{/partial}}
+  {{#if data.holding}}
+		<ui-section label='Label'>
+			{{data.holding.name}}
+		</ui-section>
+		<ui-section label='Pressure'>
+			{{Math.round(adata.holding.pressure)}} kPa
+		</ui-section>
+	{{else}}
+		<ui-section>
+			<span class='average'>No Holding Tank</span>
+		</ui-section>
+	{{/if}}
+</ui-display>
+<ui-display title='Filters'>
+  {{#with data}}
+    <filters/>
+  {{/with}}
+</ui-display>

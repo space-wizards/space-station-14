@@ -1,0 +1,49 @@
+<ui-display title='Labor Camp Teleporter'>
+	<ui-section label='Teleporter Status'>
+		<span class='{{data.teleporter ? "good" : "bad"}}'>{{data.teleporter ? "Connected" : "Not connected"}}</span>
+	</ui-section>
+		{{#if data.teleporter}}
+			<ui-section label='Location'>
+				<span>{{data.teleporter_location}}</span>
+			</ui-section>
+			<ui-section label='Locked status'>
+				<ui-button icon='{{data.teleporter_lock ? "lock" : "unlock"}}' action="teleporter_lock">{{data.teleporter_lock ? "Locked" : "Unlocked"}}</ui-button>
+				<ui-button action='toggle_open'>{{data.teleporter_state_open ? "Open" : "Closed"}}</ui-button>
+			</ui-section>
+		{{else}}
+			<span><ui-button action="scan_teleporter">Scan Teleporter</ui-button></span>
+		{{/if}}
+</ui-display>
+<ui-display title='Labor Camp Beacon'>
+	<ui-section label='Beacon Status'>
+		<span class='{{data.beacon ? "good" : "bad"}}'>{{data.beacon ? "Connected" : "Not connected"}}</span>
+	</ui-section>
+	{{#if data.beacon}}
+		<ui-section label='Location'>
+			<span>{{data.beacon_location}}</span>
+		</ui-section>
+		{{else}}
+			<span><ui-button action="scan_beacon">Scan Beacon</ui-button></span>
+		{{/if}}
+</ui-display>
+<ui-display title='Prisoner details'>
+	<ui-section label='Prisoner ID'>
+		<ui-button action="handle_id">{{data.id ? data.id_name : "-------------"}}</ui-button>
+	</ui-section>
+	{{#if data.id}}
+	<ui-section label='Set ID goal'>
+			<ui-button action="set_goal">{{data.goal}}</ui-button>
+	</ui-section>
+	{{/if}}
+	<ui-section label='Occupant'>
+		<span>{{data.prisoner.name ? data.prisoner.name : "No Occupant"}}</span>
+	</ui-section>
+	{{#if data.prisoner}}
+		<ui-section label='Criminal Status'>
+			<span>{{data.prisoner.crimstat}}</span>
+		</ui-section>
+	{{/if}}
+</ui-display>
+<ui-display>
+	<center><ui-button action="teleport" state={{data.can_teleport ? null : 'disabled'}}>Process Prisoner</ui-button></center>
+</ui-display>

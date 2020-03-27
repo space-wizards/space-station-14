@@ -1,0 +1,80 @@
+<script>
+  component.exports = {
+    data: {
+      chargingState (status) {
+        switch (status) {
+          case 2: return 'good'
+          case 1: return 'average'
+          default: return 'bad'
+        }
+      },
+      chargingMode (status) {
+        if (status == 2) return 'Full'
+        else if (status == 1) return 'Charging'
+        else return 'Draining'
+      },
+      channelState (status) {
+        if (status >= 2) return 'good'
+        else return 'bad'
+      },
+      channelPower (status) {
+        if (status >= 2) return 'On'
+        else return 'Off'
+      },
+      channelMode (status) {
+        if (status == 1 || status == 3) return 'Auto'
+        else return 'Manual'
+      }
+    },
+    computed: {
+      graphData () {
+        const history = this.get('data.history')
+        return Object.keys(history).map(key => {
+          return history[key].map((point, index) => {
+            return { x: index, y: point }
+          })
+        })
+      }
+    }
+  }
+</script>
+
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display title='Network'>
+  {{#if config.fancy}}
+    <ui-linegraph points='{{graphData}}' height='500'
+        legend='["Available", "Load"]' colors='["rgb(0, 102, 0)", "rgb(153, 0, 0)"]'
+        xunit='seconds ago' xfactor='{{data.interval}}' yunit='W' yfactor='1'
+        xinc='{{data.stored / 10}}' yinc='9'/>
+  {{else}}
+    <ui-section label='Available'>
+      <span>{{data.supply}}</span>
+    </ui-section>
+    <ui-section label='Load'>
+        <span>{{data.demand}}</span>
+    </ui-section>
+  {{/if}}
+</ui-display>
+<ui-display title='Areas'>
+  <ui-section nowrap>
+    <div class='content'>Area</div>
+    <div class='content'>Charge</div>
+    <div class='content'>Load</div>
+    <div class='content'>Status</div>
+    <div class='content'>Equipment</div>
+    <div class='content'>Lighting</div>
+    <div class='content'>Environment</div>
+  </ui-section>
+  {{#each data.areas}}
+    <ui-section label='{{name}}' nowrap>
+      <div class='content'>{{Math.round(adata.areas[@index].charge)}} %</div>
+      <div class='content'>{{adata.areas[@index].load}}</div>
+      <div class='content'><span class='{{chargingState(charging)}}'>{{chargingMode(charging)}}</span></div>
+      <div class='content'><span class='{{channelState(eqp)}}'>{{channelPower(eqp)}} [<span>{{channelMode(eqp)}}</span>]</span></div>
+      <div class='content'><span class='{{channelState(lgt)}}'>{{channelPower(lgt)}} [<span>{{channelMode(lgt)}}</span>]</span></div>
+      <div class='content'><span class='{{channelState(env)}}'>{{channelPower(env)}} [<span>{{channelMode(env)}}</span>]</span></div>
+    </ui-section>
+  {{/each}}
+</ui-display>

@@ -1,0 +1,14 @@
+{{#if data.shaking}}
+  <ui-display title={{data.question}}>
+    <ui-section>
+      {{#each data.answers}}
+        <ui-button
+          action='vote' params='{"answer": "{{answer}}"}'
+          style='{{selected ? "selected" : null}}' >{{answer}} ({{amount}})
+        </ui-button>
+      {{/each}}
+    </ui-section>
+  </ui-display>
+{{else}}
+  <ui-notice>The eightball is not currently being shaken.</ui-notice>
+{{/if}}

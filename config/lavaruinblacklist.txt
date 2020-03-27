@@ -1,0 +1,41 @@
+#Listing maps here will blacklist them from generating in lavaland.
+#Maps must be the full path to them
+#A list of maps valid to blacklist can be found in _maps\RandomRuins\LavaRuins
+#SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
+
+##BIODOMES
+#_maps/RandomRuins/LavaRuins/lavaland_surface_biodome_winter.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_biodome_beach.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_biodome_clown_planet.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_cube.dmm
+
+##RESPAWN
+#_maps/RandomRuins/LavaRuins/lavaland_surface_seed_vault.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_ash_walker1.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_syndicate_base1.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_golem_ship.dmm
+
+##SIN
+#_maps/RandomRuins/LavaRuins/lavaland_surface_envy.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_gluttony.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_greed.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_pride.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_sloth.dmm
+
+##MISC
+#_maps/RandomRuins/LavaRuins/lavaland_surface_automated_trade_outpost.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_ufo_crash.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_ww_vault.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_automated_trade_outpost.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_xeno_nest.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_survivalpod.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_wwiioutpost.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_tomb.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_hierophant.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_fountain_hall.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_pizzaparty.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_cultaltar.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_hermit.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_swarmer_crash.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_gaia.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_elephant_graveyard.dmm

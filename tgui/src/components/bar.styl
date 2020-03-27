@@ -1,0 +1,32 @@
+context = selector()
+
+.bar
+  display: inline-block
+  position: relative
+  vertical-align: middle
+  width: 100%
+  height: 20px
+  line-height: @height - 3px
+  padding: 1px
+
+  border: 1px solid bar-color-border
+  background: bar-color-background
+
+  .barText
+    @extend {context} $fontReset
+    position: absolute
+    top: 0
+    right: 3px
+
+  .barFill
+    display: block
+    height: 100%
+
+    transition: background-color 1s
+    background-color: bar-color-normal
+    &.good
+      background-color: bar-color-good
+    &.average
+      background-color: bar-color-average
+    &.bad
+      background-color: bar-color-bad

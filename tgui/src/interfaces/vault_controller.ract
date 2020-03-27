@@ -1,0 +1,10 @@
+<ui-display>
+	<ui-section label='Charge'>
+		<ui-bar min='0' max='{{data.max}}' value='{{data.stored}}'>{{Math.fixed(data.stored/1000)}}/{{data.max/1000}} kW</ui-bar>
+	</ui-section>
+</ui-display>
+<ui-display>
+	<ui-section label='Lock status'>
+		<ui-button state='{{data.stored < data.max ? "disabled" : null}}' action='togglelock'>{{data.doorstatus ? "Locked" : "Unlocked"}}</ui-button>
+	</ui-section>
+</ui-display>

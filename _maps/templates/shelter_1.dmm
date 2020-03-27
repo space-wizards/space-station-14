@@ -1,0 +1,106 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/survivalpod)
+"b" = (
+/obj/structure/sign/mining/survival{
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/survivalpod)
+"c" = (
+/obj/structure/fans,
+/turf/open/floor/pod,
+/area/survivalpod)
+"d" = (
+/obj/machinery/smartfridge/survival_pod,
+/turf/open/floor/pod,
+/area/survivalpod)
+"e" = (
+/obj/item/gps/computer,
+/turf/open/floor/pod,
+/area/survivalpod)
+"f" = (
+/obj/structure/sign/mining/survival{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/survivalpod)
+"g" = (
+/obj/machinery/stasis/survival_pod,
+/turf/open/floor/pod,
+/area/survivalpod)
+"h" = (
+/turf/open/floor/pod,
+/area/survivalpod)
+"i" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/black,
+/turf/open/floor/pod,
+/area/survivalpod)
+"j" = (
+/obj/structure/sign/mining/survival{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/survivalpod)
+"k" = (
+/obj/structure/table/survival_pod,
+/turf/open/floor/pod,
+/area/survivalpod)
+"l" = (
+/obj/structure/tubes,
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/pod,
+/area/survivalpod)
+"m" = (
+/obj/structure/sign/mining/survival,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/survivalpod)
+"n" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/survival_pod/glass,
+/turf/open/floor/pod,
+/area/survivalpod)
+"o" = (
+/obj/structure/sign/mining,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/survivalpod)
+
+(1,1,1) = {"
+a
+a
+f
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+g
+k
+m
+"}
+(3,1,1) = {"
+b
+d
+h
+h
+n
+"}
+(4,1,1) = {"
+a
+e
+i
+l
+o
+"}
+(5,1,1) = {"
+a
+a
+j
+a
+a
+"}

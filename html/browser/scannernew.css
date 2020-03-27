@@ -1,0 +1,37 @@
+.dnaBlockNumber
+{
+	font-family: Fixed, monospace;
+	float: left;
+	color: #ffffff;
+	background: #363636;
+	width: 20px;
+	padding: -3px 0 -1px 0;
+	margin: 2px 2px 0 10px;
+	text-align: center;
+}
+.dnaBlock
+{
+	font-family: Fixed, monospace;
+	float: left;
+}
+img.selected
+{
+	border: 1px solid blue;
+}
+img.unselected
+{
+	border: 2px solid black;
+}
+div>table {
+	float: left;
+}
+td
+{
+	text-align: center;
+}
+a.clean
+{
+	background: none;
+	border: none;
+	marging: none;
+}

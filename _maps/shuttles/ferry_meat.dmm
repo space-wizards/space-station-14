@@ -1,0 +1,223 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"c" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"e" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/transport)
+"f" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"g" = (
+/obj/machinery/computer/shuttle/ferry/request{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"h" = (
+/obj/structure/closet/secure_closet/freezer/meat/open{
+	name = "\"meat\" fridge"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/goliath,
+/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
+/obj/item/reagent_containers/food/snacks/meat/slab/pug,
+/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/human{
+	name = "human meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly{
+	name = "flyman meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine{
+	name = "golem meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard{
+	name = "lizard meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant{
+	name = "podperson meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow{
+	name = "shadowling meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime{
+	name = "slimeperson meat"
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie{
+	name = "rotten meat"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"i" = (
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"j" = (
+/obj/machinery/gibber,
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"k" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"l" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"m" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "old sink";
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"o" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"p" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"q" = (
+/obj/machinery/door/airlock/titanium,
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 2;
+	height = 12;
+	id = "ferry";
+	name = "ferry shuttle";
+	port_direction = 2;
+	width = 5
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"t" = (
+/obj/structure/closet/chefcloset,
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"u" = (
+/obj/structure/kitchenspike,
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"v" = (
+/obj/machinery/door/airlock/freezer{
+	name = "Meat Tradeship Backroom";
+	req_access_txt = "28"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+"w" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/transport)
+
+(1,1,1) = {"
+a
+b
+p
+b
+a
+"}
+(2,1,1) = {"
+b
+e
+i
+e
+b
+"}
+(3,1,1) = {"
+c
+f
+i
+t
+c
+"}
+(4,1,1) = {"
+c
+g
+i
+u
+c
+"}
+(5,1,1) = {"
+c
+h
+i
+u
+c
+"}
+(6,1,1) = {"
+c
+i
+i
+u
+c
+"}
+(7,1,1) = {"
+c
+j
+i
+i
+c
+"}
+(8,1,1) = {"
+c
+k
+i
+i
+c
+"}
+(9,1,1) = {"
+c
+l
+l
+v
+c
+"}
+(10,1,1) = {"
+c
+m
+i
+i
+c
+"}
+(11,1,1) = {"
+c
+n
+i
+w
+c
+"}
+(12,1,1) = {"
+c
+o
+q
+o
+c
+"}

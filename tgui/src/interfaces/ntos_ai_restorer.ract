@@ -1,0 +1,78 @@
+<script>
+  component.exports = {
+    computed: {
+      healthState () {
+        const health = this.get('data.health')
+        if (health > 70) return 'good'
+        else if (health > 50) return 'average'
+        else return 'bad'
+      }
+    }
+  }
+</script>
+
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+{{#if data.restoring}}
+  <ui-notice>
+    <span>Reconstruction in progress!</span>
+  </ui-notice>
+{{/if}}
+
+
+<ui-display>
+
+<div class='item'>
+  <div class='itemLabel'>
+	Inserted AI:
+  </div>
+  <div class='itemContent'>
+	<ui-button icon='eject' action='PRG_eject' state='{{data.nocard ? "disabled" : null}}'>{{data.name ? data.name : "---"}}</ui-button>
+  </div>
+</div>
+
+{{#if data.error}}
+	<b>ERROR: {{data.error}}</b>
+{{else}}
+	<h2>System Status</h2>
+	<div class="item">
+		<div class="itemLabel">
+			Current AI:
+		</div>
+		<div class="itemContent">
+			{{data.name}}
+		</div>
+		<div class="itemLabel">
+			Status:
+		</div>
+		<div class="itemContent">
+			{{#if data.isDead}}
+				Nonfunctional
+			{{else}}
+				Functional
+			{{/if}}
+		</div>
+		<div class="itemLabel">
+			System Integrity:
+		</div>
+		<div class="itemContent">
+			<ui-bar min='0' max='100' value='{{data.health}}'
+			state='{{healthState}}'>{{Math.round(adata.health)}}%</ui-bar>			
+		</div>
+		<div class="itemLabel">
+			Active Laws:
+		</div>
+		<div class="itemContent">
+			<table>
+				{{#each data.ai_laws}}
+					<tr><td><span class='highlight'>{{.}}</span>
+				{{/each}}
+			</table>
+		</div>
+	<ui-section label='Operations'>
+		<ui-button icon='plus' style='{{data.restoring ? "disabled" : null}}' action='PRG_beginReconstruction'>Begin Reconstruction</ui-button>
+    </ui-section>
+{{/if}}
+
+</ui-display>

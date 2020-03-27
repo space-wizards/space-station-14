@@ -1,0 +1,98 @@
+.greentext {
+	color: #90ee90;
+	font-weight: bold;
+}
+
+.greentext_alt {
+	color: green;
+}
+.redtext {
+	color: #ef2f3c;
+	font-weight: bold;
+}
+
+.bluetext {
+	color: #517fff;
+	font-weight: bold;
+}
+
+.neutraltext {
+	font-weight: bold; /* If you feel these should have some color feel free to change */
+}
+
+.marooned {
+	color: rgb(109, 109, 255); font-weight: bold;
+}
+
+.header {
+	font-size: 24px; font-weight: bold;
+}
+
+.big {
+	font-size: 24px;
+}
+
+.medaltext {
+	color: #add8e6;
+}
+
+.codephrase {
+	color : #ef2f3c;
+}
+
+.redborder {
+	border-bottom: 2px solid #ef2f3c;
+}
+
+.greenborder {
+	border-bottom: 2px solid #90ee90;
+}
+
+.clockborder {
+	border-bottom: 2px solid #B18B25;
+}
+
+.stationborder {
+	border-bottom: 2px solid #add8e6;
+}
+
+li {
+	margin-bottom: 0.2rem;
+}
+
+.panel {
+	background-color: #313131;
+	padding: 10px;
+	border-radius: 10px;
+	margin-bottom: 5px;
+}
+
+body {
+	background-color: #272727;
+	color: #efefef;
+}
+
+.tooltip_container {
+	position: relative;
+	font-size: 24px;
+}
+
+.tooltip_hover {
+	visibility: hidden;
+	position: absolute;
+	background-color: black;
+	z-index: 1;
+	width: 220px;
+	font-size: 14px;
+    border-width: 4px;
+	border-style: solid;
+	border-color: #272727;
+    background: #363636;
+    color: white;
+    top: 100%;
+	left: 30px;
+}
+
+.tooltip_container:hover .tooltip_hover {
+	visibility: visible;
+}

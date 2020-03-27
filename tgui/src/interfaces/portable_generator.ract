@@ -1,0 +1,65 @@
+<script>
+  component.exports = {
+    computed: {
+      stackPercentState () {
+        const charge = this.get('data.stack_percent')
+        if (charge > 50) return 'good'
+        else if (charge > 15) return 'average'
+        else return 'bad'
+      },
+	  sheetsAmount (){
+	    const amount = this.get('data.sheets')
+        if (amount > 5) return 'good'
+        else if (amount > 0) return 'average'
+        else return 'bad'
+	  }
+	}
+  }
+</script>
+
+{{#if !data.anchored}}
+  <ui-notice>
+    <span>Generator not anchored.</span>
+  </ui-notice>
+{{/if}}
+
+<ui-display title='Status'>
+  <ui-section label='Power switch'>
+	{{#if data.active}}
+	   <ui-button icon='power-off' style='selected' action='toggle_power'>On</ui-button>
+	{{else}}
+	   <ui-button icon='close' state='{{data.ready_to_boot ? null : "disabled"}}' action='toggle_power'>Off</ui-button>
+	{{/if}}
+  </ui-section>
+  <ui-section label='{{data.sheet_name}} sheets'>
+	<span class='{{sheetsAmount}}'>{{data.sheets}}</span>
+	{{#if data.sheets >= 1}}
+	   <ui-button action='eject' state='{{data.active ? "disabled" : null}}'>Eject</ui-button>
+	{{/if}}
+  </ui-section>
+  <ui-section label='Current sheet level'>
+	<ui-bar min='0' max='100' value='{{data.stack_percent}}' state='{{stackPercentState}}'>{{Math.fixed(adata.stack_percent)}}%</ui-bar>
+  </ui-section>
+  <ui-section label='Heat level'>
+  {{#if data.current_heat < 100}}
+	<span class="good">Nominal</span>
+  {{elseif data.current_heat < 200}}
+	<span class="average">Caution</span>
+  {{else}}
+	<span class="bad">DANGER</span>
+  {{/if}}
+  </ui-section>
+</ui-display>
+
+<ui-display title='Output'>
+  <ui-section label='Current output'>
+	{{data.power_output}}
+  </ui-section>
+  <ui-section label='Adjust output'>
+	<ui-button icon='minus' action='lower_power'>{{data.power_generated}}</ui-button>
+	<ui-button icon='plus' action='higher_power'>{{data.power_generated}}</ui-button>
+  </ui-section>
+  <ui-section label='Power available'>
+    <span class='{{data.connected ? null : 'bad'}}'>{{data.connected ? data.power_available : "Unconnected" }}</span>
+  </ui-section>
+</ui-display>

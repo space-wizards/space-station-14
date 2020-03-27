@@ -1,0 +1,20 @@
+<link rel='ractive' href='./shuttle_manipulator/status.ract'>
+<link rel='ractive' href='./shuttle_manipulator/templates.ract'>
+<link rel='ractive' href='./shuttle_manipulator/modification.ract'>
+
+<ui-tabs tabs='{{data.tabs}}'>
+	<tab name='Status'>
+		<status/>
+	</tab>
+	<tab name='Templates'>
+		<templates/>
+	</tab>
+	<tab name='Modification'>
+		{{#if data.selected}}
+		<modification/>
+		{{/if}}
+		{{#if !data.selected}}
+		<span class='bad'>No shuttle selected.</span>
+		{{/if}}
+	</tab>
+</ui-tabs>

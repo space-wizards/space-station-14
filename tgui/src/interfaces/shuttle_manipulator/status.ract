@@ -1,0 +1,33 @@
+<table width="100%">
+{{#each data.shuttles}}
+  <tr>
+    <td>
+      <ui-button action='jump_to' params='{"type": "mobile", "id": "{{id}}"}'>
+        JMP
+      </ui-button>
+    </td>
+    <td>
+      <ui-button action='fly' params='{"id": "{{id}}"}' state='{{can_fly ? null : 'disabled'}}'>
+        Fly
+      </ui-button>
+    </td>
+    <td>
+      {{name}} (<code>{{id}}</code>)
+    </td>
+    <td>
+      {{status}}
+    </td>
+    <td>
+      {{#if mode}}
+        {{mode}}
+      {{/if}}
+      {{#if timer}}
+        ({{timeleft}})
+        <ui-button action='fast_travel' params='{"id": "{{id}}"}' state='{{can_fast_travel ? null : 'disabled'}}'>
+          Fast Travel
+        </ui-button>
+      {{/if}}
+    </td>
+  </tr>
+{{/each}}
+</table>

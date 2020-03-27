@@ -1,0 +1,26 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+	{{#if data.error}}
+		##SYSTEM ERROR: {{data.error}}<ui-button action='PRG_reset'>RESET</ui-button>
+	{{elseif data.target}}
+		##DoS traffic generator active. Tx: {{data.speed}}GQ/s<br>
+		{{#each data.dos_strings}}
+			{{nums}}<br>
+		{{/each}}
+		<ui-button action='PRG_reset'>ABORT</ui-button>
+	{{else}}
+		##DoS traffic generator ready. Select target device.<br>
+		{{#if data.focus}}
+			Targeted device ID: {{data.focus}}
+		{{else}}
+			Targeted device ID: None
+		{{/if}}
+		<ui-button action='PRG_execute'>EXECUTE</ui-button><div style="clear:both"></div>
+		Detected devices on network:<br>
+		{{#each data.relays}}
+			<ui-button action='PRG_target_relay' params='{"targid": "{{id}}"}'>{{id}}</ui-button>
+		{{/each}}
+	{{/if}}
+</ui-display>

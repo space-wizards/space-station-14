@@ -1,0 +1,85 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Elevator Access"
+	},
+/obj/docking_port/mobile/elevator{
+	dir = 4;
+	dwidth = 2;
+	height = 5;
+	id = "snowdin_mining";
+	name = "mining elevator";
+	width = 5
+	},
+/turf/open/floor/plating,
+/area/shuttle/snowdin/elevator2)
+"b" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/shuttle/snowdin/elevator2)
+"c" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Elevator Access"
+	},
+/turf/open/floor/plating,
+/area/shuttle/snowdin/elevator2)
+"d" = (
+/turf/closed/wall,
+/area/shuttle/snowdin/elevator2)
+"e" = (
+/obj/machinery/computer/shuttle/snowdin/mining,
+/turf/open/floor/engine,
+/area/shuttle/snowdin/elevator2)
+"f" = (
+/turf/open/floor/engine,
+/area/shuttle/snowdin/elevator2)
+"g" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/shuttle/snowdin/elevator2)
+"i" = (
+/obj/machinery/light/small,
+/turf/open/floor/engine,
+/area/shuttle/snowdin/elevator2)
+"j" = (
+/turf/closed/wall/rust,
+/area/shuttle/snowdin/elevator2)
+
+(1,1,1) = {"
+j
+b
+a
+b
+d
+"}
+(2,1,1) = {"
+b
+e
+f
+i
+b
+"}
+(3,1,1) = {"
+c
+f
+f
+f
+c
+"}
+(4,1,1) = {"
+b
+g
+f
+f
+b
+"}
+(5,1,1) = {"
+d
+b
+c
+b
+j
+"}

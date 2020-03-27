@@ -1,0 +1,408 @@
+/*****************************************
+*
+* GLOBAL STYLES for white theme normies
+*
+******************************************/
+html, body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	color: #000000;
+}
+body {
+	background: #fff;
+	font-family: Verdana, sans-serif;
+	font-size: 13px;
+	line-height: 1.2;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	word-wrap: break-word;
+}
+
+em {
+	font-style: normal;
+	font-weight: bold;
+}
+
+img {
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+	-ms-interpolation-mode: nearest-neighbor;
+	image-rendering: pixelated;
+}
+img.icon {
+	height: 1em;
+	min-height: 16px;
+	width: auto;
+	vertical-align: bottom;
+}
+
+
+.r:before { /* "repeated" badge class for combined messages */
+	content: 'x';
+}
+.r {
+	display: inline-block;
+	min-width: 0.5em;
+	font-size: 0.7em;
+	padding: 0.2em 0.3em;
+	line-height: 1;
+	color: white;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-color: crimson;
+	border-radius: 10px;
+}
+
+a {color: #0000ff;}
+a.visited {color: #ff00ff;}
+a:visited {color: #ff00ff;}
+a.popt {text-decoration: none;}
+
+/*****************************************
+*
+* OUTPUT NOT RELATED TO ACTUAL MESSAGES
+*
+******************************************/
+#loading {
+	position: fixed;
+	width: 300px;
+	height: 150px;
+	text-align: center;
+	left: 50%;
+	top: 50%;
+	margin: -75px 0 0 -150px;
+}
+#loading i {display: block; padding-bottom: 3px;}
+
+#messages {
+	font-size: 13px;
+	padding: 3px;
+	margin: 0;
+	word-wrap: break-word;
+}
+#newMessages {
+	position: fixed;
+	display: block;
+	bottom: 0;
+	right: 0;
+	padding: 8px;
+	background: #ddd;
+	text-decoration: none;
+	font-variant: small-caps;
+	font-size: 1.1em;
+	font-weight: bold;
+	color: #333;
+}
+#newMessages:hover {background: #ccc;}
+#newMessages i {vertical-align: middle; padding-left: 3px;}
+#ping {
+	position: fixed;
+	top: 0;
+	right: 135px;
+	width: 45px;
+	background: #ddd;
+	height: 30px;
+	padding: 8px 0 2px 0;
+}
+#ping i {display: block; text-align: center;}
+#ping .ms {
+	display: block;
+	text-align: center;
+	font-size: 8pt;
+	padding-top: 2px;
+}
+#userBar {
+	position: fixed;
+	top: 0;
+	right: 0;
+}
+#userBar .subCell {
+	background: #ddd;
+	height: 30px;
+	padding: 5px 0;
+	display: block;
+	color: #333;
+	text-decoration: none;
+	line-height: 28px;
+	border-top: 1px solid #b4b4b4;
+}
+#userBar .subCell:hover {background: #ccc;}
+#userBar .toggle {
+	width: 45px;
+	background: #ccc;
+	border-top: 0;
+	float: right;
+	text-align: center;
+}
+#userBar .sub {clear: both; display: none; width: 180px;}
+#userBar .sub.scroll {overflow-y: scroll;}
+#userBar .sub.subCell {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
+#userBar .sub span {
+	display: block;
+	line-height: 30px;
+	float: left;
+}
+#userBar .sub i {
+	display: block;
+	padding: 0 5px;
+	font-size: 1.1em;
+	width: 22px;
+	text-align: center;
+	line-height: 30px;
+	float: right;
+}
+#userBar .sub input {
+	position: absolute;
+	padding: 7px 5px;
+	width: 121px;
+	line-height: 30px;
+	float: left;
+}
+#userBar .topCell {border-top: 0;}
+
+/* POPUPS */
+.popup {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	background: #ddd;
+}
+.popup .close {
+	position: absolute;
+	background: #aaa;
+	top: 0;
+	right: 0;
+	color: #333;
+	text-decoration: none;
+	z-index: 2;
+	padding: 0 10px;
+	height: 30px;
+	line-height: 30px;
+}
+.popup .close:hover {background: #999;}
+.popup .head {
+	background: #999;
+	color: #ddd;
+	padding: 0 10px;
+	height: 30px;
+	line-height: 30px;
+	text-transform: uppercase;
+	font-size: 0.9em;
+	font-weight: bold;
+	border-bottom: 2px solid green;
+}
+.popup input {border: 1px solid #999; background: #fff; margin: 0; padding: 5px; outline: none; color: #333;}
+.popup input[type=text]:hover, .popup input[type=text]:active, .popup input[type=text]:focus {border-color: green;}
+.popup input[type=submit] {padding: 5px 10px; background: #999; color: #ddd; text-transform: uppercase; font-size: 0.9em; font-weight: bold;}
+.popup input[type=submit]:hover, .popup input[type=submit]:focus, .popup input[type=submit]:active {background: #aaa; cursor: pointer;}
+
+.changeFont {padding: 10px;}
+.changeFont a {display: block; text-decoration: none; padding: 3px; color: #333;}
+.changeFont a:hover {background: #ccc;}
+
+.highlightPopup {padding: 10px; text-align: center;}
+.highlightPopup input[type=text] {display: block; width: 215px; text-align: left; margin-top: 5px;}
+.highlightPopup input.highlightColor {background-color: #FFFF00;}
+.highlightPopup input.highlightTermSubmit {margin-top: 5px;}
+
+/* ADMIN CONTEXT MENU */
+.contextMenu {
+	background-color: #ddd;
+	position: fixed;
+	margin: 2px;
+	width: 150px;
+}
+.contextMenu a {
+	display: block;
+	padding: 2px 5px;
+	text-decoration: none;
+	color: #333;
+}
+
+.contextMenu a:hover {
+	background-color: #ccc;
+}
+
+/* ADMIN FILTER MESSAGES MENU */
+.filterMessages {padding: 5px;}
+.filterMessages div {padding: 2px 0;}
+.filterMessages input {}
+.filterMessages label {}
+
+.icon-stack {height: 1em; line-height: 1em; width: 1em; vertical-align: middle; margin-top: -2px;}
+
+
+/*****************************************
+*
+* OUTPUT ACTUALLY RELATED TO MESSAGES
+*
+******************************************/
+
+/* MOTD */
+.motd {color: #638500;	font-family: Verdana, sans-serif;}
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #638500;	text-decoration: underline;}
+.motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #638500;}
+
+/* ADD HERE FOR BOLD */
+.bold, .name, .prefix, .ooc, .looc, .adminooc, .admin, .medal, .yell {font-weight: bold;}
+
+/* ADD HERE FOR ITALIC */
+.italic, .italics, .emote {font-style: italic;}
+
+/* OUTPUT COLORS */
+.highlight {background: yellow;}
+
+h1, h2, h3, h4, h5, h6	{color: #0000ff;font-family: Georgia, Verdana, sans-serif;}
+h1.alert, h2.alert		{color: #000000;}
+
+em						{font-style: normal;	font-weight: bold;}
+
+.ooc					{color: #002eb8;	font-weight: bold;}
+.adminobserverooc		{color: #0099cc;	font-weight: bold;}
+.adminooc				{color: #700038;	font-weight: bold;}
+
+.adminsay				{color: #ff4500;	font-weight: bold;}
+.admin					{color: #4473ff;	font-weight: bold;}
+
+.name					{					font-weight: bold;}
+
+.say					{}
+.deadsay				{color: #5c00e6;}
+.binarysay				{color: #20c20e;	background-color: #000000;	display: block;}
+.binarysay a			{color: #00ff00;}
+.binarysay a:active, .binarysay a:visited {color: #88ff88;}
+.radio					{color: #008000;}
+.sciradio				{color: #993399;}
+.comradio				{color: #948f02;}
+.secradio				{color: #a30000;}
+.medradio				{color: #337296;}
+.engradio				{color: #fb5613;}
+.suppradio				{color: #a8732b;}
+.servradio				{color: #6eaa2c;}
+.syndradio				{color: #6d3f40;}
+.centcomradio			{color: #686868;}
+.aiprivradio			{color: #ff00ff;}
+.redteamradio			{color: #ff0000;}
+.blueteamradio			{color: #0000ff;}
+
+.yell					{					font-weight: bold;}
+
+.alert					{color: #ff0000;}
+h1.alert, h2.alert		{color: #000000;}
+
+.emote					{					font-style: italic;}
+
+.userdanger				{color: #ff0000;	font-weight: bold;	font-size: 185%;}
+.danger					{color: #ff0000;}
+.warning				{color: #ff0000;	font-style: italic;}
+.alertwarning			{color: #FF0000;	font-weight: bold}
+.boldwarning			{color: #ff0000;	font-style: italic;	font-weight: bold}
+.announce				{color: #228b22;	font-weight: bold;}
+.boldannounce			{color: #ff0000;	font-weight: bold;}
+.greenannounce			{color: #00ff00;	font-weight: bold;}
+.rose					{color: #ff5050;}
+.info					{color: #0000CC;}
+.notice					{color: #000099;}
+.boldnotice				{color: #000099;	font-weight: bold;}
+.hear					{color: #000099;	font-style: italic;}
+.adminnotice			{color: #0000ff;}
+.adminhelp				{color: #ff0000;	font-weight: bold;}
+.unconscious			{color: #0000ff;	font-weight: bold;}
+.suicide				{color: #ff5050;	font-style: italic;}
+.green					{color: #03ff39;}
+.red					{color: #FF0000}
+.blue					{color: #0000FF}
+.nicegreen				{color: #14a833;}
+
+.cult					{color: #960000;}
+.cultitalic				{color: #960000;	font-style: italic;}
+.cultbold				{color: #960000;	font-style: italic;	font-weight: bold;}
+.cultboldtalic			{color: #960000;	font-weight: bold;	font-size: 185%;}
+
+.cultlarge				{color: #960000;	font-weight: bold;	font-size: 185%;}
+.narsie					{color: #960000;	font-weight: bold;	font-size: 925%;}
+.narsiesmall			{color: #960000;	font-weight: bold;	font-size: 370%;}
+.colossus				{color: #7F282A;	font-size: 310%;}
+.hierophant				{color: #660099;	font-weight: bold;	font-style: italic;}
+.hierophant_warning		{color: #660099;	font-style: italic;}
+.purple					{color: #5e2d79;}
+.holoparasite			{color: #35333a;}
+
+.revennotice			{color: #1d2953;}
+.revenboldnotice		{color: #1d2953;	font-weight: bold;}
+.revenbignotice			{color: #1d2953;	font-weight: bold;	font-size: 185%;}
+.revenminor				{color: #823abb}
+.revenwarning			{color: #760fbb;	font-style: italic;}
+.revendanger			{color: #760fbb;	font-weight: bold;	font-size: 185%;}
+
+.deconversion_message	{color: #5000A0;	font-size: 185%;	font-style: italic;}
+
+.ghostalert				{color: #5c00e6;	font-style: italic;	font-weight: bold;}
+
+.alien					{color: #543354;}
+.noticealien			{color: #00c000;}
+.alertalien				{color: #00c000;	font-weight: bold;}
+.changeling				{color: #800080;	font-style: italic;}
+.alertsyndie			{color: #FF0000;	font-size: 185%;	font-weight: bold;}
+
+.spider					{color: #4d004d;	font-weight: bold;	font-size: 185%;}
+
+.interface				{color: #330033;}
+
+.sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
+.papyrus				{font-family: "Papyrus", cursive, sans-serif;}
+.robot					{font-family: "Courier New", cursive, sans-serif;}
+
+.command_headset		{font-weight: bold;	font-size: 160%;}
+.small					{font-size: 60%;}
+.big					{font-size: 185%;}
+.reallybig				{font-size: 245%;}
+.extremelybig			{font-size: 310%;}
+.greentext				{color: #00FF00;	font-size: 185%;}
+.redtext				{color: #FF0000;	font-size: 185%;}
+.clown					{color: #FF69Bf;	font-size: 160%; font-family: "Comic Sans MS", cursive, sans-serif;	font-weight: bold;}
+.his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif;	font-style: italic;}
+.hypnophrase			{color: #0d0d0d;	font-weight: bold;	animation: hypnocolor 1500ms infinite; animation-direction: alternate;}
+@keyframes hypnocolor {
+	0%		{color: #0d0d0d;}
+	25%		{color: #410194;}
+	50%		{color: #7f17d8;}
+	75%		{color: #410194;}
+	100%	{color: #3bb5d3;}
+}
+
+.phobia			{color: #dd0000;	font-weight: bold;	animation: phobia 750ms infinite;}
+@keyframes phobia {
+	0%		{color: #0d0d0d;}
+	50%		{color: #dd0000;}
+	100%	{color: #0d0d0d;}
+}
+
+.icon					{height: 1em;	width: auto;}
+
+.memo					{color: #638500;	text-align: center;}
+.memoedit				{text-align: center;	font-size: 125%;}
+.abductor				{color: #800080;	font-style: italic;}
+.mind_control			{color: #A00D6F;	font-size: 100%;	font-weight: bold;	font-style: italic;}
+.slime					{color: #00CED1;}
+.drone					{color: #848482;}
+.monkey					{color: #975032;}
+.swarmer				{color: #2C75FF;}
+.resonate				{color: #298F85;}
+
+.monkeyhive				{color: #774704;}
+.monkeylead				{color: #774704;	font-size: 80%;}
+
+.connectionClosed, .fatalError {background: red;	color: white;	padding: 5px;}
+.connectionClosed.restored {background: green;}
+.internal.boldnshit {color: blue;	font-weight: bold;}
+
+/* HELPER CLASSES */
+.text-normal {font-weight: normal;	font-style: normal;}
+.hidden {display: none;	visibility: hidden;}
+.ml-1 {margin-left: 1em;}
+.ml-2 {margin-left: 2em;}
+.ml-3 {margin-left: 3em;}

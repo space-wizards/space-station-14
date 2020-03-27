@@ -1,0 +1,62 @@
+{{#if data.protolathe_linked}}
+	{{#if data.protobusy}}
+		<ui-display title='Protolathe Busy!'></ui-display>
+	{{else}}
+		<ui-display>
+			<ui-section>Search Available Designs:
+			<input value={{textsearch}} placeholder="Type Here" class="text"/>
+			 <ui-button action='textSearch' params='{"latheType" : "proto", "inputText" : {{textsearch}}}'>Search</ui-button>
+			</ui-section>
+			<ui-section>Materials: {{data.protomats}} / {{data.protomaxmats}}</ui-section>
+			<ui-section>Reagents: {{data.protochems}} / {{data.protomaxchems}}</ui-section>
+		<ui-display>
+
+		<ui-tabs tabs='{{data.lathe_tabs}}'>
+			<tab name='Category List'>
+				{{#each data.protocats}}
+					<ui-button action='switchcat' state='{{data.protocat == name? "selected" : null}}' params='{"type" : "proto", "cat" : "{{name}}"}'>{{name}}</ui-button>
+				{{/each}}
+			</tab>
+			<tab name='Selected Category'>
+				{{#each data.protodes}}
+					<ui-section>{{name}}{{matstring}}
+						{{#if canprint > 1}}
+							<input value={{number}} placeholder='1-{{canprint > 10? 10 : canprint}}' class="number"/>
+						{{/if}}
+						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "proto", "id" : "{{id}}", "amount" : "{{number}}"}'>Print</ui-button>
+					</ui-section>
+				{{/each}}
+			</tab>
+			<tab name='Search Results'>
+				{{#each data.protomatch}}
+					<ui-section>{{name}}{{matstring}}
+						{{#if canprint > 1}}
+							<input value={{number}} placeholder='1-{{canprint > 10? 10 : canprint}}' class="number"/>
+						{{/if}}
+						<ui-button action='print' state='{{canprint > 1? null : "disabled"}}' params='{"latheType" : "proto", "id" : "{{id}}", "amount" : "{{number}}"}'>Print</ui-button>
+					</ui-section>
+				{{/each}}
+			</tab>
+			<tab name='Materials'>
+				{{#each data.protomat_list}}
+					<ui-section>{{name}} : {{amount}} cm3 - 
+					{{#if sheets > 0}}
+						<input value={{number}} placeholder='1-{{sheets}}' class="number"/>
+						<ui-button action='releasemats' params='{"latheType" : "proto", "mat_id" : {{mat_id}}, "sheets" : {{number}}}'>Release</ui-button>
+					{{/if}}
+					</ui-section>
+				{{/each}}
+			</tab>
+			<tab name='Chemicals'>
+				{{#each data.protochem_list}}
+					<ui-section>{{name}} : {{amount}} - 
+						<ui-button action='purgechem' params='{"latheType" : "proto", "name" : {{name}}, "id" : {{reagentid}}}'>Purge</ui-button>
+					</ui-section>
+				{{/each}}
+			
+			</tab>
+		</ui-tabs>
+	{{/if}}
+{{else}}
+	<ui-display title='No Linked Protolathe'></ui-display>
+{{/if}}

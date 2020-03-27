@@ -1,0 +1,56 @@
+context = selector()
+
+buttoncolor(selector, color)
+  &.{selector}
+    transition: background-color 0.5s
+    background-color: color
+    &.active:hover,
+    &.active:focus
+      transition: background-color 0.25s
+      background-color: lighten(color, button-lighten-hover)
+      outline: 0
+
+    if selector is not 'disabled'
+      &:not(.active)
+        background-image: repeating-linear-gradient(
+          -45deg,
+          color,
+          color 1px,
+          button-color-disabled 1px,
+          button-color-disabled 2px
+        )
+
+span.button
+  @extend {context} $fontReset
+  display: inline-block
+  vertical-align: middle
+  min-height: 20px
+  line-height: @min-height - 3px
+  padding: 0 5px
+  white-space: nowrap
+
+  border: 1px solid button-color-border
+
+  .fa
+    padding-right: 2px
+
+  buttoncolor(normal, button-color-normal)
+  buttoncolor(disabled, button-color-disabled)
+  buttoncolor(selected, button-color-selected)
+  buttoncolor(toggle, button-color-selected)
+  buttoncolor(caution, button-color-caution)
+  buttoncolor(danger, button-color-danger)
+
+  &.gridable
+    width: 125px
+    margin: 2px 0
+    &.center
+      text-align: center
+      width:75px
+span:not(.button) + span.button
+  margin-left: 5px
+
+span.button + span:not(.button)
+  margin-left: 5px
+
+

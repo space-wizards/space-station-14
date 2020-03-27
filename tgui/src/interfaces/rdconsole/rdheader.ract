@@ -1,0 +1,7 @@
+<ui-display>
+<span class='memoedit'>Nanotrasen R&D Console</span><br/>
+Available Points: <ui-section title='Research Points'>{{data.research_points_stored}}</ui-section>
+<ui-section title='Page Selection - {{page}}'><input value={{pageselect}} placeholder='1' class="number"/>
+Select Page: <ui-button action='page' params='{"num" : "{{pageselect}}"}'> [Go] </ui-button>
+</ui-section>
+</ui-display>

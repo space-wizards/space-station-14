@@ -1,0 +1,13 @@
+<script>
+component.exports = {
+  oninit () {
+    this.on('clear', () => {
+      this.set('value', '')
+      this.find('input').focus()
+    })
+  }
+}
+</script>
+
+<input type='text' value='{{value}}' placeholder='{{placeholder}}'/>
+<ui-button icon='refresh' on-press='clear'/>

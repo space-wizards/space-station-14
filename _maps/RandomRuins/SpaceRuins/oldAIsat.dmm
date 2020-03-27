@@ -1,0 +1,4025 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"ac" = (
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"ad" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/template_noop,
+/area/space/nearstation)
+"ae" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"af" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
+"ag" = (
+/turf/closed/wall/r_wall,
+/area/tcommsat/oldaisat)
+"ah" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"ai" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"aj" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"ak" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Worn-out APC";
+	pixel_x = 1;
+	pixel_y = 23
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"al" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"am" = (
+/obj/item/stock_parts/cell,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"an" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"ao" = (
+/obj/item/coin/bananium,
+/turf/open/floor/engine,
+/area/tcommsat/oldaisat)
+"ap" = (
+/obj/structure/bed,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aq" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"ar" = (
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged2"
+	},
+/area/tcommsat/oldaisat)
+"as" = (
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged3"
+	},
+/area/tcommsat/oldaisat)
+"at" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"au" = (
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"av" = (
+/obj/item/wrench,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"aw" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"ax" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"ay" = (
+/obj/effect/spawner/lootdrop/crate_spawner,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"az" = (
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aA" = (
+/obj/structure/table,
+/obj/item/paper,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aB" = (
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/item/pen/blue,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aC" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aD" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aE" = (
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	name = "Cuban Pete-Meat"
+	},
+/turf/open/floor/engine,
+/area/tcommsat/oldaisat)
+"aF" = (
+/obj/structure/grille,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aG" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aH" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"aI" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"aJ" = (
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"aK" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/closet,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"aL" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"aM" = (
+/obj/item/folder/yellow,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aN" = (
+/obj/structure/bed,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aO" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"aP" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"aQ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"aR" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"aS" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"aT" = (
+/obj/structure/window/reinforced,
+/turf/template_noop,
+/area/template_noop)
+"aU" = (
+/obj/structure/sign/warning/securearea,
+/turf/closed/wall/r_wall,
+/area/tcommsat/oldaisat)
+"aV" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aW" = (
+/obj/item/paper/crumpled,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aX" = (
+/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+	name = "Cuban Pete-Meat"
+	},
+/obj/item/stack/spacecash,
+/turf/open/floor/engine,
+/area/tcommsat/oldaisat)
+"aY" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"aZ" = (
+/obj/structure/table,
+/obj/item/storage/fancy/cigarettes,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"ba" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bb" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bc" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bd" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"be" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/electronics/airlock,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bf" = (
+/obj/structure/door_assembly/door_assembly_hatch,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bg" = (
+/obj/item/cigbutt,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bh" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bi" = (
+/obj/machinery/vending/cola,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bj" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bk" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/tcommsat/oldaisat)
+"bm" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/grille/broken,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bn" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bo" = (
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bp" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bq" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"br" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"bs" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"bt" = (
+/obj/structure/table,
+/obj/item/radio/off,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bu" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bv" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bw" = (
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bx" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"by" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"bz" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bA" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bB" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bC" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bD" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bE" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bF" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"bG" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/stack/rods,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bH" = (
+/obj/item/stack/rods,
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bI" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bJ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bK" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"bL" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"bM" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"bN" = (
+/obj/effect/decal/cleanable/blood,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bO" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bP" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"bQ" = (
+/obj/structure/rack,
+/obj/item/circuitboard/computer/teleporter,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bR" = (
+/obj/item/radio/off,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bS" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"bT" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bU" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/chair,
+/obj/item/clothing/under/rank/centcom/officer,
+/obj/item/restraints/handcuffs,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bV" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"bW" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bX" = (
+/obj/structure/door_assembly/door_assembly_mhatch,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"bY" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"bZ" = (
+/obj/item/cigbutt,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"ca" = (
+/obj/effect/decal/cleanable/blood,
+/obj/item/assembly/signaler,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"cb" = (
+/obj/structure/table,
+/obj/item/reagent_containers/syringe/lethal/choral,
+/obj/item/reagent_containers/syringe/lethal{
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"cc" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"cd" = (
+/obj/item/storage/toolbox/syndicate,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"ce" = (
+/obj/structure/table,
+/obj/item/electropack,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"cf" = (
+/obj/structure/table,
+/obj/item/hemostat,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"cg" = (
+/obj/structure/table,
+/obj/item/circular_saw,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"ch" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"ci" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/stack/rods,
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"cj" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/template_noop,
+/area/template_noop)
+"ck" = (
+/obj/structure/window/reinforced,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"cl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"cm" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"cn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"co" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"cp" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/template_noop,
+/area/template_noop)
+"cq" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"cr" = (
+/obj/item/paper/crumpled,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"cs" = (
+/obj/item/stack/rods,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"ct" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"cu" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless/dark,
+/area/tcommsat/oldaisat)
+"cv" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"cw" = (
+/obj/machinery/light/small,
+/obj/item/paper,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"cx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"cy" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/template_noop,
+/area/template_noop)
+"cz" = (
+/obj/structure/lattice,
+/obj/item/stack/rods,
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"cB" = (
+/obj/effect/spawner/structure/window/hollow/reinforced,
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"cC" = (
+/obj/structure/grille/broken,
+/turf/template_noop,
+/area/template_noop)
+"cD" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cH" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cI" = (
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cJ" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cK" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cL" = (
+/obj/structure/sign/warning/vacuum,
+/turf/closed/wall/r_wall,
+/area/tcommsat/oldaisat)
+"cM" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cN" = (
+/obj/item/paper/crumpled,
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cO" = (
+/obj/structure/closet/malf/suits,
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cP" = (
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"cQ" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"cR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cS" = (
+/obj/item/crowbar,
+/turf/open/floor/plating/airless,
+/area/tcommsat/oldaisat)
+"cT" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/glasses/night,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cU" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cV" = (
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cW" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cX" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/oldaisat)
+"cY" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"cZ" = (
+/obj/machinery/teleport/station,
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"da" = (
+/obj/machinery/teleport/hub,
+/turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ab
+ab
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ab
+ab
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+ac
+ac
+ab
+aa
+aa
+aa
+ab
+ac
+ab
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+ac
+ac
+ac
+aa
+aa
+aa
+ac
+ac
+ab
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+aa
+ab
+ac
+ac
+aa
+aa
+aa
+ac
+ac
+ab
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+aa
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+aa
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ab
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ae
+ae
+ae
+ad
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+af
+ae
+ae
+ae
+ae
+ae
+ae
+ad
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ah
+ac
+ac
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ah
+ab
+ab
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ag
+ag
+ag
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ah
+ag
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ah
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ah
+ag
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ah
+ag
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ag
+ai
+at
+ai
+aa
+ai
+ai
+by
+ai
+ai
+aa
+ai
+by
+ai
+aa
+ai
+aa
+by
+ai
+ai
+aa
+aa
+ab
+aa
+ag
+ag
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ah
+ag
+aj
+aj
+aH
+aO
+bb
+bp
+bz
+bG
+bI
+bp
+bE
+bp
+bp
+bE
+bp
+ci
+bO
+bE
+cq
+bs
+aa
+ab
+aa
+ag
+ag
+ae
+ad
+ac
+ac
+cS
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ag
+ag
+ak
+ac
+aI
+aP
+bc
+bq
+ax
+bF
+bF
+bF
+aL
+ax
+aL
+aa
+aL
+aL
+ax
+cj
+bd
+bs
+aa
+ab
+aa
+ag
+ag
+ae
+ac
+ac
+ac
+ac
+ac
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ag
+ag
+al
+au
+aJ
+aQ
+bd
+br
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ck
+bc
+br
+ab
+ab
+aa
+ag
+ag
+ae
+ac
+ac
+ac
+ac
+ac
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ad
+ae
+ae
+ae
+ag
+ag
+am
+av
+aI
+aR
+bc
+bs
+ag
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ag
+aT
+bc
+bs
+aa
+cz
+ag
+ag
+ag
+ae
+ae
+ag
+cP
+ag
+ae
+ae
+ad
+ae
+ae
+ae
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+ae
+ag
+ag
+an
+aw
+aK
+aS
+bd
+bs
+ag
+ac
+ac
+bw
+bw
+bw
+bw
+bw
+bw
+ac
+ag
+aa
+bc
+bs
+ag
+bC
+ag
+ag
+ag
+ae
+ae
+ag
+ac
+ag
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+ab
+aa
+ae
+ag
+ag
+ag
+ax
+aL
+aT
+be
+bs
+ag
+ac
+bw
+bw
+bw
+bw
+bw
+bw
+ac
+ac
+ag
+ag
+bx
+ag
+ag
+ar
+az
+ag
+ag
+ae
+ag
+cL
+cQ
+cL
+ag
+ae
+ae
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+ab
+ab
+ac
+ac
+ac
+ab
+ac
+ab
+ae
+ag
+ag
+ag
+ag
+ag
+aU
+bf
+ag
+ag
+ac
+bw
+bw
+bw
+bw
+ac
+bw
+bw
+ac
+ag
+cl
+cr
+cv
+ag
+az
+az
+ag
+ag
+ag
+ag
+cM
+cR
+cT
+ag
+ag
+ae
+ae
+ab
+ac
+ab
+ab
+ac
+ac
+ab
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+ac
+aa
+ae
+ag
+ag
+ag
+ay
+az
+aV
+az
+az
+bA
+ac
+ac
+bw
+bw
+ac
+bw
+bw
+bw
+ac
+ag
+cm
+az
+cw
+ag
+ag
+az
+ag
+ag
+ag
+cK
+cI
+cI
+cJ
+cV
+ag
+ag
+ae
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+ae
+ag
+ag
+ag
+az
+aM
+az
+az
+bt
+bB
+bH
+bw
+bw
+bw
+bT
+bw
+bw
+bw
+ac
+ag
+ar
+az
+ar
+ag
+az
+az
+ag
+cE
+cU
+cI
+cI
+cI
+cI
+cW
+cY
+ag
+ae
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+af
+ag
+ag
+ag
+aA
+az
+aW
+bg
+bu
+bC
+ac
+bw
+ac
+ac
+bU
+bZ
+ce
+bw
+ac
+ag
+cn
+az
+ar
+as
+ar
+az
+cD
+cF
+cI
+cI
+cI
+cI
+cI
+cW
+cZ
+ag
+af
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+ae
+ag
+ag
+ag
+aB
+az
+az
+az
+az
+bC
+ac
+bw
+bw
+bw
+ac
+ca
+cf
+bw
+ac
+ag
+cm
+az
+az
+ah
+az
+az
+ag
+cG
+cH
+cI
+cI
+cI
+cI
+cW
+da
+ag
+ae
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+ab
+ab
+ac
+ac
+ab
+ab
+ac
+aa
+ad
+ag
+ag
+ag
+aC
+az
+az
+az
+az
+bD
+ac
+bw
+bN
+bR
+bV
+cb
+cg
+bw
+ac
+ag
+as
+cs
+ar
+ag
+ag
+aq
+ag
+ag
+ag
+cI
+cN
+cI
+cI
+cX
+ag
+ag
+ae
+aa
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+ab
+ab
+ab
+ac
+ac
+ab
+ac
+ab
+ae
+ag
+ag
+ag
+aD
+aC
+aC
+ag
+bv
+ag
+ac
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+ac
+ag
+co
+ct
+cx
+ag
+az
+az
+ag
+ag
+ag
+ag
+cO
+cI
+cO
+ag
+ag
+ae
+ae
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+aa
+ae
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+bw
+bv
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+ac
+ag
+ag
+bx
+ag
+ag
+aC
+az
+ag
+ag
+ae
+ag
+ag
+ag
+ag
+ag
+ae
+ae
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+ae
+ag
+ag
+ao
+aE
+aE
+aX
+ag
+ag
+ag
+bw
+ac
+bw
+bw
+bw
+bw
+ac
+bw
+ac
+ag
+aT
+bc
+bs
+ag
+cB
+ag
+ag
+ag
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ad
+ae
+ae
+ae
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ag
+aT
+bd
+bs
+aa
+ab
+ag
+ag
+ac
+ae
+ae
+ad
+ae
+ae
+ae
+ae
+ad
+ae
+ab
+ae
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(37,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ag
+ag
+ap
+aF
+aN
+aF
+bh
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+aT
+bc
+bs
+aa
+ab
+aa
+ag
+ab
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ag
+ag
+aq
+aG
+aF
+aF
+bi
+ag
+by
+by
+by
+by
+by
+by
+ai
+aa
+ai
+ai
+by
+cp
+bc
+cy
+aa
+ab
+aa
+ah
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ag
+ah
+ar
+az
+az
+az
+az
+bx
+bE
+bE
+bJ
+bO
+bE
+bI
+bE
+bE
+bE
+bJ
+bE
+bE
+cu
+bs
+aa
+ab
+aa
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ah
+ac
+as
+ar
+az
+aY
+bg
+ag
+bF
+aa
+aL
+aL
+aT
+bW
+bs
+aL
+aL
+aL
+ax
+aL
+aL
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ab
+ac
+as
+ar
+aZ
+bj
+ag
+ab
+aa
+bK
+bP
+bS
+bX
+cc
+bP
+ch
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ac
+as
+ar
+ba
+bk
+ag
+ab
+ab
+bL
+az
+az
+az
+az
+az
+bL
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+ac
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(43,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ac
+ag
+ag
+bl
+ag
+ab
+aa
+bM
+az
+az
+az
+cd
+az
+bM
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+ac
+ab
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(44,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ah
+ag
+ag
+bl
+ag
+ag
+ag
+ag
+bQ
+aD
+bY
+az
+aD
+ag
+ag
+ag
+ah
+ac
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+ah
+ac
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(45,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ah
+ag
+ag
+ag
+bl
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ah
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+ab
+ag
+ag
+ag
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(46,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ae
+ae
+ae
+bm
+ae
+ae
+ae
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ae
+ae
+ae
+ad
+aa
+aa
+aa
+ab
+ac
+ah
+ag
+ag
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(47,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bn
+ae
+ae
+ae
+ae
+ae
+ae
+af
+ae
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+ab
+ab
+ac
+ah
+ag
+ag
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(48,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bo
+ad
+ae
+aa
+ab
+aa
+aa
+ac
+aa
+aa
+ab
+aa
+ae
+ae
+aa
+aa
+aa
+cC
+ae
+ae
+ad
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(49,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+ab
+ac
+ab
+ab
+ab
+ab
+ac
+ac
+ab
+aa
+ad
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(50,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(51,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(52,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(53,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

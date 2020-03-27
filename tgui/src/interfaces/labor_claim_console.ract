@@ -1,0 +1,20 @@
+<ui-display title='Ore values'>
+	{{#each data.ores}}
+		<ui-section label='{{ore}}'>
+			<span>{{value}}</span>
+		</ui-section>
+	{{/each}}
+</ui-display>
+<ui-display title='Points'>
+	<ui-section label='Unclaimed points'>
+		<span>{{data.unclaimed_points}}</span>
+		<ui-button action="claim_points" state={{data.unclaimed_points ? null : 'disabled'}}>Claim points</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display>
+	<span>Points: {{data.id_points}}</span>
+	<ui-section label='Status'>
+		<span>{{data.status_info}}</span>
+		<ui-button action="move_shuttle" state={{data.can_go_home ? null : 'disabled'}}>Move shuttle</ui-button>
+	</ui-section>
+</ui-display>

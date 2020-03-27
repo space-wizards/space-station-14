@@ -1,0 +1,22 @@
+<ui-display title='DNA Vault Database'>
+  <ui-section label='Human DNA'>
+      <ui-bar min='0' max='{{data.dna_max}}' value='{{data.dna}}'>{{data.dna}}/{{data.dna_max}} Samples</ui-bar>
+  </ui-section>
+  <ui-section label='Plant Data'>
+    <ui-bar min='0' max='{{data.plants_max}}' value='{{data.plants}}'>{{data.plants}}/{{data.plants_max}} Samples</ui-bar>
+  </ui-section>
+  <ui-section label='Animal Data'>
+    <ui-bar min='0' max='{{data.animals_max}}' value='{{data.animals}}'>{{data.animals}}/{{data.animals_max}} Samples</ui-bar>
+  </ui-section>
+</ui-display>
+{{#if data.completed && !data.used}}
+<ui-display title ='Personal Gene Therapy'>
+  <ui-section>
+	<span>Applicable gene therapy treatments:</span>
+  </ui-section>
+  <ui-section>
+	<ui-button action='gene' params='{"choice": "{{data.choiceA}}"}'>{{data.choiceA}}</ui-button>
+	<ui-button action='gene' params='{"choice": "{{data.choiceB}}"}'>{{data.choiceB}}</ui-button>
+  </ui-section>
+</ui-display>
+{{/if}}

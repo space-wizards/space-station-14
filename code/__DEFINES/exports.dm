@@ -1,0 +1,4 @@
+#define EXPORT_CARGO 1
+#define EXPORT_EMAG 2
+#define EXPORT_CONTRABAND 4
+#define EXPORT_PIRATE 8

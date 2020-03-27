@@ -1,0 +1,78 @@
+.inputlabel {
+    position: relative;
+    display: inline;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+.inputlabel input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.radio .inputbox {
+    border-radius: 50%;
+}
+
+.inputlabel:hover input ~ .inputbox {
+    background: #b4b4b4;
+}
+
+.inputlabel input:checked ~ .inputbox {
+    background: #2196F3;
+}
+
+.inputlabel:hover input:not([disabled]):checked ~ .inputbox{
+    background: #0a6ebd;
+}
+
+.inputlabel input:disabled ~ .inputbox {
+    pointer-events: none;
+    background: #838383;
+}
+
+.banned {
+    background: #ff4e4e;
+}
+
+.inputlabel:hover input ~ .banned {
+    background: #ff0000;
+}
+
+.inputlabel input:checked ~ .banned {
+    background: #a80000;
+}
+
+.inputlabel:hover input:not([disabled]):checked ~ .banned{
+    background: #810000;
+}
+
+.inputbox:after {
+    position: absolute;
+    display: none;
+    content: '';
+}
+
+.inputlabel input:checked ~ .inputbox:after {
+    display: block;
+}
+
+.checkbox .inputbox:after {
+    top: 1px;
+    left: 5px;
+    width: 3px;
+    height: 9px;
+    transform: rotate(45deg);
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+}
+
+.radio .inputbox:after {
+    top: 4px;
+    left: 4px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+}

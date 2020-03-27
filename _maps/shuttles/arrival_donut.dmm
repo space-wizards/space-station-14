@@ -1,0 +1,182 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+"c" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"d" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"e" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"f" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"g" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"h" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"i" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"k" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"l" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"m" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"n" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"o" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"p" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/obj/docking_port/mobile/arrivals{
+	dir = 2;
+	height = 13;
+	name = "donut arrivals shuttle"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+
+(1,1,1) = {"
+a
+b
+b
+b
+b
+b
+o
+o
+b
+b
+b
+b
+a
+"}
+(2,1,1) = {"
+b
+b
+e
+h
+h
+l
+h
+h
+l
+h
+h
+b
+b
+"}
+(3,1,1) = {"
+c
+d
+f
+i
+h
+m
+h
+m
+h
+m
+h
+g
+o
+"}
+(4,1,1) = {"
+p
+d
+g
+i
+h
+m
+h
+m
+h
+m
+h
+i
+o
+"}
+(5,1,1) = {"
+c
+d
+f
+i
+h
+m
+h
+m
+h
+m
+h
+g
+o
+"}
+(6,1,1) = {"
+b
+b
+e
+h
+h
+n
+h
+h
+n
+h
+h
+b
+b
+"}
+(7,1,1) = {"
+a
+b
+b
+b
+k
+b
+o
+o
+b
+k
+b
+b
+a
+"}

@@ -1,0 +1,40 @@
+<ui-display title='{{data.tank ? data.sensors[0].long_name : null}}'>
+  {{#each adata.sensors}}
+    <ui-subdisplay title='{{!data.tank ? long_name : null}}'>
+      <ui-section label='Pressure'>
+		<span>{{Math.fixed(pressure, 2)}} kPa</span>
+      </ui-section>
+      {{#if temperature}}
+        <ui-section label='Temperature'>
+          <span>{{Math.fixed(temperature, 2)}} K</span>
+        </ui-section>
+      {{/if}}
+	  {{#each gases:id}}
+        <ui-section label='{{id}}'>
+		  <span>{{Math.fixed(., 2)}}%</span>
+        </ui-section>
+	  {{/each}}
+    </ui-subdisplay>
+  {{/each}}
+</ui-display>
+{{#if data.tank}}
+  <ui-display title='Controls' button>
+  {{#partial button}}
+    <ui-button icon='refresh' action='reconnect'>Reconnect</ui-button>
+  {{/partial}}
+    <ui-section label='Input Injector'>
+      <ui-button icon='{{data.inputting ? "power-off" : "close"}}' style='{{data.inputting ? "selected" : null}}' action='input'>
+        {{data.inputting ? "Injecting": "Off"}}</ui-button>
+    </ui-section>
+    <ui-section label='Input Rate'>
+      <ui-button icon='pencil' action='rate'>{{Math.round(adata.inputRate)}} L/s</ui-button>
+    </ui-section>
+    <ui-section label='Output Regulator'>
+      <ui-button icon='{{data.outputting ? "power-off" : "close"}}' style='{{data.outputting ? "selected" : null}}' action='output'>
+        {{data.outputting ? "Open": "Closed"}}</ui-button>
+    </ui-section>
+    <ui-section label='Output Pressure'>
+      <ui-button icon='pencil' action='pressure'>{{Math.round(adata.outputPressure)}} kPa</ui-button>
+    </ui-section>
+  </ui-display>
+{{/if}}

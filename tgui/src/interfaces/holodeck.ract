@@ -1,0 +1,21 @@
+<ui-display title='Default Programs' button>
+	{{#partial button}}
+		<ui-button icon='{{data.emagged ? "un" : null}}lock' state='{{data.can_toggle_safety ? null : "disabled"}}' action='safety'>
+			Safeties: <span class='{{data.emagged ? "bad" : "good"}}'>{{data.emagged ? "OFF" : "ON"}}</span>
+		</ui-button>
+	{{/partial}}
+	{{#each data.default_programs}}
+		<ui-button action='load_program' params='{"type": {{type}}}' style='{{data.program == type ? "selected" : null}}'>
+				{{name}}
+	</ui-button><br>
+	{{/each}}
+</ui-display>
+{{#if data.emagged}}
+	<ui-display title='Dangerous Programs'>
+		{{#each data.emag_programs}}
+			<ui-button icon='warning' action='load_program' params='{"type": {{type}}}' style='{{data.program == type ? "selected" : null}}'>
+				{{name}}
+			</ui-button><br>
+		{{/each}}
+	</ui-display>
+{{/if}}

@@ -1,0 +1,14 @@
+<ui-display>
+  <ui-section label='Status'>
+    <ui-button
+          action='toggle_power'
+          style='{{data.toggle ? "selected" : null}}' >
+          Turn {{data.toggle ? "off" : "on"}}
+    </ui-button>
+  </ui-section>
+  <ui-display title='Logging'>
+    {{#each data.logs}}
+		<ui-section label='>'>{{.}}<ui-section>
+	{{/each}}
+  </ui-display>
+</ui-display>

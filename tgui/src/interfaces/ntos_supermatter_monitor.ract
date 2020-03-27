@@ -1,0 +1,65 @@
+
+<script>
+  component.exports = {
+    data: {
+	  integState(charge) {
+	    let max = 100
+	    if(charge == max) return 'good'
+		else if(charge > (max/2)) return 'average'
+		else return 'bad'
+	    },
+       bigState(val,aver,max) {
+	    if(charge > max) return 'bad'
+		else if(val > aver) return 'average'
+		else return 'good'
+	    }
+	}
+  }
+</script>
+
+
+
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+
+{{#if data.active}}
+	<ui-button action='PRG_clear'>Back to Menu</ui-button><br>
+		<ui-display title='Supermatter Status:'>
+		<ui-section label='Core Integrity'>
+				<ui-bar min='0' max='100' value='{{adata.SM_integrity}}' state='{{integState(adata.SM_integrity)}}'>{{data.SM_integrity}}%</ui-bar>
+		</ui-section>
+		<ui-section label='Relative EER'>
+				<span class='{{bigState(data.SM_power,150,300)}}'>{{data.SM_power}} MeV/cm3</span>
+		</ui-section>
+		<ui-section label='Temperature'>
+				<span class='{{bigState(data.SM_ambienttemp,4000,5000)}}'>{{data.SM_ambienttemp}} K</span>
+		</ui-section>
+		<ui-section label='Pressure'>
+				<span class='{{bigState(data.SM_ambientpressure,5000,10000)}}'>{{data.SM_ambientpressure}} kPa</span>	
+		</ui-section>
+		</ui-display>
+		<hr><br>
+		<ui-display title='Gas Composition:'>
+			{{#each data.gases}}
+				<ui-section label='{{name}}'>
+					{{amount}} %
+				</ui-section>
+			{{/each}}
+		</ui-display>
+{{else}}
+	<ui-button action='PRG_refresh'>Refresh</ui-button><br>
+	<ui-display title='Detected Supermatters'>
+	{{#each data.supermatters}}
+		<ui-section label='Area'>
+				{{area_name}} - (#{{uid}})
+		</ui-section>
+		<ui-section label='Integrity'>
+				{{integrity}} %
+		</ui-section>
+		<ui-section label='Options'>
+				<ui-button action='PRG_set' params='{"target" : "{{uid}}"}'>View Details</ui-button>
+		</ui-section>		
+	{{/each}}
+	</ui-display>
+{{/if}}

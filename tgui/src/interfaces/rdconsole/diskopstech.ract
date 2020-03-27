@@ -1,0 +1,19 @@
+
+{{#if !data.tdisk}}
+	<ui-display title='No Technology Disk Loaded'></ui-display>
+{{else}}
+	{{#if data.tdisk_update}}
+		<ui-display title='Technology Disk Updating'></ui-display>
+	{{else}}
+		<ui-display title='Technology Disk'>
+			<ui-section title='Disk IO'><ui-button action='tdisk_down'>Download Research to Disk</ui-button><ui-button action='tdisk_up'>Upload Research from Disk</ui-button>
+			<ui-section title='Clear Disk'><ui-button action='clear_techdisk' style='danger'>WIPE ALL DATA</ui-button></ui-section>
+			<ui-section title='Eject Disk'><ui-button action='eject_techdisk'>Eject Disk</ui-button></ui-section>
+		</ui-display>
+		<ui-display title='Disk Contents'>
+			{{#each data.tdisk_nodes}}
+				<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.snode_id == id ? "selected" : null}}'>{{display_name}}</ui-button>	
+			{{/each}}
+		</ui-display>
+	{{/if}}
+{{/if}}

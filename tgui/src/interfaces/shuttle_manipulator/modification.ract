@@ -1,0 +1,38 @@
+<ui-display title='Selected: {{data.selected.name}}'>
+  {{#if data.selected.description}}
+    <ui-section label='Description'>{{data.selected.description}}</ui-section>
+  {{/if}}
+  {{#if data.selected.admin_notes}}
+    <ui-section label='Admin Notes'>{{data.selected.admin_notes}}</ui-section>
+  {{/if}}
+</ui-display>
+
+{{#if data.existing_shuttle}}
+  <ui-display title='Existing Shuttle: {{data.existing_shuttle.name}}'>
+    Status: {{data.existing_shuttle.status}}
+    {{#if data.existing_shuttle.timer}}
+      ({{data.existing_shuttle.timeleft}})
+    {{/if}}
+    <ui-button action='jump_to'
+      params='{"type": "mobile", "id": "{{data.existing_shuttle.id}}"}'>
+      Jump To
+    </ui-button>
+  </ui-display>
+{{/if}}
+
+{{#if !data.existing_shuttle}}
+  <ui-display title='Existing Shuttle: None'></ui-display>
+{{/if}}
+
+<ui-button action='preview'
+  params='{"shuttle_id": "{{data.selected.shuttle_id}}"}'>
+  Preview
+</ui-button>
+<ui-button action='load'
+  params='{"shuttle_id": "{{data.selected.shuttle_id}}"}'
+  style='danger'>
+  Load
+</ui-button>
+
+<ui-display title='Status'>
+</ui-display>

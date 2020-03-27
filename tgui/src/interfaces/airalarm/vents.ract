@@ -1,0 +1,42 @@
+<link rel='ractive' href='./back.ract'>
+
+<ui-display title='Vent Controls' button>
+  {{#partial button}}
+    <back/>
+  {{/partial}}
+  {{#each data.vents}}
+    <ui-subdisplay title='{{long_name}}'>
+      <ui-section label='Power'>
+        <ui-button icon='{{power ? "power-off" : "close"}}' style='{{power ? "selected" : null}}'
+          action='power' params='{"id_tag": "{{id_tag}}", "val": {{+!power}}}'>{{power ? "On" : "Off"}}</ui-button>
+      </ui-section>
+      <ui-section label='Mode'>
+        <span>{{direction == "release" ? "Pressurizing" : "Siphoning"}}</span>
+      </ui-section>
+      <ui-section label='Pressure Regulator'>
+        <ui-button icon='sign-in' style='{{incheck ? "selected" : null}}'
+          action='incheck' params='{"id_tag": "{{id_tag}}", "val": {{checks}}}'>Internal</ui-button>
+        <ui-button icon='sign-out' style='{{excheck ? "selected" : null}}'
+          action='excheck' params='{"id_tag": "{{id_tag}}", "val": {{checks}}}'>External</ui-button>
+      </ui-section>
+      {{#if incheck}}
+        <ui-section label='Internal Target Pressure'>
+          <ui-button icon='pencil' action='set_internal_pressure'
+            params='{"id_tag": "{{id_tag}}"}'>{{Math.fixed(internal)}}</ui-button>
+          <ui-button icon='refresh' state='{{intdefault ? "disabled" : null}}' action='reset_internal_pressure'
+            params='{"id_tag": "{{id_tag}}"}'>Reset</ui-button>
+        </ui-section>
+      {{/if}}
+      {{#if excheck}}
+          <ui-section label='External Target Pressure'>
+            <ui-button icon='pencil' action='set_external_pressure'
+              params='{"id_tag": "{{id_tag}}"}'>{{Math.fixed(external)}}</ui-button>
+            <ui-button icon='refresh' state='{{extdefault ? "disabled" : null}}' action='reset_external_pressure'
+              params='{"id_tag": "{{id_tag}}"}'>Reset</ui-button>
+          </ui-section>
+      {{/if}}
+    </ui-subdisplay>
+  {{else}}
+    <span class='bad'>Error: No vents connected.</span>
+  {{/each}}
+</ui-display>

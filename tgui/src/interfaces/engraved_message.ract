@@ -1,0 +1,29 @@
+<ui-display>
+  <ui-section label='Message'>
+    {{data.hidden_message}}
+  </ui-section>
+  <ui-section label='Created On'>
+    {{data.realdate}}
+  </ui-section>
+  <ui-section label='Approval'>
+    <ui-button
+      icon='arrow-up'
+      state='{{data.is_creator ? 'disabled' : data.has_liked ? 'selected' : null}}'
+      action='like'>{{data.num_likes}}</ui-button>
+    <ui-button
+      icon='circle'
+      state='{{data.is_creator ? 'disabled' : !data.has_liked && !data.has_disliked ? 'selected' : null}}'
+      action='neutral'></ui-button>
+    <ui-button
+      icon='arrow-down'
+      state='{{data.is_creator ? 'disabled' : data.has_disliked ? 'selected' : null}}'
+      action='dislike'>{{data.num_dislikes}}</ui-button>
+   </ui-section>
+</ui-display>
+{{#if data.admin_mode}}
+  <ui-display title='Admin Panel'>
+    <ui-section label='Creator Ckey'>{{data.creator_key}}</ui-section>
+    <ui-section label='Creator Character Name'>{{data.creator_name}}</ui-section>
+    <ui-button icon='remove' action='delete' style='danger'>Delete</ui-button>
+  </ui-display>
+{{/if}}

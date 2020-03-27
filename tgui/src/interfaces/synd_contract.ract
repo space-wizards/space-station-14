@@ -1,0 +1,148 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+	<div style="position:relative;">
+		{{#if data.error}}
+			<div style="position:absolute; width=75%; margin:auto; padding:5px; top:2px; background-color: black; border: 1px solid #750000; text-align:center; z-index: 5000;">
+				<div style="color:white; font-weight: bold; font-style: italic; margin-bottom: 10px">
+					{{data.error}}
+				</div>
+				<div style="text-align:center; margin-bottom:3px">
+					<ui-button action='PRG_clear_error'>Confirm</ui-button>
+				</div>
+			</div>
+		{{/if}}
+		{{#if data.logged_in}}
+			{{#if data.page == "CONTRACTS"}}
+				<div style="position:absolute; top:2px; right:2px">
+					<ui-button action='PRG_contractor_hub'><div style="padding-top:6px; padding-bottom:3px"><i class="fas fa-satellite-dish fa-3x"></i></div></ui-button>
+				</div>
+				<div style="text-align:center">
+					<h1>Welcome Agent...</h1>
+					<br>
+					<h3>Current status: Onboard {{data.station_name}}.</h3>
+				</div>
+
+				<p>
+					We've identified potentional high-value targets that are currently
+					assigned to your mission area. They are believed to hold valuable information
+					which could be of immediate importance to our organisation.
+				</p>
+
+				<p>
+					Listed below are all of the contracts available to you. You are to bring the
+					specified target to the designated drop-off, and contact us via this uplink. We will send
+					a specialised extraction unit to put the body into.
+				</p>
+
+				<p>
+					We want targets alive - but we will sometimes pay slight amounts if they're not, you just won't 
+					recieve the shown bonus. You can redeem your payment through this uplink in the form of raw telecrystals, 
+					which can be put into your regular Syndicate uplink to purchase whatever you may need. We provide you with 
+					these crystals the moment you send the target up to us, which can be collected at anytime through this system.
+				</p>
+
+				<p>
+					Targets extracted will be ransomed back to the station once their use to us is fulfilled, with us providing
+					you a small percentage cut. You may want to be mindful of them identifying you when they come back. 
+					We provide you with the standard contractor loadout, which will help cover your identity.
+				</p>
+				
+				<p>
+					You have {{data.redeemable_tc}} TC to redeem. <ui-button action='PRG_redeem_TC'>Collect</ui-button>
+				</p>
+				{{#if data.ongoing_contract}}
+					<div style="text-align:center; margin-bottom:3px">
+						<ui-button action='PRG_call_extraction' {{#if extraction_enroute}}state="disabled"{{/if}}>Call Extraction</ui-button>
+					</div>
+				{{/if}}
+
+				<table style="text-align:center;" border="2" cellspacing="0" width="100%">
+					<tr>
+						<th>Target</th>
+						<th>Payment</th>
+						<th>Drop-Off</th>
+						<th></th>
+					</tr>
+
+					{{#each data.contracts}}
+						{{#if data.ongoing_contract}}
+							{{#if status == 2 || status == 3 || status == 4}}
+								<tr>
+									<td>
+										<div>{{target}}</div>
+										<div>({{target_rank}})</div>
+									</td>
+									<td>{{payout}} (+{{payout_bonus}}) TC</td>
+									<td>{{dropoff}}</td>
+									<td><ui-button action='PRG_contract_abort' {{#if extraction_enroute}}state="disabled"{{/if}} params='{"contract_id": "{{id}}"}'>Cancel</ui-button></td>
+								</tr>
+							{{/if}}
+						{{else}}
+							{{#if status != 5 && status != 6}}
+								<tr>
+									<td>
+										<div>{{target}}</div>
+										<div>({{target_rank}})</div>
+									</td>
+									<td>{{payout}} (+{{payout_bonus}}) TC</td>
+									<td>{{dropoff}}</td>
+									<td><ui-button action='PRG_contract-accept' params='{"contract_id": "{{id}}"}'>Accept</ui-button></td>
+								</tr>
+							{{/if}}
+						{{/if}}
+					{{/each}}
+
+				</table>
+				{{#if data.ongoing_contract}}
+					<div style="text-align:center;">
+						<ui-display title='Dropoff Locator'>
+							Current Location: {{data.current_location}}
+							<br>
+							Dropoff Location: {{data.dropoff_direction}}
+						</ui-display>
+					</div>
+				{{/if}}
+			{{else}}
+				<div style="position:absolute; top:2px; left:2px"><ui-button action='PRG_hub_back'><i class="fas fa-arrow-left"></i> Back</ui-button></div>
+				<div style="position:absolute; top:2px; right:2px">Contractor Rep: {{data.contract_rep}}</div>
+
+				<br>
+				<br>
+
+				<p style="text-align: center">
+					The items available on the Hub are available only to contractors. They are bought using Contractor Rep, with two Rep being given on the completion of a contract.
+				</p>
+
+				<div class="margin-top: 10px">
+					{{#each data.contractor_hub_items}}
+						{{#if limited != 0}}
+							<div style="margin-top:10px; border: 1px solid white">
+								<div style="text-align:center; margin-top:5px; margin-bottom:3px">
+									{{name}}{{#if cost != 0}} - {{cost}} Rep{{/if}}
+								</div>
+								<div style="text-align:center; margin-top: 10px">
+									<i class="fas {{item_icon}} fa-3x"></i>
+								</div>
+								<div style="text-align:center; padding:15px">
+									<p>{{desc}}</p>
+								</div>
+								<div style="text-align:center; margin-bottom:5px">
+									<ui-button action='buy_hub' params='{"item": "{{name}}", "cost": "{{cost}}"}'>{{#if limited != -1}}Purchase - {{limited}} remaining{{else}}Purchase{{/if}}</ui-button>
+								</div>
+							</div>
+						{{/if}}
+					{{/each}}
+				</div>
+			{{/if}}
+		{{else}}
+			<div style="text-align:center">
+				<ui-button action='PRG_login'>Assign</ui-button><br>
+				{{#if data.error}}
+					{{data.error}}
+				{{/if}}
+			</div>
+		{{/if}}
+	</div>
+</ui-display>

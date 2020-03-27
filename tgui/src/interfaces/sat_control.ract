@@ -1,0 +1,21 @@
+{{#if data.notice}}
+  <ui-notice>
+    {{data.notice}}
+  </ui-notice>
+{{/if}}
+<ui-display title='Satellite Network Control' button>
+	{{#each data.satellites}}
+	  <ui-section candystripe nowrap>
+        <div class='content'>#{{id}}</div>
+        <div class='content'>{{mode}}</div>
+        <div class='content'>
+          <ui-button action='toggle' params='{"id": "{{id}}"}'>{{active ? "Deactivate" : "Activate"}}</ui-button>
+        </div>
+      </ui-section>
+	{{/each}}
+</ui-display>
+{{#if data.meteor_shield}}
+<ui-display title='Station Shield Coverage'>
+  <ui-bar min='0' max='{{data.meteor_shield_coverage_max}}' value='{{data.meteor_shield_coverage}}'>{{100 * data.meteor_shield_coverage / data.meteor_shield_coverage_max}} %</ui-bar>
+<ui-display>
+{{/if}}

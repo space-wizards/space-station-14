@@ -1,0 +1,12 @@
+<section class='{{#candystripe}}candystripe{{/candystripe}}'>
+  {{#if label}}
+    <span class='label' style='{{#labelcolor}}color:{{labelcolor}}{{/labelcolor}}'>{{label}}:</span>
+  {{/if}}
+  {{#if nowrap}}
+    {{yield}}
+  {{else}}
+    <div class='content' style='{{#right}}float:right;{{/right}}'>
+      {{yield}}
+    </div>
+  {{/if}}
+</section>

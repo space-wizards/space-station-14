@@ -1,0 +1,84 @@
+<ui-display title='Direction'>
+	{{#each data.preview_rows}}
+		<ui-section>
+			{{#each previews}}
+				<ui-button state='{{selected ? "selected" : null}}' action='setdir'
+					params='{"dir": {{dir}}, "flipped": {{flipped}}}'><span class="pipes32x32 {{dir}}-{{icon_state}}" title="{{dir_name}}"></span></ui-button>
+			{{/each}}
+		</ui-section>
+	{{/each}}
+</ui-display>
+{{#if data.category == 0}}
+	<ui-display title='Color'>
+		{{#each data.paint_colors}}
+			<ui-button state='{{@key == data.selected_color ? "selected" : null}}'
+				action='color' params='{"paint_color": {{@key}}}'>{{@key}}</ui-button>
+		{{/each}}
+	</ui-display>
+{{/if}}
+{{#if data.category == 3}}
+	<ui-display title='Color'>
+		{{#each data.paint_colors}}
+			<ui-button state='{{@key == data.selected_color ? "selected" : null}}'
+				action='color' params='{"paint_color": {{@key}}}'>{{@key}}</ui-button>
+		{{/each}}
+	</ui-display>
+{{/if}}
+<ui-display title='Utilities'>
+	<ui-button icon='{{data.mode & 1 ? "check-square-o" : "square-o"}}'
+		action='mode' params='{"mode": 1}'>Build</ui-button>
+	<ui-button icon='{{data.mode & 2 ? "check-square-o" : "square-o"}}'
+		action='mode' params='{"mode": 2}'>Wrench</ui-button>
+	<ui-button icon='{{data.mode & 4 ? "check-square-o" : "square-o"}}'
+		action='mode' params='{"mode": 4}'>Destroy</ui-button>
+	{{#if data.category == 0}}
+		<ui-button icon='{{data.mode & 8 ? "check-square-o" : "square-o"}}'
+			action='mode' params='{"mode": 8}'>Paint</ui-button>
+	{{/if}}
+</ui-display>
+{{#if data.locked == 0}}
+	<ui-display title='Category'>
+		<ui-section>
+			<ui-button icon='{{data.category == 0 ? "check-square-o" : "square-o"}}' state='{{data.category <= 0 ? "selected" : null}}'
+				action='category' params='{"category": 0}'>Atmospherics</ui-button>
+			<ui-button icon='{{data.category == 1 ? "check-square-o" : "square-o"}}' state='{{data.category == 1 ? "selected" : null}}'
+				action='category' params='{"category": 1}'>Disposals</ui-button>
+			<ui-button icon='{{data.category == 2 ? "check-square-o" : "square-o"}}' state='{{data.category == 2 ? "selected" : null}}'
+				action='category' params='{"category": 2}'>Transit Tubes</ui-button>
+		</ui-section>
+	</ui-display>
+{{/if}}
+{{#if data.category == 0}}
+	<ui-section label='Piping Layer'>
+		<ui-button state='{{data.piping_layer == 1 ? "selected" : null}}' action='piping_layer'
+			params='{"piping_layer": 1}'>1</ui-button>
+		<ui-button state='{{data.piping_layer == 2 ? "selected" : null}}' action='piping_layer'
+			params='{"piping_layer": 2}'>2</ui-button>
+		<ui-button state='{{data.piping_layer == 3 ? "selected" : null}}' action='piping_layer'
+			params='{"piping_layer": 3}'>3</ui-button>
+	</ui-section>
+{{/if}}
+{{#if data.category == 3}}
+	<ui-section label='Ducting Layer'>
+		<ui-button state='{{data.ducting_layer == 1 ? "selected" : null}}' action='ducting_layer'
+			params='{"ducting_layer": 1}'>1</ui-button>
+		<ui-button state='{{data.ducting_layer == 2 ? "selected" : null}}' action='ducting_layer'
+			params='{"ducting_layer": 2}'>2</ui-button>
+		<ui-button state='{{data.ducting_layer == 4 ? "selected" : null}}' action='ducting_layer'
+			params='{"ducting_layer": 4}'>3</ui-button>
+		<ui-button state='{{data.ducting_layer == 8 ? "selected" : null}}' action='ducting_layer'
+			params='{"ducting_layer": 8}'>4</ui-button>
+		<ui-button state='{{data.ducting_layer == 16 ? "selected" : null}}' action='ducting_layer'
+			params='{"ducting_layer": 16}'>5</ui-button>
+	</ui-section>	
+{{/if}}
+{{#each data.categories}}
+	<ui-display title='{{cat_name}}'>
+		{{#each recipes}}
+			<ui-section>
+				<ui-button state='{{selected ? "selected" : null}}' action='pipe_type'
+					params='{"pipe_type": {{pipe_index}}, "category": {{cat_name}}}'>{{pipe_name}}</ui-button>
+			</ui-section>
+		{{/each}}
+	</ui-display>
+{{/each}}

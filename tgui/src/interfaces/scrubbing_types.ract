@@ -1,0 +1,4 @@
+{{#each filter_types}}
+  <ui-button icon='{{enabled ? "check-square-o" : "square-o"}}' style='{{enabled ? "selected" : null}}'
+    action='toggle_filter' params='{"id_tag": "{{id_tag}}", "val": {{gas_id}}}'>{{gas_name}}</ui-button>
+{{/each}}

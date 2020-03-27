@@ -1,0 +1,970 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/space/basic,
+/area/template_noop)
+"b" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"c" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"d" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"e" = (
+/obj/machinery/porta_turret/syndicate{
+	desc = "A ballistic machine gun auto-turret that fires bluespace bullets.";
+	lethal_projectile = /obj/projectile/magic/teleport;
+	name = "displacement turret";
+	stun_projectile = /obj/projectile/magic/teleport
+	},
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"f" = (
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"g" = (
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"h" = (
+/obj/structure/table/glass,
+/obj/item/stack/sheet/bluespace_crystal{
+	amount = 37
+	},
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"i" = (
+/obj/structure/table/glass,
+/obj/item/bodybag/bluespace,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"j" = (
+/turf/open/floor/plasteel/stairs/left,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"k" = (
+/turf/open/floor/plasteel/stairs/medium,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"l" = (
+/turf/open/floor/plasteel/stairs/right,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"m" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/syringe/bluespace,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"n" = (
+/obj/structure/table/glass,
+/obj/item/stock_parts/matter_bin/bluespace,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"o" = (
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"p" = (
+/obj/structure/table/glass,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"q" = (
+/obj/structure/table/glass,
+/obj/item/storage/backpack/holding,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"r" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/glass/beaker/bluespace,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"s" = (
+/obj/structure/table/glass,
+/obj/item/stock_parts/subspace/crystal,
+/obj/item/stock_parts/subspace/transmitter,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"t" = (
+/obj/structure/displaycase{
+	start_showpiece_type = /obj/item/hilbertshotel
+	},
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"u" = (
+/obj/structure/table/glass,
+/obj/item/analyzer,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"v" = (
+/obj/structure/table/glass,
+/obj/item/stock_parts/subspace/amplifier,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"w" = (
+/obj/item/paper/crumpled/docslogs,
+/obj/item/pen,
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"x" = (
+/obj/structure/table/glass,
+/obj/item/assembly/signaler,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"y" = (
+/obj/structure/table/glass,
+/obj/item/slimecross/industrial/bluespace,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"z" = (
+/obj/machinery/door/airlock/vault{
+	name = "secured door";
+	req_access = 207
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"A" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/plasteel/grimy,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"B" = (
+/turf/open/floor/plasteel/grimy,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"C" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/grimy,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"D" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/grimy,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"E" = (
+/obj/structure/chair/office,
+/turf/open/floor/plasteel/grimy,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"F" = (
+/obj/machinery/door/window/eastleft,
+/turf/open/floor/plasteel/grimy,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"G" = (
+/obj/structure/table/reinforced,
+/obj/item/pen,
+/turf/open/floor/plasteel/grimy,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"H" = (
+/obj/structure/table/reinforced,
+/obj/item/paper/crumpled/robertsworkjournal,
+/turf/open/floor/plasteel/grimy,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"I" = (
+/obj/machinery/door/airlock/highsecurity{
+	req_access = 207
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plasteel/grimy,
+/area/ruin/space/has_grav/hilbertresearchfacility)
+"J" = (
+/turf/closed/mineral/random/no_caves,
+/area/ruin/unpowered/no_grav)
+"K" = (
+/turf/open/floor/plasteel/stairs/right{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered/no_grav)
+"U" = (
+/turf/open/floor/plasteel/stairs/medium{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered/no_grav)
+"X" = (
+/turf/open/floor/plasteel/stairs/left{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+J
+J
+J
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+J
+b
+J
+b
+b
+a
+b
+J
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+b
+J
+J
+J
+b
+J
+b
+J
+b
+b
+J
+J
+J
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+b
+c
+c
+c
+c
+c
+d
+d
+c
+d
+d
+c
+d
+d
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+b
+d
+e
+f
+f
+m
+r
+g
+g
+f
+f
+f
+e
+c
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+d
+J
+b
+b
+b
+b
+b
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+J
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+c
+J
+b
+b
+J
+b
+b
+b
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+J
+c
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+c
+J
+b
+J
+b
+b
+J
+b
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+J
+c
+g
+f
+f
+n
+s
+v
+f
+f
+f
+f
+f
+c
+J
+J
+J
+J
+J
+J
+b
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+J
+c
+g
+f
+j
+o
+o
+o
+j
+f
+f
+f
+c
+d
+d
+c
+c
+d
+c
+J
+b
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+J
+c
+h
+f
+k
+o
+t
+o
+k
+f
+f
+f
+c
+A
+B
+C
+B
+D
+c
+J
+J
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+J
+c
+g
+f
+l
+o
+o
+w
+l
+f
+f
+f
+d
+B
+B
+G
+B
+B
+c
+J
+b
+b
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+J
+c
+i
+f
+f
+p
+u
+x
+f
+f
+f
+f
+d
+B
+E
+H
+B
+B
+c
+J
+J
+J
+a
+a
+"}
+(16,1,1) = {"
+a
+b
+J
+c
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+c
+B
+B
+C
+B
+B
+c
+b
+J
+b
+a
+a
+"}
+(17,1,1) = {"
+a
+b
+J
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+c
+C
+F
+C
+B
+B
+c
+b
+b
+b
+a
+a
+"}
+(18,1,1) = {"
+a
+b
+J
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+d
+B
+B
+B
+B
+B
+d
+b
+b
+b
+b
+a
+"}
+(19,1,1) = {"
+a
+b
+J
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+z
+B
+B
+B
+B
+B
+d
+b
+b
+b
+b
+a
+"}
+(20,1,1) = {"
+a
+a
+b
+c
+e
+f
+g
+q
+g
+y
+g
+f
+e
+f
+c
+B
+B
+B
+B
+B
+d
+b
+b
+b
+b
+a
+"}
+(21,1,1) = {"
+a
+a
+b
+c
+c
+c
+c
+c
+c
+d
+d
+c
+c
+c
+d
+B
+B
+B
+B
+B
+d
+X
+b
+b
+b
+a
+"}
+(22,1,1) = {"
+a
+a
+b
+b
+J
+J
+b
+b
+J
+J
+J
+J
+J
+J
+d
+D
+B
+B
+B
+B
+I
+U
+b
+b
+b
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+b
+b
+J
+J
+b
+b
+b
+b
+J
+b
+J
+c
+d
+d
+c
+d
+c
+d
+K
+b
+b
+b
+a
+"}
+(24,1,1) = {"
+a
+a
+a
+a
+b
+b
+J
+J
+J
+b
+b
+b
+b
+J
+b
+b
+J
+J
+J
+J
+b
+b
+b
+b
+b
+a
+"}
+(25,1,1) = {"
+a
+a
+a
+a
+a
+b
+b
+b
+J
+J
+J
+J
+b
+b
+b
+b
+b
+b
+a
+J
+J
+J
+b
+J
+b
+a
+"}
+(26,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+a
+b
+b
+b
+b
+b
+a
+a
+a
+J
+J
+J
+J
+J
+a
+"}
+(27,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

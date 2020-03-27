@@ -1,0 +1,185 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/labor)
+"b" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/labor)
+"c" = (
+/obj/machinery/computer/shuttle/labor{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = -31
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/labor)
+"d" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/labor)
+"e" = (
+/obj/structure/table,
+/obj/item/folder/red,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/labor)
+"f" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/labor)
+"g" = (
+/obj/machinery/button/flasher{
+	id = "gulagshuttleflasher";
+	name = "Flash Control";
+	pixel_y = -26;
+	req_access_txt = "1"
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/labor)
+"h" = (
+/obj/machinery/mineral/stacking_unit_console{
+	machinedir = 2;
+	pixel_x = 30;
+	pixel_y = 30
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/labor)
+"i" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Labor Shuttle Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plating,
+/area/shuttle/labor)
+"j" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Labor Shuttle Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/labor)
+"k" = (
+/obj/machinery/mineral/stacking_machine/laborstacker{
+	input_dir = 2;
+	output_dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/labor)
+"l" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/labor)
+"m" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/labor)
+"n" = (
+/obj/machinery/mineral/labor_claim_console{
+	machinedir = 1;
+	pixel_x = 30
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/labor)
+"o" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/flasher{
+	id = "gulagshuttleflasher";
+	pixel_x = 25
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/labor)
+"p" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/labor)
+"q" = (
+/obj/machinery/door/airlock/titanium{
+	id_tag = "prisonshuttle";
+	name = "Labor Shuttle Airlock"
+	},
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 2;
+	height = 5;
+	id = "laborcamp";
+	name = "labor camp shuttle";
+	port_direction = 4;
+	width = 9
+	},
+/turf/open/floor/plating,
+/area/shuttle/labor)
+"r" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/labor)
+"s" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/labor)
+
+(1,1,1) = {"
+a
+a
+b
+a
+a
+b
+a
+a
+a
+"}
+(2,1,1) = {"
+b
+c
+f
+j
+l
+l
+p
+r
+s
+"}
+(3,1,1) = {"
+b
+d
+g
+a
+m
+l
+l
+r
+s
+"}
+(4,1,1) = {"
+b
+e
+h
+k
+n
+o
+l
+r
+s
+"}
+(5,1,1) = {"
+a
+a
+i
+a
+a
+a
+q
+a
+a
+"}

@@ -1,0 +1,66 @@
+<script>
+  component.exports = {
+    computed: {
+      readableFrequency () {
+        return Math.round(this.get('adata.frequency')) / 10
+      }
+    }
+  }
+</script>
+
+<ui-display title='Settings'>
+  {{#if data.headset}}
+    <ui-section label='Power'>
+      <ui-button icon='{{data.listening ? "power-off" : "close"}}' style='{{data.listening ? "selected" : null}}'
+        action='listen'>
+        {{data.listening ? "On": "Off"}}</ui-button>
+    </ui-section>
+  {{else}}
+    <ui-section label='Microphone'>
+      <ui-button icon='{{data.broadcasting ? "power-off" : "close"}}' style='{{data.broadcasting ? "selected" : null}}'
+        action='broadcast'>
+        {{data.broadcasting ? "Engaged": "Disengaged"}}</ui-button>
+    </ui-section>
+    <ui-section label='Speaker'>
+      <ui-button icon='{{data.listening ? "power-off" : "close"}}' style='{{data.listening ? "selected" : null}}'
+        action='listen'>
+        {{data.listening ? "Engaged": "Disengaged"}}</ui-button>
+    </ui-section>
+  {{/if}}
+  {{#if data.command}}
+    <ui-section label='High Volume'>
+      <ui-button icon='{{data.useCommand ? "power-off" : "close"}}' style='{{data.useCommand ? "selected" : null}}'
+        action='command'>
+        {{data.useCommand ? "On": "Off"}}</ui-button>
+    </ui-section>
+  {{/if}}
+</ui-display>
+<ui-display title='Channel'>
+  <ui-section label='Frequency'>
+    {{#if data.freqlock}}
+      <span>{{readableFrequency}}</span>
+    {{else}}
+      <ui-button icon='fast-backward' state='{{data.frequency == data.minFrequency ? "disabled": null}}' action='frequency' params='{"adjust": -1}'/>
+      <ui-button icon='backward' state='{{data.frequency == data.minFrequency ? "disabled": null}}' action='frequency' params='{"adjust": -.2}'/>
+      <ui-button icon='pencil' action='frequency' params='{"tune": "input"}'>{{readableFrequency}}</ui-button>
+      <ui-button icon='forward' state='{{data.frequency == data.maxFrequency ? "disabled": null}}' action='frequency' params='{"adjust": .2}'/>
+      <ui-button icon='fast-forward' state='{{data.frequency == data.maxFrequency ? "disabled": null}}' action='frequency' params='{"adjust": 1}'/>
+    {{/if}}
+  </ui-section>
+  {{#if data.subspaceSwitchable}}
+    <ui-section label='Subspace Transmission'>
+      <ui-button icon='{{data.subspace ? "power-off" : "close"}}' style='{{data.subspace ? "selected" : null}}'
+          action='subspace'>{{data.subspace ? "Active" : "Inactive"}}</ui-button>
+    </ui-section>
+  {{/if}}
+  {{#if data.subspace && data.channels}}
+    <ui-section label='Channels'>
+      {{#each data.channels:channel}}
+        <ui-button icon='{{. ? "check-square-o" : "square-o"}}'
+          style='{{. ? "selected" : null}}'
+          action='channel' params='{"channel": "{{channel}}"}'>
+          {{channel}}</ui-button><br/>
+      {{/each}}
+    </ui-section>
+  {{/if}}
+</ui-display>

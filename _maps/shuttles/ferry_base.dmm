@@ -1,0 +1,156 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"c" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"d" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"e" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"g" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/transport)
+"h" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"i" = (
+/obj/machinery/computer/shuttle/ferry/request{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"j" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"k" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"l" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"m" = (
+/obj/machinery/door/airlock/titanium,
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 2;
+	height = 12;
+	id = "ferry";
+	name = "ferry shuttle";
+	port_direction = 2;
+	width = 5
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"p" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+"q" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/transport)
+
+(1,1,1) = {"
+a
+b
+k
+b
+a
+"}
+(2,1,1) = {"
+b
+g
+l
+g
+b
+"}
+(3,1,1) = {"
+c
+h
+l
+p
+c
+"}
+(4,1,1) = {"
+c
+i
+l
+p
+c
+"}
+(5,1,1) = {"
+d
+j
+l
+q
+d
+"}
+(6,1,1) = {"
+c
+j
+l
+q
+c
+"}
+(7,1,1) = {"
+c
+j
+l
+q
+c
+"}
+(8,1,1) = {"
+c
+j
+l
+q
+c
+"}
+(9,1,1) = {"
+e
+j
+l
+q
+e
+"}
+(10,1,1) = {"
+c
+j
+l
+q
+c
+"}
+(11,1,1) = {"
+c
+j
+l
+q
+c
+"}
+(12,1,1) = {"
+c
+d
+m
+d
+c
+"}

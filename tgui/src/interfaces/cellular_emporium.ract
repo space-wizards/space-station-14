@@ -1,0 +1,25 @@
+<ui-display title="Cellular Emporium" button>
+  <ui-button icon='refresh' state='{{data.can_readapt ? null : "disabled"}}'
+    action='readapt'>Readapt</ui-button>
+  <ui-section label='Genetic Points Remaining' right>
+    {{data.genetic_points_remaining}}
+  </ui-section>
+</ui-display>
+<ui-display>
+{{#each data.abilities}}
+  <ui-section label='{{name}}' candystripe right>
+    <span>{{desc}}</span>
+    <span>{{helptext}}</span>
+    <span>Cost: {{dna_cost}}</span>
+    <ui-button
+      state='{{owned ? "selected" : can_purchase ? null : "disabled"}}'
+      action='evolve'
+      params='{"name": "{{name}}"}'>
+      {{owned ? "Evolved" : "Evolve"}}
+    </ui-button>
+  </ui-section>
+{{/each}}
+{{^data.abilities}}
+  <span class='warning'>No abilities available.</span>
+{{/data.abilities}}
+</ui-display>

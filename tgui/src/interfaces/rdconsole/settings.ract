@@ -1,0 +1,6 @@
+<span class='bad'>Settings</span><br/><br/>
+<ui-button action='Resync'>RESYNC MACHINERY</ui-button><br/>
+<ui-button action='Lock'>LOCK</ui-button>
+<ui-button action='disconnect' params='{"type" : "destroy"}' state = '{{data.destroy_linked? null : "disabled"}}'>Disconnect Destructive Analyzer</ui-button>
+<ui-button action='disconnect' params='{"type" : "lathe"}' state = '{{data.protolathe_linked? null : "disabled"}}'>Disconnect Protolathe</ui-button>
+<ui-button action='disconnect' params='{"type" : "imprinter"}' state = '{{data.circuit_linked? null : "disabled"}}'>Disconnect Circuit Imprinter</ui-button>

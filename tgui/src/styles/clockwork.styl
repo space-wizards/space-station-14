@@ -1,0 +1,48 @@
+body.clockwork
+  color-normal              = #B18B25
+  color-good                = #CFBA47
+  color-average             = #896B19
+  color-bad                 = #5F380E
+  color-highlight           = #B18B25
+  text-color-normal         = #B18B25
+  text-color-inverse        = #2D1400
+  background-color-start    = #B18B25
+  background-color-end      = #5F380E
+  rule-color-normal         = #B18B25
+  rule-color-dark           = #896B19
+  titlebar-color-text       = #CFBA47
+  titlebar-color-button     = #CFBA47
+  titlebar-color-background = #5F380E
+  titlebar-color-coreshadow = #170800
+  titlebar-color-shadow     = alpha(#000, 0.1)
+  resize-color              = #5F380E
+  display-color-title       = #CFBA47
+  display-color-background  = alpha(#2D1400, 0.9)
+  display-color-shadow      = alpha(#000, 0.3)
+  notice-color-first        = #000000
+  notice-color-second       = #170800
+  section-color-label       = #B18B25
+  bar-color-normal          = #B18B25
+  bar-color-good            = #CFBA47
+  bar-color-average         = #896B19
+  bar-color-bad             = #5F380E
+  bar-color-border          = #170800
+  bar-color-background      = #2D1400
+  button-color-normal       = #5F380E
+  button-color-disabled     = #2D1400
+  button-color-selected     = #CFBA47
+  button-color-caution      = yellow-orange
+  button-color-danger       = yellow
+  button-color-border       = #170800
+  button-lighten-hover      = 5%
+  input-color-text          = #B18B25
+  input-color-background    = #CFBA47
+  tooltip-color-border      = #170800
+  tooltip-color-background  = #2D1400
+
+  background: linear-gradient(to bottom,
+      background-color-start 0%,
+      background-color-end 100%)
+  @import "util/*"
+  @import "components/*"
+  @import "interfaces/*"

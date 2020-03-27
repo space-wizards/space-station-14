@@ -1,0 +1,228 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+{{#if data.have_id_slot}}
+<ui-button action='PRG_switchm' icon='home' params='{"target" : "mod"}' state='{{data.mmode == 1 ? "disabled" : null}}'>Access Modification</ui-button>
+{{/if}}
+<ui-button action='PRG_switchm' icon='folder-open' params='{"target" : "manage"}' state='{{data.mmode == 2 ? "disabled" : null}}'>Job Management</ui-button>
+<ui-button action='PRG_switchm' icon='folder-open' params='{"target" : "manifest"}' state='{{!data.mmode ? "disabled" : null}}'>Crew Manifest</ui-button>
+{{#if data.have_printer}}
+<ui-button action='PRG_print' icon='print' state='{{!data.mmode || data.has_id && data.mmode == 1  ? null : "disabled"}}'>Print</ui-button>
+{{/if}}
+
+{{#if !data.mmode}}
+<div class='item'>
+  <h2>Crew Manifest</h2>
+  <br>Please use security record computer to modify entries.<br><br>
+</div>
+{{#each data.manifest}}
+	<div class='item'>
+	{{name}} - {{rank}}
+	</div>
+{{/each}}
+
+{{elseif data.mmode == 2}}
+<div class='item'>
+  <h2>Job Management</h2>
+</div>
+<table>
+<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b></td></tr>
+{{#each data.slots}}
+
+	<tr><td>{{title}}</td><td>{{current}}/{{total}}</td><td><ui-button action='PRG_open_job' params='{"target" : "{{title}}"}' state='{{status_open ? null : "disabled"}}'>{{desc_open}}</ui-button><br></td><td><ui-button action='PRG_close_job' params='{"target" : "{{title}}"}' state='{{status_close ? null : "disabled"}}'>{{desc_close}}</ui-button>
+	</td></tr>
+
+{{/each}}
+</table>
+
+
+{{else}}
+<div class='item'>
+  <h2>Access Modification</h2>
+</div>
+
+{{#if !data.has_id}}
+  <span class='alert'><i>Please insert the ID into the terminal to proceed.</i></span><br>
+{{/if}}
+
+<div class='item'>
+  <div class='itemLabel'>
+	Target Identity:
+  </div>
+  <div class='itemContent'>
+	<ui-button icon='eject' action='PRG_eject' params='{"target" : "id"}'>{{data.id_name}}</ui-button>
+  </div>
+</div>
+<div class='item'>
+  <div class='itemLabel'>
+	Auth Identity:
+  </div>
+  <div class='itemContent'>
+	<ui-button icon='eject' action='PRG_eject' params='{"target" : "auth"}'>{{data.auth_name}}</ui-button>
+  </div>
+</div>
+<hr>
+
+{{#if data.authenticated}}
+  {{#if data.has_id}}
+	<div class='item'>
+	  <h2>Details</h2>
+	</div>
+
+	{{#if data.minor}}
+	<div class='item'>
+	  <div class='itemLabel'>
+		Registered Name:
+	  </div>
+	  <div class='itemContent'>
+		{{data.id_owner}}
+	  </div>
+	</div>
+	<div class='item'>
+	  <div class='itemLabel'>
+		Rank:
+	  </div>
+	  <div class='itemContent'>
+		{{data.id_rank}}
+	  </div>
+	</div>
+	<div class='item'>
+	  <div class='itemLabel'>
+		Demote:
+	  </div>
+	  <div class='itemContent'>
+		<ui-button action='PRG_terminate' icon='gear' state='{{data.id_rank == "Unassigned" ? "disabled" : null}}'>Demote {{data.id_owner}}</ui-button>
+	  </div>
+	</div>
+	{{else}}
+
+	<div class='item'>
+	  <div class='itemLabel'>
+		Registered Name:
+	  </div>
+	  <div class='itemContent'>
+		<ui-button action='PRG_edit' icon='pencil' params='{"name" : "1"}'>{{data.id_owner}}</ui-button>
+	  </div>
+	</div>
+
+	<div class='item'>
+	  <h2>Assignment</h2>
+	</div>
+		<ui-button action='PRG_togglea' icon='gear'>{{data.assignments ? "Hide assignments" : "Show assignments"}}</ui-button>
+	<div class='item'>
+	  <span id='allvalue.jobsslot'>
+		
+	  </span>
+	</div>
+	<div class='item'>
+	  {{#if data.assignments}}
+	  <div id="all-value.jobs">
+		<table>
+		  <tr>
+			<th>Command</th>
+			<td>
+			  <ui-button action='PRG_assign' params='{"assign_target" : "Captain"}' state='{{data.id_rank == "Captain" ? "selected" : null}}'>Captain</ui-button>
+			</td>
+		  </tr>
+		  <tr>
+			<th>Special</th>
+			<td>
+			  <ui-button action='PRG_assign' params='{"assign_target" : "Custom"}'>Custom</ui-button>
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#FFA500';">Engineering</th>
+			<td>
+			  {{#each data.engineering_jobs}}
+				<ui-button action='PRG_assign' params='{"assign_target" : "{{job}}"}' state='{{data.id_rank == job ? "selected" : null}}'>{{display_name}}</ui-button>
+			  {{/each}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#008000';">Medical</th>
+			<td>
+			  {{#each data.medical_jobs}}
+				<ui-button action='PRG_assign' params='{"assign_target" : "{{job}}"}' state='{{data.id_rank == job ? "selected" : null}}'>{{display_name}}</ui-button>
+			  {{/each}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#800080';">Science</th>
+			<td>
+			  {{#each data.science_jobs}}
+				<ui-button action='PRG_assign' params='{"assign_target" : "{{job}}"}' state='{{data.id_rank == job ? "selected" : null}}'>{{display_name}}</ui-button>
+			  {{/each}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#DD0000';">Security</th>
+			<td>
+			  {{#each data.security_jobs}}
+				<ui-button action='PRG_assign' params='{"assign_target" : "{{job}}"}' state='{{data.id_rank == job ? "selected" : null}}'>{{display_name}}</ui-button>
+			  {{/each}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#cc6600';">Cargo</th>
+			<td>
+			  {{#each data.cargo_jobs}}
+				<ui-button action='PRG_assign' params='{"assign_target" : "{{job}}"}' state='{{data.id_rank == job ? "selected" : null}}'>{{display_name}}</ui-button>
+			  {{/each}}
+			</td>
+		  </tr>
+		  <tr>
+			<th style="color: '#808080';">Civilian</th>
+			<td>
+			  {{#each data.civilian_jobs}}
+				<ui-button action='PRG_assign' params='{"assign_target" : "{{job}}"}' state='{{data.id_rank == job ? "selected" : null}}'>{{display_name}}</ui-button>
+			  {{/each}}
+			</td>
+		  </tr>
+		  {{#if data.centcom_access}}
+			<tr>
+			  <th style="color: '#A52A2A';">CentCom</th>
+			  <td>
+				{{#each data.centcom_jobs}}
+				  <ui-button action='PRG_assign' params='{"assign_target" : "{{job}}"}' state='{{data.id_rank == job ? "selected" : null}}'>{{display_name}}</ui-button>
+				{{/each}}
+			  </td>
+			</tr>
+		  {{/if}}
+		</table>
+	  </div>
+	  {{/if}}
+	</div>
+	{{/if}}
+
+	{{#if data.centcom_access}}
+	  <div class='item'>
+		<h2>Central Command</h2>
+	  </div>
+	  <div class='item' style='width: 100%'>
+		{{#each data.all_centcom_access}}
+		  <div class='itemContentWide'>
+		  <ui-button action='PRG_access' params='{"access_target" : "{{ref}}", "allowed" : "{{allowed}}"}' state='{{allowed ? "toggle" : null}}'>{{desc}}</ui-button>
+		  </div>
+		{{/each}}
+	  </div>
+	{{else}}
+	  <div class='item'>
+		<h2>{{data.station_name}}</h2>
+	  </div>
+	  <div class='item' style='width: 100%'>
+		{{#each data.regions}}
+		  <div style='float: left; width: 175px; min-height: 250px'>
+			<div class='average'><ui-button action='PRG_regsel' state='{{selected ? "toggle" : null}}' params='{"region" : "{{regid}}"}'><b>{{name}}</b></ui-button></div>
+			<br>
+		  	{{#each accesses}}
+			  <div class='itemContentWide'>
+				<ui-button action='PRG_access' params='{"access_target" : "{{ref}}", "allowed" : "{{allowed}}"}' state='{{allowed ? "toggle" : null}}'>{{desc}}</ui-button>
+			  </div>
+			{{/each}}
+		  </div>
+		{{/each}}
+	  </div>
+	{{/if}}
+  {{/if}}
+{{/if}}
+{{/if}}

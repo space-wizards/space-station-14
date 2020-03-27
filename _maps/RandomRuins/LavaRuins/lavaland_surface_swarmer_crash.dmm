@@ -1,0 +1,252 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/template_noop)
+"c" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/unpowered)
+"d" = (
+/turf/open/floor/mineral/plastitanium/red{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"e" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/template_noop,
+/area/ruin/unpowered)
+"f" = (
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
+/turf/open/floor/mineral/plastitanium/red{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+b
+b
+b
+c
+a
+c
+a
+b
+b
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+b
+b
+b
+b
+d
+d
+d
+c
+b
+b
+a
+a
+"}
+(4,1,1) = {"
+b
+b
+b
+b
+b
+b
+a
+d
+d
+b
+b
+b
+a
+a
+"}
+(5,1,1) = {"
+b
+b
+b
+b
+b
+b
+a
+a
+a
+b
+b
+b
+b
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+b
+b
+c
+a
+a
+d
+c
+a
+b
+b
+a
+"}
+(7,1,1) = {"
+a
+b
+b
+b
+c
+d
+d
+d
+d
+d
+c
+b
+b
+a
+"}
+(8,1,1) = {"
+a
+b
+b
+a
+c
+d
+d
+d
+d
+d
+c
+b
+b
+a
+"}
+(9,1,1) = {"
+a
+a
+b
+a
+c
+d
+d
+f
+d
+d
+c
+b
+b
+b
+"}
+(10,1,1) = {"
+a
+a
+b
+a
+a
+d
+d
+d
+d
+d
+c
+b
+b
+b
+"}
+(11,1,1) = {"
+a
+a
+b
+b
+a
+d
+d
+d
+d
+d
+c
+b
+b
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+b
+a
+d
+c
+c
+c
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+c
+c
+e
+e
+e
+c
+c
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+c
+e
+a
+a
+a
+e
+c
+a
+a
+a
+"}

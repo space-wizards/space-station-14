@@ -1,0 +1,461 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"b" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"c" = (
+/turf/closed/wall/mineral/abductor,
+/area/lavaland/surface/outdoors)
+"d" = (
+/turf/closed/wall/mineral/abductor,
+/area/ruin/unpowered)
+"j" = (
+/obj/machinery/abductor/experiment{
+	team_number = 100
+	},
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"k" = (
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"l" = (
+/obj/machinery/abductor/pad{
+	team_number = 100
+	},
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"o" = (
+/obj/item/hemostat/alien,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"p" = (
+/obj/effect/mob_spawn/human/abductor,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"q" = (
+/obj/structure/closet/abductor,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"s" = (
+/obj/structure/table/optable/abductor,
+/obj/item/cautery/alien,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"t" = (
+/obj/structure/table/abductor,
+/obj/item/storage/box/alienhandcuffs,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"v" = (
+/obj/item/scalpel/alien,
+/obj/item/surgical_drapes,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"w" = (
+/obj/item/retractor/alien,
+/obj/item/paper/guides/antag/abductor,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"y" = (
+/obj/machinery/abductor/gland_dispenser,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"z" = (
+/obj/structure/table/abductor,
+/obj/item/surgicaldrill/alien,
+/obj/item/circular_saw/alien,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+"A" = (
+/obj/structure/bed/abductor,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+c
+d
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+d
+j
+k
+k
+a
+y
+d
+a
+"}
+(6,1,1) = {"
+a
+a
+d
+k
+o
+s
+v
+z
+d
+a
+"}
+(7,1,1) = {"
+a
+a
+d
+l
+p
+k
+w
+A
+d
+a
+"}
+(8,1,1) = {"
+a
+a
+c
+d
+q
+t
+q
+d
+c
+a
+"}
+(9,1,1) = {"
+a
+a
+b
+c
+d
+d
+d
+c
+b
+a
+"}
+(10,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(17,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(20,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(21,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(22,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(24,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(25,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(26,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(27,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(28,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(29,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(30,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}

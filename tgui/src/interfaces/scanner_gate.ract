@@ -1,0 +1,19 @@
+<ui-display title='Scanner Gate'>
+	<ui-section label='Scan Mode'><ui-button icon='pencil' action='set_mode'></ui-button> {{data.scan_mode}}</ui-section>
+	{{#if data.scan_mode == "Disease"}}
+		<ui-section label='Disease Severity'><ui-button icon='pencil' action='set_disease_threshold'></ui-button> {{data.disease_threshold}}</ui-section>
+	{{/if}}
+	{{#if data.scan_mode == "Nanites"}}
+		<ui-section label='Cloud ID'><ui-button icon='pencil' action='set_nanite_cloud'></ui-button> {{data.nanite_cloud}}</ui-section>
+	{{/if}}
+	{{#if data.scan_mode == "Species"}}
+		<ui-section label='Target Species'><ui-button icon='pencil' action='set_target_species'></ui-button> {{data.target_species}}</ui-section>
+	{{/if}}
+	{{#if data.scan_mode == "Hygiene"}}
+		<ui-section label='Hygiene Level'><ui-button icon='pencil' action='set_target_hygiene'></ui-button> {{data.target_hygiene}}</ui-section>
+	{{/if}}
+	{{#if data.scan_mode == "Nutrition"}}
+		<ui-section label='Nutrition Level'><ui-button icon='pencil' action='set_target_nutrition'></ui-button> {{data.target_nutrition}}</ui-section>
+	{{/if}}
+    <ui-section><ui-button tooltip='If inverted, the gate will detect all entities that do NOT meet the set requirements.' tooltip-side='right' action='toggle_reverse'>{{data.reverse ? "Inverted Scan" : "Regular Scan" }}</ui-button></ui-section>
+</ui-display>

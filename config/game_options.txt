@@ -1,0 +1,570 @@
+## HEALTH ###
+
+##Damage multiplier, effects both weapons and healing on all mobs. For example, 1.25 would result in 25% higher damage.
+DAMAGE_MULTIPLIER 1
+
+## REVIVAL ###
+
+## whether pod plants work or not
+REVIVAL_POD_PLANTS
+
+## whether cloning tubes work or not
+REVIVAL_CLONING
+
+## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
+REVIVAL_BRAIN_LIFE -1
+
+## OOC DURING ROUND ###
+## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
+OOC_DURING_ROUND
+
+## EMOJI ###
+## Comment this out if you want to disable emojis
+EMOJIS
+
+## MOB MOVEMENT ###
+
+## We suggest editing these variables ingame to find a good speed for your server.
+## To do this you must be a high level admin. Open the 'debug' tab ingame.
+## Select "Debug Controller" and then, in the popup, select "Configuration". These variables should have the same name.
+
+## These values get directly added to values and totals ingame.
+## To speed things up make the number negative, to slow things down, make the number positive.
+
+## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
+RUN_DELAY 1
+WALK_DELAY 4
+
+## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
+## Entries completely override all subtypes. Later entries have precedence over earlier entries.
+## This means if you put /mob 0 on the last entry, it will null out all changes, while if you put /mob as the first entry and
+## /mob/living/carbon/human on the last entry, the last entry will override the first.
+##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
+MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 1
+
+
+## NAMES ###
+## If uncommented this adds a random surname to a player's name if they only specify one name.
+#HUMANS_NEED_SURNAMES
+
+## If uncommented, this forces all players to use random names !and appearances!.
+#FORCE_RANDOM_NAMES
+
+## Unhash this to turn on automatic reopening of a player's job if they suicide at roundstart
+#REOPEN_ROUNDSTART_SUICIDE_ROLES
+
+## Unhash to enable reopening of command level positions
+#REOPEN_ROUNDSTART_SUICIDE_ROLES_COMMAND_POSITIONS
+
+## Define the delay for roles to be reopened after the round starts in seconds.
+## Has a minimum delay of 30 seconds, though it's suggested to keep over 1 min
+## If undefined, the delay defaults to 4 minutes.
+#REOPEN_ROUNDSTART_SUICIDE_ROLES_DELAY 240
+
+## Unhash to enable a printed command report for reopened roles listing what roles were reopened.
+#REOPEN_ROUNDSTART_SUICIDE_ROLES_COMMAND_REPORT
+
+
+## ALERT LEVELS ###
+ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
+ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
+ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
+ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised. Additionally, access requirements on some doors have been lifted.
+ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
+ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+
+
+
+## GAME MODES ###
+
+## Uncomment to not send a roundstart intercept report. Gamemodes may override this.
+#NO_INTERCEPT_REPORT
+
+## Probablities for game modes chosen in 'secret' and 'random' modes.
+## Default probablity is 1, increase to make that mode more likely to be picked.
+## Set to 0 to disable that mode.
+
+PROBABILITY TRAITOR 5
+PROBABILITY TRAITORBRO 2
+PROBABILITY TRAITORCHAN 4
+PROBABILITY INTERNAL_AFFAIRS 3
+PROBABILITY NUCLEAR 2
+PROBABILITY REVOLUTION 2
+PROBABILITY CULT 2
+PROBABILITY CHANGELING 2
+PROBABILITY WIZARD 4
+PROBABILITY MONKEY 0
+PROBABILITY METEOR 0
+PROBABILITY EXTENDED 0
+PROBABILITY SECRET_EXTENDED 0
+PROBABILITY DEVIL 0
+PROBABILITY DEVIL_AGENTS 0
+PROBABILITY CLOWNOPS 0
+
+## You probably want to keep sandbox off by default for secret and random.
+PROBABILITY SANDBOX 0
+
+## Percent weight reductions for three of the most recent modes
+
+REPEATED_MODE_ADJUST 45 30 10
+
+## Toggles for continuous modes.
+## Modes that aren't continuous will end the instant all antagonists are dead.
+
+CONTINUOUS TRAITOR
+CONTINUOUS TRAITORBRO
+CONTINUOUS TRAITORCHAN
+CONTINUOUS INTERNAL_AFFAIRS
+#CONTINUOUS NUCLEAR
+#CONTINUOUS REVOLUTION
+CONTINUOUS CULT
+CONTINUOUS CHANGELING
+CONTINUOUS WIZARD
+#CONTINUOUS MONKEY
+
+##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
+
+CONTINUOUS METEOR
+CONTINUOUS EXTENDED
+CONTINUOUS SECRET_EXTENDED
+
+
+## Toggles for allowing midround antagonists (aka mulligan antagonists).
+## In modes that are continuous, if all antagonists should die then a new set of antagonists will be created.
+
+MIDROUND_ANTAG TRAITOR
+#MIDROUND_ANTAG TRAITORBRO
+MIDROUND_ANTAG TRAITORCHAN
+MIDROUND_ANTAG INTERNAL_AFFAIRS
+#MIDROUND_ANTAG  NUCLEAR
+#MIDROUND_ANTAG  REVOLUTION
+MIDROUND_ANTAG CULT
+MIDROUND_ANTAG CHANGELING
+MIDROUND_ANTAG WIZARD
+#MIDROUND_ANTAG  MONKEY
+
+## Uncomment these for overrides of the minimum / maximum number of players in a round type.
+## If you set any of these occasionally check to see if you still need them as the modes
+## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
+## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to
+## VERY low numbers (< 5) can lead to errors if the roundtypes were not designed for that.
+
+#MIN_POP TRAITOR 0
+#MAX_POP TRAITOR -1
+
+#MIN_POP TRAITORBRO 0
+#MAX_POP TRAITORBRO -1
+
+#MIN_POP TRAITORCHAN 15
+#MAX_POP TRAITORCHAN -1
+
+#MIN_POP DOUBLE_AGENTS 25
+#MAX_POP DOUBLE_AGENTS -1
+
+#MIN_POP NUCLEAR 0
+#MAX_POP NUCLEAR -1
+
+#MIN_POP REVOLUTION 20
+#MAX_POP REVOLUTION -1
+
+#MIN_POP CULT 24
+#MAX_POP CULT -1
+
+#MIN_POP CHANGELING 15
+#MAX_POP CHANGELING -1
+
+#MIN_POP WIZARD 20
+#MAX_POP WIZARD -1
+
+#MIN_POP MONKEY 20
+#MAX_POP MONKEY -1
+
+#MIN_POP METEOR 0
+#MAX_POP METEOR -1
+
+#MIN_POP DEVIL 0
+#MAX_POP DEVIL -1
+
+#MIN_POP DEVIL_AGENTS 25
+#MAX_POP DEVIL_AGENTS -1
+
+## Setting at least one mode to be playable at 0/1 players is required.
+#MIN_POP EXTENDED 0
+#MAX_POP EXTENDED -1
+
+
+
+## The amount of time it takes for the emergency shuttle to be called, from round start.
+SHUTTLE_REFUEL_DELAY 12000
+
+## Variables calculate how number of antagonists will scale to population.
+## Used as (Antagonists = Population / Coeff)
+## Set to 0 to disable scaling and use default numbers instead.
+TRAITOR_SCALING_COEFF 6
+BROTHER_SCALING_COEFF 6
+CHANGELING_SCALING_COEFF 6
+
+## Variables calculate how number of open security officer positions will scale to population.
+## Used as (Officers = Population / Coeff)
+## Set to 0 to disable scaling and use default numbers instead.
+SECURITY_SCALING_COEFF 8
+
+## The number of objectives traitors get.
+## Not including escaping/hijacking.
+TRAITOR_OBJECTIVES_AMOUNT 2
+BROTHER_OBJECTIVES_AMOUNT 2
+
+## Uncomment to prohibit jobs that start with loyalty
+## implants from being most antagonists.
+#PROTECT_ROLES_FROM_ANTAGONIST
+
+## Uncomment to prohibit assistants from becoming most antagonists.
+#PROTECT_ASSISTANT_FROM_ANTAGONIST
+
+## If non-human species are barred from joining as a head of staff
+#ENFORCE_HUMAN_AUTHORITY
+
+## If late-joining players have a chance to become a traitor/changeling
+ALLOW_LATEJOIN_ANTAGONISTS
+
+## Comment this out to disable the antagonist reputation system. This system rewards players who participate in the game instead of greytiding by giving them slightly higher odds to
+## roll antagonist in subsequent rounds until they get it.
+##
+## For details See the comments for /datum/game_mode/proc/antag_pick in code/game/gamemodes/game_mode.dm
+# USE_ANTAG_REP
+
+## The maximum amount of antagonist reputation tickets a player can bank (not use at once)
+ANTAG_REP_MAXIMUM 200
+
+## The default amount of tickets all users use while rolling
+DEFAULT_ANTAG_TICKETS 100
+
+## The maximum amount of extra tickets a user may use from their ticket bank in addition to the default tickets
+MAX_TICKETS_PER_ROLL 100
+
+## Uncomment to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.
+#SHOW_GAME_TYPE_ODDS
+
+## Uncomment to enable dynamic ruleset config file.
+DYNAMIC_CONFIG_ENABLED
+
+## RANDOM EVENTS ###
+## Comment this out to disable random events during the round.
+ALLOW_RANDOM_EVENTS
+
+## Multiplier for earliest start time of dangerous events.
+## Set to 0 to make dangerous events avaliable from round start.
+EVENTS_MIN_TIME_MUL 1
+
+## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
+## Set to 0 to make dangerous events avaliable for all populations.
+EVENTS_MIN_PLAYERS_MUL 1
+
+
+## AI ###
+
+## Allow the AI job to be picked.
+ALLOW_AI
+
+## Allow the AI Multicamera feature to be used by AI players
+ALLOW_AI_MULTICAM
+
+## Secborg ###
+## Uncomment to prevent the security cyborg module from being chosen
+#DISABLE_SECBORG
+
+## Peacekeeper Borg ###
+## Uncomment to prevent the peacekeeper cyborg module from being chosen
+#DISABLE_PEACEBORG
+
+## AWAY MISSIONS ###
+
+## Uncomment to load the virtual reality hub map
+#VIRTUAL_REALITY
+
+## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
+#ROUNDSTART_AWAY
+
+## How long the delay is before the Away Mission gate opens. Default is half an hour.
+## 600 is one minute.
+GATEWAY_DELAY 18000
+
+
+## ACCESS ###
+
+## If the number of players ready at round starts exceeds this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically be enabled. Otherwise, it will be disabled.
+## This is useful for accomodating both low and high population rounds on the same server.
+## Comment this out or set to 0 to disable this automatic toggle.
+MINIMAL_ACCESS_THRESHOLD 20
+
+## Comment this out this if you wish to use the setup where jobs have more access.
+## This is intended for servers with low populations - where there are not enough
+## players to fill all roles, so players need to do more than just one job.
+## This option is ignored if MINIMAL_ACCESS_THRESHOLD is used.
+#JOBS_HAVE_MINIMAL_ACCESS
+
+## Uncomment to give assistants maint access.
+#ASSISTANTS_HAVE_MAINT_ACCESS
+
+## Uncoment to give security maint access. Note that if you dectivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
+#SECURITY_HAS_MAINT_ACCESS
+
+## Uncomment to give everyone maint access.
+#EVERYONE_HAS_MAINT_ACCESS
+
+## Comment this out this to make security officers spawn in departmental security posts
+SEC_START_BRIG
+
+
+## GHOST INTERACTION ###
+## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
+#GHOST_INTERACTION
+
+## NEAR-DEATH EXPERIENCE ###
+## Comment this out to disable mobs hearing ghosts when unconscious and very close to death
+NEAR_DEATH_EXPERIENCE
+
+## NON-VOCAL SILICONS ###
+## Uncomment these to stop the AI, or cyborgs, from having vocal communication.
+#SILENT_AI
+#SILENT_BORG
+
+## SANDBOX PANEL AUTOCLOSE ###
+## The sandbox panel's item spawning dialog now stays open even after you click an option.
+## If you find that your players are abusing the sandbox panel, this option may slow them down
+## without preventing people from using it properly.
+## Only functions in sandbox game mode.
+#SANDBOX_AUTOCLOSE
+
+## ROUNDSTART SILICON LAWS ###
+## This controls what the AI's laws are at the start of the round.
+## Set to 0/commented out for "off", silicons will just start with Asimov.
+## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
+## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
+## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
+DEFAULT_LAWS 0
+
+## RANDOM LAWS ##
+## ------------------------------------------------------------------------------------------
+## These control what laws are available for selection if random silicon laws are active.
+## See datums\ai_laws.dm for the full law lists
+
+## standard-ish laws. These are fairly ok to run
+RANDOM_LAWS asimov
+RANDOM_LAWS asimovpp
+RANDOM_LAWS paladin
+RANDOM_LAWS robocop
+RANDOM_LAWS corporate
+
+## Quirky laws. Shouldn't cause too much harm
+#RANDOM_LAWS hippocratic
+#RANDOM_LAWS maintain
+#RANDOM_LAWS drone
+#RANDOM_LAWS liveandletlive
+#RANDOM_LAWS peacekeeper
+#RANDOM_LAWS reporter
+#RANDOM_LAWS hulkamania
+
+## Bad idea laws. Probably shouldn't enable these
+#RANDOM_LAWS syndie
+#RANDOM_LAWS ninja
+#RANDOM_LAWS antimov
+#RANDOM_LAWS thermodynamic
+
+## meme laws. Honk
+#RANDOM_LAWS buildawall
+
+## If weighted laws are selected (DEFAULT_LAWS = 3),
+## then an AI's starting laws will be determined by the weights of these values
+
+## Make sure there are no spaces between the law_id and the number.
+
+LAW_WEIGHT custom,0
+
+## standard-ish laws. These are fairly ok to run
+LAW_WEIGHT asimov,32
+LAW_WEIGHT asimovpp,12
+LAW_WEIGHT paladin,12
+LAW_WEIGHT robocop,12
+LAW_WEIGHT corporate,12
+
+## Quirky laws. Shouldn't cause too much harm
+LAW_WEIGHT hippocratic,3
+LAW_WEIGHT maintain,4
+LAW_WEIGHT drone,3
+LAW_WEIGHT liveandletlive,3
+LAW_WEIGHT peacekeeper,3
+LAW_WEIGHT reporter,4
+LAW_WEIGHT hulkamania,4
+
+## Bad idea laws. Probably shouldn't enable these
+LAW_WEIGHT syndie,0
+LAW_WEIGHT ninja,0
+LAW_WEIGHT antimov,0
+LAW_WEIGHT thermodynamic,0
+LAW_WEIGHT buildawall,0
+
+##------------------------------------------------
+
+## SILICON LAW MAX AMOUNT ###
+## The maximum number of laws a silicon can have
+## Attempting to upload laws past this point will fail unless the AI is reset
+SILICON_MAX_LAW_AMOUNT 12
+
+##------------------------------------------------
+
+## SILICON LAW MAX LENGTH ###
+## The maximum number of characters in a law uploaded
+## Affects Freeform, Core Freeform, and Syndicate Hacked boards.
+#MAX_LAW_LEN 1024
+
+##------------------------------------------------
+
+## Roundstart Races
+##-------------------------------------------------------------------------------------------
+## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.
+
+## You probably want humans on your space station, but technically speaking you can turn them off without any ill effect
+ROUNDSTART_RACES human
+
+## Races that are strictly worse than humans that could probably be turned on without balance concerns
+ROUNDSTART_RACES lizard
+#ROUNDSTART_RACES fly
+#ROUNDSTART_RACES moth
+ROUNDSTART_RACES plasmaman
+#ROUNDSTART_RACES shadow
+
+## Races that are better than humans in some ways, but worse in others
+ROUNDSTART_RACES ethereal
+#ROUNDSTART_RACES jelly
+#ROUNDSTART_RACES golem
+#ROUNDSTART_RACES adamantine
+#ROUNDSTART_RACES plasma
+#ROUNDSTART_RACES diamond
+#ROUNDSTART_RACES gold
+#ROUNDSTART_RACES silver
+#ROUNDSTART_RACES uranium
+#ROUNDSTART_RACES abductor
+#ROUNDSTART_RACES synth
+
+## Races that are straight upgrades. If these are on expect powergamers to always pick them
+#ROUNDSTART_RACES skeleton
+#ROUNDSTART_RACES zombie
+#ROUNDSTART_RACES slime
+#ROUNDSTART_RACES pod
+#ROUNDSTART_RACES military_synth
+#ROUNDSTART_RACES agent
+
+##-------------------------------------------------------------------------------------------
+
+## Roundstart no-reset races
+## Races defined here will not cause existing characters to be reset to human if they currently have a non-roundstart species defined.
+#ROUNDSTART_NO_HARD_CHECK felinid
+
+## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
+#JOIN_WITH_MUTANT_HUMANS
+
+##Overflow job. Default is assistant
+OVERFLOW_JOB Assistant
+
+## Overflow slot cap. Set to -1 for unlimited. If limited, it will still open up if every other job is full.
+OVERFLOW_CAP -1
+
+## Starlight for exterior walls and breaches. Uncomment for starlight!
+## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
+#STARLIGHT
+
+## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
+#GREY_ASSISTANTS
+
+## Midround Antag (aka Mulligan antag) config options ###
+
+## A time, in minutes, after which the midround antag system stops attempting to run and continuous rounds end immediately upon completion.
+MIDROUND_ANTAG_TIME_CHECK 60
+
+## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped
+MIDROUND_ANTAG_LIFE_CHECK 0.7
+
+##Limit Spell Choices##
+## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
+
+#NO_SUMMON_GUNS
+#NO_SUMMON_MAGIC
+#NO_SUMMON_EVENTS
+
+## Comment this out for "normal" explosions, which ignore obstacles
+## Uncomment for explosions that react to doors and walls
+REACTIONARY_EXPLOSIONS
+
+## Configure the bomb cap
+## This caps all explosions to the specified range. Used for both balance reasons and to prevent overloading the server and lagging the game out.
+## This is given as the 3rd number(light damage) in the standard (1,2,3) explosion notation. The other numbers are derived by dividing by 2 and 4.
+## eg: If you give the number 20. The bomb cap will be 5,10,20.
+## Can be any number above 4, some examples are provided below.
+
+## Small (3, 7, 14)
+#BOMBCAP 14
+## Default (5, 10, 20) (recommended if you enable REACTIONARY_EXPLOSIONS above)
+BOMBCAP 20
+## LagHell (7, 14, 28)
+#BOMBCAP 28
+
+
+## Lavaland "Budget"
+## Lavaland ruin spawning has an imaginary budget to spend on ruins, where
+## a less lootfilled or smaller or less round effecting ruin costs less to
+## spawn, while the converse is true. Alter this number to affect the amount
+## of ruins.
+LAVALAND_BUDGET 60
+
+## Space Ruin Budged
+Space_Budget 16
+
+## Time in ds from when a player latejoins till the arrival shuttle docks at the station
+## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
+ARRIVALS_SHUTTLE_DOCK_WINDOW 55
+
+## Uncomment to require the arrivals shuttle to be in flight (if it can fly) before late join players can join
+#ARRIVALS_SHUTTLE_REQUIRE_UNDOCKED
+
+## Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
+#ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
+
+## How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
+
+MICE_ROUNDSTART 10
+
+## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
+#EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
+
+## Determines if players are allowed to print integrated circuits, uncomment to allow.
+#IC_PRINTING
+
+## Uncomment to allow roundstart quirk selection in the character setup menu.
+## This used to be named traits, hence the config name, but it handles quirks, not the other kind of trait!
+ROUNDSTART_TRAITS
+
+## Uncomment to disable human moods.
+#DISABLE_HUMAN_MOOD
+
+## Enable night shifts ##
+#ENABLE_NIGHT_SHIFTS
+
+## Enable randomized shift start times##
+#RANDOMIZE_SHIFT_TIME
+
+## Sets shift time to server time at roundstart. Overridden by RANDOMIZE_SHIFT_TIME ##
+#SHIFT_TIME_REALTIME
+
+## A cap on how many monkeys may be created via monkey cubes
+MONKEYCAP 64
+
+## A cap on how many mice can be bred via cheese wedges
+RATCAP 64
+
+## Enable the capitalist agenda on your server.
+ECONOMY

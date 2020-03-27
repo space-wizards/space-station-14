@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Plant analyzers can now scan replica pods for the blood DNA (also known as UE) of any blood samples inside. The blood DNA is listed in the medical records and verifiable with forensics scanners."

@@ -1,0 +1,3 @@
+borg_deathsound.ogg is spliced from two clips, both of which are under the CC Attribution license. The sound at https://freesound.org/people/simmfoc/sounds/28477/ was pitched down, sped up, and repeated a few times. https://freesound.org/people/nicStage/sounds/1522/ is then attached with a fadeout effect and lowered volume.
+
+all complianator sounds are licensed under CC-BY-SA by Michael Haugh (supermichael)

@@ -1,0 +1,31 @@
+<link rel='ractive' href='./back.ract'>
+
+<ui-display title='Alarm Thresholds' button>
+  {{#partial button}}
+    <back/>
+  {{/partial}}
+  <table>
+    <thead><tr>
+      <th></th>
+      <th><span class="bad">min2</span></th>
+      <th><span class="average">min1</span></th>
+      <th><span class="average">max1</span></th>
+      <th><span class="bad">max2</span></th>
+    </tr></thead>
+    <tbody>
+      {{#each data.thresholds}}<tr>
+        <th>{{{name}}}</th>
+        {{#each settings}}<td>
+          <ui-button action='threshold' params='{"env": "{{env}}", "var": "{{val}}"}'>{{Math.fixed(selected, 2)}}</ui-button>
+        </td>{{/each}}
+      </tr>{{/each}}
+    </tbody>
+  <table>
+</ui-display>
+
+<style>
+  th, td {
+    padding-right: 16px;
+    text-align: left;
+  }
+</style>

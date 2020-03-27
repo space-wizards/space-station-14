@@ -1,0 +1,253 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
+	dir = 8;
+	view_range = 7;
+	x_offset = 6
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ab" = (
+/obj/machinery/computer/shuttle/hunter{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ac" = (
+/obj/structure/fans/tiny,
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 3;
+	height = 12;
+	id = "huntership_home";
+	name = "Deep Space";
+	width = 7
+	},
+/obj/docking_port/mobile{
+	dir = 4;
+	dwidth = 3;
+	height = 12;
+	id = "huntership";
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	width = 7
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Interpolship"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ae" = (
+/obj/machinery/button/door{
+	id = "Interpolship";
+	pixel_y = 26
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"af" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ag" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ah" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"aj" = (
+/obj/structure/closet/crate/eva,
+/obj/effect/turf_decal/box,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ak" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/mob_spawn/human/fugitive/spacepol{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"al" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"bY" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"gi" = (
+/obj/structure/table,
+/obj/effect/mob_spawn/human/fugitive/spacepol{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"hB" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"hJ" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ku" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"lp" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"rR" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"te" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "Interpolship"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"An" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Pq" = (
+/turf/template_noop,
+/area/template_noop)
+"Rz" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"RO" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+
+(1,1,1) = {"
+Pq
+ku
+te
+ac
+te
+ku
+Pq
+"}
+(2,1,1) = {"
+Pq
+ku
+ae
+al
+af
+ku
+Pq
+"}
+(3,1,1) = {"
+Pq
+ku
+bY
+RO
+ak
+ku
+Pq
+"}
+(4,1,1) = {"
+hB
+ku
+bY
+RO
+ak
+ku
+hB
+"}
+(5,1,1) = {"
+ku
+ku
+bY
+RO
+ak
+ku
+ku
+"}
+(6,1,1) = {"
+Pq
+hJ
+ag
+RO
+RO
+hJ
+Pq
+"}
+(7,1,1) = {"
+Pq
+hJ
+ah
+RO
+aj
+hJ
+Pq
+"}
+(8,1,1) = {"
+Pq
+ku
+lp
+RO
+aj
+ku
+Pq
+"}
+(9,1,1) = {"
+hB
+ku
+ku
+rR
+ku
+ku
+hB
+"}
+(10,1,1) = {"
+ku
+ku
+RO
+Rz
+RO
+ku
+ku
+"}
+(11,1,1) = {"
+Pq
+An
+aa
+gi
+ab
+An
+Pq
+"}
+(12,1,1) = {"
+Pq
+ku
+An
+An
+An
+ku
+Pq
+"}

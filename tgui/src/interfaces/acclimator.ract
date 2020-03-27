@@ -1,0 +1,27 @@
+<ui-display title='Acclimator'>
+
+	<ui-section>
+		<span> Current Temperature - {{data.chem_temp}} </span> <br/>
+		<span> Target Temperature - </span> <ui-button action='set_target_temperature'>{{data.target_temperature}}</ui-button> <br/>
+		<span> Acceptable Temperature Difference - </span> <ui-button action='set_allowed_temperature_difference'>{{data.allowed_temperature_difference}}</ui-button>
+	</ui-section>
+
+</ui-display>
+<ui-display title='Status'>
+
+	<ui-section>
+
+    <span> Maximum Volume - <ui-button action='change_volume'>{{data.max_volume}}</ui-button>  <ui-button action='reset_volume'>Reset</ui-button></span>
+		<span> Current Operation - {{data.acclimate_state}} </span> <br/>
+    <span> Current status: {{data.emptying ? "Emptying" : "Filling"}} </span> 
+    
+		{{#if data.enabled}}
+			<ui-button state='selected' action='turn_on'>On</ui-button>
+			<ui-button action='turn_off'>Off</ui-button>
+		{{else}}
+			<ui-button action='turn_on'>On</ui-button>
+			<ui-button state='selected' action='turn_off'>Off</ui-button>
+		{{/if}}
+	</ui-section>
+
+</ui-display>

@@ -1,0 +1,145 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/ore_box,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"c" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"d" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"e" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"f" = (
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"g" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"h" = (
+/obj/machinery/camera{
+	dir = 1;
+	network = list("auxbase")
+	},
+/obj/structure/mining_shuttle_beacon,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"i" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"j" = (
+/obj/docking_port/mobile/auxillary_base{
+	dir = 2
+	},
+/obj/machinery/bluespace_beacon,
+/obj/machinery/computer/auxillary_base,
+/turf/closed/wall,
+/area/shuttle/auxillary_base)
+"k" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"l" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"m" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"n" = (
+/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+
+(1,1,1) = {"
+b
+e
+e
+e
+e
+e
+l
+"}
+(2,1,1) = {"
+c
+f
+f
+f
+f
+f
+m
+"}
+(3,1,1) = {"
+c
+f
+f
+i
+f
+f
+m
+"}
+(4,1,1) = {"
+c
+f
+h
+j
+f
+f
+m
+"}
+(5,1,1) = {"
+c
+f
+f
+k
+f
+f
+m
+"}
+(6,1,1) = {"
+c
+f
+f
+f
+f
+f
+m
+"}
+(7,1,1) = {"
+d
+g
+g
+g
+g
+g
+n
+"}

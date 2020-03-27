@@ -1,0 +1,347 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered/cultaltar)
+"c" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/ruin/unpowered/cultaltar)
+"d" = (
+/turf/closed/wall/mineral/cult,
+/area/ruin/unpowered/cultaltar)
+"e" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/cultaltar)
+"f" = (
+/obj/structure/destructible/cult/pylon,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/cultaltar)
+"g" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered/cultaltar)
+"i" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered/cultaltar)
+"k" = (
+/obj/effect/decal/remains/human,
+/obj/item/melee/cultblade,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered/cultaltar)
+"l" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/shoes/cult,
+/obj/item/clothing/suit/hooded/cultrobes,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered/cultaltar)
+"m" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered/cultaltar)
+"o" = (
+/obj/effect/rune/narsie{
+	color = "#ff0000";
+	used = 1
+	},
+/obj/item/cult_shift,
+/obj/effect/decal/remains/human,
+/obj/item/melee/cultblade/dagger,
+/obj/effect/step_trigger/sound_effect{
+	happens_once = 1;
+	name = "a grave mistake";
+	sound = 'sound/hallucinations/i_see_you1.ogg';
+	triggerer_only = 1
+	},
+/obj/effect/step_trigger/message{
+	message = "<span class='cult italic'><b><span class='big'>You've made a grave mistake, haven't you?</span></b></span>";
+	name = "ohfuck"
+	},
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered/cultaltar)
+"q" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/shoes/cult,
+/obj/item/clothing/suit/hooded/cultrobes,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered/cultaltar)
+"s" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/cultaltar)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+b
+c
+b
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+d
+e
+c
+s
+c
+b
+b
+b
+c
+s
+c
+s
+d
+a
+"}
+(3,1,1) = {"
+a
+e
+f
+s
+d
+c
+c
+g
+c
+c
+d
+e
+f
+s
+a
+"}
+(4,1,1) = {"
+a
+c
+s
+c
+c
+c
+c
+b
+c
+c
+c
+c
+e
+c
+a
+"}
+(5,1,1) = {"
+a
+s
+d
+c
+c
+b
+b
+b
+b
+b
+c
+c
+d
+s
+a
+"}
+(6,1,1) = {"
+a
+c
+c
+c
+b
+b
+l
+d
+k
+b
+b
+c
+c
+c
+a
+"}
+(7,1,1) = {"
+b
+b
+c
+c
+g
+i
+b
+b
+b
+l
+b
+c
+c
+b
+b
+"}
+(8,1,1) = {"
+c
+b
+g
+b
+b
+d
+b
+o
+b
+d
+b
+b
+g
+b
+c
+"}
+(9,1,1) = {"
+b
+b
+c
+c
+b
+k
+b
+b
+b
+m
+b
+c
+c
+b
+b
+"}
+(10,1,1) = {"
+a
+c
+c
+c
+g
+b
+m
+d
+q
+b
+b
+c
+c
+c
+a
+"}
+(11,1,1) = {"
+a
+s
+d
+c
+c
+b
+b
+b
+b
+b
+c
+c
+d
+s
+a
+"}
+(12,1,1) = {"
+a
+c
+s
+c
+c
+c
+c
+b
+c
+c
+c
+c
+e
+c
+a
+"}
+(13,1,1) = {"
+a
+e
+f
+s
+d
+c
+c
+g
+c
+c
+d
+e
+f
+s
+a
+"}
+(14,1,1) = {"
+a
+d
+e
+c
+s
+c
+b
+b
+b
+c
+s
+c
+s
+d
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+b
+c
+b
+a
+a
+a
+a
+a
+a
+"}

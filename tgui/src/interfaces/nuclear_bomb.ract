@@ -1,0 +1,68 @@
+<ui-display title="Auth. Disk:">
+  {{#if data.disk_present}}
+      <ui-button icon='eject' style='selected' action='eject_disk'>++++++++++</ui-button>
+  {{else}}
+      <ui-button icon='plus' action='insert_disk'>----------</ui-button>
+  {{/if}}
+</ui-display>
+<ui-display title='Status'>
+  <span>{{data.status1}}-{{data.status2}}</span>
+</ui-display>
+<ui-display title='Timer'>
+  <ui-section label='Time to Detonation'>
+    <span>{{data.timing ? data.time_left : data.timer_set}}</span>
+  </ui-section>
+  {{^data.timing}}
+    <ui-section label='Adjust Timer'>
+      <ui-button icon='refresh' state='{{data.disk_present && data.code_approved && data.timer_is_not_default ? null : "disabled"}}'
+        action='timer' params='{"change": "reset"}'>Reset</ui-button>
+      <ui-button icon='minus' state='{{data.disk_present && data.code_approved && data.timer_is_not_min ? null : "disabled"}}'
+        action='timer' params='{"change": "decrease"}'>Decrease</ui-button>
+      <ui-button icon='pencil' state='{{data.disk_present && data.code_approved ? null : "disabled"}}' action='timer' params='{"change": "input"}'>Set</ui-button>
+      <ui-button icon='plus' state='{{data.disk_present && data.code_approved && data.timer_is_not_max ? null : "disabled"}}'
+        action='timer' params='{"change": "increase"}'>Increase</ui-button>
+    </ui-section>
+  {{/data.timing}}
+  <ui-section label='Timer'>
+    <ui-button icon='clock-o' style='{{data.timing ? "danger" : "caution"}}'
+      action='toggle_timer'
+      state='{{data.disk_present && data.code_approved && !data.safety ? null : "disabled"}}'>
+      {{data.timing ? "On" : "Off"}}
+    </ui-button>
+  </ui-section>
+</ui-display>
+<ui-display title='Anchoring'>
+  <ui-button
+    state='{{data.disk_present && data.code_approved ? null : "disabled"}}'
+    icon='{{data.anchored ? "lock" : "unlock"}}'
+    style='{{data.anchored ? null : "caution"}}'
+    action='anchor'>{{data.anchored ? "Engaged" : "Off"}}</ui-button>
+</ui-display>
+<ui-display title='Safety'>
+  <ui-button
+    state='{{data.disk_present && data.code_approved ? null : "disabled"}}'
+    icon='{{data.safety ? "lock" : "unlock"}}' action='safety'
+    style='{{data.safety ? "caution" : "danger"}}'>
+      <span>{{data.safety ? "On" : "Off"}}</span>
+  </ui-button>
+</ui-display>
+<ui-display title='Code'>
+  <ui-section label='Message'>{{data.message}}</ui-section>
+  <ui-section label='Keypad'>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"1"}'>1</ui-button>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"2"}'>2</ui-button>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"3"}'>3</ui-button>
+    <br>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"4"}'>4</ui-button>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"5"}'>5</ui-button>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"6"}'>6</ui-button>
+    <br>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"7"}'>7</ui-button>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"8"}'>8</ui-button>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"9"}'>9</ui-button>
+    <br>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"R"}'>R</ui-button>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"0"}'>0</ui-button>
+    <ui-button action='keypad' state='{{data.disk_present ? null : "disabled"}}' params='{"digit":"E"}'>E</ui-button>
+   </ui-section>
+</ui-display>

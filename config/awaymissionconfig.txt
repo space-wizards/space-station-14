@@ -1,0 +1,23 @@
+#List the potential random Z-levels here.
+#Maps must be the full path to them
+#Maps should be 255x255 or smaller and be bounded.  Falling off the edge of the map will result in undefined behavior.
+#SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
+
+#!!IMPORTANT NOTES FOR HOSTING AWAY MISSIONS!!:
+#Do NOT tick the maps during compile -- the game uses this list to decide which map to load. Ticking the maps will result in them ALL being loaded at once.
+#DO tick the associated code file for the away mission you are enabling. Otherwise, the map will be trying to reference objects which do not exist, which will cause runtime errors!
+
+#_maps/RandomZLevels/blackmarketpackers.dmm
+#_maps/RandomZLevels/spacebattle.dmm
+#_maps/RandomZLevels/TheBeach.dmm
+#_maps/RandomZLevels/Academy.dmm
+#_maps/RandomZLevels/wildwest.dmm
+#_maps/RandomZLevels/challenge.dmm
+#_maps/RandomZLevels/centcomAway.dmm
+#_maps/RandomZLevels/moonoutpost19.dmm
+#_maps/RandomZLevels/undergroundoutpost45.dmm
+#_maps/RandomZLevels/caves.dmm
+#_maps/RandomZLevels/snowdin.dmm
+#_maps/RandomZLevels/research.dmm
+#_maps/RandomZLevels/SnowCabin.dmm
+_maps/RandomZLevels/VR/snowdin_VR.dmm

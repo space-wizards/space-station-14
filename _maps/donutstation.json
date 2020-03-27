@@ -1,0 +1,11 @@
+{
+    "map_name": "Donutstation",
+    "map_path": "map_files/Donutstation",
+    "map_file": "Donutstation.dmm",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_donut",
+	    "emergency": "emergency_donut"
+    }
+}

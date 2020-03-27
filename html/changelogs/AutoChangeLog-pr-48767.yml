@@ -1,0 +1,5 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - tweak: "droppers are now available at autolathes and medical protolathes"
+  - tweak: "pill bottles now require plastic instead of metal to print"

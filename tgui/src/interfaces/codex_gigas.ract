@@ -1,0 +1,50 @@
+<ui-display title='Codex Gigas'>
+	<ui-section>
+		{{data.name}}
+	</ui-section>
+    <ui-section label='Prefix'>
+		<ui-button  state='{{data.currentSection == 1 ? null : "disabled"}}' action='Dark '>Dark</ui-button>
+		<ui-button  state='{{data.currentSection == 1 ? null : "disabled"}}' action='Hellish '>Hellish</ui-button>
+		<ui-button  state='{{data.currentSection == 1 ? null : "disabled"}}' action='Fallen '>Fallen</ui-button>
+		<ui-button  state='{{data.currentSection == 1 ? null : "disabled"}}' action='Fiery '>Fiery</ui-button>
+		<ui-button  state='{{data.currentSection == 1 ? null : "disabled"}}' action='Sinful '>Sinful</ui-button>
+		<ui-button  state='{{data.currentSection == 1 ? null : "disabled"}}' action='Blood '>Blood</ui-button>
+		<ui-button  state='{{data.currentSection == 1 ? null : "disabled"}}' action='Fluffy '>Fluffy</ui-button>
+    </ui-section>
+    <ui-section label='Title'>
+		<ui-button  state='{{data.currentSection <= 2 ? null : "disabled"}}' action='Lord '>Lord</ui-button>
+		<ui-button  state='{{data.currentSection <= 2 ? null : "disabled"}}' action='Prelate '>Prelate</ui-button>
+		<ui-button  state='{{data.currentSection <= 2 ? null : "disabled"}}' action='Count '>Count</ui-button>
+		<ui-button  state='{{data.currentSection <= 2 ? null : "disabled"}}' action='Viscount '>Viscount</ui-button>
+		<ui-button  state='{{data.currentSection <= 2 ? null : "disabled"}}' action='Vizier '>Vizier</ui-button>
+		<ui-button  state='{{data.currentSection <= 2 ? null : "disabled"}}' action='Elder '>Elder</ui-button>
+		<ui-button  state='{{data.currentSection <= 2 ? null : "disabled"}}' action='Adept '>Adept</ui-button>
+    </ui-section>
+    <ui-section label='Name'>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='hal'>hal</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='ve'>ve</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='odr'>odr</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='neit'>neit</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='ci'>ci</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='quon'>quon</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='mya'>mya</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='folth'>folth</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='wren'>wren</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='geyr'>geyr</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='hil'>hil</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='niet'>niet</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='twou'>twou</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='phi'>phi</ui-button>
+		<ui-button  state='{{data.currentSection <= 4 ? null : "disabled"}}' action='coa'>coa</ui-button>
+    </ui-section>
+    <ui-section label='suffix'>
+		<ui-button  state='{{data.currentSection == 4 ? null : "disabled"}}' action=' the Red'>the Red</ui-button>
+		<ui-button  state='{{data.currentSection == 4 ? null : "disabled"}}' action=' the Soulless'>the Soulless</ui-button>
+		<ui-button  state='{{data.currentSection == 4 ? null : "disabled"}}' action=' the Master'>the Master</ui-button>
+		<ui-button  state='{{data.currentSection == 4 ? null : "disabled"}}' action=', the Lord of all things'>the Lord of all things</ui-button>
+		<ui-button  state='{{data.currentSection == 4 ? null : "disabled"}}' action=', Jr.'>jr</ui-button>
+    </ui-section>
+    <ui-section label ='submit'>
+		<ui-button state='{{data.currentSection >= 4 ? null : "disabled"}}' action='search'>search</ui-button>
+    </ui-section>
+</ui-display>

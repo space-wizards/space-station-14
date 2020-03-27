@@ -1,0 +1,2944 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/obj/structure/fluff/paper/corner,
+/turf/template_noop,
+/area/template_noop)
+"ac" = (
+/obj/structure/fluff/paper,
+/turf/template_noop,
+/area/template_noop)
+"ad" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"ae" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"af" = (
+/turf/closed/indestructible/paper,
+/area/ruin/powered)
+"ag" = (
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/template_noop,
+/area/template_noop)
+"ah" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"ai" = (
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/turf/template_noop,
+/area/template_noop)
+"aj" = (
+/obj/machinery/door/airlock/freezer{
+	name = "airlock";
+	opacity = 0
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ak" = (
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"al" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"am" = (
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"an" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ao" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ap" = (
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aq" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ar" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"as" = (
+/obj/item/paper/crumpled/ruins/originalcontent,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"at" = (
+/mob/living/simple_animal/hostile/stickman,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"au" = (
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"av" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aw" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"ax" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ay" = (
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"az" = (
+/obj/structure/fluff/paper,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aA" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aB" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aC" = (
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aD" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper/corner,
+/mob/living/simple_animal/hostile/stickman,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aE" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aF" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/barricade/wooden,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aG" = (
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/barricade/wooden,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aH" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/obj/structure/barricade/wooden,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aI" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aJ" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/corner,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aK" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/fluff/paper,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aL" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/stickman,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aM" = (
+/obj/structure/fluff/paper/stack{
+	dir = 10
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aN" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aO" = (
+/obj/structure/fluff/paper,
+/mob/living/simple_animal/hostile/stickman/dog,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aP" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aQ" = (
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aR" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aS" = (
+/obj/structure/fluff/paper/corner,
+/mob/living/simple_animal/hostile/stickman/dog,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aT" = (
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aU" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aV" = (
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aW" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aX" = (
+/obj/structure/fluff/paper/stack,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aY" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"aZ" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ba" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/stickman/dog,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bb" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bc" = (
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/turf/template_noop,
+/area/template_noop)
+"bd" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"be" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"bf" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bg" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/item/toy/crayon/yellow,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bh" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/item/toy/crayon/red,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bi" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/fluff/paper/corner,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bj" = (
+/obj/structure/fluff/paper,
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bk" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/stickman,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bl" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bm" = (
+/obj/structure/fluff/paper,
+/mob/living/simple_animal/hostile/stickman,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bn" = (
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/template_noop,
+/area/template_noop)
+"bo" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"bp" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/item/toy/crayon/rainbow,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bq" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"br" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bs" = (
+/obj/item/toy/crayon/spraycan,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bt" = (
+/obj/item/storage/crayons,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bu" = (
+/mob/living/simple_animal/hostile/stickman/ranged,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bv" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bw" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"bx" = (
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/turf/template_noop,
+/area/template_noop)
+"by" = (
+/obj/structure/fluff/paper/corner,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bz" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/obj/structure/fluff/paper,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bA" = (
+/obj/item/toner,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bB" = (
+/obj/structure/easel,
+/obj/item/paper/pamphlet/ruin/originalcontent/stickman,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bC" = (
+/obj/item/toy/crayon/yellow,
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bD" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bE" = (
+/mob/living/simple_animal/hostile/stickman/dog,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bF" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack,
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bG" = (
+/obj/item/toy/crayon/blue,
+/mob/living/simple_animal/hostile/stickman/ranged,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bH" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/item/toy/crayon/yellow,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bI" = (
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/obj/structure/closet/crate/bin,
+/obj/item/paper/crumpled/ruins/originalcontent,
+/obj/item/paper/crumpled/ruins/originalcontent,
+/obj/item/paper/crumpled/ruins/originalcontent,
+/obj/item/gps{
+	gpstag = "Pulpy Signal"
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bJ" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/easel,
+/obj/item/paper/pamphlet/ruin/originalcontent/treeside,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bK" = (
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/obj/structure/table/wood,
+/obj/item/storage/crayons,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bL" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 6
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bM" = (
+/obj/item/toy/crayon/purple,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bN" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bO" = (
+/obj/machinery/door/airlock/freezer{
+	name = "airlock";
+	opacity = 0
+	},
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/fluff/paper,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bP" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bQ" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack,
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bR" = (
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bS" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bT" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 6
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bU" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/stickman,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bV" = (
+/obj/item/toy/crayon/yellow,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bW" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/easel,
+/obj/item/paper/pamphlet/ruin/originalcontent/pennywise,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bX" = (
+/obj/item/toy/crayon/blue,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bY" = (
+/obj/item/toy/crayon/red,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"bZ" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/bed,
+/obj/item/bedsheet/rainbow,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ca" = (
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/obj/structure/table/wood,
+/obj/item/storage/crayons,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cb" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/obj/item/toy/crayon/purple,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cc" = (
+/mob/living/simple_animal/hostile/boss/paper_wizard,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cd" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/toy/crayon/rainbow,
+/obj/item/toy/crayon/spraycan,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ce" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cf" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cg" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ch" = (
+/obj/structure/fluff/paper,
+/obj/item/paper/crumpled/ruins/originalcontent,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ci" = (
+/obj/structure/fluff/paper,
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cj" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/stickman,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ck" = (
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cl" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cm" = (
+/obj/structure/fluff/paper,
+/obj/structure/table/wood,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cn" = (
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/obj/structure/table/wood,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas,
+/obj/item/canvas/nineteenXnineteen,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"co" = (
+/obj/structure/fluff/paper,
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/obj/item/toy/crayon/blue,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cp" = (
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/obj/machinery/photocopier,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cq" = (
+/obj/structure/fluff/paper,
+/obj/structure/table/wood,
+/obj/item/storage/crayons,
+/obj/item/pen/fourcolor,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cr" = (
+/obj/structure/fluff/paper,
+/obj/structure/easel,
+/obj/item/paper/pamphlet/ruin/originalcontent/yelling,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cs" = (
+/obj/structure/fluff/paper,
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/stickman/dog,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"ct" = (
+/obj/structure/fluff/paper,
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cu" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 6
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cv" = (
+/obj/structure/fluff/paper,
+/obj/structure/fluff/paper/stack{
+	dir = 6
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"cw" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/stickman/ranged,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"wr" = (
+/obj/machinery/door/airlock/freezer{
+	name = "airlock";
+	opacity = 0
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"Ns" = (
+/obj/item/paper/secretrecipe,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ae
+ae
+bw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+af
+af
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ai
+af
+af
+bx
+bw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ae
+ae
+ai
+af
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ai
+af
+af
+af
+af
+af
+af
+af
+bx
+ae
+ae
+bw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ae
+ae
+ae
+ai
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+bx
+ae
+ae
+ae
+ae
+ae
+bw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+bx
+ae
+bw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ae
+ai
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+bx
+ae
+ae
+ae
+ae
+bw
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+af
+af
+af
+ak
+ar
+ar
+ay
+af
+ak
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ay
+af
+af
+af
+af
+af
+af
+af
+bx
+ae
+ae
+bw
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ai
+af
+af
+af
+af
+af
+af
+ak
+aY
+aq
+aq
+bk
+bp
+aY
+aq
+aq
+aq
+aq
+bL
+aq
+bU
+ax
+ap
+ch
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+bd
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+af
+af
+af
+al
+az
+af
+af
+am
+bq
+aT
+af
+af
+af
+af
+af
+af
+af
+am
+aq
+ci
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+bd
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+af
+af
+af
+aW
+az
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+aR
+ay
+af
+af
+af
+af
+af
+af
+bc
+aw
+aw
+be
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ae
+ai
+af
+af
+af
+af
+af
+af
+af
+al
+az
+af
+af
+af
+af
+ak
+ar
+ar
+ar
+ay
+af
+af
+af
+af
+af
+cj
+co
+af
+af
+af
+bc
+aw
+aw
+be
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+af
+af
+af
+af
+af
+am
+aZ
+ay
+af
+af
+af
+al
+ap
+ap
+ap
+aA
+ar
+ay
+af
+af
+af
+al
+az
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+ab
+ae
+ai
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+al
+az
+af
+af
+ak
+ao
+ap
+ap
+ap
+ap
+ap
+az
+af
+af
+af
+am
+aZ
+ay
+af
+af
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+af
+af
+ak
+ay
+af
+af
+af
+af
+ba
+aA
+bg
+ar
+ao
+bl
+ap
+bu
+ap
+ap
+aM
+az
+af
+af
+af
+af
+al
+az
+af
+af
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+af
+af
+al
+az
+af
+af
+af
+af
+am
+aq
+ax
+ap
+ap
+ap
+ap
+ap
+bA
+bE
+ap
+aA
+ar
+ay
+af
+af
+al
+az
+af
+af
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+ab
+ai
+af
+af
+af
+af
+af
+af
+al
+aA
+ay
+af
+af
+af
+af
+af
+al
+bl
+ap
+bt
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+az
+af
+af
+am
+aZ
+ay
+af
+bx
+ae
+bw
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+ac
+af
+af
+af
+af
+af
+aC
+aE
+ao
+aI
+az
+af
+af
+af
+af
+af
+am
+ax
+ap
+ap
+ap
+ap
+bB
+ap
+ap
+ap
+bu
+az
+af
+af
+af
+al
+az
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+ab
+ae
+ai
+af
+af
+af
+af
+af
+af
+am
+aq
+aJ
+aN
+aP
+aE
+ar
+ay
+af
+af
+am
+ax
+bu
+by
+aq
+aq
+bF
+ap
+ap
+bt
+az
+af
+af
+af
+al
+az
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+ac
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+aK
+af
+af
+al
+aX
+az
+af
+af
+af
+am
+ax
+az
+af
+af
+al
+as
+bR
+ap
+az
+af
+af
+af
+al
+cv
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+ac
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+aL
+ay
+af
+am
+aq
+bb
+ar
+ay
+af
+af
+al
+bz
+af
+af
+al
+bM
+ap
+ap
+aA
+ay
+af
+af
+bi
+aT
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+ac
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+al
+az
+af
+af
+af
+al
+ap
+az
+af
+af
+al
+aA
+ar
+bC
+ao
+ap
+ap
+bV
+ap
+az
+af
+af
+cs
+af
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+ac
+af
+af
+af
+ak
+ar
+ar
+ay
+af
+af
+af
+al
+aO
+af
+af
+af
+am
+bf
+aZ
+ay
+af
+al
+ap
+ap
+ap
+bG
+ap
+bM
+ap
+ap
+az
+af
+af
+ct
+af
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+ac
+af
+af
+af
+al
+ap
+ap
+az
+af
+af
+af
+am
+aN
+aQ
+af
+af
+af
+af
+bh
+az
+af
+al
+ap
+aI
+by
+bH
+bN
+aq
+aq
+ax
+az
+af
+af
+ct
+af
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+ac
+af
+af
+af
+al
+as
+ap
+az
+af
+af
+af
+af
+af
+aR
+ay
+af
+af
+af
+al
+bm
+af
+al
+ap
+ap
+az
+af
+bO
+af
+af
+am
+aN
+aQ
+af
+aR
+ay
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+ac
+af
+af
+af
+al
+ap
+ap
+aA
+ay
+af
+af
+af
+af
+am
+aU
+af
+af
+af
+bi
+aT
+af
+al
+aX
+ap
+az
+af
+bP
+ay
+af
+af
+af
+ck
+af
+am
+ci
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+ac
+af
+af
+ak
+ao
+ap
+ap
+aB
+aD
+aF
+aG
+af
+af
+af
+aK
+af
+af
+ak
+bj
+af
+af
+al
+ap
+ap
+az
+af
+al
+Ns
+bW
+ca
+af
+af
+af
+af
+aR
+ay
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+ac
+af
+af
+al
+ap
+ap
+ap
+ap
+az
+af
+aH
+an
+an
+an
+aV
+af
+af
+al
+az
+af
+af
+am
+aq
+aq
+aT
+af
+bQ
+ap
+ap
+aA
+cf
+ar
+cp
+af
+al
+az
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+ad
+ag
+af
+al
+ap
+at
+ap
+ap
+az
+af
+af
+af
+af
+af
+af
+af
+af
+al
+az
+af
+af
+af
+af
+af
+af
+af
+al
+bS
+bX
+ap
+bR
+ap
+cq
+af
+am
+aZ
+ay
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+ac
+af
+al
+ap
+ap
+ap
+ap
+aA
+ay
+af
+af
+af
+af
+af
+af
+af
+al
+az
+af
+af
+af
+af
+af
+af
+bI
+ao
+bM
+bt
+cb
+ap
+ap
+cr
+af
+af
+al
+az
+af
+bx
+bw
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+ac
+af
+al
+ap
+ap
+ap
+ap
+ap
+aA
+ar
+ay
+af
+af
+af
+af
+af
+am
+bb
+ay
+af
+af
+af
+af
+af
+bJ
+bA
+ap
+bY
+cc
+ap
+cl
+aT
+af
+af
+al
+az
+af
+af
+bd
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+ac
+af
+am
+aq
+au
+ap
+ap
+ap
+ap
+ap
+az
+af
+af
+af
+af
+af
+af
+al
+az
+af
+af
+af
+af
+af
+bK
+aq
+bT
+ap
+ap
+ap
+cm
+af
+af
+ak
+ao
+az
+af
+af
+bd
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+ac
+af
+af
+af
+al
+ap
+ap
+at
+as
+ap
+aA
+ay
+af
+af
+af
+af
+af
+am
+bb
+br
+ay
+af
+af
+af
+af
+af
+am
+bZ
+cd
+cg
+cn
+af
+af
+al
+ap
+az
+af
+af
+bd
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+ah
+aj
+an
+wr
+av
+ap
+ap
+ap
+ap
+ap
+ap
+aA
+ar
+ay
+af
+af
+af
+af
+al
+bs
+az
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+cw
+ap
+az
+af
+af
+bd
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+ac
+af
+af
+af
+am
+ax
+ap
+ap
+ap
+ap
+aM
+ap
+ap
+az
+af
+af
+af
+af
+am
+aq
+bv
+aE
+ar
+ay
+af
+af
+af
+af
+af
+af
+af
+ak
+cu
+aY
+aq
+aT
+af
+af
+bd
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+ad
+ag
+af
+af
+af
+am
+aq
+aq
+ax
+ap
+ap
+ap
+aS
+aT
+af
+af
+af
+af
+af
+af
+af
+al
+bu
+az
+af
+af
+af
+af
+ak
+ar
+ar
+aY
+aq
+aT
+af
+af
+af
+af
+bd
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+ad
+ag
+af
+af
+af
+af
+af
+am
+aq
+aq
+ax
+az
+af
+af
+af
+af
+af
+af
+af
+af
+am
+aq
+bD
+an
+an
+an
+an
+ce
+bq
+aq
+aT
+af
+af
+af
+af
+af
+bc
+be
+aa
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+aa
+aa
+ad
+ag
+af
+af
+af
+af
+af
+af
+af
+am
+aT
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+aa
+aa
+aa
+ad
+aw
+ag
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+bn
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+"}
+(43,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+af
+af
+af
+af
+af
+af
+af
+af
+af
+bc
+aw
+aw
+bo
+aw
+aw
+aw
+ag
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+bc
+aw
+aw
+be
+aa
+aa
+aa
+aa
+"}
+(44,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+aw
+aw
+ag
+af
+af
+af
+af
+af
+af
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+be
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(45,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+aw
+aw
+aw
+aw
+aw
+aw
+be
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

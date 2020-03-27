@@ -1,0 +1,27 @@
+div.notice
+  margin: 8px 0
+  padding: 4px
+
+  box-shadow: none
+
+  color: text-color-inverse
+  font-weight: bold
+  font-style: italic
+
+  background-color: notice-color-first
+  background-image: repeating-linear-gradient(
+    -45deg,
+    notice-color-first,
+    notice-color-first 10px,
+    notice-color-second 10px,
+    notice-color-second 20px
+  )
+
+  .label
+    color: text-color-inverse
+
+  .content:only-of-type
+    padding: 0
+
+  hr
+    background-color: rule-color-dark

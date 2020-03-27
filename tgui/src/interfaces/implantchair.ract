@@ -1,0 +1,40 @@
+<script>
+  component.exports = {
+    computed: {
+      occupantStatState () {
+        switch (this.get('data.occupant.stat')) {
+          case 0: return 'good'
+          case 1: return 'average'
+          default: return 'bad'
+        }
+      }
+    }
+  }
+</script>
+
+<ui-display title='Occupant'>
+  <ui-section label='Occupant'>
+	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
+  </ui-section>
+  {{#if data.occupied}}
+    <ui-section label='State'>
+      <span class='{{occupantStatState}}'>{{data.occupant.stat == 0 ? "Conscious" : data.occupant.stat == 1 ? "Unconcious" : "Dead"}}</span>
+  	</ui-section>
+  {{/if}}
+</ui-display>
+<ui-display title='Controls'>
+	<ui-section label='Door'>
+    <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
+	</ui-section>
+  <ui-section label='Uses'>
+    {{ data.ready_implants }}
+    {{#if data.replenishing}}
+      <span class='fa fa-cog fa-spin'/>
+    {{/if}}
+  </ui-section>
+  <ui-section label='Activate'>
+      <ui-button state='{{data.occupied && data.ready_implants > 0 && data.ready ? null : "disabled"}}' action='implant'>
+        {{ data.ready ? (data.special_name ? data.special_name : "Implant") : "Recharging"}}
+      </ui-button><br/>
+  </ui-section>
+</ui-display>

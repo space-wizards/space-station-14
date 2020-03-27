@@ -1,0 +1,4 @@
+/obj/machinery/power/apc/@SUBTYPES{dir = 1} : @OLD{@OLD; pixel_y = 23}
+/obj/machinery/power/apc/@SUBTYPES{dir = 2} : @OLD{@OLD; pixel_y = -23}
+/obj/machinery/power/apc/@SUBTYPES{dir = 4} : @OLD{@OLD; pixel_x = 24}
+/obj/machinery/power/apc/@SUBTYPES{dir = 8} : @OLD{@OLD; pixel_x = -25}

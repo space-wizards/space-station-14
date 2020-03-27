@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnstandardnessTestForDM", "UnstandardnessTestForDM\UnstandardnessTestForDM.csproj", "{A0EEBFC9-41D4-474D-853D-126AFDFB82DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0EEBFC9-41D4-474D-853D-126AFDFB82DE}.Debug|x86.ActiveCfg = Debug|x86
+		{A0EEBFC9-41D4-474D-853D-126AFDFB82DE}.Debug|x86.Build.0 = Debug|x86
+		{A0EEBFC9-41D4-474D-853D-126AFDFB82DE}.Release|x86.ActiveCfg = Release|x86
+		{A0EEBFC9-41D4-474D-853D-126AFDFB82DE}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - tweak: "OOC and Boh bomb confirmation buttons swapped around, now in the OK / Cancel order."

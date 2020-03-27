@@ -1,0 +1,48 @@
+
+<ui-display title='Storage' button>
+{{#partial button}}
+  {{#if data.isdryer}}<ui-button icon='{{data.drying ? "stop" : "tint"}}' action='Dry'>{{data.drying ? 'Stop drying' : 'Dry'}}</ui-button>{{/if}}
+{{/partial}}
+{{#if data.contents.length == 0}}
+  <ui-notice>
+    <span>Unfortunately, this {{data.name}} is empty.</span>
+  </ui-notice>
+{{else}}
+<div class="display tabular">
+	<section class="candystripe">
+			<section class="cell bold">
+				Item
+			</section>
+			<section class="cell bold">
+				Quantity
+			</section>
+			<section class="cell bold" align='center'>
+				{{#if data.verb}}{{data.verb}}{{else}}Dispense{{/if}}
+			</section>
+		</section>
+	{{#each data.contents}}
+		<section class="candystripe">
+			<section class="cell">
+				{{name}}
+			</section>
+			<section class="cell" align='right'>
+				{{amount}}
+			</section>
+			<section class="table" alight='right'>
+				<section class="cell"></section>
+				<section class="cell">
+					<ui-button grid action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{ "name" : {{name}}, "amount" : 1 }' >
+						One
+					</ui-button>
+				</section>
+				<section class="cell">
+					<ui-button grid action='Release' state={{(amount > 1) ? null : 'disabled'}} params='{ "name" : {{name}} }' >
+						Many
+					</ui-button>
+				</section>
+			</section>
+		</section>
+	{{/each}}
+</div>
+{{/if}}
+</ui-display>

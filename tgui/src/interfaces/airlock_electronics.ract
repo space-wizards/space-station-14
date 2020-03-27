@@ -1,0 +1,29 @@
+<ui-display>
+  <ui-section>
+    <ui-button icon='{{data.oneAccess ? "unlock" : "lock"}}' action='one_access'>{{data.oneAccess ? "One" : "All"}} Required</ui-button>
+    <ui-button icon='refresh' action='clear'>Clear</ui-button>
+  </ui-section>
+  <hr/>
+  <table>
+		<thead>
+			<tr>{{#each data.regions}}
+				<th><span class='highlight bold'>{{name}}</span></th>
+			{{/each}}</tr>
+		</thead>
+		<tbody>
+			<tr>{{#each data.regions}}
+				<td>{{#each accesses}}
+          <ui-button icon='{{req ? "check-square-o" : "square-o"}}' style='{{req ? "selected" : null}}'
+            action='set' params='{"access": "{{id}}"}'>{{name}}</ui-button>
+		      <br/>
+				{{/each}}</td>
+			{{/each}}</tr>
+		</tbody>
+	</table>
+	<hr/>
+	<span class='highlight bold'>Unrestricted Access:</span>
+	<ui-button icon='{{data.unres_direction & 1 ? "check-square-o" : "square-o"}}' style='{{data.unres_direction & 1 ? "selected" : null}}' action='direc_set' params='{"unres_direction": "1"}'>North</ui-button>
+	<ui-button icon='{{data.unres_direction & 4 ? "check-square-o" : "square-o"}}' style='{{data.unres_direction & 4 ? "selected" : null}}' action='direc_set' params='{"unres_direction": "4"}'>East</ui-button>
+	<ui-button icon='{{data.unres_direction & 2 ? "check-square-o" : "square-o"}}' style='{{data.unres_direction & 2 ? "selected" : null}}' action='direc_set' params='{"unres_direction": "2"}'>South</ui-button>
+	<ui-button icon='{{data.unres_direction & 8 ? "check-square-o" : "square-o"}}' style='{{data.unres_direction & 8 ? "selected" : null}}' action='direc_set' params='{"unres_direction": "8"}'>West</ui-button>
+</ui-display>

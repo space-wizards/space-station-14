@@ -1,0 +1,502 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall,
+/area/shuttle/hunter)
+"c" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"d" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"e" = (
+/obj/machinery/portable_atmospherics/scrubber/huge,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"f" = (
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"g" = (
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"h" = (
+/obj/machinery/door/airlock/security/glass,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"i" = (
+/obj/machinery/door/airlock/security/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"j" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"k" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"m" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weldingtool/largetank,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"n" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/mop,
+/obj/item/storage/bag/trash{
+	pixel_x = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"o" = (
+/obj/effect/mob_spawn/human/fugitive/russian{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"p" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"q" = (
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"r" = (
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"s" = (
+/obj/structure/table,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"t" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/large{
+	icon_state = "crittercrate"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"v" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"w" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"x" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"y" = (
+/turf/template_noop,
+/area/shuttle/hunter)
+"z" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"A" = (
+/obj/machinery/computer/shuttle/hunter{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"B" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"C" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"D" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"E" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
+	dir = 8;
+	x_offset = 0;
+	y_offset = 3
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"F" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/engineering{
+	icon_state = "engi_crateopen"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"G" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"H" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/coffin{
+	icon_state = "coffinopen"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"I" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/mecha_wreckage/ripley,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"J" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"K" = (
+/obj/machinery/door/airlock/security/glass,
+/obj/structure/fans/tiny,
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	id = "pirateship_home";
+	name = "Deep Space";
+	width = 17
+	},
+/obj/docking_port/mobile{
+	dheight = 3;
+	dwidth = 3;
+	height = 13;
+	id = "huntership";
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	width = 15
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"L" = (
+/obj/effect/mob_spawn/human/fugitive/russian{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"N" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"Q" = (
+/obj/item/book/manual/ripley_build_and_repair,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"Y" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+b
+c
+c
+b
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+c
+c
+a
+b
+b
+b
+d
+d
+b
+b
+b
+a
+c
+c
+a
+"}
+(4,1,1) = {"
+b
+d
+d
+b
+b
+p
+t
+x
+B
+B
+F
+b
+b
+d
+d
+b
+"}
+(5,1,1) = {"
+b
+e
+g
+b
+j
+q
+u
+q
+q
+u
+u
+H
+b
+g
+L
+b
+"}
+(6,1,1) = {"
+b
+e
+g
+h
+k
+k
+k
+k
+k
+D
+k
+k
+h
+g
+L
+b
+"}
+(7,1,1) = {"
+b
+f
+g
+b
+x
+k
+Y
+Y
+Y
+Y
+Q
+I
+b
+g
+L
+b
+"}
+(8,1,1) = {"
+b
+b
+b
+b
+b
+h
+b
+b
+b
+b
+h
+b
+b
+b
+b
+b
+"}
+(9,1,1) = {"
+a
+b
+b
+b
+m
+k
+b
+y
+y
+b
+k
+N
+b
+b
+b
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+i
+k
+k
+v
+y
+y
+v
+k
+k
+K
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+b
+n
+r
+b
+y
+y
+b
+r
+J
+b
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+b
+b
+h
+b
+b
+b
+b
+h
+b
+b
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+b
+o
+k
+r
+z
+z
+k
+k
+o
+b
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+b
+b
+s
+w
+A
+C
+E
+G
+b
+b
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+b
+b
+v
+v
+v
+v
+b
+b
+a
+a
+a
+a
+"}

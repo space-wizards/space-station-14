@@ -1,0 +1,45 @@
+{
+	
+    "canadian": {
+		"toilet": "washroom",
+		"bathroom": "washroom",
+		"restroom": "washroom",
+		"coffee": "doubledouble",
+		"backpack": "knapsack",
+		"rucksack": "knapsack",
+		"candybar": "chocolate bar",
+		"about": "aboot",
+		"friend": "buddy",
+		"pal": "buddy",
+		"donut": "doughnut",
+		"faucet": "tap",
+		"give": "give'r",
+		"bar": "boozecan",
+		"leave": "leave'r",
+		"scruffle": "kerfuffle",
+		"couch": "chesterfield",
+		"sofa": "chesterfield",
+		"alcohol": "mickey",
+		"shoes": "runners",
+		"cigarrete": "dart",
+		"cig": "dart",
+		"color": "colour",
+		"armor": "armour",
+		"armory": "armoury",
+		"defense": "defence",
+		"honor": "honour",
+		"labor": "labour",
+		"humor": "humour",
+		"humorous": "humourous",
+		"gray": "grey",
+		"labeled": "labelled",
+		"luster": "lustre",
+		"inch": "centimetre",
+		"yard": "metre",
+		"tumor": "tumour",
+		"mile": "kilometre",
+		"pound": "kilogram"
+		}
+	
+	
+}

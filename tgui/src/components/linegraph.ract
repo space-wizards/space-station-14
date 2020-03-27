@@ -1,0 +1,88 @@
+<script>
+  component.exports = {
+    data: {
+      graph: require('paths-js/smooth-line'),
+      xaccessor: point => point.x,
+      yaccessor: point => point.y
+    },
+    computed: {
+      size () {
+        const points = this.get('points')
+        return points[0].length
+      },
+      scale () {
+        const points = this.get('points')
+        return Math.max(...Array.map(points, a => Math.max(...Array.map(a, p => p.y))))
+      },
+      xaxis () {
+        const xinc = this.get('xinc')
+        const size = this.get('size')
+        return Array.from(Array(size).keys()).filter(num => num && num % xinc == 0)
+      },
+      yaxis () {
+        const yinc = this.get('yinc')
+        const scale = this.get('scale')
+        return Array.from(Array(yinc).keys()).map(num => Math.round((scale * (++num / 100)) * 10))
+      }
+    },
+    oninit () {
+      this.on({
+        enter (event) {
+          this.set('selected', event.index.count)
+        },
+        exit (event) {
+          this.set('selected')
+        }
+      })
+      window.addEventListener('resize', (event) => {
+        this.set('width', this.el.clientWidth)
+      })
+    },
+    onrender () {
+      this.set('width', this.el.clientWidth)
+    }
+  }
+</script>
+
+<svg class='linegraph' width='100%' height='{{height + 10}}'>
+  <g transform='translate(0, 5)'>
+    {{#graph({data: points, xaccessor: xaccessor, yaccessor: yaccessor, width: width, height: height})}}
+      {{#each xaxis}}
+        <line x1='{{xscale(.)}}' x2='{{xscale(.)}}' y1='0' y2='{{height}}' stroke='darkgray'/>
+        {{#if @index % 2 == 0}}
+          <text x='{{xscale(.)}}' y='{{height - 5}}' text-anchor='middle' fill='white'>{{(size - .) * xfactor}} {{xunit}}</text>
+        {{/if}}
+      {{/each}}
+      {{#each yaxis}}
+        <line x1='0' x2='{{width}}' y1='{{yscale(.)}}' y2='{{yscale(.)}}' stroke='darkgray'/>
+        <text x='0' y='{{yscale(.) - 5}}' text-anchor='begin' fill='white'>{{. * yfactor}} {{yunit}}</text>
+      {{/each}}
+      {{#each curves:curve}}
+        <path d='{{area.path.print()}}' fill='{{colors[curve]}}' opacity='0.1'/>
+      {{/each}}
+      {{#each curves:curve}}
+        <path d='{{line.path.print()}}' stroke='{{colors[curve]}}' fill='none'/>
+      {{/each}}
+      {{#each curves:curve}}
+        {{#each line.path.points():count}}
+          <circle transform='translate({{.}})' r='{{selected == count ? 10 : 4}}' fill='{{colors[curve]}}' on-mouseenter='enter' on-mouseleave='exit'/>
+        {{/each}}
+      {{/each}}
+      {{#each curves:curve}}
+        {{#each line.path.points():count}}
+          {{#if selected == count }}
+            <text transform='translate({{.}}) {{count <= size / 2 ? "translate(15, 4)" : "translate(-15, 4)"}}' text-anchor='{{count <= size / 2 ? "start" : "end"}}' fill='white'>
+              {{item[count].y * yfactor}} {{yunit}} @ {{(size - item[count].x) * xfactor}} {{xunit}}
+            </text>
+          {{/if}}
+        {{/each}}
+      {{/each}}
+      {{#each curves:curve}}
+        <g transform='translate({{(width / (curves.length + 1)) * (@index + 1)}}, 10)'>
+          <circle r='4' fill='{{colors[curve]}}'/>
+          <text x='8' y='4' fill='white'>{{legend[curve]}}</text>
+        </g>
+      {{/each}}
+    {{/graph}}
+  </g>
+</svg>

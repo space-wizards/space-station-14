@@ -1,0 +1,508 @@
+# You can use the "$include" directive to split your configs however you want
+
+$include game_options.txt
+$include dbconfig.txt
+$include comms.txt
+$include antag_rep.txt
+
+# You can use the @ character at the beginning of a config option to lock it from being edited in-game
+# Example usage:
+# @SERVERNAME tgstation
+# Which sets the SERVERNAME, and disallows admins from being able to change it using View Variables.
+# @LOG_TWITTER 0
+# Which explicitly disables LOG_TWITTER, as well as locking it.
+# There are various options which are hard-locked for security reasons.
+
+## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
+# SERVERNAME tgstation
+
+## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
+# SERVERSQLNAME tgstation
+
+## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
+STATIONNAME Space Station 13
+
+## Put on byond hub: Uncomment this to put your server on the byond hub.
+#HUB
+
+## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
+LOBBY_COUNTDOWN 120
+
+## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
+ROUND_END_COUNTDOWN 90
+
+## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt.
+## You need to set up your database to use the SQL based system.
+## This flag is automatically enabled if SQL_ENABLED isn't
+ADMIN_LEGACY_SYSTEM
+
+##Uncomment this to stop any admins loaded by the legacy system from having their rank edited by the permissions panel
+#PROTECT_LEGACY_ADMINS
+
+##Uncomment this to stop any ranks loaded by the legacy system from having their flags edited by the permissions panel
+#PROTECT_LEGACY_RANKS
+
+##Uncomment this to have admin ranks only loaded from the legacy admin_ranks.txt
+##If enabled, each time admins are loaded ranks the database will be updated with the current ranks and their flags
+#LOAD_LEGACY_RANKS_ONLY
+
+## Comment this out to stop locally connected clients from being given the almost full access !localhost! admin rank
+ENABLE_LOCALHOST_RANK
+
+## Uncomment this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
+## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
+## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
+## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
+## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
+#USE_AGE_RESTRICTION_FOR_JOBS
+
+## Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
+#USE_ACCOUNT_AGE_FOR_JOBS
+
+## Unhash this to track player playtime in the database. Requires database to be enabled.
+#USE_EXP_TRACKING
+## Unhash this to enable playtime requirements for head jobs.
+#USE_EXP_RESTRICTIONS_HEADS
+## Unhash this to override head jobs' playtime requirements with this number of hours.
+## Leave this commented out to use the values defined in the job datums. Values in the datums are stored as minutes.
+#USE_EXP_RESTRICTIONS_HEADS_HOURS 3
+## Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
+#USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
+## Unhash this to enable playtime requirements for certain non-head jobs, like Engineer and Scientist.
+#USE_EXP_RESTRICTIONS_OTHER
+## Allows admins to bypass job playtime requirements.
+#USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+
+## log OOC channel
+LOG_OOC
+
+## log client Say
+LOG_SAY
+
+## log admin actions
+LOG_ADMIN
+
+## log admin chat
+LOG_ADMINCHAT
+
+## log client access (logon/logoff)
+LOG_ACCESS
+
+## log game actions (start of round, results, etc.)
+LOG_GAME
+
+## log player votes
+LOG_VOTE
+
+## log client Whisper
+LOG_WHISPER
+
+## log emotes
+LOG_EMOTE
+
+## log attack messages
+LOG_ATTACK
+
+## log pda messages
+LOG_PDA
+
+## log telecomms messages
+LOG_TELECOMMS
+
+## log prayers
+LOG_PRAYER
+
+## log lawchanges
+LOG_LAW
+
+## log crew manifest to seperate file
+LOG_MANIFEST
+
+## log job divide debugging information
+#LOG_JOB_DEBUG
+
+## log all world.Topic() calls
+# LOG_WORLD_TOPIC
+
+## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
+## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
+# LOG_TWITTER
+
+## Enable logging pictures
+# LOG_PICTURES
+
+## log mecha actions
+# LOG_MECHA
+
+## log virus and actions
+LOG_VIRUS
+
+## log cloning actions
+LOG_CLONING
+
+# log shuttle actions
+LOG_SHUTTLE
+
+##Log camera pictures - Must have picture logging enabled
+PICTURE_LOGGING_CAMERA
+
+## period of time in seconds for players to be considered inactive
+# INACTIVITY_PERIOD 300
+
+## period of time in seconds for players to be considered afk and kickable
+# AFK_PERIOD 600
+
+## disconnect players who are considered afk
+# KICK_INACTIVE
+
+## Comment this out to stop admins being able to choose their personal ooccolor
+ALLOW_ADMIN_OOCCOLOR
+
+## Comment this out to stop admins being able to choose their personal asay color
+ALLOW_ADMIN_ASAYCOLOR
+
+## Job slot open/close by identification consoles delay in seconds
+ID_CONSOLE_JOBSLOT_DELAY 30
+
+## allow players to initiate a restart vote
+#ALLOW_VOTE_RESTART
+
+## allow players to initiate a mode-change vote
+#ALLOW_VOTE_MODE
+
+## allow players to initiate a map-change vote
+#ALLOW_VOTE_MAP
+
+## min delay (deciseconds) between voting sessions (default 10 minutes)
+VOTE_DELAY 6000
+
+## time period (deciseconds) which voting session will last (default 1 minute)
+VOTE_PERIOD 600
+
+## prevents dead players from voting or starting votes
+# NO_DEAD_VOTE
+
+## players' votes default to "No vote" (otherwise,  default to "No change")
+# DEFAULT_NO_VOTE
+
+## disable abandon mob
+NORESPAWN
+
+## disables calling del(src) on newmobs if they logout before spawnin in
+# DONT_DEL_NEWMOB
+
+## set a hosted by name for unix platforms
+HOSTEDBY Yournamehere
+
+## Set to jobban "Guest-" accounts from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
+## Set to 1 to jobban them from those positions, set to 0 to allow them.
+# GUEST_JOBBAN
+
+## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
+GUEST_BAN
+
+## Comment this out to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
+CHECK_RANDOMIZER
+
+## IPINTEL:
+## This allows you to detect likely proxies by checking ips against getipintel.net
+## Rating to warn at: (0.9 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
+#IPINTEL_RATING_BAD 0.9
+## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
+#IPINTEL_EMAIL ch@nge.me
+## How long to save good matches (ipintel rate limits to 15 per minute and 500 per day. so this shouldn't be too low, getipintel.net suggests 6 hours, time is in hours) (Your ip will get banned if you go over 500 a day too many times)
+#IPINTEL_SAVE_GOOD 12
+## How long to save bad matches (these numbers can change as ips change hands, best not to save these for too long in case somebody gets a new ip used by a spammer/proxy before.)
+#IPINTEL_SAVE_BAD 3
+## Domain name to query (leave commented out for the default, only needed if you pay getipintel.net for more querys)
+#IPINTEL_DOMAIN check.getipintel.net
+
+## Uncomment to allow web client connections
+#ALLOW_WEBCLIENT
+
+## Uncomment to restrict web client connections to byond members
+## This makes for a nice pay gate to cut down on ban evading, as the webclient's cid system isn't that great
+## byond membership starts at $10 for 3 months, so to use the webclient to evade, they would have sink 10 bucks in each evade.
+#WEBCLIENT_ONLY_BYOND_MEMBERS
+
+## Set to prevent anyone but those ckeys listed in config/whitelist.txt and config/admins.txt from joining your server
+#USEWHITELIST
+
+## set a server location for world reboot. Don't include the byond://, just give the address and port.
+## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
+# SERVER ss13.example.com:2506
+
+## forum address
+# FORUMURL http://tgstation13.org/phpBB/index.php
+
+## Wiki address
+# WIKIURL http://www.tgstation13.org/wiki
+
+## Rules address
+# RULESURL http://www.tgstation13.org/wiki/Rules
+
+## Github address
+# GITHUBURL https://www.github.com/tgstation/tgstation
+
+## Round specific stats address
+## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
+## This will take priority over the game logs address during reboot.
+## Example: https://atlantaned.space/statbus/round.php?round=
+# ROUNDSTATSURL
+
+## Game Logs address
+## Incase you don't have a fancy parsing system, but still want players to be able to find where you keep your server's logs.
+## Example: https://tgstation13.org/parsed-logs/basil/data/logs/
+# GAMELOGURL
+
+## Github repo id
+##This can be found by going to https://api.github.com/users/<user name here>/repos
+##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization
+# GITHUBREPOID 3234987
+
+## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
+# BANAPPEALS http://justanotherday.example.com
+
+## System command that invokes youtube-dl, used by Play Internet Sound.
+## You can install youtube-dl with
+## "pip install youtube-dl" if you have pip installed
+## from https://github.com/rg3/youtube-dl/releases
+## or your package manager
+## The default value assumes youtube-dl is in your system PATH
+# INVOKE_YOUTUBEDL youtube-dl
+
+## In-game features
+##Toggle for having jobs load up from the .txt
+# LOAD_JOBS_FROM_TXT
+
+## Uncomment this to forbid admins from possessing the singularity.
+#FORBID_SINGULO_POSSESSION
+
+## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
+## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
+#POPUP_ADMIN_PM
+
+## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
+ALLOW_HOLIDAYS
+
+## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
+#SHOW_IRC_NAME
+
+## Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
+##This is currently a testing optimized setting. A good value for production would be 98.
+TICK_LIMIT_MC_INIT 500
+
+##Defines the ticklag for the world. Ticklag is the amount of time between game ticks (aka byond ticks) (in 1/10ths of a second).
+##	This also controls the client network update rate, as well as the default client fps
+TICKLAG 0.5
+
+##Can also be set as per-second value, the following value is identical to the above.
+#FPS 20
+
+## Comment this out to disable automuting
+#AUTOMUTE_ON
+
+## Uncomment this to let players see their own notes (they can still be set by admins only)
+#SEE_OWN_NOTES
+
+### Comment these two out to prevent notes fading out over time for admins.
+## Notes older then this will start fading out.
+NOTE_FRESH_DAYS 91.31055
+## Notes older then this will be completely faded out.
+NOTE_STALE_DAYS 365.2422
+
+##Note: all population caps can be used with each other if desired.
+
+## Uncomment for 'soft' population caps, players will be warned while joining if the living crew exceeds the listed number.
+#SOFT_POPCAP 100
+
+## Message for soft cap
+SOFT_POPCAP_MESSAGE Be warned that the server is currently serving a high number of users, consider using alternative game servers.
+
+## Uncomment for 'hard' population caps, players will not be allowed to spawn if the living crew exceeds the listed number, though they may still observe or wait for the living crew to decrease in size.
+#HARD_POPCAP 150
+
+## Message for hard cap
+HARD_POPCAP_MESSAGE The server is currently serving a high number of users, You cannot currently join. You may wait for the number of living crew to decline, observe, or find alternative servers.
+
+## Uncomment for 'extreme' population caps, players will not be allowed to join the server if living crew exceeds the listed number.
+#EXTREME_POPCAP 200
+
+## Message for extreme cap
+EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, find alternative servers.
+
+## Uncomment to allow BYOND subscribers to bypassing server connection population cap. (Living player population cap still applies.)
+BYOND_MEMBER_BYPASS_POPCAP
+
+## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
+##	Requres database
+NOTIFY_NEW_PLAYER_AGE 0
+
+## Notify admins when a player connects if their byond account was created in the last X days
+## Requires database
+NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
+
+## Notify the irc channel when a new player makes their first connection
+##	Requres database
+#IRC_FIRST_CONNECTION_ALERT
+
+## Deny all new connections by ckeys we haven't seen before (exempts admins and only denies the connection if the database is enabled and connected)
+##	Requires database
+#PANIC_BUNKER
+
+## The message the Panic Bunker gives when someone is rejected by it
+#PANIC_BUNKER_MESSAGE Sorry, but the server is currently not accepting connections from never before seen players.
+
+## If panic bunker is on and a player is rejected (see above), attempt to send them to this connected server (see below) instead.
+##	You probably want this to be the same as CROSS_SERVER_ADDRESS
+#PANIC_SERVER_ADDRESS byond://address:port
+
+##Name of the place to send people rejected by the bunker
+#PANIC_SERVER_NAME [Put the name here]
+
+## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
+#AGGRESSIVE_CHANGELOG
+
+## Comment this out if you've used the mass conversion sql proc for notes or want to stop converting notes
+AUTOCONVERT_NOTES
+
+## Comment this out to stop admin messages sent anytime an admin disconnects from a round in play, you can edit the messages in admin.dm
+ANNOUNCE_ADMIN_LOGOUT
+
+## Uncomment to have an admin message sent anytime an admin connects to a round in play, you can edit the messages in admin.dm
+#ANNOUNCE_ADMIN_LOGIN
+
+## Map rotation
+## You should edit maps.txt to match your configuration when you enable this.
+MAPROTATION
+
+## Map voting
+## Allows players to vote with their preffered map setting
+## When it's set to zero, the map will be randomly picked each round
+PREFERENCE_MAP_VOTING 1
+
+## Map rotate chance delta
+## This is the chance of map rotation factored to the round length.
+## A value of 1 would mean the map rotation chance is the round length in minutes (hour long round == 60% rotation chance)
+## A value of 0.5 would mean the map rotation chance is half of the round length in minutes (hour long round == 30% rotation chance)
+#MAPROTATIONCHANCEDELTA 0.75
+
+## AUTOADMIN
+## The default admin rank
+AUTOADMIN_RANK Game Master
+
+## Uncomment to automatically give that admin rank to all players
+#AUTOADMIN
+
+
+## Uncomment to automatically deadmin players when the game starts.
+#AUTO_DEADMIN_PLAYERS
+
+## Uncomment to automatically deadmin antagonists when they gain the role.
+#AUTO_DEADMIN_ANTAGONISTS
+
+## Uncomment to automatically deadmin specific role sets when a player joins the game.
+#AUTO_DEADMIN_HEADS
+#AUTO_DEADMIN_SECURITY
+#AUTO_DEADMIN_SILICONS
+
+
+## CLIENT VERSION CONTROL
+## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
+## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
+## These messages will be followed by one stating the clients current version and the required version for clarity.
+## If CLIENT_WARN_POPUP is uncommented a popup window with the message will be displayed instead
+#CLIENT_WARN_VERSION 511
+#CLIENT_WARN_POPUP
+#CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
+CLIENT_ERROR_VERSION 511
+CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
+## The minimum build needed for joining the server, if using 512, a good minimum build would be 1421 as that disables the Middle Mouse Button exploit.
+CLIENT_ERROR_BUILD 1421
+
+## TOPIC RATE LIMITING
+## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
+## Admins are exempt from these limits.
+## Hitting the minute limit notifies admins.
+## Set to 0 or comment out to disable.
+SECOND_TOPIC_LIMIT 10
+
+MINUTE_TOPIC_LIMIT 100
+
+
+## CLICK RATE LIMITING
+## Same as above, but applies to clicking on objects in the game window.
+## This should be a higher then the interface limit to allow for the spam clickly nature of most battles.
+## Admins are exempt from these limits.
+## Hitting the minute limit notifies admins.
+## Set to 0 to disable.
+SECOND_CLICK_LIMIT 15
+
+MINUTE_CLICK_LIMIT 400
+
+##Error handling related options
+## The "cooldown" time for each occurence of a unique error
+#ERROR_COOLDOWN 600
+## How many occurences before the next will silence them
+#ERROR_LIMIT 90
+## How long a unique error will be silenced for
+#ERROR_SILENCE_TIME 6000
+##How long to wait between messaging admins about occurences of a unique error
+#ERROR_MSG_DELAY 50
+
+
+## Chat Announce Options
+## Various messages to be sent to game chats
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4
+## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
+## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+
+## Send a message with the station name starting a new game. Also required for the notify function
+#CHAT_ANNOUNCE_NEW_GAME
+
+
+## Allow admin hrefs that don't use the new token system, will eventually be removed
+DEBUG_ADMIN_HREFS
+
+###Master Controller High Pop Mode###
+
+##The Master Controller(MC) is the primary system controlling timed tasks and events in SS13 (lobby timer, game checks, lighting updates, atmos, etc)
+##Default base MC tick rate (1 = process every "byond tick" (see: tick_lag/fps config settings), 2 = process every 2 byond ticks, etc)
+##	Setting this to 0 will prevent the Master Controller from ticking
+BASE_MC_TICK_RATE 1
+
+##High population MC tick rate
+##	Byond rounds timer values UP, but the tick rate is modified with heuristics during lag spites so setting this to something like 2
+##	will make it run every 2 byond ticks, but will also double the effect of anti-lag heuristics. You can instead set it to something like
+##	1.1 to make it run every 2 byond ticks, but only increase the effect of anti-lag heuristics by 10%. or 1.5 for 50%.
+##	(As an aside, you could in theory also reduce the effect of anti-lag heuristics in the base tick rate by setting it to something like 0.5)
+HIGH_POP_MC_TICK_RATE 1.1
+
+##Engage high pop mode if player count raises above this (Player in this context means any connected user. Lobby, ghost or in-game all count)
+HIGH_POP_MC_MODE_AMOUNT 65
+
+##Disengage high pop mode if player count drops below this
+DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
+
+## Uncomment to prevent the world from sleeping while no players are connected after initializations
+#RESUME_AFTER_INITIALIZATIONS
+
+## Uncomment to set the number of /world/Reboot()s before the DreamDaemon restarts itself. 0 means restart every round. Requires tgstation server tools.
+#ROUNDS_UNTIL_HARD_RESTART 10
+
+
+##Default view size, in tiles.
+##	By default, this is 15x15, which gets simplified to 7 by byond
+##  15x15 would be the standard square view. 21x15 is what goonstation uses for widescreen.
+##  Setting this to something different from DEFAULT_VIEW_SQUARE will enable widescreen toggles
+##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
+DEFAULT_VIEW 15x15
+
+##Default view size, in tiles. Should *always* be square.
+## The alternative square viewport size if you're using a widescreen view size
+## You probably shouldn't ever be changing this, but it's here if you want to.
+DEFAULT_VIEW_SQUARE 15x15
+
+
+## Enable automatic profiling - Byond 513.1506 and newer only.
+#AUTO_PROFILE

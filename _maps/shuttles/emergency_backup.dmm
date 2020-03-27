@@ -1,0 +1,134 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/backup)
+"c" = (
+/obj/machinery/door/airlock/titanium,
+/obj/docking_port/mobile/emergency/backup,
+/turf/open/floor/plating,
+/area/shuttle/escape/backup)
+"f" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/random,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/backup)
+"g" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/backup)
+"m" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape/backup)
+"p" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/backup)
+"q" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape/backup)
+"u" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/backup)
+"x" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/backup)
+"F" = (
+/obj/structure/table/wood,
+/obj/item/paper/fluff/stations/centcom/broken_evac,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/backup)
+"P" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/backup)
+
+(1,1,1) = {"
+m
+m
+c
+m
+m
+m
+m
+m
+"}
+(2,1,1) = {"
+q
+g
+g
+g
+x
+g
+g
+q
+"}
+(3,1,1) = {"
+m
+g
+g
+g
+g
+g
+g
+m
+"}
+(4,1,1) = {"
+m
+p
+p
+p
+p
+g
+p
+m
+"}
+(5,1,1) = {"
+m
+p
+p
+p
+p
+g
+p
+m
+"}
+(6,1,1) = {"
+m
+g
+u
+g
+g
+g
+g
+m
+"}
+(7,1,1) = {"
+q
+a
+F
+f
+P
+g
+g
+q
+"}
+(8,1,1) = {"
+m
+m
+m
+m
+m
+m
+m
+m
+"}

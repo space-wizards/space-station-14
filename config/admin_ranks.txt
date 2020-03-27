@@ -1,0 +1,85 @@
+#Admin Rank format is as follows:
+#
+#Name = Game Admin
+#Include = @ ADMIN BAN SOUND
+#Exclude = FUN
+#Edit =
+#
+#Name will match anything after '=' and must be identical to an admin's rank in admins.txt to be linked but otherwise has no formatting restrictions.
+#A rank's permissions are defined with keywords that control access to groups of verbs and abilities, they are case-sensitive and separated by a space with no prefix.
+#To define no permissions for a type, leave it empty.
+#There are three types of permissions:
+#Include will give a keyword to a rank.
+#Exclude removes a keyword and takes precedence over Include.
+#Edit will allow an admin to edit these permissions on other ranks or change an admin's rank to another if they can edit all the permissions it has.
+#Edit is only used when SQL-based admin loading is enabled.
+#If SQL-based admin loading is enabled, ranks and their keywords listed here will be loaded first and override any with the same name loaded from the database.
+#
+#The following are valid permission keywords:
+#ADMIN = general admin tools, verbs etc.
+#FUN = events, other event-orientated actions. Access to the fun secrets in the secrets panel.
+#BAN = the ability to ban and unban.
+#STEALTH = the ability to stealthmin (make yourself appear with a fake name to everyone but other admins.
+#POSSESS = the ability to possess objects.
+#POLL = the ability to create in game server polls (requires DB).
+#BUILD = the ability to use buildmode.
+#SERVER = the ability to restart the server, change the game mode or force a round to start/end.
+#DEBUG = debug tools used for diagnosing and fixing problems. It's useful to give this to coders so they can investigate problems on a live server.
+#VAREDIT = everyone may view viewvars/debugvars/whatever you call it. This keyword allows you to actually EDIT those variables.
+#PERMISSIONS = allows you to promote and/or demote people.
+#SOUND = allows you to upload and play SOUND.
+#SPAWN = mob transformations, spawning of most atoms including mobs (high-risk atoms, e.g. blackholes, will require the +FUN flag too).
+#AUTOADMIN = admin gains powers upon connect. This defaults to on, you can exclude AUTOADMIN to make a role require using the readmin verb to gain powers (this does not effect the admin's ability to walk past bans or other on-connect limitations like panic bunker or pop limit).
+#DBRANKS = when sql-based admin loading is enabled, allows for non-temporary changes in the permissions panel to be saved (requires DB).
+#EVERYTHING = Simply gives you everything without having to type every flag.
+#@ = special keyword for the current permission type that adds all the keywords that the preceding rank has of the same type.
+
+Name = Admin Observer
+Include =
+Exclude = AUTOADMIN
+Edit =
+
+Name = Moderator
+Include = ADMIN
+Exclude =
+Edit =
+
+Name = Admin Candidate
+Include = @
+Exclude =
+Edit =
+
+Name = Trial Admin
+Include = @ SPAWN VAREDIT BAN
+Exclude =
+Edit =
+
+Name = Badmin
+Include = @ POSSESS POLL BUILD SERVER FUN
+Exclude =
+Edit =
+
+Name = Game Admin
+Include = @ STEALTH SOUND DEBUG
+Exclude =
+Edit =
+
+Name = Game Master
+Include = EVERYTHING
+Exclude =
+Edit = EVERYTHING
+
+Name = Lazy Master
+Include = EVERYTHING
+Exclude = AUTOADMIN
+Edit = EVERYTHING
+
+Name = Host
+Include = EVERYTHING
+Exclude =
+Edit = EVERYTHING
+
+Name = Coder
+Include = DEBUG VAREDIT SERVER SPAWN POLL
+Exclude = AUTOADMIN
+Edit =

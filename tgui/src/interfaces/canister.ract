@@ -1,0 +1,84 @@
+<ui-notice>
+  <span>The regulator {{data.hasHoldingTank ? "is" : "is not"}} connected to a tank.</span>
+</ui-notice>
+<ui-display title='Canister' button>
+  {{#partial button}}
+    <ui-button icon='pencil' action='relabel'>Relabel</ui-button>
+  {{/partial}}
+  <ui-section label='Pressure'>
+    <span>{{Math.round(adata.tankPressure)}} kPa</span>
+  </ui-section>
+  <ui-section label='Port'>
+    <span class='{{data.portConnected ? "good" : "average"}}'>{{data.portConnected ? "Connected" : "Not Connected"}}</span>
+  </ui-section>
+  {{#if data.isPrototype}} 
+  <ui-section label='Access'>
+      <ui-button icon='{{data.restricted ? "lock" : "unlock"}}'
+      style='{{"caution"}}'
+      action='restricted'>{{data.restricted ? "Restricted to Engineering" : "Public"}}</ui-button>
+  </ui-section>
+  {{/if}}
+</ui-display>
+<ui-display title='Valve'>
+  <ui-section label='Release Pressure'>
+    <ui-bar min='{{data.minReleasePressure}}' max='{{data.maxReleasePressure}}'
+      value='{{data.releasePressure}}'>{{Math.round(adata.releasePressure)}} kPa</ui-bar>
+  </ui-section>
+  <ui-section label='Pressure Regulator'>
+    <ui-button icon='refresh' state='{{data.releasePressure != data.defaultReleasePressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "reset"}'>Reset</ui-button>
+    <ui-button icon='minus' state='{{data.releasePressure > data.minReleasePressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "min"}'>Min</ui-button>
+    <ui-button icon='pencil' action='pressure' params='{"pressure": "input"}'>Set</ui-button>
+    <ui-button icon='plus' state='{{data.releasePressure < data.maxReleasePressure ? null : "disabled"}}'
+      action='pressure' params='{"pressure": "max"}'>Max</ui-button>
+  </ui-section>
+  <ui-section label='Valve'>
+    <ui-button icon='{{data.valveOpen ? "unlock" : "lock"}}'
+      style='{{data.valveOpen ? data.hasHoldingTank ? "caution" : "danger" : null}}'
+      action='valve'>{{data.valveOpen ? "Open" : "Closed"}}</ui-button>
+</ui-display>
+{{#if data.isPrototype}}  
+<ui-display title='Valve Toggle Timer'>
+  {{^data.timing}}
+    <ui-section label='Adjust Timer'>
+      <ui-button icon='refresh' state='{{data.timer_is_not_default ? null : "disabled"}}'
+        action='timer' params='{"change": "reset"}'>Reset</ui-button>
+      <ui-button icon='minus' state='{{data.timer_is_not_min ? null : "disabled"}}'
+        action='timer' params='{"change": "decrease"}'>Decrease</ui-button>
+      <ui-button icon='pencil' state='{{"disabled"}}'
+	action='timer' params='{"change": "input"}'>Set</ui-button>
+      <ui-button icon='plus' state='{{data.timer_is_not_max ? null : "disabled"}}'
+        action='timer' params='{"change": "increase"}'>Increase</ui-button>
+    </ui-section>
+  {{/data.timing}}
+  <ui-section label='Timer'>
+     <ui-button icon='clock-o' style='{{data.timing ? "danger" : "caution"}}'
+      action='toggle_timer'> {{data.timing ? "On" : "Off"}}
+ </ui-button>
+ <ui-section label='Time until Valve Toggle'>
+ <span>{{data.timing ? data.time_left : data.timer_set}}</span>
+ </ui-section>
+ </ui-display>
+{{/if}}
+
+
+<ui-display title='Holding Tank' button>
+  {{#partial button}}
+    {{#if data.hasHoldingTank}}
+      <ui-button icon='eject' style='{{data.valveOpen ? "danger" : null}}' action='eject'>Eject</ui-button>
+    {{/if}}
+  {{/partial}}
+  {{#if data.hasHoldingTank}}
+		<ui-section label='Label'>
+			{{data.holdingTank.name}}
+		</ui-section>
+		<ui-section label='Pressure'>
+			{{Math.round(adata.holdingTank.tankPressure)}} kPa
+		</ui-section>
+	{{else}}
+		<ui-section>
+			<span class='average'>No Holding Tank</span>
+		</ui-section>
+	{{/if}}
+</ui-display>

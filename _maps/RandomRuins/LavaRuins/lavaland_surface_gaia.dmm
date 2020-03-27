@@ -1,0 +1,470 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"c" = (
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"d" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"e" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"f" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"g" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"h" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"i" = (
+/obj/machinery/hydroponics/soil{
+	self_sustaining = 1
+	},
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"j" = (
+/mob/living/simple_animal/butterfly{
+	atmos_requirements = list()
+	},
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"l" = (
+/obj/item/reagent_containers/food/snacks/grown/mushroom/angel,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"m" = (
+/obj/item/reagent_containers/food/snacks/grown/mushroom/libertycap,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"n" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"p" = (
+/mob/living/simple_animal/hostile/lightgeist{
+	AIStatus = 1;
+	light_color = "#42ECFF"
+	},
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"q" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"r" = (
+/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/ausbushes/sparsegrass,
+/mob/living/simple_animal/butterfly{
+	atmos_requirements = list()
+	},
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"s" = (
+/obj/item/reagent_containers/food/snacks/grown/mushroom/amanita,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"t" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"v" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"w" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/ruin/unpowered/gaia)
+"A" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"B" = (
+/obj/structure/flora/grass/jungle,
+/mob/living/simple_animal/hostile/lightgeist{
+	AIStatus = 1;
+	light_color = "#42ECFF"
+	},
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"C" = (
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+"D" = (
+/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+/turf/open/floor/plating/grass/lavaland,
+/area/ruin/unpowered/gaia)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+w
+w
+w
+w
+w
+w
+w
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+w
+w
+c
+b
+c
+b
+c
+w
+w
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+w
+w
+c
+g
+d
+f
+c
+d
+c
+w
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+w
+w
+c
+d
+c
+i
+d
+C
+n
+c
+w
+w
+w
+a
+"}
+(5,1,1) = {"
+a
+a
+w
+c
+c
+c
+c
+p
+j
+s
+b
+h
+c
+b
+w
+a
+"}
+(6,1,1) = {"
+a
+w
+w
+g
+d
+c
+c
+c
+v
+d
+c
+c
+h
+w
+w
+a
+"}
+(7,1,1) = {"
+w
+w
+b
+c
+m
+r
+c
+c
+A
+n
+C
+b
+g
+c
+w
+w
+"}
+(8,1,1) = {"
+w
+b
+c
+d
+c
+n
+c
+b
+B
+c
+d
+m
+d
+h
+c
+w
+"}
+(9,1,1) = {"
+w
+c
+d
+c
+f
+d
+c
+d
+h
+c
+f
+j
+c
+b
+f
+w
+"}
+(10,1,1) = {"
+w
+c
+c
+h
+b
+c
+c
+q
+t
+b
+d
+c
+A
+b
+c
+w
+"}
+(11,1,1) = {"
+w
+d
+e
+i
+n
+d
+c
+t
+c
+c
+n
+c
+c
+q
+c
+w
+"}
+(12,1,1) = {"
+w
+c
+b
+c
+p
+g
+s
+c
+b
+j
+h
+d
+n
+c
+b
+w
+"}
+(13,1,1) = {"
+w
+b
+c
+d
+q
+d
+b
+c
+c
+n
+c
+c
+b
+D
+C
+w
+"}
+(14,1,1) = {"
+w
+w
+f
+c
+n
+c
+c
+b
+c
+b
+c
+h
+i
+C
+d
+w
+"}
+(15,1,1) = {"
+a
+w
+w
+l
+j
+c
+n
+c
+c
+g
+c
+j
+c
+c
+w
+w
+"}
+(16,1,1) = {"
+a
+a
+w
+c
+b
+c
+c
+g
+c
+c
+c
+n
+c
+w
+w
+a
+"}
+(17,1,1) = {"
+a
+a
+w
+d
+g
+c
+p
+h
+t
+h
+e
+c
+h
+w
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+w
+w
+c
+b
+n
+c
+c
+j
+g
+c
+c
+w
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+w
+w
+c
+h
+c
+n
+c
+c
+w
+w
+w
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+w
+w
+w
+w
+w
+w
+w
+w
+a
+a
+a
+a
+"}

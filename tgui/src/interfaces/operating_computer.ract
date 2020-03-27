@@ -1,0 +1,66 @@
+{{#if data.menu == 2}}
+	<ui-button icon='undo' action='change_menu' params='{"menu": "1"}'>Return</ui-button>
+	<ui-display title='Advanced Surgery Procedures'>
+		<ui-button icon='download' action='sync'>Sync with research database</ui-button>
+		{{#each data.surgeries}}
+			<ui-display>
+					<ui-section><b>{{name}}</b></ui-section>
+					<ui-section>{{desc}}</ui-section>
+			</ui-display>
+		{{/each}}
+	</ui-display>
+{{else}}
+	<ui-button action='change_menu' params='{"menu": "2"}'>View Surgery Procedures</ui-button>
+	{{#unless data.table}}
+		<ui-notice>
+			No table detected!
+		</ui-notice>
+	{{/unless}}
+	<ui-display>
+		<ui-display title='Patient State'>
+			{{#if data.patient}}
+				<ui-section label='State'>
+					<span class='{{data.patient.statstate}}'>{{data.patient.stat}}</span>
+				</ui-section>
+				<ui-section label='Blood Type'>
+					<span class='content'>{{data.patient.blood_type}}</span>
+				</ui-section>
+				<ui-section label='Health'>
+					<ui-bar min='{{data.patient.minHealth}}' max='{{data.patient.maxHealth}}' value='{{data.patient.health}}'
+					state='{{data.patient.health >= 0 ? "good" : "average"}}'>{{Math.round(adata.patient.health)}}</ui-bar>
+				</ui-section>
+				{{#each [{label: "Brute", type: "bruteLoss"}, {label: "Burn", type: "fireLoss"}, {label: "Toxin", type: "toxLoss"}, {label: "Respiratory", type: "oxyLoss"}]}}
+					<ui-section label='{{label}}'>
+						<ui-bar min='0' max='{{data.patient.maxHealth}}' value='{{data.patient[type]}}' state='bad'>{{Math.round(adata.patient[type])}}</ui-bar>
+					</ui-section>
+				{{/each}}
+			{{else}}
+				No patient detected.
+			{{/if}}
+		</ui-display>
+		<ui-display title='Initiated Procedures'>
+			{{#if data.procedures}}
+				{{#each data.procedures}}
+					<ui-subdisplay title='{{name}}'>
+						<ui-section label='Next Step'>
+							<span class='content'>{{next_step}}</span>
+							{{#if chems_needed}}
+								<span class='content'><b>Required chemicals:</b><br> {{chems_needed}}</span>
+							{{/if}}
+						</ui-section>
+						{{#if alternative_step}}
+							<ui-section label='Alternative Step'>
+								<span class='content'>{{alternative_step}}</span>
+								{{#if alt_chems_needed}}
+									<span class='content'><b>Required chemicals:</b><br> {{chems_needed}}</span>
+								{{/if}}
+							</ui-section>
+						{{/if}}
+					</ui-subdisplay>
+				{{/each}}
+			{{else}}
+				No active procedures.
+			{{/if}}
+		</ui-display>
+	</ui-display>
+{{/if}}

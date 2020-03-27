@@ -1,0 +1,598 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"c" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
+"d" = (
+/obj/structure/window/reinforced,
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"e" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"f" = (
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"g" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"h" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"i" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency/shuttle_build{
+	dwidth = 9;
+	height = 15;
+	name = "Shuttle Under Construction";
+	port_direction = 4;
+	preferred_direction = 2;
+	width = 26
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"j" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 3;
+	pixel_y = 10
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/airlock_painter,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"k" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical,
+/obj/item/clothing/gloves/color/yellow{
+	pixel_y = 8
+	},
+/obj/item/storage/toolbox/electrical,
+/obj/item/multitool{
+	pixel_x = 2;
+	pixel_y = -4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"l" = (
+/obj/structure/table,
+/obj/item/storage/box/lights/mixed{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/electronics/airalarm{
+	pixel_x = 8
+	},
+/obj/item/electronics/airalarm{
+	pixel_x = 8
+	},
+/obj/item/electronics/airalarm{
+	pixel_x = 8
+	},
+/obj/item/electronics/airalarm{
+	pixel_x = 8
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"m" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/metal/fifty{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/stack/rods/fifty,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"n" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/mineral/titanium/fifty{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"o" = (
+/obj/structure/table,
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/titaniumglass{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"p" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+c
+e
+e
+h
+e
+e
+g
+e
+i
+e
+e
+h
+e
+e
+g
+e
+g
+e
+p
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+e
+p
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+e
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+c
+c
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+e
+e
+h
+h
+h
+a
+"}
+(5,1,1) = {"
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+h
+h
+"}
+(6,1,1) = {"
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+h
+"}
+(7,1,1) = {"
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+j
+m
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+h
+"}
+(8,1,1) = {"
+c
+c
+f
+f
+f
+f
+f
+f
+f
+f
+k
+n
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+h
+"}
+(9,1,1) = {"
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+l
+o
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+h
+"}
+(10,1,1) = {"
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+h
+"}
+(11,1,1) = {"
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+h
+h
+"}
+(12,1,1) = {"
+c
+c
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+e
+e
+h
+h
+h
+a
+"}
+(13,1,1) = {"
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+e
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+b
+d
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+e
+p
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+c
+e
+e
+h
+e
+e
+e
+h
+e
+e
+e
+h
+e
+e
+e
+h
+e
+e
+p
+a
+a
+a
+a
+a
+a
+"}

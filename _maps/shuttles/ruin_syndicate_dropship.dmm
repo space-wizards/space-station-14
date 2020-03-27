@@ -1,0 +1,753 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"al" = (
+/obj/machinery/airalarm/syndicate{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"bo" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"bB" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/button/door{
+	id = "caravansyndicate3_bolt_starboard";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -24;
+	pixel_y = -6;
+	req_access_txt = "150";
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"bN" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/caravan/syndicate3)
+"cB" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"dZ" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/caravan/syndicate3)
+"gl" = (
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate3_bolt_port";
+	name = "External Airlock";
+	normalspeed = 0;
+	req_access_txt = "150"
+	},
+/obj/docking_port/mobile{
+	dir = 2;
+	dwidth = 6;
+	height = 7;
+	id = "caravansyndicate3";
+	name = "Syndicate Drop Ship";
+	port_direction = 8;
+	preferred_direction = 4;
+	width = 15
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/shuttle/caravan/syndicate3)
+"ha" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/obj/item/wrench,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/caravan/syndicate3)
+"hF" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/power/apc/syndicate{
+	dir = 8;
+	name = "Syndicate Drop Ship APC";
+	pixel_x = -25
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/caravan/syndicate3)
+"ka" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/shuttle/caravan/syndicate3)
+"mJ" = (
+/obj/structure/shuttle/engine/propulsion/burst/left{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/caravan/syndicate3)
+"ns" = (
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	id = "caravansyndicate3_bridge";
+	name = "Bridge Blast Door Control";
+	pixel_x = -16;
+	pixel_y = 5;
+	req_access_txt = "150"
+	},
+/obj/machinery/button/door{
+	id = "caravansyndicate3_bolt_bridge";
+	name = "Bridge Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -16;
+	pixel_y = -5;
+	req_access_txt = "150";
+	specialfunctions = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"qE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/shoes/sneakers/black,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"rz" = (
+/obj/machinery/computer/shuttle/caravan/syndicate3{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"rU" = (
+/obj/structure/grille,
+/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/machinery/door/poddoor{
+	id = "caravansyndicate3_bridge"
+	},
+/turf/open/floor/plating,
+/area/shuttle/caravan/syndicate3)
+"rV" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/shuttle/caravan/syndicate3)
+"sb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/syndicate3{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"sn" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/shuttle/caravan/syndicate3)
+"ss" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"uy" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"vw" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/regular,
+/obj/item/assembly/flash/handheld,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"vQ" = (
+/obj/structure/shuttle/engine/propulsion/burst/right{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/caravan/syndicate3)
+"wH" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/caravan/syndicate3)
+"xC" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/button/door{
+	id = "caravansyndicate3_bolt_port";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -24;
+	pixel_y = 6;
+	req_access_txt = "150";
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"BQ" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"Cm" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -26
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/shuttle/caravan/syndicate3)
+"Dt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/storage/box/syndie_kit/chameleon,
+/obj/item/crowbar/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Dx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"EO" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/airalarm/syndicate{
+	pixel_y = 24
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/shuttle/caravan/syndicate3)
+"Fa" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/under/syndicate/combat,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/storage/belt/military,
+/obj/item/crowbar/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Gx" = (
+/obj/machinery/airalarm/syndicate{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"HJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sign/warning/vacuum{
+	pixel_y = -32
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/under/syndicate/combat,
+/obj/item/storage/belt/military,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"HM" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"Ij" = (
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Shuttle turret control";
+	pixel_y = 34;
+	req_access = null;
+	req_access_txt = "150"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"IR" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate3_bolt_bridge";
+	name = "Bridge";
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"Jv" = (
+/turf/template_noop,
+/area/template_noop)
+"KS" = (
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate3_bolt_starboard";
+	name = "External Airlock";
+	normalspeed = 0;
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/caravan/syndicate3)
+"Lq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/structure/sign/warning/vacuum{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/shoes/sneakers/black,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"NH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/glasses/night,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Pt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/closet/crate,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/item/stack/sheet/mineral/plastitanium{
+	amount = 20
+	},
+/obj/item/storage/box/lights/bulbs,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 20
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/caravan/syndicate3)
+"PL" = (
+/obj/machinery/porta_turret/syndicate/energy,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/caravan/syndicate3)
+"Rj" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 1
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/caravan/syndicate3)
+"Sl" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/emergency,
+/obj/item/wrench,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"Tn" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/caravan/syndicate3)
+"UD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"US" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"Vf" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Ready Room";
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"Wr" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"YU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/under/syndicate/combat,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"ZB" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"ZI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/jackboots,
+/obj/item/crowbar/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"ZJ" = (
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"ZK" = (
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+"ZZ" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/syndicate3)
+
+(1,1,1) = {"
+Jv
+mJ
+dZ
+dZ
+dZ
+vQ
+Jv
+"}
+(2,1,1) = {"
+ZB
+wH
+wH
+wH
+wH
+wH
+ZB
+"}
+(3,1,1) = {"
+Tn
+Tn
+bN
+Pt
+ha
+Tn
+Tn
+"}
+(4,1,1) = {"
+Tn
+hF
+US
+ZJ
+BQ
+ka
+Tn
+"}
+(5,1,1) = {"
+Tn
+EO
+ss
+cB
+BQ
+Cm
+Tn
+"}
+(6,1,1) = {"
+Tn
+sn
+ss
+cB
+UD
+rV
+Tn
+"}
+(7,1,1) = {"
+Tn
+NH
+Fa
+cB
+qE
+Dt
+Tn
+"}
+(8,1,1) = {"
+Rj
+Tn
+Tn
+Vf
+Tn
+Tn
+PL
+"}
+(9,1,1) = {"
+gl
+xC
+al
+cB
+bo
+bB
+KS
+"}
+(10,1,1) = {"
+Tn
+Lq
+YU
+Dx
+ZI
+HJ
+Tn
+"}
+(11,1,1) = {"
+Tn
+Tn
+Tn
+IR
+Tn
+Tn
+Tn
+"}
+(12,1,1) = {"
+Tn
+uy
+Gx
+cB
+ZZ
+Sl
+Tn
+"}
+(13,1,1) = {"
+rU
+ns
+Ij
+HM
+Wr
+vw
+rU
+"}
+(14,1,1) = {"
+rU
+rU
+sb
+rz
+ZK
+rU
+rU
+"}
+(15,1,1) = {"
+Jv
+rU
+rU
+rU
+rU
+rU
+Jv
+"}

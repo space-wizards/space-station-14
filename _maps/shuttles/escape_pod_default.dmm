@@ -1,0 +1,67 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"B" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/pod_1)
+"G" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/status_display/evac{
+	pixel_x = 32
+	},
+/obj/machinery/computer/shuttle/pod{
+	pixel_x = -32
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"N" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Escape Pod Airlock"
+	},
+/obj/docking_port/mobile/pod{
+	port_direction = 2
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"Q" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/pod_1)
+"U" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/item/radio/intercom{
+	pixel_x = 25
+	},
+/obj/item/storage/pod{
+	pixel_x = -26
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/pod_1)
+"Z" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/pod_1)
+
+(1,1,1) = {"
+B
+B
+B
+Z
+"}
+(2,1,1) = {"
+Q
+G
+U
+N
+"}
+(3,1,1) = {"
+B
+B
+B
+Z
+"}

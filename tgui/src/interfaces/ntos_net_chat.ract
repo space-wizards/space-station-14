@@ -1,0 +1,71 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+	{{#if data.adminmode}}
+		<h1>ADMINISTRATIVE MODE</h1>
+	{{/if}}
+
+	{{#if data.title}}
+		<div class="itemLabel">
+			Current channel: 
+		</div>
+		<div class="itemContent">
+			{{data.title}}
+		</div>
+		<div class="itemLabel">
+			Operator access: 
+		</div>
+		<div class="itemContent">
+			{{#if data.is_operator}}
+				<b>Enabled</b>
+			{{else}}
+				<b>Disabled</b>
+			{{/if}}
+		</div>
+		<div class="itemLabel">
+			Controls: 
+		</div>
+		<div class="itemContent">
+			<table>
+				<tr><td><ui-button action='PRG_speak'>Send message</ui-button>
+				<tr><td><ui-button action='PRG_changename'>Change nickname</ui-button>
+				<tr><td><ui-button action='PRG_toggleadmin'>Toggle administration mode</ui-button>
+				<tr><td><ui-button action='PRG_leavechannel'>Leave channel</ui-button>
+				<tr><td><ui-button action='PRG_savelog'>Save log to local drive</ui-button>
+				{{#if data.is_operator}}
+					<tr><td><ui-button action='PRG_renamechannel'>Rename channel</ui-button>
+					<tr><td><ui-button action='PRG_setpassword'>Set password</ui-button>
+					<tr><td><ui-button action='PRG_deletechannel'>Delete channel</ui-button>
+				{{/if}}
+			</table>
+		</div>		
+		<b>Chat Window</b>
+			<div class="statusDisplay" style="overflow: auto;">
+			<div class="item">
+				<div class="itemContent" style="width: 100%;">
+					{{#each data.messages}}
+						{{msg}}<br>
+					{{/each}}
+				</div>
+			</div>
+			</div>	
+		<b>Connected Users</b><br>
+		{{#each data.clients}}
+			{{name}}<br>
+		{{/each}}
+	{{else}}
+		<b>Controls:</b>
+		<table>
+			<tr><td><ui-button action='PRG_changename'>Change nickname</ui-button>
+			<tr><td><ui-button action='PRG_newchannel'>New Channel</ui-button>
+			<tr><td><ui-button action='PRG_toggleadmin'>Toggle administration mode</ui-button>
+		</table>
+		<b>Available channels:</b>
+		<table>
+		{{#each data.all_channels}}		
+			<tr><td><ui-button action='PRG_joinchannel' params='{"id": "{{id}}"}'>{{chan}}</ui-button><br>
+		{{/each}}
+		</table>
+	{{/if}}
+</ui-display>

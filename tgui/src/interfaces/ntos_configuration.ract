@@ -1,0 +1,67 @@
+<script>
+  component.exports = {
+    data: {
+	  chargeState(charge) {
+	    let max = this.get('data.battery.max')
+	    if(charge > (max/2)) return 'good'
+		else if(charge > (max/4)) return 'average'
+		else return 'bad'
+	    }
+      }
+    }
+</script>
+
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display>
+	<i>Welcome to computer configuration utility. Please consult your system administrator if you have any questions about your device.</i><hr>
+	<ui-display title='Power Supply'>
+		<ui-section label='Power Usage'>
+			{{data.power_usage}}W
+		</ui-section>
+		
+		{{#if data.battery}}
+			<ui-section label='Battery Status'>
+					Active
+			</ui-section>
+			<ui-section label='Battery Rating'>
+				{{data.battery.max}}
+			</ui-section>
+			<ui-section label='Battery Charge'>
+				<ui-bar min='0' max='{{adata.battery.max}}' value='{{adata.battery.charge}}' state='{{chargeState(adata.battery.charge)}}'>{{Math.round(adata.battery.charge)}}/{{adata.battery.max}}</ui-bar>
+			</ui-section>
+		{{else}}
+			<ui-section label='Battery Status'>
+				Not Available
+			</ui-section>
+		{{/if}}
+	</ui-display>
+	
+	<ui-display title='File System'>
+		<ui-section label='Used Capacity'>
+			<ui-bar min='0' max='{{adata.disk_size}}' value='{{adata.disk_used}}' state='good'>{{Math.round(adata.disk_used)}}GQ / {{adata.disk_size}}GQ</ui-bar>
+		</ui-section>
+	</ui-display>
+	
+	<ui-display title='Computer Components'>
+		{{#each data.hardware}}
+			<ui-subdisplay title='{{name}}'>
+				<div style='display: table-caption; margin-left: 3px'>{{desc}}</div>
+
+				<ui-section label='State'>
+					<ui-button state='{{critical ? "disabled" : null}}' action='PC_toggle_component' params='{"name": "{{name}}"}'>
+						{{enabled ? "Enabled" : "Disabled"}}
+					</ui-button>
+				</ui-section>
+				
+				{{#if powerusage}}
+					<ui-section label='Power Usage'>
+						{{powerusage}}W
+					</ui-section>
+				{{/if}}
+			</ui-subdisplay>			
+			<br>
+		{{/each}}
+	</ui-display>
+</ui-display>

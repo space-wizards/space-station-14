@@ -1,0 +1,50 @@
+<ui-display title='Health kiosk'>
+  <ui-section>Greetings, valued nanotransen employee. Insert {{data.kiosk_cost}} Credits to begin health analysis.</ui-section>
+  <ui-section>
+    <ui-button icon='power-off' state='{{data.active_status  ? null : 'disabled'}}' action='beginScan'>Begin Scan (Cost: {{data.kiosk_cost}} Credits)</ui-button><br/>
+  </ui-section>
+  {{#if data.active_status == 0}}
+    <ui-section title='Medical Report'>
+      <ui-section label='Patient name'>
+        {{data.patient_name}}.
+      </ui-section>
+      <ui-section label='Brute'>
+	<ui-bar min='0' max='100' value='{{data.brute_health}}' state={{"bad"}}> {{Math.round(data.brute_health)}}%</ui-bar>
+      </ui-section>
+      <ui-section label='Burn'>
+	<ui-bar min='0' max='100' value='{{data.burn_health}}' state={{"bad"}}> {{Math.round(data.burn_health)}}%</ui-bar>
+      </ui-section>
+      <ui-section label='Toxin'>
+	<ui-bar min='0' max='100' value='{{data.toxin_health}}' state="bad"}}> {{Math.round(data.toxin_health)}}%</ui-bar>
+      </ui-section>
+      <ui-section label='Suffocation'>
+	<ui-bar min='0' max='100' value='{{data.suffocation_health}}' state="bad"}}> {{Math.round(data.suffocation_health)}}%</ui-bar>
+      </ui-section>
+      {{#if data.adv_active_status == 0}}
+      <ui-section label='Cellular'>
+	<ui-bar min='0' max='100' value='{{data.clone_health}}' state="bad"}}> {{Math.round(data.clone_health)}}%</ui-bar>
+      </ui-section>
+      {{/if}}
+      <ui-section label='Patient status'>
+        {{data.patient_status}}
+      </ui-section>
+      <ui-section label='Disease status'>
+        {{data.patient_illness}}
+      </ui-section>
+      {{#if data.adv_active_status == 0}}
+      <ui-section label='Brain status'>
+        <span class='{{data.brain_damage <= 20 ? "good" : "bad"}}'>{{data.brain_health}}</span>
+      </ui-section>   
+      {{/if}}
+      {{#if data.upgrade_active_status == 0}}
+      <span></span>
+      <ui-section label ='Patient pre-existing conditions'>
+        {{data.trauma_status}}
+      </ui-section>
+      <ui-section label ='Radiation status'>
+        {{data.rad_status}} Target is <span class='{{data.rad_value <= 100 ? "good" : "bad"}}'>{{Math.round(data.rad_value)}}% irradiated.</span>
+      </ui-section>
+      {{/if}}
+      </ui-section>
+  {{/if}}
+</ui-display> 

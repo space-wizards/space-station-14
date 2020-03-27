@@ -1,0 +1,692 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral/random,
+/area/ruin/unpowered/no_grav)
+"c" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"d" = (
+/turf/closed/wall/mineral/bananium,
+/area/ruin/unpowered)
+"e" = (
+/obj/machinery/door/airlock/bananium,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"f" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered)
+"g" = (
+/obj/effect/mob_spawn/human/clown,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"h" = (
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"i" = (
+/obj/structure/closet/crate,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"j" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/item/stack/ore/bananium,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"k" = (
+/obj/structure/closet/secure_closet{
+	name = "clown locker";
+	req_access_txt = "46"
+	},
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"l" = (
+/obj/structure/shuttle/engine/heater{
+	color = "#FFFF00";
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	color = "#FFFF00";
+	dir = 8
+	},
+/turf/open/floor/plating/airless{
+	color = "#FFFF00"
+	},
+/area/ruin/unpowered)
+"m" = (
+/obj/structure/shuttle/engine/propulsion/left{
+	color = "#FFFF00";
+	dir = 4
+	},
+/turf/template_noop,
+/area/ruin/unpowered)
+"n" = (
+/turf/closed/mineral/random,
+/area/ruin/unpowered)
+"o" = (
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered)
+"p" = (
+/obj/item/stack/ore/bananium,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"q" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered)
+"r" = (
+/obj/effect/mob_spawn/human/clown{
+	name = "Clown Pilot"
+	},
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"s" = (
+/obj/item/paper/fluff/ruins/crashedclownship/true_nation,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"t" = (
+/obj/structure/grille{
+	color = "#FFFF00"
+	},
+/obj/structure/window/reinforced{
+	color = "#FFFF00"
+	},
+/obj/structure/window/reinforced{
+	color = "#FFFF00";
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	color = "#FFFF00";
+	dir = 8
+	},
+/turf/open/floor/plating/airless{
+	color = "#FFFF00"
+	},
+/area/ruin/unpowered)
+"u" = (
+/obj/item/shard,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"v" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"w" = (
+/obj/item/storage/bag/ore,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"x" = (
+/obj/item/pickaxe,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"y" = (
+/obj/structure/closet/crate,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"z" = (
+/obj/item/shovel,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+b
+b
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+b
+b
+b
+b
+b
+b
+a
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(6,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(7,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(8,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(9,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+a
+a
+a
+"}
+(10,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+a
+a
+a
+"}
+(11,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+c
+a
+a
+"}
+(12,1,1) = {"
+c
+c
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+a
+"}
+(13,1,1) = {"
+c
+c
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(14,1,1) = {"
+a
+b
+b
+b
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+b
+a
+"}
+(15,1,1) = {"
+a
+b
+b
+b
+c
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(16,1,1) = {"
+a
+b
+a
+a
+a
+d
+n
+n
+t
+d
+b
+b
+b
+b
+b
+b
+b
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+d
+n
+n
+h
+d
+b
+b
+b
+b
+c
+b
+b
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+d
+d
+n
+q
+u
+d
+d
+b
+b
+b
+c
+b
+b
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+d
+f
+o
+r
+h
+w
+d
+b
+b
+b
+c
+c
+c
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+d
+g
+h
+h
+v
+x
+d
+b
+b
+b
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+a
+e
+h
+h
+s
+h
+h
+e
+b
+b
+a
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+e
+h
+h
+p
+g
+h
+e
+b
+b
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+d
+i
+h
+h
+h
+y
+d
+b
+a
+a
+a
+a
+a
+"}
+(24,1,1) = {"
+a
+a
+a
+a
+d
+i
+h
+p
+h
+y
+d
+b
+a
+a
+a
+a
+a
+"}
+(25,1,1) = {"
+a
+a
+a
+a
+d
+j
+p
+h
+h
+i
+d
+b
+a
+a
+a
+a
+a
+"}
+(26,1,1) = {"
+a
+a
+a
+a
+d
+k
+h
+p
+p
+z
+d
+a
+a
+a
+a
+a
+a
+"}
+(27,1,1) = {"
+a
+a
+a
+a
+d
+l
+l
+l
+l
+l
+d
+a
+a
+a
+a
+a
+a
+"}
+(28,1,1) = {"
+a
+a
+a
+a
+a
+m
+m
+m
+m
+m
+a
+a
+a
+a
+a
+a
+a
+"}

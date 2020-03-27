@@ -1,0 +1,198 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
+"e" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"f" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor2";
+	name = "supply dock loading door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"g" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"h" = (
+/obj/machinery/button/door{
+	id = "QMLoaddoor2";
+	name = "Loading Doors";
+	pixel_x = 24;
+	pixel_y = 8
+	},
+/obj/machinery/button/door{
+	id = "QMLoaddoor";
+	name = "Loading Doors";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"i" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
+	},
+/obj/docking_port/mobile/supply,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"j" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "supply dock loading door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"l" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/supply)
+"q" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"s" = (
+/turf/template_noop,
+/area/template_noop)
+"t" = (
+/obj/structure/shuttle/engine/propulsion/burst/left,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"u" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"v" = (
+/obj/structure/shuttle/engine/propulsion/burst/right,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"w" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"x" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+
+(1,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+s
+"}
+(2,1,1) = {"
+b
+e
+e
+e
+e
+x
+e
+e
+e
+l
+b
+t
+"}
+(3,1,1) = {"
+b
+e
+e
+e
+e
+e
+e
+e
+e
+e
+q
+u
+"}
+(4,1,1) = {"
+b
+w
+e
+e
+e
+e
+e
+e
+e
+e
+q
+u
+"}
+(5,1,1) = {"
+b
+e
+e
+e
+e
+e
+e
+e
+e
+e
+q
+u
+"}
+(6,1,1) = {"
+b
+e
+e
+e
+e
+h
+e
+e
+e
+l
+b
+v
+"}
+(7,1,1) = {"
+b
+b
+b
+f
+g
+b
+i
+j
+b
+b
+b
+s
+"}

@@ -1,0 +1,69 @@
+{
+
+    "italian": {
+        "I'm": "I'm-a",
+        "am": "am-a",
+        "and": "and-a",
+        "assistant": "goombah",
+        "assistants": "goombahs",
+        "baby": [
+            "bambino",
+            "little sausage roll"
+        ],
+        "bad": "molto male",
+        "bye": [
+            "ciao",
+            "arrivederci"
+        ],
+        "captain": "capitano",
+        "cheese": [
+            "parmesano",
+            "gorgonzola"
+        ],
+        "cook": "cook-a",
+        "could": "could-a",
+        "dad": "pappa",
+        "enemy": "friend-a",
+        "friend": "enemy-a",
+        "good": "molto bene",
+        "greytide": "curvisti",
+        "greytider": "curvisti",
+        "greytiders": "curvisti",
+        "hello": [
+            "ciao",
+            "buongiorno"
+        ],
+        "it's": "it's-a",
+        "make": "make-a",
+        "meat": [
+            "pepperoni",
+            "prosciutto"
+        ],
+        "mom": "mamma",
+        "my": "my-a",
+        "nuke": "spiciest-a meatball",
+        "op ": "greek ",
+        "operative": "greek",
+        "operatives": "greeks",
+        "ops": "greeks",
+        "sec ": "polizia ",
+        "security": "polizia",
+        "shitcurity": "carabinieri",
+        "shitsec": "carabinieri",
+        "sing": "sing-a",
+        "spaghetti": "SPAGHETT",
+        "spicy": "a-spicy",
+        "thanks": "grazie",
+        "thing": "thing-a",
+        "traitor": "mafioso",
+        "use": "use-a",
+        "want": "want-a",
+        "what's": "what's-a",
+        "who's": "who's-a",
+        "whose": "whose-a",
+        "why": "for-a what reason",
+        "wine": "vino"
+		}
+
+
+}

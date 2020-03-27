@@ -1,0 +1,317 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/abandoned_tele)
+"c" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"d" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"e" = (
+/obj/machinery/teleport/station,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"f" = (
+/obj/machinery/teleport/hub,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"g" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"h" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"i" = (
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/yellow,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"j" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"k" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"l" = (
+/obj/item/stock_parts/cell,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"n" = (
+/obj/effect/decal/cleanable/robot_debris/old,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"o" = (
+/obj/effect/spawner/lootdrop/crate_spawner,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"p" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/beacon,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"s" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"u" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"v" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"w" = (
+/obj/item/shard,
+/obj/item/electronics/apc,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"x" = (
+/obj/structure/closet,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"y" = (
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"z" = (
+/obj/structure/closet/crate,
+/obj/item/aicard,
+/obj/item/multitool,
+/obj/item/weldingtool,
+/obj/item/wrench,
+/obj/item/circuitboard/computer/teleporter,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"A" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"B" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"O" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+
+(1,1,1) = {"
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+c
+a
+c
+a
+c
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+c
+j
+p
+j
+c
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+c
+c
+k
+h
+k
+c
+c
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+c
+b
+b
+O
+b
+b
+c
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+h
+h
+s
+b
+b
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+b
+b
+g
+l
+q
+u
+h
+b
+b
+c
+a
+a
+"}
+(8,1,1) = {"
+b
+d
+h
+m
+n
+h
+h
+z
+b
+c
+c
+a
+"}
+(9,1,1) = {"
+b
+e
+h
+h
+r
+v
+m
+h
+c
+c
+a
+c
+"}
+(10,1,1) = {"
+b
+f
+h
+n
+h
+h
+h
+A
+h
+a
+a
+c
+"}
+(11,1,1) = {"
+b
+b
+i
+m
+h
+w
+y
+b
+B
+c
+a
+a
+"}
+(12,1,1) = {"
+c
+b
+b
+o
+s
+x
+b
+b
+c
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+"}

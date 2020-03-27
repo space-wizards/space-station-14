@@ -1,0 +1,7 @@
+<ui-display title='Ghost roles'>
+	<ui-section label='Ignored roles'>
+		{{#each data.ignore}}
+			<ui-button icon='{{enabled ? "check-square-o" : "square-o"}}' style='{{enabled ? "danger" : null}}' action='toggle_ignore' params='{"key": "{{key}}"}'>{{desc}}</ui-button>
+		{{/each}}
+	</ui-section>
+</ui-display>

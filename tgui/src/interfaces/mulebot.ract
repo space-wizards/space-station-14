@@ -1,0 +1,60 @@
+<ui-notice>
+  {{#if data.siliconUser}}
+    <ui-section label='Interface Lock'>
+      <ui-button icon='{{data.locked ? "lock" : "unlock"}}' action='lock'>{{data.locked ? "Engaged" : "Disengaged"}}</ui-button>
+    </ui-section>
+  {{else}}
+    <span>Swipe an ID card to {{data.locked ? "unlock" : "lock"}} this interface.</span>
+  {{/if}}
+</ui-notice>
+<ui-display title='Status'>
+  <ui-section label='Power'>
+    {{#if !data.locked || data.siliconUser }}
+      <ui-button icon='{{data.on ? "power-off" : "close"}}' style='{{data.on ? "selected" : null}}' action="power">{{data.on ? "On" : "Off"}}</ui-button>
+    {{else}}
+      <span class='{{data.on ? "good" : "bad"}}' state='{{data.cell ? null : "disabled"}}'>{{data.on ? "On" : "Off"}}</span>
+    {{/if}}
+  </ui-section>
+  <ui-section label='Cell'>
+    <span class='{{data.cell ? null : "bad"}}'>{{data.cell ? data.cellPercent + "%" : "No Cell"}}</span>
+  </ui-section>
+  <ui-section label='Mode'>
+    <span class='{{data.modeStatus}}'>{{data.mode}}</span>
+  </ui-section>
+  <ui-section label='Load'>
+    <span class='{{data.load ? "good" : "average"}}'>{{data.load ? data.load : "None"}}</span>
+  </ui-section>
+  <ui-section label='Destination'>
+    <span class='{{data.destination ? "good": "average"}}'>{{data.destination ? data.destination : "None"}}</span>
+  </ui-section>
+</ui-display>
+{{#if !data.locked || data.siliconUser}}
+  <ui-display title='Controls' button>
+    {{#partial button}}
+      {{#if data.load}}
+        <ui-button icon='eject' action='unload'>Unload</ui-button>
+      {{/if}}
+      {{#if data.haspai}}
+        <ui-button icon='eject' action='ejectpai'>Eject PAI</ui-button>
+      {{/if}}
+      <ui-button icon='pencil' action='setid'>Set ID</ui-button>
+    {{/partial}}
+    <ui-section label='Destination'>
+      <ui-button icon='pencil' action='destination'>Set Destination</ui-button>
+      <ui-button icon='stop' action='stop'>Stop</ui-button>
+      <ui-button icon='play' action='go'>Go</ui-button>
+    </ui-section>
+    <ui-section label='Home'>
+      <ui-button icon='home' action='home'>Go Home</ui-button>
+      <ui-button icon='pencil' action='sethome'>Set Home</ui-button>
+    </ui-section>
+    <ui-section label='Settings'>
+      <ui-button icon='{{data.autoReturn ? "check-square-o" : "square-o"}}' style='{{data.autoReturn ? "selected" : null}}' action='autoret'>
+        Auto-Return Home</ui-button>
+      <ui-button icon='{{data.autoPickup ? "check-square-o" : "square-o"}}' style='{{data.autoPickup ? "selected" : null}}' action='autopick'>
+        Auto-Pickup Crate</ui-button>
+      <ui-button icon='{{data.reportDelivery ? "check-square-o" : "square-o"}}' style='{{data.reportDelivery ? "selected" : null}}' action='report'>
+        Report Deliveries</ui-button>
+    </ui-section>
+  </ui-display>
+{{/if}}

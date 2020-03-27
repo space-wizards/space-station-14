@@ -1,0 +1,1002 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/turf/closed/mineral{
+	color = "#de1d1d"
+	},
+/area/ruin/powered/clownplanet)
+"ac" = (
+/turf/open/floor/bronze,
+/area/ruin/powered/clownplanet)
+"ad" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/bronze,
+/area/ruin/powered/clownplanet)
+"ae" = (
+/turf/closed/indestructible/rock{
+	color = "#de1d1d"
+	},
+/area/ruin/powered/clownplanet)
+"af" = (
+/turf/closed/wall/mineral/sandstone,
+/area/ruin/powered/clownplanet)
+"ag" = (
+/turf/open/floor/engine,
+/area/ruin/powered/clownplanet)
+"ah" = (
+/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer,
+/turf/open/floor/engine,
+/area/ruin/powered/clownplanet)
+"ai" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/mineral/sandstone,
+/area/ruin/powered/clownplanet)
+"aj" = (
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"ak" = (
+/obj/structure/flora/ausbushes/palebush,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"al" = (
+/obj/structure/sign/warning/xeno_mining,
+/turf/closed/wall/mineral/sandstone,
+/area/ruin/powered/clownplanet)
+"am" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"an" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"ao" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/banana,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"ap" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aq" = (
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"ar" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"as" = (
+/obj/structure/sink/puddle,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"at" = (
+/turf/open/floor/plasteel/bluespace,
+/area/ruin/powered/clownplanet)
+"au" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"av" = (
+/turf/open/floor/mineral/bananium,
+/area/ruin/powered/clownplanet)
+"aw" = (
+/obj/machinery/door/airlock/bananium,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"ax" = (
+/obj/item/assembly/mousetrap/armed,
+/turf/open/floor/plasteel/bluespace,
+/area/ruin/powered/clownplanet)
+"ay" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/plasteel/bluespace,
+/area/ruin/powered/clownplanet)
+"az" = (
+/obj/structure/signpost,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aA" = (
+/obj/structure/flora/rock,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aB" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aD" = (
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"aE" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aF" = (
+/obj/item/shovel,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"aG" = (
+/obj/effect/mob_spawn/human/clown/corpse,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"aH" = (
+/turf/closed/mineral/bananium{
+	color = "#de1d1d"
+	},
+/area/ruin/powered/clownplanet)
+"aI" = (
+/obj/item/pickaxe,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"aJ" = (
+/obj/item/flashlight/lamp/bananalamp,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"aK" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aM" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aN" = (
+/obj/structure/mineral_door/sandstone,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/bronze,
+/area/ruin/powered/clownplanet)
+"aO" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aP" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aQ" = (
+/obj/structure/flora/ausbushes/pointybush,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aR" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aS" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aT" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aU" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aV" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aY" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"aZ" = (
+/obj/structure/flora/rock,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"ba" = (
+/obj/structure/flora/ausbushes/reedbush,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"bb" = (
+/obj/structure/flora/rock,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"bc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"bd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"be" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
+/area/ruin/powered/clownplanet)
+"bf" = (
+/obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/stripes/white/box,
+/turf/open/floor/bluespace,
+/area/ruin/powered/clownplanet)
+"bg" = (
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/stripes/white/box,
+/turf/open/floor/bluespace,
+/area/ruin/powered/clownplanet)
+"bh" = (
+/obj/machinery/vending/cola/random,
+/obj/effect/turf_decal/stripes/white/box,
+/turf/open/floor/bluespace,
+/area/ruin/powered/clownplanet)
+"bi" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/powered/clownplanet)
+"bj" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/powered/clownplanet)
+"bk" = (
+/obj/machinery/vending/snack/random,
+/obj/effect/turf_decal/stripes/white/box,
+/turf/open/floor/bluespace,
+/area/ruin/powered/clownplanet)
+"bl" = (
+/obj/item/bedsheet/clown,
+/obj/structure/bed,
+/obj/effect/mob_spawn/human/clown/corpse,
+/turf/open/floor/wood,
+/area/ruin/powered/clownplanet)
+"bm" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+aw
+aw
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+ae
+aZ
+ax
+ax
+bb
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+ao
+aj
+aj
+ba
+at
+at
+aL
+aj
+bf
+bh
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+ae
+ae
+ao
+as
+aj
+aj
+aS
+aW
+at
+at
+bc
+aE
+aB
+aj
+aA
+ab
+ae
+ae
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+ae
+ae
+aj
+ap
+aj
+au
+aj
+aU
+av
+av
+av
+av
+aL
+aj
+bi
+bi
+ab
+aH
+ae
+ae
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+ae
+aj
+aj
+aj
+ao
+aj
+aj
+aU
+at
+av
+at
+at
+aL
+aj
+bj
+bl
+ab
+aI
+aH
+ae
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+ae
+ae
+aj
+ak
+aj
+aj
+aj
+ar
+aU
+av
+av
+av
+av
+aL
+aK
+bi
+ab
+ab
+aG
+aH
+ae
+ae
+aa
+"}
+(8,1,1) = {"
+aa
+ae
+am
+am
+aE
+aq
+ap
+aj
+aS
+aW
+at
+at
+at
+at
+bc
+aE
+aj
+ab
+aD
+aD
+ab
+ab
+ae
+aa
+"}
+(9,1,1) = {"
+aa
+ae
+af
+af
+aL
+aj
+aj
+aj
+aT
+at
+av
+av
+av
+av
+at
+aL
+aj
+ab
+aD
+ab
+ab
+ab
+ae
+aa
+"}
+(10,1,1) = {"
+ae
+ae
+ac
+ai
+aM
+aE
+ak
+aj
+aU
+at
+av
+at
+ay
+av
+at
+aL
+au
+ab
+aD
+ab
+ab
+ab
+ae
+ae
+"}
+(11,1,1) = {"
+ae
+ac
+ad
+af
+al
+aR
+aj
+aj
+aU
+at
+av
+av
+av
+av
+at
+aL
+az
+ab
+aD
+aD
+ab
+ab
+ab
+ae
+"}
+(12,1,1) = {"
+ae
+ac
+ag
+ag
+aN
+aL
+aj
+an
+aU
+at
+at
+at
+at
+at
+at
+aL
+aj
+ab
+ab
+aD
+ab
+aH
+ab
+ae
+"}
+(13,1,1) = {"
+ae
+ac
+ah
+ag
+aN
+aL
+aj
+aj
+aU
+at
+av
+av
+av
+av
+at
+aL
+aj
+aq
+ab
+aD
+ab
+aJ
+aH
+ae
+"}
+(14,1,1) = {"
+ae
+ad
+ac
+af
+al
+aL
+au
+aj
+aU
+at
+at
+av
+at
+at
+at
+aL
+aj
+aj
+bm
+aD
+aD
+aG
+ab
+ae
+"}
+(15,1,1) = {"
+ae
+ae
+ac
+ai
+aO
+aP
+aj
+ar
+aU
+at
+at
+at
+av
+at
+at
+aL
+aj
+aQ
+ab
+aD
+ab
+ab
+ae
+ae
+"}
+(16,1,1) = {"
+aa
+ae
+af
+af
+aL
+aj
+aj
+aj
+aU
+at
+av
+av
+av
+av
+at
+aL
+aB
+ab
+ab
+aD
+ab
+ab
+ae
+aa
+"}
+(17,1,1) = {"
+aa
+ae
+aC
+aC
+aP
+aj
+ap
+aj
+aV
+aX
+at
+at
+at
+at
+bd
+aP
+aj
+ab
+aD
+aD
+aH
+ab
+ae
+aa
+"}
+(18,1,1) = {"
+aa
+ae
+ae
+aj
+an
+aj
+aq
+aj
+an
+aU
+av
+av
+av
+av
+aL
+aj
+aj
+ab
+aF
+ab
+ab
+ae
+ae
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+ae
+aj
+aj
+aj
+ao
+aj
+aj
+aU
+at
+av
+at
+at
+aL
+aK
+aj
+ab
+aG
+ab
+ab
+ae
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+ae
+ae
+aj
+ar
+aj
+ak
+aj
+aU
+av
+at
+av
+av
+aL
+aj
+aj
+ab
+aH
+ab
+ae
+ae
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+ae
+ae
+ao
+as
+aj
+aj
+aY
+aX
+at
+at
+bd
+be
+aj
+aj
+aA
+ab
+ae
+ae
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+ao
+aj
+aj
+aU
+at
+at
+aL
+aj
+bg
+bk
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+ae
+aZ
+ax
+ax
+bb
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+aw
+aw
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

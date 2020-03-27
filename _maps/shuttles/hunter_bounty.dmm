@@ -1,0 +1,487 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/hunter)
+"c" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"d" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"e" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"f" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"g" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/hunter)
+"h" = (
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"i" = (
+/obj/structure/grille,
+/obj/structure/window/plasma/reinforced/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"j" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"k" = (
+/obj/structure/sign/poster/contraband/bountyhunters,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/hunter)
+"l" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"m" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"n" = (
+/obj/structure/table,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"o" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"p" = (
+/obj/effect/mob_spawn/human/fugitive/bounty/hook,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"q" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"r" = (
+/obj/machinery/computer/launchpad{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"s" = (
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"t" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"u" = (
+/obj/structure/curtain/bounty,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"v" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"w" = (
+/obj/structure/table,
+/obj/item/phone,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"x" = (
+/obj/structure/table,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"y" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"z" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"A" = (
+/obj/machinery/computer/shuttle/hunter{
+	icon_state = "computer";
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"B" = (
+/obj/machinery/launchpad,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"C" = (
+/obj/item/multitool,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"D" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"E" = (
+/obj/structure/table,
+/obj/item/twohanded/binoculars,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"F" = (
+/obj/machinery/power/smes,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"G" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"H" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"I" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
+	icon_state = "computer";
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"J" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"K" = (
+/obj/machinery/suit_storage_unit/open,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"M" = (
+/obj/effect/mob_spawn/human/fugitive/bounty/armor{
+	icon_state = "sleeper";
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"N" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external,
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	id = "pirateship_home";
+	name = "Deep Space";
+	width = 17
+	},
+/obj/docking_port/mobile{
+	dheight = 3;
+	dwidth = 3;
+	height = 13;
+	id = "huntership";
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	width = 15
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"P" = (
+/obj/structure/fluff/empty_sleeper{
+	icon_state = "sleeper-open";
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"Z" = (
+/obj/effect/mob_spawn/human/fugitive/bounty/synth,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+
+(1,1,1) = {"
+a
+a
+a
+b
+a
+a
+a
+a
+a
+b
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+b
+a
+a
+a
+a
+a
+b
+a
+a
+a
+"}
+(3,1,1) = {"
+b
+a
+a
+b
+a
+e
+a
+e
+a
+b
+a
+a
+b
+"}
+(4,1,1) = {"
+b
+a
+e
+b
+b
+q
+i
+q
+b
+b
+e
+a
+b
+"}
+(5,1,1) = {"
+b
+b
+f
+b
+b
+r
+B
+F
+b
+b
+f
+b
+b
+"}
+(6,1,1) = {"
+b
+b
+g
+b
+b
+s
+C
+G
+b
+b
+g
+b
+b
+"}
+(7,1,1) = {"
+c
+d
+h
+j
+l
+t
+D
+H
+c
+d
+h
+j
+N
+"}
+(8,1,1) = {"
+b
+b
+i
+b
+b
+u
+u
+u
+b
+b
+i
+b
+b
+"}
+(9,1,1) = {"
+a
+b
+i
+b
+m
+v
+s
+s
+J
+b
+i
+b
+a
+"}
+(10,1,1) = {"
+a
+a
+i
+k
+n
+w
+x
+s
+J
+b
+i
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+b
+n
+x
+E
+s
+K
+b
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+b
+o
+y
+s
+s
+J
+b
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+i
+b
+u
+u
+u
+b
+i
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+i
+p
+s
+s
+s
+P
+i
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+i
+Z
+z
+s
+z
+M
+i
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+b
+i
+A
+n
+I
+i
+b
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+i
+i
+i
+i
+i
+a
+a
+a
+a
+"}

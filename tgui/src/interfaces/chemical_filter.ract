@@ -1,0 +1,20 @@
+<ui-display title='Left' button> 
+	<ui-section>
+		{{#each data.left}}
+			<ui-button action='remove' params='{"which":"left","reagent":"{{.}}"}'>{{.}}</ui-button>
+		{{/each}}
+	</ui-section>
+	<ui-section>
+		<ui-button action='add' params='{"which":"left"}'>Add filter</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display title='Right' button> 
+	<ui-section>
+		{{#each data.right}}
+			<ui-button action='remove' params='{"which":"right","reagent":"{{.}}"}'>{{.}}</ui-button>
+		{{/each}}
+	</ui-section>
+	<ui-section>
+		<ui-button action='add' params='{"which":"right"}'>Add filter</ui-button>
+	</ui-section>
+</ui-display>
