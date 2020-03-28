@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Construction;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -10,6 +11,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -24,6 +26,8 @@ namespace Content.Server.GameObjects.Components.Construction
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly ISharedNotifyManager _notifyManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
@@ -44,8 +48,10 @@ namespace Content.Server.GameObjects.Components.Construction
             var transform = Owner.Transform;
 
             var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-            if (!interactionSystem.InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: true))
+            if (!interactionSystem.InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
             {
+                _notifyManager.PopupMessage(transform.GridPosition, Owner,
+                        _localizationManager.GetString("You can't reach there!"));
                 return;
             }
 

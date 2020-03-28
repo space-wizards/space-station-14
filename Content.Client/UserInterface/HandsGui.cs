@@ -39,8 +39,6 @@ namespace Content.Client.UserInterface
         {
             IoCManager.InjectDependencies(this);
 
-            MouseFilter = MouseFilterMode.Ignore;
-
             var textureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
             var textureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
             var textureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
@@ -54,8 +52,7 @@ namespace Content.Client.UserInterface
             var hBox = new HBoxContainer
             {
                 SeparationOverride = 0,
-                Children = {_rightStatusPanel, _rightButton, _leftButton, _leftStatusPanel},
-                MouseFilter = MouseFilterMode.Ignore
+                Children = {_rightStatusPanel, _rightButton, _leftButton, _leftStatusPanel}
             };
 
             AddChild(hBox);
@@ -68,7 +65,6 @@ namespace Content.Client.UserInterface
             // Active hand
             _leftButton.AddChild(ActiveHandRect = new TextureRect
             {
-                MouseFilter = MouseFilterMode.Ignore,
                 Texture = textureHandActive,
                 TextureScale = (2, 2)
             });
