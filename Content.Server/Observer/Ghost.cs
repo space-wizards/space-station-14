@@ -1,4 +1,5 @@
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.GameObjects;
@@ -25,15 +26,18 @@ namespace Content.Server.Observer
             }
 
             var mind = player.ContentData().Mind;
-            GridCoordinates position;
             var canReturn = player.AttachedEntity != null;
+            var name = player.AttachedEntity?.Name ?? player.Name;
+
+            if (player.AttachedEntity != null && player.AttachedEntity.HasComponent<GhostComponent>())
+                return;
 
             if (mind.VisitingEntity != null)
             {
                 mind.UnVisit();
             }
 
-            position = player.AttachedEntity?.Transform.GridPosition ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
+            var position = player.AttachedEntity?.Transform.GridPosition ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
 
             if (canReturn && player.AttachedEntity.TryGetComponent(out SpeciesComponent species))
             {
@@ -55,6 +59,7 @@ namespace Content.Server.Observer
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var ghost = entityManager.SpawnEntity("MobObserver", position);
+            ghost.Name = name;
             var ghostComponent = ghost.GetComponent<GhostComponent>();
             ghostComponent.CanReturnToBody = canReturn;
 
