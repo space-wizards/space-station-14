@@ -5,23 +5,23 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public interface IActionBlocker
     {
-        bool CanMove();
+        bool CanMove() => true;
 
-        bool CanInteract();
+        bool CanInteract() => true;
 
-        bool CanUse();
+        bool CanUse() => true;
 
-        bool CanThrow();
+        bool CanThrow() => true;
 
-        bool CanSpeak();
+        bool CanSpeak() => true;
 
-        bool CanDrop();
+        bool CanDrop() => true;
 
-        bool CanPickup();
+        bool CanPickup() => true;
 
-        bool CanEmote();
+        bool CanEmote() => true;
 
-        bool CanAttack();
+        bool CanAttack() => true;
     }
 
     public class ActionBlockerSystem : EntitySystem
