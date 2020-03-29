@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Content.Server.Observer;
 using Content.Shared.Chat;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -91,6 +92,17 @@ namespace Content.Server.Chat
             _netManager.ServerSendToAll(msg);
 
             _mommiLink.SendOOCMessage(player.SessionId.ToString(), message);
+        }
+
+        public void SendDeadChat(IPlayerSession player, string message)
+        {
+            var clients = _playerManager.GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>()).Select(p => p.ConnectedClient);;
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Dead;
+            msg.Message = message;
+            msg.MessageWrap = $"DEAD: {player.AttachedEntity.Name}: {{0}}";
+            _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
         public void SendHookOOC(string sender, string message)
