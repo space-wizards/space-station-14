@@ -30,3 +30,5 @@ We are happy to accept contributions from anybody. Get in Discord or IRC if you 
 ## Building
 
 [See the relevant HackMD wiki page](https://hackmd.io/@ss14/docs/%2FBZkI4RlUQbm09QWrXCZ3kg)
+
+Happy April Fools' Day!
