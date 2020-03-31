@@ -33,6 +33,7 @@
   description: Melts anything as long as it's fueled, don't forget your eye protection!
   components:
   - type: Welder
+  - type: Toggle
   - type: Sprite
     sprite: Objects/Tools/welder.rsi
     layers:
