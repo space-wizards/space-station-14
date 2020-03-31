@@ -134,7 +134,7 @@ namespace Content.Client
                 "Mind",
                 "MovementSpeedModifier",
                 "StorageFill",
-		"Welder"
+		        "Welder"
             };
 
             foreach (var ignoreName in registerIgnore)
