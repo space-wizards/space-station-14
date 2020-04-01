@@ -1,5 +1,6 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Movement;
-using Robust.Server.AI;
+﻿using Content.Server.AI.Utility;
+using Content.Server.AI.Utility.AiLogic;
+using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -28,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        public AiLogicProcessor Processor { get; set; }
+        public UtilityAi Processor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float VisionRadius
@@ -54,6 +55,12 @@ namespace Content.Server.GameObjects.Components.Movement
 
             serializer.DataField(ref _logicName, "logic", null);
             serializer.DataField(ref _visionRadius, "vision", 8.0f);
+        }
+
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+            Processor.Shutdown();
         }
 
         /// <summary>

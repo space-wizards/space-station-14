@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using System;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
@@ -11,6 +12,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
@@ -20,8 +22,15 @@ namespace Content.Server.GameObjects
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
+        // This is mainly useful for AI; clothing should prrroobbbabbbllyy also trigger this?
+        public IEntity Holder { get; set; }
+        /// <summary>
+        /// If an entity has this in their hands / inventory
+        /// </summary>
+        [ViewVariables]
+        public bool IsHeld { get; set; }
 
-        #pragma warning disable 649
+#pragma warning disable 649
         [Dependency] private readonly IRobustRandom _robustRandom;
         #pragma warning restore 649
 

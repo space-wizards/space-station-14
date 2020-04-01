@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects
         /// <summary>
         ///     Enumerates over the hand keys, returning the active hand first.
         /// </summary>
-        private IEnumerable<string> ActivePriorityEnumerable()
+        public IEnumerable<string> ActivePriorityEnumerable()
         {
             yield return ActiveIndex;
             foreach (var hand in hands.Keys)
@@ -142,6 +142,8 @@ namespace Content.Server.GameObjects
             var success = slot.Insert(item.Owner);
             if (success)
             {
+                item.Holder = Owner;
+                item.IsHeld = true;
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
             }
 
@@ -197,6 +199,8 @@ namespace Content.Server.GameObjects
             }
 
             item.RemovedFromSlot();
+            item.Holder = null;
+            item.IsHeld = false;
 
             // TODO: The item should be dropped to the container our owner is in, if any.
             item.Owner.Transform.GridPosition = coords;
@@ -240,6 +244,8 @@ namespace Content.Server.GameObjects
             }
 
             item.RemovedFromSlot();
+            item.Holder = null;
+            item.IsHeld = false;
 
             // TODO: The item should be dropped to the container our owner is in, if any.
             item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
@@ -303,6 +309,8 @@ namespace Content.Server.GameObjects
             }
 
             item.RemovedFromSlot();
+            item.Holder = Owner;
+            item.IsHeld = true;
 
             if (!targetContainer.Insert(item.Owner))
             {
@@ -543,6 +551,7 @@ namespace Content.Server.GameObjects
                 }
 
                 Dirty();
+                message.Entity.GetComponent<ItemComponent>().IsHeld = false;
                 if (!message.Entity.TryGetComponent(out PhysicsComponent physics))
                 {
                     return;

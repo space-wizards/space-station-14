@@ -33,6 +33,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private float _arcWidth = 90;
         private string _arc;
         private string _hitSound;
+        public float CooldownTime => _cooldownTime;
         private float _cooldownTime = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]

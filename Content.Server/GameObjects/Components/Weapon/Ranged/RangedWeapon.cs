@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -58,6 +59,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                     _tryFire(user, msg.Target, 0);
                     break;
             }
+        }
+
+        // Probably shouldn't be a separate method but don't want anything except NPCs calling this,
+        // and currently ranged combat is handled via player only messages
+        public void AiFire(IEntity entity, GridCoordinates coordinates)
+        {
+            if (!entity.HasComponent<AiControllerComponent>())
+            {
+                throw new InvalidOperationException("Only AIs should call AiFire");
+            }
+
+            _tryFire(entity, coordinates, 0);
         }
 
         private void _tryFire(IEntity user, GridCoordinates coordinates, int attemptCount)

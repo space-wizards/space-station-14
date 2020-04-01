@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -256,7 +257,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
             inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
-                new PointerInputCmdHandler(HandleUseItemInHand));
+                new PointerInputCmdHandler(HandleClientUseItemInHand));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.Attack,
                 new PointerInputCmdHandler(HandleAttack));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
@@ -346,7 +347,31 @@ namespace Content.Server.GameObjects.EntitySystems
             return true;
         }
 
-        private bool HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        /// <summary>
+        /// Entity will try and use their active hand at the target location.
+        /// Don't use for players
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="coords"></param>
+        /// <param name="uid"></param>
+        internal void UseItemInHand(IEntity entity, GridCoordinates coords, EntityUid uid)
+        {
+            if (entity.HasComponent<BasicActorComponent>())
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (entity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
+            {
+                DoAttack(entity, coords);
+            }
+            else
+            {
+                UserInteraction(entity, coords, uid);
+            }
+        }
+
+        private bool HandleClientUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!_mapManager.GridExists(coords.GridID))
