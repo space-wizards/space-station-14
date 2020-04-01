@@ -1,4 +1,4 @@
-using Content.Client.UserInterface;
+﻿using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface;
@@ -22,7 +22,8 @@ namespace Content.Client.GameObjects.Components
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cast = (StackComponentState) curState;
+            if (!(curState is StackComponentState cast))
+                return;
 
             Count = cast.Count;
             MaxCount = cast.MaxCount;

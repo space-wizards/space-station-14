@@ -26,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Stack
         private const string SerializationCache = "stack";
         private int _count = 50;
         private int _maxCount = 50;
+        private bool _throwIndividually = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int Count
@@ -49,6 +50,17 @@ namespace Content.Server.GameObjects.Components.Stack
             private set
             {
                 _maxCount = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ThrowIndividually
+        {
+            get => _throwIndividually;
+            private set
+            {
+                _throwIndividually = value;
                 Dirty();
             }
         }
@@ -144,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Stack
 
                         Timer.Spawn(300, () => _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is now full."));
                     }
-
+                    return true;
                 }
                 else if (toTransfer == 0 && stack.AvailableSpace == 0)
                 {

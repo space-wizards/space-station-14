@@ -17,7 +17,6 @@ using Content.Shared.GameObjects.Components.VendingMachines;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.State;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
@@ -35,7 +34,6 @@ namespace Content.Client
 #pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IBaseClient _baseClient;
-        [Dependency] private readonly IStateManager _stateManager;
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
 #pragma warning restore 649
 
@@ -128,7 +126,14 @@ namespace Content.Client
                 "UtilityBeltClothingFill",
                 "ShuttleController",
                 "HumanInventoryController",
-                "UseDelay"
+                "UseDelay",
+                "Pourable",
+                "Paper",
+                "Write",
+                "Bloodstream",
+                "Mind",
+                "MovementSpeedModifier",
+                "StorageFill"
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -166,16 +171,10 @@ namespace Content.Client
             var stylesheet = new NanoStyle();
 
             IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
-            IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
 
             IoCManager.InjectDependencies(this);
 
             _escapeMenuOwner.Initialize();
-
-            _baseClient.PlayerJoinedGame += (sender, args) =>
-            {
-                _stateManager.RequestStateChange<GameScreen>();
-            };
 
             _baseClient.PlayerJoinedServer += (sender, args) =>
             {
@@ -236,7 +235,6 @@ namespace Content.Client
             {
                 case ModUpdateLevel.FramePreEngine:
                     IoCManager.Resolve<IClientNotifyManager>().FrameUpdate(frameEventArgs);
-                    IoCManager.Resolve<IClientGameTicker>().FrameUpdate(frameEventArgs);
                     IoCManager.Resolve<IChatManager>().FrameUpdate(frameEventArgs);
                     break;
             }

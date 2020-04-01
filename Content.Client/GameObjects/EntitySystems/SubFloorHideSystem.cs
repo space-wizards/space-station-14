@@ -3,7 +3,6 @@ using Content.Shared.Maps;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -29,18 +28,13 @@ namespace Content.Client.GameObjects.EntitySystems
             _mapManager.GridChanged += MapManagerOnGridChanged;
             _mapManager.TileChanged += MapManagerOnTileChanged;
 
-            SubscribeEvent<SubFloorHideDirtyEvent>(HandleDirtyEvent);
+            SubscribeLocalEvent<SubFloorHideDirtyEvent>(HandleDirtyEvent);
         }
 
-        private void HandleDirtyEvent(object sender, SubFloorHideDirtyEvent ev)
+        private void HandleDirtyEvent(SubFloorHideDirtyEvent ev)
         {
-            if (!(sender is IEntity senderEnt))
-            {
-                return;
-            }
-
-            var grid = _mapManager.GetGrid(senderEnt.Transform.GridID);
-            var indices = grid.WorldToTile(senderEnt.Transform.WorldPosition);
+            var grid = _mapManager.GetGrid(ev.Sender.Transform.GridID);
+            var indices = grid.WorldToTile(ev.Sender.Transform.WorldPosition);
             UpdateTile(grid, indices);
         }
 

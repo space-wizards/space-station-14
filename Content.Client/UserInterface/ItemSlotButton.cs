@@ -31,7 +31,6 @@ namespace Content.Client.GameObjects
 
             AddChild(SpriteView = new SpriteView
             {
-                MouseFilter = MouseFilterMode.Ignore,
                 Scale = (2, 2),
                 OverrideDirection = Direction.South
             });
@@ -52,7 +51,6 @@ namespace Content.Client.GameObjects
             {
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                MouseFilter = MouseFilterMode.Ignore,
                 Stretch = TextureRect.StretchMode.KeepCentered,
                 TextureScale = (2, 2),
                 Visible = false,

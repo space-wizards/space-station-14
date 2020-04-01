@@ -11,10 +11,12 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Timing;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
@@ -38,6 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IRobustRandom _robustRandom;
+        [Dependency] private readonly IConfigurationManager _configurationManager;
 #pragma warning restore 649
 
         private AudioSystem _audioSystem;
@@ -74,13 +77,15 @@ namespace Content.Server.GameObjects.EntitySystems
             input.BindMap.BindFunction(EngineKeyFunctions.MoveDown, moveDownCmdHandler);
             input.BindMap.BindFunction(EngineKeyFunctions.Run, runCmdHandler);
 
-            SubscribeEvent<PlayerAttachSystemMessage>(PlayerAttached);
-            SubscribeEvent<PlayerDetachedSystemMessage>(PlayerDetached);
+            SubscribeLocalEvent<PlayerAttachSystemMessage>(PlayerAttached);
+            SubscribeLocalEvent<PlayerDetachedSystemMessage>(PlayerDetached);
 
             _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
+
+            _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
         }
 
-        private static void PlayerAttached(object sender, PlayerAttachSystemMessage ev)
+        private static void PlayerAttached(PlayerAttachSystemMessage ev)
         {
             if (!ev.Entity.HasComponent<IMoverComponent>())
             {
@@ -88,9 +93,9 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void PlayerDetached(object sender, PlayerDetachedSystemMessage ev)
+        private static void PlayerDetached(PlayerDetachedSystemMessage ev)
         {
-            if(ev.Entity.HasComponent<PlayerInputMoverComponent>())
+            if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
             {
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
@@ -136,7 +141,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.SprintMoveSpeed : mover.WalkMoveSpeed);
+                physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
 
                 // Handle footsteps.
@@ -177,7 +182,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleDirChange(ICommonSession session, Direction dir, bool state)
         {
-            if(!TryGetAttachedComponent(session as IPlayerSession, out IMoverComponent moverComp))
+            if (!TryGetAttachedComponent(session as IPlayerSession, out IMoverComponent moverComp))
                 return;
 
             moverComp.SetVelocityDirection(dir, state);
@@ -185,14 +190,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleRunChange(ICommonSession session, bool running)
         {
-            if(!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
+            if (!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
                 return;
 
             moverComp.Sprinting = running;
         }
 
         private static bool TryGetAttachedComponent<T>(IPlayerSession session, out T component)
-            where T: IComponent
+            where T : IComponent
         {
             component = default;
 

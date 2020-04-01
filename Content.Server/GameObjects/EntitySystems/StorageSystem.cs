@@ -14,16 +14,10 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Initialize()
         {
+            SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
+            SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
+
             EntityQuery = new TypeEntityQuery(typeof(ServerStorageComponent));
-        }
-
-        /// <inheritdoc />
-        public override void SubscribeEvents()
-        {
-            base.SubscribeEvents();
-
-            SubscribeEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
-            SubscribeEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
         }
 
         /// <inheritdoc />
@@ -35,7 +29,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void HandleEntityRemovedFromContainer(object sender, EntRemovedFromContainerMessage message)
+        private static void HandleEntityRemovedFromContainer(EntRemovedFromContainerMessage message)
         {
             var oldParentEntity = message.Container.Owner;
 
@@ -45,7 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void HandleEntityInsertedIntoContainer(object sender, EntInsertedIntoContainerMessage message)
+        private static void HandleEntityInsertedIntoContainer(EntInsertedIntoContainerMessage message)
         {
             var oldParentEntity = message.Container.Owner;
 

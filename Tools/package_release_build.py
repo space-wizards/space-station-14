@@ -35,7 +35,9 @@ SHARED_IGNORED_RESOURCES = {
     "ResourcePack.zip",
     "buildResourcePack.py",
     "CONTENT_GOES_HERE",
-    ".gitignore"
+    ".gitignore",
+    ".directory",
+    ".DS_Store"
 }
 CLIENT_IGNORED_RESOURCES = {
     "Maps",
@@ -258,7 +260,7 @@ def publish_client_server(runtime: str, target_os: str) -> None:
         "--runtime", runtime,
         "--no-self-contained",
         "-c", "Release",
-        f"/p:TargetOS={str}",
+        f"/p:TargetOS={target_os}",
         "/p:FullRelease=True",
     ]
 

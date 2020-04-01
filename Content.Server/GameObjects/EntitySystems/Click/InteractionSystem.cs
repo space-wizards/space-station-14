@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Input;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -15,9 +16,11 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -248,6 +251,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IPhysicsManager _physicsManager;
 #pragma warning restore 649
 
         public const float InteractionRange = 2;
@@ -262,6 +266,39 @@ namespace Content.Server.GameObjects.EntitySystems
                 new PointerInputCmdHandler(HandleAttack));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
                 new PointerInputCmdHandler(HandleActivateItemInWorld));
+        }
+
+        /// <summary>
+        ///     Checks that these coordinates are within a certain distance without any
+        ///     entity that matches the collision mask obstructing them.
+        ///     If the <paramref name="range"/> is zero or negative,
+        ///     this method will only check if nothing obstructs the two sets of coordinates..
+        /// </summary>
+        /// <param name="coords">Set of coordinates to use.</param>
+        /// <param name="otherCoords">Other set of coordinates to use.</param>
+        /// <param name="range">maximum distance between the two sets of coordinates.</param>
+        /// <param name="collisionMask">the mask to check for collisions</param>
+        /// <param name="ignoredEnt">the entity to be ignored when checking for collisions.</param>
+        /// <param name="mapManager">Map manager containing the two GridIds.</param>
+        /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
+        /// <returns>True if the two points are within a given range without being obstructed.</returns>
+        public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,
+            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null, bool insideBlockerValid = false)
+        {
+            var dir = otherCoords - coords.Position;
+
+            if (dir.LengthSquared.Equals(0f))
+                return true;
+
+            if (range > 0f && !(dir.LengthSquared <= range*range))
+                return false;
+
+            var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
+            var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt, true);
+
+
+
+            return !rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && rayResults.Distance < 1f);
         }
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
@@ -302,7 +339,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private void InteractionActivate(IEntity user, IEntity used)
         {
             var activateMsg = new ActivateInWorldMessage(user, used);
-            RaiseEvent(activateMsg);
+            RaiseLocalEvent(activateMsg);
             if (activateMsg.Handled)
             {
                 return;
@@ -434,6 +471,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
+            playerTransform.LocalRotation = new Angle(coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position);
+
             // TODO: Check if client should be able to see that object to click on it in the first place
 
             // Clicked on empty space behavior, try using ranged attack
@@ -500,7 +539,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private void InteractAfterAttack(IEntity user, IEntity weapon, GridCoordinates clickLocation)
         {
             var message = new AfterAttackMessage(user, weapon, null, clickLocation);
-            RaiseEvent(message);
+            RaiseLocalEvent(message);
             if (message.Handled)
             {
                 return;
@@ -522,7 +561,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
             var attackMsg = new AttackByMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(attackMsg);
+            RaiseLocalEvent(attackMsg);
             if (attackMsg.Handled)
             {
                 return;
@@ -544,7 +583,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(afterAtkMsg);
+            RaiseLocalEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
             {
                 return;
@@ -570,7 +609,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void Interaction(IEntity user, IEntity attacked)
         {
             var message = new AttackHandMessage(user, attacked);
-            RaiseEvent(message);
+            RaiseLocalEvent(message);
             if (message.Handled)
             {
                 return;
@@ -621,7 +660,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var useMsg = new UseInHandMessage(user, used);
-            RaiseEvent(useMsg);
+            RaiseLocalEvent(useMsg);
             if (useMsg.Handled)
             {
                 return;
@@ -659,7 +698,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void ThrownInteraction(IEntity user, IEntity thrown)
         {
             var throwMsg = new ThrownMessage(user, thrown);
-            RaiseEvent(throwMsg);
+            RaiseLocalEvent(throwMsg);
             if (throwMsg.Handled)
             {
                 return;
@@ -681,7 +720,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void LandInteraction(IEntity user, IEntity landing, GridCoordinates landLocation)
         {
             var landMsg = new LandMessage(user, landing, landLocation);
-            RaiseEvent(landMsg);
+            RaiseLocalEvent(landMsg);
             if (landMsg.Handled)
             {
                 return;
@@ -715,7 +754,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void DroppedInteraction(IEntity user, IEntity item)
         {
             var dropMsg = new DroppedMessage(user, item);
-            RaiseEvent(dropMsg);
+            RaiseLocalEvent(dropMsg);
             if (dropMsg.Handled)
             {
                 return;
@@ -737,7 +776,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void HandSelectedInteraction(IEntity user, IEntity item)
         {
             var handSelectedMsg = new HandSelectedMessage(user, item);
-            RaiseEvent(handSelectedMsg);
+            RaiseLocalEvent(handSelectedMsg);
             if (handSelectedMsg.Handled)
             {
                 return;
@@ -759,7 +798,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void HandDeselectedInteraction(IEntity user, IEntity item)
         {
             var handDeselectedMsg = new HandDeselectedMessage(user, item);
-            RaiseEvent(handDeselectedMsg);
+            RaiseLocalEvent(handDeselectedMsg);
             if (handDeselectedMsg.Handled)
             {
                 return;
@@ -782,7 +821,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
             var rangedMsg = new RangedAttackMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(rangedMsg);
+            RaiseLocalEvent(rangedMsg);
             if (rangedMsg.Handled)
                 return;
 
@@ -803,7 +842,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(afterAtkMsg);
+            RaiseLocalEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
                 return;
 
@@ -839,7 +878,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var item = hands.GetActiveHand?.Owner;
 
             // TODO: If item is null we need some kinda unarmed combat.
-            if (!ActionBlockerSystem.CanInteract(player) || item == null)
+            if (!ActionBlockerSystem.CanAttack(player) || item == null)
             {
                 return;
             }

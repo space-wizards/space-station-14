@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Power
         protected override void Startup()
         {
             base.Startup();
-            if (_drawType != DrawTypes.Node)
+            if (DrawType != DrawTypes.Node)
             {
                 var componentMgr = IoCManager.Resolve<IComponentManager>();
                 AvailableProviders = componentMgr.GetAllComponents<PowerProviderComponent>().Where(x => x.CanServiceDevice(this)).ToList();
@@ -40,12 +40,16 @@ namespace Content.Server.GameObjects.Components.Power
         ///     The method of draw we will try to use to place our load set via component parameter, defaults to using power providers
         /// </summary>
         [ViewVariables]
-        public virtual DrawTypes DrawType
+        public DrawTypes DrawType
         {
-            get => _drawType;
+            get => _drawType ?? DefaultDrawType;
             protected set => _drawType = value;
         }
-        private DrawTypes _drawType = DrawTypes.Provider;
+
+        private DrawTypes? _drawType;
+
+        protected virtual DrawTypes DefaultDrawType => DrawTypes.Provider;
+
 
         /// <summary>
         ///     The power draw method we are currently connected to and using
@@ -206,7 +210,9 @@ namespace Content.Server.GameObjects.Components.Power
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _drawType, "drawtype", DrawTypes.Provider);
+            var drawType = DrawType;
+            serializer.DataField(ref drawType, "drawtype", DefaultDrawType);
+            DrawType = drawType;
             serializer.DataField(ref _priority, "priority", Powernet.Priority.Medium);
 
             if (SaveLoad)

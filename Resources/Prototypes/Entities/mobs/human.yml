@@ -3,17 +3,24 @@
   name: Urist McHands
   id: HumanMob_Content
   description: A miserable pile of secrets
+  drawdepth: Mobs
   components:
-  - type: AIDebugger # TODO: ConsoleCommand to add these
+  - type: Mind
+  - type: AIDebugger
   - type: PathfindingDebugger
   - type: Hands
     hands:
     - left
     - right
+  - type: MovementSpeedModifier
   - type: Hunger
   - type: Thirst
   # Organs
   - type: Stomach
+    maxVolume: 100
+    digestionDelay: 20
+  - type: Bloodstream
+    maxVolume: 250
 
   - type: Inventory
   - type: Constructor
@@ -22,7 +29,6 @@
   - type: Sprite
     netsync: false
     drawdepth: Mobs
-
     layers:
     - map: ["enum.HumanoidVisualLayers.Chest"]
       color: "#e8b59b"
@@ -43,14 +49,6 @@
       color: "#e8b59b"
       sprite: Mob/human.rsi
       state: human_l_arm
-    - map: ["enum.HumanoidVisualLayers.LHand"]
-      color: "#e8b59b"
-      sprite: Mob/human.rsi
-      state: human_l_hand
-    - map: ["enum.HumanoidVisualLayers.RHand"]
-      color: "#e8b59b"
-      sprite: Mob/human.rsi
-      state: human_r_hand
     - map: ["enum.HumanoidVisualLayers.RLeg"]
       color: "#e8b59b"
       sprite: Mob/human.rsi
@@ -71,6 +69,15 @@
 
     - map: ["enum.Slots.INNERCLOTHING"]
       shader: stencilDraw
+
+    - map: ["enum.HumanoidVisualLayers.LHand"]
+      color: "#e8b59b"
+      sprite: Mob/human.rsi
+      state: human_l_hand
+    - map: ["enum.HumanoidVisualLayers.RHand"]
+      color: "#e8b59b"
+      sprite: Mob/human.rsi
+      state: human_r_hand
 
     - map: ["enum.Slots.IDCARD"]
     - map: ["enum.Slots.GLOVES"]
@@ -170,14 +177,6 @@
         color: "#e8b59b"
         sprite: Mob/human.rsi
         state: human_l_arm
-      - map: ["enum.HumanoidVisualLayers.LHand"]
-        color: "#e8b59b"
-        sprite: Mob/human.rsi
-        state: human_l_hand
-      - map: ["enum.HumanoidVisualLayers.RHand"]
-        color: "#e8b59b"
-        sprite: Mob/human.rsi
-        state: human_r_hand
       - map: ["enum.HumanoidVisualLayers.RLeg"]
         color: "#e8b59b"
         sprite: Mob/human.rsi
@@ -196,6 +195,15 @@
 
       - map: ["enum.Slots.INNERCLOTHING"]
         shader: stencilDraw
+
+      - map: ["enum.HumanoidVisualLayers.LHand"]
+        color: "#e8b59b"
+        sprite: Mob/human.rsi
+        state: human_l_hand
+      - map: ["enum.HumanoidVisualLayers.RHand"]
+        color: "#e8b59b"
+        sprite: Mob/human.rsi
+        state: human_r_hand
 
       - map: ["enum.Slots.IDCARD"]
       - map: ["enum.Slots.GLOVES"]

@@ -43,6 +43,12 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public int CurrentVolume => _containedSolution.TotalVolume;
 
         /// <summary>
+        ///     The volume without reagents remaining in the container.
+        /// </summary>
+        [ViewVariables]
+        public int EmptyVolume => MaxVolume - CurrentVolume;
+
+        /// <summary>
         ///     The current blended color of all the reagents in the container.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
@@ -59,6 +65,23 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         }
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
+
+        /// <summary>
+        /// Shortcut for Capabilities PourIn flag to avoid binary operators.
+        /// </summary>
+        public bool CanPourIn => (Capabilities & SolutionCaps.PourIn) != 0;
+        /// <summary>
+        /// Shortcut for Capabilities PourOut flag to avoid binary operators.
+        /// </summary>
+        public bool CanPourOut => (Capabilities & SolutionCaps.PourOut) != 0;
+        /// <summary>
+        /// Shortcut for Capabilities Injectable flag
+        /// </summary>
+        public bool Injectable => (Capabilities & SolutionCaps.Injectable) != 0;
+        /// <summary>
+        /// Shortcut for Capabilities Injector flag
+        /// </summary>
+        public bool Injector => (Capabilities & SolutionCaps.Injector) != 0;
 
         /// <inheritdoc />
         public override string Name => "Solution";
@@ -108,9 +131,15 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             return true;
         }
 
+        /// <summary>
+        /// Attempt to remove the specified quantity from this solution
+        /// </summary>
+        /// <param name="quantity">Quantity of this solution to remove</param>
+        /// <returns>Whether or not the solution was successfully removed</returns>
         public bool TryRemoveSolution(int quantity)
         {
-            if (CurrentVolume == 0) return false;
+            if (CurrentVolume == 0)
+                return false;
 
             _containedSolution.RemoveSolution(quantity);
             OnSolutionChanged();

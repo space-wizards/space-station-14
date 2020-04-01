@@ -1,6 +1,7 @@
 - type: entity
   id: WeaponArc
   save: false
+  abstract: true
   components:
   - type: Sprite
     sprite: Effects/weapons/arcs.rsi

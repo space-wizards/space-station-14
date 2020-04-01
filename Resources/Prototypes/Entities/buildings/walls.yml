@@ -2,14 +2,21 @@
   id: base_wall
   name: BaseWall
   description: Keeps the air in and the greytide out.
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
   components:
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     netsync: false
     drawdepth: Walls
+
   - type: Icon
     state: full
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -21,15 +28,13 @@
   - type: Occluder
     sizeX: 32
     sizeY: 32
+
   - type: SnapGrid
     offset: Center
 
   - type: IconSmooth
     key: walls
     base: solid
-  placement:
-    snap:
-    - Wall
 
 - type: entity
   id: brick_wall

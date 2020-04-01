@@ -48,6 +48,13 @@ namespace Content.Client.GameObjects.EntitySystems
             _overlayManager.AddOverlay(new CombatModeOverlay(this));
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _overlayManager.RemoveOverlay(nameof(CombatModeOverlay));
+        }
+
         private bool IsInCombatMode()
         {
             var entity = _playerManager.LocalPlayer.ControlledEntity;
@@ -101,7 +108,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             // Up.
-            if (_timeHeld >= AttackTimeThreshold)
+            if (UseOrAttackIsDown && _timeHeld >= AttackTimeThreshold)
             {
                 // Attack.
                 SendMsg(ContentKeyFunctions.Attack, BoundKeyState.Down);

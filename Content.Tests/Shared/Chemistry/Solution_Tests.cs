@@ -143,6 +143,7 @@ namespace Content.Tests.Shared.Chemistry
 
             solution.RemoveSolution(500);
 
+            //Check that edited solution is correct
             Assert.That(solution.GetReagentQuantity("water"), Is.EqualTo(200));
             Assert.That(solution.TotalVolume, Is.EqualTo(200));
         }
@@ -154,6 +155,7 @@ namespace Content.Tests.Shared.Chemistry
 
             solution.RemoveSolution(1000);
 
+            //Check that edited solution is correct
             Assert.That(solution.GetReagentQuantity("water"), Is.EqualTo(0));
             Assert.That(solution.TotalVolume, Is.EqualTo(0));
         }

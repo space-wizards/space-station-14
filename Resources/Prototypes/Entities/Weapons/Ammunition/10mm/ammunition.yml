@@ -3,6 +3,7 @@
   id: magazine_10mm_empty
   name: "10mm magazine - empty"
   parent: BaseItem
+  abstract: true
   components:
   - type: BallisticMagazine
     caliber: A10mm

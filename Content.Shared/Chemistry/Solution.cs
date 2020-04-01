@@ -125,9 +125,13 @@ namespace Content.Shared.Chemistry
             }
         }
 
+        /// <summary>
+        /// Remove the specified quantity from this solution.
+        /// </summary>
+        /// <param name="quantity">The quantity of this solution to remove</param>
         public void RemoveSolution(int quantity)
         {
-            if(quantity <=0)
+            if(quantity <= 0)
                 return;
 
             var ratio = (float)(TotalVolume - quantity) / TotalVolume;

@@ -48,8 +48,7 @@ namespace Content.Client.UserInterface
         public HumanoidCharacterProfile Profile;
         public event Action<HumanoidCharacterProfile> OnProfileChanged;
 
-        public HumanoidProfileEditor(ILocalizationManager localization,
-            IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager)
+        public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager)
         {
             _random = IoCManager.Resolve<IRobustRandom>();
             Profile = (HumanoidCharacterProfile) preferencesManager.Preferences.SelectedCharacter;
@@ -83,7 +82,7 @@ namespace Content.Client.UserInterface
                 var panel = HighlightedContainer();
                 var randomizeEverythingButton = new Button
                 {
-                    Text = localization.GetString("Randomize everything")
+                    Text = Loc.GetString("Randomize everything")
                 };
                 randomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
                 panel.AddChild(randomizeEverythingButton);
@@ -100,7 +99,7 @@ namespace Content.Client.UserInterface
                 {
                     SizeFlagsVertical = SizeFlags.FillExpand
                 };
-                var nameLabel = new Label {Text = localization.GetString("Name:")};
+                var nameLabel = new Label {Text = Loc.GetString("Name:")};
                 _nameEdit = new LineEdit
                 {
                     CustomMinimumSize = (270, 0),
@@ -109,7 +108,7 @@ namespace Content.Client.UserInterface
                 _nameEdit.OnTextChanged += args => { SetName(args.Text); };
                 var nameRandomButton = new Button
                 {
-                    Text = localization.GetString("Randomize"),
+                    Text = Loc.GetString("Randomize"),
                 };
                 nameRandomButton.OnPressed += args => RandomizeName();
                 hBox.AddChild(nameLabel);
@@ -143,19 +142,19 @@ namespace Content.Client.UserInterface
                 {
                     var panel = HighlightedContainer();
                     var hBox = new HBoxContainer();
-                    var sexLabel = new Label {Text = localization.GetString("Sex:")};
+                    var sexLabel = new Label {Text = Loc.GetString("Sex:")};
 
                     var sexButtonGroup = new ButtonGroup();
 
                     _sexMaleButton = new Button
                     {
-                        Text = localization.GetString("Male"),
+                        Text = Loc.GetString("Male"),
                         Group = sexButtonGroup
                     };
                     _sexMaleButton.OnPressed += args => { SetSex(Sex.Male); };
                     _sexFemaleButton = new Button
                     {
-                        Text = localization.GetString("Female"),
+                        Text = Loc.GetString("Female"),
                         Group = sexButtonGroup
                     };
                     _sexFemaleButton.OnPressed += args => { SetSex(Sex.Female); };
@@ -173,7 +172,7 @@ namespace Content.Client.UserInterface
                 {
                     var panel = HighlightedContainer();
                     var hBox = new HBoxContainer();
-                    var ageLabel = new Label {Text = localization.GetString("Age:")};
+                    var ageLabel = new Label {Text = Loc.GetString("Age:")};
                     _ageEdit = new LineEdit {CustomMinimumSize = (40, 0)};
                     _ageEdit.OnTextChanged += args =>
                     {
@@ -332,13 +331,13 @@ namespace Content.Client.UserInterface
                 var hBox = new HBoxContainer();
                 var importButton = new Button
                 {
-                    Text = localization.GetString("Import"),
+                    Text = Loc.GetString("Import"),
                     Disabled = true,
                     ToolTip = "Not yet implemented!"
                 };
                 var exportButton = new Button
                 {
-                    Text = localization.GetString("Export"),
+                    Text = Loc.GetString("Export"),
                     Disabled = true,
                     ToolTip = "Not yet implemented!"
                 };
@@ -356,7 +355,7 @@ namespace Content.Client.UserInterface
                 var panel = HighlightedContainer();
                 _saveButton = new Button
                 {
-                    Text = localization.GetString("Save"),
+                    Text = Loc.GetString("Save"),
                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter
                 };
                 _saveButton.OnPressed += args => { Save(); };

@@ -107,9 +107,19 @@ namespace Content.Server.GameObjects
             return CurrentDamageState.CanDrop();
         }
 
+        bool IActionBlocker.CanPickup()
+        {
+            return CurrentDamageState.CanPickup();
+        }
+
         bool IActionBlocker.CanEmote()
         {
             return CurrentDamageState.CanEmote();
+        }
+
+        bool IActionBlocker.CanAttack()
+        {
+            return CurrentDamageState.CanAttack();
         }
 
         List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
@@ -163,7 +173,8 @@ namespace Content.Server.GameObjects
 
             currentstate = threshold;
 
-            Owner.RaiseEvent(new MobDamageStateChangedMessage(this));
+            EntityEventArgs toRaise = new MobDamageStateChangedMessage(this);
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, toRaise);
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
@@ -184,8 +195,8 @@ namespace Content.Server.GameObjects
                     bruteDamage += 30;
                     break;
             }
-            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage);
-            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage, null);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage, null);
         }
     }
 

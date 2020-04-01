@@ -4,11 +4,14 @@
   save: false
   description: Boo!
   components:
+  - type: Mind
   - type: Physics
     mass: 5
   - type: Eye
     zoom: 0.5, 0.5
+    drawFov: false
   - type: Input
     context: "ghost"
   - type: Examiner
     DoRangeCheck: false
+  - type: IgnorePause

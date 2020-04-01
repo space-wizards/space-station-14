@@ -155,11 +155,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             }
 
+            var position = Owner.Transform.GridPosition;
             Owner.Delete();
 
             if (_finishPrototype != null)
             {
-                var finisher = Owner.EntityManager.SpawnEntity(_finishPrototype, Owner.Transform.GridPosition);
+                var finisher = Owner.EntityManager.SpawnEntity(_finishPrototype, position);
                 if (user.TryGetComponent(out HandsComponent handsComponent) && finisher.TryGetComponent(out ItemComponent itemComponent))
                 {
                     if (handsComponent.CanPutInHand(itemComponent))

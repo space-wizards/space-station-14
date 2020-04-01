@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -43,7 +43,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cast = (HumanoidAppearanceComponentState) curState;
+            if (!(curState is HumanoidAppearanceComponentState cast))
+                return;
+
             Appearance = cast.Appearance;
             Sex = cast.Sex;
         }

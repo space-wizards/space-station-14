@@ -5,7 +5,7 @@
     {
         public const uint DAMAGEABLE = 1000;
         public const uint DESTRUCTIBLE = 1001;
-        public const uint TEMPERATURE = 1002;
+        public const uint BALLISTIC_MAGAZINE_WEAPON = 1002;
         public const uint HANDS = 1003;
         public const uint SOLUTION = 1004;
         public const uint STORAGE = 1005;
@@ -39,8 +39,9 @@
         public const uint WELDER = 1034;
         public const uint STACK = 1035;
         public const uint HANDHELD_LIGHT = 1036;
-        public const uint BALLISTIC_MAGAZINE_WEAPON = 1037;
-        public const uint PATHFINDER_DEBUG = 1038;
-        public const uint AI_DEBUG = 1039;
+        public const uint PAPER = 1037;
+        public const uint REAGENT_INJECTOR = 1038;
+        public const uint PATHFINDER_DEBUG = 1039;
+        public const uint AI_DEBUG = 1040;
     }
 }

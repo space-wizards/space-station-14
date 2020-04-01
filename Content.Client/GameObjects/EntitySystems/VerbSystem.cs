@@ -9,15 +9,12 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.State;
-using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
-using Robust.Client.State.States;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -34,7 +31,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
 #pragma warning restore 649
 
         private VerbPopup _currentPopup;
@@ -44,6 +40,8 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
+            SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
+
             IoCManager.InjectDependencies(this);
 
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
@@ -51,24 +49,17 @@ namespace Content.Client.GameObjects.EntitySystems
                 new PointerInputCmdHandler(OnOpenContextMenu));
         }
 
-        public override void RegisterMessageTypes()
-        {
-            base.RegisterMessageTypes();
-
-            RegisterMessageType<VerbSystemMessages.VerbsResponseMessage>();
-        }
-
         public void OpenContextMenu(IEntity entity, ScreenCoordinates screenCoordinates)
         {
             if (_currentPopup != null)
             {
-                _closeContextMenu();
+                CloseContextMenu();
             }
 
             _currentEntity = entity.Uid;
             _currentPopup = new VerbPopup();
             _currentPopup.UserInterfaceManager.ModalRoot.AddChild(_currentPopup);
-            _currentPopup.OnPopupHide += _closeContextMenu;
+            _currentPopup.OnPopupHide += CloseContextMenu;
 
             _currentPopup.List.AddChild(new Label {Text = "Waiting on Server..."});
             RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
@@ -82,11 +73,11 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             if (_currentPopup != null)
             {
-                _closeContextMenu();
+                CloseContextMenu();
                 return true;
             }
 
-            if (!(_stateManager.CurrentState is GameScreen gameScreen))
+            if (!(_stateManager.CurrentState is GameScreenBase gameScreen))
             {
                 return false;
             }
@@ -99,7 +90,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             _currentPopup = new VerbPopup();
-            _currentPopup.OnPopupHide += _closeContextMenu;
+            _currentPopup.OnPopupHide += CloseContextMenu;
             foreach (var entity in entities)
             {
                 var button = new Button {Text = entity.Name};
@@ -121,19 +112,7 @@ namespace Content.Client.GameObjects.EntitySystems
             OpenContextMenu(entity, new ScreenCoordinates(_inputManager.MouseScreenPosition));
         }
 
-        public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
-        {
-            base.HandleNetMessage(channel, message);
-
-            switch (message)
-            {
-                case VerbSystemMessages.VerbsResponseMessage resp:
-                    _fillEntityPopup(resp);
-                    break;
-            }
-        }
-
-        private void _fillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
+        private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
         {
             if (_currentEntity != msg.Entity || !_entityManager.TryGetEntity(_currentEntity, out var entity))
             {
@@ -142,7 +121,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             DebugTools.AssertNotNull(_currentPopup);
 
-            var buttons = new List<Button>();
+            var buttons = new Dictionary<string, List<Button>>();
 
             var vBox = _currentPopup.List;
             vBox.DisposeAllChildren();
@@ -154,11 +133,14 @@ namespace Content.Client.GameObjects.EntitySystems
                     button.OnPressed += _ =>
                     {
                         RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(_currentEntity, data.Key));
-                        _closeContextMenu();
+                        CloseContextMenu();
                     };
                 }
 
-                buttons.Add(button);
+                if(!buttons.ContainsKey(data.Category))
+                    buttons[data.Category] = new List<Button>();
+
+                buttons[data.Category].Add(button);
             }
 
             var user = GetUserEntity();
@@ -169,7 +151,13 @@ namespace Content.Client.GameObjects.EntitySystems
                     continue;
 
                 var disabled = verb.GetVisibility(user, component) != VerbVisibility.Visible;
-                buttons.Add(CreateVerbButton(verb.GetText(user, component), disabled, verb.ToString(),
+                var category = verb.GetCategory(user, component);
+
+
+                if(!buttons.ContainsKey(category))
+                    buttons[category] = new List<Button>();
+
+                buttons[category].Add(CreateVerbButton(verb.GetText(user, component), disabled, verb.ToString(),
                     entity.ToString(), () => verb.Activate(user, component)));
             }
             //Get global verbs. Visible for all entities regardless of their components.
@@ -179,17 +167,33 @@ namespace Content.Client.GameObjects.EntitySystems
                     continue;
 
                 var disabled = globalVerb.GetVisibility(user, entity) != VerbVisibility.Visible;
-                buttons.Add(CreateVerbButton(globalVerb.GetText(user, entity), disabled, globalVerb.ToString(),
+                var category = globalVerb.GetCategory(user, entity);
+
+                if(!buttons.ContainsKey(category))
+                    buttons[category] = new List<Button>();
+
+                buttons[category].Add(CreateVerbButton(globalVerb.GetText(user, entity), disabled, globalVerb.ToString(),
                     entity.ToString(), () => globalVerb.Activate(user, entity)));
             }
 
             if (buttons.Count > 0)
             {
-                buttons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
-
-                foreach (var button in buttons)
+                foreach (var (category, verbs) in buttons)
                 {
-                    vBox.AddChild(button);
+                    if (string.IsNullOrEmpty(category))
+                        continue;
+
+                    vBox.AddChild(CreateCategoryButton(category, verbs));
+                }
+
+                if (buttons.ContainsKey(""))
+                {
+                    buttons[""].Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
+
+                    foreach (var verb in buttons[""])
+                    {
+                        vBox.AddChild(verb);
+                    }
                 }
             }
             else
@@ -211,7 +215,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 button.OnPressed += _ =>
                 {
-                    _closeContextMenu();
+                    CloseContextMenu();
                     try
                     {
                         action.Invoke();
@@ -225,7 +229,26 @@ namespace Content.Client.GameObjects.EntitySystems
             return button;
         }
 
-        private void _closeContextMenu()
+        private Button CreateCategoryButton(string text, List<Button> verbButtons)
+        {
+            verbButtons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
+
+            var button = new Button
+            {
+                Text = $"{text}...",
+            };
+            button.OnPressed += _ =>
+                {
+                    _currentPopup.List.DisposeAllChildren();
+                    foreach (var verb in verbButtons)
+                    {
+                        _currentPopup.List.AddChild(verb);
+                    }
+                };
+            return button;
+        }
+
+        private void CloseContextMenu()
         {
             _currentPopup?.Dispose();
             _currentPopup = null;

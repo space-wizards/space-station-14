@@ -17,7 +17,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
         bool CanDrop();
 
+        bool CanPickup();
+
         bool CanEmote();
+
+        bool CanAttack();
     }
 
     public class ActionBlockerSystem : EntitySystem
@@ -81,7 +85,17 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             return candrop;
 		}
-            
+
+        public static bool CanPickup(IEntity entity)
+        {
+            bool canpickup = true;
+            foreach (var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
+            {
+                canpickup &= actionblockercomponents.CanPickup();
+            }
+            return canpickup;
+        }
+
         public static bool CanEmote(IEntity entity)
         {
             bool canemote = true;
@@ -92,6 +106,18 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             return canemote;
+        }
+
+        public static bool CanAttack(IEntity entity)
+        {
+            bool canattack = true;
+
+            foreach (var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
+            {
+                canattack &= actionblockercomponents.CanAttack();
+            }
+
+            return canattack;
         }
     }
 }

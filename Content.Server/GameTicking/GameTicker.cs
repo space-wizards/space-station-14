@@ -13,7 +13,6 @@ using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
-using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Maps;
@@ -39,6 +38,7 @@ using Robust.Shared.Timers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameTicking
 {
@@ -47,9 +47,6 @@ namespace Content.Server.GameTicking
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
         private const string MapFile = "Maps/stationstation.yml";
-
-        // Seconds.
-        private const float LobbyDuration = 20;
 
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
         [ViewVariables] private readonly List<ManifestEntry> _manifest = new List<ManifestEntry>();
@@ -86,17 +83,25 @@ namespace Content.Server.GameTicking
 
         public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
 
+        private TimeSpan LobbyDuration =>
+            TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
+
         public void Initialize()
         {
             DebugTools.Assert(!_initialized);
 
             _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
+            _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
+            _configurationManager.RegisterCVar("game.defaultpreset", "Sandbox", CVar.ARCHIVE);
+
             _playerManager.PlayerStatusChanged += _handlePlayerStatusChanged;
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
+
+            SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
 
             RestartRound();
 
@@ -131,7 +136,7 @@ namespace Content.Server.GameTicking
                 if (_playerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
                 else
-                    _roundStartTimeUtc = DateTime.UtcNow + TimeSpan.FromSeconds(LobbyDuration);
+                    _roundStartTimeUtc = DateTime.UtcNow + LobbyDuration;
 
                 _sendStatusToAll();
             }
@@ -258,6 +263,14 @@ namespace Content.Server.GameTicking
             UpdateInfoText();
         }
 
+        public void SetStartPreset(string type) =>
+            SetStartPreset(type switch
+            {
+                "Sandbox" => typeof(PresetSandbox),
+                "DeathMatch" => typeof(PresetDeathMatch),
+                _ => throw new NotSupportedException()
+            });
+
         private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
         {
             GridCoordinates coordinates = lateJoin ? _getLateJoinSpawnPoint() : _getJobSpawnPoint(job.Prototype.ID);
@@ -272,6 +285,7 @@ namespace Content.Server.GameTicking
                     inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
                 }
             }
+
             return entity;
         }
 
@@ -313,7 +327,8 @@ namespace Content.Server.GameTicking
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
-                if (point.SpawnType == SpawnPointType.Job && point.Job.ID == jobId) possiblePoints.Add(entity.Transform.GridPosition);
+                if (point.SpawnType == SpawnPointType.Job && point.Job.ID == jobId)
+                    possiblePoints.Add(entity.Transform.GridPosition);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -388,7 +403,7 @@ namespace Content.Server.GameTicking
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
                         _roundStartCountdownHasNotStartedYetDueToNoPlayers = false;
-                        _roundStartTimeUtc = DateTime.UtcNow + TimeSpan.FromSeconds(LobbyDuration);
+                        _roundStartTimeUtc = DateTime.UtcNow + LobbyDuration;
                     }
 
                     break;
@@ -466,10 +481,14 @@ namespace Content.Server.GameTicking
 
         private void EquipIdCard(IEntity mob, string characterName, JobPrototype jobPrototype)
         {
-            var card = _entityManager.SpawnEntity("IDCardStandard", mob.Transform.GridPosition);
-
             var inventory = mob.GetComponent<InventoryComponent>();
-            inventory.Equip(EquipmentSlotDefines.Slots.IDCARD, card.GetComponent<ClothingComponent>());
+
+            if (!inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent cardItem))
+            {
+                return;
+            }
+
+            var card = cardItem.Owner;
 
             var cardComponent = card.GetComponent<IdCardComponent>();
             cardComponent.FullName = characterName;

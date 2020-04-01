@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Content.Server.Chemistry;
+using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -32,7 +35,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
         protected override void Startup()
         {
             base.Startup();
-            
+            Init();
+        }
+
+        public void Init()
+        {
             _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
         }
@@ -201,7 +208,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     if (SolutionValidReaction(reaction, out int unitReactions))
                     {
                         PerformReaction(reaction, unitReactions);
-                        checkForNewReaction = true; 
+                        checkForNewReaction = true;
                         break;
                     }
                 }

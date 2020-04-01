@@ -169,32 +169,6 @@
 
 - type: entity
   parent: GlovesBase
-  id: GlovesChalAppara1
-  name: Chal Appara 1 gloves
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Gloves/chal_appara_1.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/chal_appara_1.rsi
-  - type: Clothing
-    sprite: Clothing/Gloves/chal_appara_1.rsi
-
-- type: entity
-  parent: GlovesBase
-  id: GlovesChalAppara12
-  name: Chal Appara 12 gloves
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Gloves/chal_appara_12.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/chal_appara_12.rsi
-  - type: Clothing
-    sprite: Clothing/Gloves/chal_appara_12.rsi
-
-- type: entity
-  parent: GlovesBase
   id: GlovesEngineeringRig
   name: Engineering Rig gloves
   description: ''
@@ -482,8 +456,8 @@
 - type: entity
   parent: GlovesBase
   id: GlovesLeather
-  name: Leather gloves
-  description: ''
+  name: 'Botanist''s leather gloves'
+  description: 'These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They''re also quite warm.'
   components:
   - type: Sprite
     sprite: Clothing/Gloves/leather.rsi
@@ -491,6 +465,7 @@
     sprite: Clothing/Gloves/leather.rsi
   - type: Clothing
     sprite: Clothing/Gloves/leather.rsi
+    HeatResistance: 1400
 
 - type: entity
   parent: GlovesBase
@@ -802,5 +777,4 @@
   - type: Icon
     sprite: Clothing/Gloves/yellow.rsi
   - type: Clothing
-    HeatResistance: 1500
     sprite: Clothing/Gloves/yellow.rsi

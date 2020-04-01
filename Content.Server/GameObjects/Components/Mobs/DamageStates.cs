@@ -62,8 +62,18 @@ namespace Content.Server.GameObjects
         {
             return true;
         }
-        
+
+        bool IActionBlocker.CanPickup()
+        {
+            return true;
+        }
+
         bool IActionBlocker.CanEmote()
+        {
+            return true;
+        }
+
+        bool IActionBlocker.CanAttack()
         {
             return true;
         }
@@ -113,8 +123,18 @@ namespace Content.Server.GameObjects
         {
             return false;
         }
-        
+
+        bool IActionBlocker.CanPickup()
+        {
+            return false;
+        }
+
         bool IActionBlocker.CanEmote()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanAttack()
         {
             return false;
         }
@@ -184,8 +204,18 @@ namespace Content.Server.GameObjects
         {
             return false;
         }
-        
+
+        bool IActionBlocker.CanPickup()
+        {
+            return false;
+        }
+
         bool IActionBlocker.CanEmote()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanAttack()
         {
             return false;
         }

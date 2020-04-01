@@ -3,6 +3,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -46,7 +47,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
     public class ExplosionEventArgs : EventArgs
     {
-        public IEntity Source { get; set; }
+        public GridCoordinates Source { get; set; }
         public IEntity Target { get; set; }
         public ExplosionSeverity Severity { get; set; }
     }
@@ -70,7 +71,7 @@ namespace Content.Server.GameObjects.EntitySystems
             owner.Delete();
         }
 
-        public void HandleExplosion(IEntity source, IEntity target, ExplosionSeverity severity)
+        public void HandleExplosion(GridCoordinates source, IEntity target, ExplosionSeverity severity)
         {
             var eventArgs = new ExplosionEventArgs
             {
