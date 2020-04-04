@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.GameObjects.Components.Actor;
 using Content.Client.Input;
 using Content.Client.Interfaces;
@@ -18,7 +18,7 @@ using Content.Shared.GameObjects.Components.VendingMachines;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Interfaces.State;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
@@ -36,6 +36,8 @@ namespace Content.Client
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IBaseClient _baseClient;
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
+        [Dependency] private readonly IGameController _gameController;
+        [Dependency] private readonly IStateManager _stateManager;
 #pragma warning restore 649
 
         public override void Init()
@@ -223,6 +225,16 @@ namespace Content.Client
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IItemSlotManager>().Initialize();
+
+            // Fire off into state dependent on launcher or not.
+            if (_gameController.LaunchState.FromLauncher)
+            {
+                _stateManager.RequestStateChange<LauncherConnecting>();
+            }
+            else
+            {
+                _stateManager.RequestStateChange<MainScreen>();
+            }
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
