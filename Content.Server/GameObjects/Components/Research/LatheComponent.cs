@@ -62,6 +62,9 @@ namespace Content.Server.GameObjects.Components.Research
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
+            if (!Powered)
+                return;
+
             switch (message.Message)
             {
                 case LatheQueueRecipeMessage msg:
@@ -87,13 +90,15 @@ namespace Content.Server.GameObjects.Components.Research
 
                 case LatheServerSyncMessage msg:
                     if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)
-                    ||  !Owner.TryGetComponent(out ProtolatheDatabaseComponent protoDatabase)) return;
+                    || !Owner.TryGetComponent(out ProtolatheDatabaseComponent protoDatabase)) return;
 
-                    if(database.SyncWithServer())
+                    if (database.SyncWithServer())
                         protoDatabase.Sync();
 
                     break;
             }
+            
+
         }
 
         internal bool Produce(LatheRecipePrototype recipe)

@@ -8,6 +8,7 @@ using Content.Client.Parallax;
 using Content.Client.Sandbox;
 using Content.Client.State;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -17,7 +18,7 @@ using Content.Shared.GameObjects.Components.VendingMachines;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Interfaces.State;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
@@ -35,6 +36,8 @@ namespace Content.Client
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IBaseClient _baseClient;
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
+        [Dependency] private readonly IGameController _gameController;
+        [Dependency] private readonly IStateManager _stateManager;
 #pragma warning restore 649
 
         public override void Init()
@@ -167,10 +170,7 @@ namespace Content.Client
 
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
-
-            var stylesheet = new NanoStyle();
-
-            IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
+            IoCManager.Resolve<IStylesheetManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
@@ -225,6 +225,16 @@ namespace Content.Client
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IItemSlotManager>().Initialize();
+
+            // Fire off into state dependent on launcher or not.
+            if (_gameController.LaunchState.FromLauncher)
+            {
+                _stateManager.RequestStateChange<LauncherConnecting>();
+            }
+            else
+            {
+                _stateManager.RequestStateChange<MainScreen>();
+            }
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

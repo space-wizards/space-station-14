@@ -9,6 +9,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using System;
 using System.Collections.Generic;
+using Content.Client.UserInterface.Stylesheets;
 
 namespace Content.Client.UserInterface.Cargo
 {
@@ -57,7 +58,7 @@ namespace Content.Client.UserInterface.Cargo
             var accountName = new HBoxContainer();
             var accountNameLabel = new Label {
                 Text = _loc.GetString("Account Name: "),
-                StyleClasses = { NanoStyle.StyleClassLabelKeyText }
+                StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _accountNameLabel = new Label {
                 Text = "None" //Owner.Bank.Account.Name
@@ -70,7 +71,7 @@ namespace Content.Client.UserInterface.Cargo
             var pointsLabel = new Label
             {
                 Text = _loc.GetString("Points: "),
-                StyleClasses = { NanoStyle.StyleClassLabelKeyText }
+                StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _pointsLabel = new Label
             {
@@ -84,7 +85,7 @@ namespace Content.Client.UserInterface.Cargo
             var shuttleStatusLabel = new Label
             {
                 Text = _loc.GetString("Shuttle Status: "),
-                StyleClasses = { NanoStyle.StyleClassLabelKeyText }
+                StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _shuttleStatusLabel = new Label
             {
@@ -410,13 +411,13 @@ namespace Content.Client.UserInterface.Cargo
             ProductName = new Label
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                StyleClasses = { NanoStyle.StyleClassLabelSubText },
+                StyleClasses = { StyleNano.StyleClassLabelSubText },
                 ClipText = true
             };
             Description = new Label
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                StyleClasses = { NanoStyle.StyleClassLabelSubText },
+                StyleClasses = { StyleNano.StyleClassLabelSubText },
                 ClipText = true
             };
             vBox.AddChild(ProductName);
@@ -426,14 +427,14 @@ namespace Content.Client.UserInterface.Cargo
             Approve = new Button
             {
                 Text = "Approve",
-                StyleClasses = { NanoStyle.StyleClassLabelSubText }
+                StyleClasses = { StyleNano.StyleClassLabelSubText }
             };
             hBox.AddChild(Approve);
 
             Cancel = new Button
             {
                 Text = "Cancel",
-                StyleClasses = { NanoStyle.StyleClassLabelSubText }
+                StyleClasses = { StyleNano.StyleClassLabelSubText }
             };
             hBox.AddChild(Cancel);
 
