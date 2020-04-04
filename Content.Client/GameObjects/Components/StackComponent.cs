@@ -1,4 +1,5 @@
 ﻿using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface;
@@ -38,7 +39,7 @@ namespace Content.Client.GameObjects.Components
             public StatusControl(StackComponent parent)
             {
                 _parent = parent;
-                _label = new RichTextLabel {StyleClasses = {NanoStyle.StyleClassItemStatus}};
+                _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
                 AddChild(_label);
 
                 parent._uiUpdateNeeded = true;

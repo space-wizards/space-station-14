@@ -1,5 +1,5 @@
 using Content.Client.GameObjects.Components.Instruments;
-using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.Audio.Midi;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.UserInterface;
@@ -148,7 +148,7 @@ namespace Content.Client.Instruments
                             Align = Label.AlignMode.Center,
                             SizeFlagsVertical = SizeFlags.ShrinkCenter,
                             SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                            StyleClasses = {NanoStyle.StyleClassLabelBig},
+                            StyleClasses = {StyleNano.StyleClassLabelBig},
                             Text = Loc.GetString("MIDI support is currently\nnot available on your platform.")
                         }
                     }

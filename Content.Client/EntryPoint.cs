@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Client.GameObjects.Components.Actor;
 using Content.Client.Input;
 using Content.Client.Interfaces;
@@ -8,6 +8,7 @@ using Content.Client.Parallax;
 using Content.Client.Sandbox;
 using Content.Client.State;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -167,10 +168,7 @@ namespace Content.Client
 
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
-
-            var stylesheet = new NanoStyle();
-
-            IoCManager.Resolve<IUserInterfaceManager>().Stylesheet = stylesheet.Stylesheet;
+            IoCManager.Resolve<IStylesheetManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
