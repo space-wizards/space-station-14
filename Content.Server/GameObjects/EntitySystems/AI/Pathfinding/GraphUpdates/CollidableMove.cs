@@ -1,18 +1,14 @@
-using Robust.Shared.Map;
+using Robust.Shared.GameObjects.Components.Transform;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.GraphUpdates
 {
     public struct CollidableMove : IPathfindingGraphUpdate
     {
-        public int CollisionLayer { get; }
-        public TileRef OldTile { get; }
-        public TileRef NewTile { get; }
+        public MoveEvent MoveEvent { get; }
 
-        public CollidableMove(int collisionLayer, TileRef oldTile, TileRef newTile)
+        public CollidableMove(MoveEvent moveEvent)
         {
-            CollisionLayer = collisionLayer;
-            NewTile = newTile;
-            OldTile = oldTile;
+            MoveEvent = moveEvent;
         }
     }
 }

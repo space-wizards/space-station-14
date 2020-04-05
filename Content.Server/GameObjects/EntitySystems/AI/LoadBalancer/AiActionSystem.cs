@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
 using Content.Shared.GameObjects.Components.AI;
 using Robust.Shared.GameObjects.Systems;
@@ -14,9 +15,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
 
         private readonly AiActionJobQueue _aiRequestQueue = new AiActionJobQueue();
 
-        public AiActionRequestJob RequestAction(AiActionRequest request)
+        public AiActionRequestJob RequestAction(AiActionRequest request, CancellationTokenSource cancellationToken = null)
         {
-            var job = new AiActionRequestJob(0.002, request);
+            var job = new AiActionRequestJob(0.002, request, cancellationToken);
             // AI should already know if it shouldn't request again
             _aiRequestQueue.PendingQueue.Enqueue(job);
             return job;

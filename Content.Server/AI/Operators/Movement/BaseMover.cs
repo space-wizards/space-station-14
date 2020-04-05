@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
@@ -113,6 +114,7 @@ namespace Content.Server.AI.Operators.Movement
         protected void AntiStuck(float frameTime)
         {
             // TODO: More work because these are sketchy af
+            // TODO: Check if a wall was spawned in front of us and then immediately dump route if it was
 
             // First check if we're still in a stuck state from last frame
             if (IsStuck && !_tryingAntiStuck)
@@ -245,7 +247,7 @@ namespace Content.Server.AI.Operators.Movement
                 startGrid,
                 endGrid,
                 PathfindingProximity
-            ));
+            ), _routeCancelToken);
         }
 
         protected void ReceivedRoute()
@@ -276,7 +278,7 @@ namespace Content.Server.AI.Operators.Movement
                 ReceivedRoute();
             }
 
-            return Outcome.Continuing;
+            return !ActionBlockerSystem.CanMove(Owner) ? Outcome.Failed : Outcome.Continuing;
         }
     }
 

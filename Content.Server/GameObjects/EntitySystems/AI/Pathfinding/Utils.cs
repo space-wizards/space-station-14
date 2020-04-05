@@ -40,6 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
          {
             // If it's a diagonal we need to check NSEW to see if we can get to it and stop corner cutting, NE needs N and E etc.
             // Given there's different collision layers stored for each node in the graph it's probably not worth it to cache this
+            // Also this will help with corner-cutting
 
             currentNode.Neighbors.TryGetValue(Direction.North, out var northNeighbor);
             currentNode.Neighbors.TryGetValue(Direction.South, out var southNeighbor);
@@ -50,7 +51,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             {
                 case Direction.NorthEast:
                     if (northNeighbor == null || eastNeighbor == null) return false;
-                    if (!Traversable(collisionMask, northNeighbor.CollisionMask) &&
+                    if (!Traversable(collisionMask, northNeighbor.CollisionMask) ||
                         !Traversable(collisionMask, eastNeighbor.CollisionMask))
                     {
                         return false;
@@ -58,7 +59,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                     break;
                 case Direction.NorthWest:
                     if (northNeighbor == null || westNeighbor == null) return false;
-                    if (!Traversable(collisionMask, northNeighbor.CollisionMask) &&
+                    if (!Traversable(collisionMask, northNeighbor.CollisionMask) ||
                         !Traversable(collisionMask, westNeighbor.CollisionMask))
                     {
                         return false;
@@ -66,7 +67,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                     break;
                 case Direction.SouthWest:
                     if (southNeighbor == null || westNeighbor == null) return false;
-                    if (!Traversable(collisionMask, southNeighbor.CollisionMask) &&
+                    if (!Traversable(collisionMask, southNeighbor.CollisionMask) ||
                         !Traversable(collisionMask, westNeighbor.CollisionMask))
                     {
                         return false;
@@ -74,7 +75,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                     break;
                 case Direction.SouthEast:
                     if (southNeighbor == null || eastNeighbor == null) return false;
-                    if (!Traversable(collisionMask, southNeighbor.CollisionMask) &&
+                    if (!Traversable(collisionMask, southNeighbor.CollisionMask) ||
                         !Traversable(collisionMask, eastNeighbor.CollisionMask))
                     {
                         return false;
@@ -136,7 +137,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                     if (intermediate.TileRef.X < current.TileRef.X)
                     {
                         xOffset += 1;
-                    } else if (intermediate.TileRef.X > current.TileRef.X)
+                    }
+                    else if (intermediate.TileRef.X > current.TileRef.X)
                     {
                         xOffset -= 1;
                     }
@@ -148,7 +150,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                     if (intermediate.TileRef.Y < current.TileRef.Y)
                     {
                         yOffset += 1;
-                    } else if (intermediate.TileRef.Y > current.TileRef.Y)
+                    }
+                    else if (intermediate.TileRef.Y > current.TileRef.Y)
                     {
                         yOffset -= 1;
                     }
@@ -162,6 +165,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
                     if (intermediate.TileRef != current.TileRef)
                     {
+                        // Hacky corner cut fix
+
                         running.Push(intermediate.TileRef);
                         continue;
                     }

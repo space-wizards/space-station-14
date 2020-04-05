@@ -1,6 +1,8 @@
 using Content.Client.GameObjects.Components.AI;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.Console;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
@@ -13,7 +15,7 @@ namespace Content.Client.Commands
         // ReSharper disable once StringLiteralTypo
         public string Command => "debugai";
         public string Description => "Handles all tooltip debugging above AI mobs";
-        public string Help => "";
+        public string Help => "debugai [disable/paths/thonk]";
 
         public bool Execute(IDebugConsole console, params string[] args)
         {

@@ -67,16 +67,10 @@ namespace Content.Client.GameObjects.Components.Pathfinding
             switch (message)
             {
                 case JpsRouteMessage route:
-                    if ((_modes & (int) PathfindingDebugMode.Route) != 0)
-                    {
-                        ReceivedJpsRoute(route);
-                    }
+                    ReceivedJpsRoute(route);
                     break;
                 case AStarRouteMessage route:
-                    if ((_modes & (int) PathfindingDebugMode.Route) != 0)
-                    {
-                        ReceivedAStarRoute(route);
-                    }
+                    ReceivedAStarRoute(route);
                     break;
                 case PathfindingGraphMessage graph:
                     if ((_modes & (int) PathfindingDebugMode.Graph) != 0)
@@ -95,14 +89,17 @@ namespace Content.Client.GameObjects.Components.Pathfinding
                 {
                     SendNetworkMessage(new RequestPathfindingGraphMessage());
                 }
-
-                if (_overlay != null)
+                else
                 {
-                    return;
+                    _overlay?.Graph.Clear();
                 }
-                var overlayManager = IoCManager.Resolve<IOverlayManager>();
-                _overlay = new DebugPathfindingOverlay();
-                overlayManager.AddOverlay(_overlay);
+
+                if (_overlay == null)
+                {
+                    var overlayManager = IoCManager.Resolve<IOverlayManager>();
+                    _overlay = new DebugPathfindingOverlay();
+                    overlayManager.AddOverlay(_overlay);
+                }
             }
             else
             {
@@ -114,7 +111,10 @@ namespace Content.Client.GameObjects.Components.Pathfinding
                 var overlayManager = IoCManager.Resolve<IOverlayManager>();
                 overlayManager.RemoveOverlay(_overlay.ID);
                 _overlay = null;
+                return;
             }
+
+            _overlay.Modes = _modes;
         }
 
         public override void OnAdd()
@@ -176,8 +176,10 @@ namespace Content.Client.GameObjects.Components.Pathfinding
         // TODO: Add a box like the debug one and show the most recent path stuff
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
+        public int Modes { get; set; } = 0;
+
         // Graph debugging
-        private readonly Dictionary<int, List<Vector2>> _graph = new Dictionary<int, List<Vector2>>();
+        public readonly Dictionary<int, List<Vector2>> Graph = new Dictionary<int, List<Vector2>>();
         private readonly Dictionary<int, Color> _graphColors = new Dictionary<int, Color>();
 
         // Route debugging
@@ -192,12 +194,12 @@ namespace Content.Client.GameObjects.Components.Pathfinding
 
         public void UpdateGraph(Dictionary<int, List<Vector2>> graph)
         {
-            _graph.Clear();
+            Graph.Clear();
             _graphColors.Clear();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             foreach (var (chunk, nodes) in graph)
             {
-                _graph[chunk] = nodes;
+                Graph[chunk] = nodes;
                 _graphColors[chunk] = new Color(robustRandom.NextFloat(), robustRandom.NextFloat(), robustRandom.NextFloat(), 0.3f);
             }
         }
@@ -207,7 +209,7 @@ namespace Content.Client.GameObjects.Components.Pathfinding
             var eyeManager = IoCManager.Resolve<IEyeManager>();
             var viewport = IoCManager.Resolve<IEyeManager>().GetWorldViewport();
 
-            foreach (var (chunk, nodes) in _graph)
+            foreach (var (chunk, nodes) in Graph)
             {
                 foreach (var tile in nodes)
                 {
@@ -234,11 +236,37 @@ namespace Content.Client.GameObjects.Components.Pathfinding
 
             foreach (var route in AStarRoutes)
             {
+                // Draw box on each tile of route
+                foreach (var position in route.Route)
+                {
+                    if (!viewport.Contains(position)) continue;
+                    var screenTile = eyeManager.WorldToScreen(position);
+                    // worldHandle.DrawLine(position, nextWorld.Value, Color.Blue);
+                    var box = new UIBox2(
+                        screenTile.X - 15.0f,
+                        screenTile.Y - 15.0f,
+                        screenTile.X + 15.0f,
+                        screenTile.Y + 15.0f);
+                    screenHandle.DrawRect(box, Color.Orange.WithAlpha(0.25f));
+                }
+            }
+        }
+
+        private void DrawAStarNodes(DrawingHandleScreen screenHandle)
+        {
+            var eyeManager = IoCManager.Resolve<IEyeManager>();
+            var viewport = eyeManager.GetWorldViewport();
+
+            foreach (var route in AStarRoutes)
+            {
                 var highestgScore = route.GScores.Values.Max();
 
                 foreach (var (tile, score) in route.GScores)
                 {
-                    if (route.Route.Contains(tile) || !viewport.Contains(tile)) continue;
+                    if ((route.Route.Contains(tile) && (Modes & (int) PathfindingDebugMode.Route) != 0) || !viewport.Contains(tile))
+                    {
+                        continue;
+                    }
 
                     var screenTile = eyeManager.WorldToScreen(tile);
 
@@ -254,7 +282,16 @@ namespace Content.Client.GameObjects.Components.Pathfinding
                         1.0f - (score / highestgScore),
                         0.1f));
                 }
+            }
+        }
 
+        private void DrawJpsRoutes(DrawingHandleScreen screenHandle)
+        {
+            var eyeManager = IoCManager.Resolve<IEyeManager>();
+            var viewport = eyeManager.GetWorldViewport();
+
+            foreach (var route in JpsRoutes)
+            {
                 // Draw box on each tile of route
                 foreach (var position in route.Route)
                 {
@@ -268,11 +305,10 @@ namespace Content.Client.GameObjects.Components.Pathfinding
                         screenTile.Y + 15.0f);
                     screenHandle.DrawRect(box, Color.Orange.WithAlpha(0.25f));
                 }
-                // TODO: Draw remaining stuff
             }
         }
 
-        private void DrawJpsRoutes(DrawingHandleScreen screenHandle)
+        private void DrawJpsNodes(DrawingHandleScreen screenHandle)
         {
             var eyeManager = IoCManager.Resolve<IEyeManager>();
             var viewport = eyeManager.GetWorldViewport();
@@ -281,7 +317,10 @@ namespace Content.Client.GameObjects.Components.Pathfinding
             {
                 foreach (var tile in route.JumpNodes)
                 {
-                    if (route.Route.Contains(tile) || !viewport.Contains(tile)) continue;
+                    if ((route.Route.Contains(tile) && (Modes & (int) PathfindingDebugMode.Route) != 0) || !viewport.Contains(tile))
+                    {
+                        continue;
+                    }
 
                     var screenTile = eyeManager.WorldToScreen(tile);
 
@@ -297,32 +336,35 @@ namespace Content.Client.GameObjects.Components.Pathfinding
                         0.0f,
                         0.2f));
                 }
-
-                // Draw box on each tile of route
-                foreach (var position in route.Route)
-                {
-                    if (!viewport.Contains(position)) continue;
-                    var screenTile = eyeManager.WorldToScreen(position);
-                    // worldHandle.DrawLine(position, nextWorld.Value, Color.Blue);
-                    var box = new UIBox2(
-                        screenTile.X - 15.0f,
-                        screenTile.Y - 15.0f,
-                        screenTile.X + 15.0f,
-                        screenTile.Y + 15.0f);
-                    screenHandle.DrawRect(box, Color.Orange.WithAlpha(0.25f));
-                }
-                // TODO: Draw remaining stuff
             }
         }
         #endregion
 
         protected override void Draw(DrawingHandleBase handle)
         {
+            if (Modes == 0)
+            {
+                return;
+            }
+
             var screenHandle = (DrawingHandleScreen) handle;
 
-            DrawAStarRoutes(screenHandle);
-            DrawGraph(screenHandle);
-            DrawJpsRoutes(screenHandle);
+            if ((Modes & (int) PathfindingDebugMode.Route) != 0)
+            {
+                DrawAStarRoutes(screenHandle);
+                DrawJpsRoutes(screenHandle);
+            }
+
+            if ((Modes & (int) PathfindingDebugMode.Nodes) != 0)
+            {
+                DrawAStarNodes(screenHandle);
+                DrawJpsNodes(screenHandle);
+            }
+
+            if ((Modes & (int) PathfindingDebugMode.Graph) != 0)
+            {
+                DrawGraph(screenHandle);
+            }
         }
     }
 
@@ -331,5 +373,6 @@ namespace Content.Client.GameObjects.Components.Pathfinding
         None = 0,
         Route = 1 << 0,
         Graph = 1 << 1,
+        Nodes = 1 << 2,
     }
 }

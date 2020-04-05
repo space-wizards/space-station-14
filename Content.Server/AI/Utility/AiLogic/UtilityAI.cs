@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.BehaviorSets;
@@ -46,6 +47,8 @@ namespace Content.Server.AI.Utility.AiLogic
         /// If we've requested a plan then wait patiently for the action
         /// </summary>
         private AiActionRequestJob _actionRequest;
+
+        private CancellationTokenSource _actionCancellation;
 
         /// <summary>
         /// If we can't do anything then stop thinking; should probably use ActionBlocker instead
@@ -165,6 +168,7 @@ namespace Content.Server.AI.Utility.AiLogic
             // If we can't do anything then there's no point thinking
             if (_isDead || BehaviorSets.Count == 0)
             {
+                _actionCancellation?.Cancel();
                 _blackboard.GetState<LastUtilityScoreState>().SetValue(0.0f);
                 CurrentAction = null;
                 return;
@@ -189,7 +193,8 @@ namespace Content.Server.AI.Utility.AiLogic
             if (_planCooldownRemaining <= 0.0f)
             {
                 _planCooldownRemaining = PlanCooldown;
-                _actionRequest = _planner.RequestAction(new AiActionRequest(SelfEntity.Uid, _blackboard, _availableActions));
+                _actionCancellation = new CancellationTokenSource();
+                _actionRequest = _planner.RequestAction(new AiActionRequest(SelfEntity.Uid, _blackboard, _availableActions), _actionCancellation);
 
                 return;
             }

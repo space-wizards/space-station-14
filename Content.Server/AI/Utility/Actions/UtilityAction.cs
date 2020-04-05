@@ -20,7 +20,7 @@ namespace Content.Server.AI.Utility.Actions
         /// </summary>
         public virtual bool CanOverride => false;
 
-        public virtual BonusWeight Bonus { get; protected set; } = BonusWeight.Invalid;
+        public virtual BonusWeight Bonus { get; protected set; } = BonusWeight.Idle;
 
         protected IEntity Owner { get; }
 

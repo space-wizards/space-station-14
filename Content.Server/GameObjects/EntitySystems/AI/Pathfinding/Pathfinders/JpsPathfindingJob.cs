@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Queues;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
@@ -19,27 +20,26 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         private PathfindingNode _startNode;
         private PathfindingNode _endNode;
         private PathfindingArgs _pathfindingArgs;
+        private CancellationTokenSource _cancellationToken;
 
         public JpsPathfindingJob(double maxTime,
             PathfindingNode startNode,
             PathfindingNode endNode,
-            PathfindingArgs pathfindingArgs) : base(maxTime)
+            PathfindingArgs pathfindingArgs,
+            CancellationTokenSource cancellationToken = null) : base(maxTime)
         {
             _startNode = startNode;
             _endNode = endNode;
             _pathfindingArgs = pathfindingArgs;
+            _cancellationToken = cancellationToken;
         }
 
         public override IEnumerator Process()
         {
             // VERY similar to A*; main difference is with the neighbor tiles you look for jump nodes instead
-            if (_startNode == null)
-            {
-                Finish();
-                yield break;
-            }
-
-            if (_endNode == null)
+            if ((_cancellationToken != null && _cancellationToken.IsCancellationRequested) ||
+                _startNode == null ||
+                _endNode == null)
             {
                 Finish();
                 yield break;
@@ -77,6 +77,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     if (OutOfTime())
                     {
                         yield return null;
+                        if (_cancellationToken != null && _cancellationToken.IsCancellationRequested)
+                        {
+                            Finish();
+                            yield break;
+                        }
                         StopWatch.Restart();
                         Status = Status.Running;
                     }
@@ -91,7 +96,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 
                 foreach (var (direction, _) in currentNode.Neighbors)
                 {
-                    var jumpNode = GetJumpPoint(_pathfindingArgs.CollisionMask, currentNode, direction, _endNode);
+                    var jumpNode = GetJumpPoint(currentNode, direction, _endNode);
 
                     if (jumpNode != null && !closedTiles.Contains(jumpNode))
                     {
@@ -164,7 +169,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             Result = route;
         }
 
-        private PathfindingNode GetJumpPoint(int collisionMask, PathfindingNode currentNode, Direction direction, PathfindingNode endNode)
+        private PathfindingNode GetJumpPoint(PathfindingNode currentNode, Direction direction, PathfindingNode endNode)
         {
             var count = 0;
 
@@ -196,7 +201,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                 switch (direction)
                 {
                     case Direction.East:
-                        if (IsCardinalJumpPoint(collisionMask, direction, nextNode))
+                        if (IsCardinalJumpPoint(direction, nextNode))
                         {
                             return nextNode;
                         }
@@ -208,14 +213,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                             return nextNode;
                         }
 
-                        if (GetJumpPoint(collisionMask, nextNode, Direction.North, endNode) != null || GetJumpPoint(collisionMask, nextNode, Direction.East, endNode) != null)
+                        if (GetJumpPoint(nextNode, Direction.North, endNode) != null || GetJumpPoint(nextNode, Direction.East, endNode) != null)
                         {
                             return nextNode;
                         }
 
                         break;
                     case Direction.North:
-                        if (IsCardinalJumpPoint(collisionMask, direction, nextNode))
+                        if (IsCardinalJumpPoint(direction, nextNode))
                         {
                             return nextNode;
                         }
@@ -227,14 +232,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                             return nextNode;
                         }
 
-                        if (GetJumpPoint(collisionMask, nextNode, Direction.North, endNode) != null || GetJumpPoint(collisionMask, nextNode, Direction.West, endNode) != null)
+                        if (GetJumpPoint(nextNode, Direction.North, endNode) != null || GetJumpPoint(nextNode, Direction.West, endNode) != null)
                         {
                             return nextNode;
                         }
 
                         break;
                     case Direction.West:
-                        if (IsCardinalJumpPoint(collisionMask, direction, nextNode))
+                        if (IsCardinalJumpPoint(direction, nextNode))
                         {
                             return nextNode;
                         }
@@ -246,14 +251,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                             return nextNode;
                         }
 
-                        if (GetJumpPoint(collisionMask, nextNode, Direction.South, endNode) != null || GetJumpPoint(collisionMask, nextNode, Direction.West, endNode) != null)
+                        if (GetJumpPoint(nextNode, Direction.South, endNode) != null || GetJumpPoint(nextNode, Direction.West, endNode) != null)
                         {
                             return nextNode;
                         }
 
                         break;
                     case Direction.South:
-                        if (IsCardinalJumpPoint(collisionMask, direction, nextNode))
+                        if (IsCardinalJumpPoint(direction, nextNode))
                         {
                             return nextNode;
                         }
@@ -265,7 +270,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                             return nextNode;
                         }
 
-                        if (GetJumpPoint(collisionMask, nextNode, Direction.South, endNode) != null || GetJumpPoint(collisionMask, nextNode, Direction.East, endNode) != null)
+                        if (GetJumpPoint(nextNode, Direction.South, endNode) != null || GetJumpPoint(nextNode, Direction.East, endNode) != null)
                         {
                             return nextNode;
                         }
@@ -284,12 +289,48 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 
         private bool IsDiagonalJumpPoint(Direction direction, PathfindingNode currentNode)
         {
-            // If we're going diagonally need to check all cardinals. Maybe could do this in a loop? My brain no worky right now.
-            // From NorthEast we check North, East, SouthEast
-            // So if South closed we also check SouthEast (i.e. same x-direction of travel).
+            // If we're going diagonally need to check all cardinals.
+            // I just just using casts int casts and offset to make it smaller but brain no workyand it wasn't working.
+            // From NorthEast we check (Closed / Open) S - SE, W - NW
 
-            var openNeighborOne = currentNode.GetNeighbor((Direction) ((int) direction + 1 % 8));
-            var closedNeighborOne = currentNode.GetNeighbor((Direction) ((int) direction + 2 % 8));
+            PathfindingNode openNeighborOne;
+            PathfindingNode closedNeighborOne;
+            PathfindingNode openNeighborTwo;
+            PathfindingNode closedNeighborTwo;
+
+            switch (direction)
+            {
+                case Direction.NorthEast:
+                    openNeighborOne = currentNode.GetNeighbor(Direction.SouthEast);
+                    closedNeighborOne = currentNode.GetNeighbor(Direction.South);
+
+                    openNeighborTwo = currentNode.GetNeighbor(Direction.NorthWest);
+                    closedNeighborTwo = currentNode.GetNeighbor(Direction.West);
+                    break;
+                case Direction.SouthEast:
+                    openNeighborOne = currentNode.GetNeighbor(Direction.NorthEast);
+                    closedNeighborOne = currentNode.GetNeighbor(Direction.North);
+
+                    openNeighborTwo = currentNode.GetNeighbor(Direction.SouthWest);
+                    closedNeighborTwo = currentNode.GetNeighbor(Direction.West);
+                    break;
+                case Direction.SouthWest:
+                    openNeighborOne = currentNode.GetNeighbor(Direction.NorthWest);
+                    closedNeighborOne = currentNode.GetNeighbor(Direction.North);
+
+                    openNeighborTwo = currentNode.GetNeighbor(Direction.SouthEast);
+                    closedNeighborTwo = currentNode.GetNeighbor(Direction.East);
+                    break;
+                case Direction.NorthWest:
+                    openNeighborOne = currentNode.GetNeighbor(Direction.SouthWest);
+                    closedNeighborOne = currentNode.GetNeighbor(Direction.South);
+
+                    openNeighborTwo = currentNode.GetNeighbor(Direction.NorthEast);
+                    closedNeighborTwo = currentNode.GetNeighbor(Direction.East);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
             if ((closedNeighborOne == null || Utils.GetTileCost(_pathfindingArgs, currentNode, closedNeighborOne) == null)
                 && openNeighborOne != null && Utils.GetTileCost(_pathfindingArgs, currentNode, openNeighborOne) != null)
@@ -297,30 +338,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                 return true;
             }
 
-            var openNeighborTwo = currentNode.GetNeighbor((Direction) ((int) direction + 5 % 8));
-            var closedNeighborTwo = currentNode.GetNeighbor((Direction) ((int) direction + 6 % 8));
-
             if ((closedNeighborTwo == null || Utils.GetTileCost(_pathfindingArgs, currentNode, closedNeighborTwo) == null)
                 && openNeighborTwo != null && Utils.GetTileCost(_pathfindingArgs, currentNode, openNeighborTwo) != null)
-            {
-                return true;
-            }
-            /* I don't think we need this?
-            var openNeighborThree = currentNode.GetNeighbor((Direction) ((int) direction + 7 % 8));
-            var closedNeighborThree = currentNode.GetNeighbor((Direction) ((int) direction + 6 % 8));
-
-            if ((closedNeighborThree == null || !Utils.Traversable(collisionMask, closedNeighborThree.CollisionMask)) &&
-                (openNeighborThree != null && Utils.Traversable(collisionMask, openNeighborThree.CollisionMask)))
-            {
-                return true;
-            }
-            */
-
-            var openNeighborFour = currentNode.GetNeighbor((Direction) ((int) direction + 2 % 8));
-            var closedNeighborFour = currentNode.GetNeighbor((Direction) ((int) direction + 3 % 8));
-
-            if ((closedNeighborFour == null || Utils.GetTileCost(_pathfindingArgs, currentNode, closedNeighborFour) == null)
-                && openNeighborFour != null && Utils.GetTileCost(_pathfindingArgs, currentNode, openNeighborFour) != null)
             {
                 return true;
             }
@@ -331,23 +350,55 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         /// <summary>
         /// Check to see if the node is a jump point (only works for cardinal directions)
         /// </summary>
-        private static bool IsCardinalJumpPoint(int collisionMask, Direction direction, PathfindingNode currentNode)
+        private bool IsCardinalJumpPoint(Direction direction, PathfindingNode currentNode)
         {
-            // If we're going east we need North and NorthEast / South and SouthEast, etc. for each variant
-            var openNeighborOne = currentNode.GetNeighbor((Direction) ((int) direction + 1 % 8));
-            var closedNeighborOne = currentNode.GetNeighbor((Direction) ((int) direction + 2 % 8));
+            PathfindingNode openNeighborOne;
+            PathfindingNode closedNeighborOne;
+            PathfindingNode openNeighborTwo;
+            PathfindingNode closedNeighborTwo;
 
-            if ((closedNeighborOne == null || !Utils.Traversable(collisionMask, closedNeighborOne.CollisionMask)) &&
-                (openNeighborOne != null && Utils.Traversable(collisionMask, openNeighborOne.CollisionMask)))
+            switch (direction)
+            {
+                case Direction.North:
+                    openNeighborOne = currentNode.GetNeighbor(Direction.NorthEast);
+                    closedNeighborOne = currentNode.GetNeighbor(Direction.East);
+
+                    openNeighborTwo = currentNode.GetNeighbor(Direction.NorthWest);
+                    closedNeighborTwo = currentNode.GetNeighbor(Direction.West);
+                    break;
+                case Direction.East:
+                    openNeighborOne = currentNode.GetNeighbor(Direction.NorthEast);
+                    closedNeighborOne = currentNode.GetNeighbor(Direction.North);
+
+                    openNeighborTwo = currentNode.GetNeighbor(Direction.SouthEast);
+                    closedNeighborTwo = currentNode.GetNeighbor(Direction.South);
+                    break;
+                case Direction.South:
+                    openNeighborOne = currentNode.GetNeighbor(Direction.SouthEast);
+                    closedNeighborOne = currentNode.GetNeighbor(Direction.East);
+
+                    openNeighborTwo = currentNode.GetNeighbor(Direction.SouthWest);
+                    closedNeighborTwo = currentNode.GetNeighbor(Direction.West);
+                    break;
+                case Direction.West:
+                    openNeighborOne = currentNode.GetNeighbor(Direction.NorthWest);
+                    closedNeighborOne = currentNode.GetNeighbor(Direction.North);
+
+                    openNeighborTwo = currentNode.GetNeighbor(Direction.SouthWest);
+                    closedNeighborTwo = currentNode.GetNeighbor(Direction.South);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if ((closedNeighborOne == null || !Utils.Traversable(_pathfindingArgs.CollisionMask, closedNeighborOne.CollisionMask)) &&
+                (openNeighborOne != null && Utils.Traversable(_pathfindingArgs.CollisionMask, openNeighborOne.CollisionMask)))
             {
                 return true;
             }
 
-            var openNeighborTwo = currentNode.GetNeighbor((Direction) ((int) direction - 1 % 8));
-            var closedNeighborTwo = currentNode.GetNeighbor((Direction) ((int) direction - 2 % 8));
-
-            if ((closedNeighborTwo == null || !Utils.Traversable(collisionMask, closedNeighborTwo.CollisionMask)) &&
-                (openNeighborTwo != null && Utils.Traversable(collisionMask, openNeighborTwo.CollisionMask)))
+            if ((closedNeighborTwo == null || !Utils.Traversable(_pathfindingArgs.CollisionMask, closedNeighborTwo.CollisionMask)) &&
+                (openNeighborTwo != null && Utils.Traversable(_pathfindingArgs.CollisionMask, openNeighborTwo.CollisionMask)))
             {
                 return true;
             }

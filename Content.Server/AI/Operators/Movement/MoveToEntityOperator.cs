@@ -28,11 +28,12 @@ namespace Content.Server.AI.Operators.Movement
 
         public override Outcome Execute(float frameTime)
         {
-            base.Execute(frameTime);
+            var baseOutcome = base.Execute(frameTime);
             // TODO: Given this is probably the most common operator whatever speed boosts you can do here will be gucci
             // Could also look at running it every other tick.
 
-            if (Target == null ||
+            if (baseOutcome == Outcome.Failed ||
+                Target == null ||
                 Target.Deleted ||
                 Target.Transform.GridID != Owner.Transform.GridID)
             {

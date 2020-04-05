@@ -9,15 +9,19 @@ namespace Content.Server.AI.Operators.Movement
 {
     public class MoveToGridOperator : BaseMover
     {
-        // Instance variables
         private IMapManager _mapManager;
+        private float _desiredRange;
 
-        public MoveToGridOperator(IEntity owner, GridCoordinates gridPosition)
+        public MoveToGridOperator(
+            IEntity owner,
+            GridCoordinates gridPosition,
+            float desiredRange = 1.5f)
         {
             Setup(owner);
             TargetGrid = gridPosition;
             _mapManager = IoCManager.Resolve<IMapManager>();
             PathfindingProximity = 0.2f; // Accept no substitutes
+            _desiredRange = desiredRange;
         }
 
         public void UpdateTarget(GridCoordinates newTarget)
@@ -29,9 +33,10 @@ namespace Content.Server.AI.Operators.Movement
 
         public override Outcome Execute(float frameTime)
         {
-            base.Execute(frameTime);
-            // TODO: Fix double-pathing. Is the problem with MoveToGridOperator?
-            if (TargetGrid.GridID != Owner.Transform.GridID)
+            var baseOutcome = base.Execute(frameTime);
+
+            if (baseOutcome == Outcome.Failed ||
+                TargetGrid.GridID != Owner.Transform.GridID)
             {
                 HaveArrived();
                 return Outcome.Failed;
@@ -50,7 +55,7 @@ namespace Content.Server.AI.Operators.Movement
             var targetRange = (TargetGrid.Position - Owner.Transform.GridPosition.Position).Length;
 
             // We there
-            if (targetRange <= 1.5f)
+            if (targetRange <= _desiredRange)
             {
                 HaveArrived();
                 return Outcome.Success;

@@ -1,13 +1,11 @@
+# This is inherited for both players and mobs
 - type: entity
   save: false
-  name: Urist McHands
-  id: HumanMob_Content
+  name: Base Human
+  id: BaseHumanMob_Content
   description: A miserable pile of secrets
   drawdepth: Mobs
   components:
-  - type: Mind
-  - type: AIDebugger
-  - type: PathfindingDebugger
   - type: Hands
     hands:
     - left
@@ -112,21 +110,12 @@
       mask: 30
       layer: 4
 
-  - type: Input
-    context: "human"
-
   - type: Species
     Template: Human
     HeatResistance: 323
-  - type: StatusEffectsUI
-  - type: OverlayEffectsUI
   - type: HeatResistance
   - type: Damageable
 
-  - type: Eye
-    zoom: 0.5, 0.5
-
-  - type: CameraRecoil
   - type: Appearance
     visuals:
     - type: SpeciesVisualizer2D
@@ -138,6 +127,27 @@
   - type: FootstepSound
   - type: HumanoidAppearance
   - type: HumanInventoryController
+
+- type: entity
+  save: false
+  parent: BaseHumanMob_Content
+  name: Urist McHands
+  id: HumanMob_Content
+  description: A miserable pile of secrets
+  drawdepth: Mobs
+  components:
+  - type: Mind
+  - type: AIDebugger
+  - type: PathfindingDebugger
+  - type: Input
+    context: "human"
+  - type: StatusEffectsUI
+  - type: OverlayEffectsUI
+  - type: HeatResistance
+  - type: Damageable
+  - type: Eye
+    zoom: 0.5, 0.5
+  - type: CameraRecoil
 
 - type: entity
   save: false

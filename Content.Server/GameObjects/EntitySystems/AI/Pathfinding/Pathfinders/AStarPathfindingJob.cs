@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Queues;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
@@ -17,27 +18,27 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         private PathfindingNode _startNode;
         private PathfindingNode _endNode;
         private PathfindingArgs _pathfindingArgs;
+        private CancellationTokenSource _cancellationToken;
 
         public AStarPathfindingJob(
             double maxTime,
             PathfindingNode startNode,
             PathfindingNode endNode,
-            PathfindingArgs pathfindingArgs) : base(maxTime)
+            PathfindingArgs pathfindingArgs,
+            CancellationTokenSource cancellationToken = null) : base(maxTime)
         {
             _startNode = startNode;
             _endNode = endNode;
             _pathfindingArgs = pathfindingArgs;
+            _cancellationToken = cancellationToken;
         }
 
         public override IEnumerator Process()
         {
-            if (_startNode == null)
-            {
-                Finish();
-                yield break;
-            }
-
-            if (_endNode == null)
+            if ((_cancellationToken != null && _cancellationToken.IsCancellationRequested) ||
+                _startNode == null ||
+                _endNode == null ||
+                Status == Status.Finished)
             {
                 Finish();
                 yield break;
@@ -70,6 +71,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     if (OutOfTime())
                     {
                         yield return null;
+                        if (_cancellationToken != null && _cancellationToken.IsCancellationRequested)
+                        {
+                            Finish();
+                            yield break;
+                        }
                         StopWatch.Restart();
                         Status = Status.Running;
                     }

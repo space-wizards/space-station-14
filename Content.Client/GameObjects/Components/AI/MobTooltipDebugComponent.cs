@@ -92,25 +92,27 @@ namespace Content.Client.GameObjects.Components.AI
         {
             if (_tooltips != 0)
             {
-                if (_overlay != null)
+                if (_overlay == null)
                 {
-                    return;
+                    var overlayManager = IoCManager.Resolve<IOverlayManager>();
+                    _overlay = new DebugAiOverlay();
+                    overlayManager.AddOverlay(_overlay);
                 }
-                var overlayManager = IoCManager.Resolve<IOverlayManager>();
-                _overlay = new DebugAiOverlay();
-                overlayManager.AddOverlay(_overlay);
-                return;
             }
             else
             {
-                if (_overlay == null)
+                if (_overlay != null)
                 {
-                    return;
+                    _overlay.Modes = 0;
+                    var overlayManager = IoCManager.Resolve<IOverlayManager>();
+                    overlayManager.RemoveOverlay(_overlay.ID);
+                    _overlay = null;
                 }
+            }
 
-                var overlayManager = IoCManager.Resolve<IOverlayManager>();
-                overlayManager.RemoveOverlay(_overlay.ID);
-                _overlay = null;
+            if (_overlay != null)
+            {
+                _overlay.Modes = _tooltips;
             }
         }
 
@@ -136,6 +138,17 @@ namespace Content.Client.GameObjects.Components.AI
     public sealed class DebugAiOverlay : Overlay
     {
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
+
+        public int Modes
+        {
+            get => _modes;
+            set
+            {
+                _modes = value;
+                UpdateTooltip();
+            }
+        }
+        private int _modes = 0;
 
         private Dictionary<IEntity, PanelContainer> _aiBoxes = new Dictionary<IEntity, PanelContainer>();
 
@@ -173,7 +186,6 @@ namespace Content.Client.GameObjects.Components.AI
                     MouseFilter = Control.MouseFilterMode.Ignore,
                     ModulateSelfOverride = Color.White.WithAlpha(0.75f),
                 };
-
 
                 userInterfaceManager.StateRoot.AddChild(panel);
 
@@ -226,6 +238,35 @@ namespace Content.Client.GameObjects.Components.AI
                          $"Nodes per ms: {message.ClosedTiles.Count / (message.TimeTaken * 1000)}";
         }
 
+        private void UpdateTooltip()
+        {
+            if (Modes == 0)
+            {
+                foreach (var tooltip in _aiBoxes.Values)
+                {
+                    tooltip.Dispose();
+                }
+                _aiBoxes.Clear();
+                return;
+            }
+
+
+            foreach (var tooltip in _aiBoxes.Values)
+            {
+                if ((Modes & (int) MobTooltips.Paths) != 0)
+                {
+                    var label = (Label) tooltip.GetChild(0).GetChild(1);
+                    label.Text = "";
+                }
+
+                if ((Modes & (int) MobTooltips.Thonk) != 0)
+                {
+                    var label = (Label) tooltip.GetChild(0).GetChild(0);
+                    label.Text = "";
+                }
+            }
+        }
+
         /// <summary>
         /// Updated when we receive the AI's action
         /// </summary>
@@ -252,6 +293,11 @@ namespace Content.Client.GameObjects.Components.AI
 
         protected override void Draw(DrawingHandleBase handle)
         {
+            if (Modes == 0)
+            {
+                return;
+            }
+
             var eyeManager = IoCManager.Resolve<IEyeManager>();
             foreach (var (entity, panel) in _aiBoxes)
             {

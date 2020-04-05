@@ -10,7 +10,7 @@ namespace Content.Client.Commands
         // ReSharper disable once StringLiteralTypo
         public string Command => "pathfinder";
         public string Description => "Toggles visibility of pathfinding debuggers.";
-        public string Help => "";
+        public string Help => "pathfinder [disable/nodes/routes/graph]";
 
         public bool Execute(IDebugConsole console, params string[] args)
         {
@@ -25,10 +25,17 @@ namespace Content.Client.Commands
                         ClientPathfindingDebugComponent.DisableAll();
                         anyAction = true;
                         break;
-                    case "paths":
+                    // Shows all nodes on the closed list
+                    case "nodes":
+                        ClientPathfindingDebugComponent.ToggleTooltip(PathfindingDebugMode.Nodes);
+                        anyAction = true;
+                        break;
+                    // Will show just the constructed route
+                    case "routes":
                         ClientPathfindingDebugComponent.ToggleTooltip(PathfindingDebugMode.Route);
                         anyAction = true;
                         break;
+                    // Shows all of the pathfinding chunks
                     case "graph":
                         ClientPathfindingDebugComponent.ToggleTooltip(PathfindingDebugMode.Graph);
                         anyAction = true;

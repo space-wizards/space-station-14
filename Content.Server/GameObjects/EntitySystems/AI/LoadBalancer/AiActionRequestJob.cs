@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.ExpandableActions;
 using Content.Server.AI.WorldState.States;
@@ -18,15 +19,21 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
         public static event Action<UtilityAiDebugMessage> FoundAction;
 #endif
         private readonly AiActionRequest _request;
+        private CancellationTokenSource _cancellationToken;
 
-        public AiActionRequestJob(double maxTime, AiActionRequest request) : base(maxTime)
+        public AiActionRequestJob(
+            double maxTime,
+            AiActionRequest request,
+            CancellationTokenSource cancellationToken = null) : base(maxTime)
         {
             _request = request;
+            _cancellationToken = cancellationToken;
         }
 
         public override IEnumerator Process()
         {
-            if (_request.Context == null)
+            if ((_cancellationToken != null && _cancellationToken.IsCancellationRequested) ||
+                _request.Context == null)
             {
                 Finish();
                 yield break;
@@ -69,6 +76,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
                     if (OutOfTime())
                     {
                         yield return null;
+                        if (_cancellationToken != null && _cancellationToken.IsCancellationRequested)
+                        {
+                            Finish();
+                            yield break;
+                        }
                         StopWatch.Restart();
                         Status = Status.Running;
                     }
