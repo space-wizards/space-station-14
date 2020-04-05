@@ -1,5 +1,6 @@
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -68,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Actor
                                 (SubText = new Label
                                 {
                                     SizeFlagsVertical = SizeFlags.None,
-                                    StyleClasses = {NanoStyle.StyleClassLabelSubText}
+                                    StyleClasses = {StyleNano.StyleClassLabelSubText}
                                 })
                             }
                         }

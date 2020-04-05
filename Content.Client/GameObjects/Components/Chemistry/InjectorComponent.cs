@@ -1,4 +1,5 @@
 ﻿using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Robust.Shared.Timing;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -50,7 +51,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
             public StatusControl(InjectorComponent parent)
             {
                 _parent = parent;
-                _label = new RichTextLabel { StyleClasses = { NanoStyle.StyleClassItemStatus } };
+                _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
                 AddChild(_label);
 
                 parent._uiUpdateNeeded = true;

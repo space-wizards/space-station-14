@@ -46,6 +46,8 @@ namespace Content.Server.GameObjects.Components.Research
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
             if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)) return;
+            if (!Powered)
+                return;
 
             switch (message.Message)
             {

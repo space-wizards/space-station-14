@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Client.Graphics.Drawing;
@@ -218,7 +219,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                     new Label
                     {
                         Text = $"{state.BeakerCurrentVolume}/{state.BeakerMaxVolume}",
-                        StyleClasses = {NanoStyle.StyleClassLabelSecondaryColor}
+                        StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                     }
                 }
             });
@@ -247,12 +248,12 @@ namespace Content.Client.GameObjects.Components.Chemistry
                             new Label
                             {
                                 Text = $"{name}: ",
-                                StyleClasses = {NanoStyle.StyleClassPowerStateGood}
+                                StyleClasses = {StyleNano.StyleClassPowerStateGood}
                             },
                             new Label
                             {
                                 Text = $"{reagent.Quantity}u",
-                                StyleClasses = {NanoStyle.StyleClassPowerStateGood}
+                                StyleClasses = {StyleNano.StyleClassPowerStateGood}
                             }
                         }
                     });
@@ -267,7 +268,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                             new Label
                             {
                                 Text = $"{reagent.Quantity}u",
-                                StyleClasses = {NanoStyle.StyleClassLabelSecondaryColor}
+                                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                             }
                         }
                     });
