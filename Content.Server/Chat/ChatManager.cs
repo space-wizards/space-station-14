@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;

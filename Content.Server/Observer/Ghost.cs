@@ -1,4 +1,5 @@
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
@@ -7,6 +8,7 @@ using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 
 namespace Content.Server.Observer

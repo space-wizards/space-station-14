@@ -16,3 +16,7 @@
     DoRangeCheck: false
   - type: IgnorePause
   - type: Ghost
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    texture: Mob/observer.png

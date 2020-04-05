@@ -1,4 +1,5 @@
-﻿using Content.Server.Interfaces.Chat;
+﻿using Content.Server.GameObjects.Components.Observer;
+using Content.Server.Interfaces.Chat;
 using Content.Server.Observer;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;

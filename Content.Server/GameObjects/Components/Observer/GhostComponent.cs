@@ -1,18 +1,16 @@
-using System.Threading;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Players;
-using Content.Shared.Observer;
+using Content.Shared.GameObjects.Components.Observer;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
 
 
-namespace Content.Server.Observer
+namespace Content.Server.GameObjects.Components.Observer
 {
     [RegisterComponent]
     public class GhostComponent : SharedGhostComponent, IActionBlocker
@@ -46,6 +44,9 @@ namespace Content.Server.Observer
                         actor.playerSession.ContentData().Mind.UnVisit();
                     }
                     break;
+                case PlayerAttachedMsg _:
+                    Dirty();
+                    break;
                 case PlayerDetachedMsg _:
                     Timer.Spawn(100, Owner.Delete);
                     break;
@@ -53,7 +54,6 @@ namespace Content.Server.Observer
                     break;
             }
         }
-
 
         public bool CanInteract() => false;
         public bool CanUse() => false;

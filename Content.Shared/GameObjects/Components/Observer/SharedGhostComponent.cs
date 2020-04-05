@@ -1,9 +1,8 @@
 using System;
-using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Observer
+namespace Content.Shared.GameObjects.Components.Observer
 {
     public class SharedGhostComponent : Component
     {

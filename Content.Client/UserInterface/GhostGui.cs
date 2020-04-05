@@ -1,5 +1,5 @@
 using System.Data;
-using Content.Client.Observer;
+using Content.Client.GameObjects.Components.Observer;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
