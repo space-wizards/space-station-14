@@ -22,7 +22,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine
     {
 #pragma warning disable 649
-        [Dependency] private readonly IRounderForReagents _rounder;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -105,8 +104,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if ((handSolutionComp.Capabilities & SolutionCaps.PourOut) == 0 || (component.Capabilities & SolutionCaps.PourIn) == 0)
                     return;
 
-                var transferQuantity = Math.Min(component.MaxVolume - component.CurrentVolume, handSolutionComp.CurrentVolume);
-                transferQuantity = Math.Min(transferQuantity, 10);
+                var transferQuantity = ReagentUnit.Min(component.MaxVolume - component.CurrentVolume, handSolutionComp.CurrentVolume, ReagentUnit.New(10));
 
                 // nothing to transfer
                 if (transferQuantity <= 0)
@@ -185,8 +183,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if ((handSolutionComp.Capabilities & SolutionCaps.PourIn) == 0 || (component.Capabilities & SolutionCaps.PourOut) == 0)
                     return;
 
-                var transferQuantity = Math.Min(handSolutionComp.MaxVolume - handSolutionComp.CurrentVolume, component.CurrentVolume);
-                transferQuantity = Math.Min(transferQuantity, 10);
+                var transferQuantity = ReagentUnit.Min(handSolutionComp.MaxVolume - handSolutionComp.CurrentVolume, component.CurrentVolume, ReagentUnit.New(10));
 
                 // pulling from an empty container, pointless to continue
                 if (transferQuantity <= 0)
@@ -223,10 +220,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        public bool TryAddReagent(string reagentId, decimal quantity, out decimal acceptedQuantity, bool skipReactionCheck = false, bool skipColor = false)
+        public bool TryAddReagent(string reagentId, ReagentUnit quantity, out ReagentUnit acceptedQuantity, bool skipReactionCheck = false, bool skipColor = false)
         {
-            quantity = _rounder.Round(quantity);
-            var toAcceptQuantity = _rounder.Round(MaxVolume - ContainedSolution.TotalVolume);
+            var toAcceptQuantity = MaxVolume - ContainedSolution.TotalVolume;
             if (quantity > toAcceptQuantity)
             {
                 acceptedQuantity = toAcceptQuantity;
@@ -269,16 +265,16 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="reaction">The reaction whose reactants will be checked for in the solution.</param>
         /// <param name="unitReactions">The number of times the reaction can occur with the given solution.</param>
         /// <returns></returns>
-        private bool SolutionValidReaction(ReactionPrototype reaction, out decimal unitReactions)
+        private bool SolutionValidReaction(ReactionPrototype reaction, out ReagentUnit unitReactions)
         {
-            unitReactions = decimal.MaxValue; //Set to some impossibly large number initially
+            unitReactions = ReagentUnit.MaxValue; //Set to some impossibly large number initially
             foreach (var reactant in reaction.Reactants)
             {
-                if (!ContainsReagent(reactant.Key, out decimal reagentQuantity))
+                if (!ContainsReagent(reactant.Key, out ReagentUnit reagentQuantity))
                 {
                     return false;
                 }
-                var currentUnitReactions = _rounder.Round(reagentQuantity / reactant.Value.Amount);
+                var currentUnitReactions = reagentQuantity / reactant.Value.Amount;
                 if (currentUnitReactions < unitReactions)
                 {
                     unitReactions = currentUnitReactions;
@@ -301,26 +297,26 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="solution">Solution to be reacted.</param>
         /// <param name="reaction">Reaction to occur.</param>
         /// <param name="unitReactions">The number of times to cause this reaction.</param>
-        private void PerformReaction(ReactionPrototype reaction, decimal unitReactions)
+        private void PerformReaction(ReactionPrototype reaction, ReagentUnit unitReactions)
         {
             //Remove non-catalysts
             foreach (var reactant in reaction.Reactants)
             {
                 if (!reactant.Value.Catalyst)
                 {
-                    var amountToRemove = _rounder.Round(unitReactions * reactant.Value.Amount);
+                    var amountToRemove = unitReactions * reactant.Value.Amount;
                     TryRemoveReagent(reactant.Key, amountToRemove);
                 }
             }
             //Add products
             foreach (var product in reaction.Products)
             {
-                TryAddReagent(product.Key, (int)(unitReactions * product.Value), out var acceptedQuantity, true);
+                TryAddReagent(product.Key, product.Value * unitReactions, out var acceptedQuantity, true);
             }
             //Trigger reaction effects
             foreach (var effect in reaction.Effects)
             {
-                effect.React(Owner, unitReactions);
+                effect.React(Owner, unitReactions.Decimal());
             }
 
             //Play reaction sound client-side

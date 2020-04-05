@@ -16,9 +16,6 @@ namespace Content.Shared.Chemistry
     /// </summary>
     public class Solution : IExposeData, IEnumerable<Solution.ReagentQuantity>
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRounderForReagents _rounder;
-#pragma warning restore 649
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
         private List<ReagentQuantity> _contents = new List<ReagentQuantity>(2);
@@ -28,7 +25,7 @@ namespace Content.Shared.Chemistry
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
         /// </summary>
         [ViewVariables]
-        public decimal TotalVolume { get; private set; }
+        public ReagentUnit TotalVolume { get; private set; }
 
         /// <summary>
         ///     Constructs an empty solution (ex. an empty beaker).
@@ -40,7 +37,7 @@ namespace Content.Shared.Chemistry
         /// </summary>
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        public Solution(string reagentId, int quantity)
+        public Solution(string reagentId, ReagentUnit quantity)
         {
             AddReagent(reagentId, quantity);
         }
@@ -52,7 +49,7 @@ namespace Content.Shared.Chemistry
 
             if (serializer.Reading)
             {
-                TotalVolume = 0;
+                TotalVolume = ReagentUnit.New(0);
                 foreach (var reagent in _contents)
                 {
                     TotalVolume += reagent.Quantity;
@@ -65,9 +62,8 @@ namespace Content.Shared.Chemistry
         /// </summary>
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        public void AddReagent(string reagentId, decimal quantity)
+        public void AddReagent(string reagentId, ReagentUnit quantity)
         {
-            quantity = _rounder.Round(quantity);
             if (quantity <= 0)
                 return;
 
@@ -91,7 +87,7 @@ namespace Content.Shared.Chemistry
         /// </summary>
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>
         /// <returns>The quantity in milli-units.</returns>
-        public decimal GetReagentQuantity(string reagentId)
+        public ReagentUnit GetReagentQuantity(string reagentId)
         {
             for (var i = 0; i < _contents.Count; i++)
             {
@@ -99,10 +95,10 @@ namespace Content.Shared.Chemistry
                     return _contents[i].Quantity;
             }
 
-            return 0;
+            return ReagentUnit.New(0);
         }
 
-        public void RemoveReagent(string reagentId, decimal quantity)
+        public void RemoveReagent(string reagentId, ReagentUnit quantity)
         {
             if(quantity <= 0)
                 return;
@@ -115,7 +111,7 @@ namespace Content.Shared.Chemistry
 
                 var curQuantity = reagent.Quantity;
 
-                var newQuantity = _rounder.Round(curQuantity - quantity);
+                var newQuantity = curQuantity - quantity;
                 if (newQuantity <= 0)
                 {
                     _contents.RemoveSwap(i);
@@ -135,12 +131,12 @@ namespace Content.Shared.Chemistry
         /// Remove the specified quantity from this solution.
         /// </summary>
         /// <param name="quantity">The quantity of this solution to remove</param>
-        public void RemoveSolution(decimal quantity)
+        public void RemoveSolution(ReagentUnit quantity)
         {
             if(quantity <= 0)
                 return;
 
-            var ratio = _rounder.Round(TotalVolume - quantity) / TotalVolume;
+            var ratio = (TotalVolume - quantity).Decimal() / TotalVolume.Decimal();
 
             if (ratio <= 0)
             {
@@ -155,24 +151,24 @@ namespace Content.Shared.Chemistry
 
                 // quantity taken is always a little greedy, so fractional quantities get rounded up to the nearest
                 // whole unit. This should prevent little bits of chemical remaining because of float rounding errors.
-                var newQuantity = _rounder.Round(oldQuantity * ratio);
+                var newQuantity = oldQuantity * ratio;
 
                 _contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
             }
 
-            TotalVolume = _rounder.Round(TotalVolume * ratio);
+            TotalVolume = TotalVolume * ratio;
         }
 
         public void RemoveAllSolution()
         {
             _contents.Clear();
-            TotalVolume = 0;
+            TotalVolume = ReagentUnit.New(0);
         }
 
-        public Solution SplitSolution(decimal quantity)
+        public Solution SplitSolution(ReagentUnit quantity)
         {
             if (quantity <= 0)
-                return IoCManager.InjectDependencies(new Solution());
+                return new Solution();
 
             Solution newSolution;
 
@@ -183,15 +179,15 @@ namespace Content.Shared.Chemistry
                 return newSolution;
             }
 
-            newSolution = IoCManager.InjectDependencies(new Solution());
-            var newTotalVolume = 0M;
-            var ratio = (TotalVolume - quantity) / TotalVolume;
+            newSolution = new Solution();
+            var newTotalVolume = ReagentUnit.New(0M);
+            var ratio = (TotalVolume - quantity).Decimal() / TotalVolume.Decimal();
 
             for (var i = 0; i < _contents.Count; i++)
             {
                 var reagent = _contents[i];
 
-                var newQuantity = (int)Math.Floor(reagent.Quantity * ratio);
+                var newQuantity = reagent.Quantity * ratio;
                 var splitQuantity = reagent.Quantity - newQuantity;
 
                 _contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
@@ -199,7 +195,7 @@ namespace Content.Shared.Chemistry
                 newTotalVolume += splitQuantity;
             }
 
-            TotalVolume = (int)Math.Floor(TotalVolume * ratio);
+            TotalVolume = TotalVolume * ratio;
             newSolution.TotalVolume = newTotalVolume;
 
             return newSolution;
@@ -234,8 +230,8 @@ namespace Content.Shared.Chemistry
 
         public Solution Clone()
         {
-            var volume = 0M;
-            var newSolution = IoCManager.InjectDependencies(new Solution());
+            var volume = ReagentUnit.New(0);
+            var newSolution = new Solution();
 
             for (var i = 0; i < _contents.Count; i++)
             {
@@ -252,9 +248,9 @@ namespace Content.Shared.Chemistry
         public readonly struct ReagentQuantity
         {
             public readonly string ReagentId;
-            public readonly decimal Quantity;
+            public readonly ReagentUnit Quantity;
 
-            public ReagentQuantity(string reagentId, decimal quantity)
+            public ReagentQuantity(string reagentId, ReagentUnit quantity)
             {
                 ReagentId = reagentId;
                 Quantity = quantity;

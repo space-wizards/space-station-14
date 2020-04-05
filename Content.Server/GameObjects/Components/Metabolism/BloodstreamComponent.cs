@@ -34,17 +34,17 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// Max volume of internal solution storage
         /// </summary>
         [ViewVariables]
-        private int _initialMaxVolume;
+        private ReagentUnit _initialMaxVolume;
 
         /// <summary>
         /// Empty volume of internal solution
         /// </summary>
-        public decimal EmptyVolume => _internalSolution.EmptyVolume;
+        public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _initialMaxVolume, "maxVolume", 250);
+            serializer.DataField(ref _initialMaxVolume, "maxVolume", ReagentUnit.New(250));
         }
 
         public override void Initialize()

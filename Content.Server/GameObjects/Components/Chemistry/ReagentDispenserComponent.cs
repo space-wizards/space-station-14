@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables] private string _packPrototypeId;
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
-        [ViewVariables] private decimal _dispenseAmount = 10;
+        [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
 
         [ViewVariables]
         private SolutionComponent Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
@@ -115,22 +115,22 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     TryClear();
                     break;
                 case UiButton.SetDispenseAmount1:
-                    _dispenseAmount = 1;
+                    _dispenseAmount = ReagentUnit.New(1);
                     break;
                 case UiButton.SetDispenseAmount5:
-                    _dispenseAmount = 5;
+                    _dispenseAmount = ReagentUnit.New(5);
                     break;
                 case UiButton.SetDispenseAmount10:
-                    _dispenseAmount = 10;
+                    _dispenseAmount = ReagentUnit.New(10);
                     break;
                 case UiButton.SetDispenseAmount25:
-                    _dispenseAmount = 25;
+                    _dispenseAmount = ReagentUnit.New(25);
                     break;
                 case UiButton.SetDispenseAmount50:
-                    _dispenseAmount = 50;
+                    _dispenseAmount = ReagentUnit.New(50);
                     break;
                 case UiButton.SetDispenseAmount100:
-                    _dispenseAmount = 100;
+                    _dispenseAmount = ReagentUnit.New(100);
                     break;
                 case UiButton.Dispense:
                     if (HasBeaker)
@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var beaker = _beakerContainer.ContainedEntity;
             if (beaker == null)
             {
-                return new ReagentDispenserBoundUserInterfaceState(false, 0, 0,
+                return new ReagentDispenserBoundUserInterfaceState(false, ReagentUnit.New(0), ReagentUnit.New(0),
                     "", Inventory, Owner.Name, null, _dispenseAmount);
             }
 

@@ -4,6 +4,7 @@ using System.Text;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -28,13 +29,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public override string Name => "Pourable";
 
-        private decimal _transferAmount;
+        private ReagentUnit _transferAmount;
 
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
         /// </summary>
         [ViewVariables]
-        public decimal TransferAmount
+        public ReagentUnit TransferAmount
         {
             get => _transferAmount;
             set => _transferAmount = value;
@@ -43,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _transferAmount, "transferAmount", 5.0M);
+            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5.0M));
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
 
             //Get transfer amount. May be smaller than _transferAmount if not enough room
-            decimal realTransferAmount = Math.Min(attackPourable.TransferAmount, targetSolution.EmptyVolume);
+            var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, targetSolution.EmptyVolume);
             if (realTransferAmount <= 0) //Special message if container is full
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,

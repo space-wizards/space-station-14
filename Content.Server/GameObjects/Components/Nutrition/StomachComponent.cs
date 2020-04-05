@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// <summary>
         /// Max volume of internal solution storage
         /// </summary>
-        public decimal MaxVolume
+        public ReagentUnit MaxVolume
         {
             get => _stomachContents.MaxVolume;
             set => _stomachContents.MaxVolume = value;
@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// Initial internal solution storage volume
         /// </summary>
         [ViewVariables]
-        private int _initialMaxVolume;
+        private ReagentUnit _initialMaxVolume;
 
         /// <summary>
         /// Time in seconds between reagents being ingested and them being transferred to <see cref="BloodstreamComponent"/>
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _initialMaxVolume, "maxVolume", 100);
+            serializer.DataField(ref _initialMaxVolume, "maxVolume", ReagentUnit.New(100));
             serializer.DataField(ref _digestionDelay, "digestionDelay", 20);
         }
 
@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
 
             //Add reagents ready for transfer to bloodstream to transferSolution
-            var transferSolution = IoCManager.InjectDependencies(new Solution());
+            var transferSolution = new Solution();
             foreach (var delta in _reagentDeltas.ToList()) //Use ToList here to remove entries while iterating
             {
                 //Increment lifetime of reagents
@@ -141,10 +141,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private class ReagentDelta
         {
             public readonly string ReagentId;
-            public readonly decimal Quantity;
+            public readonly ReagentUnit Quantity;
             public float Lifetime { get; private set; }
 
-            public ReagentDelta(string reagentId, decimal quantity)
+            public ReagentDelta(string reagentId, ReagentUnit quantity)
             {
                 ReagentId = reagentId;
                 Quantity = quantity;

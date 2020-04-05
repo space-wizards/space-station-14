@@ -28,7 +28,6 @@ namespace Content.Server
             IoCManager.Register<ICargoOrderDataManager, CargoOrderDataManager>();
             IoCManager.Register<IModuleManager, ServerModuleManager>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
-            IoCManager.Register<IRounderForReagents, RounderForReagents>();
         }
     }
 }

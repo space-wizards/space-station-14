@@ -29,7 +29,6 @@ namespace Content.Client
             IoCManager.Register<IModuleManager, ClientModuleManager>();
             IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
             IoCManager.Register<IItemSlotManager, ItemSlotManager>();
-            IoCManager.Register<IRounderForReagents, RounderForReagents>();
         }
     }
 }

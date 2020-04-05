@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
+using Content.Shared.Chemistry;
 
 namespace Content.Client.GameObjects.Components.Chemistry
 {
@@ -16,8 +17,8 @@ namespace Content.Client.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class InjectorComponent : SharedInjectorComponent, IItemStatus
     {
-        [ViewVariables] private decimal CurrentVolume { get; set; }
-        [ViewVariables] private decimal TotalVolume { get; set; }
+        [ViewVariables] private ReagentUnit CurrentVolume { get; set; }
+        [ViewVariables] private ReagentUnit TotalVolume { get; set; }
         [ViewVariables] private InjectorToggleMode CurrentMode { get; set; }
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
 

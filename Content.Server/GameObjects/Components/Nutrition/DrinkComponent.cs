@@ -33,18 +33,18 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         private string _finishPrototype;
 
-        public decimal TransferAmount => _transferAmount;
+        public ReagentUnit TransferAmount => _transferAmount;
         [ViewVariables]
-        private decimal _transferAmount = 2;
+        private ReagentUnit _transferAmount = ReagentUnit.New(2);
 
-        public decimal MaxVolume
+        public ReagentUnit MaxVolume
         {
             get => _contents.MaxVolume;
             set => _contents.MaxVolume = value;
         }
 
         private Solution _initialContents; // This is just for loading from yaml
-        private int _maxVolume;
+        private ReagentUnit _maxVolume;
 
         private bool _despawnOnFinish;
 
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 return 0;
             }
-            return Math.Max(1, (int)Math.Ceiling(_contents.CurrentVolume / _transferAmount));
+            return Math.Max(1, (int)Math.Ceiling((_contents.CurrentVolume / _transferAmount).Float()));
         }
 
 
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _initialContents, "contents", null);
-            serializer.DataField(ref _maxVolume, "max_volume", 0);
+            serializer.DataField(ref _maxVolume, "max_volume", ReagentUnit.New(0));
             serializer.DataField(ref _useSound, "use_sound", "/Audio/items/drink.ogg");
             // E.g. cola can when done or clear bottle, whatever
             // Currently this will enforce it has the same volume but this may change.
@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                                              | SolutionCaps.Injectable;
 
                     var pourable = Owner.AddComponent<PourableComponent>();
-                    pourable.TransferAmount = 5;
+                    pourable.TransferAmount = ReagentUnit.New(5);
                 }
             }
 
@@ -150,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (user.TryGetComponent(out StomachComponent stomachComponent))
             {
                 _drinking = true;
-                var transferAmount = Math.Min(_transferAmount, _contents.CurrentVolume);
+                var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
                 var split = _contents.SplitSolution(transferAmount);
                 if (stomachComponent.TryTransferSolution(split))
                 {
