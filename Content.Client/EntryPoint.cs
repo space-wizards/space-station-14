@@ -144,7 +144,13 @@ namespace Content.Client
                 "Mop",
                 "Bucket",
                 "Puddle",
-                "CanSpill"
+                "CanSpill",
+                "PowerWire",
+                "PowerSupplier",
+                "PowerConsumer",
+                "Battery",
+                "BatteryStorage",
+                "BatteryDischarger",
             };
 
             foreach (var ignoreName in registerIgnore)
