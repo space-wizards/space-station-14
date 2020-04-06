@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
@@ -67,7 +68,7 @@ namespace Content.Client.UserInterface
             {
                 SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkEnd,
                 Text = Loc.GetString("Save and close"),
-                StyleClasses = {NanoStyle.StyleClassButtonBig}
+                StyleClasses = {StyleNano.StyleClassButtonBig}
             };
 
             var topHBox = new HBoxContainer
@@ -83,7 +84,7 @@ namespace Content.Client.UserInterface
                             new Label
                             {
                                 Text = Loc.GetString("Character Setup"),
-                                StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
+                                StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
                                 VAlign = Label.VAlignMode.Center,
                                 SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkCenter
                             }
@@ -99,7 +100,7 @@ namespace Content.Client.UserInterface
             {
                 PanelOverride = new StyleBoxFlat
                 {
-                    BackgroundColor = NanoStyle.NanoGold,
+                    BackgroundColor = StyleNano.NanoGold,
                     ContentMarginTopOverride = 2
                 }
             });
@@ -146,7 +147,7 @@ namespace Content.Client.UserInterface
 
             hBox.AddChild(new PanelContainer
             {
-                PanelOverride = new StyleBoxFlat {BackgroundColor = NanoStyle.NanoGold},
+                PanelOverride = new StyleBoxFlat {BackgroundColor = StyleNano.NanoGold},
                 CustomMinimumSize = (2, 0)
             });
             _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager);

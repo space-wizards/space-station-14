@@ -1,29 +1,29 @@
-﻿using Content.Client.GameObjects.EntitySystems;
+﻿using System.Linq;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.UserInterface.Stylesheets
 {
-    public sealed class NanoStyle
+    public sealed class StyleNano : StyleBase
     {
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
         public const string StyleClassSliderBlue = "Blue";
 
-        public const string StyleClassLabelHeading = "LabelHeading";
         public const string StyleClassLabelHeadingBigger = "LabelHeadingBigger";
-        public const string StyleClassLabelSubText = "LabelSubText";
         public const string StyleClassLabelKeyText = "LabelKeyText";
         public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
         public const string StyleClassLabelBig = "LabelBig";
         public const string StyleClassButtonBig = "ButtonBig";
+
         public static readonly Color NanoGold = Color.FromHex("#A88B5E");
+
         public static readonly Color ButtonColorDefault = Color.FromHex("#464966");
         public static readonly Color ButtonColorHovered = Color.FromHex("#575b7f");
         public static readonly Color ButtonColorPressed = Color.FromHex("#3e6c45");
@@ -36,12 +36,10 @@ namespace Content.Client.UserInterface
 
         public const string StyleClassItemStatus = "ItemStatus";
 
-        public Stylesheet Stylesheet { get; }
+        public override Stylesheet Stylesheet { get; }
 
-        public NanoStyle()
+        public StyleNano(IResourceCache resCache) : base(resCache)
         {
-            var resCache = IoCManager.Resolve<IResourceCache>();
-            var notoSans8 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 8);
             var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
             var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
             var notoSansBold12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 12);
@@ -69,16 +67,10 @@ namespace Content.Client.UserInterface
             var textureInvertedTriangle = resCache.GetTexture("/Nano/inverted_triangle.svg.png");
 
             // Button styles.
-            var buttonTex = resCache.GetTexture("/Nano/button.svg.96dpi.png");
-            var buttonNormal = new StyleBoxTexture
+            var buttonNormal = new StyleBoxTexture(BaseButton)
             {
-                Texture = buttonTex,
                 Modulate = ButtonColorDefault
             };
-            buttonNormal.SetPatchMargin(StyleBox.Margin.All, 10);
-            buttonNormal.SetPadding(StyleBox.Margin.All, 1);
-            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            buttonNormal.SetContentMarginOverride(StyleBox.Margin.Horizontal, 14);
 
             var buttonHover = new StyleBoxTexture(buttonNormal)
             {
@@ -248,16 +240,8 @@ namespace Content.Client.UserInterface
             var sliderFillRed = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Red};
             var sliderFillBlue = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Blue};
 
-            Stylesheet = new Stylesheet(new[]
+            Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
-                // Default font.
-                new StyleRule(
-                    new SelectorElement(null, null, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSans12),
-                    }),
-
                 // Window title.
                 new StyleRule(
                     new SelectorElement(typeof(Label), new[] {SS14Window.StyleClassWindowTitle}, null, null),
@@ -721,7 +705,12 @@ namespace Content.Client.UserInterface
                 {
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
                 }),
-            });
+
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ ClassHighDivider}, null, null), new []
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
+                })
+            }).ToList());
         }
     }
 }

@@ -6,6 +6,7 @@ using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
 using Content.Client.Sandbox;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Interfaces;
 using Robust.Shared.IoC;
@@ -27,6 +28,7 @@ namespace Content.Client
             IoCManager.Register<IModuleManager, ClientModuleManager>();
             IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
             IoCManager.Register<IItemSlotManager, ItemSlotManager>();
+            IoCManager.Register<IStylesheetManager, StylesheetManager>();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -57,7 +58,7 @@ namespace Content.Client.UserInterface
                             (_itemNameLabel = new Label
                             {
                                 ClipText = true,
-                                StyleClasses = {NanoStyle.StyleClassItemStatus}
+                                StyleClasses = {StyleNano.StyleClassItemStatus}
                             })
                         }
                     }
