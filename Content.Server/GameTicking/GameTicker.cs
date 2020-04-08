@@ -13,6 +13,7 @@ using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
+using Content.Shared.Chat;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Maps;
@@ -123,6 +124,8 @@ namespace Content.Server.GameTicking
         {
             Logger.InfoS("ticker", "Restarting round!");
 
+            SendServerMessage("Restarting round...");
+
             RunLevel = GameRunLevel.PreRoundLobby;
             _resettingCleanup();
             _preRoundSetup();
@@ -146,6 +149,8 @@ namespace Content.Server.GameTicking
         {
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             Logger.InfoS("ticker", "Starting round!");
+
+            SendServerMessage("The round is starting now...");
 
             RunLevel = GameRunLevel.InRound;
 
@@ -191,6 +196,14 @@ namespace Content.Server.GameTicking
             _sendStatusToAll();
         }
 
+        private void SendServerMessage(string message)
+        {
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Server;
+            msg.Message = message;
+            IoCManager.Resolve<IServerNetManager>().ServerSendToAll(msg);
+        }
+
         private HumanoidCharacterProfile GetPlayerProfile(IPlayerSession p) =>
             (HumanoidCharacterProfile) _prefsManager.GetPreferences(p.SessionId.Username).SelectedCharacter;
 
@@ -200,6 +213,8 @@ namespace Content.Server.GameTicking
             Logger.InfoS("ticker", "Ending round!");
 
             RunLevel = GameRunLevel.PostRound;
+
+            SendServerMessage("The round has ended!");
         }
 
         public void Respawn(IPlayerSession targetPlayer)
