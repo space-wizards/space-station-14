@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var randomVariant = robustRandom.Next(0, _spriteVariants - 1);
             string[] splitRSI = _spriteComponent.BaseRSIPath.Split(ResourcePath.SYSTEM_SEPARATOR);
-            var baseName = splitRSI[splitRSI.Length - 1].Replace(".rsi", "");
+            var baseName = new ResourcePath(_spriteComponent.BaseRSIPath).FilenameWithoutExtension;
 
             _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
             _spriteComponent.Rotation = Angle.FromDegrees(robustRandom.Next(0, 359));
