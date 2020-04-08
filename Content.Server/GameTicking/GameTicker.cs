@@ -100,6 +100,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
+            _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
 
             SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
 
@@ -200,6 +201,13 @@ namespace Content.Server.GameTicking
             Logger.InfoS("ticker", "Ending round!");
 
             RunLevel = GameRunLevel.PostRound;
+
+            //Tell every client the round has ended.
+            var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
+            roundEndMessage.GamemodeTitle = MakeGamePreset().ModeTitle;
+            //TODO:Grab actual timespan of round.
+            roundEndMessage.DurationInHours = 1337;
+            _netManager.ServerSendToAll(roundEndMessage);
         }
 
         public void Respawn(IPlayerSession targetPlayer)
@@ -559,10 +567,12 @@ namespace Content.Server.GameTicking
 
         private string GetInfoText()
         {
-            var gameMode = MakeGamePreset().Description;
+            var gmTitle = MakeGamePreset().ModeTitle;
+            var desc = MakeGamePreset().Description;
             return _localization.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
-The current game mode is [color=white]{0}[/color]", gameMode);
+The current game mode is: [color=white]{0}[/color].
+[color=yellow]{1}[/color]", gmTitle, desc );
         }
 
         private void UpdateInfoText()

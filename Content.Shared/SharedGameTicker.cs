@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Lidgren.Network;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Network;
@@ -114,5 +114,36 @@ namespace Content.Shared
                 buffer.Write(TextBlob);
             }
         }
+
+        protected class MsgRoundEndMessage : NetMessage
+        {
+
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgRoundEndMessage);
+            public MsgRoundEndMessage(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public string GamemodeTitle;
+            //TODO: Change to a more detailed measurement of time.
+            public uint DurationInHours;
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                GamemodeTitle = buffer.ReadString();
+                DurationInHours = buffer.ReadUInt32();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(GamemodeTitle);
+                buffer.Write(DurationInHours);
+
+            }
+
+        }
     }
 }
+
