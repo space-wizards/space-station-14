@@ -199,6 +199,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             bool checkForNewReaction = false;
             while (true)
             {
+                //TODO: make a hashmap at startup and then look up reagents in the contents for a reaction
                 //Check the solution for every reaction
                 foreach (var reaction in _reactions)
                 {

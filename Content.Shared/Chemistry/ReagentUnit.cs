@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
+using System;
 using System.Linq;
 
 namespace Content.Shared.Chemistry
 {
     [Serializable]
-    public struct ReagentUnit
+    public struct ReagentUnit : ISelfSerialize
     {
         private int _value;
         private static readonly int Shift = 2;
@@ -14,11 +16,6 @@ namespace Content.Shared.Chemistry
         private decimal ShiftDown()
         {
             return _value / (decimal)Math.Pow(10, Shift);
-        }
-
-        private decimal ShiftUp()
-        {
-            return _value * (decimal)Math.Pow(10, Shift);
         }
 
         private ReagentUnit(int value)
@@ -38,12 +35,27 @@ namespace Content.Shared.Chemistry
 
         public static ReagentUnit New(float value)
         {
-            return new ReagentUnit((int) Math.Round(value * (float) Math.Pow(10, Shift)));
+            return new ReagentUnit(FromFloat(value));
+        }
+
+        private static int FromFloat(float value)
+        {
+            return (int) Math.Round(value * (float) Math.Pow(10, Shift));
         }
 
         public static ReagentUnit New(double value)
         {
             return new ReagentUnit((int) Math.Round(value * Math.Pow(10, Shift)));
+        }
+
+        public static ReagentUnit New(string value)
+        {
+            return New(FloatFromString(value));
+        }
+
+        private static float FloatFromString(string value)
+        {
+            return float.Parse(value);
         }
 
         public static ReagentUnit operator +(ReagentUnit a) => a;
@@ -135,7 +147,7 @@ namespace Content.Shared.Chemistry
 
         public decimal Decimal()
         {
-            return (decimal) ShiftDown();
+            return ShiftDown();
         }
 
         public int Int()
@@ -157,6 +169,16 @@ namespace Content.Shared.Chemistry
         public override int GetHashCode()
         {
             return HashCode.Combine(_value);
+        }
+
+        public void Deserialize(string value)
+        {
+            _value = FromFloat(FloatFromString(value));
+        }
+
+        public string Serialize()
+        {
+            return ToString();
         }
     }
 }

@@ -46,6 +46,15 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
+        [TestCase("1.005", "1")]
+        [TestCase("0.999", "1")]
+        public void ReagentUnitStringTests(string value, string expected)
+        {
+            var result = ReagentUnit.New(value);
+            Assert.AreEqual(expected, $"{result}");
+        }
+
+        [Test]
         [TestCase(1.001f, 1.001f, "2")]
         [TestCase(1.001f, 1.004f, "2")]
         [TestCase(1f, 2.005f, "3.01")]
