@@ -2,6 +2,7 @@
 using System.Linq;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Chemistry;
@@ -46,6 +47,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables]
         private SolutionComponent Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
 
+        ///implementing PowerDeviceComponent
+        private PowerDeviceComponent _powerDevice;
+        private bool Powered => _powerDevice.Powered;
+
+
         /// <summary>
         /// Shows the serializer how to save/load this components yaml prototype.
         /// </summary>
@@ -70,6 +76,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
+            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
 
             InitializeFromPrototype();
             UpdateUserInterface();
@@ -158,6 +165,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
             //Check if player can interact in their current state
             if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
+                return false;
+            //Check if device is powered
+            if (!Powered)
                 return false;
 
             return true;
@@ -250,6 +260,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     _localizationManager.GetString("You have no hands."));
                 return;
             }
+
+            if (!Powered)
+                return;
 
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)

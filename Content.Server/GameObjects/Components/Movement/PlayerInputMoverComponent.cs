@@ -104,12 +104,6 @@ namespace Content.Server.GameObjects.Components.Movement
         /// </summary>
         [ViewVariables] public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>("game.diagonalmovement");
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
-        }
-
         /// <inheritdoc />
         public override void OnAdd()
         {

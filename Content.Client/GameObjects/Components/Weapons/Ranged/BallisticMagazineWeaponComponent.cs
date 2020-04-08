@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Client.Animations;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
@@ -174,7 +175,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
                                         (_noMagazineLabel = new Label
                                         {
                                             Text = "No Magazine!",
-                                            StyleClasses = {NanoStyle.StyleClassItemStatus}
+                                            StyleClasses = {StyleNano.StyleClassItemStatus}
                                         })
                                     }
                                 },
