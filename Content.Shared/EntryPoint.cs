@@ -24,7 +24,6 @@
         {
             base.PostInit();
 
-
             _initTileDefinitions();
         }
 
