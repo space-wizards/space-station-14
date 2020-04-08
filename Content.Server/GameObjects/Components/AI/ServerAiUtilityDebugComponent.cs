@@ -9,13 +9,16 @@ namespace Content.Server.GameObjects.Components.AI
     [RegisterComponent]
     public class ServerAiUtilityDebugComponent : SharedAiDebugComponent
     {
+#if DEBUG
         public override void Initialize()
         {
             base.Initialize();
+
             AiActionRequestJob.FoundAction += plan =>
             {
                 SendNetworkMessage(plan);
             };
         }
+#endif
     }
 }
