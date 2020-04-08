@@ -17,7 +17,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
 #pragma warning restore 649
 
         [ViewVariables]
-        protected Solution ContainedSolution;
+        protected Solution ContainedSolution = new Solution();
         private ReagentUnit _maxVolume;
         private SolutionCaps _capabilities;
 
