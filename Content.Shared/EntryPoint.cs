@@ -17,7 +17,7 @@
 
         public override void Init()
         {
-            IoCManager.InjectDependencies(this);
+            IoCManager.InjectDepe ndencies(this);
         }
 
         public override void PostInit()
