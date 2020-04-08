@@ -33,9 +33,22 @@ namespace Content.Client.GameObjects.Components.Command
             _menu.OpenCentered();
         }
 
+        public void EmergencyShuttleButtonPressed()
+        {
+            if(CountdownStarted)
+                RecallShuttle();
+            else
+                CallShuttle();
+        }
+
         public void CallShuttle()
         {
             SendMessage(new CommunicationsConsoleCallEmergencyShuttleMessage());
+        }
+
+        public void RecallShuttle()
+        {
+            SendMessage(new CommunicationsConsoleRecallEmergencyShuttleMessage());
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

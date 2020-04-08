@@ -49,6 +49,10 @@ namespace Content.Server.GameObjects.Components.Command
                 case CommunicationsConsoleCallEmergencyShuttleMessage _:
                     RoundEndSystem.RequestRoundEnd();
                     break;
+
+                case CommunicationsConsoleRecallEmergencyShuttleMessage _:
+                    RoundEndSystem.CancelRoundEndCountdown();
+                    break;
             }
         }
 

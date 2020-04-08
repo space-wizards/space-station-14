@@ -41,6 +41,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public void CancelRoundEndCountdown()
         {
+            if (!IsRoundEndCountdownStarted)
+                return;
+
+            IsRoundEndCountdownStarted = false;
+
             _roundEndCancellationTokenSource.Cancel();
             _roundEndCancellationTokenSource = new CancellationTokenSource();
 

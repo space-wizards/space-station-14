@@ -34,6 +34,14 @@ namespace Content.Shared.GameObjects.Components.Command
     }
 
     [Serializable, NetSerializable]
+    public class CommunicationsConsoleRecallEmergencyShuttleMessage : BoundUserInterfaceMessage
+    {
+        public CommunicationsConsoleRecallEmergencyShuttleMessage()
+        {
+        }
+    }
+
+    [Serializable, NetSerializable]
     public enum CommunicationsConsoleUiKey
     {
         Key
