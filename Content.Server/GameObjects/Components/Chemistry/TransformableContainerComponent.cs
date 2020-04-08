@@ -37,6 +37,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _initialDescription = Owner.Description;
         }
 
+        protected override void Startup()
+        {
+            base.Startup();
+            Owner.GetComponent<SolutionComponent>().Capabilities |= SolutionCaps.FitsInDispenser;;
+        }
+
         public void CancelTransformation()
         {
             _currentReagent = null;
@@ -48,7 +54,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
             var solution = eventArgs.Owner.GetComponent<SolutionComponent>();
-
             //Transform container into initial state when emptied
             if (_currentReagent != null && solution.ReagentList.Count == 0)
             {
@@ -71,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Drinks/" + proto.SpriteReplacementPath),"icon");
                 _sprite.LayerSetSprite(0, spriteSpec);
-                Owner.Name = proto.Name;
+                Owner.Name = proto.Name + " glass";
                 //Owner.Description = proto.Description;
                 _currentReagent = proto;
             }

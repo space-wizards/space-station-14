@@ -150,8 +150,6 @@
       hands:
         - left
         - right
-    # Organs
-    - type: Stomach
 
     - type: Inventory
     - type: Sprite

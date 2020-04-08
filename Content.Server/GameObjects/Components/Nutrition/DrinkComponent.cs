@@ -16,7 +16,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class DrinkComponent : Component, IAfterAttack, IUse, ISolutionChange
+    public class DrinkComponent : Component, IAfterAttack, IUse
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -132,47 +132,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
                 _drinking = false;
             }
-
-            //Finish(user);
         }
-
-        /// <summary>
-        /// Trigger finish behavior in the drink if applicable.
-        /// Depending on the drink this will either delete it,
-        /// or convert it to another entity, like an empty variant.
-        /// </summary>
-        /// <param name="user">The entity that is using the drink</param>
-        /*
-         public void Finish(IEntity user)
-        {
-            // Drink containers are mostly transient.
-            // are you sure about that
-            if (_drinking || !_despawnOnFinish || UsesLeft() > 0)
-                return;
-
-            var gridPos = Owner.Transform.GridPosition;
-            Owner.Delete();
-
-            if (_finishPrototype == null || user == null)
-                return;
-
-            var finisher = Owner.EntityManager.SpawnEntity(_finishPrototype, Owner.Transform.GridPosition);
-            if (user.TryGetComponent(out HandsComponent handsComponent) && finisher.TryGetComponent(out ItemComponent itemComponent))
-            {
-                if (handsComponent.CanPutInHand(itemComponent))
-                {
-                    handsComponent.PutInHand(itemComponent);
-                    return;
-                }
-            }
-
-            finisher.Transform.GridPosition = gridPos;
-            if (finisher.TryGetComponent(out DrinkComponent drinkComponent))
-            {
-                drinkComponent.MaxVolume = MaxVolume;
-            }
-        }*/
-
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) { } //Finish(null);
     }
 }
