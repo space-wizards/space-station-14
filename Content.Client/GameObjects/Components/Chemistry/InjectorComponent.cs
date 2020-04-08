@@ -30,13 +30,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
         //Handle net updates
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if(curState == null)
+            var cast = (InjectorComponentState) curState; 
+            if (cast != null)
             {
-                return;
-            }
-            if(curState.GetType() == typeof(InjectorComponentState))
-            {
-                var cast = (InjectorComponentState) curState;
                 CurrentVolume = cast.CurrentVolume;
                 TotalVolume = cast.TotalVolume;
                 CurrentMode = cast.CurrentMode;
