@@ -5,8 +5,11 @@
   name: Base cup
   abstract: true
   components:
+  - type: Solution
+    maxVol: 20
+  - type: Pourable
+    transferAmount: 5
   - type: Drink
-    max_volume: 4
     despawn_empty: false
   - type: Sound
   - type: Sprite
@@ -20,8 +23,8 @@
   name: Golden cup
   description: A golden cup
   components:
-  - type: Drink
-    max_volume: 10
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/golden_cup.rsi
   - type: Icon
@@ -33,8 +36,8 @@
   name: Insulated pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
-  - type: Drink
-    max_volume: 15
+  - type: Solution
+    maxVol: 15
   - type: Sprite
     sprite: Objects/Drinks/pitcher.rsi
     state: icon-6
@@ -52,8 +55,8 @@
   name: Mug
   description: A plain white mug.
   components:
-  - type: Drink
-    max_volume: 4
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/mug.rsi
     state: icon-3
@@ -71,8 +74,8 @@
   name: Mug Black
   description: A sleek black mug.
   components:
-  - type: Drink
-    max_volume: 4
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/mug_black.rsi
     state: icon-3
@@ -90,8 +93,8 @@
   name: Mug Blue
   description: A blue and black mug.
   components:
-  - type: Drink
-    max_volume: 4
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/mug_blue.rsi
     state: icon-3
@@ -109,8 +112,8 @@
   name: Mug Green
   description: A pale green and pink mug.
   components:
-  - type: Drink
-    max_volume: 4
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/mug_green.rsi
     state: icon-3
@@ -128,8 +131,8 @@
   name: Mug Heart
   description: A white mug, it prominently features a red heart.
   components:
-  - type: Drink
-    max_volume: 4
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/mug_heart.rsi
     state: icon-3
@@ -147,8 +150,8 @@
   name: Mug Metal
   description: A metal mug. You're not sure which metal.
   components:
-  - type: Drink
-    max_volume: 4
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/mug_metal.rsi
     state: icon-3
@@ -166,8 +169,8 @@
   name: Mug Moebius
   description: A mug with a Moebius Laboratories logo on it. Not even your morning coffee is safe from corporate advertising.
   components:
-  - type: Drink
-    max_volume: 4
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/mug_moebius.rsi
     state: icon-3
@@ -185,8 +188,8 @@
   name: "#1 mug"
   description: "A white mug, it prominently features a #1."
   components:
-  - type: Drink
-    max_volume: 4
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/mug_one.rsi
     state: icon-3
@@ -204,8 +207,8 @@
   name: Mug Rainbow
   description: A rainbow mug. The colors are almost as blinding as a welder.
   components:
-  - type: Drink
-    max_volume: 4
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/mug_rainbow.rsi
     state: icon-3
@@ -223,8 +226,8 @@
   name: Mug Red
   description: A red and black mug.
   components:
-  - type: Drink
-    max_volume: 4
+  - type: Solution
+    maxVol: 10
   - type: Sprite
     sprite: Objects/Drinks/mug_red.rsi
     state: icon-3

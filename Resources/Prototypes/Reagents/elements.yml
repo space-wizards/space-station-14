@@ -95,3 +95,9 @@
   name: Sodium
   desc: A silvery-white alkali metal. Highly reactive in it's pure form.
   color: "#c6c8cc"
+
+- type: reagent
+  id: chem.U
+  name: Uranium
+  desc: A silvery-white metallic chemical element in the actinide series, weakly radioactive.
+  color: "#00ff06"

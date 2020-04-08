@@ -2,16 +2,103 @@
   id: chem.Whiskey
   name: Whiskey
   desc: An alcoholic beverage made from fermented grain mash
+  spritePath: whiskeyglass.rsi
 
 - type: reagent
   id: chem.Ale
   name: Ale
   desc: A type of beer brewed using a warm fermentation method, resulting in a sweet, full-bodied and fruity taste.
+  spritePath: aleglass.rsi
 
 - type: reagent
   id: chem.Wine
   name: Wine
   desc: An alcoholic drink made from fermented grapes
+  spritePath: wineglass.rsi
+
+- type: reagent
+  id: chem.Beer
+  name: Beer
+  desc: A cold pint of pale lager.
+  spritePath: beerglass.rsi
+
+- type: reagent
+  id: chem.Vodka
+  name: Vodka
+  desc: The glass contain wodka. Xynta.
+
+- type: reagent
+  id: chem.Kahlua
+  name: Kahlua
+  desc: A widely known, Mexican coffee-flavoured liqueur. In production since 1936!
+  spritePath: kahluaglass.rsi
+
+- type: reagent
+  id: chem.Cognac
+  name: Cognac
+  desc: A sweet and strongly alcoholic drink, twice distilled and left to mature for several years. Classy as fornication.
+  spritePath: cognacglass.rsi
+
+- type: reagent
+  id: chem.ManlyDorf
+  name: Manly Dorf
+  desc: A dwarfy concoction made from ale and beer. Intended for stout dwarves only.
+  spritePath: manlydorfglass.rsi
+
+- type: reagent
+  id: chem.CubaLibre
+  name: Cuba Libre
+  desc: A classic mix of rum and cola.
+  spritePath: cubalibreglass.rsi
+
+- type: reagent
+  id: chem.IrishCarBomb
+  name: Irish Car Bomb
+  desc: A troubling mixture of irish cream and ale.
+  spritePath: irishcarbomb.rsi
+
+- type: reagent
+  id: chem.IrishCoffee
+  name: Irish Coffee
+  desc: Coffee served with irish cream. Regular cream just isn't the same!
+  spritePath: irishcoffeeglass.rsi
+
+- type: reagent
+  id: chem.IrishCream
+  name: Irish Cream
+  desc: Whiskey-imbued cream. What else could you expect from the Irish.
+  spritePath: irishcreamglass.rsi
+
+- type: reagent
+  id: chem.B52
+  name: B-52
+  desc: Coffee, irish cream, and cognac. You will get bombed.
+  spritePath: b52glass.rsi
+
+- type: reagent
+  id: chem.AtomicBomb
+  name: Atomic Bomb
+  desc: Nuclear proliferation never tasted so good.
+  spritePath: atomicbombglass.rsi
+
+- type: reagent
+  id: chem.WhiskeyCola
+  name: Whiskey Cola
+  desc: An innocent-looking mixture of cola and whiskey. Delicious.
+  spritePath: whiskeycolaglass.rsi
+
+- type: reagent
+  id: chem.SyndicateBomb
+  name: Syndicate Bomb
+  desc: Somebody set us up the bomb!
+  spritePath: syndicatebomb.rsi
+
+- type: reagent
+  id: chem.Antifreeze
+  name: Antifreeze
+  desc: The ultimate refreshment.
+  spritePath: antifreeze.rsi
+
 
 - type: reagent
   id: chem.Cola
@@ -33,6 +120,22 @@
   id: chem.Tea
   name: Tea
   desc: A made by boiling leaves of the tea tree, Camellia sinensis.
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: chem.Cream
+  name: Cream
+  desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: chem.Milk
+  name: Milk
+  desc: An opaque white liquid produced by the mammary glands of mammals.
   metabolism:
     - !type:DefaultDrink
       rate: 1

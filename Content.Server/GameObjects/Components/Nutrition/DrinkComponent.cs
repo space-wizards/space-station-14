@@ -16,7 +16,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class DrinkComponent : Component, IAfterAttack, IUse
+    public class DrinkComponent : Component, IAfterAttack, IUse, ISolutionChange
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -42,9 +42,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
             set => _contents.MaxVolume = value;
         }
 
-        private Solution _initialContents; // This is just for loading from yaml
-        private int _maxVolume;
-
         private bool _despawnOnFinish;
 
         private bool _drinking;
@@ -63,53 +60,21 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _initialContents, "contents", null);
-            serializer.DataField(ref _maxVolume, "max_volume", 0);
             serializer.DataField(ref _useSound, "use_sound", "/Audio/items/drink.ogg");
             // E.g. cola can when done or clear bottle, whatever
-            // Currently this will enforce it has the same volume but this may change.
-            serializer.DataField(ref _despawnOnFinish, "despawn_empty", true);
+            // Currently this will enforce it has the same volume but this may change. - TODO: this should be implemented in a separate component
+            serializer.DataField(ref _despawnOnFinish, "despawn_empty", false);
             serializer.DataField(ref _finishPrototype, "spawn_on_finish", null);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            if (_contents == null)
-            {
-                if (Owner.TryGetComponent(out SolutionComponent solutionComponent))
-                {
-                    _contents = solutionComponent;
-                }
-                else
-                {
-                    _contents = Owner.AddComponent<SolutionComponent>();
-                    //Ensure SolutionComponent supports click transferring if custom one not set
-                    _contents.Capabilities = SolutionCaps.PourIn
-                                             | SolutionCaps.PourOut
-                                             | SolutionCaps.Injectable;
-
-                    var pourable = Owner.AddComponent<PourableComponent>();
-                    pourable.TransferAmount = 5;
-                }
-            }
-
-            _drinking = false;
-            if (_maxVolume != 0)
-                _contents.MaxVolume = _maxVolume;
-            else
-                _contents.MaxVolume = _initialContents.TotalVolume;
-            _contents.SolutionChanged += HandleSolutionChangedEvent;
         }
 
         protected override void Startup()
         {
             base.Startup();
-            if (_initialContents != null)
-            {
-                _contents.TryAddSolution(_initialContents, true, true);
-            }
-            _initialContents = null;
+            _contents = Owner.GetComponent<SolutionComponent>();
+            _contents.Capabilities = SolutionCaps.PourIn
+                                     | SolutionCaps.PourOut
+                                     | SolutionCaps.Injectable;
+            _drinking = false;
             Owner.TryGetComponent(out AppearanceComponent appearance);
             _appearanceComponent = appearance;
             _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.MaxUses, MaxVolume);
@@ -168,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 _drinking = false;
             }
 
-            Finish(user);
+            //Finish(user);
         }
 
         /// <summary>
@@ -177,14 +142,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// or convert it to another entity, like an empty variant.
         /// </summary>
         /// <param name="user">The entity that is using the drink</param>
-        public void Finish(IEntity user)
+        /*
+         public void Finish(IEntity user)
         {
             // Drink containers are mostly transient.
+            // are you sure about that
             if (_drinking || !_despawnOnFinish || UsesLeft() > 0)
                 return;
 
             var gridPos = Owner.Transform.GridPosition;
-            _contents.SolutionChanged -= HandleSolutionChangedEvent;
             Owner.Delete();
 
             if (_finishPrototype == null || user == null)
@@ -205,16 +171,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 drinkComponent.MaxVolume = MaxVolume;
             }
-        }
+        }*/
 
-        /// <summary>
-        /// Updates drink state when the solution is changed by something other
-        /// than this component. Without this some drinks won't properly delete
-        /// themselves without additional clicks/uses after them being emptied.
-        /// </summary>
-        private void HandleSolutionChangedEvent()
-        {
-            Finish(null);
-        }
+        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) { } //Finish(null);
     }
 }
