@@ -19,9 +19,7 @@ namespace Content.Server.AI.Utility.AiLogic
 {
     public abstract class UtilityAi : AiLogicProcessor
     {
-        // TODO
-        // Potentially just have a constructed dict of all the considerations and then just pass in the context for each one
-        // The actual action itself should just have the consideration type and the response curve
+        // TODO: Look at having ParallelOperators (probably no more than that as then you'd have a full-blown BT)
         private AiActionSystem _planner;
         private Blackboard _blackboard;
 
@@ -29,7 +27,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// The sum of all behaviorsets gives us what actions the AI can take
         /// </summary>
         public Dictionary<Type, BehaviorSet> BehaviorSets { get; } = new Dictionary<Type, BehaviorSet>();
-        private readonly List<IAiUtility> _availableActions = new List<IAiUtility>();
+        private List<IAiUtility> _availableActions = new List<IAiUtility>();
 
         /// <summary>
         /// The currently running action; most importantly are the operators.
@@ -103,9 +101,12 @@ namespace Content.Server.AI.Utility.AiLogic
                     }
                 }
             }
+
+            _availableActions.Reverse();
         }
 
         // TODO. This also ties into the TODO on adding a Finalize / Startup Method to each operator
+        // Or alternatively have a separate BarkOperator...
         // This would then call an event with an enum of the BarkEvent and each AI could do its own bark accordingly.
         public void Bark(string message)
         {

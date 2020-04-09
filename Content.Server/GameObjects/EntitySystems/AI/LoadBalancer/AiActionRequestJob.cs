@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
 
             var consideredTaskCount = 0;
             // Actions are pre-sorted
-            var actions = new Stack<IAiUtility>(_request.Actions.Reverse());
+            var actions = new Stack<IAiUtility>(_request.Actions);
 
             // So essentially we go through and once we have a valid score that score becomes the cutoff;
             // once the bonus of new tasks is below the cutoff we can stop evaluating.
