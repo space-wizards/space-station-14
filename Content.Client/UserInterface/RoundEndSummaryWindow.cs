@@ -18,18 +18,10 @@ namespace Content.Client.UserInterface
 
         protected override Vector2? CustomSize => (520, 580);
 
-#pragma warning disable 649
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IInputManager _inputManager;
-#pragma warning restore 649
-
         public RoundEndSummaryWindow(string gm, uint duration)
         {
-            Title = "Round End Summary";
+            Title = Loc.GetString("Round End Summary");
 
-            //Get section header font
-            _loc = IoCManager.Resolve<ILocalizationManager>();
             var cache = IoCManager.Resolve<IResourceCache>();
             var inputManager = IoCManager.Resolve<IInputManager>();
             Font headerFont = new VectorFont(cache.GetResource<FontResource>("/Nano/NotoSans/NotoSans-Regular.ttf"), _headerFontSize);
@@ -40,12 +32,12 @@ namespace Content.Client.UserInterface
 
             //Gamemode Name
             var gamemodeLabel = new RichTextLabel();
-            gamemodeLabel.SetMarkup(_loc.GetString("Round of: [color=white]{0}[/color] has ended.", gm));
+            gamemodeLabel.SetMarkup(Loc.GetString("Round of: [color=white]{0}[/color] has ended.", gm));
             VBox.AddChild(gamemodeLabel);
 
             //Duration
             var roundDurationInfo = new RichTextLabel();
-            roundDurationInfo.SetMarkup(_loc.GetString("The round lasted for [color=yellow]{0}[/color] hours.", duration));
+            roundDurationInfo.SetMarkup(Loc.GetString("The round lasted for [color=yellow]{0}[/color] hours.", duration));
             VBox.AddChild(roundDurationInfo);
 
             OpenCentered();
