@@ -273,7 +273,7 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
         {
-            GridCoordinates coordinates = lateJoin ? _getLateJoinSpawnPoint() : _getJobSpawnPoint(job.Prototype.ID);
+            GridCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
             var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
@@ -299,11 +299,11 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnObserverMob()
         {
-            GridCoordinates coordinates = _getLateJoinSpawnPoint();
+            var coordinates = GetObserverSpawnPoint();
             return _entityManager.SpawnEntity(ObserverPrototypeName, coordinates);
         }
 
-        private GridCoordinates _getLateJoinSpawnPoint()
+        public GridCoordinates GetLateJoinSpawnPoint()
         {
             var location = _spawnPoint;
 
@@ -319,7 +319,7 @@ namespace Content.Server.GameTicking
             return location;
         }
 
-        private GridCoordinates _getJobSpawnPoint(string jobId)
+        public GridCoordinates GetJobSpawnPoint(string jobId)
         {
             var location = _spawnPoint;
 
@@ -328,6 +328,23 @@ namespace Content.Server.GameTicking
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Job && point.Job.ID == jobId)
+                    possiblePoints.Add(entity.Transform.GridPosition);
+            }
+
+            if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
+
+            return location;
+        }
+
+        public GridCoordinates GetObserverSpawnPoint()
+        {
+            var location = _spawnPoint;
+
+            var possiblePoints = new List<GridCoordinates>();
+            foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
+            {
+                var point = entity.GetComponent<SpawnPointComponent>();
+                if (point.SpawnType == SpawnPointType.Observer)
                     possiblePoints.Add(entity.Transform.GridPosition);
             }
 
