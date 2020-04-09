@@ -3,6 +3,8 @@ using Content.Client.Command;
 using Content.Shared.GameObjects.Components.Command;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Command
@@ -12,11 +14,13 @@ namespace Content.Client.GameObjects.Components.Command
         [ViewVariables]
         private CommunicationsConsoleMenu _menu;
 
+        [Dependency] private IGameTiming _gameTiming;
+
         public bool CountdownStarted { get; private set; }
 
         public int Countdown => _expectedCountdownTime == null
-            ? 0 : Math.Max((int)(_expectedCountdownTime.Value.Subtract(DateTime.Now)).TotalSeconds, 0);
-        private DateTime? _expectedCountdownTime;
+            ? 0 : Math.Max((int)_expectedCountdownTime.Value.Subtract(_gameTiming.CurTime).TotalSeconds, 0);
+        private TimeSpan? _expectedCountdownTime;
 
         public CommunicationsConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {

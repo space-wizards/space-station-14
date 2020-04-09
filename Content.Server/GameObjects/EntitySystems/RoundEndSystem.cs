@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Content.Server.Interfaces.GameTicking;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -11,12 +12,13 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private IGameTicker _gameTicker;
+        [Dependency] private IGameTiming _gameTiming;
 #pragma warning restore 649
 
         private CancellationTokenSource _roundEndCancellationTokenSource = new CancellationTokenSource();
         public bool IsRoundEndCountdownStarted { get; private set; }
         public int RoundEndCountdownTime { get; set; } = 5000;
-        public DateTime? ExpectedCountdownEnd = null;
+        public TimeSpan? ExpectedCountdownEnd = null;
 
         public delegate void RoundEndCountdownStarted();
         public event RoundEndCountdownStarted OnRoundEndCountdownStarted;
@@ -34,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             IsRoundEndCountdownStarted = true;
 
-            ExpectedCountdownEnd = DateTime.Now.AddMilliseconds(RoundEndCountdownTime);
+            ExpectedCountdownEnd = _gameTiming.CurTime.Add(new TimeSpan(0,0,0,0,RoundEndCountdownTime));
             Timer.Spawn(RoundEndCountdownTime, EndRound, _roundEndCancellationTokenSource.Token);
             OnRoundEndCountdownStarted?.Invoke();
         }

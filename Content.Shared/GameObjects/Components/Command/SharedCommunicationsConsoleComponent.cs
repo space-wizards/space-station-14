@@ -14,10 +14,10 @@ namespace Content.Shared.GameObjects.Components.Command
     [Serializable, NetSerializable]
     public class CommunicationsConsoleInterfaceState : BoundUserInterfaceState
     {
-        public readonly DateTime? ExpectedCountdownEnd;
+        public readonly TimeSpan? ExpectedCountdownEnd;
         public readonly bool CountdownStarted;
 
-        public CommunicationsConsoleInterfaceState(DateTime? expectedCountdownEnd = null)
+        public CommunicationsConsoleInterfaceState(TimeSpan? expectedCountdownEnd = null)
         {
             ExpectedCountdownEnd = expectedCountdownEnd;
             CountdownStarted = expectedCountdownEnd != null;
