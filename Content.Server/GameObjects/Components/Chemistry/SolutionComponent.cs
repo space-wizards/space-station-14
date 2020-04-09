@@ -42,15 +42,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private SpriteComponent _spriteComponent;
 
-        [ViewVariables]
-        protected Solution _containedSolution = new Solution();
-        protected int _maxVolume;
+        private Solution _containedSolution = new Solution();
+        private int _maxVolume;
         private SolutionCaps _capabilities;
         private string _fillInitState;
         private int _fillInitSteps;
         private string _fillPathString = "Objects/Chemistry/fillings.rsi";
         private ResourcePath _fillPath;
         private SpriteSpecifier _fillSprite;
+
         /// <summary>
         ///     The maximum volume of the container.
         /// </summary>
@@ -87,6 +87,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             get => _capabilities;
             set => _capabilities = value;
+        }
+
+        [ViewVariables]
+        public Solution Solution
+        {
+            get => _containedSolution;
+            set => _containedSolution = value;
         }
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
@@ -140,15 +147,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 _spriteComponent.AddLayerWithSprite(_fillSprite);
                 UpdateFillIcon();
             }
-        }
-
-        /// <inheritdoc />
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-
-            _containedSolution.RemoveAllSolution();
-            _containedSolution = new Solution();
         }
 
         public void RemoveAllSolution()
