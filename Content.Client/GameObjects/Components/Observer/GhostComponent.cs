@@ -14,14 +14,9 @@ namespace Content.Client.GameObjects.Components.Observer
     public class GhostComponent : SharedGhostComponent
     {
         private GhostGui _gui;
-        private bool _canReturnToBody = true;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public override bool CanReturnToBody
-        {
-            get => _canReturnToBody;
-            set {}
-        }
+        public bool CanReturnToBody { get; private set; } = true;
 
 #pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud;
@@ -92,7 +87,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
             if (!(curState is GhostComponentState state)) return;
 
-            _canReturnToBody = state.CanReturnToBody;
+            CanReturnToBody = state.CanReturnToBody;
 
             if (Owner == _playerManager.LocalPlayer.ControlledEntity)
             {

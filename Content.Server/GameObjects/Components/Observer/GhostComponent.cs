@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Observer
         private bool _canReturnToBody = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public override bool CanReturnToBody
+        public bool CanReturnToBody
         {
             get => _canReturnToBody;
             set

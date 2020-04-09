@@ -8,8 +8,6 @@ namespace Content.Shared.GameObjects.Components.Observer
     {
         public override string Name => "Ghost";
         public override uint? NetID => ContentNetIDs.GHOST;
-
-        public virtual bool CanReturnToBody { get; set; } = true;
     }
 
     [Serializable, NetSerializable]
