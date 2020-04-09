@@ -118,5 +118,37 @@ namespace Content.Tests.Shared.Chemistry
             var result = (int) Math.Round(a * (float) Math.Pow(10, 2));
             Assert.AreEqual(expected, result);
         }
+
+        [Test]
+        public void ReagentUnitMin()
+        {
+            var unorderedList = new[]
+            {
+                ReagentUnit.New(5),
+                ReagentUnit.New(3),
+                ReagentUnit.New(1),
+                ReagentUnit.New(2),
+                ReagentUnit.New(4),
+            };
+            var min = ReagentUnit.Min(unorderedList);
+            Assert.AreEqual(ReagentUnit.New(1), min);
+        }
+
+        [Test]
+        [TestCase(1, 0, false)]
+        [TestCase(0, 0, true)]
+        [TestCase(-1, 0, false)]
+        [TestCase(null, 0, true)]
+        [TestCase(1, 1, true)]
+        [TestCase(0, 1, false)]
+        [TestCase(-1, 1, false)]
+        [TestCase(null, 1, false)]
+        public void ReagentUnitEquals(int a, int b, bool expected)
+        {
+            var parameter = ReagentUnit.New(a);
+            var comparison = ReagentUnit.New(b);
+            Assert.AreEqual(comparison.Equals(parameter), parameter.Equals(comparison));
+            Assert.AreEqual(expected, comparison.Equals(parameter));
+        }
     }
 }

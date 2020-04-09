@@ -1,21 +1,23 @@
 ﻿using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 
 namespace Content.Shared.Chemistry
 {
     [Serializable]
-    public struct ReagentUnit : ISelfSerialize
+    public struct ReagentUnit : ISelfSerialize, IComparable<ReagentUnit>, IEquatable<ReagentUnit>
     {
         private int _value;
         private static readonly int Shift = 2;
 
         public static ReagentUnit MaxValue => new ReagentUnit(int.MaxValue);
 
-        private decimal ShiftDown()
+        private double ShiftDown()
         {
-            return _value / (decimal)Math.Pow(10, Shift);
+            return _value / Math.Pow(10, Shift);
         }
 
         private ReagentUnit(int value)
@@ -55,7 +57,7 @@ namespace Content.Shared.Chemistry
 
         private static float FloatFromString(string value)
         {
-            return float.Parse(value);
+            return float.Parse(value, CultureInfo.InvariantCulture);
         }
 
         public static ReagentUnit operator +(ReagentUnit a) => a;
@@ -83,8 +85,19 @@ namespace Content.Shared.Chemistry
 
         public static ReagentUnit operator *(ReagentUnit a, decimal b)
         {
+            var aD = (decimal) a.ShiftDown();
+            return New(aD * b);
+        }
+
+        public static ReagentUnit operator *(ReagentUnit a, double b)
+        {
             var aD = a.ShiftDown();
             return New(aD * b);
+        }
+
+        public static ReagentUnit operator *(ReagentUnit a, int b)
+        {
+            return new ReagentUnit(a._value * b);
         }
 
         public static ReagentUnit operator /(ReagentUnit a, ReagentUnit b)
@@ -138,14 +151,17 @@ namespace Content.Shared.Chemistry
             return a._value > b._value;
         }
 
-        public override string ToString() => $"{ShiftDown()}";
-
         public float Float()
         {
             return (float) ShiftDown();
         }
 
         public decimal Decimal()
+        {
+            return (decimal) ShiftDown();
+        }
+
+        public double Double()
         {
             return ShiftDown();
         }
@@ -157,7 +173,12 @@ namespace Content.Shared.Chemistry
 
         public static ReagentUnit Min(params ReagentUnit[] reagentUnits)
         {
-            return reagentUnits.OrderBy(x => x._value).First();
+            return reagentUnits.Min();
+        }
+
+        public static ReagentUnit Min(ReagentUnit a, ReagentUnit b)
+        {
+            return a < b ? a : b;
         }
 
         public override bool Equals(object obj)
@@ -176,9 +197,29 @@ namespace Content.Shared.Chemistry
             _value = FromFloat(FloatFromString(value));
         }
 
+        public override string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";
+
         public string Serialize()
         {
             return ToString();
+        }
+
+        public bool Equals([AllowNull] ReagentUnit other)
+        {
+            return _value == other._value;
+        }
+
+        public int CompareTo([AllowNull] ReagentUnit other)
+        {
+            if(other._value > _value)
+            {
+                return -1;
+            }
+            if(other._value < _value)
+            {
+                return 1;
+            }
+            return 0;
         }
     }
 }

@@ -204,6 +204,41 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
+        public void SplitSolutionFractional()
+        {
+            var solution = new Solution();
+            solution.AddReagent("water", ReagentUnit.New(1));
+            solution.AddReagent("fire", ReagentUnit.New(2));
+
+            var splitSolution = solution.SplitSolution(ReagentUnit.New(1));
+
+            Assert.That(solution.GetReagentQuantity("water").Float(), Is.EqualTo(0.67f));
+            Assert.That(solution.GetReagentQuantity("fire").Float(), Is.EqualTo(1.33f));
+            Assert.That(solution.TotalVolume.Int(), Is.EqualTo(2));
+
+            Assert.That(splitSolution.GetReagentQuantity("water").Float(), Is.EqualTo(0.33f));
+            Assert.That(splitSolution.GetReagentQuantity("fire").Float(), Is.EqualTo(0.67f));
+            Assert.That(splitSolution.TotalVolume.Int(), Is.EqualTo(1));
+        }
+
+        [Test]
+        [TestCase(0.03f, 0.01f, 0.02f)]
+        [TestCase(0.03f, 0.02f, 0.01f)]
+        public void SplitSolutionTinyFractionalBigSmall(float initial, float reduce, float remainder)
+        {
+            var solution = new Solution();
+            solution.AddReagent("water", ReagentUnit.New(initial));
+
+            var splitSolution = solution.SplitSolution(ReagentUnit.New(reduce));
+
+            Assert.That(solution.GetReagentQuantity("water").Float(), Is.EqualTo(remainder));
+            Assert.That(solution.TotalVolume.Float(), Is.EqualTo(remainder));
+
+            Assert.That(splitSolution.GetReagentQuantity("water").Float(), Is.EqualTo(reduce));
+            Assert.That(splitSolution.TotalVolume.Float(), Is.EqualTo(reduce));
+        }
+        
+        [Test]
         public void SplitSolutionMoreThanTotalRemovesAll()
         {
             var solution = new Solution("water", ReagentUnit.New(800));
