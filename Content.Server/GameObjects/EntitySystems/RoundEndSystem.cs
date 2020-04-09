@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private CancellationTokenSource _roundEndCancellationTokenSource = new CancellationTokenSource();
         public bool IsRoundEndCountdownStarted { get; private set; }
-        public int RoundEndCountdownTime { get; set; } = 5000;
+        public int RoundEndCountdownTime { get; set; } = 240000;
         public TimeSpan? ExpectedCountdownEnd = null;
 
         public delegate void RoundEndCountdownStarted();
