@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _transformed = false;
             _sprite.LayerSetSprite(0, _initialSprite);
             Owner.Name = _initialName;
-            //Owner.Description = _initialDescription;
+            Owner.Description = _initialDescription;
         }
 
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Drinks/" + proto.SpriteReplacementPath),"icon");
                 _sprite.LayerSetSprite(0, spriteSpec);
                 Owner.Name = proto.Name + " glass";
-                //Owner.Description = proto.Description;
+                Owner.Description = proto.Description;
                 _currentReagent = proto;
                 _transformed = true;
             }
