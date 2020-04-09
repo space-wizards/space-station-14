@@ -9,6 +9,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Chat
 {
@@ -22,6 +23,7 @@ namespace Content.Server.Chat
 #pragma warning disable 649
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
         [Dependency] private readonly IMoMMILink _mommiLink;
 #pragma warning restore 649
 
@@ -102,7 +104,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
-            msg.MessageWrap = $"DEAD: {player.AttachedEntity.Name}: {{0}}";
+            msg.MessageWrap = $"{_localizationManager.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
