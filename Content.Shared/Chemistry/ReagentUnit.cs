@@ -32,7 +32,7 @@ namespace Content.Shared.Chemistry
 
         public static ReagentUnit New(decimal value)
         {
-            return new ReagentUnit((int) Math.Round(value * (decimal) Math.Pow(10, Shift)));
+            return new ReagentUnit((int) Math.Round(value * (decimal) Math.Pow(10, Shift), MidpointRounding.AwayFromZero));
         }
 
         public static ReagentUnit New(float value)
@@ -42,12 +42,12 @@ namespace Content.Shared.Chemistry
 
         private static int FromFloat(float value)
         {
-            return (int) Math.Round(value * (float) Math.Pow(10, Shift));
+            return (int) Math.Round(value * (float) Math.Pow(10, Shift), MidpointRounding.AwayFromZero);
         }
 
         public static ReagentUnit New(double value)
         {
-            return new ReagentUnit((int) Math.Round(value * Math.Pow(10, Shift)));
+            return new ReagentUnit((int) Math.Round(value * Math.Pow(10, Shift), MidpointRounding.AwayFromZero));
         }
 
         public static ReagentUnit New(string value)
