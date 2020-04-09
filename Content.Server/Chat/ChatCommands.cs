@@ -1,4 +1,6 @@
-﻿using Content.Server.Interfaces.Chat;
+﻿using Content.Server.GameObjects.Components.Observer;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Observer;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
@@ -24,7 +26,10 @@ namespace Content.Server.Chat
 
             var message = string.Join(" ", args);
 
-            chat.EntitySay(player.AttachedEntity, message);
+            if (player.AttachedEntity.HasComponent<GhostComponent>())
+                chat.SendDeadChat(player, message);
+            else
+                chat.EntitySay(player.AttachedEntity, message);
         }
     }
 

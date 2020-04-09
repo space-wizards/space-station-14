@@ -41,5 +41,6 @@
         public const uint HANDHELD_LIGHT = 1036;
         public const uint PAPER = 1037;
         public const uint REAGENT_INJECTOR = 1038;
+        public const uint GHOST = 1039;
     }
 }

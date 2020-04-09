@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests
@@ -53,6 +54,10 @@ namespace Content.IntegrationTests
         public void ToggleReady(IPlayerSession player, bool ready)
         {
         }
+
+        public GridCoordinates GetLateJoinSpawnPoint() => GridCoordinates.InvalidGrid;
+        public GridCoordinates GetJobSpawnPoint(string jobId) => GridCoordinates.InvalidGrid;
+        public GridCoordinates GetObserverSpawnPoint() => GridCoordinates.InvalidGrid;
 
         public T AddGameRule<T>() where T : GameRule, new()
         {

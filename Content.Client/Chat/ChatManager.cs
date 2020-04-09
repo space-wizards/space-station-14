@@ -288,7 +288,7 @@ namespace Content.Client.Chat
             WriteChatMessage(storedMessage);
 
             // Local messages that have an entity attached get a speech bubble.
-            if (msg.Channel == ChatChannel.Local && msg.SenderEntity != default)
+            if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Dead) && msg.SenderEntity != default)
             {
                 AddSpeechBubble(msg);
             }
