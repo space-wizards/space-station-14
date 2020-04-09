@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Observer
                     }
                     else
                     {
-                        _gui.Parent?.RemoveChild(_gui);
+                        _gui.Orphan();
                     }
 
                     _gameHud.HandsContainer.AddChild(_gui);
