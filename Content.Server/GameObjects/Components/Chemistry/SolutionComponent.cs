@@ -9,6 +9,8 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
+using Content.Shared.Utility;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -38,11 +40,17 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private AudioSystem _audioSystem;
         private ChemistrySystem _chemistrySystem;
 
+        private SpriteComponent _spriteComponent;
+
         [ViewVariables]
         protected Solution _containedSolution = new Solution();
         protected int _maxVolume;
         private SolutionCaps _capabilities;
-
+        private string _fillInitState;
+        private int _fillInitSteps;
+        private string _fillPathString = "Objects/Chemistry/fillings.rsi";
+        private ResourcePath _fillPath;
+        private SpriteSpecifier _fillSprite;
         /// <summary>
         ///     The maximum volume of the container.
         /// </summary>
@@ -108,6 +116,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             serializer.DataField(ref _maxVolume, "maxVol", 0);
             serializer.DataField(ref _containedSolution, "contents", _containedSolution);
             serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
+            serializer.DataField(ref _fillInitState, "fillingState", "");
+            serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
         }
 
         public override void Initialize()
@@ -116,23 +126,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
             _chemistrySystem = _entitySystemManager.GetEntitySystem<ChemistrySystem>();
             _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
-
         }
 
         protected override void Startup()
         {
             base.Startup();
             RecalculateColor();
-        }
-
-        /// <summary>
-        /// Initializes the SolutionComponent if it doesn't have an owner
-        /// </summary>
-        public void InitializeFromPrototype()
-        {
-            // Because Initialize needs an Owner, Startup isn't called, etc.
-            IoCManager.InjectDependencies(this);
-            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+            if (!string.IsNullOrEmpty(_fillInitState))
+            {
+                _spriteComponent = Owner.GetComponent<SpriteComponent>();
+                _fillPath = new ResourcePath(_fillPathString);
+                _fillSprite = new SpriteSpecifier.Rsi(_fillPath, _fillInitState + (_fillInitSteps - 1));
+                _spriteComponent.AddLayerWithSprite(_fillSprite);
+                UpdateFillIcon();
+            }
         }
 
         /// <inheritdoc />
@@ -147,7 +154,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public void RemoveAllSolution()
         {
             _containedSolution.RemoveAllSolution();
-            OnSolutionChanged();
+            OnSolutionChanged(false);
         }
 
         public bool TryRemoveReagent(string reagentId, int quantity)
@@ -155,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!ContainsReagent(reagentId, out var currentQuantity)) return false;
 
             _containedSolution.RemoveReagent(reagentId, quantity);
-            OnSolutionChanged();
+            OnSolutionChanged(false);
             return true;
         }
 
@@ -170,21 +177,24 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
 
             _containedSolution.RemoveSolution(quantity);
-            OnSolutionChanged();
+            OnSolutionChanged(false);
             return true;
         }
 
         public Solution SplitSolution(int quantity)
         {
             var solutionSplit = _containedSolution.SplitSolution(quantity);
-            OnSolutionChanged();
+            OnSolutionChanged(false);
             return solutionSplit;
         }
 
         protected void RecalculateColor()
         {
-            if(_containedSolution.TotalVolume == 0)
-                SubstanceColor = Color.White;
+            if (_containedSolution.TotalVolume == 0)
+            {
+                SubstanceColor = Color.Transparent;
+                return;
+            }
 
             Color mixColor = default;
             float runningTotalQuantity = 0;
@@ -195,24 +205,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
                 if(!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                     continue;
-
                 if (mixColor == default)
                     mixColor = proto.SubstanceColor;
-
-                mixColor = BlendRGB(mixColor, proto.SubstanceColor, reagent.Quantity / runningTotalQuantity);
+                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor,
+                    (1 / runningTotalQuantity) * reagent.Quantity);
             }
+
+            SubstanceColor = mixColor;
         }
-
-         private Color BlendRGB(Color rgb1, Color rgb2, float amount)
-         {
-             var r     = (float)Math.Round(rgb1.R + (rgb2.R - rgb1.R) * amount, 1);
-             var g     = (float)Math.Round(rgb1.G + (rgb2.G - rgb1.G) * amount, 1);
-             var b     = (float)Math.Round(rgb1.B + (rgb2.B - rgb1.B) * amount, 1);
-             var alpha = (float)Math.Round(rgb1.A + (rgb2.A - rgb1.A) * amount, 1);
-
-             return new Color(r, g, b, alpha);
-         }
-
 
         /// <summary>
         ///     Transfers solution from the held container to the target container.
@@ -400,12 +400,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             _containedSolution.AddReagent(reagentId, acceptedQuantity);
-            if (!skipColor) {
-                RecalculateColor();
-            }
             if(!skipReactionCheck)
                 CheckForReaction();
-            OnSolutionChanged();
+            OnSolutionChanged(skipColor);
             return true;
         }
 
@@ -415,12 +412,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
 
             _containedSolution.AddSolution(solution);
-            if (!skipColor) {
-                RecalculateColor();
-            }
             if(!skipReactionCheck)
                 CheckForReaction();
-            _chemistrySystem.HandleSolutionChange(Owner);
+            OnSolutionChanged(skipColor);
             return true;
         }
 
@@ -519,6 +513,32 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return majorReagent.ReagentId;
         }
 
-        protected virtual void OnSolutionChanged() => _chemistrySystem.HandleSolutionChange(Owner);
+        protected void UpdateFillIcon()
+        {
+            if (string.IsNullOrEmpty(_fillInitState)) return;
+
+            var percentage =  (double)CurrentVolume / MaxVolume;
+            var level = ContentHelpers.RoundToLevels(percentage * 100, 100, _fillInitSteps);
+
+            //Transformed glass uses special fancy sprites so we don't bother
+            if (level == 0 || Owner.TryGetComponent<TransformableContainerComponent>(out var transformableContainerComponent)
+                               && transformableContainerComponent.Transformed)
+            {
+                _spriteComponent.LayerSetColor(1, Color.Transparent);
+                return;
+            }
+            _fillSprite = new SpriteSpecifier.Rsi(_fillPath, _fillInitState+level);
+            _spriteComponent.LayerSetSprite(1, _fillSprite);
+            _spriteComponent.LayerSetColor(1,SubstanceColor);
+        }
+
+        protected virtual void OnSolutionChanged(bool skipColor)
+        {
+            if (!skipColor)
+                RecalculateColor();
+
+            UpdateFillIcon();
+            _chemistrySystem.HandleSolutionChange(Owner);
+        }
     }
 }

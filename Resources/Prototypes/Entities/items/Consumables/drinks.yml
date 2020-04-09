@@ -29,6 +29,7 @@
   - type: Icon
     sprite: Objects/Drinks/glass_clear.rsi
   - type: Solution
+    fillingState: glass
     maxVol: 50
     caps: 16
   - type: Drink

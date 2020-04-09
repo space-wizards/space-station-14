@@ -2,11 +2,13 @@
   id: chem.H
   name: Hydrogen
   desc: A light, flammable gas.
+  color: "#808080"
 
 - type: reagent
   id: chem.O
   name: Oxygen
   desc: An oxidizing, colorless gas.
+  color: "#808080"
 
 - type: reagent
   id: chem.S
@@ -36,6 +38,7 @@
   id: chem.N
   name: Nitrogen
   desc: A colorless, odorless unreactive gas. Highly stable.
+  color: "#808080"
 
 - type: reagent
   id: chem.Fe
@@ -47,6 +50,7 @@
   id: chem.F
   name: Fluorine
   desc: A highly toxic pale yellow gas. Extremely reactive.
+  color: "#808080"
 
 - type: reagent
   id: chem.Si

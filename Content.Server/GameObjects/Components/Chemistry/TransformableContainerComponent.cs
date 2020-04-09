@@ -20,6 +20,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public override string Name => "TransformableContainer";
 
+        private bool _transformed = false;
+        public bool Transformed { get => _transformed; }
+
         private SpriteSpecifier _initialSprite;
         private string _initialName;
         private string _initialDescription;
@@ -46,6 +49,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public void CancelTransformation()
         {
             _currentReagent = null;
+            _transformed = false;
             _sprite.LayerSetSprite(0, _initialSprite);
             Owner.Name = _initialName;
             //Owner.Description = _initialDescription;
@@ -79,6 +83,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 Owner.Name = proto.Name + " glass";
                 //Owner.Description = proto.Description;
                 _currentReagent = proto;
+                _transformed = true;
             }
         }
     }
