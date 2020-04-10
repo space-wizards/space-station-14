@@ -68,22 +68,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _digestionDelay, "digestionDelay", 20);
         }
 
-
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
-            //Doesn't use Owner.AddComponent<>() to avoid cross-contamination (e.g. with blood or whatever they holds other solutions)
-            _stomachContents = new SolutionComponent();
-            _stomachContents.InitializeFromPrototype();
+            _stomachContents = Owner.GetComponent<SolutionComponent>();
             _stomachContents.MaxVolume = _initialMaxVolume;
-            _stomachContents.Owner = Owner; //Manually set owner to avoid crash when VV'ing this
-
-            //Ensure bloodstream in present
             if (!Owner.TryGetComponent<BloodstreamComponent>(out _bloodstream))
             {
                 Logger.Warning(_localizationManager.GetString(
-                        "StomachComponent entity does not have a BloodstreamComponent, which is required for it to function. Owner entity name: {0}",
-                        Owner.Name));
+                    "StomachComponent entity does not have a BloodstreamComponent, which is required for it to function. Owner entity name: {0}",
+                    Owner.Name));
             }
         }
 

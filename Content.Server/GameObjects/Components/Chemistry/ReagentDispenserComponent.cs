@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IAttackBy))]
-    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IAttackBy
+    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IAttackBy, ISolutionChange
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
@@ -161,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private bool PlayerCanUseDispenser(IEntity playerEntity)
         {
             //Need player entity to check if they are still able to use the dispenser
-            if (playerEntity == null) 
+            if (playerEntity == null)
                 return false;
             //Check if player can interact in their current state
             if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
@@ -207,7 +207,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
 
             var beaker = _beakerContainer.ContainedEntity;
-            Solution.SolutionChanged -= HandleSolutionChangedEvent;
             _beakerContainer.Remove(_beakerContainer.ContainedEntity);
             UpdateUserInterface();
 
@@ -304,7 +303,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 else
                 {
                     _beakerContainer.Insert(activeHandEntity);
-                    Solution.SolutionChanged += HandleSolutionChangedEvent;
                     UpdateUserInterface();
                 }
             }
@@ -317,10 +315,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        private void HandleSolutionChangedEvent()
-        {
-            UpdateUserInterface();
-        }
+        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => UpdateUserInterface();
 
         private void ClickSound()
         {
@@ -329,5 +324,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 sound.Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
             }
         }
+
+
     }
 }
