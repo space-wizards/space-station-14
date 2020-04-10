@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private CancellationTokenSource _roundEndCancellationTokenSource = new CancellationTokenSource();
         public bool IsRoundEndCountdownStarted { get; private set; }
-        public int RoundEndCountdownTime { get; set; } = 240000;
+        public TimeSpan RoundEndCountdownTime { get; set; } = TimeSpan.FromMinutes(4);
         public TimeSpan? ExpectedCountdownEnd = null;
 
         public delegate void RoundEndCountdownStarted();
@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             IsRoundEndCountdownStarted = true;
 
-            ExpectedCountdownEnd = _gameTiming.CurTime + TimeSpan.FromMilliseconds(RoundEndCountdownTime);
+            ExpectedCountdownEnd = _gameTiming.CurTime + RoundEndCountdownTime;
             Timer.Spawn(RoundEndCountdownTime, EndRound, _roundEndCancellationTokenSource.Token);
             OnRoundEndCountdownStarted?.Invoke();
         }
