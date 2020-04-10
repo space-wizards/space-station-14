@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -50,7 +51,7 @@ namespace Content.Client.Command
             Timer.SpawnRepeating(1000, UpdateCountdown, _timerCancelTokenSource.Token);
         }
 
-        private void UpdateCountdown()
+        public void UpdateCountdown()
         {
             if (!Owner.CountdownStarted)
             {

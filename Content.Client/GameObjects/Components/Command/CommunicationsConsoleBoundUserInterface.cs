@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Command
 
             _expectedCountdownTime = commsState.ExpectedCountdownEnd;
             CountdownStarted = commsState.CountdownStarted;
-
+            _menu?.UpdateCountdown();
 
         }
 
