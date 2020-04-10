@@ -2,6 +2,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -28,6 +29,13 @@ namespace Content.Server.GameObjects.Components.Observer
             }
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Owner.EnsureComponent<VisibilityComponent>().Layer = (int)VisibilityFlags.Ghost;
+        }
+
         public override ComponentState GetComponentState() => new GhostComponentState(CanReturnToBody);
 
         public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
@@ -44,10 +52,12 @@ namespace Content.Server.GameObjects.Components.Observer
                         actor.playerSession.ContentData().Mind.UnVisit();
                     }
                     break;
-                case PlayerAttachedMsg _:
+                case PlayerAttachedMsg msg:
+                    msg.NewPlayer.VisibilityMask |= (int)VisibilityFlags.Ghost;
                     Dirty();
                     break;
-                case PlayerDetachedMsg _:
+                case PlayerDetachedMsg msg:
+                    msg.OldPlayer.VisibilityMask &= ~(int)VisibilityFlags.Ghost;
                     Timer.Spawn(100, Owner.Delete);
                     break;
                 default:
