@@ -205,8 +205,30 @@ namespace Content.Server.GameTicking
             //Tell every client the round has ended.
             var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
             roundEndMessage.GamemodeTitle = MakeGamePreset().ModeTitle;
+
             //TODO:Grab actual timespan of round.
             roundEndMessage.DurationInHours = 1337;
+
+            //Generate a list of basic player info to display in the end round summary.
+            var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
+            foreach(var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
+            {
+                if (ply == null) continue;
+                if(ply.AttachedEntity.TryGetComponent<MindComponent>(out var mindComponent)
+                    && mindComponent.HasMind)
+                {
+                    var playerEndRoundInfo = new RoundEndPlayerInfo()
+                    {
+                        PlayerOOCName = ply.Name,
+                        PlayerICName = mindComponent.Mind.CurrentEntity.Name,
+                        Role = mindComponent.Mind.AllRoles.First().Name,
+                        Antag = false
+                    };
+                    listOfPlayerInfo.Add(playerEndRoundInfo);
+                }
+            }
+
+            roundEndMessage.AllPlayersEndInfo = listOfPlayerInfo;
             _netManager.ServerSendToAll(roundEndMessage);
         }
 

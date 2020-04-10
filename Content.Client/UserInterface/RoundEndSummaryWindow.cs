@@ -10,7 +10,9 @@ using Robust.Shared.Maths;
 using Content.Client.Utility;
 using Robust.Client.Player;
 using System.Linq;
+using System.Collections.Generic;
 using static Robust.Client.UserInterface.Controls.ItemList;
+using static Content.Shared.SharedGameTicker;
 
 namespace Content.Client.UserInterface
 {
@@ -27,7 +29,7 @@ namespace Content.Client.UserInterface
 
         protected override Vector2? CustomSize => (520, 580);
 
-        public RoundEndSummaryWindow(string gm, uint duration)
+        public RoundEndSummaryWindow(string gm, uint duration, List<RoundEndPlayerInfo> info )
         {
             Title = Loc.GetString("Round End Summary");
 
@@ -59,12 +61,15 @@ namespace Content.Client.UserInterface
                 SelectMode = ItemList.ItemListSelectMode.Button
             };
 
-            foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
+            foreach(var plyinfo in info)
             {
-                var playerOOCName = session.SessionId.Username;
-                //No Mind data so no ICName/Job/Role, etc.
-                _playerList.AddItem(playerOOCName);
+                var oocName = plyinfo.PlayerOOCName;
+                var icName = plyinfo.PlayerICName;
+                var role = plyinfo.Role;
+                var wasAntag = plyinfo.Antag;
+                _playerList.AddItem($"{oocName} was {icName} playing role of {role}.");
             }
+
             VBox.AddChild(_playerList);
             OpenCentered();
             MoveToFront();

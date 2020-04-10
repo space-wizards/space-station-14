@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Lidgren.Network;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Network;
 
@@ -114,6 +116,14 @@ namespace Content.Shared
                 buffer.Write(TextBlob);
             }
         }
+        public struct RoundEndPlayerInfo
+        {
+            public string PlayerOOCName;
+            public string PlayerICName;
+            public string Role;
+            public bool Antag;
+
+        }
 
         protected class MsgRoundEndMessage : NetMessage
         {
@@ -130,10 +140,30 @@ namespace Content.Shared
             //TODO: Change to a more detailed measurement of time.
             public uint DurationInHours;
 
+            public uint PlayerCount;
+
+            public List<RoundEndPlayerInfo> AllPlayersEndInfo;
+
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 GamemodeTitle = buffer.ReadString();
                 DurationInHours = buffer.ReadUInt32();
+
+                PlayerCount = buffer.ReadUInt32();
+                AllPlayersEndInfo = new List<RoundEndPlayerInfo>();
+                for(var i = 0; i < PlayerCount + 1; i++)
+                {
+                    var readPlayerData = new RoundEndPlayerInfo
+                    {
+                        PlayerOOCName = buffer.ReadString(),
+                        PlayerICName = buffer.ReadString(),
+                        Role = buffer.ReadString(),
+                        Antag = buffer.ReadBoolean()
+                    };
+
+                    AllPlayersEndInfo.Add(readPlayerData);
+                }
+                
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
@@ -141,6 +171,14 @@ namespace Content.Shared
                 buffer.Write(GamemodeTitle);
                 buffer.Write(DurationInHours);
 
+                buffer.Write(PlayerCount);
+                foreach(var playerEndInfo in AllPlayersEndInfo)
+                {
+                    buffer.Write(playerEndInfo.PlayerOOCName);
+                    buffer.Write(playerEndInfo.PlayerICName);
+                    buffer.Write(playerEndInfo.Role);
+                    buffer.Write(playerEndInfo.Antag);
+                }
             }
 
         }
