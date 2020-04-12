@@ -1,7 +1,15 @@
 ﻿using System;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Audio;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -24,8 +32,13 @@ namespace Content.Server.GameObjects.Components.Power
     ///     Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
     /// </summary>
     [RegisterComponent]
-    public class LightBulbComponent : Component
+    public class LightBulbComponent : Component, ILand
     {
+
+#pragma warning disable 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IRobustRandom _random;
+#pragma warning restore 649
 
         /// <summary>
         ///     Invoked whenever the state of the light bulb changes.
@@ -103,6 +116,19 @@ namespace Content.Server.GameObjects.Components.Power
         {
             base.Initialize();
             UpdateColor();
+        }
+
+        public void Land(LandEventArgs eventArgs)
+        {
+            if (State == LightBulbState.Broken)
+                return;
+
+            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("glassbreak");
+            var file = _random.Pick(soundCollection.PickFiles);
+
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play(file, Owner);
+
+            State = LightBulbState.Broken;
         }
     }
 }
