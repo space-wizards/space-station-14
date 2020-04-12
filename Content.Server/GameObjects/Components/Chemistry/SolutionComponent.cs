@@ -1,15 +1,8 @@
 ﻿using Content.Server.Chemistry;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using Content.Server.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -21,9 +14,9 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -46,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private SpriteComponent _spriteComponent;
 
         private Solution _containedSolution = new Solution();
-        private int _maxVolume;
+        private ReagentUnit _maxVolume;
         private SolutionCaps _capabilities;
         private string _fillInitState;
         private int _fillInitSteps;
@@ -58,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         ///     The maximum volume of the container.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public int MaxVolume
+        public ReagentUnit MaxVolume
         {
             get => _maxVolume;
             set => _maxVolume = value; // Note that the contents won't spill out if the capacity is reduced.
@@ -68,13 +61,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
         ///     The total volume of all the of the reagents in the container.
         /// </summary>
         [ViewVariables]
-        public int CurrentVolume => _containedSolution.TotalVolume;
+        public ReagentUnit CurrentVolume => _containedSolution.TotalVolume;
 
         /// <summary>
         ///     The volume without reagents remaining in the container.
         /// </summary>
         [ViewVariables]
-        public int EmptyVolume => MaxVolume - CurrentVolume;
+        public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
 
         /// <summary>
         ///     The current blended color of all the reagents in the container.
@@ -123,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _maxVolume, "maxVol", 0);
+            serializer.DataField(ref _maxVolume, "maxVol", ReagentUnit.New(0));
             serializer.DataField(ref _containedSolution, "contents", _containedSolution);
             serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
             serializer.DataField(ref _fillInitState, "fillingState", "");
@@ -158,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             OnSolutionChanged(false);
         }
 
-        public bool TryRemoveReagent(string reagentId, int quantity)
+        public bool TryRemoveReagent(string reagentId, ReagentUnit quantity)
         {
             if (!ContainsReagent(reagentId, out var currentQuantity)) return false;
 
@@ -172,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="quantity">Quantity of this solution to remove</param>
         /// <returns>Whether or not the solution was successfully removed</returns>
-        public bool TryRemoveSolution(int quantity)
+        public bool TryRemoveSolution(ReagentUnit quantity)
         {
             if (CurrentVolume == 0)
                 return false;
@@ -182,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        public Solution SplitSolution(int quantity)
+        public Solution SplitSolution(ReagentUnit quantity)
         {
             var solutionSplit = _containedSolution.SplitSolution(quantity);
             OnSolutionChanged(false);
@@ -198,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             Color mixColor = default;
-            float runningTotalQuantity = 0;
+            var runningTotalQuantity = ReagentUnit.New(0);
 
             foreach (var reagent in _containedSolution)
             {
@@ -209,7 +202,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (mixColor == default)
                     mixColor = proto.SubstanceColor;
                 mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor,
-                    (1 / runningTotalQuantity) * reagent.Quantity);
+                    (1 / runningTotalQuantity.Float()) * reagent.Quantity.Float());
             }
 
             SubstanceColor = mixColor;
@@ -389,7 +382,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public bool TryAddReagent(string reagentId, ReagentUnit quantity, out ReagentUnit acceptedQuantity, bool skipReactionCheck = false, bool skipColor = false)
         {
-            var toAcceptQuantity = MaxVolume - ContainedSolution.TotalVolume;
+            var toAcceptQuantity = MaxVolume - _containedSolution.TotalVolume;
             if (quantity > toAcceptQuantity)
             {
                 acceptedQuantity = toAcceptQuantity;
@@ -400,7 +393,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 acceptedQuantity = quantity;
             }
 
-            ContainedSolution.AddReagent(reagentId, acceptedQuantity);
+            _containedSolution.AddReagent(reagentId, acceptedQuantity);
             if (!skipColor) {
                 RecalculateColor();
             }
@@ -412,10 +405,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public bool TryAddSolution(Solution solution, bool skipReactionCheck = false, bool skipColor = false)
         {
-            if (solution.TotalVolume > (MaxVolume - ContainedSolution.TotalVolume))
+            if (solution.TotalVolume > (MaxVolume - _containedSolution.TotalVolume))
                 return false;
 
-            ContainedSolution.AddSolution(solution);
+            _containedSolution.AddSolution(solution);
             if (!skipColor) {
                 RecalculateColor();
             }
@@ -496,7 +489,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="reagentId">The reagent to check for.</param>
         /// <param name="quantity">Output the quantity of the reagent if it is contained, 0 if it isn't.</param>
         /// <returns>Return true if the solution contains the reagent.</returns>
-        public bool ContainsReagent(string reagentId, out int quantity)
+        public bool ContainsReagent(string reagentId, out ReagentUnit quantity)
         {
             foreach (var reagent in _containedSolution.Contents)
             {
@@ -506,7 +499,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     return true;
                 }
             }
-            quantity = 0;
+            quantity = ReagentUnit.New(0);
             return false;
         }
 
@@ -524,7 +517,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (string.IsNullOrEmpty(_fillInitState)) return;
 
-            var percentage =  (double)CurrentVolume / MaxVolume;
+            var percentage =  (CurrentVolume / MaxVolume).Double();
             var level = ContentHelpers.RoundToLevels(percentage * 100, 100, _fillInitSteps);
 
             //Transformed glass uses special fancy sprites so we don't bother
