@@ -47,16 +47,11 @@ namespace Content.Server.GameObjects.Components.Metabolism
             serializer.DataField(ref _initialMaxVolume, "maxVolume", ReagentUnit.New(250));
         }
 
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
-
-            //Create and setup internal solution storage
-            _internalSolution = new SolutionComponent();
-            _internalSolution.InitializeFromPrototype();
-            _internalSolution.Init();
+            base.Startup();
+            _internalSolution = Owner.GetComponent<SolutionComponent>();
             _internalSolution.MaxVolume = _initialMaxVolume;
-            _internalSolution.Owner = Owner; //Manually set owner to avoid crash when VV'ing this
         }
 
         /// <summary>

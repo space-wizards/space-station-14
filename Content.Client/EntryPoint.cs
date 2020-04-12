@@ -134,6 +134,7 @@ namespace Content.Client
                 "Paper",
                 "Write",
                 "Bloodstream",
+                "TransformableContainer",
                 "Mind",
                 "MovementSpeedModifier",
                 "StorageFill"
@@ -148,7 +149,7 @@ namespace Content.Client
             factory.Register<SharedLatheComponent>();
             factory.Register<SharedSpawnPointComponent>();
 
-            factory.Register<SolutionComponent>();
+            factory.Register<SharedSolutionComponent>();
 
             factory.Register<SharedVendingMachineComponent>();
             factory.Register<SharedWiresComponent>();

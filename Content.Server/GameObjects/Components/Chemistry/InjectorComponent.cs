@@ -65,19 +65,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             serializer.DataField(ref _initialMaxVolume, "initialMaxVolume", ReagentUnit.New(15));
             serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
         }
-
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
-
-            //Create and setup internal storage
-            _internalContents = new SolutionComponent();
-            _internalContents.InitializeFromPrototype();
-            _internalContents.Init();
-            _internalContents.MaxVolume = _initialMaxVolume;
-            _internalContents.Owner = Owner; //Manually set owner to avoid crash when VV'ing this
+            base.Startup();
+            _internalContents = Owner.GetComponent<SolutionComponent>();
             _internalContents.Capabilities |= SolutionCaps.Injector;
-
             //Set _toggleState based on prototype
             _toggleState = _injectOnly ? InjectorToggleMode.Inject : InjectorToggleMode.Draw;
         }

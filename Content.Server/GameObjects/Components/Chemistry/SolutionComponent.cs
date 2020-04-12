@@ -1,25 +1,37 @@
 ﻿using Content.Server.Chemistry;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Linq;
+using Content.Server.Chemistry;
+using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.Utility;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     /// <summary>
-    ///     Shared ECS component that manages a liquid solution of reagents.
+    ///    ECS component that manages a liquid solution of reagents.
     /// </summary>
     [RegisterComponent]
-    internal class SolutionComponent : Shared.GameObjects.Components.Chemistry.SolutionComponent, IExamine
+    internal class SolutionComponent : SharedSolutionComponent, IExamine
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -29,27 +41,178 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private IEnumerable<ReactionPrototype> _reactions;
         private AudioSystem _audioSystem;
+        private ChemistrySystem _chemistrySystem;
+
+        private SpriteComponent _spriteComponent;
+
+        private Solution _containedSolution = new Solution();
+        private int _maxVolume;
+        private SolutionCaps _capabilities;
+        private string _fillInitState;
+        private int _fillInitSteps;
+        private string _fillPathString = "Objects/Chemistry/fillings.rsi";
+        private ResourcePath _fillPath;
+        private SpriteSpecifier _fillSprite;
+
+        /// <summary>
+        ///     The maximum volume of the container.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int MaxVolume
+        {
+            get => _maxVolume;
+            set => _maxVolume = value; // Note that the contents won't spill out if the capacity is reduced.
+        }
+
+        /// <summary>
+        ///     The total volume of all the of the reagents in the container.
+        /// </summary>
+        [ViewVariables]
+        public int CurrentVolume => _containedSolution.TotalVolume;
+
+        /// <summary>
+        ///     The volume without reagents remaining in the container.
+        /// </summary>
+        [ViewVariables]
+        public int EmptyVolume => MaxVolume - CurrentVolume;
+
+        /// <summary>
+        ///     The current blended color of all the reagents in the container.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Color SubstanceColor { get; private set; }
+
+        /// <summary>
+        ///     The current capabilities of this container (is the top open to pour? can I inject it into another object?).
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public SolutionCaps Capabilities
+        {
+            get => _capabilities;
+            set => _capabilities = value;
+        }
+
+        [ViewVariables]
+        public Solution Solution
+        {
+            get => _containedSolution;
+            set => _containedSolution = value;
+        }
+
+        public IReadOnlyList<Solution.ReagentQuantity> ReagentList => _containedSolution.Contents;
+
+        /// <summary>
+        /// Shortcut for Capabilities PourIn flag to avoid binary operators.
+        /// </summary>
+        public bool CanPourIn => (Capabilities & SolutionCaps.PourIn) != 0;
+        /// <summary>
+        /// Shortcut for Capabilities PourOut flag to avoid binary operators.
+        /// </summary>
+        public bool CanPourOut => (Capabilities & SolutionCaps.PourOut) != 0;
+        /// <summary>
+        /// Shortcut for Capabilities Injectable flag
+        /// </summary>
+        public bool Injectable => (Capabilities & SolutionCaps.Injectable) != 0;
+        /// <summary>
+        /// Shortcut for Capabilities Injector flag
+        /// </summary>
+        public bool Injector => (Capabilities & SolutionCaps.Injector) != 0;
+
+        /// <inheritdoc />
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _maxVolume, "maxVol", 0);
+            serializer.DataField(ref _containedSolution, "contents", _containedSolution);
+            serializer.DataField(ref _capabilities, "caps", SolutionCaps.None);
+            serializer.DataField(ref _fillInitState, "fillingState", "");
+            serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            _chemistrySystem = _entitySystemManager.GetEntitySystem<ChemistrySystem>();
+            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+        }
 
         protected override void Startup()
         {
             base.Startup();
-            Init();
+            RecalculateColor();
+            if (!string.IsNullOrEmpty(_fillInitState))
+            {
+                _spriteComponent = Owner.GetComponent<SpriteComponent>();
+                _fillPath = new ResourcePath(_fillPathString);
+                _fillSprite = new SpriteSpecifier.Rsi(_fillPath, _fillInitState + (_fillInitSteps - 1));
+                _spriteComponent.AddLayerWithSprite(_fillSprite);
+                UpdateFillIcon();
+            }
         }
 
-        public void Init()
+        public void RemoveAllSolution()
         {
-            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
-            _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            _containedSolution.RemoveAllSolution();
+            OnSolutionChanged(false);
+        }
+
+        public bool TryRemoveReagent(string reagentId, int quantity)
+        {
+            if (!ContainsReagent(reagentId, out var currentQuantity)) return false;
+
+            _containedSolution.RemoveReagent(reagentId, quantity);
+            OnSolutionChanged(false);
+            return true;
         }
 
         /// <summary>
-        /// Initializes the SolutionComponent if it doesn't have an owner
+        /// Attempt to remove the specified quantity from this solution
         /// </summary>
-        public void InitializeFromPrototype()
+        /// <param name="quantity">Quantity of this solution to remove</param>
+        /// <returns>Whether or not the solution was successfully removed</returns>
+        public bool TryRemoveSolution(int quantity)
         {
-            // Because Initialize needs an Owner, Startup isn't called, etc.
-            IoCManager.InjectDependencies(this);
-            _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
+            if (CurrentVolume == 0)
+                return false;
+
+            _containedSolution.RemoveSolution(quantity);
+            OnSolutionChanged(false);
+            return true;
+        }
+
+        public Solution SplitSolution(int quantity)
+        {
+            var solutionSplit = _containedSolution.SplitSolution(quantity);
+            OnSolutionChanged(false);
+            return solutionSplit;
+        }
+
+        protected void RecalculateColor()
+        {
+            if (_containedSolution.TotalVolume == 0)
+            {
+                SubstanceColor = Color.Transparent;
+                return;
+            }
+
+            Color mixColor = default;
+            float runningTotalQuantity = 0;
+
+            foreach (var reagent in _containedSolution)
+            {
+                runningTotalQuantity += reagent.Quantity;
+
+                if(!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                    continue;
+                if (mixColor == default)
+                    mixColor = proto.SubstanceColor;
+                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor,
+                    (1 / runningTotalQuantity) * reagent.Quantity);
+            }
+
+            SubstanceColor = mixColor;
         }
 
         /// <summary>
@@ -118,6 +281,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         void IExamine.Examine(FormattedMessage message)
         {
             message.AddText(_loc.GetString("Contains:\n"));
+            if (ReagentList.Count == 0)
+            {
+                message.AddText("Nothing.\n");
+            }
             foreach (var reagent in ReagentList)
             {
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
@@ -239,7 +406,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             if(!skipReactionCheck)
                 CheckForReaction();
-            OnSolutionChanged();
+            OnSolutionChanged(skipColor);
             return true;
         }
 
@@ -254,7 +421,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             if(!skipReactionCheck)
                 CheckForReaction();
-            OnSolutionChanged();
+            OnSolutionChanged(skipColor);
             return true;
         }
 
@@ -321,6 +488,64 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             //Play reaction sound client-side
             _audioSystem.Play("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
+        }
+
+        /// <summary>
+        /// Check if the solution contains the specified reagent.
+        /// </summary>
+        /// <param name="reagentId">The reagent to check for.</param>
+        /// <param name="quantity">Output the quantity of the reagent if it is contained, 0 if it isn't.</param>
+        /// <returns>Return true if the solution contains the reagent.</returns>
+        public bool ContainsReagent(string reagentId, out int quantity)
+        {
+            foreach (var reagent in _containedSolution.Contents)
+            {
+                if (reagent.ReagentId == reagentId)
+                {
+                    quantity = reagent.Quantity;
+                    return true;
+                }
+            }
+            quantity = 0;
+            return false;
+        }
+
+        public string GetMajorReagentId()
+        {
+            if (_containedSolution.Contents.Count == 0)
+            {
+                return "";
+            }
+            var majorReagent = _containedSolution.Contents.OrderByDescending(reagent => reagent.Quantity).First();;
+            return majorReagent.ReagentId;
+        }
+
+        protected void UpdateFillIcon()
+        {
+            if (string.IsNullOrEmpty(_fillInitState)) return;
+
+            var percentage =  (double)CurrentVolume / MaxVolume;
+            var level = ContentHelpers.RoundToLevels(percentage * 100, 100, _fillInitSteps);
+
+            //Transformed glass uses special fancy sprites so we don't bother
+            if (level == 0 || Owner.TryGetComponent<TransformableContainerComponent>(out var transformableContainerComponent)
+                               && transformableContainerComponent.Transformed)
+            {
+                _spriteComponent.LayerSetColor(1, Color.Transparent);
+                return;
+            }
+            _fillSprite = new SpriteSpecifier.Rsi(_fillPath, _fillInitState+level);
+            _spriteComponent.LayerSetSprite(1, _fillSprite);
+            _spriteComponent.LayerSetColor(1,SubstanceColor);
+        }
+
+        protected virtual void OnSolutionChanged(bool skipColor)
+        {
+            if (!skipColor)
+                RecalculateColor();
+
+            UpdateFillIcon();
+            _chemistrySystem.HandleSolutionChange(Owner);
         }
     }
 }
