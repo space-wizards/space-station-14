@@ -35,9 +35,9 @@ namespace Content.Server.Chemistry.ReactionEffects
             serializer.DataField(ref _maxScale, "maxScale", 1);
         }
 
-        public void React(IEntity solutionEntity, int intensity)
+        public void React(IEntity solutionEntity, decimal intensity)
         {
-            float floatIntensity = intensity; //Use float to avoid truncation in scaling
+            float floatIntensity = (float)intensity; 
             if (solutionEntity == null)
                 return;
             if(!solutionEntity.TryGetComponent(out SolutionComponent solution))

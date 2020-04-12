@@ -171,7 +171,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
             Title = castState.DispenserName;
             UpdateContainerInfo(castState);
 
-            switch (castState.SelectedDispenseAmount)
+            switch (castState.SelectedDispenseAmount.Int())
             {
                 case 1:
                     DispenseButton1.Pressed = true;

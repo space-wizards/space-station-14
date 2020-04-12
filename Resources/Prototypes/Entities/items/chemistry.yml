@@ -13,7 +13,7 @@
     maxVol: 50
     caps: 27
   - type: Pourable
-    transferAmount: 5
+    transferAmount: 5.0
 
 - type: entity
   name: Large Beaker
@@ -30,7 +30,7 @@
     maxVol: 100
     caps: 27
   - type: Pourable
-    transferAmount: 5
+    transferAmount: 5.0
 
 - type: entity
   name: Dropper
@@ -48,7 +48,7 @@
     maxVol: 5
     caps: 19
   - type: Pourable
-    transferAmount: 5
+    transferAmount: 5.0
 
 - type: entity
   name: Syringe
