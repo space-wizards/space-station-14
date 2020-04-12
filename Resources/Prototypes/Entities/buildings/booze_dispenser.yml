@@ -18,3 +18,7 @@
   - chem.Ale
   - chem.Wine
   - chem.Ice
+  - chem.Beer
+  - chem.Vodka
+  - chem.Cognac
+  - chem.Kahlua
