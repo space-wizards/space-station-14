@@ -18,52 +18,79 @@ namespace Content.Client.UserInterface
 {
     public sealed class RoundEndSummaryWindow : SS14Window
     {
-        private VBoxContainer VBox { get; }
+        private VBoxContainer RoundEndSummaryTab { get; }
+        private VBoxContainer PlayerManifestoTab { get; }
+        private TabContainer RoundEndWindowTabs { get; }
         protected override Vector2? CustomSize => (520, 580);
 
         public RoundEndSummaryWindow(string gm, uint duration, List<RoundEndPlayerInfo> info )
         {
+
             Title = Loc.GetString("Round End Summary");
-            VBox = new VBoxContainer();
-            Contents.AddChild(VBox);
+
+            //Round End Window is split into two tabs, one about the round stats
+            //and the other is a list of RoundEndPlayerInfo for each player.
+            //This tab would be a good place for things like: "x many people died.",
+            //"clown slipped the crew x times.", "x shots were fired this round.", etc.
+            //Also good for serious info.
+            RoundEndSummaryTab = new VBoxContainer()
+            {
+                Name = Loc.GetString("Round Information")
+            };
+
+            //Tab for listing  unique info per player.
+            PlayerManifestoTab = new VBoxContainer()
+            {
+                Name = Loc.GetString("Player Manifesto")
+            };
+
+            RoundEndWindowTabs = new TabContainer();
+            RoundEndWindowTabs.AddChild(RoundEndSummaryTab);
+            RoundEndWindowTabs.AddChild(PlayerManifestoTab);
+
+            Contents.AddChild(RoundEndWindowTabs);
+
             //Gamemode Name
             var gamemodeLabel = new RichTextLabel();
             gamemodeLabel.SetMarkup(Loc.GetString("Round of [color=white]{0}[/color] has ended.", gm));
-            VBox.AddChild(gamemodeLabel);
+            RoundEndSummaryTab.AddChild(gamemodeLabel);
 
-            //Duration
-            //var roundDurationInfo = new RichTextLabel();
-            //roundDurationInfo.SetMarkup(Loc.GetString("The round lasted for [color=yellow]{0}[/color] hours.", duration));
-            //VBox.AddChild(roundDurationInfo);
-
+            //TODO: Implement showing the duration of the round.
 
             //Initialize what will be the list of players display.
             var scrollContainer = new ScrollContainer();
             scrollContainer.SizeFlagsVertical = SizeFlags.FillExpand;
             var innerScrollContainer = new VBoxContainer();
 
+            //Put antags on top of the list.
+            var manifestSortedList = info.OrderBy(p => !p.Antag);
             //Create labels for each player info.
-            foreach (var plyinfo in info)
+            foreach (var plyinfo in manifestSortedList)
             {
-                var oocName = plyinfo.PlayerOOCName;
-                var icName = plyinfo.PlayerICName;
-                var role = plyinfo.Role;
-                var wasAntag = plyinfo.Antag;
 
-                var playerInfoText = new RichTextLabel();
-                playerInfoText.SetMarkup(Loc.GetString($"[color=gray]{oocName}[/color] was [color=white]{icName}[/color] playing role of [color=orange]{role}[/color]."));
+                var playerInfoText = new RichTextLabel()
+                {
+                    SizeFlagsVertical = SizeFlags.Fill
+                };
+
+                //TODO: On Hover display a popup detailing more play info.
+                //For example: their antag goals and if they completed them sucessfully.
+                var icNameColor = plyinfo.Antag ? "red" : "white";
+                playerInfoText.SetMarkup(
+                    Loc.GetString($"[color=gray]{plyinfo.PlayerOOCName}[/color] was [color={icNameColor}]{plyinfo.PlayerICName}[/color] playing role of [color=orange]{plyinfo.Role}[/color]."));
                 innerScrollContainer.AddChild(playerInfoText);
             }
 
             scrollContainer.AddChild(innerScrollContainer);
             //Attach the entire ScrollContainer that holds all the playerinfo.
-            VBox.AddChild(scrollContainer);
+            PlayerManifestoTab.AddChild(scrollContainer);
 
             //Finally, display the window.
             OpenCentered();
             MoveToFront();
 
         }
+
     }
 
 }
