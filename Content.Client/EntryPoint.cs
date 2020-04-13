@@ -15,6 +15,7 @@ using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
+using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
@@ -226,6 +227,14 @@ namespace Content.Client
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IItemSlotManager>().Initialize();
+
+            _baseClient.RunLevelChanged += (sender, args) =>
+            {
+                if (args.NewLevel == ClientRunLevel.Initialize)
+                {
+                    _stateManager.RequestStateChange<MainScreen>();
+                }
+            };
 
             // Fire off into state dependent on launcher or not.
             if (_gameController.LaunchState.FromLauncher)
