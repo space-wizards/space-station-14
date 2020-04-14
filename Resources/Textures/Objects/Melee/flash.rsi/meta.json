@@ -1,0 +1,30 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e77d2738fa24e464f1497e0f93e3002df5d404b2/icons/obj/device.dmi",
+    "states": [
+        {
+            "name": "icon",
+            "directions": 1
+        },
+        {
+            "name": "use",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0,
+                    1.0,
+                    3.0
+                ]
+            ]
+        },
+        {
+            "name": "burnt",
+            "directions": 1
+        }
+    ]
+}

@@ -5,6 +5,7 @@
   description: A miserable pile of secrets
   drawdepth: Mobs
   components:
+  - type: Flashable
   - type: Mind
     show_examine_info: true
   - type: Hands

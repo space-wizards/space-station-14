@@ -1,0 +1,19 @@
+- type: entity
+  name: Flash
+  parent: BaseItem
+  id: MeleeFlash
+  description: They light the way to freedom
+  components:
+  - type: Flasher
+  - type: UseDelay
+  - type: Sprite
+    sprite: Objects/Melee/flash.rsi
+    layers:
+    - state: icon
+    #- state: HandheldLightOnOverlay
+    #  shader: unshaded
+    #  visible: false
+  - type: Icon
+    sprite: Objects/Melee/flash.rsi
+    state: icon
+  - type: Sound
