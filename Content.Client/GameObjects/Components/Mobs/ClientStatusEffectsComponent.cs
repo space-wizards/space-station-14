@@ -76,10 +76,6 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void PlayerDetached()
         {
-            if (!CurrentlyControlled)
-            {
-                return;
-            }
             _ui?.Dispose();
             _ui = null;
         }

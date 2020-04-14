@@ -34,7 +34,6 @@ namespace Content.Client.GameObjects.Components.Observer
 
         private void SetGhostVisibility(bool visibility)
         {
-            // So, for now this is a client-side hack... Please, PLEASE someone make this work server-side.
             foreach (var ghost in _componentManager.GetAllComponents(typeof(GhostComponent)))
             {
                 if (ghost.Owner.TryGetComponent(out SpriteComponent component))
