@@ -255,7 +255,25 @@ namespace Content.Tests.Shared.Chemistry
             Assert.That(splitSolution.GetReagentQuantity("water").Float(), Is.EqualTo(reduce));
             Assert.That(splitSolution.TotalVolume.Float(), Is.EqualTo(reduce));
         }
-        
+
+        [Test]
+        [TestCase(2)]
+        [TestCase(10)]
+        [TestCase(100)]
+        [TestCase(1000)]
+        public void SplitRounding(int amount)
+        {
+            var solutionOne = new Solution();
+            solutionOne.AddReagent("foo", ReagentUnit.New(amount));
+            solutionOne.AddReagent("bar", ReagentUnit.New(amount));
+            solutionOne.AddReagent("baz", ReagentUnit.New(amount));
+
+            var splitAmount = ReagentUnit.New(5);
+            var split = solutionOne.SplitSolution(splitAmount);
+
+            Assert.That(split.TotalVolume, Is.EqualTo(splitAmount));
+        }
+
         [Test]
         public void SplitSolutionMoreThanTotalRemovesAll()
         {
