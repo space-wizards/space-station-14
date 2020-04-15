@@ -48,6 +48,7 @@ namespace Content.Server.GameTicking
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
         private const string MapFile = "Maps/stationstation.yml";
+        private static TimeSpan _roundStartTimeSpan;
 
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
         [ViewVariables] private readonly List<ManifestEntry> _manifest = new List<ManifestEntry>();
@@ -194,6 +195,7 @@ namespace Content.Server.GameTicking
                 SpawnPlayer(player, job, false);
             }
 
+            _roundStartTimeSpan = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
             _sendStatusToAll();
         }
 
@@ -220,14 +222,15 @@ namespace Content.Server.GameTicking
             roundEndMessage.GamemodeTitle = MakeGamePreset().ModeTitle;
 
             //Get the timespan of the round.
-            var gameTime = IoCManager.Resolve<IGameTiming>();
-            roundEndMessage.RoundDuration = gameTime.RealTime;
+            roundEndMessage.RoundDuration = new TimeSpan(DateTime.Now.Hour,
+                DateTime.Now.Minute,
+                DateTime.Now.Second)
+                .Subtract(_roundStartTimeSpan);
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
             foreach(var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
             {
-                if (ply == null) continue;
                 if(ply.AttachedEntity.TryGetComponent<MindComponent>(out var mindComponent)
                     && mindComponent.HasMind)
                 {
@@ -235,7 +238,7 @@ namespace Content.Server.GameTicking
                     {
                         PlayerOOCName = ply.Name,
                         PlayerICName = mindComponent.Mind.CurrentEntity.Name,
-                        Role = mindComponent.Mind.AllRoles.First().Name,
+                        Role = mindComponent.Mind.AllRoles.First() != null ? mindComponent.Mind.AllRoles.First().Name : Loc.GetString("Unkown"),
                         Antag = false
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
