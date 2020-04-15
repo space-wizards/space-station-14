@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         private SolutionComponent _contents;
         [ViewVariables]
-        private int _transferAmount;
+        private ReagentUnit _transferAmount;
 
         private Solution _initialContents; // This is just for loading from yaml
 
@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _initialContents, "contents", null);
             serializer.DataField(ref _useSound, "use_sound", "/Audio/items/eatfood.ogg");
             // Default is transfer 30 units
-            serializer.DataField(ref _transferAmount, "transfer_amount", 5);
+            serializer.DataField(ref _transferAmount, "transfer_amount", ReagentUnit.New(5));
             // E.g. empty chip packet when done
             serializer.DataField(ref _finishPrototype, "spawn_on_finish", null);
         }
@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _initialContents = null;
             if (_contents.CurrentVolume == 0)
             {
-                _contents.TryAddReagent("chem.Nutriment", 5, out _);
+                _contents.TryAddReagent("chem.Nutriment", ReagentUnit.New(5), out _);
             }
             Owner.TryGetComponent(out AppearanceComponent appearance);
             _appearanceComponent = appearance;
@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 return 0;
             }
-            return Math.Max(1, _contents.CurrentVolume / _transferAmount);
+            return Math.Max(1, (int)Math.Ceiling((_contents.CurrentVolume / _transferAmount).Float()));
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 // TODO: Add putting food back in boxes here?
                 if (user.TryGetComponent(out StomachComponent stomachComponent))
                 {
-                    var transferAmount = Math.Min(_transferAmount, _contents.CurrentVolume);
+                    var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
                     var split = _contents.SplitSolution(transferAmount);
                     if (stomachComponent.TryTransferSolution(split))
                     {

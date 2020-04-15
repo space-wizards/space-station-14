@@ -5,12 +5,6 @@
   description: One sip of this and you just know you're gonna have a good time.
   components:
   - type: Drink  
-    max_volume: 10
-    spawn_on_finish: DrinkBottleAbsinthe  
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
   - type: Sprite
     sprite: Objects/Drinks/absinthebottle.rsi
   - type: Icon
@@ -23,12 +17,6 @@
   description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
   components:
   - type: Drink    
-    max_volume: 10
-    spawn_on_finish: DrinkBottleAlcoClear
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
   - type: Sprite
     sprite: Objects/Drinks/alco-green.rsi
   - type: Icon
@@ -40,13 +28,12 @@
   name: Magm-Ale
   description: A true dorf's drink of choice.
   components:
-  - type: Drink  
-    max_volume: 10
-    spawn_on_finish: DrinkBottleAle
+  - type: Solution
+    maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
+      - ReagentId: chem.Ale
+        Quantity: 80  
   - type: Sprite
     sprite: Objects/Drinks/alebottle.rsi
   - type: Icon
@@ -59,12 +46,6 @@
   description: A bottle filled with nothing
   components:
   - type: Drink  
-    max_volume: 10
-    spawn_on_finish: DrinkBottleAlcoClear  
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
   - type: Sprite
     sprite: Objects/Drinks/bottleofnothing.rsi
   - type: Icon
@@ -76,13 +57,12 @@
   name: Cognac bottle
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
   components:
-  - type: Drink
-    max_volume: 10
-    spawn_on_finish: DrinkBottleCognac
+  - type: Solution
+    maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
+      - ReagentId: chem.Cognac
+        Quantity: 80  
   - type: Sprite
     sprite: Objects/Drinks/cognacbottle.rsi
   - type: Icon
@@ -95,12 +75,6 @@
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
   - type: Drink   
-    max_volume: 10
-    spawn_on_finish: DrinkBottleGin
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
   - type: Sprite
     sprite: Objects/Drinks/ginbottle.rsi
   - type: Icon
@@ -113,12 +87,6 @@
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   components:
   - type: Drink  
-    max_volume: 10
-    spawn_on_finish: DrinkBottleGoldschlager  
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
   - type: Sprite
     sprite: Objects/Drinks/goldschlagerbottle.rsi
   - type: Icon
@@ -130,13 +98,12 @@
   name: Kahlua bottle
   description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK
   components:
-  - type: Drink
-    max_volume: 10
-    spawn_on_finish: DrinkBottleKahlua
+  - type: Solution
+    maxVol: 80
     contents:
       reagents:
       - ReagentId: chem.H2O
-        Quantity: 10
+        Quantity: 80  
   - type: Sprite
     sprite: Objects/Drinks/kahluabottle.rsi
   - type: Icon
@@ -149,12 +116,6 @@
   description: Silver laced tequilla, served in space night clubs across the galaxy.
   components:
   - type: Drink  
-    max_volume: 10
-    spawn_on_finish: DrinkBottlePatron  
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
   - type: Sprite
     sprite: Objects/Drinks/patronbottle.rsi
   - type: Icon
@@ -167,12 +128,6 @@
   description: What a delightful packaging for a surely high quality wine! The vintage must be amazing!
   components:
   - type: Drink   
-    max_volume: 10
-    spawn_on_finish: DrinkBottlePoisonWine 
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
   - type: Sprite
     sprite: Objects/Drinks/pwinebottle.rsi
   - type: Icon
@@ -185,12 +140,6 @@
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
   components:
   - type: Drink  
-    max_volume: 10
-    spawn_on_finish: DrinkBottleRum
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
   - type: Sprite
     sprite: Objects/Drinks/rumbottle.rsi
   - type: Icon
@@ -203,12 +152,6 @@
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
   components:
   - type: Drink   
-    max_volume: 10
-    spawn_on_finish: DrinkBottleTequila
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
   - type: Sprite
     sprite: Objects/Drinks/tequillabottle.rsi
   - type: Icon
@@ -221,12 +164,6 @@
   description: Sweet, sweet dryness~
   components:
   - type: Drink    
-    max_volume: 10
-    spawn_on_finish: DrinkBottleVermouth
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
   - type: Sprite
     sprite: Objects/Drinks/vermouthbottle.rsi
   - type: Icon
@@ -238,13 +175,12 @@
   name: Vodka bottle
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
   components:
-  - type: Drink   
-    max_volume: 10
-    spawn_on_finish: DrinkBottleVodka
+  - type: Solution
+    maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
+      - ReagentId: chem.Vodka
+        Quantity: 80
   - type: Sprite
     sprite: Objects/Drinks/vodkabottle.rsi
   - type: Icon
@@ -256,13 +192,12 @@
   name: Uncle Git's special reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
   components:
-  - type: Drink  
-    max_volume: 10
-    spawn_on_finish: DrinkBottleWhiskey
+  - type: Solution
+    maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
+      - ReagentId: chem.Whiskey
+        Quantity: 80
   - type: Sprite
     sprite: Objects/Drinks/whiskeybottle.rsi
   - type: Icon
@@ -274,13 +209,12 @@
   name: Doublebearded bearded special wine bottle
   description: A faint aura of unease and asspainery surrounds the bottle.
   components:
-  - type: Drink  
-    max_volume: 10
-    spawn_on_finish: DrinkBottleWine
+  - type: Solution
+    maxVol: 80
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 10
+      - ReagentId: chem.Wine
+        Quantity: 80
   - type: Sprite
     sprite: Objects/Drinks/winebottle.rsi
   - type: Icon

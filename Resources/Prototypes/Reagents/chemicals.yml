@@ -2,6 +2,7 @@
   id: chem.Nutriment
   name: Nutriment
   desc: Generic nutrition
+  color: "#664330"
   metabolism:
     - !type:DefaultFood
       rate: 1
@@ -10,11 +11,13 @@
   id: chem.H2SO4
   name: Sulfuric Acid
   desc: A highly corrosive, oily, colorless liquid.
+  color: "#BF8C00"
 
 - type: reagent
   id: chem.H2O
   name: Water
   desc: A tasty colorless liquid.
+  color: "#808080"
   metabolism:
     - !type:DefaultDrink
       rate: 1
@@ -29,6 +32,7 @@
   id: chem.Plasma
   name: Plasma
   desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
+  color: "#500064"
 
 - type: reagent
   id: chem.Ethanol

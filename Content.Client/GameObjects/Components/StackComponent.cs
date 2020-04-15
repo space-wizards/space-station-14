@@ -1,5 +1,4 @@
-﻿using Content.Client.UserInterface;
-using Content.Client.UserInterface.Stylesheets;
+﻿using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface;
@@ -14,21 +13,19 @@ namespace Content.Client.GameObjects.Components
     [RegisterComponent]
     public class StackComponent : SharedStackComponent, IItemStatus
     {
-        [ViewVariables] public int Count { get; private set; }
-        [ViewVariables] public int MaxCount { get; private set; }
-
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
 
         public Control MakeControl() => new StatusControl(this);
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override int Count
         {
-            if (!(curState is StackComponentState cast))
-                return;
+            get => base.Count;
+            set
+            {
+                base.Count = value;
 
-            Count = cast.Count;
-            MaxCount = cast.MaxCount;
-            _uiUpdateNeeded = true;
+                _uiUpdateNeeded = true;
+            }
         }
 
         private sealed class StatusControl : Control

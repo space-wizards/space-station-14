@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -18,11 +19,11 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         [Serializable, NetSerializable]
         protected sealed class InjectorComponentState : ComponentState
         {
-            public int CurrentVolume { get; }
-            public int TotalVolume { get; }
+            public ReagentUnit CurrentVolume { get; }
+            public ReagentUnit TotalVolume { get; }
             public InjectorToggleMode CurrentMode { get; }
 
-            public InjectorComponentState(int currentVolume, int totalVolume, InjectorToggleMode currentMode) : base(ContentNetIDs.REAGENT_INJECTOR)
+            public InjectorComponentState(ReagentUnit currentVolume, ReagentUnit totalVolume, InjectorToggleMode currentMode) : base(ContentNetIDs.REAGENT_INJECTOR)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;

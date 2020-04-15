@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Interfaces.GameTicking
@@ -26,6 +27,10 @@ namespace Content.Server.Interfaces.GameTicking
         void MakeObserve(IPlayerSession player);
         void MakeJoinGame(IPlayerSession player);
         void ToggleReady(IPlayerSession player, bool ready);
+
+        GridCoordinates GetLateJoinSpawnPoint();
+        GridCoordinates GetJobSpawnPoint(string jobId);
+        GridCoordinates GetObserverSpawnPoint();
 
         // GameRule system.
         T AddGameRule<T>() where T : GameRule, new();

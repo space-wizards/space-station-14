@@ -176,3 +176,8 @@
     - type: ComputerVisualizer2D
       key: generic_key
       screen: comm
+  - type: CommunicationsConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.CommunicationsConsoleUiKey.Key
+      type: CommunicationsConsoleBoundUserInterface

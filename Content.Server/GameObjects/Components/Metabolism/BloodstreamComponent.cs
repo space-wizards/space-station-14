@@ -34,29 +34,24 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// Max volume of internal solution storage
         /// </summary>
         [ViewVariables]
-        private int _initialMaxVolume;
+        private ReagentUnit _initialMaxVolume;
 
         /// <summary>
         /// Empty volume of internal solution
         /// </summary>
-        public int EmptyVolume => _internalSolution.EmptyVolume;
+        public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _initialMaxVolume, "maxVolume", 250);
+            serializer.DataField(ref _initialMaxVolume, "maxVolume", ReagentUnit.New(250));
         }
 
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
-
-            //Create and setup internal solution storage
-            _internalSolution = new SolutionComponent();
-            _internalSolution.InitializeFromPrototype();
-            _internalSolution.Init();
+            base.Startup();
+            _internalSolution = Owner.GetComponent<SolutionComponent>();
             _internalSolution.MaxVolume = _initialMaxVolume;
-            _internalSolution.Owner = Owner; //Manually set owner to avoid crash when VV'ing this
         }
 
         /// <summary>
@@ -98,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 //Run metabolism code for each reagent
                 foreach (var metabolizable in proto.Metabolism)
                 {
-                    int reagentDelta = metabolizable.Metabolize(Owner, reagent.ReagentId, tickTime);
+                    var reagentDelta = metabolizable.Metabolize(Owner, reagent.ReagentId, tickTime);
                     _internalSolution.TryRemoveReagent(reagent.ReagentId, reagentDelta);
                 }
             }

@@ -75,7 +75,13 @@ namespace Content.Server.GameObjects
         {
             if (damageType == DamageType.Total)
             {
-                throw new ArgumentException("Cannot take damage for DamageType.Total");
+                foreach (DamageType e in Enum.GetValues(typeof(DamageType)))
+                {
+                    if (e == damageType) continue;
+                    TakeDamage(e, amount, source, sourceMob);
+                }
+
+                return;
             }
             InitializeDamageType(damageType);
 

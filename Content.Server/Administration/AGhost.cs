@@ -1,4 +1,5 @@
-﻿using Content.Server.Players;
+﻿using Content.Server.GameObjects.Components.Observer;
+using Content.Server.Players;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -30,10 +31,14 @@ namespace Content.Server.Administration
             }
             else
             {
+                var canReturn = mind.CurrentEntity != null && !mind.CurrentEntity.HasComponent<GhostComponent>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var ghost = entityManager.SpawnEntity("AdminObserver", player.AttachedEntity.Transform.GridPosition);
-
-                mind.Visit(ghost);
+                if(canReturn)
+                    mind.Visit(ghost);
+                else
+                    mind.TransferTo(ghost);
+                ghost.GetComponent<GhostComponent>().CanReturnToBody = canReturn;
             }
         }
     }

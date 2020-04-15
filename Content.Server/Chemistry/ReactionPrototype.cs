@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
@@ -16,7 +17,7 @@ namespace Content.Server.Chemistry
         private string _id;
         private string _name;
         private Dictionary<string, ReactantPrototype> _reactants;
-        private Dictionary<string, uint> _products;
+        private Dictionary<string, ReagentUnit> _products;
         private List<IReactionEffect> _effects;
 
         public string ID => _id;
@@ -28,7 +29,7 @@ namespace Content.Server.Chemistry
         /// <summary>
         /// Reagents created when the reaction occurs.
         /// </summary>
-        public IReadOnlyDictionary<string, uint> Products => _products;
+        public IReadOnlyDictionary<string, ReagentUnit> Products => _products;
         /// <summary>
         /// Effects to be triggered when the reaction occurs.
         /// </summary>
@@ -41,7 +42,7 @@ namespace Content.Server.Chemistry
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _reactants, "reactants", new Dictionary<string, ReactantPrototype>());
-            serializer.DataField(ref _products, "products", new Dictionary<string, uint>());
+            serializer.DataField(ref _products, "products", new Dictionary<string, ReagentUnit>());
             serializer.DataField(ref _effects, "effects", new List<IReactionEffect>());
         }
     }
@@ -51,13 +52,13 @@ namespace Content.Server.Chemistry
     /// </summary>
     public class ReactantPrototype : IExposeData
     {
-        private int _amount;
+        private ReagentUnit _amount;
         private bool _catalyst;
 
         /// <summary>
         /// Minimum amount of the reactant needed for the reaction to occur.
         /// </summary>
-        public int Amount => _amount;
+        public ReagentUnit Amount => _amount;
         /// <summary>
         /// Whether or not the reactant is a catalyst. Catalysts aren't removed when a reaction occurs.
         /// </summary>
@@ -65,7 +66,7 @@ namespace Content.Server.Chemistry
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref _amount, "amount", 1);
+            serializer.DataField(ref _amount, "amount", ReagentUnit.New(1));
             serializer.DataField(ref _catalyst, "catalyst", false);
         }
     }

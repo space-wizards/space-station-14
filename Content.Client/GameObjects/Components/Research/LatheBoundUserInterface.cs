@@ -17,9 +17,9 @@ namespace Content.Client.GameObjects.Components.Research
         private IPrototypeManager _prototypeManager;
 #pragma warning restore
         [ViewVariables]
-        private LatheMenu menu;
+        private LatheMenu _menu;
         [ViewVariables]
-        private LatheQueueMenu queueMenu;
+        private LatheQueueMenu _queueMenu;
 
         public MaterialStorageComponent Storage { get; private set; }
         public SharedLatheComponent Lathe { get; private set; }
@@ -48,30 +48,30 @@ namespace Content.Client.GameObjects.Components.Research
             Lathe = lathe;
             Database = database;
 
-            menu = new LatheMenu(this);
-            queueMenu = new LatheQueueMenu { Owner = this };
+            _menu = new LatheMenu(this);
+            _queueMenu = new LatheQueueMenu { Owner = this };
 
-            menu.OnClose += Close;
+            _menu.OnClose += Close;
 
-            menu.Populate();
-            menu.PopulateMaterials();
+            _menu.Populate();
+            _menu.PopulateMaterials();
 
-            menu.QueueButton.OnPressed += (args) => { queueMenu.OpenCentered(); };
+            _menu.QueueButton.OnPressed += (args) => { _queueMenu.OpenCentered(); };
 
-            menu.ServerConnectButton.OnPressed += (args) =>
+            _menu.ServerConnectButton.OnPressed += (args) =>
             {
                 SendMessage(new SharedLatheComponent.LatheServerSelectionMessage());
             };
 
-            menu.ServerSyncButton.OnPressed += (args) =>
+            _menu.ServerSyncButton.OnPressed += (args) =>
             {
                 SendMessage(new SharedLatheComponent.LatheServerSyncMessage());
             };
 
-            storage.OnMaterialStorageChanged += menu.PopulateDisabled;
-            storage.OnMaterialStorageChanged += menu.PopulateMaterials;
+            storage.OnMaterialStorageChanged += _menu.PopulateDisabled;
+            storage.OnMaterialStorageChanged += _menu.PopulateMaterials;
 
-            menu.OpenCentered();
+            _menu.OpenCentered();
         }
 
         public void Queue(LatheRecipePrototype recipe, int quantity = 1)
@@ -85,10 +85,10 @@ namespace Content.Client.GameObjects.Components.Research
             {
                 case SharedLatheComponent.LatheProducingRecipeMessage msg:
                     if (!_prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe)) break;
-                    queueMenu?.SetInfo(recipe);
+                    _queueMenu?.SetInfo(recipe);
                     break;
                 case SharedLatheComponent.LatheStoppedProducingRecipeMessage _:
-                    queueMenu?.ClearInfo();
+                    _queueMenu?.ClearInfo();
                     break;
                 case SharedLatheComponent.LatheFullQueueMessage msg:
                     _queuedRecipes.Clear();
@@ -97,7 +97,7 @@ namespace Content.Client.GameObjects.Components.Research
                         if (!_prototypeManager.TryIndex(id, out LatheRecipePrototype recipePrototype)) break;
                         _queuedRecipes.Enqueue(recipePrototype);
                     }
-                    queueMenu?.PopulateList();
+                    _queueMenu?.PopulateList();
                     break;
             }
         }
@@ -106,8 +106,8 @@ namespace Content.Client.GameObjects.Components.Research
         {
             base.Dispose(disposing);
             if (!disposing) return;
-            menu?.Dispose();
-            queueMenu?.Dispose();
+            _menu?.Dispose();
+            _queueMenu?.Dispose();
         }
     }
 }

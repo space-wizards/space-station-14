@@ -6,93 +6,37 @@
   id: DrinkBase
   abstract: true
   components:
+  - type: Solution
+    maxVol: 50
+  - type: Pourable
+    transferAmount: 5
   - type: Drink  
-    despawn_empty: true
+    despawn_empty: false
   - type: Sound
   - type: Sprite
     state: icon
-    netsync: false
   - type: Icon
     state: icon
 
-# Drinks below here
+# Transformable container - normal glass
 - type: entity
+  name: Drinking glass
   parent: DrinkBase
-  id: DrinkAbsintheglass
-  name: Absinthe glass
-  description: A anise-flavoured spirit derived from botanicals.
+  id: DrinkGlass
   components:
-  - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
-    sprite: Objects/Drinks/absintheglass.rsi
+    sprite: Objects/Drinks/glass_clear.rsi
   - type: Icon
-    sprite: Objects/Drinks/absintheglass.rsi
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkAcidspitGlass
-  name: Acidspit glass
-  description: A drink for the daring, can be deadly if incorrectly prepared!
-  components:
-  - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
-  - type: Sprite
-    sprite: Objects/Drinks/acidspitglass.rsi
-  - type: Icon
-    sprite: Objects/Drinks/acidspitglass.rsi
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkAlco-blue
-  name: Miss Blue Curacao
-  description: A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic.
-  components:
-  - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
-    spawn_on_finish: TrashAlcoClear
-  - type: Sprite
-    sprite: Objects/Drinks/alco-blue.rsi
-  - type: Icon
-    sprite: Objects/Drinks/alco-blue.rsi
-
-#- type: entity
-#  parent: DrinkBase
-#  id: DrinkAlco-red
-#  name: Alco-red
-#  description: ''
-#  components:
-#  - type: Drink#    
-#    contents:
-#    - water: 1
-#    spawn_on_finish: TrashAlcoClear
-#  - type: Sprite
-#    sprite: Objects/Drinks/alco-red.rsi
-#  - type: Icon
-#    sprite: Objects/Drinks/alco-red.rsi
-#
-#- type: entity
-#  parent: DrinkBase
-#  id: DrinkAlco-white
-#  name: Alco-white
-#  description: ''
-#  components:
-#  - type: Drink#    
-#    contents:
-#    - water: 1
-#  - type: Sprite
-#    sprite: Objects/Drinks/alco-white.rsi
-#  - type: Icon
-#    sprite: Objects/Drinks/alco-white.rsi
+    sprite: Objects/Drinks/glass_clear.rsi
+  - type: Solution
+    fillingState: glass
+    maxVol: 50
+    caps: 16
+  - type: Drink
+    despawn_empty: false
+  - type: Pourable
+    transferAmount: 5
+  - type: TransformableContainer
 
 - type: entity
   parent: DrinkBase
@@ -100,79 +44,16 @@
   name: Ale
   description: A dark alchoholic beverage made by malted barley and yeast.
   components:
-  - type: Drink    
+  - type: Solution
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Ale
+        Quantity: 20    
   - type: Sprite
     sprite: Objects/Drinks/aleglass.rsi
   - type: Icon
     sprite: Objects/Drinks/aleglass.rsi
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkAlliescocktail
-  name: Allies cocktail
-  description: A drink made from your allies, not as sweet as when made from your enemies.
-  components:
-  - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
-  - type: Sprite
-    sprite: Objects/Drinks/alliescocktail.rsi
-  - type: Icon
-    sprite: Objects/Drinks/alliescocktail.rsi
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkAloe
-  name: Aloe
-  description: So very, very, very good.
-  components:
-  - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
-  - type: Sprite
-    sprite: Objects/Drinks/aloe.rsi
-  - type: Icon
-    sprite: Objects/Drinks/aloe.rsi
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkAmasecglass
-  name: Amasec glass
-  description: Official drink of the Gun Club!
-  components:
-  - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
-  - type: Sprite
-    sprite: Objects/Drinks/amasecglass.rsi
-  - type: Icon
-    sprite: Objects/Drinks/amasecglass.rsi
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkAndalusia
-  name: Andalusia
-  description: A nice, strangely named drink.
-  components:
-  - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
-  - type: Sprite
-    sprite: Objects/Drinks/andalusia.rsi
-  - type: Icon
-    sprite: Objects/Drinks/andalusia.rsi
 
 - type: entity
   parent: DrinkBase
@@ -180,11 +61,13 @@
   name: Anti-freeze
   description: Ultimate refreshment.
   components:
-  - type: Drink    
+  - type: Solution
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Antifreeze
+        Quantity: 20
+  - type: Drink    
   - type: Sprite
     sprite: Objects/Drinks/antifreeze.rsi
   - type: Icon
@@ -196,31 +79,17 @@
   name: Atomic bomb glass
   description: Nuclear proliferation never tasted so good.
   components:
-  - type: Drink    
+  - type: Solution
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.AtomicBomb
+        Quantity: 20
+  - type: Drink    
   - type: Sprite
     sprite: Objects/Drinks/atomicbombglass.rsi
   - type: Icon
     sprite: Objects/Drinks/atomicbombglass.rsi
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkBarefootAndPregnant
-  name: Barefoot
-  description: Barefoot and pregnant
-  components:
-  - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
-  - type: Sprite
-    sprite: Objects/Drinks/b&p.rsi
-  - type: Icon
-    sprite: Objects/Drinks/b&p.rsi
 
 - type: entity
   parent: DrinkBase
@@ -228,47 +97,17 @@
   name: B-52 glass
   description: Coffee, Irish Cream, and cognac. You will get bombed.
   components:
-  - type: Drink    
+  - type: Solution
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.B52
+        Quantity: 20  
+  - type: Drink    
   - type: Sprite
     sprite: Objects/Drinks/b52glass.rsi
   - type: Icon
     sprite: Objects/Drinks/b52glass.rsi
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkBahamaMama
-  name: Bahama mama
-  description: Tropical cocktail.
-  components:
-  - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
-  - type: Sprite
-    sprite: Objects/Drinks/bahama_mama.rsi
-  - type: Icon
-    sprite: Objects/Drinks/bahama_mama.rsi
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkBananaJuice
-  name: Banana juice
-  description: The raw essence of a banana.
-  components:
-  - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
-  - type: Sprite
-    sprite: Objects/Drinks/banana.rsi
-  - type: Icon
-    sprite: Objects/Drinks/banana.rsi
 
 - type: entity
   parent: DrinkBase
@@ -277,10 +116,6 @@
   description: A drink from Clown Heaven.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/bananahonkglass.rsi
   - type: Icon
@@ -307,10 +142,6 @@
   description: Deny drinking this and prepare for THE LAW.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/beepskysmashglass.rsi
   - type: Icon
@@ -322,11 +153,12 @@
   name: Beer  # Beer it is. Coffee. Beer? COFF-EE? BE-ER? C-O... B-E
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Beer
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/beer.rsi
   - type: Icon
@@ -338,11 +170,12 @@
   name: Beer glass
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Beer
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/beerglass.rsi
   - type: Icon
@@ -355,10 +188,6 @@
   description: A delicious blend of several different kinds of berries.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/berryjuice.rsi
   - type: Icon
@@ -385,10 +214,6 @@
   description: For the lactose-intolerant. Still as classy as a White Russian.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/blackrussianglass.rsi
   - type: Icon
@@ -401,10 +226,6 @@
   description: A strange yet pleasurable mixture made of vodka, tomato and lime juice. Tastes like liquid murder
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/bloodymaryglass.rsi
   - type: Icon
@@ -417,10 +238,6 @@
   description: Ewww...
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/booger.rsi
   - type: Icon
@@ -433,10 +250,6 @@
   description: It's just as effective as Dutch-Courage!
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/bravebullglass.rsi
   - type: Icon
@@ -463,10 +276,6 @@
   description: It's not what it sounds like...
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/brownstar.rsi
   - type: Icon
@@ -479,10 +288,6 @@
   description: A nice, strong and tasty beverage while you are reading.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/cafe_latte.rsi
   - type: Icon
@@ -495,10 +300,6 @@
   description: A handled glass pitcher.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/carafe.rsi
     state: icon-10
@@ -517,10 +318,6 @@
   description: Has a uniquely sweet flavour of concentrated carrots.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/carrotjuice.rsi
   - type: Icon
@@ -533,10 +330,6 @@
   description: You take a tiny sip and feel a burning sensation...
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/changelingsting.rsi
   - type: Icon
@@ -549,10 +342,6 @@
   description: A heated drink consisting melted chocolate and heated milk.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/chocolateglass.rsi
   - type: Icon
@@ -564,11 +353,12 @@
   name: Coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Coffee
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/coffee.rsi
   - type: Icon
@@ -580,11 +370,12 @@
   name: Cognac glass
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Cognac
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/cognacglass.rsi
   - type: Icon
@@ -596,11 +387,12 @@
   name: Space cola bottle
   description: Cola. in space
   components:
-  - type: Drink
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Cola
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/colabottle.rsi
   - type: Icon
@@ -612,11 +404,12 @@
   name: Cream
   description: Dairy product composed of the higher-fat layer skimmed from the top of milk before homogenization.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Cream
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/cream.rsi
   - type: Icon
@@ -628,11 +421,12 @@
   name: Cuba libre glass
   description: Rum, mixed with cola. Viva la revolucion.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.CubaLibre
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/cubalibreglass.rsi
   - type: Icon
@@ -645,10 +439,6 @@
   description: Exotically blue, fruity drink, distilled from oranges.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/curacaoglass.rsi
   - type: Icon
@@ -661,10 +451,6 @@
   description: AHHHH!!!!  # AAHHHHHH
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/demonsblood.rsi
   - type: Icon
@@ -677,10 +463,6 @@
   description: A metal flask with a leather band and golden badge belonging to the inspector.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/detflask.rsi
   - type: Icon
@@ -693,10 +475,6 @@
   description: Creepy time!
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/devilskiss.rsi
   - type: Icon
@@ -709,10 +487,6 @@
   description: A gulp a day keeps the MediBot away. That's probably for the best.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/doctorsdelightglass.rsi
   - type: Icon
@@ -725,10 +499,6 @@
   description: Only for the experienced. You think you see sand floating in the glass.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/driestmartiniglass.rsi
   - type: Icon
@@ -741,10 +511,6 @@
   description: A delicious blend of 42 different flavours
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/dr_gibb.rsi
   - type: Icon
@@ -757,10 +523,6 @@
   description: A delicious blend of 42 different flavours
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/dr_gibb_glass.rsi
   - type: Icon
@@ -773,10 +535,6 @@
   description: A relatively sweet and fruity 46 proof liquor.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/emeraldglass.rsi
   - type: Icon
@@ -789,10 +547,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/energy_drink.rsi
   - type: Icon
@@ -805,10 +559,6 @@
   description: The surprise is, it's green!
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/erikasurprise.rsi
   - type: Icon
@@ -821,10 +571,6 @@
   description: A metal flask belonging to the captain
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/flask.rsi
   - type: Icon
@@ -837,10 +583,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/flask_old.rsi
   - type: Icon
@@ -853,10 +595,6 @@
   description: Whoah, this stuff looks volatile!
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/gargleblasterglass.rsi
   - type: Icon
@@ -869,10 +607,6 @@
   description: Refreshingly lemony, deliciously dry.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/ginfizzglass.rsi
   - type: Icon
@@ -885,10 +619,6 @@
   description: An all time classic, mild cocktail.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/gintonicglass.rsi
   - type: Icon
@@ -901,10 +631,6 @@
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/ginvodkaglass.rsi
   - type: Icon
@@ -917,10 +643,6 @@
   description: This appears to be beer mixed with milk. Disgusting.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/glass_brown.rsi
   - type: Icon
@@ -933,10 +655,6 @@
   description: Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/glass_brown2.rsi
   - type: Icon
@@ -949,10 +667,6 @@
   description: You've really hit rock bottom now... your liver packed its bags and left last night.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/glass_clear.rsi
   - type: Icon
@@ -965,10 +679,6 @@
   description: The sweet-sour juice of limes.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/glass_green.rsi
   - type: Icon
@@ -981,10 +691,6 @@
   description: Liquid extract of the orange tree fruit, produced by squeezing or reaming oranges.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/glass_orange.rsi
   - type: Icon
@@ -997,10 +703,6 @@
   description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/glass_red.rsi
   - type: Icon
@@ -1012,11 +714,12 @@
   name: Milk
   description: An opaque white liquid produced by the mammary glands of mammals.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Milk
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/glass_white.rsi
   - type: Icon
@@ -1030,10 +733,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/glass_yellow.rsi
   - type: Icon
@@ -1046,10 +745,6 @@
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/goldschlagerglass.rsi
   - type: Icon
@@ -1062,10 +757,6 @@
   description: The juice is often sold in stores or fermented and made into wine, brandy, or vinegar.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/grapejuice.rsi
   - type: Icon
@@ -1078,10 +769,6 @@
   description: Sweetened drink with a grape flavor and a deep purple color.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/grapesoda.rsi
   - type: Icon
@@ -1094,10 +781,6 @@
   description: Sweet and tangy, a bar syrup used to add color or flavor to drinks.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/grenadinebottle.rsi
   - type: Icon
@@ -1110,10 +793,6 @@
   description: Made in the modern day with proper pomegranate substitute. Who uses real fruit, anyways?
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/grenadineglass.rsi
   - type: Icon
@@ -1126,10 +805,6 @@
   description: Watered-down rum, pirate approved!
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/grogglass.rsi
   - type: Icon
@@ -1142,10 +817,6 @@
   description: Sweetened drink with a grape flavor and a deep purple color.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/gsodaglass.rsi
   - type: Icon
@@ -1158,10 +829,6 @@
   description: The noodles are boiled, the flavors are artificial, just like being back in school.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/hell.rsi
   - type: Icon
@@ -1174,10 +841,6 @@
   description: You just don't get it maaaan.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/hippiesdelightglass.rsi
   - type: Icon
@@ -1190,10 +853,6 @@
   description: A heated drink consisting melted chocolate and heated milk.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/hot_coco.rsi
   - type: Icon
@@ -1205,11 +864,12 @@
   name: Coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Coffee
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/hot_coffee.rsi
   - type: Icon
@@ -1222,10 +882,6 @@
   description: Coffee and ice, refreshing and cool.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/icedcoffeeglass.rsi
   - type: Icon
@@ -1238,10 +894,6 @@
   description: The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/icedteaglass.rsi
   - type: Icon
@@ -1254,10 +906,6 @@
   description: A beer which is so cold the air around it freezes.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/iced_beerglass.rsi
   - type: Icon
@@ -1269,11 +917,12 @@
   name: Ice glass
   description: Water frozen into a solid state.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 1
+      - ReagentId: chem.Ice
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/iceglass.rsi
   - type: Icon
@@ -1285,11 +934,12 @@
   name: Irish car bomb
   description: Mmm, tastes like chocolate cake...
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.IrishCarBomb
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/irishcarbomb.rsi
   - type: Icon
@@ -1301,11 +951,12 @@
   name: Irish coffee glass
   description: Coffee, and alcohol. More fun than a Mimosa to drink in the morning.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.IrishCoffee
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/irishcoffeeglass.rsi
   - type: Icon
@@ -1317,11 +968,12 @@
   name: Irish cream glass
   description: Whiskey-imbued cream, what else would you expect from the Irish.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.IrishCream
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/irishcreamglass.rsi
   - type: Icon
@@ -1334,10 +986,6 @@
   description: The hipster's cup
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/jar.rsi
   - type: Icon
@@ -1350,10 +998,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/jar_metroid.rsi
   - type: Icon
@@ -1366,10 +1010,6 @@
   description: You can't really tell what this is.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/jar_what.rsi
   - type: Icon
@@ -1381,11 +1021,12 @@
   name: Kahlua glass
   description: A widely known, Mexican coffee-flavoured liqueur.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Kahlua
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/kahluaglass.rsi
   - type: Icon
@@ -1398,10 +1039,6 @@
   description: Long live the guy who everyone had mistaken for a girl. Baka!
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/kiraspecial.rsi
   - type: Icon
@@ -1414,10 +1051,6 @@
   description: Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/lemonade.rsi
   - type: Icon
@@ -1430,10 +1063,6 @@
   description: Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/lemonadeglass.rsi
   - type: Icon
@@ -1446,10 +1075,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/lemonglass.rsi
   - type: Icon
@@ -1462,10 +1087,6 @@
   description: Used to make lemonade, soft drinks, and cocktails.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/lemonjuice.rsi
   - type: Icon
@@ -1478,10 +1099,6 @@
   description: A tangy substance made of lime and lemon.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/lemonlime.rsi
   - type: Icon
@@ -1494,10 +1111,6 @@
   description: The sweet-sour juice of limes.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/limejuice.rsi
   - type: Icon
@@ -1510,10 +1123,6 @@
   description: A flask with a Lithium Atom symbol on it.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/lithiumflask.rsi
   - type: Icon
@@ -1526,10 +1135,6 @@
   description: The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/longislandicedteaglass.rsi
   - type: Icon
@@ -1542,10 +1147,6 @@
   description: The Detective's undercover drink of choice. He never could stomach gin...
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/manhattanglass.rsi
   - type: Icon
@@ -1557,11 +1158,12 @@
   name: The manly dorf glass
   description: Beer and Ale, brought together in a delicious mix. Intended for true men only.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.ManlyDorf
+        Quantity: 20   
   - type: Sprite
     sprite: Objects/Drinks/manlydorfglass.rsi
   - type: Icon
@@ -1574,10 +1176,6 @@
   description: On the rocks with salt on the rim. Arriba~!
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/margaritaglass.rsi
   - type: Icon
@@ -1590,10 +1188,6 @@
   description: Vodka with Gin. Not quite how 007 enjoyed it, but still delicious.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/martiniglass.rsi
   - type: Icon
@@ -1606,10 +1200,6 @@
   description: A Viking's drink, though a cheap one.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/meadglass.rsi
   - type: Icon
@@ -1621,11 +1211,12 @@
   name: Milk jug
   description: An opaque white liquid produced by the mammary glands of mammals.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Milk
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/milk.rsi
   - type: Icon
@@ -1638,10 +1229,6 @@
   description: Sweet, cold beverage that is usually made from milk
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/milkshake.rsi
   - type: Icon
@@ -1654,10 +1241,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/mojito.rsi
   - type: Icon
@@ -1670,10 +1253,6 @@
   description: A strong neurotoxin that puts the subject into a death-like state.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/neurotoxinglass.rsi
   - type: Icon
@@ -1686,10 +1265,6 @@
   description: Absolutely nothing.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/nothing.rsi
   - type: Icon
@@ -1702,10 +1277,6 @@
   description: Fortified dessert wine made from cabernet sauvignon, saperavi and other grapes.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/ntcahors.rsi
   - type: Icon
@@ -1718,10 +1289,6 @@
   description: Cola, cola never changes.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/nuka_colaglass.rsi
   - type: Icon
@@ -1734,10 +1301,6 @@
   description: Liquid extract of the orange tree fruit, produced by squeezing or reaming oranges.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/orangejuice.rsi
   - type: Icon
@@ -1750,10 +1313,6 @@
   description: Tequila with silver in it, a favorite of alcoholic women in the club scene.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/patronglass.rsi
   - type: Icon
@@ -1766,10 +1325,6 @@
   description: A tasty juice blended from various kinds of very deadly and toxic berries.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/poisonberryjuice.rsi
   - type: Icon
@@ -1782,10 +1337,6 @@
   description: A scientist's drink of choice, for pondering ways to blow up the station.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/proj_manhattanglass.rsi
   - type: Icon
@@ -1798,10 +1349,6 @@
   description: Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/pwineglass.rsi
   - type: Icon
@@ -1814,10 +1361,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/rag.rsi
   - type: Icon
@@ -1830,10 +1373,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/rag_lit.rsi
   - type: Icon
@@ -1846,10 +1385,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/rag_small.rsi
   - type: Icon
@@ -1862,10 +1397,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/rag_small_lit.rsi
   - type: Icon
@@ -1878,10 +1409,6 @@
   description: Just add 10ml water, self heats! A taste that reminds you of your school years.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/ramen.rsi
   - type: Icon
@@ -1894,10 +1421,6 @@
   description: The true Viking's drink! Even though it has a strange red color.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/red_meadglass.rsi
   - type: Icon
@@ -1910,10 +1433,6 @@
   description: The secret of the sanctuary of the Libarian...
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/rewriter.rsi
   - type: Icon
@@ -1926,10 +1445,6 @@
   description: Distilled alcoholic drink made from saltwater.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/rumglass.rsi
   - type: Icon
@@ -1942,10 +1457,6 @@
   description: A spicy Vodka! Might be a little hot for the little guys!
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/sbitenglass.rsi
   - type: Icon
@@ -1958,10 +1469,6 @@
   description: Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/screwdriverglass.rsi
   - type: Icon
@@ -1974,10 +1481,6 @@
   description: 'Comprised of: White soda, blue curacao, melon liquor.'
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/sdreamglass.rsi
   - type: Icon
@@ -1990,10 +1493,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/shake-blue.rsi
   - type: Icon
@@ -2007,10 +1506,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/shake-empty.rsi
   - type: Icon
@@ -2023,10 +1518,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/shake-meat.rsi
   - type: Icon
@@ -2039,10 +1530,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/shake-robo.rsi
   - type: Icon
@@ -2055,10 +1542,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/shake-white.rsi
   - type: Icon
@@ -2072,10 +1555,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/shaker.rsi
   - type: Icon
@@ -2088,10 +1567,6 @@
   description: A shiny metal flask. It appears to have a Greek symbol inscribed on it.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/shinyflask.rsi
   - type: Icon
@@ -2104,10 +1579,6 @@
   description: ''
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/shotglass.rsi
   - type: Icon
@@ -2120,10 +1591,6 @@
   description: A drink from Mime Heaven.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/silencerglass.rsi
   - type: Icon
@@ -2136,10 +1603,6 @@
   description: A blue-space beverage!
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/singulo.rsi
   - type: Icon
@@ -2152,10 +1615,6 @@
   description: A cold refreshment
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/snowwhite.rsi
   - type: Icon
@@ -2168,10 +1627,6 @@
   description: Water containing dissolved carbon dioxide gas.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/sodawater.rsi
   - type: Icon
@@ -2184,10 +1639,6 @@
   description: An opaque white liquid made from soybeans.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/soymilk.rsi
   - type: Icon
@@ -2200,10 +1651,6 @@
   description: A coffee drink made with espresso and steamed soy milk.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/soy_latte.rsi
   - type: Icon
@@ -2216,10 +1663,6 @@
   description: Tastes like a hull breach in your mouth.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/space-up_bottle.rsi
   - type: Icon
@@ -2232,10 +1675,6 @@
   description: Tastes like a hull breach in your mouth.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/space-up_glass.rsi
   - type: Icon
@@ -2248,10 +1687,6 @@
   description: Blows right through you like a space wind.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/space_mountain_wind_bottle.rsi
   - type: Icon
@@ -2264,10 +1699,6 @@
   description: Blows right through you like a space wind.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/space_mountain_wind_glass.rsi
   - type: Icon
@@ -2279,11 +1710,12 @@
   name: Syndicate bomb
   description: Tastes like terrorism!
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.SyndicateBomb
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/syndicatebomb.rsi
   - type: Icon
@@ -2295,11 +1727,12 @@
   name: Teacup
   description: A plain white porcelain teacup.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Tea
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/teacup.rsi
     state: icon-1
@@ -2317,11 +1750,12 @@
   name: Tea glass
   description: Tasty black tea. Contains caffeine.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Tea
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/teaglass.rsi
   - type: Icon
@@ -2333,11 +1767,12 @@
   name: Teapot  # Short and stout
   description: An elegant teapot. It simply oozes class.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Tea
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/teapot.rsi
   - type: Icon
@@ -2350,10 +1785,6 @@
   description: A strong and mildly flavoured, mexican produced spirit.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/tequillaglass.rsi
   - type: Icon
@@ -2366,10 +1797,6 @@
   description: Tequila and orange juice. Much like a Screwdriver, only Mexican~
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/tequillasunriseglass.rsi
   - type: Icon
@@ -2382,10 +1809,6 @@
   description: A potent mixture of caffeine and alcohol.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/thirteen_loko_glass.rsi
   - type: Icon
@@ -2398,10 +1821,6 @@
   description: Made for a woman, strong enough for a man.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/threemileislandglass.rsi
   - type: Icon
@@ -2414,10 +1833,6 @@
   description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/tomatojuice.rsi
   - type: Icon
@@ -2430,10 +1845,6 @@
   description: A carbonated soft drink in which quinine is dissolved.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/tonic.rsi
   - type: Icon
@@ -2446,10 +1857,6 @@
   description: This thing is ON FIRE! CALL THE DAMN SHUTTLE!"
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/toxinsspecialglass.rsi
   - type: Icon
@@ -2462,10 +1869,6 @@
   description: Keeping your drinks at the perfect temperature since 1892.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/vacuumflask.rsi
   - type: Icon
@@ -2478,10 +1881,6 @@
   description: Aromatized, fortified white wine flavored with various botanicals.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/vermouthglass.rsi
   - type: Icon
@@ -2494,10 +1893,6 @@
   description: For when a gin and tonic isn't russian enough.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/vodkatonicglass.rsi
   - type: Icon
@@ -2510,10 +1905,6 @@
   description: Stay hydrated
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/water.rsi
   - type: Icon
@@ -2526,10 +1917,6 @@
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/waterbottle.rsi
   - type: Icon
@@ -2542,10 +1929,6 @@
   description: Delicious juice made from watermelon.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/watermelon.rsi
   - type: Icon
@@ -2558,10 +1941,6 @@
   description: A paper water cup.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/water_cup.rsi
     state: icon-1
@@ -2579,11 +1958,12 @@
   name: Whiskey cola glass
   description: Whiskey, mixed with cola. Surprisingly refreshing.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.WhiskeyCola
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/whiskeycolaglass.rsi
   - type: Icon
@@ -2595,11 +1975,12 @@
   name: Special blend whiskey glass
   description: Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Whiskey
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/whiskeyglass.rsi
   - type: Icon
@@ -2612,10 +1993,6 @@
   description: For the more refined griffon.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/whiskeysodaglass.rsi
   - type: Icon
@@ -2628,10 +2005,6 @@
   description: For the more refined griffon.
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/whiskeysodaglass2.rsi
   - type: Icon
@@ -2644,10 +2017,6 @@
   description: That's just, like, your opinion, man...
   components:
   - type: Drink    
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
   - type: Sprite
     sprite: Objects/Drinks/whiterussianglass.rsi
   - type: Icon
@@ -2659,11 +2028,12 @@
   name: Wine glass
   description: An premium alchoholic beverage made from distilled grape juice.
   components:
-  - type: Drink    
+  - type: Solution    
+    maxVol: 20
     contents:
       reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+      - ReagentId: chem.Wine
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/wineglass.rsi
   - type: Icon

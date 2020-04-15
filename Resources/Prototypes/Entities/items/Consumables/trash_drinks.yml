@@ -10,13 +10,12 @@
     state: icon
   - type: Icon
     state: icon
+  - type: Solution
+    maxVol: 10
+  - type: Pourable
+    transferAmount: 5
   - type: Drink
     despawn_empty: false
-    max_volume: 10
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 0
 
 # Containers
 - type: entity
@@ -88,19 +87,6 @@
     sprite: Objects/TrashDrinks/ginbottle_empty.rsi
   - type: Icon
     sprite: Objects/TrashDrinks/ginbottle_empty.rsi
-
-# Couldn't think of a nice place to put this
-- type: entity
-  name: Empty glass
-  parent: DrinkBottleBase
-  id: DrinkEmptyGlass
-  components:
-  - type: Sprite
-    sprite: Objects/TrashDrinks/alebottle_empty.rsi
-  - type: Icon
-    sprite: Objects/TrashDrinks/alebottle_empty.rsi
-  - type: Solution
-    max_volume: 4
 
 - type: entity
   name: Goldschlager bottle
