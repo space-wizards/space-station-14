@@ -137,8 +137,8 @@ namespace Content.Shared
             #endregion
 
             public string GamemodeTitle;
-            //TODO: Change to a more detailed measurement of time.
-            public uint DurationInHours;
+            public TimeSpan RoundDuration;
+            
 
             public uint PlayerCount;
 
@@ -147,7 +147,11 @@ namespace Content.Shared
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 GamemodeTitle = buffer.ReadString();
-                DurationInHours = buffer.ReadUInt32();
+
+                var hours = buffer.ReadInt32();
+                var mins = buffer.ReadInt32();
+                var seconds = buffer.ReadInt32();
+                RoundDuration = new TimeSpan(hours, mins, seconds);
 
                 PlayerCount = buffer.ReadUInt32();
                 AllPlayersEndInfo = new List<RoundEndPlayerInfo>();
@@ -163,13 +167,16 @@ namespace Content.Shared
 
                     AllPlayersEndInfo.Add(readPlayerData);
                 }
-                
+
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
                 buffer.Write(GamemodeTitle);
-                buffer.Write(DurationInHours);
+                buffer.Write(RoundDuration.Hours);
+                buffer.Write(RoundDuration.Minutes);
+                buffer.Write(RoundDuration.Seconds);
+
 
                 buffer.Write(PlayerCount);
                 foreach(var playerEndInfo in AllPlayersEndInfo)

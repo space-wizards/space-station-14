@@ -13,6 +13,7 @@ using System.Linq;
 using System.Collections.Generic;
 using static Robust.Client.UserInterface.Controls.ItemList;
 using static Content.Shared.SharedGameTicker;
+using System;
 
 namespace Content.Client.UserInterface
 {
@@ -23,7 +24,7 @@ namespace Content.Client.UserInterface
         private TabContainer RoundEndWindowTabs { get; }
         protected override Vector2? CustomSize => (520, 580);
 
-        public RoundEndSummaryWindow(string gm, uint duration, List<RoundEndPlayerInfo> info )
+        public RoundEndSummaryWindow(string gm, TimeSpan roundTimeSpan, List<RoundEndPlayerInfo> info )
         {
 
             Title = Loc.GetString("Round End Summary");
@@ -55,7 +56,11 @@ namespace Content.Client.UserInterface
             gamemodeLabel.SetMarkup(Loc.GetString("Round of [color=white]{0}[/color] has ended.", gm));
             RoundEndSummaryTab.AddChild(gamemodeLabel);
 
-            //TODO: Implement showing the duration of the round.
+            //Duration
+            var roundTimeLabel = new RichTextLabel();
+            roundTimeLabel.SetMarkup(Loc.GetString("It lasted for [color=yellow]{0} hours, {1} minutes, and {2} seconds.",
+                roundTimeSpan.Hours,roundTimeSpan.Minutes,roundTimeSpan.Seconds));
+            RoundEndSummaryTab.AddChild(roundTimeLabel);
 
             //Initialize what will be the list of players display.
             var scrollContainer = new ScrollContainer();

@@ -206,8 +206,9 @@ namespace Content.Server.GameTicking
             var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
             roundEndMessage.GamemodeTitle = MakeGamePreset().ModeTitle;
 
-            //TODO:Grab actual timespan of round.
-            roundEndMessage.DurationInHours = 1337;
+            //Get the timespan of the round.
+            var gameTime = IoCManager.Resolve<IGameTiming>();
+            roundEndMessage.RoundDuration = gameTime.RealTime;
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndPlayerInfo>();

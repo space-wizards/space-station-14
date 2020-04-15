@@ -73,7 +73,7 @@ namespace Content.Client.GameTicking
         {
 
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.DurationInHours, message.AllPlayersEndInfo);
+            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundDuration, message.AllPlayersEndInfo);
 
         }
     }
