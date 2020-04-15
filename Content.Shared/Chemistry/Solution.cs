@@ -181,11 +181,13 @@ namespace Content.Shared.Chemistry
 
             newSolution = new Solution();
             var newTotalVolume = ReagentUnit.New(0M);
-            var ratio = (TotalVolume - quantity).Decimal() / TotalVolume.Decimal();
+            var remainingVolume = TotalVolume;
 
             for (var i = 0; i < _contents.Count; i++)
             {
                 var reagent = _contents[i];
+                var ratio = (remainingVolume - quantity).Decimal() / remainingVolume.Decimal();
+                remainingVolume -= reagent.Quantity;
 
                 var newQuantity = reagent.Quantity * ratio;
                 var splitQuantity = reagent.Quantity - newQuantity;
@@ -193,10 +195,11 @@ namespace Content.Shared.Chemistry
                 _contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
                 newSolution._contents.Add(new ReagentQuantity(reagent.ReagentId, splitQuantity));
                 newTotalVolume += splitQuantity;
+                quantity -= splitQuantity;
             }
 
-            TotalVolume = TotalVolume * ratio;
             newSolution.TotalVolume = newTotalVolume;
+            TotalVolume -= newTotalVolume;
 
             return newSolution;
         }
