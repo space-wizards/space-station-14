@@ -1451,15 +1451,15 @@
 
 - type: entity
   parent: FoodBase
-  id: FoodLasagna
-  name: Lasagna 
-  description: An Italian dish made of stacked pasta sheets.
+  id: Lasagna
+  name: Lasagna
+  description: A classic Italian dish.
   components:
   - type: Food
     contents:
       reagents:
       - ReagentId: chem.Nutriment
-        Quantity: 60
+        Quantity: 8
     spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/lasagna.rsi

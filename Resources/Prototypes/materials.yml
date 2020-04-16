@@ -17,3 +17,12 @@
   electricresistivity: 1.0e+13
   thermalconductivity: 0.9
   specificheat: 840
+
+- type: material
+  id: lasagnium
+  name: Lasagnium
+  icon: Objects/Materials/lasagnium.png
+  density: 9999
+  electricresistivity: 9.9e+99
+  thermalconductivity: 99
+  specificheat: 999

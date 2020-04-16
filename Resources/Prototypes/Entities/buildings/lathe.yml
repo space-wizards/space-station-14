@@ -49,12 +49,15 @@
       - MetalStack
       - GlassStack
       - Wirecutter
+      - GarfSuitHelmet
+      - GarfSuit
       - Screwdriver
       - Welder
       - Wrench
       - CableStack
       - Crowbar
       - Multitool
+
   - type: Appearance
     visuals:
     - type: AutolatheVisualizer2D

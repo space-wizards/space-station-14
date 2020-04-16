@@ -77,3 +77,27 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  name: Lasagnium
+  id: LasagniumStack
+  parent: MaterialStack
+  components:
+  - type: Material
+    materials:
+    - key: enum.MaterialKeys.Stack
+      mat: lasagnium
+  - type: Stack
+    stacktype: enum.StackType.Lasagnium
+  - type: Sprite
+    texture: Objects/Materials/lasagnium.png
+  - type: Icon
+    texture: Objects/Materials/lasagnium.png
+
+- type: entity
+  id: LasagniumSheet1
+  name: Lasagnium Sheet 1
+  parent: LasagniumStack
+  components:
+  - type: Stack
+    count: 1
