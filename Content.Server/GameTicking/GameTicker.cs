@@ -195,7 +195,7 @@ namespace Content.Server.GameTicking
                 SpawnPlayer(player, job, false);
             }
 
-            _roundStartTimeSpan = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+            _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();
         }
 
@@ -222,10 +222,7 @@ namespace Content.Server.GameTicking
             roundEndMessage.GamemodeTitle = MakeGamePreset().ModeTitle;
 
             //Get the timespan of the round.
-            roundEndMessage.RoundDuration = new TimeSpan(DateTime.Now.Hour,
-                DateTime.Now.Minute,
-                DateTime.Now.Second)
-                .Subtract(_roundStartTimeSpan);
+            roundEndMessage.RoundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
@@ -238,7 +235,7 @@ namespace Content.Server.GameTicking
                     {
                         PlayerOOCName = ply.Name,
                         PlayerICName = mindComponent.Mind.CurrentEntity.Name,
-                        Role = mindComponent.Mind.AllRoles.First() != null ? mindComponent.Mind.AllRoles.First().Name : Loc.GetString("Unkown"),
+                        Role = mindComponent.Mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unkown"),
                         Antag = false
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
