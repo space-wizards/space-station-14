@@ -650,6 +650,19 @@
 
 - type: entity
   parent: OuterclothingBase
+  id: OuterclothingGarfsuit
+  name: Garf Suit
+  description: 'An orange suit that smells faintly of lasagna'
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/garfsuit.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/garfsuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/garfsuit.rsi
+
+- type: entity
+  parent: OuterclothingBase
   id: OuterclothingGentlecoat
   name: Gentle coat
   description: ''
