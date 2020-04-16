@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Markers;
@@ -16,9 +17,11 @@ using Content.Shared;
 using Content.Shared.Chat;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
+using Robust.Server.Interfaces;
 using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
+using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -35,16 +38,18 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking
 {
     public partial class GameTicker : SharedGameTicker, IGameTicker
     {
+        private static readonly TimeSpan UpdateRestartDelay = TimeSpan.FromSeconds(20);
+
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
         private const string MapFile = "Maps/stationstation.yml";
@@ -66,6 +71,10 @@ namespace Content.Server.GameTicking
         [ViewVariables(VVAccess.ReadWrite)] private GridCoordinates _spawnPoint;
 
         [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar<bool>("game.lobbyenabled");
+
+        [ViewVariables] private bool _updateOnRoundEnd;
+        private CancellationTokenSource _updateShutdownCts;
+
 
         [ViewVariables]
         public GameRunLevel RunLevel
@@ -109,6 +118,16 @@ namespace Content.Server.GameTicking
             _initialized = true;
 
             JobControllerInit();
+
+            _watchdogApi.UpdateReceived += WatchdogApiOnUpdateReceived;
+        }
+
+        private void WatchdogApiOnUpdateReceived()
+        {
+            _chatManager.DispatchServerAnnouncement(Loc.GetString(
+                "Update has been received, server will automatically restart for update at the end of this round."));
+            _updateOnRoundEnd = true;
+            ServerEmptyUpdateRestartCheck();
         }
 
         public void Update(FrameEventArgs frameEventArgs)
@@ -122,6 +141,13 @@ namespace Content.Server.GameTicking
 
         public void RestartRound()
         {
+            if (_updateOnRoundEnd)
+            {
+                _baseServer.Shutdown(
+                    Loc.GetString("Server is shutting down for update and will automatically restart."));
+                return;
+            }
+
             Logger.InfoS("ticker", "Restarting round!");
 
             SendServerMessage("Restarting round...");
@@ -421,6 +447,11 @@ namespace Content.Server.GameTicking
 
             switch (args.NewStatus)
             {
+                case SessionStatus.Connecting:
+                    // Cancel shutdown update timer in progress.
+                    _updateShutdownCts?.Cancel();
+                    break;
+
                 case SessionStatus.Connected:
                 {
                     // Always make sure the client has player data. Mind gets assigned on spawn.
@@ -475,9 +506,41 @@ namespace Content.Server.GameTicking
                     if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
                     _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} left server!");
+                    ServerEmptyUpdateRestartCheck();
                     break;
                 }
             }
+        }
+
+        /// <summary>
+        ///     Checks whether there are still players on the server,
+        /// and if not starts a timer to automatically reboot the server if an update is available.
+        /// </summary>
+        private void ServerEmptyUpdateRestartCheck()
+        {
+            // Can't simple check the current connected player count since that doesn't update
+            // before PlayerStatusChanged gets fired.
+            // So in the disconnect handler we'd still see a single player otherwise.
+            var playersOnline = _playerManager.GetAllPlayers().Any(p => p.Status != SessionStatus.Disconnected);
+            if (playersOnline || !_updateOnRoundEnd)
+            {
+                // Still somebody online.
+                return;
+            }
+
+            if (_updateShutdownCts != null && !_updateShutdownCts.IsCancellationRequested)
+            {
+                // Do nothing because I guess we already have a timer running..?
+                return;
+            }
+
+            _updateShutdownCts = new CancellationTokenSource();
+
+            Timer.Spawn(UpdateRestartDelay, () =>
+            {
+                _baseServer.Shutdown(
+                    Loc.GetString("Server is shutting down for update and will automatically restart."));
+            }, _updateShutdownCts.Token);
         }
 
         private void SpawnPlayer(IPlayerSession session, string jobId = null, bool lateJoin = true)
@@ -623,6 +686,8 @@ The current game mode is [color=white]{0}[/color]", gameMode);
         [Dependency] private readonly ILocalizationManager _localization;
         [Dependency] private readonly IRobustRandom _robustRandom;
         [Dependency] private readonly IServerPreferencesManager _prefsManager;
+        [Dependency] private readonly IBaseServer _baseServer;
+        [Dependency] private readonly IWatchdogApi _watchdogApi;
 #pragma warning restore 649
     }
 
