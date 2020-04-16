@@ -53,6 +53,7 @@ namespace Content.Server.GameTicking
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
         private const string MapFile = "Maps/stationstation.yml";
+        private static TimeSpan _roundStartTimeSpan;
 
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
         [ViewVariables] private readonly List<ManifestEntry> _manifest = new List<ManifestEntry>();
@@ -110,6 +111,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
+            _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
 
             SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
 
@@ -219,6 +221,7 @@ namespace Content.Server.GameTicking
                 SpawnPlayer(player, job, false);
             }
 
+            _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();
         }
 
@@ -240,7 +243,33 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PostRound;
 
-            SendServerMessage("The round has ended!");
+            //Tell every client the round has ended.
+            var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
+            roundEndMessage.GamemodeTitle = MakeGamePreset().ModeTitle;
+
+            //Get the timespan of the round.
+            roundEndMessage.RoundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
+
+            //Generate a list of basic player info to display in the end round summary.
+            var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
+            foreach(var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
+            {
+                if(ply.AttachedEntity.TryGetComponent<MindComponent>(out var mindComponent)
+                    && mindComponent.HasMind)
+                {
+                    var playerEndRoundInfo = new RoundEndPlayerInfo()
+                    {
+                        PlayerOOCName = ply.Name,
+                        PlayerICName = mindComponent.Mind.CurrentEntity.Name,
+                        Role = mindComponent.Mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unkown"),
+                        Antag = false
+                    };
+                    listOfPlayerInfo.Add(playerEndRoundInfo);
+                }
+            }
+
+            roundEndMessage.AllPlayersEndInfo = listOfPlayerInfo;
+            _netManager.ServerSendToAll(roundEndMessage);
         }
 
         public void Respawn(IPlayerSession targetPlayer)
@@ -654,10 +683,12 @@ namespace Content.Server.GameTicking
 
         private string GetInfoText()
         {
-            var gameMode = MakeGamePreset().Description;
+            var gmTitle = MakeGamePreset().ModeTitle;
+            var desc = MakeGamePreset().Description;
             return _localization.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
-The current game mode is [color=white]{0}[/color]", gameMode);
+The current game mode is: [color=white]{0}[/color].
+[color=yellow]{1}[/color]", gmTitle, desc );
         }
 
         private void UpdateInfoText()
