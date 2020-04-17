@@ -18,6 +18,8 @@ namespace Content.Client.GameObjects.Components.Observer
         [ViewVariables(VVAccess.ReadOnly)]
         public bool CanReturnToBody { get; private set; } = true;
 
+        private bool _isAttached;
+
 #pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud;
         [Dependency] private readonly IPlayerManager _playerManager;
@@ -29,6 +31,12 @@ namespace Content.Client.GameObjects.Components.Observer
             base.OnRemove();
 
             _gui?.Dispose();
+
+            // PlayerDetachedMsg might not fire due to deletion order so...
+            if (_isAttached)
+            {
+                SetGhostVisibility(false);
+            }
         }
 
 
@@ -68,12 +76,14 @@ namespace Content.Client.GameObjects.Components.Observer
 
                     _gameHud.HandsContainer.AddChild(_gui);
                     SetGhostVisibility(true);
+                    _isAttached = true;
 
                     break;
 
                 case PlayerDetachedMsg _:
                     _gui.Parent?.RemoveChild(_gui);
                     SetGhostVisibility(false);
+                    _isAttached = false;
                     break;
             }
         }
