@@ -6,6 +6,7 @@ using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -641,6 +642,7 @@ namespace Content.Server.GameTicking
 
             var mob = _spawnObserverMob();
             mob.Name = name;
+            mob.GetComponent<GhostComponent>().CanReturnToBody = false;
             data.Mind.TransferTo(mob);
         }
 
