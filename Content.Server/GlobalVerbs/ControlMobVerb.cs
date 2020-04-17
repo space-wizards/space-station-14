@@ -1,6 +1,7 @@
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Players;
 using Content.Shared.GameObjects;
 using Robust.Server.Console;
@@ -41,9 +42,13 @@ namespace Content.Server.GlobalVerbs
         {
             var userMind = user.GetComponent<IActorComponent>().playerSession.ContentData().Mind;
             var targetMind = target.GetComponent<MindComponent>();
+            var oldEntity = userMind.CurrentEntity;
 
             targetMind.Mind?.TransferTo(null);
             userMind.TransferTo(target);
+
+            if(oldEntity.HasComponent<GhostComponent>())
+                oldEntity.Delete();
         }
     }
 }

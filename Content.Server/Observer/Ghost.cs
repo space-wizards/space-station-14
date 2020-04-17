@@ -10,6 +10,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Timers;
 
 namespace Content.Server.Observer
 {
@@ -37,6 +38,7 @@ namespace Content.Server.Observer
             if (mind.VisitingEntity != null)
             {
                 mind.UnVisit();
+                mind.VisitingEntity.Delete();
             }
 
             var position = player.AttachedEntity?.Transform.GridPosition ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
