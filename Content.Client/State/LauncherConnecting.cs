@@ -21,10 +21,16 @@ namespace Content.Client.State
         [Dependency] private readonly IStylesheetManager _stylesheetManager;
         [Dependency] private readonly IClientNetManager _clientNetManager;
         [Dependency] private readonly IGameController _gameController;
+        [Dependency] private readonly IBaseClient _baseClient;
 #pragma warning restore 649
 
         private Control _control;
         private Label _connectStatus;
+
+        private Control _connectingStatus;
+        private Control _connectFail;
+        private Label _connectFailReason;
+        private Control _disconnected;
 
         public override void Startup()
         {
@@ -37,11 +43,12 @@ namespace Content.Client.State
             back.SetPatchMargin(StyleBox.Margin.All, 10);
 
             Button exitButton;
-            Label connectFailReason;
-            Control connectingStatus;
+            Button reconnectButton;
+            Button retryButton;
 
             var address = _gameController.LaunchState.Ss14Address ?? _gameController.LaunchState.ConnectAddress;
 
+            VBoxContainer disconnected;
             _control = new Control
             {
                 Stylesheet = _stylesheetManager.SheetSpace,
@@ -101,9 +108,10 @@ namespace Content.Client.State
                                         {
                                             new Control
                                             {
+                                                SizeFlagsVertical = Control.SizeFlags.FillExpand,
                                                 Children =
                                                 {
-                                                    (connectingStatus = new VBoxContainer
+                                                    (_connectingStatus = new VBoxContainer
                                                     {
                                                         SeparationOverride = 0,
                                                         Children =
@@ -121,9 +129,52 @@ namespace Content.Client.State
                                                             }),
                                                         }
                                                     }),
-                                                    (connectFailReason = new Label
+                                                    (_connectFail = new VBoxContainer
                                                     {
-                                                        Align = Label.AlignMode.Center
+                                                        Visible = false,
+                                                        SeparationOverride = 0,
+                                                        Children =
+                                                        {
+                                                            (_connectFailReason = new Label
+                                                            {
+                                                                Align = Label.AlignMode.Center
+                                                            }),
+
+                                                            (retryButton = new Button
+                                                            {
+                                                                Text = "Retry",
+                                                                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
+                                                                SizeFlagsVertical =
+                                                                    Control.SizeFlags.Expand |
+                                                                    Control.SizeFlags.ShrinkEnd
+                                                            })
+                                                        }
+                                                    }),
+
+                                                    (_disconnected = new VBoxContainer
+                                                    {
+                                                        SeparationOverride = 0,
+                                                        Children =
+                                                        {
+                                                            new Label
+                                                            {
+                                                                Text = "Disconnected from server:",
+                                                                Align = Label.AlignMode.Center
+                                                            },
+                                                            new Label
+                                                            {
+                                                                Text = _baseClient.LastDisconnectReason,
+                                                                Align = Label.AlignMode.Center
+                                                            },
+                                                            (reconnectButton = new Button
+                                                            {
+                                                                Text = "Reconnect",
+                                                                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
+                                                                SizeFlagsVertical =
+                                                                    Control.SizeFlags.Expand |
+                                                                    Control.SizeFlags.ShrinkEnd
+                                                            })
+                                                        }
                                                     })
                                                 }
                                             },
@@ -136,8 +187,6 @@ namespace Content.Client.State
                                                 Text = address,
                                                 StyleClasses = {StyleBase.StyleClassLabelSubText},
                                                 SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
-                                                SizeFlagsVertical =
-                                                    Control.SizeFlags.ShrinkEnd | Control.SizeFlags.Expand,
                                             }
                                         }
                                     },
@@ -197,14 +246,24 @@ namespace Content.Client.State
                 _gameController.Shutdown("Exit button pressed");
             };
 
+            void Retry(BaseButton.ButtonEventArgs args)
+            {
+                _baseClient.ConnectToServer(_gameController.LaunchState.ConnectEndpoint);
+                SetActivePage(Page.Connecting);
+            }
+
+            reconnectButton.OnPressed += Retry;
+            retryButton.OnPressed += Retry;
+
             _clientNetManager.ConnectFailed += (sender, args) =>
             {
-                connectFailReason.Text = Loc.GetString("Failed to connect to server:\n{0}", args.Reason);
-                connectingStatus.Visible = false;
-                connectFailReason.Visible = true;
+                _connectFailReason.Text = Loc.GetString("Failed to connect to server:\n{0}", args.Reason);
+                SetActivePage(Page.ConnectFailed);
             };
 
             _clientNetManager.ClientConnectStateChanged += ConnectStateChanged;
+
+            SetActivePage(Page.Connecting);
 
             ConnectStateChanged(_clientNetManager.ClientConnectState);
         }
@@ -213,7 +272,7 @@ namespace Content.Client.State
         {
             _connectStatus.Text = Loc.GetString(state switch
             {
-                ClientConnectionState.NotConnecting => "Not connecting?",
+                ClientConnectionState.NotConnecting => "You should not be seeing this",
                 ClientConnectionState.ResolvingHost => "Resolving server address...",
                 ClientConnectionState.EstablishingConnection => "Establishing initial connection...",
                 ClientConnectionState.Handshake => "Doing handshake...",
@@ -225,6 +284,25 @@ namespace Content.Client.State
         public override void Shutdown()
         {
             _control.Dispose();
+        }
+
+        public void SetDisconnected()
+        {
+            SetActivePage(Page.Disconnected);
+        }
+
+        private void SetActivePage(Page page)
+        {
+            _connectingStatus.Visible = page == Page.Connecting;
+            _connectFail.Visible = page == Page.ConnectFailed;
+            _disconnected.Visible = page == Page.Disconnected;
+        }
+
+        private enum Page
+        {
+            Connecting,
+            ConnectFailed,
+            Disconnected,
         }
     }
 }

@@ -232,14 +232,27 @@ namespace Content.Client
             {
                 if (args.NewLevel == ClientRunLevel.Initialize)
                 {
-                    _stateManager.RequestStateChange<MainScreen>();
+                    SwitchToDefaultState(args.OldLevel == ClientRunLevel.Connected ||
+                                         args.OldLevel == ClientRunLevel.InGame);
                 }
             };
 
+            SwitchToDefaultState();
+        }
+
+        private void SwitchToDefaultState(bool disconnected = false)
+        {
             // Fire off into state dependent on launcher or not.
+
             if (_gameController.LaunchState.FromLauncher)
             {
                 _stateManager.RequestStateChange<LauncherConnecting>();
+                var state = (LauncherConnecting) _stateManager.CurrentState;
+
+                if (disconnected)
+                {
+                    state.SetDisconnected();
+                }
             }
             else
             {
