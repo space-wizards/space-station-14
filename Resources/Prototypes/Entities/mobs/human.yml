@@ -16,6 +16,7 @@
   # Organs
   - type: Solution
     maxVol: 250
+    caps: 32
   - type: Bloodstream
     max_volume: 100
   - type: Stomach
