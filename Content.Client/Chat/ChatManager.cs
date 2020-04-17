@@ -184,6 +184,9 @@ namespace Content.Client.Chat
                 case ChatChannel.OOC:
                     color = Color.LightSkyBlue;
                     break;
+                case ChatChannel.Dead:
+                    color = Color.MediumPurple;
+                    break;
             }
 
             _currentChatBox?.AddLine(messageText, message.Channel, color);
