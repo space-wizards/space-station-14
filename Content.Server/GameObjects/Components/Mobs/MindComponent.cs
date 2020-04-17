@@ -1,4 +1,5 @@
-﻿using Content.Server.Mobs;
+﻿using Content.Server.GameObjects.Components.Observer;
+using Content.Server.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.ViewVariables;
@@ -46,13 +47,31 @@ namespace Content.Server.GameObjects.Components.Mobs
             Mind = value;
         }
 
-        public override void OnRemove()
+        protected override void Shutdown()
         {
-            base.OnRemove();
+            base.Shutdown();
 
             if (HasMind)
             {
-                Mind.TransferTo(null);
+                var visiting = Mind.VisitingEntity;
+                if (visiting != null)
+                {
+                    if (visiting.TryGetComponent(out GhostComponent ghost))
+                    {
+                        ghost.CanReturnToBody = false;
+                    }
+
+                    Mind.TransferTo(visiting);
+                }
+                else
+                {
+                    var ghost = Owner.EntityManager.SpawnEntity("MobObserver", Owner.Transform.GridPosition);
+                    ghost.Name = Mind.CharacterName;
+
+                    var ghostComponent = ghost.GetComponent<GhostComponent>();
+                    ghostComponent.CanReturnToBody = false;
+                    Mind.TransferTo(ghost);
+                }
             }
         }
     }
