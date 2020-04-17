@@ -150,8 +150,8 @@ namespace Content.Server.GameObjects.Components
                 if(!entity.Transform.IsMapTransform)
                     continue;
 
-                // only items that can be stored in an inventory, or a player, can be eaten by a locker
-                if(!entity.HasComponent<StoreableComponent>() && !entity.HasComponent<IActorComponent>())
+                // only items that can be stored in an inventory, or a mob, can be eaten by a locker
+                if (!entity.HasComponent<StoreableComponent>() && !entity.HasComponent<SpeciesComponent>())
                     continue;
 
                 if (!AddToContents(entity))
@@ -207,7 +207,8 @@ namespace Content.Server.GameObjects.Components
         private bool AddToContents(IEntity entity)
         {
             var collidableComponent = Owner.GetComponent<ICollidableComponent>();
-            if(entity.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
+            ICollidableComponent entityCollidableComponent;
+            if (entity.TryGetComponent(out entityCollidableComponent))
             {
                 if(MaxSize < entityCollidableComponent.WorldAABB.Size.X
                     || MaxSize < entityCollidableComponent.WorldAABB.Size.Y)
@@ -247,6 +248,10 @@ namespace Content.Server.GameObjects.Components
                 }
                 Contents.Insert(entity);
                 entity.Transform.WorldPosition = worldPos;
+                if (entityCollidableComponent != null)
+                {
+                    entityCollidableComponent.CollisionEnabled = false;
+                }
                 return true;
             }
             return false;
@@ -256,7 +261,13 @@ namespace Content.Server.GameObjects.Components
         {
             foreach (var contained in Contents.ContainedEntities.ToArray())
             {
-                Contents.Remove(contained);
+                if(Contents.Remove(contained))
+                {
+                    if (contained.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
+                    {
+                        entityCollidableComponent.CollisionEnabled = true;
+                    }
+                }
             }
         }
 
