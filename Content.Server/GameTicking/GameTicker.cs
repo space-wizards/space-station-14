@@ -583,7 +583,10 @@ namespace Content.Server.GameTicking
 
             var data = session.ContentData();
             data.WipeMind();
-            data.Mind = new Mind(session.SessionId);
+            data.Mind = new Mind(session.SessionId)
+            {
+                CharacterName = character.Name
+            };
 
             if (jobId == null)
             {

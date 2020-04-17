@@ -63,7 +63,8 @@ namespace Content.Server.Observer
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var ghost = entityManager.SpawnEntity("MobObserver", position);
-            ghost.Name = name;
+            ghost.Name = mind.CharacterName;
+
             var ghostComponent = ghost.GetComponent<GhostComponent>();
             ghostComponent.CanReturnToBody = canReturn;
 

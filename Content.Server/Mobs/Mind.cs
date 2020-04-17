@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Players;
@@ -47,6 +47,9 @@ namespace Content.Server.Mobs
         public IEntity VisitingEntity { get; private set; }
 
         [ViewVariables] public IEntity CurrentEntity => VisitingEntity ?? OwnedEntity;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string CharacterName { get; set; }
 
         /// <summary>
         ///     The component currently owned by this mind.
