@@ -111,6 +111,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         public bool Injector => (Capabilities & SolutionCaps.Injector) != 0;
 
+        public bool NoExamine => (Capabilities & SolutionCaps.NoExamine) != 0;
+
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -273,6 +275,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         void IExamine.Examine(FormattedMessage message)
         {
+            if (NoExamine)
+            {
+                return;
+            }
+
             message.AddText(_loc.GetString("Contains:\n"));
             if (ReagentList.Count == 0)
             {
