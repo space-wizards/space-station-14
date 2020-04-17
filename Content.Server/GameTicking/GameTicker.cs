@@ -630,12 +630,17 @@ namespace Content.Server.GameTicking
 
         private void _spawnObserver(IPlayerSession session)
         {
+            var name = _prefsManager
+                .GetPreferences(session.SessionId.Username)
+                .SelectedCharacter.Name;
+
             _playerJoinGame(session);
             var data = session.ContentData();
             data.WipeMind();
             data.Mind = new Mind(session.SessionId);
 
             var mob = _spawnObserverMob();
+            mob.Name = name;
             data.Mind.TransferTo(mob);
         }
 
