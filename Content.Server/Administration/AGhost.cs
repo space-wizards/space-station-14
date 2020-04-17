@@ -1,10 +1,12 @@
-﻿using Content.Server.GameObjects.Components.Observer;
+﻿using System.Timers;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Players;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.Administration
 {
@@ -27,7 +29,7 @@ namespace Content.Server.Administration
             {
                 var visiting = mind.VisitingEntity;
                 mind.UnVisit();
-                visiting.Delete();
+                Timer.Spawn(100, visiting.Delete);
             }
             else
             {

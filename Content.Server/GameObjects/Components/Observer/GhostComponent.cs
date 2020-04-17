@@ -50,6 +50,7 @@ namespace Content.Server.GameObjects.Components.Observer
                     if (netChannel == null || netChannel == actor.playerSession.ConnectedClient)
                     {
                         actor.playerSession.ContentData().Mind.UnVisit();
+                        Timer.Spawn(100, Owner.Delete);
                     }
                     break;
                 case PlayerAttachedMsg msg:
@@ -58,7 +59,6 @@ namespace Content.Server.GameObjects.Components.Observer
                     break;
                 case PlayerDetachedMsg msg:
                     msg.OldPlayer.VisibilityMask &= ~(int)VisibilityFlags.Ghost;
-                    Timer.Spawn(100, Owner.Delete);
                     break;
                 default:
                     break;
