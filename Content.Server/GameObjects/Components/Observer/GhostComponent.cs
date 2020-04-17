@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Observer
                     if (netChannel == null || netChannel == actor.playerSession.ConnectedClient)
                     {
                         actor.playerSession.ContentData().Mind.UnVisit();
-                        Timer.Spawn(100, Owner.Delete);
+                        Owner.Delete();
                     }
                     break;
                 case PlayerAttachedMsg msg:

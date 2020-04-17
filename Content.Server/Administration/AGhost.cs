@@ -29,7 +29,7 @@ namespace Content.Server.Administration
             {
                 var visiting = mind.VisitingEntity;
                 mind.UnVisit();
-                Timer.Spawn(100, visiting.Delete);
+                visiting.Delete();
             }
             else
             {

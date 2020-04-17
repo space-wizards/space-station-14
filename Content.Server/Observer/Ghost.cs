@@ -38,7 +38,7 @@ namespace Content.Server.Observer
             if (mind.VisitingEntity != null)
             {
                 mind.UnVisit();
-                Timer.Spawn(100, mind.VisitingEntity.Delete);
+                mind.VisitingEntity.Delete();
             }
 
             var position = player.AttachedEntity?.Transform.GridPosition ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
