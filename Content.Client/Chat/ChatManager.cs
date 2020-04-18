@@ -184,6 +184,9 @@ namespace Content.Client.Chat
                 case ChatChannel.OOC:
                     color = Color.LightSkyBlue;
                     break;
+                case ChatChannel.Dead:
+                    color = Color.MediumPurple;
+                    break;
             }
 
             _currentChatBox?.AddLine(messageText, message.Channel, color);
@@ -288,7 +291,7 @@ namespace Content.Client.Chat
             WriteChatMessage(storedMessage);
 
             // Local messages that have an entity attached get a speech bubble.
-            if (msg.Channel == ChatChannel.Local && msg.SenderEntity != default)
+            if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Dead) && msg.SenderEntity != default)
             {
                 AddSpeechBubble(msg);
             }

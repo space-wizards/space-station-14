@@ -1,14 +1,20 @@
 
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
     public class MovementSpeedModifierComponent : Component
     {
+        public const float DefaultBaseWalkSpeed = 4.0f;
+        public const float DefaultBaseSprintSpeed = 7.0f;
+
         public override string Name => "MovementSpeedModifier";
 
         private float _cachedWalkSpeedModifier = 1.0f;
+        [ViewVariables]
         public float WalkSpeedModifier
         {
             get
@@ -18,6 +24,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
         private float _cachedSprintSpeedModifier;
+        [ViewVariables]
         public float SprintSpeedModifier
         {
             get
@@ -27,6 +34,16 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BaseWalkSpeed { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BaseSprintSpeed { get; set; }
+
+        [ViewVariables]
+        public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed;
+        [ViewVariables]
+        public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
+
         /// <summary>
         ///     set to warn us that a component's movespeed modifier has changed
         /// </summary>
@@ -35,6 +52,14 @@ namespace Content.Server.GameObjects.Components.Movement
         public void RefreshMovementSpeedModifiers()
         {
             _movespeedModifiersNeedRefresh = true;
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(this, p => p.BaseWalkSpeed, "baseWalkSpeed", 4);
+            serializer.DataField(this, p => p.BaseSprintSpeed, "baseSprintSpeed", 7);
         }
 
         /// <summary>

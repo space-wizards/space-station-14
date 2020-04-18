@@ -47,6 +47,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             {
                 return;
             }
+            if (!Powered)
+                return;
 
             var wires = Owner.GetComponent<WiresComponent>();
             if (wires.IsPanelOpen)
@@ -121,6 +123,9 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            if (!Powered)
+                return;
+
             var message = serverMsg.Message;
             switch (message)
             {

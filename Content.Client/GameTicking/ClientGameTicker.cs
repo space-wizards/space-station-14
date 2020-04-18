@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Client.Interfaces;
 using Content.Client.State;
+using Content.Client.UserInterface;
 using Content.Shared;
 using Robust.Client.Interfaces.State;
 using Robust.Shared.Interfaces.Network;
@@ -35,9 +36,12 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame), JoinGame);
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), LobbyStatus);
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo), LobbyInfo);
+            _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage), RoundEnd);
 
             _initialized = true;
         }
+
+
 
         private void JoinLobby(MsgTickerJoinLobby message)
         {
@@ -63,6 +67,14 @@ namespace Content.Client.GameTicking
         private void JoinGame(MsgTickerJoinGame message)
         {
             _stateManager.RequestStateChange<GameScreen>();
+        }
+
+        private void RoundEnd(MsgRoundEndMessage message)
+        {
+
+            //This is not ideal at all, but I don't see an immediately better fit anywhere else.
+            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundDuration, message.AllPlayersEndInfo);
+
         }
     }
 }

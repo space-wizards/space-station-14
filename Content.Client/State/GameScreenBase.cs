@@ -43,8 +43,6 @@ namespace Content.Client.State
 
         public override void Shutdown()
         {
-            _playerManager.LocalPlayer.DetachEntity();
-
             _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
         }
 

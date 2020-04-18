@@ -11,6 +11,7 @@
   - ooc
   - observe
   - toggleready
+  - ghost
 
 - Index: 50
   Name: Moderator
@@ -26,6 +27,7 @@
   - showtime
   - observe
   - toggleready
+  - ghost
   - kick
   - listplayers
   - loc
@@ -44,6 +46,7 @@
   - aghost
   - observe
   - toggleready
+  - ghost
   - spawn
   - delete
   - tp
@@ -84,6 +87,7 @@
   - aghost
   - observe
   - toggleready
+  - ghost
   - spawn
   - delete
   - tp

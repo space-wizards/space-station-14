@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Instruments;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
@@ -28,6 +29,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         [Dependency] private readonly IGameTiming _timing;
 #pragma warning restore 649
 
+        [CanBeNull]
         private IMidiRenderer _renderer;
         private int _instrumentProgram = 1;
 
@@ -42,8 +44,14 @@ namespace Content.Client.GameObjects.Components.Instruments
         [ViewVariables(VVAccess.ReadWrite)]
         public bool LoopMidi
         {
-            get => _renderer.LoopMidi;
-            set => _renderer.LoopMidi = value;
+            get => _renderer?.LoopMidi ?? false;
+            set
+            {
+                if (_renderer != null)
+                {
+                    _renderer.LoopMidi = value;
+                }
+            }
         }
 
         /// <summary>
@@ -53,9 +61,13 @@ namespace Content.Client.GameObjects.Components.Instruments
         public int InstrumentProgram
         {
             get => _instrumentProgram;
-            set {
+            set
+            {
                 _instrumentProgram = value;
-                _renderer.MidiProgram = _instrumentProgram;
+                if (_renderer != null)
+                {
+                    _renderer.MidiProgram = _instrumentProgram;
+                }
             }
         }
 
@@ -63,22 +75,26 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     Whether there's a midi song being played or not.
         /// </summary>
         [ViewVariables]
-        public bool IsMidiOpen => _renderer.Status == MidiRendererStatus.File;
+        public bool IsMidiOpen => _renderer?.Status == MidiRendererStatus.File;
 
         /// <summary>
         ///     Whether the midi renderer is listening for midi input or not.
         /// </summary>
         [ViewVariables]
-        public bool IsInputOpen => _renderer.Status == MidiRendererStatus.Input;
+        public bool IsInputOpen => _renderer?.Status == MidiRendererStatus.Input;
 
         public override void Initialize()
         {
             base.Initialize();
             IoCManager.InjectDependencies(this);
             _renderer = _midiManager.GetNewRenderer();
-            _renderer.MidiProgram = _instrumentProgram;
-            _renderer.TrackingEntity = Owner;
-            _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); };
+
+            if (_renderer != null)
+            {
+                _renderer.MidiProgram = _instrumentProgram;
+                _renderer.TrackingEntity = Owner;
+                _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); };
+            }
         }
 
         protected override void Shutdown()
@@ -93,9 +109,16 @@ namespace Content.Client.GameObjects.Components.Instruments
             serializer.DataField(ref _instrumentProgram, "program", 1);
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
+            IComponent component = null)
         {
             base.HandleMessage(message, netChannel, component);
+
+            if (_renderer == null)
+            {
+                return;
+            }
+
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMessage:
@@ -107,8 +130,8 @@ namespace Content.Client.GameObjects.Components.Instruments
 
                 case InstrumentStopMidiMessage _:
                     _renderer.StopAllNotes();
-                    if(IsInputOpen) CloseInput();
-                    if(IsMidiOpen) CloseMidi();
+                    if (IsInputOpen) CloseInput();
+                    if (IsMidiOpen) CloseMidi();
                     break;
             }
         }
@@ -116,7 +139,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <inheritdoc cref="MidiRenderer.OpenInput"/>
         public bool OpenInput()
         {
-            if (_renderer.OpenInput())
+            if (_renderer != null && _renderer.OpenInput())
             {
                 _renderer.OnMidiEvent += RendererOnMidiEvent;
                 return true;
@@ -128,28 +151,37 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <inheritdoc cref="MidiRenderer.CloseInput"/>
         public bool CloseInput()
         {
-            if (!_renderer.CloseInput()) return false;
+            if (_renderer == null || !_renderer.CloseInput())
+            {
+                return false;
+            }
+
             _renderer.OnMidiEvent -= RendererOnMidiEvent;
             return true;
-
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenMidi(string)"/>
         public bool OpenMidi(string filename)
         {
-            if (!_renderer.OpenMidi(filename)) return false;
+            if (_renderer == null || !_renderer.OpenMidi(filename))
+            {
+                return false;
+            }
+
             _renderer.OnMidiEvent += RendererOnMidiEvent;
             return true;
-
         }
 
         /// <inheritdoc cref="MidiRenderer.CloseMidi"/>
         public bool CloseMidi()
         {
-            if (!_renderer.CloseMidi()) return false;
+            if (_renderer == null || !_renderer.CloseMidi())
+            {
+                return false;
+            }
+
             _renderer.OnMidiEvent -= RendererOnMidiEvent;
             return true;
-
         }
 
         /// <summary>
