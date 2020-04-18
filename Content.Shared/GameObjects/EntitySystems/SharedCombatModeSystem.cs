@@ -29,11 +29,6 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return;
             }
 
-            if (IoCManager.Resolve<IModuleManager>().IsServerModule && IoCManager.Resolve<IRobustRandom>().Prob(0.5f))
-            {
-                Logger.Info("Mispredict!");
-                return;
-            }
             combatModeComponent.IsInCombatMode = ev.Active;
         }
     }
