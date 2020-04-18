@@ -20,3 +20,7 @@
     netsync: false
     drawdepth: Mobs
     texture: Mob/observer.png
+
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 14
+    baseWalkSpeed: 7
