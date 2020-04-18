@@ -186,13 +186,19 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleDirChange(ICommonSession session, Direction dir, bool state)
         {
-            if (!TryGetAttachedComponent(session as IPlayerSession, out IMoverComponent moverComp))
+            var playerSes = session as IPlayerSession;
+            if (!TryGetAttachedComponent(playerSes, out IMoverComponent moverComp))
                 return;
 
-            var owner = (session as IPlayerSession)?.AttachedEntity;
+            var owner = playerSes?.AttachedEntity;
 
-            if (owner != null && owner.TryGetComponent(out SpeciesComponent species) && species.CurrentDamageState is DeadState)
-                new Ghost().Execute(null, (IPlayerSession)session, null);
+            if (owner != null)
+            {
+                foreach (var comp in owner.GetAllComponents<IRelayMoveInput>())
+                {
+                    comp.MoveInputPressed(playerSes);
+                }
+            }
 
             moverComp.SetVelocityDirection(dir, state);
         }
