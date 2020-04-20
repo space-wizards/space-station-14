@@ -4,6 +4,7 @@ using Content.Server.Mobs;
 using Content.Server.Players;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -15,6 +16,8 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
+        private bool _showExamineInfo = false;
+
         /// <inheritdoc />
         public override string Name => "Mind";
 
@@ -29,6 +32,16 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// </summary>
         [ViewVariables]
         public bool HasMind => Mind != null;
+
+        /// <summary>
+        ///     Whether examining should show information about the mind or not.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ShowExamineInfo
+        {
+            get => _showExamineInfo;
+            set => _showExamineInfo = value;
+        }
 
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
@@ -78,8 +91,17 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _showExamineInfo, "show_examine_info", false);
+        }
+
         public void Examine(FormattedMessage message)
         {
+            if (!ShowExamineInfo)
+                return;
+
             // TODO: Use gendered pronouns depending on the entity
             if(!HasMind)
                 message.AddMarkup($"[color=red]They are totally catatonic. The stresses of life in deep-space must have been too much for them. Any recovery is unlikely.[/color]");
