@@ -1,7 +1,10 @@
 ﻿using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
+using Content.Server.Players;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Mobs
@@ -10,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     ///     Stores a <see cref="Server.Mobs.Mind"/> on a mob.
     /// </summary>
     [RegisterComponent]
-    public class MindComponent : Component
+    public class MindComponent : Component, IExamine
     {
         /// <inheritdoc />
         public override string Name => "Mind";
@@ -73,6 +76,15 @@ namespace Content.Server.GameObjects.Components.Mobs
                     Mind.TransferTo(ghost);
                 }
             }
+        }
+
+        public void Examine(FormattedMessage message)
+        {
+            // TODO: Use gendered pronouns depending on the entity
+            if(!HasMind)
+                message.AddMarkup($"[color=red]They are totally catatonic. The stresses of life in deep-space must have been too much for them. Any recovery is unlikely.[/color]");
+            else if(Mind.Session == null)
+                message.AddMarkup("[color=yellow]They have a blank, absent-minded stare and appears completely unresponsive to anything. They may snap out of it soon.[/color]");
         }
     }
 }
