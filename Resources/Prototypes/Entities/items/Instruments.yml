@@ -1,132 +1,132 @@
-# - type: entity
-#   name: BaseHandheldInstrument
-#   parent: BaseItem
-#   id: BaseHandheldInstrument
-#   abstract: true
-#   components:
-#   - type: Instrument
-#     handheld: true
-#   - type: UserInterface
-#     interfaces:
-#     - key: enum.InstrumentUiKey.Key
-#       type: InstrumentBoundUserInterface
-#
-# - type: entity
-#   name: Synthesizer
-#   parent: BaseHandheldInstrument
-#   id: SynthesizerInstrument
-#   components:
-#   - type: Instrument
-#     program: 2
-#   - type: Sprite
-#     texture: Objects/Instruments/musician.rsi/h_synthesizer.png
-#   - type: Icon
-#     texture: Objects/Instruments/musician.rsi/h_synthesizer.png
-#
-# - type: entity
-#   name: Violin
-#   parent: BaseHandheldInstrument
-#   id: ViolinInstrument
-#   components:
-#   - type: Instrument
-#     program: 40
-#   - type: Sprite
-#     texture: Objects/Instruments/musician.rsi/violin.png
-#   - type: Icon
-#     texture: Objects/Instruments/musician.rsi/violin.png
-#
-# - type: entity
-#   name: Trumpet
-#   parent: BaseHandheldInstrument
-#   id: TrumpetInstrument
-#   components:
-#   - type: Instrument
-#     program: 56
-#   - type: Sprite
-#     texture: Objects/Instruments/musician.rsi/trumpet.png
-#   - type: Icon
-#     texture: Objects/Instruments/musician.rsi/trumpet.png
-#
-# - type: entity
-#   name: Electric Guitar
-#   parent: BaseHandheldInstrument
-#   id: ElectricGuitarInstrument
-#   components:
-#   - type: Instrument
-#     program: 27
-#   - type: Sprite
-#     texture: Objects/Instruments/musician.rsi/eguitar.png
-#   - type: Icon
-#     texture: Objects/Instruments/musician.rsi/eguitar.png
-#
-# - type: entity
-#   name: Accordion
-#   parent: BaseHandheldInstrument
-#   id: AccordionInstrument
-#   components:
-#   - type: Instrument
-#     program: 21
-#   - type: Sprite
-#     texture: Objects/Instruments/musician.rsi/accordion.png
-#   - type: Icon
-#     texture: Objects/Instruments/musician.rsi/accordion.png
-#
-# - type: entity
-#   name: Harmonica
-#   parent: BaseHandheldInstrument
-#   id: HarmonicaInstrument
-#   components:
-#   - type: Instrument
-#     program: 22
-#   - type: Sprite
-#     texture: Objects/Instruments/musician.rsi/harmonica.png
-#   - type: Icon
-#     texture: Objects/Instruments/musician.rsi/harmonica.png
-#
-# - type: entity
-#   name: Recorder
-#   parent: BaseHandheldInstrument
-#   id: RecorderInstrument
-#   components:
-#   - type: Instrument
-#     program: 74
-#   - type: Sprite
-#     texture: Objects/Instruments/musician.rsi/recorder.png
-#   - type: Icon
-#     texture: Objects/Instruments/musician.rsi/recorder.png
-#
-# - type: entity
-#   name: Trombone
-#   parent: BaseHandheldInstrument
-#   id: TromboneInstrument
-#   components:
-#   - type: Instrument
-#     program: 57
-#   - type: Sprite
-#     texture: Objects/Instruments/musician.rsi/trombone.png
-#   - type: Icon
-#     texture: Objects/Instruments/musician.rsi/trombone.png
-#
-# - type: entity
-#   name: Saxophone
-#   parent: BaseHandheldInstrument
-#   id: SaxophoneInstrument
-#   components:
-#   - type: Instrument
-#     program: 67
-#   - type: Sprite
-#     texture: Objects/Instruments/musician.rsi/saxophone.png
-#   - type: Icon
-#     texture: Objects/Instruments/musician.rsi/saxophone.png
-#
-# - type: entity
-#   name: Glockenspiel
-#   parent: BaseHandheldInstrument
-#   id: GlockenspielInstrument
-#   components:
-#   - type: Instrument
-#     program: 9
-#   - type: Sprite
-#     texture: Objects/Instruments/musician.rsi/glockenspiel.png
-#   - type: Icon
-#     texture: Objects/Instruments/musician.rsi/glockenspiel.png
+- type: entity
+  name: BaseHandheldInstrument
+  parent: BaseItem
+  id: BaseHandheldInstrument
+  abstract: true
+  components:
+  - type: Instrument
+    handheld: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
+
+- type: entity
+  name: Synthesizer
+  parent: BaseHandheldInstrument
+  id: SynthesizerInstrument
+  components:
+  - type: Instrument
+    program: 2
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/h_synthesizer.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/h_synthesizer.png
+
+- type: entity
+  name: Violin
+  parent: BaseHandheldInstrument
+  id: ViolinInstrument
+  components:
+  - type: Instrument
+    program: 40
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/violin.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/violin.png
+
+- type: entity
+  name: Trumpet
+  parent: BaseHandheldInstrument
+  id: TrumpetInstrument
+  components:
+  - type: Instrument
+    program: 56
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/trumpet.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/trumpet.png
+
+- type: entity
+  name: Electric Guitar
+  parent: BaseHandheldInstrument
+  id: ElectricGuitarInstrument
+  components:
+  - type: Instrument
+    program: 27
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/eguitar.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/eguitar.png
+
+- type: entity
+  name: Accordion
+  parent: BaseHandheldInstrument
+  id: AccordionInstrument
+  components:
+  - type: Instrument
+    program: 21
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/accordion.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/accordion.png
+
+- type: entity
+  name: Harmonica
+  parent: BaseHandheldInstrument
+  id: HarmonicaInstrument
+  components:
+  - type: Instrument
+    program: 22
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/harmonica.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/harmonica.png
+
+- type: entity
+  name: Recorder
+  parent: BaseHandheldInstrument
+  id: RecorderInstrument
+  components:
+  - type: Instrument
+    program: 74
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/recorder.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/recorder.png
+
+- type: entity
+  name: Trombone
+  parent: BaseHandheldInstrument
+  id: TromboneInstrument
+  components:
+  - type: Instrument
+    program: 57
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/trombone.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/trombone.png
+
+- type: entity
+  name: Saxophone
+  parent: BaseHandheldInstrument
+  id: SaxophoneInstrument
+  components:
+  - type: Instrument
+    program: 67
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/saxophone.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/saxophone.png
+
+- type: entity
+  name: Glockenspiel
+  parent: BaseHandheldInstrument
+  id: GlockenspielInstrument
+  components:
+  - type: Instrument
+    program: 9
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/glockenspiel.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/glockenspiel.png
