@@ -57,10 +57,9 @@ namespace Content.Client.GameObjects.Components.Observer
                 component.Visible = _playerManager.LocalPlayer.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleMessage(message, component);
 
             switch (message)
             {

@@ -13,6 +13,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -40,10 +41,9 @@ namespace Content.Client.GameObjects.Components.Mobs
             PlayerDetached();
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleMessage(message, component);
             switch (message)
             {
                 case PlayerAttachedMsg _:

@@ -10,6 +10,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects
 {
@@ -53,7 +54,7 @@ namespace Content.Client.GameObjects
             };
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
             switch (message)
             {

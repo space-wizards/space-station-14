@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Construction
@@ -30,9 +31,10 @@ namespace Content.Server.GameObjects.Components.Construction
         [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, channel, session);
+
             switch (message)
             {
                 case TryStartStructureConstructionMessage tryStart:

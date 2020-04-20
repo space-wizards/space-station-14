@@ -11,6 +11,7 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
@@ -304,16 +305,35 @@ namespace Content.Server.GameObjects
         }
 
         /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case ContainerContentsModifiedMessage msg:
+                    if (msg.Removed)
+                        ForceUnequip(msg.Container, msg.Entity);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        /// <inheritdoc />
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        {
+            base.HandleNetworkMessage(message, netChannel, session);
+
+            if (session == null)
+            {
+                throw new ArgumentNullException(nameof(session));
+            }
 
             switch (message)
             {
                 case ClientInventoryMessage msg:
-                    var playerMan = IoCManager.Resolve<IPlayerManager>();
-                    var session = playerMan.GetSessionByChannel(netChannel);
                     var playerentity = session.AttachedEntity;
 
                     if (playerentity == Owner)
@@ -326,11 +346,6 @@ namespace Content.Server.GameObjects
                     var item = GetSlotItem(msg.Slot);
                     if (item != null && item.Owner.TryGetComponent(out ServerStorageComponent storage))
                         storage.OpenStorageUI(Owner);
-                    break;
-
-                case ContainerContentsModifiedMessage msg:
-                    if (msg.Removed)
-                        ForceUnequip(msg.Container, msg.Entity);
                     break;
             }
         }
