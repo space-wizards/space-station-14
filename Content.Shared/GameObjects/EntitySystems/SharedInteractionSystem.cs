@@ -7,7 +7,6 @@ using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using System;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -42,20 +41,26 @@ namespace Content.Server.GameObjects.EntitySystems
         public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,
             int collisionMask = (int)CollisionGroup.Impassable, IEntity ignoredEnt = null, bool insideBlockerValid = false)
         {
+            bool retVal = false;
             var dir = otherCoords - coords.Position;
 
-            if (dir.LengthSquared.Equals(0f))
-                return true;
+            if (dir.LengthSquared.Equals(0f)) return true;
+            if (range > 0f && !(dir.LengthSquared <= range * range)) return false;
+                    var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
+                    var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt, true);
 
-            if (range > 0f && !(dir.LengthSquared <= range * range))
-                return false;
-
-            var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt, true);
-
-
-
-            return !rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && rayResults.Distance < 1f);
+                    if(!rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && rayResults.Distance < 1f))
+                    {
+                        _mapManager.TryFindGridAt(coords, out var mapGrid);
+                        var srcPos = mapGrid.MapToGrid(coords);
+                        var destPos = new GridCoordinates(otherCoords, mapGrid);
+                        if (srcPos.InRange(_mapManager, destPos, InteractionRange))
+                        {
+                            retVal = true;
+                        }
+                    }
+             
+            return retVal;
         }
     }
 }
