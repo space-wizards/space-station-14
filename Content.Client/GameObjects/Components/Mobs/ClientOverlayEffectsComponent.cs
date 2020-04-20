@@ -67,19 +67,6 @@ namespace Content.Client.GameObjects
             }
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
-        {
-            switch (message)
-            {
-                case PlayerAttachedMsg _:
-                    SetOverlay(_currentEffect);
-                    break;
-                case PlayerDetachedMsg _:
-                    RemoveOverlay();
-                    break;
-            }
-        }
-
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);

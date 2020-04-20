@@ -63,18 +63,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             _updateEye();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case RecoilKickMessage msg:
-                    Kick(msg.Recoil);
-                    break;
-            }
-        }
-
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, channel, session);

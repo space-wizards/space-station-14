@@ -171,32 +171,6 @@ namespace Content.Client.GameObjects
             }
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
-        {
-            base.HandleNetworkMessage(message, channel, session);
-
-            switch (message)
-            {
-                case PlayerAttachedMsg _:
-                    if (_gui == null)
-                    {
-                        _gui = new HandsGui();
-                    }
-                    else
-                    {
-                        _gui.Parent?.RemoveChild(_gui);
-                    }
-
-                    _gameHud.HandsContainer.AddChild(_gui);
-                    _gui.UpdateHandIcons();
-                    break;
-
-                case PlayerDetachedMsg _:
-                    _gui.Parent?.RemoveChild(_gui);
-                    break;
-            }
-        }
-
         public void SendChangeHand(string index)
         {
             SendNetworkMessage(new ClientChangedHandMsg(index));
