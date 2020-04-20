@@ -285,7 +285,7 @@
   parent: base_wall
   components:
   - type: Sprite
-    color: "#71797a"
+    color: "#889192"
     sprite: Buildings/Walls/solid.rsi
   - type: Icon
     sprite: Buildings/Walls/solid.rsi
