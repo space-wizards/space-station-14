@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
-using Content.Server.Observer;
+using Content.Server.Players;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
@@ -29,7 +29,11 @@ namespace Content.Server.Chat
             if (player.AttachedEntity.HasComponent<GhostComponent>())
                 chat.SendDeadChat(player, message);
             else
-                chat.EntitySay(player.AttachedEntity, message);
+            {
+                var mindComponent = player.ContentData().Mind;
+                chat.EntitySay(mindComponent.OwnedEntity, message);
+            }
+
         }
     }
 
@@ -51,14 +55,15 @@ namespace Content.Server.Chat
 
             var action = string.Join(" ", args);
 
-            chat.EntityMe(player.AttachedEntity, action);
+            var mindComponent = player.ContentData().Mind;
+            chat.EntityMe(mindComponent.OwnedEntity, action);
         }
     }
 
     internal class OOCCommand : IClientCommand
     {
         public string Command => "ooc";
-        public string Description => "Send Out of Character chat messages.";
+        public string Description => "Send Out Of Character chat messages.";
         public string Help => "ooc <text>";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
