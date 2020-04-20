@@ -6,6 +6,7 @@
   drawdepth: Mobs
   components:
   - type: Mind
+    show_examine_info: true
   - type: Hands
     hands:
     - left
