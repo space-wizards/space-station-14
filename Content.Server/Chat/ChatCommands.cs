@@ -1,12 +1,10 @@
 ﻿using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
-using Content.Server.Observer;
 using Content.Server.Players;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 
 namespace Content.Server.Chat
 {
@@ -28,14 +26,11 @@ namespace Content.Server.Chat
 
             var message = string.Join(" ", args);
 
-
             if (player.AttachedEntity.HasComponent<GhostComponent>())
                 chat.SendDeadChat(player, message);
             else
             {
-                // This is a hacky way of getting the Players Mind
                 var mindComponent = player.ContentData().Mind;
-                // Say the message, as the Mind of the player.
                 chat.EntitySay(mindComponent.OwnedEntity, message);
             }
 
@@ -60,9 +55,7 @@ namespace Content.Server.Chat
 
             var action = string.Join(" ", args);
 
-            // As EntitySay, Hacky way of getting the Player's Mind
             var mindComponent = player.ContentData().Mind;
-            // Now do the /me as the Player's Mind.
             chat.EntityMe(mindComponent.OwnedEntity, action);
         }
     }
