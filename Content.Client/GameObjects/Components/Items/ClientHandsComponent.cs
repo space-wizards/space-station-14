@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -144,10 +145,35 @@ namespace Content.Client.GameObjects
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case PlayerAttachedMsg _:
+                    if (_gui == null)
+                    {
+                        _gui = new HandsGui();
+                    }
+                    else
+                    {
+                        _gui.Parent?.RemoveChild(_gui);
+                    }
+
+                    _gameHud.HandsContainer.AddChild(_gui);
+                    _gui.UpdateHandIcons();
+                    break;
+
+                case PlayerDetachedMsg _:
+                    _gui.Parent?.RemoveChild(_gui);
+                    break;
+            }
+        }
+
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        {
+            base.HandleNetworkMessage(message, channel, session);
 
             switch (message)
             {

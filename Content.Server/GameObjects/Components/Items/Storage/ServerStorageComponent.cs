@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -19,6 +20,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects
@@ -33,7 +35,6 @@ namespace Content.Server.GameObjects
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IEntityManager _entityManager;
 #pragma warning restore 649
 
@@ -255,18 +256,22 @@ namespace Content.Server.GameObjects
         /// and puts the removed entity in hand or on the ground
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="netChannel"></param>
-        /// <param name="component"></param>
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        /// <param name="channel"></param>
+        /// <param name="session"></param>
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, channel, session);
+
+            if (session == null)
+            {
+                throw new ArgumentException(nameof(session));
+            }
 
             switch (message)
             {
                 case RemoveEntityMessage _:
                 {
                     _ensureInitialCalculated();
-                    var session = _playerManager.GetSessionByChannel(netChannel);
                     var playerentity = session.AttachedEntity;
 
                     var ourtransform = Owner.GetComponent<ITransformComponent>();
@@ -296,7 +301,7 @@ namespace Content.Server.GameObjects
                 case InsertEntityMessage _:
                 {
                     _ensureInitialCalculated();
-                    var playerEntity = _playerManager.GetSessionByChannel(netChannel).AttachedEntity;
+                    var playerEntity = session.AttachedEntity;
                     var storageTransform = Owner.GetComponent<ITransformComponent>();
                     var playerTransform = playerEntity.GetComponent<ITransformComponent>();
                     // TODO: Replace by proper entity range check once it is implemented.
@@ -311,9 +316,7 @@ namespace Content.Server.GameObjects
                 }
                 case CloseStorageUIMessage _:
                 {
-                    var session = _playerManager.GetSessionByChannel(netChannel);
-
-                    UnsubscribeSession(session);
+                    UnsubscribeSession(session as IPlayerSession);
                     break;
                 }
             }

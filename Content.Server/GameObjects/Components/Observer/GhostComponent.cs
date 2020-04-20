@@ -7,6 +7,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -38,10 +39,27 @@ namespace Content.Server.GameObjects.Components.Observer
 
         public override ComponentState GetComponentState() => new GhostComponentState(CanReturnToBody);
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case PlayerAttachedMsg msg:
+                    msg.NewPlayer.VisibilityMask |= (int)VisibilityFlags.Ghost;
+                    Dirty();
+                    break;
+                case PlayerDetachedMsg msg:
+                    msg.OldPlayer.VisibilityMask &= ~(int)VisibilityFlags.Ghost;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        {
+            base.HandleNetworkMessage(message, netChannel, session);
 
             switch (message)
             {
@@ -52,13 +70,6 @@ namespace Content.Server.GameObjects.Components.Observer
                         actor.playerSession.ContentData().Mind.UnVisit();
                         Owner.Delete();
                     }
-                    break;
-                case PlayerAttachedMsg msg:
-                    msg.NewPlayer.VisibilityMask |= (int)VisibilityFlags.Ghost;
-                    Dirty();
-                    break;
-                case PlayerDetachedMsg msg:
-                    msg.OldPlayer.VisibilityMask &= ~(int)VisibilityFlags.Ghost;
                     break;
                 default:
                     break;
