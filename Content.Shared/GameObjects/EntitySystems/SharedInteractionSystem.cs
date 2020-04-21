@@ -41,7 +41,6 @@ namespace Content.Server.GameObjects.EntitySystems
         public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,
             int collisionMask = (int)CollisionGroup.Impassable, IEntity ignoredEnt = null, bool insideBlockerValid = false)
         {
-            bool retVal = false;
             var dir = otherCoords - coords.Position;
 
             if (dir.LengthSquared.Equals(0f)) return true;
@@ -56,10 +55,10 @@ namespace Content.Server.GameObjects.EntitySystems
                 var destPos = new GridCoordinates(otherCoords, mapGrid);
                 if (srcPos.InRange(_mapManager, destPos, InteractionRange))
                 {
-                    retVal = true;
+                    return true;
                 }
             }
-            return retVal;
+            return false;
         }
     }
 }
