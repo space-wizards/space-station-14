@@ -1,5 +1,6 @@
 using System;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -27,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             {
                 if (component.Owner.TryGetComponent(out SolutionComponent solutionComponent))
                 {
-                    return solutionComponent.CurrentVolume > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                    return solutionComponent.CurrentVolume > ReagentUnit.Zero ? VerbVisibility.Visible : VerbVisibility.Disabled;
                 }
 
                 return VerbVisibility.Invisible;

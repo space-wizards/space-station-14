@@ -25,20 +25,20 @@ namespace Content.Server.GameObjects.Components.Fluids
         internal SolutionComponent Contents => _contents;
         private SolutionComponent _contents;
 
-        public int MaxVolume
+        public ReagentUnit MaxVolume
         {
             get => _contents.MaxVolume;
             set => _contents.MaxVolume = value;
         }
 
-        public int CurrentVolume => _contents.CurrentVolume;
+        public ReagentUnit CurrentVolume => _contents.CurrentVolume;
 
         // Currently there's a separate amount for pickup and dropoff so
         // Picking up a puddle requires multiple clicks
         // Dumping in a bucket requires 1 click
         // Long-term you'd probably use a cooldown and start the pickup once we have some form of global cooldown
-        public int PickupAmount => _pickupAmount;
-        private int _pickupAmount;
+        public ReagentUnit PickupAmount => _pickupAmount;
+        private ReagentUnit _pickupAmount;
 
         private string _pickupSound;
 
@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             serializer.DataFieldCached(ref _pickupSound, "pickup_sound", "/Audio/effects/Fluids/slosh.ogg");
             // The turbo mop will pickup more
-            serializer.DataFieldCached(ref _pickupAmount, "pickup_amount", 5);
+            serializer.DataFieldCached(ref _pickupAmount, "pickup_amount", ReagentUnit.New(5));
         }
 
         public override void Initialize()
@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             // - _pickupAmount,
             // - whatever's left in the puddle, or
             // - whatever we can still hold (whichever's smallest)
-            var transferAmount = Math.Min(Math.Min(5, puddleComponent.CurrentVolume), MaxVolume - CurrentVolume);
+            var transferAmount = ReagentUnit.Min(ReagentUnit.New(5), puddleComponent.CurrentVolume, MaxVolume - CurrentVolume);
             if (transferAmount == 0)
             {
                 return;

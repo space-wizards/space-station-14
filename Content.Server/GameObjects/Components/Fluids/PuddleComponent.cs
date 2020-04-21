@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override string Name => "Puddle";
 
         private CancellationTokenSource _evaporationToken;
-        private int _evaporateThreshold; // How few <Solution Quantity> we can hold prior to self-destructing
+        private ReagentUnit _evaporateThreshold; // How few <Solution Quantity> we can hold prior to self-destructing
         private float _evaporateTime;
         private string _spillSound;
         private DateTime _lastOverflow = DateTime.Now;
@@ -50,20 +50,20 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         private SnapGridComponent _snapGrid;
 
-        public int MaxVolume
+        public ReagentUnit MaxVolume
         {
             get => _contents.MaxVolume;
             set => _contents.MaxVolume = value;
         }
 
         [ViewVariables]
-        public int CurrentVolume => _contents.CurrentVolume;
+        public ReagentUnit CurrentVolume => _contents.CurrentVolume;
 
         // Volume at which the fluid will try to spill to adjacent components
         // Currently a random number, potentially change
-        public int OverflowVolume => _overflowVolume;
+        public ReagentUnit OverflowVolume => _overflowVolume;
         [ViewVariables]
-        private int _overflowVolume;
+        private ReagentUnit _overflowVolume;
 
         private SolutionComponent _contents;
         private int _spriteVariants;
@@ -74,10 +74,10 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataFieldCached(ref _spillSound, "spill_sound", "/Audio/effects/Fluids/splat.ogg");
-            serializer.DataField(ref _overflowVolume, "overflow_volume", 20);
+            serializer.DataField(ref _overflowVolume, "overflow_volume", ReagentUnit.New(20));
             serializer.DataField(ref _evaporateTime, "evaporate_time", 600.0f);
             // Long-term probably have this based on the underlying reagents
-            serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", 2);
+            serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(2));
             serializer.DataField(ref _spriteVariants, "variants", 1);
             serializer.DataField(ref _recolor, "recolor", false);
         }
@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             _snapGrid = Owner.GetComponent<SnapGridComponent>();
 
             // Smaller than 1m^3 for now but realistically this shouldn't be hit
-            MaxVolume = 1000;
+            MaxVolume = ReagentUnit.New(1000);
 
             // Random sprite state set server-side so it's consistent across all clients
             _spriteComponent = Owner.GetComponent<SpriteComponent>();
@@ -142,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             return true;
         }
 
-        internal Solution SplitSolution(int quantity)
+        internal Solution SplitSolution(ReagentUnit quantity)
         {
             var split = _contents.SplitSolution(quantity);
             CheckEvaporate();
@@ -182,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
             // Opacity based on level of fullness to overflow
             // Hard-cap lower bound for visibility reasons
-            var volumeScale = ((float)CurrentVolume / OverflowVolume) * 0.75f + 0.25f;
+            var volumeScale = (CurrentVolume.Float() / OverflowVolume.Float()) * 0.75f + 0.25f;
             var cappedScale = Math.Min(1.0f, volumeScale);
             // Color based on the underlying solutioncomponent
             Color newColor;
@@ -226,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             foreach (var direction in RandomDirections())
             {
                 // Can't spill < 1 reagent so stop overflowing
-                if (neighborPuddles.Count == overflowAmount)
+                if ((ReagentUnit.Epsilon * neighborPuddles.Count) == overflowAmount)
                 {
                     break;
                 }
@@ -277,7 +277,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            var spillAmount = neighborPuddles.Count / overflowAmount;
+            var spillAmount = overflowAmount / ReagentUnit.New(neighborPuddles.Count);
 
             SpillToNeighbours(neighborPuddles, spillAmount);
         }
@@ -319,13 +319,14 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
-        private void SpillToNeighbours(IEnumerable<IEntity> neighbors, int spillAmount)
+        private void SpillToNeighbours(IEnumerable<IEntity> neighbors, ReagentUnit spillAmount)
         {
             foreach (var neighborPuddle in neighbors)
             {
                 var solution = _contents.SplitSolution(spillAmount);
 
                 neighborPuddle.GetComponent<PuddleComponent>().TryAddSolution(solution, false, false);
+
             }
         }
     }

@@ -1,7 +1,5 @@
 ﻿using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Serialization;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 
@@ -13,7 +11,9 @@ namespace Content.Shared.Chemistry
         private int _value;
         private static readonly int Shift = 2;
 
-        public static ReagentUnit MaxValue => new ReagentUnit(int.MaxValue);
+        public static ReagentUnit MaxValue { get; } = new ReagentUnit(int.MaxValue);
+        public static ReagentUnit Epsilon { get; } = new ReagentUnit(1);
+        public static ReagentUnit Zero { get; } = new ReagentUnit(0);
 
         private double ShiftDown()
         {
@@ -131,6 +131,16 @@ namespace Content.Shared.Chemistry
             return a.ShiftDown() != b;
         }
 
+        public static bool operator ==(ReagentUnit a, ReagentUnit b)
+        {
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(ReagentUnit a, ReagentUnit b)
+        {
+            return !a.Equals(b);
+        }
+
         public static bool operator <=(ReagentUnit a, ReagentUnit b)
         {
             return a._value <= b._value;
@@ -204,12 +214,12 @@ namespace Content.Shared.Chemistry
             return ToString();
         }
 
-        public bool Equals([AllowNull] ReagentUnit other)
+        public bool Equals(ReagentUnit other)
         {
             return _value == other._value;
         }
 
-        public int CompareTo([AllowNull] ReagentUnit other)
+        public int CompareTo(ReagentUnit other)
         {
             if(other._value > _value)
             {

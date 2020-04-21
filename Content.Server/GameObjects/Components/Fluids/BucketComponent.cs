@@ -2,6 +2,7 @@ using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -22,13 +23,13 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         public override string Name => "Bucket";
 
-        public int MaxVolume
+        public ReagentUnit MaxVolume
         {
             get => _contents.MaxVolume;
             set => _contents.MaxVolume = value;
         }
 
-        public int CurrentVolume => _contents.CurrentVolume;
+        public ReagentUnit CurrentVolume => _contents.CurrentVolume;
 
         private SolutionComponent _contents;
 
@@ -51,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             // Let's fill 'er up
             // If this is called the mop should be empty but just in case we'll do Max - Current
-            var transferAmount = Math.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
+            var transferAmount = ReagentUnit.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
             var solution = _contents.SplitSolution(transferAmount);
             if (!mopComponent.Contents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
             {
@@ -88,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            var transferAmount = Math.Min(mopComponent.CurrentVolume, MaxVolume - CurrentVolume);
+            var transferAmount = ReagentUnit.Min(mopComponent.CurrentVolume, MaxVolume - CurrentVolume);
             if (transferAmount == 0)
             {
                 return false;
