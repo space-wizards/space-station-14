@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
@@ -56,9 +57,10 @@ namespace Content.Client.State
             var inRange = false;
             if (_playerManager.LocalPlayer.ControlledEntity != null && entityToClick != null)
             {
-                var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.WorldPosition;
+                var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.MapPosition;
                 var entityPos = entityToClick.Transform.WorldPosition;
-                inRange = (entityPos - playerPos).Length <= VerbUtility.InteractionRange;
+                inRange = _entitySystemManager.GetEntitySystem<SharedInteractionSystem>()
+                    .InRangeUnobstructed(playerPos,entityPos,ignoredEnt: _playerManager.LocalPlayer.ControlledEntity);
             }
 
             InteractionOutlineComponent outline;
