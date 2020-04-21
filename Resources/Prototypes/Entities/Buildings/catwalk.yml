@@ -1,5 +1,5 @@
 - type: entity
-  id: catwalk
+  id: Catwalk
   name: Catwalk
   components:
   - type: Clickable
@@ -12,12 +12,9 @@
   - type: Icon
     sprite: Buildings/catwalk.rsi
     state: catwalk_preview
-
   - type: SnapGrid
     offset: Center
-
   - type: IconSmooth
     key: catwalk
     base: catwalk_
-
   - type: Catwalk

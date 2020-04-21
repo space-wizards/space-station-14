@@ -1,7 +1,7 @@
 - type: entity
   id: chem_dispenser
   name: Chemical Dispenser
-  parent: reagent_dispenser_base
+  parent: ReagentDispenserBase
   description: An industrial grade chemical dispenser with a sizeable chemical supply.
   components:
   - type: Sprite

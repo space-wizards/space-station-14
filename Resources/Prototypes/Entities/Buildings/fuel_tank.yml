@@ -1,5 +1,5 @@
 - type: entity
-  id: weldtank
+  id: WeldingFuelTank
   name: Fueltank
   description: A storage tank containing welding fuel.
   components:

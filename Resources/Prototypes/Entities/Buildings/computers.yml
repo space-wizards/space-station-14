@@ -1,5 +1,5 @@
 - type: entity
-  id: computerBase
+  id: ComputerBase
   name: Computer
   abstract: true
   components:
@@ -44,8 +44,8 @@
 
 
 - type: entity
-  id: computerAlert
-  parent: computerBase
+  id: ComputerAlert
+  parent: ComputerBase
   name: Alerts Computer
   components:
   - type: Appearance
@@ -56,8 +56,8 @@
 
 
 - type: entity
-  id: computerPowerMonitoring
-  parent: computerBase
+  id: ComputerPowerMonitoring
+  parent: ComputerBase
   name: Power Monitoring Computer
   components:
   - type: Appearance
@@ -68,8 +68,8 @@
 
 
 - type: entity
-  id: computerSupplyOrdering
-  parent: computerBase
+  id: ComputerSupplyOrdering
+  parent: ComputerBase
   name: Cargo Ordering Computer
   components:
   - type: Appearance
@@ -100,8 +100,8 @@
       type: CargoConsoleBoundUserInterface
 
 - type: entity
-  id: computerSupplyRequest
-  parent: computerSupplyOrdering
+  id: ComputerSupplyRequest
+  parent: ComputerSupplyOrdering
   name: Cargo Request Computer
   components:
   - type: Appearance
@@ -113,8 +113,8 @@
     requestOnly: true
 
 - type: entity
-  id: computerMedicalRecords
-  parent: computerBase
+  id: ComputerMedicalRecords
+  parent: ComputerBase
   name: Medical Records Computer
   components:
   - type: Appearance
@@ -125,8 +125,8 @@
 
 
 - type: entity
-  id: computerResearchAndDevelopment
-  parent: computerBase
+  id: ComputerResearchAndDevelopment
+  parent: ComputerBase
   name: R&D Computer
   components:
   - type: Appearance
@@ -149,8 +149,8 @@
     priority: Low
 
 - type: entity
-  id: computerId
-  parent: computerBase
+  id: ComputerId
+  parent: ComputerBase
   name: ID Card Computer
   components:
   - type: AccessReader
@@ -167,8 +167,8 @@
       screen: id
 
 - type: entity
-  id: computerComms
-  parent: computerBase
+  id: ComputerComms
+  parent: ComputerBase
   name: Communications Computer
   components:
   - type: Appearance

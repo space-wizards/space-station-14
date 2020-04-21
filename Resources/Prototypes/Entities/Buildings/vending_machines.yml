@@ -43,7 +43,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_ammo
+  id: VendingMachineAmmo
   name: AmmoVend
   components:
   - type: VendingMachine
@@ -53,7 +53,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_booze
+  id: VendingMachineBooze
   name: Booze-O-Mat
   components:
   - type: VendingMachine
@@ -63,7 +63,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_cart
+  id: VendingMachineCart
   name: PTech
   components:
   - type: VendingMachine
@@ -73,7 +73,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_chapel
+  id: VendingMachineChapel
   name: PietyVend
   components:
   - type: VendingMachine
@@ -83,7 +83,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_cigs
+  id: VendingMachineCigs
   name: Cigarette machine
   components:
   - type: VendingMachine
@@ -93,7 +93,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_coffee
+  id: VendingMachineCoffee
   name: Hot Drinks machine
   components:
   - type: VendingMachine
@@ -103,7 +103,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_cola
+  id: VendingMachineCola
   name: Robust Softdrinks
   components:
   - type: VendingMachine
@@ -113,7 +113,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_dinnerware
+  id: VendingMachineDinnerware
   name: Dinnerware
   components:
   - type: VendingMachine
@@ -123,7 +123,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_discount
+  id: VendingMachineDiscount
   name: Discount Dan's
   components:
   - type: VendingMachine
@@ -133,7 +133,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_engivend
+  id: VendingMachineEngivend
   name: Engi-Vend
   components:
   - type: VendingMachine
@@ -143,7 +143,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_hats
+  id: VendingMachineHats
   name: Hatlord 9000
   components:
   - type: VendingMachine
@@ -153,7 +153,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_magivend
+  id: VendingMachineMagivend
   name: MagiVend
   components:
   - type: VendingMachine
@@ -163,7 +163,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_medical
+  id: VendingMachineMedical
   name: NanoMed Plus
   components:
   - type: VendingMachine
@@ -173,7 +173,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_mining
+  id: VendingMachineMining
   name: Dwarven Mining Equipment
   components:
   - type: VendingMachine
@@ -183,7 +183,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_nutri
+  id: VendingMachineNutri
   name: NutriMax
   components:
   - type: VendingMachine
@@ -193,7 +193,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_robotics
+  id: VendingMachineRobotics
   name: Robotech Deluxe
   components:
   - type: VendingMachine
@@ -203,7 +203,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_sales
+  id: VendingMachineSales
   name: Sales
   components:
   - type: VendingMachine
@@ -213,7 +213,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_sec
+  id: VendingMachineSec
   name: SecTech
   components:
   - type: VendingMachine
@@ -223,7 +223,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_seeds
+  id: VendingMachineSeeds
   name: MegaSeed Servitor
   components:
   - type: VendingMachine
@@ -233,7 +233,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_shoes
+  id: VendingMachineShoes
   name: Shoelord 9000
   components:
   - type: VendingMachine
@@ -243,7 +243,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_smartfridge
+  id: VendingMachineSmartFridge
   name: SmartFridge
   components:
   - type: VendingMachine
@@ -253,7 +253,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_snack
+  id: VendingMachineSnack
   name: Getmore Chocolate Corp
   components:
   - type: VendingMachine
@@ -263,7 +263,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_soviet
+  id: VendingMachineSoviet
   name: Товарищ-vend
   components:
   - type: VendingMachine
@@ -273,7 +273,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_sovietsoda
+  id: VendingMachineSovietSoda
   name: BODA
   components:
   - type: VendingMachine
@@ -283,7 +283,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_suits
+  id: VendingMachineSuits
   name: Suitlord 9000
   components:
   - type: VendingMachine
@@ -293,7 +293,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_theater
+  id: VendingMachineTheater
   name: AutoDrobe
   components:
   - type: VendingMachine
@@ -303,7 +303,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_vendomat
+  id: VendingMachineVendomat
   name: Vendomat
   components:
   - type: VendingMachine
@@ -313,7 +313,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_vox
+  id: VendingMachineVox
   name: Trader Supply
   components:
   - type: VendingMachine
@@ -323,7 +323,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_wallmed
+  id: VendingMachineWallMedical
   name: NanoMed
   components:
   - type: VendingMachine
@@ -333,7 +333,7 @@
 
 - type: entity
   parent: VendingMachine
-  id: vending_machine_youtool
+  id: VendingMachineYouTool
   name: YouTool
   components:
   - type: VendingMachine

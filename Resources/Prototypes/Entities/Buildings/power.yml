@@ -161,7 +161,7 @@
     offset: Center
 
 - type: entity
-  id: smes_dry
+  id: SmesDry
   parent: SMES
   components:
   - type: PowerStorage

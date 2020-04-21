@@ -1,0 +1,83 @@
+- type: entity
+  name: Carpet Floor Tile
+  parent: BaseItem
+  id: FloorTileItemCarpet
+  description: Those could work as a pretty decent throwing weapon.
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_carpet
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_carpet
+  - type: Item
+    Size: 25
+  - type: FloorTile
+    output: floor_carpet
+  - type: Stack
+    stacktype: FloorTileCarpet
+    count: 1
+    max: 8
+
+- type: entity
+  name: White Floor Tile
+  parent: BaseItem
+  id: FloorTileItemWhite
+  description: Those could work as a pretty decent throwing weapon.
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_white
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_white
+  - type: Item
+    Size: 25
+  - type: FloorTile
+    output: floor_white
+  - type: Stack
+    stacktype: FloorTileWhite
+    count: 1
+    max: 8
+
+- type: entity
+  name: Dark Floor Tile
+  parent: BaseItem
+  id: FloorTileItemDark
+  description: Those could work as a pretty decent throwing weapon.
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_dark
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_dark
+  - type: Item
+    Size: 25
+  - type: FloorTile
+    output: floor_dark
+  - type: Stack
+    stacktype: FloorTileDark
+    count: 1
+    max: 8
+
+- type: entity
+  name: Steel Floor Tile
+  parent: BaseItem
+  id: FloorTileItemSteel
+  description: Those could work as a pretty decent throwing weapon.
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_steel
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_steel
+  - type: Item
+    Size: 25
+  - type: FloorTile
+    output: floor_steel
+  - type: Stack
+    stacktype: FloorTileSteel
+    count: 1
+    max: 8

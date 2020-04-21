@@ -1,7 +1,7 @@
 - type: entity
   name: Pilot Chair
   description: The driver seat of a prestigious battle cruiser.
-  id: pilotseat_chair
+  id: PilotSeatChair
   components:
   - type: Sprite
     sprite: Buildings/furniture.rsi

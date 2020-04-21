@@ -1,8 +1,8 @@
 - type: entity
-  id: booze_dispenser
+  id: BoozeDispenser
   name: Booze Dispenser
   description: A booze dispenser with a single slot for a container to be filled.
-  parent: reagent_dispenser_base
+  parent: ReagentDispenserBase
   components:
   - type: Sprite
     texture: Buildings/chemicals.rsi/booze_dispenser.png

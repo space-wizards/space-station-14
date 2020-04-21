@@ -18,7 +18,7 @@
 
 - type: entity
   parent: BaseLathe
-  id: autolathe
+  id: Autolathe
   name: "Autolathe"
   components:
   - type: Sprite
@@ -61,7 +61,7 @@
 
 - type: entity
   parent: BaseLathe
-  id: protolathe
+  id: Protolathe
   name: "Protolathe"
   components:
   - type: Sprite

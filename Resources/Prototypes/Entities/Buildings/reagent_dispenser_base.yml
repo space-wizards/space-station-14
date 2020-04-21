@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  id: reagent_dispenser_base
+  id: ReagentDispenserBase
   components:
   - type: Clickable
   - type: InteractionOutline

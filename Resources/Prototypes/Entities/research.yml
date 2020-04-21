@@ -1,5 +1,5 @@
 - type: entity
-  id: researchAndDevelopmentServer
+  id: ResearchAndDevelopmentServer
   name: "R&D Server"
   components:
   - type: Sprite
@@ -21,8 +21,9 @@
     priority: Low
 
 - type: entity
-  id: baseResearchAndDevelopmentPointSource
+  id: BaseResearchAndDevelopmentPointSource
   name: "Base R&D Point Source"
+  # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite
     sprite: Buildings/research.rsi

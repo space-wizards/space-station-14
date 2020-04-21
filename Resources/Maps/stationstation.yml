@@ -281,7 +281,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 26
-  type: poweredsmalllight
+  type: PoweredSmallLight
   components:
   - parent: 0
     pos: -4.5,-5
@@ -312,7 +312,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 29
-  type: poweredsmalllight
+  type: PoweredSmallLight
   components:
   - parent: 0
     pos: 0.5,-5
@@ -607,14 +607,14 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 70
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -6.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 71
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -8.5,-6.5
@@ -649,7 +649,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 76
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 4.5,-8.5
@@ -719,28 +719,28 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 86
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -3.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 87
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -2.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 88
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -1.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 89
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -0.5,-5.5
@@ -754,7 +754,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 91
-  type: crate_generic
+  type: CrateGeneric
   components:
   - parent: 0
     pos: 5.5,-6.5
@@ -902,14 +902,14 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 111
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 2.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 112
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -4.5,-11.5
@@ -1049,7 +1049,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 132
-  type: smes_dry
+  type: SmesDry
   components:
   - parent: 0
     pos: -1.5,-13.5
@@ -1058,7 +1058,7 @@ entities:
   - charge: 3000
     type: PowerStorage
 - uid: 133
-  type: smes_dry
+  type: SmesDry
   components:
   - parent: 0
     pos: -2.5,-13.5
@@ -1067,7 +1067,7 @@ entities:
   - charge: 3000
     type: PowerStorage
 - uid: 134
-  type: smes_dry
+  type: SmesDry
   components:
   - parent: 0
     pos: -3.5,-13.5
@@ -1083,14 +1083,14 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 136
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -2.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 137
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 1.5,-12.5
@@ -1111,28 +1111,28 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 140
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -3.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 141
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -2.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 142
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -1.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 143
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -0.5,-10.5
@@ -1160,7 +1160,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 147
-  type: locker_generic
+  type: LockerGeneric
   components:
   - parent: 0
     pos: 1.5,-10.5
@@ -1202,7 +1202,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 150
-  type: locker_generic
+  type: LockerGeneric
   components:
   - parent: 0
     pos: 0.5,-10.5
@@ -1220,7 +1220,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 151
-  type: fire_extinguisher
+  type: FireExtinguisher
   components:
   - parent: 0
     pos: -1.297692,-5.396082
@@ -1241,7 +1241,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 154
-  type: computerSupplyRequest
+  type: ComputerSupplyRequest
   components:
   - parent: 0
     pos: 0.5,-5.5
@@ -1253,7 +1253,7 @@ entities:
     - cargo.Medkit
     type: GalacticMarket
 - uid: 155
-  type: computerSupplyOrdering
+  type: ComputerSupplyOrdering
   components:
   - parent: 0
     pos: 0.5,0.5
@@ -1265,28 +1265,28 @@ entities:
     - cargo.Medkit
     type: GalacticMarket
 - uid: 156
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -4.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 157
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -1.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 158
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -2.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 159
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -3.5,-1.5
@@ -1300,14 +1300,14 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 161
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 4.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 162
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -5.5,-13.5
@@ -1368,7 +1368,7 @@ entities:
   - parent: 29
     type: Transform
 - uid: 171
-  type: wall_light
+  type: WallLight
   components:
   - parent: 0
     pos: -0.5,-14
@@ -1410,42 +1410,42 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 177
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 178
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 179
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,2.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 180
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 181
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 182
-  type: vending_machine_youtool
+  type: VendingMachineYouTool
   components:
   - parent: 0
     pos: -11.5,-0.5
@@ -1482,98 +1482,98 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 187
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -6.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 188
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -5.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 189
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -4.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 190
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -3.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 191
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -2.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 192
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -1.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 193
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -0.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 194
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 0.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 195
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 1.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 196
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -4.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 197
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -3.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 198
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -2.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 199
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -1.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 200
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -0.5,4.5
@@ -1594,7 +1594,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 203
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -9.5,0.5
@@ -1643,7 +1643,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 210
-  type: airlock
+  type: Airlock
   components:
   - parent: 0
     pos: -9.5,1.5
@@ -1655,7 +1655,7 @@ entities:
   - parent: 212
     type: Transform
 - uid: 212
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 0.5,1
@@ -1672,21 +1672,21 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 213
-  type: chairOfficeLight
+  type: ChairOfficeLight
   components:
   - parent: 0
     pos: -3.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 214
-  type: chairOfficeDark
+  type: ChairOfficeDark
   components:
   - parent: 0
     pos: 0.5,-6.5
     rot: 1.5707963267949 rad
     type: Transform
 - uid: 215
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: -6.5,1
@@ -1710,35 +1710,35 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 217
-  type: stool
+  type: Stool
   components:
   - parent: 0
     pos: -1.5,-9.5
     rot: 1.5707963267949 rad
     type: Transform
 - uid: 218
-  type: chairOfficeLight
+  type: ChairOfficeLight
   components:
   - parent: 0
     pos: -3.5,-2.5
     rot: 1.5707963267949 rad
     type: Transform
 - uid: 219
-  type: chairOfficeLight
+  type: ChairOfficeLight
   components:
   - parent: 0
     pos: -2.5,-2.5
     rot: 1.5707963267949 rad
     type: Transform
 - uid: 220
-  type: chairOfficeLight
+  type: ChairOfficeLight
   components:
   - parent: 0
     pos: -2.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 221
-  type: stool
+  type: Stool
   components:
   - parent: 0
     pos: -2.5,-6.5
@@ -1848,91 +1848,91 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 237
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 238
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 239
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 240
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 241
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 242
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 243
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 244
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 245
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 246
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-9.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 247
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 248
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 9.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 249
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 8.5,-8.5
@@ -1946,7 +1946,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 251
-  type: poweredsmalllight
+  type: PoweredSmallLight
   components:
   - parent: 0
     pos: 5,-9.5
@@ -2494,7 +2494,7 @@ entities:
   - parent: 215
     type: Transform
 - uid: 317
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: -1.5,8
@@ -2516,7 +2516,7 @@ entities:
   - parent: 317
     type: Transform
 - uid: 319
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 4,3.5
@@ -2538,13 +2538,13 @@ entities:
   - parent: 319
     type: Transform
 - uid: 321
-  type: wall_light
+  type: WallLight
   components:
   - parent: 0
     pos: -7,-10.5
     type: Transform
 - uid: 322
-  type: poweredsmalllight
+  type: PoweredSmallLight
   components:
   - parent: 0
     pos: -10,-5.5
@@ -2783,14 +2783,14 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 355
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -15.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 356
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -15.5,-1.5
@@ -2818,35 +2818,35 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 360
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -15.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 361
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -14.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 362
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -13.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 363
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -12.5,7.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 364
-  type: locker_tool_filled
+  type: LockerToolFilled
   components:
   - parent: 0
     pos: -11.5,-5.5
@@ -2858,7 +2858,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 365
-  type: locker_tool_filled
+  type: LockerToolFilled
   components:
   - parent: 0
     pos: -11.5,-4.5
@@ -2870,7 +2870,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 366
-  type: locker_tool_filled
+  type: LockerToolFilled
   components:
   - parent: 0
     pos: -11.5,-3.5
@@ -2882,7 +2882,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 367
-  type: locker_tool_filled
+  type: LockerToolFilled
   components:
   - parent: 0
     pos: -11.5,-2.5
@@ -2894,7 +2894,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 368
-  type: locker_tool_filled
+  type: LockerToolFilled
   components:
   - parent: 0
     pos: -11.5,-1.5
@@ -2920,7 +2920,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 371
-  type: autolathe
+  type: Autolathe
   components:
   - parent: 0
     pos: -14.5,-7.5
@@ -2942,7 +2942,7 @@ entities:
     - Multitool
     type: LatheDatabase
 - uid: 372
-  type: autolathe
+  type: Autolathe
   components:
   - parent: 0
     pos: -13.5,-7.5
@@ -2964,7 +2964,7 @@ entities:
     - Multitool
     type: LatheDatabase
 - uid: 373
-  type: autolathe
+  type: Autolathe
   components:
   - parent: 0
     pos: -12.5,-7.5
@@ -2986,7 +2986,7 @@ entities:
     - Multitool
     type: LatheDatabase
 - uid: 374
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: -11,-5.5
@@ -3008,7 +3008,7 @@ entities:
   - parent: 374
     type: Transform
 - uid: 376
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: -11,-0.5
@@ -3030,7 +3030,7 @@ entities:
   - parent: 376
     type: Transform
 - uid: 378
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: -16,-0.5
@@ -3051,7 +3051,7 @@ entities:
   - parent: 378
     type: Transform
 - uid: 380
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: -16,-5.5
@@ -3072,7 +3072,7 @@ entities:
   - parent: 380
     type: Transform
 - uid: 382
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: -15,3.5
@@ -3093,7 +3093,7 @@ entities:
   - parent: 382
     type: Transform
 - uid: 384
-  type: poweredsmalllight
+  type: PoweredSmallLight
   components:
   - parent: 0
     pos: -14.5,7
@@ -3143,21 +3143,21 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 390
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -11.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 391
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: -9.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 392
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: -10.5,4
@@ -3291,21 +3291,21 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 410
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -15.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 411
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -15.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 412
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: -15.5,0.5
@@ -3347,7 +3347,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 418
-  type: vending_machine_engivend
+  type: VendingMachineEngivend
   components:
   - parent: 0
     pos: -11.5,0.5
@@ -3356,103 +3356,103 @@ entities:
   - sprite: Buildings/VendingMachines/engivend.rsi
     type: Sprite
 - uid: 419
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 18.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 420
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 21.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 421
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 20.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 422
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 18.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 423
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 19.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 424
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 18.5,5.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 425
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 22.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 426
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 24.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 427
-  type: chairOfficeLight
+  type: ChairOfficeLight
   components:
   - parent: 0
     pos: 19.5,4.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 428
-  type: chairOfficeLight
+  type: ChairOfficeLight
   components:
   - parent: 0
     pos: 20.5,5.5
     rot: 1.5707963267948966 rad
     type: Transform
 - uid: 429
-  type: chairOfficeLight
+  type: ChairOfficeLight
   components:
   - parent: 0
     pos: 23.5,8.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 430
-  type: chairOfficeLight
+  type: ChairOfficeLight
   components:
   - parent: 0
     pos: 24.5,5.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 431
-  type: chair
+  type: Chair
   components:
   - parent: 0
     pos: 14.5,6.5
     type: Transform
 - uid: 432
-  type: chair
+  type: Chair
   components:
   - parent: 0
     pos: 14.5,8.5
     type: Transform
 - uid: 433
-  type: chair
+  type: Chair
   components:
   - parent: 0
     pos: 14.5,7.5
@@ -3469,63 +3469,63 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 435
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 23.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 436
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 0.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 437
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 25.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 438
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 23.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 439
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 24.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 440
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 26.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 441
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 27.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 442
-  type: computerMedicalRecords
+  type: ComputerMedicalRecords
   components:
   - parent: 0
     pos: 21.5,5.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 443
-  type: medical_scanner
+  type: MedicalScanner
   components:
   - parent: 0
     pos: 18.5,-1.5
@@ -3537,7 +3537,7 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 444
-  type: medical_scanner
+  type: MedicalScanner
   components:
   - parent: 0
     pos: 18.5,-5.5
@@ -3549,21 +3549,21 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 445
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 13.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 446
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 13.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 447
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 13.5,1.5
@@ -4515,28 +4515,28 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 583
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 5.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 584
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 12.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 585
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 23.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 586
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 23.5,5.5
@@ -4872,21 +4872,21 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 634
-  type: airlock
+  type: Airlock
   components:
   - parent: 0
     pos: 1.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 635
-  type: airlock
+  type: Airlock
   components:
   - parent: 0
     pos: 4.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 636
-  type: airlock
+  type: Airlock
   components:
   - parent: 0
     pos: 13.5,10.5
@@ -4917,7 +4917,7 @@ entities:
     pos: 25.5,4.5
     type: Transform
 - uid: 641
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 17.5,4
@@ -4939,7 +4939,7 @@ entities:
   - parent: 641
     type: Transform
 - uid: 643
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 22.5,3
@@ -4961,7 +4961,7 @@ entities:
   - parent: 643
     type: Transform
 - uid: 645
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 13.5,3
@@ -5082,7 +5082,7 @@ entities:
     pos: 25.5,3.5
     type: Transform
 - uid: 663
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 14,9.5
@@ -5103,7 +5103,7 @@ entities:
   - parent: 663
     type: Transform
 - uid: 665
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 22,9.5
@@ -5139,7 +5139,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 669
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 16.5,-6
@@ -5161,14 +5161,14 @@ entities:
   - parent: 669
     type: Transform
 - uid: 671
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 23.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 672
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 24.5,-5.5
@@ -5371,7 +5371,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 701
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 31.5,-6
@@ -5393,7 +5393,7 @@ entities:
   - parent: 701
     type: Transform
 - uid: 703
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 30,1.5
@@ -5471,7 +5471,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 713
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 28,7.5
@@ -5493,7 +5493,7 @@ entities:
   - parent: 713
     type: Transform
 - uid: 715
-  type: vending_machine_medical
+  type: VendingMachineMedical
   components:
   - parent: 0
     pos: 29.5,3.5
@@ -5502,7 +5502,7 @@ entities:
   - sprite: Buildings/VendingMachines/medical.rsi
     type: Sprite
 - uid: 716
-  type: vending_machine_medical
+  type: VendingMachineMedical
   components:
   - parent: 0
     pos: 27.5,-5.5
@@ -5511,7 +5511,7 @@ entities:
   - sprite: Buildings/VendingMachines/medical.rsi
     type: Sprite
 - uid: 717
-  type: vending_machine_medical
+  type: VendingMachineMedical
   components:
   - parent: 0
     pos: 25.5,-5.5
@@ -5520,7 +5520,7 @@ entities:
   - sprite: Buildings/VendingMachines/medical.rsi
     type: Sprite
 - uid: 718
-  type: vending_machine_wallmed
+  type: VendingMachineWallMedical
   components:
   - parent: 0
     pos: 1.5,-3.5
@@ -5553,14 +5553,14 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 721
-  type: computerMedicalRecords
+  type: ComputerMedicalRecords
   components:
   - parent: 0
     pos: 22.5,-5.5
     rot: 1.5707963267948966 rad
     type: Transform
 - uid: 722
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 23.5,-6
@@ -5624,35 +5624,35 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
 - uid: 730
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 33.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 731
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 33.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 732
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 33.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 733
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 33.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 734
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 33.5,-5.5
@@ -5715,7 +5715,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 743
-  type: crate_medical
+  type: CrateMedical
   components:
   - parent: 0
     pos: 32.5,-1.5
@@ -5727,7 +5727,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 744
-  type: crate_medical
+  type: CrateMedical
   components:
   - parent: 0
     pos: 31.5,-1.5
@@ -5739,7 +5739,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 745
-  type: locker_medical
+  type: LockerMedical
   components:
   - parent: 0
     pos: 30.5,-1.5
@@ -5751,7 +5751,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 746
-  type: locker_medical
+  type: LockerMedical
   components:
   - parent: 0
     pos: 29.5,-1.5
@@ -5763,7 +5763,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 747
-  type: locker_medical
+  type: LockerMedical
   components:
   - parent: 0
     pos: 27.5,5.5
@@ -5775,7 +5775,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 748
-  type: locker_chemistry
+  type: LockerChemistry
   components:
   - parent: 0
     pos: 27.5,6.5
@@ -6382,21 +6382,21 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 834
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 5.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 835
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 6.5,24.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 836
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 6.5,20.5
@@ -6648,28 +6648,28 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 872
-  type: airlock
+  type: Airlock
   components:
   - parent: 0
     pos: 5.5,15.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 873
-  type: airlock
+  type: Airlock
   components:
   - parent: 0
     pos: 7.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 874
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 9.5,15.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 875
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 6.5,12
@@ -6691,7 +6691,7 @@ entities:
   - parent: 875
     type: Transform
 - uid: 877
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 12.5,12
@@ -6718,7 +6718,7 @@ entities:
   - parent: 880
     type: Transform
 - uid: 880
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 14,18.5
@@ -6749,7 +6749,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 883
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 18,22.5
@@ -6771,7 +6771,7 @@ entities:
   - parent: 883
     type: Transform
 - uid: 885
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 18,27.5
@@ -6793,7 +6793,7 @@ entities:
   - parent: 885
     type: Transform
 - uid: 887
-  type: poweredsmalllight
+  type: PoweredSmallLight
   components:
   - parent: 0
     pos: 18,17.5
@@ -6814,7 +6814,7 @@ entities:
   - parent: 887
     type: Transform
 - uid: 889
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 2,17.5
@@ -6840,7 +6840,7 @@ entities:
   - parent: 892
     type: Transform
 - uid: 892
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 2,23.5
@@ -6856,7 +6856,7 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 893
-  type: poweredsmalllight
+  type: PoweredSmallLight
   components:
   - parent: 0
     pos: 11,24.5
@@ -6878,14 +6878,14 @@ entities:
   - parent: 893
     type: Transform
 - uid: 895
-  type: catwalk
+  type: Catwalk
   components:
   - parent: 0
     pos: 13.5,24.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 896
-  type: poweredsmalllight
+  type: PoweredSmallLight
   components:
   - parent: 0
     pos: 7.5,26
@@ -6907,7 +6907,7 @@ entities:
   - parent: 896
     type: Transform
 - uid: 898
-  type: researchAndDevelopmentServer
+  type: ResearchAndDevelopmentServer
   components:
   - parent: 0
     pos: 11.5,24.5
@@ -6918,7 +6918,7 @@ entities:
   - technologies: []
     type: TechnologyDatabase
 - uid: 899
-  type: computerResearchAndDevelopment
+  type: ComputerResearchAndDevelopment
   components:
   - parent: 0
     pos: 8.5,18.5
@@ -6926,13 +6926,13 @@ entities:
   - technologies: []
     type: TechnologyDatabase
 - uid: 900
-  type: baseResearchAndDevelopmentPointSource
+  type: BaseResearchAndDevelopmentPointSource
   components:
   - parent: 0
     pos: 13.5,16.5
     type: Transform
 - uid: 901
-  type: protolathe
+  type: Protolathe
   components:
   - parent: 0
     pos: 8.5,17.5
@@ -6956,7 +6956,7 @@ entities:
   - technologies: []
     type: TechnologyDatabase
 - uid: 902
-  type: autolathe
+  type: Autolathe
   components:
   - parent: 0
     pos: 13.5,18.5
@@ -6977,7 +6977,7 @@ entities:
     - Multitool
     type: LatheDatabase
 - uid: 903
-  type: autolathe
+  type: Autolathe
   components:
   - parent: 0
     pos: -4.5,-5.5
@@ -6998,35 +6998,35 @@ entities:
     - Multitool
     type: LatheDatabase
 - uid: 904
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 8.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 905
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 9.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 906
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 10.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 907
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 11.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 908
-  type: table
+  type: Table
   components:
   - parent: 0
     pos: 13.5,17.5
@@ -7243,7 +7243,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 939
-  type: poweredlight
+  type: Poweredlight
   components:
   - parent: 0
     pos: 8,16.5
@@ -7312,27 +7312,27 @@ entities:
     pos: 10.577456,21.424059
     type: Transform
 - uid: 949
-  type: chairOfficeLight
+  type: ChairOfficeLight
   components:
   - parent: 0
     pos: 9.5,18.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 950
-  type: chairOfficeLight
+  type: ChairOfficeLight
   components:
   - parent: 0
     pos: 9.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 951
-  type: chair
+  type: Chair
   components:
   - parent: 0
     pos: 12.5,17.5
     type: Transform
 - uid: 952
-  type: locker_science
+  type: LockerScience
   components:
   - parent: 0
     pos: 12.5,21.5
@@ -7344,7 +7344,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 953
-  type: locker_science
+  type: LockerScience
   components:
   - parent: 0
     pos: 13.5,21.5

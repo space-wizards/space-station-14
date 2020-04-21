@@ -1,5 +1,5 @@
 - type: entity
-  id: asteroid_rock
+  id: AsteroidRock
   name: Asteroid Rock
   components:
   - type: AsteroidRock

@@ -1,5 +1,5 @@
 - type: entity
-  id: window
+  id: Window
   name: Window
   description: Don't smudge up the glass down there.
   placement:
@@ -14,11 +14,9 @@
     netsync: false
     drawdepth: WallTops
     sprite: Buildings/window.rsi
-
   - type: Icon
     sprite: Buildings/window.rsi
     state: full
-
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -27,25 +25,21 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100
-
   - type: SnapGrid
     offset: Center
-
   - type: Window
-    base: window
+    base: Window
 
 - type: entity
-  id: rwindow
+  id: ReinforcedWindow
   name: Reinforced Window
-  parent: window
+  parent: Window
   components:
   - type: Sprite
     drawdepth: WallTops
     sprite: Buildings/rwindow.rsi
-
   - type: Window
-    base: rwindow
-
+    base: ReinforcedWindow
   - type: Icon
     sprite: Buildings/rwindow.rsi
     state: full

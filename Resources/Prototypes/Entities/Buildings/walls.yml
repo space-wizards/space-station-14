@@ -24,7 +24,7 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: Occluder
     sizeX: 32
     sizeY: 32
@@ -47,7 +47,7 @@
     sprite: Buildings/Walls/brick.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: brick
@@ -63,7 +63,7 @@
     sprite: Buildings/Walls/clock.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: clock
@@ -79,7 +79,7 @@
     sprite: Buildings/Walls/clown.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: clown
@@ -96,7 +96,7 @@
     sprite: Buildings/Walls/cult.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: cult
@@ -112,7 +112,7 @@
     sprite: Buildings/Walls/debug.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: debug
@@ -128,7 +128,7 @@
     sprite: Buildings/Walls/diamond.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: diamond
@@ -145,7 +145,7 @@
     sprite: Buildings/Walls/gold.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: gold
@@ -161,7 +161,7 @@
     sprite: Buildings/Walls/ice.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: ice
@@ -177,7 +177,7 @@
     sprite: Buildings/Walls/metal.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: metal
@@ -193,7 +193,7 @@
     sprite: Buildings/Walls/plasma.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: plasma
@@ -209,7 +209,7 @@
     sprite: Buildings/Walls/plastic.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: plastic
@@ -225,7 +225,7 @@
     sprite: Buildings/Walls/reinforced.rsi
   - type: Destructible
     thresholdvalue: 300
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: reinforced
@@ -242,7 +242,7 @@
     sprite: Buildings/Walls/riveted.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: riveted
@@ -258,7 +258,7 @@
     sprite: Buildings/Walls/sandstone.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: sandstone
@@ -274,7 +274,7 @@
     sprite: Buildings/Walls/silver.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: silver
@@ -291,7 +291,7 @@
     sprite: Buildings/Walls/solid.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
     destroysound: /Audio/effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
@@ -308,7 +308,7 @@
     sprite: Buildings/Walls/uranium.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: uranium
@@ -324,7 +324,7 @@
     sprite: Buildings/Walls/wood.rsi
   - type: Destructible
     thresholdvalue: 100
-    spawnondestroy: girder
+    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: wood

@@ -1,6 +1,6 @@
 - type: entity
-  id: table
-  name: "table"
+  id: Table
+  name: "Table"
   components:
   - type: Clickable
   - type: InteractionOutline

@@ -1,0 +1,12 @@
+- type: entity
+  name: Fire Extinguisher
+  parent: BaseItem
+  id: FireExtinguisher
+  description: Extinguishes fires.
+  components:
+  - type: Sprite
+    texture: Objects/Misc/fire_extinguisher.png
+  - type: Icon
+    texture: Objects/Misc/fire_extinguisher.png
+  - type: Item
+    Size: 10

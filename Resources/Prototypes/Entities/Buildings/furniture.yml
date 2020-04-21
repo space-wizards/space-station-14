@@ -1,6 +1,6 @@
 - type: entity
   name: Stool
-  id: stool
+  id: Stool
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -15,7 +15,7 @@
 
 - type: entity
   name: White Office Chair
-  id: chairOfficeLight
+  id: ChairOfficeLight
   components:
   - type: Rotatable
   - type: Clickable
@@ -30,7 +30,7 @@
 
 - type: entity
   name: Dark Office Chair
-  id: chairOfficeDark
+  id: ChairOfficeDark
   components:
   - type: Rotatable
   - type: Clickable
@@ -45,7 +45,7 @@
 
 - type: entity
   name: Chair
-  id: chair
+  id: Chair
   components:
   - type: Clickable
   - type: InteractionOutline

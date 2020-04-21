@@ -1,5 +1,5 @@
 - type: entity
-  id: low_wall
+  id: LowWall
   name: Low Wall
   description: Goes up to about your waist.
   placement:
@@ -35,7 +35,7 @@
     base: metal_
 
 - type: entity
-  id: low_wall_overlay
+  id: LowWallOverlay
   name: Low Wall Overlay
   abstract: true
   components:

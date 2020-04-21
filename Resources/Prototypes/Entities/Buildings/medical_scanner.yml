@@ -1,5 +1,5 @@
 - type: entity
-  id: medical_scanner
+  id: MedicalScanner
   name: Medical Scanner
   description: A bulky medical scanner.
   components:

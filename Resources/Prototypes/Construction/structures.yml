@@ -23,12 +23,12 @@
 
 - type: construction
   name: Table
-  id: table
+  id: Table
   category: Structures
   icon:
     sprite: Buildings/table_solid.rsi
     state: plain_preview
-  result: table
+  result: Table
   placementmode: SnapgridCenter
   steps:
   - material: Metal
@@ -36,14 +36,14 @@
 
 - type: construction
   name: Window
-  id: window
+  id: Window
   category: Structures
   description: Clear.
   icon:
     sprite: Buildings/window.rsi
     state: full
   objecttype: Structure
-  result: window
+  result: Window
   placementmode: SnapgridCenter
   steps:
   - material: Glass
@@ -51,14 +51,14 @@
 
 - type: construction
   name: Low Wall
-  id: low_wall
+  id: LowWall
   category: Structures
   description: A low wall used for mounting windows.
   icon:
     sprite: Buildings/low_wall.rsi
     state: metal
   objecttype: Structure
-  result: low_wall
+  result: LowWall
   placementmode: SnapgridCenter
   steps:
   - material: Metal
@@ -74,14 +74,14 @@
 
 - type: construction
   name: Rein Window
-  id: rwindow
+  id: ReinforcedWindow
   category: Structures
   description: Clear but tough.
   icon:
     sprite: Buildings/rwindow.rsi
     state: full
   objecttype: Structure
-  result: rwindow
+  result: ReinforcedWindow
   placementmode: SnapgridCenter
   steps:
   - material: Glass
