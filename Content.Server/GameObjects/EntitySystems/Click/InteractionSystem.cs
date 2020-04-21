@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -166,6 +167,46 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public IEntity User { get; }
         public GridCoordinates LandingLocation { get; }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when their owner is put in an inventory slot.
+    /// </summary>
+    public interface IEquipped
+    {
+        void Equipped(EquippedEventArgs eventArgs);
+    }
+
+    public class EquippedEventArgs : EventArgs
+    {
+        public EquippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Slot = slot;
+        }
+
+        public IEntity User { get; }
+        public EquipmentSlotDefines.Slots Slot { get; }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when their owner is removed from an inventory slot.
+    /// </summary>
+    public interface IUnequipped
+    {
+        void Unequipped(UnequippedEventArgs eventArgs);
+    }
+
+    public class UnequippedEventArgs : EventArgs
+    {
+        public UnequippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Slot = slot;
+        }
+
+        public IEntity User { get; }
+        public EquipmentSlotDefines.Slots Slot { get; }
     }
 
     /// <summary>
@@ -711,6 +752,50 @@ namespace Content.Server.GameObjects.EntitySystems
         }
 
         /// <summary>
+        ///     Calls Equipped on all components that implement the IEquipped interface
+        ///     on an entity that has been equipped.
+        /// </summary>
+        public void EquippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            var equipMsg = new EquippedMessage(user, equipped, slot);
+            RaiseLocalEvent(equipMsg);
+            if (equipMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = equipped.GetAllComponents<IEquipped>().ToList();
+
+            // Call Thrown on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.Equipped(new EquippedEventArgs(user, slot));
+            }
+        }
+
+        /// <summary>
+        ///     Calls Unequipped on all components that implement the IUnequipped interface
+        ///     on an entity that has been equipped.
+        /// </summary>
+        public void UnequippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            var unequipMsg = new UnequippedMessage(user, equipped, slot);
+            RaiseLocalEvent(unequipMsg);
+            if (unequipMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = equipped.GetAllComponents<IUnequipped>().ToList();
+
+            // Call Thrown on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.Unequipped(new UnequippedEventArgs(user, slot));
+            }
+        }
+
+        /// <summary>
         /// Activates the Dropped behavior of an object
         /// Verifies that the user is capable of doing the drop interaction first
         /// </summary>
@@ -1101,6 +1186,74 @@ namespace Content.Server.GameObjects.EntitySystems
             User = user;
             Thrown = thrown;
             LandLocation = landLocation;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when equipping the entity in an inventory slot.
+    /// </summary>
+    [PublicAPI]
+    public class EquippedMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that equipped the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was equipped.
+        /// </summary>
+        public IEntity Equipped { get; }
+
+        /// <summary>
+        ///     Slot where the item was placed.
+        /// </summary>
+        public EquipmentSlotDefines.Slots Slot { get; }
+
+        public EquippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Equipped = equipped;
+            Slot = slot;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when removing the entity from an inventory slot.
+    /// </summary>
+    [PublicAPI]
+    public class UnequippedMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that equipped the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was equipped.
+        /// </summary>
+        public IEntity Equipped { get; }
+
+        /// <summary>
+        ///     Slot where the item was removed from.
+        /// </summary>
+        public EquipmentSlotDefines.Slots Slot { get; }
+
+        public UnequippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Equipped = equipped;
+            Slot = slot;
         }
     }
 
