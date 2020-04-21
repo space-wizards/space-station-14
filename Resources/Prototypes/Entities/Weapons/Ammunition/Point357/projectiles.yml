@@ -1,7 +1,7 @@
 - type: entity
   id: bullet_357
   name: .357 Bullet
-  parent: bullet_base
+  parent: BulletBase
   abstract: true
   components:
   - type: Projectile
@@ -12,7 +12,7 @@
 - type: entity
   id: bullet_357f
   name: .357 Bullet (Flash)
-  parent: bullet_basef
+  parent: BulletBaseFlash
   abstract: true
   components:
   - type: Projectile
@@ -23,7 +23,7 @@
 - type: entity
   id: bullet_357hv
   name: .357 Bullet (High-Velocity)
-  parent: bullet_basehv
+  parent: BulletBaseHighVelocity
   abstract: true
   components:
   - type: Projectile
@@ -34,7 +34,7 @@
 - type: entity
   id: bullet_357l
   name: .357 Bullet (L)
-  parent: bullet_basel
+  parent: BulletBaseL
   abstract: true
   components:
   - type: Projectile
@@ -45,7 +45,7 @@
 - type: entity
   id: bullet_357p
   name: .357 Bullet (Practice)
-  parent: bullet_basep
+  parent: BulletBasePractice
   abstract: true
   components:
   - type: Projectile
@@ -56,7 +56,7 @@
 - type: entity
   id: bullet_357r
   name: .357 Bullet (Rubber)
-  parent: bullet_baser
+  parent: BulletBaseRubber
   abstract: true
   components:
   - type: Projectile
