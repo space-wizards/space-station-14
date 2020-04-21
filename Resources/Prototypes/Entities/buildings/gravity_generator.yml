@@ -1,5 +1,5 @@
 - type: entity
-  id: gravityGenerator
+  id: GravityGenerator
   name: Gravity Generator
   description: It's what keeps you to the floor.
   components:
