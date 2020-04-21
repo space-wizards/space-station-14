@@ -104,7 +104,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             _spriteComponent = Owner.GetComponent<SpriteComponent>();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var randomVariant = robustRandom.Next(0, _spriteVariants - 1);
-            string[] splitRSI = _spriteComponent.BaseRSIPath.Split(ResourcePath.SYSTEM_SEPARATOR);
             var baseName = new ResourcePath(_spriteComponent.BaseRSIPath).FilenameWithoutExtension;
 
             _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
