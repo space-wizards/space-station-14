@@ -1,0 +1,24 @@
+- type: entity
+  id: gravityGenerator
+  name: Gravity Generator
+  description: It's what keeps you to the floor.
+  components:
+    - type: Sprite
+      sprite: Buildings/gravity_generator.rsi
+      layers:
+        - state: on
+        - sprite: Buildings/gravity_generator_core.rsi
+          state: activated
+    - type: Icon
+      sprite: Buildings/gravity_generator.rsi
+      state: on
+    - type: SnapGrid
+      offset: Center
+    - type: PowerDevice
+    - type: Collidable
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-1.0,-1.0,1.0,1.0"
+          layer: 15
+    - type: Clickable
+    - type: GravityGenerator

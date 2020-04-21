@@ -21,7 +21,7 @@ namespace Content.Server.Throw
     {
         public static void Throw(IEntity thrownEnt, float throwForce, GridCoordinates targetLoc, GridCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
-            
+
 
             if (!thrownEnt.TryGetComponent(out CollidableComponent colComp))
                 return;
@@ -67,6 +67,14 @@ namespace Content.Server.Throw
             var spd = a / (1f / timing.TickRate); // acceleration is applied in 1 tick instead of 1 second, scale appropriately
 
             physComp.LinearVelocity = angle.ToVec() * spd;
+
+            if (throwSourceEnt != null)
+            {
+                var p = throwSourceEnt.GetComponent<PhysicsComponent>();
+                var playerAccel = 5 * throwForce / (float) Math.Max(0.001, p.Mass);
+                p.LinearVelocity = Angle.FromDegrees(angle.Degrees + 180).ToVec()
+                                   * playerAccel / (1f / timing.TickRate);
+            }
         }
     }
 }

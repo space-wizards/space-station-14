@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components;
+﻿using System;
+using System.Net;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
@@ -15,6 +17,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
@@ -28,6 +31,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -44,6 +48,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IRobustRandom _robustRandom;
         [Dependency] private readonly IConfigurationManager _configurationManager;
+        [Dependency] private readonly IEntityManager _entityManager;
 #pragma warning restore 649
 
         private AudioSystem _audioSystem;
@@ -130,13 +135,33 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
                 var mover = entity.GetComponent<IMoverComponent>();
                 var physics = entity.GetComponent<PhysicsComponent>();
+                var collider = entity.GetComponent<CollidableComponent>();
 
-                UpdateKinematics(entity.Transform, mover, physics);
+                UpdateKinematics(entity.Transform, mover, physics, collider);
             }
         }
 
-        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics)
+        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics, CollidableComponent collider)
         {
+            if (!_mapManager.GetGrid(transform.GridID).HasGravity)
+            {
+                // No gravity: is our entity touching anything?
+                var touching = false;
+                foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, 0.2f, true))
+                {
+                    if (entity.TryGetComponent<CollidableComponent>(out var otherCollider))
+                    {
+                        if (otherCollider.Owner == transform.Owner) continue; // Don't try to push off of yourself!
+                        touching |= ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
+                                     || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
+                                    && !entity.HasComponent<ItemComponent>(); // This can't be an item
+                    }
+                }
+                if (!touching)
+                {
+                    return;
+                }
+            }
             if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
             {
                 if (physics.LinearVelocity != Vector2.Zero)
