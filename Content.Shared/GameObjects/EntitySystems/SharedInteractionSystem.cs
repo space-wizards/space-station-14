@@ -16,10 +16,10 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SharedInteractionSystem : EntitySystem
     {
-#pragma warning disable 649
+        #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IPhysicsManager _physicsManager;
-#pragma warning restore 649
+        #pragma warning restore 649
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -46,20 +46,19 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (dir.LengthSquared.Equals(0f)) return true;
             if (range > 0f && !(dir.LengthSquared <= range * range)) return false;
-                    var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-                    var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt, true);
 
-                    if(!rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && rayResults.Distance < 1f))
-                    {
-                        _mapManager.TryFindGridAt(coords, out var mapGrid);
-                        var srcPos = mapGrid.MapToGrid(coords);
-                        var destPos = new GridCoordinates(otherCoords, mapGrid);
-                        if (srcPos.InRange(_mapManager, destPos, InteractionRange))
-                        {
-                            retVal = true;
-                        }
-                    }
-             
+            var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
+            var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt, true);
+            if(!rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && rayResults.Distance < 1f))
+            {
+                _mapManager.TryFindGridAt(coords, out var mapGrid);
+                var srcPos = mapGrid.MapToGrid(coords);
+                var destPos = new GridCoordinates(otherCoords, mapGrid);
+                if (srcPos.InRange(_mapManager, destPos, InteractionRange))
+                {
+                    retVal = true;
+                }
+            }
             return retVal;
         }
     }
