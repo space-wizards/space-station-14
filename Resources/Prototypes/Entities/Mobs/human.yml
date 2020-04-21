@@ -23,8 +23,6 @@
   - type: Stomach
     max_volume: 250
     digestionDelay: 20
-
-
   - type: Inventory
   - type: Constructor
   - type: Clickable
@@ -60,7 +58,6 @@
       color: "#e8b59b"
       sprite: Mob/human.rsi
       state: human_l_leg
-
     - shader: StencilClear
       sprite: Mob/human.rsi
       state: human_l_leg
@@ -69,10 +66,8 @@
       sprite: Mob/masking_helpers.rsi
       state: female_full
       visible: false
-
     - map: ["enum.Slots.INNERCLOTHING"]
       shader: StencilDraw
-
     - map: ["enum.HumanoidVisualLayers.LHand"]
       color: "#e8b59b"
       sprite: Mob/human.rsi
@@ -81,7 +76,6 @@
       color: "#e8b59b"
       sprite: Mob/human.rsi
       state: human_r_hand
-
     - map: ["enum.Slots.IDCARD"]
     - map: ["enum.Slots.GLOVES"]
     - map: ["enum.Slots.SHOES"]
@@ -100,24 +94,19 @@
     - map: ["enum.Slots.HEAD"]
     - map: ["hand-left"]
     - map: ["hand-right"]
-
   - type: Icon
     sprite: Mob/human.rsi
     state: human_basic
-
   - type: Physics
     mass: 85
-
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.35,-0.35,0.35,0.35"
       mask: 30
       layer: 4
-
   - type: Input
     context: "human"
-
   - type: Species
     Template: Human
     HeatResistance: 323
@@ -125,15 +114,12 @@
   - type: OverlayEffectsUI
   - type: HeatResistance
   - type: Damageable
-
   - type: Eye
     zoom: 0.5, 0.5
-
   - type: CameraRecoil
   - type: Appearance
     visuals:
     - type: SpeciesVisualizer2D
-
   - type: CombatMode
   - type: Teleportable
   - type: Examiner
