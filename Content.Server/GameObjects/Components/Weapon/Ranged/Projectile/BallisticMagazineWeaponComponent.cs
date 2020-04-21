@@ -21,6 +21,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
+    /// <summary>
+    ///      Guns that have a magazine.
+    /// </summary>
     [RegisterComponent]
     public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackBy, IMapInit
     {
@@ -46,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         [ViewVariables] private bool _autoEjectMagazine;
         [ViewVariables] private AppearanceComponent _appearance;
 
-        private static readonly Direction[] _randomBulletDirs =
+        private static readonly Direction[] RandomBulletDirs =
         {
             Direction.North,
             Direction.East,
@@ -54,12 +57,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             Direction.West
         };
 
-        protected override int ChamberCount => 1;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
             serializer.DataField(ref _magazineTypes, "magazines",
                 new List<BallisticMagazineType> {BallisticMagazineType.Unspecified});
             serializer.DataField(ref _defaultMagazine, "default_magazine", null);
@@ -72,7 +72,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         public override void Initialize()
         {
             base.Initialize();
-
             _appearance = Owner.GetComponent<AppearanceComponent>();
         }
 
@@ -80,57 +79,44 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         protected override void Startup()
         {
             base.Startup();
-
             _magazineSlot = ContainerManagerComponent.Ensure<ContainerSlot>("ballistic_gun_magazine", Owner);
-
             if (Magazine != null)
             {
                 // Already got magazine from loading a container.
-                Magazine.GetComponent<BallisticMagazineComponent>().OnAmmoCountChanged += _magazineAmmoCountChanged;
+                Magazine.GetComponent<BallisticMagazineComponent>().OnAmmoCountChanged += MagazineAmmoCountChanged;
             }
-
-            _updateAppearance();
+            UpdateAppearance();
         }
 
         public bool InsertMagazine(IEntity magazine, bool playSound = true)
         {
-            if (!magazine.TryGetComponent(out BallisticMagazineComponent component))
+            if (!magazine.TryGetComponent(out BallisticMagazineComponent magazinetype))
             {
                 throw new ArgumentException("Not a magazine", nameof(magazine));
             }
-
-            if (!MagazineTypes.Contains(component.MagazineType))
+            if (!MagazineTypes.Contains(magazinetype.MagazineType))
             {
                 throw new ArgumentException("Wrong magazine type", nameof(magazine));
             }
-
-            if (component.Caliber != Caliber)
-            {
-                throw new ArgumentException("Wrong caliber", nameof(magazine));
-            }
-
             if (!_magazineSlot.Insert(magazine))
             {
                 return false;
             }
-
             if (_magInSound != null)
             {
                 Owner.GetComponent<SoundComponent>().Play(_magInSound);
             }
-
-            component.OnAmmoCountChanged += _magazineAmmoCountChanged;
+            magazinetype.OnAmmoCountChanged += MagazineAmmoCountChanged;
             if (GetChambered(0) == null)
             {
                 // No bullet in chamber, load one from magazine.
-                var bullet = component.TakeBullet();
+                var bullet = magazinetype.TakeBullet();
                 if (bullet != null)
                 {
                     LoadIntoChamber(0, bullet);
                 }
             }
-
-            _updateAppearance();
+            UpdateAppearance();
             Dirty();
             return true;
         }
@@ -142,7 +128,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             {
                 return false;
             }
-
             if (_magazineSlot.Remove(entity))
             {
                 entity.Transform.GridPosition = Owner.Transform.GridPosition;
@@ -150,14 +135,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 {
                     Owner.GetComponent<SoundComponent>().Play(_magOutSound, AudioParams.Default.WithVolume(20));
                 }
-
-                _updateAppearance();
+                UpdateAppearance();
                 Dirty();
-                entity.GetComponent<BallisticMagazineComponent>().OnAmmoCountChanged -= _magazineAmmoCountChanged;
+                entity.GetComponent<BallisticMagazineComponent>().OnAmmoCountChanged -= MagazineAmmoCountChanged;
                 return true;
             }
-
-            _updateAppearance();
+            UpdateAppearance();
             Dirty();
             return false;
         }
@@ -168,9 +151,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
             // Eject chambered bullet.
             var entity = RemoveFromChamber(chamber);
+            if (entity == null)
+            {
+                return;
+            }
             var offsetPos = (CalcBulletOffset(), CalcBulletOffset());
             entity.Transform.GridPosition = Owner.Transform.GridPosition.Offset(offsetPos);
-            entity.Transform.LocalRotation = _bulletDropRandom.Pick(_randomBulletDirs).ToAngle();
+            entity.Transform.LocalRotation = _bulletDropRandom.Pick(RandomBulletDirs).ToAngle();
             var effect = $"/Audio/Guns/Casings/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
             Owner.GetComponent<SoundComponent>().Play(effect, AudioParams.Default.WithVolume(-3));
 
@@ -188,9 +175,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                     DoAutoEject();
                 }
             }
-
             Dirty();
-            _updateAppearance();
+            UpdateAppearance();
         }
 
         private float CalcBulletOffset()
@@ -206,7 +192,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             {
                 Owner.GetComponent<SoundComponent>().Play(_autoEjectSound, AudioParams.Default.WithVolume(-5));
             }
-
             Dirty();
         }
 
@@ -221,7 +206,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             {
                 Owner.PopupMessage(eventArgs.User, "No magazine");
             }
-
             return true;
         }
 
@@ -231,29 +215,26 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             {
                 return false;
             }
-
             if (Magazine != null)
             {
                 Owner.PopupMessage(eventArgs.User, "Already got a magazine.");
                 return false;
             }
-
-            if (!MagazineTypes.Contains(component.MagazineType) || component.Caliber != Caliber)
+            if (!MagazineTypes.Contains(component.MagazineType))
             {
                 Owner.PopupMessage(eventArgs.User, "Magazine doesn't fit.");
                 return false;
             }
-
             return InsertMagazine(eventArgs.AttackWith);
         }
 
-        private void _magazineAmmoCountChanged()
+        private void MagazineAmmoCountChanged()
         {
             Dirty();
-            _updateAppearance();
+            UpdateAppearance();
         }
 
-        private void _updateAppearance()
+        private void UpdateAppearance()
         {
             if (Magazine != null)
             {
@@ -273,15 +254,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         public override ComponentState GetComponentState()
         {
             var chambered = GetChambered(0) != null;
-
             (int, int)? count = null;
-
             if (Magazine != null)
             {
                 var magComponent = Magazine.GetComponent<BallisticMagazineComponent>();
                 count = (magComponent.CountLoaded, magComponent.Capacity);
             }
-
             return new BallisticMagazineWeaponComponentState(chambered, count);
         }
 

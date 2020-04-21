@@ -6,6 +6,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 
@@ -68,9 +69,9 @@ namespace Content.Client.GameObjects.Components.Sound
                 });
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, channel, session);
             switch (message)
             {
                 case ScheduledSoundMessage msg:

@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(StoreableComponent))]
-    public class ItemComponent : StoreableComponent, IAttackHand, IExAct
+    public class ItemComponent : StoreableComponent, IAttackHand, IExAct, IEquipped, IUnequipped
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -69,6 +69,16 @@ namespace Content.Server.GameObjects
             }
         }
 
+        public void Equipped(EquippedEventArgs eventArgs)
+        {
+            EquippedToSlot();
+        }
+
+        public void Unequipped(UnequippedEventArgs eventArgs)
+        {
+            RemovedFromSlot();
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -78,11 +88,16 @@ namespace Content.Server.GameObjects
 
         public bool CanPickup(IEntity user)
         {
-            var coords = Owner.Transform.GridPosition;
-
             if (!ActionBlockerSystem.CanPickup(user)) return false;
+
+            if (user.Transform.MapID != Owner.Transform.MapID)
+                return false;
+
+            var userPos = user.Transform.MapPosition;
+            var itemPos = Owner.Transform.WorldPosition;
+
             return _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .InRangeUnobstructed(coords, user.Transform.GridPosition, ignoredEnt:Owner);
+                .InRangeUnobstructed(userPos, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
         }
 
         public bool AttackHand(AttackHandEventArgs eventArgs)

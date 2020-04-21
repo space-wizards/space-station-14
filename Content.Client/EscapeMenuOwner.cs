@@ -5,7 +5,6 @@ using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.State;
-using Robust.Client.State.States;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Map;
@@ -41,7 +40,7 @@ namespace Content.Client
 
         private void StateManagerOnOnStateChanged(StateChangedEventArgs obj)
         {
-            if (obj.NewState is GameScreen)
+            if (obj.NewState is GameScreenBase)
             {
                 // Switched TO GameScreen.
                 _escapeMenu = new EscapeMenu(_clientConsole, _tileDefinitionManager, _placementManager,
@@ -52,7 +51,7 @@ namespace Content.Client
                 _inputManager.SetInputCommand(EngineKeyFunctions.EscapeMenu,
                     InputCmdHandler.FromDelegate(s => Enabled()));
             }
-            else if (obj.OldState is GameScreen)
+            else if (obj.OldState is GameScreenBase)
             {
                 // Switched FROM GameScreen.
                 _escapeMenu.Dispose();

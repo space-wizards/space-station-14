@@ -120,7 +120,6 @@ namespace Content.Client.GameObjects.Components.Doors
                     {
                         animPlayer.Play(OpenAnimation, AnimationKey);
                     }
-
                     break;
                 case DoorVisualState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");

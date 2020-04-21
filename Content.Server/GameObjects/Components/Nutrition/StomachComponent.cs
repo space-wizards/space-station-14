@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// <summary>
         /// Max volume of internal solution storage
         /// </summary>
-        public int MaxVolume
+        public ReagentUnit MaxVolume
         {
             get => _stomachContents.MaxVolume;
             set => _stomachContents.MaxVolume = value;
@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// Initial internal solution storage volume
         /// </summary>
         [ViewVariables]
-        private int _initialMaxVolume;
+        private ReagentUnit _initialMaxVolume;
 
         /// <summary>
         /// Time in seconds between reagents being ingested and them being transferred to <see cref="BloodstreamComponent"/>
@@ -64,26 +64,19 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _initialMaxVolume, "maxVolume", 100);
+            serializer.DataField(ref _initialMaxVolume, "maxVolume", ReagentUnit.New(100));
             serializer.DataField(ref _digestionDelay, "digestionDelay", 20);
         }
 
-
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
-            //Doesn't use Owner.AddComponent<>() to avoid cross-contamination (e.g. with blood or whatever they holds other solutions)
-            _stomachContents = new SolutionComponent();
-            _stomachContents.InitializeFromPrototype();
+            _stomachContents = Owner.GetComponent<SolutionComponent>();
             _stomachContents.MaxVolume = _initialMaxVolume;
-            _stomachContents.Owner = Owner; //Manually set owner to avoid crash when VV'ing this
-
-            //Ensure bloodstream in present
             if (!Owner.TryGetComponent<BloodstreamComponent>(out _bloodstream))
             {
                 Logger.Warning(_localizationManager.GetString(
-                        "StomachComponent entity does not have a BloodstreamComponent, which is required for it to function. Owner entity name: {0}",
-                        Owner.Name));
+                    "StomachComponent entity does not have a BloodstreamComponent, which is required for it to function. Owner entity name: {0}",
+                    Owner.Name));
             }
         }
 
@@ -141,10 +134,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private class ReagentDelta
         {
             public readonly string ReagentId;
-            public readonly int Quantity;
+            public readonly ReagentUnit Quantity;
             public float Lifetime { get; private set; }
 
-            public ReagentDelta(string reagentId, int quantity)
+            public ReagentDelta(string reagentId, ReagentUnit quantity)
             {
                 ReagentId = reagentId;
                 Quantity = quantity;

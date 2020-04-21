@@ -1,4 +1,4 @@
-using Content.Server.GameTicking.GameRules;
+﻿using Content.Server.GameTicking.GameRules;
 using Content.Server.Interfaces.GameTicking;
 using Robust.Shared.IoC;
 
@@ -15,6 +15,7 @@ namespace Content.Server.GameTicking.GamePresets
             _gameTicker.AddGameRule<RuleDeathMatch>();
         }
 
-        public override string Description => "Deathmatch, go and kill everybody else to win!";
+        public override string ModeTitle => "Deathmatch";
+        public override string Description => "Kill anything that moves!";
     }
 }

@@ -9,10 +9,11 @@
   - type: Icon
     texture: Objects/Chemistry/chemicals.rsi/beaker.png
   - type: Solution
+    fillingState: beaker
     maxVol: 50
     caps: 27
   - type: Pourable
-    transferAmount: 5
+    transferAmount: 5.0
 
 - type: entity
   name: Large Beaker
@@ -25,10 +26,11 @@
   - type: Icon
     texture: Objects/Chemistry/chemicals.rsi/beakerlarge.png
   - type: Solution
+    fillingState: beakerlarge
     maxVol: 100
     caps: 27
   - type: Pourable
-    transferAmount: 5
+    transferAmount: 5.0
 
 - type: entity
   name: Dropper
@@ -41,10 +43,12 @@
   - type: Icon
     texture: Objects/Chemistry/chemicals.rsi/dropper.png
   - type: Solution
+    fillingState: dropper
+    fillingSteps: 2
     maxVol: 5
     caps: 19
   - type: Pourable
-    transferAmount: 5
+    transferAmount: 5.0
 
 - type: entity
   name: Syringe
@@ -53,10 +57,12 @@
   id: Syringe
   components:
   - type: Sprite
-    texture: Objects/Chemistry/chemicals.rsi/syringeproj.png
+    texture: Objects/Chemistry/syringe.rsi/0.png
   - type: Icon
-    texture: Objects/Chemistry/chemicals.rsi/syringeproj.png
+    texture: Objects/Chemistry/syringe.rsi/0.png
   - type: Solution
+    fillingState: syringe
+    fillingSteps: 5
     maxVol: 15
     caps: 19
   - type: Injector

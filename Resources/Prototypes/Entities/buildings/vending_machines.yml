@@ -99,7 +99,7 @@
   - type: VendingMachine
     pack: Hot Drinks machine
   - type: Icon
-    sprite: Buildings/VendingMachines/dinnerware.rsi
+    sprite: Buildings/VendingMachines/coffee.rsi
 
 - type: entity
   parent: VendingMachine
@@ -109,7 +109,7 @@
   - type: VendingMachine
     pack: Robust Softdrinks
   - type: Icon
-    sprite: Buildings/VendingMachines/discount.rsi
+    sprite: Buildings/VendingMachines/cola.rsi
 
 - type: entity
   parent: VendingMachine

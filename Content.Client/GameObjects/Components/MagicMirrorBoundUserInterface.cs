@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Preferences.Appearance;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
@@ -126,9 +127,9 @@ namespace Content.Client.GameObjects.Components
             var vBox = new VBoxContainer();
             AddChild(vBox);
 
-            vBox.AddChild(_colorSliderR = new ColorSlider(NanoStyle.StyleClassSliderRed));
-            vBox.AddChild(_colorSliderG = new ColorSlider(NanoStyle.StyleClassSliderGreen));
-            vBox.AddChild(_colorSliderB = new ColorSlider(NanoStyle.StyleClassSliderBlue));
+            vBox.AddChild(_colorSliderR = new ColorSlider(StyleNano.StyleClassSliderRed));
+            vBox.AddChild(_colorSliderG = new ColorSlider(StyleNano.StyleClassSliderGreen));
+            vBox.AddChild(_colorSliderB = new ColorSlider(StyleNano.StyleClassSliderBlue));
 
             Action colorValueChanged = ColorValueChanged;
             _colorSliderR.OnValueChanged += colorValueChanged;

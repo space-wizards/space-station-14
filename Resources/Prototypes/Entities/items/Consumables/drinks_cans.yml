@@ -31,10 +31,11 @@
   description: A refreshing beverage.
   components:
   - type: Solution
+    maxVol: 20
     contents:
       reagents:
       - ReagentId: chem.Cola
-        Quantity: 4
+        Quantity: 20
   - type: Sprite
     sprite: Objects/Drinks/cola.rsi
   - type: Icon
@@ -61,11 +62,7 @@
   name: Ice tea can
   description: ''
   components:
-  - type: Solution
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+  - type: Drink    
   - type: Sprite
     sprite: Objects/Drinks/ice_tea_can.rsi
   - type: Icon
@@ -92,11 +89,7 @@
   name: Lemon-lime can
   description: You wanted ORANGE. It gave you Lemon Lime.
   components:
-  - type: Solution
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+  - type: Drink    
   - type: Sprite
     sprite: Objects/Drinks/lemon-lime.rsi
   - type: Icon
@@ -123,11 +116,7 @@
   name: Purple Can
   description: ''
   components:
-  - type: Solution
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+  - type: Drink    
   - type: Sprite
     sprite: Objects/Drinks/purple_can.rsi
   - type: Icon
@@ -154,11 +143,7 @@
   name: Space mountain wind can
   description: Blows right through you like a space wind.
   components:
-  - type: Solution
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+  - type: Drink    
   - type: Sprite
     sprite: Objects/Drinks/space_mountain_wind.rsi
   - type: Icon
@@ -185,11 +170,7 @@
   name: Space-up can
   description: Tastes like a hull breach in your mouth.
   components:
-  - type: Solution
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+  - type: Drink    
   - type: Sprite
     sprite: Objects/Drinks/space-up.rsi
   - type: Icon
@@ -216,11 +197,7 @@
   name: Starkist can
   description: The taste of a star in liquid form. And, a bit of tuna...?
   components:
-  - type: Solution
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+  - type: Drink    
   - type: Sprite
     sprite: Objects/Drinks/starkist.rsi
   - type: Icon
@@ -247,11 +224,7 @@
   name: Thirteen loko can
   description: The MBO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
-  - type: Solution
-    contents:
-      reagents:
-      - ReagentId: chem.H2O
-        Quantity: 4
+  - type: Drink    
   - type: Sprite
     sprite: Objects/Drinks/thirteen_loko.rsi
   - type: Icon

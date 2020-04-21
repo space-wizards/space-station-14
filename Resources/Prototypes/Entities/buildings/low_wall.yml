@@ -11,7 +11,7 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
-    color: "#71797a"
+    color: "#889192"
     drawdepth: Walls
     sprite: Buildings/low_wall.rsi
 
@@ -40,6 +40,6 @@
   abstract: true
   components:
   - type: Sprite
-    color: "#71797a"
+    color: "#889192"
     drawdepth: WallMountedItems
     sprite: Buildings/low_wall.rsi

@@ -1,5 +1,6 @@
 using Content.Client.Chat;
 using Content.Client.Interfaces;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -24,7 +25,6 @@ namespace Content.Client.UserInterface
         public LobbyCharacterPreviewPanel CharacterPreview { get; }
 
         public LobbyGui(IEntityManager entityManager,
-            ILocalizationManager localization,
             IResourceCache resourceCache,
             IClientPreferencesManager preferencesManager)
         {
@@ -69,8 +69,8 @@ namespace Content.Client.UserInterface
                         {
                             new Label
                             {
-                                Text = localization.GetString("Lobby"),
-                                StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
+                                Text = Loc.GetString("Lobby"),
+                                StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
                                 /*MarginBottom = 40,
                                 MarginLeft = 8,*/
                                 VAlign = Label.VAlignMode.Center
@@ -79,7 +79,7 @@ namespace Content.Client.UserInterface
                     },
                     (ServerName = new Label
                     {
-                        StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
+                        StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
                         /*MarginBottom = 40,
                         GrowHorizontal = GrowDirection.Both,*/
                         VAlign = Label.VAlignMode.Center,
@@ -88,8 +88,8 @@ namespace Content.Client.UserInterface
                     (LeaveButton = new Button
                     {
                         SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
-                        Text = localization.GetString("Leave"),
-                        StyleClasses = {NanoStyle.StyleClassButtonBig},
+                        Text = Loc.GetString("Leave"),
+                        StyleClasses = {StyleNano.StyleClassButtonBig},
                         //GrowHorizontal = GrowDirection.Begin
                     })
                 }
@@ -101,7 +101,7 @@ namespace Content.Client.UserInterface
             {
                 PanelOverride = new StyleBoxFlat
                 {
-                    BackgroundColor = NanoStyle.NanoGold,
+                    BackgroundColor = StyleNano.NanoGold,
                     ContentMarginTopOverride = 2
                 },
             });
@@ -115,7 +115,6 @@ namespace Content.Client.UserInterface
 
             CharacterPreview = new LobbyCharacterPreviewPanel(
                 entityManager,
-                localization,
                 preferencesManager)
             {
                 SizeFlagsHorizontal = SizeFlags.None
@@ -147,21 +146,21 @@ namespace Content.Client.UserInterface
                                         {
                                             (ObserveButton = new Button
                                             {
-                                                Text = localization.GetString("Observe"),
-                                                StyleClasses = {NanoStyle.StyleClassButtonBig}
+                                                Text = Loc.GetString("Observe"),
+                                                StyleClasses = {StyleNano.StyleClassButtonBig}
                                             }),
                                             (StartTime = new Label
                                             {
                                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                                                 Align = Label.AlignMode.Right,
                                                 FontColorOverride = Color.DarkGray,
-                                                StyleClasses = {NanoStyle.StyleClassLabelBig}
+                                                StyleClasses = {StyleNano.StyleClassLabelBig}
                                             }),
                                             (ReadyButton = new Button
                                             {
                                                 ToggleMode = true,
-                                                Text = localization.GetString("Ready Up"),
-                                                StyleClasses = {NanoStyle.StyleClassButtonBig}
+                                                Text = Loc.GetString("Ready Up"),
+                                                StyleClasses = {StyleNano.StyleClassButtonBig}
                                             }),
                                         }
                                     }
@@ -181,7 +180,7 @@ namespace Content.Client.UserInterface
                         {
                             (Chat = new ChatBox
                             {
-                                Input = {PlaceHolder = localization.GetString("Say something!")}
+                                Input = {PlaceHolder = Loc.GetString("Say something!")}
                             })
                         }
                     },
@@ -190,7 +189,7 @@ namespace Content.Client.UserInterface
 
             hBox.AddChild(new PanelContainer
             {
-                PanelOverride = new StyleBoxFlat {BackgroundColor = NanoStyle.NanoGold}, CustomMinimumSize = (2, 0)
+                PanelOverride = new StyleBoxFlat {BackgroundColor = StyleNano.NanoGold}, CustomMinimumSize = (2, 0)
             });
 
             {
@@ -201,7 +200,7 @@ namespace Content.Client.UserInterface
                     {
                         new NanoHeading
                         {
-                            Text = localization.GetString("Online Players"),
+                            Text = Loc.GetString("Online Players"),
                         },
                         new MarginContainer
                         {
@@ -217,7 +216,7 @@ namespace Content.Client.UserInterface
                         },
                         new NanoHeading
                         {
-                            Text = localization.GetString("Server Info"),
+                            Text = Loc.GetString("Server Info"),
                         },
                         new MarginContainer
                         {
@@ -228,7 +227,7 @@ namespace Content.Client.UserInterface
                             MarginBottomOverride = 2,
                             Children =
                             {
-                                (ServerInfo = new ServerInfo(localization))
+                                (ServerInfo = new ServerInfo())
                             }
                         },
                     }

@@ -1,6 +1,6 @@
 - type: entity
   id: table
-  name: "worktop"
+  name: "table"
   components:
   - type: Clickable
   - type: InteractionOutline

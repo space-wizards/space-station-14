@@ -2,6 +2,10 @@
   id: window
   name: Window
   description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -13,7 +17,7 @@
 
   - type: Icon
     sprite: Buildings/window.rsi
-    state: window0
+    state: full
 
   - type: Collidable
     shapes:
@@ -30,10 +34,6 @@
   - type: Window
     base: window
 
-  placement:
-    snap:
-    - Wall
-
 - type: entity
   id: rwindow
   name: Reinforced Window
@@ -48,4 +48,4 @@
 
   - type: Icon
     sprite: Buildings/rwindow.rsi
-    state: rwindow0
+    state: full

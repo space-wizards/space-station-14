@@ -47,6 +47,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             {
                 return;
             }
+            if (!Powered)
+                return;
 
             var wires = Owner.GetComponent<WiresComponent>();
             if (wires.IsPanelOpen)
@@ -121,6 +123,9 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            if (!Powered)
+                return;
+
             var message = serverMsg.Message;
             switch (message)
             {
@@ -166,8 +171,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
             Timer.Spawn(_animationDuration, () =>
             {
-                TrySetVisualState(VendingMachineVisualState.Normal);
                 _ejecting = false;
+                TrySetVisualState(VendingMachineVisualState.Normal);
                 Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPosition);
             });
         }

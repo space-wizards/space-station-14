@@ -19,11 +19,23 @@ namespace Content.Client.UserInterface
         private readonly int _headerFontSize = 14;
         private VBoxContainer VBox { get; }
 
-        private const string IntroContents = @"Hi and welcome to Space Station 14! This tutorial will assume that you know a bit about how SS13 plays. It's mostly intended to lay out the controls and their differences from SS13.
-";
-        private const string GameplayContents = @"Some notes on gameplay. To talk in OOC, prefix your chat message with \[ or /ooc. Death is currently show as a black circle around the player. You can respawn via the respawn button in the sandbox menu. Instead of intents, we have ""combat mode"". Check controls above for its keybind. You can't attack anybody with it off, so no more hitting yourself with your own crowbar.
-";
+        private const string IntroContents = @"Hi and welcome to Space Station 14! This tutorial will assume that you know a bit about how SS13 plays. It's mostly intended to lay out the controls and their differences from SS13.";
+        private const string GameplayContents = @"Some notes on gameplay. To talk in OOC, prefix your chat message with \[ or /ooc. Death is currently show as a black circle around the player. You can respawn via the respawn button in the sandbox menu. Instead of intents, we have ""combat mode"". Check controls above for its keybind. You can't attack anybody with it off, so no more hitting yourself with your own crowbar.";
         private const string FeedbackContents = @"If you have any feedback, questions, bug reports, etc..., do not be afraid to tell us! You can ask on Discord or heck, just write it in OOC! We'll catch it.";
+        private const string SandboxSpawnerContents = @"[color=#ffffff]Entitiy spawn panel options:[/color]
+[color=#a4885c]Default[/color] spawns small entities like mugs without aligning them to anything, while aligning block entities like walls to the grid.
+[color=#a4885c]PlaceFree[/color] spawns all entities without aligning them.
+[color=#a4885c]PlaceNearby[/color] limits the spawn radius to around 2 tiles.
+[color=#a4885c]SnapgridCenter[/color] aligns the entity to the middle of the tile.
+[color=#a4885c]SnapgridBorder[/color] aligns the entity to the border of the tile.
+[color=#ffffff]Grid aligned options:[/color]
+[color=#a4885c]AlignSimilar[/color] snaps the entity to similar entities. Currently broken.
+[color=#a4885c]AlignTileAny[/color] aligns the entity to the grid.
+[color=#a4885c]AlignTileEmpty[/color] target tile must be empty
+[color=#a4885c]AlignTileNonDense[/color] no colliders allowed in the target tile.
+[color=#a4885c]AlignTileDense[/color] colliders must be in the target tile.
+[color=#a4885c]AlignWall[/color] snaps to vertical halftiles.
+[color=#a4885c]AlignWallProper[/color] snaps the entity to the middle of the tile edges";
 
         protected override Vector2? CustomSize => (520, 580);
 
@@ -50,7 +62,7 @@ namespace Content.Client.UserInterface
             }
 
             //Controls
-            VBox.AddChild(new Label{FontOverride = headerFont, Text = "Controls"});
+            VBox.AddChild(new Label{FontOverride = headerFont, Text = "\nControls"});
 
             // Moved this down here so that Rider shows which args correspond to which format spot.
             AddFormattedText(Loc.GetString(@"Movement: [color=#a4885c]{0} {1} {2} {3}[/color]
@@ -71,8 +83,7 @@ Toggle UI: [color=#a4885c]{17}[/color]
 Toggle debug overlay: [color=#a4885c]{18}[/color]
 Toggle entity spawner: [color=#a4885c]{19}[/color]
 Toggle tile spawner: [color=#a4885c]{20}[/color]
-Toggle sandbox window: [color=#a4885c]{21}[/color]
-",
+Toggle sandbox window: [color=#a4885c]{21}[/color]",
                 Key(MoveUp), Key(MoveLeft), Key(MoveDown), Key(MoveRight),
                 Key(SwapHands),
                 Key(ActivateItemInHand),
@@ -94,11 +105,15 @@ Toggle sandbox window: [color=#a4885c]{21}[/color]
                 Key(OpenSandboxWindow)));
 
             //Gameplay
-            VBox.AddChild(new Label { FontOverride = headerFont, Text = "Gameplay" });
+            VBox.AddChild(new Label { FontOverride = headerFont, Text = Loc.GetString("\nSandbox spawner", Key(OpenSandboxWindow)) });
+            AddFormattedText(SandboxSpawnerContents);
+
+            //Gameplay
+            VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nGameplay" });
             AddFormattedText(GameplayContents);
 
             //Feedback
-            VBox.AddChild(new Label { FontOverride = headerFont, Text = "Feedback" });
+            VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nFeedback" });
             AddFormattedText(FeedbackContents);
         }
 
