@@ -1,5 +1,5 @@
 - type: entity
-  parent: ReagentItem
+  parent: BaseItem
   name: "Extra-Grip™ Mop"
   id: MopItem
   description: A mop that can't be stopped, viscera cleanup detail awaits.
@@ -10,36 +10,68 @@
     texture: Objects/Janitorial/mop.png
   - type: Item
     Size: 10
+  - type: Mop
   - type: Solution
     maxVol: 10
     caps: 1
+  - type: Sound
 
 - type: entity
-  parent: ReagentItem
+  parent: BaseItem
   name: Mop Bucket
   id: MopBucket
   description: Holds water and the tears of the janitor.
   components:
+  - type: Clickable
   - type: Sprite
     texture: Objects/Janitorial/mopbucket.png
+    drawdepth: Objects
   - type: Icon
     texture: Objects/Janitorial/mopbucket.png
   - type: Clickable
   - type: InteractionOutline
+  - type: Bucket
+  - type: Sound
   - type: Solution
     maxVol: 500
     caps: 3
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      mask: 3
+      layer: 1
+    IsScrapingFloor: true
+  - type: Physics
+    mass: 5
+    Anchored: false
+  - type: Sound
 
 - type: entity
-  parent: ReagentItem
+  parent: BaseItem
   name: Bucket
   id: Bucket
   description: "It's a bucket."
   components:
+  - type: Clickable
   - type: Sprite
     texture: Objects/Janitorial/bucket.png
+    drawdepth: Objects
   - type: Icon
     texture: Objects/Janitorial/bucket.png
+  - type: Bucket
+  - type: Sound
   - type: Solution
     maxVol: 500
     caps: 3
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      mask: 3
+      layer: 1
+    IsScrapingFloor: true
+  - type: Physics
+    mass: 5
+    Anchored: false
+  - type: Sound

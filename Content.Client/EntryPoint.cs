@@ -138,7 +138,11 @@ namespace Content.Client
                 "TransformableContainer",
                 "Mind",
                 "MovementSpeedModifier",
-                "StorageFill"
+                "StorageFill",
+                "Mop",
+                "Bucket",
+                "Puddle",
+                "CanSpill",
             };
 
             foreach (var ignoreName in registerIgnore)
