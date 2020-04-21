@@ -1,4 +1,5 @@
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Mobs;
 using Content.Server.Players;
 using Robust.Server.Interfaces.Console;
@@ -55,8 +56,13 @@ namespace Content.Server.Administration
                 return;
             }
 
+            var oldEntity = mind.CurrentEntity;
+
             mindComponent.Mind?.TransferTo(null);
             mind.TransferTo(target);
+
+            if(oldEntity.HasComponent<GhostComponent>())
+                oldEntity.Delete();
 
         }
     }

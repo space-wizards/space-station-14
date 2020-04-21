@@ -192,19 +192,8 @@
     - type: ComputerVisualizer2D
       key: generic_key
       screen: comm
-
-  - type: CargoConsole
-  - type: CargoOrderDatabase
-  - type: GalacticMarket
-    static: true
-    products:
-      - cargo.dice
-      - cargo.flashlight
-      - cargo.Medkit
+  - type: CommunicationsConsole
   - type: UserInterface
     interfaces:
-    - key: enum.CargoConsoleUiKey.Key
-      type: BodyScannerBoundUserInterface
-
-
-
+    - key: enum.CommunicationsConsoleUiKey.Key
+      type: CommunicationsConsoleBoundUserInterface

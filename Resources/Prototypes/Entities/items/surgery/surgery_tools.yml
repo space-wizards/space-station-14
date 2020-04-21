@@ -5,8 +5,9 @@
   desc: A surgical tool used to make incisions into flesh.
   components:
   - type: SurgeryTool
-    surgeryToolClass: incision
+    surgeryToolClass: Incision
     baseOperateTime: 3
+    
   - type: Sprite
     sprite: Objects/Surgery/scalpel.rsi
     state: scalpel
@@ -16,3 +17,5 @@
 
   - type: ItemCooldown
   - type: MeleeWeapon
+  
+  

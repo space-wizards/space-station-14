@@ -22,9 +22,6 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IMoverComponent))]
     public class PlayerInputMoverComponent : Component, IMoverComponent, ICollideSpecial
     {
-        public const float DefaultBaseWalkSpeed = 4.0f;
-        public const float DefaultBaseSprintSpeed = 7.0f;
-
 #pragma warning disable 649
         [Dependency] private readonly IConfigurationManager _configurationManager;
 #pragma warning restore 649
@@ -37,19 +34,6 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <inheritdoc />
         public override string Name => "PlayerInputMover";
 
-
-        /// <summary>
-        ///     Movement speed (m/s) that the entity walks, before modifiers
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseWalkSpeed { get; set; } = DefaultBaseWalkSpeed;
-
-        /// <summary>
-        ///     Movement speed (m/s) that the entity sprints, before modifiers
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseSprintSpeed { get; set; } = DefaultBaseSprintSpeed;
-
         /// <summary>
         ///     Movement speed (m/s) that the entity walks, after modifiers
         /// </summary>
@@ -58,12 +42,12 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                float speed = BaseWalkSpeed;
-                if (Owner.TryGetComponent<MovementSpeedModifierComponent>(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
                 {
-                    speed *= component.WalkSpeedModifier;
+                    return component.CurrentWalkSpeed;
                 }
-                return speed;
+
+                return MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             }
         }
         /// <summary>
@@ -74,12 +58,12 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                float speed = BaseSprintSpeed;
-                if (Owner.TryGetComponent<MovementSpeedModifierComponent>(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
                 {
-                    speed *= component.SprintSpeedModifier;
+                    return component.CurrentSprintSpeed;
                 }
-                return speed;
+
+                return MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
             }
         }
 
@@ -104,12 +88,6 @@ namespace Content.Server.GameObjects.Components.Movement
         /// </summary>
         [ViewVariables] public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>("game.diagonalmovement");
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
-        }
-
         /// <inheritdoc />
         public override void OnAdd()
         {
@@ -119,20 +97,6 @@ namespace Content.Server.GameObjects.Components.Movement
 
             base.OnAdd();
         }
-
-        /// <inheritdoc />
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            //only save the base speeds - the current speeds are transient.
-            serializer.DataReadWriteFunction("wspd", DefaultBaseWalkSpeed, value => BaseWalkSpeed = value, () => BaseWalkSpeed);
-            serializer.DataReadWriteFunction("rspd", DefaultBaseSprintSpeed, value => BaseSprintSpeed = value, () => BaseSprintSpeed);
-
-            // The velocity and moving directions is usually set from player or AI input,
-            // so we don't want to save/load these derived fields.
-        }
-
 
         /// <summary>
         ///     Toggles one of the four cardinal directions. Each of the four directions are

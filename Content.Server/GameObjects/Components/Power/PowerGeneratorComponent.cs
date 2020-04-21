@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// Power supply from this entity
         /// </summary>
         private float _supply = 1000; //arbitrary initial magic number to start
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float Supply
         {
             get => _supply;

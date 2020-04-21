@@ -9,6 +9,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
@@ -40,16 +41,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             FireHandler?.Invoke(user, clickLocation);
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, channel, session);
+
+            if (session == null)
+            {
+                throw new ArgumentNullException(nameof(session));
+            }
 
             switch (message)
             {
                 case SyncFirePosMessage msg:
-                    var playerMgr = IoCManager.Resolve<IPlayerManager>();
-                    var session = playerMgr.GetSessionByChannel(netChannel);
                     var user = session.AttachedEntity;
                     if (user == null)
                     {

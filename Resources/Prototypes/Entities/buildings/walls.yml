@@ -13,8 +13,10 @@
   - type: Sprite
     netsync: false
     drawdepth: Walls
+
   - type: Icon
     state: full
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -26,6 +28,7 @@
   - type: Occluder
     sizeX: 32
     sizeY: 32
+
   - type: SnapGrid
     offset: Center
 
@@ -282,7 +285,7 @@
   parent: base_wall
   components:
   - type: Sprite
-    color: "#71797a"
+    color: "#889192"
     sprite: Buildings/Walls/solid.rsi
   - type: Icon
     sprite: Buildings/Walls/solid.rsi

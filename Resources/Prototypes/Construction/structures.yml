@@ -19,7 +19,7 @@
   - material: Metal
     amount: 2
     reverse:
-      tool: Welder
+      tool: Wrench
 
 - type: construction
   name: Table
@@ -33,3 +33,65 @@
   steps:
   - material: Metal
     amount: 2
+
+- type: construction
+  name: Window
+  id: window
+  category: Structures
+  description: Clear.
+  icon:
+    sprite: Buildings/window.rsi
+    state: full
+  objecttype: Structure
+  result: window
+  placementmode: SnapgridCenter
+  steps:
+  - material: Glass
+    amount: 2
+
+- type: construction
+  name: Low Wall
+  id: low_wall
+  category: Structures
+  description: A low wall used for mounting windows.
+  icon:
+    sprite: Buildings/low_wall.rsi
+    state: metal
+  objecttype: Structure
+  result: low_wall
+  placementmode: SnapgridCenter
+  steps:
+  - material: Metal
+    amount: 2
+    icon: Buildings/wall_girder.png
+    reverse:
+      tool: Wrench
+
+  - material: Metal
+    amount: 2
+    reverse:
+      tool: Wrench
+
+- type: construction
+  name: Rein Window
+  id: rwindow
+  category: Structures
+  description: Clear but tough.
+  icon:
+    sprite: Buildings/rwindow.rsi
+    state: full
+  objecttype: Structure
+  result: rwindow
+  placementmode: SnapgridCenter
+  steps:
+  - material: Glass
+    amount: 2
+    reverse:
+      tool: Wrench
+
+# Should be replaced with Metal Rods when someone puts them in.
+  - material: Metal
+    amount: 2
+    reverse:
+      # Should be replaced with Wirecutter when someone makes it work.
+      tool: Wrench

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -12,7 +14,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Construction.ConstructionStepMaterial;
 using static Content.Shared.Construction.ConstructionStepTool;
@@ -34,6 +36,8 @@ namespace Content.Server.GameObjects.Components.Construction
 #pragma warning disable 649
         [Dependency] private IRobustRandom _random;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IServerNotifyManager _notifyManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         public override void Initialize()
@@ -49,8 +53,10 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             var playerEntity = eventArgs.User;
             var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: true))
+            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: Prototype.CanBuildInImpassable))
             {
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, playerEntity,
+                    _localizationManager.GetString("You can't reach there!"));
                 return false;
             }
 
@@ -108,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 Sprite.AddLayerWithSprite(prototype.Icon);
             }
-            
+
 
         }
 

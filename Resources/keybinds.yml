@@ -23,9 +23,9 @@ binds:
 - function: MoveDown
   type: State
   key: S
-#- function: Run
-#  type: State
-#  key: Shift
+- function: Run
+  type: State
+  key: Shift
 - function: ShowEscapeMenu
   type: State
   key: Escape

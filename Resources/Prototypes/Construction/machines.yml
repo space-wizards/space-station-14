@@ -5,6 +5,7 @@
   category: Machines
   description: A simple wall-mounted light fixture.
   placementmode: SnapgridBorder
+  canbuildinimpassable: true
   icon:
     sprite: Objects/Lighting/lighting.rsi
     state: on
@@ -16,6 +17,7 @@
     icon:
       sprite: Objects/Lighting/lighting.rsi
       state: construct
+
 
   - material: Cable
     amount: 1

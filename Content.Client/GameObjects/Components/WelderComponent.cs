@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
@@ -46,7 +47,7 @@ namespace Content.Client.GameObjects.Components
             public StatusControl(WelderComponent parent)
             {
                 _parent = parent;
-                _label = new RichTextLabel {StyleClasses = {NanoStyle.StyleClassItemStatus}};
+                _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
                 AddChild(_label);
 
                 parent._uiUpdateNeeded = true;

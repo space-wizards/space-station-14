@@ -57,18 +57,6 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
         /// <summary>
-        ///     Movement speed (m/s) that the entity walks, before modifiers
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseWalkSpeed { get; set; } = PlayerInputMoverComponent.DefaultBaseWalkSpeed;
-
-        /// <summary>
-        ///     Movement speed (m/s) that the entity sprints, before modifiers
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseSprintSpeed { get; set; } = PlayerInputMoverComponent.DefaultBaseSprintSpeed;
-
-        /// <summary>
         ///     Movement speed (m/s) that the entity walks, after modifiers
         /// </summary>
         [ViewVariables]
@@ -76,14 +64,15 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                float speed = BaseWalkSpeed;
-                if (Owner.TryGetComponent<MovementSpeedModifierComponent>(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
                 {
-                    speed *= component.WalkSpeedModifier;
+                    return component.CurrentWalkSpeed;
                 }
-                return speed;
+
+                return MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             }
         }
+
         /// <summary>
         ///     Movement speed (m/s) that the entity walks, after modifiers
         /// </summary>
@@ -92,12 +81,12 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                float speed = BaseSprintSpeed;
-                if (Owner.TryGetComponent<MovementSpeedModifierComponent>(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
                 {
-                    speed *= component.SprintSpeedModifier;
+                    return component.CurrentSprintSpeed;
                 }
-                return speed;
+
+                return MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
             }
         }
 

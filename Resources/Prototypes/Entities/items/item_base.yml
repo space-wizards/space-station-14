@@ -11,7 +11,7 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
-      mask: 26
+      mask: 0
       layer: 32
     IsScrapingFloor: true
   - type: Physics
