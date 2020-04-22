@@ -1,7 +1,7 @@
 # One bullet to bring them all into the darkness and bind them
 - type: entity
-  id: bullet_base
-  name: bullet_base
+  id: BulletBase
+  name: BulletBase
   description: If you can see this you're probably dead!
   abstract: true
   components:
@@ -28,13 +28,13 @@
 - type: entity
   id: ProjectileBullet
   name: ProjectileBullet
-  parent: bullet_base
+  parent: BulletBase
   abstract: true
 
 - type: entity
-  id: bullet_basef
+  id: BulletBaseFlash
   name: Base Bullet Flash
-  parent: bullet_base
+  parent: BulletBase
   abstract: true
   components:
   - type: Projectile
@@ -43,9 +43,9 @@
       Brute: 10
 
 - type: entity
-  id: bullet_basehv
+  id: BulletBaseHighVelocity
   name: Base Bullet High-Velocity
-  parent: bullet_base
+  parent: BulletBase
   abstract: true
   components:
   - type: Projectile
@@ -54,9 +54,9 @@
       Brute: 12
 
 - type: entity
-  id: bullet_basel
+  id: BulletBaseL
   name: Base Bullet L
-  parent: bullet_base
+  parent: BulletBase
   abstract: true
   components:
   - type: Projectile
@@ -65,9 +65,9 @@
       Brute: 10
 
 - type: entity
-  id: bullet_basep
+  id: BulletBasePractice
   name: Base Bullet Practice
-  parent: bullet_base
+  parent: BulletBase
   abstract: true
   components:
   - type: Projectile
@@ -76,9 +76,9 @@
       Brute: 0
 
 - type: entity
-  id: bullet_baser
+  id: BulletBaseRubber
   name: Base Bullet Rubber
-  parent: bullet_base
+  parent: BulletBase
   abstract: true
   components:
   - type: Projectile

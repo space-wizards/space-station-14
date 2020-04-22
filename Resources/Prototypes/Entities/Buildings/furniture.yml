@@ -1,0 +1,59 @@
+- type: entity
+  name: Stool
+  id: Stool
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Buildings/furniture.rsi
+    state: stool_base
+    color: "#8e9799"
+  - type: Icon
+    sprite: Buildings/furniture.rsi
+    state: stool_base
+
+- type: entity
+  name: White Office Chair
+  id: ChairOfficeLight
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Buildings/furniture.rsi
+    state: officechair_white
+  - type: Icon
+    sprite: Buildings/furniture.rsi
+    state: officechair_white
+
+- type: entity
+  name: Dark Office Chair
+  id: ChairOfficeDark
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Buildings/furniture.rsi
+    state: officechair_dark
+  - type: Icon
+    sprite: Buildings/furniture.rsi
+    state: officechair_dark
+
+- type: entity
+  name: Chair
+  id: Chair
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Buildings/furniture.rsi
+    state: chair
+    color: "#8e9799"
+  - type: Icon
+    sprite: Buildings/furniture.rsi
+    state: chair

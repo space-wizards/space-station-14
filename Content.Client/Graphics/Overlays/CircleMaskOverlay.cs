@@ -20,7 +20,7 @@ namespace Content.Client.Graphics.Overlays
         public CircleMaskOverlay() : base(nameof(CircleMaskOverlay))
         {
             IoCManager.InjectDependencies(this);
-            Shader = _prototypeManager.Index<ShaderPrototype>("circlemask").Instance();
+            Shader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();
         }
 
         protected override void Draw(DrawingHandleBase handle)

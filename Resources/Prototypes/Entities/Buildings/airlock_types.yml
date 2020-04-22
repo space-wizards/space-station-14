@@ -1,0 +1,83 @@
+- type: entity
+  parent: Airlock
+  id: airlock_external
+  name: External Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/airlock_external.rsi
+
+  - type: Icon
+    sprite: Buildings/airlock_external.rsi
+
+  - type: Appearance
+    visuals:
+    - type: AirlockVisualizer2D
+      open_sound: /Audio/machines/airlock_ext_open.ogg
+      close_sound: /Audio/machines/airlock_ext_close.ogg
+      deny_sound: /Audio/machines/airlock_deny.ogg
+    - type: WiresVisualizer2D
+
+- type: entity
+  parent: Airlock
+  id: airlock_engineering
+  name: Engineering Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/airlock_engineering.rsi
+
+  - type: Icon
+    sprite: Buildings/airlock_engineering.rsi
+
+- type: entity
+  parent: airlock_engineering
+  id: airlock_engineering_locked
+  name: Locked Engineering Airlock
+  components:
+  - type: AccessReader
+    required: ["engineering"]
+
+
+- type: entity
+  parent: Airlock
+  id: airlock_medical
+  name: Medical Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/airlock_medical.rsi
+
+  - type: Icon
+    sprite: Buildings/airlock_medical.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: airlock_medical_glass
+  name: Glass Medical Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/airlock_medical_glass.rsi
+
+  - type: Icon
+    sprite: Buildings/airlock_medical_glass.rsi
+
+
+- type: entity
+  parent: Airlock
+  id: airlock_science
+  name: Science Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/airlock_science.rsi
+
+  - type: Icon
+    sprite: Buildings/airlock_science.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: airlock_science_glass
+  name: Glass Science Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/airlock_science_glass.rsi
+
+  - type: Icon
+    sprite: Buildings/airlock_science_glass.rsi

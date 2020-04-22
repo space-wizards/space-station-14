@@ -27,7 +27,7 @@
   icon:
     sprite: Objects/Tools/flashlight.rsi
     state: lantern_off
-  product: crate_flashlight
+  product: CrateFlashlights
   cost: 3000
   category: Engineering
   group: market
@@ -39,7 +39,7 @@
   icon:
     sprite: Objects/Lighting/light_tube.rsi
     state: normal
-  product: crate_light_bulb
+  product: CrateLightBulb
   cost: 200
   category: Engineering
   group: market
@@ -49,7 +49,7 @@
   id: cargo.fireextinguisher
   description: Puts out fires. Or propels you in space.
   icon: Objects/Misc/fire_extinguisher.png
-  product: crate_fire_extinguisher
+  product: CrateFireExtinguisher
   cost: 300
   category: Other
   group: market
@@ -61,7 +61,7 @@
   icon:
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
-  product: crate_pen
+  product: CratePen
   cost: 10
   category: Other
   group: market
@@ -73,7 +73,7 @@
   icon:
     sprite: Objects/Fun/bikehorn.rsi
     state: icon
-  product: crate_bikehorn
+  product: CrateBikeHorn
   cost: 300
   category: Other
   group: market
@@ -85,7 +85,7 @@
   icon:
     sprite: Objects/Melee/cleaver.rsi
     state: butch
-  product: crate_cleaver
+  product: CrateCleaver
   cost: 300
   category: Other
   group: blackmarket
@@ -95,7 +95,7 @@
   id: cargo.fueltank
   description: Movable fuel tank for welders. No boom boom.
   icon: Buildings/weldtank.png
-  product: crate_fueltank
+  product: CrateFuelTank
   cost: 200
   category: Engineering
   group: market
@@ -107,7 +107,7 @@
   icon:
     sprite: Buildings/medical_scanner.rsi
     state: scanner_open
-  product: crate_medscanner
+  product: CrateMedicalScanner
   cost: 400
   category: Medical
   group: market
@@ -117,7 +117,7 @@
   id: cargo.glass
   description: 50 sheets of glass.
   icon: Objects/Materials/sheet_glass.png
-  product: crate_glass
+  product: CrateGlass
   cost: 50
   category: Engineering
   group: market
@@ -127,7 +127,7 @@
   id: cargo.cable
   description: 50 coils of cable.
   icon: Objects/Tools/cable_coil.png
-  product: crate_cable
+  product: CrateCable
   cost: 50
   category: Engineering
   group: market
