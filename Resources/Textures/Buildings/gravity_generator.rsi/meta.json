@@ -10,6 +10,14 @@
         {
             "name":"on",
             "directions": 1
+        },
+        {
+            "name": "off",
+            "directions": 1
+        },
+        {
+            "name": "broken",
+            "directions": 1
         }
     ]
 }
