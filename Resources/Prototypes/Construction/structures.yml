@@ -26,7 +26,7 @@
   id: Table
   category: Structures
   icon:
-    sprite: Buildings/table_solid.rsi
+    sprite: Buildings/tables.rsi
     state: plain_preview
   result: Table
   placementmode: SnapgridCenter

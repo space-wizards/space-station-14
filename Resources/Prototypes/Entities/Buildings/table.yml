@@ -7,10 +7,10 @@
   - type: PlaceableSurface
   - type: Sprite
     netsync: false
-    sprite: Buildings/table_solid.rsi
+    sprite: Buildings/tables.rsi
 
   - type: Icon
-    sprite: Buildings/table_solid.rsi
+    sprite: Buildings/tables.rsi
     state: plain_preview
 
   - type: Collidable
@@ -24,6 +24,19 @@
   - type: IconSmooth
     key: tables
     base: solid_
+
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 50
+    spawnondestroy: TableParts
+
+- type: entity
+  id: TableWood
+  parent: Table
+  name: "wood table"
+  components:
+  - type: IconSmooth
+    base: wood_
 
   - type: Damageable
   - type: Destructible

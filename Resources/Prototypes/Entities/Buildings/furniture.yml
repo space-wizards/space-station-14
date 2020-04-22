@@ -14,6 +14,17 @@
     state: stool_base
 
 - type: entity
+  name: bar stool
+  id: StoolBar
+  parent: Stool
+  components:
+  - type: Sprite
+    state: bar_stool
+    color: "white"
+  - type: Icon
+    state: bar_stool
+
+- type: entity
   name: White Office Chair
   id: ChairOfficeLight
   components:
@@ -57,3 +68,15 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: chair
+
+
+- type: entity
+  name: Wooden Chair
+  id: ChairWood
+  parent: Chair
+  components:
+  - type: Sprite
+    state: wooden_chair
+    color: "white"
+  - type: Icon
+    state: wooden_chair
