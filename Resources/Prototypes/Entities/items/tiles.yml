@@ -20,6 +20,27 @@
     max: 8
 
 - type: entity
+  name: Wood Floor Tile
+  parent: BaseItem
+  id: FloorTileItemWood
+  description: Those could work as a pretty decent throwing weapon.
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_wood
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_wood
+  - type: Item
+    Size: 25
+  - type: FloorTile
+    output: floor_wood
+  - type: Stack
+    stacktype: FloorTileWood
+    count: 1
+    max: 8
+
+- type: entity
   name: White Floor Tile
   parent: BaseItem
   id: FloorTileItemWhite
