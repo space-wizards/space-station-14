@@ -287,7 +287,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
-    public sealed class InteractionSystem : EntitySystem
+    public sealed class InteractionSystem : SharedInteractionSystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -308,38 +308,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 new PointerInputCmdHandler(HandleActivateItemInWorld));
         }
 
-        /// <summary>
-        ///     Checks that these coordinates are within a certain distance without any
-        ///     entity that matches the collision mask obstructing them.
-        ///     If the <paramref name="range"/> is zero or negative,
-        ///     this method will only check if nothing obstructs the two sets of coordinates..
-        /// </summary>
-        /// <param name="coords">Set of coordinates to use.</param>
-        /// <param name="otherCoords">Other set of coordinates to use.</param>
-        /// <param name="range">maximum distance between the two sets of coordinates.</param>
-        /// <param name="collisionMask">the mask to check for collisions</param>
-        /// <param name="ignoredEnt">the entity to be ignored when checking for collisions.</param>
-        /// <param name="mapManager">Map manager containing the two GridIds.</param>
-        /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
-        /// <returns>True if the two points are within a given range without being obstructed.</returns>
-        public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,
-            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null, bool insideBlockerValid = false)
-        {
-            var dir = otherCoords - coords.Position;
 
-            if (dir.LengthSquared.Equals(0f))
-                return true;
-
-            if (range > 0f && !(dir.LengthSquared <= range*range))
-                return false;
-
-            var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt, true);
-
-
-
-            return !rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && rayResults.Distance < 1f);
-        }
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {

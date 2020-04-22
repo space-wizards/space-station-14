@@ -123,6 +123,10 @@ namespace Content.Shared.GameObjects.Components
         Cable,
         Ointment,
         Brutepack,
-        FloorTileSteel
+        FloorTileSteel,
+        FloorTileCarpet,
+        FloorTileWhite,
+        FloorTileDark,
+        FloorTileWood
     }
 }
