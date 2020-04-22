@@ -1,36 +1,54 @@
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent: Component, IAttackBy
+    public class GravityGeneratorComponent: Component, IAttackBy, IBreakAct
     {
 
         private PowerDeviceComponent _powerDevice;
 
         private SpriteComponent _sprite;
 
-        private bool Powered => true;
+        private bool _switchedOn;
 
-        public GravityGeneratorStatus Status
+        private bool _intact;
+
+        private GravityGeneratorStatus _status;
+
+        public bool Powered => _powerDevice.Powered;
+
+        public bool SwitchedOn => _switchedOn;
+
+        public bool Intact => _intact;
+
+        public GravityGeneratorStatus Status => _status;
+
+        public bool NeedsUpdate
         {
             get
             {
-                if (!Intact) return GravityGeneratorStatus.Broken;
-                if (!Powered) return GravityGeneratorStatus.Unpowered;
-                if (!SwitchedOn) return GravityGeneratorStatus.Off;
-                return GravityGeneratorStatus.On;
+                switch (_status)
+                {
+                    case GravityGeneratorStatus.On:
+                        return !(Powered && SwitchedOn && Intact);
+                    case GravityGeneratorStatus.Off:
+                        return SwitchedOn || !(Powered && Intact);
+                    case GravityGeneratorStatus.Unpowered:
+                        return SwitchedOn || Powered || !Intact;
+                    case GravityGeneratorStatus.Broken:
+                        return SwitchedOn || Powered || Intact;
+                    default:
+                        return true; // This _should_ be unreachable
+                }
             }
         }
 
-        public bool SwitchedOn = true;
-
-        public bool Intact = true;
         public override string Name => "GravityGenerator";
 
         public override void Initialize()
@@ -39,14 +57,17 @@ namespace Content.Server.GameObjects.Components.Gravity
 
             _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
             _sprite = Owner.GetComponent<SpriteComponent>();
+            _switchedOn = true;
+            _intact = true;
+            _status = GravityGeneratorStatus.On;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref SwitchedOn, "switched_on", true);
-            serializer.DataField(ref Intact, "intact", true);
+            serializer.DataField(ref _switchedOn, "switched_on", true);
+            serializer.DataField(ref _intact, "intact", true);
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)
@@ -55,9 +76,62 @@ namespace Content.Server.GameObjects.Components.Gravity
             return false;
         }
 
-        public void UpdateSprite()
+        public void OnBreak(BreakageEventArgs eventArgs)
         {
+            _intact = false;
+        }
 
+        public void UpdateState()
+        {
+            if (!Intact)
+            {
+                MakeBroken();
+            } else if (!Powered)
+            {
+                MakeUnpowered();
+            } else if (!SwitchedOn)
+            {
+                MakeOff();
+            } else
+            {
+                MakeOn();
+            }
+        }
+
+        private void MakeBroken()
+        {
+            _status = GravityGeneratorStatus.Broken;
+            _sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(
+                ResourcePath.FromRelativeSystemPath("Buildings/gravity_generator.rsi"),
+                "broken"));
+            _sprite.LayerSetVisible(1, false);
+        }
+
+        private void MakeUnpowered()
+        {
+            _status = GravityGeneratorStatus.Unpowered;
+            _sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(
+                ResourcePath.FromRelativeSystemPath("Buildings/gravity_generator.rsi"),
+                "off"));
+            _sprite.LayerSetVisible(1, false);
+        }
+
+        private void MakeOff()
+        {
+            _status = GravityGeneratorStatus.Off;
+            _sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(
+                ResourcePath.FromRelativeSystemPath("Buildings/gravity_generator.rsi"),
+                "off"));
+            _sprite.LayerSetVisible(1, false);
+        }
+
+        private void MakeOn()
+        {
+            _status = GravityGeneratorStatus.On;
+            _sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(
+                ResourcePath.FromRelativeSystemPath("Buildings/gravity_generator.rsi"),
+                "on"));
+            _sprite.LayerSetVisible(1, true);
         }
     }
 
