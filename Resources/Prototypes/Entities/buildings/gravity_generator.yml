@@ -15,10 +15,16 @@
     - type: SnapGrid
       offset: Center
     - type: PowerDevice
+      load: 500
     - type: Collidable
       shapes:
         - !type:PhysShapeAabb
           bounds: "-1.0,-1.0,1.0,1.0"
           layer: 15
     - type: Clickable
+    - type: Damageable
+    - type: Breakable
+      threshold: 150
     - type: GravityGenerator
+  placement:
+    mode: AlignTileAny
