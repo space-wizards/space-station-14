@@ -19,12 +19,17 @@
     - type: Collidable
       shapes:
         - !type:PhysShapeAabb
-          bounds: "-1.0,-1.0,1.0,1.0"
+          bounds: "-1.5,-1.5,1.5,1.5"
           layer: 15
     - type: Clickable
+    - type: InteractionOutline
     - type: Damageable
     - type: Breakable
       threshold: 150
     - type: GravityGenerator
+    - type: UserInterface
+      interfaces:
+        - key: enum.GravityGeneratorUiKey.Key
+          type: GravityGeneratorBoundUserInterface
   placement:
     mode: AlignTileAny

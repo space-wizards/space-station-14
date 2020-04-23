@@ -1,6 +1,13 @@
+using System;
+using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Gravity;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -8,8 +15,9 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent: Component, IAttackBy, IBreakAct
+    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IAttackBy, IBreakAct, IAttackHand
     {
+        private BoundUserInterface _userInterface;
 
         private PowerDeviceComponent _powerDevice;
 
@@ -55,6 +63,9 @@ namespace Content.Server.GameObjects.Components.Gravity
         {
             base.Initialize();
 
+            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
+                .GetBoundUserInterface(GravityGeneratorUiKey.Key);
+            _userInterface.OnReceiveMessage += HandleUIMessage;
             _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
             _sprite = Owner.GetComponent<SpriteComponent>();
             _switchedOn = true;
@@ -70,15 +81,41 @@ namespace Content.Server.GameObjects.Components.Gravity
             serializer.DataField(ref _intact, "intact", true);
         }
 
+        bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent<IActorComponent>(out var actor))
+                return false;
+            if (Status != GravityGeneratorStatus.Off && Status != GravityGeneratorStatus.On)
+            {
+                return false;
+            }
+            OpenUserInterface(actor.playerSession);
+            return true;
+        }
+
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            // TODO: Open UI if powered to flip the generator on or off, screw open to repair if broken
-            return false;
+            if (!eventArgs.AttackWith.TryGetComponent<WelderComponent>(out var welder)) return false;
+            if (welder.Activated && welder.Fuel >= 5)
+            {
+                // Repair generator
+                var damagable = Owner.GetComponent<DamageableComponent>();
+                var breakable = Owner.GetComponent<BreakableComponent>();
+                damagable.HealAllDamage();
+                breakable.broken = false;
+                _intact = true;
+                welder.Fuel -= 5;
+                return true;
+            } else
+            {
+                return false;
+            }
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)
         {
             _intact = false;
+            _switchedOn = false;
         }
 
         public void UpdateState()
@@ -96,6 +133,27 @@ namespace Content.Server.GameObjects.Components.Gravity
             {
                 MakeOn();
             }
+        }
+
+        private void HandleUIMessage(ServerBoundUserInterfaceMessage message)
+        {
+            switch (message.Message)
+            {
+                case GeneratorStatusRequestMessage _:
+                    _userInterface.SendMessage(new GeneratorStatusMessage(Status == GravityGeneratorStatus.On));
+                    break;
+                case SwitchGeneratorMessage msg:
+                    _switchedOn = msg.On;
+                    UpdateState();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void OpenUserInterface(IPlayerSession playerSession)
+        {
+            _userInterface.Open(playerSession);
         }
 
         private void MakeBroken()
