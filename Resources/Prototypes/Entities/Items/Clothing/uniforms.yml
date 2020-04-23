@@ -26,24 +26,6 @@
 
 - type: entity
   parent: UniformBase
-  id: UniformGrey
-  name: Grey Jumpsuit
-  description: Greytide. Worldwide.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/uniform_grey.rsi
-    state: grey
-
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_grey.rsi
-    state: grey
-
-  - type: Clothing
-    sprite: Clothing/Uniforms/uniform_grey.rsi
-
-
-- type: entity
-  parent: UniformBase
   id: UniformEngineering
   name: Engineering Jumpsuit
   components:
