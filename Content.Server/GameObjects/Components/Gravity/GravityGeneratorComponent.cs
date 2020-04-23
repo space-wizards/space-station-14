@@ -71,6 +71,7 @@ namespace Content.Server.GameObjects.Components.Gravity
             _switchedOn = true;
             _intact = true;
             _status = GravityGeneratorStatus.On;
+            UpdateState();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
