@@ -176,6 +176,23 @@
 
 - type: entity
   parent: IDCardStandard
+  id: BartenderIDCard
+  name: Bartender ID Card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idbartender
+  - type: Icon
+    state: idbartender
+  - type: IdCard
+    jobTitle: Bartender
+  - type: Access
+    tags: ["maintenance", "service"]
+
+- type: entity
+  parent: IDCardStandard
   id: HoPIDCard
   name: Head of Personnel ID Card
   components:
