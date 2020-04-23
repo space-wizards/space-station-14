@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                _gridsToShake[gridId] += shakeTimes;
+                _gridsToShake[gridId] = shakeTimes;
             }
             // Play the gravity sound
             foreach (var player in _playerManager.GetAllPlayers())
