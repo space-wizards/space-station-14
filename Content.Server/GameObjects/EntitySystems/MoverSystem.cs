@@ -143,8 +143,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics, CollidableComponent collider)
         {
-            if (!_mapManager.GetGrid(transform.GridID).HasGravity)
+            bool weightless = false;
+
+            var tile = _mapManager.GetGrid(transform.GridID).GetTileRef(transform.GridPosition).Tile;
+
+            if (!_mapManager.GetGrid(transform.GridID).HasGravity || tile.IsEmpty)
             {
+                weightless = true;
                 // No gravity: is our entity touching anything?
                 var touching = false;
                 foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, 0.2f, true))
@@ -172,6 +177,9 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
+
+                // Don't handle footsteps if we're weightless
+                if (weightless) return;
 
                 // Handle footsteps.
                 if (_mapManager.GridExists(mover.LastPosition.GridID))
