@@ -65,32 +65,6 @@
 
 - type: entity
   parent: OuterclothingBase
-  id: OuterclothingArmor
-  name: Armor
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/armor.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/armor.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/armor.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingArmorsec
-  name: Security armor
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/armorsec.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/armorsec.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/armorsec.rsi
-
-- type: entity
-  parent: OuterclothingBase
   id: OuterclothingArmorreflec
   name: Armor (reflective)
   description: ''
