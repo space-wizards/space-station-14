@@ -18,7 +18,6 @@ namespace Content.Client.GameObjects.Components.Gravity
 
         public GravityGeneratorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base (owner, uiKey)
         {
-            Console.WriteLine("User interface created!");
             SendMessage(new SharedGravityGeneratorComponent.GeneratorStatusRequestMessage());
         }
 
