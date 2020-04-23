@@ -1,10 +1,14 @@
 ﻿using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
 using Content.Server.Players;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -81,12 +85,24 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
                 else
                 {
-                    var ghost = Owner.EntityManager.SpawnEntity("MobObserver", Owner.Transform.GridPosition);
-                    ghost.Name = Mind.CharacterName;
+                    var spawnPosition = Owner.Transform.GridPosition;
+                    Timer.Spawn(0, () =>
+                    {
+                        // Async this so that we don't throw if the grid we're on is being deleted.
+                        var mapMan = IoCManager.Resolve<IMapManager>();
 
-                    var ghostComponent = ghost.GetComponent<GhostComponent>();
-                    ghostComponent.CanReturnToBody = false;
-                    Mind.TransferTo(ghost);
+                        if (!mapMan.GridExists(spawnPosition.GridID))
+                        {
+                            spawnPosition = IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
+                        }
+
+                        var ghost = Owner.EntityManager.SpawnEntity("MobObserver", spawnPosition);
+                        ghost.Name = Mind.CharacterName;
+
+                        var ghostComponent = ghost.GetComponent<GhostComponent>();
+                        ghostComponent.CanReturnToBody = false;
+                        Mind.TransferTo(ghost);
+                    });
                 }
             }
         }
