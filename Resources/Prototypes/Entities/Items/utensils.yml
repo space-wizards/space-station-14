@@ -36,7 +36,7 @@
   parent: UtensilBase
   id: Spoon
   name: spoon
-  desc: There is no spoon.
+  description: There is no spoon.
   components:
   - type: Sprite
     state: spoon
@@ -48,7 +48,7 @@
   parent: UtensilBase
   id: SpoonPlastic
   name: plastic spoon
-  desc: There is no spoon.
+  description: There is no spoon.
   components:
   - type: Sprite
     state: plastic_spoon
