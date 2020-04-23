@@ -135,24 +135,29 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
                 var mover = entity.GetComponent<IMoverComponent>();
                 var physics = entity.GetComponent<PhysicsComponent>();
-                var collider = entity.GetComponent<CollidableComponent>();
-
-                UpdateKinematics(entity.Transform, mover, physics, collider);
+                if (entity.TryGetComponent<CollidableComponent>(out var collider))
+                {
+                    UpdateKinematics(entity.Transform, mover, physics, collider);
+                }
+                else
+                {
+                    UpdateKinematics(entity.Transform, mover, physics);
+                }
             }
         }
 
-        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics, CollidableComponent collider)
+        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics, CollidableComponent collider = null)
         {
             bool weightless = false;
 
             var tile = _mapManager.GetGrid(transform.GridID).GetTileRef(transform.GridPosition).Tile;
 
-            if (!_mapManager.GetGrid(transform.GridID).HasGravity || tile.IsEmpty)
+            if ((!_mapManager.GetGrid(transform.GridID).HasGravity || tile.IsEmpty) && collider != null)
             {
                 weightless = true;
                 // No gravity: is our entity touching anything?
                 var touching = false;
-                foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, 0.2f, true))
+                foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
                 {
                     if (entity.TryGetComponent<CollidableComponent>(out var otherCollider))
                     {
@@ -175,11 +180,15 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
+                if (weightless)
+                {
+                    physics.LinearVelocity = mover.VelocityDir * mover.CurrentPushSpeed;
+                    transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
+                    return;
+                }
+
                 physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
-
-                // Don't handle footsteps if we're weightless
-                if (weightless) return;
 
                 // Handle footsteps.
                 if (_mapManager.GridExists(mover.LastPosition.GridID))
