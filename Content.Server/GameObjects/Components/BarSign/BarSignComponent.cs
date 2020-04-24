@@ -56,10 +56,12 @@ namespace Content.Server.GameObjects.Components.BarSign
             if (!_power.Powered)
             {
                 _sprite.LayerSetState(0, "empty");
+                _sprite.LayerSetShader(0, "shaded");
             }
             else
             {
                 _sprite.LayerSetState(0, prototype.Icon);
+                _sprite.LayerSetShader(0, "unshaded");
             }
 
             if (!string.IsNullOrEmpty(prototype.Name))
