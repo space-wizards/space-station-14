@@ -49,12 +49,12 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
             var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate, true);
-            if(!rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && rayResults.Distance < 1f))
+            if(!rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && (rayResults.HitPos - otherCoords).Length < 1f))
             {
                 _mapManager.TryFindGridAt(coords, out var mapGrid);
                 var srcPos = mapGrid.MapToGrid(coords);
                 var destPos = new GridCoordinates(otherCoords, mapGrid);
-                if (srcPos.InRange(_mapManager, destPos, InteractionRange))
+                if (srcPos.InRange(_mapManager, destPos, range))
                 {
                     return true;
                 }
