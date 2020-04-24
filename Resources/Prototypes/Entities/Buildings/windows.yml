@@ -28,7 +28,7 @@
   - type: SnapGrid
     offset: Center
   - type: Window
-    base: Window
+    base: window
 
 - type: entity
   id: ReinforcedWindow
@@ -39,7 +39,7 @@
     drawdepth: WallTops
     sprite: Buildings/rwindow.rsi
   - type: Window
-    base: ReinforcedWindow
+    base: rwindow
   - type: Icon
     sprite: Buildings/rwindow.rsi
     state: full
