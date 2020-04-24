@@ -1,15 +1,21 @@
 - type: entity
   parent: BaseItem
-  name: "Extra-Grip™ Mop"
+  name: mop
   id: MopItem
   description: A mop that can't be stopped, viscera cleanup detail awaits.
   components:
   - type: Sprite
-    texture: Objects/Janitorial/mop.png
+    sprite: Objects/Janitorial/mop.rsi
+    state: mop
+
   - type: Icon
-    texture: Objects/Janitorial/mop.png
+    sprite: Objects/Janitorial/mop.rsi
+    state: mop
+
   - type: Item
     Size: 10
+    sprite: Objects/Janitorial/mop.rsi
+
   - type: Mop
   - type: Solution
     maxVol: 10
@@ -49,9 +55,9 @@
 
 - type: entity
   parent: BaseItem
-  name: Bucket
+  name: bucket
   id: Bucket
-  description: "It's a bucket."
+  description: "Dear God."
   components:
   - type: Clickable
   - type: Sprite
@@ -75,3 +81,22 @@
     mass: 5
     Anchored: false
   - type: Sound
+
+
+- type: entity
+  name: wet floor sign
+  id: WetFloorSign
+  parent: BaseItem
+  description: Caution! Wet Floor!
+  components:
+  - type: Sprite
+    sprite: Objects/Janitorial/wet_floor_sign.rsi
+    state: caution
+
+  - type: Icon
+    sprite: Objects/Janitorial/wet_floor_sign.rsi
+    state: caution
+
+  - type: Item
+    sprite: Objects/Janitorial/wet_floor_sign.rsi
+
