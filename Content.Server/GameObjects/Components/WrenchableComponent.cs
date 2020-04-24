@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class Wrenchable : Component, IAttackBy
+    public class WrenchableComponent : Component, IAttackBy
     {
         public override string Name => "Wrenchable";
         private AudioSystem _audioSystem;
