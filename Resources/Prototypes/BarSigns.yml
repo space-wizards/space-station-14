@@ -166,6 +166,12 @@
   icon: "goose"
   description: "Drink till you puke and/or break the laws of reality!"
 
+- type: barSign
+  id: EngineChange
+  name: "The Engine Change"
+  icon: "enginechange"
+  description: "Still waiting."
+
 # Hidden signs list below this point
 - type: barSign
   id: EmpBarSign
