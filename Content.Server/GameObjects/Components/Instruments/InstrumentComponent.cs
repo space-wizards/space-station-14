@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
         /// </summary>
-        private INetChannel _instrumentPlayer;
+        private ICommonSession _instrumentPlayer;
         private bool _handheld;
 
         [ViewVariables]
@@ -49,8 +49,9 @@ namespace Content.Server.GameObjects.Components.Instruments
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
+
             // If the client that sent the message isn't the client playing this instrument, we ignore it.
-            if (channel != _instrumentPlayer) return;
+            if (session != _instrumentPlayer) return;
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMsg:
@@ -79,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
             if (session == null) return;
 
-            _instrumentPlayer = session.ConnectedClient;
+            _instrumentPlayer = session;
         }
 
         public void HandDeselected(HandDeselectedEventArgs eventArgs)
@@ -96,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (_instrumentPlayer != null)
                 return;
 
-            _instrumentPlayer = actor.playerSession.ConnectedClient;
+            _instrumentPlayer = actor.playerSession;
             OpenUserInterface(actor.playerSession);
         }
 
@@ -105,14 +106,14 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return false;
 
-            if(_instrumentPlayer == actor.playerSession.ConnectedClient)
+            if(_instrumentPlayer == actor.playerSession)
                 OpenUserInterface(actor.playerSession);
             return false;
         }
 
-        private void UserInterfaceOnClosed(ServerBoundUserInterfaceMessage obj)
+        private void UserInterfaceOnClosed(IPlayerSession player)
         {
-            if (!Handheld && obj.Session.ConnectedClient == _instrumentPlayer)
+            if (!Handheld && player == _instrumentPlayer)
             {
                 _instrumentPlayer = null;
                 SendNetworkMessage(new InstrumentStopMidiMessage());
