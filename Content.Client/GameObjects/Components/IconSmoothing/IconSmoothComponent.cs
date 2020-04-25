@@ -101,7 +101,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             switch (Mode)
             {
                 case IconSmoothingMode.Corners:
-                    CalculateNewSpriteCorers();
+                    CalculateNewSpriteCorners();
                     break;
 
                 case IconSmoothingMode.CardinalFlags:
@@ -129,7 +129,17 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             Sprite.LayerSetState(0, $"{StateBase}{(int) dirs}");
         }
 
-        private void CalculateNewSpriteCorers()
+        private void CalculateNewSpriteCorners()
+        {
+            var (cornerNE, cornerNW, cornerSW, cornerSE) = CalculateCornerFill();
+
+            Sprite.LayerSetState(CornerLayers.NE, $"{StateBase}{(int) cornerNE}");
+            Sprite.LayerSetState(CornerLayers.SE, $"{StateBase}{(int) cornerSE}");
+            Sprite.LayerSetState(CornerLayers.SW, $"{StateBase}{(int) cornerSW}");
+            Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) cornerNW}");
+        }
+
+        protected (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill()
         {
             var n = MatchingEntity(SnapGrid.GetInDir(Direction.North));
             var ne = MatchingEntity(SnapGrid.GetInDir(Direction.NorthEast));
@@ -191,10 +201,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
                 cornerNW |= CornerFill.Diagonal;
             }
 
-            Sprite.LayerSetState(CornerLayers.NE, $"{StateBase}{(int) cornerNE}");
-            Sprite.LayerSetState(CornerLayers.SE, $"{StateBase}{(int) cornerSE}");
-            Sprite.LayerSetState(CornerLayers.SW, $"{StateBase}{(int) cornerSW}");
-            Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) cornerNW}");
+            return (cornerNE, cornerNW, cornerSW, cornerSE);
         }
 
         /// <inheritdoc />
@@ -258,7 +265,6 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             Clockwise = 4,
         }
 
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
         public enum CornerLayers
         {
             SE,

@@ -220,15 +220,18 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/reinforced.rsi
+    color: "#889192"
+    sprite: Buildings/Walls/solid.rsi
   - type: Icon
-    sprite: Buildings/Walls/reinforced.rsi
+    sprite: Buildings/Walls/solid.rsi
+    state: rgeneric
   - type: Destructible
     thresholdvalue: 300
     spawnondestroy: Girder
-  - type: IconSmooth
+  - type: ReinforcedWall
     key: walls
-    base: reinforced
+    base: solid
+    reinforcedBase: reinf_over
 
 # Riveting
 - type: entity
