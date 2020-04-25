@@ -188,6 +188,9 @@ namespace Content.Server.GameObjects.Components.Research
                 case "Glass":
                     SetAppearance(LatheVisualState.InsertingGlass);
                     break;
+                case "Lasagna":
+                    SetAppearance(LatheVisualState.InsertingLasagna);
+                    break;
             }
 
             Timer.Spawn(InsertionTime, async () =>
