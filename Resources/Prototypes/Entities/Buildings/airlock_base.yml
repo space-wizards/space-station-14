@@ -49,9 +49,16 @@
 - type: entity
   id: AirlockGlass
   parent: Airlock
+  name: Glass Airlock
   components:
   - type: Airlock
     occludes: false
 
   - type: Occluder
     enabled: false
+
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_glass.rsi
+
+  - type: Icon
+    sprite: Buildings/Doors/airlock_glass.rsi

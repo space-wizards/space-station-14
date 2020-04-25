@@ -28,6 +28,19 @@
   - type: Icon
     sprite: Buildings/Doors/airlock_engineering.rsi
 
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockEngineeringGlass
+  name: Glass Engineering Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_engineering_glass.rsi
+
+  - type: Icon
+    sprite: Buildings/Doors/airlock_engineering_glass.rsi
+
+
 - type: entity
   parent: airlock_engineering
   id: airlock_engineering_locked
