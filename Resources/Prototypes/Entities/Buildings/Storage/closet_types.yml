@@ -19,7 +19,8 @@
 
 - type: entity
   id: LockerToolFilled
-  name: Tool Locker (Filled)
+  name: Tool Locker
+  suffix: Filled
   parent: LockerTool
   components:
   - type: ToolLockerFill

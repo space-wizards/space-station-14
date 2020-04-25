@@ -47,7 +47,8 @@
 
 - type: entity
   id: YellowToolboxItemFilled
-  name: Electrical Toolbox (Filled)
+  name: Electrical Toolbox
+  suffix: Filled
   parent: YellowToolboxItem
   components:
   - type: ToolboxElectricalFill
