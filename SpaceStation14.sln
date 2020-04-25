@@ -51,6 +51,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{5040
 		RobustToolbox\MSBuild\Robust.Properties.targets = RobustToolbox\MSBuild\Robust.Properties.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A-411B-4B3B-BEB6-DEC6DCA4C205}"
+ProjectSection(SolutionItems) = preProject
+	Jenkinsfile = Jenkinsfile
+	Tools\generate_hashes.ps1 = Tools\generate_hashes.ps1
+	Tools\package_release_build.py = Tools\package_release_build.py
+	Tools\run_travis.sh = Tools\run_travis.sh
+	.travis.yml = .travis.yml
+	.appveyor.yml = .appveyor.yml
+	Tools\gen_build_info.py = Tools\gen_build_info.py
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
