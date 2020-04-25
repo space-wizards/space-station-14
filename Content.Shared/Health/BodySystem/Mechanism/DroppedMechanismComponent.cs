@@ -29,7 +29,7 @@ namespace Content.Shared.BodySystem {
 
         public Mechanism ContainedMechanism => _containedMechanism;
 
-        public void Initialize(Mechanism data)
+        public void InitializeDroppedMechanism(Mechanism data)
         {
             _containedMechanism = data;
             Owner.Name = _containedMechanism.Name;

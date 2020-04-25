@@ -9,22 +9,15 @@ using Robust.Shared.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
 
-namespace Content.Shared.BodySystem {
-    public enum BodyPartCompatibility { Mechanical, Biological, Universal };
-    public enum BodyPartType { Other, Torso, Head, Arm, Hand, Leg, Foot };
-    public enum SurgeryToolType { Incision, Retraction, Cauterization }
-
-
-}
-
-namespace Content.Shared.BodySystem {
+namespace Content.Server.BodySystem {
 
     /// <summary>
     ///     Component representing the many BodyParts attached to each other. 
     /// </summary>
     [RegisterComponent]
-    public class BodyManagerComponent : Component {
+    public class BodyManagerComponent : Component, IAttackHand {
 
 #pragma warning disable CS0649
         [Dependency]
@@ -48,15 +41,20 @@ namespace Content.Shared.BodySystem {
         /// <summary>
         ///     List of all BodyParts in this body, taken from the keys of _parts.
         /// </summary>
-        public List<BodyPart> Parts {
+        public IEnumerable<BodyPart> Parts {
             get
             {
-                List<BodyPart> temp = new List<BodyPart>();
-                foreach (var (key, value) in _partDictionary)
-                    temp.Add(value);
-                return temp;
+                return _partDictionary.Values;
             }
         }
+
+
+        public bool AttackHand(AttackHandEventArgs eventArgs)
+        {
+            return false;
+            //This is for removing organs.
+        }
+
 
 
         public override void ExposeData(ObjectSerializer serializer) {
@@ -64,16 +62,19 @@ namespace Content.Shared.BodySystem {
 
             string templateName = "";
             serializer.DataField(ref templateName, "BaseTemplate", "bodyTemplate.Humanoid");
-            if (!_prototypeManager.TryIndex(templateName, out BodyTemplatePrototype templateData))
-                throw new InvalidOperationException("No BodyTemplatePrototype was found with the name " + templateName + " while loading a BodyTemplate!"); //Should never happen unless you fuck up the prototype.
+            if (serializer.Reading)
+            {
+                if (!_prototypeManager.TryIndex(templateName, out BodyTemplatePrototype templateData))
+                    throw new InvalidOperationException("No BodyTemplatePrototype was found with the name " + templateName + " while loading a BodyTemplate!"); //Should never happen unless you fuck up the prototype.
 
-            string presetName = "";
-            serializer.DataField(ref presetName, "BasePreset", "bodyPreset.BasicHuman");
-            if (!_prototypeManager.TryIndex(presetName, out BodyPresetPrototype presetData))
-                throw new InvalidOperationException("No BodyPresetPrototype was found with the name " + presetName + " while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.
+                string presetName = "";
+                serializer.DataField(ref presetName, "BasePreset", "bodyPreset.BasicHuman");
+                if (!_prototypeManager.TryIndex(presetName, out BodyPresetPrototype presetData))
+                    throw new InvalidOperationException("No BodyPresetPrototype was found with the name " + presetName + " while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.
 
-            _template = new BodyTemplate(templateData);
-            LoadBodyPreset(new BodyPreset(presetData));
+                _template = new BodyTemplate(templateData);
+                LoadBodyPreset(new BodyPreset(presetData));
+            }
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace Content.Shared.BodySystem {
         }
 
         /// <summary>
-        ///     Tries to remove the given Mechanism from the given BodyPart. Returns null if there was an error in spawning the entity, otherwise returns a reference to the DroppedMechanismComponent on the newly spawned entity.
+        ///     Tries to remove the given Mechanism reference from the given BodyPart reference. Returns null if there was an error in spawning the entity, otherwise returns a reference to the DroppedMechanismComponent on the newly spawned entity.
         /// </summary>	
         public DroppedMechanismComponent DropMechanism(BodyPart bodyPartTarget, Mechanism mechanismTarget)
         {
@@ -116,7 +117,7 @@ namespace Content.Shared.BodySystem {
                 return null;
             var mechanismEntity = Owner.EntityManager.SpawnEntity("BaseDroppedMechanism", Owner.Transform.GridPosition);
             var droppedMechanismComponent = mechanismEntity.GetComponent<DroppedMechanismComponent>();
-            droppedMechanismComponent.Initialize(mechanismTarget);
+            droppedMechanismComponent.InitializeDroppedMechanism(mechanismTarget);
             return droppedMechanismComponent;
         }
 
@@ -144,7 +145,7 @@ namespace Content.Shared.BodySystem {
         }
 
         /// <summary>
-        ///     Disconnects the given BodyPart, potentially dropping other BodyParts if they were hanging off it. 
+        ///     Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it. 
         /// </summary>
         public void DisconnectBodyPart(BodyPart part, bool dropEntity)
         {
@@ -163,6 +164,7 @@ namespace Content.Shared.BodySystem {
                         }
                     }
                 }
+                _partDictionary.Remove(slotName);
                 if (dropEntity)
                 {
                     var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
@@ -171,15 +173,6 @@ namespace Content.Shared.BodySystem {
             }
         }
 
-
-        /// <summary>
-        ///     Attempts to perform surgery on the given BodyPart with the given tool. Returns false if there was an error, true if successful.
-        /// </summary>
-        public bool AttemptSurgery(BodyPart target, SurgeryToolType toolType) {
-            if (!_partDictionary.ContainsValue(target))
-                return false;
-            return target.AttemptSurgery(toolType);
-        }
 
 
 
@@ -203,6 +196,7 @@ namespace Content.Shared.BodySystem {
                         }
                     }
                 }
+                _partDictionary.Remove(name);
                 if (dropEntity)
                 {
                     var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
@@ -236,17 +230,21 @@ namespace Content.Shared.BodySystem {
             TryGetBodyPart(slotName, out BodyPart part);
             if (part == GetCenterBodyPart())
                 return true;
-            TryGetBodyPartConnections(slotName, out List<string> connections);
-            foreach (string connection in connections) {
-                if (!searchedSlots.Contains(connection) && ConnectedToCenterPartRecursion(searchedSlots, slotName))
-                    return true;
+            searchedSlots.Add(slotName);
+            if (TryGetBodyPartConnections(slotName, out List<string> connections))
+            {
+                foreach (string connection in connections)
+                {
+                    if (!searchedSlots.Contains(connection) && ConnectedToCenterPartRecursion(searchedSlots, connection))
+                        return true;
+                }
             }
             return false;
                
         }
 
         /// <summary>
-        ///     Grabs the BodyPart in the given slotName if there is one. Returns true if a BodyPart is found, false otherwise.
+        ///     Grabs the BodyPart in the given slotName if there is one. Returns true if a BodyPart is found, false otherwise. If false, result will be null.
         /// </summary>		
         private bool TryGetBodyPart(string slotName, out BodyPart result)
         {
@@ -254,7 +252,7 @@ namespace Content.Shared.BodySystem {
         }
 
         /// <summary>
-        ///     Grabs the slotName that the given BodyPart resides in. Returns true if the BodyPart is part of this body, false otherwise. 
+        ///     Grabs the slotName that the given BodyPart resides in. Returns true if the BodyPart is part of this body, false otherwise. If false, result will be null.
         /// </summary>		
         private bool TryGetSlotName(BodyPart part, out string result)
         {
@@ -263,7 +261,7 @@ namespace Content.Shared.BodySystem {
         }
 
         /// <summary>
-        ///     Grabs the names of all connected slots to the given slotName from the template. Returns true if connections are found to the slotName, false otherwise. 
+        ///     Grabs the names of all connected slots to the given slotName from the template. Returns true if connections are found to the slotName, false otherwise. If false, connections will be null.
         /// </summary>	
         private bool TryGetBodyPartConnections(string slotName, out List<string> connections)
         {

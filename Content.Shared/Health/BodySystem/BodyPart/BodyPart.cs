@@ -1,8 +1,6 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+﻿using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -48,13 +46,13 @@ namespace Content.Shared.BodySystem
         ///     Path to the RSI that represents this BodyPart.
         /// </summary>			  
         [ViewVariables]
-        public string SpritePath;
+        public string RSIPath;
 
         /// <summary>
         ///     RSI state that represents this BodyPart.
         /// </summary>			  
         [ViewVariables]
-        public string SpriteState;
+        public string RSIState;
 
         /// <summary>
         ///     BodyPartType that this body part is considered. 
@@ -123,11 +121,19 @@ namespace Content.Shared.BodySystem
         }
 
         /// <summary>
+        ///     Returns whether the given SurgertToolType can be used on the current state of this BodyPart (e.g. 
+        /// </summary>
+        public bool SurgeryCheck(SurgeryToolType toolType)
+        {
+            return _surgeryData.CheckSurgery(toolType);
+        }
+
+        /// <summary>
         ///     Attempts to perform surgery on this BodyPart with the given tool. Returns false if there was an error, true if successful.
         /// </summary>
-        public bool AttemptSurgery(SurgeryToolType toolType)
+        public bool AttemptSurgery(SurgeryToolType toolType, IEntity performer)
         {
-            return _surgeryData.AttemptSurgery(toolType);
+            return _surgeryData.PerformSurgery(toolType, performer);
         }
 
         /// <summary>
@@ -164,13 +170,15 @@ namespace Content.Shared.BodySystem
             Name = data.Name;
             Plural = data.Plural;
             PartType = data.PartType;
-            SpritePath = data.SpritePath;
-            SpriteState = data.SpriteState;
+            RSIPath = data.RSIPath;
+            RSIState = data.RSIState;
             MaxDurability = data.Durability;
             CurrentDamages = new BiologicalDamageContainer();
             Resistance = data.Resistance;
             Size = data.Size;
             Compatibility = data.Compatibility;
+            //_surgeryData = (ISurgeryData) Activator.CreateInstance(null, data.SurgeryDataName);
+            _surgeryData = new BiologicalSurgeryData(this);
             Properties = data.Properties;
             IPrototypeManager prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             foreach (string mechanismPrototypeID in data.Mechanisms)

@@ -16,11 +16,6 @@ namespace Content.Shared.BodySystem {
     [RegisterComponent]
     public class DroppedBodyPartComponent : Component {
 
-        #pragma warning disable CS0649
-            [Dependency]
-            private IPrototypeManager _prototypeManager;
-        #pragma warning restore
-
         public sealed override string Name => "DroppedBodyPart";
 
         [ViewVariables]
@@ -32,7 +27,8 @@ namespace Content.Shared.BodySystem {
             Owner.Name = _containedMechanism.Name;
             if (Owner.TryGetComponent<SpriteComponent>(out SpriteComponent component))
             {
-                component.LayerSetTexture(0, data.SpritePath);
+                component.LayerSetRSI(0, data.RSIPath);
+                component.LayerSetState(0, data.RSIState);
             }
         }
     }

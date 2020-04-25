@@ -2,13 +2,15 @@
   id: bodyPart.Torso.BasicHuman
   name: "human torso"
   plural: "human torsos"
-  spritePath: "Objects/Fun/dice.rsi"
+  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiState: "torso_m"
   partType: Torso
   durability: 100
   destroyThreshold: -150
   resistance: 4.0
   size: 14
   compatibility: Biological
+  surgeryDataType: BiologicalsurgeryDataType
   mechanisms:
     - mechanism.Heart.BasicHuman
     - mechanism.Lungs.BasicHuman
@@ -20,13 +22,15 @@
   id: bodyPart.Head.BasicHuman
   name: "human head"
   plural: "human heads"
-  spritePath: "Objects/Fun/dice.rsi"
+  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiState: head_m
   partType: Head
   durability: 50
   destroyThreshold: -120
   resistance: 7.0
   size: 7
   compatibility: Biological	
+  surgeryDataType: BiologicalsurgeryDataType
   mechanisms:
     - mechanism.Brain.BasicHuman
     - mechanism.Eyes.BasicHuman
@@ -37,13 +41,15 @@
   id: bodyPart.Arm.BasicHuman
   name: "human arm"
   plural: "human arms"
-  spritePath: "Objects/Fun/dice.rsi"
+  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiState: r_arm
   partType: Arm
   durability: 40
   destroyThreshold: -80
   resistance: 3.0
   size: 5
   compatibility: Biological	
+  surgeryDataType: BiologicalsurgeryDataType
   properties:
     - !type:ArmLength
       length: 2.4
@@ -54,40 +60,43 @@
   id: bodyPart.Hand.BasicHuman
   name: "human hand"
   plural: "human hands"
-  spritePath: "Objects/Fun/dice.rsi"
+  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiState: r_hand
   partType: Hand
   durability: 30
   destroyThreshold: -60
   resistance: 2.0
   size: 3
   compatibility: Biological	
-    
+  surgeryDataType: BiologicalsurgeryDataType
        
       
 - type: bodyPart
   id: bodyPart.Leg.BasicHuman
   name: "human leg"
   plural: "human legs"
-  spritePath: "Objects/Fun/dice.rsi"
+  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiState: r_leg
   partType: Leg
   durability: 45
   destroyThreshold: -90
   resistance: 2.0
   size: 6
   compatibility: Biological	
-     
+  surgeryDataType: BiologicalsurgeryDataType
      
      
 - type: bodyPart
   id: bodyPart.Foot.BasicHuman
   name: "human foot"
   plural: "human feet"
-  spritePath: "Objects/Fun/dice.rsi"
+  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiState: r_foot
   partType: Foot
   durability: 30
   destroyThreshold: -60
   resistance: 3.0
   size: 2
   compatibility: Biological	
-
+  surgeryDataType: BiologicalsurgeryDataType
       

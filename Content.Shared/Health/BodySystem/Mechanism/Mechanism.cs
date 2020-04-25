@@ -32,7 +32,7 @@ namespace Content.Shared.BodySystem {
 		public string ExamineMessage;
 
         /// <summary>
-        ///     Path to the .png that represents this mechanism (NOT .rsi folder).
+        ///     Path to the .png that represents this mechanism (NOT .rsi folder). TODO: make this rsi why does sprite path even exist FUCk
         /// </summary>			  
         [ViewVariables]
         public string SpritePath;
