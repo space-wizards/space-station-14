@@ -37,15 +37,12 @@ namespace Content.Shared.GameObjects.Components.Gravity
             }
         }
 
-        /// <summary>
-        ///     Sent to the client to let them know if the generator is on or off.
-        /// </summary>
         [Serializable, NetSerializable]
-        public class GeneratorStatusMessage : BoundUserInterfaceMessage
+        public class GeneratorState : BoundUserInterfaceState
         {
             public bool On;
 
-            public GeneratorStatusMessage(bool on)
+            public GeneratorState(bool on)
             {
                 On = on;
             }

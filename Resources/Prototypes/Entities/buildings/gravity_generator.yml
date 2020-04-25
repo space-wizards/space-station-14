@@ -9,6 +9,7 @@
         - state: on
         - sprite: Buildings/gravity_generator_core.rsi
           state: activated
+          shader: unshaded
     - type: Icon
       sprite: Buildings/gravity_generator.rsi
       state: on

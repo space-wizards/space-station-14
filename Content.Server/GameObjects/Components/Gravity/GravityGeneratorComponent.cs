@@ -1,16 +1,20 @@
-using System;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Gravity;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Gravity
 {
@@ -97,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Gravity
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
             if (!eventArgs.AttackWith.TryGetComponent<WelderComponent>(out var welder)) return false;
-            if (welder.Activated && welder.Fuel >= 5)
+            if (welder.TryUse(5.0f))
             {
                 // Repair generator
                 var damagable = Owner.GetComponent<DamageableComponent>();
@@ -105,7 +109,13 @@ namespace Content.Server.GameObjects.Components.Gravity
                 damagable.HealAllDamage();
                 breakable.broken = false;
                 _intact = true;
-                welder.Fuel -= 5;
+
+                var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+                var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
+
+                entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
+                notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
+
                 return true;
             } else
             {
@@ -141,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Gravity
             switch (message.Message)
             {
                 case GeneratorStatusRequestMessage _:
-                    _userInterface.SendMessage(new GeneratorStatusMessage(Status == GravityGeneratorStatus.On));
+                    _userInterface.SetState(new GeneratorState(Status == GravityGeneratorStatus.On));
                     break;
                 case SwitchGeneratorMessage msg:
                     _switchedOn = msg.On;
@@ -160,36 +170,28 @@ namespace Content.Server.GameObjects.Components.Gravity
         private void MakeBroken()
         {
             _status = GravityGeneratorStatus.Broken;
-            _sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(
-                ResourcePath.FromRelativeSystemPath("Buildings/gravity_generator.rsi"),
-                "broken"));
+            _sprite.LayerSetState(0, "broken");
             _sprite.LayerSetVisible(1, false);
         }
 
         private void MakeUnpowered()
         {
             _status = GravityGeneratorStatus.Unpowered;
-            _sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(
-                ResourcePath.FromRelativeSystemPath("Buildings/gravity_generator.rsi"),
-                "off"));
+            _sprite.LayerSetState(0, "off");
             _sprite.LayerSetVisible(1, false);
         }
 
         private void MakeOff()
         {
             _status = GravityGeneratorStatus.Off;
-            _sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(
-                ResourcePath.FromRelativeSystemPath("Buildings/gravity_generator.rsi"),
-                "off"));
+            _sprite.LayerSetState(0, "off");
             _sprite.LayerSetVisible(1, false);
         }
 
         private void MakeOn()
         {
             _status = GravityGeneratorStatus.On;
-            _sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(
-                ResourcePath.FromRelativeSystemPath("Buildings/gravity_generator.rsi"),
-                "on"));
+            _sprite.LayerSetState(0, "on");
             _sprite.LayerSetVisible(1, true);
         }
     }

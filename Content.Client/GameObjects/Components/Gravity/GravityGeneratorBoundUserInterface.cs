@@ -38,19 +38,13 @@ namespace Content.Client.GameObjects.Components.Gravity
             _window.OpenCentered();
         }
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        protected override void UpdateState(BoundUserInterfaceState state)
         {
-            base.ReceiveMessage(message);
+            base.UpdateState(state);
 
-            switch (message)
-            {
-                case SharedGravityGeneratorComponent.GeneratorStatusMessage statusMessage:
-                    IsOn = statusMessage.On;
-                    _window.UpdateButton();
-                    break;
-                default:
-                    break;
-            }
+            var castState = (SharedGravityGeneratorComponent.GeneratorState) state;
+            IsOn = castState.On;
+            _window.UpdateButton();
         }
 
         protected override void Dispose(bool disposing)
@@ -64,8 +58,6 @@ namespace Content.Client.GameObjects.Components.Gravity
 
     public class GravityGeneratorWindow : SS14Window
     {
-        [Dependency] private ILocalizationManager _loc;
-
         public Label Status;
 
         public Button Switch;
@@ -78,7 +70,7 @@ namespace Content.Client.GameObjects.Components.Gravity
 
             Owner = gravityGeneratorInterface;
 
-            Title = "Generator Control";
+            Title = Loc.GetString("Gravity Generator Control");
 
             var vBox = new VBoxContainer
             {
@@ -86,12 +78,12 @@ namespace Content.Client.GameObjects.Components.Gravity
             };
             Status = new Label
             {
-                Text = _loc.GetString("Current Status: " + (Owner.IsOn ? "On" : "Off")),
+                Text = Loc.GetString("Current Status: " + (Owner.IsOn ? "On" : "Off")),
                 FontColorOverride = Owner.IsOn ? Color.ForestGreen : Color.Red
             };
             Switch = new Button
             {
-                Text = Owner.IsOn ? "Turn Off" : "Turn On",
+                Text = Loc.GetString(Owner.IsOn ? "Turn Off" : "Turn On"),
                 TextAlign = Label.AlignMode.Center,
                 CustomMinimumSize = new Vector2(150, 60)
             };
@@ -104,9 +96,9 @@ namespace Content.Client.GameObjects.Components.Gravity
 
         public void UpdateButton()
         {
-            Status.Text = _loc.GetString("Current Status: " + (Owner.IsOn ? "On" : "Off"));
+            Status.Text = Loc.GetString("Current Status: " + (Owner.IsOn ? "On" : "Off"));
             Status.FontColorOverride = Owner.IsOn ? Color.ForestGreen : Color.Red;
-            Switch.Text = Owner.IsOn ? "Turn Off" : "Turn On";
+            Switch.Text = Loc.GetString(Owner.IsOn ? "Turn Off" : "Turn On");
         }
     }
 }
