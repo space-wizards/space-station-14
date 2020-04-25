@@ -178,7 +178,8 @@ namespace Content.Shared.BodySystem
             Size = data.Size;
             Compatibility = data.Compatibility;
             //_surgeryData = (ISurgeryData) Activator.CreateInstance(null, data.SurgeryDataName);
-            _surgeryData = new BiologicalSurgeryData(this);
+            //TODO: figure out a way to convert a string name in the YAML to the proper class (reflection won't work for reasons)
+            _surgeryData = new BiologicalSurgeryData();
             Properties = data.Properties;
             IPrototypeManager prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             foreach (string mechanismPrototypeID in data.Mechanisms)

@@ -22,8 +22,6 @@ namespace Content.Shared.BodySystem {
         private bool _skinOpened = false;
         private bool _skinPulled = false;
 
-        public BiologicalSurgeryData(BodyPart p) : base(p) { }
-
         public override SurgeryAction GetSurgeryStep(SurgeryToolType toolType)
         {
             if (!_skinOpened)

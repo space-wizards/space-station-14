@@ -15,13 +15,7 @@ namespace Content.Shared.BodySystem {
     ///     This data class represents the state of a BodyPart in regards to everything surgery related - whether there's an incision on it, whether the bone is broken, etc.
     /// </summary>	
     public abstract class ISurgeryData {
-        private BodyPart _parent;
         public delegate void SurgeryAction(IEntity performer);
-
-        public ISurgeryData(BodyPart p)
-        {
-            _parent = p;
-        }
 
         /// <summary>
         ///     Gets the delegate corresponding to the surgery step using the given SurgeryToolType. Returns null if no surgery step can be performed.
