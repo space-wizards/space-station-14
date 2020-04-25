@@ -20,9 +20,16 @@
   components:
   - type: Screwdriver
   - type: Sprite
-    texture: Objects/Tools/screwdriver.png
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver
+
   - type: Icon
-    texture: Objects/Tools/screwdriver.png
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver
+
+  - type: Item
+    sprite: Objects/Tools/screwdriver.rsi
+
   - type: ItemCooldown
   - type: MeleeWeapon
 
@@ -95,7 +102,12 @@
   components:
   - type: Multitool
   - type: Sprite
-    texture: Objects/Tools/multitool.png
+    sprite: Objects/Tools/multitool.rsi
+    state: multitool
+
   - type: Icon
-    texture: Objects/Tools/multitool.png
-  - type: PowerDebugTool
+    sprite: Objects/Tools/multitool.rsi
+    state: multitool
+
+  - type: Item
+    sprite: Objects/Tools/multitool.rsi
