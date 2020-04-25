@@ -90,7 +90,7 @@
 #  name: Ambrosia vulgar is crushed
 #  parent: FoodBase
 #  id: FoodAmbrosiaVulgarIsCrushed
-#  description: 
+#  description:
 #  components:
 #  - type: Food
 #    uses: 1
@@ -137,7 +137,7 @@
 #  name: Bacon
 #  parent: FoodBase
 #  id: FoodBacon
-#  description: 
+#  description:
 #  components:
 #  - type: Food
 #    uses: 1
@@ -182,7 +182,7 @@
   name: Bread (slice)
   parent: FoodBase
   id: FoodBreadSlice
-  description: 
+  description:
   components:
   - type: Food
     contents:
@@ -199,7 +199,7 @@
   name: Banana bread (slice)
   parent: FoodBase
   id: FoodBananaBreadSlice
-  description: 
+  description:
   components:
   - type: Food
     contents:
@@ -233,7 +233,7 @@
 #  name: Bear meat
 #  parent: FoodBase
 #  id: FoodBearMeat
-#  description: 
+#  description:
 #  components:
 #  - type: Food
 #    uses: 1
@@ -612,7 +612,7 @@
 #  name: Cocoa
 #  parent: FoodBase
 #  id: FoodCocoa
-#  description: 
+#  description:
 #  components:
 #  - type: Food
 #    uses: 1
@@ -1448,6 +1448,27 @@
     sprite: Objects/Food/limecake_slice.rsi
   - type: Icon
     sprite: Objects/Food/limecake_slice.rsi
+
+- type: entity
+  parent: FoodBase
+  id: Lasagna
+  name: Lasagna
+  description: A classic Italian dish.
+  components:
+  - type: Food
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 8
+    spawn_on_finish: TrashPlate
+  - type: Sprite
+    sprite: Objects/Food/lasagna.rsi
+  - type: Icon
+    sprite: Objects/Food/lasagna.rsi
+  - type: Material
+    materials:
+    - key: enum.MaterialKeys.Stack
+      mat: lasagnamaterial
 
 - type: entity
   parent: FoodBase

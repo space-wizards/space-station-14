@@ -92,6 +92,23 @@
             ]
         },
         {
+            "name": "autolathe_inserting_lasagnium",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
             "name": "autolathe_inserting_unlit",
             "directions": 1,
             "delays": [

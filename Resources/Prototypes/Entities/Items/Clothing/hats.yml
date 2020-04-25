@@ -1146,6 +1146,19 @@
   parent: HatBase
 
 - type: entity
+  id: HatGarfsuit
+  name: Garf Helmet
+  description: 'The helmet to the orange hardsuit'
+  components:
+  - sprite: Clothing/Head/garfsuit.rsi
+    type: Sprite
+  - sprite: Clothing/Head/garfsuit.rsi
+    type: Icon
+  - sprite: Clothing/Head/garfsuit.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
   id: HatGentcap
   name: Gent cap
   description: ''

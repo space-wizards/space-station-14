@@ -15,3 +15,19 @@
   materials:
     steel: 30
     glass: 50
+
+- type: latheRecipe
+  id: GarfSuitHelmet
+  icon: Clothing/Head/garfsuit.rsi/icon.png
+  result: HatGarfsuit
+  completetime: 500
+  materials:
+    lasagnamaterial: 5
+
+- type: latheRecipe
+  id: GarfSuit
+  icon: Clothing/OuterClothing/garfsuit.rsi/icon.png
+  result: OuterclothingGarfsuit
+  completetime: 500
+  materials:
+    lasagnamaterial: 5

@@ -17,3 +17,12 @@
   electricresistivity: 1.0e+13
   thermalconductivity: 0.9
   specificheat: 840
+
+- type: material
+  id: lasagnamaterial
+  name: Lasagna
+  icon: Objects/Materials/lasagna.png
+  density: 6969
+  electricresistivity: 6.9e-9
+  thermalconductivity: 69
+  specificheat: 420
