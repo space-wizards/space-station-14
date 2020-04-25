@@ -2,20 +2,20 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.ToggleSystem
 {
-    class WelderSystem : EntitySystem
+    class ToggleSystem : EntitySystem
     {
         public override void Initialize()
         {
-            EntityQuery = new TypeEntityQuery(typeof(WelderComponent));
+            EntityQuery = new TypeEntityQuery(typeof(ToggleComponent));
         }
 
         public override void Update(float frameTime)
         {
             foreach (var entity in RelevantEntities)
             {
-                var comp = entity.GetComponent<WelderComponent>();
+                var comp = entity.GetComponent<ToggleComponent>();
                 comp.OnUpdate(frameTime);
             }
         }

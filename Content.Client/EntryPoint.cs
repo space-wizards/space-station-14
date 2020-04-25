@@ -133,7 +133,8 @@ namespace Content.Client
                 "Bloodstream",
                 "Mind",
                 "MovementSpeedModifier",
-                "StorageFill"
+                "StorageFill",
+		        "Welder"
             };
 
             foreach (var ignoreName in registerIgnore)

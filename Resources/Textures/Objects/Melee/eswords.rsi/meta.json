@@ -1,0 +1,273 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "eswordoff",
+            "directions": 1
+        },
+        {
+            "name": "off-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "off-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "blue-on-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "blue-on-inhand-right",
+            "directions": 4,
+            "delays": [
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ]
+            ]
+        },
+        {
+            "name": "iconblue",
+            "directions": 1,
+            "delays": [
+              [
+                  0.2,
+                  0.2
+              ]
+            ]
+        },
+        {
+            "name": "purple-on-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "purple-on-inhand-right",
+            "directions": 4,
+            "delays": [
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ]
+            ]
+        },
+        {
+            "name": "iconpurple",
+            "directions": 1,
+            "delays": [
+              [
+                  0.2,
+                  0.2
+              ]
+            ]
+        },
+        {
+            "name": "red-on-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "red-on-inhand-right",
+            "directions": 4,
+            "delays": [
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ]
+            ]
+        },
+        {
+            "name": "iconred",
+            "directions": 1,
+            "delays": [
+              [
+                  0.2,
+                  0.2
+              ]
+            ]
+        },
+        {
+            "name": "green-on-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "green-on-inhand-right",
+            "directions": 4,
+            "delays": [
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ],
+              [
+                  0.2,
+                  0.2
+              ]
+            ]
+        },
+        {
+            "name": "icongreen",
+            "directions": 1,
+            "delays": [
+              [
+                  0.2,
+                  0.2
+              ]
+            ]
+        }
+    ]
+}

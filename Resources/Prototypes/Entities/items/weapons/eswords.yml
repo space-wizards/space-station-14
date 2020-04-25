@@ -1,0 +1,91 @@
+- type: entity
+  parent: BaseItem
+  id: esword_parent
+  description: If you see this you are a thief or a traitor. Either way you should feel bad about yourself!
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Melee/eswords.rsi
+  - type: Icon
+    sprite: Objects/Melee/eswords.rsi
+  - type: MeleeWeapon
+    range: 1
+    arcwidth: 10
+    arc: spear
+  - type: Item
+    sprite: Objects/Melee/eswords.rsi
+    Size: 24
+  - type: ItemCooldown
+- type: MeleeWeaponAnimation
+  id: esword
+  length: 0.10
+  speed: 6
+  arcType: Poke
+- type: sound_collection
+  id: esword_hit
+  files:
+  - /Audio/items/blade1.ogg
+
+- type: entity
+  name: Blue Esword
+  parent: esword_parent
+  id: blueesword
+  components:
+  - type: Sprite
+    state: iconblue
+  - type: Icon
+    state: iconblue
+  - type: Item
+    HeldPrefix: blue
+- type: MeleeWeaponAnimation
+  parent: esword
+  id: esword_blue
+  state: iconblue
+
+- type: entity
+  name: Green Esword
+  parent: esword_parent
+  id: greenesword
+  components:
+  - type: Sprite
+    state: icongreen
+  - type: Icon
+    state: icongreen
+  - type: Item
+    HeldPrefix: green
+- type: MeleeWeaponAnimation
+  parent: esword
+  id: esword_green
+  state: icongreen
+
+- type: entity
+  name: Purple Esword
+  parent: esword_parent
+  id: purpleesword
+  components:
+  - type: Sprite
+    state: iconpurple
+  - type: Icon
+    state: iconpurple
+  - type: Item
+    HeldPrefix: purple
+- type: MeleeWeaponAnimation
+  parent: esword
+  id: esword_purple
+  state: iconpurple
+
+- type: entity
+  name: Red Esword
+  parent: esword_parent
+  id: redesword
+  components:
+  - type: Sprite
+    state: iconred
+  - type: Icon
+    state: iconred
+  - type: Item
+    HeldPrefix: red
+- type: MeleeWeaponAnimation
+  parent: esword
+  id: esword_red
+  state: iconred
