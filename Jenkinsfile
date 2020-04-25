@@ -10,6 +10,11 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'Tools/package_release_build.py -p windows mac linux'
+            }
+        }
+        stage('Update build info') {
+            steps {
+                sh 'Tools/gen_build_info.py'
                 archiveArtifacts artifacts: 'release/*.zip'
             }
         }
