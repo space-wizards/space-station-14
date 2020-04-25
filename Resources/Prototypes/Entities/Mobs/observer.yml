@@ -19,7 +19,9 @@
   - type: Sprite
     netsync: false
     drawdepth: Mobs
-    texture: Mob/observer.png
+    sprite: Mob/ghost.rsi
+    state: animated
+    color: "#fff8"
 
   - type: MovementSpeedModifier
     baseSprintSpeed: 14
