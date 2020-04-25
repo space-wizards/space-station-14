@@ -8,7 +8,7 @@
   - type: Sprite
     netsync: false
     drawdepth: Mobs # They're on the same layer as mobs, perspective.
-    sprite: Buildings/airlock_basic.rsi
+    sprite: Buildings/Doors/airlock_basic.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -18,7 +18,7 @@
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Icon
-    sprite: Buildings/airlock_basic.rsi
+    sprite: Buildings/Doors/airlock_basic.rsi
     state: closed
   - type: Collidable
     shapes:
