@@ -80,13 +80,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _drinking = false;
             Owner.TryGetComponent(out AppearanceComponent appearance);
             _appearanceComponent = appearance;
-            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.MaxUses, MaxVolume);
+            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.MaxUses, MaxVolume.Float());
             _updateAppearance();
         }
 
         private void _updateAppearance()
         {
-            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.Visual, UsesLeft());
+            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.Visual, _contents.CurrentVolume.Float());
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
