@@ -2,20 +2,24 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
     public class PullableComponent: Component
     {
-        private const float DistBeforePull = 0.25f;
-
-        private const float PullStrength = 5.0f;
+        private const float DistBeforePull = 1.0f;
 
         private PhysicsComponent _physicsComponent;
 
         private IEntity _puller;
         public override string Name => "Pullable";
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public IEntity Puller => _puller;
+
+        public bool GettingPulled => _puller != null;
 
         public override void Initialize()
         {
@@ -33,6 +37,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public void StopPull()
         {
+            _physicsComponent.LinearVelocity = Vector2.Zero;
             _puller = null;
         }
 
@@ -40,11 +45,17 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (_puller == null) return;
 
+            var pullerPhysics = _puller.GetComponent<PhysicsComponent>();
+
             // Are we outside of pulling range?
-            var dist = Owner.Transform.WorldPosition - _puller.Transform.WorldPosition;
+            var dist = _puller.Transform.WorldPosition - Owner.Transform.WorldPosition;
             if (dist.Length > DistBeforePull)
             {
-                _physicsComponent.LinearVelocity = dist.Normalized * PullStrength;
+                _physicsComponent.LinearVelocity = dist.Normalized * pullerPhysics.LinearVelocity.Length;
+            }
+            else
+            {
+                _physicsComponent.LinearVelocity = Vector2.Zero;
             }
         }
     }

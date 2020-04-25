@@ -96,6 +96,11 @@ binds:
   type: state
   key: MouseLeft
   canFocus: true
+  mod1: Shift
+- function: TryPullObject
+  type: State
+  key: MouseLeft
+  canFocus: true
   mod1: Control
 - function: OpenContextMenu
   type: state

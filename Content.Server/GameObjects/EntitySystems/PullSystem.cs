@@ -14,5 +14,15 @@ namespace Content.Server.GameObjects.EntitySystems
 
             EntityQuery = new TypeEntityQuery<PullableComponent>();
         }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            foreach (var entity in RelevantEntities)
+            {
+                entity.GetComponent<PullableComponent>().Update();
+            }
+        }
     }
 }

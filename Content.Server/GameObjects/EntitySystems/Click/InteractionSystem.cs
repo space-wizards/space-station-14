@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -331,6 +332,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 new PointerInputCmdHandler(HandleWideAttack));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
                 new PointerInputCmdHandler(HandleActivateItemInWorld));
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.TryPullObject,
+                new PointerInputCmdHandler(HandleTryPullObject));
         }
 
 
@@ -449,6 +452,42 @@ namespace Content.Server.GameObjects.EntitySystems
             UserInteraction(userEntity, coords, uid);
 
             return true;
+        }
+
+        private bool HandleTryPullObject(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        {
+            Console.WriteLine("Moving item");
+            // client sanitization
+            if (!_mapManager.GridExists(coords.GridID))
+            {
+                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return false;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
+                return false;
+            }
+
+            var player = (session as IPlayerSession).AttachedEntity;
+
+            var pulledObject = EntityManager.GetEntity(uid);
+
+            if (pulledObject.TryGetComponent<PullableComponent>(out var pull))
+            {
+                if (!pull.GettingPulled)
+                {
+                    pull.GetPulled(player);
+                }
+                else
+                {
+                    pull.StopPull();
+                }
+            }
+
+            return false;
         }
 
         private void UserInteraction(IEntity player, GridCoordinates coordinates, EntityUid clickedUid)
