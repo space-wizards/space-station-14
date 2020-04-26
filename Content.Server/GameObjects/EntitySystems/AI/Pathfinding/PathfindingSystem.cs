@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// <param name="pathfindingArgs"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Job<Queue<TileRef>> RequestPath(PathfindingArgs pathfindingArgs, CancellationTokenSource cancellationToken = null)
+        public Job<Queue<TileRef>> RequestPath(PathfindingArgs pathfindingArgs, CancellationToken cancellationToken)
         {
             var startNode = GetNode(pathfindingArgs.Start);
             var endNode = GetNode(pathfindingArgs.End);

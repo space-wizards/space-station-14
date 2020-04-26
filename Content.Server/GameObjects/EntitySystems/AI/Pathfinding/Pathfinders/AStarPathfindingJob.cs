@@ -2,12 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Queues;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Content.Shared.Pathfinding;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 {
@@ -18,14 +17,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         private PathfindingNode _startNode;
         private PathfindingNode _endNode;
         private PathfindingArgs _pathfindingArgs;
-        private CancellationTokenSource _cancellationToken;
+        private CancellationToken _cancellationToken;
 
         public AStarPathfindingJob(
             double maxTime,
             PathfindingNode startNode,
             PathfindingNode endNode,
             PathfindingArgs pathfindingArgs,
-            CancellationTokenSource cancellationToken = null) : base(maxTime)
+            CancellationToken cancellationToken) : base(maxTime)
         {
             _startNode = startNode;
             _endNode = endNode;
@@ -35,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 
         public override IEnumerator Process()
         {
-            if ((_cancellationToken != null && _cancellationToken.IsCancellationRequested) ||
+            if (_cancellationToken.IsCancellationRequested ||
                 _startNode == null ||
                 _endNode == null ||
                 Status == Status.Finished)
@@ -51,13 +50,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                 yield break;
             }
 
-            var openTiles = new PathfindingPriorityQueue<PathfindingNode>();
+            var openTiles = new PriorityQueue<ValueTuple<float, PathfindingNode>>(new PathfindingComparer());
             var gScores = new Dictionary<PathfindingNode, float>();
             var cameFrom = new Dictionary<PathfindingNode, PathfindingNode>();
             var closedTiles = new HashSet<PathfindingNode>();
 
             PathfindingNode currentNode = null;
-            openTiles.Enqueue(_startNode, 0);
+            openTiles.Add((0.0f, _startNode));
             gScores[_startNode] = 0.0f;
             var routeFound = false;
             var count = 0;
@@ -71,7 +70,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     if (OutOfTime())
                     {
                         yield return null;
-                        if (_cancellationToken != null && _cancellationToken.IsCancellationRequested)
+                        if (_cancellationToken.IsCancellationRequested)
                         {
                             Finish();
                             yield break;
@@ -87,7 +86,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     yield break;
                 }
 
-                currentNode = openTiles.Dequeue();
+                (_, currentNode) = openTiles.Take();
                 if (currentNode.Equals(_endNode))
                 {
                     routeFound = true;
@@ -124,7 +123,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     // See http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#breaking-ties
                     // There's other ways to do it but future consideration
                     var fScore = gScores[nextNode] + Utils.OctileDistance(_endNode, nextNode) * (1.0f + 1.0f / 1000.0f);
-                    openTiles.Enqueue(nextNode, fScore);
+                    openTiles.Add((fScore, nextNode));
                 }
             }
 

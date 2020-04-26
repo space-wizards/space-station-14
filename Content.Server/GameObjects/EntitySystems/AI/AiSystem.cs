@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                     continue;
                 }
 
-                entity.TryGetComponent(out AiControllerComponent aiComp);
+                var aiComp = entity.GetComponent<AiControllerComponent>();
                 ProcessorInitialize(aiComp);
 
                 var processor = aiComp.Processor;

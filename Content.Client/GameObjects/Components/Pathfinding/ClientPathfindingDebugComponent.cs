@@ -24,29 +24,23 @@ namespace Content.Client.GameObjects.Components.Pathfinding
     [RegisterComponent]
     internal sealed class ClientPathfindingDebugComponent : SharedPathfindingDebugComponent
     {
-        private static int _modes;
+        private PathfindingDebugMode _modes = PathfindingDebugMode.None;
 
-        public static void DisableAll()
+        public void EnableTooltip(PathfindingDebugMode mode)
         {
-            _modes = 0;
-            Toggle?.Invoke();
+            _modes |= mode;
+            _overlay.Modes = _modes;
         }
 
-        public static void EnableTooltip(PathfindingDebugMode mode)
+        public void DisableTooltip(PathfindingDebugMode mode)
         {
-            _modes |= (int) mode;
-            Toggle?.Invoke();
+            _modes &= ~mode;
+            _overlay.Modes = _modes;
         }
 
-        public static void DisableTooltip(PathfindingDebugMode mode)
+        public void ToggleTooltip(PathfindingDebugMode mode)
         {
-            _modes &= ~(int) mode;
-            Toggle?.Invoke();
-        }
-
-        public static void ToggleTooltip(PathfindingDebugMode mode)
-        {
-            if ((_modes & (int) mode) != 0)
+            if ((_modes & mode) != 0)
             {
                 DisableTooltip(mode);
             }
@@ -55,8 +49,6 @@ namespace Content.Client.GameObjects.Components.Pathfinding
                 EnableTooltip(mode);
             }
         }
-
-        private static event Action Toggle;
 
         private DebugPathfindingOverlay _overlay;
         private float _routeDuration = 4.0f; // How long before we remove a route from the overlay
@@ -73,7 +65,7 @@ namespace Content.Client.GameObjects.Components.Pathfinding
                     ReceivedAStarRoute(route);
                     break;
                 case PathfindingGraphMessage graph:
-                    if ((_modes & (int) PathfindingDebugMode.Graph) != 0)
+                    if ((_modes & PathfindingDebugMode.Graph) != 0)
                     {
                         ReceivedGraph(graph);
                     }
@@ -81,60 +73,41 @@ namespace Content.Client.GameObjects.Components.Pathfinding
             }
         }
 
-        private void ToggleOverlay()
+        private void EnableOverlay()
         {
-            if (_modes != 0)
-            {
-                if ((_modes & (int) PathfindingDebugMode.Graph) != 0)
-                {
-                    SendNetworkMessage(new RequestPathfindingGraphMessage());
-                }
-                else
-                {
-                    _overlay?.Graph.Clear();
-                }
-
-                if (_overlay == null)
-                {
-                    var overlayManager = IoCManager.Resolve<IOverlayManager>();
-                    _overlay = new DebugPathfindingOverlay();
-                    overlayManager.AddOverlay(_overlay);
-                }
-            }
-            else
-            {
-                if (_overlay == null)
-                {
-                    return;
-                }
-
-                var overlayManager = IoCManager.Resolve<IOverlayManager>();
-                overlayManager.RemoveOverlay(_overlay.ID);
-                _overlay = null;
-                return;
-            }
-
-            _overlay.Modes = _modes;
-        }
-
-        public override void OnAdd()
-        {
-            base.OnAdd();
-            Toggle += ToggleOverlay;
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-            Toggle -= ToggleOverlay;
-            if (_overlay == null)
+            if (_overlay != null)
             {
                 return;
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
+            _overlay = new DebugPathfindingOverlay {Modes = _modes};
+            overlayManager.AddOverlay(_overlay);
+        }
+
+        private void DisableOverlay()
+        {
+            if (_overlay == null)
+            {
+                return;
+            }
+
+            _overlay.Modes = 0;
+            var overlayManager = IoCManager.Resolve<IOverlayManager>();
             overlayManager.RemoveOverlay(_overlay.ID);
             _overlay = null;
+        }
+
+        public override void OnAdd()
+        {
+            base.OnAdd();
+            EnableOverlay();
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            DisableOverlay();
         }
 
         private void ReceivedAStarRoute(AStarRouteMessage routeMessage)
@@ -176,7 +149,7 @@ namespace Content.Client.GameObjects.Components.Pathfinding
         // TODO: Add a box like the debug one and show the most recent path stuff
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-        public int Modes { get; set; } = 0;
+        public PathfindingDebugMode Modes { get; set; } = PathfindingDebugMode.None;
 
         // Graph debugging
         public readonly Dictionary<int, List<Vector2>> Graph = new Dictionary<int, List<Vector2>>();
@@ -263,7 +236,7 @@ namespace Content.Client.GameObjects.Components.Pathfinding
 
                 foreach (var (tile, score) in route.GScores)
                 {
-                    if ((route.Route.Contains(tile) && (Modes & (int) PathfindingDebugMode.Route) != 0) || !viewport.Contains(tile))
+                    if ((route.Route.Contains(tile) && (Modes & PathfindingDebugMode.Route) != 0) || !viewport.Contains(tile))
                     {
                         continue;
                     }
@@ -317,7 +290,7 @@ namespace Content.Client.GameObjects.Components.Pathfinding
             {
                 foreach (var tile in route.JumpNodes)
                 {
-                    if ((route.Route.Contains(tile) && (Modes & (int) PathfindingDebugMode.Route) != 0) || !viewport.Contains(tile))
+                    if ((route.Route.Contains(tile) && (Modes & PathfindingDebugMode.Route) != 0) || !viewport.Contains(tile))
                     {
                         continue;
                     }
@@ -349,19 +322,19 @@ namespace Content.Client.GameObjects.Components.Pathfinding
 
             var screenHandle = (DrawingHandleScreen) handle;
 
-            if ((Modes & (int) PathfindingDebugMode.Route) != 0)
+            if ((Modes & PathfindingDebugMode.Route) != 0)
             {
                 DrawAStarRoutes(screenHandle);
                 DrawJpsRoutes(screenHandle);
             }
 
-            if ((Modes & (int) PathfindingDebugMode.Nodes) != 0)
+            if ((Modes & PathfindingDebugMode.Nodes) != 0)
             {
                 DrawAStarNodes(screenHandle);
                 DrawJpsNodes(screenHandle);
             }
 
-            if ((Modes & (int) PathfindingDebugMode.Graph) != 0)
+            if ((Modes & PathfindingDebugMode.Graph) != 0)
             {
                 DrawGraph(screenHandle);
             }

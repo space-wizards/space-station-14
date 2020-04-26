@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.AI;
 using Content.Shared.Pathfinding;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
@@ -25,29 +26,23 @@ namespace Content.Client.GameObjects.Components.AI
     [RegisterComponent]
     public sealed class MobTooltipDebugComponent : SharedAiDebugComponent
     {
-        private static int _tooltips;
+        private MobTooltips _tooltips = MobTooltips.None;
 
-        public static void DisableAll()
+        public void EnableTooltip(MobTooltips tooltip)
         {
-            _tooltips = 0;
-            Toggle?.Invoke();
+            _tooltips |= tooltip;
+            _overlay.Modes = _tooltips;
         }
 
-        public static void EnableTooltip(MobTooltips tooltip)
+        public void DisableTooltip(MobTooltips tooltip)
         {
-            _tooltips |= (int) tooltip;
-            Toggle?.Invoke();
+            _tooltips &= ~tooltip;
+            _overlay.Modes = _tooltips;
         }
 
-        public static void DisableTooltip(MobTooltips tooltip)
+        public void ToggleTooltip(MobTooltips tooltip)
         {
-            _tooltips &= ~(int) tooltip;
-            Toggle?.Invoke();
-        }
-
-        public static void ToggleTooltip(MobTooltips tooltip)
-        {
-            if ((_tooltips & (int) tooltip) != 0)
+            if ((_tooltips & tooltip) != 0)
             {
                 DisableTooltip(tooltip);
             }
@@ -57,8 +52,6 @@ namespace Content.Client.GameObjects.Components.AI
             }
         }
 
-        private static event Action Toggle;
-
         // Ideally you'd persist the label until the entity dies / is deleted but for first-draft this is fine
         private DebugAiOverlay _overlay;
 
@@ -67,20 +60,23 @@ namespace Content.Client.GameObjects.Components.AI
             base.HandleMessage(message, netChannel, component);
             switch (message)
             {
+                case PlayerDetachedMsg _:
+                    DisableOverlay();
+                    break;
                 case UtilityAiDebugMessage msg:
-                    if ((_tooltips & (int) MobTooltips.Thonk) != 0)
+                    if ((_tooltips & MobTooltips.Thonk) != 0)
                     {
                         _overlay?.UpdatePlan(msg);
                     }
                     break;
                 case AStarRouteMessage route:
-                    if ((_tooltips & (int) MobTooltips.Paths) != 0)
+                    if ((_tooltips & MobTooltips.Paths) != 0)
                     {
                         _overlay?.UpdateAStarRoute(route);
                     }
                     break;
                 case JpsRouteMessage route:
-                    if ((_tooltips & (int) MobTooltips.Paths) != 0)
+                    if ((_tooltips & MobTooltips.Paths) != 0)
                     {
                         _overlay?.UpdateJpsRoute(route);
                     }
@@ -88,50 +84,41 @@ namespace Content.Client.GameObjects.Components.AI
             }
         }
 
-        private void ToggleOverlay()
+        private void EnableOverlay()
         {
-            if (_tooltips != 0)
-            {
-                if (_overlay == null)
-                {
-                    var overlayManager = IoCManager.Resolve<IOverlayManager>();
-                    _overlay = new DebugAiOverlay();
-                    overlayManager.AddOverlay(_overlay);
-                }
-            }
-            else
-            {
-                if (_overlay != null)
-                {
-                    _overlay.Modes = 0;
-                    var overlayManager = IoCManager.Resolve<IOverlayManager>();
-                    overlayManager.RemoveOverlay(_overlay.ID);
-                    _overlay = null;
-                }
-            }
-
             if (_overlay != null)
             {
-                _overlay.Modes = _tooltips;
+                return;
             }
+
+            var overlayManager = IoCManager.Resolve<IOverlayManager>();
+            _overlay = new DebugAiOverlay {Modes = _tooltips};
+            overlayManager.AddOverlay(_overlay);
+        }
+
+        private void DisableOverlay()
+        {
+            if (_overlay == null)
+            {
+                return;
+            }
+
+            _overlay.Modes = 0;
+            var overlayManager = IoCManager.Resolve<IOverlayManager>();
+            overlayManager.RemoveOverlay(_overlay.ID);
+            _overlay = null;
         }
 
         public override void OnAdd()
         {
             base.OnAdd();
-            Toggle += ToggleOverlay;
+            EnableOverlay();
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
-            if (_overlay != null)
-            {
-                var overlayManager = IoCManager.Resolve<IOverlayManager>();
-                overlayManager.RemoveOverlay(_overlay.ID);
-                _overlay = null;
-            }
-            Toggle -= ToggleOverlay;
+            DisableOverlay();
         }
     }
 
@@ -139,7 +126,7 @@ namespace Content.Client.GameObjects.Components.AI
     {
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public int Modes
+        public MobTooltips Modes
         {
             get => _modes;
             set
@@ -148,7 +135,7 @@ namespace Content.Client.GameObjects.Components.AI
                 UpdateTooltip();
             }
         }
-        private int _modes = 0;
+        private MobTooltips _modes = MobTooltips.None;
 
         private Dictionary<IEntity, PanelContainer> _aiBoxes = new Dictionary<IEntity, PanelContainer>();
 
@@ -253,13 +240,13 @@ namespace Content.Client.GameObjects.Components.AI
 
             foreach (var tooltip in _aiBoxes.Values)
             {
-                if ((Modes & (int) MobTooltips.Paths) != 0)
+                if ((Modes & MobTooltips.Paths) != 0)
                 {
                     var label = (Label) tooltip.GetChild(0).GetChild(1);
                     label.Text = "";
                 }
 
-                if ((Modes & (int) MobTooltips.Thonk) != 0)
+                if ((Modes & MobTooltips.Thonk) != 0)
                 {
                     var label = (Label) tooltip.GetChild(0).GetChild(0);
                     label.Text = "";

@@ -32,6 +32,32 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
+            if (!_owner.TryGetComponent(out HandsComponent handsComponent))
+            {
+                return Outcome.Failed;
+            }
+
+            var emptyHands = false;
+
+            foreach (var hand in handsComponent.ActivePriorityEnumerable())
+            {
+                if (handsComponent.GetHand(hand) == null)
+                {
+                    if (handsComponent.ActiveIndex != hand)
+                    {
+                        handsComponent.ActiveIndex = hand;
+                    }
+
+                    emptyHands = true;
+                    break;
+                }
+            }
+
+            if (!emptyHands)
+            {
+                return Outcome.Failed;
+            }
+
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
             interactionSystem.Interaction(_owner, _target);
             return Outcome.Success;

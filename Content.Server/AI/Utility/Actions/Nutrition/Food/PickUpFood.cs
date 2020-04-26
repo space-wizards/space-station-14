@@ -29,7 +29,6 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
             ActionOperators = new Queue<IOperator>(new IOperator[]
             {
                 new MoveToEntityOperator(Owner, _entity),
-                new SwapToFreeHandOperator(Owner),
                 new PickupEntityOperator(Owner, _entity),
             });
         }
