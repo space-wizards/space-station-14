@@ -1,0 +1,7 @@
+- type: microwaveMealRecipe
+  id: RecipeBurger
+  name: "Burger"
+  description: "A burger, in space."
+  ingredients:
+    - "Flour,15"
+    - "Meat,5"
