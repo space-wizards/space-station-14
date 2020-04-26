@@ -6,7 +6,7 @@
     },
     "states": [
         {
-            "name": "weldersprite",
+            "name": "welder",
             "select": [],
             "flags": {},
             "directions": 1,
@@ -17,7 +17,7 @@
             ]
         },
         {
-            "name": "welder-flame",
+            "name": "welder_flame",
             "select": [],
             "flags": {},
             "directions": 1,
@@ -29,7 +29,7 @@
             ]
         },
         {
-          "name": "welder-off-inhand-left",
+          "name": "inhand-left",
           "directions": 4,
           "delays": [
             [
@@ -47,43 +47,7 @@
           ]
         },
         {
-          "name": "welder-off-inhand-right",
-          "directions": 4,
-          "delays": [
-            [
-              1
-            ],
-            [
-              1
-            ],
-            [
-              1
-            ],
-            [
-              1
-            ]
-          ]
-        },
-        {
-          "name": "welder-on-inhand-left",
-          "directions": 4,
-          "delays": [
-            [
-              1
-            ],
-            [
-              1
-            ],
-            [
-              1
-            ],
-            [
-              1
-            ]
-          ]
-        },
-        {
-          "name": "welder-on-inhand-right",
+          "name": "inhand-right",
           "directions": 4,
           "delays": [
             [

@@ -1,0 +1,31 @@
+- type: entity
+  name: Purple Esword
+  parent: BaseItem
+  id: purpleesword
+  components:
+  - type: Sprite
+    sprite: Objects/Melee/eswordpurple.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Objects/Melee/eswordpurple.rsi
+    state: icon
+
+  - type: MeleeWeapon
+    range: 1.5
+    arcwidth: 10
+    arc: spear
+
+  - type: Item
+    Size: 24
+    sprite: Objects/Melee/eswordpurple.rsi
+    prefix: inhand
+
+  - type: ItemCooldown
+
+- type: MeleeWeaponAnimation
+  id: purpleesword
+  state: icon
+  length: 0.10
+  speed: 6
+  arcType: Poke
