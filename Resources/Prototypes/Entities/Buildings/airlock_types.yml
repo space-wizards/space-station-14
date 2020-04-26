@@ -117,3 +117,26 @@
 
   - type: Icon
     sprite: Buildings/Doors/airlock_command_glass.rsi
+
+
+- type: entity
+  parent: Airlock
+  id: AirlockSecurity
+  name: Security Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_security.rsi
+
+  - type: Icon
+    sprite: Buildings/Doors/airlock_security.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockSecurityGlass
+  name: Glass Security Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_security_glass.rsi
+
+  - type: Icon
+    sprite: Buildings/Doors/airlock_security_glass.rsi
