@@ -33,37 +33,29 @@
   description: Melts anything as long as it's fueled, don't forget your eye protection!
   components:
   - type: Welder
-  - type: Toggle
   - type: Sprite
     sprite: Objects/Tools/welder.rsi
     layers:
-    - state: weldersprite
-    - state: welder-flame
+    - state: welder
+    - state: welder_flame
       shader: unshaded
-      visible: False
+      visible: false
+
   - type: Icon
     sprite: Objects/Tools/welder.rsi
-    state: weldersprite
+    state: welder
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: ItemStatus
+
   - type: Item
     Size: 24
     sprite: Objects/Tools/welder.rsi
     layers:
-    - state: welder-inhand-right
-    - state: welder-flame-inhand-right
+    - state: inhand
+    - state: inhand_welder_flame
       shader: unshaded
       visible: false
-  - type: ItemCooldown
-  - type: MeleeWeapon
-  - type: ItemStatus
-- type: sound_collection
-  id: welder_on
-  files:
-  - /Audio/items/lighter1.ogg
-  - /Audio/items/lighter2.ogg
-- type: sound_collection
-  id: welder_off
-  files:
-  - /Audio/effects/zzzt.ogg
 
 - type: entity
   name: Wrench
@@ -78,6 +70,17 @@
     texture: Objects/Tools/wrench.png
   - type: ItemCooldown
   - type: MeleeWeapon
+
+- type: sound_collection
+  id: welder_on
+  files:
+  - /Audio/items/lighter1.ogg
+  - /Audio/items/lighter2.ogg
+
+- type: sound_collection
+  id: welder_off
+  files:
+  - /Audio/effects/zzzt.ogg
 
 - type: entity
   name: Crowbar

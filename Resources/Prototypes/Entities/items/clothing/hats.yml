@@ -62,6 +62,33 @@
     type: Icon
   - sprite: Clothing/Head/asset_protection_rig.rsi
     type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: whitecatears
+  name: White Cat Ears
+  description: ''
+  components:
+  - sprite: Clothing/Head/catearswhite.rsi
+    type: Sprite
+  - sprite: Clothing/Head/catearswhite.rsi
+    type: Icon
+  - sprite: Clothing/Head/catearswhite.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: greencatears
+  name: Green Cat Ears
+  description: ''
+  components:
+  - sprite: Clothing/Head/catearsgreen.rsi
+    type: Sprite
+  - sprite: Clothing/Head/catearsgreen.rsi
+    type: Icon
+  - sprite: Clothing/Head/catearsgreen.rsi
+    type: Clothing
+  parent: HatBase
 
 - type: entity
   id: HatAssetProtectionRigSealed
@@ -699,6 +726,45 @@
   - sprite: Clothing/Head/cargosoft_flipped.rsi
     type: Icon
   - sprite: Clothing/Head/cargosoft_flipped.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCat
+  name: Cat
+  description: ''
+  components:
+  - sprite: Clothing/Head/cat.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cat.rsi
+    type: Icon
+  - sprite: Clothing/Head/cat.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCat2
+  name: Cat2
+  description: ''
+  components:
+  - sprite: Clothing/Head/cat2.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cat2.rsi
+    type: Icon
+  - sprite: Clothing/Head/cat2.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCat3
+  name: Cat3
+  description: ''
+  components:
+  - sprite: Clothing/Head/cat3.rsi
+    type: Sprite
+  - sprite: Clothing/Head/cat3.rsi
+    type: Icon
+  - sprite: Clothing/Head/cat3.rsi
     type: Clothing
   parent: HatBase
 
