@@ -15,6 +15,7 @@ FILES = {
 
 SERVER_FILES = [
     "SS14.Server_Linux_x64.zip",
+    "SS14.Server_Linux_ARM64.zip",
     "SS14.Server_Windows_x64.zip",
     "SS14.Server_macOS_x64.zip"
 ]
