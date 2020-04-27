@@ -51,6 +51,7 @@ namespace Content.Server.GameObjects.Components.Movement
             var position = new GridCoordinates((float) (Math.Floor(coords.X) + 0.5), (float) (Math.Floor(coords.Y) + 0.5), coords.GridID);
             var dist = _puller.Transform.GridPosition.Position - position.Position;
             if (Math.Sqrt(dist.LengthSquared) > DistBeforeStopPull) return;
+            if (Math.Sqrt(dist.LengthSquared) < 0.25f) return;
             Owner.Transform.GridPosition = position;
         }
 
