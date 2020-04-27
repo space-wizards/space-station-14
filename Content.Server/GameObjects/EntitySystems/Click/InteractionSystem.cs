@@ -456,7 +456,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private bool HandleTryPullObject(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
-            Console.WriteLine("Moving item");
             // client sanitization
             if (!_mapManager.GridExists(coords.GridID))
             {
@@ -473,18 +472,22 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var player = (session as IPlayerSession).AttachedEntity;
 
-            var pulledObject = EntityManager.GetEntity(uid);
-
-            if (pulledObject.TryGetComponent<PullableComponent>(out var pull))
+            if (!EntityManager.TryGetEntity(uid, out var pulledObject)) return false;
+            if (!pulledObject.TryGetComponent<PullableComponent>(out var pull)) return false;
+            if (!player.TryGetComponent<HandsComponent>(out var hands)) return false;
+            var dist = player.Transform.GridPosition.Position - pulledObject.Transform.GridPosition.Position;
+            if (dist.LengthSquared > InteractionRangeSquared)
             {
-                if (!pull.GettingPulled)
-                {
-                    pull.GetPulled(player);
-                }
-                else
-                {
-                    pull.StopPull();
-                }
+                return false;
+            }
+
+            if (!pull.GettingPulled)
+            {
+                hands.StartPulling(pull);
+            }
+            else
+            {
+                hands.StopPulling();
             }
 
             return false;

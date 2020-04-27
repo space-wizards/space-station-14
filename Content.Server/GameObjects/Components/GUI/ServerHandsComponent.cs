@@ -3,6 +3,7 @@
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
@@ -33,6 +34,8 @@ namespace Content.Server.GameObjects
 
         private string activeIndex;
 
+        private PullableComponent _pulledObject = null;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public string ActiveIndex
         {
@@ -48,6 +51,8 @@ namespace Content.Server.GameObjects
                 Dirty();
             }
         }
+
+        [ViewVariables] public bool isPulling => _pulledObject != null;
 
         [ViewVariables] private Dictionary<string, ContainerSlot> hands = new Dictionary<string, ContainerSlot>();
         [ViewVariables] private List<string> orderedHands = new List<string>();
@@ -147,6 +152,11 @@ namespace Content.Server.GameObjects
             }
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
+
+            if (item.Owner.Uid == _pulledObject.Owner.Uid)
+            {
+                StopPulling();
+            }
 
             return success;
         }
@@ -457,6 +467,27 @@ namespace Content.Server.GameObjects
             }
 
             return false;
+        }
+
+        public void StartPulling(PullableComponent pullable)
+        {
+            if (isPulling)
+            {
+                _pulledObject.StopPull();
+            }
+            _pulledObject = pullable;
+            _pulledObject.GetPulled(Owner);
+        }
+
+        public void StopPulling()
+        {
+            _pulledObject.StopPull();
+            _pulledObject = null;
+        }
+
+        public void MovePulledObject(GridCoordinates coords)
+        {
+            _pulledObject?.MoveTo(coords);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
