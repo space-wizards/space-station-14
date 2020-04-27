@@ -67,9 +67,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     return 0;
                 }
 
-                if(x.Ingredients.Count < y.Ingredients.Count)
+                if (x.Ingredients.Count < y.Ingredients.Count)
                 {
                     return 1;
+                }
+
+                if (x.Ingredients.Count > y.Ingredients.Count)
+                {
+                    return -1;
                 }
 
                 return 0;
@@ -109,7 +114,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 {
                     var outputFromRecipe = r.OutPutPrototype;
                     _entityManager.SpawnEntity(outputFromRecipe, Owner.Transform.GridPosition);
+                    return;
                 }
+
             }
         }
 
@@ -119,13 +126,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 var ingName = ingredient.Key.ToString();
                 var ingQuantity = ingredient.Value;
-                if (!_contents.ContainsReagent(ingName, out var amt) && amt != ingQuantity) return false;
-                _contents.TryRemoveReagent(ingName, ReagentUnit.New(ingQuantity));
-
-                //This doesnt work.
+                if (_contents.ContainsReagent(ingName, out var amt) && amt >= ingQuantity)
+                {
+                    _contents.TryRemoveReagent(ingName, ReagentUnit.New(ingQuantity));
+                    return true;
+                }
 
             }
-            return true;
+            return false;
 
         }
 

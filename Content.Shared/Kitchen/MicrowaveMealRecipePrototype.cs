@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -17,25 +18,24 @@ namespace Content.Shared.Kitchen
     public class MicrowaveMealRecipePrototype : IPrototype, IIndexedPrototype
     {
 
-        public string ID {get; private set;}
-        public string Name {get; private set;}
+        private string _id;
+        private string _name;
+        private string _output;
+        private Dictionary<string, int> _ingredients;
 
-        public string OutPutPrototype { get; private set; }
-        public Dictionary<string,int> Ingredients {get; private set;}
+        public string ID => _id;
+        public string Name => Loc.GetString(_name);
+        public string OutPutPrototype => _output;
+        public IReadOnlyDictionary<string, int> Ingredients => _ingredients;
+
         public void LoadFrom(YamlMappingNode mapping)
         {
-            ID = mapping.GetNode("id").ToString();
-            Name = Loc.GetString(mapping.GetNode("name").ToString());
-            OutPutPrototype = mapping.GetNode("output").ToString();
-            if(mapping.TryGetNode("ingredients", out YamlMappingNode ingDict))
-            {
-                Ingredients = new Dictionary<string, int>();
-                foreach (var kvp in ingDict.Children)
-                {
-                    Ingredients.Add(kvp.Key.ToString(), kvp.Value.AsInt());
-                }
-            }
+            var serializer = YamlObjectSerializer.NewReader(mapping);
 
+            serializer.DataField(ref _id, "id", string.Empty);
+            serializer.DataField(ref _name, "name", string.Empty);
+            serializer.DataField(ref _output, "output", string.Empty);
+            serializer.DataField(ref _ingredients, "ingredients", new Dictionary<string, int>());
         }
     }
 }
