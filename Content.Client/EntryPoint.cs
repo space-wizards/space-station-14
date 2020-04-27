@@ -143,6 +143,7 @@ namespace Content.Client
                 "Bucket",
                 "Puddle",
                 "CanSpill",
+                "Microwave"
             };
 
             foreach (var ignoreName in registerIgnore)

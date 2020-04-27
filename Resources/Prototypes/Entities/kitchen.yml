@@ -1,0 +1,30 @@
+- type: entity
+  id: KitchenMicrowave
+  name: Microwave
+  description: It's magic.
+  components:
+  - type: Microwave
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Solution
+    maxVol: 100
+    caps: 1
+
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,0,0.5,1"
+      layer: 15
+    IsScrapingFloor: true
+  - type: Sprite
+    netsync: false
+    sprite: Buildings/medical_scanner.rsi
+    layers:
+    - state: scanner_open
+      map: ["enum.MedicalScannerVisualLayers.Machine"]
+    - state: scanner_terminal_blue
+      map: ["enum.MedicalScannerVisualLayers.Terminal"]
+  - type: PowerDevice
+  - type: Icon
+    sprite: Buildings/medical_scanner.rsi
+    state: scanner_open

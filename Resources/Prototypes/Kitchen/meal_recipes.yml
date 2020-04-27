@@ -1,7 +1,17 @@
 - type: microwaveMealRecipe
-  id: RecipeBurger
-  name: "Burger"
-  description: "A burger, in space."
+  id: RecipeCheeseburger
+  name: "Cheeseburger Recipe"
+  output: FoodCheeseburger
   ingredients:
-    - "Flour,15"
-    - "Meat,5"
+    chem.H2O: 15
+    chem.Nutriment: 5
+
+- type: microwaveMealRecipe
+  id: RecipeFlashlight
+  name: "Flashlight Recipe"
+  output: FlashlightLantern
+  ingredients:
+    chem.H2O: 15
+    chem.Nutriment: 20
+    chem.Glucose: 5
+
