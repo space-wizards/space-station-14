@@ -25,8 +25,8 @@ namespace Content.Server.GameTicking.GamePresets
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
-        public int MinPlayers { get; set; } = 2;
-        public int MinTraitors { get; set; } = 1;
+        public int MinPlayers { get; set; } = 5;
+        public int MinTraitors { get; set; } = 2;
         public int PlayersPerTraitor { get; set; } = 5;
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers)
