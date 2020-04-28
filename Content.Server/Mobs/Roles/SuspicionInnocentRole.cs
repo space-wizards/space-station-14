@@ -5,9 +5,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Mobs.Roles
 {
-    public class InnocentRole : Role
+    public class SuspicionInnocentRole : Role
     {
-        public InnocentRole(Mind mind) : base(mind)
+        public SuspicionInnocentRole(Mind mind) : base(mind)
         {
         }
 

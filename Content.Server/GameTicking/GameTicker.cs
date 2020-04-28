@@ -104,7 +104,7 @@ namespace Content.Server.GameTicking
 
             _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.defaultpreset", "Traitor", CVar.ARCHIVE);
+            _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
 
             _playerManager.PlayerStatusChanged += _handlePlayerStatusChanged;
@@ -350,7 +350,7 @@ namespace Content.Server.GameTicking
             {
                 "Sandbox" => typeof(PresetSandbox),
                 "DeathMatch" => typeof(PresetDeathMatch),
-                "Traitor" => typeof(PresetTraitor),
+                "Suspicion" => typeof(PresetSuspicion),
                 _ => throw new NotSupportedException()
             });
 

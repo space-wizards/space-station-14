@@ -23,7 +23,7 @@ namespace Content.Server.GameTicking.GameRules
     ///     Simple GameRule that will do a free-for-all death match.
     ///     Kill everybody else to win.
     /// </summary>
-    public sealed class RuleTraitor : GameRule, IEntityEventSubscriber
+    public sealed class RuleSuspicion : GameRule, IEntityEventSubscriber
     {
         private static readonly TimeSpan DeadCheckDelay = TimeSpan.FromSeconds(1);
 

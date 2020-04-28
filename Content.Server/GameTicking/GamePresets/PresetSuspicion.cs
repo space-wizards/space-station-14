@@ -16,7 +16,7 @@ using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.GameTicking.GamePresets
 {
-    public class PresetTraitor : GamePreset
+    public class PresetSuspicion : GamePreset
     {
 #pragma warning disable 649
         [Dependency] private readonly ISandboxManager _sandboxManager;
@@ -44,21 +44,21 @@ namespace Content.Server.GameTicking.GamePresets
             {
                 var traitor = _random.PickAndTake(list);
                 var mind = traitor.Data.ContentData().Mind;
-                mind.AddRole(new TraitorRole(mind));
+                mind.AddRole(new SuspicionTraitorRole(mind));
             }
 
             foreach (var player in list)
             {
                 var mind = player.Data.ContentData().Mind;
-                mind.AddRole(new InnocentRole(mind));
+                mind.AddRole(new SuspicionInnocentRole(mind));
             }
 
             _sandboxManager.IsSandboxEnabled = false;
-            _gameTicker.AddGameRule<RuleTraitor>();
+            _gameTicker.AddGameRule<RuleSuspicion>();
             return true;
         }
 
-        public override string ModeTitle => "Traitor";
-        public override string Description => "There are traitors on board... Can you kill them before they kill you?";
+        public override string ModeTitle => "Suspicion";
+        public override string Description => "Suspicion on the Space Station. There are traitors on board... Can you kill them before they kill you?";
     }
 }
