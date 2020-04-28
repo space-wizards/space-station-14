@@ -4,13 +4,14 @@
   id: Wirecutter
   description: This kills the wire.
   components:
-  - type: Wirecutter
   - type: Sprite
     texture: Objects/Tools/wirecutter.png
   - type: Icon
     texture: Objects/Tools/wirecutter.png
   - type: ItemCooldown
   - type: MeleeWeapon
+  - type: Tool
+      behavior: enum.Tool.Wirecutter
 
 - type: entity
   name: Screwdriver
@@ -18,20 +19,18 @@
   id: Screwdriver
   description: Industrial grade torque in a small screwdriving package
   components:
-  - type: Screwdriver
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
     state: screwdriver
-
   - type: Icon
     sprite: Objects/Tools/screwdriver.rsi
     state: screwdriver
-
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
-
   - type: ItemCooldown
   - type: MeleeWeapon
+  - type: Tool
+      behavior: enum.Tool.Screwdriver
 
 - type: entity
   name: Welding Tool
@@ -39,7 +38,6 @@
   id: Welder
   description: Melts anything as long as it's fueled, don't forget your eye protection!
   components:
-  - type: Welder
   - type: Sprite
     sprite: Objects/Tools/welder.rsi
     layers:
@@ -47,13 +45,14 @@
     - state: welder_flame
       shader: unshaded
       visible: false
-
   - type: Icon
     sprite: Objects/Tools/welder.rsi
     state: welder
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: ItemStatus
+  - type: Tool
+      behavior: enum.Tool.Screwdriver
 
 - type: entity
   name: Wrench
@@ -61,24 +60,14 @@
   id: Wrench
   description: A common tool for assembly and disassembly, righty tighty lefty loosey
   components:
-  - type: Wrench
   - type: Sprite
     texture: Objects/Tools/wrench.png
   - type: Icon
     texture: Objects/Tools/wrench.png
   - type: ItemCooldown
   - type: MeleeWeapon
-
-- type: sound_collection
-  id: welder_on
-  files:
-  - /Audio/items/lighter1.ogg
-  - /Audio/items/lighter2.ogg
-
-- type: sound_collection
-  id: welder_off
-  files:
-  - /Audio/effects/zzzt.ogg
+  - type: Tool
+      behavior: enum.Tool.Wrench
 
 - type: entity
   name: Crowbar
@@ -86,13 +75,14 @@
   id: Crowbar
   description: A multipurpose tool to pry open doors and fight interdimensional invaders
   components:
-  - type: Crowbar
   - type: Sprite
     texture: Objects/Tools/crowbar.png
   - type: Icon
     texture: Objects/Tools/crowbar.png
   - type: ItemCooldown
   - type: MeleeWeapon
+  - type: Tool
+      behavior: enum.Tool.Crowbar
 
 - type: entity
   name: Multitool
@@ -100,14 +90,13 @@
   id: Multitool
   description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
   components:
-  - type: Multitool
   - type: Sprite
     sprite: Objects/Tools/multitool.rsi
     state: multitool
-
   - type: Icon
     sprite: Objects/Tools/multitool.rsi
     state: multitool
-
   - type: Item
     sprite: Objects/Tools/multitool.rsi
+  - type: Tool
+      behavior: enum.Tool.Multitool

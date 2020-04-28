@@ -1,0 +1,10 @@
+- type: soundCollection
+  id: WelderOn
+  files:
+    - /Audio/items/lighter1.ogg
+    - /Audio/items/lighter2.ogg
+
+- type: soundCollection
+  id: WelderOff
+  files:
+    - /Audio/effects/zzzt.ogg
