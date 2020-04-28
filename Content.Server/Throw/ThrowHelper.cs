@@ -26,7 +26,7 @@ namespace Content.Server.Throw
 
             var mapManager = IoCManager.Resolve<IMapManager>();
 
-            colComp.CollisionEnabled = true;
+            colComp.CanCollide = true;
             // I can now collide with player, so that i can do damage.
 
             if (!thrownEnt.TryGetComponent(out ThrownItemComponent projComp))
