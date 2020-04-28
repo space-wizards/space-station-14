@@ -118,9 +118,17 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (!ShowExamineInfo)
                 return;
 
+            var dead = false;
+
+            if(Owner.TryGetComponent<SpeciesComponent>(out var species))
+                if (species.CurrentDamageState is DeadState)
+                    dead = true;
+
             // TODO: Use gendered pronouns depending on the entity
             if(!HasMind)
-                message.AddMarkup($"[color=red]They are totally catatonic. The stresses of life in deep-space must have been too much for them. Any recovery is unlikely.[/color]");
+                message.AddMarkup(!dead
+                    ? $"[color=red]They are totally catatonic. The stresses of life in deep-space must have been too much for them. Any recovery is unlikely.[/color]"
+                    : $"[color=purple]Their soul has departed.[/color]");
             else if(Mind.Session == null)
                 message.AddMarkup("[color=yellow]They have a blank, absent-minded stare and appears completely unresponsive to anything. They may snap out of it soon.[/color]");
         }
