@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.EntitySystems
     public interface IToolAct
     {
         /// <summary>
-        /// Called when using a wrench on an entity
+        /// Called when using a tool on an entity
         /// </summary>
         bool ToolAct(ToolActEventArgs eventArgs) => false;
     }
