@@ -36,7 +36,7 @@
         public const uint GALACTIC_MARKET = 1031;
         public const uint HUMANOID_APPEARANCE = 1032;
         public const uint INSTRUMENTS = 1033;
-        public const uint WELDER = 1034;
+        public const uint TOOL = 1034;
         public const uint STACK = 1035;
         public const uint HANDHELD_LIGHT = 1036;
         public const uint PAPER = 1037;

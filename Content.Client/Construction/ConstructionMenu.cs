@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -182,25 +183,25 @@ namespace Content.Client.Construction
                         case ConstructionStepTool tool:
                             switch (tool.Tool)
                             {
-                                case ConstructionStepTool.ToolType.Wrench:
+                                case Tool.Wrench:
                                     icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.png");
                                     text = "Wrench";
                                     break;
-                                case ConstructionStepTool.ToolType.Crowbar:
+                                case Tool.Crowbar:
                                     icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.png");
                                     text = "Crowbar";
                                     break;
-                                case ConstructionStepTool.ToolType.Screwdriver:
+                                case Tool.Screwdriver:
                                     icon = ResourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Tools/screwdriver.png");
                                     text = "Screwdriver";
                                     break;
-                                case ConstructionStepTool.ToolType.Welder:
+                                case Tool.Welder:
                                     icon = ResourceCache.GetResource<RSIResource>("/Textures/Objects/tools.rsi")
                                         .RSI["welder"].Frame0;
                                     text = $"Welding tool ({tool.Amount} fuel)";
                                     break;
-                                case ConstructionStepTool.ToolType.Wirecutters:
+                                case Tool.Wirecutter:
                                     icon = ResourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Tools/wirecutter.png");
                                     text = "Wirecutters";

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Interactable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -235,30 +236,31 @@ namespace Content.Server.GameObjects.Components
                         return;
                     }
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
+                    activeHandEntity.TryGetComponent<ToolComponent>(out var tool);
                     switch (msg.Action)
                     {
                         case WiresAction.Cut:
-                            if (activeHandEntity?.HasComponent<WirecutterComponent>() != true)
+                            if (tool == null || tool.Behavior != Tool.Wirecutter)
                             {
                                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
                             }
-                            _audioSystem.Play("/Audio/items/wirecutter.ogg", Owner);
+                            tool.PlayUseSound();
                             wire.IsCut = true;
                             UpdateUserInterface();
                             break;
                         case WiresAction.Mend:
-                            if (activeHandEntity?.HasComponent<WirecutterComponent>() != true)
+                            if (tool == null || tool.Behavior != Tool.Wirecutter)
                             {
                                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
                             }
-                            _audioSystem.Play("/Audio/items/wirecutter.ogg", Owner);
+                            tool.PlayUseSound();
                             wire.IsCut = false;
                             UpdateUserInterface();
                             break;
                         case WiresAction.Pulse:
-                            if (activeHandEntity?.HasComponent<MultitoolComponent>() != true)
+                            if (tool == null || tool.Behavior != Tool.Multitool)
                             {
                                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a multitool in your hand!"));
                                 return;
@@ -288,10 +290,10 @@ namespace Content.Server.GameObjects.Components
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<ScrewdriverComponent>())
-            {
+            if (!eventArgs.AttackWith.TryGetComponent<ToolComponent>(out var tool))
                 return false;
-            }
+            if (tool.Behavior != Tool.Screwdriver)
+                return false;
 
             IsPanelOpen = !IsPanelOpen;
             IoCManager.Resolve<IEntitySystemManager>()

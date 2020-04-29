@@ -11,7 +11,8 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
-      behavior: enum.Tool.Wirecutter
+    behavior: enum.Tool.Wirecutter
+    useSound: /Audio/items/wirecutter.ogg
 
 - type: entity
   name: Screwdriver
@@ -30,7 +31,8 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
-      behavior: enum.Tool.Screwdriver
+    behavior: enum.Tool.Screwdriver
+    useSoundCollection: Screwdriver
 
 - type: entity
   name: Welding Tool
@@ -51,8 +53,16 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: ItemStatus
+  - type: Solution
+    maxVol: 50
+    caps: 9
+    contents:
+      reagents:
+        - ReagentId: chem.WeldingFuel
+          Quantity: 50
   - type: Tool
-      behavior: enum.Tool.Screwdriver
+    behavior: enum.Tool.Welder
+    useSoundCollection: Welder
 
 - type: entity
   name: Wrench
@@ -67,7 +77,8 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
-      behavior: enum.Tool.Wrench
+    behavior: enum.Tool.Wrench
+    useSound: /Audio/items/ratchet.ogg
 
 - type: entity
   name: Crowbar
@@ -82,7 +93,8 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
-      behavior: enum.Tool.Crowbar
+    behavior: enum.Tool.Crowbar
+    useSound: /Audio/items/crowbar.ogg
 
 - type: entity
   name: Multitool
@@ -99,4 +111,60 @@
   - type: Item
     sprite: Objects/Tools/multitool.rsi
   - type: Tool
-      behavior: enum.Tool.Multitool
+    behavior: enum.Tool.Multitool
+
+- type: entity
+  name: Jaws of life
+  parent: BaseItem
+  id: JawsOfLife
+  description: A set of jaws of life, compressed through the magic of science.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/jaws_of_life.rsi
+      state: jaws_pry
+    - type: Icon
+      sprite: Objects/Tools/jaws_of_life.rsi
+      state: jaws_pry
+    - type: Item
+      sprite: Objects/Tools/jaws_of_life.rsi
+    - type: Tool
+      behavior: enum.Tool.Crowbar
+      statusShowBehavior: true
+    - type: MultiTool
+      tools:
+        - behavior: enum.Tool.Crowbar
+          state: jaws_pry
+          useSound: /Audio/items/jaws_pry.ogg
+          changeSound: /Audio/items/change_jaws.ogg
+        - behavior: enum.Tool.Wirecutter
+          state: jaws_cutter
+          useSound: /Audio/items/jaws_cut.ogg
+          changeSound: /Audio/items/change_jaws.ogg
+
+- type: entity
+  name: Power Drill
+  parent: BaseItem
+  id: PowerDrill
+  description: A simple powered hand drill.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/drill.rsi
+      state: drill_screw
+    - type: Icon
+      sprite: Objects/Tools/drill.rsi
+      state: drill_screw
+    - type: Item
+      sprite: Objects/Tools/drill.rsi
+    - type: Tool
+      behavior: enum.Tool.Screwdriver
+      statusShowBehavior: true
+    - type: MultiTool
+      tools:
+        - behavior: enum.Tool.Screwdriver
+          state: drill_screw
+          useSound: /Audio/items/drill_use.ogg
+          changeSound: /Audio/items/change_drill.ogg
+        - behavior: enum.Tool.Wrench
+          state: drill_bolt
+          useSound: /Audio/items/drill_use.ogg
+          changeSound: /Audio/items/change_drill.ogg

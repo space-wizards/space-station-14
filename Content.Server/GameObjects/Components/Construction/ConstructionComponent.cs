@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -141,46 +142,42 @@ namespace Content.Server.GameObjects.Components.Construction
                         sound.Play("/Audio/items/deconstruct.ogg", Transform.GridPosition);
                     return true;
                 case ConstructionStepTool toolStep:
+                    if (!slapped.TryGetComponent<ToolComponent>(out var tool))
+                        return false;
                     switch (toolStep.Tool)
                     {
-                        case ToolType.Crowbar:
-                            if (slapped.HasComponent<CrowbarComponent>())
+                        case Tool.Crowbar:
+                            if (tool.Behavior == Tool.Crowbar)
                             {
-                                sound.Play("/Audio/items/crowbar.ogg", Transform.GridPosition);
+                                tool.PlayUseSound();
                                 return true;
                             }
                             return false;
-                        case ToolType.Welder:
-                            if (slapped.TryGetComponent(out WelderComponent welder) && welder.TryUse(toolStep.Amount))
+                        case Tool.Welder:
+                            if (tool.Behavior == Tool.Welder && tool.TryWeld(toolStep.Amount))
                             {
-                                if (_random.NextDouble() > 0.5)
-                                    sound.Play("/Audio/items/welder.ogg", Transform.GridPosition);
-                                else
-                                    sound.Play("/Audio/items/welder2.ogg", Transform.GridPosition);
+                                tool.PlayUseSound();
                                 return true;
                             }
                             return false;
-                        case ToolType.Wrench:
-                            if (slapped.HasComponent<WrenchComponent>())
+                        case Tool.Wrench:
+                            if (tool.Behavior == Tool.Wrench)
                             {
-                                sound.Play("/Audio/items/ratchet.ogg", Transform.GridPosition);
+                                tool.PlayUseSound();
                                 return true;
                             }
                             return false;
-                        case ToolType.Screwdriver:
-                            if (slapped.HasComponent<ScrewdriverComponent>())
+                        case Tool.Screwdriver:
+                            if (tool.Behavior == Tool.Screwdriver)
                             {
-                                if (_random.NextDouble() > 0.5)
-                                    sound.Play("/Audio/items/screwdriver.ogg", Transform.GridPosition);
-                                else
-                                    sound.Play("/Audio/items/screwdriver2.ogg", Transform.GridPosition);
+                                tool.PlayUseSound();
                                 return true;
                             }
                             return false;
-                        case ToolType.Wirecutters:
-                            if (slapped.HasComponent<WirecutterComponent>())
+                        case Tool.Wirecutter:
+                            if (tool.Behavior == Tool.Wirecutter)
                             {
-                                sound.Play("/Audio/items/wirecutter.ogg", Transform.GridPosition);
+                                tool.PlayUseSound();
                                 return true;
                             }
                             return false;

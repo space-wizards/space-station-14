@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
 using Content.Shared.Physics;
@@ -42,6 +45,129 @@ namespace Content.Server.GameObjects.EntitySystems
         public GridCoordinates ClickLocation { get; set; }
         public IEntity AttackWith { get; set; }
     }
+
+    #region Tools
+
+    /// <summary>
+    /// This interface gives components behavior when being clicked on or "attacked" by a user with a tool in their hand
+    /// </summary>
+    public interface IToolAct
+    {
+        /// <summary>
+        /// Called when using a wrench on an entity
+        /// </summary>
+        bool ToolAct(ToolActEventArgs eventArgs) => false;
+    }
+
+    public class ToolActEventArgs : EventArgs
+    {
+        public IEntity User { get; set; }
+        public GridCoordinates ClickLocation { get; set; }
+        public IEntity AttackWith { get; set; }
+        public ToolComponent ToolComponent => AttackWith.GetComponent<ToolComponent>();
+        public virtual Tool Behavior { get; }
+    }
+
+    /// <summary>
+    /// This interface gives components behavior when being clicked on or "attacked" by a user with a wrench in their hand
+    /// </summary>
+    public interface IWrenchAct : IToolAct
+    {
+        /// <summary>
+        /// Called when using a wrench on an entity
+        /// </summary>
+        bool WrenchAct(WrenchActEventArgs eventArgs);
+    }
+
+    public class WrenchActEventArgs : ToolActEventArgs
+    {
+        public override Tool Behavior => Tool.Wrench;
+    }
+
+    /// <summary>
+    /// This interface gives components behavior when being clicked on or "attacked" by a user with a crowbar in their hand
+    /// </summary>
+    public interface ICrowbarAct : IToolAct
+    {
+        /// <summary>
+        /// Called when using a wrench on an entity
+        /// </summary>
+        bool CrowbarAct(CrowbarActEventArgs eventArgs);
+    }
+
+    public class CrowbarActEventArgs : ToolActEventArgs
+    {
+        public override Tool Behavior => Tool.Crowbar;
+    }
+
+    /// <summary>
+    /// This interface gives components behavior when being clicked on or "attacked" by a user with a screwdriver in their hand
+    /// </summary>
+    public interface IScrewdriverAct
+    {
+        /// <summary>
+        /// Called when using a wrench on an entity
+        /// </summary>
+        bool ScrewdriverAct(ScrewdriverActEventArgs eventArgs);
+    }
+
+    public class ScrewdriverActEventArgs : ToolActEventArgs
+    {
+        public override Tool Behavior => Tool.Screwdriver;
+    }
+
+    /// <summary>
+    /// This interface gives components behavior when being clicked on or "attacked" by a user with a wirecutter in their hand
+    /// </summary>
+    public interface IWirecutterAct
+    {
+        /// <summary>
+        /// Called when using a wrench on an entity
+        /// </summary>
+        bool WirecutterAct(WirecutterActEventArgs eventArgs);
+    }
+
+    public class WirecutterActEventArgs : ToolActEventArgs
+    {
+        public override Tool Behavior => Tool.Wirecutter;
+    }
+
+    /// <summary>
+    /// This interface gives components behavior when being clicked on or "attacked" by a user with a welder in their hand
+    /// </summary>
+    public interface IWelderAct
+    {
+        /// <summary>
+        /// Called when using a wrench on an entity
+        /// </summary>
+        bool WelderAct(WelderActEventArgs eventArgs);
+    }
+
+    public class WelderActEventArgs : ToolActEventArgs
+    {
+        public override Tool Behavior => Tool.Welder;
+        public bool Lit { get; set; }
+        public float Fuel { get; set; }
+        public float FuelCapacity { get; set; }
+    }
+
+    /// <summary>
+    /// This interface gives components behavior when being clicked on or "attacked" by a user with a multitool in their hand
+    /// </summary>
+    public interface IMultitoolAct
+    {
+        /// <summary>
+        /// Called when using a wrench on an entity
+        /// </summary>
+        bool MultitoolAct(MultitoolActEventArgs eventArgs);
+    }
+
+    public class MultitoolActEventArgs : ToolActEventArgs
+    {
+        public override Tool Behavior => Tool.Multitool;
+    }
+
+    #endregion
 
     /// <summary>
     /// This interface gives components behavior when being clicked on or "attacked" by a user with an empty hand
@@ -561,9 +687,97 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var attackBy in attackBys)
             {
                 if (attackBy.AttackBy(attackByEventArgs))
-                {
                     // If an AttackBy returns a status completion we finish our attack
                     return;
+            }
+
+            // We handle specific tools AttackBy here.
+            if (weapon.TryGetComponent<ToolComponent>(out var tool))
+            {
+                switch (tool.Behavior)
+                {
+                    case Tool.Wrench:
+                        var wrenchList = attacked.GetAllComponents<IWrenchAct>().ToList();
+                        var wrenchAttackBy = new WrenchActEventArgs()
+                            { User = user, ClickLocation = clickLocation, AttackWith = weapon };
+
+                        foreach (var comp in wrenchList)
+                        {
+                            if (comp.WrenchAct(wrenchAttackBy))
+                                return;
+                        }
+
+                        break;
+
+                    case Tool.Crowbar:
+                        var crowbarList = attacked.GetAllComponents<ICrowbarAct>().ToList();
+                        var crowbarAttackBy = new CrowbarActEventArgs()
+                            { User = user, ClickLocation = clickLocation, AttackWith = weapon };
+
+                        foreach (var comp in crowbarList)
+                        {
+                            if (comp.CrowbarAct(crowbarAttackBy))
+                                return;
+                        }
+
+                        break;
+
+                    case Tool.Screwdriver:
+                        var screwdriverList = attacked.GetAllComponents<IScrewdriverAct>().ToList();
+                        var screwdriverAttackBy = new ScrewdriverActEventArgs()
+                            { User = user, ClickLocation = clickLocation, AttackWith = weapon };
+
+                        foreach (var comp in screwdriverList)
+                        {
+                            if (comp.ScrewdriverAct(screwdriverAttackBy))
+                                return;
+                        }
+
+                        break;
+
+                    case Tool.Wirecutter:
+                        var wirecutterList = attacked.GetAllComponents<IWirecutterAct>().ToList();
+                        var wirecutterAttackBy = new WirecutterActEventArgs()
+                            { User = user, ClickLocation = clickLocation, AttackWith = weapon };
+
+                        foreach (var comp in wirecutterList)
+                        {
+                            if (comp.WirecutterAct(wirecutterAttackBy))
+                                return;
+                        }
+                        break;
+
+                    case Tool.Welder:
+                        var welderList = attacked.GetAllComponents<IWelderAct>().ToList();
+                        var welderAttackBy = new WelderActEventArgs()
+                        {
+                            User = user, ClickLocation = clickLocation, AttackWith = weapon,
+                            Fuel = tool.Fuel, FuelCapacity = tool.FuelCapacity
+                        };
+
+                        foreach (var comp in welderList)
+                        {
+                            if (comp.WelderAct(welderAttackBy))
+                                return;
+                        }
+
+                        break;
+
+                    case Tool.Multitool:
+                        var multitoolList = attacked.GetAllComponents<IMultitoolAct>().ToList();
+                        var multitoolAttackBy = new MultitoolActEventArgs()
+                            { User = user, ClickLocation = clickLocation, AttackWith = weapon };
+
+                        foreach (var comp in multitoolList)
+                        {
+                            if (comp.MultitoolAct(multitoolAttackBy))
+                                return;
+                        }
+
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Interactable.Tools;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -13,9 +12,22 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         private readonly HashSet<ToolComponent> _activeWelders = new HashSet<ToolComponent>();
 
+        public bool Subscribe(ToolComponent welder)
+        {
+            return _activeWelders.Add(welder);
+        }
+
+        public bool Unsubscribe(ToolComponent welder)
+        {
+            return _activeWelders.Remove(welder);
+        }
+
         public override void Update(float frameTime)
         {
-            foreach (var tool in _activeWelders) ;
+            foreach (var tool in _activeWelders.ToArray())
+            {
+                tool.OnUpdate(frameTime);
+            }
         }
     }
 }

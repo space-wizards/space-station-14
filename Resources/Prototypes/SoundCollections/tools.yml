@@ -8,3 +8,15 @@
   id: WelderOff
   files:
     - /Audio/effects/zzzt.ogg
+
+- type: soundCollection
+  id: Welder
+  files:
+    - /Audio/items/welder.ogg
+    - /Audio/items/welder2.ogg
+
+- type: soundCollection
+  id: Screwdriver
+  files:
+    - /Audio/items/screwdriver.ogg
+    - /Audio/items/screwdriver2.ogg

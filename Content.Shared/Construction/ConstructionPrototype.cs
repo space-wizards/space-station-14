@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -138,7 +139,7 @@ namespace Content.Shared.Construction
             if (step.TryGetNode("tool", out node))
             {
                 return new ConstructionStepTool(
-                    node.AsEnum<ConstructionStepTool.ToolType>(),
+                    node.AsEnum<Tool>(),
                     amount
                 );
             }
@@ -190,20 +191,11 @@ namespace Content.Shared.Construction
 
     public class ConstructionStepTool : ConstructionStep
     {
-        public readonly ToolType Tool;
+        public readonly Tool Tool;
 
-        public ConstructionStepTool(ToolType tool, int amount) : base(amount)
+        public ConstructionStepTool(Tool tool, int amount) : base(amount)
         {
             Tool = tool;
-        }
-
-        public enum ToolType
-        {
-            Wrench,
-            Welder,
-            Screwdriver,
-            Crowbar,
-            Wirecutters,
         }
     }
 
