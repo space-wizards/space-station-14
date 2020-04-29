@@ -694,6 +694,11 @@ namespace Content.Server.GameObjects.EntitySystems
             // We handle specific tools AttackBy here.
             if (weapon.TryGetComponent<ToolComponent>(out var tool))
             {
+
+                if (attacked.GetAllComponents<IToolAct>().Any((act => act.ToolAct(new ToolActEventArgs()
+                    {User = user, ClickLocation = clickLocation, AttackWith = weapon}))))
+                    return;
+
                 switch (tool.Behavior)
                 {
                     case Tool.Wrench:
