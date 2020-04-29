@@ -174,9 +174,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
             {
-                if (physics.LinearVelocity != Vector2.Zero)
-                    physics.LinearVelocity = Vector2.Zero;
-
+                physics.VirtualForce.Force = Vector2.Zero;
             }
             else
             {
@@ -188,6 +186,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
 
                 physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
+                physics.VirtualForce.Force = mover.VelocityDir * ((mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed)) * physics.Mass;
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
 
                 // Handle footsteps.
