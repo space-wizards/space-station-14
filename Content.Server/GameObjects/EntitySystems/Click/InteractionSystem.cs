@@ -48,17 +48,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
     #region Tools
 
-    /// <summary>
-    /// This interface gives components behavior when being clicked on or "attacked" by a user with a tool in their hand
-    /// </summary>
-    public interface IToolAct
-    {
-        /// <summary>
-        /// Called when using a tool on an entity
-        /// </summary>
-        bool ToolAct(ToolActEventArgs eventArgs) => false;
-    }
-
     public class ToolActEventArgs : EventArgs
     {
         public IEntity User { get; set; }
@@ -71,7 +60,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     /// This interface gives components behavior when being clicked on or "attacked" by a user with a wrench in their hand
     /// </summary>
-    public interface IWrenchAct : IToolAct
+    public interface IWrenchAct
     {
         /// <summary>
         /// Called when using a wrench on an entity
@@ -87,7 +76,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     /// This interface gives components behavior when being clicked on or "attacked" by a user with a crowbar in their hand
     /// </summary>
-    public interface ICrowbarAct : IToolAct
+    public interface ICrowbarAct
     {
         /// <summary>
         /// Called when using a wrench on an entity
@@ -694,11 +683,6 @@ namespace Content.Server.GameObjects.EntitySystems
             // We handle specific tools AttackBy here.
             if (weapon.TryGetComponent<ToolComponent>(out var tool))
             {
-
-                if (attacked.GetAllComponents<IToolAct>().Any((act => act.ToolAct(new ToolActEventArgs()
-                    {User = user, ClickLocation = clickLocation, AttackWith = weapon}))))
-                    return;
-
                 switch (tool.Behavior)
                 {
                     case Tool.Wrench:
