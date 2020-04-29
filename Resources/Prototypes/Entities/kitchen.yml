@@ -18,13 +18,9 @@
     IsScrapingFloor: true
   - type: Sprite
     netsync: false
-    sprite: Buildings/medical_scanner.rsi
-    layers:
-    - state: scanner_open
-      map: ["enum.MedicalScannerVisualLayers.Machine"]
-    - state: scanner_terminal_blue
-      map: ["enum.MedicalScannerVisualLayers.Terminal"]
+    sprite: Objects/Kitchen/microwave.rsi
+    state: mw0
   - type: PowerDevice
   - type: Icon
-    sprite: Buildings/medical_scanner.rsi
-    state: scanner_open
+    sprite: Objects/Kitchen/microwave.rsi
+    state: mw0

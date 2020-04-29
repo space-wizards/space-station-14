@@ -101,26 +101,21 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             if(_contents.ReagentList.Count > 0)
             {
-                DetermineRecipe();
-            }
-
-        }
-
-        private void DetermineRecipe()
-        {
-            foreach (var r in _allRecipes)
-            {
-                if(CheckReagents(r))
+                foreach (var r in _allRecipes)
                 {
-                    var outputFromRecipe = r.OutPutPrototype;
-                    _entityManager.SpawnEntity(outputFromRecipe, Owner.Transform.GridPosition);
-                    return;
-                }
+                    if (CanSatisfyRecipe(r))
+                    {
+                        var outputFromRecipe = r.OutPutPrototype;
+                        _entityManager.SpawnEntity(outputFromRecipe, Owner.Transform.GridPosition);
+                        return;
+                    }
 
+                }
             }
+
         }
 
-        private bool CheckReagents(MicrowaveMealRecipePrototype recipe)
+        private bool CanSatisfyRecipe(MicrowaveMealRecipePrototype recipe)
         {
             foreach(var ingredient in recipe.Ingredients)
             {
