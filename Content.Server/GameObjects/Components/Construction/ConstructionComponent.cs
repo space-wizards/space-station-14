@@ -145,6 +145,7 @@ namespace Content.Server.GameObjects.Components.Construction
                     if (!slapped.TryGetComponent<ToolComponent>(out var tool))
                         return false;
                     if (toolStep.Tool != tool.Behavior) return false;
+                    if (toolStep.Tool == Tool.Welder && !tool.TryWeld(toolStep.Amount)) return false;
                     tool.PlayUseSound();
                     return true;
 
