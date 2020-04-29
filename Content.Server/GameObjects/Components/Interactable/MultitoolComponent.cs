@@ -36,7 +36,8 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             public void ExposeData(ObjectSerializer serializer)
             {
-                Behavior = (Tool)serializer.ReadStringEnumKey("behavior");
+                if(serializer.Reading)
+                    Behavior = (Tool)serializer.ReadStringEnumKey("behavior");
                 serializer.DataField(ref _state, "state", string.Empty);
                 serializer.DataField(ref _sprite, "sprite", string.Empty);
                 serializer.DataField(ref _texture, "texture", string.Empty);

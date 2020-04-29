@@ -132,10 +132,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             base.ExposeData(serializer);
 
+            if(serializer.Reading)
+                _behavior = (Tool)serializer.ReadStringEnumKey("behavior");
             serializer.DataField(ref _speedModifier, "speed", 1);
             serializer.DataField(ref _useSound, "useSound", string.Empty);
             serializer.DataField(ref _useSoundCollection, "useSoundCollection", string.Empty);
-            _behavior = (Tool)serializer.ReadStringEnumKey("behavior");
         }
 
         /// <summary>
