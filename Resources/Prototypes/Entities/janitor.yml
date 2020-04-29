@@ -34,7 +34,6 @@
     drawdepth: Objects
   - type: Icon
     texture: Objects/Janitorial/mopbucket.png
-  - type: Clickable
   - type: InteractionOutline
   - type: Bucket
   - type: Sound
@@ -51,7 +50,6 @@
   - type: Physics
     mass: 5
     Anchored: false
-  - type: Sound
 
 - type: entity
   parent: BaseItem
