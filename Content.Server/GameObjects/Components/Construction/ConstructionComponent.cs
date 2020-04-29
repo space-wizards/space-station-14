@@ -144,46 +144,10 @@ namespace Content.Server.GameObjects.Components.Construction
                 case ConstructionStepTool toolStep:
                     if (!slapped.TryGetComponent<ToolComponent>(out var tool))
                         return false;
-                    switch (toolStep.Tool)
-                    {
-                        case Tool.Crowbar:
-                            if (tool.Behavior == Tool.Crowbar)
-                            {
-                                tool.PlayUseSound();
-                                return true;
-                            }
-                            return false;
-                        case Tool.Welder:
-                            if (tool.Behavior == Tool.Welder && tool.TryWeld(toolStep.Amount))
-                            {
-                                tool.PlayUseSound();
-                                return true;
-                            }
-                            return false;
-                        case Tool.Wrench:
-                            if (tool.Behavior == Tool.Wrench)
-                            {
-                                tool.PlayUseSound();
-                                return true;
-                            }
-                            return false;
-                        case Tool.Screwdriver:
-                            if (tool.Behavior == Tool.Screwdriver)
-                            {
-                                tool.PlayUseSound();
-                                return true;
-                            }
-                            return false;
-                        case Tool.Wirecutter:
-                            if (tool.Behavior == Tool.Wirecutter)
-                            {
-                                tool.PlayUseSound();
-                                return true;
-                            }
-                            return false;
-                        default:
-                            throw new NotImplementedException();
-                    }
+                    if (toolStep.Tool != tool.Behavior) return false;
+                    tool.PlayUseSound();
+                    return true;
+
                 default:
                     throw new NotImplementedException();
             }
