@@ -54,12 +54,12 @@
   - type: MeleeWeapon
   - type: ItemStatus
   - type: Solution
-    maxVol: 50
+    maxVol: 100
     caps: 9
     contents:
       reagents:
         - ReagentId: chem.WeldingFuel
-          Quantity: 50
+          Quantity: 100
   - type: Tool
     behavior: enum.Tool.Welder
     useSoundCollection: Welder

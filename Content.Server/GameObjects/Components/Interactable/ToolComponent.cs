@@ -35,12 +35,12 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         /// Default Cost of using the welder fuel for an action
         /// </summary>
-        public const float DefaultFuelCost = 5;
+        public const float DefaultFuelCost = 10;
 
         /// <summary>
         /// Rate at which we expunge fuel from ourselves when activated
         /// </summary>
-        public const float FuelLossRate = 0.2f;
+        public const float FuelLossRate = 0.5f;
 
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
@@ -199,8 +199,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
-
-            Logger.Info(_solutionComponent.Solution.GetReagentQuantity("chem.WeldingFuel").ToString());
 
             if (Fuel == 0)
             {
