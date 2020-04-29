@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         /// Rate at which we expunge fuel from ourselves when activated
         /// </summary>
-        public const float FuelLossRate = 5f; // 0.2f
+        public const float FuelLossRate = 0.2f;
 
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
