@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components
             if (collidedwith.Count > 0 && Owner.TryGetComponent(out CollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 body.PhysicsShapes[0].CollisionMask &= (int)~CollisionGroup.MobImpassable;
-                body.IsScrapingFloor = true;
+                body.Status = BodyStatus.OnGround;
 
                 // KYS, your job is finished. Trigger ILand as well.
                 Owner.RemoveComponent<ThrownItemComponent>();

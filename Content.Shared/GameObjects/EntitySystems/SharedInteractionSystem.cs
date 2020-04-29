@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (range > 0f && !(dir.LengthSquared <= range * range)) return false;
 
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate, true);
+            var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate);
             if(!rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && (rayResults.HitPos - otherCoords).Length < 1f))
             {
 

@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 {
                     var collideComp = gridEntity.AddComponent<CollidableComponent>();
                     collideComp.CanCollide = true;
-                    collideComp.IsHardCollidable = true;
+                    //collideComp.IsHardCollidable = true;
                     collideComp.PhysicsShapes.Add(new PhysShapeGrid(grid));
                 }
 

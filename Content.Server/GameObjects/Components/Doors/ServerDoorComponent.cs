@@ -155,7 +155,7 @@ namespace Content.Server.GameObjects
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
-                collidableComponent.IsHardCollidable = false;
+                //collidableComponent.IsHardCollidable = false;
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
@@ -191,14 +191,14 @@ namespace Content.Server.GameObjects
 
         public bool Close()
         {
-            if (collidableComponent.TryCollision(Vector2.Zero))
+            if (collidableComponent.IsColliding(Vector2.Zero))
             {
                 // Do nothing, somebody's in the door.
                 return false;
             }
 
             State = DoorState.Closing;
-            collidableComponent.IsHardCollidable = true;
+            //collidableComponent.IsHardCollidable = true;
             OpenTimeCounter = 0;
             SetAppearance(DoorVisualState.Closing);
 

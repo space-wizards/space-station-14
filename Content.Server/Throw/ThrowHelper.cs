@@ -37,7 +37,7 @@ namespace Content.Server.Throw
                     colComp.PhysicsShapes.Add(new PhysShapeAabb());
 
                 colComp.PhysicsShapes[0].CollisionMask |= (int) (CollisionGroup.MobImpassable | CollisionGroup.Impassable);
-                colComp.IsScrapingFloor = false;
+                colComp.Status = BodyStatus.InAir;
             }
             var angle = new Angle(targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager));
 
