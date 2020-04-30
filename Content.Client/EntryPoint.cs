@@ -178,6 +178,7 @@ namespace Content.Client
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
             IoCManager.Resolve<IStylesheetManager>().Initialize();
+            IoCManager.Resolve<IScreenshotHook>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
