@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Shared.Kitchen
+namespace Content.Shared.Prototypes.Kitchen
 {
     /// <summary>
     ///    A recipe for space microwaves.
@@ -15,7 +15,7 @@ namespace Content.Shared.Kitchen
 
     [Prototype("microwaveMealRecipe")]
 
-    public class MicrowaveMealRecipePrototype : IPrototype, IIndexedPrototype
+    public class MealRecipePrototype : IPrototype, IIndexedPrototype
     {
 
         private string _id;

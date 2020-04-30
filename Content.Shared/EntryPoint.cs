@@ -6,7 +6,7 @@
  using Robust.Shared.IoC;
  using Robust.Shared.Prototypes;
 
- namespace Content.Shared
+namespace Content.Shared
 {
     public class EntryPoint : GameShared
     {
@@ -55,5 +55,6 @@
 
             _tileDefinitionManager.Initialize();
         }
+
     }
 }

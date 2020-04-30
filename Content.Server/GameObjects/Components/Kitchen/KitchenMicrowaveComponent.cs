@@ -14,6 +14,7 @@ using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Robust.Shared.Serialization;
 using Robust.Shared.Interfaces.GameObjects;
+using Content.Shared.Prototypes.Kitchen;
 using Content.Shared.Kitchen;
 
 namespace Content.Server.GameObjects.Components.Kitchen
@@ -24,61 +25,19 @@ namespace Content.Server.GameObjects.Components.Kitchen
     {
 
 #pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly RecipeManager _recipeManager;
 #pragma warning restore 649
 
         public override string Name => "Microwave";
 
-        private AppearanceComponent _appearanceComponent;
-
-        [ViewVariables]
-        private string _useSound;
-        [ViewVariables]
-        private string _outputPrototype;
         [ViewVariables]
         private SolutionComponent _contents;
-
-        private static List<MicrowaveMealRecipePrototype> _allRecipes;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            if(_allRecipes == null)
-            {
-                _allRecipes = new List<MicrowaveMealRecipePrototype>();
-                foreach (var recipe in _prototypeManager.EnumeratePrototypes<MicrowaveMealRecipePrototype>())
-                {
 
-                    _allRecipes.Add(recipe);
-
-                }
-                _allRecipes.Sort(new RecipeComparer());
-            }
-
-        }
-
-        private class RecipeComparer : IComparer<MicrowaveMealRecipePrototype>
-        {
-            int IComparer<MicrowaveMealRecipePrototype>.Compare(MicrowaveMealRecipePrototype x, MicrowaveMealRecipePrototype y)
-            {
-                if(x == null || y == null)
-                {
-                    return 0;
-                }
-
-                if (x.Ingredients.Count < y.Ingredients.Count)
-                {
-                    return 1;
-                }
-
-                if (x.Ingredients.Count > y.Ingredients.Count)
-                {
-                    return -1;
-                }
-
-                return 0;
-            }
         }
 
         public override void Initialize()
@@ -101,12 +60,12 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             if(_contents.ReagentList.Count > 0)
             {
-                foreach (var r in _allRecipes)
+                foreach(var r in _recipeManager.Recipes)
                 {
-                    if (CanSatisfyRecipe(r))
+                    if(CanSatisfyRecipe(r))
                     {
-                        var outputFromRecipe = r.Result;
-                        _entityManager.SpawnEntity(outputFromRecipe, Owner.Transform.GridPosition);
+                        var resultPrototype = r.Result;
+                        _entityManager.SpawnEntity(resultPrototype, Owner.Transform.GridPosition);
                         return;
                     }
 
@@ -115,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         }
 
-        private bool CanSatisfyRecipe(MicrowaveMealRecipePrototype recipe)
+        private bool CanSatisfyRecipe(MealRecipePrototype recipe)
         {
             foreach(var ingredient in recipe.Ingredients)
             {
