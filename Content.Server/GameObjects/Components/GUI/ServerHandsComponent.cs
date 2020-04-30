@@ -151,6 +151,12 @@ namespace Content.Server.GameObjects
             return success;
         }
 
+        public void PutInHandOrDrop(ItemComponent item)
+        {
+            if (!PutInHand(item))
+                item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+        }
+
         public bool CanPutInHand(ItemComponent item)
         {
             foreach (var hand in ActivePriorityEnumerable())
