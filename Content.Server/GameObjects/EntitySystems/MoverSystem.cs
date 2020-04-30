@@ -9,6 +9,7 @@ using Content.Server.Observer;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -148,7 +149,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics, CollidableComponent collider = null)
         {
-            bool weightless = false;
+            if (physics.Controller == null)
+            {
+                // Set up controller
+                physics.SetController<MoverController>();
+            }
+
+            var weightless = false;
 
             var tile = _mapManager.GetGrid(transform.GridID).GetTileRef(transform.GridPosition).Tile;
 
@@ -163,30 +170,32 @@ namespace Content.Server.GameObjects.EntitySystems
                     {
                         if (otherCollider.Owner == transform.Owner) continue; // Don't try to push off of yourself!
                         touching |= ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
-                                     || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
+                                     || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0
+                                    ) // Ensure collision
                                     && !entity.HasComponent<ItemComponent>(); // This can't be an item
                     }
                 }
+
                 if (!touching)
                 {
                     return;
                 }
             }
-            if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
+
+            if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
-                physics.VirtualForce.Force = Vector2.Zero;
+                (physics.Controller as MoverController)?.StopMoving();
             }
             else
             {
                 if (weightless)
                 {
-                    physics.LinearVelocity = mover.VelocityDir * mover.CurrentPushSpeed;
+                    (physics.Controller as MoverController)?.Push(mover.VelocityDir * mover.CurrentPushSpeed);
                     transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
                     return;
                 }
-
-                physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
-                physics.VirtualForce.Force = mover.VelocityDir * ((mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed)) * physics.Mass;
+                (physics.Controller as MoverController)?.Move(mover.VelocityDir,
+                    mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
 
                 // Handle footsteps.

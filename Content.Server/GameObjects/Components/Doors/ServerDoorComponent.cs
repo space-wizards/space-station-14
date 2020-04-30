@@ -155,7 +155,7 @@ namespace Content.Server.GameObjects
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
-                //collidableComponent.IsHardCollidable = false;
+                collidableComponent.CanCollide = false;
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
@@ -198,7 +198,7 @@ namespace Content.Server.GameObjects
             }
 
             State = DoorState.Closing;
-            //collidableComponent.IsHardCollidable = true;
+            collidableComponent.CanCollide = true;
             OpenTimeCounter = 0;
             SetAppearance(DoorVisualState.Closing);
 
