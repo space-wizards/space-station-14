@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 {
                     if (CanSatisfyRecipe(r))
                     {
-                        var outputFromRecipe = r.OutPutPrototype;
+                        var outputFromRecipe = r.Result;
                         _entityManager.SpawnEntity(outputFromRecipe, Owner.Transform.GridPosition);
                         return;
                     }

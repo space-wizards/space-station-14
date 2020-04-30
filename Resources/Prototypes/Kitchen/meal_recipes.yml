@@ -1,17 +1,7 @@
 - type: microwaveMealRecipe
   id: RecipeCheeseburger
   name: "Cheeseburger Recipe"
-  output: FoodCheeseburger
+  result: FoodCheeseburger
   ingredients:
-    chem.H2O: 15
+    chem.Flour: 15
     chem.Nutriment: 5
-
-- type: microwaveMealRecipe
-  id: RecipeFlashlight
-  name: "Flashlight Recipe"
-  output: FlashlightLantern
-  ingredients:
-    chem.H2O: 15
-    chem.Nutriment: 20
-    chem.Glucose: 5
-

@@ -20,12 +20,12 @@ namespace Content.Shared.Kitchen
 
         private string _id;
         private string _name;
-        private string _output;
+        private string _result;
         private Dictionary<string, int> _ingredients;
 
         public string ID => _id;
         public string Name => Loc.GetString(_name);
-        public string OutPutPrototype => _output;
+        public string Result => _result;
         public IReadOnlyDictionary<string, int> Ingredients => _ingredients;
 
         public void LoadFrom(YamlMappingNode mapping)
@@ -34,7 +34,7 @@ namespace Content.Shared.Kitchen
 
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _name, "name", string.Empty);
-            serializer.DataField(ref _output, "output", string.Empty);
+            serializer.DataField(ref _result, "result", string.Empty);
             serializer.DataField(ref _ingredients, "ingredients", new Dictionary<string, int>());
         }
     }
