@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -22,14 +23,14 @@ namespace Content.Server.GameObjects.Components.Sound
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _soundName, "sound", string.Empty);
-            serializer.DataField(ref _pitchVariation, "variation", string.Empty);
+            serializer.DataField(ref _pitchVariation, "variation", 0.0f);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!string.IsNullOrWhiteSpace(_soundName))
             {
-                if (!string.IsNullOrWhiteSpace(_pitchVariation))
+                if (_pitchVariation > 0.0)
                 {
                     Owner.GetComponent<SoundComponent>().Play(_soundName, AudioHelpers.WithVariation(_pitchVariation).WithVolume(-2f));
                     return true;
