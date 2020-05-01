@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using System;
+using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
@@ -12,6 +14,8 @@ using Robust.Shared.Timers;
 using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects.Components.Container;
+using Robust.Shared.Log;
 using Content.Server.GameObjects.Components.Power;
 
 namespace Content.Server.GameObjects.Components.Kitchen
@@ -29,38 +33,38 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         public override string Name => "Microwave";
 
-        private int _cookTimeSeconds;
+        private int _cookTimeDefault;
+        private int _cookTimeMultiplier; //For upgrades and stuff I guess?
         private string _badRecipeName;
         [ViewVariables]
         private SolutionComponent _contents;
+
+        [ViewVariables]
+        public bool _busy = false;
 
         private AppearanceComponent _appearance;
 
         private AudioSystem _audioSystem;
 
         private PowerDeviceComponent _powerDevice;
+
+        private Container _storage;
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _badRecipeName, "failureResult", "FoodBadRecipe");
-            serializer.DataField(ref _cookTimeSeconds, "cookTime", 5000);
+            serializer.DataField(ref _cookTimeDefault, "cookTime", 5);
+            serializer.DataField(ref _cookTimeMultiplier, "cookTimeMultiplier", 1000);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            if (_contents == null)
-            {
-                if (Owner.TryGetComponent(out SolutionComponent solutionComponent))
-                {
-                    _contents = solutionComponent;
-                }
-                else
-                {
-                    _contents = Owner.AddComponent<SolutionComponent>();
-                }
-            }
+            _contents ??= Owner.TryGetComponent(out SolutionComponent solutionComponent)
+                ? solutionComponent
+                : Owner.AddComponent<SolutionComponent>();
 
+            _storage = ContainerManagerComponent.Ensure<Container>("microwave_entity_container", Owner, out var existed);
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
@@ -68,40 +72,50 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (_contents.ReagentList.Count == 0 || !_powerDevice.Powered)
+
+            if (!_powerDevice.Powered || _busy) return;
+            if (_contents.ReagentList.Count <= 0)
             {
                 return;
             }
-            foreach(var r in _recipeManager.Recipes)
-            {
-                if(CanSatisfyRecipe(r))
-                {
-                    SetAppearance(MicrowaveVisualState.Cooking);
-                    Timer.Spawn(_cookTimeSeconds, () =>
-                    {
-                        RemoveContents(r);
-                        _entityManager.SpawnEntity(r.Result, Owner.Transform.GridPosition);
-
-                        _audioSystem.Play("/Audio/machines/ding.ogg");
-                        SetAppearance(MicrowaveVisualState.Idle);
-                    });                  
-                    return;
-                }
-            }
-
-            SetAppearance(MicrowaveVisualState.Cooking);
-            Timer.Spawn(_cookTimeSeconds, () =>
-            {
-                _contents.RemoveAllSolution();
-                _entityManager.SpawnEntity(_badRecipeName, Owner.Transform.GridPosition);
-                _audioSystem.Play("/Audio/machines/ding.ogg");
-                SetAppearance(MicrowaveVisualState.Idle);
-            });
+            _busy = true;
+            wzhzhzh();
         }
 
+        //This is required.
+        private void wzhzhzh()
+        {
+            foreach(var r in _recipeManager.Recipes)
+            {
+
+                var success = CanSatisfyRecipe(r);
+                SetAppearance(MicrowaveVisualState.Cooking);
+                _audioSystem.Play("/Audio/machines/microwave_start_beep.ogg");
+                var time = success ? r._cookTime : _cookTimeDefault;
+                Timer.Spawn(time * _cookTimeMultiplier, () =>
+                {
+
+                    if (success)
+                    {
+                        SubtractContents(r);
+                    }
+                    else
+                    {
+                        _contents.RemoveAllSolution();
+                    }
+
+                    var entityToSpawn = success ? r._result : _badRecipeName;
+                    _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.GridPosition);
+                    _audioSystem.Play("/Audio/machines/microwave_done_beep.ogg");
+                    SetAppearance(MicrowaveVisualState.Idle);
+                    _busy = false;
+                });
+                return;
+            }
+        }
         private bool CanSatisfyRecipe(FoodRecipePrototype recipe)
         {
-            foreach (var item in recipe.Ingredients)
+            foreach (var item in recipe._ingredients)
             {
                 if (!_contents.ContainsReagent(item.Key, out var amount))
                 {
@@ -117,9 +131,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
             return true;
         }
 
-        private void RemoveContents(FoodRecipePrototype recipe)
+        private void SubtractContents(FoodRecipePrototype recipe)
         {
-            foreach(var item in recipe.Ingredients)
+            foreach(var item in recipe._ingredients)
             {
                 _contents.TryRemoveReagent(item.Key, ReagentUnit.New(item.Value));
             }

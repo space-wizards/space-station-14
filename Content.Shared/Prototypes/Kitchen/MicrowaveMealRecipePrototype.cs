@@ -18,24 +18,26 @@ namespace Content.Shared.Prototypes.Kitchen
     public class FoodRecipePrototype : IPrototype, IIndexedPrototype
     {
 
-        private string _id;
-        private string _name;
-        private string _result;
-        private Dictionary<string, int> _ingredients;
+        public string _id;
+        public string _name => Loc.GetString(Name);
+        private string Name;
+        public string _result;
+        public IReadOnlyDictionary<string, int> _ingredients => Ingredients;
+        private Dictionary<string, int> Ingredients;
+        public int _cookTime;
 
         public string ID => _id;
-        public string Name => Loc.GetString(_name);
-        public string Result => _result;
-        public IReadOnlyDictionary<string, int> Ingredients => _ingredients;
 
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
             serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _name, "name", string.Empty);
+            serializer.DataField(ref Name, "name", string.Empty);
             serializer.DataField(ref _result, "result", string.Empty);
-            serializer.DataField(ref _ingredients, "ingredients", new Dictionary<string, int>());
+            serializer.DataField(ref Ingredients, "ingredients", new Dictionary<string, int>());
+            serializer.DataField(ref _cookTime, "time", 5);
         }
+
     }
 }
