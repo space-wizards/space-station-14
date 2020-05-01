@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Doors;
@@ -17,7 +18,7 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class ServerDoorComponent : Component, IActivate
+    public class ServerDoorComponent : Component, IActivate, ICollideBehavior
     {
         public override string Name => "Door";
 
@@ -85,26 +86,21 @@ namespace Content.Server.GameObjects
             ActivateImpl(eventArgs);
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+
+        public void CollideWith(List<IEntity> collidedwith)
         {
-            base.HandleMessage(message, component);
-
-            switch (message)
+            if (State != DoorState.Closed)
             {
-                case BumpedEntMsg msg:
-                    if (State != DoorState.Closed)
-                    {
-                        return;
-                    }
+                return;
+            }
 
-                    // Only open when bumped by mobs.
-                    if (!msg.Entity.HasComponent(typeof(SpeciesComponent)))
-                    {
-                        return;
-                    }
-
-                    TryOpen(msg.Entity);
-                    break;
+            foreach (var entity in collidedwith)
+            {
+                if (entity.HasComponent(typeof(SpeciesComponent)))
+                {
+                    TryOpen(entity);
+                    return;
+                }
             }
         }
 
