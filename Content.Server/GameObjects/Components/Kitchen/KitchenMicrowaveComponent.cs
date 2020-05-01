@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                         _entityManager.SpawnEntity(r.Result, Owner.Transform.GridPosition);
 
                         _audioSystem.Play("/Audio/machines/ding.ogg");
-                        SetAppearance(MicrowaveVisualState.PoweredIdle);
+                        SetAppearance(MicrowaveVisualState.Idle);
                     });                  
                     return;
                 }
@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _contents.RemoveAllSolution();
                 _entityManager.SpawnEntity(_badRecipeName, Owner.Transform.GridPosition);
                 _audioSystem.Play("/Audio/machines/ding.ogg");
-                SetAppearance(MicrowaveVisualState.PoweredIdle);
+                SetAppearance(MicrowaveVisualState.Idle);
             });
         }
 

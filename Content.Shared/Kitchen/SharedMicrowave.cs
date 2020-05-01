@@ -9,8 +9,7 @@ namespace Content.Shared.Kitchen
      [Serializable, NetSerializable]
      public enum MicrowaveVisualState
      {
-         Off,
-         PoweredIdle,
+         Idle,
          Cooking
      }
 

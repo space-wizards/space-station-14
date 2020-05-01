@@ -17,11 +17,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out MicrowaveVisualState state))
             {
-                state = MicrowaveVisualState.PoweredIdle;
+                state = MicrowaveVisualState.Idle;
             }
             switch (state)
             {
-                case MicrowaveVisualState.PoweredIdle:
+                case MicrowaveVisualState.Idle:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.Base, "mw");
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mw_unlit");
                     break;
