@@ -64,6 +64,11 @@ EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared.Scripting", "RobustToolbox\Robust.Shared.Scripting\Robust.Shared.Scripting.csproj", "{41B450C0-A361-4CD7-8121-7072B8995CFC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{DDD55F86-0406-42E5-8443-93EDC6BB2D75}"
+ProjectSection(SolutionItems) = preProject
+	RobustToolbox\Tools\download_natives.py = RobustToolbox\Tools\download_natives.py
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -149,6 +154,7 @@ Global
 		{4809F412-3132-419E-BF9D-CCF7593C3533} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{50404922-9637-4394-BF59-165D0850ADC8} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{41B450C0-A361-4CD7-8121-7072B8995CFC} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
+		{DDD55F86-0406-42E5-8443-93EDC6BB2D75} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}
