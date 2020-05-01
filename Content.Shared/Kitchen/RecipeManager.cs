@@ -12,21 +12,21 @@ namespace Content.Shared.Kitchen
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
-        public List<MealRecipePrototype> Recipes { get; private set; }
+        public List<FoodRecipePrototype> Recipes { get; private set; }
 
         public void Initialize()
         {
-            Recipes = new List<MealRecipePrototype>();
-            foreach (var item in _prototypeManager.EnumeratePrototypes<MealRecipePrototype>())
+            Recipes = new List<FoodRecipePrototype>();
+            foreach (var item in _prototypeManager.EnumeratePrototypes<FoodRecipePrototype>())
             {
                 Recipes.Add(item);
             }
 
             Recipes.Sort(new RecipeComparer());
         }
-        private class RecipeComparer : IComparer<MealRecipePrototype>
+        private class RecipeComparer : IComparer<FoodRecipePrototype>
         {
-            int IComparer<MealRecipePrototype>.Compare(MealRecipePrototype x, MealRecipePrototype y)
+            int IComparer<FoodRecipePrototype>.Compare(FoodRecipePrototype x, FoodRecipePrototype y)
             {
                 if (x == null || y == null)
                 {

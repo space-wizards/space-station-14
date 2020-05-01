@@ -1,7 +1,7 @@
 - type: microwaveMealRecipe
   id: RecipeCheeseburger
-  name: "Cheeseburger Recipe"
+  name: Cheeseburger Recipe
   result: FoodCheeseburger
   ingredients:
-    chem.Flour: 15
+    chem.H2O: 15
     chem.Nutriment: 5

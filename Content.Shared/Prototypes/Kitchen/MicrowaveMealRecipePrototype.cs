@@ -15,7 +15,7 @@ namespace Content.Shared.Prototypes.Kitchen
 
     [Prototype("microwaveMealRecipe")]
 
-    public class MealRecipePrototype : IPrototype, IIndexedPrototype
+    public class FoodRecipePrototype : IPrototype, IIndexedPrototype
     {
 
         private string _id;

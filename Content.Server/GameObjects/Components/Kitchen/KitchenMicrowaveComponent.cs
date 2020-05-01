@@ -1,14 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.Components;
-using Content.Shared.Audio;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
+﻿using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
@@ -64,33 +56,40 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 {
                     if(CanSatisfyRecipe(r))
                     {
+                        RemoveContents(r);
                         var resultPrototype = r.Result;
                         _entityManager.SpawnEntity(resultPrototype, Owner.Transform.GridPosition);
                         return;
                     }
-
                 }
             }
-
         }
 
-        private bool CanSatisfyRecipe(MealRecipePrototype recipe)
+        private bool CanSatisfyRecipe(FoodRecipePrototype recipe)
         {
-            foreach(var ingredient in recipe.Ingredients)
+            foreach (var item in recipe.Ingredients)
             {
-                var ingName = ingredient.Key.ToString();
-                var ingQuantity = ingredient.Value;
-                if (_contents.ContainsReagent(ingName, out var amt) && amt >= ingQuantity)
+                if (!_contents.ContainsReagent(item.Key, out var amount))
                 {
-                    _contents.TryRemoveReagent(ingName, ReagentUnit.New(ingQuantity));
-                    return true;
+                    return false;
                 }
 
+                if (amount.Int() < item.Value)
+                {
+                    return false;
+                }
             }
-            return false;
 
+            return true;
         }
 
+        private void RemoveContents(FoodRecipePrototype recipe)
+        {
+            foreach(var item in recipe.Ingredients)
+            {
+                _contents.TryRemoveReagent(item.Key, ReagentUnit.New(item.Value));
+            }
+        }
 
 
     }
