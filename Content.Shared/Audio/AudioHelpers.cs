@@ -1,3 +1,4 @@
+using System;
 using Content.Shared.GameObjects.Components.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -14,7 +15,7 @@ namespace Content.Shared.Audio
         /// </summary>
         public static AudioParams WithVariation(float amplitude)
         {
-            var scale = (float)(amplitude * IoCManager.Resolve<IRobustRandom>().NextGaussian());
+            var scale = (float)(IoCManager.Resolve<IRobustRandom>().NextGaussian(1, amplitude));
             return AudioParams.Default.WithPitchScale(scale);
         }
     }
