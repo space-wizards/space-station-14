@@ -20,7 +20,7 @@
   - type: Sound
   - type: EmitSoundOnUse
     sound: /Audio/items/bikehorn.ogg
-    variation: 1
+    variation: 0.15
 
   - type: UseDelay
     delay: 0.5
