@@ -16,17 +16,24 @@ namespace Content.Server.GameObjects.Components.Sound
         public override string Name => "EmitSoundOnUse";
 
         public string _soundName;
+        public float _pitchVariation;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _soundName, "sound", "");
+            serializer.DataField(ref _soundName, "sound", string.Empty);
+            serializer.DataField(ref _pitchVariation, "variation", string.Empty);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             if (!string.IsNullOrWhiteSpace(_soundName))
             {
+                if (!string.IsNullOrWhiteSpace(_pitchVariation))
+                {
+                    Owner.GetComponent<SoundComponent>().Play(_soundName, AudioHelpers.WithVariation(_pitchVariation).WithVolume(-2f));
+                    return true;
+                }
                 Owner.GetComponent<SoundComponent>().Play(_soundName, AudioParams.Default.WithVolume(-2f));
                 return true;
             }
