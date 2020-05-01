@@ -9,6 +9,9 @@
   - type: Solution
     maxVol: 100
     caps: 1
+  - type: Appearance
+    visuals:
+    - type: MicrowaveVisualizer
 
   - type: Collidable
     shapes:
@@ -19,7 +22,12 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Kitchen/microwave.rsi
-    state: mw0
+    layers:
+    - state: mw0
+      map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: mw_unlit
+      shader: unshaded
+      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
   - type: PowerDevice
   - type: Icon
     sprite: Objects/Kitchen/microwave.rsi

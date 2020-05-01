@@ -5,3 +5,11 @@
   ingredients:
     chem.H2O: 15
     chem.Nutriment: 5
+
+- type: microwaveMealRecipe
+  id: RecipeFlashlight
+  name: Flashlight Recipe
+  result: FoodCheeseWedge
+  ingredients:
+    chem.H2O: 15
+    chem.Glucose: 5
