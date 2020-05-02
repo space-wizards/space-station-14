@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -15,23 +14,21 @@ using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Shared.Log;
 using Content.Server.GameObjects.Components.Power;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class KitchenMicrowaveComponent : Component, IActivate
+    public class KitchenMicrowaveComponent : SharedMicrowaveComponent, IActivate, ISolutionChange
     {
-
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly RecipeManager _recipeManager;
 #pragma warning restore 649
-
-        public override string Name => "Microwave";
 
         private int _cookTimeDefault;
         private int _cookTimeMultiplier; //For upgrades and stuff I guess?
@@ -42,6 +39,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
         [ViewVariables]
         public bool _busy = false;
 
+        private bool Powered => _powerDevice.Powered;
+
+        private bool HasContents => _contents.ReagentList.Count > 0;
+
         private AppearanceComponent _appearance;
 
         private AudioSystem _audioSystem;
@@ -49,6 +50,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private PowerDeviceComponent _powerDevice;
 
         private Container _storage;
+
+        private BoundUserInterface _userInterface;
+        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => UpdateUserInterface();
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -68,23 +72,48 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
+                .GetBoundUserInterface(MicrowaveUiKey.Key);
+            _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+
         }
+
+        private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
+        {
+            if (!Powered || _busy) return;
+
+            switch (message.Message)
+            {
+                case MicrowaveStartCookMessage msg :
+                    if (!HasContents) return;
+                    UpdateUserInterface();
+                    wzhzhzh();
+                    break;
+
+                case MicrowaveEjectMessage msg :
+                    if (!HasContents) return;
+                    EjectReagents();
+                    UpdateUserInterface();
+                    break;
+            }
+
+        }
+
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-
-            if (!_powerDevice.Powered || _busy) return;
-            if (_contents.ReagentList.Count <= 0)
-            {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return;
-            }
-            _busy = true;
-            wzhzhzh();
+            if (!Powered) return;
+            UpdateUserInterface();
+            _userInterface.Open(actor.playerSession);
+
         }
 
         //This is required.
         private void wzhzhzh()
         {
+            _busy = true;
             foreach(var r in _recipeManager.Recipes)
             {
 
@@ -101,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     }
                     else
                     {
-                        _contents.RemoveAllSolution();
+                        EjectReagents();
                     }
 
                     var entityToSpawn = success ? r._result : _badRecipeName;
@@ -112,6 +141,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 });
                 return;
             }
+        }
+
+        /// <summary>
+        /// This actually deletes all the reagents.
+        /// </summary>
+        private void EjectReagents()
+        {
+            _contents.RemoveAllSolution();
         }
         private bool CanSatisfyRecipe(FoodRecipePrototype recipe)
         {
@@ -143,6 +180,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             if (_appearance != null || Owner.TryGetComponent(out _appearance))
                 _appearance.SetData(PowerDeviceVisuals.VisualState, state);
+        }
+
+        private void UpdateUserInterface()
+        {
+            _userInterface.SetState(new MicrowaveUserInterfaceState(_contents.Solution.Contents.ToList()));
         }
     }
 }

@@ -13,6 +13,11 @@
     visuals:
     - type: MicrowaveVisualizer
   - type: Sound
+  - type: UserInterface
+    interfaces:
+    - key: enum.MicrowaveUiKey.Key
+      type: MicrowaveBoundUserInterface
+
 
   - type: Collidable
     shapes:
