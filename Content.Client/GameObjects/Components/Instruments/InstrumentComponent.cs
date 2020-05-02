@@ -9,6 +9,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -109,10 +110,9 @@ namespace Content.Client.GameObjects.Components.Instruments
             serializer.DataField(ref _instrumentProgram, "program", 1);
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, channel, session);
 
             if (_renderer == null)
             {

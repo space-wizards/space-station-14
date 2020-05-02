@@ -1,12 +1,17 @@
 ﻿using System.Linq;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Content.Server.Observer;
+using Content.Server.Players;
 using Content.Shared.Chat;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Log;
 
 namespace Content.Server.Chat
 {
@@ -20,6 +25,7 @@ namespace Content.Server.Chat
 #pragma warning disable 649
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
         [Dependency] private readonly IMoMMILink _mommiLink;
 #pragma warning restore 649
 
@@ -91,6 +97,18 @@ namespace Content.Server.Chat
             _netManager.ServerSendToAll(msg);
 
             _mommiLink.SendOOCMessage(player.SessionId.ToString(), message);
+        }
+
+        public void SendDeadChat(IPlayerSession player, string message)
+        {
+            var clients = _playerManager.GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>()).Select(p => p.ConnectedClient);;
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Dead;
+            msg.Message = message;
+            msg.MessageWrap = $"{_localizationManager.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
+            msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
+            _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
         public void SendHookOOC(string sender, string message)

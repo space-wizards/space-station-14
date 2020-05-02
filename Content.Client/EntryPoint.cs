@@ -15,6 +15,7 @@ using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
+using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.Input;
@@ -134,9 +135,14 @@ namespace Content.Client
                 "Paper",
                 "Write",
                 "Bloodstream",
+                "TransformableContainer",
                 "Mind",
                 "MovementSpeedModifier",
-                "StorageFill"
+                "StorageFill",
+                "Mop",
+                "Bucket",
+                "Puddle",
+                "CanSpill",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -148,7 +154,7 @@ namespace Content.Client
             factory.Register<SharedLatheComponent>();
             factory.Register<SharedSpawnPointComponent>();
 
-            factory.Register<SolutionComponent>();
+            factory.Register<SharedSolutionComponent>();
 
             factory.Register<SharedVendingMachineComponent>();
             factory.Register<SharedWiresComponent>();
@@ -157,6 +163,7 @@ namespace Content.Client
 
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
+            prototypes.RegisterIgnore("barSign");
 
             ClientContentIoC.Register();
 
@@ -171,6 +178,7 @@ namespace Content.Client
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
             IoCManager.Resolve<IStylesheetManager>().Initialize();
+            IoCManager.Resolve<IScreenshotHook>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
@@ -226,10 +234,31 @@ namespace Content.Client
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IItemSlotManager>().Initialize();
 
+            _baseClient.RunLevelChanged += (sender, args) =>
+            {
+                if (args.NewLevel == ClientRunLevel.Initialize)
+                {
+                    SwitchToDefaultState(args.OldLevel == ClientRunLevel.Connected ||
+                                         args.OldLevel == ClientRunLevel.InGame);
+                }
+            };
+
+            SwitchToDefaultState();
+        }
+
+        private void SwitchToDefaultState(bool disconnected = false)
+        {
             // Fire off into state dependent on launcher or not.
+
             if (_gameController.LaunchState.FromLauncher)
             {
                 _stateManager.RequestStateChange<LauncherConnecting>();
+                var state = (LauncherConnecting) _stateManager.CurrentState;
+
+                if (disconnected)
+                {
+                    state.SetDisconnected();
+                }
             }
             else
             {

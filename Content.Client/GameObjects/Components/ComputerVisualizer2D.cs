@@ -11,6 +11,9 @@ namespace Content.Client.GameObjects.Components
     {
         private string KeyboardState = "generic_key";
         private string ScreenState = "generic";
+        private string BodyState = "computer";
+        private string BodyBrokenState = "broken";
+        private string ScreenBroken = "computer_broken";
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -25,6 +28,16 @@ namespace Content.Client.GameObjects.Components
             {
                 ScreenState = scalar.AsString();
             }
+
+            if (node.TryGetNode("body", out scalar))
+            {
+                BodyState = scalar.AsString();
+            }
+
+            if (node.TryGetNode("bodyBroken", out scalar))
+            {
+                BodyBrokenState = scalar.AsString();
+            }
         }
 
         public override void InitializeEntity(IEntity entity)
@@ -33,8 +46,12 @@ namespace Content.Client.GameObjects.Components
 
             var sprite = entity.GetComponent<ISpriteComponent>();
             sprite.LayerSetState(Layers.Screen, ScreenState);
-            sprite.LayerSetState(Layers.Keyboard, $"{KeyboardState}_off");
-            sprite.LayerSetState(Layers.KeyboardOn, KeyboardState);
+
+            if (!string.IsNullOrEmpty(KeyboardState))
+            {
+                sprite.LayerSetState(Layers.Keyboard, $"{KeyboardState}_off");
+                sprite.LayerSetState(Layers.KeyboardOn, KeyboardState);
+            }
         }
 
         public override void OnChangeData(AppearanceComponent component)
@@ -52,17 +69,20 @@ namespace Content.Client.GameObjects.Components
 
             if (broken)
             {
-                sprite.LayerSetState(Layers.Body, "broken");
-                sprite.LayerSetState(Layers.Screen, "computer_broken");
+                sprite.LayerSetState(Layers.Body, BodyBrokenState);
+                sprite.LayerSetState(Layers.Screen, ScreenBroken);
             }
             else
             {
-                sprite.LayerSetState(Layers.Body, "computer");
+                sprite.LayerSetState(Layers.Body, BodyState);
                 sprite.LayerSetState(Layers.Screen, ScreenState);
             }
 
             sprite.LayerSetVisible(Layers.Screen, powered);
-            sprite.LayerSetVisible(Layers.KeyboardOn, powered);
+            if (sprite.LayerMapTryGet(Layers.KeyboardOn, out _))
+            {
+                sprite.LayerSetVisible(Layers.KeyboardOn, powered);
+            }
         }
 
         public enum Layers

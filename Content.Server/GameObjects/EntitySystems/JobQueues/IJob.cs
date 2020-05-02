@@ -4,7 +4,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
 {
     public interface IJob
     {
-        Status Status { get; }
+        JobStatus Status { get; }
         void Run();
     }
 }

@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Power
 {
@@ -11,9 +12,9 @@ namespace Content.Client.GameObjects.Components.Power
     public class PowerDebugTool : SharedPowerDebugTool
     {
         SS14Window LastWindow;
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, channel, session);
 
             switch (message)
             {

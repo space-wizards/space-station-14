@@ -23,7 +23,7 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition
             foreach (var reagent in food.ReagentList)
             {
                 // TODO
-                nutritionValue += reagent.Quantity * 30;
+                nutritionValue += (reagent.Quantity * 30).Int();
             }
 
             return nutritionValue / 1000.0f;

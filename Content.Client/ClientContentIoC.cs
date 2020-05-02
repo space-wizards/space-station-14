@@ -8,7 +8,9 @@ using Content.Client.Sandbox;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.IoC;
 
 namespace Content.Client
@@ -29,6 +31,7 @@ namespace Content.Client
             IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
             IoCManager.Register<IItemSlotManager, ItemSlotManager>();
             IoCManager.Register<IStylesheetManager, StylesheetManager>();
+            IoCManager.Register<IScreenshotHook, ScreenshotHook>();
         }
     }
 }

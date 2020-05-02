@@ -9,8 +9,8 @@ namespace Content.Client.GameObjects.Components
     [RegisterComponent]
     public class InteractionOutlineComponent : Component
     {
-        private const string ShaderInRange = "selection_outline_inrange";
-        private const string ShaderOutOfRange = "selection_outline";
+        private const string ShaderInRange = "SelectionOutlineInrange";
+        private const string ShaderOutOfRange = "SelectionOutline";
 
         public override string Name => "InteractionOutline";
 

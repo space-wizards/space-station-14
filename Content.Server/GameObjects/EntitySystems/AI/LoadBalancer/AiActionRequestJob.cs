@@ -1,8 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.ExpandableActions;
 using Content.Server.AI.WorldState.States;
@@ -19,38 +18,32 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
         public static event Action<UtilityAiDebugMessage> FoundAction;
 #endif
         private readonly AiActionRequest _request;
-        private CancellationTokenSource _cancellationToken;
 
         public AiActionRequestJob(
             double maxTime,
             AiActionRequest request,
-            CancellationTokenSource cancellationToken = null) : base(maxTime)
+            CancellationToken cancellationToken = default) : base(maxTime, cancellationToken)
         {
             _request = request;
-            _cancellationToken = cancellationToken;
         }
 
-        public override IEnumerator Process()
+        protected override async Task<UtilityAction> Process()
         {
-            if ((_cancellationToken != null && _cancellationToken.IsCancellationRequested) ||
-                _request.Context == null)
+            if (_request.Context == null)
             {
-                Finish();
-                yield break;
+                return null;
             }
 
             var entity = _request.Context.GetState<SelfState>().GetValue();
 
             if (entity == null || !entity.HasComponent<AiControllerComponent>())
             {
-                Finish();
-                yield break;
+                return null;
             }
 
             if (_request.Actions == null || _request.Context == null)
             {
-                Finish();
-                yield break;
+                return null;
             }
 
             var consideredTaskCount = 0;
@@ -73,23 +66,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
             {
                 if (consideredTaskCount > 0 && consideredTaskCount % 5 == 0)
                 {
-                    if (OutOfTime())
-                    {
-                        yield return null;
-                        if (_cancellationToken != null && _cancellationToken.IsCancellationRequested)
-                        {
-                            Finish();
-                            yield break;
-                        }
-                        StopWatch.Restart();
-                        Status = Status.Running;
-                    }
+                    await SuspendIfOutOfTime();
 
                     // If this happens then that means something changed when we resumed so ABORT
                     if (actions.Count == 0 || _request.Context == null)
                     {
-                        Finish();
-                        yield break;
+                        return null;
                     }
                 }
 
@@ -126,7 +108,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
             }
 
             _request.Context.GetState<LastUtilityScoreState>().SetValue(cutoff);
-            Finish();
 #if DEBUG
             if (foundAction != null)
             {
@@ -141,7 +122,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
 #endif
             _request.Context.ResetPlanning();
 
-            Result = foundAction;
+            return foundAction;
         }
     }
 }

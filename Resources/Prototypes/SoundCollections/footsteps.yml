@@ -8,6 +8,15 @@
   - /Audio/effects/footsteps/carpet5.ogg
 
 - type: sound_collection
+  id: footstep_wood
+  files:
+  - /Audio/effects/footsteps/wood1.ogg
+  - /Audio/effects/footsteps/wood2.ogg
+  - /Audio/effects/footsteps/wood3.ogg
+  - /Audio/effects/footsteps/wood4.ogg
+  - /Audio/effects/footsteps/wood5.ogg
+
+- type: sound_collection
   id: footstep_catwalk
   files:
   - /Audio/effects/footsteps/catwalk1.ogg

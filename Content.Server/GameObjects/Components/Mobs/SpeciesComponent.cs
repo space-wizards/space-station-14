@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Server.Observer;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,7 +18,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct
+    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct, IRelayMoveInput
     {
         /// <summary>
         /// Damagestates are reached by reaching a certain damage threshold, they will block actions after being reached
@@ -51,9 +54,10 @@ namespace Content.Server.GameObjects
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
+            base.HandleMessage(message, component);
+
             switch (message)
             {
                 case PlayerAttachedMsg _:
@@ -197,6 +201,14 @@ namespace Content.Server.GameObjects
             }
             Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage, null);
             Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage, null);
+        }
+
+        void IRelayMoveInput.MoveInputPressed(IPlayerSession session)
+        {
+            if (CurrentDamageState is DeadState)
+            {
+                new Ghost().Execute(null, session, null);
+            }
         }
     }
 

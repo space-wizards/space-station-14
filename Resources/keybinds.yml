@@ -23,9 +23,9 @@ binds:
 - function: MoveDown
   type: State
   key: S
-#- function: Run
-#  type: State
-#  key: Shift
+- function: Run
+  type: State
+  key: Shift
 - function: ShowEscapeMenu
   type: State
   key: Escape
@@ -155,3 +155,10 @@ binds:
 - function: OpenSandboxWindow
   type: state
   key: B
+- function: TakeScreenshot
+  type: state
+  key: F2
+- function: TakeScreenshotNoUI
+  type: state
+  key: F2
+  mod1: Shift

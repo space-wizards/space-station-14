@@ -1,4 +1,4 @@
-using Content.Server.Sandbox;
+﻿using Content.Server.Sandbox;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.GamePresets
@@ -14,6 +14,7 @@ namespace Content.Server.GameTicking.GamePresets
             _sandboxManager.IsSandboxEnabled = true;
         }
 
-        public override string Description => "Sandbox, go and build something!";
+        public override string ModeTitle => "Sandbox";
+        public override string Description => "No stress, build something!";
     }
 }

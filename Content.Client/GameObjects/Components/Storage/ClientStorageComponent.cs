@@ -12,6 +12,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -40,9 +41,10 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnRemove();
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
+            base.HandleNetworkMessage(message, channel, session);
+
             switch (message)
             {
                 //Updates what we are storing for the UI

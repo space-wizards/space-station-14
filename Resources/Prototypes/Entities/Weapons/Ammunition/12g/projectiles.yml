@@ -1,7 +1,7 @@
 - type: entity
   id: pellet_12g
   name: 12g Pellet
-  parent: bullet_base
+  parent: BulletBase
   abstract: true
   components:
   - type: Projectile

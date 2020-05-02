@@ -3,12 +3,14 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Server.Observer;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.Configuration;
@@ -25,6 +27,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -138,6 +141,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (physics.LinearVelocity != Vector2.Zero)
                     physics.LinearVelocity = Vector2.Zero;
+
             }
             else
             {
@@ -145,8 +149,13 @@ namespace Content.Server.GameObjects.EntitySystems
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
 
                 // Handle footsteps.
-                var distance = transform.GridPosition.Distance(_mapManager, mover.LastPosition);
-                mover.StepSoundDistance += distance;
+                if (_mapManager.GridExists(mover.LastPosition.GridID))
+                {
+                    // Can happen when teleporting between grids.
+                    var distance = transform.GridPosition.Distance(_mapManager, mover.LastPosition);
+                    mover.StepSoundDistance += distance;
+                }
+
                 mover.LastPosition = transform.GridPosition;
                 float distanceNeeded;
                 if (mover.Sprinting)
@@ -182,8 +191,19 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleDirChange(ICommonSession session, Direction dir, bool state)
         {
-            if (!TryGetAttachedComponent(session as IPlayerSession, out IMoverComponent moverComp))
+            var playerSes = session as IPlayerSession;
+            if (!TryGetAttachedComponent(playerSes, out IMoverComponent moverComp))
                 return;
+
+            var owner = playerSes?.AttachedEntity;
+
+            if (owner != null)
+            {
+                foreach (var comp in owner.GetAllComponents<IRelayMoveInput>())
+                {
+                    comp.MoveInputPressed(playerSes);
+                }
+            }
 
             moverComp.SetVelocityDirection(dir, state);
         }

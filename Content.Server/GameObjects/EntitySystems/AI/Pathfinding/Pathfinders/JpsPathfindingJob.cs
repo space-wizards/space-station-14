@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Content.Shared.Pathfinding;
@@ -19,36 +19,31 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         private PathfindingNode _startNode;
         private PathfindingNode _endNode;
         private PathfindingArgs _pathfindingArgs;
-        private CancellationToken _cancellationToken;
 
         public JpsPathfindingJob(double maxTime,
             PathfindingNode startNode,
             PathfindingNode endNode,
             PathfindingArgs pathfindingArgs,
-            CancellationToken cancellationToken) : base(maxTime)
+            CancellationToken cancellationToken) : base(maxTime, cancellationToken)
         {
             _startNode = startNode;
             _endNode = endNode;
             _pathfindingArgs = pathfindingArgs;
-            _cancellationToken = cancellationToken;
         }
 
-        public override IEnumerator Process()
+        protected override async Task<Queue<TileRef>> Process()
         {
             // VERY similar to A*; main difference is with the neighbor tiles you look for jump nodes instead
-            if (_cancellationToken.IsCancellationRequested ||
-                _startNode == null ||
+            if (_startNode == null ||
                 _endNode == null)
             {
-                Finish();
-                yield break;
+                return null;
             }
 
             // If we couldn't get a nearby node that's good enough
             if (!Utils.TryEndNode(ref _endNode, _pathfindingArgs))
             {
-                Finish();
-                yield break;
+                return null;
             }
 
             var openTiles = new PriorityQueue<ValueTuple<float, PathfindingNode>>(new PathfindingComparer());
@@ -73,17 +68,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                 // JPS probably getting a lot fewer nodes than A* is
                 if (count % 5 == 0 && count > 0)
                 {
-                    if (OutOfTime())
-                    {
-                        yield return null;
-                        if (_cancellationToken.IsCancellationRequested)
-                        {
-                            Finish();
-                            yield break;
-                        }
-                        StopWatch.Restart();
-                        Status = Status.Running;
-                    }
+                    await SuspendIfOutOfTime();
                 }
 
                 (_, currentNode) = openTiles.Take();
@@ -131,18 +116,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 
             if (!routeFound)
             {
-                Finish();
-                yield break;
+                return null;
             }
 
             var route = Utils.ReconstructJumpPath(cameFrom, currentNode);
             if (route.Count == 1)
             {
-                Finish();
-                yield break;
+                return null;
             }
-
-            Finish();
 
 #if DEBUG
             // Need to get data into an easier format to send to the relevant clients
@@ -165,7 +146,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             }
 #endif
 
-            Result = route;
+            return route;
         }
 
         private PathfindingNode GetJumpPoint(PathfindingNode currentNode, Direction direction, PathfindingNode endNode)

@@ -16,6 +16,8 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
             common.AddFunction(ContentKeyFunctions.OpenTutorial);
             common.AddFunction(ContentKeyFunctions.UseOrAttack);
+            common.AddFunction(ContentKeyFunctions.TakeScreenshot);
+            common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
 
             var human = contexts.GetContext("human");
             human.AddFunction(ContentKeyFunctions.SwapHands);

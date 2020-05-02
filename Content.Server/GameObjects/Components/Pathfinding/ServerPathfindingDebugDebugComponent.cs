@@ -7,6 +7,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 
 
 namespace Content.Server.GameObjects.Components.Pathfinding
@@ -14,9 +15,10 @@ namespace Content.Server.GameObjects.Components.Pathfinding
     [RegisterComponent]
     public sealed class ServerPathfindingDebugDebugComponent : SharedPathfindingDebugComponent
     {
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, netChannel, session);
+
             switch (message)
             {
                 case RequestPathfindingGraphMessage _:

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Players;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -47,6 +48,9 @@ namespace Content.Server.Mobs
         public IEntity VisitingEntity { get; private set; }
 
         [ViewVariables] public IEntity CurrentEntity => VisitingEntity ?? OwnedEntity;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string CharacterName { get; set; }
 
         /// <summary>
         ///     The component currently owned by this mind.
@@ -139,6 +143,7 @@ namespace Content.Server.Mobs
         public void TransferTo(IEntity entity)
         {
             MindComponent component = null;
+            bool alreadyAttached = false;
             if (entity != null)
             {
                 if (!entity.TryGetComponent(out component))
@@ -150,6 +155,17 @@ namespace Content.Server.Mobs
                     // TODO: Kick them out, maybe?
                     throw new ArgumentException("That entity already has a mind.", nameof(entity));
                 }
+
+                if (entity.TryGetComponent(out IActorComponent actor))
+                {
+                    // Happens when transferring to your currently visited entity.
+                    if (actor.playerSession != Session)
+                    {
+                        throw new ArgumentException("Visit target already has a session.", nameof(entity));
+                    }
+
+                    alreadyAttached = true;
+                }
             }
 
             OwnedMob?.InternalEjectMind();
@@ -157,7 +173,7 @@ namespace Content.Server.Mobs
             OwnedMob?.InternalAssignMind(this);
 
             // Player is CURRENTLY connected.
-            if (Session != null && OwnedMob != null)
+            if (Session != null && OwnedMob != null && !alreadyAttached)
             {
                 Session.AttachToEntity(entity);
             }

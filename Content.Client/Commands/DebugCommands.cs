@@ -1,3 +1,4 @@
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces;
 using Content.Shared.GameObjects.Components.Markers;
 using Robust.Client.Interfaces.Console;
@@ -37,6 +38,24 @@ namespace Content.Client.Commands
             return false;
         }
     }
+
+    internal sealed class ShowWiresCommand : IConsoleCommand
+    {
+        // ReSharper disable once StringLiteralTypo
+        public string Command => "showwires";
+        public string Description => "Makes wires always visible.";
+        public string Help => "";
+
+        public bool Execute(IDebugConsole console, params string[] args)
+        {
+            IoCManager.Resolve<IEntitySystemManager>()
+                .GetEntitySystem<SubFloorHideSystem>()
+                .EnableAll ^= true;
+
+            return false;
+        }
+    }
+
 
     internal sealed class NotifyCommand : IConsoleCommand
     {

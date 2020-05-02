@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(StoreableComponent))]
-    public class ItemComponent : StoreableComponent, IAttackHand, IExAct
+    public class ItemComponent : StoreableComponent, IAttackHand, IExAct, IEquipped, IUnequipped
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -68,6 +68,16 @@ namespace Content.Server.GameObjects
             {
                 component.Visible = false;
             }
+        }
+
+        public void Equipped(EquippedEventArgs eventArgs)
+        {
+            EquippedToSlot();
+        }
+
+        public void Unequipped(UnequippedEventArgs eventArgs)
+        {
+            RemovedFromSlot();
         }
 
         public override void ExposeData(ObjectSerializer serializer)

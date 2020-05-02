@@ -16,6 +16,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.Components.AI
@@ -55,14 +56,24 @@ namespace Content.Client.GameObjects.Components.AI
         // Ideally you'd persist the label until the entity dies / is deleted but for first-draft this is fine
         private DebugAiOverlay _overlay;
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleMessage(message, component);
+
             switch (message)
             {
                 case PlayerDetachedMsg _:
                     DisableOverlay();
                     break;
+            }
+        }
+
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        {
+            base.HandleNetworkMessage(message, netChannel, session);
+
+            switch (message)
+            {
                 case UtilityAiDebugMessage msg:
                     if ((_tooltips & MobTooltips.Thonk) != 0)
                     {

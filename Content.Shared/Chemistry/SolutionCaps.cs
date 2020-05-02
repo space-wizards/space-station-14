@@ -24,6 +24,8 @@ namespace Content.Shared.Chemistry
         /// <para>Allows us to have obscenely large containers that are harder to abuse in chem dispensers
         /// since they can't be placed directly in them.</para>
         /// </summary>
-        FitsInDispenser = 16, 
+        FitsInDispenser = 16,
+
+        NoExamine = 32,
     }
 }

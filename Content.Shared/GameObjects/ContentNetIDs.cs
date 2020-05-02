@@ -43,5 +43,6 @@
         public const uint REAGENT_INJECTOR = 1038;
         public const uint PATHFINDER_DEBUG = 1039;
         public const uint AI_DEBUG = 1040;
+        public const uint GHOST = 1041;
     }
 }

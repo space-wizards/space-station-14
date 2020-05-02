@@ -275,7 +275,7 @@ namespace Content.Server.AI.Operators.Movement
 
         public virtual Outcome Execute(float frameTime)
         {
-            if (RouteJob != null && RouteJob.Status == Status.Finished)
+            if (RouteJob != null && RouteJob.Status == JobStatus.Finished)
             {
                 ReceivedRoute();
             }
