@@ -4,7 +4,6 @@ using Content.Shared.GameObjects.Components.Weapons;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics;
-using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
@@ -19,6 +18,7 @@ namespace Content.Client.GameObjects.Components.Weapons
     public sealed class ClientFlashableComponent : SharedFlashableComponent
     {
         private CancellationTokenSource _cancelToken;
+        private TimeSpan _startTime;
         private double _duration;
         private FlashOverlay _overlay;
 
@@ -41,18 +41,37 @@ namespace Content.Client.GameObjects.Components.Weapons
                 return;
             }
 
-            var currentTime = IoCManager.Resolve<IGameTiming>().CurTime;
-            // Account for ping
-            _duration = newState.Duration - (currentTime - newState.Time).TotalSeconds;
-            EnableOverlay();
+            // Few things here:
+            // 1. If a shorter duration flash is applied then don't do anything
+            // 2. If the client-side time is later than when the flash should've ended don't do anything
+            var currentTime = IoCManager.Resolve<IGameTiming>().CurTime.TotalSeconds;
+            var newEndTime = newState.Time.TotalSeconds + newState.Duration;
+            var currentEndTime = _startTime.TotalSeconds + _duration;
+
+            if (currentEndTime > newEndTime)
+            {
+                return;
+            }
+
+            if (currentTime > newEndTime)
+            {
+                DisableOverlay();
+                return;
+            }
+
+            _startTime = newState.Time;
+            _duration = newState.Duration;
+
+            EnableOverlay(newEndTime - currentTime);
         }
 
-        private void EnableOverlay()
+        private void EnableOverlay(double duration)
         {
             // If the timer gets reset
             if (_overlay != null)
             {
-                _overlay.Reset();
+                _overlay.Duration = _duration;
+                _overlay.StartTime = _startTime;
                 _cancelToken.Cancel();
             }
             else
@@ -63,7 +82,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             }
 
             _cancelToken = new CancellationTokenSource();
-            Timer.Spawn((int) _duration * 1000, DisableOverlay, _cancelToken.Token);
+            Timer.Spawn((int) duration * 1000, DisableOverlay, _cancelToken.Token);
         }
 
         private void DisableOverlay()
@@ -86,25 +105,20 @@ namespace Content.Client.GameObjects.Components.Weapons
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private IGameTiming _timer;
         private IClyde _displayManager;
-        private TimeSpan _startTime;
-        private readonly double _duration;
+        public TimeSpan StartTime { get; set; }
+        public double Duration { get; set; }
         public FlashOverlay(double duration) : base(nameof(FlashOverlay))
         {
             _timer = IoCManager.Resolve<IGameTiming>();
             _displayManager = IoCManager.Resolve<IClyde>();
-            _startTime = _timer.CurTime;
-            _duration = duration;
-        }
-
-        public void Reset()
-        {
-            _startTime = _timer.CurTime;
+            StartTime = _timer.CurTime;
+            Duration = duration;
         }
 
         protected override void Draw(DrawingHandleBase handle)
         {
-            var elapsedTime = (_timer.CurTime - _startTime).TotalSeconds;
-            if (elapsedTime > _duration)
+            var elapsedTime = (_timer.CurTime - StartTime).TotalSeconds;
+            if (elapsedTime > Duration)
             {
                 return;
             }
@@ -112,16 +126,16 @@ namespace Content.Client.GameObjects.Components.Weapons
 
             screenHandle.DrawRect(
                 new UIBox2(0.0f, 0.0f, _displayManager.ScreenSize.X, _displayManager.ScreenSize.Y),
-                Color.White.WithAlpha(GetAlpha(elapsedTime / _duration))
+                Color.White.WithAlpha(GetAlpha(elapsedTime / Duration))
                 );
         }
 
         private float GetAlpha(double ratio)
         {
-            const float slope = -1;
-            const float exponent = 1;
-            const float yOffset = 1.2f;
-            const float xOffset = 0;
+            const float slope = -1.25f;
+            const float exponent = 1f;
+            const float yOffset = 1f;
+            const float xOffset = 0.2f;
 
             // Overkill but easy to adjust if you want to mess around with the design
             return (float) Math.Clamp(slope * (float) Math.Pow(ratio - xOffset, exponent) + yOffset, 0.0, 1.0);
