@@ -119,11 +119,12 @@ namespace Content.Client.GameObjects.Components.Weapons
         private float GetAlpha(double ratio)
         {
             const float slope = -1;
-            const float exponent = 3;
-            const float yOffset = 1;
+            const float exponent = 1;
+            const float yOffset = 1.2f;
             const float xOffset = 0;
 
-            return slope * (float) Math.Pow(ratio - xOffset, exponent) + yOffset;
+            // Overkill but easy to adjust if you want to mess around with the design
+            return (float) Math.Clamp(slope * (float) Math.Pow(ratio - xOffset, exponent) + yOffset, 0.0, 1.0);
         }
     }
 }
