@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
     public abstract class BaseCharger : Component
     {
 
-        public IEntity HeldItem;
+        public IEntity HeldItem { get; protected set; }
         protected ContainerSlot _container;
         protected PowerDeviceComponent _powerDevice;
         public CellChargerStatus Status => _status;
