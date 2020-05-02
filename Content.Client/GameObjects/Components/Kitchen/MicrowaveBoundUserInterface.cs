@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Content.Client.GameObjects.Components.Mobs;
 using Content.Shared.Kitchen;
 using Robust.Shared.GameObjects.Components.UserInterface;
 
@@ -29,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             base.UpdateState(state);
             if (!(state is MicrowaveUserInterfaceState cstate))
                 return;
-            _menu.RefreshReagents(cstate.ContainedReagents);
+            _menu.RefreshContents(cstate.ReagentsReagents, cstate.ContainedSolids);
 
         }
 

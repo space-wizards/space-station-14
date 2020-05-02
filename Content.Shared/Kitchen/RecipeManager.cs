@@ -33,12 +33,12 @@ namespace Content.Shared.Kitchen
                     return 0;
                 }
 
-                if (x._ingredients.Count < y._ingredients.Count)
+                if (x._ingReagents.Count < y._ingReagents.Count)
                 {
                     return 1;
                 }
 
-                if (x._ingredients.Count > y._ingredients.Count)
+                if (x._ingReagents.Count > y._ingReagents.Count)
                 {
                     return -1;
                 }

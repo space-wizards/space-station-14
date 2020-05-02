@@ -2,8 +2,10 @@
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.Kitchen;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -37,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             };
             var ejectButton = new Button()
             {
-                Label = { Text = Loc.GetString("EJECT CONTENTS")}
+                Label = { Text = Loc.GetString("EJECT REAGENTS")}
             };
             var scrollContainer = new ScrollContainer()
             {
@@ -71,7 +73,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
         }
 
 
-        public void RefreshReagents(List<Solution.ReagentQuantity> reagents)
+        public void RefreshContents(List<Solution.ReagentQuantity> reagents, Dictionary<string,int> solids)
         {
             InnerScrollContainer.RemoveAllChildren();
             foreach (var item in reagents)
@@ -84,6 +86,18 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     Text = $"{item.Quantity} {proto.Name}"
                 });
             }
+
+            foreach (var item in solids)
+            {
+                IoCManager.Resolve<IPrototypeManager>().TryIndex(item.Key, out EntityPrototype proto);
+                var solidLabel = new Button()
+                {
+                    Text = $"{item.Value} {proto.Name}"
+                };
+
+                InnerScrollContainer.AddChild(solidLabel);
+            }
+
         }
 
         protected override void Dispose(bool disposing)

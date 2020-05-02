@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Chemistry;
 using Robust.Shared.Serialization;
 using Robust.Shared.Interfaces.GameObjects;
@@ -17,17 +19,19 @@ using Robust.Server.GameObjects.Components.Container;
 using Content.Server.GameObjects.Components.Power;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class KitchenMicrowaveComponent : SharedMicrowaveComponent, IActivate, ISolutionChange
+    public class KitchenMicrowaveComponent : SharedMicrowaveComponent, IActivate, IAttackBy, ISolutionChange
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly RecipeManager _recipeManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
 
         private int _cookTimeDefault;
@@ -41,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private bool Powered => _powerDevice.Powered;
 
-        private bool HasContents => _contents.ReagentList.Count > 0;
+        private bool HasContents => _contents.ReagentList.Count > 0 || _entityContents.Count > 0;
 
         private AppearanceComponent _appearance;
 
@@ -50,6 +54,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private PowerDeviceComponent _powerDevice;
 
         private Container _storage;
+
+        private Dictionary<string, int> _entityContents;
 
         private BoundUserInterface _userInterface;
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => UpdateUserInterface();
@@ -74,6 +80,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MicrowaveUiKey.Key);
+            _entityContents = new Dictionary<string, int>();
             _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
 
         }
@@ -92,7 +99,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
                 case MicrowaveEjectMessage msg :
                     if (!HasContents) return;
-                    EjectReagents();
+                    DestroyReagents();
+                    EjectSolids();
                     UpdateUserInterface();
                     break;
             }
@@ -108,6 +116,31 @@ namespace Content.Server.GameObjects.Components.Kitchen
             UpdateUserInterface();
             _userInterface.Open(actor.playerSession);
 
+        }
+
+        public bool AttackBy(AttackByEventArgs eventArgs)
+        {
+            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand.Owner;
+            if (itemEntity.TryGetComponent(typeof(FoodComponent), out var food))
+            {
+                if (_entityContents.TryGetValue(itemEntity.Prototype.ID, out var  quantity) && quantity > 0)
+                {
+                    quantity++;
+                    food.Owner.Delete();
+                    UpdateUserInterface();
+                    return true;
+                }
+                else
+                {
+                    _storage.Insert(food.Owner);
+                }
+
+                _entityContents.Add(itemEntity.Prototype.ID, 1);
+                UpdateUserInterface();
+                return true;
+            }
+
+            return false;
         }
 
         //This is required.
@@ -130,7 +163,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     }
                     else
                     {
-                        EjectReagents();
+                        DestroyReagents();
+                        EjectSolids();
                     }
 
                     var entityToSpawn = success ? r._result : _badRecipeName;
@@ -139,6 +173,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     SetAppearance(MicrowaveVisualState.Idle);
                     _busy = false;
                 });
+                _busy = false;
+                UpdateUserInterface();
                 return;
             }
         }
@@ -146,20 +182,54 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// <summary>
         /// This actually deletes all the reagents.
         /// </summary>
-        private void EjectReagents()
+        private void DestroyReagents()
         {
             _contents.RemoveAllSolution();
         }
+
+        private void EjectSolids()
+        {
+
+            foreach (var item in _storage.ContainedEntities.ToList())
+            {
+                _storage.Remove(item);
+            }
+
+            foreach (var kvp in _entityContents)
+            {
+                if (kvp.Value > 1 && _prototypeManager.TryIndex(kvp.Key, out EntityPrototype proto))
+                {
+                    for(int i = 0; i <= kvp.Value - 1; i++)
+                        _entityManager.SpawnEntity(proto.Name, Owner.Transform.GridPosition);
+
+                }
+            }
+
+            _entityContents.Clear();
+        }
         private bool CanSatisfyRecipe(FoodRecipePrototype recipe)
         {
-            foreach (var item in recipe._ingredients)
+            foreach (var reagent in recipe._ingReagents)
             {
-                if (!_contents.ContainsReagent(item.Key, out var amount))
+                if (!_contents.ContainsReagent(reagent.Key, out var amount))
                 {
                     return false;
                 }
 
-                if (amount.Int() < item.Value)
+                if (amount.Int() < reagent.Value)
+                {
+                    return false;
+                }
+            }
+
+            foreach (var solid in recipe._ingSolids)
+            {
+                if (!_entityContents.TryGetValue(solid.Key, out var amount))
+                {
+                    return false;
+                }
+
+                if (amount < solid.Value)
                 {
                     return false;
                 }
@@ -170,9 +240,15 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void SubtractContents(FoodRecipePrototype recipe)
         {
-            foreach(var item in recipe._ingredients)
+            foreach(var item in recipe._ingReagents)
             {
                 _contents.TryRemoveReagent(item.Key, ReagentUnit.New(item.Value));
+            }
+
+            foreach(var item in recipe._ingSolids)
+            {
+                _entityContents.TryGetValue(item.Key, out var value);
+                value -= item.Value;
             }
         }
 
@@ -184,7 +260,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void UpdateUserInterface()
         {
-            _userInterface.SetState(new MicrowaveUserInterfaceState(_contents.Solution.Contents.ToList()));
+            _userInterface.SetState(new MicrowaveUserInterfaceState(_contents.Solution.Contents.ToList(), solids:_entityContents));
         }
+
+
     }
 }

@@ -3,15 +3,9 @@
   name: Cheeseburger Recipe
   result: FoodCheeseburger
   time: 10
-  ingredients:
+  reagents:
     chem.H2O: 15
     chem.Nutriment: 5
+  solids:
+    FoodMeatBreadSlice: 1
 
-- type: microwaveMealRecipe
-  id: RecipeFlashlight
-  name: Flashlight Recipe
-  result: FoodCheeseWedge
-  time: 5
-  ingredients:
-    chem.H2O: 15
-    chem.Glucose: 5
