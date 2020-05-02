@@ -1,72 +1,232 @@
-using System.Collections;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Robust.Shared.Log;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.JobQueues
 {
+    /// <summary>
+    ///     CPU-intensive job that can be suspended and resumed on the main thread
+    /// </summary>
+    /// <remarks>
+    ///     Implementations should overload <see cref="Process"/>.
+    ///     Inside <see cref="Process"/>, implementations should only await on <see cref="SuspendNow"/>,
+    ///     <see cref="SuspendIfOutOfTime"/>, or <see cref="WaitAsyncTask"/>.
+    /// </remarks>
+    /// <typeparam name="T">The type of result this job generates</typeparam>
     public abstract class Job<T> : IJob
     {
-        protected double DebugTime;
+        public Status Status { get; private set; } = Status.Pending;
+
+        /// <summary>
+        ///     Represents the status of this job as a regular task.
+        /// </summary>
+        public Task<T> AsTask { get; }
+
+        public T Result { get; private set; }
+        public Exception Exception { get; private set; }
+        protected CancellationToken Cancellation { get; }
+
+        public double DebugTime { get; private set; }
         private readonly double _maxTime;
-        public Status Status { get; protected set; } = Status.Pending;
+        protected readonly IStopwatch StopWatch;
 
-        protected readonly Stopwatch StopWatch = new Stopwatch();
+        // TCS for the Task property.
+        private readonly TaskCompletionSource<T> _taskTcs;
 
-        public T Result { get; protected set; }
-        private IEnumerator _workInProgress = null;
+        // TCS to call to resume the suspended job.
+        private TaskCompletionSource<object> _resume;
+        private Task _workInProgress;
 
-        protected Job(double maxTime)
+        protected Job(double maxTime, CancellationToken cancellation = default)
+            : this(maxTime, new Stopwatch(), cancellation)
         {
-            _maxTime = maxTime;
         }
 
-        protected bool OutOfTime()
+        protected Job(double maxTime, IStopwatch stopwatch, CancellationToken cancellation = default)
         {
+            _maxTime = maxTime;
+            StopWatch = stopwatch;
+            Cancellation = cancellation;
+
+            _taskTcs = new TaskCompletionSource<T>();
+            AsTask = _taskTcs.Task;
+        }
+
+        /// <summary>
+        ///     Suspends the current task immediately, yielding to other running jobs.
+        /// </summary>
+        /// <remarks>
+        ///     This does not stop the job queue from un-suspending the current task immediately again,
+        ///     if there is still time left over.
+        /// </remarks>
+        protected Task SuspendNow()
+        {
+            DebugTools.AssertNull(_resume);
+
+            _resume = new TaskCompletionSource<object>();
+            Status = Status.Paused;
+            DebugTime += StopWatch.Elapsed.TotalSeconds;
+            return _resume.Task;
+        }
+
+        protected ValueTask SuspendIfOutOfTime()
+        {
+            DebugTools.AssertNull(_resume);
+
             // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (StopWatch.Elapsed.TotalSeconds < _maxTime || _maxTime == 0.0)
+            if (StopWatch.Elapsed.TotalSeconds <= _maxTime || _maxTime == 0.0)
             {
-                return false;
+                return new ValueTask();
             }
 
+            return new ValueTask(SuspendNow());
+        }
+
+        /// <summary>
+        ///     Wrapper to await on an external task.
+        /// </summary>
+        protected async Task<TTask> WaitAsyncTask<TTask>(Task<TTask> task)
+        {
+            DebugTools.AssertNull(_resume);
+
+            Status = Status.Waiting;
             DebugTime += StopWatch.Elapsed.TotalSeconds;
+
+            var result = await task;
+
+            // Immediately block on resume so that everything stays correct.
             Status = Status.Paused;
-            return true;
+            _resume = new TaskCompletionSource<object>();
+
+            await _resume.Task;
+
+            return result;
+        }
+
+        /// <summary>
+        ///     Wrapper to safely await on an external task.
+        /// </summary>
+        protected async Task WaitAsyncTask(Task task)
+        {
+            DebugTools.AssertNull(_resume);
+
+            Status = Status.Waiting;
+            DebugTime += StopWatch.Elapsed.TotalSeconds;
+
+            await task;
+
+            // Immediately block on resume so that everything stays correct.
+            _resume = new TaskCompletionSource<object>();
+            Status = Status.Paused;
+
+            await _resume.Task;
         }
 
         public void Run()
         {
-            if (_workInProgress == null)
-            {
-                _workInProgress = Process();
-            }
+            _workInProgress ??= ProcessWrap();
 
             if (Status == Status.Finished)
             {
                 return;
             }
 
+            DebugTools.Assert(_resume != null,
+                "Run() called without resume. Was this called while the job is in Waiting state?");
+            var resume = _resume;
+            _resume = null;
+
             Status = Status.Running;
             StopWatch.Restart();
-            _workInProgress.MoveNext();
+
+            if (Cancellation.IsCancellationRequested)
+            {
+                resume.TrySetCanceled();
+            }
+            else
+            {
+                resume.SetResult(null);
+            }
+
+            if (Status != Status.Finished && Status != Status.Waiting)
+            {
+                DebugTools.Assert(_resume != null,
+                    "Job suspended without _resume set. Did you await on an external task without using WaitAsyncTask?");
+            }
         }
 
-        /// <summary>
-        /// Functions as a Coroutine
-        /// </summary>
-        /// <returns></returns>
-        public abstract IEnumerator Process();
+        protected abstract Task<T> Process();
 
-        protected void Finish()
+        private async Task ProcessWrap()
         {
-            DebugTime += StopWatch.Elapsed.TotalSeconds;
-            Status = Status.Finished;
+            try
+            {
+                Cancellation.ThrowIfCancellationRequested();
+
+                // Making sure that the task starts inside the Running block,
+                // where the stopwatch is correctly set and such.
+                await SuspendNow();
+                Result = await Process();
+
+                // TODO: not sure if it makes sense to connect Task directly up
+                // to the return value of this method/Process.
+                // Maybe?
+                _taskTcs.TrySetResult(Result);
+            }
+            catch (TaskCanceledException)
+            {
+                _taskTcs.TrySetCanceled();
+            }
+            catch (Exception e)
+            {
+                // TODO: Should this be exposed differently?
+                // I feel that people might forget to check whether the job failed.
+                Logger.ErrorS("job", "Job failed on exception:\n{0}", e);
+                Exception = e;
+                _taskTcs.TrySetException(e);
+            }
+            finally
+            {
+                if (Status != Status.Waiting)
+                {
+                    // If we're blocked on waiting and the waiting task goes cancel/exception,
+                    // this timing info would not be correct.
+                    DebugTime += StopWatch.Elapsed.TotalSeconds;
+                }
+                Status = Status.Finished;
+            }
         }
     }
 
     public enum Status
     {
+        /// <summary>
+        ///     Job has been created and has not been ran yet.
+        /// </summary>
         Pending,
+
+        /// <summary>
+        ///     Job is currently (yes, right now!) executing.
+        /// </summary>
         Running,
+
+        /// <summary>
+        ///     Job is paused due to CPU limits.
+        /// </summary>
         Paused,
+
+        /// <summary>
+        ///     Job is paused because of waiting on external task.
+        /// </summary>
+        Waiting,
+
+        /// <summary>
+        ///     Job is done.
+        /// </summary>
+        // TODO: Maybe have a different status code for cancelled/failed on exception?
         Finished,
     }
 }

@@ -17,9 +17,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
 
         public AiActionRequestJob RequestAction(AiActionRequest request, CancellationTokenSource cancellationToken = null)
         {
-            var job = new AiActionRequestJob(0.002, request, cancellationToken);
+            var job = new AiActionRequestJob(0.002, request, cancellationToken.Token);
             // AI should already know if it shouldn't request again
-            _aiRequestQueue.PendingQueue.Enqueue(job);
+            _aiRequestQueue.EnqueueJob(job);
             return job;
         }
 
