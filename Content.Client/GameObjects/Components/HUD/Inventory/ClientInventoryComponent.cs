@@ -127,8 +127,7 @@ namespace Content.Client.GameObjects
                 {
                     var (rsi, state) = data.Value;
                     _sprite.LayerSetVisible(slot, true);
-                    _sprite.LayerSetRSI(slot, rsi);
-                    _sprite.LayerSetState(slot, state);
+                    _sprite.LayerSetState(slot, state, rsi);
 
                     if (slot == Slots.INNERCLOTHING)
                     {
@@ -181,10 +180,9 @@ namespace Content.Client.GameObjects
             SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleMessage(message, component);
 
             switch (message)
             {

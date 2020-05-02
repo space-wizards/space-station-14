@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -14,10 +15,36 @@ namespace Content.Client.GameObjects.EntitySystems
     /// </summary>
     internal sealed class SubFloorHideSystem : EntitySystem
     {
+        private bool _enableAll;
+
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
 #pragma warning restore 649
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool EnableAll
+        {
+            get => _enableAll;
+            set
+            {
+                _enableAll = value;
+
+                UpdateAll();
+            }
+        }
+
+        private void UpdateAll()
+        {
+            foreach (var comp in EntityManager.ComponentManager.GetAllComponents<SubFloorHideComponent>())
+            {
+                var gridId = comp.Owner.Transform.GridID;
+                var grid = _mapManager.GetGrid(gridId);
+
+                var snapPos = comp.Owner.GetComponent<SnapGridComponent>();
+                UpdateTile(grid, snapPos.Position);
+            }
+        }
 
         public override void Initialize()
         {
@@ -64,7 +91,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     continue;
                 }
 
-                spriteComponent.Visible = !subFloorComponent.Running || tileDef.IsSubFloor;
+                spriteComponent.Visible = EnableAll || !subFloorComponent.Running || tileDef.IsSubFloor;
             }
         }
     }

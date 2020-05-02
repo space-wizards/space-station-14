@@ -37,13 +37,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// attempt to inject it's entire contents upon use.
         /// </summary>
         [ViewVariables]
-        private int _transferAmount;
+        private ReagentUnit _transferAmount;
 
         /// <summary>
         /// Initial storage volume of the injector
         /// </summary>
         [ViewVariables]
-        private int _initialMaxVolume;
+        private ReagentUnit _initialMaxVolume;
 
         /// <summary>
         /// The state of the injector. Determines it's attack behavior. Containers must have the
@@ -62,22 +62,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _injectOnly, "injectOnly", false);
-            serializer.DataField(ref _initialMaxVolume, "initialMaxVolume", 15);
-            serializer.DataField(ref _transferAmount, "transferAmount", 5);
+            serializer.DataField(ref _initialMaxVolume, "initialMaxVolume", ReagentUnit.New(15));
+            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
         }
-
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
-
-            //Create and setup internal storage
-            _internalContents = new SolutionComponent();
-            _internalContents.InitializeFromPrototype();
-            _internalContents.Init();
-            _internalContents.MaxVolume = _initialMaxVolume;
-            _internalContents.Owner = Owner; //Manually set owner to avoid crash when VV'ing this
+            base.Startup();
+            _internalContents = Owner.GetComponent<SolutionComponent>();
             _internalContents.Capabilities |= SolutionCaps.Injector;
-
             //Set _toggleState based on prototype
             _toggleState = _injectOnly ? InjectorToggleMode.Inject : InjectorToggleMode.Draw;
         }
@@ -165,7 +157,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Get transfer amount. May be smaller than _transferAmount if not enough room
-            int realTransferAmount = Math.Min(_transferAmount, targetBloodstream.EmptyVolume);
+            var realTransferAmount = ReagentUnit.Min(_transferAmount, targetBloodstream.EmptyVolume);
             if (realTransferAmount <= 0)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
@@ -193,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Get transfer amount. May be smaller than _transferAmount if not enough room
-            int realTransferAmount = Math.Min(_transferAmount, targetSolution.EmptyVolume);
+            var realTransferAmount = ReagentUnit.Min(_transferAmount, targetSolution.EmptyVolume);
             if (realTransferAmount <= 0)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
@@ -221,7 +213,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Get transfer amount. May be smaller than _transferAmount if not enough room
-            int realTransferAmount = Math.Min(_transferAmount, targetSolution.CurrentVolume);
+            var realTransferAmount = ReagentUnit.Min(_transferAmount, targetSolution.CurrentVolume);
             if (realTransferAmount <= 0)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,

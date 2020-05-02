@@ -14,6 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using static Content.Client.StaticIoC;
@@ -108,17 +109,16 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
             _statusControl?.Update();
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
+            base.HandleNetworkMessage(message, channel, session);
+
             switch (message)
             {
                 case BmwComponentAutoEjectedMessage _:
                     _statusControl?.PlayAlarmAnimation();
                     return;
             }
-
-            base.HandleMessage(message, netChannel, component);
         }
 
         public Control MakeControl()

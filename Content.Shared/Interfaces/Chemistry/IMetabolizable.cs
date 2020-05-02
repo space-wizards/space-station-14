@@ -19,6 +19,6 @@ namespace Content.Shared.Interfaces.Chemistry
         /// <param name="reagentId">The reagent id</param>
         /// <param name="tickTime">The time since the last metabolism tick in seconds.</param>
         /// <returns>The amount of reagent to be removed. The metabolizing organ should handle removing the reagent.</returns>
-        int Metabolize(IEntity solutionEntity, string reagentId, float tickTime);
+        ReagentUnit Metabolize(IEntity solutionEntity, string reagentId, float tickTime);
     }
 }

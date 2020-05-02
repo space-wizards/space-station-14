@@ -21,8 +21,6 @@ namespace Content.Server.Throw
     {
         public static void Throw(IEntity thrownEnt, float throwForce, GridCoordinates targetLoc, GridCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
-            
-
             if (!thrownEnt.TryGetComponent(out CollidableComponent colComp))
                 return;
 
@@ -38,7 +36,7 @@ namespace Content.Server.Throw
                 if (colComp.PhysicsShapes.Count == 0)
                     colComp.PhysicsShapes.Add(new PhysShapeAabb());
 
-                colComp.PhysicsShapes[0].CollisionMask |= (int) CollisionGroup.MobImpassable;
+                colComp.PhysicsShapes[0].CollisionMask |= (int) (CollisionGroup.MobImpassable | CollisionGroup.Impassable);
                 colComp.IsScrapingFloor = false;
             }
             var angle = new Angle(targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager));

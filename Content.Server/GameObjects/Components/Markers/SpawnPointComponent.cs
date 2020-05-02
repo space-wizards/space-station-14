@@ -38,5 +38,6 @@ namespace Content.Server.GameObjects.Components.Markers
         Unset = 0,
         LateJoin,
         Job,
+        Observer,
     }
 }
