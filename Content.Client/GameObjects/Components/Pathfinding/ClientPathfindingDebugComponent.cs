@@ -13,6 +13,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timers;
@@ -53,9 +54,10 @@ namespace Content.Client.GameObjects.Components.Pathfinding
         private DebugPathfindingOverlay _overlay;
         private float _routeDuration = 4.0f; // How long before we remove a route from the overlay
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, netChannel, session);
+
             switch (message)
             {
                 case JpsRouteMessage route:
