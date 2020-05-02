@@ -1,0 +1,18 @@
+- type: job
+  id: Bartender
+  name: "Bartender"
+  positions: 1
+  startingGear: BartenderGear
+  department:
+  - Civilian
+
+  icon: "Bartender"
+
+- type: startingGear
+  id: BartenderGear
+  equipment:
+    innerclothing: UniformBartender
+    outerclothing: OuterclothingArmorVest
+    backpack: BackpackClothing
+    shoes: ShoesBlack
+    idcard: BartenderIDCard

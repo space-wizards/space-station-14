@@ -1,6 +1,4 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Content.Client.Utility;
+﻿using Content.Client.Utility;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -139,6 +137,21 @@ namespace Content.Client.GameObjects
             base.PlayerAttached();
 
             _gameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
+
+            // Update all the buttons to make sure they check out.
+
+            foreach (var (slot, buttons) in _inventoryButtons)
+            {
+                foreach (var button in buttons)
+                {
+                    ClearButton(button, slot);
+                }
+
+                if (Owner.TryGetSlot(slot, out var entity))
+                {
+                    AddToSlot(slot, entity);
+                }
+            }
         }
 
         public override void PlayerDetached()

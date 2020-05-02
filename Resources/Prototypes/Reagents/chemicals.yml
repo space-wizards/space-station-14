@@ -1,7 +1,7 @@
 - type: reagent
   id: chem.Nutriment
   name: Nutriment
-  desc: Generic nutrition
+  desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
   color: "#664330"
   metabolism:
     - !type:DefaultFood
@@ -17,7 +17,7 @@
   id: chem.H2O
   name: Water
   desc: A tasty colorless liquid.
-  color: "#808080"
+  color: "#DEF7F5"
   metabolism:
     - !type:DefaultDrink
       rate: 1

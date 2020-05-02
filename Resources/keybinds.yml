@@ -155,3 +155,10 @@ binds:
 - function: OpenSandboxWindow
   type: state
   key: B
+- function: TakeScreenshot
+  type: state
+  key: F2
+- function: TakeScreenshotNoUI
+  type: state
+  key: F2
+  mod1: Shift

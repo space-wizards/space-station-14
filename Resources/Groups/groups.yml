@@ -134,3 +134,4 @@
   - gc_mode
   CanViewVar: true
   CanAdminPlace: true
+  CanScript: true

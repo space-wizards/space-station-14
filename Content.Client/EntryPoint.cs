@@ -139,7 +139,11 @@ namespace Content.Client
                 "TransformableContainer",
                 "Mind",
                 "MovementSpeedModifier",
-                "StorageFill"
+                "StorageFill",
+                "Mop",
+                "Bucket",
+                "Puddle",
+                "CanSpill",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -162,6 +166,7 @@ namespace Content.Client
 
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
+            prototypes.RegisterIgnore("barSign");
 
             ClientContentIoC.Register();
 
@@ -176,6 +181,7 @@ namespace Content.Client
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
             IoCManager.Resolve<IStylesheetManager>().Initialize();
+            IoCManager.Resolve<IScreenshotHook>().Initialize();
 
             IoCManager.InjectDependencies(this);
 

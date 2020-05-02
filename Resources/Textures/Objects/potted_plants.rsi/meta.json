@@ -1,0 +1,288 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+  	    {
+      "name": "random",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "applebush",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-01",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-02",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-03",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-04",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-05",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-06",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-07",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-08",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-09",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-10",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-11",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-12",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-13",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-14",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-15",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-16",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-17",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-18",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-19",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-20",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-21",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-22",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-23",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-24",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-25",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-26",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-27",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-28",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-29",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    }
+  ]
+}
