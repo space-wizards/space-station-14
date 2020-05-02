@@ -43,7 +43,7 @@ namespace Content.Server.AI.Operators.Movement
 
             if (RouteJob != null)
             {
-                if (RouteJob.Status != Status.Finished)
+                if (RouteJob.Status != JobStatus.Finished)
                 {
                     return Outcome.Continuing;
                 }

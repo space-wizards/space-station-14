@@ -30,7 +30,7 @@ namespace Content.Tests.Server.Jobs
 
             queue.Process();
 
-            Assert.That(job.Status, Is.EqualTo(Status.Finished));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
             Assert.That(job.Result, Is.EqualTo("honk!"));
         }
 
@@ -46,13 +46,13 @@ namespace Content.Tests.Server.Jobs
             queue.EnqueueJob(job);
 
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Paused));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
             Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(1f));
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Paused));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
             Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2f));
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Finished));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
 
             Assert.That(job.Result, Is.EqualTo("foo!"));
             Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2.4f));
@@ -71,12 +71,12 @@ namespace Content.Tests.Server.Jobs
             queue.EnqueueJob(job);
 
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Paused));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Paused));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Paused));
             cts.Cancel();
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Finished));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
             Assert.That((float)job.DebugTime, new ApproxEqualityConstraint(2.0f));
 
             Assert.That(job.Result, Is.Null);
@@ -95,12 +95,12 @@ namespace Content.Tests.Server.Jobs
             queue.EnqueueJob(job);
 
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Waiting));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Waiting));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
             tcs.SetResult(1);
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Finished));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
 
             Assert.That(job.Result, Is.EqualTo("oof!"));
         }
@@ -118,12 +118,12 @@ namespace Content.Tests.Server.Jobs
             queue.EnqueueJob(job);
 
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Waiting));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Waiting));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Waiting));
             tcs.SetCanceled();
             queue.Process();
-            Assert.That(job.Status, Is.EqualTo(Status.Finished));
+            Assert.That(job.Status, Is.EqualTo(JobStatus.Finished));
 
             Assert.That(job.Result, Is.Null);
         }

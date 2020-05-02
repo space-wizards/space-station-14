@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         {
             if (_startNode == null ||
                 _endNode == null ||
-                Status == Status.Finished)
+                Status == JobStatus.Finished)
             {
                 return null;
             }

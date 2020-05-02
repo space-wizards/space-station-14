@@ -178,7 +178,7 @@ namespace Content.Server.AI.Utility.AiLogic
             // If we asked for a new action we don't want to dump the existing one.
             if (_actionRequest != null)
             {
-                if (_actionRequest.Status != Status.Finished)
+                if (_actionRequest.Status != JobStatus.Finished)
                 {
                     return;
                 }

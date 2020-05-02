@@ -34,13 +34,13 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues.Queues
             // Move all finished waiting jobs back into the regular queue.
             foreach (var waitingJob in _waitingJobs)
             {
-                if (waitingJob.Status != Status.Waiting)
+                if (waitingJob.Status != JobStatus.Waiting)
                 {
                     _pendingQueue.Enqueue(waitingJob);
                 }
             }
 
-            _waitingJobs.RemoveAll(p => p.Status != Status.Waiting);
+            _waitingJobs.RemoveAll(p => p.Status != JobStatus.Waiting);
 
             // At one point I tried making the pathfinding queue multi-threaded but ehhh didn't go great
             // Could probably try it again at some point
@@ -56,9 +56,9 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues.Queues
 
                 switch (job.Status)
                 {
-                    case Status.Finished:
+                    case JobStatus.Finished:
                         continue;
-                    case Status.Waiting:
+                    case JobStatus.Waiting:
                         // If this job goes into waiting we have to move it into a separate list.
                         // Otherwise we'd just be spinning like mad here for external IO or such.
                         _waitingJobs.Add(job);

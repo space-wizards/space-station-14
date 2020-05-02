@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
     /// <typeparam name="T">The type of result this job generates</typeparam>
     public abstract class Job<T> : IJob
     {
-        public Status Status { get; private set; } = Status.Pending;
+        public JobStatus Status { get; private set; } = JobStatus.Pending;
 
         /// <summary>
         ///     Represents the status of this job as a regular task.
@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
             DebugTools.AssertNull(_resume);
 
             _resume = new TaskCompletionSource<object>();
-            Status = Status.Paused;
+            Status = JobStatus.Paused;
             DebugTime += StopWatch.Elapsed.TotalSeconds;
             return _resume.Task;
         }
@@ -92,13 +92,13 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
         {
             DebugTools.AssertNull(_resume);
 
-            Status = Status.Waiting;
+            Status = JobStatus.Waiting;
             DebugTime += StopWatch.Elapsed.TotalSeconds;
 
             var result = await task;
 
             // Immediately block on resume so that everything stays correct.
-            Status = Status.Paused;
+            Status = JobStatus.Paused;
             _resume = new TaskCompletionSource<object>();
 
             await _resume.Task;
@@ -113,14 +113,14 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
         {
             DebugTools.AssertNull(_resume);
 
-            Status = Status.Waiting;
+            Status = JobStatus.Waiting;
             DebugTime += StopWatch.Elapsed.TotalSeconds;
 
             await task;
 
             // Immediately block on resume so that everything stays correct.
             _resume = new TaskCompletionSource<object>();
-            Status = Status.Paused;
+            Status = JobStatus.Paused;
 
             await _resume.Task;
         }
@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
         {
             _workInProgress ??= ProcessWrap();
 
-            if (Status == Status.Finished)
+            if (Status == JobStatus.Finished)
             {
                 return;
             }
@@ -139,7 +139,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
             var resume = _resume;
             _resume = null;
 
-            Status = Status.Running;
+            Status = JobStatus.Running;
             StopWatch.Restart();
 
             if (Cancellation.IsCancellationRequested)
@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
                 resume.SetResult(null);
             }
 
-            if (Status != Status.Finished && Status != Status.Waiting)
+            if (Status != JobStatus.Finished && Status != JobStatus.Waiting)
             {
                 DebugTools.Assert(_resume != null,
                     "Job suspended without _resume set. Did you await on an external task without using WaitAsyncTask?");
@@ -190,18 +190,18 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues
             }
             finally
             {
-                if (Status != Status.Waiting)
+                if (Status != JobStatus.Waiting)
                 {
                     // If we're blocked on waiting and the waiting task goes cancel/exception,
                     // this timing info would not be correct.
                     DebugTime += StopWatch.Elapsed.TotalSeconds;
                 }
-                Status = Status.Finished;
+                Status = JobStatus.Finished;
             }
         }
     }
 
-    public enum Status
+    public enum JobStatus
     {
         /// <summary>
         ///     Job has been created and has not been ran yet.
