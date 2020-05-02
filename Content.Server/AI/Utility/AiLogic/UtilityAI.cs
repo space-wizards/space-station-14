@@ -64,7 +64,7 @@ namespace Content.Server.AI.Utility.AiLogic
 
         public void RemoveBehaviorSet(Type behaviorSet)
         {
-            DebugTools.Assert(behaviorSet.IsInstanceOfType(typeof(BehaviorSet)));
+            DebugTools.Assert(behaviorSet.IsAssignableFrom(typeof(BehaviorSet)));
 
             if (BehaviorSets.ContainsKey(behaviorSet))
             {
@@ -126,7 +126,7 @@ namespace Content.Server.AI.Utility.AiLogic
             }
         }
 
-        public void Shutdown()
+        public override void Shutdown()
         {
             // TODO: If DamageableComponent removed still need to unsubscribe?
             if (SelfEntity.TryGetComponent(out DamageableComponent damageableComponent))

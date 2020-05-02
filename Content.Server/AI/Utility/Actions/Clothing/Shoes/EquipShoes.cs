@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.HTN.Tasks.Primitive.Operators.Inventory;
 using Content.Server.AI.Operators.Inventory;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.Utility.Considerations.Clothing.Shoes;
+using Content.Server.AI.Utility.Considerations.Clothing;
 using Content.Server.AI.Utility.Considerations.Inventory;
 using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
+using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Utility.Actions.Clothing.Shoes
@@ -17,7 +17,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Shoes
     {
         private IEntity _entity;
 
-        public EquipShoes(IEntity owner, IEntity entity, BonusWeight weight) : base(owner)
+        public EquipShoes(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;
@@ -25,7 +25,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Shoes
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators =  new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<IOperator>(new IOperator[]
             {
                 new EquipEntityOperator(Owner, _entity),
                 new UseItemInHandsOperator(Owner, _entity),
@@ -39,7 +39,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Shoes
         }
 
         protected override Consideration[] Considerations { get; } = {
-            new ShoesInSlotCon(
+            new ClothingInSlotCon(EquipmentSlotDefines.Slots.SHOES,
                 new InverseBoolCurve()),
             new CanPutTargetInHandsCon(
                 new BoolCurve()),

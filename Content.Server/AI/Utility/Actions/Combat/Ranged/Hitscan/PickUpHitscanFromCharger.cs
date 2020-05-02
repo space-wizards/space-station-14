@@ -8,6 +8,7 @@ using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat.Ranged;
 using Content.Server.AI.Utility.Considerations.Combat.Ranged.Ballistic;
 using Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan;
+using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Hands;
 using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.Utility.Curves;
@@ -23,7 +24,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
         private IEntity _entity;
         private IEntity _charger;
 
-        public PickUpHitscanFromCharger(IEntity owner, IEntity entity, IEntity charger, BonusWeight weight) : base(owner)
+        public PickUpHitscanFromCharger(IEntity owner, IEntity entity, IEntity charger, float weight) : base(owner)
         {
             _entity = entity;
             _charger = charger;
@@ -32,7 +33,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators =  new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<IOperator>(new IOperator[]
             {
                 new MoveToEntityOperator(Owner, _charger),
                 new WaitForHitscanChargeOperator(_entity),
@@ -50,7 +51,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
         protected override Consideration[] Considerations { get; } = {
             new HeldRangedWeaponsCon(
                 new QuadraticCurve(-1.0f, 1.0f, 1.0f, 0.0f)),
-            new TargetNotInAnyHandsCon(
+            new TargetAccessibleCon(
                 new BoolCurve()),
             new FreeHandCon(
                 new BoolCurve()),

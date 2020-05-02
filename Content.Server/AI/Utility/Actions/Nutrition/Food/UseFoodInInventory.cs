@@ -4,6 +4,7 @@ using Content.Server.AI.HTN.Tasks.Primitive.Operators.Inventory;
 using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Hands;
 using Content.Server.AI.Utility.Considerations.Nutrition;
 using Content.Server.AI.Utility.Curves;
@@ -15,12 +16,12 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
 {
     public sealed class UseFoodInInventory : UtilityAction
     {
-        public override BonusWeight Bonus => BonusWeight.Normal;
         private IEntity _entity;
 
-        public UseFoodInInventory(IEntity owner, IEntity entity) : base(owner)
+        public UseFoodInInventory(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
+            Bonus = weight;
         }
 
         public override void SetupOperators(Blackboard context)

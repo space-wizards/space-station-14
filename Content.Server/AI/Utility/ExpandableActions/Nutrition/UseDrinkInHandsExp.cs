@@ -9,7 +9,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Nutrition
 {
     public sealed class UseDrinkInHandsExp : ExpandableUtilityAction
     {
-        public override BonusWeight Bonus => BonusWeight.Normal;
+        public override float Bonus => 10.0f;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
@@ -17,7 +17,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Nutrition
 
             foreach (var entity in context.GetState<InventoryState>().GetValue())
             {
-                yield return new UseDrinkInInventory(owner, entity);
+                yield return new UseDrinkInInventory(owner, entity, Bonus);
             }
         }
     }

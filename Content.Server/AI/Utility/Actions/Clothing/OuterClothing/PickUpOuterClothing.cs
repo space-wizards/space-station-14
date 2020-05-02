@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Operators.Movement;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.Utility.Considerations.Clothing.OuterClothing;
+using Content.Server.AI.Utility.Considerations.Clothing;
 using Content.Server.AI.Utility.Considerations.Inventory;
 using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
+using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Utility.Actions.Clothing.OuterClothing
@@ -17,7 +17,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.OuterClothing
     {
         private readonly IEntity _entity;
 
-        public PickUpOuterClothing(IEntity owner, IEntity entity, BonusWeight weight) : base(owner)
+        public PickUpOuterClothing(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;
@@ -25,7 +25,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.OuterClothing
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators =  new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<IOperator>(new IOperator[]
             {
                 new MoveToEntityOperator(Owner, _entity),
                 new PickupEntityOperator(Owner, _entity),
@@ -39,11 +39,11 @@ namespace Content.Server.AI.Utility.Actions.Clothing.OuterClothing
         }
 
         protected override Consideration[] Considerations { get; } = {
-            new OuterClothingInSlotCon(
+            new ClothingInSlotCon(EquipmentSlotDefines.Slots.OUTERCLOTHING,
                 new InverseBoolCurve()),
             new CanPutTargetInHandsCon(
                 new BoolCurve()),
-            new OuterClothingInInventoryCon(
+            new ClothingInInventoryCon(EquipmentSlotDefines.SlotFlags.OUTERCLOTHING,
                 new InverseBoolCurve()),
         };
     }

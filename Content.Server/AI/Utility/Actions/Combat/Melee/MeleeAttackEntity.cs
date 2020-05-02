@@ -22,7 +22,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
     {
         private IEntity _entity;
 
-        public MeleeAttackEntity(IEntity owner, IEntity entity, BonusWeight weight) : base(owner)
+        public MeleeAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;
@@ -37,7 +37,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
                 moveOperator.DesiredRange = meleeWeaponComponent.Range - 0.01f;
             }
 
-            ActionOperators =  new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<IOperator>(new IOperator[]
             {
                 moveOperator,
                 new SwingMeleeWeaponOperator(Owner, _entity),

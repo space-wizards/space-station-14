@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Ranged.Hitscan
 {
     public sealed class ChargeEquippedHitscanExp : ExpandableUtilityAction
     {
-        public override BonusWeight Bonus => BonusWeight.CombatPrep;
+        public override float Bonus => 20.0f;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
@@ -25,7 +25,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Ranged.Hitscan
             foreach (var entity in Visibility.GetEntitiesInRange(owner.Transform.GridPosition, typeof(WeaponCapacitorChargerComponent),
                 controller.VisionRadius))
             {
-                yield return new PutHitscanInCharger(owner, entity, context, Bonus);
+                yield return new PutHitscanInCharger(owner, entity, Bonus);
             }
         }
     }

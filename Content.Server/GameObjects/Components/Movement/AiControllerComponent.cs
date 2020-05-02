@@ -1,6 +1,7 @@
 ﻿using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Robust.Server.AI;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        public UtilityAi Processor { get; set; }
+        public AiLogicProcessor Processor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float VisionRadius

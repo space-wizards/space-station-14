@@ -10,7 +10,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Ranged.Ballistic
 {
     public sealed class DropEmptyBallisticExp : ExpandableUtilityAction
     {
-        public override BonusWeight Bonus => BonusWeight.CombatPrep;
+        public override float Bonus => 20.0f;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {

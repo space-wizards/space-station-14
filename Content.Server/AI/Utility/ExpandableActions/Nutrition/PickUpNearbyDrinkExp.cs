@@ -11,12 +11,12 @@ namespace Content.Server.AI.Utility.ExpandableActions.Nutrition
 {
     public sealed class PickUpNearbyDrinkExp : ExpandableUtilityAction
     {
-        public override BonusWeight Bonus => BonusWeight.Normal;
+        public override float Bonus => 10.0f;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
-            if (!owner.TryGetComponent(out AiControllerComponent controller))
+            if (!owner.HasComponent<AiControllerComponent>())
             {
                 throw new InvalidOperationException();
             }

@@ -15,12 +15,12 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Ranged
 {
     public sealed class PickUpRangedExp : ExpandableUtilityAction
     {
-        public override BonusWeight Bonus => BonusWeight.CombatPrep;
+        public override float Bonus => 20.0f;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
-            if (!owner.TryGetComponent(out AiControllerComponent controller))
+            if (!owner.HasComponent<AiControllerComponent>())
             {
                 throw new InvalidOperationException();
             }

@@ -1,3 +1,4 @@
+using System;
 using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 
@@ -16,7 +17,9 @@ namespace Content.Server.AI.Utility.Considerations
 
         public float ComputeResponseCurve(float score)
         {
-            return Curve.GetResponse(score);
+            var clampedScore = Math.Clamp(score, 0.0f, 1.0f);
+            var curvedResponse = Math.Clamp(Curve.GetResponse(clampedScore), 0.0f, 1.0f);
+            return curvedResponse;
         }
     }
 }

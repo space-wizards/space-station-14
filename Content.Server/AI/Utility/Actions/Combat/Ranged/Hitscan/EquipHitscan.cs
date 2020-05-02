@@ -18,7 +18,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
     {
         private IEntity _entity;
 
-        public EquipHitscan(IEntity owner, IEntity entity, BonusWeight weight) : base(owner)
+        public EquipHitscan(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;
@@ -26,7 +26,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators =  new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<IOperator>(new IOperator[]
             {
                 new EquipEntityOperator(Owner, _entity)
             });

@@ -125,11 +125,6 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             }
 
             HeldItem = entity;
-            if (entity.TryGetComponent(out ItemComponent itemComponent))
-            {
-                // TODO: Less hacky way to do this
-                itemComponent.IsHeld = false;
-            }
 
             if (!_container.Insert(HeldItem))
             {

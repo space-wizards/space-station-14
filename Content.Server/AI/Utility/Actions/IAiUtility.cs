@@ -4,6 +4,6 @@ namespace Content.Server.AI.Utility.Actions
 {
     public interface IAiUtility
     {
-        BonusWeight Bonus { get; }
+        float Bonus { get; }
     }
 }

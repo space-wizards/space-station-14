@@ -4,6 +4,7 @@ using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Hands;
 using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.Utility.Curves;
@@ -16,10 +17,9 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Ballistic
 {
     public sealed class PickUpAmmo : UtilityAction
     {
-        public sealed override BonusWeight Bonus => BonusWeight.Normal;
         private IEntity _entity;
 
-        public PickUpAmmo(IEntity owner, IEntity entity, BonusWeight weight) : base(owner)
+        public PickUpAmmo(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;
@@ -27,7 +27,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Ballistic
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators =  new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<IOperator>(new IOperator[]
             {
                 new MoveToEntityOperator(Owner, _entity),
                 new PickupEntityOperator(Owner, _entity),
@@ -43,7 +43,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Ballistic
 
         protected override Consideration[] Considerations { get; } = {
             //TODO: Consider ammo's type and what guns we have
-            new TargetNotInAnyHandsCon(
+            new TargetAccessibleCon(
                 new BoolCurve()),
             new FreeHandCon(
                 new BoolCurve()),

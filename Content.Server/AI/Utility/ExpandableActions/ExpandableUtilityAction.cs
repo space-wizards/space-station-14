@@ -10,7 +10,7 @@ namespace Content.Server.AI.Utility.ExpandableActions
     /// </summary>
     public abstract class ExpandableUtilityAction : IAiUtility
     {
-        public abstract BonusWeight Bonus { get; }
+        public abstract float Bonus { get; }
 
         // e.g. you may have a "PickupFood" action for all nearby food sources if you have the "Hungry" BehaviorSet.
         public abstract IEnumerable<UtilityAction> GetActions(Blackboard context);

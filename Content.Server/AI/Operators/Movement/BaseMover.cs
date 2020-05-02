@@ -29,6 +29,7 @@ namespace Content.Server.AI.Operators.Movement
         /// <summary>
         /// How close the pathfinder needs to get before returning a route
         /// Set at 1.42f just in case there's rounding and diagonally adjacent tiles aren't counted.
+        ///
         /// </summary>
         public float PathfindingProximity { get; set; } = 1.42f;
         protected Queue<TileRef> Route = new Queue<TileRef>();

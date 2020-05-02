@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Ranged.Hitscan
 {
     public sealed class PickUpHitscanFromChargersExp : ExpandableUtilityAction
     {
-        public override BonusWeight Bonus => BonusWeight.CombatPrep;
+        public override float Bonus => 20.0f;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {

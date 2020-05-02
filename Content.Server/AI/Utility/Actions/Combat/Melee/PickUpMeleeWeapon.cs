@@ -5,6 +5,7 @@ using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat.Melee;
+using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Hands;
 using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.Utility.Curves;
@@ -19,7 +20,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
     {
         private IEntity _entity;
 
-        public PickUpMeleeWeapon(IEntity owner, IEntity entity, BonusWeight weight) : base(owner)
+        public PickUpMeleeWeapon(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;
@@ -27,7 +28,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators =  new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<IOperator>(new IOperator[]
             {
                 new MoveToEntityOperator(Owner, _entity),
                 new PickupEntityOperator(Owner, _entity),
@@ -42,7 +43,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
         }
 
         protected override Consideration[] Considerations { get; } = {
-            new TargetNotInAnyHandsCon(
+            new TargetAccessibleCon(
                 new BoolCurve()),
             new FreeHandCon(
                 new BoolCurve()),

@@ -23,7 +23,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Ballistic
         private IEntity _entity;
         private MoveToEntityOperator _moveOperator;
 
-        public BallisticAttackEntity(IEntity owner, IEntity entity, BonusWeight weight) : base(owner)
+        public BallisticAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;
@@ -35,7 +35,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Ballistic
             _moveOperator.MovedATile += InLos;
 
             // TODO: Accuracy in blackboard
-            ActionOperators =  new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<IOperator>(new IOperator[]
             {
                 _moveOperator,
                 new ShootAtEntityOperator(Owner, _entity, 0.7f),

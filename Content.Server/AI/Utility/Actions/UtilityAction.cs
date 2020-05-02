@@ -20,7 +20,20 @@ namespace Content.Server.AI.Utility.Actions
         /// </summary>
         public virtual bool CanOverride => false;
 
-        public virtual BonusWeight Bonus { get; protected set; } = BonusWeight.Idle;
+        /// <summary>
+        /// This is used to sort actions; if there's a top-tier action available we won't bother checking the lower tiers.
+        /// Threshold doesn't necessarily mean we'll do an action at a higher threshold;
+        /// if it's really un-optimal (i.e. low score) then we'll also check lower tiers
+        /// </summary>
+        /// Guidelines:
+        // Idle should just be flavor-stuff if we reeaaalllyyy have nothing to do
+        // Idle = 1
+        // Normal = 5
+        // Needs = 10
+        // Combat prep (e.g. grabbing weapons) = 20
+        // Combat = 30
+        // Danger (e.g. dodging a grenade) = 50
+        public virtual float Bonus { get; protected set; } = 1.0f;
 
         protected IEntity Owner { get; }
 
@@ -90,20 +103,19 @@ namespace Content.Server.AI.Utility.Actions
             // have a better score than the current action (if applicable) and early-out that way as well.
 
             // 23:00 Building a better centaur
-            var bonusValue = (float) Bonus;
             var finalScore = 1.0f;
-            var minThreshold = min / bonusValue;
-            var modificationFactor = 1 - (1.0f / Considerations.Length);
+            var minThreshold = min / Bonus;
+            var modificationFactor = 1.0f - 1.0f / Considerations.Length;
             // See 10:09 for this and the adjustments
 
             foreach (var consideration in Considerations)
             {
                 var score = consideration.GetScore(context); // TODO: consideration parameters, e.g. range limits?
                 var makeUpValue = (1.0f - score) * modificationFactor;
-                var adjustedScore = score + (makeUpValue * score);
+                var adjustedScore = score + makeUpValue * score;
                 var response = consideration.ComputeResponseCurve(adjustedScore);
 
-                finalScore *= Math.Clamp(response, 0.0f, 1.0f);
+                finalScore *= response;
 
                 DebugTools.Assert(!float.IsNaN(response));
 
@@ -115,31 +127,7 @@ namespace Content.Server.AI.Utility.Actions
 
             DebugTools.Assert(finalScore <= 1.0f);
 
-            return finalScore * bonusValue;
+            return finalScore * Bonus;
         }
-    }
-
-    /// <summary>
-    /// This is used to sort actions; if there's a top-tier action available we won't bother checking the lower tiers.
-    /// Cast to a float by the utility actions
-    /// Threshold doesn't necessarily mean we'll do an action at a higher threshold;
-    /// if it's really un-optimal (i.e. low score) then we'll also check lower tiers
-    /// </summary>
-    public enum BonusWeight : ushort
-    {
-        Invalid = 0,
-        // Idle should just be flavor-stuff if we reeaaalllyyy have nothing to do
-        // TODO: Look at dividing these by 10 for more granularity.
-        // Could also just use the floats as bonuses as straight up but it'll be nicer to have an enum as a guide
-        Idle = 1,
-        // Use a computer, bark at someone, whatever
-        Normal = 5,
-        // Hunger / thirst etc.
-        Needs = 10,
-        // Picking up weapons etc.
-        CombatPrep = 20,
-        Combat = 30,
-        // Avoid that grenade
-        Danger = 50,
     }
 }

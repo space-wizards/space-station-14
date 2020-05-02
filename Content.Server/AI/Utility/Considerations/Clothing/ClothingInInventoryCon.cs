@@ -4,11 +4,16 @@ using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 
-namespace Content.Server.AI.Utility.Considerations.Clothing.OuterClothing
+namespace Content.Server.AI.Utility.Considerations.Clothing
 {
-    public sealed class OuterClothingInInventoryCon : Consideration
+    public sealed class ClothingInInventoryCon : Consideration
     {
-        public OuterClothingInInventoryCon(IResponseCurve curve) : base(curve) {}
+        private readonly EquipmentSlotDefines.SlotFlags _slot;
+
+        public ClothingInInventoryCon(EquipmentSlotDefines.SlotFlags slotFlags, IResponseCurve curve) : base(curve)
+        {
+            _slot = slotFlags;
+        }
 
         public override float GetScore(Blackboard context)
         {
@@ -21,7 +26,7 @@ namespace Content.Server.AI.Utility.Considerations.Clothing.OuterClothing
                     continue;
                 }
 
-                if ((clothingComponent.SlotFlags & EquipmentSlotDefines.SlotFlags.OUTERCLOTHING) != 0)
+                if ((clothingComponent.SlotFlags & _slot) != 0)
                 {
                     return 1.0f;
                 }

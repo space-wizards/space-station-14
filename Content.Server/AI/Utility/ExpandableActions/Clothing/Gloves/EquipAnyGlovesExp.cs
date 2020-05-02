@@ -16,7 +16,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Gloves
     /// </summary>
     public sealed class EquipAnyGlovesExp : ExpandableUtilityAction
     {
-        public override BonusWeight Bonus => BonusWeight.Normal;
+        public override float Bonus => 5.0f;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {

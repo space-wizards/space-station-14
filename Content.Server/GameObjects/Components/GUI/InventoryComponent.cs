@@ -110,7 +110,6 @@ namespace Content.Server.GameObjects
             }
 
             item.EquippedToSlot();
-            item.IsHeld = true;
 
             Dirty();
 
@@ -168,7 +167,6 @@ namespace Content.Server.GameObjects
             }
 
             item.RemovedFromSlot();
-            item.IsHeld = false;
 
             // TODO: The item should be dropped to the container our owner is in, if any.
             var itemTransform = item.Owner.GetComponent<ITransformComponent>();
@@ -259,7 +257,6 @@ namespace Content.Server.GameObjects
             if (entity.TryGetComponent(out ItemComponent itemComp))
             {
                 itemComp.RemovedFromSlot();
-                itemComp.IsHeld = false;
             }
 
             Dirty();

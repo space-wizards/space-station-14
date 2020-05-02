@@ -10,7 +10,7 @@ namespace Content.Server.AI.WorldState
     public sealed class Blackboard
     {
         // Cache the known types
-        private static List<Type> _aiStates;
+        private static readonly Lazy<List<Type>> _aiStates = new Lazy<List<Type>>(GetStates);
 
         private readonly Dictionary<Type, IAiState> _states = new Dictionary<Type, IAiState>();
         private readonly List<ICachedState> _cachedStates = new List<ICachedState>();
@@ -21,28 +21,25 @@ namespace Content.Server.AI.WorldState
             Setup(owner);
         }
 
-        private void GetStates()
+        private static List<Type> GetStates()
         {
-            _aiStates = new List<Type>();
+            var aiStates = new List<Type>();
             var reflectionManager = IoCManager.Resolve<IReflectionManager>();
 
             foreach (var state in reflectionManager.GetAllChildren(typeof(IAiState)))
             {
-                _aiStates.Add(state);
+                aiStates.Add(state);
             }
+
+            return aiStates;
         }
 
         private void Setup(IEntity owner)
         {
-            if (_aiStates == null)
-            {
-                GetStates();
-            }
-
             DebugTools.AssertNotNull(_aiStates);
             var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
 
-            foreach (var state in _aiStates)
+            foreach (var state in _aiStates.Value)
             {
                 var newState = (IAiState) typeFactory.CreateInstance(state);
                 newState.Setup(owner);

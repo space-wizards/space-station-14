@@ -10,27 +10,21 @@ namespace Content.Server.AI.Utility.Considerations.Hands
     /// </summary>
     public sealed class TargetInOurHandsCon : Consideration
     {
-        public TargetInOurHandsCon(IResponseCurve curve) : base(curve)
-        {
-        }
+        public TargetInOurHandsCon(IResponseCurve curve) : base(curve) {}
 
         public override float GetScore(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || !target.TryGetComponent(out ItemComponent itemComponent) || itemComponent.Holder != owner)
+            if (target == null ||
+                !target.HasComponent<ItemComponent>() ||
+                !owner.TryGetComponent(out HandsComponent handsComponent))
             {
                 return 0.0f;
             }
 
-            // This prroobbbbabbbllyy shouldn't happen but just in case?
-            if (!owner.TryGetComponent(out HandsComponent _))
-            {
-                return 0.0f;
-            }
-
-            return 1.0f;
+            return handsComponent.IsHolding(target) ? 1.0f : 0.0f;
         }
     }
 }

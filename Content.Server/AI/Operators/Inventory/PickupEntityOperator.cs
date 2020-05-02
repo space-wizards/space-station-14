@@ -1,6 +1,7 @@
 using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -21,11 +22,11 @@ namespace Content.Server.AI.Operators.Inventory
         // TODO: When I spawn new entities they seem to duplicate clothing or something?
         public Outcome Execute(float frameTime)
         {
-            // TODO: If they're in a locker need to check
+            // TODO: If they're in a locker need to check (use a separate operator)
             if (_target == null ||
                 _target.Deleted ||
-                !_target.TryGetComponent(out ItemComponent itemComponent) ||
-                itemComponent.IsHeld ||
+                !_target.HasComponent<ItemComponent>() ||
+                ContainerHelpers.IsInContainer(_target) ||
                 (_owner.Transform.GridPosition.Position - _target.Transform.GridPosition.Position).Length >
                 InteractionSystem.InteractionRange)
             {

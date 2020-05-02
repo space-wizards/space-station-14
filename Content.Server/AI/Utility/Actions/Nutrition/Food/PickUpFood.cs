@@ -4,6 +4,7 @@ using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Hands;
 using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.Utility.Considerations.Nutrition;
@@ -18,7 +19,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
     {
         private IEntity _entity;
 
-        public PickUpFood(IEntity owner, IEntity entity, BonusWeight weight) : base(owner)
+        public PickUpFood(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;
@@ -35,7 +36,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
 
         protected override Consideration[] Considerations => new Consideration[]
         {
-            new TargetNotInAnyHandsCon(
+            new TargetAccessibleCon(
                 new BoolCurve()),
             new FreeHandCon(
                 new BoolCurve()),

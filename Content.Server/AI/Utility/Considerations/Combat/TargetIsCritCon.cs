@@ -14,12 +14,12 @@ namespace Content.Server.AI.Utility.Considerations.Combat
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || !target.TryGetComponent(out DamageableComponent damageableComponent))
+            if (target == null || !target.TryGetComponent(out SpeciesComponent speciesComponent))
             {
                 return 0.0f;
             }
 
-            if (damageableComponent.CurrentDamage[DamageType.Total] >= 200.0f)
+            if (speciesComponent.CurrentDamageState is CriticalState)
             {
                 return 1.0f;
             }
