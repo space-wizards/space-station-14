@@ -53,7 +53,6 @@ namespace Content.Server.GameTicking.GamePresets
                 mind.AddRole(new SuspicionInnocentRole(mind));
             }
 
-            _sandboxManager.IsSandboxEnabled = false;
             _gameTicker.AddGameRule<RuleSuspicion>();
             return true;
         }
