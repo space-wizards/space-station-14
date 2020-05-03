@@ -1,4 +1,4 @@
-using Content.Client.GameObjects.Components.AI;
+using Content.Client.GameObjects.EntitySystems.Debug;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Player;
@@ -16,7 +16,7 @@ namespace Content.Client.Commands
         // ReSharper disable once StringLiteralTypo
         public string Command => "debugai";
         public string Description => "Handles all tooltip debugging above AI mobs";
-        public string Help => "debugai [disable/paths/thonk]";
+        public string Help => "debugai [hide/paths/thonk]";
 
         public bool Execute(IDebugConsole console, params string[] args)
         {
@@ -27,31 +27,24 @@ namespace Content.Client.Commands
             }
 
             var anyAction = false;
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var playerEntity = playerManager.LocalPlayer.ControlledEntity;
-            MobTooltipDebugComponent tooltip;
+            var debugSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClientAiDebugSystem>();
 
             foreach (var arg in args)
             {
                 switch (arg)
                 {
-                    case "disable":
-                        if (playerEntity.HasComponent<MobTooltipDebugComponent>())
-                        {
-                            playerEntity.RemoveComponent<MobTooltipDebugComponent>();
-                        }
+                    case "hide":
+                        debugSystem.Disable();
                         anyAction = true;
                         break;
                     // This will show the pathfinding numbers above the mob's head
                     case "paths":
-                        tooltip = AddTooltip(playerEntity);
-                        tooltip.ToggleTooltip(MobTooltips.Paths);
+                        debugSystem.ToggleTooltip(AiDebugMode.Paths);
                         anyAction = true;
                         break;
                     // Shows stats on what the AI was thinking.
                     case "thonk":
-                        tooltip = AddTooltip(playerEntity);
-                        tooltip.ToggleTooltip(MobTooltips.Thonk);
+                        debugSystem.ToggleTooltip(AiDebugMode.Thonk);
                         anyAction = true;
                         break;
                     default:
@@ -62,16 +55,6 @@ namespace Content.Client.Commands
             return !anyAction;
 #endif
             return true;
-        }
-
-        private MobTooltipDebugComponent AddTooltip(IEntity entity)
-        {
-            if (entity.TryGetComponent(out MobTooltipDebugComponent debugComponent))
-            {
-                return debugComponent;
-            }
-
-            return entity.AddComponent<MobTooltipDebugComponent>();
         }
     }
 }

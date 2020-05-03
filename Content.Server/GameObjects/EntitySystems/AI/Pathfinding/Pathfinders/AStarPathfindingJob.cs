@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
-using Content.Shared.Pathfinding;
+using Content.Shared.AI;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 {
     public class AStarPathfindingJob : Job<Queue<TileRef>>
     {
-        public static event Action<AStarRouteDebug> DebugRoute;
+        public static event Action<SharedAiDebug.AStarRouteDebug> DebugRoute;
 
         private PathfindingNode _startNode;
         private PathfindingNode _endNode;
@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     debugClosedTiles.Add(node.TileRef);
                 }
 
-                var debugRoute = new AStarRouteDebug(
+                var debugRoute = new SharedAiDebug.AStarRouteDebug(
                     _pathfindingArgs.Uid,
                     route,
                     debugCameFrom,
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             }
 #endif
 
-            return Result;
+            return route;
         }
     }
 }

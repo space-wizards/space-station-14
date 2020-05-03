@@ -1,8 +1,6 @@
-using Content.Client.GameObjects.Components.AI;
-using Content.Client.GameObjects.Components.Pathfinding;
+using Content.Client.GameObjects.EntitySystems.Debug;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.Console;
-using Robust.Client.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -14,7 +12,7 @@ namespace Content.Client.Commands
         // ReSharper disable once StringLiteralTypo
         public string Command => "pathfinder";
         public string Description => "Toggles visibility of pathfinding debuggers.";
-        public string Help => "pathfinder [disable/nodes/routes/graph]";
+        public string Help => "pathfinder [hide/nodes/routes/graph]";
 
         public bool Execute(IDebugConsole console, params string[] args)
         {
@@ -25,37 +23,29 @@ namespace Content.Client.Commands
             }
 
             var anyAction = false;
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var playerEntity = playerManager.LocalPlayer.ControlledEntity;
-            ClientPathfindingDebugComponent debug;
+            var debugSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClientPathfindingDebugSystem>();
 
             foreach (var arg in args)
             {
                 switch (arg)
                 {
-                    case "disable":
-                        if (playerEntity.HasComponent<ClientPathfindingDebugComponent>())
-                        {
-                            playerEntity.RemoveComponent<ClientPathfindingDebugComponent>();
-                        }
+                    case "hide":
+                        debugSystem.Disable();
                         anyAction = true;
                         break;
                     // Shows all nodes on the closed list
                     case "nodes":
-                        debug = AddPathfindingDebug(playerEntity);
-                        debug.ToggleTooltip(PathfindingDebugMode.Nodes);
+                        debugSystem.ToggleTooltip(PathfindingDebugMode.Nodes);
                         anyAction = true;
                         break;
                     // Will show just the constructed route
                     case "routes":
-                        debug = AddPathfindingDebug(playerEntity);
-                        debug.ToggleTooltip(PathfindingDebugMode.Route);
+                        debugSystem.ToggleTooltip(PathfindingDebugMode.Route);
                         anyAction = true;
                         break;
                     // Shows all of the pathfinding chunks
                     case "graph":
-                        debug = AddPathfindingDebug(playerEntity);
-                        debug.ToggleTooltip(PathfindingDebugMode.Graph);
+                        debugSystem.ToggleTooltip(PathfindingDebugMode.Graph);
                         anyAction = true;
                         break;
                     default:
@@ -66,16 +56,6 @@ namespace Content.Client.Commands
             return !anyAction;
 #endif
             return true;
-        }
-
-        private ClientPathfindingDebugComponent AddPathfindingDebug(IEntity entity)
-        {
-            if (entity.TryGetComponent(out ClientPathfindingDebugComponent debugComponent))
-            {
-                return debugComponent;
-            }
-
-            return entity.AddComponent<ClientPathfindingDebugComponent>();
         }
     }
 }

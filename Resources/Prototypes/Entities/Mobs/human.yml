@@ -132,8 +132,6 @@
   components:
   - type: Mind
     show_examine_info: true
-  - type: AIDebugger
-  - type: PathfindingDebugger
   - type: Input
     context: "human"
   - type: StatusEffectsUI

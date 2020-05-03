@@ -8,14 +8,14 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
-using Content.Shared.GameObjects.Components.AI;
+using Content.Shared.AI;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
 {
     public class AiActionRequestJob : Job<UtilityAction>
     {
 #if DEBUG
-        public static event Action<UtilityAiDebugMessage> FoundAction;
+        public static event Action<SharedAiDebug.UtilityAiDebugMessage> FoundAction;
 #endif
         private readonly AiActionRequest _request;
 
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
 #if DEBUG
             if (foundAction != null)
             {
-                FoundAction?.Invoke(new UtilityAiDebugMessage(
+                FoundAction?.Invoke(new SharedAiDebug.UtilityAiDebugMessage(
                     _request.Context.GetState<SelfState>().GetValue().Uid,
                     DebugTime,
                     cutoff,

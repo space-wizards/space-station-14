@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.Doors;
-using Content.Server.GameObjects.Components.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.GraphUpdates;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
-using Content.Shared.Pathfinding;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
@@ -16,7 +14,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 {
@@ -40,10 +37,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         // Every tick we queue up all the changes and do them at once
         private readonly Queue<IPathfindingGraphUpdate> _queuedGraphUpdates = new Queue<IPathfindingGraphUpdate>();
         private readonly PathfindingJobQueue _pathfindingQueue = new PathfindingJobQueue();
-#if DEBUG
-        private readonly Queue<AStarRouteDebug> _aStarRouteDebugs = new Queue<AStarRouteDebug>();
-        private readonly Queue<JpsRouteDebug> _jpsRouteDebugs = new Queue<JpsRouteDebug>();
-#endif
 
         // Need to store previously known entity positions for collidables for when they move
         private readonly Dictionary<IEntity, TileRef> _lastKnownPositions = new Dictionary<IEntity, TileRef>();
@@ -67,28 +60,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-#if DEBUG
-            var componentManager = IoCManager.Resolve<IComponentManager>();
-            foreach (var component in componentManager.GetAllComponents(typeof(ServerPathfindingDebugDebugComponent)))
-            {
-                foreach (var route in _aStarRouteDebugs)
-                {
-                    SendAStarDebugMessage((ServerPathfindingDebugDebugComponent) component, route);
-                }
-            }
-
-            _aStarRouteDebugs.Clear();
-
-            foreach (var component in componentManager.GetAllComponents(typeof(ServerPathfindingDebugDebugComponent)))
-            {
-                foreach (var route in _jpsRouteDebugs)
-                {
-                    SendJpsDebugMessage((ServerPathfindingDebugDebugComponent) component, route);
-                }
-            }
-
-            _jpsRouteDebugs.Clear();
-#endif
 
             // Make sure graph is updated, then get pathfinders
             ProcessGraphUpdates();
@@ -217,11 +188,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             _mapManager.OnGridRemoved += QueueGridRemoval;
             _mapManager.GridChanged += QueueGridChange;
             _mapManager.TileChanged += QueueTileChange;
-
-#if DEBUG
-            AStarPathfindingJob.DebugRoute += QueueAStarRouteDebug;
-            JpsPathfindingJob.DebugRoute += QueueJpsRouteDebug;
-#endif
         }
 
         public override void Shutdown()
@@ -230,108 +196,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             _mapManager.OnGridRemoved -= QueueGridRemoval;
             _mapManager.GridChanged -= QueueGridChange;
             _mapManager.TileChanged -= QueueTileChange;
-
-#if DEBUG
-            AStarPathfindingJob.DebugRoute -= QueueAStarRouteDebug;
-            JpsPathfindingJob.DebugRoute -= QueueJpsRouteDebug;
-#endif
         }
-
-#if DEBUG
-        private void QueueJpsRouteDebug(JpsRouteDebug routeDebug)
-        {
-            if (routeDebug?.Route != null)
-            {
-                _jpsRouteDebugs.Enqueue(routeDebug);
-            }
-        }
-
-        private void QueueAStarRouteDebug(AStarRouteDebug routeDebug)
-        {
-            if (routeDebug?.Route != null)
-            {
-                _aStarRouteDebugs.Enqueue(routeDebug);
-            }
-        }
-
-        /// <summary>
-        /// Mainly here because it's currently easier to send as Vectors.
-        /// </summary>
-        /// <param name="debugComponent"></param>
-        /// <param name="routeDebug"></param>
-        private void SendAStarDebugMessage(ServerPathfindingDebugDebugComponent debugComponent, AStarRouteDebug routeDebug)
-        {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var route = new List<Vector2>();
-            foreach (var tile in routeDebug.Route)
-            {
-                var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                route.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position);
-            }
-
-            var cameFrom = new Dictionary<Vector2, Vector2>();
-            foreach (var (from, to) in routeDebug.CameFrom)
-            {
-                var tileOneGrid = mapManager.GetGrid(from.GridIndex).GridTileToLocal(from.GridIndices);
-                var tileOneWorld = mapManager.GetGrid(from.GridIndex).LocalToWorld(tileOneGrid).Position;
-                var tileTwoGrid = mapManager.GetGrid(to.GridIndex).GridTileToLocal(to.GridIndices);
-                var tileTwoWorld = mapManager.GetGrid(to.GridIndex).LocalToWorld(tileTwoGrid).Position;
-                cameFrom.Add(tileOneWorld, tileTwoWorld);
-            }
-
-            var gScores = new Dictionary<Vector2, float>();
-            foreach (var (tile, score) in routeDebug.GScores)
-            {
-                var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                gScores.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position, score);
-            }
-
-            var closedTiles = new List<Vector2>();
-            foreach (var tile in routeDebug.ClosedTiles)
-            {
-                var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                closedTiles.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position);
-            }
-
-            var msg = new AStarRouteMessage(
-                routeDebug.EntityUid,
-                route,
-                cameFrom,
-                gScores,
-                closedTiles,
-                routeDebug.TimeTaken
-                );
-
-            debugComponent.Owner.SendNetworkMessage(debugComponent, msg);
-        }
-
-        private void SendJpsDebugMessage(ServerPathfindingDebugDebugComponent debugComponent, JpsRouteDebug routeDebug)
-        {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var route = new List<Vector2>();
-            foreach (var tile in routeDebug.Route)
-            {
-                var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                route.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position);
-            }
-
-            var jumpNodes = new List<Vector2>();
-            foreach (var tile in routeDebug.JumpNodes)
-            {
-                var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                jumpNodes.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position);
-            }
-
-            var msg = new JpsRouteMessage(
-                routeDebug.EntityUid,
-                route,
-                jumpNodes,
-                routeDebug.TimeTaken
-                );
-
-            debugComponent.Owner.SendNetworkMessage(debugComponent, msg);
-        }
-#endif
 
         private void QueueGridRemoval(GridId gridId)
         {

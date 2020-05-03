@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
-using Content.Shared.Pathfinding;
+using Content.Shared.AI;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 {
     public class JpsPathfindingJob : Job<Queue<TileRef>>
     {
-        public static event Action<JpsRouteDebug> DebugRoute;
+        public static event Action<SharedAiDebug.JpsRouteDebug> DebugRoute;
 
         private PathfindingNode _startNode;
         private PathfindingNode _endNode;
@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     debugJumpNodes.Add(node.TileRef);
                 }
 
-                var debugRoute = new JpsRouteDebug(
+                var debugRoute = new SharedAiDebug.JpsRouteDebug(
                     _pathfindingArgs.Uid,
                     route,
                     debugJumpNodes,
