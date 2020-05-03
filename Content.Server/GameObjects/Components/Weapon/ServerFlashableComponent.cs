@@ -38,13 +38,18 @@ namespace Content.Server.GameObjects.Components.Weapon
             foreach (var component in componentManager.GetAllComponents(typeof(ServerFlashableComponent)))
             {
                 if (component.Owner.Transform.MapID != source.Transform.MapID ||
-                    component.Owner == source ||
-                    (component.Owner.Transform.WorldPosition - source.Transform.WorldPosition).Length >= range)
+                    component.Owner == source)
                 {
                     continue;
                 }
 
                 var direction = component.Owner.Transform.WorldPosition - source.Transform.WorldPosition;
+
+                if (direction.Length > range)
+                {
+                    continue;
+                }
+
                 // Direction will be zero if they're hit with the source only I think
                 if (direction != Vector2.Zero)
                 {

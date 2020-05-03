@@ -132,9 +132,9 @@ namespace Content.Client.GameObjects.Components.Weapons
 
         private float GetAlpha(double ratio)
         {
-            const float slope = -1f;
-            const float exponent = 2.0f;
-            const float yOffset = 1f;
+            const float slope = -9.0f;
+            const float exponent = 0.1f;
+            const float yOffset = 9.0f;
             const float xOffset = 0.0f;
 
             // Overkill but easy to adjust if you want to mess around with the design
