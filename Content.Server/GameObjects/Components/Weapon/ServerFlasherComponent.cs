@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Weapon
 
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref _duration, "duration", 5.0);
+            serializer.DataField(ref _duration, "duration", 8.0);
             serializer.DataField(ref _sound, "use_sound", "/Audio/weapons/flash.ogg");
         }
 

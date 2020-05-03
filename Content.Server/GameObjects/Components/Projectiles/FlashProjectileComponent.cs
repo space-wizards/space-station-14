@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _range, "range", 1.0);
-            serializer.DataField(ref _duration, "duration", 5.0);
+            serializer.DataField(ref _duration, "duration", 8.0);
             serializer.DataField(ref _sound, "sound", "/Audio/effects/snap.ogg");
         }
 

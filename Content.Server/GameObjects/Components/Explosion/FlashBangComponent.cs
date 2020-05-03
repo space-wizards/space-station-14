@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             base.ExposeData(serializer);
 
             serializer.DataField(ref _range, "range", 7.0f);
-            serializer.DataField(ref _duration, "duration", 5.0);
+            serializer.DataField(ref _duration, "duration", 8.0);
             serializer.DataField(ref _sound, "sound", "/Audio/effects/bang.ogg");
         }
 
