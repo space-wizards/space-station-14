@@ -18,7 +18,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         public bool IgnoreShooter = true;
 
-        private EntityUid Shooter = EntityUid.Invalid;
+        public EntityUid Shooter => _shooter;
+        private EntityUid _shooter = EntityUid.Invalid;
 
         private Dictionary<DamageType, int> _damages;
         [ViewVariables]
@@ -46,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <param name="shooter"></param>
         public void IgnoreEntity(IEntity shooter)
         {
-            Shooter = shooter.Uid;
+            _shooter = shooter.Uid;
         }
 
         /// <summary>

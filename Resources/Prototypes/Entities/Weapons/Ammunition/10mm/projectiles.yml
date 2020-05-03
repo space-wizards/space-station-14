@@ -12,7 +12,7 @@
 - type: entity
   id: bullet_10mmf
   name: 10mm Bullet (Flash)
-  parent: BulletBase
+  parent: BulletBaseFlash
   abstract: true
   components:
   - type: Projectile

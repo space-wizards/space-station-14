@@ -1,0 +1,27 @@
+- type: entity
+  name: Flashbang Grenade
+  description: Grenade that causes temporarary blindness
+  parent: BaseItem
+  id: GrenadeFlash
+  components:
+  - type: Sprite
+    sprite: Objects/Grenades/flashbang.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Icon
+    sprite: Objects/Grenades/flashbang.rsi
+    state: icon
+  - type: Item
+    Size: 5
+  - type: OnUseTimerTrigger
+    delay: 5
+  - type: FlashBang
+  - type: Sound
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 10
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer2D
+      countdown_sound: /Audio/effects/countdown.ogg

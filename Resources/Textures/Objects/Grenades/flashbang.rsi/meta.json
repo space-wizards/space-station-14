@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "GPL3",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/80f952c3a9148f2394fbf482f7ea25ed12c372ce/icons/obj/grenade.dmi",
+    "states": [
+        {
+            "name": "icon",
+            "directions": 1
+        },
+        {
+            "name": "primed",
+            "directions": 1,
+            "delays": [
+                [
+                    0.7,
+                    0.7
+                ]
+            ]
+        }
+    ]
+}

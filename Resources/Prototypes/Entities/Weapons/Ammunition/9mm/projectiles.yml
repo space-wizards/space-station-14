@@ -12,7 +12,7 @@
 - type: entity
   id: bullet_9mmf
   name: 9mm Bullet (Flash)
-  parent: BulletBase
+  parent: BulletBaseFlash
   abstract: true
   components:
   - type: Projectile

@@ -12,7 +12,7 @@
 - type: entity
   id: bullet_762mmf
   name: 7.62mm Bullet (Flash)
-  parent: BulletBase
+  parent: BulletBaseFlash
   abstract: true
   components:
   - type: Projectile

@@ -201,7 +201,7 @@
   parent: magazine_9mm_smg_empty
   components:
   - type: BallisticMagazine
-    fill: ammo_casing_9mm_f
+    fill: ammo_casing_9mm_flash
     caliber: A9mm
     capacity: 30
   - type: Icon
