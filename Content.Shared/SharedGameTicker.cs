@@ -138,7 +138,7 @@ namespace Content.Shared
 
             public string GamemodeTitle;
             public TimeSpan RoundDuration;
-            
+
 
             public uint PlayerCount;
 
