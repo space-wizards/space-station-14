@@ -20,8 +20,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
-            //_audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-
         }
 
         public override void OnChangeData(AppearanceComponent component)

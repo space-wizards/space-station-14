@@ -1,8 +1,4 @@
 ﻿using Robust.Client.GameObjects.Components.UserInterface;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Content.Client.GameObjects.Components.Mobs;
 using Content.Shared.Kitchen;
 using Robust.Shared.GameObjects.Components.UserInterface;
 
@@ -28,9 +24,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (!(state is MicrowaveUserInterfaceState cstate))
+            if (!(state is MicrowaveUpdateUserInterfaceState cstate))
                 return;
-            _menu.RefreshContents(cstate.ReagentsReagents, cstate.ContainedSolids);
+            _menu.RefreshContentsDisplay(cstate.ReagentsReagents, cstate.ContainedSolids);
 
         }
 
@@ -42,6 +38,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
         public void Eject()
         {
             SendMessage(new SharedMicrowaveComponent.MicrowaveEjectMessage());
+        }
+
+        public void EjectSolidWithIndex(int index)
+        {
+            SendMessage(new SharedMicrowaveComponent.MicrowaveEjectSolidIndexedMessage(index));
         }
     }
 }

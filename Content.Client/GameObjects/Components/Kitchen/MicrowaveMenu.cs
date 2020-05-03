@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects;
-using Content.Shared.Kitchen;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -17,7 +15,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
     {
         protected override Vector2? CustomSize => (512, 256);
 
-        public MicrowaveBoundUserInterface Owner { get; set; }
+        private MicrowaveBoundUserInterface Owner { get; set; }
 
         private List<Solution.ReagentQuantity> _heldReagents;
 
@@ -35,11 +33,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             var startButton = new Button()
             {
-                Label = { Text = Loc.GetString("START")}
+                Label = { Text = Loc.GetString("START"), FontColorOverride = Color.Green}
             };
             var ejectButton = new Button()
             {
-                Label = { Text = Loc.GetString("EJECT REAGENTS")}
+                Label = { Text = Loc.GetString("EJECT REAGENTS"),FontColorOverride = Color.Red}
             };
             var scrollContainer = new ScrollContainer()
             {
@@ -56,24 +54,12 @@ namespace Content.Client.GameObjects.Components.Kitchen
             vbox.AddChild(ejectButton);
             vbox.AddChild(scrollContainer);
             Contents.AddChild(vbox);
-            startButton.OnPressed += OnCookButtonPressed;
-            ejectButton.OnPressed += OnEjectButtonPressed;
+            startButton.OnPressed += args => Owner.Cook();
+            ejectButton.OnPressed += args => Owner.Eject();
 
         }
 
-        private void OnEjectButtonPressed(BaseButton.ButtonEventArgs obj)
-        {
-            Owner.Eject();
-        }
-
-        private void OnCookButtonPressed(BaseButton.ButtonEventArgs args)
-        {
-            Owner.Cook();
-
-        }
-
-
-        public void RefreshContents(List<Solution.ReagentQuantity> reagents, Dictionary<string,int> solids)
+        public void RefreshContentsDisplay(List<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
         {
             InnerScrollContainer.RemoveAllChildren();
             foreach (var item in reagents)
@@ -82,20 +68,20 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
                 InnerScrollContainer.AddChild(new Label()
                 {
-
                     Text = $"{item.Quantity} {proto.Name}"
                 });
             }
 
             foreach (var item in solids)
             {
-                IoCManager.Resolve<IPrototypeManager>().TryIndex(item.Key, out EntityPrototype proto);
-                var solidLabel = new Button()
+                var name = IoCManager.Resolve<IEntityManager>().GetEntity(item).Prototype.Name;
+                var solidButton = new Button()
                 {
-                    Text = $"{item.Value} {proto.Name}"
+                    Text = $"{name}"
                 };
 
-                InnerScrollContainer.AddChild(solidLabel);
+                solidButton.OnPressed += args => Owner.EjectSolidWithIndex(solids.IndexOf(item));
+                InnerScrollContainer.AddChild(solidButton);
             }
 
         }

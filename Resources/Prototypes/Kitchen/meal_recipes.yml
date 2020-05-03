@@ -2,10 +2,10 @@
   id: RecipeCheeseburger
   name: Cheeseburger Recipe
   result: FoodCheeseburger
-  time: 10
+  time: 1
   reagents:
     chem.H2O: 15
     chem.Nutriment: 5
   solids:
-    FoodMeatBreadSlice: 1
+    Food4NoRaisins: 2
 

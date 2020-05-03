@@ -18,16 +18,17 @@ namespace Content.Shared.Prototypes.Kitchen
     public class FoodRecipePrototype : IPrototype, IIndexedPrototype
     {
 
-        public string _id;
-        public string _name => Loc.GetString(Name);
-        private string Name;
-        public string _result;
-        public IReadOnlyDictionary<string, int> _ingReagents => IngredientsReagents;
-        public IReadOnlyDictionary<string, int> _ingSolids => IngredientsSolids;
+        private string _id;
+        public string Name => Loc.GetString(Name);
+        private string _name;
+        public string Result;
+        public int CookTime;
+        public IReadOnlyDictionary<string, int> IngredientsReagents => _ingsReagents;
+        public IReadOnlyDictionary<string, int> IngredientsSolids => _ingsSolids;
 
-        private Dictionary<string, int> IngredientsReagents;
-        private Dictionary<string, int> IngredientsSolids;
-        public int _cookTime;
+        private Dictionary<string, int> _ingsReagents;
+        private Dictionary<string, int> _ingsSolids;
+
 
         public string ID => _id;
 
@@ -36,11 +37,11 @@ namespace Content.Shared.Prototypes.Kitchen
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
             serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref Name, "name", string.Empty);
-            serializer.DataField(ref _result, "result", string.Empty);
-            serializer.DataField(ref IngredientsReagents, "reagents", new Dictionary<string, int>());
-            serializer.DataField(ref IngredientsSolids, "solids", new Dictionary<string, int>());
-            serializer.DataField(ref _cookTime, "time", 5);
+            serializer.DataField(ref _name, "name", string.Empty);
+            serializer.DataField(ref Result, "result", string.Empty);
+            serializer.DataField(ref _ingsReagents, "reagents", new Dictionary<string, int>());
+            serializer.DataField(ref _ingsSolids, "solids", new Dictionary<string, int>());
+            serializer.DataField(ref CookTime, "time", 5);
         }
 
     }

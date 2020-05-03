@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Interfaces.GameObjects;
 
 
 namespace Content.Shared.Kitchen
@@ -32,14 +33,25 @@ namespace Content.Shared.Kitchen
             {
             }
         }
+
+        [Serializable, NetSerializable]
+        public class MicrowaveEjectSolidIndexedMessage : BoundUserInterfaceMessage
+        {
+
+            public int index;
+            public MicrowaveEjectSolidIndexedMessage(int i)
+            {
+                index = i;
+            }
+        }
     }
 
     [NetSerializable, Serializable]
-    public class MicrowaveUserInterfaceState : BoundUserInterfaceState
+    public class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
     {
         public readonly List<Solution.ReagentQuantity> ReagentsReagents;
-        public readonly Dictionary<string, int> ContainedSolids;
-        public MicrowaveUserInterfaceState(List<Solution.ReagentQuantity> reagents, Dictionary<string,int> solids)
+        public readonly List<EntityUid> ContainedSolids;
+        public MicrowaveUpdateUserInterfaceState(List<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
         {
             ReagentsReagents = reagents;
             ContainedSolids = solids;
