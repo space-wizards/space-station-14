@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     break;
 
                 case MicrowaveEjectSolidIndexedMessage msg:
-                    EjectIndexedSolid(msg.index);
+                    EjectIndexedSolid(msg.EntityID);
                     UpdateUserInterface();
                     break;
             }
@@ -272,10 +272,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _solids.Clear();
         }
 
-        private void EjectIndexedSolid(int index)
+        private void EjectIndexedSolid(EntityUid entityID)
         {
-            var entityToRemove = _storage.ContainedEntities.ToArray()[index];
-            _storage.Remove(entityToRemove);
+            _storage.Remove(_entityManager.GetEntity(entityID));
         }
 
 

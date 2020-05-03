@@ -17,79 +17,73 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
         private MicrowaveBoundUserInterface Owner { get; set; }
 
-        private List<Solution.ReagentQuantity> _heldReagents;
+        public Button StartButton { get;}
+        public Button EjectButton { get;}
 
-        private VBoxContainer InnerScrollContainer { get; set; }
+        public GridContainer TimerButtons { get; }
+
+        public ItemList IngredientsList { get;}
 
         public MicrowaveMenu(MicrowaveBoundUserInterface owner = null)
         {
             Owner = owner;
-            _heldReagents = new List<Solution.ReagentQuantity>();
             Title = Loc.GetString("Microwave");
-            var vbox = new VBoxContainer()
+            var hSplit = new HSplitContainer
             {
+                SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsVertical = SizeFlags.Fill
             };
 
-            var startButton = new Button()
+
+            IngredientsList = new ItemList
             {
-                Label = { Text = Loc.GetString("START"), FontColorOverride = Color.Green}
-            };
-            var ejectButton = new Button()
-            {
-                Label = { Text = Loc.GetString("EJECT REAGENTS"),FontColorOverride = Color.Red}
-            };
-            var scrollContainer = new ScrollContainer()
-            {
-                SizeFlagsVertical = SizeFlags.FillExpand
+                SizeFlagsVertical = SizeFlags.Expand,
+                SelectMode = ItemList.ItemListSelectMode.Button,
+                SizeFlagsStretchRatio = 8,
+                CustomMinimumSize = (100,100)
             };
 
-            InnerScrollContainer = new VBoxContainer()
+            hSplit.AddChild(IngredientsList);
+
+            var vSplit = new VSplitContainer();
+            hSplit.AddChild(vSplit);
+
+            var buttonGridContainer = new GridContainer
             {
-                SizeFlagsVertical = SizeFlags.FillExpand
+                Columns = 2,
+            };
+            StartButton = new Button
+            {
+                Text = Loc.GetString("START"),
+            };
+            EjectButton = new Button
+            {
+                Text = Loc.GetString("EJECT CONTENTS"),
+            };
+            buttonGridContainer.AddChild(StartButton);
+            buttonGridContainer.AddChild(EjectButton);
+            vSplit.AddChild(buttonGridContainer);
+
+
+            TimerButtons = new GridContainer
+            {
+                Columns = 5,
+
             };
 
-            scrollContainer.AddChild(InnerScrollContainer);
-            vbox.AddChild(startButton);
-            vbox.AddChild(ejectButton);
-            vbox.AddChild(scrollContainer);
-            Contents.AddChild(vbox);
-            startButton.OnPressed += args => Owner.Cook();
-            ejectButton.OnPressed += args => Owner.Eject();
+            vSplit.AddChild(TimerButtons);
+
+
+            Contents.AddChild(hSplit);
+
 
         }
 
-        public void RefreshContentsDisplay(List<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
-        {
-            InnerScrollContainer.RemoveAllChildren();
-            foreach (var item in reagents)
-            {
-                IoCManager.Resolve<IPrototypeManager>().TryIndex(item.ReagentId, out ReagentPrototype proto);
-
-                InnerScrollContainer.AddChild(new Label()
-                {
-                    Text = $"{item.Quantity} {proto.Name}"
-                });
-            }
-
-            foreach (var item in solids)
-            {
-                var name = IoCManager.Resolve<IEntityManager>().GetEntity(item).Prototype.Name;
-                var solidButton = new Button()
-                {
-                    Text = $"{name}"
-                };
-
-                solidButton.OnPressed += args => Owner.EjectSolidWithIndex(solids.IndexOf(item));
-                InnerScrollContainer.AddChild(solidButton);
-            }
-
-        }
+      
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            InnerScrollContainer.Dispose();
         }
     }
 }

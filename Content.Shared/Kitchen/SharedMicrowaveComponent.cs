@@ -38,10 +38,10 @@ namespace Content.Shared.Kitchen
         public class MicrowaveEjectSolidIndexedMessage : BoundUserInterfaceMessage
         {
 
-            public int index;
-            public MicrowaveEjectSolidIndexedMessage(int i)
+            public EntityUid EntityID;
+            public MicrowaveEjectSolidIndexedMessage(EntityUid entityID)
             {
-                index = i;
+                EntityID = entityID;
             }
         }
     }
