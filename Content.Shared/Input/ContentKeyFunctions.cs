@@ -15,6 +15,8 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenContextMenu = "OpenContextMenu";
         public static readonly BoundKeyFunction OpenCraftingMenu = "OpenCraftingMenu";
         public static readonly BoundKeyFunction OpenInventoryMenu = "OpenInventoryMenu";
+        public static readonly BoundKeyFunction SmartEquipBackpack = "SmartEquipBackpack";
+        public static readonly BoundKeyFunction SmartEquipBelt = "SmartEquipBelt";
         public static readonly BoundKeyFunction OpenTutorial = "OpenTutorial";
         public static readonly BoundKeyFunction SwapHands = "SwapHands";
         public static readonly BoundKeyFunction ThrowItemInHand = "ThrowItemInHand";

@@ -105,6 +105,14 @@ binds:
 - function: OpenInventoryMenu
   type: state
   key: I
+- function: SmartEquipBackpack
+  type: State
+  key: B
+  mod1: Shift
+- function: SmartEquipBelt
+  type: State
+  key: E
+  mod1: Shift
 - function: ShowDebugConsole
   type: state
   key: Tilde

@@ -45,6 +45,8 @@ namespace Content.Server.GameObjects
         private int StorageCapacityMax = 10000;
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
+        public IReadOnlyCollection<IEntity> StoredEntities => storage.ContainedEntities;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -140,7 +142,6 @@ namespace Content.Server.GameObjects
         /// <returns></returns>
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            _ensureInitialCalculated();
             Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, eventArgs.User.Uid, eventArgs.AttackWith.Uid);
 
             if(Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
@@ -363,8 +364,10 @@ namespace Content.Server.GameObjects
         /// <summary>
         /// Inserts an entity into the storage component from the players active hand.
         /// </summary>
-        private bool PlayerInsertEntity(IEntity player)
+        public bool PlayerInsertEntity(IEntity player)
         {
+            _ensureInitialCalculated();
+
             if (!player.TryGetComponent(out IHandsComponent hands) || hands.GetActiveHand == null)
                 return false;
 
