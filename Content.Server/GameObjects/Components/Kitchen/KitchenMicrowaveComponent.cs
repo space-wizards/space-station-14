@@ -76,13 +76,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private BoundUserInterface _userInterface;
 
         private Container _storage;
-        /// <summary>
-        /// A dictionary of PrototypeIDs and integers representing quantity.
-        /// </summary>
-        private Dictionary<string, int> _solids;
-        private List<EntityUid> _solidsVisualList;
-
-
+        
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -107,9 +101,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MicrowaveUiKey.Key);
-
-            _solids = new Dictionary<string, int>();
-            _solidsVisualList = new List<EntityUid>();
+            
             _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
         }
 
@@ -149,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 case MicrowaveVaporizeReagentIndexedMessage msg:
                     if (HasContents)
                     {
-                        _solution.TryRemoveReagent(msg.ReagentQuantity.ReagentId, msg.ReagentQuantity.Quantity);
+                        VaporizeReagentWithReagentQuantity(msg.ReagentQuantity);
                         ClickSound();
                         UpdateUserInterface();
                     }
@@ -175,13 +167,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void UpdateUserInterface()
         {
-            _solidsVisualList.Clear();
+            var solidsVisualList = new List<EntityUid>();
+            solidsVisualList.Clear();
             foreach(var item in _storage.ContainedEntities)
             {
-                _solidsVisualList.Add(item.Uid);
+                solidsVisualList.Add(item.Uid);
             }
 
-            _userInterface.SetState(new MicrowaveUpdateUserInterfaceState(_solution.Solution.Contents, _solidsVisualList));
+            _userInterface.SetState(new MicrowaveUpdateUserInterfaceState(_solution.Solution.Contents, solidsVisualList));
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -257,16 +250,17 @@ namespace Content.Server.GameObjects.Components.Kitchen
             
             _busy = true;
             // Convert storage into Dictionary of ingredients
-            _solids.Clear();
+            var solidsDict = new Dictionary<string, int>();
+            solidsDict.Clear();
             foreach(var item in _storage.ContainedEntities)
             {
-                if(_solids.ContainsKey(item.Prototype.ID))
+                if(solidsDict.ContainsKey(item.Prototype.ID))
                 {
-                    _solids[item.Prototype.ID]++;
+                    solidsDict[item.Prototype.ID]++;
                 }
                 else
                 {
-                    _solids.Add(item.Prototype.ID, 1);
+                    solidsDict.Add(item.Prototype.ID, 1);
                 }
             }
 
@@ -274,7 +268,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             FoodRecipePrototype recipeToCook = null;
             foreach(var r in _recipeManager.Recipes)
             {
-                if (!CanSatisfyRecipe(r))
+                if (!CanSatisfyRecipe(r, solidsDict))
                 {
                     continue;
                 }
@@ -316,9 +310,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _solution.RemoveAllSolution();
         }
 
-        private void VaporizeReagentWithIndex()
+        private void VaporizeReagentWithReagentQuantity(Solution.ReagentQuantity reagentQuantity)
         {
-            
+            _solution.TryRemoveReagent(reagentQuantity.ReagentId, reagentQuantity.Quantity);
         }
 
         private void VaporizeSolids()
@@ -329,7 +323,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _storage.Remove(item);
                 item.Delete();
             }
-            _solids.Clear();
         }
 
         private void EjectSolids()
@@ -339,13 +332,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 _storage.Remove(_storage.ContainedEntities.ElementAt(i));
             }
-
-            _solids.Clear();
         }
 
         private void EjectSolidWithIndex(EntityUid entityID)
         {
-            _storage.Remove(_entityManager.GetEntity(entityID));
+            if (_entityManager.EntityExists(entityID))
+            {
+                _storage.Remove(_entityManager.GetEntity(entityID));
+            }
         }
 
 
@@ -374,7 +368,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         }
 
-        private bool CanSatisfyRecipe(FoodRecipePrototype recipe)
+        private bool CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string,int> solids)
         {
             foreach (var reagent in recipe.IngredientsReagents)
             {
@@ -391,12 +385,12 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             foreach (var solid in recipe.IngredientsSolids)
             {
-                if (!_solids.ContainsKey(solid.Key))
+                if (!solids.ContainsKey(solid.Key))
                 {
                     return false;
                 }
 
-                if (_solids[solid.Key] < solid.Value)
+                if (solids[solid.Key] < solid.Value)
                 {
                     return false;
                 }
