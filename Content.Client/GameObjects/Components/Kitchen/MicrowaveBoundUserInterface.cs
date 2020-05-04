@@ -16,6 +16,10 @@ namespace Content.Client.GameObjects.Components.Kitchen
 {
     public  class MicrowaveBoundUserInterface : BoundUserInterface
     {
+#pragma warning disable 649
+        [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+#pragma warning restore 649
         private MicrowaveMenu _menu;
 
         private Dictionary<int, EntityUid> _solids = new Dictionary<int, EntityUid>();
@@ -38,7 +42,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu.OnCookTimeSelected += args =>
             {
                 var actualButton = args.Button as Button;
-                var newTime = (byte) int.Parse(actualButton.Text);
+                var newTime = (uint) int.Parse(actualButton.Text);
                 _menu.VisualCookTime = newTime;
                 SendMessage(new SharedMicrowaveComponent.MicrowaveSelectCookTimeMessage(newTime));
             };
@@ -75,7 +79,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu.IngredientsList.Clear();
             foreach (var item in reagents)
             {
-                IoCManager.Resolve<IPrototypeManager>().TryIndex(item.ReagentId, out ReagentPrototype proto);
+                _prototypeManager.TryIndex(item.ReagentId, out ReagentPrototype proto);
 
                 _menu.IngredientsList.AddItem($"{item.Quantity} {proto.Name}");
             }
@@ -83,7 +87,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _solids.Clear();
             foreach (var entityID in solids)
             {
-                var entity = IoCManager.Resolve<IEntityManager>().GetEntity(entityID);
+                var entity = _entityManager.GetEntity(entityID);
 
                 if (entity.TryGetComponent(out IconComponent icon))
                 {

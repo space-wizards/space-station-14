@@ -24,29 +24,17 @@ namespace Content.Shared.Kitchen
 
             Recipes.Sort(new RecipeComparer());
         }
-        private class RecipeComparer : IComparer<FoodRecipePrototype>
+        private class RecipeComparer : Comparer<FoodRecipePrototype>
         {
-            int IComparer<FoodRecipePrototype>.Compare(FoodRecipePrototype x, FoodRecipePrototype y)
+            public override int Compare(FoodRecipePrototype x, FoodRecipePrototype y)
             {
                 if (x == null || y == null)
                 {
                     return 0;
                 }
-
-                if (x.IngredientsReagents.Count < y.IngredientsReagents.Count)
-                {
-                    return 1;
-                }
-
-                if (x.IngredientsReagents.Count > y.IngredientsReagents.Count)
-                {
-                    return -1;
-                }
-
-                return 0;
+                
+                return -x.IngredientsReagents.Count.CompareTo(y.IngredientsReagents.Count);
             }
-
-
         }
     }
 }

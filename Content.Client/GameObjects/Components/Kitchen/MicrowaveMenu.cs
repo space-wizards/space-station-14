@@ -1,5 +1,6 @@
 ﻿using System;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
@@ -15,7 +16,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
         public event Action<BaseButton.ButtonEventArgs> OnCookTimeSelected;
 
-        public byte VisualCookTime { get; set; }
+        public uint VisualCookTime = 1;
 
         public Button StartButton { get;}
         public Button EjectButton { get;}
@@ -81,6 +82,13 @@ namespace Content.Client.GameObjects.Components.Kitchen
             buttonGridContainer.AddChild(StartButton);
             buttonGridContainer.AddChild(EjectButton);
             vSplit.AddChild(buttonGridContainer);
+            
+            //Padding
+            vSplit.AddChild(new Control
+            {
+                CustomMinimumSize = (0, 15),
+                SizeFlagsVertical = SizeFlags.Fill,
+            });
 
             CookTimeButtonGroup = new ButtonGroup();
             CookTimeButtonVbox = new VBoxContainer
@@ -107,9 +115,12 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 index+=5;
             }
 
+            var cookTimeOneSecondButton = (Button)CookTimeButtonVbox.GetChild(0);
+            cookTimeOneSecondButton.Pressed = true;
+            
             _cookTimeInfoLabel = new Label
             {
-                Text = Loc.GetString("COOK TIME:"),
+                Text = Loc.GetString($"COOK TIME: {VisualCookTime}"),
                 Align = Label.AlignMode.Center,
                 Modulate = Color.White,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter
@@ -120,18 +131,20 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 ModulateSelfOverride = Color.Red,
                 CustomMinimumSize = (100, 128),
-                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black},
+                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.5f)},
 
                 Children =
                 {
+
                     new VBoxContainer
                     {
 
                         Children =
                         {
+  
                             new PanelContainer
                             {
-                                PanelOverride = new StyleBoxFlat(){BackgroundColor = Color.Red.WithAlpha(0.2f)},
+                                PanelOverride = new StyleBoxFlat(){BackgroundColor = Color.Gray.WithAlpha(0.2f)},
 
                                 Children =
                                 {
@@ -162,6 +175,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 Children =
                 {
+
                     innerTimerPanel
                 },
             };

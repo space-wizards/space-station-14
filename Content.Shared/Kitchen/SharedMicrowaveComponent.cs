@@ -44,10 +44,10 @@ namespace Content.Shared.Kitchen
         [Serializable, NetSerializable]
         public class MicrowaveSelectCookTimeMessage : BoundUserInterfaceMessage
         {
-            public byte newCookTime;
-            public MicrowaveSelectCookTimeMessage(byte newTime)
+            public uint newCookTime;
+            public MicrowaveSelectCookTimeMessage(uint inputTime)
             {
-                newCookTime = newTime;
+                newCookTime = inputTime;
             }
         }
     }

@@ -22,6 +22,8 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Content.Server.Interfaces;
+using Robust.Shared.Audio;
+using YamlDotNet.Serialization.NodeTypeResolvers;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -57,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// For right now, I don't think any recipe cook time should be greater than 60 seconds.
         /// </summary>
         [ViewVariables]
-        private byte _currentCookTimerTime { get; set; }
+        private uint _currentCookTimerTime { get; set; } = 1;
 #endregion
 
         private bool Powered => _powerDevice.Powered;
@@ -109,7 +111,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _solids = new Dictionary<string, int>();
             _solidsVisualList = new List<EntityUid>();
             _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
-
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -122,10 +123,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             switch (message.Message)
             {
                 case MicrowaveStartCookMessage msg :
-                    if (HasContents)
-                    {
-                        wzhzhzh();
-                    }
+                    wzhzhzh();
                     break;
 
                 case MicrowaveEjectMessage msg :
@@ -133,6 +131,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     {
                         VaporizeReagents();
                         EjectSolids();
+                        ClickSound();
                         UpdateUserInterface();
                     }
 
@@ -142,12 +141,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     if (HasContents)
                     {
                         EjectSolidWithIndex(msg.EntityID);
+                        ClickSound();
                         UpdateUserInterface();
                     }
                     break;
 
                 case MicrowaveSelectCookTimeMessage msg:
                     _currentCookTimerTime = msg.newCookTime;
+                    ClickSound();
                     UpdateUserInterface();
                     break;
             }
@@ -166,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private void UpdateUserInterface()
         {
             _solidsVisualList.Clear();
-            foreach(var item in _storage.ContainedEntities.ToList())
+            foreach(var item in _storage.ContainedEntities)
             {
                 _solidsVisualList.Add(item.Uid);
             }
@@ -240,6 +241,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
         //This is required. It's 'cook'.
         private void wzhzhzh()
         {
+            if (!HasContents)
+            {
+                return;
+            }
+            
             _busy = true;
             // Convert storage into Dictionary of ingredients
             _solids.Clear();
@@ -269,11 +275,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             var goodMeal = (recipeToCook != null)
                            &&
-                           (_currentCookTimerTime == (byte)recipeToCook.CookTime) ? true : false;
+                           (_currentCookTimerTime == (uint)recipeToCook.CookTime) ? true : false;
 
             SetAppearance(MicrowaveVisualState.Cooking);
             _audioSystem.Play(_startCookingSound);
-            Timer.Spawn(_currentCookTimerTime * _cookTimeMultiplier, () =>
+            Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), () =>
             {
 
                 if (goodMeal)
@@ -340,7 +346,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 for (var i = 0; i < recipeSolid.Value; i++)
                 {
-                    foreach (var item in _storage.ContainedEntities.ToList())
+                    foreach (var item in _storage.ContainedEntities)
                     {
                         if (item.Prototype.ID == recipeSolid.Key)
                         {
@@ -383,6 +389,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             return true;
+        }
+        
+        private void ClickSound()
+        {
+
+            _audioSystem.Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
+            
         }
 
     }
