@@ -27,6 +27,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
         private VBoxContainer CookTimeButtonVbox { get; }
 
         public ItemList IngredientsList { get;}
+
+        public ItemList IngredientsListReagents { get; }
         private Label _cookTimeInfoLabel { get; }
 
         public MicrowaveMenu(MicrowaveBoundUserInterface owner = null)
@@ -39,16 +41,31 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 SizeFlagsVertical = SizeFlags.Fill
             };
 
+            IngredientsListReagents = new ItemList
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SelectMode = ItemList.ItemListSelectMode.Button,
+                SizeFlagsStretchRatio = 2,
+                CustomMinimumSize = (100,128)
+            };
 
             IngredientsList = new ItemList
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SelectMode = ItemList.ItemListSelectMode.Button,
-                SizeFlagsStretchRatio = 8,
-                CustomMinimumSize = (200,256)
+                SizeFlagsStretchRatio = 2,
+                CustomMinimumSize = (100,128)
             };
-
+            
+            hSplit.AddChild(IngredientsListReagents);
+            //Padding between the lists.
+            hSplit.AddChild(new Control
+            {
+                CustomMinimumSize = (0,5),
+            });
+            
             hSplit.AddChild(IngredientsList);
 
             var vSplit = new VBoxContainer

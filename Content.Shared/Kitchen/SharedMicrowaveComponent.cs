@@ -41,6 +41,17 @@ namespace Content.Shared.Kitchen
                 EntityID = entityID;
             }
         }
+        
+        [Serializable, NetSerializable]
+        public class MicrowaveVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
+        {
+
+            public Solution.ReagentQuantity ReagentQuantity;
+            public MicrowaveVaporizeReagentIndexedMessage(Solution.ReagentQuantity reagentQuantity)
+            {
+                ReagentQuantity = reagentQuantity;
+            }
+        }
         [Serializable, NetSerializable]
         public class MicrowaveSelectCookTimeMessage : BoundUserInterfaceMessage
         {

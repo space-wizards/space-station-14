@@ -145,7 +145,16 @@ namespace Content.Server.GameObjects.Components.Kitchen
                         UpdateUserInterface();
                     }
                     break;
-
+                
+                case MicrowaveVaporizeReagentIndexedMessage msg:
+                    if (HasContents)
+                    {
+                        _solution.TryRemoveReagent(msg.ReagentQuantity.ReagentId, msg.ReagentQuantity.Quantity);
+                        ClickSound();
+                        UpdateUserInterface();
+                    }
+                    break;
+                
                 case MicrowaveSelectCookTimeMessage msg:
                     _currentCookTimerTime = msg.newCookTime;
                     ClickSound();
@@ -305,7 +314,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private void VaporizeReagents()
         {
             _solution.RemoveAllSolution();
+        }
 
+        private void VaporizeReagentWithIndex()
+        {
+            
         }
 
         private void VaporizeSolids()

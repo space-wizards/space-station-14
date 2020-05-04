@@ -23,22 +23,33 @@ namespace Content.Client.GameObjects.Components.Kitchen
         private MicrowaveMenu _menu;
 
         private Dictionary<int, EntityUid> _solids = new Dictionary<int, EntityUid>();
+        private Dictionary<int, Solution.ReagentQuantity> _reagents =new Dictionary<int, Solution.ReagentQuantity>();
 
         public MicrowaveBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner,uiKey)
         {
-
+            
         }
 
         protected override void Open()
         {
             base.Open();
             _menu = new MicrowaveMenu(this);
-
             _menu.OpenCentered();
             _menu.OnClose += Close;
             _menu.StartButton.OnPressed += args => SendMessage(new SharedMicrowaveComponent.MicrowaveStartCookMessage());
             _menu.EjectButton.OnPressed += args => SendMessage(new SharedMicrowaveComponent.MicrowaveEjectMessage());
-            _menu.IngredientsList.OnItemSelected += args => SendMessage(new SharedMicrowaveComponent.MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
+            _menu.IngredientsList.OnItemSelected += args =>
+            { 
+                SendMessage(new SharedMicrowaveComponent.MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
+                
+            };
+
+            _menu.IngredientsListReagents.OnItemSelected += args =>
+            {
+                SendMessage(
+                    new SharedMicrowaveComponent.MicrowaveVaporizeReagentIndexedMessage(_reagents[args.ItemIndex]));
+            };
+                
             _menu.OnCookTimeSelected += args =>
             {
                 var actualButton = args.Button as Button;
@@ -76,25 +87,28 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
         private void RefreshContentsDisplay(IReadOnlyList<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
         {
-            _menu.IngredientsList.Clear();
-            foreach (var item in reagents)
+            _reagents.Clear();
+            _menu.IngredientsListReagents.Clear();
+            foreach (var reagent in reagents)
             {
-                _prototypeManager.TryIndex(item.ReagentId, out ReagentPrototype proto);
-
-                _menu.IngredientsList.AddItem($"{item.Quantity} {proto.Name}");
+                _prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto);
+                var reagentAdded = _menu.IngredientsListReagents.AddItem($"{reagent.Quantity} {proto.Name}");
+                var reagentIndex = _menu.IngredientsListReagents.IndexOf(reagentAdded);
+                _reagents.Add(reagentIndex, reagent);
             }
 
             _solids.Clear();
+            _menu.IngredientsList.Clear();
             foreach (var entityID in solids)
             {
                 var entity = _entityManager.GetEntity(entityID);
 
                 if (entity.TryGetComponent(out IconComponent icon))
                 {
-                    var itemItem = _menu.IngredientsList.AddItem(entity.Name, icon.Icon.Default);
+                    var solidItem = _menu.IngredientsList.AddItem(entity.Name, icon.Icon.Default);
 
-                    var index = _menu.IngredientsList.IndexOf(itemItem);
-                    _solids.Add(index, entityID);
+                    var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
+                    _solids.Add(solidIndex, entityID);
                 }
 
 
