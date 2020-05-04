@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Chemistry;
+﻿using System;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.Components.Kitchen
 {
@@ -17,18 +13,26 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
         private MicrowaveBoundUserInterface Owner { get; set; }
 
+        public event Action<BaseButton.ButtonEventArgs> OnCookTimeSelected;
+
+        public byte VisualCookTime { get; set; }
+
         public Button StartButton { get;}
         public Button EjectButton { get;}
 
-        public GridContainer TimerButtons { get; }
+        public PanelContainer TimerFacePlate { get; }
+
+        public ButtonGroup CookTimeButtonGroup { get; }
+        private VBoxContainer CookTimeButtonVbox { get; }
 
         public ItemList IngredientsList { get;}
+        private Label _cookTimeInfoLabel { get; }
 
         public MicrowaveMenu(MicrowaveBoundUserInterface owner = null)
         {
             Owner = owner;
             Title = Loc.GetString("Microwave");
-            var hSplit = new HSplitContainer
+            var hSplit = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsVertical = SizeFlags.Fill
@@ -37,53 +41,135 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             IngredientsList = new ItemList
             {
-                SizeFlagsVertical = SizeFlags.Expand,
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SelectMode = ItemList.ItemListSelectMode.Button,
                 SizeFlagsStretchRatio = 8,
-                CustomMinimumSize = (100,100)
+                CustomMinimumSize = (200,256)
             };
 
             hSplit.AddChild(IngredientsList);
 
-            var vSplit = new VSplitContainer();
+            var vSplit = new VBoxContainer
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+            };
+
             hSplit.AddChild(vSplit);
 
-            var buttonGridContainer = new GridContainer
+            var buttonGridContainer = new VBoxContainer
             {
-                Columns = 2,
+                Align  = BoxContainer.AlignMode.Center,
+                SizeFlagsStretchRatio = 3
             };
+
             StartButton = new Button
             {
-                Text = Loc.GetString("START"),
+                Text = Loc.GetString("Start"),
+                TextAlign = Label.AlignMode.Center,
+
             };
+
             EjectButton = new Button
             {
-                Text = Loc.GetString("EJECT CONTENTS"),
+                Text = Loc.GetString("Eject All Contents"),
+                ToolTip = Loc.GetString("This vaporizes all reagents, but ejects any solids."),
+                TextAlign = Label.AlignMode.Center,
             };
+
             buttonGridContainer.AddChild(StartButton);
             buttonGridContainer.AddChild(EjectButton);
             vSplit.AddChild(buttonGridContainer);
 
-
-            TimerButtons = new GridContainer
+            CookTimeButtonGroup = new ButtonGroup();
+            CookTimeButtonVbox = new VBoxContainer
             {
-                Columns = 5,
-
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                Align = BoxContainer.AlignMode.Center,
             };
 
-            vSplit.AddChild(TimerButtons);
+            var index = 0;
+            for (var i = 0; i <= 12; i++)
+            {
+                var newButton = new Button
+                {
+                    Text = (index <= 0 ? 1 : index).ToString(),
+                    TextAlign = Label.AlignMode.Center,
+                    Group =  CookTimeButtonGroup,
+                };
+                CookTimeButtonVbox.AddChild(newButton);
+                newButton.OnPressed += args =>
+                {
+                    OnCookTimeSelected?.Invoke(args);
+                    _cookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {VisualCookTime}";
+                };
+                index+=5;
+            }
+
+            _cookTimeInfoLabel = new Label
+            {
+                Text = Loc.GetString("COOK TIME:"),
+                Align = Label.AlignMode.Center,
+                Modulate = Color.White,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter
+            };
+
+            var innerTimerPanel = new PanelContainer
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                ModulateSelfOverride = Color.Red,
+                CustomMinimumSize = (100, 128),
+                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black},
+
+                Children =
+                {
+                    new VBoxContainer
+                    {
+
+                        Children =
+                        {
+                            new PanelContainer
+                            {
+                                PanelOverride = new StyleBoxFlat(){BackgroundColor = Color.Red.WithAlpha(0.2f)},
+
+                                Children =
+                                {
+                                    _cookTimeInfoLabel
+                                }
+                            },
+
+                            new ScrollContainer()
+                            {
+                                SizeFlagsVertical = SizeFlags.FillExpand,
+
+                                Children =
+                                {
+                                    CookTimeButtonVbox,
+                                }
+                            },
+
+                        }
+                    }
 
 
+                }
+            };
+
+            TimerFacePlate = new PanelContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                Children =
+                {
+                    innerTimerPanel
+                },
+            };
+
+            vSplit.AddChild(TimerFacePlate);
             Contents.AddChild(hSplit);
 
-
         }
 
-      
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
     }
 }

@@ -33,38 +33,55 @@ namespace Content.Server.GameObjects.Components.Kitchen
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly RecipeManager _recipeManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
+#region YAMLSERIALIZE
         private int _cookTimeDefault;
         private int _cookTimeMultiplier; //For upgrades and stuff I guess?
         private string _badRecipeName;
         private string _startCookingSound;
         private string _cookingCompleteSound;
+#endregion
+
+#region VIEWVARIABLES
         [ViewVariables]
         private SolutionComponent _solution;
 
         [ViewVariables]
         private bool _busy = false;
 
+        /// <summary>
+        /// This is a fixed offset of 5.
+        /// The cook times for all recipes should be divisible by 5,with a minimum of 1 second.
+        /// For right now, I don't think any recipe cook time should be greater than 60 seconds.
+        /// </summary>
+        [ViewVariables]
+        private byte _currentCookTimerTime { get; set; }
+#endregion
+
         private bool Powered => _powerDevice.Powered;
 
         private bool HasContents => _solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0;
 
-        private AppearanceComponent _appearance;
+        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => UpdateUserInterface();
 
         private AudioSystem _audioSystem;
 
+        private AppearanceComponent _appearance;
         private PowerDeviceComponent _powerDevice;
 
-        private Container _storage;
+        private BoundUserInterface _userInterface;
 
+        private Container _storage;
+        /// <summary>
+        /// A dictionary of PrototypeIDs and integers representing quantity.
+        /// </summary>
         private Dictionary<string, int> _solids;
         private List<EntityUid> _solidsVisualList;
 
-        private BoundUserInterface _userInterface;
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => UpdateUserInterface();
+
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -97,22 +114,40 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            if (!Powered || _busy || !HasContents) return;
+            if (!Powered || _busy)
+            {
+                return;
+            }
 
             switch (message.Message)
             {
                 case MicrowaveStartCookMessage msg :
-                    wzhzhzh();
+                    if (HasContents)
+                    {
+                        wzhzhzh();
+                    }
                     break;
 
                 case MicrowaveEjectMessage msg :
-                    VaporizeReagents();
-                    EjectSolids();
-                    UpdateUserInterface();
+                    if (HasContents)
+                    {
+                        VaporizeReagents();
+                        EjectSolids();
+                        UpdateUserInterface();
+                    }
+
                     break;
 
                 case MicrowaveEjectSolidIndexedMessage msg:
-                    EjectIndexedSolid(msg.EntityID);
+                    if (HasContents)
+                    {
+                        EjectSolidWithIndex(msg.EntityID);
+                        UpdateUserInterface();
+                    }
+                    break;
+
+                case MicrowaveSelectCookTimeMessage msg:
+                    _currentCookTimerTime = msg.newCookTime;
                     UpdateUserInterface();
                     break;
             }
@@ -122,7 +157,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private void SetAppearance(MicrowaveVisualState state)
         {
             if (_appearance != null || Owner.TryGetComponent(out _appearance))
+            {
                 _appearance.SetData(PowerDeviceVisuals.VisualState, state);
+            }
+
         }
 
         private void UpdateUserInterface()
@@ -138,9 +176,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor) || !Powered)
+            {
                 return;
-            if (!Powered) return;
+            }
             UpdateUserInterface();
             _userInterface.Open(actor.playerSession);
 
@@ -177,33 +216,34 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 //Move units from attackSolution to targetSolution
                 var removedSolution = attackSolution.SplitSolution(realTransferAmount);
                 if (!mySolution.TryAddSolution(removedSolution))
+                {
                     return false;
+                }
 
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
                     Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
                 return true;
             }
 
-            if (itemEntity.TryGetComponent(typeof(FoodComponent), out var food))
+            if (!itemEntity.TryGetComponent(typeof(FoodComponent), out var food))
             {
-                var ent = food.Owner; //Get the entity of the ItemComponent.
-                
-                _storage.Insert(ent);
-
-                UpdateUserInterface();
-                return true;
+                return false;
             }
-           
-            return false;
+
+            var ent = food.Owner; //Get the entity of the ItemComponent.
+            _storage.Insert(ent);
+            UpdateUserInterface();
+            return true;
+
         }
 
-        //This is required.
+        //This is required. It's 'cook'.
         private void wzhzhzh()
         {
             _busy = true;
             // Convert storage into Dictionary of ingredients
             _solids.Clear();
-            foreach(var item in _storage.ContainedEntities.ToList())
+            foreach(var item in _storage.ContainedEntities)
             {
                 if(_solids.ContainsKey(item.Prototype.ID))
                 {
@@ -216,35 +256,44 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             // Check recipes
+            FoodRecipePrototype recipeToCook = null;
             foreach(var r in _recipeManager.Recipes)
             {
-
-                var success = CanSatisfyRecipe(r);
-                SetAppearance(MicrowaveVisualState.Cooking);
-                _audioSystem.Play(_startCookingSound);
-                var time = success ? r.CookTime : _cookTimeDefault;
-                Timer.Spawn(time * _cookTimeMultiplier, () =>
+                if (!CanSatisfyRecipe(r))
                 {
+                    continue;
+                }
 
-                    if (success)
-                    {
-                        SubtractContents(r);
-                    }
-                    else
-                    {
-                        VaporizeReagents();
-                        VaporizeSolids();
-                    }
-
-                    var entityToSpawn = success ? r.Result : _badRecipeName;
-                    _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.GridPosition);
-                    _audioSystem.Play(_cookingCompleteSound);
-                    SetAppearance(MicrowaveVisualState.Idle);
-                    _busy = false;
-                });
-                UpdateUserInterface();
-                return;
+                recipeToCook = r;
             }
+
+            var goodMeal = (recipeToCook != null)
+                           &&
+                           (_currentCookTimerTime == (byte)recipeToCook.CookTime) ? true : false;
+
+            SetAppearance(MicrowaveVisualState.Cooking);
+            _audioSystem.Play(_startCookingSound);
+            Timer.Spawn(_currentCookTimerTime * _cookTimeMultiplier, () =>
+            {
+
+                if (goodMeal)
+                {
+                    SubtractContents(recipeToCook);
+                }
+                else
+                {
+                    VaporizeReagents();
+                    VaporizeSolids();
+                }
+
+                var entityToSpawn = goodMeal ? recipeToCook.Result : _badRecipeName;
+                _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.GridPosition);
+                _audioSystem.Play(_cookingCompleteSound);
+                SetAppearance(MicrowaveVisualState.Idle);
+                _busy = false;
+            });
+            UpdateUserInterface();
+            return;
         }
 
         private void VaporizeReagents()
@@ -257,8 +306,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             foreach (var item in _storage.ContainedEntities.ToList())
             {
+                _storage.Remove(item);
                 item.Delete();
             }
+            _solids.Clear();
         }
 
         private void EjectSolids()
@@ -272,7 +323,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _solids.Clear();
         }
 
-        private void EjectIndexedSolid(EntityUid entityID)
+        private void EjectSolidWithIndex(EntityUid entityID)
         {
             _storage.Remove(_entityManager.GetEntity(entityID));
         }
@@ -280,15 +331,27 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void SubtractContents(FoodRecipePrototype recipe)
         {
-            foreach(var kvp in recipe.IngredientsReagents)
+            foreach(var recipeReagent in recipe.IngredientsReagents)
             {
-                _solution.TryRemoveReagent(kvp.Key, ReagentUnit.New(kvp.Value));
+                _solution.TryRemoveReagent(recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
             }
 
-            foreach (var solid in recipe.IngredientsSolids)
+            foreach (var recipeSolid in recipe.IngredientsSolids)
             {
-                _solids[solid.Key] -= solid.Value;
+                for (var i = 0; i < recipeSolid.Value; i++)
+                {
+                    foreach (var item in _storage.ContainedEntities.ToList())
+                    {
+                        if (item.Prototype.ID == recipeSolid.Key)
+                        {
+                            _storage.Remove(item);
+                            item.Delete();
+                            break;
+                        }
+                    }
+                }
             }
+
         }
 
         private bool CanSatisfyRecipe(FoodRecipePrototype recipe)

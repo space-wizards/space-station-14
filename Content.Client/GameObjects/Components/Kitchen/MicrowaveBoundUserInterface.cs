@@ -7,8 +7,10 @@ using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using System.Collections.Generic;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Client.UserInterface.Controls;
+
+
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.GameObjects.Components.Kitchen
 {
@@ -32,7 +34,15 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu.OnClose += Close;
             _menu.StartButton.OnPressed += args => SendMessage(new SharedMicrowaveComponent.MicrowaveStartCookMessage());
             _menu.EjectButton.OnPressed += args => SendMessage(new SharedMicrowaveComponent.MicrowaveEjectMessage());
-            _menu.IngredientsList.OnItemSelected += args => EjectSolidWithIndex(args.ItemIndex);
+            _menu.IngredientsList.OnItemSelected += args => SendMessage(new SharedMicrowaveComponent.MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
+            _menu.OnCookTimeSelected += args =>
+            {
+                var actualButton = args.Button as Button;
+                var newTime = (byte) int.Parse(actualButton.Text);
+                _menu.VisualCookTime = newTime;
+                SendMessage(new SharedMicrowaveComponent.MicrowaveSelectCookTimeMessage(newTime));
+            };
+
         }
 
         protected override void Dispose(bool disposing)
@@ -60,12 +70,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
         }
 
 
-        public void EjectSolidWithIndex(int index)
-        {
-            SendMessage(new SharedMicrowaveComponent.MicrowaveEjectSolidIndexedMessage(_solids[index]));
-        }
-
-        public void RefreshContentsDisplay(List<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
+        private void RefreshContentsDisplay(List<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
         {
             _menu.IngredientsList.Clear();
             foreach (var item in reagents)
@@ -88,7 +93,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     _solids.Add(index, entityID);
                 }
 
-                
+
             }
 
         }

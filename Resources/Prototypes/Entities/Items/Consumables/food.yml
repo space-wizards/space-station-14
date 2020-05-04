@@ -2865,3 +2865,20 @@
     sprite: Objects/Food/xenomeatpie.rsi
   - type: Icon
     sprite: Objects/Food/xenomeatpie.rsi
+
+- type: entity
+  parent: FoodBase
+  id: DisgustingSweptSoup
+  name: Salty Sweet Miso Cola Soup
+  description: Jesus christ.
+  components:
+  - type: Food
+    contents:
+      reagents:
+      - ReagentId: chem.Bleach
+        Quantity: 15
+    spawn_on_finish: TrashSnackBowl
+  - type: Sprite
+    sprite: Objects/Food/stew.rsi
+  - type: Icon
+    sprite: Objects/Food/stew.rsi

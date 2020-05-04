@@ -2,10 +2,20 @@
   id: RecipeCheeseburger
   name: Cheeseburger Recipe
   result: FoodCheeseburger
-  time: 1
+  time: 5
   reagents:
-    chem.H2O: 15
-    chem.Nutriment: 5
+    chem.Nutriment: 10
   solids:
-    Food4NoRaisins: 2
+    FoodBreadSlice: 2
+
+
+- type: microwaveMealRecipe
+  id: RecipeMisoColaSoup
+  name: Salty Sweet MisoCola Soup Recipe
+  result: DisgustingSweptSoup
+  time: 15
+  reagents:
+    chem.Cola: 5
+  solids:
+    FoodMiloSoup: 1
 
