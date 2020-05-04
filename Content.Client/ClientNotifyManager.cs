@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Client.Interfaces;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
@@ -57,7 +58,11 @@ namespace Content.Client
 
         public void PopupMessage(ScreenCoordinates coordinates, string message)
         {
-            var label = new PopupLabel {Text = message};
+            var label = new PopupLabel
+            {
+                Text = message,
+                StyleClasses = { StyleNano.StyleClassPopupMessage },
+            };
             var minimumSize = label.CombinedMinimumSize;
             LayoutContainer.SetPosition(label, label.InitialPos = coordinates.Position - minimumSize / 2);
             _userInterfaceManager.PopupRoot.AddChild(label);

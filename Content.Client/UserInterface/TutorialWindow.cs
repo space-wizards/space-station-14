@@ -69,29 +69,29 @@ namespace Content.Client.UserInterface
 Switch hands: [color=#a4885c]{4}[/color]
 Use held item: [color=#a4885c]{5}[/color]
 Drop held item: [color=#a4885c]{6}[/color]
-Smart equip from backpack: [color=#a4885c]{7}[/color]
-Smart equip from belt: [color=#a4885c]{8}[/color]
-Open inventory: [color=#a4885c]{9}[/color]
-Open character window: [color=#a4885c]{10}[/color]
-Open crafting window: [color=#a4885c]{11}[/color]
-Focus chat: [color=#a4885c]{12}[/color]
-Use targeted entity: [color=#a4885c]{13}[/color]
-Throw held item: [color=#a4885c]{14}[/color]
-Examine entity: [color=#a4885c]{15}[/color]
-Open entity context menu: [color=#a4885c]{16}[/color]
-Toggle combat mode: [color=#a4885c]{17}[/color]
-Toggle console: [color=#a4885c]{18}[/color]
-Toggle UI: [color=#a4885c]{19}[/color]
-Toggle debug overlay: [color=#a4885c]{20}[/color]
-Toggle entity spawner: [color=#a4885c]{21}[/color]
-Toggle tile spawner: [color=#a4885c]{22}[/color]
-Toggle sandbox window: [color=#a4885c]{23}[/color]",
+Smart equip from backpack: [color=#a4885c]{24}[/color]
+Smart equip from belt: [color=#a4885c]{25}[/color]
+Open inventory: [color=#a4885c]{7}[/color]
+Open character window: [color=#a4885c]{8}[/color]
+Open crafting window: [color=#a4885c]{9}[/color]
+Focus chat: [color=#a4885c]{10}[/color]
+Use hand/object in hand: [color=#a4885c]{22}[/color]
+Do wide attack: [color=#a4885c]{23}[/color]
+Use targeted entity: [color=#a4885c]{11}[/color]
+Throw held item: [color=#a4885c]{12}[/color]
+Examine entity: [color=#a4885c]{13}[/color]
+Open entity context menu: [color=#a4885c]{14}[/color]
+Toggle combat mode: [color=#a4885c]{15}[/color]
+Toggle console: [color=#a4885c]{16}[/color]
+Toggle UI: [color=#a4885c]{17}[/color]
+Toggle debug overlay: [color=#a4885c]{18}[/color]
+Toggle entity spawner: [color=#a4885c]{19}[/color]
+Toggle tile spawner: [color=#a4885c]{20}[/color]
+Toggle sandbox window: [color=#a4885c]{21}[/color]",
                 Key(MoveUp), Key(MoveLeft), Key(MoveDown), Key(MoveRight),
                 Key(SwapHands),
                 Key(ActivateItemInHand),
                 Key(Drop),
-                Key(SmartEquipBackpack),
-                Key(SmartEquipBelt),
                 Key(OpenInventoryMenu),
                 Key(OpenCharacterMenu),
                 Key(OpenCraftingMenu),
@@ -106,15 +106,19 @@ Toggle sandbox window: [color=#a4885c]{23}[/color]",
                 Key(ShowDebugMonitors),
                 Key(OpenEntitySpawnWindow),
                 Key(OpenTileSpawnWindow),
-                Key(OpenSandboxWindow)));
-
-            //Gameplay
-            VBox.AddChild(new Label { FontOverride = headerFont, Text = Loc.GetString("\nSandbox spawner", Key(OpenSandboxWindow)) });
-            AddFormattedText(SandboxSpawnerContents);
+                Key(OpenSandboxWindow),
+                Key(Use),
+                Key(WideAttack),
+                Key(SmartEquipBackpack),
+                Key(SmartEquipBelt)));
 
             //Gameplay
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nGameplay" });
             AddFormattedText(GameplayContents);
+
+            //Gameplay
+            VBox.AddChild(new Label { FontOverride = headerFont, Text = Loc.GetString("\nSandbox spawner", Key(OpenSandboxWindow)) });
+            AddFormattedText(SandboxSpawnerContents);
 
             //Feedback
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nFeedback" });

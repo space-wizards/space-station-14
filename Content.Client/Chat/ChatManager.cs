@@ -211,19 +211,19 @@ namespace Content.Client.Chat
                 case OOCAlias:
                 {
                     var conInput = text.Substring(1);
-                    _console.ProcessCommand($"ooc \"{conInput}\"");
+                    _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
                 case MeAlias:
                 {
                     var conInput = text.Substring(1);
-                    _console.ProcessCommand($"me \"{conInput}\"");
+                    _console.ProcessCommand($"me \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
                 default:
                 {
                     var conInput = _currentChatBox.DefaultChatFormat != null
-                        ? string.Format(_currentChatBox.DefaultChatFormat, text)
+                        ? string.Format(_currentChatBox.DefaultChatFormat, CommandParsing.Escape(text))
                         : text;
                     _console.ProcessCommand(conInput);
                     break;
