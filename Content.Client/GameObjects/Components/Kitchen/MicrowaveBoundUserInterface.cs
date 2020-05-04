@@ -74,7 +74,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
         }
 
 
-        private void RefreshContentsDisplay(List<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
+        private void RefreshContentsDisplay(IReadOnlyList<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
         {
             _menu.IngredientsList.Clear();
             foreach (var item in reagents)

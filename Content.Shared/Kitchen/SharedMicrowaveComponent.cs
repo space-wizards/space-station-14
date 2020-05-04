@@ -57,9 +57,9 @@ namespace Content.Shared.Kitchen
     [NetSerializable, Serializable]
     public class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
     {
-        public readonly List<Solution.ReagentQuantity> ReagentsReagents;
+        public readonly IReadOnlyList<Solution.ReagentQuantity> ReagentsReagents;
         public readonly List<EntityUid> ContainedSolids;
-        public MicrowaveUpdateUserInterfaceState(List<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
+        public MicrowaveUpdateUserInterfaceState(IReadOnlyList<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
         {
             ReagentsReagents = reagents;
             ContainedSolids = solids;

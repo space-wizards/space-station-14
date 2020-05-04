@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _solidsVisualList.Add(item.Uid);
             }
 
-            _userInterface.SetState(new MicrowaveUpdateUserInterfaceState(_solution.Solution.Contents.ToList(), _solidsVisualList));
+            _userInterface.SetState(new MicrowaveUpdateUserInterfaceState(_solution.Solution.Contents, _solidsVisualList));
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -310,8 +310,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void VaporizeSolids()
         {
-            foreach (var item in _storage.ContainedEntities.ToList())
+            for(var i = _storage.ContainedEntities.Count-1; i>=0; i--)
             {
+                var item = _storage.ContainedEntities.ElementAt(i);
                 _storage.Remove(item);
                 item.Delete();
             }
@@ -321,9 +322,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private void EjectSolids()
         {
 
-            foreach (var item in _storage.ContainedEntities.ToList())
+            for(var i = _storage.ContainedEntities.Count-1; i>=0; i--)
             {
-                _storage.Remove(item);
+                _storage.Remove(_storage.ContainedEntities.ElementAt(i));
             }
 
             _solids.Clear();
