@@ -87,20 +87,15 @@ namespace Content.Server.GameObjects
         }
 
 
-        public void CollideWith(List<IEntity> collidedwith)
+        void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (State != DoorState.Closed)
             {
                 return;
             }
-
-            foreach (var entity in collidedwith)
+            if (entity.HasComponent(typeof(SpeciesComponent)))
             {
-                if (entity.HasComponent(typeof(SpeciesComponent)))
-                {
                     TryOpen(entity);
-                    return;
-                }
             }
         }
 
