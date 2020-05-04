@@ -1,6 +1,8 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Weapons;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -14,17 +16,20 @@ namespace Content.Server.GameObjects.Components.Weapon
     /// Handheld flasher
     /// </summary>
     [RegisterComponent]
-    public class ServerFlasherComponent : Component, IAfterAttack
+    public class ServerFlasherComponent : SharedFlasherComponent, IAfterAttack
     {
         public override string Name => "Flasher";
+        public override uint? NetID => ContentNetIDs.FLASHER;
         private SoundComponent _soundComponent;
         private double _duration;
         private string _sound;
+        private double _lightDuration;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _duration, "duration", 8.0);
             serializer.DataField(ref _sound, "use_sound", "/Audio/weapons/flash.ogg");
+            serializer.DataField(ref _lightDuration, "light_duration", 1.0);
         }
 
         protected override void Startup()
@@ -60,6 +65,8 @@ namespace Content.Server.GameObjects.Components.Weapon
             }
 
             flashable.Flash(_duration);
+            SendNetworkMessage(new FlasherComponentMessage());
+            BriefLightSystem.BriefLightHelper(Owner, _lightDuration);
 
             if (_soundComponent != null && _sound != null)
             {

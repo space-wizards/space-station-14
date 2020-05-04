@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components.Weapons
     public class SharedFlashableComponent : Component
     {
         public override string Name => "Flashable";
-        public override uint? NetID => ContentNetIDs.FLASH;
+        public override uint? NetID => ContentNetIDs.FLASHABLE;
     }
 
     [Serializable, NetSerializable]
@@ -16,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Weapons
         public double Duration { get; }
         public TimeSpan Time { get; }
 
-        public FlashComponentState(double duration, TimeSpan time) : base(ContentNetIDs.FLASH)
+        public FlashComponentState(double duration, TimeSpan time) : base(ContentNetIDs.FLASHABLE)
         {
             Duration = duration;
             Time = time;

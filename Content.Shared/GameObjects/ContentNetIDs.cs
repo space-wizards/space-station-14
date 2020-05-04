@@ -42,6 +42,7 @@
         public const uint PAPER = 1037;
         public const uint REAGENT_INJECTOR = 1038;
         public const uint GHOST = 1039;
-        public const uint FLASH = 1040;
+        public const uint FLASHABLE = 1040;
+        public const uint FLASHER = 1041;
     }
 }
