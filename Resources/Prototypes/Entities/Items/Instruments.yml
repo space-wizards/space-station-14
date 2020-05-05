@@ -24,6 +24,18 @@
     texture: Objects/Instruments/musician.rsi/h_synthesizer.png
 
 - type: entity
+  name: Acoustic Guitar
+  parent: BaseHandheldInstrument
+  id: AcousticGuitarInstrument
+  components:
+  - type: Instrument
+    program: 25
+  - type: Sprite
+    texture: Objects/Instruments/musician.rsi/guitar.png
+  - type: Icon
+    texture: Objects/Instruments/musician.rsi/guitar.png
+
+- type: entity
   name: Violin
   parent: BaseHandheldInstrument
   id: ViolinInstrument

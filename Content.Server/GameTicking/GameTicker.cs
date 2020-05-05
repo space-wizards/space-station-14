@@ -104,7 +104,8 @@ namespace Content.Server.GameTicking
 
             _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.defaultpreset", "Sandbox", CVar.ARCHIVE);
+            _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
+            _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
 
             _playerManager.PlayerStatusChanged += _handlePlayerStatusChanged;
 
@@ -181,11 +182,6 @@ namespace Content.Server.GameTicking
 
             SendServerMessage("The round is starting now...");
 
-            RunLevel = GameRunLevel.InRound;
-
-            var preset = MakeGamePreset();
-            preset.Start();
-
             List<IPlayerSession> readyPlayers;
             if (LobbyEnabled)
             {
@@ -195,6 +191,8 @@ namespace Content.Server.GameTicking
             {
                 readyPlayers = _playersInLobby.Keys.ToList();
             }
+
+            RunLevel = GameRunLevel.InRound;
 
             // Get the profiles for each player for easier lookup.
             var profiles = readyPlayers.ToDictionary(p => p, GetPlayerProfile);
@@ -220,6 +218,18 @@ namespace Content.Server.GameTicking
             foreach (var (player, job) in assignedJobs)
             {
                 SpawnPlayer(player, job, false);
+            }
+
+            // Time to start the preset.
+            var preset = MakeGamePreset();
+
+            if (!preset.Start(assignedJobs.Keys.ToList()))
+            {
+                SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
+                var newPreset = MakeGamePreset();
+                _chatManager.DispatchServerAnnouncement($"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
+                if(!newPreset.Start(readyPlayers))
+                    throw new ApplicationException("Fallback preset failed to start!");
             }
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
@@ -255,15 +265,16 @@ namespace Content.Server.GameTicking
             var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
             foreach(var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
             {
-                if(ply.AttachedEntity.TryGetComponent<MindComponent>(out var mindComponent)
-                    && mindComponent.HasMind)
+                var mind = ply.ContentData().Mind;
+                if(mind != null)
                 {
+                    var antag = mind.AllRoles.Any(role => role.Antag);
                     var playerEndRoundInfo = new RoundEndPlayerInfo()
                     {
                         PlayerOOCName = ply.Name,
-                        PlayerICName = mindComponent.Mind.CurrentEntity.Name,
-                        Role = mindComponent.Mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unkown"),
-                        Antag = false
+                        PlayerICName = mind.CurrentEntity.Name,
+                        Role = antag ? mind.AllRoles.First(role => role.Antag).Name : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unkown"),
+                        Antag = antag
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
                 }
@@ -339,6 +350,7 @@ namespace Content.Server.GameTicking
             {
                 "Sandbox" => typeof(PresetSandbox),
                 "DeathMatch" => typeof(PresetDeathMatch),
+                "Suspicion" => typeof(PresetSuspicion),
                 _ => throw new NotSupportedException()
             });
 

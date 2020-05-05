@@ -21,6 +21,7 @@
     state: utilitybelt
   - type: Clothing
     Size: 50
+    QuickEquip: false
     sprite: Clothing/belt_utility.rsi
   - type: Storage
     Capacity: 40 # Full tool loadout is 35, plus an extra

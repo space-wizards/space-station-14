@@ -12,6 +12,7 @@ using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
@@ -162,6 +163,8 @@ namespace Content.Client
             factory.Register<SharedCargoConsoleComponent>();
             factory.Register<SharedReagentDispenserComponent>();
             factory.Register<SharedMicrowaveComponent>();
+            factory.Register<SharedGravityGeneratorComponent>();
+
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
             prototypes.RegisterIgnore("barSign");
@@ -179,6 +182,7 @@ namespace Content.Client
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
             IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
             IoCManager.Resolve<IStylesheetManager>().Initialize();
+            IoCManager.Resolve<IScreenshotHook>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
