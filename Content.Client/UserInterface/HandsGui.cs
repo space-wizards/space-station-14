@@ -57,10 +57,10 @@ namespace Content.Client.UserInterface
 
             AddChild(hBox);
 
-            _leftButton.OnPressed += args => HandKeyBindDown(args.Event, HandNameLeft);
-            _leftButton.OnStoragePressed += args => _OnStoragePressed(args.Event, HandNameLeft);
-            _rightButton.OnPressed += args => HandKeyBindDown(args.Event, HandNameRight);
-            _rightButton.OnStoragePressed += args => _OnStoragePressed(args.Event, HandNameRight);
+            _leftButton.OnPressed += args => HandKeyBindDown(args, HandNameLeft);
+            _leftButton.OnStoragePressed += args => _OnStoragePressed(args, HandNameLeft);
+            _rightButton.OnPressed += args => HandKeyBindDown(args, HandNameRight);
+            _rightButton.OnStoragePressed += args => _OnStoragePressed(args, HandNameRight);
 
             // Active hand
             _leftButton.AddChild(ActiveHandRect = new TextureRect

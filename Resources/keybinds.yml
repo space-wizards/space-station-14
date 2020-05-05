@@ -1,5 +1,9 @@
 version: 1 # Not used right now, whatever.
 binds:
+- function: UIClick
+  type: state
+  key: MouseLeft
+  canFocus: true
 - function: Use
   type: state
   key: MouseLeft
@@ -84,6 +88,7 @@ binds:
 - function: ActivateItemInWorld
   type: state
   key: E
+  canFocus: true
 - function: ThrowItemInHand
   type: state
   key: MouseLeft
