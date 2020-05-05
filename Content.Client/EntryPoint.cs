@@ -16,6 +16,7 @@ using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
+using Content.Shared.Kitchen;
 using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
@@ -143,7 +144,7 @@ namespace Content.Client
                 "Mop",
                 "Bucket",
                 "Puddle",
-                "CanSpill",
+                "CanSpill"
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -161,7 +162,7 @@ namespace Content.Client
             factory.Register<SharedWiresComponent>();
             factory.Register<SharedCargoConsoleComponent>();
             factory.Register<SharedReagentDispenserComponent>();
-
+            factory.Register<SharedMicrowaveComponent>();
             factory.Register<SharedGravityGeneratorComponent>();
 
             prototypes.RegisterIgnore("material");

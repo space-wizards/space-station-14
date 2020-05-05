@@ -90,7 +90,7 @@
 #  name: Ambrosia vulgar is crushed
 #  parent: FoodBase
 #  id: FoodAmbrosiaVulgarIsCrushed
-#  description: 
+#  description:
 #  components:
 #  - type: Food
 #    uses: 1
@@ -137,7 +137,7 @@
 #  name: Bacon
 #  parent: FoodBase
 #  id: FoodBacon
-#  description: 
+#  description:
 #  components:
 #  - type: Food
 #    uses: 1
@@ -182,7 +182,7 @@
   name: Bread (slice)
   parent: FoodBase
   id: FoodBreadSlice
-  description: 
+  description:
   components:
   - type: Food
     contents:
@@ -199,7 +199,7 @@
   name: Banana bread (slice)
   parent: FoodBase
   id: FoodBananaBreadSlice
-  description: 
+  description:
   components:
   - type: Food
     contents:
@@ -233,7 +233,7 @@
 #  name: Bear meat
 #  parent: FoodBase
 #  id: FoodBearMeat
-#  description: 
+#  description:
 #  components:
 #  - type: Food
 #    uses: 1
@@ -612,7 +612,7 @@
 #  name: Cocoa
 #  parent: FoodBase
 #  id: FoodCocoa
-#  description: 
+#  description:
 #  components:
 #  - type: Food
 #    uses: 1
@@ -1482,11 +1482,11 @@
   - type: Icon
     sprite: Objects/Food/loadedbakedpotato.rsi
 
-#- type: entity
+# - type: entity
 #  parent: FoodBase
 #  id: FoodMeat
 #  name: Meat
-#  description: ''
+#  description: A slab of meat.
 #  components:
 #  - type: Food
 #    uses: 1
@@ -2865,3 +2865,20 @@
     sprite: Objects/Food/xenomeatpie.rsi
   - type: Icon
     sprite: Objects/Food/xenomeatpie.rsi
+
+- type: entity
+  parent: FoodBase
+  id: DisgustingSweptSoup
+  name: Salty Sweet Miso Cola Soup
+  description: Jesus christ.
+  components:
+  - type: Food
+    contents:
+      reagents:
+      - ReagentId: chem.Bleach
+        Quantity: 15
+    spawn_on_finish: TrashSnackBowl
+  - type: Sprite
+    sprite: Objects/Food/stew.rsi
+  - type: Icon
+    sprite: Objects/Food/stew.rsi

@@ -1,0 +1,40 @@
+- type: entity
+  id: KitchenMicrowave
+  name: Microwave
+  description: It's magic.
+  components:
+  - type: Microwave
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Solution
+    maxVol: 100
+    caps: 1
+  - type: Appearance
+    visuals:
+    - type: MicrowaveVisualizer
+  - type: Sound
+  - type: UserInterface
+    interfaces:
+    - key: enum.MicrowaveUiKey.Key
+      type: MicrowaveBoundUserInterface
+
+
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.4,0.25,0.4"
+      layer: 15
+    IsScrapingFloor: true
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Kitchen/microwave.rsi
+    layers:
+    - state: mw0
+      map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: mw_unlit
+      shader: unshaded
+      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+  - type: PowerDevice
+  - type: Icon
+    sprite: Objects/Kitchen/microwave.rsi
+    state: mw0

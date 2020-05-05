@@ -1,0 +1,21 @@
+- type: microwaveMealRecipe
+  id: RecipeCheeseburger
+  name: Cheeseburger Recipe
+  result: FoodCheeseburger
+  time: 5
+  reagents:
+    chem.Nutriment: 10
+  solids:
+    FoodBreadSlice: 2
+
+
+- type: microwaveMealRecipe
+  id: RecipeMisoColaSoup
+  name: Salty Sweet MisoCola Soup Recipe
+  result: DisgustingSweptSoup
+  time: 15
+  reagents:
+    chem.Cola: 5
+  solids:
+    FoodMiloSoup: 1
+
