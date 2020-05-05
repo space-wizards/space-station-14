@@ -150,7 +150,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
                     continue;
 
-                var disabled = verb.GetVisibility(user, component) != VerbVisibility.Visible;
+                if (VerbUtility.IsVerbInvisible(verb, user, component, out var vis))
+                    continue;
+
+                var disabled = vis != VerbVisibility.Visible;
                 var category = verb.GetCategory(user, component);
 
 
@@ -166,7 +169,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
                     continue;
 
-                var disabled = globalVerb.GetVisibility(user, entity) != VerbVisibility.Visible;
+                if (VerbUtility.IsVerbInvisible(globalVerb, user, entity, out var vis))
+                    continue;
+
+                var disabled = vis != VerbVisibility.Visible;
                 var category = globalVerb.GetCategory(user, entity);
 
                 if(!buttons.ContainsKey(category))
