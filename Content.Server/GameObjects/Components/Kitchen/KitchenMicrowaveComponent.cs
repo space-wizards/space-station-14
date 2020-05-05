@@ -168,7 +168,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private void UpdateUserInterface()
         {
             var solidsVisualList = new List<EntityUid>();
-            solidsVisualList.Clear();
             foreach(var item in _storage.ContainedEntities)
             {
                 solidsVisualList.Add(item.Uid);
@@ -251,7 +250,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _busy = true;
             // Convert storage into Dictionary of ingredients
             var solidsDict = new Dictionary<string, int>();
-            solidsDict.Clear();
             foreach(var item in _storage.ContainedEntities)
             {
                 if(solidsDict.ContainsKey(item.Prototype.ID))
