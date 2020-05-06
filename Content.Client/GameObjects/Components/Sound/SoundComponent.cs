@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameObjects.Components.Sound;
-using Microsoft.DiaSymReader;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
