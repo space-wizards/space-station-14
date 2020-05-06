@@ -19,11 +19,9 @@ using Robust.Server.GameObjects.Components.Container;
 using Content.Server.GameObjects.Components.Power;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Content.Server.Interfaces;
 using Robust.Shared.Audio;
-using YamlDotNet.Serialization.NodeTypeResolvers;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -76,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private BoundUserInterface _userInterface;
 
         private Container _storage;
-        
+
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -101,7 +99,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MicrowaveUiKey.Key);
-            
             _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
         }
 
@@ -137,7 +134,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                         UpdateUserInterface();
                     }
                     break;
-                
                 case MicrowaveVaporizeReagentIndexedMessage msg:
                     if (HasContents)
                     {
@@ -146,7 +142,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                         UpdateUserInterface();
                     }
                     break;
-                
                 case MicrowaveSelectCookTimeMessage msg:
                     _currentCookTimerTime = msg.newCookTime;
                     ClickSound();
@@ -173,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 solidsVisualList.Add(item.Uid);
             }
 
-            _userInterface.SetState(new MicrowaveUpdateUserInterfaceState(_solution.Solution.Contents, solidsVisualList));
+            _userInterface.SetState(new MicrowaveUpdateUserInterfaceState(_solution.Solution.Contents, solidsVisualList, _busy));
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -246,7 +241,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 return;
             }
-            
+
             _busy = true;
             // Convert storage into Dictionary of ingredients
             var solidsDict = new Dictionary<string, int>();
@@ -298,9 +293,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _audioSystem.Play(_cookingCompleteSound);
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
+                UpdateUserInterface();
             });
             UpdateUserInterface();
-            return;
         }
 
         private void VaporizeReagents()
@@ -396,12 +391,12 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             return true;
         }
-        
+
         private void ClickSound()
         {
 
             _audioSystem.Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
-            
+
         }
 
     }
