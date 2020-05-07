@@ -1,13 +1,99 @@
+
+#Burgers
 - type: microwaveMealRecipe
   id: RecipeCheeseburger
   name: Cheeseburger Recipe
   result: FoodCheeseburger
   time: 5
   reagents:
-    chem.Nutriment: 10
+    chem.Flour: 5
+  solids:
+    FoodMeat: 1
+
+- type: microwaveMealRecipe
+  id: RecipeTofuBurger
+  name: Tofu Burger Recipe
+  result: FoodTofuBurger
+  time: 5
+  reagents:
+    chem.Flour: 15
+  solids:
+    Tofu: 1
+
+- type: microwaveMealRecipe
+  id: RecipeXenoburger
+  name: Xenoburger Recipe
+  result: FoodXenoburger
+  time: 5
+  reagents:
+    chem.Flour: 5
+  solids:
+    FoodXenomeat: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSuperBiteBurger
+  name: Super Bite Burger Recipe
+  result: FoodSuperBiteBurger
+  time: 20
+  reagents:
+    chem.Flour: 15
+    chem.Salt: 5
+    chem.Pepper: 5
+  solids:
+    FoodMeat: 5
+    FoodCheeseWedge: 3
+    FoodTomato: 4
+    FoodEgg: 2
+
+#Breads & Sandwiches
+- type: microwaveMealRecipe
+  id: RecipeBread
+  name: Bread Recipe
+  result: DrinkFoodContainerBread
+  time: 15
+  reagents:
+    chem.Flour: 15
+
+- type: microwaveMealRecipe
+  id: RecipeSandwich
+  name: Sandwich Recipe
+  result: FoodSandwich
+  time: 10
   solids:
     FoodBreadSlice: 2
+    FoodMeatSteak: 1
+    FoodCheeseWedge: 1
 
+- type: microwaveMealRecipe
+  id: RecipeToastedSandwich
+  name: Toasted Sandwich Recipe
+  result: FoodToastedSandwich
+  time: 5
+  solids:
+    FoodSandwich: 1
+
+- type: microwaveMealRecipe
+  id: RecipeGrilledCheese
+  name: Grilled Cheese Recipe
+  result: FoodGrilledCheese
+  time: 5
+  solids:
+    FoodBreadSlice: 2
+    FoodCheeseWedge: 1
+
+
+
+#Other
+- type: microwaveMealRecipe
+  id: RecipeMeatSteak
+  name: Meat Steak Recipe
+  result: FoodMeatSteak
+  time: 10
+  reagents:
+    chem.Salt: 1
+    chem.Pepper: 1
+  solids:
+    FoodMeat: 1
 
 - type: microwaveMealRecipe
   id: RecipeMisoColaSoup
