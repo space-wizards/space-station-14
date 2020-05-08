@@ -239,3 +239,36 @@ binds:
   type: state
   key: F2
   mod1: Shift
+- function: OpenAbilitiesMenu
+  type: state
+  key: Equal
+- function: Hotbar0
+  type: state
+  key: Num0
+- function: Hotbar1
+  type: state
+  key: Num1
+- function: Hotbar2
+  type: state
+  key: Num2
+- function: Hotbar3
+  type: state
+  key: Num3
+- function: Hotbar4
+  type: state
+  key: Num4
+- function: Hotbar5
+  type: state
+  key: Num5
+- function: Hotbar6
+  type: state
+  key: Num6
+- function: Hotbar7
+  type: state
+  key: Num7
+- function: Hotbar8
+  type: state
+  key: Num8
+- function: Hotbar9
+  type: state
+  key: Num9
