@@ -37,16 +37,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
         private Dictionary<string, BodyPart> _surgeryOptionsCache = new Dictionary<string, BodyPart>();
-        private IEntity _performer;
+        private BodyManagerComponent _targetCache;
+        private IEntity _performerCache;
 
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
             if (eventArgs.Attacked == null)
                 return;
-            if (eventArgs.Attacked.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager))
+            if (eventArgs.Attacked.TryGetComponent<BodySystem.BodyManagerComponent>(out BodySystem.BodyManagerComponent bodyManager))
             {
                 _surgeryOptionsCache.Clear();
-                Dictionary<string, string> toSend = new Dictionary<string, string>();
+                var toSend = new Dictionary<string, string>();
                 foreach (var(key, value) in bodyManager.PartDictionary) {
                     if (value.SurgeryCheck(_surgeryToolClass))
                     {
@@ -58,7 +59,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 {
                     OpenSurgeryUI(eventArgs.User);
                     UpdateSurgeryUI(eventArgs.User, toSend);
-                    _performer = eventArgs.User;
+                    _performerCache = eventArgs.User;
+                    _targetCache = bodyManager;
                 }
             }
         }
@@ -74,12 +76,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 Logger.Debug("Error when trying to perform surgery on bodypart in slot " + msg.TargetSlot + ": it was not found!");
                 throw new InvalidOperationException();
             }
-            if (!target.AttemptSurgery(_surgeryToolClass, _performer))
+            if (!target.AttemptSurgery(_surgeryToolClass, _targetCache, _performerCache))
             {
                 Logger.Debug("Error when trying to perform surgery on bodypart " + target.Name + "!");
                 throw new InvalidOperationException();
             }
-            CloseSurgeryUI(_performer);
+            CloseSurgeryUI(_performerCache);
         }
 
 

@@ -14,10 +14,10 @@ namespace Content.Client.BodySystem
         private BodyScannerDisplay _display;
 
         [ViewVariables]
-        private BodyTemplate _template;
+        private BodyScannerTemplateData _template;
 
         [ViewVariables]
-        private Dictionary<string, BodyPart> _parts;
+        private Dictionary<string, BodyScannerBodyPartData> _parts;
 
         public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {

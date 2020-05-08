@@ -18,13 +18,13 @@ namespace Content.Shared.BodySystem {
     public class BodyPartPrototype : IPrototype, IIndexedPrototype {
         private string _id;
         private string _name;
-		private string _plural;
+        private string _plural;
         private string _rsiPath;
         private string _rsiState;
         private BodyPartType _partType;
-		private int _durability;
-		private int _destroyThreshold;
-		private float _resistance;
+        private int _durability;
+        private int _destroyThreshold;
+        private float _resistance;
 		private int _size;
 		private BodyPartCompatibility _compatibility;
         private string _surgeryDataName;
@@ -85,9 +85,9 @@ namespace Content.Shared.BodySystem {
             serializer.DataField(ref _surgeryDataName, "surgeryDataType", "BiologicalSurgeryData");
             serializer.DataField(ref _durability, "durability", 50);
 			serializer.DataField(ref _destroyThreshold, "destroyThreshold", -50);
-			serializer.DataField(ref _resistance, "resistance", 0f);
-			serializer.DataField(ref _size, "size", 0);
-			serializer.DataField(ref _compatibility, "compatibility", BodyPartCompatibility.Universal);
+            serializer.DataField(ref _resistance, "resistance", 0f);
+            serializer.DataField(ref _size, "size", 0);
+            serializer.DataField(ref _compatibility, "compatibility", BodyPartCompatibility.Universal);
 			serializer.DataField(ref _properties, "properties", new List<IExposeData>());
             serializer.DataField(ref _mechanisms, "mechanisms", new List<string>());
         }

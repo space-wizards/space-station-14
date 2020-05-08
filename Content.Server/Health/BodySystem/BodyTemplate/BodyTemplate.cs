@@ -12,7 +12,6 @@ namespace Content.Shared.BodySystem {
     ///     This class is a data capsule representing the standard format of a body. For instance, the "humanoid" BodyTemplate
     ///     defines two arms, each connected to a torso and so on. Capable of loading data from a BodyTemplatePrototype.
     /// </summary>	
-    [NetSerializable, Serializable]
     public class BodyTemplate {
 
         private int _hash;

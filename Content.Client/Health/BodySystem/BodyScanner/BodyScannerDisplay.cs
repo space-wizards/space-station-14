@@ -30,10 +30,11 @@ namespace Content.Client.UserInterface
         private ItemList MechanismList { get; }
         private RichTextLabel MechanismInfoLabel { get; }
 
-        private BodyTemplate _template;
-        private Dictionary<string, BodyPart> _parts;
+
+        private BodyScannerTemplateData _template;
+        private Dictionary<string, BodyScannerBodyPartData> _parts;
         private List<string> _slots; 
-        private BodyPart _currentBodyPart;
+        private BodyScannerBodyPartData _currentBodyPart;
 
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
@@ -97,9 +98,7 @@ namespace Content.Client.UserInterface
         }
 
 
-
-
-        public void UpdateDisplay(BodyTemplate template, Dictionary<string, BodyPart> parts)
+        public void UpdateDisplay(BodyScannerTemplateData template, Dictionary<string, BodyScannerBodyPartData> parts)
         {
             _template = template; 
             _parts = parts;
@@ -119,7 +118,7 @@ namespace Content.Client.UserInterface
                 UpdateBodyPartBox(_currentBodyPart, _slots[args.ItemIndex]);
             }
         }
-        private void UpdateBodyPartBox(BodyPart part, string slotName)
+        private void UpdateBodyPartBox(BodyScannerBodyPartData part, string slotName)
         {
             BodyPartLabel.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(slotName) + ": " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(part.Name);
             BodyPartHealth.Text = part.CurrentDurability + "/" + part.MaxDurability;
@@ -135,7 +134,7 @@ namespace Content.Client.UserInterface
         {
             UpdateMechanismBox(_currentBodyPart.Mechanisms[args.ItemIndex]);
         }
-        private void UpdateMechanismBox(Mechanism mechanism)
+        private void UpdateMechanismBox(BodyScannerMechanismData mechanism)
         {
             //TODO: Make UI look less shit and clean up whatever the fuck this is lmao
             if (mechanism != null)

@@ -24,13 +24,64 @@ namespace Content.Shared.BodySystem
     [NetSerializable, Serializable]
     public class BodyScannerInterfaceState : BoundUserInterfaceState
     {
-        public readonly BodyTemplate Template;
-        public readonly Dictionary<string, BodyPart> Parts;
-
-        public BodyScannerInterfaceState(BodyTemplate _template, Dictionary<string, BodyPart> _parts)
+        public readonly Dictionary<string, BodyScannerBodyPartData> Parts;
+        public readonly BodyScannerTemplateData Template;
+        public BodyScannerInterfaceState(Dictionary<string, BodyScannerBodyPartData> parts, BodyScannerTemplateData template)
         {
-            Template = _template;
-            Parts = _parts;
+            Template = template;
+            Parts = parts;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public class BodyScannerBodyPartData
+    {
+        public readonly string Name;
+        public readonly string RSIPath;
+        public readonly string RSIState;
+        public readonly int MaxDurability;
+        public readonly int CurrentDurability;
+        public readonly List<BodyScannerMechanismData> Mechanisms;
+        public BodyScannerBodyPartData(string name, string rsiPath, string rsiState, int maxDurability, int currentDurability, List<BodyScannerMechanismData> mechanisms)
+        {
+            Name = name;
+            RSIPath = rsiPath;
+            RSIState = rsiState;
+            MaxDurability = maxDurability;
+            CurrentDurability = currentDurability;
+            Mechanisms = mechanisms;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public class BodyScannerMechanismData
+    {
+        public readonly string Name;
+        public readonly string Description;
+        public readonly string RSIPath;
+        public readonly string RSIState;
+        public readonly int MaxDurability;
+        public readonly int CurrentDurability;
+        public BodyScannerMechanismData(string name, string description, string rsiPath, string rsiState, int maxDurability, int currentDurability)
+        {
+            Name = name;
+            Description = description;
+            RSIPath = rsiPath;
+            RSIState = rsiState;
+            MaxDurability = maxDurability;
+            CurrentDurability = currentDurability;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public class BodyScannerTemplateData
+    {
+        public readonly string Name;
+        public readonly Dictionary<string, BodyPartType> Slots;
+        public BodyScannerTemplateData(string name, Dictionary<string, BodyPartType> slots)
+        {
+            Name = name;
+            Slots = slots;
         }
     }
 }

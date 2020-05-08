@@ -11,7 +11,6 @@ namespace Content.Shared.BodySystem {
     /// <summary>
     ///     Stores data on what BodyPart(Prototypes) should fill a BodyTemplate. Used for loading complete body presets, like a "basic human" with all human limbs.
     /// </summary>
-    [NetSerializable, Serializable]
     public class BodyPreset {
         private string _name;
 		private Dictionary<string,string> _partIDs;

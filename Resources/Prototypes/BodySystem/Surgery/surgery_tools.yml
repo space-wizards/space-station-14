@@ -113,7 +113,7 @@
   desc: A surgical tool used to compress blood vessels to prevent bleeding.
   components:
   - type: SurgeryTool
-    surgeryToolClass: BoneSawing
+    surgeryToolClass: VesselCompression
     baseOperateTime: 3
     
   - type: Sprite

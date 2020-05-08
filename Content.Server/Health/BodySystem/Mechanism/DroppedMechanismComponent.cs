@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using System.Globalization;
+using Robust.Server.GameObjects;
 
-namespace Content.Shared.BodySystem {
+namespace Content.Server.BodySystem {
 
     /// <summary>
     ///    Component containing the data for a dropped Mechanism entity.
@@ -33,11 +34,11 @@ namespace Content.Shared.BodySystem {
         {
             _containedMechanism = data;
             Owner.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(_containedMechanism.Name);
-            //TODO: figure out how to do this while in shared since SpriteComponent doesn't exist in it (maybe move to server?)
-            /*if (Owner.TryGetComponent<SpriteComponent>(out SpriteComponent component))
+            if (Owner.TryGetComponent<SpriteComponent>(out SpriteComponent component))
             {
-                component.LayerSetTexture(0, data.SpritePath);
-            }*/
+                component.LayerSetRSI(0, data.RSIPath);
+                component.LayerSetState(0, data.RSIState);
+            }
         }
     }
 }
