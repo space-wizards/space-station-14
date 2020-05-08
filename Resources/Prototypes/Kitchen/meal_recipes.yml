@@ -81,6 +81,88 @@
     FoodBreadSlice: 2
     FoodCheeseWedge: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBaguette
+  name: Baguette Recipe
+  result: FoodBaguette
+  time: 10
+  reagents:
+    chem.Flour: 15
+    chem.Salt: 1
+    chem.Pepper: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCreamCheeseBread
+  name: Cream Cheese Bread Recipe
+  result: DrinkFoodContainerCreamCheeseBread
+  time: 20
+  reagents:
+    chem.Flour: 15
+  solids:
+    FoodCheeseWedge: 2
+
+- type: microwaveMealRecipe
+  id: RecipeBananaBread
+  name: Banana Bread Recipe
+  result: DrinkFoodContainerBananaBread
+  time: 25
+  reagents:
+    chem.Flour: 15
+    chem.Milk: 5
+  solids:
+    FoodEgg: 3
+    FoodBanana: 1
+
+
+
+#Pizzas
+- type: microwaveMealRecipe
+  id: MargheritaPizzaRecipe
+  name: Margherita Pizza Recipe
+  result: DrinkFoodContainerMargheritaPizza
+  time: 30
+  reagents:
+    chem.Flour: 10
+  solids:
+    FoodCheeseWedge: 4
+    FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: MushroomPizzaRecipe
+  name: Mushroom Pizza Recipe
+  result: DrinkFoodContainerMushroomPizza
+  time: 25
+  reagents:
+    chem.Flour: 10
+  solids:
+    FoodMushroom: 5
+
+- type: microwaveMealRecipe
+  id: MeatPizzaRecipe
+  name: Meat Pizza Recipe
+  result: DrinkFoodContainerMeatPizza
+  time: 30
+  reagents:
+    chem.Flour: 10
+  solids:
+    FoodMeat: 3
+    FoodCheeseWedge: 1
+    FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: VegetablePizzaRecipe
+  name: Vegetable Pizza Recipe
+  result: DrinkFoodContainerVegetablePizza
+  time: 30
+  reagents:
+    chem.Flour: 10
+  solids:
+    FoodEggplant: 1
+    FoodCarrot: 1
+    FoodCorn: 1
+    FoodTomato: 1
+
+#Italian
 
 
 #Other
