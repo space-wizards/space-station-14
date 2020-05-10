@@ -117,7 +117,7 @@
 
 #Pizzas
 - type: microwaveMealRecipe
-  id: MargheritaPizzaRecipe
+  id: RecipeMargheritaPizza
   name: Margherita Pizza Recipe
   result: DrinkFoodContainerMargheritaPizza
   time: 30
@@ -128,7 +128,7 @@
     FoodTomato: 1
 
 - type: microwaveMealRecipe
-  id: MushroomPizzaRecipe
+  id: RecipeMushroomPizza
   name: Mushroom Pizza Recipe
   result: DrinkFoodContainerMushroomPizza
   time: 25
@@ -138,7 +138,7 @@
     FoodMushroom: 5
 
 - type: microwaveMealRecipe
-  id: MeatPizzaRecipe
+  id: RecipeMeatPizza
   name: Meat Pizza Recipe
   result: DrinkFoodContainerMeatPizza
   time: 30
@@ -150,7 +150,7 @@
     FoodTomato: 1
 
 - type: microwaveMealRecipe
-  id: VegetablePizzaRecipe
+  id: RecipeVegetablePizza
   name: Vegetable Pizza Recipe
   result: DrinkFoodContainerVegetablePizza
   time: 30
@@ -163,7 +163,145 @@
     FoodTomato: 1
 
 #Italian
+- type: microwaveMealRecipe
+  id: RecipeSpaghetti
+  name:  Spaghetti Recipe
+  result: FoodSpaghetti
+  time: 1
+  reagents:
+    chem.Flour: 5
 
+- type: microwaveMealRecipe
+  id: RecipeBoiledSpaghetti
+  name: Boiled Spaghetti Recipe
+  result: FoodSpagettiBoiled
+  time: 5
+  reagents:
+    chem.H2O: 5
+  solids:
+    FoodSpagetti: 1
+
+- type: microwaveMealRecipe
+  id: RecipePastaTomato
+  name: Pasta Tomato Recipe
+  result: FoodPastaTomato
+  time: 10
+  reagents:
+    chem.H2O: 5
+  solids:
+    FoodSpagetti: 1
+    FoodTomato: 2
+
+- type: microwaveMealRecipe
+  id: RecipeMeatballSpaghetti
+  name: Spaghetti & Meatballs Recipe
+  result: FoodMeatballSpaghetti
+  time: 10
+  reagents:
+    chem.H2O: 5
+  solids:
+    FoodSpagetti: 1
+    FoodMeatball: 2
+
+- type: microwaveMealRecipe
+  id: RecipeCrabSpaghetti
+  name: Crab Spaghetti Recipe
+  result: FoodCrabSpaghetti
+  time: 10
+  reagents:
+    chem.H2O: 5
+  solids:
+    FoodCrabMeat: 2
+
+- type: microwaveMealRecipe
+  id: RecipeCopypasta
+  name: Copypasta Recipe
+  result: FoodCopypasta
+  time: 10
+  solids:
+    FoodPastaTomato: 2
+
+# - type: microwaveMealRecipe
+#   id: RecipeMoMMISpaghetti
+#   name: MoMMI Spaghetti Recipe
+#   result: FoodMoMMISpaghetti
+#   time: 10
+#   reagents:
+#     chem.Flour: 5
+#   solids:
+
+- type: microwaveMealRecipe
+  id: RecipeRisotto
+  name: Risotto Recipe
+  result: FoodRisotto
+  time: 10
+  reagents:
+    chem.Flour: 10 #This should be 10 units of rice.
+    chem.Wine: 5
+  solids:
+    FoodCheeseWedge: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBruschetta
+  name: Bruschetta Recipe
+  result: FoodBruschetta
+  time: 10
+  reagents:
+    chem.Flour: 10
+    chem.Salt: 2
+  solids:
+    FoodGarlic: 1
+    FoodCheeseWedge: 1
+    FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeQuiche
+  name: Quiche Recipe
+  result: FoodQuiche
+  time: 10
+  solids:
+    FoodBlueTomato: 1
+    FoodGarlic: 1
+    FoodEgg: 1
+    FoodCheeseWedge: 1
+
+- type: microwaveMealRecipe
+  id: RecipeLasagna
+  name: Lasagna Recipe
+  result: FoodLasagna
+  time: 15
+  # reagents:
+  #   chem.TomatoJuice: 15
+  solids:
+    FoodFlatDough: 2
+    FoodMeat: 2
+    FoodEggPlant: 1
+    FoodCheeseWedge: 1
+
+#Soups & Stew
+- type: microwaveMealRecipe
+  id: RecipeMeatballSoup
+  name: Meatball Soup Recipe
+  result: FoodMeatballSoup
+  time: 10
+  reagents:
+    chem.H2O: 10
+  solids:
+    FoodMeatball: 1
+    FoodCarrot: 1
+    FoodPotato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeNettleSoup
+  name: Nettle Soup Recipe
+  result: FoodNettleSoup
+  time: 10
+  reagents:
+    chem.H2O: 10
+  solids:
+    FoodNettle: 1
+    FoodEgg: 1
+    FoodPotato: 1
 
 #Other
 - type: microwaveMealRecipe
@@ -179,7 +317,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeMisoColaSoup
-  name: Salty Sweet MisoCola Soup Recipe
+  name: Salty Sweet MiloCola Soup Recipe
   result: DisgustingSweptSoup
   time: 15
   reagents:
@@ -187,3 +325,14 @@
   solids:
     FoodMiloSoup: 1
 
+
+
+#Handy template for copy **pasta**. Get it? Pasta? Aw whatever fuck you.
+# - type: microwaveMealRecipe
+#   id:
+#   name:
+#   result:
+#   time: 5
+#   reagents:
+
+#   solids:
