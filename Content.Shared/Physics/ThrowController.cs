@@ -1,5 +1,4 @@
-using Robust.Shared.Interfaces.Timers;
-using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Timers;
 
@@ -8,7 +7,9 @@ namespace Content.Shared.Physics
     public class ThrowController: VirtualController
     {
         private float _throwTime;
-        private SharedPhysicsComponent _controller;
+        private SharedPhysicsComponent _component;
+
+        private const float DefaultThrowTime = 0.25f;
 
         public float ThrowTime
         {
@@ -18,20 +19,24 @@ namespace Content.Shared.Physics
 
         public override SharedPhysicsComponent ControlledComponent
         {
-            set => _controller = value;
+            set => _component = value;
         }
 
         public void StartThrow()
         {
-            Timer.Spawn((int) (ThrowTime * 1000), () =>
-            {
-
-            });
+            _component.Status = BodyStatus.InAir;
+            Timer.Spawn((int) (ThrowTime * 1000), StopThrow);
         }
 
-        public override void UpdateBeforeProcessing()
+        public void StopThrow()
         {
-            base.UpdateBeforeProcessing();
+            _component.Status = BodyStatus.OnGround;
+            _component.LinearVelocity = Vector2.Zero;
+        }
+
+        public ThrowController()
+        {
+            ThrowTime = DefaultThrowTime;
         }
     }
 }

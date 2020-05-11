@@ -69,10 +69,10 @@ namespace Content.Server.Throw
             if (throwSourceEnt != null)
             {
                 var p = throwSourceEnt.GetComponent<PhysicsComponent>();
-                var playerAccel = 5 * throwForce / (float) Math.Max(0.001, p.Mass);
-                p.LinearVelocity = Angle.FromDegrees(angle.Degrees + 180).ToVec()
-                                   * playerAccel / (1f / timing.TickRate);
+                p.Momentum += Angle.FromDegrees(angle.Degrees + 180).ToVec() * throwForce;
             }
+            physComp.SetController<ThrowController>();
+            (physComp.Controller as ThrowController)?.StartThrow();
         }
     }
 }

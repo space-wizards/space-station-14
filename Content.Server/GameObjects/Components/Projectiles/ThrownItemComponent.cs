@@ -52,6 +52,9 @@ namespace Content.Server.GameObjects.Components
                 body.PhysicsShapes[0].CollisionMask &= (int)~CollisionGroup.MobImpassable;
 
                 // KYS, your job is finished. Trigger ILand as well.
+                var physics = Owner.GetComponent<PhysicsComponent>();
+                (physics.Controller as ThrowController).StopThrow();
+                physics.RemoveController();
                 Owner.RemoveComponent<ThrownItemComponent>();
                 _entitySystemManager.GetEntitySystem<InteractionSystem>().LandInteraction(User, Owner, Owner.Transform.GridPosition);
             }
