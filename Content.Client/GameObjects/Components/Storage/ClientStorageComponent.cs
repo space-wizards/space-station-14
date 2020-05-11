@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Client.Interfaces.GameObjects;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -105,6 +106,9 @@ namespace Content.Client.GameObjects.Components.Storage
             private Label Information;
             public ClientStorageComponent StorageEntity;
 
+            private StyleBoxFlat _HoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.7f)};
+            private StyleBoxFlat  _unHoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.0f)};
+
             protected override Vector2? CustomSize => (180, 320);
 
             public StorageWindow()
@@ -115,8 +119,19 @@ namespace Content.Client.GameObjects.Components.Storage
                 var containerButton = new ContainerButton
                 {
                     SizeFlagsHorizontal = SizeFlags.Fill,
-                    SizeFlagsVertical = SizeFlags.Fill
+                    SizeFlagsVertical = SizeFlags.Fill,
+                    MouseFilter = MouseFilterMode.Pass,
                 };
+
+                var innerContainerButton = new PanelContainer
+                {
+                    PanelOverride = _unHoveredBox,
+                    SizeFlagsHorizontal = SizeFlags.Fill,
+                    SizeFlagsVertical = SizeFlags.Fill,
+                };
+
+
+                containerButton.AddChild(innerContainerButton);
                 containerButton.OnPressed += args =>
                 {
                     var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
@@ -127,7 +142,10 @@ namespace Content.Client.GameObjects.Components.Storage
                     }
                 };
 
-                VSplitContainer = new VBoxContainer();
+                VSplitContainer = new VBoxContainer()
+                {
+                    MouseFilter = MouseFilterMode.Ignore,
+                };
                 containerButton.AddChild(VSplitContainer);
                 Information = new Label
                 {
@@ -141,7 +159,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     SizeFlagsVertical = SizeFlags.FillExpand,
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
                     HScrollEnabled = true,
-                    VScrollEnabled = true
+                    VScrollEnabled = true,
                 };
                 EntityList = new VBoxContainer
                 {
@@ -152,6 +170,15 @@ namespace Content.Client.GameObjects.Components.Storage
 
                 Contents.AddChild(containerButton);
 
+                listScrollContainer.OnMouseEntered += args =>
+                {
+                    innerContainerButton.PanelOverride = _HoveredBox;
+                };
+
+                listScrollContainer.OnMouseExited += args =>
+                {
+                    innerContainerButton.PanelOverride = _unHoveredBox;
+                };
             }
 
             public override void Close()
