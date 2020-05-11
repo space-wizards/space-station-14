@@ -44,5 +44,6 @@
         public const uint GHOST = 1039;
         public const uint MICROWAVE = 1040;
         public const uint GRAVITY_GENERATOR = 1041;
+        public const uint LASER_ABILITY = 1042;
     }
 }

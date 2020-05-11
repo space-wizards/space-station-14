@@ -23,6 +23,8 @@
   - type: Stomach
     max_volume: 250
     digestionDelay: 20
+  - type: Hotbar
+  - type: LaserAbility
   - type: Inventory
   - type: Constructor
   - type: Clickable
@@ -139,6 +141,8 @@
         - left
         - right
 
+    - type: Hotbar
+    - type: LaserAbility
     - type: Inventory
     - type: Sprite
       netsync: false
