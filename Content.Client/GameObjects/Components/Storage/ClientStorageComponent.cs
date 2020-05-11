@@ -32,7 +32,7 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnAdd();
 
             Window = new StorageWindow()
-                {StorageEntity = this};
+                {StorageEntity = this};1
         }
 
         public override void OnRemove()
@@ -103,7 +103,6 @@ namespace Content.Client.GameObjects.Components.Storage
             private Control VSplitContainer;
             private VBoxContainer EntityList;
             private Label Information;
-            private Button AddItemButton;
             public ClientStorageComponent StorageEntity;
 
             protected override Vector2? CustomSize => (180, 320);
@@ -113,7 +112,23 @@ namespace Content.Client.GameObjects.Components.Storage
                 Title = "Storage Item";
                 RectClipContent = true;
 
+                var containerButton = new ContainerButton
+                {
+                    SizeFlagsHorizontal = SizeFlags.Fill,
+                    SizeFlagsVertical = SizeFlags.Fill
+                };
+                containerButton.OnPressed += args =>
+                {
+                    var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
+
+                    if (controlledEntity.TryGetComponent(out IHandsComponent hands))
+                    {
+                        StorageEntity.SendNetworkMessage(new InsertEntityMessage());
+                    }
+                };
+                
                 VSplitContainer = new VBoxContainer();
+                containerButton.AddChild(VSplitContainer);
                 Information = new Label
                 {
                     Text = "Items: 0 Volume: 0/0 Stuff",
@@ -135,16 +150,8 @@ namespace Content.Client.GameObjects.Components.Storage
                 listScrollContainer.AddChild(EntityList);
                 VSplitContainer.AddChild(listScrollContainer);
 
-                AddItemButton = new Button
-                {
-                    Text = "Add Item",
-                    ToggleMode = false,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
-                };
-                AddItemButton.OnPressed += OnAddItemButtonPressed;
-                VSplitContainer.AddChild(AddItemButton);
+                Contents.AddChild(containerButton);
 
-                Contents.AddChild(VSplitContainer);
             }
 
             public override void Close()
@@ -168,7 +175,8 @@ namespace Content.Client.GameObjects.Components.Storage
 
                     var button = new EntityButton()
                     {
-                        EntityuID = entityuid.Key
+                        EntityuID = entityuid.Key,
+                        MouseFilter = MouseFilterMode.Stop,
                     };
                     button.ActualButton.OnToggled += OnItemButtonToggled;
                     //Name and Size labels set
