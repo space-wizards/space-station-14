@@ -32,7 +32,7 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnAdd();
 
             Window = new StorageWindow()
-                {StorageEntity = this};1
+                {StorageEntity = this};
         }
 
         public override void OnRemove()
@@ -126,7 +126,7 @@ namespace Content.Client.GameObjects.Components.Storage
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());
                     }
                 };
-                
+
                 VSplitContainer = new VBoxContainer();
                 containerButton.AddChild(VSplitContainer);
                 Information = new Label
