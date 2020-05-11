@@ -31,6 +31,7 @@ namespace Content.Client
             IoCManager.Register<IClientPreferencesManager, ClientPreferencesManager>();
             IoCManager.Register<IItemSlotManager, ItemSlotManager>();
             IoCManager.Register<IStylesheetManager, StylesheetManager>();
+            IoCManager.Register<IScreenshotHook, ScreenshotHook>();
         }
     }
 }

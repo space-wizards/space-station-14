@@ -177,7 +177,7 @@ namespace Content.Server.GameObjects
 
             currentstate = threshold;
 
-            EntityEventArgs toRaise = new MobDamageStateChangedMessage(this);
+            var toRaise = new MobDamageStateChangedMessage(this);
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, toRaise);
         }
 

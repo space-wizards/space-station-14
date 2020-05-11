@@ -417,8 +417,8 @@ namespace Content.Server.GameObjects.EntitySystems
             var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
             inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
                 new PointerInputCmdHandler(HandleUseItemInHand));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Attack,
-                new PointerInputCmdHandler(HandleAttack));
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.WideAttack,
+                new PointerInputCmdHandler(HandleWideAttack));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
                 new PointerInputCmdHandler(HandleActivateItemInWorld));
         }
@@ -477,7 +477,7 @@ namespace Content.Server.GameObjects.EntitySystems
             activateComp.Activate(new ActivateEventArgs {User = user});
         }
 
-        private bool HandleAttack(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleWideAttack(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!_mapManager.GridExists(coords.GridID))

@@ -19,6 +19,17 @@ namespace Content.Server.Interfaces.GameObjects.Components.Movement
         /// </summary>
         float CurrentSprintSpeed { get; }
 
+
+        /// <summary>
+        ///     The movement speed (m/s) of the entity when it pushes off of a solid object in zero gravity.
+        /// </summary>
+        float CurrentPushSpeed { get; }
+
+        /// <summary>
+        ///     How far an entity can reach (in meters) to grab hold of a solid object in zero gravity.
+        /// </summary>
+        float GrabRange { get; }
+
         /// <summary>
         ///     Is the entity Sprinting (running)?
         /// </summary>

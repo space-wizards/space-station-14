@@ -8,7 +8,9 @@
 
 - type: latheRecipe
   id: Screwdriver
-  icon: Objects/Tools/screwdriver.png
+  icon:
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver
   result: Screwdriver
   completetime: 500
   materials:
@@ -16,7 +18,9 @@
 
 - type: latheRecipe
   id: Welder
-  icon: Objects/Tools/autolathe_welder.png
+  icon:
+    sprite: Objects/Tools/welder.rsi
+    state: welder
   result: Welder
   completetime: 500
   materials:
@@ -51,7 +55,9 @@
 
 - type: latheRecipe
   id: Multitool
-  icon: Objects/Tools/multitool.png
+  icon:
+    sprite: Objects/Tools/multitool.rsi
+    state: multitool
   result: Multitool
   completetime: 500
   materials:

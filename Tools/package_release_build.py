@@ -63,7 +63,14 @@ WINDOWS_NATIVES = {
     "freetype6.dll",
     "openal32.dll",
     "swnfd.dll",
-    "glfw3.dll"
+    "glfw3.dll",
+    "fluidsynth.dll",
+    "libglib-2.0-0.dll",
+    "libgobject-2.0-0.dll",
+    "libgthread-2.0-0.dll",
+    "libinstpatch-2.dll",
+    "libintl-8.dll",
+    "libsndfile-1.dll"
 }
 
 LINUX_NATIVES = {

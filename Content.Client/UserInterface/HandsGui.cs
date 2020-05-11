@@ -7,6 +7,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
@@ -57,10 +58,10 @@ namespace Content.Client.UserInterface
 
             AddChild(hBox);
 
-            _leftButton.OnPressed += args => HandKeyBindDown(args.Event, HandNameLeft);
-            _leftButton.OnStoragePressed += args => _OnStoragePressed(args.Event, HandNameLeft);
-            _rightButton.OnPressed += args => HandKeyBindDown(args.Event, HandNameRight);
-            _rightButton.OnStoragePressed += args => _OnStoragePressed(args.Event, HandNameRight);
+            _leftButton.OnPressed += args => HandKeyBindDown(args, HandNameLeft);
+            _leftButton.OnStoragePressed += args => _OnStoragePressed(args, HandNameLeft);
+            _rightButton.OnPressed += args => HandKeyBindDown(args, HandNameRight);
+            _rightButton.OnStoragePressed += args => _OnStoragePressed(args, HandNameRight);
 
             // Active hand
             _leftButton.AddChild(ActiveHandRect = new TextureRect
@@ -118,31 +119,34 @@ namespace Content.Client.UserInterface
 
         private void HandKeyBindDown(GUIBoundKeyEventArgs args, string handIndex)
         {
-            args.Handle();
-
             if (!TryGetHands(out var hands))
                 return;
 
             if (args.Function == ContentKeyFunctions.MouseMiddle)
             {
                 hands.SendChangeHand(handIndex);
+                args.Handle();
                 return;
             }
 
             var entity = hands.GetEntity(handIndex);
             if (entity == null)
             {
-                if (args.CanFocus && hands.ActiveIndex != handIndex)
+                if (args.Function == EngineKeyFunctions.UIClick && hands.ActiveIndex != handIndex)
                 {
                     hands.SendChangeHand(handIndex);
+                    args.Handle();
                 }
                 return;
             }
 
             if (_itemSlotManager.OnButtonPressed(args, entity))
+            {
+                args.Handle();
                 return;
+            }
 
-            if (args.CanFocus)
+            if (args.Function == EngineKeyFunctions.UIClick)
             {
                 if (hands.ActiveIndex == handIndex)
                 {
@@ -152,13 +156,14 @@ namespace Content.Client.UserInterface
                 {
                     hands.AttackByInHand(handIndex);
                 }
+                args.Handle();
                 return;
             }
         }
 
         private void _OnStoragePressed(GUIBoundKeyEventArgs args, string handIndex)
         {
-            if (!args.CanFocus)
+            if (args.Function != EngineKeyFunctions.UIClick)
                 return;
             if (!TryGetHands(out var hands))
                 return;

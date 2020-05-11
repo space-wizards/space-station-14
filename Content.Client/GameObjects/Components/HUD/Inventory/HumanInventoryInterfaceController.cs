@@ -114,13 +114,13 @@ namespace Content.Client.GameObjects
             }
         }
 
-        protected override void HandleInventoryKeybind(BaseButton.ButtonEventArgs args, Slots slot)
+        protected override void HandleInventoryKeybind(GUIBoundKeyEventArgs args, Slots slot)
         {
             if (!_inventoryButtons.TryGetValue(slot, out var buttons))
                 return;
             if (!Owner.TryGetSlot(slot, out var item))
                 return;
-            if (_itemSlotManager.OnButtonPressed(args.Event, item))
+            if (_itemSlotManager.OnButtonPressed(args, item))
                 return;
 
             base.HandleInventoryKeybind(args, slot);

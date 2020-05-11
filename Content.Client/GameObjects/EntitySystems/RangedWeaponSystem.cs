@@ -39,8 +39,8 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Update(frameTime);
 
             var canFireSemi = _isFirstShot;
-            var state = _inputSystem.CmdStates.GetState(ContentKeyFunctions.Attack);
-            if (!_combatModeSystem.UseOrAttackIsDown && state != BoundKeyState.Down)
+            var state = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
+            if (!_combatModeSystem.IsInCombatMode() || state != BoundKeyState.Down)
             {
                 _isFirstShot = true;
                 _blocked = false;

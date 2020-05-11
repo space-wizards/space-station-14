@@ -1,9 +1,16 @@
 version: 1 # Not used right now, whatever.
 binds:
-- function: UseOrAttack
+- function: UIClick
   type: state
   key: MouseLeft
   canFocus: true
+- function: Use
+  type: state
+  key: MouseLeft
+  canFocus: true
+- function: WideAttack
+  type: state
+  key: Space
 - function: ShowDebugMonitors
   type: Toggle
   key: F3
@@ -65,6 +72,14 @@ binds:
 - function: OpenCharacterMenu
   type: State
   key: C
+- function: TextCursorSelect
+  # TextCursorSelect HAS to be above ExamineEntity
+  # So that LineEdit receives it correctly.
+  # TODO: Make it so that UI keybinds are somehow prioritized so this ordering stuff isn't necessary.
+  type: state
+  key: MouseLeft
+  mod1: Shift
+  canFocus: true
 - function: ExamineEntity
   type: State
   key: MouseLeft
@@ -94,6 +109,14 @@ binds:
 - function: OpenInventoryMenu
   type: state
   key: I
+- function: SmartEquipBackpack
+  type: State
+  key: B
+  mod1: Shift
+- function: SmartEquipBelt
+  type: State
+  key: E
+  mod1: Shift
 - function: ShowDebugConsole
   type: state
   key: Tilde
@@ -109,11 +132,52 @@ binds:
   type: state
   key: Right
   canRepeat: true
+- function: TextCursorWordLeft
+  type: state
+  key: Left
+  mod1: Control
+  canRepeat: true
+- function: TextCursorWordRight
+  type: state
+  key: Right
+  mod1: Control
+  canRepeat: true
 - function: TextCursorBegin
   type: state
   key: Home
 - function: TextCursorEnd
   type: state
+  key: End
+  canRepeat: true
+- function: TextCursorSelectLeft
+  type: state
+  key: Left
+  mod1: Shift
+  canRepeat: true
+- function: TextCursorSelectRight
+  type: state
+  key: Right
+  mod1: Shift
+  canRepeat: true
+- function: TextCursorSelectWordLeft
+  type: state
+  key: Left
+  mod1: Shift
+  mod2: Control
+  canRepeat: true
+- function: TextCursorSelectWordRight
+  type: state
+  key: Right
+  mod1: Shift
+  mod2: Control
+  canRepeat: true
+- function: TextCursorSelectBegin
+  type: state
+  mod1: Shift
+  key: Home
+- function: TextCursorSelectEnd
+  type: state
+  mod1: Shift
   key: End
   canRepeat: true
 - function: TextBackspace
@@ -126,6 +190,18 @@ binds:
 - function: TextSubmit
   type: state
   key: NumpadEnter
+- function: TextSelectAll
+  type: state
+  key: A
+  mod1: Control
+- function: TextCopy
+  type: state
+  key: C
+  mod1: Control
+- function: TextCut
+  type: state
+  key: X
+  mod1: Control
 - function: TextPaste
   type: state
   key: V
@@ -155,3 +231,10 @@ binds:
 - function: OpenSandboxWindow
   type: state
   key: B
+- function: TakeScreenshot
+  type: state
+  key: F2
+- function: TakeScreenshotNoUI
+  type: state
+  key: F2
+  mod1: Shift
