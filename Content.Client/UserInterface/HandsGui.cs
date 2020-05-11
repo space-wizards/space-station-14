@@ -119,14 +119,13 @@ namespace Content.Client.UserInterface
 
         private void HandKeyBindDown(GUIBoundKeyEventArgs args, string handIndex)
         {
-            args.Handle();
-
             if (!TryGetHands(out var hands))
                 return;
 
             if (args.Function == ContentKeyFunctions.MouseMiddle)
             {
                 hands.SendChangeHand(handIndex);
+                args.Handle();
                 return;
             }
 
@@ -136,12 +135,16 @@ namespace Content.Client.UserInterface
                 if (args.Function == EngineKeyFunctions.UIClick && hands.ActiveIndex != handIndex)
                 {
                     hands.SendChangeHand(handIndex);
+                    args.Handle();
                 }
                 return;
             }
 
             if (_itemSlotManager.OnButtonPressed(args, entity))
+            {
+                args.Handle();
                 return;
+            }
 
             if (args.Function == EngineKeyFunctions.UIClick)
             {
@@ -153,6 +156,7 @@ namespace Content.Client.UserInterface
                 {
                     hands.AttackByInHand(handIndex);
                 }
+                args.Handle();
                 return;
             }
         }
