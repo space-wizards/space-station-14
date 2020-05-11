@@ -58,13 +58,10 @@ namespace Content.Server.Throw
             if (!thrownEnt.TryGetComponent(out PhysicsComponent physComp))
                 physComp = thrownEnt.AddComponent<PhysicsComponent>();
 
-            // TODO: Move this into PhysicsSystem, we need an ApplyForce function.
-            var a = throwForce / (float) Math.Max(0.001, physComp.Mass); // a = f / m
-
             var timing = IoCManager.Resolve<IGameTiming>();
-            var spd = a / (1f / timing.TickRate); // acceleration is applied in 1 tick instead of 1 second, scale appropriately
+            var spd = throwForce / (1f / timing.TickRate); // acceleration is applied in 1 tick instead of 1 second, scale appropriately
 
-            physComp.LinearVelocity = angle.ToVec() * spd;
+            physComp.Momentum = angle.ToVec() * spd;
 
             if (throwSourceEnt != null)
             {
