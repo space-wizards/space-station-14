@@ -7,6 +7,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
@@ -132,7 +133,7 @@ namespace Content.Client.UserInterface
             var entity = hands.GetEntity(handIndex);
             if (entity == null)
             {
-                if (args.CanFocus && hands.ActiveIndex != handIndex)
+                if (args.Function == EngineKeyFunctions.UIClick && hands.ActiveIndex != handIndex)
                 {
                     hands.SendChangeHand(handIndex);
                 }
@@ -142,7 +143,7 @@ namespace Content.Client.UserInterface
             if (_itemSlotManager.OnButtonPressed(args, entity))
                 return;
 
-            if (args.CanFocus)
+            if (args.Function == EngineKeyFunctions.UIClick)
             {
                 if (hands.ActiveIndex == handIndex)
                 {
@@ -158,7 +159,7 @@ namespace Content.Client.UserInterface
 
         private void _OnStoragePressed(GUIBoundKeyEventArgs args, string handIndex)
         {
-            if (!args.CanFocus)
+            if (args.Function != EngineKeyFunctions.UIClick)
                 return;
             if (!TryGetHands(out var hands))
                 return;
