@@ -1,4 +1,5 @@
-﻿using Content.Client.Interfaces.Chat;
+﻿using System;
+using Content.Client.Interfaces.Chat;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -9,8 +10,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Chat
 {
-    public class SpeechBubble : Control
+    public abstract class SpeechBubble : Control
     {
+        public enum SpeechType
+        {
+            Emote,
+            Say
+        }
+
         /// <summary>
         ///     The total time a speech bubble stays on screen.
         /// </summary>
@@ -38,6 +45,21 @@ namespace Content.Client.Chat
 
         public float ContentHeight { get; private set; }
 
+        public static SpeechBubble CreateSpeechBubble(SpeechType type, string text, IEntity senderEntity, IEyeManager eyeManager, IChatManager chatManager)
+        {
+            switch (type)
+            {
+                case SpeechType.Emote:
+                    return new EmoteSpeechBubble(text, senderEntity, eyeManager, chatManager);
+
+                case SpeechType.Say:
+                    return new SaySpeechBubble(text, senderEntity, eyeManager, chatManager);
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public SpeechBubble(string text, IEntity senderEntity, IEyeManager eyeManager, IChatManager chatManager)
         {
             _chatManager = chatManager;
@@ -47,26 +69,17 @@ namespace Content.Client.Chat
             // Use text clipping so new messages don't overlap old ones being pushed up.
             RectClipContent = true;
 
-            var label = new RichTextLabel
-            {
-                MaxWidth = 256,
-            };
-            label.SetMessage(text);
+            var bubble = BuildBubble(text);
 
-            var panel = new PanelContainer
-            {
-                StyleClasses = { "tooltipBox" },
-                Children = { label },
-                ModulateSelfOverride = Color.White.WithAlpha(0.75f)
-            };
-
-            AddChild(panel);
+            AddChild(bubble);
 
             ForceRunStyleUpdate();
 
-            ContentHeight = panel.CombinedMinimumSize.Y;
+            ContentHeight = bubble.CombinedMinimumSize.Y;
             _verticalOffsetAchieved = -ContentHeight;
         }
+
+        protected abstract Control BuildBubble(string text);
 
         protected override Vector2 CalculateMinimumSize()
         {
@@ -132,6 +145,59 @@ namespace Content.Client.Chat
             {
                 _timeLeft = FadeTime;
             }
+        }
+    }
+
+    public class EmoteSpeechBubble : SpeechBubble
+
+    {
+        public EmoteSpeechBubble(string text, IEntity senderEntity, IEyeManager eyeManager, IChatManager chatManager)
+            : base(text, senderEntity, eyeManager, chatManager)
+        {
+        }
+
+        protected override Control BuildBubble(string text)
+        {
+            var label = new RichTextLabel
+            {
+                MaxWidth = 256,
+            };
+            label.SetMessage(text);
+
+            var panel = new PanelContainer
+            {
+                StyleClasses = { "speechBox", "emoteBox" },
+                Children = { label },
+                ModulateSelfOverride = Color.White.WithAlpha(0.75f)
+            };
+
+            return panel;
+        }
+    }
+
+    public class SaySpeechBubble : SpeechBubble
+    {
+        public SaySpeechBubble(string text, IEntity senderEntity, IEyeManager eyeManager, IChatManager chatManager)
+            : base(text, senderEntity, eyeManager, chatManager)
+        {
+        }
+
+        protected override Control BuildBubble(string text)
+        {
+            var label = new RichTextLabel
+            {
+                MaxWidth = 256,
+            };
+            label.SetMessage(text);
+
+            var panel = new PanelContainer
+            {
+                StyleClasses = { "speechBox", "sayBox" },
+                Children = { label },
+                ModulateSelfOverride = Color.White.WithAlpha(0.75f)
+            };
+
+            return panel;
         }
     }
 }
