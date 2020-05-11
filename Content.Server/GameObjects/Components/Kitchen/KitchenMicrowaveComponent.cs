@@ -274,7 +274,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                            (_currentCookTimerTime == (uint)recipeToCook.CookTime) ? true : false;
 
             SetAppearance(MicrowaveVisualState.Cooking);
-            _audioSystem.Play(_startCookingSound);
+            _audioSystem.Play(_startCookingSound, AudioParams.Default);
             Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), () =>
             {
 
@@ -290,7 +290,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
                 var entityToSpawn = goodMeal ? recipeToCook.Result : _badRecipeName;
                 _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.GridPosition);
-                _audioSystem.Play(_cookingCompleteSound);
+                _audioSystem.Play(_cookingCompleteSound, AudioParams.Default);
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
                 UpdateUserInterface();
