@@ -1,4 +1,4 @@
-namespace Content.Server.AI.HTN.Tasks.Primitive.Operators
+namespace Content.Server.AI.Operators
 {
     public interface IOperator
     {

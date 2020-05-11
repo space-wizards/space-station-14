@@ -1,4 +1,3 @@
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
@@ -10,8 +9,8 @@ namespace Content.Server.AI.Operators.Inventory
     public class PickupEntityOperator : IOperator
     {
         // Input variables
-        private IEntity _owner;
-        private IEntity _target;
+        private readonly IEntity _owner;
+        private readonly IEntity _target;
 
         public PickupEntityOperator(IEntity owner, IEntity target)
         {
@@ -22,7 +21,6 @@ namespace Content.Server.AI.Operators.Inventory
         // TODO: When I spawn new entities they seem to duplicate clothing or something?
         public Outcome Execute(float frameTime)
         {
-            // TODO: If they're in a locker need to check (use a separate operator)
             if (_target == null ||
                 _target.Deleted ||
                 !_target.HasComponent<ItemComponent>() ||

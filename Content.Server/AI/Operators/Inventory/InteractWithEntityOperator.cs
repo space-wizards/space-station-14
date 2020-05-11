@@ -1,4 +1,3 @@
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -11,8 +10,8 @@ namespace Content.Server.AI.Operators.Inventory
     /// </summary>
     public class InteractWithEntityOperator : IOperator
     {
-        private IEntity _owner;
-        private IEntity _useTarget;
+        private readonly IEntity _owner;
+        private readonly IEntity _useTarget;
 
         public InteractWithEntityOperator(IEntity owner, IEntity useTarget)
         {

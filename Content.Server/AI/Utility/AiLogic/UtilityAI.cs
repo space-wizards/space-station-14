@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.AI.HTN.Tasks.Primitive.Operators;
+using Content.Server.AI.Operators;
+using Content.Server.AI.Operators.Generic;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.BehaviorSets;
 using Content.Server.AI.WorldState;
@@ -20,14 +22,16 @@ namespace Content.Server.AI.Utility.AiLogic
     public abstract class UtilityAi : AiLogicProcessor
     {
         // TODO: Look at having ParallelOperators (probably no more than that as then you'd have a full-blown BT)
+        // Also RepeatOperators (e.g. if we're following an entity keep repeating MoveToEntity)
         private AiActionSystem _planner;
+        public Blackboard Blackboard => _blackboard;
         private Blackboard _blackboard;
 
         /// <summary>
-        /// The sum of all behaviorsets gives us what actions the AI can take
+        /// The sum of all BehaviorSets gives us what actions the AI can take
         /// </summary>
         public Dictionary<Type, BehaviorSet> BehaviorSets { get; } = new Dictionary<Type, BehaviorSet>();
-        private List<IAiUtility> _availableActions = new List<IAiUtility>();
+        private readonly List<IAiUtility> _availableActions = new List<IAiUtility>();
 
         /// <summary>
         /// The currently running action; most importantly are the operators.
@@ -105,13 +109,9 @@ namespace Content.Server.AI.Utility.AiLogic
             _availableActions.Reverse();
         }
 
-        // TODO. This also ties into the TODO on adding a Finalize / Startup Method to each operator
-        // Or alternatively have a separate BarkOperator...
-        // This would then call an event with an enum of the BarkEvent and each AI could do its own bark accordingly.
-        public void Bark(string message)
+        public virtual void Bark(BarkType barkType)
         {
-            var chatManager = IoCManager.Resolve<IChatManager>();
-            chatManager.EntitySay(SelfEntity, message);
+            return;
         }
 
         public override void Setup()

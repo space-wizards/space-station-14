@@ -7,8 +7,18 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.WorldState
 {
+    /// <summary>
+    /// The blackboard functions as an AI's repository of knowledge in a common format.
+    /// </summary>
     public sealed class Blackboard
     {
+        // Some stuff like "My Health" is easy to represent as components but abstract stuff like "How much food is nearby"
+        // is harder. This also allows data to be cached if it's being hit frequently.
+        
+        // This also stops you from re-writing the same boilerplate everywhere of stuff like "Do I have OuterClothing on?"
+        
+        // Eventually a Group blackboard will be added where AI can share knowledge with each other
+        
         // Cache the known types
         private static readonly Lazy<List<Type>> _aiStates = new Lazy<List<Type>>(GetStates);
 

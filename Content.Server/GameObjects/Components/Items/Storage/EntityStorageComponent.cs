@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components
                 ToggleOpen();
         }
 
-        private void ToggleOpen()
+        public void ToggleOpen()
         {
             if (Open)
             {

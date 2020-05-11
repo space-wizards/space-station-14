@@ -18,7 +18,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         private PathfindingNode _startNode;
         private PathfindingNode _endNode;
         private PathfindingArgs _pathfindingArgs;
-        private CancellationToken _cancellationToken;
 
         public AStarPathfindingJob(
             double maxTime,

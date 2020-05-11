@@ -1,8 +1,4 @@
-using System.Collections.Generic;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
-using Content.Server.AI.Operators.Inventory;
-using Content.Server.AI.Operators.Movement;
-using Content.Server.AI.Utility.AiLogic;
+using Content.Server.AI.Operators.Sequences;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Hands;
@@ -27,11 +23,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators = new Queue<IOperator>(new IOperator[]
-            {
-                new MoveToEntityOperator(Owner, _entity),
-                new PickupEntityOperator(Owner, _entity),
-            });
+            ActionOperators = new GoPickupEntitySequence(Owner, _entity).Sequence;
         }
 
         protected override Consideration[] Considerations => new Consideration[]

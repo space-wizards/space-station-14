@@ -10,6 +10,7 @@ namespace Content.Server.AI.Utility.BehaviorSets
         {
             Actions = new IAiUtility[]
             {
+                new CloseLastEntityStorage(Owner), 
                 new WanderAndWait(Owner),
             };
         }

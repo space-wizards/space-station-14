@@ -13,6 +13,7 @@ namespace Content.Server.AI.Utility.AiLogic
             base.Setup();
             BehaviorSets.Add(typeof(ClothingBehaviorSet), new ClothingBehaviorSet(SelfEntity));
             BehaviorSets.Add(typeof(HungerBehaviorSet), new HungerBehaviorSet(SelfEntity));
+            BehaviorSets.Add(typeof(ThirstBehaviorSet), new ThirstBehaviorSet(SelfEntity));;
             BehaviorSets.Add(typeof(SpirateBehaviorSet), new SpirateBehaviorSet(SelfEntity));
             BehaviorSets.Add(typeof(IdleBehaviorSet), new IdleBehaviorSet(SelfEntity));
             SortActions();

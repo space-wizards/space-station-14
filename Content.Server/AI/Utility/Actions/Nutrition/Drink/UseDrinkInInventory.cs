@@ -1,12 +1,8 @@
 using System.Collections.Generic;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators.Inventory;
+using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Hands;
-using Content.Server.AI.Utility.Considerations.Nutrition;
 using Content.Server.AI.Utility.Considerations.Nutrition.Drink;
 using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;

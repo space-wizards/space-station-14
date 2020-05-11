@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.AI.HTN.Tasks.Primitive.Operators;
+using Content.Server.AI.Operators;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;

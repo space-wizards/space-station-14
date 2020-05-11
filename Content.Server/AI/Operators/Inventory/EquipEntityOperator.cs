@@ -1,4 +1,3 @@
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -6,8 +5,8 @@ namespace Content.Server.AI.Operators.Inventory
 {
     public sealed class EquipEntityOperator : IOperator
     {
-        private IEntity _owner;
-        private IEntity _entity;
+        private readonly IEntity _owner;
+        private readonly IEntity _entity;
         public EquipEntityOperator(IEntity owner, IEntity entity)
         {
             _owner = owner;

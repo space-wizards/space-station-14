@@ -1,13 +1,13 @@
 using Content.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.AI.HTN.Tasks.Primitive.Operators.Inventory
+namespace Content.Server.AI.Operators.Inventory
 {
-    public class DropHandItems : IOperator
+    public class DropHandItemsOperator : IOperator
     {
-        private IEntity _owner;
+        private readonly IEntity _owner;
 
-        public DropHandItems(IEntity owner)
+        public DropHandItemsOperator(IEntity owner)
         {
             _owner = owner;
         }

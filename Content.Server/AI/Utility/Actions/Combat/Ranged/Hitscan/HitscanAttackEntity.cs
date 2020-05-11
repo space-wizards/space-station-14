@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.AI.HTN.Tasks.Primitive.Operators;
+using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Combat.Ranged;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.AiLogic;

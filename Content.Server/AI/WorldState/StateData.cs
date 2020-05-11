@@ -38,9 +38,39 @@ namespace Content.Server.AI.WorldState
 
         public abstract T GetValue();
     }
+    
+    /// <summary>
+    /// For when we want to set StateData but not reset it when re-planning actions
+    /// Useful for group blackboard sharing or to avoid repeating the same action (e.g. bark phrases).
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public abstract class StoredStateData<T> : IAiState
+    {
+        // Probably not the best class name but couldn't think of anything better
+        public abstract string Name { get; }
+        private IEntity Owner { get; set; }
+
+        private T _value;
+
+        public void Setup(IEntity owner)
+        {
+            Owner = owner;
+        }
+
+        public virtual void SetValue(T value)
+        {
+            _value = value;
+        }
+
+        public T GetValue()
+        {
+            return _value;
+        }
+    }
 
     /// <summary>
     /// This is state data that is transient and forgotten every time we re-plan
+    /// e.g. "Current Target" gets updated for every action we consider
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class PlanningStateData<T> : IAiState, IPlanningState
@@ -68,7 +98,8 @@ namespace Content.Server.AI.WorldState
     }
 
     /// <summary>
-    /// This is state data that is cached for n seconds before being discarded. Mostly useful to get nearby components and store the value.
+    /// This is state data that is cached for n seconds before being discarded.
+    /// Mostly useful to get nearby components and store the value.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class CachedStateData<T> : IAiState, ICachedState

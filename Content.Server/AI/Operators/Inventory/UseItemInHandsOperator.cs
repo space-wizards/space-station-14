@@ -1,20 +1,15 @@
 using Content.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.AI.HTN.Tasks.Primitive.Operators.Inventory
+namespace Content.Server.AI.Operators.Inventory
 {
     /// <summary>
     /// Will find the item in storage, put it in an active hand, then use it
     /// </summary>
     public class UseItemInHandsOperator : IOperator
     {
-        // Output variables
-
-        // Instance variables
-
-        // Input variables
-        private IEntity _owner;
-        private IEntity _target;
+        private readonly IEntity _owner;
+        private readonly IEntity _target;
 
         public UseItemInHandsOperator(IEntity owner, IEntity target)
         {
