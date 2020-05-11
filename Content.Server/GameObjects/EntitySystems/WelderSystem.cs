@@ -8,16 +8,16 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     ///     Despite the name, it's only really used for the welder logic in tools. Go figure.
     /// </summary>
-    public class ToolSystem : EntitySystem
+    public class WelderSystem : EntitySystem
     {
-        private readonly HashSet<ToolComponent> _activeWelders = new HashSet<ToolComponent>();
+        private readonly HashSet<WelderComponent> _activeWelders = new HashSet<WelderComponent>();
 
-        public bool Subscribe(ToolComponent welder)
+        public bool Subscribe(WelderComponent welder)
         {
             return _activeWelders.Add(welder);
         }
 
-        public bool Unsubscribe(ToolComponent welder)
+        public bool Unsubscribe(WelderComponent welder)
         {
             return _activeWelders.Remove(welder);
         }

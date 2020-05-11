@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -13,16 +14,17 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    public class ToolComponent : SharedToolComponent, IItemStatus
+    [ComponentReference(typeof(ToolComponent))]
+    public class WelderComponent : ToolComponent, IItemStatus
     {
+        public override string Name => "Welder";
+        public override uint? NetID => ContentNetIDs.WELDER;
+
         private Tool _behavior;
-
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
-
-        private bool _statusShowBehavior;
-
-        [ViewVariables] public bool StatusShowBehavior => _statusShowBehavior;
-
+        [ViewVariables] public float FuelCapacity { get; private set; }
+        [ViewVariables] public float Fuel { get; private set; }
+        [ViewVariables] public bool Activated { get; private set; }
         [ViewVariables]
         public override Tool Behavior
         {
@@ -32,27 +34,28 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         public override void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _statusShowBehavior, "statusShowBehavior", false);
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is ToolComponentState tool)) return;
+            if (!(curState is WelderComponentState weld))
+                return;
 
-            _behavior = tool.Behavior;
+            FuelCapacity = weld.FuelCapacity;
+            Fuel = weld.Fuel;
+            Activated = weld.Activated;
+            _behavior = weld.Behavior;
             _uiUpdateNeeded = true;
-
         }
 
         public Control MakeControl() => new StatusControl(this);
 
         private sealed class StatusControl : Control
         {
-            private readonly ToolComponent _parent;
+            private readonly WelderComponent _parent;
             private readonly RichTextLabel _label;
 
-            public StatusControl(ToolComponent parent)
+            public StatusControl(WelderComponent parent)
             {
                 _parent = parent;
                 _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
@@ -72,11 +75,14 @@ namespace Content.Client.GameObjects.Components.Interactable
 
                 _parent._uiUpdateNeeded = false;
 
-                if(!_parent.StatusShowBehavior)
-                    _label.SetMarkup(string.Empty);
-                else
-                    _label.SetMarkup(_parent.Behavior.ToString());
+                if (_parent.Behavior == Tool.Welder)
+                {
+                    var fuelCap = _parent.FuelCapacity;
+                    var fuel = _parent.Fuel;
 
+                    _label.SetMarkup(Loc.GetString("Fuel: [color={0}]{1}/{2}[/color]",
+                        fuel < fuelCap / 4f ? "darkorange" : "orange", Math.Round(fuel), fuelCap));
+                }
             }
         }
     }

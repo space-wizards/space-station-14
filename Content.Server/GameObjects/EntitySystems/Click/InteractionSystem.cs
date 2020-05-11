@@ -738,10 +738,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
                     case Tool.Welder:
                         var welderList = attacked.GetAllComponents<IWelderAct>().ToList();
+                        var welder = (WelderComponent) tool;
                         var welderAttackBy = new WelderActEventArgs()
                         {
                             User = user, ClickLocation = clickLocation, AttackWith = weapon,
-                            Fuel = tool.Fuel, FuelCapacity = tool.FuelCapacity
+                            Fuel = welder.Fuel, FuelCapacity = welder.FuelCapacity
                         };
 
                         foreach (var comp in welderList)

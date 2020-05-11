@@ -60,8 +60,7 @@
       reagents:
         - ReagentId: chem.WeldingFuel
           Quantity: 100
-  - type: Tool
-    behavior: enum.Tool.Welder
+  - type: Welder
     useSoundCollection: Welder
 
 - type: entity

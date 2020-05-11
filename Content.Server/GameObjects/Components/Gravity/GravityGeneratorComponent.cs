@@ -1,5 +1,5 @@
 using Content.Server.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -19,7 +19,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IAttackBy, IBreakAct, IAttackHand
+    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IWelderAct, IBreakAct, IAttackHand
     {
         private BoundUserInterface _userInterface;
 
@@ -98,29 +98,25 @@ namespace Content.Server.GameObjects.Components.Gravity
             return true;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool WelderAct(WelderActEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent<WelderComponent>(out var welder)) return false;
-            if (welder.TryUse(5.0f))
-            {
-                // Repair generator
-                var damagable = Owner.GetComponent<DamageableComponent>();
-                var breakable = Owner.GetComponent<BreakableComponent>();
-                damagable.HealAllDamage();
-                breakable.broken = false;
-                _intact = true;
+            var welder = (WelderComponent)eventArgs.ToolComponent;
+            if (!welder.TryWeld(5.0f)) return false;
+            // Repair generator
+            var damageable = Owner.GetComponent<DamageableComponent>();
+            var breakable = Owner.GetComponent<BreakableComponent>();
+            damageable.HealAllDamage();
+            breakable.broken = false;
+            _intact = true;
 
-                var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-                var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
+            var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+            var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
 
-                entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
-                notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
+            entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
+            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
 
-                return true;
-            } else
-            {
-                return false;
-            }
+            return true;
+
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)

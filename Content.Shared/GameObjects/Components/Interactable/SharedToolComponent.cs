@@ -25,17 +25,23 @@ namespace Content.Shared.GameObjects.Components.Interactable
     [NetSerializable, Serializable]
     public class ToolComponentState : ComponentState
     {
-        public float FuelCapacity { get; }
-        public float Fuel { get; }
-        public bool Activated { get; }
         public Tool Behavior { get; }
 
         public ToolComponentState(Tool behavior) : base(ContentNetIDs.TOOL)
         {
             Behavior = behavior;
         }
+    }
 
-        public ToolComponentState(float fuelCapacity, float fuel, bool activated) : base(ContentNetIDs.TOOL)
+    [NetSerializable, Serializable]
+    public class WelderComponentState : ComponentState
+    {
+        public float FuelCapacity { get; }
+        public float Fuel { get; }
+        public bool Activated { get; }
+        public Tool Behavior { get; }
+
+        public WelderComponentState(float fuelCapacity, float fuel, bool activated) : base(ContentNetIDs.WELDER)
         {
             FuelCapacity = fuelCapacity;
             Fuel = fuel;

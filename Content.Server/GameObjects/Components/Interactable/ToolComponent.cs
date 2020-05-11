@@ -32,16 +32,6 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     public class ToolComponent : SharedToolComponent, IExamine, IAfterAttack, IUse, IAttack
     {
-        /// <summary>
-        /// Default Cost of using the welder fuel for an action
-        /// </summary>
-        public const float DefaultFuelCost = 10;
-
-        /// <summary>
-        /// Rate at which we expunge fuel from ourselves when activated
-        /// </summary>
-        public const float FuelLossRate = 0.5f;
-
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
@@ -52,16 +42,12 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private AudioSystem _audioSystem;
         private InteractionSystem _interactionSystem;
-        private ToolSystem _toolSystem;
-
-        private SolutionComponent _solutionComponent;
         private SpriteComponent _spriteComponent;
 
-        private Tool _behavior = Tool.Wrench;
-        private float _speedModifier = 1;
-        private bool _welderLit = false;
+        protected Tool _behavior = Tool.Wrench;
         private string _useSound;
         private string _useSoundCollection;
+        private float _speedModifier = 1;
 
         [ViewVariables]
         public override Tool Behavior
@@ -74,12 +60,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
-        [ViewVariables]
-        public float Fuel => _solutionComponent?.Solution.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
-
-        [ViewVariables]
-        public float FuelCapacity => _solutionComponent?.MaxVolume.Float() ?? 0f;
-
         /// <summary>
         ///     For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
         /// </summary>
@@ -88,20 +68,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             get => _speedModifier;
             set => _speedModifier = value;
-        }
-
-        /// <summary>
-        /// Status of welder, whether it is ignited
-        /// </summary>
-        [ViewVariables]
-        public bool WelderLit
-        {
-            get => _welderLit;
-            private set
-            {
-                _welderLit = value;
-                Dirty();
-            }
         }
 
         public string UseSound
@@ -122,9 +88,6 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
             _interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-            _toolSystem = _entitySystemManager.GetEntitySystem<ToolSystem>();
-
-            Owner.TryGetComponent(out _solutionComponent);
             Owner.TryGetComponent(out _spriteComponent);
         }
 
@@ -132,8 +95,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             base.ExposeData(serializer);
 
-            if(serializer.Reading)
-                _behavior = (Tool)serializer.ReadStringEnumKey("behavior");
+            if (serializer.Reading)
+            {
+                try
+                {
+                    _behavior = (Tool)serializer.ReadStringEnumKey("behavior");
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
             serializer.DataField(ref _speedModifier, "speed", 1);
             serializer.DataField(ref _useSound, "useSound", string.Empty);
             serializer.DataField(ref _useSoundCollection, "useSoundCollection", string.Empty);
@@ -142,74 +114,12 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         ///     Status modifier which determines whether or not we can act as a tool at this time
         /// </summary>
-        public bool CanUse()
+        public virtual bool CanUse()
         {
-            return _behavior != Tool.Welder || CanWeld(DefaultFuelCost);
-        }
-
-        public bool TryWeld(float value)
-        {
-            if (!WelderLit || !CanWeld(value) || _solutionComponent == null)
-            {
-                return false;
-            }
-
-            return _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
-        }
-
-        public bool CanWeld(float value)
-        {
-            return Fuel > value || Behavior != Tool.Welder;
-        }
-
-        public bool CanLitWelder()
-        {
-            return Fuel > 0 || Behavior != Tool.Welder;
-        }
-
-        /// <summary>
-        /// Deactivates welding tool if active, activates welding tool if possible
-        /// </summary>
-        /// <returns></returns>
-        public bool ToggleWelderStatus()
-        {
-            if (WelderLit)
-            {
-                WelderLit = false;
-                // Layer 1 is the flame.
-                _spriteComponent.LayerSetVisible(1, false);
-                PlaySoundCollection("WelderOff", -5);
-                _toolSystem.Unsubscribe(this);
-                return true;
-            }
-
-            if (!CanLitWelder()) return false;
-
-            WelderLit = true;
-            _spriteComponent.LayerSetVisible(1, true);
-            PlaySoundCollection("WelderOn", -5);
-            _toolSystem.Subscribe(this);
             return true;
         }
 
-        public void OnUpdate(float frameTime)
-        {
-            if (Behavior != Tool.Welder || !WelderLit)
-            {
-                return;
-            }
-
-            _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
-
-            if (Fuel == 0)
-            {
-                ToggleWelderStatus();
-            }
-
-            Dirty();
-        }
-
-        private void PlaySoundCollection(string name, float volume=-5f)
+        protected void PlaySoundCollection(string name, float volume=-5f)
         {
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(name);
             var file = _robustRandom.Pick(soundCollection.PickFiles);
@@ -227,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public override ComponentState GetComponentState()
         {
-            return Behavior == Tool.Welder ? new ToolComponentState(FuelCapacity, Fuel, WelderLit) : new ToolComponentState(Behavior);
+            return new ToolComponentState(Behavior);
         }
 
         public void AfterAttack(AfterAttackEventArgs eventArgs)
@@ -256,42 +166,17 @@ namespace Content.Server.GameObjects.Components.Interactable
             tileItem.Transform.WorldPosition += (0.2f, 0.2f);
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        public virtual bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            Logger.Info(Behavior.ToString());
-
-            switch (Behavior)
-            {
-                case Tool.Welder:
-                    return ToggleWelderStatus();
-            }
-
             return false;
         }
 
-        public void Examine(FormattedMessage message)
+        public virtual void Examine(FormattedMessage message)
         {
-            switch (Behavior)
-            {
-                case Tool.Welder:
-                    if (WelderLit)
-                    {
-                        message.AddMarkup(Loc.GetString("[color=orange]Lit[/color]\n"));
-                    }
-                    else
-                    {
-                        message.AddText(Loc.GetString("Not lit\n"));
-                    }
-
-                    message.AddMarkup(Loc.GetString("Fuel: [color={0}]{1}/{2}[/color].",
-                        Fuel < FuelCapacity / 4f ? "darkorange" : "orange", Math.Round(Fuel), FuelCapacity));
-                    break;
-            }
         }
 
-        public void Attack(AttackEventArgs eventArgs)
+        public virtual void Attack(AttackEventArgs eventArgs)
         {
-
         }
     }
 }
