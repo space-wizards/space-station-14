@@ -214,13 +214,10 @@ namespace Content.Server.GameObjects.Components.Doors
             }
 
             if (State == DoorState.Closed)
-            {
                 Open();
-            }
             else if(State == DoorState.Open)
-            {
                 Close();
-            }
+
             return true;
 
         }

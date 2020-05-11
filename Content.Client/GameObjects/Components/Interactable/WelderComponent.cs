@@ -25,12 +25,7 @@ namespace Content.Client.GameObjects.Components.Interactable
         [ViewVariables] public float FuelCapacity { get; private set; }
         [ViewVariables] public float Fuel { get; private set; }
         [ViewVariables] public bool Activated { get; private set; }
-        [ViewVariables]
-        public override Tool Behavior
-        {
-            get => _behavior;
-            set {}
-        }
+        [ViewVariables] public override Tool Behavior => _behavior;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

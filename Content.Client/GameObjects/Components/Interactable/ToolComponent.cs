@@ -16,19 +16,11 @@ namespace Content.Client.GameObjects.Components.Interactable
     public class ToolComponent : SharedToolComponent, IItemStatus
     {
         private Tool _behavior;
-
-        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
-
         private bool _statusShowBehavior;
 
+        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public bool StatusShowBehavior => _statusShowBehavior;
-
-        [ViewVariables]
-        public override Tool Behavior
-        {
-            get => _behavior;
-            set {}
-        }
+        [ViewVariables] public override Tool Behavior => _behavior;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
