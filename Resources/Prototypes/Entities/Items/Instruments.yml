@@ -19,9 +19,15 @@
   - type: Instrument
     program: 2
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/h_synthesizer.png
+    sprite: Objects/Instruments/h_synthesizer.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/h_synthesizer.png
+    sprite: Objects/Instruments/h_synthesizer.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/h_synthesizer.rsi
+
 
 - type: entity
   name: Acoustic Guitar
@@ -31,9 +37,14 @@
   - type: Instrument
     program: 25
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/guitar.png
+    sprite: Objects/Instruments/guitar.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/guitar.png
+    sprite: Objects/Instruments/guitar.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/guitar.rsi
 
 - type: entity
   name: Violin
@@ -43,9 +54,14 @@
   - type: Instrument
     program: 40
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/violin.png
+    sprite: Objects/Instruments/violin.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/violin.png
+    sprite: Objects/Instruments/violin.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/violin.rsi
 
 - type: entity
   name: Trumpet
@@ -55,9 +71,9 @@
   - type: Instrument
     program: 56
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/trumpet.png
+    texture: Objects/Instruments/otherinstruments.rsi/trumpet.png
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/trumpet.png
+    texture: Objects/Instruments/otherinstruments.rsi/trumpet.png
 
 - type: entity
   name: Electric Guitar
@@ -67,9 +83,14 @@
   - type: Instrument
     program: 27
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/eguitar.png
+    sprite: Objects/Instruments/eguitar.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/eguitar.png
+    sprite: Objects/Instruments/eguitar.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/eguitar.rsi
 
 - type: entity
   name: Accordion
@@ -79,9 +100,14 @@
   - type: Instrument
     program: 21
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/accordion.png
+    sprite: Objects/Instruments/accordion.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/accordion.png
+    sprite: Objects/Instruments/accordion.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/accordion.rsi
 
 - type: entity
   name: Harmonica
@@ -91,9 +117,14 @@
   - type: Instrument
     program: 22
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/harmonica.png
+    sprite: Objects/Instruments/harmonica.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/harmonica.png
+    sprite: Objects/Instruments/harmonica.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/harmonica.rsi
 
 - type: entity
   name: Recorder
@@ -103,9 +134,14 @@
   - type: Instrument
     program: 74
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/recorder.png
+    sprite: Objects/Instruments/recorder.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/recorder.png
+    sprite: Objects/Instruments/recorder.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/recorder.rsi
 
 - type: entity
   name: Trombone
@@ -115,9 +151,14 @@
   - type: Instrument
     program: 57
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/trombone.png
+    sprite: Objects/Instruments/trombone.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/trombone.png
+    sprite: Objects/Instruments/trombone.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/trombone.rsi
 
 - type: entity
   name: Saxophone
@@ -127,9 +168,14 @@
   - type: Instrument
     program: 67
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/saxophone.png
+    sprite: Objects/Instruments/saxophone.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/saxophone.png
+    sprite: Objects/Instruments/saxophone.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/saxophone.rsi
 
 - type: entity
   name: Glockenspiel
@@ -139,6 +185,11 @@
   - type: Instrument
     program: 9
   - type: Sprite
-    texture: Objects/Instruments/musician.rsi/glockenspiel.png
+    sprite: Objects/Instruments/glockenspiel.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Instruments/musician.rsi/glockenspiel.png
+    sprite: Objects/Instruments/glockenspiel.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/glockenspiel.rsi
