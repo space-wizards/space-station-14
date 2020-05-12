@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Content.Client.GameObjects.Components.HUD.Hotbar;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
@@ -75,7 +76,13 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            hotbarComponent.Abilities[index].Activate(args);
+            var ability = hotbarComponent.Abilities.ElementAtOrDefault(index);
+            if (ability == null)
+            {
+                return false;
+            }
+
+            ability.Activate(args);
             return true;
         }
     }

@@ -8,12 +8,14 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Mobs.Abilities
@@ -23,9 +25,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 649
-        public override string Name => "LaserAbility";
 
         private const float MaxLength = 20;
 
@@ -44,29 +46,30 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _spritename, "fireSprite", "Objects/laser.png");
+            serializer.DataField(ref _spritename, "fireSprite", "Objects/Projectiles/laser.png");
             serializer.DataField(ref _damage, "damage", 10);
             serializer.DataField(ref _baseFireCost, "baseFireCost", 300);
             serializer.DataField(ref _lowerChargeLimit, "lowerChargeLimit", 10);
-            serializer.DataField(ref _fireSound, "fireSound", "/Audio/laser.ogg");
+            serializer.DataField(ref _fireSound, "fireSound", "Audio/Guns/Gunshots/laser.ogg");
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {
-            base.HandleMessage(message, component);
+            base.HandleNetworkMessage(message, netChannel, session);
 
             switch (message)
             {
                 case FireLaserMessage msg:
                 {
-                    Fire(msg.Player, msg.Coordinates);
+                    Fire(msg.Coordinates);
                     break;
                 }
             }
         }
 
-        private void Fire(IEntity user, GridCoordinates clickLocation)
+        private void Fire(GridCoordinates clickLocation)
         {
+            var user = Owner;
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 
@@ -108,7 +111,10 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
             };
             var mgr = IoCManager.Resolve<IEntitySystemManager>();
             mgr.GetEntitySystem<EffectSystem>().CreateParticle(message);
-            Owner.GetComponent<SoundComponent>().Play(_fireSound, AudioParams.Default.WithVolume(-5));
+            if (Owner.TryGetComponent<SoundComponent>(out var soundComponent))
+            {
+                soundComponent.Play(_fireSound, AudioParams.Default.WithVolume(-5));
+            }
         }
     }
 }

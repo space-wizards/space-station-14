@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
 
         private const float MaxLength = 20;
 
-        public List<Ability> Abilities = new List<Ability>();
+        public List<Ability> Abilities;
 
         string _spritename;
         private int _damage;
@@ -42,14 +42,10 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
         {
             base.Initialize();
 
+            Abilities = new List<Ability>();
+
             var ability = new Ability("Textures/Objects/Guns/Laser/laser_cannon.rsi/laser_cannon.png", TriggerAbility, new TimeSpan(10));
-
             Abilities.Add(ability);
-
-            if (Owner.TryGetComponent(out HotbarComponent hotbarComponent))
-            {
-                hotbarComponent.AddAbility(ability);
-            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -94,8 +90,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
             ability.Start = _gameTiming.CurTime;
             ability.End = ability.Start + ability.Cooldown;
 
-            var player = session.AttachedEntity;
-            SendNetworkMessage(new FireLaserMessage(player, coords));
+            SendNetworkMessage(new FireLaserMessage(coords));
             return;
         }
     }
