@@ -5,10 +5,10 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/discordia-space/CEV-Eris/raw/d71760fe0c0e9ea3a9aa8e9e794daf7e7f892d8c/icons/inventory/suit/mob.dmi",
+  "copyright": "Taken from https://github.com/tgstation/",
   "states": [
     {
-      "name": "equipped-OUTERCLOTHING",
+      "name": "equipped-INNERCLOTHING",
       "directions": 4,
       "delays": [
         [
@@ -20,15 +20,6 @@
         [
           1
         ],
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "icon",
-      "directions": 1,
-      "delays": [
         [
           1
         ]
@@ -65,6 +56,15 @@
         [
           1
         ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "icon",
+      "directions": 1,
+      "delays": [
         [
           1
         ]

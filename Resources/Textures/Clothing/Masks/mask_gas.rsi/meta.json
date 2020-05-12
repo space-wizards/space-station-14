@@ -8,7 +8,7 @@
     "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 9f4bd6e0d5e457b6a36f3c505a8194116a666d6f",
     "states": [
         {
-            "name": "gas_mask",
+            "name": "icon",
             "directions": 1,
             "delays": [ [ 1.0 ] ]
         },
