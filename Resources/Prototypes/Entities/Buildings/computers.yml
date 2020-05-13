@@ -168,7 +168,7 @@
       
 - type: entity
   id: computerBodyScanner
-  parent: computerBase
+  parent: ComputerBase
   name: Body Scanner Computer
   components:
   - type: BodyScanner
