@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         private float _stunCap = 20f;
         private float _knockdownCap = 20f;
         private float _helpKnockdownRemove = 1f;
-        private float _helpInterval = 0.5f;
+        private float _helpInterval = 1f;
 
         private float _stunnedTimer = 0f;
         private float _knockdownTimer = 0f;
@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             base.ExposeData(serializer);
             serializer.DataField(ref _stunCap, "stunCap", 20f);
             serializer.DataField(ref _knockdownCap, "knockdownCap", 20f);
-            serializer.DataField(ref _helpInterval, "helpInterval", 0.5f);
+            serializer.DataField(ref _helpInterval, "helpInterval", 1f);
             serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
         }
 
