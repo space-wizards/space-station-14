@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 switch (state)
                 {
-                    case SharedSpeciesComponent.MobState.Stand:
+                    case SharedSpeciesComponent.MobState.Standing:
                         sprite.Rotation = 0;
                         break;
                     case SharedSpeciesComponent.MobState.Down:

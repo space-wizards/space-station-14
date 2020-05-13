@@ -1,8 +1,14 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Mobs;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects
 {
@@ -96,10 +102,15 @@ namespace Content.Server.GameObjects
     {
         public void EnterState(IEntity entity)
         {
+            if(entity.TryGetComponent(out StunnableComponent stun))
+                stun.CancelAll();
+
+            StandingStateHelper.Down(entity);
         }
 
         public void ExitState(IEntity entity)
         {
+            StandingStateHelper.Standing(entity);
         }
 
         public bool IsConscious => false;
@@ -167,11 +178,10 @@ namespace Content.Server.GameObjects
     {
         public void EnterState(IEntity entity)
         {
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
-            {
-                var newState = SharedSpeciesComponent.MobState.Down;
-                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
-            }
+            if(entity.TryGetComponent(out StunnableComponent stun))
+                stun.CancelAll();
+
+            StandingStateHelper.Down(entity);
 
             if (entity.TryGetComponent(out CollidableComponent collidable))
             {
@@ -181,11 +191,7 @@ namespace Content.Server.GameObjects
 
         public void ExitState(IEntity entity)
         {
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
-            {
-                var newState = SharedSpeciesComponent.MobState.Stand;
-                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
-            }
+            StandingStateHelper.Standing(entity);
 
             if (entity.TryGetComponent(out CollidableComponent collidable))
             {

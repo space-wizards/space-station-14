@@ -2,9 +2,14 @@ using System;
 using System.Threading;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Mobs;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timers;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
@@ -13,109 +18,111 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class StunnableComponent : Component, IActionBlocker
+    public class StunnableComponent : Component, IActionBlocker, IAttackHand
     {
+        [Dependency] private IEntitySystemManager _entitySystemManager;
         [Dependency] private ITimerManager _timerManager;
 
         private bool _stunned = false;
         private bool _knocked = false;
+        private bool _canHelp = true;
 
-        private int _stunCapMs = 20000;
-        private int _knockdownCapMs = 20000;
+        private float _stunCap = 20f;
+        private float _knockdownCap = 20f;
+        private float _helpKnockdownRemove = 1f;
+        private float _helpInterval = 1f;
 
-        private Timer _stunTimer;
-        private Timer _knockdownTimer;
-
-        private CancellationTokenSource _stunTimerCancellation;
-        private CancellationTokenSource _knockdownTimerCancellation;
+        private float _stunnedTimer = 0f;
+        private float _knockdownTimer = 0f;
 
         public override string Name => "Stunnable";
 
         [ViewVariables] public bool Stunned => _stunned;
         [ViewVariables] public bool KnockedDown => _knocked;
 
-        public void Stun(int milliseconds)
+        public void Stun(float seconds)
         {
-            if (_stunTimer != null)
-            {
-                _stunTimerCancellation.Cancel();
-                milliseconds += _stunTimer.Time;
-            }
+            seconds = Math.Min(seconds + _stunnedTimer, _stunCap);
 
-            milliseconds = Math.Min(milliseconds, _stunCapMs);
-
-            DropItemsInHands();
+            StandingStateHelper.DropAllItemsInHands(Owner);
 
             _stunned = true;
-            _stunTimerCancellation = new CancellationTokenSource();
-            _stunTimer = new Timer(milliseconds, false, OnStunTimerFired);
-            _timerManager.AddTimer(_stunTimer, _stunTimerCancellation.Token);
+            _stunnedTimer = seconds;
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            Timer.Spawn(10000, () => Paralyze(5000));
+            Timer.Spawn(10000, () => Paralyze(15f));
         }
 
-        public void Knockdown(int milliseconds)
+        public void Knockdown(float seconds)
         {
-            if (_knockdownTimer != null)
-            {
-                _knockdownTimerCancellation.Cancel();
-                milliseconds += _knockdownTimer.Time;
-            }
+            seconds = MathF.Min(_knockdownTimer + seconds, _knockdownCap);
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                var state = SharedSpeciesComponent.MobState.Down;
-                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, state);
-            }
-
-            milliseconds = Math.Min(milliseconds, _knockdownCapMs);
-
-            DropItemsInHands();
+            StandingStateHelper.Down(Owner);
 
             _knocked = true;
-            _knockdownTimerCancellation = new CancellationTokenSource();
-            _knockdownTimer = new Timer(milliseconds, false, OnKnockdownTimerFired);
-            _timerManager.AddTimer(_knockdownTimer, _knockdownTimerCancellation.Token);
+            _knockdownTimer = seconds;
         }
 
-        private void DropItemsInHands()
+        public void Paralyze(float seconds)
         {
-            if (!Owner.TryGetComponent(out IHandsComponent hands)) return;
-
-            foreach (var heldItem in hands.GetAllHeldItems())
-            {
-                hands.Drop(heldItem.Owner);
-            }
+            Stun(seconds);
+            Knockdown(seconds);
         }
 
-        private void OnStunTimerFired()
+        /// <summary>
+        ///     Used when
+        /// </summary>
+        public void CancelAll()
         {
-            _stunned = false;
-            _stunTimer = null;
-            _stunTimerCancellation = null;
-        }
-
-        private void OnKnockdownTimerFired()
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                var state = SharedSpeciesComponent.MobState.Stand;
-                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, state);
-            }
-
             _knocked = false;
-            _knockdownTimer = null;
-            _knockdownTimerCancellation = null;
+            _stunned = false;
+
+            _knockdownTimer = 0f;
+            _stunnedTimer = 0f;
         }
 
-        public void Paralyze(int milliseconds)
+        public bool AttackHand(AttackHandEventArgs eventArgs)
         {
-            Stun(milliseconds);
-            Knockdown(milliseconds);
+            if (!_canHelp || KnockedDown)
+                return false;
+
+            _canHelp = false;
+            Timer.Spawn(((int)_helpInterval*1000), () => _canHelp = true);
+
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
+                .Play("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.5f));
+
+            _knockdownTimer -= _helpKnockdownRemove;
+
+            return true;
+        }
+
+        public void Update(float delta)
+        {
+            if (_knocked)
+            {
+                _knockdownTimer -= delta;
+
+                if (_knockdownTimer <= 0f)
+                {
+                    StandingStateHelper.Standing(Owner);
+
+                    _knocked = false;
+                }
+            }
+
+            if (_stunned)
+            {
+                _stunnedTimer -= delta;
+
+                if (_stunnedTimer <= 0)
+                {
+                    _stunned = false;
+                }
+            }
         }
 
         #region ActionBlockers
