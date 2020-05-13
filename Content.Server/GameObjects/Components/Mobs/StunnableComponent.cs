@@ -24,8 +24,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         [Dependency] private IEntitySystemManager _entitySystemManager;
         [Dependency] private ITimerManager _timerManager;
 
-        private bool _stunned = false;
-        private bool _knocked = false;
         private bool _canHelp = true;
 
         private float _stunCap = 20f;
@@ -38,8 +36,8 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public override string Name => "Stunnable";
 
-        [ViewVariables] public bool Stunned => _stunned;
-        [ViewVariables] public bool KnockedDown => _knocked;
+        [ViewVariables] public bool Stunned => _stunnedTimer > 0f;
+        [ViewVariables] public bool KnockedDown => _knockdownTimer > 0f;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -56,7 +54,6 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             StandingStateHelper.DropAllItemsInHands(Owner);
 
-            _stunned = true;
             _stunnedTimer = seconds;
         }
 
@@ -66,7 +63,6 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             StandingStateHelper.Down(Owner);
 
-            _knocked = true;
             _knockdownTimer = seconds;
         }
 
@@ -81,9 +77,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// </summary>
         public void CancelAll()
         {
-            _knocked = false;
-            _stunned = false;
-
             _knockdownTimer = 0f;
             _stunnedTimer = 0f;
         }
@@ -106,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public void Update(float delta)
         {
-            if (_knocked)
+            if (KnockedDown)
             {
                 _knockdownTimer -= delta;
 
@@ -114,17 +107,17 @@ namespace Content.Server.GameObjects.Components.Mobs
                 {
                     StandingStateHelper.Standing(Owner);
 
-                    _knocked = false;
+                    _knockdownTimer = 0f;
                 }
             }
 
-            if (_stunned)
+            if (Stunned)
             {
                 _stunnedTimer -= delta;
 
                 if (_stunnedTimer <= 0)
                 {
-                    _stunned = false;
+                    _stunnedTimer = 0f;
                 }
             }
         }
