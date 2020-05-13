@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Mobs;
@@ -19,7 +20,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class StunnableComponent : Component, IActionBlocker, IAttackHand
+    public class StunnableComponent : Component, IActionBlocker, IAttackHand, IMoveSpeedModifier
     {
         [Dependency] private IEntitySystemManager _entitySystemManager;
         [Dependency] private ITimerManager _timerManager;
@@ -28,22 +29,39 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private float _stunCap = 20f;
         private float _knockdownCap = 20f;
+        private float _slowdownCap = 20f;
         private float _helpKnockdownRemove = 1f;
         private float _helpInterval = 1f;
 
         private float _stunnedTimer = 0f;
         private float _knockdownTimer = 0f;
+        private float _slowdownTimer = 0f;
+
+        private float _walkModifierOverride = 0f;
+        private float _runModifierOverride = 0f;
 
         public override string Name => "Stunnable";
 
         [ViewVariables] public bool Stunned => _stunnedTimer > 0f;
         [ViewVariables] public bool KnockedDown => _knockdownTimer > 0f;
+        [ViewVariables] public bool SlowedDown => _slowdownTimer > 0f;
+        [ViewVariables] public float StunCap => _stunCap;
+        [ViewVariables] public float KnockdownCap => _knockdownCap;
+        [ViewVariables] public float SlowdownCap => _slowdownCap;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Timer.Spawn(1000, () => Slowdown(20f));
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _stunCap, "stunCap", 20f);
             serializer.DataField(ref _knockdownCap, "knockdownCap", 20f);
+            serializer.DataField(ref _slowdownCap, "slowdownCap", 20f);
             serializer.DataField(ref _helpInterval, "helpInterval", 1f);
             serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
         }
@@ -70,6 +88,19 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             Stun(seconds);
             Knockdown(seconds);
+        }
+
+        public void Slowdown(float seconds, float walkModifierOverride = 0f, float runModifierOverride = 0f)
+        {
+            seconds = MathF.Min(_slowdownTimer + seconds, _slowdownCap);
+
+            _walkModifierOverride = walkModifierOverride;
+            _runModifierOverride = runModifierOverride;
+
+            _slowdownTimer = seconds;
+
+            if(Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
+                movement.RefreshMovementSpeedModifiers();
         }
 
         /// <summary>
@@ -99,6 +130,16 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public void Update(float delta)
         {
+            if (Stunned)
+            {
+                _stunnedTimer -= delta;
+
+                if (_stunnedTimer <= 0)
+                {
+                    _stunnedTimer = 0f;
+                }
+            }
+
             if (KnockedDown)
             {
                 _knockdownTimer -= delta;
@@ -111,13 +152,16 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
             }
 
-            if (Stunned)
+            if (SlowedDown)
             {
-                _stunnedTimer -= delta;
+                _slowdownTimer -= delta;
 
-                if (_stunnedTimer <= 0)
+                if (_slowdownTimer <= 0f)
                 {
-                    _stunnedTimer = 0f;
+                    _slowdownTimer = 0f;
+
+                    if(Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
+                        movement.RefreshMovementSpeedModifiers();
                 }
             }
         }
@@ -146,5 +190,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         public bool CanUnequip() => (!Stunned);
         public bool CanChangeDirection() => true;
         #endregion
+
+        public float WalkSpeedModifier => (SlowedDown ? (_walkModifierOverride <= 0f ? 0.5f : _walkModifierOverride) : 1f);
+        public float SprintSpeedModifier => (SlowedDown ? (_runModifierOverride <= 0f ? 0.5f : _runModifierOverride) : 1f);
     }
 }
