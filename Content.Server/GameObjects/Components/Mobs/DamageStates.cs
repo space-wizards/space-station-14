@@ -77,6 +77,16 @@ namespace Content.Server.GameObjects
         {
             return true;
         }
+
+        bool IActionBlocker.CanEquip()
+        {
+            return true;
+        }
+
+        bool IActionBlocker.CanUnequip()
+        {
+            return true;
+        }
     }
 
     /// <summary>
@@ -135,6 +145,16 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanAttack()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanEquip()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanUnequip()
         {
             return false;
         }
@@ -216,6 +236,16 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanAttack()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanEquip()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanUnequip()
         {
             return false;
         }
