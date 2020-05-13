@@ -28,6 +28,7 @@ p = os.path.join
 
 PLATFORM_WINDOWS = "windows"
 PLATFORM_LINUX = "linux"
+PLATFORM_LINUX_ARM64 = "linux-arm64"
 PLATFORM_MACOS = "mac"
 
 SHARED_IGNORED_RESOURCES = {
@@ -62,7 +63,14 @@ WINDOWS_NATIVES = {
     "freetype6.dll",
     "openal32.dll",
     "swnfd.dll",
-    "glfw3.dll"
+    "glfw3.dll",
+    "fluidsynth.dll",
+    "libglib-2.0-0.dll",
+    "libgobject-2.0-0.dll",
+    "libgthread-2.0-0.dll",
+    "libinstpatch-2.dll",
+    "libintl-8.dll",
+    "libsndfile-1.dll"
 }
 
 LINUX_NATIVES = {
@@ -85,7 +93,7 @@ def main() -> None:
     parser.add_argument("--platform",
                         "-p",
                         action="store",
-                        choices=[PLATFORM_WINDOWS, PLATFORM_MACOS, PLATFORM_LINUX],
+                        choices=[PLATFORM_WINDOWS, PLATFORM_MACOS, PLATFORM_LINUX, PLATFORM_LINUX_ARM64],
                         nargs="*",
                         help="Which platform to build for. If not provided, all platforms will be built")
 
@@ -116,6 +124,11 @@ def main() -> None:
         if not skip_build:
             wipe_bin()
         build_linux(skip_build)
+
+    if PLATFORM_LINUX_ARM64 in platforms:
+        if not skip_build:
+            wipe_bin()
+        build_linux_arm64(skip_build)
 
     if PLATFORM_MACOS in platforms:
         if not skip_build:
@@ -253,7 +266,36 @@ def build_linux(skip_build: bool) -> None:
     copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
     server_zip.close()
 
-def publish_client_server(runtime: str, target_os: str) -> None:
+
+def build_linux_arm64(skip_build: bool) -> None:
+    # Run a full build.
+    print(Fore.GREEN + "Building project for Linux ARM64 (SERVER ONLY)..." + Style.RESET_ALL)
+
+    if not skip_build:
+        subprocess.run([
+            "dotnet",
+            "build",
+            "SpaceStation14.sln",
+            "-c", "Release",
+            "--nologo",
+            "/v:m",
+            "/p:TargetOS=Linux",
+            "/t:Rebuild",
+            "/p:FullRelease=True"
+        ], check=True)
+
+        publish_client_server("linux-arm64", "Linux", True)
+
+    print(Fore.GREEN + "Packaging Linux ARM64 server..." + Style.RESET_ALL)
+    server_zip = zipfile.ZipFile(p("release", "SS14.Server_Linux_ARM64.zip"), "w",
+                                 compression=zipfile.ZIP_DEFLATED)
+    copy_dir_into_zip(p("RobustToolbox", "bin", "Server", "linux-arm64", "publish"), "", server_zip)
+    copy_resources(p("Resources"), server_zip, server=True)
+    copy_content_assemblies(p("Resources", "Assemblies"), server_zip, server=True)
+    server_zip.close()
+
+
+def publish_client_server(runtime: str, target_os: str, actually_only_server: bool = False) -> None:
     # Runs dotnet publish on client and server.
     base = [
         "dotnet", "publish",
@@ -264,8 +306,11 @@ def publish_client_server(runtime: str, target_os: str) -> None:
         "/p:FullRelease=True",
     ]
 
-    subprocess.run(base + ["RobustToolbox/Robust.Client/Robust.Client.csproj"], check=True)
+    if not actually_only_server:
+        subprocess.run(base + ["RobustToolbox/Robust.Client/Robust.Client.csproj"], check=True)
+
     subprocess.run(base + ["RobustToolbox/Robust.Server/Robust.Server.csproj"], check=True)
+
 
 def copy_resources(target, zipf, server):
     # Content repo goes FIRST so that it won't override engine files as that's forbidden.
@@ -368,10 +413,12 @@ def copy_dir_or_file(src: str, dst: str):
     else:
         raise IOError("{} is neither file nor directory. Can't copy.".format(src))
 
+
 def copy_client_natives(fileNames: List[str], zipf: zipfile.ZipFile, zipPath: str):
     for fileName in fileNames:
         zipf.write(p("RobustToolbox", "bin", "Client", fileName), p(zipPath, fileName))
         print(f"writing native {fileName}")
+
 
 if __name__ == '__main__':
     main()

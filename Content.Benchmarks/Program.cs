@@ -6,7 +6,7 @@ namespace Content.Benchmarks
     {
         public static void Main(string[] args)
         {
-            BenchmarkRunner.Run<ComponentManagerGetAllComponents>();
+            BenchmarkRunner.Run<StereoToMonoBenchmark>();
         }
     }
 }

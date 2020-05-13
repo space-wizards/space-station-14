@@ -8,6 +8,7 @@ using Content.Server.Preferences;
 using Content.Server.Sandbox;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
+using Content.Shared.Kitchen;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.IoC;
@@ -28,6 +29,7 @@ namespace Content.Server
             IoCManager.Register<ICargoOrderDataManager, CargoOrderDataManager>();
             IoCManager.Register<IModuleManager, ServerModuleManager>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
+            IoCManager.Register<RecipeManager, RecipeManager>();
         }
     }
 }

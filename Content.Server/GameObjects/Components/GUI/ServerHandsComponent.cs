@@ -151,6 +151,12 @@ namespace Content.Server.GameObjects
             return success;
         }
 
+        public void PutInHandOrDrop(ItemComponent item)
+        {
+            if (!PutInHand(item))
+                item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+        }
+
         public bool CanPutInHand(ItemComponent item)
         {
             foreach (var hand in ActivePriorityEnumerable())
@@ -192,10 +198,14 @@ namespace Content.Server.GameObjects
 
             var inventorySlot = hands[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+
             if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
             {
                 return false;
             }
+
+            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+                return false;
 
             item.RemovedFromSlot();
 

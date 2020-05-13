@@ -42,6 +42,9 @@
         public const uint PAPER = 1037;
         public const uint REAGENT_INJECTOR = 1038;
         public const uint GHOST = 1039;
-        public const uint SURGERY = 1040;
+        public const uint MICROWAVE = 1040;
+        public const uint GRAVITY_GENERATOR = 1041;
+        public const uint SURGERY = 1042;
+
     }
 }

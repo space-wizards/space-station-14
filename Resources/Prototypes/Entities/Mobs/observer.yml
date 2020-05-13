@@ -1,0 +1,28 @@
+- type: entity
+  id: MobObserver
+  name: Observer
+  save: false
+  description: Boo!
+  components:
+  - type: Mind
+  - type: Physics
+    mass: 5
+  - type: Eye
+    zoom: 0.5, 0.5
+    drawFov: false
+  - type: Input
+    context: "ghost"
+  - type: Examiner
+    DoRangeCheck: false
+  - type: IgnorePause
+  - type: Ghost
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    sprite: Mob/ghost.rsi
+    state: animated
+    color: "#fff8"
+
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 14
+    baseWalkSpeed: 7

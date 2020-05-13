@@ -21,6 +21,7 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
         public const string StyleClassLabelBig = "LabelBig";
         public const string StyleClassButtonBig = "ButtonBig";
+        public const string StyleClassPopupMessage = "PopupMessage";
 
         public static readonly Color NanoGold = Color.FromHex("#A88B5E");
 
@@ -41,7 +42,9 @@ namespace Content.Client.UserInterface.Stylesheets
         public StyleNano(IResourceCache resCache) : base(resCache)
         {
             var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
+            var notoSansItalic10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Italic.ttf", 10);
             var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSansItalic12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Italic.ttf", 12);
             var notoSansBold12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 12);
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
             var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
@@ -449,6 +452,19 @@ namespace Content.Client.UserInterface.Stylesheets
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
 
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "sayBox"}, null, null), new[]
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                }),
+
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "emoteBox"}, null, null),
+                    new SelectorElement(typeof(RichTextLabel), null, null, null)),
+                    new[]
+                {
+                    new StyleProperty("font", notoSansItalic12),
+                }),
+
                 // Entity tooltip
                 new StyleRule(
                     new SelectorElement(typeof(PanelContainer), new[] {ExamineSystem.StyleClassEntityTooltip}, null,
@@ -550,6 +566,14 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty("font", notoSans16)
+                    }),
+
+                // Popup messages
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessage}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSansItalic10),
+                        new StyleProperty("font-color", Color.LightGray),
                     }),
 
                 //APC and SMES power state label colors

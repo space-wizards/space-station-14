@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            item.EquippedToSlot();
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
 
             Dirty();
             return true;
@@ -166,11 +166,12 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            item.RemovedFromSlot();
-
             // TODO: The item should be dropped to the container our owner is in, if any.
             var itemTransform = item.Owner.GetComponent<ITransformComponent>();
             itemTransform.GridPosition = Owner.GetComponent<ITransformComponent>().GridPosition;
+
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
+
             Dirty();
             return true;
         }

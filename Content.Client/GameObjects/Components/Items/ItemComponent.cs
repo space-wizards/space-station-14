@@ -51,7 +51,7 @@ namespace Content.Client.GameObjects
             base.ExposeData(serializer);
 
             serializer.DataFieldCached(ref RsiPath, "sprite", null);
-            serializer.DataFieldCached(ref _equippedPrefix, "prefix", null);
+            serializer.DataFieldCached(ref _equippedPrefix, "HeldPrefix", null);
         }
 
         protected RSI GetRSI()

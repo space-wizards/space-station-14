@@ -42,6 +42,3 @@
   - type: Item
     Size: 24
     sprite: Objects/Guns/SMGs/c20r.rsi
-  - type: Item
-    Size: 24
-    sprite: Objects/Guns/SMGs/wt550.rsi

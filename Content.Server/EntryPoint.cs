@@ -4,6 +4,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Preferences;
 using Content.Server.Sandbox;
+using Content.Shared.Kitchen;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
@@ -70,6 +71,7 @@ namespace Content.Server
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
 
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
+
         }
 
         public override void PostInit()
@@ -79,6 +81,7 @@ namespace Content.Server
             _gameTicker.Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
+            IoCManager.Resolve<RecipeManager>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

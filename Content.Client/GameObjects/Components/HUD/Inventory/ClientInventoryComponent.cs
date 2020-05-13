@@ -127,8 +127,7 @@ namespace Content.Client.GameObjects
                 {
                     var (rsi, state) = data.Value;
                     _sprite.LayerSetVisible(slot, true);
-                    _sprite.LayerSetRSI(slot, rsi);
-                    _sprite.LayerSetState(slot, state);
+                    _sprite.LayerSetState(slot, state, rsi);
 
                     if (slot == Slots.INNERCLOTHING)
                     {

@@ -1,6 +1,4 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Content.Client.Utility;
+﻿using Content.Client.Utility;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -116,13 +114,13 @@ namespace Content.Client.GameObjects
             }
         }
 
-        protected override void HandleInventoryKeybind(BaseButton.ButtonEventArgs args, Slots slot)
+        protected override void HandleInventoryKeybind(GUIBoundKeyEventArgs args, Slots slot)
         {
             if (!_inventoryButtons.TryGetValue(slot, out var buttons))
                 return;
             if (!Owner.TryGetSlot(slot, out var item))
                 return;
-            if (_itemSlotManager.OnButtonPressed(args.Event, item))
+            if (_itemSlotManager.OnButtonPressed(args, item))
                 return;
 
             base.HandleInventoryKeybind(args, slot);
@@ -139,6 +137,21 @@ namespace Content.Client.GameObjects
             base.PlayerAttached();
 
             _gameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
+
+            // Update all the buttons to make sure they check out.
+
+            foreach (var (slot, buttons) in _inventoryButtons)
+            {
+                foreach (var button in buttons)
+                {
+                    ClearButton(button, slot);
+                }
+
+                if (Owner.TryGetSlot(slot, out var entity))
+                {
+                    AddToSlot(slot, entity);
+                }
+            }
         }
 
         public override void PlayerDetached()

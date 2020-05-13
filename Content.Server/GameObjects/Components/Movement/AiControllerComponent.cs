@@ -90,6 +90,15 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
+        /// <inheritdoc />
+        [ViewVariables]
+        public float CurrentPushSpeed => 5.0f;
+
+        /// <inheritdoc />
+        [ViewVariables]
+        public float GrabRange => 0.2f;
+
+
         /// <summary>
         ///     Is the entity Sprinting (running)?
         /// </summary>

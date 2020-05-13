@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -169,6 +170,46 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
+    ///     This interface gives components behavior when their owner is put in an inventory slot.
+    /// </summary>
+    public interface IEquipped
+    {
+        void Equipped(EquippedEventArgs eventArgs);
+    }
+
+    public class EquippedEventArgs : EventArgs
+    {
+        public EquippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Slot = slot;
+        }
+
+        public IEntity User { get; }
+        public EquipmentSlotDefines.Slots Slot { get; }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when their owner is removed from an inventory slot.
+    /// </summary>
+    public interface IUnequipped
+    {
+        void Unequipped(UnequippedEventArgs eventArgs);
+    }
+
+    public class UnequippedEventArgs : EventArgs
+    {
+        public UnequippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Slot = slot;
+        }
+
+        public IEntity User { get; }
+        public EquipmentSlotDefines.Slots Slot { get; }
+    }
+
+    /// <summary>
     ///     This interface gives components behavior when being used to "attack".
     /// </summary>
     public interface IAttack
@@ -246,7 +287,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
-    public sealed class InteractionSystem : EntitySystem
+    public sealed class InteractionSystem : SharedInteractionSystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -261,44 +302,13 @@ namespace Content.Server.GameObjects.EntitySystems
             var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
             inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
                 new PointerInputCmdHandler(HandleUseItemInHand));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Attack,
-                new PointerInputCmdHandler(HandleAttack));
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.WideAttack,
+                new PointerInputCmdHandler(HandleWideAttack));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
                 new PointerInputCmdHandler(HandleActivateItemInWorld));
         }
 
-        /// <summary>
-        ///     Checks that these coordinates are within a certain distance without any
-        ///     entity that matches the collision mask obstructing them.
-        ///     If the <paramref name="range"/> is zero or negative,
-        ///     this method will only check if nothing obstructs the two sets of coordinates..
-        /// </summary>
-        /// <param name="coords">Set of coordinates to use.</param>
-        /// <param name="otherCoords">Other set of coordinates to use.</param>
-        /// <param name="range">maximum distance between the two sets of coordinates.</param>
-        /// <param name="collisionMask">the mask to check for collisions</param>
-        /// <param name="ignoredEnt">the entity to be ignored when checking for collisions.</param>
-        /// <param name="mapManager">Map manager containing the two GridIds.</param>
-        /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
-        /// <returns>True if the two points are within a given range without being obstructed.</returns>
-        public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,
-            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null, bool insideBlockerValid = false)
-        {
-            var dir = otherCoords - coords.Position;
 
-            if (dir.LengthSquared.Equals(0f))
-                return true;
-
-            if (range > 0f && !(dir.LengthSquared <= range*range))
-                return false;
-
-            var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRay(coords.MapId, ray, dir.Length, ignoredEnt, true);
-
-
-
-            return !rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && rayResults.Distance < 1f);
-        }
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
@@ -352,7 +362,7 @@ namespace Content.Server.GameObjects.EntitySystems
             activateComp.Activate(new ActivateEventArgs {User = user});
         }
 
-        private bool HandleAttack(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleWideAttack(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!_mapManager.GridExists(coords.GridID))
@@ -707,6 +717,50 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var comp in comps)
             {
                 comp.Land(new LandEventArgs(user, landLocation));
+            }
+        }
+
+        /// <summary>
+        ///     Calls Equipped on all components that implement the IEquipped interface
+        ///     on an entity that has been equipped.
+        /// </summary>
+        public void EquippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            var equipMsg = new EquippedMessage(user, equipped, slot);
+            RaiseLocalEvent(equipMsg);
+            if (equipMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = equipped.GetAllComponents<IEquipped>().ToList();
+
+            // Call Thrown on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.Equipped(new EquippedEventArgs(user, slot));
+            }
+        }
+
+        /// <summary>
+        ///     Calls Unequipped on all components that implement the IUnequipped interface
+        ///     on an entity that has been equipped.
+        /// </summary>
+        public void UnequippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            var unequipMsg = new UnequippedMessage(user, equipped, slot);
+            RaiseLocalEvent(unequipMsg);
+            if (unequipMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = equipped.GetAllComponents<IUnequipped>().ToList();
+
+            // Call Thrown on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.Unequipped(new UnequippedEventArgs(user, slot));
             }
         }
 
@@ -1101,6 +1155,74 @@ namespace Content.Server.GameObjects.EntitySystems
             User = user;
             Thrown = thrown;
             LandLocation = landLocation;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when equipping the entity in an inventory slot.
+    /// </summary>
+    [PublicAPI]
+    public class EquippedMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that equipped the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was equipped.
+        /// </summary>
+        public IEntity Equipped { get; }
+
+        /// <summary>
+        ///     Slot where the item was placed.
+        /// </summary>
+        public EquipmentSlotDefines.Slots Slot { get; }
+
+        public EquippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Equipped = equipped;
+            Slot = slot;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when removing the entity from an inventory slot.
+    /// </summary>
+    [PublicAPI]
+    public class UnequippedMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that equipped the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was equipped.
+        /// </summary>
+        public IEntity Equipped { get; }
+
+        /// <summary>
+        ///     Slot where the item was removed from.
+        /// </summary>
+        public EquipmentSlotDefines.Slots Slot { get; }
+
+        public UnequippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Equipped = equipped;
+            Slot = slot;
         }
     }
 

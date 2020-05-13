@@ -1,7 +1,7 @@
 - type: entity
   id: bullet_20mm
   name: 20mm Bullet
-  parent: bullet_base
+  parent: BulletBase
   abstract: true
   components:
   - type: Projectile

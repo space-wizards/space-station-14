@@ -1,0 +1,8 @@
+- type: reagent
+  id: chem.Flour
+  name: Flour
+  desc: Used for baking.
+  color: "#FFFFFF"
+  metabolism:
+    - !type:DefaultFood
+      rate: 1
