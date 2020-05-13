@@ -31,6 +31,8 @@ namespace Content.Shared.GameObjects
         /// <returns>The text string that is shown in the right click menu for this verb.</returns>
         public abstract string GetText(IEntity user, IComponent component);
 
+        public abstract string GetIcon(IEntity user, IComponent component);
+
         /// <summary>
         ///     Gets the category of this verb.
         /// </summary>
@@ -71,6 +73,11 @@ namespace Content.Shared.GameObjects
         /// <returns>The text string that is shown in the right click menu for this verb.</returns>
         protected abstract string GetText(IEntity user, T component);
 
+        protected virtual string GetIcon(IEntity user, T component)
+        {
+            return default;
+        }
+
         /// <summary>
         ///     Gets the category of this verb.
         /// </summary>
@@ -98,6 +105,11 @@ namespace Content.Shared.GameObjects
         public sealed override string GetText(IEntity user, IComponent component)
         {
             return GetText(user, (T) component);
+        }
+
+        public sealed override string GetIcon(IEntity user, IComponent component)
+        {
+            return GetIcon(user, (T) component);
         }
 
         /// <inheritdoc />

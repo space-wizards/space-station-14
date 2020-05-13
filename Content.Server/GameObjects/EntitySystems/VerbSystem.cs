@@ -12,9 +12,9 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public class VerbSystem : EntitySystem
     {
-        #pragma warning disable 649
+#pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager;
-        #pragma warning restore 649
+#pragma warning restore 649
 
         public override void Initialize()
         {
@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 // TODO: These keys being giant strings is inefficient as hell.
                 data.Add(new VerbsResponseMessage.VerbData(verb.GetText(userEntity, component),
                     $"{component.GetType()}:{verb.GetType()}", verb.GetCategory(userEntity, component),
-                    vis == VerbVisibility.Visible));
+                    vis == VerbVisibility.Visible, verb.GetIcon(userEntity, component)));
             }
 
             //Get global verbs. Visible for all entities regardless of their components.
@@ -114,7 +114,8 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
 
                 data.Add(new VerbsResponseMessage.VerbData(globalVerb.GetText(userEntity, entity),
-                    globalVerb.GetType().ToString(), globalVerb.GetCategory(userEntity, entity), vis == VerbVisibility.Visible));
+                    globalVerb.GetType().ToString(), globalVerb.GetCategory(userEntity, entity),
+                    vis == VerbVisibility.Visible, globalVerb.GetIcon(userEntity, entity)));
             }
 
             var response = new VerbsResponseMessage(data, req.EntityUid);

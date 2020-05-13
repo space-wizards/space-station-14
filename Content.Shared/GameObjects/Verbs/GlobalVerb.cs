@@ -1,6 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects
 {
@@ -26,6 +27,11 @@ namespace Content.Shared.GameObjects
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <returns>The text string that is shown in the right click menu for this verb.</returns>
         public abstract string GetText(IEntity user, IEntity target);
+
+        public virtual string GetIcon(IEntity userEntity, IEntity target)
+        {
+            return null;
+        }
 
         /// <summary>
         ///     Gets the category of this verb.

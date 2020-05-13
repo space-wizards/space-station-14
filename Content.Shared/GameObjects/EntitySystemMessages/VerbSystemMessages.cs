@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.EntitySystemMessages
 {
@@ -36,14 +37,16 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
                 public readonly string Text;
                 public readonly string Key;
                 public readonly string Category;
+                public readonly string Icon;
                 public readonly bool Available;
 
-                public VerbData(string text, string key, string category, bool available)
+                public VerbData(string text, string key, string category, bool available, string icon)
                 {
                     Text = text;
                     Key = key;
                     Category = category;
                     Available = available;
+                    Icon = icon;
                 }
             }
         }

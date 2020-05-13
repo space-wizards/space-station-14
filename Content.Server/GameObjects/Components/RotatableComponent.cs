@@ -40,6 +40,11 @@ namespace Content.Server.GameObjects.Components
                 return "Rotate clockwise";
             }
 
+            protected override string GetIcon(IEntity user, RotatableComponent component)
+            {
+                return "/Textures/UserInterface/VerbIcons/rotate_cw.svg.96dpi.png";
+            }
+
             protected override string GetCategory(IEntity user, RotatableComponent component) => "Rotate";
 
             protected override VerbVisibility GetVisibility(IEntity user, RotatableComponent component)
@@ -60,6 +65,12 @@ namespace Content.Server.GameObjects.Components
             {
                 return "Rotate counter-clockwise";
             }
+
+            protected override string GetIcon(IEntity user, RotatableComponent component)
+            {
+                return "/Textures/UserInterface/VerbIcons/rotate_ccw.svg.96dpi.png";
+            }
+
 
             protected override string GetCategory(IEntity user, RotatableComponent component) => "Rotate";
 
