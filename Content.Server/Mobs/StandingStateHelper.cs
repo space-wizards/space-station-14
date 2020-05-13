@@ -34,7 +34,7 @@ namespace Content.Server.Mobs
             appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
 
             if (playSound)
-                PlaySoundCollection("bodyfall", AudioHelpers.WithVariation(0.5f));
+                PlaySoundCollection("bodyfall", AudioHelpers.WithVariation(0.25f));
 
             if(dropItems)
                 DropAllItemsInHands(entity);

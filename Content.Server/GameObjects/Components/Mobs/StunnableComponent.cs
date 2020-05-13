@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timers;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         private float _stunCap = 20f;
         private float _knockdownCap = 20f;
         private float _helpKnockdownRemove = 1f;
-        private float _helpInterval = 1f;
+        private float _helpInterval = 0.5f;
 
         private float _stunnedTimer = 0f;
         private float _knockdownTimer = 0f;
@@ -40,6 +41,15 @@ namespace Content.Server.GameObjects.Components.Mobs
         [ViewVariables] public bool Stunned => _stunned;
         [ViewVariables] public bool KnockedDown => _knocked;
 
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _stunCap, "stunCap", 20f);
+            serializer.DataField(ref _knockdownCap, "knockdownCap", 20f);
+            serializer.DataField(ref _helpInterval, "helpInterval", 0.5f);
+            serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
+        }
+
         public void Stun(float seconds)
         {
             seconds = Math.Min(seconds + _stunnedTimer, _stunCap);
@@ -48,12 +58,6 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             _stunned = true;
             _stunnedTimer = seconds;
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Timer.Spawn(10000, () => Paralyze(15f));
         }
 
         public void Knockdown(float seconds)
@@ -86,14 +90,14 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public bool AttackHand(AttackHandEventArgs eventArgs)
         {
-            if (!_canHelp || KnockedDown)
+            if (!_canHelp || !KnockedDown)
                 return false;
 
             _canHelp = false;
             Timer.Spawn(((int)_helpInterval*1000), () => _canHelp = true);
 
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
-                .Play("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.5f));
+                .Play("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
 
             _knockdownTimer -= _helpKnockdownRemove;
 
