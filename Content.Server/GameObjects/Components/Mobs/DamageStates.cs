@@ -93,6 +93,11 @@ namespace Content.Server.GameObjects
         {
             return true;
         }
+
+        bool IActionBlocker.CanChangeDirection()
+        {
+            return true;
+        }
     }
 
     /// <summary>
@@ -168,6 +173,11 @@ namespace Content.Server.GameObjects
         bool IActionBlocker.CanUnequip()
         {
             return false;
+        }
+
+        bool IActionBlocker.CanChangeDirection()
+        {
+            return true;
         }
     }
 
@@ -252,6 +262,11 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanUnequip()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanChangeDirection()
         {
             return false;
         }

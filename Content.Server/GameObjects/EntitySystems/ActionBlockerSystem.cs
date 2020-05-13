@@ -24,6 +24,7 @@ namespace Content.Server.GameObjects.EntitySystems
         bool CanAttack() => true;
         bool CanEquip() => true;
         bool CanUnequip() => true;
+        bool CanChangeDirection() => true;
     }
 
     public class ActionBlockerSystem : EntitySystem
@@ -144,6 +145,18 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             return canunequip;
+        }
+
+        public static bool CanChangeDirection(IEntity entity)
+        {
+            bool canchangedirection = true;
+
+            foreach (var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
+            {
+                canchangedirection &= actionblockercomponents.CanChangeDirection();
+            }
+
+            return canchangedirection;
         }
     }
 }

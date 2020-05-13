@@ -151,6 +151,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         public bool CanEquip() => (!Stunned);
 
         public bool CanUnequip() => (!Stunned);
+        public bool CanChangeDirection() => true;
         #endregion
     }
 }
