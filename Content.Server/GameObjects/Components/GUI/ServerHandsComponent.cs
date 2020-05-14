@@ -406,6 +406,11 @@ namespace Content.Server.GameObjects
             return hands.ContainsKey(index);
         }
 
+        public void RefreshInHands()
+        {
+            SendNetworkMessage(new RefreshInHandsMsg());
+        }
+
         /// <summary>
         ///     Get the name of the slot passed to the inventory component.
         /// </summary>

@@ -75,4 +75,16 @@ namespace Content.Shared.GameObjects
             Index = index;
         }
     }
+
+    /// <summary>
+    /// A message that tells the client to refresh in-hands.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class RefreshInHandsMsg : ComponentMessage
+    {
+        public RefreshInHandsMsg()
+        {
+            Directed = true;
+        }
+    }
 }

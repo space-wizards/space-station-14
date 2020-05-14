@@ -6,6 +6,7 @@ using System.Linq;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects;
+using Mono.Cecil;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -116,7 +117,19 @@ namespace Content.Client.GameObjects
                 return;
             }
 
-            var item = entity.GetComponent<ItemComponent>();
+            SetInHands(hand, entity);
+        }
+
+        private void SetInHands(string hand, IEntity entity)
+        {
+            if (entity == null)
+            {
+                _sprite.LayerSetVisible($"hand-{hand}", false);
+
+                return;
+            }
+
+            if (!entity.TryGetComponent(out ItemComponent item)) return;
             var maybeInhands = item.GetInHandStateInfo(hand);
             if (!maybeInhands.HasValue)
             {
@@ -127,6 +140,14 @@ namespace Content.Client.GameObjects
                 var (rsi, state) = maybeInhands.Value;
                 _sprite.LayerSetVisible($"hand-{hand}", true);
                 _sprite.LayerSetState($"hand-{hand}", state, rsi);
+            }
+        }
+
+        public void RefreshInHands()
+        {
+            foreach (var (hand, entity) in _hands)
+            {
+                SetInHands(hand, entity);
             }
         }
 
@@ -167,6 +188,9 @@ namespace Content.Client.GameObjects
 
                 case PlayerDetachedMsg _:
                     _gui.Parent?.RemoveChild(_gui);
+                    break;
+                case RefreshInHandsMsg _:
+                    RefreshInHands();
                     break;
             }
         }

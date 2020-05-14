@@ -191,6 +191,11 @@ namespace Content.Server.Interfaces.GameObjects
         /// <returns>True if the hand exists, false otherwise.</returns>
         bool HasHand(string index);
 
+        /// <summary>
+        ///     Refresh all in-hands sprites.
+        /// </summary>
+        void RefreshInHands();
+
         void HandleSlotModifiedMaybe(ContainerModifiedMessage message);
     }
 }
