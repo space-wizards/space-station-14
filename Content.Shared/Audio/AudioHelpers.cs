@@ -1,6 +1,5 @@
 using System;
 using Content.Shared.GameObjects.Components.Sound;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
