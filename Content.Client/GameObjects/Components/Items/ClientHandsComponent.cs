@@ -6,7 +6,6 @@ using System.Linq;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects;
-using Mono.Cecil;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -145,6 +144,8 @@ namespace Content.Client.GameObjects
 
         public void RefreshInHands()
         {
+            if (!Initialized) return;
+
             foreach (var (hand, entity) in _hands)
             {
                 SetInHands(hand, entity);
