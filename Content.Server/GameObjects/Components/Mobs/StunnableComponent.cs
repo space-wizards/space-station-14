@@ -85,6 +85,10 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
+        /// <summary>
+        ///     Stuns the entity, disallowing it from doing many interactions temporarily.
+        /// </summary>
+        /// <param name="seconds">How many seconds the mob will stay stunned</param>
         public void Stun(float seconds)
         {
             seconds = Math.Min(seconds + _stunnedTimer, _stunCap);
@@ -95,6 +99,10 @@ namespace Content.Server.GameObjects.Components.Mobs
             _lastStun = _gameTiming.CurTime;
         }
 
+        /// <summary>
+        ///     Knocks down the mob, making it fall to the ground.
+        /// </summary>
+        /// <param name="seconds">How many seconds the mob will stay on the ground</param>
         public void Knockdown(float seconds)
         {
             seconds = MathF.Min(_knockdownTimer + seconds, _knockdownCap);
@@ -105,12 +113,22 @@ namespace Content.Server.GameObjects.Components.Mobs
             _lastStun = _gameTiming.CurTime;
         }
 
+        /// <summary>
+        ///     Applies knockdown and stun to the mob temporarily
+        /// </summary>
+        /// <param name="seconds">How many seconds the mob will be paralyzed</param>
         public void Paralyze(float seconds)
         {
             Stun(seconds);
             Knockdown(seconds);
         }
 
+        /// <summary>
+        ///     Slows down the mob's walking/running speed temporarily
+        /// </summary>
+        /// <param name="seconds">How many seconds the mob will be slowed down</param>
+        /// <param name="walkModifierOverride">Walk speed modifier. Set to 0 or negative for default value. (0.5f)</param>
+        /// <param name="runModifierOverride">Run speed modifier. Set to 0 or negative for default value. (0.5f)</param>
         public void Slowdown(float seconds, float walkModifierOverride = 0f, float runModifierOverride = 0f)
         {
             seconds = MathF.Min(_slowdownTimer + seconds, _slowdownCap);
