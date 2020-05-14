@@ -91,7 +91,10 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// <param name="seconds">How many seconds the mob will stay stunned</param>
         public void Stun(float seconds)
         {
-            seconds = Math.Min(seconds + _stunnedTimer, _stunCap);
+            seconds = Math.Min(_stunnedTimer + (seconds * StunTimeModifier), _stunCap);
+
+            if (seconds <= 0f)
+                return;
 
             StandingStateHelper.DropAllItemsInHands(Owner);
 
@@ -105,7 +108,10 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// <param name="seconds">How many seconds the mob will stay on the ground</param>
         public void Knockdown(float seconds)
         {
-            seconds = MathF.Min(_knockdownTimer + seconds, _knockdownCap);
+            seconds = MathF.Min(_knockdownTimer + (seconds * KnockdownTimeModifier), _knockdownCap);
+
+            if (seconds <= 0f)
+                return;
 
             StandingStateHelper.Down(Owner);
 
@@ -131,7 +137,10 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// <param name="runModifierOverride">Run speed modifier. Set to 0 or negative for default value. (0.5f)</param>
         public void Slowdown(float seconds, float walkModifierOverride = 0f, float runModifierOverride = 0f)
         {
-            seconds = MathF.Min(_slowdownTimer + seconds, _slowdownCap);
+            seconds = MathF.Min(_slowdownTimer + (seconds * SlowdownTimeModifier), _slowdownCap);
+
+            if (seconds <= 0f)
+                return;
 
             _walkModifierOverride = walkModifierOverride;
             _runModifierOverride = runModifierOverride;
@@ -259,7 +268,65 @@ namespace Content.Server.GameObjects.Components.Mobs
         public bool CanChangeDirection() => true;
         #endregion
 
+        public float StunTimeModifier
+        {
+            get
+            {
+                var modifier = 1.0f;
+                var components = Owner.GetAllComponents<IStunModifier>();
+
+                foreach (var component in components)
+                {
+                    modifier *= component.StunTimeModifier;
+                }
+
+                return modifier;
+            }
+        }
+
+        public float KnockdownTimeModifier
+        {
+            get
+            {
+                var modifier = 1.0f;
+                var components = Owner.GetAllComponents<IStunModifier>();
+
+                foreach (var component in components)
+                {
+                    modifier *= component.KnockdownTimeModifier;
+                }
+
+                return modifier;
+            }
+        }
+
+        public float SlowdownTimeModifier
+        {
+            get
+            {
+                var modifier = 1.0f;
+                var components = Owner.GetAllComponents<IStunModifier>();
+
+                foreach (var component in components)
+                {
+                    modifier *= component.SlowdownTimeModifier;
+                }
+
+                return modifier;
+            }
+        }
+
         public float WalkSpeedModifier => (SlowedDown ? (_walkModifierOverride <= 0f ? 0.5f : _walkModifierOverride) : 1f);
         public float SprintSpeedModifier => (SlowedDown ? (_runModifierOverride <= 0f ? 0.5f : _runModifierOverride) : 1f);
+    }
+
+    /// <summary>
+    ///     This interface allows components to multiply the time in seconds of various stuns by a number.
+    /// </summary>
+    public interface IStunModifier
+    {
+        float StunTimeModifier => 1.0f;
+        float KnockdownTimeModifier => 1.0f;
+        float SlowdownTimeModifier => 1.0f;
     }
 }
