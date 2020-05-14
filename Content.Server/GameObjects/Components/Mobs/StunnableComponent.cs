@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         /// <param name="seconds">How many seconds the mob will stay stunned</param>
         public void Stun(float seconds)
         {
-            seconds = Math.Min(_stunnedTimer + (seconds * StunTimeModifier), _stunCap);
+            seconds = MathF.Min(_stunnedTimer + (seconds * StunTimeModifier), _stunCap);
 
             if (seconds <= 0f)
                 return;
