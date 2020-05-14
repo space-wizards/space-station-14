@@ -1,4 +1,6 @@
 using System;
+using Robust.Shared.Interfaces.Physics;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
@@ -27,12 +29,13 @@ namespace Content.Shared.Physics
 
         public void Move(Vector2 velocityDirection, float speed)
         {
-            Velocity = velocityDirection * speed;
+            if (IoCManager.Resolve<IPhysicsManager>().IsWeightless(_component.Owner.Transform.GridPosition)) return;
+            Push(velocityDirection, speed);
         }
 
-        public void Push(Vector2 velocityChange)
+        public void Push(Vector2 velocityDirection, float speed)
         {
-            Velocity += velocityChange;
+            Velocity = velocityDirection * speed;
         }
 
         public void StopMoving()

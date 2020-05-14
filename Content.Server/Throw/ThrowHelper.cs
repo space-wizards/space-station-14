@@ -61,15 +61,14 @@ namespace Content.Server.Throw
             var timing = IoCManager.Resolve<IGameTiming>();
             var spd = throwForce / (1f / timing.TickRate); // acceleration is applied in 1 tick instead of 1 second, scale appropriately
 
-            physComp.Momentum = angle.ToVec() * spd;
-
-            if (throwSourceEnt != null)
-            {
-                var p = throwSourceEnt.GetComponent<PhysicsComponent>();
-                p.Momentum += Angle.FromDegrees(angle.Degrees + 180).ToVec() * throwForce;
-            }
             physComp.SetController<ThrowController>();
-            (physComp.Controller as ThrowController)?.StartThrow();
+            (physComp.Controller as ThrowController)?.StartThrow(angle.ToVec() * spd);
+
+            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<PhysicsComponent>(out var physics))
+            {
+                const float ThrowFactor = 5.0f; // Break Newton's Third Law for better gameplay
+                (physics.Controller as MoverController)?.Push(-angle.ToVec(), spd * ThrowFactor / physics.Mass);
+            }
         }
     }
 }

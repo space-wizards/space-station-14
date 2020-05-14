@@ -170,8 +170,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     {
                         if (otherCollider.Owner == transform.Owner) continue; // Don't try to push off of yourself!
                         touching |= ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
-                                     || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0
-                                    ) // Ensure collision
+                                     || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
                                     && !entity.HasComponent<ItemComponent>(); // This can't be an item
                     }
                 }
@@ -190,7 +189,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (weightless)
                 {
-                    (physics.Controller as MoverController)?.Push(mover.VelocityDir * mover.CurrentPushSpeed);
+                    (physics.Controller as MoverController)?.Push(mover.VelocityDir, mover.CurrentPushSpeed);
                     transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
                     return;
                 }
