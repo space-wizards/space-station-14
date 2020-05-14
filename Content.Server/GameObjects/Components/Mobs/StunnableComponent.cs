@@ -12,7 +12,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timers;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -22,11 +24,26 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class StunnableComponent : Component, IActionBlocker, IAttackHand, IMoveSpeedModifier
     {
+        public override string Name => "Stunnable";
+
+#pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
-        [Dependency] private ITimerManager _timerManager;
+        [Dependency] private IGameTiming _gameTiming;
+#pragma warning restore 649
+
+        private TimeSpan? _lastStun;
+
+        [ViewVariables]
+        public TimeSpan? StunStart => _lastStun;
+
+        [ViewVariables]
+        public TimeSpan? StunEnd => _lastStun == null
+            ? (TimeSpan?) null
+            : _gameTiming.CurTime + TimeSpan.FromSeconds(_stunnedTimer + _knockdownTimer + _slowdownTimer);
+
+        private const int StunLevels = 8;
 
         private bool _canHelp = true;
-
         private float _stunCap = 20f;
         private float _knockdownCap = 20f;
         private float _slowdownCap = 20f;
@@ -39,8 +56,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private float _walkModifierOverride = 0f;
         private float _runModifierOverride = 0f;
-
-        public override string Name => "Stunnable";
+        private readonly string[] _texturesStunOverlay = new string[StunLevels];
 
         [ViewVariables] public bool Stunned => _stunnedTimer > 0f;
         [ViewVariables] public bool KnockedDown => _knockdownTimer > 0f;
@@ -59,6 +75,16 @@ namespace Content.Server.GameObjects.Components.Mobs
             serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            for (var i = 0; i < StunLevels; i++)
+            {
+                _texturesStunOverlay[i] = $"/Textures/UserInterface/Inventory/cooldown-{i}.png";
+            }
+        }
+
         public void Stun(float seconds)
         {
             seconds = Math.Min(seconds + _stunnedTimer, _stunCap);
@@ -66,6 +92,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             StandingStateHelper.DropAllItemsInHands(Owner);
 
             _stunnedTimer = seconds;
+            _lastStun = _gameTiming.CurTime;
         }
 
         public void Knockdown(float seconds)
@@ -75,6 +102,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             StandingStateHelper.Down(Owner);
 
             _knockdownTimer = seconds;
+            _lastStun = _gameTiming.CurTime;
         }
 
         public void Paralyze(float seconds)
@@ -91,6 +119,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             _runModifierOverride = runModifierOverride;
 
             _slowdownTimer = seconds;
+            _lastStun = _gameTiming.CurTime;
 
             if(Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
                 movement.RefreshMovementSpeedModifiers();
@@ -113,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             _canHelp = false;
             Timer.Spawn(((int)_helpInterval*1000), () => _canHelp = true);
 
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
+            _entitySystemManager.GetEntitySystem<AudioSystem>()
                 .Play("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
 
             _knockdownTimer -= _helpKnockdownRemove;
@@ -157,6 +186,34 @@ namespace Content.Server.GameObjects.Components.Mobs
                         movement.RefreshMovementSpeedModifiers();
                 }
             }
+
+            if (!_lastStun.HasValue || !StunEnd.HasValue || !Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+                return;
+
+            var start = _lastStun.Value;
+            var end = StunEnd.Value;
+
+            var length = (end - start).TotalSeconds;
+            var progress = (_gameTiming.CurTime - start).TotalSeconds;
+            var ratio = (float)(progress / length);
+
+            var textureIndex = CalculateStunLevel(ratio);
+            if (textureIndex == StunLevels)
+            {
+                _lastStun = null;
+                status.RemoveStatus(StatusEffect.Stun);
+            }
+            else
+            {
+                status.ChangeStatus(StatusEffect.Stun, _texturesStunOverlay[textureIndex]);
+            }
+        }
+
+        private static int CalculateStunLevel(float stunValue)
+        {
+            var val = stunValue.Clamp(0, 1);
+            val *= StunLevels;
+            return (int)Math.Floor(val);
         }
 
         #region ActionBlockers

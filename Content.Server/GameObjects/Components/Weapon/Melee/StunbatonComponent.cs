@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return;
 
             _entitySystemManager.GetEntitySystem<AudioSystem>()
-                .Play("/Audio/weapons/egloves.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+                .Play("/Audio/weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
             {
@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             else
             {
                 _entitySystemManager.GetEntitySystem<AudioSystem>()
-                    .Play(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner, AudioHelpers.WithVariation(0.25f));
+                    .Play(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
                 item.EquippedPrefix = "on";
                 sprite.LayerSetState(0, "stunbaton_on");

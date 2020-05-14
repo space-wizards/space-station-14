@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Mobs;
+using Microsoft.CodeAnalysis.Completion;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
@@ -39,7 +40,8 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            animation.Stop("rotate");
+            if (animation.HasRunningAnimation("rotate"))
+                animation.Stop("rotate");
 
             animation.Play(new Animation
             {
