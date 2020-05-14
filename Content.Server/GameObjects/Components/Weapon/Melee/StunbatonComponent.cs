@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Audio;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -15,15 +18,22 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     public class StunbatonComponent : MeleeWeaponComponent, IUse
     {
         [Dependency] private IRobustRandom _robustRandom;
+        [Dependency] private IEntitySystemManager _entitySystemManager;
 
         public override string Name => "Stunbaton";
 
-        private float _paralyzeTime = 10f;
-        private float _paralyzeChance = 0.25f;
-        private float _slowdownTime = 5f;
-
         private bool _activated = false;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _paralyzeChance = 0.25f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _paralyzeTime = 10f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _slowdownTime = 5f;
+
+        [ViewVariables]
         public bool Activated => _activated;
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -37,8 +47,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         public override void OnHitEntities(IEnumerable<IEntity> entities)
         {
-            if (!_activated)
+            if (!Activated)
                 return;
+
+            _entitySystemManager.GetEntitySystem<AudioSystem>()
+                .Play("/Audio/weapons/egloves.ogg", Owner, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
             {
@@ -64,6 +77,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
             else
             {
+                _entitySystemManager.GetEntitySystem<AudioSystem>()
+                    .Play(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner, AudioHelpers.WithVariation(0.25f));
+
                 item.EquippedPrefix = "on";
                 sprite.LayerSetState(0, "stunbaton_on");
                 _activated = true;

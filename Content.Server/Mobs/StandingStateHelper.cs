@@ -34,7 +34,8 @@ namespace Content.Server.Mobs
             appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
 
             if (playSound)
-                PlaySoundCollection("bodyfall", AudioHelpers.WithVariation(0.25f));
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
+                    .Play(AudioHelpers.GetRandomFileFromSoundCollection("bodyfall"), entity, AudioHelpers.WithVariation(0.25f));
 
             if(dropItems)
                 DropAllItemsInHands(entity);
@@ -68,14 +69,6 @@ namespace Content.Server.Mobs
             {
                 hands.Drop(heldItem.Owner);
             }
-        }
-
-        private static void PlaySoundCollection(string name, AudioParams parameters = default)
-        {
-            var soundCollection = IoCManager.Resolve<IPrototypeManager>().Index<SoundCollectionPrototype>(name);
-            var file = IoCManager.Resolve<IRobustRandom>().Pick(soundCollection.PickFiles);
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
-                .Play(file, parameters);
         }
     }
 }

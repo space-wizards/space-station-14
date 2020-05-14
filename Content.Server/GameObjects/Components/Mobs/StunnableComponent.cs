@@ -49,13 +49,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         [ViewVariables] public float KnockdownCap => _knockdownCap;
         [ViewVariables] public float SlowdownCap => _slowdownCap;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            Timer.Spawn(1000, () => Slowdown(20f));
-        }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
