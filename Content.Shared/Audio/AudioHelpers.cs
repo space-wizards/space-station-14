@@ -1,10 +1,14 @@
 using System;
 using Content.Shared.GameObjects.Components.Sound;
+using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Audio
@@ -17,6 +21,12 @@ namespace Content.Shared.Audio
         {
             var scale = (float)(IoCManager.Resolve<IRobustRandom>().NextGaussian(1, amplitude));
             return AudioParams.Default.WithPitchScale(scale);
+        }
+
+        public static string GetRandomFileFromSoundCollection(string name)
+        {
+            var soundCollection = IoCManager.Resolve<IPrototypeManager>().Index<SoundCollectionPrototype>(name);
+            return IoCManager.Resolve<IRobustRandom>().Pick(soundCollection.PickFiles);
         }
     }
 }
