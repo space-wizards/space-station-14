@@ -1,6 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
+﻿using System;
+using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Animations;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Mobs
@@ -11,19 +15,50 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
             if (component.TryGetData<SharedSpeciesComponent.MobState>(SharedSpeciesComponent.MobVisuals.RotationState, out var state))
             {
                 switch (state)
                 {
                     case SharedSpeciesComponent.MobState.Standing:
-                        sprite.Rotation = 0;
+                        SetRotation(component, 0);
                         break;
                     case SharedSpeciesComponent.MobState.Down:
-                        sprite.Rotation = Angle.FromDegrees(90);
+                        SetRotation(component, Angle.FromDegrees(90));
                         break;
                 }
             }
+        }
+
+        public void SetRotation(AppearanceComponent component, Angle rotation)
+        {
+            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+
+            if (!sprite.Owner.TryGetComponent(out AnimationPlayerComponent animation))
+            {
+                sprite.Rotation = rotation;
+                return;
+            }
+
+            animation.Stop("rotate");
+
+            animation.Play(new Animation
+            {
+                Length = TimeSpan.FromSeconds(0.125),
+                AnimationTracks =
+                {
+                    new AnimationTrackComponentProperty
+                    {
+                        ComponentType = typeof(ISpriteComponent),
+                        Property = nameof(ISpriteComponent.Rotation),
+                        InterpolationMode = AnimationInterpolationMode.Linear,
+                        KeyFrames =
+                        {
+                            new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
+                            new AnimationTrackProperty.KeyFrame(rotation, 0.125f)
+                        }
+                    }
+                }
+            }, "rotate");
         }
     }
 }
