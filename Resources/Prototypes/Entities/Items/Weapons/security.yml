@@ -4,21 +4,21 @@
   id: Stunbaton
   components:
     - type: Sprite
-      sprite: Objects/Melee/spear.rsi
-      state: spear
+      sprite: Objects/Melee/stunbaton.rsi
+      state: stunbaton_off
 
     - type: Icon
-      sprite: Objects/Melee/spear.rsi
-      state: spear
+      sprite: Objects/Melee/stunbaton.rsi
+      state: stunbaton_off
 
     - type: Stunbaton
-      range: 1.5
+      range: 0.75
       arcwidth: 0
       arc: default
 
     - type: Item
-      Size: 24
-      sprite: Objects/Melee/spear.rsi
-      prefix: inhand
+      Size: 10
+      sprite: Objects/Melee/stunbaton.rsi
+      HeldPrefix: off
 
     - type: ItemCooldown
