@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
@@ -31,7 +30,7 @@ namespace Content.Server.AI.Utility.Actions.Test
             var originalPosOp = new MoveToGridOperator(Owner, currentPosition, 0.25f);
             var newPosOp = new MoveToGridOperator(Owner, nextPosition, 0.25f);
 
-            ActionOperators = new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 newPosOp,
                 originalPosOp

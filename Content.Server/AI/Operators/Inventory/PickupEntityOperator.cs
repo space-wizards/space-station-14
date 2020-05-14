@@ -6,7 +6,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {
-    public class PickupEntityOperator : IOperator
+    public class PickupEntityOperator : AiOperator
     {
         // Input variables
         private readonly IEntity _owner;
@@ -19,7 +19,7 @@ namespace Content.Server.AI.Operators.Inventory
         }
 
         // TODO: When I spawn new entities they seem to duplicate clothing or something?
-        public Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             if (_target == null ||
                 _target.Deleted ||

@@ -7,28 +7,32 @@ namespace Content.Server.AI.Operators.Sequences
     /// Sequential chain of operators
     /// Saves having to duplicate stuff like MoveTo and PickUp everywhere
     /// </summary>
-    public abstract class SequenceOperator : IOperator
+    public abstract class SequenceOperator : AiOperator
     {
-        public Queue<IOperator> Sequence { get; protected set; }
+        public Queue<AiOperator> Sequence { get; protected set; }
 
-        public Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             if (Sequence.Count == 0)
             {
                 return Outcome.Success;
             }
-
-            var outcome = Sequence.Peek().Execute(frameTime);
+            
+            var op = Sequence.Peek();
+            op.TryStartup();
+            var outcome = op.Execute(frameTime);
 
             switch (outcome)
             {
                 case Outcome.Success:
+                    op.Shutdown(outcome);
                     // Not over until all operators are done
                     Sequence.Dequeue();
                     return Outcome.Continuing;
                 case Outcome.Continuing:
                     return Outcome.Continuing;
                 case Outcome.Failed:
+                    op.Shutdown(outcome);
                     Sequence.Clear();
                     return Outcome.Failed;
                 

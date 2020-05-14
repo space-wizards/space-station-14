@@ -3,7 +3,7 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
 {
-    public class DropHandItemsOperator : IOperator
+    public class DropHandItemsOperator : AiOperator
     {
         private readonly IEntity _owner;
 
@@ -12,7 +12,7 @@ namespace Content.Server.AI.Operators.Inventory
             _owner = owner;
         }
 
-        public Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             _owner.TryGetComponent(out HandsComponent handsComponent);
             foreach (var item in handsComponent.GetAllHeldItems())

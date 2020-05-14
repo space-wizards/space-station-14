@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Generic;
 using Content.Server.AI.Utility.Actions;
@@ -11,7 +10,6 @@ using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
-using Content.Server.Interfaces.Chat;
 using Robust.Server.AI;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -148,7 +146,7 @@ namespace Content.Server.AI.Utility.AiLogic
                 _isDead = false;
             }
         }
-
+        
         private void ReceivedAction()
         {
             var action = _actionRequest.Result;
@@ -171,6 +169,7 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 _actionCancellation?.Cancel();
                 _blackboard.GetState<LastUtilityScoreState>().SetValue(0.0f);
+                CurrentAction?.Shutdown();
                 CurrentAction = null;
                 return;
             }
@@ -213,6 +212,7 @@ namespace Content.Server.AI.Utility.AiLogic
                 case Outcome.Success:
                     if (CurrentAction.ActionOperators.Count == 0)
                     {
+                        CurrentAction.Shutdown();
                         CurrentAction = null;
                         // Nothing to compare new action to
                         _blackboard.GetState<LastUtilityScoreState>().SetValue(0.0f);
@@ -221,6 +221,7 @@ namespace Content.Server.AI.Utility.AiLogic
                 case Outcome.Continuing:
                     break;
                 case Outcome.Failed:
+                    CurrentAction.Shutdown();
                     CurrentAction = null;
                     _blackboard.GetState<LastUtilityScoreState>().SetValue(0.0f);
                     break;

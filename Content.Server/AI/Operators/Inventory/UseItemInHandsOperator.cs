@@ -6,7 +6,7 @@ namespace Content.Server.AI.Operators.Inventory
     /// <summary>
     /// Will find the item in storage, put it in an active hand, then use it
     /// </summary>
-    public class UseItemInHandsOperator : IOperator
+    public class UseItemInHandsOperator : AiOperator
     {
         private readonly IEntity _owner;
         private readonly IEntity _target;
@@ -17,7 +17,7 @@ namespace Content.Server.AI.Operators.Inventory
             _target = target;
         }
 
-        public Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             if (_target == null)
             {

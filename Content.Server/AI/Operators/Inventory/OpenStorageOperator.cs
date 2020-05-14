@@ -10,7 +10,7 @@ namespace Content.Server.AI.Operators.Inventory
     /// <summary>
     /// If the target is in EntityStorage will open its parent container
     /// </summary>
-    public sealed class OpenStorageOperator : IOperator
+    public sealed class OpenStorageOperator : AiOperator
     {
         private readonly IEntity _owner;
         private readonly IEntity _target;
@@ -21,7 +21,7 @@ namespace Content.Server.AI.Operators.Inventory
             _target = target;
         }
         
-        public Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             if ((_target.Transform.GridPosition.Position - _owner.Transform.GridPosition.Position).Length >
                 InteractionSystem.InteractionRange)

@@ -4,7 +4,7 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Operators.Generic
 {
-    public class BarkOperator : IOperator
+    public class BarkOperator : AiOperator
     {
         private IEntity _owner;
         private BarkType _barkType;
@@ -15,7 +15,7 @@ namespace Content.Server.AI.Operators.Generic
             _barkType = barkType;
         }
         
-        public Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             if (!_owner.TryGetComponent(out AiControllerComponent aiController))
             {

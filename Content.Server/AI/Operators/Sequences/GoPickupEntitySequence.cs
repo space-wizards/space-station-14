@@ -9,7 +9,7 @@ namespace Content.Server.AI.Operators.Sequences
     {
         public GoPickupEntitySequence(IEntity owner, IEntity target)
         {
-            Sequence = new Queue<IOperator>(new IOperator[]
+            Sequence = new Queue<AiOperator>(new AiOperator[]
             {
                 new MoveToEntityOperator(owner, target),
                 new OpenStorageOperator(owner, target),

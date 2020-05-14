@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Generic;
 using Content.Server.AI.Operators.Movement;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.ActionBlocker;
 using Content.Server.AI.Utility.Curves;
@@ -45,7 +43,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
                 waitTime = 0.0f;
             }
 
-            ActionOperators = new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new MoveToGridOperator(Owner, randomGrid),
                 new WaitOperator(waitTime),

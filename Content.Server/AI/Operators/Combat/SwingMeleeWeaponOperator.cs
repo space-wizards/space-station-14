@@ -1,4 +1,3 @@
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Melee;
@@ -8,7 +7,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat
 {
-    public class SwingMeleeWeaponOperator : IOperator
+    public class SwingMeleeWeaponOperator : AiOperator
     {
         private float _burstTime;
         private float _elapsedTime;
@@ -23,21 +22,31 @@ namespace Content.Server.AI.Operators.Combat
             _burstTime = burstTime;
         }
 
-        public Outcome Execute(float frameTime)
+        public override bool TryStartup()
         {
-            if (_burstTime <= _elapsedTime)
+            if (!base.TryStartup())
             {
-                return Outcome.Success;
+                return true;
             }
-
+            
             if (!_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
             {
-                return Outcome.Failed;
+                return false;
             }
 
             if (!combatModeComponent.IsInCombatMode)
             {
                 combatModeComponent.IsInCombatMode = true;
+            }
+
+            return true;
+        }
+
+        public override Outcome Execute(float frameTime)
+        {
+            if (_burstTime <= _elapsedTime)
+            {
+                return Outcome.Success;
             }
 
             if (!_owner.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand == null)

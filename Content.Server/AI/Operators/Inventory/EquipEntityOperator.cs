@@ -3,7 +3,7 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
 {
-    public sealed class EquipEntityOperator : IOperator
+    public sealed class EquipEntityOperator : AiOperator
     {
         private readonly IEntity _owner;
         private readonly IEntity _entity;
@@ -13,7 +13,7 @@ namespace Content.Server.AI.Operators.Inventory
             _entity = entity;
         }
 
-        public Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             if (!_owner.TryGetComponent(out HandsComponent handsComponent))
             {

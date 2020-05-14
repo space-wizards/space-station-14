@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.Operators;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Robust.Shared.Interfaces.GameObjects;
@@ -47,7 +45,7 @@ namespace Content.Server.AI.Utility.Actions
         /// <summary>
         /// To keep the operators simple we can chain them together here, e.g. move to can be chained with other operators.
         /// </summary>
-        public Queue<IOperator> ActionOperators { get; protected set; }
+        public Queue<AiOperator> ActionOperators { get; protected set; }
 
         /// <summary>
         /// Sometimes we may need to set the target for an action or the likes.
@@ -60,6 +58,8 @@ namespace Content.Server.AI.Utility.Actions
         {
             Owner = owner;
         }
+        
+        public virtual void Shutdown() {}
 
         /// <summary>
         /// If this action is chosen then setup the operators to run. This also allows for operators to be reset.
@@ -74,11 +74,23 @@ namespace Content.Server.AI.Utility.Actions
                 return Outcome.Success;
             }
 
+            op.TryStartup();
             var outcome = op.Execute(frameTime);
 
-            if (outcome == Outcome.Success)
+            switch (outcome)
             {
-                ActionOperators.Dequeue();
+                case Outcome.Success:
+                    op.Shutdown(outcome);
+                    ActionOperators.Dequeue();
+                    break;
+                case Outcome.Continuing:
+                    break;
+                case Outcome.Failed:
+                    op.Shutdown(outcome);
+                    ActionOperators.Clear();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             return outcome;
@@ -86,6 +98,7 @@ namespace Content.Server.AI.Utility.Actions
 
         /// <summary>
         /// AKA the Decision Score Evaluator (DSE)
+        /// This is where the magic happens
         /// </summary>
         /// <param name="context"></param>
         /// <param name="bonus"></param>
@@ -111,7 +124,7 @@ namespace Content.Server.AI.Utility.Actions
 
             foreach (var consideration in Considerations)
             {
-                var score = consideration.GetScore(context); // TODO: consideration parameters, e.g. range limits?
+                var score = consideration.GetScore(context);
                 var makeUpValue = (1.0f - score) * modificationFactor;
                 var adjustedScore = score + makeUpValue * score;
                 var response = consideration.ComputeResponseCurve(adjustedScore);

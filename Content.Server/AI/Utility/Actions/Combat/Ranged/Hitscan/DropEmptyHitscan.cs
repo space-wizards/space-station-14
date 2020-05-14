@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan;
 using Content.Server.AI.Utility.Considerations.Inventory;
@@ -26,7 +24,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators = new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new EquipEntityOperator(Owner, _entity),
                 new DropEntityOperator(Owner, _entity)

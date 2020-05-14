@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Combat.Ranged;
 using Content.Server.AI.Operators.Movement;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat;
 using Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan;
@@ -30,17 +28,28 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
             Bonus = weight;
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            if (_moveOperator != null)
+            {
+                _moveOperator.MovedATile -= InLos;
+            }
+        }
+
         public override void SetupOperators(Blackboard context)
         {
             _moveOperator = new MoveToEntityOperator(Owner, _entity);
             _moveOperator.MovedATile += InLos;
 
             // TODO: Accuracy in blackboard
-            ActionOperators = new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 _moveOperator,
                 new ShootAtEntityOperator(Owner, _entity, 0.7f),
             });
+            
+            InLos();
         }
 
         protected override void UpdateBlackboard(Blackboard context)
@@ -72,14 +81,6 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
                 new QuadraticCurve(1.0f, 0.4f, 0.0f, -0.02f)),
         };
 
-        ~HitscanAttackEntity()
-        {
-            if (_moveOperator != null)
-            {
-                _moveOperator.MovedATile -= InLos;
-            }
-        }
-
         private void InLos()
         {
             // This should only be called if the movement operator is the current one;
@@ -87,7 +88,8 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
             if (Visibility.InLineOfSight(Owner, _entity))
             {
                 _moveOperator.HaveArrived();
-                ActionOperators.Dequeue();
+                var mover = ActionOperators.Dequeue();
+                mover.Shutdown(Outcome.Success);
             }
         }
     }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
@@ -19,7 +18,7 @@ using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.AI.Operators.Movement
 {
-    public abstract class BaseMover : IOperator
+    public abstract class BaseMover : AiOperator
     {
         /// <summary>
         /// Invoked every time we move across a tile
@@ -273,7 +272,7 @@ namespace Content.Server.AI.Operators.Movement
             NextGrid = _mapManager.GetGrid(nextTile.GridIndex).GridTileToLocal(nextTile.GridIndices);
         }
 
-        public virtual Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             if (RouteJob != null && RouteJob.Status == JobStatus.Finished)
             {

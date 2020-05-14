@@ -8,7 +8,7 @@ namespace Content.Server.AI.Operators.Inventory
     /// <summary>
     /// A Generic interacter; if you need to check stuff then make your own
     /// </summary>
-    public class InteractWithEntityOperator : IOperator
+    public class InteractWithEntityOperator : AiOperator
     {
         private readonly IEntity _owner;
         private readonly IEntity _useTarget;
@@ -20,7 +20,7 @@ namespace Content.Server.AI.Operators.Inventory
 
         }
 
-        public Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             if (_useTarget.Transform.GridID != _owner.Transform.GridID)
             {

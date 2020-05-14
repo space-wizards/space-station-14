@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Combat;
 using Content.Server.AI.Operators.Movement;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat;
 using Content.Server.AI.Utility.Considerations.Combat.Melee;
@@ -38,7 +36,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
                 moveOperator.DesiredRange = meleeWeaponComponent.Range - 0.01f;
             }
 
-            ActionOperators = new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 moveOperator,
                 new SwingMeleeWeaponOperator(Owner, _entity),

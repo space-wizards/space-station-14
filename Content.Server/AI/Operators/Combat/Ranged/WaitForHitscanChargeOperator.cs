@@ -1,11 +1,10 @@
 using System;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Operators.Combat.Ranged
 {
-    public class WaitForHitscanChargeOperator : IOperator
+    public class WaitForHitscanChargeOperator : AiOperator
     {
         private float _lastCharge = 0.0f;
         private float _lastFill = 0.0f;
@@ -21,7 +20,7 @@ namespace Content.Server.AI.Operators.Combat.Ranged
             _hitscan = hitscanWeaponComponent;
         }
 
-        public Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             if (_hitscan.CapacitorComponent.Capacity - _hitscan.CapacitorComponent.Charge < 0.01f)
             {

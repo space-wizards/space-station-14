@@ -32,7 +32,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
         {
             var lastStorage = context.GetState<LastOpenedStorageState>().GetValue();
             
-            ActionOperators = new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new MoveToEntityOperator(Owner, lastStorage),
                 new CloseLastStorageOperator(Owner), 

@@ -10,33 +10,52 @@ namespace Content.Server.AI.Operators.Inventory
     /// Close the last EntityStorage we opened
     /// This will also update the State for it (which a regular InteractWith won't do)
     /// </summary>
-    public sealed class CloseLastStorageOperator : IOperator
+    public sealed class CloseLastStorageOperator : AiOperator
     {
         private readonly IEntity _owner;
+        private IEntity _target;
 
         public CloseLastStorageOperator(IEntity owner)
         {
             _owner = owner;
         }
-        
-        public Outcome Execute(float frameTime)
+
+        public override bool TryStartup()
         {
+            if (!base.TryStartup())
+            {
+                return true;
+            }
+            
             var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
 
             if (blackboard == null)
             {
-                return Outcome.Failed;
+                return false;
             }
 
-            var target = blackboard.GetState<LastOpenedStorageState>().GetValue();
-        
-            if ((target.Transform.GridPosition.Position - _owner.Transform.GridPosition.Position).Length >
+            _target = blackboard.GetState<LastOpenedStorageState>().GetValue();
+            
+            return _target != null;
+        }
+
+        public override void Shutdown(Outcome outcome)
+        {
+            base.Shutdown(outcome);
+            var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
+
+            blackboard?.GetState<LastOpenedStorageState>().SetValue(null);
+        }
+
+        public override Outcome Execute(float frameTime)
+        {
+            if ((_target.Transform.GridPosition.Position - _owner.Transform.GridPosition.Position).Length >
                 InteractionSystem.InteractionRange)
             {
                 return Outcome.Failed;
             }
 
-            if (!target.TryGetComponent(out EntityStorageComponent storageComponent) || 
+            if (!_target.TryGetComponent(out EntityStorageComponent storageComponent) || 
                 storageComponent.Locked)
             {
                 return Outcome.Failed;
@@ -46,8 +65,6 @@ namespace Content.Server.AI.Operators.Inventory
             {
                 storageComponent.ToggleOpen();
             }
-
-            blackboard.GetState<LastOpenedStorageState>().SetValue(null);
 
             return Outcome.Success;
         }

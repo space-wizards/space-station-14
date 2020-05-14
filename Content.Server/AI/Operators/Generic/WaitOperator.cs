@@ -1,8 +1,6 @@
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
-
 namespace Content.Server.AI.Operators.Generic
 {
-    public class WaitOperator : IOperator
+    public class WaitOperator : AiOperator
     {
         private readonly float _waitTime;
         private float _accumulatedTime = 0.0f;
@@ -12,7 +10,7 @@ namespace Content.Server.AI.Operators.Generic
             _waitTime = waitTime;
         }
 
-        public Outcome Execute(float frameTime)
+        public override Outcome Execute(float frameTime)
         {
             if (_accumulatedTime < _waitTime)
             {

@@ -1,13 +1,10 @@
 using System.Collections.Generic;
-using Content.Server.AI.HTN.Tasks.Primitive.Operators;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Combat.Ranged;
 using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Operators.Movement;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat.Ranged;
-using Content.Server.AI.Utility.Considerations.Combat.Ranged.Ballistic;
 using Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan;
 using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Hands;
@@ -34,7 +31,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators = new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new MoveToEntityOperator(Owner, _charger),
                 new WaitForHitscanChargeOperator(_entity),

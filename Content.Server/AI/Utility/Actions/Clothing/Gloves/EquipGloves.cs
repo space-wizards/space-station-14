@@ -24,7 +24,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Gloves
 
         public override void SetupOperators(Blackboard context)
         {
-            ActionOperators = new Queue<IOperator>(new IOperator[]
+            ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new EquipEntityOperator(Owner, _entity),
                 new UseItemInHandsOperator(Owner, _entity),
