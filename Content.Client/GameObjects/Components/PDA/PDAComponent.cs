@@ -1,7 +1,11 @@
+using Content.Shared.GameObjects.Components.PDA;
+using Robust.Shared.GameObjects;
+
 namespace Content.Client.GameObjects.Components.PDA
 {
-    public class PDAComponent
+    [RegisterComponent]
+    public class PDAComponent : SharedPDAComponent
     {
-        
+
     }
 }

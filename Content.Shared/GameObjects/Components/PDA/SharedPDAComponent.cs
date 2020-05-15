@@ -1,7 +1,9 @@
-using Content.Shared.GameObjects;
+using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Serialization;
 
-namespace Content.Shared.PDA
+namespace Content.Shared.GameObjects.Components.PDA
 {
     public class SharedPDAComponent : Component
     {
@@ -14,5 +16,51 @@ namespace Content.Shared.PDA
         }
 
 
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class PDAToggleFlashlightMessage : BoundUserInterfaceMessage
+    {
+        public PDAToggleFlashlightMessage()
+        {
+
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class PDAEjectIDMessage : BoundUserInterfaceMessage
+    {
+        public PDAEjectIDMessage()
+        {
+
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class PDAUpdateUserInterfaceState : BoundUserInterfaceState
+    {
+        public bool FlashlightEnabled;
+        public PDAIdInfoText PDAOwnerInfo;
+
+
+        public PDAUpdateUserInterfaceState(bool isFlashlightOn, PDAIdInfoText ownerInfo)
+        {
+            FlashlightEnabled = isFlashlightOn;
+            PDAOwnerInfo = ownerInfo;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public struct PDAIdInfoText
+    {
+        public string ActualOwnerName;
+        public string IDOwner;
+        public string JobTitle;
+    }
+
+    [NetSerializable, Serializable]
+    public enum PDAUiKey
+    {
+        Key
     }
 }
