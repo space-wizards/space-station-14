@@ -120,15 +120,12 @@
   components:
   - type: RCD
   - type: UseDelay
-    delay: 2.0
-    
+    delay: 1.0
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: rcd
-
   - type: Icon
     sprite: Objects/Tools/rcd.rsi
     state: rcd
-
   - type: Item
     sprite: Objects/Tools/rcd.rsi
