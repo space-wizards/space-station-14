@@ -111,3 +111,25 @@
 
   - type: Item
     sprite: Objects/Tools/multitool.rsi
+
+- type: entity
+  name: RCD
+  parent: BaseItem
+  id: RCD
+  description: An advanced construction device which can place floors / walls down quickly.
+  components:
+  - type: Rapid Construction Device
+  
+  - type: UseDelay
+    delay: 2.0
+    
+  - type: Sprite
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd
+
+  - type: Icon
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd
+
+  - type: Item
+    sprite: Objects/Tools/rcd.rsi
