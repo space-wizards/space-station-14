@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Maps;
+using Microsoft.EntityFrameworkCore.Internal;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -18,7 +19,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Items
 {
     [RegisterComponent]
-    public class RcdComponent : Component, IAfterAttack, IUse, IExamine
+    public class RCDComponent : Component, IAfterAttack, IUse, IExamine
     {
 #pragma warning disable 649
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
@@ -33,7 +34,8 @@ namespace Content.Server.GameObjects.Components.Items
         private Array modes = Enum.GetValues(typeof(RCDmode));
         private int ammo = 5; //How much "ammo" we have left. You can refille this with RCD ammo.
 
-        private enum RCDmode //Enum to store the different mode states for clarity.
+        ///Enum to store the different mode states for clarity.
+        private enum RCDmode
         {
             Floors,
             Walls,
@@ -46,27 +48,13 @@ namespace Content.Server.GameObjects.Components.Items
             serializer.DataField(ref _outputTile, "output", "floor_steel");
         }
 
-        /**
-         *
-         *    Method called when the RCD is clicked in-hand, this will swap the RCD's mode from "floors" to "walls".
-         *
-         */
+
+        ///Method called when the RCD is clicked in-hand, this will swap the RCD's mode from "floors" to "walls".
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             SwapMode(eventArgs);
             return true;
-        }
-
-
-        /**
-         *
-         * Un-used method which is inherited from super
-         *
-         */
-        public void Activate(ActivateEventArgs eventArgs)
-        {
-            return;
         }
 
         /**
@@ -131,34 +119,51 @@ namespace Content.Server.GameObjects.Components.Items
                 return;
             }
 
-            var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-
-            if (mode == RCDmode.Floors || mode == RCDmode.Deconstruct)
+            var targetTile = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
+            ITileDefinition desiredTile = null;
+            //Try catch to assert that _outputTile is a valid key in the tiledefinition manager, failing this check, we'll abort any tile placement.
+            try
             {
-                if ((mode == RCDmode.Floors && !tileDef.IsSubFloor) || attacked != null
-                ) //Deconstruct mode can rip up any tile, but we don't want to place floor tiles on pre-existing floor tiles.
-                {
-                    return;
-                }
+                desiredTile = _tileDefinitionManager[_outputTile];
+            }
+            catch (Exception e)
+            {
+                desiredTile = null;
+            }
 
-                var desiredTile = _tileDefinitionManager[_outputTile];
+            var canPlaceTile = targetTile.IsSubFloor && desiredTile != null; //Boolean to check if we're able to build the desired tile. This defaults to checking for subfloors, but is overridden by "deconstruct" which sets it to the inverse.
+
+
+            switch (this.mode)
+            {
+                //Floor mode just needs the tile to be a space tile (subFloor)
+                case RCDmode.Floors:
+                    break;
+                //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
+                case RCDmode.Deconstruct:
+                    canPlaceTile = !targetTile.IsSubFloor && desiredTile != null;
+                    break;
+                //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile, thus we early return to avoid the tile set code.
+                case RCDmode.Walls:
+                    //If for whatever reason we can't get the grid coords, something has gone horribly wrong so let's return.
+                    if (!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
+                    {
+                        return;
+                    }
+                    var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
+                    var ent = _serverEntityManager.SpawnEntity("solid_wall", grid.GridTileToLocal(snapPos));
+                    ent.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
+                    _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
+                    ammo--;
+                    return; //Alright we're done here
+            }
+
+            if (canPlaceTile)
+            {
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
+                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
+                ammo--;
             }
-
-            else
-            {
-                if (!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
-                {
-                    return;
-                }
-
-                var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
-                var ent = _serverEntityManager.SpawnEntity("solid_wall", grid.GridTileToLocal(snapPos));
-                ent.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
-            }
-
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
-            ammo--;
         }
     }
 }
