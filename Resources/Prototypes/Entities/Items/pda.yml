@@ -1,0 +1,22 @@
+- type: entity
+  name: PDA
+  parent: BaseItem
+  id: PDAGeneric
+  description: Personal Data Assistant
+  components:
+  - type: PDA
+  - type: HandheldLight
+  - type: Sprite
+    sprite: Objects/Tools/flashlight.rsi
+    layers:
+    - state: lantern_off
+    - state: HandheldLightOnOverlay
+      shader: unshaded
+      visible: false
+  - type: Icon
+    sprite: Objects/Tools/flashlight.rsi
+    state: lantern_off
+  - type: PointLight
+    enabled: false
+    radius: 3
+  - type: Sound
