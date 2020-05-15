@@ -131,31 +131,34 @@ namespace Content.Server.GameObjects.Components.Items
                 return;
             }
 
-            var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
+            var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                if (mode == RCDmode.Floors || mode == RCDmode.Deconstruct)
+            if (mode == RCDmode.Floors || mode == RCDmode.Deconstruct)
+            {
+                if ((mode == RCDmode.Floors && !tileDef.IsSubFloor) || attacked != null
+                ) //Deconstruct mode can rip up any tile, but we don't want to place floor tiles on pre-existing floor tiles.
                 {
-                    if ((mode == RCDmode.Floors && !tileDef.IsSubFloor) || attacked != null) //Deconstruct mode can rip up any tile, but we don't want to place floor tiles on pre-existing floor tiles.
-                    {
-                        return;
-                    }
-                    var desiredTile = _tileDefinitionManager[_outputTile];
-                    mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
+                    return;
                 }
-                else
-                {
-                    if (!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
-                    {
-                        return;
-                    }
-                    var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
-                    GridCoordinates snapCoords = grid.GridTileToLocal(snapPos);
-                    var ent = _serverEntityManager.SpawnEntity("solid_wall", snapCoords);
-                    ent.GetComponent<ITransformComponent>().LocalRotation = Owner.GetComponent<ITransformComponent>().LocalRotation; //Now apply icon smoothing.
 
+                var desiredTile = _tileDefinitionManager[_outputTile];
+                mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
+            }
+
+            else
+            {
+                if (!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
+                {
+                    return;
                 }
-                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
-                ammo--;
+
+                var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
+                var ent = _serverEntityManager.SpawnEntity("solid_wall", grid.GridTileToLocal(snapPos));
+                ent.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
+            }
+
+            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
+            ammo--;
         }
     }
 }
