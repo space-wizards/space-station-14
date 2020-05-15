@@ -118,7 +118,7 @@
   id: RCD
   description: An advanced construction device which can place floors / walls down quickly.
   components:
-  - type: Rapid Construction Device
+  - type: RCD
   
   - type: UseDelay
     delay: 2.0

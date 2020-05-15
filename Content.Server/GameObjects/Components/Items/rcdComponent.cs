@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
 #pragma warning restore 649
-        public override string Name => "Rapid Construction Device";
+        public override string Name => "RCD";
         public string _outputTile = "floor_steel";
         String[] modes = Enum.GetNames(typeof(RCDmodes)); //Displayed modes for saying stuff like "you switch to floors mode"
         private int mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Items
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             SwapMode(eventArgs);
-            return false;
+            return true;
         }
 
 
@@ -108,9 +108,8 @@ namespace Content.Server.GameObjects.Components.Items
 
         void IExamine.Examine(FormattedMessage message)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
             string mode = Enum.GetNames(typeof(RCDmodes))[this.mode]; //Access the string name of the mode based off of its numerical index in the enum.
-            message.AddMarkup(loc.GetString("It's currently placing "+mode+", and holds "+this.ammo+" charges."));
+            message.AddMarkup(Loc.GetString("It's currently placing "+mode+", and holds "+this.ammo+" charges."));
         }
 
         /**
@@ -155,7 +154,7 @@ namespace Content.Server.GameObjects.Components.Items
                     var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
                     GridCoordinates snapCoords = grid.GridTileToLocal(snapPos);
                     var ent = _serverEntityManager.SpawnEntity("solid_wall", snapCoords);
-                    ent.GetComponent<ITransformComponent>().LocalRotation = Transform.LocalRotation;
+                    ent.GetComponent<ITransformComponent>().LocalRotation = Owner.GetComponent<ITransformComponent>().LocalRotation; //Now apply icon smoothing.
 
                 }
 
