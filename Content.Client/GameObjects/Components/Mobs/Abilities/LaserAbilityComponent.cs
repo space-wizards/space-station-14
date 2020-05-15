@@ -9,6 +9,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -24,39 +25,16 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
     public class LaserAbilityComponent : SharedLaserAbilityComponent
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 649
 
-        private const float MaxLength = 20;
-
-        public List<Ability> Abilities;
-
-        string _spritename;
-        private int _damage;
-        private int _baseFireCost;
-        private float _lowerChargeLimit;
-        private string _fireSound;
+        public Ability Ability;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            Abilities = new List<Ability>();
-
-            var ability = new Ability("Textures/Objects/Guns/Laser/laser_cannon.rsi/laser_cannon.png", TriggerAbility, new TimeSpan(10));
-            Abilities.Add(ability);
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _spritename, "fireSprite", "Objects/laser.png");
-            serializer.DataField(ref _damage, "damage", 10);
-            serializer.DataField(ref _baseFireCost, "baseFireCost", 300);
-            serializer.DataField(ref _lowerChargeLimit, "lowerChargeLimit", 10);
-            serializer.DataField(ref _fireSound, "fireSound", "/Audio/laser.ogg");
+            Ability = new Ability("Textures/Objects/Guns/Laser/laser_cannon.rsi/laser_cannon.png", TriggerAbility, new TimeSpan(10));
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -67,10 +45,22 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
             {
                 case GetAbilitiesMessage msg:
                 {
-                    foreach (var ability in Abilities)
-                    {
-                        msg.Hotbar.AddAbility(ability);
-                    }
+                    msg.Hotbar.AddAbility(Ability);
+                    break;
+                }
+            }
+        }
+
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        {
+            base.HandleNetworkMessage(message, netChannel, session);
+
+            switch (message)
+            {
+                case FireLaserCooldownMessage msg:
+                {
+                    Ability.Start = msg.Start;
+                    Ability.End = msg.End;
                     break;
                 }
             }
@@ -82,13 +72,11 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
             {
                 return;
             }
-            if (_gameTiming.CurTime < ability.End)
+
+            if (_gameTiming.CurTime < Ability.End) // + TimeSpan(latency) for prediction maybe?
             {
                 return;
             }
-
-            ability.Start = _gameTiming.CurTime;
-            ability.End = ability.Start + ability.Cooldown;
 
             SendNetworkMessage(new FireLaserMessage(coords));
             return;

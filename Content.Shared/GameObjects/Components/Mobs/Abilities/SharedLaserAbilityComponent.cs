@@ -21,5 +21,18 @@ namespace Content.Shared.GameObjects.Components.Mobs.Abilities
                 Coordinates = coordinates;
             }
         }
+
+        [Serializable, NetSerializable]
+        public class FireLaserCooldownMessage : ComponentMessage
+        {
+            public TimeSpan Start;
+            public TimeSpan End;
+
+            public FireLaserCooldownMessage(TimeSpan start, TimeSpan end)
+            {
+                Start = start;
+                End = end;
+            }
+        }
     }
 }

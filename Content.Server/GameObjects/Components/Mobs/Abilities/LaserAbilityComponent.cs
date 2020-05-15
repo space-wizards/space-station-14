@@ -36,6 +36,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
         private int _baseFireCost;
         private float _lowerChargeLimit;
         private string _fireSound;
+        private TimeSpan _cooldown;
+        private TimeSpan _start;
+        private TimeSpan _end;
 
         public override void Initialize()
         {
@@ -51,6 +54,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
             serializer.DataField(ref _baseFireCost, "baseFireCost", 300);
             serializer.DataField(ref _lowerChargeLimit, "lowerChargeLimit", 10);
             serializer.DataField(ref _fireSound, "fireSound", "Audio/Guns/Gunshots/laser.ogg");
+            serializer.DataField(ref _cooldown, "cooldown", TimeSpan.FromSeconds(2));
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
@@ -61,7 +65,16 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
             {
                 case FireLaserMessage msg:
                 {
+                    if (_gameTiming.CurTime < _end)
+                    {
+                        return;
+                    }
+
+                    _start = _gameTiming.CurTime;
+                    _end = _start + _cooldown;
+
                     Fire(msg.Coordinates);
+                    SendNetworkMessage(new FireLaserCooldownMessage(_start, _end));
                     break;
                 }
             }
