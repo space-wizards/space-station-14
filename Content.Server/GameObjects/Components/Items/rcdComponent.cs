@@ -1,9 +1,7 @@
 ﻿using System;
-using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Maps;
-using Microsoft.EntityFrameworkCore.Internal;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -27,14 +25,15 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
+        [Dependency] private IServerNotifyManager _serverNotifyManager;
 #pragma warning restore 649
         public override string Name => "RCD";
-        public string _outputTile = "floor_steel";
-        String[] modes = Enum.GetNames(typeof(RCDmodes)); //Displayed modes for saying stuff like "you switch to floors mode"
-        private int mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
+        private string _outputTile = "floor_steel";
+        private RCDmode mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
+        private Array modes = Enum.GetValues(typeof(RCDmode));
         private int ammo = 5; //How much "ammo" we have left. You can refille this with RCD ammo.
 
-        private enum RCDmodes //Enum to store the different mode states for clarity.
+        private enum RCDmode //Enum to store the different mode states for clarity.
         {
             Floors,
             Walls,
@@ -81,22 +80,22 @@ namespace Content.Server.GameObjects.Components.Items
         public void SwapMode(UseEntityEventArgs eventArgs)
         {
             _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/genhit.ogg", Owner);
-            this.mode = (this.mode < modes.Length-1) ? this.mode + 1 : 0; //Basic value rollover so that you can't get to an invalid mode
-            string mode = modes[this.mode];
-            switch (mode)
+            int mode = (int) this.mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
+            mode = (++mode) % modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
+            this.mode = (RCDmode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
+            switch (this.mode)
             {
-                case("Floors"):
+                case RCDmode.Floors:
                     _outputTile = "floor_steel";
                     break;
-                case("Walls"):
+                case RCDmode.Walls:
                     _outputTile = "base_wall";
                     break;
-                case("Deconstruct"):
+                case RCDmode.Deconstruct:
                     _outputTile = "space";
                     break;
             }
-            var notify = IoCManager.Resolve<IServerNotifyManager>();
-            notify.PopupMessage(Owner, eventArgs.User, "The RCD will now place "+mode); //Prints an overhead message above the RCD
+            _serverNotifyManager.PopupMessage(Owner, eventArgs.User, "The RCD is now set to "+this.mode+" mode."); //Prints an overhead message above the RCD
         }
 
         /**
@@ -108,8 +107,7 @@ namespace Content.Server.GameObjects.Components.Items
 
         void IExamine.Examine(FormattedMessage message)
         {
-            string mode = Enum.GetNames(typeof(RCDmodes))[this.mode]; //Access the string name of the mode based off of its numerical index in the enum.
-            message.AddMarkup(Loc.GetString("It's currently placing "+mode+", and holds "+this.ammo+" charges."));
+            message.AddMarkup(Loc.GetString("It's currently in "+mode+" mode, and holds "+this.ammo+" charges."));
         }
 
         /**
@@ -135,10 +133,9 @@ namespace Content.Server.GameObjects.Components.Items
 
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
-                string mode = modes[this.mode];
-                if (mode == "Floors" || mode == "Deconstruct")
+                if (mode == RCDmode.Floors || mode == RCDmode.Deconstruct)
                 {
-                    if (!tileDef.IsSubFloor || attacked != null)
+                    if ((mode == RCDmode.Floors && !tileDef.IsSubFloor) || attacked != null) //Deconstruct mode can rip up any tile, but we don't want to place floor tiles on pre-existing floor tiles.
                     {
                         return;
                     }
@@ -157,7 +154,6 @@ namespace Content.Server.GameObjects.Components.Items
                     ent.GetComponent<ITransformComponent>().LocalRotation = Owner.GetComponent<ITransformComponent>().LocalRotation; //Now apply icon smoothing.
 
                 }
-
                 _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
                 ammo--;
         }
