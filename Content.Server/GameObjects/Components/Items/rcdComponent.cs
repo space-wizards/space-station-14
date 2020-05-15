@@ -28,11 +28,10 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
 #pragma warning restore 649
-
         public override string Name => "Rapid Construction Device";
         public string _outputTile = "floor_steel";
-        String[] modes = Enum.GetNames(typeof(RCDmodes));
-        private int mode = 0;
+        String[] modes = Enum.GetNames(typeof(RCDmodes)); //Displayed modes for saying stuff like "you switch to floors mode"
+        private int mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
         private int ammo = 5; //How much "ammo" we have left. You can refille this with RCD ammo.
 
         private enum RCDmodes //Enum to store the different mode states for clarity.
@@ -60,15 +59,29 @@ namespace Content.Server.GameObjects.Components.Items
             return false;
         }
 
+
+        /**
+         *
+         * Un-used method which is inherited from super
+         *
+         */
         public void Activate(ActivateEventArgs eventArgs)
         {
             return;
         }
 
+        /**
+         *
+         * Method to allow the user to swap the mode of the RCD by clicking it in hand, the actual in hand clicking bit is done over on UseEntity()
+         *
+         * @param UseEntityEventArgs = The entity which triggered this method call, used to know where to play the "click" sound.
+         *
+         */
+
         public void SwapMode(UseEntityEventArgs eventArgs)
         {
             _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/genhit.ogg", Owner);
-            this.mode = (this.mode < modes.Length-1) ? this.mode + 1 : 0;
+            this.mode = (this.mode < modes.Length-1) ? this.mode + 1 : 0; //Basic value rollover so that you can't get to an invalid mode
             string mode = modes[this.mode];
             switch (mode)
             {
@@ -83,8 +96,15 @@ namespace Content.Server.GameObjects.Components.Items
                     break;
             }
             var notify = IoCManager.Resolve<IServerNotifyManager>();
-            notify.PopupMessage(Owner, eventArgs.User, "The RCD will now place "+mode);
+            notify.PopupMessage(Owner, eventArgs.User, "The RCD will now place "+mode); //Prints an overhead message above the RCD
         }
+
+        /**
+         *
+         * Method called when the user examines this object, it'll simply add the mode that it's in to the object's description
+         * @params message = The original message from examining, like ..() in BYOND's examine
+         *
+         */
 
         void IExamine.Examine(FormattedMessage message)
         {
@@ -92,6 +112,13 @@ namespace Content.Server.GameObjects.Components.Items
             string mode = Enum.GetNames(typeof(RCDmodes))[this.mode]; //Access the string name of the mode based off of its numerical index in the enum.
             message.AddMarkup(loc.GetString("It's currently placing "+mode+", and holds "+this.ammo+" charges."));
         }
+
+        /**
+         *
+         * Method to handle clicking on a tile to then appropriately RCD it. This can have several behaviours depending on mode.
+         * @param eventAargs = An action event telling us what tile was clicked on. We use this to exrapolate where to place the new tile / remove the old one etc.
+         *
+         */
 
         public void AfterAttack(AfterAttackEventArgs eventArgs)
         {
@@ -134,10 +161,6 @@ namespace Content.Server.GameObjects.Components.Items
 
                 _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
                 ammo--;
-
-
-
         }
-
     }
 }
