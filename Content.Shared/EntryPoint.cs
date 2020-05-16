@@ -1,14 +1,15 @@
-﻿﻿using System;
- using System.Collections.Generic;
- using System.Globalization;
- using Content.Shared.Maps;
- using Robust.Shared.ContentPack;
- using Robust.Shared.Interfaces.Map;
- using Robust.Shared.IoC;
- using Robust.Shared.Localization;
- using Robust.Shared.Prototypes;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Content.Shared.Maps;
+using Robust.Shared.ContentPack;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Localization.Macros;
+using Robust.Shared.Prototypes;
 
- namespace Content.Shared
+namespace Content.Shared
 {
     public class EntryPoint : GameShared
     {
@@ -26,7 +27,16 @@
             IoCManager.InjectDependencies(this);
 
             // Default to en-US.
-            _localizationManager.LoadCulture(new CultureInfo(Culture));
+            // TODO Move this elsewhere, this definitely doesn't belong to here.
+            var macros = new Dictionary<string, ITextMacro>
+            {
+                { "they", new They() },
+                { "their", new Their() },
+                { "theirs", new Theirs() },
+                { "them", new Them() },
+                { "themself", new Themself() },
+            };
+            _localizationManager.LoadCulture(new MacroCultureInfoWrapper(new MacroFormatter(macros), Culture));
         }
 
         public override void Init()
