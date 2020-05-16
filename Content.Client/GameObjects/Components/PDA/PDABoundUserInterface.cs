@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects.Components.PDA
         }
 
 
-        public class PDAMenu : SS14Window
+        private class PDAMenu : SS14Window
         {
             protected override Vector2? CustomSize => (512, 256);
 
@@ -80,6 +80,8 @@ namespace Content.Client.GameObjects.Components.PDA
             public Button FlashLightToggleButton { get; }
             public Button EjectIDButton { get; }
 
+            public TabContainer MasterTabContainer;
+
             public RichTextLabel PDAOwnerLabel { get; }
             public PanelContainer IDInfoContainer { get; }
             public RichTextLabel IDInfoLabel { get; }
@@ -87,9 +89,14 @@ namespace Content.Client.GameObjects.Components.PDA
             public PDAMenu(PDABoundUserInterface owner = null)
             {
                 //CustomMinimumSize = (380, 128);
+
                 _owner = owner;
                 Title = Loc.GetString("PDA");
 
+                #region MAIN_MENU_TAB
+
+
+                //Main menu
                 PDAOwnerLabel = new RichTextLabel
                 {
 
@@ -145,12 +152,32 @@ namespace Content.Client.GameObjects.Components.PDA
                         FlashLightToggleButton
                     }
                 };
+                #endregion
 
-                Contents.AddChild(vboxContainer);
+                #region MESSAGING_MENU_TAB
+                 //Messaging Tab
+                 var chatTabVboxContainer = new VBoxContainer
+                 {
+
+                 };
+
+
+                #endregion
+
+                MasterTabContainer = new TabContainer
+                {
+
+                    Children =
+                    {
+                        vboxContainer,
+
+                    }
+                };
+
+                MasterTabContainer.SetTabTitle(0,Loc.GetString("Main Menu"));
+                Contents.AddChild(MasterTabContainer);
 
             }
-
-
         }
     }
 
