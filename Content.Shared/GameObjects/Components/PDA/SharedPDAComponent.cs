@@ -59,6 +59,12 @@ namespace Content.Shared.GameObjects.Components.PDA
     }
 
     [NetSerializable, Serializable]
+    public enum PDAVisuals
+    {
+        ScreenLit,
+    }
+
+    [NetSerializable, Serializable]
     public enum PDAUiKey
     {
         Key

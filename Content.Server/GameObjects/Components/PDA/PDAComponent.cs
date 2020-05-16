@@ -15,7 +15,8 @@ using Robust.Shared.Players;
 namespace Content.Server.GameObjects.Components.PDA
 {
     [RegisterComponent]
-    public class PDAComponent : SharedPDAComponent, IAttackBy, IUse
+    [ComponentReference(typeof(IActivate))]
+    public class PDAComponent : SharedPDAComponent, IAttackBy, IActivate
     {
         private Container _idSlot;
         private PointLightComponent _pdaLight;
@@ -26,15 +27,18 @@ namespace Content.Server.GameObjects.Components.PDA
 
         public IdCardComponent ContainedID { get; private set; }
 
+        private AppearanceComponent _appearance;
+
         public override void Initialize()
         {
             base.Initialize();
             _idSlot = ContainerManagerComponent.Ensure<Container>("pda_entity_container", Owner, out var existed);
             _pdaLight = Owner.GetComponent<PointLightComponent>();
+            _appearance = Owner.GetComponent<AppearanceComponent>();
             _interface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(PDAUiKey.Key);
             _interface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
-        }
+            UpdatePDAAppearance();        }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
@@ -58,12 +62,18 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             var ownerInfo = new PDAIdInfoText
             {
-                ActualOwnerName = OriginalOwner.Name,
+                ActualOwnerName = OriginalOwner?.Name,
                 IDOwner = ContainedID?.FullName,
                 JobTitle = ContainedID?.JobTitle
             };
 
             _interface.SetState(new PDAUpdateUserInterfaceState(_lightOn,ownerInfo));
+            UpdatePDAAppearance();
+        }
+
+        private void UpdatePDAAppearance()
+        {
+            _appearance?.SetData(PDAVisuals.ScreenLit, _lightOn);
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)
@@ -78,6 +88,10 @@ namespace Content.Server.GameObjects.Components.PDA
             {
                 _idSlot.Insert(item);
                 ContainedID = idCardComponent;
+                if (OriginalOwner == null)
+                {
+                    SetPDAOwner(eventArgs.User);
+                }
                 UpdatePDAUserInterface();
                 return true;
             }
@@ -85,23 +99,20 @@ namespace Content.Server.GameObjects.Components.PDA
             return false;
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+
+
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
-                return false;
+                return;
             }
             _interface.Open(actor.playerSession);
-
-            return true;
+            UpdatePDAAppearance();
         }
 
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
-        {
-            base.HandleNetworkMessage(message, netChannel, session);
 
-        }
 
         public void SetPDAOwner(IEntity mob)
         {
@@ -157,8 +168,6 @@ namespace Content.Server.GameObjects.Components.PDA
                 component.HandleIDEjection(user);
             }
         }
-
-
 
     }
 }

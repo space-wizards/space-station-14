@@ -6,15 +6,23 @@
   components:
   - type: PDA
   - type: Sprite
-    sprite: Objects/Tools/flashlight.rsi
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
     layers:
-    - state: lantern_off
-    - state: HandheldLightOnOverlay
+    - state: pda
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: unlit_pda_screen
       shader: unshaded
-      visible: false
+      map: ["enum.PDAVisualLayers.Unlit"]
   - type: Icon
-    sprite: Objects/Tools/flashlight.rsi
-    state: lantern_off
+    sprite: Objects/Devices/pda.rsi
+    state: pda
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+  - type: Clothing
+    Slots:
+    - idcard
   - type: PointLight
     enabled: false
     radius: 3
