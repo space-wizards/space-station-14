@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.PDA
 {
@@ -40,11 +41,8 @@ namespace Content.Client.GameObjects.Components.PDA
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (!(state is PDAUpdateUserInterfaceState cstate))
-            {
-                return;
-            }
-
+            DebugTools.Assert((state is PDAUpdateUserInterfaceState));
+            var cstate = (PDAUpdateUserInterfaceState) state;
             _menu.FlashLightToggleButton.Pressed = cstate.FlashlightEnabled;
             _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("Owner: [color=white]{0}[/color]",cstate.PDAOwnerInfo.ActualOwnerName));
 
@@ -59,7 +57,7 @@ namespace Content.Client.GameObjects.Components.PDA
                     cstate.PDAOwnerInfo.JobTitle));
             }
 
-            _menu.EjectIDButton.Visible = cstate.PDAOwnerInfo.IDOwner != null ? true : false;
+            _menu.EjectIDButton.Visible = cstate.PDAOwnerInfo.IDOwner != null;
 
         }
 
