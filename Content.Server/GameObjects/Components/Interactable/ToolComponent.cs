@@ -2,6 +2,8 @@
 // ReSharper disable once RedundantUsingDirective
 
 using System;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
@@ -30,7 +32,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    public class ToolComponent : SharedToolComponent, IExamine, IAfterAttack, IUse, IAttack
+    public class ToolComponent : SharedToolComponent, IAfterAttack
     {
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
@@ -114,7 +116,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         ///     Status modifier which determines whether or not we can act as a tool at this time
         /// </summary>
-        public virtual bool CanUse()
+        public virtual bool CanUse(float resource)
+        {
+            return true;
+        }
+
+        /// <summary>
+        ///     Method which will try to use the current tool and consume resources/power if applicable.
+        /// </summary>
+        /// <param name="resource">The amount of resource</param>
+        /// <returns>Whether the tool could be used or not.</returns>
+        public virtual bool TryUse(float resource = 0f)
         {
             return true;
         }
@@ -142,6 +154,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void AfterAttack(AfterAttackEventArgs eventArgs)
         {
+            if (eventArgs.Attacked != null && RaiseToolAct(eventArgs))
+                return;
+
             if (Behavior != Tool.Crowbar)
                 return;
 
@@ -166,17 +181,100 @@ namespace Content.Server.GameObjects.Components.Interactable
             tileItem.Transform.WorldPosition += (0.2f, 0.2f);
         }
 
-        public virtual bool UseEntity(UseEntityEventArgs eventArgs)
+        private bool RaiseToolAct(AfterAttackEventArgs eventArgs)
         {
+            var attacked = eventArgs.Attacked;
+            var clickLocation = eventArgs.ClickLocation;
+            var user = eventArgs.User;
+
+            switch (Behavior)
+            {
+                case Tool.Wrench:
+                    var wrenchList = attacked.GetAllComponents<IWrenchAct>().ToList();
+                    var wrenchAttackBy = new WrenchActEventArgs()
+                        { User = user, ClickLocation = clickLocation, AttackWith = Owner };
+
+                    foreach (var comp in wrenchList)
+                    {
+                        if (comp.WrenchAct(wrenchAttackBy))
+                            return true;
+                    }
+
+                    break;
+
+                case Tool.Crowbar:
+                    var crowbarList = attacked.GetAllComponents<ICrowbarAct>().ToList();
+                    var crowbarAttackBy = new CrowbarActEventArgs()
+                        { User = user, ClickLocation = clickLocation, AttackWith = Owner };
+
+                    foreach (var comp in crowbarList)
+                    {
+                        if (comp.CrowbarAct(crowbarAttackBy))
+                            return true;
+                    }
+
+                    break;
+
+                case Tool.Screwdriver:
+                    var screwdriverList = attacked.GetAllComponents<IScrewdriverAct>().ToList();
+                    var screwdriverAttackBy = new ScrewdriverActEventArgs()
+                        { User = user, ClickLocation = clickLocation, AttackWith = Owner };
+
+                    foreach (var comp in screwdriverList)
+                    {
+                        if (comp.ScrewdriverAct(screwdriverAttackBy))
+                            return true;
+                    }
+
+                    break;
+
+                case Tool.Wirecutter:
+                    var wirecutterList = attacked.GetAllComponents<IWirecutterAct>().ToList();
+                    var wirecutterAttackBy = new WirecutterActEventArgs()
+                        { User = user, ClickLocation = clickLocation, AttackWith = Owner };
+
+                    foreach (var comp in wirecutterList)
+                    {
+                        if (comp.WirecutterAct(wirecutterAttackBy))
+                            return true;
+                    }
+                    break;
+
+                case Tool.Welder:
+                    var welderList = attacked.GetAllComponents<IWelderAct>().ToList();
+                    var welder = (WelderComponent) this;
+                    var welderAttackBy = new WelderActEventArgs()
+                    {
+                        User = user, ClickLocation = clickLocation, AttackWith = Owner,
+                        Fuel = welder.Fuel, FuelCapacity = welder.FuelCapacity
+                    };
+
+                    foreach (var comp in welderList)
+                    {
+                        if (comp.WelderAct(welderAttackBy))
+                            return true;
+                    }
+
+                    break;
+
+                case Tool.Multitool:
+                    var multitoolList = attacked.GetAllComponents<IMultitoolAct>().ToList();
+                    var multitoolAttackBy = new MultitoolActEventArgs()
+                        { User = user, ClickLocation = clickLocation, AttackWith = Owner };
+
+                    foreach (var comp in multitoolList)
+                    {
+                        if (comp.MultitoolAct(multitoolAttackBy))
+                            return true;
+                    }
+
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             return false;
-        }
-
-        public virtual void Examine(FormattedMessage message)
-        {
-        }
-
-        public virtual void Attack(AttackEventArgs eventArgs)
-        {
         }
     }
 }

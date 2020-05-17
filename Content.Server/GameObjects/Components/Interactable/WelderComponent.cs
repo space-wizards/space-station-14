@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
-    public class WelderComponent : ToolComponent
+    public class WelderComponent : ToolComponent, IExamine, IUse
     {
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
@@ -80,12 +80,14 @@ namespace Content.Server.GameObjects.Components.Interactable
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
 
-        /// <summary>
-        ///     Status modifier which determines whether or not we can act as a tool at this time
-        /// </summary>
-        public override bool CanUse()
+        public bool CanUse()
         {
             return CanWeld(DefaultFuelCost);
+        }
+
+        public bool TryUse()
+        {
+            return TryWeld(DefaultFuelCost);
         }
 
         public bool TryWeld(float value)
@@ -133,12 +135,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        public override bool UseEntity(UseEntityEventArgs eventArgs)
+        public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             return ToggleWelderStatus();
         }
 
-        public override void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message)
         {
             if (WelderLit)
             {

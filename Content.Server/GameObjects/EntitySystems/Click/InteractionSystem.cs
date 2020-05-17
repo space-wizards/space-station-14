@@ -135,6 +135,7 @@ namespace Content.Server.GameObjects.EntitySystems
     public class WelderActEventArgs : ToolActEventArgs
     {
         public override Tool Behavior => Tool.Welder;
+        public WelderComponent WelderComponent => (WelderComponent)ToolComponent;
         public bool Lit { get; set; }
         public float Fuel { get; set; }
         public float FuelCapacity { get; set; }
@@ -678,97 +679,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (attackBy.AttackBy(attackByEventArgs))
                     // If an AttackBy returns a status completion we finish our attack
                     return;
-            }
-
-            // We handle specific tools AttackBy here.
-            if (weapon.TryGetComponent<ToolComponent>(out var tool))
-            {
-                switch (tool.Behavior)
-                {
-                    case Tool.Wrench:
-                        var wrenchList = attacked.GetAllComponents<IWrenchAct>().ToList();
-                        var wrenchAttackBy = new WrenchActEventArgs()
-                            { User = user, ClickLocation = clickLocation, AttackWith = weapon };
-
-                        foreach (var comp in wrenchList)
-                        {
-                            if (comp.WrenchAct(wrenchAttackBy))
-                                return;
-                        }
-
-                        break;
-
-                    case Tool.Crowbar:
-                        var crowbarList = attacked.GetAllComponents<ICrowbarAct>().ToList();
-                        var crowbarAttackBy = new CrowbarActEventArgs()
-                            { User = user, ClickLocation = clickLocation, AttackWith = weapon };
-
-                        foreach (var comp in crowbarList)
-                        {
-                            if (comp.CrowbarAct(crowbarAttackBy))
-                                return;
-                        }
-
-                        break;
-
-                    case Tool.Screwdriver:
-                        var screwdriverList = attacked.GetAllComponents<IScrewdriverAct>().ToList();
-                        var screwdriverAttackBy = new ScrewdriverActEventArgs()
-                            { User = user, ClickLocation = clickLocation, AttackWith = weapon };
-
-                        foreach (var comp in screwdriverList)
-                        {
-                            if (comp.ScrewdriverAct(screwdriverAttackBy))
-                                return;
-                        }
-
-                        break;
-
-                    case Tool.Wirecutter:
-                        var wirecutterList = attacked.GetAllComponents<IWirecutterAct>().ToList();
-                        var wirecutterAttackBy = new WirecutterActEventArgs()
-                            { User = user, ClickLocation = clickLocation, AttackWith = weapon };
-
-                        foreach (var comp in wirecutterList)
-                        {
-                            if (comp.WirecutterAct(wirecutterAttackBy))
-                                return;
-                        }
-                        break;
-
-                    case Tool.Welder:
-                        var welderList = attacked.GetAllComponents<IWelderAct>().ToList();
-                        var welder = (WelderComponent) tool;
-                        var welderAttackBy = new WelderActEventArgs()
-                        {
-                            User = user, ClickLocation = clickLocation, AttackWith = weapon,
-                            Fuel = welder.Fuel, FuelCapacity = welder.FuelCapacity
-                        };
-
-                        foreach (var comp in welderList)
-                        {
-                            if (comp.WelderAct(welderAttackBy))
-                                return;
-                        }
-
-                        break;
-
-                    case Tool.Multitool:
-                        var multitoolList = attacked.GetAllComponents<IMultitoolAct>().ToList();
-                        var multitoolAttackBy = new MultitoolActEventArgs()
-                            { User = user, ClickLocation = clickLocation, AttackWith = weapon };
-
-                        foreach (var comp in multitoolList)
-                        {
-                            if (comp.MultitoolAct(multitoolAttackBy))
-                                return;
-                        }
-
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
             }
 
             var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);

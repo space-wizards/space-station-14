@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         public bool WelderAct(WelderActEventArgs eventArgs)
         {
-            var welder = (WelderComponent)eventArgs.ToolComponent;
+            var welder = eventArgs.WelderComponent;
             if (!welder.TryWeld(5.0f)) return false;
             // Repair generator
             var damageable = Owner.GetComponent<DamageableComponent>();
