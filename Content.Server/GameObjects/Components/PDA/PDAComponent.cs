@@ -1,5 +1,6 @@
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Server.GameObjects;
@@ -9,6 +10,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
 
@@ -18,6 +20,9 @@ namespace Content.Server.GameObjects.Components.PDA
     [ComponentReference(typeof(IActivate))]
     public class PDAComponent : SharedPDAComponent, IAttackBy, IActivate
     {
+#pragma warning disable 649
+        [Dependency] protected readonly IPDAUplinkManager _uplinkManager;
+#pragma warning restore 649
         private Container _idSlot;
         private PointLightComponent _pdaLight;
         private bool _lightOn = false;
@@ -38,7 +43,8 @@ namespace Content.Server.GameObjects.Components.PDA
             _interface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(PDAUiKey.Key);
             _interface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
-            UpdatePDAAppearance();        }
+            UpdatePDAAppearance();
+        }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
