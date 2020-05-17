@@ -28,8 +28,9 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 50
-    spawnondestroy: TableParts
+    spawnondestroy: SteelSheet1
 
+# TODO: drop wood instead of steel when destroyed when that's added
 - type: entity
   id: TableWood
   parent: Table
@@ -41,4 +42,4 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 50
-    spawnondestroy: TableParts
+    spawnondestroy: SteelSheet1
