@@ -137,7 +137,7 @@ namespace Content.Client.GameObjects.Components.PDA
                     ToggleMode = true,
                 };
 
-                var vboxContainer = new VBoxContainer
+                var mainMenuTabContainer = new VBoxContainer
                 {
                     SizeFlagsVertical = SizeFlags.FillExpand,
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
@@ -152,13 +152,12 @@ namespace Content.Client.GameObjects.Components.PDA
                 };
                 #endregion
 
-                #region MESSAGING_MENU_TAB
+                #region UPLINK_TAB
                  //Messaging Tab
-                 var chatTabVboxContainer = new VBoxContainer
+                 var uplinkTabContainer = new VBoxContainer
                  {
 
                  };
-
 
                 #endregion
 
@@ -167,12 +166,15 @@ namespace Content.Client.GameObjects.Components.PDA
 
                     Children =
                     {
-                        vboxContainer,
+                        mainMenuTabContainer,
+                        uplinkTabContainer
+
 
                     }
                 };
 
                 MasterTabContainer.SetTabTitle(0,Loc.GetString("Main Menu"));
+                MasterTabContainer.SetTabTitle(1,Loc.GetString("Uplink -DEBUG-"));
                 Contents.AddChild(MasterTabContainer);
 
             }
