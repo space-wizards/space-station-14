@@ -16,6 +16,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
+using static Robust.Shared.Utility.EntitySystemHelpers;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -141,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Movement
             Timer.Spawn(TimeSpan.FromSeconds(_chargeTime + _cooldown), () => SetState(ItemTeleporterState.Off));
             if (_cooldownSound != null)
             {
-                var soundPlayer = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                var soundPlayer = EntitySystem<AudioSystem>();
                 soundPlayer.Play(_cooldownSound, Owner);
             }
         }
@@ -227,7 +228,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             // Messy maybe?
             GridCoordinates targetGrid = new GridCoordinates(vector, user.Transform.GridID);
-            var soundPlayer = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            var soundPlayer = EntitySystem<AudioSystem>();
 
             // If portals use those, otherwise just move em over
             if (_portalAliveTime > 0.0f)

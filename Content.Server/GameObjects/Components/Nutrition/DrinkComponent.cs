@@ -124,7 +124,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     // When we split Finish gets called which may delete the can so need to use the entity system for sound
                     if (_useSound != null)
                     {
-                        var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
                         var audioSystem = entitySystemManager.GetEntitySystem<AudioSystem>();
                         audioSystem.Play(_useSound);
                         user.PopupMessage(user, _localizationManager.GetString("Slurp"));

@@ -22,6 +22,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using static Robust.Shared.Utility.EntitySystemHelpers;
 
 namespace Content.Server.GameObjects
 {
@@ -34,7 +35,6 @@ namespace Content.Server.GameObjects
 
         #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _robustRandom;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IMapManager _mapManager;
         #pragma warning restore 649
 
@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects
             var userPos = user.Transform.MapPosition;
             var itemPos = Owner.Transform.WorldPosition;
 
-            return _entitySystemManager.GetEntitySystem<InteractionSystem>()
+            return EntitySystem<SharedInteractionSystem>()
                 .InRangeUnobstructed(userPos, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
         }
 

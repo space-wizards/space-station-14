@@ -15,6 +15,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using static Robust.Shared.Utility.EntitySystemHelpers;
 
 namespace Content.Server.GameObjects.Components.Gravity
 {
@@ -110,10 +111,9 @@ namespace Content.Server.GameObjects.Components.Gravity
                 breakable.broken = false;
                 _intact = true;
 
-                var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
                 var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
 
-                entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
+                EntitySystem<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
                 notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
 
                 return true;

@@ -18,6 +18,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Construction.ConstructionStepMaterial;
 using static Content.Shared.Construction.ConstructionStepTool;
+using static Robust.Shared.Utility.EntitySystemHelpers;
+using static Robust.Shared.Utility.EntitySystemHelpers;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
@@ -46,14 +48,12 @@ namespace Content.Server.GameObjects.Components.Construction
 
             Sprite = Owner.GetComponent<SpriteComponent>();
             Transform = Owner.GetComponent<ITransformComponent>();
-            var systemman = IoCManager.Resolve<IEntitySystemManager>();
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
             var playerEntity = eventArgs.User;
-            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: Prototype.CanBuildInImpassable))
+            if (!EntitySystem<SharedInteractionSystem>().InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: Prototype.CanBuildInImpassable))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, playerEntity,
                     _localizationManager.GetString("You can't reach there!"));
@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 return false;
             }
-            var sound = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            var sound = EntitySystem<AudioSystem>();
 
             switch (step)
             {
