@@ -1,10 +1,11 @@
-using Content.Server.PDA;
-using Robust.Shared.Interfaces.GameObjects;
+using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.PDA;
 
 namespace Content.Server.Interfaces.PDA
 {
     public interface IPDAUplinkManager
     {
+        public IReadOnlyList<UplinkStoreListing> FetchListings();
         void Initialize();
         public bool AddNewAccount(UplinkAccount acc);
 

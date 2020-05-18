@@ -1,4 +1,5 @@
 using Content.Client.Utility;
+using Content.Server.PDA;
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -43,6 +44,10 @@ namespace Content.Client.GameObjects.Components.PDA
             base.UpdateState(state);
             DebugTools.Assert((state is PDAUpdateUserInterfaceState));
             var cstate = (PDAUpdateUserInterfaceState) state;
+            switch (state)
+            {
+
+            }
             _menu.FlashLightToggleButton.Pressed = cstate.FlashlightEnabled;
             _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("Owner: [color=white]{0}[/color]",cstate.PDAOwnerInfo.ActualOwnerName));
 
@@ -60,6 +65,8 @@ namespace Content.Client.GameObjects.Components.PDA
             _menu.EjectIDButton.Visible = cstate.PDAOwnerInfo.IDOwner != null;
 
         }
+
+
 
         protected override void Dispose(bool disposing)
         {
@@ -83,6 +90,9 @@ namespace Content.Client.GameObjects.Components.PDA
             public RichTextLabel PDAOwnerLabel { get; }
             public PanelContainer IDInfoContainer { get; }
             public RichTextLabel IDInfoLabel { get; }
+
+
+            private ScrollContainer _uplinkShopScrollContainer;
 
             public PDAMenu(PDABoundUserInterface owner = null)
             {
@@ -154,11 +164,30 @@ namespace Content.Client.GameObjects.Components.PDA
 
                 #region UPLINK_TAB
                  //Messaging Tab
-                 var uplinkTabContainer = new VBoxContainer
-                 {
 
+                 var uplinkStoreHeader = new Label
+                 {
+                    Align = Label.AlignMode.Center,
+                    Text = Loc.GetString("Uplink Listings"),
                  };
 
+                 _uplinkShopScrollContainer = new ScrollContainer();
+                var innerVboxContainer = new VBoxContainer
+                 {
+                    Children =
+                    {
+                        uplinkStoreHeader,
+                        _uplinkShopScrollContainer
+                    }
+                 };
+
+                 var uplinkTabContainer = new VBoxContainer
+                 {
+                     Children =
+                     {
+                         innerVboxContainer
+                     }
+                 };
                 #endregion
 
                 MasterTabContainer = new TabContainer
@@ -168,14 +197,44 @@ namespace Content.Client.GameObjects.Components.PDA
                     {
                         mainMenuTabContainer,
                         uplinkTabContainer
-
-
                     }
                 };
 
                 MasterTabContainer.SetTabTitle(0,Loc.GetString("Main Menu"));
                 MasterTabContainer.SetTabTitle(1,Loc.GetString("Uplink -DEBUG-"));
                 Contents.AddChild(MasterTabContainer);
+            }
+
+            public void AddListingGUI(UplinkStoreListing listing)
+            {
+                var itemLabel = new Label
+                {
+                    Text = listing.Item.Name
+
+                };
+                var priceLabel = new Label
+                {
+                    Text = listing.Price.ToString(),
+                };
+                var hbox = new HBoxContainer
+                {
+                    Children =
+                    {
+                        itemLabel,
+                        priceLabel
+                    }
+                };
+                var button = new PDAUplinkItemButton
+                {
+                    Children =
+                    {
+                        hbox
+                    }
+                };
+                _uplinkShopScrollContainer.AddChild(button);
+            }
+            private sealed class PDAUplinkItemButton : ContainerButton
+            {
 
             }
         }

@@ -61,6 +61,14 @@ namespace Content.Server.GameObjects.Components.PDA
                     HandleIDEjection(message.Session.AttachedEntity);
                     break;
                 }
+
+                case PDARequestUplinkListingsMessage msg:
+                {
+
+                    var listingsMessage = new PDASendUplinkListingsMessage(_uplinkManager.FetchListings());
+
+                    break;
+                }
             }
         }
 
@@ -105,8 +113,6 @@ namespace Content.Server.GameObjects.Components.PDA
             return false;
         }
 
-
-
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
@@ -116,9 +122,6 @@ namespace Content.Server.GameObjects.Components.PDA
             _interface.Open(actor.playerSession);
             UpdatePDAAppearance();
         }
-
-
-
 
         public void SetPDAOwner(IEntity mob)
         {

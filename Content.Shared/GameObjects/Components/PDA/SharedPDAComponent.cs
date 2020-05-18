@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
@@ -50,6 +51,28 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class PDASendUplinkListingsMessage : BoundUserInterfaceState
+    {
+
+        public IReadOnlyList<UplinkStoreListing> Listings;
+        public PDASendUplinkListingsMessage(IReadOnlyList<UplinkStoreListing> listings)
+        {
+            Listings = listings;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class PDARequestUplinkListingsMessage : BoundUserInterfaceMessage
+    {
+        public PDARequestUplinkListingsMessage()
+        {
+
+        }
+    }
+
+
+
     [NetSerializable, Serializable]
     public struct PDAIdInfoText
     {
@@ -68,5 +91,20 @@ namespace Content.Shared.GameObjects.Components.PDA
     public enum PDAUiKey
     {
         Key
+    }
+
+    public struct UplinkAccount
+    {
+        public EntityUid AccountHolder;
+        public int Balance;
+    }
+
+    [Serializable] [NetSerializable]
+    public struct UplinkStoreListing
+    {
+        public EntityPrototype Item;
+        public int Price;
+        public string Category;
+        public string Description;
     }
 }
