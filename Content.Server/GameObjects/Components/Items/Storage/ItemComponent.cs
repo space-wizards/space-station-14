@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects
             var userPos = user.Transform.MapPosition;
             var itemPos = Owner.Transform.WorldPosition;
 
-            return EntitySystemHelpers.EntitySystem<SharedInteractionSystem>()
+            return Robust.Shared.Utility.EntitySystems.Get<SharedInteractionSystem>()
                 .InRangeUnobstructed(userPos, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
         }
 

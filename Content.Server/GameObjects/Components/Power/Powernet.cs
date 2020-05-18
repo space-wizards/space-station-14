@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public Powernet()
         {
-            var powerSystem = EntitySystemHelpers.EntitySystem<PowerSystem>();
+            var powerSystem = Robust.Shared.Utility.EntitySystems.Get<PowerSystem>();
             powerSystem.Powernets.Add(this);
             Uid = powerSystem.NewUid();
         }
@@ -374,7 +374,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         private void RemoveFromSystem()
         {
-            EntitySystemHelpers.EntitySystem<PowerSystem>().Powernets.Remove(this);
+            Robust.Shared.Utility.EntitySystems.Get<PowerSystem>().Powernets.Remove(this);
         }
 
         #region Registration

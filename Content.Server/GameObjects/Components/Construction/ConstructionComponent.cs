@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Construction
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
             var playerEntity = eventArgs.User;
-            if (!EntitySystemHelpers.EntitySystem<SharedInteractionSystem>().InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: Prototype.CanBuildInImpassable))
+            if (!Robust.Shared.Utility.EntitySystems.Get<SharedInteractionSystem>().InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: Prototype.CanBuildInImpassable))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, playerEntity,
                     _localizationManager.GetString("You can't reach there!"));
@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 return false;
             }
-            var sound = EntitySystemHelpers.EntitySystem<AudioSystem>();
+            var sound = Robust.Shared.Utility.EntitySystems.Get<AudioSystem>();
 
             switch (step)
             {

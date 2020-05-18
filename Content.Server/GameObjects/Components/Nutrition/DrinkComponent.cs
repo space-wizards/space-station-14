@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     if (_useSound != null)
                     {
 
-                        var audioSystem = EntitySystemHelpers.EntitySystem<AudioSystem>();
+                        var audioSystem = Robust.Shared.Utility.EntitySystems.Get<AudioSystem>();
                         audioSystem.Play(_useSound);
                         user.PopupMessage(user, _localizationManager.GetString("Slurp"));
                     }

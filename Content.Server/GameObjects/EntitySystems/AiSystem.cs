@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 var processorId = args[0];
                 var entId = new EntityUid(int.Parse(args[1]));
                 var ent = IoCManager.Resolve<IEntityManager>().GetEntity(entId);
-                var aiSystem = EntitySystemHelpers.EntitySystem<AiSystem>();
+                var aiSystem = Robust.Shared.Utility.EntitySystems.Get<AiSystem>();
 
                 if (!aiSystem.ProcessorTypeExists(processorId))
                 {

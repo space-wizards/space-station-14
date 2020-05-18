@@ -142,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Movement
             Timer.Spawn(TimeSpan.FromSeconds(_chargeTime + _cooldown), () => SetState(ItemTeleporterState.Off));
             if (_cooldownSound != null)
             {
-                var soundPlayer = EntitySystemHelpers.EntitySystem<AudioSystem>();
+                var soundPlayer = Robust.Shared.Utility.EntitySystems.Get<AudioSystem>();
                 soundPlayer.Play(_cooldownSound, Owner);
             }
         }
@@ -228,7 +228,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             // Messy maybe?
             GridCoordinates targetGrid = new GridCoordinates(vector, user.Transform.GridID);
-            var soundPlayer = EntitySystemHelpers.EntitySystem<AudioSystem>();
+            var soundPlayer = Robust.Shared.Utility.EntitySystems.Get<AudioSystem>();
 
             // If portals use those, otherwise just move em over
             if (_portalAliveTime > 0.0f)

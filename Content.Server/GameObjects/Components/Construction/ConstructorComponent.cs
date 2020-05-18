@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var transform = Owner.Transform;
 
-            if (!EntitySystemHelpers.EntitySystem<SharedInteractionSystem>().InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
+            if (!Robust.Shared.Utility.EntitySystems.Get<SharedInteractionSystem>().InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
             {
                 _notifyManager.PopupMessage(transform.GridPosition, Owner,
                         _localizationManager.GetString("You can't reach there!"));

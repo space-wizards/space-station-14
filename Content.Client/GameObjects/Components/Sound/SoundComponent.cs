@@ -55,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Sound
             Timer.Spawn((int) schedule.Delay + (_random.Next((int) schedule.RandomDelay)),() =>
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
-                    if (_audioSystem == null) _audioSystem = EntitySystemHelpers.EntitySystem<AudioSystem>();
+                    if (_audioSystem == null) _audioSystem = Robust.Shared.Utility.EntitySystems.Get<AudioSystem>();
                     _audioStreams.Add(schedule,_audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams));
 
                     if (schedule.Times == 0) return;
@@ -88,7 +88,7 @@ namespace Content.Client.GameObjects.Components.Sound
         public override void Initialize()
         {
             base.Initialize();
-            EntitySystemHelpers.TryGetEntitySystem(out _audioSystem);
+            Robust.Shared.Utility.EntitySystems.TryGet(out _audioSystem);
         }
 
         public override void ExposeData(ObjectSerializer serializer)

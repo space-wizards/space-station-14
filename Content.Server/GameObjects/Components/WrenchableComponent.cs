@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            _audioSystem = EntitySystemHelpers.EntitySystem<AudioSystem>();
+            _audioSystem = Robust.Shared.Utility.EntitySystems.Get<AudioSystem>();
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)

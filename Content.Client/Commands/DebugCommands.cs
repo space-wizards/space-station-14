@@ -49,7 +49,7 @@ namespace Content.Client.Commands
 
         public bool Execute(IDebugConsole console, params string[] args)
         {
-            EntitySystemHelpers.EntitySystem<SubFloorHideSystem>()
+            EntitySystems.Get<SubFloorHideSystem>()
                 .EnableAll ^= true;
 
             return false;

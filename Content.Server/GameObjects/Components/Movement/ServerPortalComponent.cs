@@ -196,7 +196,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (!immuneEntities.Contains(entity))
             {
                 var position = _connectingTeleporter.Transform.GridPosition;
-                var soundPlayer = EntitySystemHelpers.EntitySystem<AudioSystem>();
+                var soundPlayer = Robust.Shared.Utility.EntitySystems.Get<AudioSystem>();
 
                 // Departure
                 // Do we need to rate-limit sounds to stop ear BLAST?

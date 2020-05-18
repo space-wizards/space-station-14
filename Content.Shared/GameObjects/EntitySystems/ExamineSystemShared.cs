@@ -30,7 +30,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return false;
             }
 
-            return EntitySystemHelpers.EntitySystem<SharedInteractionSystem>()
+            return Robust.Shared.Utility.EntitySystems.Get<SharedInteractionSystem>()
                 .InRangeUnobstructed(examiner.Transform.MapPosition, examined.Transform.MapPosition.Position,
                     ExamineRange, predicate: entity => entity == examiner || entity == examined, insideBlockerValid:true);
         }

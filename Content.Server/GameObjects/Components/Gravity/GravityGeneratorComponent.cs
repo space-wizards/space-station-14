@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Gravity
 
                 var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
 
-                EntitySystemHelpers.EntitySystem<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
+                Robust.Shared.Utility.EntitySystems.Get<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
                 notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
 
                 return true;

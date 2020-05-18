@@ -138,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            EntitySystemHelpers.EntitySystem<AudioSystem>().Play(_spillSound);
+            Robust.Shared.Utility.EntitySystems.Get<AudioSystem>().Play(_spillSound);
             return true;
         }
 

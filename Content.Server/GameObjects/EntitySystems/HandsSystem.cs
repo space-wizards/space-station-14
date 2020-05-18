@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!TryGetAttachedComponent(session as IPlayerSession, out HandsComponent handsComp))
                 return;
 
-            var interactionSystem = EntitySystemHelpers.EntitySystem<InteractionSystem>();
+            var interactionSystem = Robust.Shared.Utility.EntitySystems.Get<InteractionSystem>();
 
             var oldItem = handsComp.GetActiveHand;
 
@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
 
 
-            if(EntitySystemHelpers.EntitySystem<SharedInteractionSystem>().InRangeUnobstructed(coords.ToMap(_mapManager), ent.Transform.WorldPosition, ignoredEnt: ent))
+            if(Robust.Shared.Utility.EntitySystems.Get<SharedInteractionSystem>().InRangeUnobstructed(coords.ToMap(_mapManager), ent.Transform.WorldPosition, ignoredEnt: ent))
                 if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
                 {
                     handsComp.Drop(handsComp.ActiveIndex, coords);

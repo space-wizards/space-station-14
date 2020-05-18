@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Research
         {
             base.Initialize();
             Id = ServerCount++;
-            EntitySystemHelpers.EntitySystem<ResearchSystem>()?.RegisterServer(this);
+            Robust.Shared.Utility.EntitySystems.Get<ResearchSystem>()?.RegisterServer(this);
             Database = Owner.GetComponent<TechnologyDatabaseComponent>();
             Owner.TryGetComponent(out _powerDevice);
         }
@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Research
         protected override void Shutdown()
         {
             base.Shutdown();
-           EntitySystemHelpers.EntitySystem<ResearchSystem>()?.UnregisterServer(this);
+           Robust.Shared.Utility.EntitySystems.Get<ResearchSystem>()?.UnregisterServer(this);
         }
 
         public override void ExposeData(ObjectSerializer serializer)

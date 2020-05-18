@@ -109,7 +109,7 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            _audioSystem = EntitySystemHelpers.EntitySystem<AudioSystem>();
+            _audioSystem = Robust.Shared.Utility.EntitySystems.Get<AudioSystem>();
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
@@ -236,7 +236,7 @@ namespace Content.Server.GameObjects.Components
                         return;
                     }
 
-                    if (!EntitySystemHelpers.EntitySystem<SharedInteractionSystem>().InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
+                    if (!Robust.Shared.Utility.EntitySystems.Get<SharedInteractionSystem>().InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
                     {
                         _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You can't reach there!"));
                         return;
@@ -302,7 +302,7 @@ namespace Content.Server.GameObjects.Components
             }
 
             IsPanelOpen = !IsPanelOpen;
-            EntitySystemHelpers.EntitySystem<AudioSystem>()
+            Robust.Shared.Utility.EntitySystems.Get<AudioSystem>()
                 .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg");
             return true;
         }
