@@ -17,7 +17,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -138,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            EntitySystem<AudioSystem>().Play(_spillSound);
+            EntitySystemHelpers.EntitySystem<AudioSystem>().Play(_spillSound);
             return true;
         }
 

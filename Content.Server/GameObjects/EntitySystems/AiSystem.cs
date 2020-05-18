@@ -11,7 +11,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 var processorId = args[0];
                 var entId = new EntityUid(int.Parse(args[1]));
                 var ent = IoCManager.Resolve<IEntityManager>().GetEntity(entId);
-                var aiSystem = EntitySystem<AiSystem>();
+                var aiSystem = EntitySystemHelpers.EntitySystem<AiSystem>();
 
                 if (!aiSystem.ProcessorTypeExists(processorId))
                 {

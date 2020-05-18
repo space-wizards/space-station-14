@@ -11,7 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -196,7 +196,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (!immuneEntities.Contains(entity))
             {
                 var position = _connectingTeleporter.Transform.GridPosition;
-                var soundPlayer = EntitySystem<AudioSystem>();
+                var soundPlayer = EntitySystemHelpers.EntitySystem<AudioSystem>();
 
                 // Departure
                 // Do we need to rate-limit sounds to stop ear BLAST?

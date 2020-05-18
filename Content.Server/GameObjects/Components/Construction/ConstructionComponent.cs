@@ -18,8 +18,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Construction.ConstructionStepMaterial;
 using static Content.Shared.Construction.ConstructionStepTool;
-using static Robust.Shared.Utility.EntitySystemHelpers;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Construction
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
             var playerEntity = eventArgs.User;
-            if (!EntitySystem<SharedInteractionSystem>().InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: Prototype.CanBuildInImpassable))
+            if (!EntitySystemHelpers.EntitySystem<SharedInteractionSystem>().InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: Prototype.CanBuildInImpassable))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, playerEntity,
                     _localizationManager.GetString("You can't reach there!"));
@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 return false;
             }
-            var sound = EntitySystem<AudioSystem>();
+            var sound = EntitySystemHelpers.EntitySystem<AudioSystem>();
 
             switch (step)
             {

@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.Sound
 {
@@ -55,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Sound
             Timer.Spawn((int) schedule.Delay + (_random.Next((int) schedule.RandomDelay)),() =>
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
-                    if (_audioSystem == null) _audioSystem = EntitySystem<AudioSystem>();
+                    if (_audioSystem == null) _audioSystem = EntitySystemHelpers.EntitySystem<AudioSystem>();
                     _audioStreams.Add(schedule,_audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams));
 
                     if (schedule.Times == 0) return;
@@ -88,7 +88,7 @@ namespace Content.Client.GameObjects.Components.Sound
         public override void Initialize()
         {
             base.Initialize();
-            TryGetEntitySystem(out _audioSystem);
+            EntitySystemHelpers.TryGetEntitySystem(out _audioSystem);
         }
 
         public override void ExposeData(ObjectSerializer serializer)

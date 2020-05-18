@@ -5,7 +5,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            _audioSystem = EntitySystem<AudioSystem>();
+            _audioSystem = EntitySystemHelpers.EntitySystem<AudioSystem>();
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)

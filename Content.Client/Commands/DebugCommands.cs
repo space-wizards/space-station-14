@@ -6,7 +6,7 @@ using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Commands
 {
@@ -49,7 +49,7 @@ namespace Content.Client.Commands
 
         public bool Execute(IDebugConsole console, params string[] args)
         {
-            EntitySystem<SubFloorHideSystem>()
+            EntitySystemHelpers.EntitySystem<SubFloorHideSystem>()
                 .EnableAll ^= true;
 
             return false;

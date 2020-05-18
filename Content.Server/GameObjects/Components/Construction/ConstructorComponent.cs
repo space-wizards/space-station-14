@@ -16,7 +16,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var transform = Owner.Transform;
 
-            if (!EntitySystem<SharedInteractionSystem>().InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
+            if (!EntitySystemHelpers.EntitySystem<SharedInteractionSystem>().InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
             {
                 _notifyManager.PopupMessage(transform.GridPosition, Owner,
                         _localizationManager.GetString("You can't reach there!"));

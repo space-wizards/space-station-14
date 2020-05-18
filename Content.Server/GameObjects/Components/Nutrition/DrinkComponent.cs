@@ -15,7 +15,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Nutrition
 {
@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     if (_useSound != null)
                     {
 
-                        var audioSystem = EntitySystem<AudioSystem>();
+                        var audioSystem = EntitySystemHelpers.EntitySystem<AudioSystem>();
                         audioSystem.Play(_useSound);
                         user.PopupMessage(user, _localizationManager.GetString("Slurp"));
                     }

@@ -17,7 +17,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
                 Shaded = false
             };
-            EntitySystem<EffectSystem>().CreateParticle(message);
+            EntitySystemHelpers.EntitySystem<EffectSystem>().CreateParticle(message);
             Owner.GetComponent<SoundComponent>().Play(_fireSound, AudioParams.Default.WithVolume(-5));
         }
     }

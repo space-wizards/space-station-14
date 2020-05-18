@@ -7,7 +7,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Research
 {
@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Research
         {
             base.Initialize();
             Id = ServerCount++;
-            EntitySystem<ResearchSystem>()?.RegisterServer(this);
+            EntitySystemHelpers.EntitySystem<ResearchSystem>()?.RegisterServer(this);
             Database = Owner.GetComponent<TechnologyDatabaseComponent>();
             Owner.TryGetComponent(out _powerDevice);
         }
@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Research
         protected override void Shutdown()
         {
             base.Shutdown();
-           EntitySystem<ResearchSystem>()?.UnregisterServer(this);
+           EntitySystemHelpers.EntitySystem<ResearchSystem>()?.UnregisterServer(this);
         }
 
         public override void ExposeData(ObjectSerializer serializer)

@@ -22,7 +22,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using static Robust.Shared.Utility.EntitySystemHelpers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects
 {
@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects
             var userPos = user.Transform.MapPosition;
             var itemPos = Owner.Transform.WorldPosition;
 
-            return EntitySystem<SharedInteractionSystem>()
+            return EntitySystemHelpers.EntitySystem<SharedInteractionSystem>()
                 .InRangeUnobstructed(userPos, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
         }
 
