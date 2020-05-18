@@ -1,5 +1,4 @@
 using Content.Client.Utility;
-using Content.Server.PDA;
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
