@@ -15,6 +15,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using static Robust.Shared.Utility.EntitySystemHelpers;
 
 namespace Content.Server.GameObjects.Components.Nutrition
 {
@@ -124,7 +125,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     // When we split Finish gets called which may delete the can so need to use the entity system for sound
                     if (_useSound != null)
                     {
-                        var audioSystem = entitySystemManager.GetEntitySystem<AudioSystem>();
+
+                        var audioSystem = EntitySystem<AudioSystem>();
                         audioSystem.Play(_useSound);
                         user.PopupMessage(user, _localizationManager.GetString("Slurp"));
                     }
