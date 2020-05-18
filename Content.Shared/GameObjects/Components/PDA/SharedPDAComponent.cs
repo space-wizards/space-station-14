@@ -52,7 +52,7 @@ namespace Content.Shared.GameObjects.Components.PDA
     }
 
     [Serializable, NetSerializable]
-    public sealed class PDASendUplinkListingsMessage : BoundUserInterfaceState
+    public sealed class PDASendUplinkListingsMessage : BoundUserInterfaceMessage
     {
 
         public IReadOnlyList<UplinkStoreListing> Listings;

@@ -9,10 +9,8 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.PDA
 {
