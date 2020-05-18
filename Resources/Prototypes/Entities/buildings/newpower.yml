@@ -1,0 +1,169 @@
+- type: entity
+  abstract: true
+  id: WireBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Icon
+    texture: Objects/Power/eightdirwire.png
+  - type: Sprite  
+  - type: IconSmooth
+    mode: CardinalFlags
+  
+- type: entity
+  parent: WireBase
+  id: HVWire
+  name: HV Wire
+  components:
+  - type: Sprite
+    sprite: Objects/Power/hv_cable.rsi
+    state: hvcable_0
+  - type: IconSmooth
+    base: hvcable_
+    key: hv_cables
+  - type: HVNode
+  
+- type: entity
+  parent: WireBase
+  id: MVWire
+  name: MV Wire
+  components:
+  - type: Sprite
+    color: Yellow
+    sprite: Objects/Power/mv_cable.rsi
+    state: mvcable_0
+  - type: IconSmooth
+    base: mvcable_
+    key: mv_cables
+  - type: MVNode
+  
+- type: entity
+  parent: WireBase
+  id: LVWire
+  name: LV Wire
+  components:
+  - type: Sprite
+    color: Green
+    sprite: Objects/Power/lv_cable.rsi
+    state: lvcable_0
+  - type: IconSmooth
+    base: lvcable_
+    key: lv_cables
+  - type: LVNode
+  
+#Not Implemented
+
+- type: entity
+  id: DebugGenerator 
+  name: Debug Generator
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Objects/Power/generator.png
+  - type: Icon
+    texture: Objects/Power/generator.png
+
+- type: entity
+  id: DebugConsumer
+  name: Debug Consumer
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Objects/Power/wiredmachine.png
+  - type: Icon
+
+- type: entity
+  id: DebugBatteryStorage
+  name: Debug Battery Storage
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Objects/Power/provider.png
+  - type: Icon
+    texture: Objects/Power/provider.png
+  
+- type: entity
+  id: DebugBatteryDischarger
+  name: Debug Battery Discharger
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Buildings/smes.rsi
+    state: smes
+    layers:
+    - state: smes-display
+      shader: unshaded
+  - type: Icon
+    sprite: Buildings/smes.rsi
+    state: smes
+  
+- type: entity
+  id: DebugSmes
+  name: Debug Smes
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Buildings/smes.rsi
+    state: smes
+    layers:
+    - state: smes-display
+      shader: unshaded
+  - type: Icon
+    sprite: Buildings/smes.rsi
+    state: smes
+    
+- type: entity
+  id: DebugHVToMVSubstation
+  name: Debug HV To MV Substation
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Buildings/smes.rsi
+    state: smes
+    layers:
+    - state: smes-display
+      shader: unshaded
+  - type: Icon
+    sprite: Buildings/smes.rsi
+    state: smes
