@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -20,6 +19,8 @@ namespace Content.Client.GameObjects.Components.Instruments
     [RegisterComponent]
     public class InstrumentComponent : SharedInstrumentComponent
     {
+        public const float TimeBetweenNetMessages = 1f;
+
         /// <summary>
         ///     Called when a midi song stops playing.
         /// </summary>
@@ -27,12 +28,18 @@ namespace Content.Client.GameObjects.Components.Instruments
 
 #pragma warning disable 649
         [Dependency] private IMidiManager _midiManager;
-        [Dependency] private readonly IGameTiming _timing;
+        [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 649
 
         [CanBeNull]
         private IMidiRenderer _renderer;
         private int _instrumentProgram = 1;
+
+        [ViewVariables]
+        private readonly Queue<ValueTuple<MidiEvent, double>> _midiQueue = new Queue<(MidiEvent, double)>();
+
+        [ViewVariables]
+        private float _timer = 0f;
 
         /// <summary>
         ///     A queue of MidiEvents to be sent to the server.
@@ -124,8 +131,14 @@ namespace Content.Client.GameObjects.Components.Instruments
                 case InstrumentMidiEventMessage midiEventMessage:
                     // If we're the ones sending the MidiEvents, we ignore this message.
                     if (IsInputOpen || IsMidiOpen) break;
-                    Timer.Spawn((int) (500 + _timing.CurTime.TotalMilliseconds - midiEventMessage.Timestamp),
-                        () => _renderer.SendMidiEvent(midiEventMessage.MidiEvent));
+                    for (var i = 0; i < midiEventMessage.MidiEvent.Length; i++)
+                    {
+                        //_midiQueue.Enqueue((midiEventMessage.MidiEvent[i], (i == 0 ? 0 : 0) + _gameTiming.CurTime.TotalSeconds - midiEventMessage.Timestamp[i]));
+
+                        var j = i;
+                        Timer.Spawn((int) ((TimeBetweenNetMessages)*1.5f + _gameTiming.CurTime.TotalSeconds - midiEventMessage.Timestamp[i])*1000,
+                            () => _renderer.SendMidiEvent(midiEventMessage.MidiEvent[j]));
+                    }
                     break;
 
                 case InstrumentStopMidiMessage _:
@@ -190,7 +203,47 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <param name="midiEvent">The received midi event</param>
         private void RendererOnMidiEvent(MidiEvent midiEvent)
         {
-            SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent, _timing.CurTime.TotalMilliseconds));
+            _midiQueue.Enqueue((midiEvent, _gameTiming.CurTime.TotalSeconds));
+        }
+
+        public void Update(float delta)
+        {
+            _timer -= delta;
+
+            if (_timer > 0f) return;
+
+            if (!IsMidiOpen && !IsInputOpen)
+            {
+                //UpdatePlaying(delta);
+                return;
+            }
+
+            SendAllMidiMessages();
+            _timer = TimeBetweenNetMessages;
+        }
+
+        private void UpdatePlaying(float delta)
+        {
+            if(_renderer == null || _midiQueue.Count == 0) return;
+            var (midiEvent, timestamp) = _midiQueue.Dequeue();
+            _renderer.SendMidiEvent(midiEvent);
+            _timer = _midiQueue.Count != 0 ? (float) (_midiQueue.Peek().Item2) : 0;
+        }
+
+        private void SendAllMidiMessages()
+        {
+            var count = _midiQueue.Count;
+            var events = new MidiEvent[count];
+            var timestamps = new double[count];
+
+            for (var i = 0; i < count; i++)
+            {
+                var (midiEvent, timestamp) = _midiQueue.Dequeue();
+                events[i] = midiEvent;
+                timestamps[i] = timestamp;
+            }
+
+            SendNetworkMessage(new InstrumentMidiEventMessage(events, timestamps));
         }
     }
 }

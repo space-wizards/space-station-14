@@ -26,10 +26,10 @@ namespace Content.Shared.GameObjects.Components.Instruments
     [Serializable, NetSerializable]
     public class InstrumentMidiEventMessage : ComponentMessage
     {
-        public MidiEvent MidiEvent;
-        public double Timestamp;
+        public MidiEvent[] MidiEvent;
+        public double[] Timestamp;
 
-        public InstrumentMidiEventMessage(MidiEvent midiEvent, double timestamp)
+        public InstrumentMidiEventMessage(MidiEvent[] midiEvent, double[] timestamp)
         {
             MidiEvent = midiEvent;
             Timestamp = timestamp;
