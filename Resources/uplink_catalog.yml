@@ -1,0 +1,8 @@
+listings:
+- category: Weapon
+  itemID: PistolClarissa
+  price: 5
+- category: Weapon
+  itemID: PistolDeagle
+  price: 50
+  description: For when you want ZERO evidence left behind.
