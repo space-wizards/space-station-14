@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces.Atmos;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
@@ -19,6 +20,7 @@ namespace Content.Server.Atmos
 #pragma warning disable 649
         // ReSharper disable once InconsistentNaming
         [Dependency] private readonly IMapManager MapManager;
+        [Dependency] private readonly IPauseManager _pauseManager;
 #pragma warning restore 649
 
         private readonly Dictionary<GridId, GridAtmosphereManager> _gridAtmosphereManagers =
@@ -42,8 +44,11 @@ namespace Content.Server.Atmos
 
         public void Update(float frameTime)
         {
-            foreach (var atmos in _gridAtmosphereManagers.Values)
+            foreach (var (gridId, atmos) in _gridAtmosphereManagers)
             {
+                if (_pauseManager.IsGridPaused(gridId))
+                    continue;
+
                 atmos.Update(frameTime);
             }
         }
