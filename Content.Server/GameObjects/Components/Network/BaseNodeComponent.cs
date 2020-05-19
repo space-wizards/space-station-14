@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
@@ -7,13 +8,13 @@ using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Network
 {
-    public abstract class NetworkNodeComponent : Component
+    public abstract class BaseNodeComponent : Component
     {
         [ViewVariables]
         public abstract NetworkType NetworkType { get; }
 
         [ViewVariables]
-        public BaseNetwork Network { get; private set; }
+        public INodeNetwork Network { get; private set; }
 
         public override void Initialize()
         {
@@ -49,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Network
             //if we still dont have a network, make own
             if (Network == null)
             {
-                var newNetwork = MakeNewNetwork();
+                var newNetwork = IoCManager.Resolve<INodeNetwork>();
                 if (!TrySetNetwork(newNetwork))
                 {
                     throw new Exception($"'{this}' could not join '{newNetwork}' that it made for itself.");
@@ -84,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Network
             }
         }
 
-        public bool TrySetNetwork(BaseNetwork network)
+        public bool TrySetNetwork(INodeNetwork network)
         {
             if (network.NetworkType == NetworkType)
             {
@@ -105,14 +106,9 @@ namespace Content.Server.GameObjects.Components.Network
             Network = null;
         }
 
-        protected abstract IEnumerable<NetworkNodeComponent> GetReachableNodes();
+        protected abstract IEnumerable<BaseNodeComponent> GetReachableNodes();
 
-        private BaseNetwork MakeNewNetwork()
-        {
-            return NetworkInjector.ReturnNewNetwork(this);
-        }
-
-        private bool TrySetNetworkIfNeeded(BaseNetwork network)
+        private bool TrySetNetworkIfNeeded(INodeNetwork network)
         {
             if (Network != null)
             {

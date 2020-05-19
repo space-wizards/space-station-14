@@ -6,10 +6,23 @@ using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Network
 {
-    public abstract class BaseNetwork
+    public interface INodeNetwork
+    {
+        NetworkType NetworkType { get; }
+
+        public IReadOnlyList<NetworkNodeComponent> Nodes { get; }
+
+        void AddNode(NetworkNodeComponent node);
+
+        void RemoveNode(NetworkNodeComponent node);
+
+        void CombineNetwork(INodeNetwork network);
+    }
+
+    public class NodeNetwork
     {
         [ViewVariables]
-        public abstract NetworkType NetworkType { get; }
+        public NetworkType NetworkType { get; }
 
         [ViewVariables]
         public IReadOnlyList<NetworkNodeComponent> Nodes => _nodes;
@@ -33,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Network
             RemakeNetwork();
         }
 
-        public void CombineNetwork(BaseNetwork network)
+        public void CombineNetwork(INodeNetwork network)
         {
             Debug.Assert(network.NetworkType == NetworkType);
             _recombining = true;
