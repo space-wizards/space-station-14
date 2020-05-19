@@ -21,6 +21,7 @@
     visuals:
     - type: PDAVisualizer
   - type: Clothing
+    QuickEquip: false
     Slots:
     - idcard
   - type: PointLight

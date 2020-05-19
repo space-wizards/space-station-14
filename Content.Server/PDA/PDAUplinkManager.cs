@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Prototypes.PDA;
-using Robust.Client.Placement.Modes;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -34,16 +36,27 @@ namespace Content.Server.PDA
 
                 RegisterUplinkListing(newListing);
             }
+
+            _accounts = new List<UplinkAccount>();
         }
 
         private void RegisterUplinkListing(UplinkListingData listing)
         {
-            if (_listings.Contains(listing))
+            if (!ContainsListing(listing))
             {
-                return;
+                _listings.Add(listing);
             }
 
-            _listings.Add(listing);
+        }
+
+        private bool ContainsListing(UplinkListingData listing)
+        {
+            if (_listings.Any(otherListing => listing.Equals(otherListing)))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public bool AddNewAccount(UplinkAccount acc)
@@ -70,17 +83,19 @@ namespace Content.Server.PDA
 
         public bool PurchaseItem(UplinkAccount acc, UplinkListingData listing)
         {
-            if (acc.Balance < listing.Price || !_listings.Contains(listing))
+            if (!ContainsListing(listing) || acc.Balance < listing.Price)
             {
                 return false;
             }
 
             var player = _entityManager.GetEntity(acc.AccountHolder);
-            _entityManager.SpawnEntity(listing.ItemID,
-                player.Transform.GridPosition);
-            return true;
+            var hands = player.GetComponent<HandsComponent>();
+            hands.PutInHandOrDrop(_entityManager.SpawnEntity(listing.ItemID,
+                player.Transform.GridPosition).GetComponent<ItemComponent>());
+            return ChangeBalance(acc, listing.Price);
 
         }
+
 
 
     }

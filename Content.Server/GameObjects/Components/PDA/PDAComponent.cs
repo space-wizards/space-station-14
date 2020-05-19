@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.PDA;
@@ -16,7 +17,7 @@ namespace Content.Server.GameObjects.Components.PDA
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class PDAComponent : SharedPDAComponent, IAttackBy, IActivate
+    public class PDAComponent : SharedPDAComponent, IAttackBy, IActivate, IUse
     {
 #pragma warning disable 649
         [Dependency] protected readonly IPDAUplinkManager _uplinkManager;
@@ -31,6 +32,8 @@ namespace Content.Server.GameObjects.Components.PDA
         public IdCardComponent ContainedID { get; private set; }
 
         private AppearanceComponent _appearance;
+
+        private UplinkAccount _account;
 
         public override void Initialize()
         {
@@ -63,8 +66,19 @@ namespace Content.Server.GameObjects.Components.PDA
                 case PDARequestUplinkListingsMessage msg:
                 {
 
-                    var listingsMessage = new PDASendUplinkListingsMessage(_uplinkManager.FetchListings());
+                    var listingsMessage = new PDASendUplinkListingsMessage(_uplinkManager.FetchListings().ToArray());
                     _interface.SetState(listingsMessage);
+                    break;
+                }
+
+
+                case PDAUplinkBuyListingMessage buyMsg:
+                {
+                    if (!_uplinkManager.PurchaseItem(_account, buyMsg.ListingToBuy))
+                    {
+                        //TODO: Send a message that tells the buyer they are too poor or something.
+                    }
+
                     break;
                 }
             }
@@ -117,8 +131,27 @@ namespace Content.Server.GameObjects.Components.PDA
             {
                 return;
             }
+            if (OriginalOwner == null)
+            {
+                SetPDAOwner(eventArgs.User);
+            }
+            if (_account == null)
+            {
+                InitUplinkAccount(new UplinkAccount(eventArgs.User.Uid, 500));
+            }
             _interface.Open(actor.playerSession);
             UpdatePDAAppearance();
+        }
+
+        public bool UseEntity(UseEntityEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            {
+                return false;
+            }
+            _interface.Open(actor.playerSession);
+            UpdatePDAAppearance();
+            return true;
         }
 
         public void SetPDAOwner(IEntity mob)
@@ -130,6 +163,12 @@ namespace Content.Server.GameObjects.Components.PDA
 
             OriginalOwner = mob;
             UpdatePDAUserInterface();
+        }
+
+        public void InitUplinkAccount(UplinkAccount acc)
+        {
+            _account = acc;
+            _uplinkManager.AddNewAccount(_account);
         }
 
         protected void ToggleLight()
@@ -175,6 +214,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 component.HandleIDEjection(user);
             }
         }
+
 
     }
 }

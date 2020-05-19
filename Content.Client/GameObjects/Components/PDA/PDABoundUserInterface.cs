@@ -1,19 +1,28 @@
+using System;
+using System.Collections.Generic;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
-using Content.Shared.Prototypes.PDA;
 using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.PDA
 {
+
     public class PDABoundUserInterface : BoundUserInterface
     {
-
+#pragma warning disable 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+#pragma warning restore 649
         private PDAMenu _menu;
         private ClientUserInterfaceComponent Owner;
         public PDABoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
@@ -24,7 +33,7 @@ namespace Content.Client.GameObjects.Components.PDA
         protected override void Open()
         {
             base.Open();
-            _menu = new PDAMenu(this);
+            _menu = new PDAMenu(this, _prototypeManager);
             _menu.OpenToLeft();
             _menu.OnClose += Close;
             _menu.FlashLightToggleButton.OnToggled += args =>
@@ -46,6 +55,18 @@ namespace Content.Client.GameObjects.Components.PDA
                     SendMessage(new PDARequestUplinkListingsMessage());
                 }
             };
+
+            _menu.OnListingButtonPressed += args =>
+            {
+                if (!_menu.UplinkListingDatas.TryGetValue(args.Button, out var listing))
+                {
+                    return;
+                }
+
+                SendMessage(new PDAUplinkBuyListingMessage(listing));
+            };
+
+
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -79,6 +100,7 @@ namespace Content.Client.GameObjects.Components.PDA
 
                 case PDASendUplinkListingsMessage msg:
                 {
+                    _menu.ClearListings();
                     foreach (var item in msg.Listings)
                     {
                         _menu.AddListingGUI(item);
@@ -101,6 +123,7 @@ namespace Content.Client.GameObjects.Components.PDA
 
         private class PDAMenu : SS14Window
         {
+
             protected override Vector2? CustomSize => (512, 256);
 
             private PDABoundUserInterface _owner { get; }
@@ -116,19 +139,23 @@ namespace Content.Client.GameObjects.Components.PDA
 
             public VBoxContainer UplinkTabContainer { get; }
 
+            private IPrototypeManager _prototypeManager;
 
-            private ScrollContainer _uplinkShopScrollContainer;
+            public VBoxContainer UplinkListingsContainer;
 
-            public PDAMenu(PDABoundUserInterface owner = null)
+            public Dictionary<BaseButton, UplinkListingData> UplinkListingDatas;
+
+            public event Action<BaseButton.ButtonEventArgs> OnListingButtonPressed;
+
+            public PDAMenu(PDABoundUserInterface owner, IPrototypeManager prototypeManager)
             {
-                //CustomMinimumSize = (380, 128);
 
                 _owner = owner;
+                _prototypeManager = prototypeManager;
                 Title = Loc.GetString("PDA");
 
+                UplinkListingDatas = new Dictionary<BaseButton, UplinkListingData>();
                 #region MAIN_MENU_TAB
-
-
                 //Main menu
                 PDAOwnerLabel = new RichTextLabel
                 {
@@ -196,13 +223,36 @@ namespace Content.Client.GameObjects.Components.PDA
                     Text = Loc.GetString("Uplink Listings"),
                  };
 
-                 _uplinkShopScrollContainer = new ScrollContainer();
+                 var masterPanelContainer = new PanelContainer
+                 {
+                     PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Red.WithAlpha(0.20f)},
+                 };
+
+                 var _uplinkShopScrollContainer = new ScrollContainer
+                 {
+                     SizeFlagsHorizontal = SizeFlags.FillExpand,
+                     SizeFlagsVertical = SizeFlags.Expand,
+                     SizeFlagsStretchRatio = 2,
+                     CustomMinimumSize = (100,256)
+                 };
+
+                 masterPanelContainer.AddChild(_uplinkShopScrollContainer);
+                 UplinkListingsContainer = new VBoxContainer
+                 {
+                     SizeFlagsHorizontal = SizeFlags.FillExpand,
+                     SizeFlagsVertical = SizeFlags.Expand,
+                     SizeFlagsStretchRatio = 2,
+                     CustomMinimumSize = (100,256),
+                 };
+
+                 _uplinkShopScrollContainer.AddChild(UplinkListingsContainer);
+
                 var innerVboxContainer = new VBoxContainer
                  {
                     Children =
                     {
                         uplinkStoreHeader,
-                        _uplinkShopScrollContainer
+                        masterPanelContainer
                     }
                  };
 
@@ -232,14 +282,23 @@ namespace Content.Client.GameObjects.Components.PDA
 
             public void AddListingGUI(UplinkListingData listing)
             {
+
+                if (!_prototypeManager.TryIndex(listing.ItemID, out EntityPrototype prototype))
+                {
+                    return;
+                }
+
                 var itemLabel = new Label
                 {
-                    Text = listing.ListingName
-
+                    Text = listing.ListingName == string.Empty ? prototype.Name : listing.ListingName,
+                    ToolTip = listing.Description == string.Empty ? prototype.Description : listing.Description,
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
                 };
+
                 var priceLabel = new Label
                 {
-                    Text = listing.Price.ToString(),
+                    Text = $"{listing.Price} TC",
+                    Align = Label.AlignMode.Right,
                 };
                 var hbox = new HBoxContainer
                 {
@@ -251,12 +310,21 @@ namespace Content.Client.GameObjects.Components.PDA
                 };
                 var button = new PDAUplinkItemButton
                 {
+                    SizeFlagsVertical = SizeFlags.Fill,
                     Children =
                     {
                         hbox
                     }
                 };
-                _uplinkShopScrollContainer.AddChild(button);
+
+                button.OnPressed += args => OnListingButtonPressed?.Invoke(args);
+                UplinkListingsContainer.AddChild(button);
+                UplinkListingDatas.Add(button,listing);
+            }
+
+            public void ClearListings()
+            {
+                UplinkListingsContainer.Children.Clear();
             }
             private sealed class PDAUplinkItemButton : ContainerButton
             {

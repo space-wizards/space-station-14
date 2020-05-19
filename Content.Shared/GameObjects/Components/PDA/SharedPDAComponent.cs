@@ -62,8 +62,8 @@ namespace Content.Shared.GameObjects.Components.PDA
     public sealed class PDASendUplinkListingsMessage : PDAUBoundUserInterfaceState
     {
 
-        public IReadOnlyList<UplinkListingData> Listings;
-        public PDASendUplinkListingsMessage(IReadOnlyList<UplinkListingData> listings)
+        public UplinkListingData[] Listings;
+        public PDASendUplinkListingsMessage(UplinkListingData[] listings)
         {
             Listings = listings;
         }
@@ -77,6 +77,15 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class PDAUplinkBuyListingMessage : BoundUserInterfaceMessage
+    {
+        public UplinkListingData ListingToBuy;
+        public PDAUplinkBuyListingMessage(UplinkListingData itemToBuy)
+        {
+            ListingToBuy = itemToBuy;
+        }
+    }
 
 
     [NetSerializable, Serializable]
@@ -99,14 +108,21 @@ namespace Content.Shared.GameObjects.Components.PDA
         Key
     }
 
-    public struct UplinkAccount
+    [NetSerializable, Serializable]
+    public class UplinkAccount
     {
         public EntityUid AccountHolder;
         public int Balance;
+
+        public UplinkAccount(EntityUid uid, int startingBalance)
+        {
+            AccountHolder = uid;
+            Balance = startingBalance;
+        }
     }
 
     [NetSerializable, Serializable]
-    public class UplinkListingData : ComponentState
+    public class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
     {
         public string ItemID;
         public int Price;
@@ -122,6 +138,16 @@ namespace Content.Shared.GameObjects.Components.PDA
             Category = category;
             Description = description;
             ItemID = itemId;
+        }
+
+        public bool Equals(UplinkListingData other)
+        {
+            if (other == null)
+            {
+                return false; //eat shit
+            }
+
+            return this.ItemID == other.ItemID;
         }
     }
 

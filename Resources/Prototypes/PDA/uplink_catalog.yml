@@ -1,15 +1,13 @@
 
 - type: uplinkListing
   id: UplinkPistolClarissa
-  listingName: Based pistol.
   category: Weapon
   itemId: PistolClarissa
   price: 5
-  description: Poggers.
 
-# - type: uplinkListing
-#   id:  UplinkPistolDeagle
-#   category: Weapon
-#   itemID: PistolDeagle
-#   price: 50
-#   description: For when you want ZERO evidence left behind.
+- type: uplinkListing
+  id:  UplinkPistolDeagle
+  category: Weapon
+  itemId: PistolDeagle
+  price: 50
+  description: For when you want ZERO evidence left behind.
