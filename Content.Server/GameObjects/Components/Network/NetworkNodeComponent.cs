@@ -107,7 +107,10 @@ namespace Content.Server.GameObjects.Components.Network
 
         protected abstract IEnumerable<NetworkNodeComponent> GetReachableNodes();
 
-        protected abstract BaseNetwork MakeNewNetwork();
+        private BaseNetwork MakeNewNetwork()
+        {
+            return NetworkInjector.ReturnNewNetwork(this);
+        }
 
         private bool TrySetNetworkIfNeeded(BaseNetwork network)
         {

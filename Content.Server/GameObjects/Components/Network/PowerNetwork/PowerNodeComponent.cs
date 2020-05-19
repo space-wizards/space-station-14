@@ -21,11 +21,6 @@ namespace Content.Server.GameObjects.Components.NewPower
                 .Select(entity => entity.TryGetComponent<LVNodeComponent>(out var node) ? node : null)
                 .Where(node => node != null);
         }
-
-        protected override BaseNetwork MakeNewNetwork()
-        {
-            return new PowerNetwork(this);
-        }
     }
 
     [RegisterComponent]
@@ -43,11 +38,6 @@ namespace Content.Server.GameObjects.Components.NewPower
                 .Select(entity => entity.TryGetComponent<MVNodeComponent>(out var node) ? node : null)
                 .Where(node => node != null);
         }
-
-        protected override BaseNetwork MakeNewNetwork()
-        {
-            return new PowerNetwork(this);
-        }
     }
 
     [RegisterComponent]
@@ -64,11 +54,6 @@ namespace Content.Server.GameObjects.Components.NewPower
                 .SelectMany(sgc => sgc.GetLocal())
                 .Select(entity => entity.TryGetComponent<HVNodeComponent>(out var node) ? node : null)
                 .Where(node => node != null);
-        }
-
-        protected override BaseNetwork MakeNewNetwork()
-        {
-            return new PowerNetwork(this);
         }
     }
 }
