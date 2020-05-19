@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -50,6 +51,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
             return InsertBulb(eventArgs.AttackWith);
         }
 

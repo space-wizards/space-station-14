@@ -1,5 +1,6 @@
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -23,6 +24,8 @@ namespace Content.Server.GameObjects.Components
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if (!eventArgs.AttackWith.HasComponent<WrenchComponent>())
             {
                 return false;

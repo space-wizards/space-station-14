@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Gravity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
@@ -102,6 +103,8 @@ namespace Content.Server.GameObjects.Components.Gravity
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
             if (!eventArgs.AttackWith.TryGetComponent<WelderComponent>(out var welder)) return false;
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if (welder.TryUse(5.0f))
             {
                 // Repair generator

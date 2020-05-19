@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -20,6 +21,8 @@ namespace Content.Server.GameObjects.Components
         }
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if (!IsPlaceable)
                 return false;
 

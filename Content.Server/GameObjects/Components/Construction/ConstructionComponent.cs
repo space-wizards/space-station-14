@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -52,13 +53,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            var playerEntity = eventArgs.User;
-            if (!Robust.Shared.Utility.EntitySystems.Get<SharedInteractionSystem>().InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: Prototype.CanBuildInImpassable))
-            {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, playerEntity,
-                    _localizationManager.GetString("You can't reach there!"));
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs, Prototype.CanBuildInImpassable))
                 return false;
-            }
 
             var stage = Prototype.Stages[Stage];
 

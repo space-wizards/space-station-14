@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -140,6 +141,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
             if (eventArgs.AttackWith.TryGetComponent(out WirecutterComponent wirecutter))
             {
                 Owner.Delete();

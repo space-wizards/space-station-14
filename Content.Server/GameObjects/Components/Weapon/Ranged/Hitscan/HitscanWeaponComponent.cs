@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics;
@@ -67,6 +68,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if (!eventArgs.AttackWith.TryGetComponent(out PowerStorageComponent component))
             {
                 return false;

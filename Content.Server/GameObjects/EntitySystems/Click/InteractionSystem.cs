@@ -18,6 +18,7 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -41,6 +42,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
         public IEntity AttackWith { get; set; }
+        public IEntity Target { get; set; }
     }
 
     /// <summary>
@@ -292,6 +294,7 @@ namespace Content.Server.GameObjects.EntitySystems
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IPhysicsManager _physicsManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         public const float InteractionRange = 2;
@@ -555,7 +558,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var attackBys = attacked.GetAllComponents<IAttackBy>().ToList();
             var attackByEventArgs = new AttackByEventArgs
             {
-                User = user, ClickLocation = clickLocation, AttackWith = weapon
+                User = user, ClickLocation = clickLocation, AttackWith = weapon, Target = attacked
             };
 
             foreach (var attackBy in attackBys)

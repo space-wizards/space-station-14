@@ -1,6 +1,7 @@
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -30,6 +31,8 @@ namespace Content.Server.GameObjects.Components.Mining
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             var item = eventArgs.AttackWith;
             if (!item.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent)) return false;
 

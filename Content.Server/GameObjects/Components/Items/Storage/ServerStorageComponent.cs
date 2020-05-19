@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
@@ -144,10 +145,14 @@ namespace Content.Server.GameObjects
         {
             Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, eventArgs.User.Uid, eventArgs.AttackWith.Uid);
 
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if(Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
                 return false;
             }
+
+
 
             return PlayerInsertEntity(eventArgs.User);
          }

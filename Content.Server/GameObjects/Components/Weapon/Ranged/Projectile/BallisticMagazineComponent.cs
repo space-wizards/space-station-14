@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
@@ -190,6 +191,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             var ammoMagTransfer = CanTransferFrom(eventArgs.AttackWith);
             if (ammoMagTransfer.Result) {
                 IEntity bullet;

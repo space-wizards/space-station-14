@@ -4,6 +4,7 @@ using System.Text;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -59,6 +60,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <returns></returns>
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             //Get target and check if it can be poured into
             if (!Owner.TryGetComponent<SolutionComponent>(out var targetSolution))
                 return false;

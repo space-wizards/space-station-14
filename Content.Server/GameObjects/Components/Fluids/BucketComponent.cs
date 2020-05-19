@@ -2,6 +2,7 @@ using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -72,6 +73,8 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if (!eventArgs.AttackWith.TryGetComponent(out MopComponent mopComponent))
             {
                 return false;

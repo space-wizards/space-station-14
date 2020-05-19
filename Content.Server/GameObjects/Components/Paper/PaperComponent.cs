@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -64,6 +65,8 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if (!eventArgs.AttackWith.HasComponent<WriteComponent>())
                 return false;
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))

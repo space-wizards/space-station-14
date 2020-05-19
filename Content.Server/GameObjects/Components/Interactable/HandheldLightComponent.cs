@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
@@ -55,6 +56,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
             if (!eventArgs.AttackWith.HasComponent<PowerCellComponent>()) return false;
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
 
             if (Cell != null) return false;
 

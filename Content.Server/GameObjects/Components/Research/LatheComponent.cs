@@ -8,6 +8,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Research;
@@ -97,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Research
 
                     break;
             }
-            
+
 
         }
 
@@ -154,6 +155,8 @@ namespace Content.Server.GameObjects.Components.Research
         }
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
             ||  !eventArgs.AttackWith.TryGetComponent(out MaterialComponent material)) return false;
 

@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -296,6 +297,8 @@ namespace Content.Server.GameObjects.Components
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if (!eventArgs.AttackWith.HasComponent<ScrewdriverComponent>())
             {
                 return false;

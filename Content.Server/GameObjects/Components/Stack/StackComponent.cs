@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -70,6 +71,8 @@ namespace Content.Server.GameObjects.Components.Stack
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if (eventArgs.AttackWith.TryGetComponent<StackComponent>(out var stack))
             {
                 if (!stack.StackType.Equals(StackType))

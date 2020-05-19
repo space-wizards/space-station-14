@@ -21,6 +21,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Robust.Shared.Audio;
 
 namespace Content.Server.GameObjects.Components.Kitchen
@@ -184,6 +185,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand.Owner;
 
             if(itemEntity.TryGetComponent<PourableComponent>(out var attackPourable))
