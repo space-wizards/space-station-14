@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -28,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 return;
             }
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             if (!eventArgs.Attacked.TryGetComponent(out DamageableComponent damagecomponent)) return;
             if (Owner.TryGetComponent(out StackComponent stackComponent))

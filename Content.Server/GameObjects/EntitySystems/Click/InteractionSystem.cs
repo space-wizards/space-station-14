@@ -42,8 +42,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
         public IEntity AttackWith { get; set; }
-        public IEntity Target { get; set; }
-        public GridCoordinates TargetGridCoordinates => Target.Transform.GridPosition;
+        public IEntity Attacked { get; set; }
     }
 
     public interface ITargetedAttack
@@ -55,7 +54,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Target of the attack
         /// </summary>
-        IEntity Target { get; }
+        IEntity Attacked { get; }
 
     }
 
@@ -73,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems
     public class AttackHandEventArgs : EventArgs, ITargetedAttack
     {
         public IEntity User { get; set; }
-        public IEntity Target { get; set; }
+        public IEntity Attacked { get; set; }
     }
 
     /// <summary>
@@ -98,7 +97,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
     /// <summary>
     /// This interface gives components a behavior when clicking on another object and no interaction occurs
-    /// Doesn't pass what you clicked on as an argument, but if it becomes necessary we can add it later
     /// </summary>
     public interface IAfterAttack
     {
@@ -573,7 +571,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var attackBys = attacked.GetAllComponents<IAttackBy>().ToList();
             var attackByEventArgs = new AttackByEventArgs
             {
-                User = user, ClickLocation = clickLocation, AttackWith = weapon, Target = attacked
+                User = user, ClickLocation = clickLocation, AttackWith = weapon, Attacked = attacked
             };
 
             foreach (var attackBy in attackBys)
@@ -619,7 +617,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var attackHands = attacked.GetAllComponents<IAttackHand>().ToList();
-            var attackHandEventArgs = new AttackHandEventArgs {User = user, Target = attacked};
+            var attackHandEventArgs = new AttackHandEventArgs {User = user, Attacked = attacked};
 
             foreach (var attackHand in attackHands)
             {

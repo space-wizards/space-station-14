@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
@@ -100,23 +101,25 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             UseDrink(eventArgs.Attacked);
         }
 
-        private void UseDrink(IEntity user)
+        private void UseDrink(IEntity targetEntity)
         {
-            if (user == null)
+            if (targetEntity == null)
             {
                 return;
             }
 
             if (UsesLeft() == 0 && !_despawnOnFinish)
             {
-                user.PopupMessage(user, _localizationManager.GetString("Empty"));
+                targetEntity.PopupMessage(targetEntity, _localizationManager.GetString("Empty"));
                 return;
             }
 
-            if (user.TryGetComponent(out StomachComponent stomachComponent))
+            if (targetEntity.TryGetComponent(out StomachComponent stomachComponent))
             {
                 _drinking = true;
                 var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
@@ -129,14 +132,14 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                         var audioSystem = EntitySystem.Get<AudioSystem>();
                         audioSystem.Play(_useSound);
-                        user.PopupMessage(user, _localizationManager.GetString("Slurp"));
+                        targetEntity.PopupMessage(targetEntity, _localizationManager.GetString("Slurp"));
                     }
                 }
                 else
                 {
                     // Add it back in
                     _contents.TryAddSolution(split);
-                    user.PopupMessage(user, _localizationManager.GetString("Can't drink"));
+                    targetEntity.PopupMessage(targetEntity, _localizationManager.GetString("Can't drink"));
                 }
                 _drinking = false;
             }

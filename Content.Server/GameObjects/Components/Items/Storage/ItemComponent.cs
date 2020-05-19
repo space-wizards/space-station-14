@@ -103,6 +103,7 @@ namespace Content.Server.GameObjects
 
         public bool AttackHand(AttackHandEventArgs eventArgs)
         {
+            //NOTE: Interaction range check done inside CanPickup
             if (!CanPickup(eventArgs.User)) return false;
 
             var hands = eventArgs.User.GetComponent<IHandsComponent>();

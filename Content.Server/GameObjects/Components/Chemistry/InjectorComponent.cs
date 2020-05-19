@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Shared.GameObjects;
@@ -115,6 +116,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 return;
             }
+
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             var targetEntity = eventArgs.Attacked;
             //Handle injecting/drawing for solutions
