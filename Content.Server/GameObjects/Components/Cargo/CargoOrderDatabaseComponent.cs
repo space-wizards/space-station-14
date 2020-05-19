@@ -17,6 +17,8 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         public override void Initialize()
         {
+            base.Initialize();
+
             _cargoOrderDataManager.AddComponent(this);
         }
 

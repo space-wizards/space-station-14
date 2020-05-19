@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
@@ -21,10 +22,7 @@ namespace Content.Client.GameObjects.Components.Power
         {
             base.Open();
 
-            _window = new ApcWindow
-            {
-                MarginRight = 426.0f, MarginBottom = 270.0f
-            };
+            _window = new ApcWindow();
             _window.OnClose += Close;
             _window.OpenCenteredMinSize();
 
@@ -50,15 +48,15 @@ namespace Content.Client.GameObjects.Components.Power
             {
                 case ApcExternalPowerState.None:
                     _externalPowerStateLabel.Text = "None";
-                    _externalPowerStateLabel.SetOnlyStyleClass(NanoStyle.StyleClassPowerStateNone);
+                    _externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
                     break;
                 case ApcExternalPowerState.Low:
                     _externalPowerStateLabel.Text = "Low";
-                    _externalPowerStateLabel.SetOnlyStyleClass(NanoStyle.StyleClassPowerStateLow);
+                    _externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateLow);
                     break;
                 case ApcExternalPowerState.Good:
                     _externalPowerStateLabel.Text = "Good";
-                    _externalPowerStateLabel.SetOnlyStyleClass(NanoStyle.StyleClassPowerStateGood);
+                    _externalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -143,7 +141,7 @@ namespace Content.Client.GameObjects.Components.Power
                 var externalStatus = new HBoxContainer();
                 var externalStatusLabel = new Label {Text = "External Power: "};
                 ExternalPowerStateLabel = new Label {Text = "Good"};
-                ExternalPowerStateLabel.SetOnlyStyleClass(NanoStyle.StyleClassPowerStateGood);
+                ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                 externalStatus.AddChild(externalStatusLabel);
                 externalStatus.AddChild(ExternalPowerStateLabel);
                 rows.AddChild(externalStatus);

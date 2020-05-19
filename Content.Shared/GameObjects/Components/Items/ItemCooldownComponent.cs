@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -12,7 +12,6 @@ namespace Content.Shared.GameObjects.Components.Items
     public sealed class ItemCooldownComponent : Component
     {
         public override string Name => "ItemCooldown";
-        public override Type StateType => typeof(ItemCooldownComponentState);
         public override uint? NetID => ContentNetIDs.ITEMCOOLDOWN;
 
         private TimeSpan? _cooldownEnd;
@@ -63,7 +62,8 @@ namespace Content.Shared.GameObjects.Components.Items
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cast = (ItemCooldownComponentState) curState;
+            if (!(curState is ItemCooldownComponentState cast))
+                return;
 
             CooldownStart = cast.CooldownStart;
             CooldownEnd = cast.CooldownEnd;

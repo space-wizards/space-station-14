@@ -6,7 +6,7 @@ namespace Content.Shared.Chat
     ///     Represents chat channels that the player can filter chat tabs by.
     /// </summary>
     [Flags]
-    public enum ChatChannel : byte
+    public enum ChatChannel : short
     {
         None = 0,
 
@@ -47,8 +47,13 @@ namespace Content.Shared.Chat
         Emotes = 64,
 
         /// <summary>
+        ///     Deadchat
+        /// </summary>
+        Dead = 128,
+
+        /// <summary>
         ///     Unspecified.
         /// </summary>
-        Unspecified = 128,
+        Unspecified = 256,
     }
 }

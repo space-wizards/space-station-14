@@ -5,7 +5,7 @@
     {
         public const uint DAMAGEABLE = 1000;
         public const uint DESTRUCTIBLE = 1001;
-        public const uint TEMPERATURE = 1002;
+        public const uint BALLISTIC_MAGAZINE_WEAPON = 1002;
         public const uint HANDS = 1003;
         public const uint SOLUTION = 1004;
         public const uint STORAGE = 1005;
@@ -34,7 +34,17 @@
         public const uint ITEMCOOLDOWN = 1029;
         public const uint CARGO_ORDER_DATABASE = 1030;
         public const uint GALACTIC_MARKET = 1031;
-        public const uint HAIR = 1032;
+        public const uint HUMANOID_APPEARANCE = 1032;
         public const uint INSTRUMENTS = 1033;
+        public const uint WELDER = 1034;
+        public const uint STACK = 1035;
+        public const uint HANDHELD_LIGHT = 1036;
+        public const uint PAPER = 1037;
+        public const uint REAGENT_INJECTOR = 1038;
+        public const uint GHOST = 1039;
+        public const uint MICROWAVE = 1040;
+        public const uint GRAVITY_GENERATOR = 1041;
+        public const uint SURGERY = 1042;
+
     }
 }

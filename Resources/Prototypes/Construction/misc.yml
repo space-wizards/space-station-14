@@ -1,0 +1,12 @@
+- type: construction
+  name: Skub
+  id: skub
+  category: Items/Misc
+  keywords: [misc]
+  description: In the end, there is only Skub.
+  icon: Objects/Misc/skub.rsi/icon.png
+  result: Skub
+  objecttype: Item
+  steps:
+  - material: Metal
+    amount: 1

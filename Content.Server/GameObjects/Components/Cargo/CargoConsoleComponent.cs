@@ -1,6 +1,7 @@
 ﻿using Content.Server.Cargo;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Cargo;
+using Content.Server.GameObjects.Components.Power;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -39,6 +41,9 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private bool _requestOnly = false;
 
+        private PowerDeviceComponent _powerDevice;
+        private bool Powered => _powerDevice.Powered;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -46,6 +51,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             Orders = Owner.GetComponent<CargoOrderDatabaseComponent>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(CargoConsoleUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
             _galacticBankManager.AddComponent(this);
             BankId = 0;
         }
@@ -64,6 +70,8 @@ namespace Content.Server.GameObjects.Components.Cargo
         {
             var message = serverMsg.Message;
             if (!Orders.ConnectedToDatabase)
+                return;
+            if (!Powered)
                 return;
             switch (message)
             {
@@ -104,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                             continue;
                         for (var i = 0; i < order.Amount; i++)
                         {
-                            Owner.EntityManager.SpawnEntityAt(product.Product, Owner.Transform.GridPosition);
+                            Owner.EntityManager.SpawnEntity(product.Product, Owner.Transform.GridPosition);
                         }
                     }
                     break;
@@ -118,6 +126,8 @@ namespace Content.Server.GameObjects.Components.Cargo
             {
                 return;
             }
+            if (!Powered)
+                return;
 
             _userInterface.Open(actor.playerSession);
         }

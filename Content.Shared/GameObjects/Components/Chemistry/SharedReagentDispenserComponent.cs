@@ -26,8 +26,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         public class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly bool HasBeaker;
-            public readonly int BeakerCurrentVolume;
-            public readonly int BeakerMaxVolume;
+            public readonly ReagentUnit BeakerCurrentVolume;
+            public readonly ReagentUnit BeakerMaxVolume;
             public readonly string ContainerName;
             /// <summary>
             /// A list of the reagents which this dispenser can dispense.
@@ -38,10 +38,10 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             /// </summary>
             public readonly List<Solution.ReagentQuantity> ContainerReagents;
             public readonly string DispenserName;
-            public readonly int SelectedDispenseAmount;
+            public readonly ReagentUnit SelectedDispenseAmount;
 
-            public ReagentDispenserBoundUserInterfaceState(bool hasBeaker, int beakerCurrentVolume, int beakerMaxVolume, string containerName,
-                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Solution.ReagentQuantity> containerReagents, int selectedDispenseAmount)
+            public ReagentDispenserBoundUserInterfaceState(bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
+                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Solution.ReagentQuantity> containerReagents, ReagentUnit selectedDispenseAmount)
             {
                 HasBeaker = hasBeaker;
                 BeakerCurrentVolume = beakerCurrentVolume;

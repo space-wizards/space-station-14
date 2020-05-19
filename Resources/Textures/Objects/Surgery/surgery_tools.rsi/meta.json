@@ -1,0 +1,51 @@
+{
+	"version": 1, 
+	"size": {
+		"x": 32, 
+		"y": 32
+	}, 
+	"states": [
+		{
+			"name": "scalpel", 
+			"directions": 1, 
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "retractor", 
+			"directions": 1, 
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "bone_saw", 
+			"directions": 1, 
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "hemostat", 
+			"directions": 1, 
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "drill", 
+			"directions": 1, 
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "cautery", 
+			"directions": 1, 
+			"delays": [
+				[1.0]
+			]
+		}
+	]
+}

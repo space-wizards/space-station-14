@@ -40,6 +40,8 @@ namespace Content.Server.GameObjects.Components
                 return "Rotate clockwise";
             }
 
+            protected override string GetCategory(IEntity user, RotatableComponent component) => "Rotate";
+
             protected override VerbVisibility GetVisibility(IEntity user, RotatableComponent component)
             {
                 return VerbVisibility.Visible;
@@ -47,7 +49,7 @@ namespace Content.Server.GameObjects.Components
 
             protected override void Activate(IEntity user, RotatableComponent component)
             {
-                component.TryRotate(user, Angle.FromDegrees(90));
+                component.TryRotate(user, Angle.FromDegrees(-90));
             }
         }
 
@@ -59,6 +61,8 @@ namespace Content.Server.GameObjects.Components
                 return "Rotate counter-clockwise";
             }
 
+            protected override string GetCategory(IEntity user, RotatableComponent component) => "Rotate";
+
             protected override VerbVisibility GetVisibility(IEntity user, RotatableComponent component)
             {
                 return VerbVisibility.Visible;
@@ -66,7 +70,7 @@ namespace Content.Server.GameObjects.Components
 
             protected override void Activate(IEntity user, RotatableComponent component)
             {
-                component.TryRotate(user, Angle.FromDegrees(-90));
+                component.TryRotate(user, Angle.FromDegrees(90));
             }
         }
 

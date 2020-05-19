@@ -1,4 +1,6 @@
+﻿using System.Collections.Generic;
 using Content.Server.Sandbox;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.GamePresets
@@ -9,11 +11,13 @@ namespace Content.Server.GameTicking.GamePresets
         [Dependency] private readonly ISandboxManager _sandboxManager;
 #pragma warning restore 649
 
-        public override void Start()
+        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers)
         {
             _sandboxManager.IsSandboxEnabled = true;
+            return true;
         }
 
-        public override string Description => "Sandbox, go and build something!";
+        public override string ModeTitle => "Sandbox";
+        public override string Description => "No stress, build something!";
     }
 }

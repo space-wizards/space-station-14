@@ -11,6 +11,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -46,6 +47,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             {
                 return;
             }
+            if (!Powered)
+                return;
 
             var wires = Owner.GetComponent<WiresComponent>();
             if (wires.IsPanelOpen)
@@ -120,6 +123,9 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            if (!Powered)
+                return;
+
             var message = serverMsg.Message;
             switch (message)
             {
@@ -165,9 +171,9 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
             Timer.Spawn(_animationDuration, () =>
             {
-                TrySetVisualState(VendingMachineVisualState.Normal);
                 _ejecting = false;
-                Owner.EntityManager.SpawnEntityAt(id, Owner.Transform.GridPosition);
+                TrySetVisualState(VendingMachineVisualState.Normal);
+                Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPosition);
             });
         }
 

@@ -3,7 +3,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -22,7 +21,6 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IPlayerManager _playerManager;
 #pragma warning restore 649
 
         private static readonly FormattedMessage _entityNotFoundMessage;
@@ -37,17 +35,12 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
+            SubscribeNetworkEvent<ExamineSystemMessages.RequestExamineInfoMessage>(ExamineInfoRequest);
+
             IoCManager.InjectDependencies(this);
         }
 
-        public override void RegisterMessageTypes()
-        {
-            base.RegisterMessageTypes();
-
-            RegisterMessageType<ExamineSystemMessages.RequestExamineInfoMessage>();
-        }
-
-        private FormattedMessage GetExamineText(IEntity entity)
+        private static FormattedMessage GetExamineText(IEntity entity)
         {
             var message = new FormattedMessage();
 
@@ -82,15 +75,12 @@ namespace Content.Server.GameObjects.EntitySystems
             return message;
         }
 
-        public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
+        private void ExamineInfoRequest(ExamineSystemMessages.RequestExamineInfoMessage request, EntitySessionEventArgs eventArgs)
         {
-            base.HandleNetMessage(channel, message);
-
-            if (!(message is ExamineSystemMessages.RequestExamineInfoMessage request))
-                return;
-
-            var session = _playerManager.GetSessionByChannel(channel);
+            var player = (IPlayerSession) eventArgs.SenderSession;
+            var session = eventArgs.SenderSession;
             var playerEnt = session.AttachedEntity;
+            var channel = player.ConnectedClient;
 
             if (playerEnt == null
                 || !_entityManager.TryGetEntity(request.EntityUid, out var entity)

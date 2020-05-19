@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Server.Observer;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,12 +18,12 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct
+    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct, IRelayMoveInput
     {
         /// <summary>
         /// Damagestates are reached by reaching a certain damage threshold, they will block actions after being reached
         /// </summary>
-        public DamageState CurrentDamageState { get; private set; } = new NormalState();
+        public IDamageState CurrentDamageState { get; private set; } = new NormalState();
 
         /// <summary>
         /// Damage state enum for current health, set only via change damage state //TODO: SETTER
@@ -46,15 +49,15 @@ namespace Content.Server.GameObjects
 
             serializer.DataField(ref templatename, "Template", "Human");
 
-            Type type = AppDomain.CurrentDomain.GetAssemblyByName("Content.Server")
-                .GetType("Content.Server.GameObjects." + templatename);
+            var type = typeof(SpeciesComponent).Assembly.GetType("Content.Server.GameObjects." + templatename);
             DamageTemplate = (DamageTemplates) Activator.CreateInstance(type);
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
+            base.HandleMessage(message, component);
+
             switch (message)
             {
                 case PlayerAttachedMsg _:
@@ -102,15 +105,25 @@ namespace Content.Server.GameObjects
         {
             return CurrentDamageState.CanSpeak();
 		}
-            
+
         bool IActionBlocker.CanDrop()
         {
             return CurrentDamageState.CanDrop();
         }
 
+        bool IActionBlocker.CanPickup()
+        {
+            return CurrentDamageState.CanPickup();
+        }
+
         bool IActionBlocker.CanEmote()
         {
             return CurrentDamageState.CanEmote();
+        }
+
+        bool IActionBlocker.CanAttack()
+        {
+            return CurrentDamageState.CanAttack();
         }
 
         List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
@@ -164,7 +177,8 @@ namespace Content.Server.GameObjects
 
             currentstate = threshold;
 
-            Owner.RaiseEvent(new MobDamageStateChangedMessage(this));
+            var toRaise = new MobDamageStateChangedMessage(this);
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, toRaise);
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
@@ -185,8 +199,16 @@ namespace Content.Server.GameObjects
                     bruteDamage += 30;
                     break;
             }
-            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage);
-            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage, null);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage, null);
+        }
+
+        void IRelayMoveInput.MoveInputPressed(IPlayerSession session)
+        {
+            if (CurrentDamageState is DeadState)
+            {
+                new Ghost().Execute(null, session, null);
+            }
         }
     }
 

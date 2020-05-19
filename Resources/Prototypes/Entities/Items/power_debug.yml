@@ -1,0 +1,18 @@
+- type: entity
+  name: Power Debug Tool
+  parent: BaseItem
+  id: PowerDebug
+  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/multitool.rsi
+    state: multitool
+
+  - type: Icon
+    sprite: Objects/Tools/multitool.rsi
+    state: multitool
+
+  - type: Item
+    sprite: Objects/Tools/multitool.rsi
+
+  - type: PowerDebugTool

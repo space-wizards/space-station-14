@@ -19,9 +19,6 @@ namespace Content.Server.GameObjects
         /// <inheritdoc />
         public override string Name => "Temperature";
 
-        /// <inheritdoc />
-        public override uint? NetID => ContentNetIDs.TEMPERATURE;
-
         //TODO: should be programmatic instead of how it currently is
         [ViewVariables]
         public float CurrentTemperature { get; private set; } = PhysicalConstants.ZERO_CELCIUS;
@@ -46,7 +43,7 @@ namespace Content.Server.GameObjects
 
             _secondsSinceLastDamageUpdate += frameTime;
 
-            Owner.TryGetComponent<DamageableComponent>(out DamageableComponent component);
+            Owner.TryGetComponent(out DamageableComponent component);
 
             while (_secondsSinceLastDamageUpdate >= 1)
             {

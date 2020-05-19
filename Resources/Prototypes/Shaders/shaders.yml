@@ -1,9 +1,9 @@
 - type: shader
-  id: circlemask
+  id: CircleMask
   kind: source
-  path: "/Shaders/circlemask.swsl"
+  path: "/Shaders/circle_mask.swsl"
 
 - type: shader
-  id: gradientcirclemask
+  id: GradientCircleMask
   kind: source
-  path: "/Shaders/gradientcirclemask.swsl"
+  path: "/Shaders/gradient_circle_mask.swsl"

@@ -1,5 +1,20 @@
-- type: vendingMachineInventory
+﻿- type: vendingMachineInventory
   id: Dinnerware
   name: Dinnerware
   description: A vending machine containing kitchen and restaurant equipment.
   spriteName: dinnerware
+  startinginventory:
+    ButchCleaver: 1
+    DrinkBaseCup: 10
+    DrinkPitcher: 1
+    DrinkMug: 5
+    DrinkMugBlack: 2
+    DrinkMugBlue: 2
+    DrinkMugGreen: 2
+    DrinkMugHeart: 1
+    DrinkMugMetal: 2
+    DrinkMugMoebius: 1
+    DrinkMugOne: 1
+    DrinkMugRainbow: 2
+    DrinkMugRed: 2
+

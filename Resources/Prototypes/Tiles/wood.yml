@@ -1,0 +1,12 @@
+- type: tile
+  name: floor_wood
+  display_name: Wood
+  texture: "wood"
+  base_turfs:
+  - space
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_wood
+  friction: 0.35
+  item_drop: FloorTileItemCarpet

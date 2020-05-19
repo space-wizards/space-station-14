@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Linq;
+using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Throw;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
+using Content.Shared.Interfaces;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -10,12 +16,16 @@ using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -29,6 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -38,11 +49,16 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
+            SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
+
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
             input.BindMap.BindFunction(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands));
             input.BindMap.BindFunction(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop));
             input.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem));
             input.BindMap.BindFunction(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem));
+            input.BindMap.BindFunction(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack));
+            input.BindMap.BindFunction(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt));
         }
 
         /// <inheritdoc />
@@ -59,14 +75,7 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        /// <inheritdoc />
-        public override void SubscribeEvents()
-        {
-            SubscribeEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
-            SubscribeEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
-        }
-
-        private static void HandleContainerModified(object sender, ContainerModifiedMessage args)
+        private static void HandleContainerModified(ContainerModifiedMessage args)
         {
             if (args.Container.Owner.TryGetComponent(out IHandsComponent handsComponent))
             {
@@ -124,20 +133,23 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
-            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(ent, handsComp.GetActiveHand.Owner))
-                return false;
-                
-            if(handsComp.GetActiveHand != null && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(ent, handsComp.GetActiveHand.Owner))
-            	return false;
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
 
-            if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
-            {
-                handsComp.Drop(handsComp.ActiveIndex, coords);
-            }
+            if(interactionSystem.InRangeUnobstructed(coords.ToMap(_mapManager), ent.Transform.WorldPosition, ignoredEnt: ent))
+                if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
+                {
+                    handsComp.Drop(handsComp.ActiveIndex, coords);
+                }
+                else
+                {
+                    var entCoords = ent.Transform.GridPosition.Position;
+                    var entToDesiredDropCoords = coords.Position - entCoords;
+                    var clampedDropCoords = ((entToDesiredDropCoords.Normalized * InteractionSystem.InteractionRange) + entCoords);
+
+                    handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(clampedDropCoords, coords.GridID));
+                }
             else
-            {
-                handsComp.Drop(handsComp.ActiveIndex);
-            }
+                handsComp.Drop(handsComp.ActiveIndex, ent.Transform.GridPosition);
 
             return true;
         }
@@ -168,63 +180,72 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!handsComp.ThrowItem())
                 return false;
 
-            // pop off an item, or throw the single item in hand.
-            if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2)
+            // throw the item, split off from a stack if it's meant to be thrown individually
+            if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2 || !stackComp.ThrowIndividually)
             {
                 handsComp.Drop(handsComp.ActiveIndex);
             }
             else
             {
                 stackComp.Use(1);
-                throwEnt = throwEnt.EntityManager.SpawnEntityAt(throwEnt.Prototype.ID, plyEnt.Transform.GridPosition);
+                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, plyEnt.Transform.GridPosition);
 
                 // can only throw one item at a time, regardless of what the prototype stack size is.
                 if (throwEnt.TryGetComponent<StackComponent>(out var newStackComp))
                     newStackComp.Count = 1;
             }
 
-            if (!throwEnt.TryGetComponent(out CollidableComponent colComp))
-                return true;
-
-            colComp.CollisionEnabled = true;
-            // I can now collide with player, so that i can do damage.
-
-            if (!throwEnt.TryGetComponent(out ThrownItemComponent projComp))
-            {
-                projComp = throwEnt.AddComponent<ThrownItemComponent>();
-
-                if(colComp.PhysicsShapes.Count == 0)
-                    colComp.PhysicsShapes.Add(new PhysShapeAabb());
-
-                colComp.PhysicsShapes[0].CollisionMask |= (int)CollisionGroup.MobImpassable;
-                colComp.IsScrapingFloor = false;
-            }
-
-            projComp.User = plyEnt;
-            projComp.IgnoreEntity(plyEnt);
-
-            var transform = plyEnt.Transform;
-            var dirVec = (coords.ToWorld(_mapManager).Position - transform.WorldPosition).Normalized;
-
-            if (!throwEnt.TryGetComponent(out PhysicsComponent physComp))
-                physComp = throwEnt.AddComponent<PhysicsComponent>();
-
-            // TODO: Move this into PhysicsSystem, we need an ApplyForce function.
-            var a = ThrowForce / (float) Math.Max(0.001, physComp.Mass); // a = f / m
-
-            var timing = IoCManager.Resolve<IGameTiming>();
-            var spd = a / (1f / timing.TickRate); // acceleration is applied in 1 tick instead of 1 second, scale appropriately
-
-            physComp.LinearVelocity = dirVec * spd;
-
-            var wHomoDir = Vector3.UnitX;
-
-            transform.InvWorldMatrix.Transform(ref wHomoDir, out var lHomoDir);
-
-            lHomoDir.Normalize();
-            transform.LocalRotation = new Angle(lHomoDir.Xy);
+            ThrowHelper.Throw(throwEnt, ThrowForce, coords, plyEnt.Transform.GridPosition, false, plyEnt);
 
             return true;
+        }
+
+        private void HandleSmartEquipBackpack(ICommonSession session)
+        {
+            HandleSmartEquip(session, EquipmentSlotDefines.Slots.BACKPACK);
+        }
+
+        private void HandleSmartEquipBelt(ICommonSession session)
+        {
+            HandleSmartEquip(session, EquipmentSlotDefines.Slots.BELT);
+        }
+
+        private void HandleSmartEquip(ICommonSession session, EquipmentSlotDefines.Slots equipementSlot)
+        {
+            var plyEnt = ((IPlayerSession) session).AttachedEntity;
+
+            if (plyEnt == null || !plyEnt.IsValid())
+                return;
+
+            if (!plyEnt.TryGetComponent(out HandsComponent handsComp) || !plyEnt.TryGetComponent(out InventoryComponent inventoryComp))
+                return;
+
+            if (!inventoryComp.TryGetSlotItem(equipementSlot, out ItemComponent equipmentItem)
+                || !equipmentItem.Owner.TryGetComponent<ServerStorageComponent>(out var storageComponent))
+            {
+                _notifyManager.PopupMessage(plyEnt, plyEnt, Loc.GetString("You have no {0} to take something out of!", EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
+                return;
+            }
+
+            var heldItem = handsComp.GetHand(handsComp.ActiveIndex)?.Owner;
+
+            if (heldItem != null)
+            {
+                storageComponent.PlayerInsertEntity(plyEnt);
+            }
+            else
+            {
+                if (storageComponent.StoredEntities.Count == 0)
+                {
+                    _notifyManager.PopupMessage(plyEnt, plyEnt, Loc.GetString("There's nothing in your {0} to take out!", EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
+                }
+                else
+                {
+                    var lastStoredEntity = Enumerable.Last(storageComponent.StoredEntities);
+                    if (storageComponent.Remove(lastStoredEntity))
+                        handsComp.PutInHandOrDrop(lastStoredEntity.GetComponent<ItemComponent>());
+                }
+            }
         }
     }
 }

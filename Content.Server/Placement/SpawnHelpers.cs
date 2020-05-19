@@ -14,18 +14,14 @@ namespace Content.Server.Placement
         /// <summary>
         ///     Spawns a spotlight ground turret that will track any living entities in range.
         /// </summary>
-        /// <param name="grid"></param>
-        /// <param name="localPosition"></param>
-        public static void SpawnLightTurret(IMapGrid grid, Vector2 localPosition)
+        /// <param name="position"></param>
+        public static void SpawnLightTurret(GridCoordinates position)
         {
             var entMan = IoCManager.Resolve<IServerEntityManager>();
-            var tBase = entMan.SpawnEntity("TurretBase");
-            tBase.GetComponent<ITransformComponent>().GridPosition = new GridCoordinates(localPosition, grid);
+            var tBase = entMan.SpawnEntity("TurretBase", position);
 
-            var tTop = entMan.SpawnEntity("TurretTopLight");
-            var topTransform = tTop.GetComponent<ITransformComponent>();
-            topTransform.GridPosition = new GridCoordinates(localPosition, grid);
-            topTransform.AttachParent(tBase);
+            var tTop = entMan.SpawnEntity("TurretTopLight", position);
+            tTop.Transform.AttachParent(tBase);
         }
     }
 }

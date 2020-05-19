@@ -11,6 +11,7 @@
   - ooc
   - observe
   - toggleready
+  - ghost
 
 - Index: 50
   Name: Moderator
@@ -26,6 +27,10 @@
   - showtime
   - observe
   - toggleready
+  - ghost
+  - kick
+  - listplayers
+  - loc
 
 - Index: 100
   Name: Administrator
@@ -41,6 +46,7 @@
   - aghost
   - observe
   - toggleready
+  - ghost
   - spawn
   - delete
   - tp
@@ -51,4 +57,81 @@
   - restartround
   - respawn
   - rejuvenate
+  - addcomp
+  - controlmob
+  - kick
+  - listplayers
+  - loc
+  - lsmap
+  - lsgrid
+  - mindinfo
+  - addrole
+  - rmrole
+  - showtime
+  - group
+  - addai
   CanViewVar: true
+  CanAdminPlace: true
+
+- Index: 200
+  Name: Host
+  Commands:
+  - joingame
+  - help
+  - list
+  - say
+  - whisper
+  - me
+  - ooc
+  - showtime
+  - aghost
+  - observe
+  - toggleready
+  - ghost
+  - spawn
+  - delete
+  - tp
+  - tpgrid
+  - setgamepreset
+  - startround
+  - endround
+  - restartround
+  - respawn
+  - rejuvenate
+  - addcomp
+  - controlmob
+  - kick
+  - listplayers
+  - loc
+  - lsmap
+  - lsgrid
+  - mindinfo
+  - addrole
+  - rmrole
+  - srvpopupmsg
+  - group
+  - showtime
+  - restart
+  - cvar
+  - netaudit
+  - szr_stats
+  - mem
+  - addai
+  - loglevel
+  - testlog
+  - addmap
+  - rmmap
+  - savebp
+  - loadbp
+  - savemap
+  - loadmap
+  - pausemap
+  - unpausemap
+  - querymappaused
+  - mapinit
+  - saveconfig
+  - gc
+  - gc_mode
+  CanViewVar: true
+  CanAdminPlace: true
+  CanScript: true

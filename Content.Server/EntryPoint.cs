@@ -2,7 +2,9 @@ using Content.Server.Cargo;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Server.Preferences;
 using Content.Server.Sandbox;
+using Content.Shared.Kitchen;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
@@ -35,6 +37,10 @@ namespace Content.Server
                 "LowWall",
                 "Window",
                 "CharacterInfo",
+                "InteractionOutline",
+                "MeleeWeaponArcAnimation",
+                "AnimationsTest",
+                "ItemStatus"
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -49,6 +55,7 @@ namespace Content.Server
                 var cast = (ServerModuleTestingCallbacks) TestingCallbacks;
                 cast.ServerBeforeIoC?.Invoke();
             }
+
             IoCManager.BuildGraph();
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
@@ -62,6 +69,9 @@ namespace Content.Server
 
             var logManager = IoCManager.Resolve<ILogManager>();
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
+
+            IoCManager.Resolve<IServerPreferencesManager>().StartInit();
+
         }
 
         public override void PostInit()
@@ -70,6 +80,8 @@ namespace Content.Server
 
             _gameTicker.Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
+            IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
+            IoCManager.Resolve<RecipeManager>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -164,6 +170,46 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
+    ///     This interface gives components behavior when their owner is put in an inventory slot.
+    /// </summary>
+    public interface IEquipped
+    {
+        void Equipped(EquippedEventArgs eventArgs);
+    }
+
+    public class EquippedEventArgs : EventArgs
+    {
+        public EquippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Slot = slot;
+        }
+
+        public IEntity User { get; }
+        public EquipmentSlotDefines.Slots Slot { get; }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when their owner is removed from an inventory slot.
+    /// </summary>
+    public interface IUnequipped
+    {
+        void Unequipped(UnequippedEventArgs eventArgs);
+    }
+
+    public class UnequippedEventArgs : EventArgs
+    {
+        public UnequippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Slot = slot;
+        }
+
+        public IEntity User { get; }
+        public EquipmentSlotDefines.Slots Slot { get; }
+    }
+
+    /// <summary>
     ///     This interface gives components behavior when being used to "attack".
     /// </summary>
     public interface IAttack
@@ -241,10 +287,11 @@ namespace Content.Server.GameObjects.EntitySystems
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
-    public sealed class InteractionSystem : EntitySystem
+    public sealed class InteractionSystem : SharedInteractionSystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IPhysicsManager _physicsManager;
 #pragma warning restore 649
 
         public const float InteractionRange = 2;
@@ -255,9 +302,13 @@ namespace Content.Server.GameObjects.EntitySystems
             var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
             inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
                 new PointerInputCmdHandler(HandleUseItemInHand));
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.WideAttack,
+                new PointerInputCmdHandler(HandleWideAttack));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
                 new PointerInputCmdHandler(HandleActivateItemInWorld));
         }
+
+
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
@@ -280,10 +331,24 @@ namespace Content.Server.GameObjects.EntitySystems
             return true;
         }
 
+        /// <summary>
+        /// Activates the Activate behavior of an object
+        /// Verifies that the user is capable of doing the use interaction first
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="used"></param>
+        public void TryInteractionActivate(IEntity user, IEntity used)
+        {
+            if (user != null && used != null && ActionBlockerSystem.CanUse(user))
+            {
+                InteractionActivate(user, used);
+            }
+        }
+
         private void InteractionActivate(IEntity user, IEntity used)
         {
             var activateMsg = new ActivateInWorldMessage(user, used);
-            RaiseEvent(activateMsg);
+            RaiseLocalEvent(activateMsg);
             if (activateMsg.Handled)
             {
                 return;
@@ -295,6 +360,37 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             activateComp.Activate(new ActivateEventArgs {User = user});
+        }
+
+        private bool HandleWideAttack(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        {
+            // client sanitization
+            if (!_mapManager.GridExists(coords.GridID))
+            {
+                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return true;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent attack with client-side entity. Session={session}, Uid={uid}");
+                return true;
+            }
+
+            var userEntity = ((IPlayerSession) session).AttachedEntity;
+
+            if (userEntity == null || !userEntity.IsValid())
+            {
+                return true;
+            }
+
+            if (userEntity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
+            {
+                DoAttack(userEntity, coords);
+            }
+
+            return true;
         }
 
         private bool HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
@@ -320,14 +416,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return true;
             }
 
-            if (userEntity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
-            {
-                DoAttack(userEntity, coords, uid);
-            }
-            else
-            {
-                UserInteraction(userEntity, coords, uid);
-            }
+            UserInteraction(userEntity, coords, uid);
 
             return true;
         }
@@ -367,6 +456,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
+            playerTransform.LocalRotation = new Angle(coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position);
+
             // TODO: Check if client should be able to see that object to click on it in the first place
 
             // Clicked on empty space behavior, try using ranged attack
@@ -392,7 +483,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // Check if ClickLocation is in object bounds here, if not lets log as warning and see why
             if (attacked.TryGetComponent(out ICollidableComponent collideComp))
             {
-                if (!collideComp.WorldAABB.Contains(coordinates.ToWorld(_mapManager).Position))
+                if (!collideComp.WorldAABB.Contains(coordinates.ToMapPos(_mapManager)))
                 {
                     Logger.WarningS("system.interaction",
                         $"Player {player.Name} clicked {attacked.Name} outside of its bounding box component somehow");
@@ -433,7 +524,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private void InteractAfterAttack(IEntity user, IEntity weapon, GridCoordinates clickLocation)
         {
             var message = new AfterAttackMessage(user, weapon, null, clickLocation);
-            RaiseEvent(message);
+            RaiseLocalEvent(message);
             if (message.Handled)
             {
                 return;
@@ -455,7 +546,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
             var attackMsg = new AttackByMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(attackMsg);
+            RaiseLocalEvent(attackMsg);
             if (attackMsg.Handled)
             {
                 return;
@@ -477,7 +568,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(afterAtkMsg);
+            RaiseLocalEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
             {
                 return;
@@ -503,7 +594,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void Interaction(IEntity user, IEntity attacked)
         {
             var message = new AttackHandMessage(user, attacked);
-            RaiseEvent(message);
+            RaiseLocalEvent(message);
             if (message.Handled)
             {
                 return;
@@ -545,8 +636,16 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public void UseInteraction(IEntity user, IEntity used)
         {
+            if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
+            {
+                if (delayComponent.ActiveDelay)
+                    return;
+                else
+                    delayComponent.BeginDelay();
+            }
+
             var useMsg = new UseInHandMessage(user, used);
-            RaiseEvent(useMsg);
+            RaiseLocalEvent(useMsg);
             if (useMsg.Handled)
             {
                 return;
@@ -575,7 +674,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             ThrownInteraction(user, item);
             return true;
-
         }
 
         /// <summary>
@@ -585,7 +683,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void ThrownInteraction(IEntity user, IEntity thrown)
         {
             var throwMsg = new ThrownMessage(user, thrown);
-            RaiseEvent(throwMsg);
+            RaiseLocalEvent(throwMsg);
             if (throwMsg.Handled)
             {
                 return;
@@ -607,7 +705,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void LandInteraction(IEntity user, IEntity landing, GridCoordinates landLocation)
         {
             var landMsg = new LandMessage(user, landing, landLocation);
-            RaiseEvent(landMsg);
+            RaiseLocalEvent(landMsg);
             if (landMsg.Handled)
             {
                 return;
@@ -623,6 +721,50 @@ namespace Content.Server.GameObjects.EntitySystems
         }
 
         /// <summary>
+        ///     Calls Equipped on all components that implement the IEquipped interface
+        ///     on an entity that has been equipped.
+        /// </summary>
+        public void EquippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            var equipMsg = new EquippedMessage(user, equipped, slot);
+            RaiseLocalEvent(equipMsg);
+            if (equipMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = equipped.GetAllComponents<IEquipped>().ToList();
+
+            // Call Thrown on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.Equipped(new EquippedEventArgs(user, slot));
+            }
+        }
+
+        /// <summary>
+        ///     Calls Unequipped on all components that implement the IUnequipped interface
+        ///     on an entity that has been equipped.
+        /// </summary>
+        public void UnequippedInteraction(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            var unequipMsg = new UnequippedMessage(user, equipped, slot);
+            RaiseLocalEvent(unequipMsg);
+            if (unequipMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = equipped.GetAllComponents<IUnequipped>().ToList();
+
+            // Call Thrown on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.Unequipped(new UnequippedEventArgs(user, slot));
+            }
+        }
+
+        /// <summary>
         /// Activates the Dropped behavior of an object
         /// Verifies that the user is capable of doing the drop interaction first
         /// </summary>
@@ -632,7 +774,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             DroppedInteraction(user, item);
             return true;
-
         }
 
         /// <summary>
@@ -642,7 +783,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void DroppedInteraction(IEntity user, IEntity item)
         {
             var dropMsg = new DroppedMessage(user, item);
-            RaiseEvent(dropMsg);
+            RaiseLocalEvent(dropMsg);
             if (dropMsg.Handled)
             {
                 return;
@@ -663,9 +804,9 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public void HandSelectedInteraction(IEntity user, IEntity item)
         {
-            var dropMsg = new HandSelectedMessage(user, item);
-            RaiseEvent(dropMsg);
-            if (dropMsg.Handled)
+            var handSelectedMsg = new HandSelectedMessage(user, item);
+            RaiseLocalEvent(handSelectedMsg);
+            if (handSelectedMsg.Handled)
             {
                 return;
             }
@@ -685,9 +826,9 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public void HandDeselectedInteraction(IEntity user, IEntity item)
         {
-            var dropMsg = new HandDeselectedMessage(user, item);
-            RaiseEvent(dropMsg);
-            if (dropMsg.Handled)
+            var handDeselectedMsg = new HandDeselectedMessage(user, item);
+            RaiseLocalEvent(handDeselectedMsg);
+            if (handDeselectedMsg.Handled)
             {
                 return;
             }
@@ -709,7 +850,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
             var rangedMsg = new RangedAttackMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(rangedMsg);
+            RaiseLocalEvent(rangedMsg);
             if (rangedMsg.Handled)
                 return;
 
@@ -730,7 +871,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var afterAtkMsg = new AfterAttackMessage(user, weapon, attacked, clickLocation);
-            RaiseEvent(afterAtkMsg);
+            RaiseLocalEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
                 return;
 
@@ -747,7 +888,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private void DoAttack(IEntity player, GridCoordinates coordinates, EntityUid uid)
+        private void DoAttack(IEntity player, GridCoordinates coordinates)
         {
             // Verify player is on the same map as the entity he clicked on
             if (_mapManager.GetGrid(coordinates.GridID).ParentMapId != player.Transform.MapID)
@@ -766,7 +907,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var item = hands.GetActiveHand?.Owner;
 
             // TODO: If item is null we need some kinda unarmed combat.
-            if (!ActionBlockerSystem.CanInteract(player) || item == null)
+            if (!ActionBlockerSystem.CanAttack(player) || item == null)
             {
                 return;
             }
@@ -1014,6 +1155,74 @@ namespace Content.Server.GameObjects.EntitySystems
             User = user;
             Thrown = thrown;
             LandLocation = landLocation;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when equipping the entity in an inventory slot.
+    /// </summary>
+    [PublicAPI]
+    public class EquippedMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that equipped the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was equipped.
+        /// </summary>
+        public IEntity Equipped { get; }
+
+        /// <summary>
+        ///     Slot where the item was placed.
+        /// </summary>
+        public EquipmentSlotDefines.Slots Slot { get; }
+
+        public EquippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Equipped = equipped;
+            Slot = slot;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when removing the entity from an inventory slot.
+    /// </summary>
+    [PublicAPI]
+    public class UnequippedMessage : EntitySystemMessage
+    {
+        /// <summary>
+        ///     If this message has already been "handled" by a previous system.
+        /// </summary>
+        public bool Handled { get; set; }
+
+        /// <summary>
+        ///     Entity that equipped the item.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     Item that was equipped.
+        /// </summary>
+        public IEntity Equipped { get; }
+
+        /// <summary>
+        ///     Slot where the item was removed from.
+        /// </summary>
+        public EquipmentSlotDefines.Slots Slot { get; }
+
+        public UnequippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        {
+            User = user;
+            Equipped = equipped;
+            Slot = slot;
         }
     }
 

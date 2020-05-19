@@ -146,6 +146,12 @@ namespace Content.Server.GameTicking
             }
 
             var ticker = IoCManager.Resolve<IGameTicker>();
+            if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
+            {
+                shell.SendText(player, "Round has not started.");
+                return;
+            }
+
             ticker.MakeJoinGame(player);
         }
     }
@@ -184,21 +190,7 @@ namespace Content.Server.GameTicking
 
             var ticker = IoCManager.Resolve<IGameTicker>();
 
-            Type presetType;
-            switch (args[0])
-            {
-                case "DeathMatch":
-                    presetType = typeof(PresetDeathMatch);
-                    break;
-                case "Sandbox":
-                    presetType = typeof(PresetSandbox);
-                    break;
-                default:
-                    shell.SendText(player, "That is not a valid game preset!");
-                    return;
-            }
-
-            ticker.SetStartPreset(presetType);
+            ticker.SetStartPreset(args[0]);
         }
     }
 }

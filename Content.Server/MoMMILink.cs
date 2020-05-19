@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Robust.Server.Interfaces.ServerStatus;
 using Robust.Server.ServerStatus;
@@ -79,46 +80,40 @@ namespace Content.Server
             }
         }
 
-        private bool _handleChatPost(HttpMethod method, HttpListenerRequest request, HttpListenerResponse response)
+        private bool _handleChatPost(HttpMethod method, HttpRequest request, HttpResponse response)
         {
-            if (method != HttpMethod.Post || request.Url.AbsolutePath != "/ooc")
+            if (method != HttpMethod.Post || request.Path != "/ooc")
             {
                 return false;
             }
 
             var password = _configurationManager.GetCVar<string>("status.mommipassword");
-            OOCPostMessage message;
 
-            using (var streamReader = new StreamReader(request.InputStream, EncodingHelpers.UTF8))
-            using (var jsonReader = new JsonTextReader(streamReader))
+            OOCPostMessage message = null;
+            try
             {
-                var serializer = new JsonSerializer();
-                try
-                {
-                    message = serializer.Deserialize<OOCPostMessage>(jsonReader);
-                }
-                catch (JsonSerializationException)
-                {
-                    response.Respond(method, "400 Bad Request", HttpStatusCode.BadRequest, "text/plain");
-                    return true;
-                }
+                message = request.GetFromJson<OOCPostMessage>();
+            }
+            catch (JsonSerializationException)
+            {
+                // message null so enters block down below.
             }
 
             if (message == null)
             {
-                response.Respond(method, "400 Bad Request", HttpStatusCode.BadRequest, "text/plain");
+                response.StatusCode = (int) HttpStatusCode.BadRequest;
                 return true;
             }
 
             if (message.Password != password)
             {
-                response.Respond(method, "Incorrect password", HttpStatusCode.Forbidden, "text/plain");
+                response.StatusCode = (int) HttpStatusCode.Forbidden;
                 return true;
             }
 
             _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Sender, message.Contents));
 
-            response.Respond(method, "Message received", HttpStatusCode.OK, "text/plain");
+            response.StatusCode = (int) HttpStatusCode.OK;
 
             return false;
         }

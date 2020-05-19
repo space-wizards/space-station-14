@@ -1,5 +1,7 @@
+﻿using System.Collections.Generic;
 using Content.Server.GameTicking.GameRules;
 using Content.Server.Interfaces.GameTicking;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.GamePresets
@@ -10,11 +12,13 @@ namespace Content.Server.GameTicking.GamePresets
         [Dependency] private readonly IGameTicker _gameTicker;
 #pragma warning restore 649
 
-        public override void Start()
+        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers)
         {
             _gameTicker.AddGameRule<RuleDeathMatch>();
+            return true;
         }
 
-        public override string Description => "Deathmatch, go and kill everybody else to win!";
+        public override string ModeTitle => "Deathmatch";
+        public override string Description => "Kill anything that moves!";
     }
 }

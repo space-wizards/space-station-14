@@ -9,7 +9,6 @@ namespace Content.Shared.GameObjects
     {
         public override string Name => "Damageable";
         public sealed override uint? NetID => ContentNetIDs.DAMAGEABLE;
-        public sealed override Type StateType => typeof(DamageComponentState);
     }
 
     // The IDs of the items get synced over the network.

@@ -3,8 +3,8 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -71,13 +71,16 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 if (entity.TryGetComponent(out DamageableComponent damage))
                 {
-                    foreach (var damageType in _damages)
+                    Owner.EntityManager.TryGetEntity(Shooter, out var shooter);
+
+                    foreach (var (damageType, amount) in _damages)
                     {
-                        damage.TakeDamage(damageType.Key, damageType.Value);
+
+                        damage.TakeDamage(damageType, amount, Owner, shooter);
                     }
                 }
 
-                if (entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
+                if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
                     && Owner.TryGetComponent(out PhysicsComponent physicsComponent))
                 {
                     var direction = physicsComponent.LinearVelocity.Normalized;

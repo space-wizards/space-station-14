@@ -89,19 +89,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 
-            var ray = new Ray(userPosition, angle.ToVec(), (int)(CollisionGroup.Impassable | CollisionGroup.MobImpassable));
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(ray, MaxLength,
-                Owner.Transform.GetMapTransform().Owner);
+            var ray = new CollisionRay(userPosition, angle.ToVec(), (int)(CollisionGroup.Impassable | CollisionGroup.MobImpassable));
+            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user, ignoreNonHardCollidables: true);
 
-            Hit(rayCastResults, energyModifier);
+            Hit(rayCastResults, energyModifier, user);
             AfterEffects(user, rayCastResults, angle, energyModifier);
         }
 
-        protected virtual void Hit(RayCastResults ray, float damageModifier)
+        protected virtual void Hit(RayCastResults ray, float damageModifier, IEntity user = null)
         {
             if (ray.HitEntity != null && ray.HitEntity.TryGetComponent(out DamageableComponent damage))
             {
-                damage.TakeDamage(DamageType.Heat, (int)Math.Round(_damage * damageModifier, MidpointRounding.AwayFromZero));
+                damage.TakeDamage(DamageType.Heat, (int)Math.Round(_damage * damageModifier, MidpointRounding.AwayFromZero), Owner, user);
                 //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
                 //even numbers if halfway between two numbers, rather than rounding to nearest
             }

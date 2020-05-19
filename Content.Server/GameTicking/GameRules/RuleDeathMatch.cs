@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using Content.Server.GameObjects;
 using Content.Server.Interfaces.Chat;
@@ -34,7 +34,7 @@ namespace Content.Server.GameTicking.GameRules
         {
             _chatManager.DispatchServerAnnouncement("The game is now a death match. Kill everybody else to win!");
 
-            _entityManager.SubscribeEvent<MobDamageStateChangedMessage>(_onMobDamageStateChanged, this);
+            _entityManager.EventBus.SubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this, _onMobDamageStateChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
         }
 
@@ -42,11 +42,11 @@ namespace Content.Server.GameTicking.GameRules
         {
             base.Removed();
 
-            _entityManager.UnsubscribeEvent<MobDamageStateChangedMessage>(this);
+            _entityManager.EventBus.UnsubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this);
             _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
         }
 
-        private void _onMobDamageStateChanged(object sender, MobDamageStateChangedMessage message)
+        private void _onMobDamageStateChanged(MobDamageStateChangedMessage message)
         {
             _runDelayedCheck();
         }

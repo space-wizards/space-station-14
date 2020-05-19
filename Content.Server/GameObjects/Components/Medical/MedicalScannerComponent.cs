@@ -1,14 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Medical;
+using Content.Server.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Medical
@@ -20,7 +22,12 @@ namespace Content.Server.GameObjects.Components.Medical
         private AppearanceComponent _appearance;
         private BoundUserInterface _userInterface;
         private ContainerSlot _bodyContainer;
+        private readonly Vector2 _ejectOffset = new Vector2(-0.5f, 0f);
         public bool IsOccupied => _bodyContainer.ContainedEntity != null;
+
+        ///implementing PowerDeviceComponent
+        private PowerDeviceComponent _powerDevice;
+        private bool Powered => _powerDevice.Powered;
 
         public override void Initialize()
         {
@@ -29,6 +36,7 @@ namespace Content.Server.GameObjects.Components.Medical
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MedicalScannerUiKey.Key);
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
+            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
             UpdateUserInterface();
         }
 
@@ -61,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
             var dmgDict = new Dictionary<string, int>();
 
-            foreach (var dmgType in (DamageType[])Enum.GetValues(typeof(DamageType)))
+            foreach (var dmgType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
             {
                 if (damageable.CurrentDamage.TryGetValue(dmgType, out var amount))
                 {
@@ -70,18 +78,20 @@ namespace Content.Server.GameObjects.Components.Medical
             }
 
             return new MedicalScannerBoundUserInterfaceState(
-                deathThresholdValue-currentHealth,
+                deathThresholdValue - currentHealth,
                 deathThresholdValue,
                 dmgDict);
         }
 
         private void UpdateUserInterface()
         {
+            if (!Powered)
+                return;
             var newState = GetUserInterfaceState();
             _userInterface.SetState(newState);
         }
 
-        private MedicalScannerStatus GetStatusFromDamageState(DamageState damageState)
+        private MedicalScannerStatus GetStatusFromDamageState(IDamageState damageState)
         {
             switch (damageState)
             {
@@ -110,6 +120,8 @@ namespace Content.Server.GameObjects.Components.Medical
             {
                 return;
             }
+            if (!Powered)
+                return;
             _userInterface.Open(actor.playerSession);
         }
 
@@ -160,7 +172,9 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public void EjectBody()
         {
-            _bodyContainer.Remove(_bodyContainer.ContainedEntity);
+            var containedEntity = _bodyContainer.ContainedEntity;
+            _bodyContainer.Remove(containedEntity);
+            containedEntity.Transform.WorldPosition += _ejectOffset;
             UpdateUserInterface();
             UpdateAppearance();
         }

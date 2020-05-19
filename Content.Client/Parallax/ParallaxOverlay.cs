@@ -1,10 +1,10 @@
-using Content.Client.Interfaces.Parallax;
+﻿using Content.Client.Interfaces.Parallax;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
+using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -16,8 +16,8 @@ namespace Content.Client.Parallax
 #pragma warning disable 649
         [Dependency] private readonly IParallaxManager _parallaxManager;
         [Dependency] private readonly IEyeManager _eyeManager;
+        [Dependency] private readonly IClyde _displayManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
         public override bool AlwaysDirty => true;
@@ -52,15 +52,17 @@ namespace Content.Client.Parallax
             var screenHandle = (DrawingHandleScreen) handle;
 
             var (sizeX, sizeY) = _parallaxTexture.Size;
-            var (posX, posY) = _eyeManager.ScreenToWorld(Vector2.Zero).ToWorld(_mapManager).Position;
+            var (posX, posY) = _eyeManager.ScreenToMap(Vector2.Zero).Position;
             var (ox, oy) = (Vector2i) new Vector2(-posX / Slowness, posY / Slowness);
             ox = MathHelper.Mod(ox, sizeX);
             oy = MathHelper.Mod(oy, sizeY);
 
-            screenHandle.DrawTexture(_parallaxTexture, new Vector2(ox, oy));
-            screenHandle.DrawTexture(_parallaxTexture, new Vector2(ox - sizeX, oy));
-            screenHandle.DrawTexture(_parallaxTexture, new Vector2(ox, oy - sizeY));
-            screenHandle.DrawTexture(_parallaxTexture, new Vector2(ox - sizeX, oy - sizeY));
+            var (screenSizeX, screenSizeY) = _displayManager.ScreenSize;
+            for (var x = -sizeX; x < screenSizeX; x += sizeX) {
+                for (var y = -sizeY; y < screenSizeY; y += sizeY) {
+                    screenHandle.DrawTexture(_parallaxTexture, new Vector2(ox + x, oy + y));
+                }
+            }
         }
     }
 }

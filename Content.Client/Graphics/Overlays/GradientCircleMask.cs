@@ -19,7 +19,7 @@ namespace Content.Client.Graphics.Overlays
         public GradientCircleMask() : base(nameof(GradientCircleMask))
         {
             IoCManager.InjectDependencies(this);
-            Shader = _prototypeManager.Index<ShaderPrototype>("gradientcirclemask").Instance();
+            Shader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();
         }
 
         protected override void Draw(DrawingHandleBase handle)
