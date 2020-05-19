@@ -158,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public bool TryPryTile(IEntity user, GridCoordinates clickLocation)
         {
-            if (HasQuality(ToolQuality.Prying))
+            if (!HasQuality(ToolQuality.Prying))
                 return false;
 
             var mapGrid = _mapManager.GetGrid(clickLocation.GridID);
