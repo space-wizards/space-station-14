@@ -1,5 +1,6 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Content.Shared.Preferences.Appearance;
@@ -74,6 +75,8 @@ namespace Content.Server.GameObjects.Components
             {
                 return;
             }
+
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs, insideBlockerValid: true)) return;
 
             if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent looks))
             {

@@ -54,6 +54,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             RemoveItemToHand(eventArgs.User);
         }
 

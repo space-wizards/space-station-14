@@ -1,6 +1,7 @@
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameTicking;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Command;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -65,6 +66,8 @@ namespace Content.Server.GameObjects.Components.Command
         {
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return;
+
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             if (!Powered)
             {

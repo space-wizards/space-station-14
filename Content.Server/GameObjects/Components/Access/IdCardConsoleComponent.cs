@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.Access;
 using Content.Shared.GameObjects.Components.Access;
 using Robust.Server.GameObjects.Components.Container;
@@ -192,6 +193,8 @@ namespace Content.Server.GameObjects.Components.Access
             {
                 return;
             }
+
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             _userInterface.Open(actor.playerSession);
         }

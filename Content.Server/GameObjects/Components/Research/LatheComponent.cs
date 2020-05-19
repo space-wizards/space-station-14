@@ -151,6 +151,9 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 return;
             }
+
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             OpenUserInterface(actor.playerSession);
         }
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)

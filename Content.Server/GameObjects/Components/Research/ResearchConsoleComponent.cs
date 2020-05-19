@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
@@ -33,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Research
         private const string _soundCollectionName = "keyboard";
 
         private bool Powered => _powerDevice.Powered;
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -109,6 +110,9 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 return;
             }
+
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             OpenUserInterface(actor.playerSession);
             PlayKeyboardSound();
             return;

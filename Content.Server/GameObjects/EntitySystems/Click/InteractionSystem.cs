@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.EntitySystems
         bool AttackBy(AttackByEventArgs eventArgs);
     }
 
-    public class AttackByEventArgs : EventArgs, ITargetedAttack
+    public class AttackByEventArgs : EventArgs, ITargetedAttackEventArgs
     {
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.EntitySystems
         public IEntity Attacked { get; set; }
     }
 
-    public interface ITargetedAttack
+    public interface ITargetedAttackEventArgs
     {
         /// <summary>
         /// Performer of the attack
@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.EntitySystems
         bool AttackHand(AttackHandEventArgs eventArgs);
     }
 
-    public class AttackHandEventArgs : EventArgs, ITargetedAttack
+    public class AttackHandEventArgs : EventArgs, ITargetedAttackEventArgs
     {
         public IEntity User { get; set; }
         public IEntity Attacked { get; set; }
@@ -141,9 +141,10 @@ namespace Content.Server.GameObjects.EntitySystems
         void Activate(ActivateEventArgs eventArgs);
     }
 
-    public class ActivateEventArgs : EventArgs
+    public class ActivateEventArgs : EventArgs, ITargetedAttackEventArgs
     {
         public IEntity User { get; set; }
+        public IEntity Attacked { get; set; }
     }
 
     /// <summary>
@@ -375,7 +376,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            activateComp.Activate(new ActivateEventArgs {User = user});
+            activateComp.Activate(new ActivateEventArgs {User = user, Attacked = used});
         }
 
         private bool HandleWideAttack(ICommonSession session, GridCoordinates coords, EntityUid uid)

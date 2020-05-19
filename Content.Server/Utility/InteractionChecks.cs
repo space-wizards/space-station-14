@@ -19,7 +19,7 @@ namespace Content.Server.Utility
         /// that attacker is in range of the attacked entity. Additionally shows a popup if
         /// validation fails.
         /// </summary>
-        public static bool InRangeUnobstructed(ITargetedAttack eventArgs, bool insideBlockerValid = false)
+        public static bool InRangeUnobstructed(ITargetedAttackEventArgs eventArgs, bool insideBlockerValid = false)
         {
             if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
                 eventArgs.Attacked.Transform.WorldPosition, ignoredEnt: eventArgs.Attacked, insideBlockerValid: insideBlockerValid))

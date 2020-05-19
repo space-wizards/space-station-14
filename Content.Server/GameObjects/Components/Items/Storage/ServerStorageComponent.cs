@@ -331,6 +331,8 @@ namespace Content.Server.GameObjects
         /// <inheritdoc />
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             ((IUse) this).UseEntity(new UseEntityEventArgs { User = eventArgs.User });
         }
 

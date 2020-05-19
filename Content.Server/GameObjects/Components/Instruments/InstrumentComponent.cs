@@ -1,4 +1,5 @@
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Instruments;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -96,6 +97,8 @@ namespace Content.Server.GameObjects.Components.Instruments
 
             if (_instrumentPlayer != null)
                 return;
+
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             _instrumentPlayer = actor.playerSession;
             OpenUserInterface(actor.playerSession);

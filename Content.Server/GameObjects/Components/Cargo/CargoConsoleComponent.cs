@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Content.Server.Utility;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Cargo
@@ -128,6 +129,8 @@ namespace Content.Server.GameObjects.Components.Cargo
             }
             if (!Powered)
                 return;
+
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             _userInterface.Open(actor.playerSession);
         }

@@ -178,6 +178,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 return;
             }
+
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             UpdateUserInterface();
             _userInterface.Open(actor.playerSession);
 

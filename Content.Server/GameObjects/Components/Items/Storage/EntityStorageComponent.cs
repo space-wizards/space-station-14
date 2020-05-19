@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Storage;
 using Robust.Server.GameObjects;
@@ -105,6 +106,8 @@ namespace Content.Server.GameObjects.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             if(_noDoor)
                 ToggleLock();
             else

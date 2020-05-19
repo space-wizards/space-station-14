@@ -1,5 +1,6 @@
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -66,6 +67,8 @@ namespace Content.Server.GameObjects.Components.Items
 
         public void Activate(ActivateEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             Roll();
         }
 

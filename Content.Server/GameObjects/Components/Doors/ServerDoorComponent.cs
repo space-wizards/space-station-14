@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -82,6 +83,8 @@ namespace Content.Server.GameObjects
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             ActivateImpl(eventArgs);
         }
 

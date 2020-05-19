@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
@@ -49,6 +50,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             }
             if (!Powered)
                 return;
+
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             var wires = Owner.GetComponent<WiresComponent>();
             if (wires.IsPanelOpen)
