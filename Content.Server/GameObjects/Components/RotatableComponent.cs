@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components
 
             protected override void Activate(IEntity user, RotatableComponent component)
             {
-                component.TryRotate(user, Angle.FromDegrees(90));
+                component.TryRotate(user, Angle.FromDegrees(-90));
             }
         }
 
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components
 
             protected override void Activate(IEntity user, RotatableComponent component)
             {
-                component.TryRotate(user, Angle.FromDegrees(-90));
+                component.TryRotate(user, Angle.FromDegrees(90));
             }
         }
 
