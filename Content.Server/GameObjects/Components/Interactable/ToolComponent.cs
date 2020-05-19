@@ -153,28 +153,34 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void AfterAttack(AfterAttackEventArgs eventArgs)
         {
-            if (Qualities != ToolQuality.Prying)
-                return;
+            TryPryTile(eventArgs.User, eventArgs.ClickLocation);
+        }
 
-            var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
-            var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
+        public bool TryPryTile(IEntity user, GridCoordinates clickLocation)
+        {
+            if (HasQuality(ToolQuality.Prying))
+                return false;
+
+            var mapGrid = _mapManager.GetGrid(clickLocation.GridID);
+            var tile = mapGrid.GetTileRef(clickLocation);
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
 
-            if (!_interactionSystem.InRangeUnobstructed(eventArgs.User.Transform.MapPosition, coordinates.ToMapPos(_mapManager), ignoredEnt:eventArgs.User))
-                return;
+            if (!_interactionSystem.InRangeUnobstructed(user.Transform.MapPosition, coordinates.ToMapPos(_mapManager), ignoredEnt:user))
+                return false;
 
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
-            if (!tileDef.CanCrowbar) return;
+            if (!tileDef.CanCrowbar) return false;
 
             var underplating = _tileDefinitionManager["underplating"];
-            mapGrid.SetTile(eventArgs.ClickLocation, new Tile(underplating.TileId));
+            mapGrid.SetTile(clickLocation, new Tile(underplating.TileId));
             PlayUseSound();
 
             //Actually spawn the relevant tile item at the right position and give it some offset to the corner.
             var tileItem = Owner.EntityManager.SpawnEntity(tileDef.ItemDropPrototypeName, coordinates);
             tileItem.Transform.WorldPosition += (0.2f, 0.2f);
+            return true;
         }
     }
 }
