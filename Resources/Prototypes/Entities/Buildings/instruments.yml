@@ -35,10 +35,10 @@
    - type: Instrument
      program: 1
    - type: Sprite
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: piano
    - type: Icon
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: piano
 
  - type: entity
@@ -49,10 +49,10 @@
    - type: Instrument
      program: 7
    - type: Sprite
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: minimoog
    - type: Icon
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: minimoog
 
  - type: entity
@@ -63,8 +63,8 @@
    - type: Instrument
      program: 13
    - type: Sprite
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: xylophone
    - type: Icon
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: xylophone

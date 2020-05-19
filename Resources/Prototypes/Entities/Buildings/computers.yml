@@ -165,7 +165,23 @@
     - type: ComputerVisualizer2D
       key: id_key
       screen: id
-
+      
+- type: entity
+  id: computerBodyScanner
+  parent: ComputerBase
+  name: Body Scanner Computer
+  components:
+  - type: BodyScanner
+  - type: UserInterface
+    interfaces:
+    - key: enum.BodyScannerUiKey.Key
+      type: BodyScannerBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: generic_key
+      screen: generic
+      
 - type: entity
   id: ComputerComms
   parent: ComputerBase

@@ -17,10 +17,10 @@
     sprite: Clothing/meson_scanners.rsi
     state: meson
   - type: Icon
-    sprite: Clothing/meson_scanners.rsi
+    sprite: Clothing/Glasses/meson_scanners.rsi
     state: meson
   - type: Clothing
-    sprite: Clothing/meson_scanners.rsi
+    sprite: Clothing/Glasses/meson_scanners.rsi
 
 
 - type: entity
@@ -30,13 +30,13 @@
   description: Useful both for security and cargonia
   components:
   - type: Sprite
-    sprite: Clothing/sunglasses.rsi
+    sprite: Clothing/Glasses/sunglasses.rsi
     state: sunglasses
   - type: Icon
-    sprite: Clothing/sunglasses.rsi
+    sprite: Clothing/Glasses/sunglasses.rsi
     state: sunglasses
   - type: Clothing
-    sprite: Clothing/sunglasses.rsi
+    sprite: Clothing/Glasses/sunglasses.rsi
 
 - type: entity
   parent: GlassesBase
@@ -45,10 +45,10 @@
   description: Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes. Often worn by budget security officers.
   components:
   - type: Sprite
-    sprite: Clothing/sunglasses_sec.rsi
+    sprite: Clothing/Glasses/sunglasses_sec.rsi
     state: icon
   - type: Icon
-    sprite: Clothing/sunglasses_sec.rsi
+    sprite: Clothing/Glasses/sunglasses_sec.rsi
     state: icon
   - type: Clothing
-    sprite: Clothing/sunglasses_sec.rsi
+    sprite: Clothing/Glasses/sunglasses_sec.rsi

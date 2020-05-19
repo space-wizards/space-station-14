@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
         public MicrowaveBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner,uiKey)
         {
-            
+
         }
 
         protected override void Open()
@@ -39,9 +39,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu.StartButton.OnPressed += args => SendMessage(new SharedMicrowaveComponent.MicrowaveStartCookMessage());
             _menu.EjectButton.OnPressed += args => SendMessage(new SharedMicrowaveComponent.MicrowaveEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>
-            { 
+            {
                 SendMessage(new SharedMicrowaveComponent.MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
-                
+
             };
 
             _menu.IngredientsListReagents.OnItemSelected += args =>
@@ -49,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 SendMessage(
                     new SharedMicrowaveComponent.MicrowaveVaporizeReagentIndexedMessage(_reagents[args.ItemIndex]));
             };
-                
+
             _menu.OnCookTimeSelected += args =>
             {
                 var actualButton = args.Button as Button;
@@ -80,6 +80,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 return;
             }
 
+            _menu.ToggleBusyDisableOverlayPanel(cstate.IsMicrowaveBusy);
             RefreshContentsDisplay(cstate.ReagentsReagents, cstate.ContainedSolids);
 
         }
@@ -101,9 +102,12 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu.IngredientsList.Clear();
             foreach (var entityID in solids)
             {
-                var entity = _entityManager.GetEntity(entityID);
+                if (!_entityManager.TryGetEntity(entityID, out var entity))
+                {
+                    return;
+                }
 
-                if (entity.TryGetComponent(out IconComponent icon))
+                if (!entity.Deleted && entity.TryGetComponent(out IconComponent icon))
                 {
                     var solidItem = _menu.IngredientsList.AddItem(entity.Name, icon.Icon.Default);
 

@@ -41,7 +41,7 @@ namespace Content.Shared.Kitchen
                 EntityID = entityID;
             }
         }
-        
+
         [Serializable, NetSerializable]
         public class MicrowaveVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
         {
@@ -70,10 +70,12 @@ namespace Content.Shared.Kitchen
     {
         public readonly IReadOnlyList<Solution.ReagentQuantity> ReagentsReagents;
         public readonly List<EntityUid> ContainedSolids;
-        public MicrowaveUpdateUserInterfaceState(IReadOnlyList<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
+        public bool IsMicrowaveBusy;
+        public MicrowaveUpdateUserInterfaceState(IReadOnlyList<Solution.ReagentQuantity> reagents, List<EntityUid> solids, bool busyStatus)
         {
             ReagentsReagents = reagents;
             ContainedSolids = solids;
+            IsMicrowaveBusy = busyStatus;
         }
     }
 

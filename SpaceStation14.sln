@@ -52,22 +52,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{5040
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A-411B-4B3B-BEB6-DEC6DCA4C205}"
-ProjectSection(SolutionItems) = preProject
-	Jenkinsfile = Jenkinsfile
-	Tools\generate_hashes.ps1 = Tools\generate_hashes.ps1
-	Tools\package_release_build.py = Tools\package_release_build.py
-	Tools\run_travis.sh = Tools\run_travis.sh
-	.travis.yml = .travis.yml
-	.appveyor.yml = .appveyor.yml
-	Tools\gen_build_info.py = Tools\gen_build_info.py
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		.appveyor.yml = .appveyor.yml
+		.travis.yml = .travis.yml
+		Tools\gen_build_info.py = Tools\gen_build_info.py
+		Tools\generate_hashes.ps1 = Tools\generate_hashes.ps1
+		Jenkinsfile = Jenkinsfile
+		Tools\package_release_build.py = Tools\package_release_build.py
+		Tools\run_travis.sh = Tools\run_travis.sh
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared.Scripting", "RobustToolbox\Robust.Shared.Scripting\Robust.Shared.Scripting.csproj", "{41B450C0-A361-4CD7-8121-7072B8995CFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Shared.Scripting", "RobustToolbox\Robust.Shared.Scripting\Robust.Shared.Scripting.csproj", "{41B450C0-A361-4CD7-8121-7072B8995CFC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{DDD55F86-0406-42E5-8443-93EDC6BB2D75}"
-ProjectSection(SolutionItems) = preProject
-	RobustToolbox\Tools\download_natives.py = RobustToolbox\Tools\download_natives.py
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		RobustToolbox\Tools\download_natives.py = RobustToolbox\Tools\download_natives.py
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,10 +135,10 @@ Global
 		{45C9B43F-305D-4651-9863-F6384CBC847F}.Debug|x64.Build.0 = Debug|x64
 		{45C9B43F-305D-4651-9863-F6384CBC847F}.Release|x64.ActiveCfg = Release|x64
 		{45C9B43F-305D-4651-9863-F6384CBC847F}.Release|x64.Build.0 = Release|x64
-		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Debug|x64.Build.0 = Debug|Any CPU
-		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Release|x64.ActiveCfg = Release|Any CPU
-		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Release|x64.Build.0 = Release|Any CPU
+		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Debug|x64.ActiveCfg = Debug|x64
+		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Debug|x64.Build.0 = Debug|x64
+		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Release|x64.ActiveCfg = Release|x64
+		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -144,7 +144,10 @@ namespace Content.Client
                 "Mop",
                 "Bucket",
                 "Puddle",
-                "CanSpill"
+                "CanSpill",
+                "RandomPottedPlant",
+                "CommunicationsConsole",
+                "BarSign",
             };
 
             foreach (var ignoreName in registerIgnore)
