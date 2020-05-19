@@ -7,6 +7,7 @@ using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
@@ -50,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var transform = Owner.Transform;
 
-            if (!Robust.Shared.Utility.EntitySystems.Get<SharedInteractionSystem>().InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
+            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
             {
                 _notifyManager.PopupMessage(transform.GridPosition, Owner,
                         _localizationManager.GetString("You can't reach there!"));

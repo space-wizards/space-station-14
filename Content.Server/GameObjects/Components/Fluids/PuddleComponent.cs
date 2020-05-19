@@ -9,6 +9,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -138,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            Robust.Shared.Utility.EntitySystems.Get<AudioSystem>().Play(_spillSound);
+            EntitySystem.Get<AudioSystem>().Play(_spillSound);
             return true;
         }
 

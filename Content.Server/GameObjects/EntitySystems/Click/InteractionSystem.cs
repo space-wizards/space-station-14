@@ -37,12 +37,26 @@ namespace Content.Server.GameObjects.EntitySystems
         bool AttackBy(AttackByEventArgs eventArgs);
     }
 
-    public class AttackByEventArgs : EventArgs
+    public class AttackByEventArgs : EventArgs, ITargetedAttack
     {
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
         public IEntity AttackWith { get; set; }
         public IEntity Target { get; set; }
+        public GridCoordinates TargetGridCoordinates => Target.Transform.GridPosition;
+    }
+
+    public interface ITargetedAttack
+    {
+        /// <summary>
+        /// Performer of the attack
+        /// </summary>
+        IEntity User { get; }
+        /// <summary>
+        /// Target of the attack
+        /// </summary>
+        IEntity Target { get; }
+
     }
 
     /// <summary>
@@ -56,9 +70,10 @@ namespace Content.Server.GameObjects.EntitySystems
         bool AttackHand(AttackHandEventArgs eventArgs);
     }
 
-    public class AttackHandEventArgs : EventArgs
+    public class AttackHandEventArgs : EventArgs, ITargetedAttack
     {
         public IEntity User { get; set; }
+        public IEntity Target { get; set; }
     }
 
     /// <summary>
@@ -604,7 +619,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var attackHands = attacked.GetAllComponents<IAttackHand>().ToList();
-            var attackHandEventArgs = new AttackHandEventArgs {User = user};
+            var attackHandEventArgs = new AttackHandEventArgs {User = user, Target = attacked};
 
             foreach (var attackHand in attackHands)
             {

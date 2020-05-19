@@ -12,6 +12,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -90,6 +91,8 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
+
             if (!eventArgs.User.TryGetComponent<IActorComponent>(out var actor))
                 return false;
             if (Status != GravityGeneratorStatus.Off && Status != GravityGeneratorStatus.On)
@@ -116,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Gravity
 
                 var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
 
-                Robust.Shared.Utility.EntitySystems.Get<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
+                EntitySystem.Get<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
                 notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
 
                 return true;

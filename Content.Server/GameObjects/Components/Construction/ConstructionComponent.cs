@@ -11,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Random;
@@ -120,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 return false;
             }
-            var sound = Robust.Shared.Utility.EntitySystems.Get<AudioSystem>();
+            var sound = EntitySystem.Get<AudioSystem>();
 
             switch (step)
             {

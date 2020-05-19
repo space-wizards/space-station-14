@@ -10,6 +10,7 @@ using Content.Shared.Maths;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -126,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     if (_useSound != null)
                     {
 
-                        var audioSystem = Robust.Shared.Utility.EntitySystems.Get<AudioSystem>();
+                        var audioSystem = EntitySystem.Get<AudioSystem>();
                         audioSystem.Play(_useSound);
                         user.PopupMessage(user, _localizationManager.GetString("Slurp"));
                     }

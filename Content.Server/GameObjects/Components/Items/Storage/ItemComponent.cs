@@ -12,6 +12,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
@@ -96,7 +97,7 @@ namespace Content.Server.GameObjects
             var userPos = user.Transform.MapPosition;
             var itemPos = Owner.Transform.WorldPosition;
 
-            return Robust.Shared.Utility.EntitySystems.Get<SharedInteractionSystem>()
+            return EntitySystem.Get<SharedInteractionSystem>()
                 .InRangeUnobstructed(userPos, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
         }
 
