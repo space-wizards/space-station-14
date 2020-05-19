@@ -54,10 +54,10 @@ namespace Content.Server.Utility
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
-                    eventArgs.ClickLocation.ToMapPos(mapManager), ignoredEnt: null, insideBlockerValid: insideBlockerValid))
+                    eventArgs.ClickLocation.ToMapPos(mapManager), ignoredEnt: eventArgs.User, insideBlockerValid: insideBlockerValid))
                 {
                     var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                    eventArgs.Attacked.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
+                    eventArgs.User.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
                     return false;
                 }
             }
