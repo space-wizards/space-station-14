@@ -21,7 +21,6 @@ namespace Content.Server.GameObjects.Components.Interactable
     {
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IRobustRandom _robustRandom;
 #pragma warning restore 649
 
         public override string Name => "Welder";
@@ -38,7 +37,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         public const float FuelLossRate = 0.5f;
 
         private bool _welderLit = false;
-
         private WelderSystem _welderSystem;
         private SpriteComponent _spriteComponent;
         private SolutionComponent _solutionComponent;
@@ -67,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             base.Initialize();
 
-            _behavior = Tool.Welder;
+            AddQuality(ToolQuality.Welding);
 
             _welderSystem = _entitySystemManager.GetEntitySystem<WelderSystem>();
 
@@ -80,41 +78,40 @@ namespace Content.Server.GameObjects.Components.Interactable
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
 
-        public bool CanUse()
+        public override bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded)
         {
-            return CanWeld(DefaultFuelCost);
+            var canUse = base.UseTool(user, target, toolQualityNeeded);
+
+            return toolQualityNeeded.HasFlag(ToolQuality.Welding) ? canUse && TryWeld(DefaultFuelCost) : canUse;
         }
 
-        public bool TryUse()
+        public bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded, float fuelConsumed)
         {
-            return TryWeld(DefaultFuelCost);
+            return base.UseTool(user, target, toolQualityNeeded) && TryWeld(fuelConsumed);
         }
 
-        public bool TryWeld(float value)
+        private bool TryWeld(float value)
         {
             if (!WelderLit || !CanWeld(value) || _solutionComponent == null)
-            {
                 return false;
-            }
 
             return _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
         }
 
-        public bool CanWeld(float value)
+        private bool CanWeld(float value)
         {
-            return Fuel > value || Behavior != Tool.Welder;
+            return Fuel > value || Qualities != ToolQuality.Welding;
         }
 
-        public bool CanLitWelder()
+        private bool CanLitWelder()
         {
-            return Fuel > 0 || Behavior != Tool.Welder;
+            return Fuel > 0 || Qualities != ToolQuality.Welding;
         }
 
         /// <summary>
         /// Deactivates welding tool if active, activates welding tool if possible
         /// </summary>
-        /// <returns></returns>
-        public bool ToggleWelderStatus()
+        private bool ToggleWelderStatus()
         {
             if (WelderLit)
             {
@@ -157,17 +154,13 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void OnUpdate(float frameTime)
         {
-            if (Behavior != Tool.Welder || !WelderLit)
-            {
+            if (!HasQuality(ToolQuality.Welding) || !WelderLit)
                 return;
-            }
 
             _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
 
             if (Fuel == 0)
-            {
                 ToggleWelderStatus();
-            }
 
             Dirty();
         }

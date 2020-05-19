@@ -45,5 +45,6 @@
         public const uint GHOST = 1040;
         public const uint MICROWAVE = 1041;
         public const uint GRAVITY_GENERATOR = 1042;
+        public const uint MULTITOOLS = 1043;
     }
 }

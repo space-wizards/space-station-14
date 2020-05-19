@@ -2,6 +2,7 @@
 // ReSharper disable once RedundantUsingDirective
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using Content.Server.GameObjects.Components.Chemistry;
@@ -46,18 +47,18 @@ namespace Content.Server.GameObjects.Components.Interactable
         private InteractionSystem _interactionSystem;
         private SpriteComponent _spriteComponent;
 
-        protected Tool _behavior = Tool.Wrench;
+        protected ToolQuality _qualities = ToolQuality.Anchoring;
         private string _useSound;
         private string _useSoundCollection;
         private float _speedModifier = 1;
 
         [ViewVariables]
-        public override Tool Behavior
+        public override ToolQuality Qualities
         {
-            get => _behavior;
+            get => _qualities;
             set
             {
-                _behavior = value;
+                _qualities = value;
                 Dirty();
             }
         }
@@ -84,6 +85,23 @@ namespace Content.Server.GameObjects.Components.Interactable
             set => _useSoundCollection = value;
         }
 
+        public void AddQuality(ToolQuality quality)
+        {
+            _qualities |= quality;
+            Dirty();
+        }
+
+        public void RemoveQuality(ToolQuality quality)
+        {
+            _qualities &= ~quality;
+            Dirty();
+        }
+
+        public bool HasQuality(ToolQuality quality)
+        {
+            return _qualities.HasFlag(quality);
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -99,13 +117,10 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (serializer.Reading)
             {
-                try
+                var qualities = serializer.ReadDataField("qualities", new List<ToolQuality>());
+                foreach (var quality in qualities)
                 {
-                    _behavior = (Tool)serializer.ReadStringEnumKey("behavior");
-                }
-                catch
-                {
-                    // ignored
+                    AddQuality(quality);
                 }
             }
             serializer.DataField(ref _speedModifier, "speed", 1);
@@ -113,22 +128,11 @@ namespace Content.Server.GameObjects.Components.Interactable
             serializer.DataField(ref _useSoundCollection, "useSoundCollection", string.Empty);
         }
 
-        /// <summary>
-        ///     Status modifier which determines whether or not we can act as a tool at this time
-        /// </summary>
-        public virtual bool CanUse(float resource)
+        public virtual bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded)
         {
-            return true;
-        }
+            PlayUseSound();
 
-        /// <summary>
-        ///     Method which will try to use the current tool and consume resources/power if applicable.
-        /// </summary>
-        /// <param name="resource">The amount of resource</param>
-        /// <returns>Whether the tool could be used or not.</returns>
-        public virtual bool TryUse(float resource = 0f)
-        {
-            return true;
+            return ActionBlockerSystem.CanInteract(user) && HasQuality(toolQualityNeeded);
         }
 
         protected void PlaySoundCollection(string name, float volume=-5f)
@@ -147,17 +151,9 @@ namespace Content.Server.GameObjects.Components.Interactable
                 PlaySoundCollection(UseSoundCollection, 0f);
         }
 
-        public override ComponentState GetComponentState()
-        {
-            return new ToolComponentState(Behavior);
-        }
-
         public void AfterAttack(AfterAttackEventArgs eventArgs)
         {
-            if (eventArgs.Attacked != null && RaiseToolAct(eventArgs))
-                return;
-
-            if (Behavior != Tool.Crowbar)
+            if (Qualities != ToolQuality.Prying)
                 return;
 
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
@@ -179,102 +175,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             //Actually spawn the relevant tile item at the right position and give it some offset to the corner.
             var tileItem = Owner.EntityManager.SpawnEntity(tileDef.ItemDropPrototypeName, coordinates);
             tileItem.Transform.WorldPosition += (0.2f, 0.2f);
-        }
-
-        private bool RaiseToolAct(AfterAttackEventArgs eventArgs)
-        {
-            var attacked = eventArgs.Attacked;
-            var clickLocation = eventArgs.ClickLocation;
-            var user = eventArgs.User;
-
-            switch (Behavior)
-            {
-                case Tool.Wrench:
-                    var wrenchList = attacked.GetAllComponents<IWrenchAct>().ToList();
-                    var wrenchAttackBy = new WrenchActEventArgs()
-                        { User = user, ClickLocation = clickLocation, AttackWith = Owner };
-
-                    foreach (var comp in wrenchList)
-                    {
-                        if (comp.WrenchAct(wrenchAttackBy))
-                            return true;
-                    }
-
-                    break;
-
-                case Tool.Crowbar:
-                    var crowbarList = attacked.GetAllComponents<ICrowbarAct>().ToList();
-                    var crowbarAttackBy = new CrowbarActEventArgs()
-                        { User = user, ClickLocation = clickLocation, AttackWith = Owner };
-
-                    foreach (var comp in crowbarList)
-                    {
-                        if (comp.CrowbarAct(crowbarAttackBy))
-                            return true;
-                    }
-
-                    break;
-
-                case Tool.Screwdriver:
-                    var screwdriverList = attacked.GetAllComponents<IScrewdriverAct>().ToList();
-                    var screwdriverAttackBy = new ScrewdriverActEventArgs()
-                        { User = user, ClickLocation = clickLocation, AttackWith = Owner };
-
-                    foreach (var comp in screwdriverList)
-                    {
-                        if (comp.ScrewdriverAct(screwdriverAttackBy))
-                            return true;
-                    }
-
-                    break;
-
-                case Tool.Wirecutter:
-                    var wirecutterList = attacked.GetAllComponents<IWirecutterAct>().ToList();
-                    var wirecutterAttackBy = new WirecutterActEventArgs()
-                        { User = user, ClickLocation = clickLocation, AttackWith = Owner };
-
-                    foreach (var comp in wirecutterList)
-                    {
-                        if (comp.WirecutterAct(wirecutterAttackBy))
-                            return true;
-                    }
-                    break;
-
-                case Tool.Welder:
-                    var welderList = attacked.GetAllComponents<IWelderAct>().ToList();
-                    var welder = (WelderComponent) this;
-                    var welderAttackBy = new WelderActEventArgs()
-                    {
-                        User = user, ClickLocation = clickLocation, AttackWith = Owner,
-                        Fuel = welder.Fuel, FuelCapacity = welder.FuelCapacity
-                    };
-
-                    foreach (var comp in welderList)
-                    {
-                        if (comp.WelderAct(welderAttackBy))
-                            return true;
-                    }
-
-                    break;
-
-                case Tool.Multitool:
-                    var multitoolList = attacked.GetAllComponents<IMultitoolAct>().ToList();
-                    var multitoolAttackBy = new MultitoolActEventArgs()
-                        { User = user, ClickLocation = clickLocation, AttackWith = Owner };
-
-                    foreach (var comp in multitoolList)
-                    {
-                        if (comp.MultitoolAct(multitoolAttackBy))
-                            return true;
-                    }
-
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return false;
         }
     }
 }

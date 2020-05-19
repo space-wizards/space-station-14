@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -26,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             private string _sprite;
             private string _changeSound;
 
-            public Tool Behavior { get; private set; }
+            public ToolQuality Behavior { get; private set; }
             public string State => _state;
             public string Texture => _texture;
             public string Sprite => _sprite;
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             public void ExposeData(ObjectSerializer serializer)
             {
                 if(serializer.Reading)
-                    Behavior = (Tool)serializer.ReadStringEnumKey("behavior");
+                    Behavior = (ToolQuality)serializer.ReadStringEnumKey("behavior");
                 serializer.DataField(ref _state, "state", string.Empty);
                 serializer.DataField(ref _sprite, "sprite", string.Empty);
                 serializer.DataField(ref _texture, "texture", string.Empty);
@@ -52,6 +53,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 #pragma warning restore 649
 
         public override string Name => "MultiTool";
+        public override uint? NetID => ContentNetIDs.MULTITOOLS;
         private List<ToolEntry> _tools;
         private int _currentTool = 0;
 
@@ -87,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             _tool.UseSound = current.Sound;
             _tool.UseSoundCollection = current.SoundCollection;
-            _tool.Behavior = current.Behavior;
+            _tool.Qualities = current.Behavior;
 
             if (_sprite == null) return;
 
@@ -98,6 +100,8 @@ namespace Content.Server.GameObjects.Components.Interactable
                     _sprite.LayerSetState(0, current.State);
             else
                 _sprite.LayerSetTexture(0, current.Texture);
+
+            Dirty();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -110,6 +114,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             Cycle();
             return true;
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new MultiToolComponentState(_tool.Qualities);
         }
     }
 }

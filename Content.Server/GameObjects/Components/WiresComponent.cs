@@ -248,7 +248,7 @@ namespace Content.Server.GameObjects.Components
                     switch (msg.Action)
                     {
                         case WiresAction.Cut:
-                            if (tool == null || tool.Behavior != Tool.Wirecutter)
+                            if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
                             {
                                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
@@ -258,7 +258,7 @@ namespace Content.Server.GameObjects.Components
                             UpdateUserInterface();
                             break;
                         case WiresAction.Mend:
-                            if (tool == null || tool.Behavior != Tool.Wirecutter)
+                            if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
                             {
                                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
@@ -268,7 +268,7 @@ namespace Content.Server.GameObjects.Components
                             UpdateUserInterface();
                             break;
                         case WiresAction.Pulse:
-                            if (tool == null || tool.Behavior != Tool.Multitool)
+                            if (tool == null || !tool.HasQuality(ToolQuality.Multitool))
                             {
                                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a multitool in your hand!"));
                                 return;
@@ -300,13 +300,13 @@ namespace Content.Server.GameObjects.Components
         {
             if (!eventArgs.AttackWith.TryGetComponent<ToolComponent>(out var tool))
                 return false;
-            if (tool.Behavior != Tool.Screwdriver)
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Screwing))
                 return false;
 
             IsPanelOpen = !IsPanelOpen;
             IoCManager.Resolve<IEntitySystemManager>()
                 .GetEntitySystem<AudioSystem>()
-                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg");
+                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg", Owner);
             return true;
         }
 

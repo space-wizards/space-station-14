@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var stage = Prototype.Stages[Stage];
 
-            if (TryProcessStep(stage.Forward, eventArgs.AttackWith))
+            if (TryProcessStep(stage.Forward, eventArgs.AttackWith, eventArgs.User))
             {
                 Stage++;
                 if (Stage == Prototype.Stages.Count - 1)
@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            else if (TryProcessStep(stage.Backward, eventArgs.AttackWith))
+            else if (TryProcessStep(stage.Backward, eventArgs.AttackWith, eventArgs.User))
             {
                 Stage--;
                 if (Stage == 0)
@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         }
 
-        bool TryProcessStep(ConstructionStep step, IEntity slapped)
+        bool TryProcessStep(ConstructionStep step, IEntity slapped, IEntity user)
         {
             if (step == null)
             {
@@ -144,10 +144,13 @@ namespace Content.Server.GameObjects.Components.Construction
                 case ConstructionStepTool toolStep:
                     if (!slapped.TryGetComponent<ToolComponent>(out var tool))
                         return false;
-                    if (toolStep.Tool != tool.Behavior) return false;
-                    if (toolStep.Tool == Tool.Welder && !((WelderComponent)tool).TryWeld(toolStep.Amount)) return false;
-                    tool.PlayUseSound();
-                    return true;
+
+                    // Handle welder manually since tool steps specify fuel amount needed, for some reason.
+                    if (toolStep.ToolQuality.HasFlag(ToolQuality.Welding))
+                        return slapped.TryGetComponent<WelderComponent>(out var welder)
+                               && welder.UseTool(user, Owner, toolStep.ToolQuality, toolStep.Amount);
+
+                    return tool.UseTool(user, Owner, toolStep.ToolQuality);
 
                 default:
                     throw new NotImplementedException();

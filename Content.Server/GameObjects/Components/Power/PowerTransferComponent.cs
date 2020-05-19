@@ -142,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Power
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
             if (!eventArgs.AttackWith.TryGetComponent(out ToolComponent tool)) return false;
-            if (tool.Behavior != Tool.Wirecutter) return false;
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Cutting)) return false;
 
             Owner.Delete();
             var droppedEnt = Owner.EntityManager.SpawnEntity("CableStack", eventArgs.ClickLocation);

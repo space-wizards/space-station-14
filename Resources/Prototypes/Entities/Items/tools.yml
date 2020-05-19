@@ -11,7 +11,8 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
-    behavior: enum.Tool.Wirecutter
+    qualities:
+      - Cutting
     useSound: /Audio/items/wirecutter.ogg
 
 - type: entity
@@ -31,7 +32,8 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
-    behavior: enum.Tool.Screwdriver
+    qualities:
+      - Screwing
     useSoundCollection: Screwdriver
 
 - type: entity
@@ -76,7 +78,8 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
-    behavior: enum.Tool.Wrench
+    qualities:
+      - Anchoring
     useSound: /Audio/items/ratchet.ogg
 
 - type: entity
@@ -92,7 +95,8 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
-    behavior: enum.Tool.Crowbar
+    qualities:
+      - Prying
     useSound: /Audio/items/crowbar.ogg
 
 - type: entity
@@ -110,7 +114,8 @@
   - type: Item
     sprite: Objects/Tools/multitool.rsi
   - type: Tool
-    behavior: enum.Tool.Multitool
+    qualities:
+      - Multitool
 
 - type: entity
   name: Jaws of life
@@ -127,15 +132,16 @@
     - type: Item
       sprite: Objects/Tools/jaws_of_life.rsi
     - type: Tool
-      behavior: enum.Tool.Crowbar
+      qualities:
+        - Prying
       statusShowBehavior: true
     - type: MultiTool
       tools:
-        - behavior: enum.Tool.Crowbar
+        - behavior: enum.ToolQuality.Prying
           state: jaws_pry
           useSound: /Audio/items/jaws_pry.ogg
           changeSound: /Audio/items/change_jaws.ogg
-        - behavior: enum.Tool.Wirecutter
+        - behavior: enum.ToolQuality.Cutting
           state: jaws_cutter
           useSound: /Audio/items/jaws_cut.ogg
           changeSound: /Audio/items/change_jaws.ogg
@@ -155,15 +161,16 @@
     - type: Item
       sprite: Objects/Tools/drill.rsi
     - type: Tool
-      behavior: enum.Tool.Screwdriver
+      qualities:
+        - Screwing
       statusShowBehavior: true
     - type: MultiTool
       tools:
-        - behavior: enum.Tool.Screwdriver
+        - behavior: enum.ToolQuality.Screwing
           state: drill_screw
           useSound: /Audio/items/drill_use.ogg
           changeSound: /Audio/items/change_drill.ogg
-        - behavior: enum.Tool.Wrench
+        - behavior: enum.ToolQuality.Anchoring
           state: drill_bolt
           useSound: /Audio/items/drill_use.ogg
           changeSound: /Audio/items/change_drill.ogg

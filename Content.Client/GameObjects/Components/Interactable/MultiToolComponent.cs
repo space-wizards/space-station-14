@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -13,26 +14,29 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    public class ToolComponent : SharedToolComponent, IItemStatus
+    public class MultiToolComponent : Component, IItemStatus
     {
-        private Tool _behavior;
+        private ToolQuality _behavior;
         private bool _statusShowBehavior;
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public bool StatusShowBehavior => _statusShowBehavior;
-        [ViewVariables] public override Tool Behavior => _behavior;
+        [ViewVariables] public ToolQuality Behavior => _behavior;
+
+        public override string Name => "MultiTool";
+        public override uint? NetID => ContentNetIDs.MULTITOOLS;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _statusShowBehavior, "statusShowBehavior", false);
+            serializer.DataField(ref _statusShowBehavior, "statusShowBehavior", true);
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is ToolComponentState tool)) return;
+            if (!(curState is MultiToolComponentState tool)) return;
 
-            _behavior = tool.Behavior;
+            _behavior = tool.Quality;
             _uiUpdateNeeded = true;
 
         }
@@ -41,10 +45,10 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         private sealed class StatusControl : Control
         {
-            private readonly ToolComponent _parent;
+            private readonly MultiToolComponent _parent;
             private readonly RichTextLabel _label;
 
-            public StatusControl(ToolComponent parent)
+            public StatusControl(MultiToolComponent parent)
             {
                 _parent = parent;
                 _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};

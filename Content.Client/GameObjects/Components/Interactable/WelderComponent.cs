@@ -14,18 +14,17 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    [ComponentReference(typeof(ToolComponent))]
-    public class WelderComponent : ToolComponent, IItemStatus
+    public class WelderComponent : SharedToolComponent, IItemStatus
     {
         public override string Name => "Welder";
         public override uint? NetID => ContentNetIDs.WELDER;
 
-        private Tool _behavior;
+        private ToolQuality _behavior;
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public float FuelCapacity { get; private set; }
         [ViewVariables] public float Fuel { get; private set; }
         [ViewVariables] public bool Activated { get; private set; }
-        [ViewVariables] public override Tool Behavior => _behavior;
+        [ViewVariables] public override ToolQuality Qualities => _behavior;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -39,7 +38,7 @@ namespace Content.Client.GameObjects.Components.Interactable
             FuelCapacity = weld.FuelCapacity;
             Fuel = weld.Fuel;
             Activated = weld.Activated;
-            _behavior = weld.Behavior;
+            _behavior = weld.Quality;
             _uiUpdateNeeded = true;
         }
 
@@ -70,14 +69,11 @@ namespace Content.Client.GameObjects.Components.Interactable
 
                 _parent._uiUpdateNeeded = false;
 
-                if (_parent.Behavior == Tool.Welder)
-                {
-                    var fuelCap = _parent.FuelCapacity;
-                    var fuel = _parent.Fuel;
+                var fuelCap = _parent.FuelCapacity;
+                var fuel = _parent.Fuel;
 
-                    _label.SetMarkup(Loc.GetString("Fuel: [color={0}]{1}/{2}[/color]",
-                        fuel < fuelCap / 4f ? "darkorange" : "orange", Math.Round(fuel), fuelCap));
-                }
+                _label.SetMarkup(Loc.GetString("Fuel: [color={0}]{1}/{2}[/color]",
+                    fuel < fuelCap / 4f ? "darkorange" : "orange", Math.Round(fuel), fuelCap));
             }
         }
     }

@@ -204,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Doors
             if (!eventArgs.AttackWith.TryGetComponent<ToolComponent>(out var tool))
                 return false;
 
-            if (tool.Behavior != Tool.Crowbar) return false;
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying)) return false;
 
             if (IsPowered())
             {

@@ -139,7 +139,7 @@ namespace Content.Shared.Construction
             if (step.TryGetNode("tool", out node))
             {
                 return new ConstructionStepTool(
-                    node.AsEnum<Tool>(),
+                    node.AsEnum<ToolQuality>(),
                     amount
                 );
             }
@@ -191,11 +191,11 @@ namespace Content.Shared.Construction
 
     public class ConstructionStepTool : ConstructionStep
     {
-        public readonly Tool Tool;
+        public readonly ToolQuality ToolQuality;
 
-        public ConstructionStepTool(Tool tool, int amount) : base(amount)
+        public ConstructionStepTool(ToolQuality toolQuality, int amount) : base(amount)
         {
-            Tool = tool;
+            ToolQuality = toolQuality;
         }
     }
 

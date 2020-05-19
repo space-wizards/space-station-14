@@ -181,27 +181,27 @@ namespace Content.Client.Construction
 
                             break;
                         case ConstructionStepTool tool:
-                            switch (tool.Tool)
+                            switch (tool.ToolQuality)
                             {
-                                case Tool.Wrench:
+                                case ToolQuality.Anchoring:
                                     icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.png");
                                     text = "Wrench";
                                     break;
-                                case Tool.Crowbar:
+                                case ToolQuality.Prying:
                                     icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.png");
                                     text = "Crowbar";
                                     break;
-                                case Tool.Screwdriver:
+                                case ToolQuality.Screwing:
                                     icon = ResourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Tools/screwdriver.png");
                                     text = "Screwdriver";
                                     break;
-                                case Tool.Welder:
+                                case ToolQuality.Welding:
                                     icon = ResourceCache.GetResource<RSIResource>("/Textures/Objects/tools.rsi")
                                         .RSI["welder"].Frame0;
                                     text = $"Welding tool ({tool.Amount} fuel)";
                                     break;
-                                case Tool.Wirecutter:
+                                case ToolQuality.Cutting:
                                     icon = ResourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Tools/wirecutter.png");
                                     text = "Wirecutters";

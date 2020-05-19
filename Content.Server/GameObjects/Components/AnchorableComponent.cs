@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class AnchorableComponent : Component, IWrenchAct
+    public class AnchorableComponent : Component, IAttackBy
     {
         public override string Name => "Anchorable";
 
@@ -20,15 +20,16 @@ namespace Content.Server.GameObjects.Components
             Owner.EnsureComponent<PhysicsComponent>();
         }
 
-        public bool WrenchAct(WrenchActEventArgs eventArgs)
+        public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent physics))
-            {
+            if (!Owner.TryGetComponent(out PhysicsComponent physics)
+                || !eventArgs.AttackWith.TryGetComponent(out ToolComponent tool))
                 return false;
-            }
+
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Anchoring))
+                return false;
 
             physics.Anchored = !physics.Anchored;
-            eventArgs.ToolComponent.PlayUseSound();
 
             return true;
         }
