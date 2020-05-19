@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 {
 
                     var listingsMessage = new PDASendUplinkListingsMessage(_uplinkManager.FetchListings());
-
+                    _interface.SetState(listingsMessage);
                     break;
                 }
             }
@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 JobTitle = ContainedID?.JobTitle
             };
 
-            _interface.SetState(new PDAUpdateUserInterfaceState(_lightOn,ownerInfo));
+            _interface.SetState(new PDAUpdateMainMenuState(_lightOn,ownerInfo));
             UpdatePDAAppearance();
         }
 

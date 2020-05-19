@@ -37,14 +37,21 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
+
     [Serializable, NetSerializable]
-    public sealed class PDAUpdateUserInterfaceState : BoundUserInterfaceState
+    public class PDAUBoundUserInterfaceState : BoundUserInterfaceState
+    {
+
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class PDAUpdateMainMenuState : PDAUBoundUserInterfaceState
     {
         public bool FlashlightEnabled;
         public PDAIdInfoText PDAOwnerInfo;
 
 
-        public PDAUpdateUserInterfaceState(bool isFlashlightOn, PDAIdInfoText ownerInfo)
+        public PDAUpdateMainMenuState(bool isFlashlightOn, PDAIdInfoText ownerInfo)
         {
             FlashlightEnabled = isFlashlightOn;
             PDAOwnerInfo = ownerInfo;
@@ -52,11 +59,11 @@ namespace Content.Shared.GameObjects.Components.PDA
     }
 
     [Serializable, NetSerializable]
-    public sealed class PDASendUplinkListingsMessage : BoundUserInterfaceMessage
+    public sealed class PDASendUplinkListingsMessage : PDAUBoundUserInterfaceState
     {
 
-        public IReadOnlyList<UplinkStoreListing> Listings;
-        public PDASendUplinkListingsMessage(IReadOnlyList<UplinkStoreListing> listings)
+        public IReadOnlyList<UplinkListingData> Listings;
+        public PDASendUplinkListingsMessage(IReadOnlyList<UplinkListingData> listings)
         {
             Listings = listings;
         }
@@ -67,7 +74,6 @@ namespace Content.Shared.GameObjects.Components.PDA
     {
         public PDARequestUplinkListingsMessage()
         {
-
         }
     }
 
@@ -99,12 +105,24 @@ namespace Content.Shared.GameObjects.Components.PDA
         public int Balance;
     }
 
-    [Serializable] [NetSerializable]
-    public struct UplinkStoreListing
+    [NetSerializable, Serializable]
+    public class UplinkListingData : ComponentState
     {
-        public EntityPrototype Item;
+        public string ItemID;
         public int Price;
         public string Category;
         public string Description;
+        public string ListingName;
+
+        public UplinkListingData(string listingName,string itemId,
+            int price, string category, string description) : base(ContentNetIDs.PDA)
+        {
+            ListingName = listingName;
+            Price = price;
+            Category = category;
+            Description = description;
+            ItemID = itemId;
+        }
     }
+
 }

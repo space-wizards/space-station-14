@@ -1,5 +1,6 @@
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.Prototypes.PDA;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -36,32 +37,55 @@ namespace Content.Client.GameObjects.Components.PDA
             {
                 SendMessage(new PDAEjectIDMessage());
             };
+
+            _menu.MasterTabContainer.OnTabChanged += i =>
+            {
+                var tab = _menu.MasterTabContainer.GetChild(i);
+                if (tab == _menu.UplinkTabContainer)
+                {
+                    SendMessage(new PDARequestUplinkListingsMessage());
+                }
+            };
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            DebugTools.Assert((state is PDAUpdateUserInterfaceState));
-            var cstate = (PDAUpdateUserInterfaceState) state;
+            DebugTools.Assert((state is PDAUBoundUserInterfaceState));
+
+            var cstate = (PDAUBoundUserInterfaceState) state;
             switch (state)
             {
 
-            }
-            _menu.FlashLightToggleButton.Pressed = cstate.FlashlightEnabled;
-            _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("Owner: [color=white]{0}[/color]",cstate.PDAOwnerInfo.ActualOwnerName));
+                case PDAUpdateMainMenuState msg:
+                {
+                    _menu.FlashLightToggleButton.Pressed = msg.FlashlightEnabled;
+                    _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("Owner: [color=white]{0}[/color]",msg.PDAOwnerInfo.ActualOwnerName));
 
-            if (cstate.PDAOwnerInfo.JobTitle == null || cstate.PDAOwnerInfo.IDOwner == null)
-            {
-                _menu.IDInfoLabel.SetMarkup(Loc.GetString("ID:"));
-            }
-            else
-            {
-                _menu.IDInfoLabel.SetMarkup(Loc.GetString("ID: [color=white]{0}[/color], [color=yellow]{1}[/color]",
-                    cstate.PDAOwnerInfo.IDOwner,
-                    cstate.PDAOwnerInfo.JobTitle));
-            }
+                    if (msg.PDAOwnerInfo.JobTitle == null || msg.PDAOwnerInfo.IDOwner == null)
+                    {
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("ID:"));
+                    }
+                    else
+                    {
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("ID: [color=white]{0}[/color], [color=yellow]{1}[/color]",
+                            msg.PDAOwnerInfo.IDOwner,
+                            msg.PDAOwnerInfo.JobTitle));
+                    }
 
-            _menu.EjectIDButton.Visible = cstate.PDAOwnerInfo.IDOwner != null;
+                    _menu.EjectIDButton.Visible = msg.PDAOwnerInfo.IDOwner != null;
+                    break;
+                }
+
+                case PDASendUplinkListingsMessage msg:
+                {
+                    foreach (var item in msg.Listings)
+                    {
+                        _menu.AddListingGUI(item);
+                    }
+                    break;
+                }
+            }
 
         }
 
@@ -89,6 +113,8 @@ namespace Content.Client.GameObjects.Components.PDA
             public RichTextLabel PDAOwnerLabel { get; }
             public PanelContainer IDInfoContainer { get; }
             public RichTextLabel IDInfoLabel { get; }
+
+            public VBoxContainer UplinkTabContainer { get; }
 
 
             private ScrollContainer _uplinkShopScrollContainer;
@@ -162,7 +188,7 @@ namespace Content.Client.GameObjects.Components.PDA
                 #endregion
 
                 #region UPLINK_TAB
-                 //Messaging Tab
+                 //Uplink Tab
 
                  var uplinkStoreHeader = new Label
                  {
@@ -180,7 +206,7 @@ namespace Content.Client.GameObjects.Components.PDA
                     }
                  };
 
-                 var uplinkTabContainer = new VBoxContainer
+                 UplinkTabContainer = new VBoxContainer
                  {
                      Children =
                      {
@@ -195,7 +221,7 @@ namespace Content.Client.GameObjects.Components.PDA
                     Children =
                     {
                         mainMenuTabContainer,
-                        uplinkTabContainer
+                        UplinkTabContainer
                     }
                 };
 
@@ -204,11 +230,11 @@ namespace Content.Client.GameObjects.Components.PDA
                 Contents.AddChild(MasterTabContainer);
             }
 
-            public void AddListingGUI(UplinkStoreListing listing)
+            public void AddListingGUI(UplinkListingData listing)
             {
                 var itemLabel = new Label
                 {
-                    Text = listing.Item.Name
+                    Text = listing.ListingName
 
                 };
                 var priceLabel = new Label
