@@ -85,8 +85,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
             RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
 
-            var size = _currentVerbListRoot.List.CombinedMinimumSize;
-            var box = UIBox2.FromDimensions(screenCoordinates.Position, size);
+            var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
             _currentVerbListRoot.Open(box);
         }
 
@@ -126,10 +125,6 @@ namespace Content.Client.GameObjects.EntitySystems
                 var entity = entities[i];
 
                 _currentEntityList.List.AddChild(new EntityButton(this, entity));
-
-                //var button = new Button {Text = entity.Name};
-                //_currentPopup.List.AddChild(button);
-                //button.OnPressed += _ => OnContextButtonPressed(entity);
             }
 
             _userInterfaceManager.ModalRoot.AddChild(_currentEntityList);
@@ -312,7 +307,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             return new VerbGroupButton(this, verbButtons, value)
             {
-                Text = $"{text}...",
+                Text = text,
             };
         }
 
@@ -479,7 +474,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         }),
                         (_label = new Label()),
                         // Padding
-                        new Control {CustomMinimumSize = (4, 0)}
+                        new Control {CustomMinimumSize = (8, 0)}
                     }
                 });
             }
@@ -539,6 +534,9 @@ namespace Content.Client.GameObjects.EntitySystems
                         {
                             SizeFlagsHorizontal = SizeFlags.FillExpand
                         }),
+
+                        // Padding
+                        new Control {CustomMinimumSize = (8, 0)},
 
                         new TextureRect
                         {
