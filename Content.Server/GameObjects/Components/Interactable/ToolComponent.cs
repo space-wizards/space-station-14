@@ -48,9 +48,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         private SpriteComponent _spriteComponent;
 
         protected ToolQuality _qualities = ToolQuality.Anchoring;
-        private string _useSound;
-        private string _useSoundCollection;
-        private float _speedModifier = 1;
 
         [ViewVariables]
         public override ToolQuality Qualities
@@ -67,23 +64,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         ///     For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float SpeedModifier
-        {
-            get => _speedModifier;
-            set => _speedModifier = value;
-        }
+        public float SpeedModifier { get; set; } = 1;
 
-        public string UseSound
-        {
-            get => _useSound;
-            set => _useSound = value;
-        }
+        public string UseSound { get; set; }
 
-        public string UseSoundCollection
-        {
-            get => _useSoundCollection;
-            set => _useSoundCollection = value;
-        }
+        public string UseSoundCollection { get; set; }
 
         public void AddQuality(ToolQuality quality)
         {
@@ -123,9 +108,9 @@ namespace Content.Server.GameObjects.Components.Interactable
                     AddQuality(quality);
                 }
             }
-            serializer.DataField(ref _speedModifier, "speed", 1);
-            serializer.DataField(ref _useSound, "useSound", string.Empty);
-            serializer.DataField(ref _useSoundCollection, "useSoundCollection", string.Empty);
+            serializer.DataField(this, mod => SpeedModifier, "speed", 1);
+            serializer.DataField(this, use => UseSound, "useSound", string.Empty);
+            serializer.DataField(this, collection => UseSoundCollection, "useSoundCollection", string.Empty);
         }
 
         public virtual bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded)
