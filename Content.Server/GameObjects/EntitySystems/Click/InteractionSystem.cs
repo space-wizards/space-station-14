@@ -467,7 +467,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (item != null)
                 {
                     // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterInteract
-                    InteractAfterAttack(player, item, coordinates);
+                    InteractAfter(player, item, coordinates);
                 }
 
                 return;
@@ -492,7 +492,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            // RangedAttack/AfterInteract: Check distance between user and clicked item, if too large parse it in the ranged function
+            // RangedInteract/AfterInteract: Check distance between user and clicked item, if too large parse it in the ranged function
             // TODO: have range based upon the item being used? or base it upon some variables of the player himself?
             var distance = (playerTransform.WorldPosition - attacked.Transform.WorldPosition).LengthSquared;
             if (distance > InteractionRangeSquared)
@@ -522,7 +522,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private void InteractAfterAttack(IEntity user, IEntity weapon, GridCoordinates clickLocation)
+        private void InteractAfter(IEntity user, IEntity weapon, GridCoordinates clickLocation)
         {
             var message = new AfterAttackMessage(user, weapon, null, clickLocation);
             RaiseLocalEvent(message);
@@ -531,12 +531,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterAttackEventArgs = new AfterInteractEventArgs {User = user, ClickLocation = clickLocation};
+            var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
+            var afterInteractEventArgs = new AfterInteractEventArgs {User = user, ClickLocation = clickLocation};
 
-            foreach (var afterAttack in afterAttacks)
+            foreach (var afterInteract in afterInteracts)
             {
-                afterAttack.AfterInteract(afterAttackEventArgs);
+                afterInteract.AfterInteract(afterInteractEventArgs);
             }
         }
 
