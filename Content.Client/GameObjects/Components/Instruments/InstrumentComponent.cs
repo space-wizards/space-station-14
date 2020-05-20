@@ -123,7 +123,14 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         protected void EndRenderer()
         {
-            Timer.Spawn(1000, () => { _renderer?.Dispose(); });
+            if (IsInputOpen)
+                CloseInput();
+
+            if (IsMidiOpen)
+                CloseMidi();
+
+            var renderer = _renderer;
+            Timer.Spawn(1000, () => { renderer?.Dispose(); });
             _renderer = null;
             _midiQueue.Clear();
         }
@@ -149,13 +156,15 @@ namespace Content.Client.GameObjects.Components.Instruments
                 case InstrumentMidiEventMessage midiEventMessage:
                     // If we're the ones sending the MidiEvents, we ignore this message.
                     if (!IsRendererAlive || IsInputOpen || IsMidiOpen) break;
+                    var curTime = _gameTiming.CurTime;
                     Logger.Info($"NEW BATCH!!! LENGTH:{midiEventMessage.MidiEvent.Length} QUEUED:{_midiQueue.Count} LAST:{_lastEvent}");
                     for (var i = 0; i < midiEventMessage.MidiEvent.Length; i++)
                     {
                         var ev = midiEventMessage.MidiEvent[i];
                         var delta = i != 0 ?
                             ev.Timestamp.Subtract(midiEventMessage.MidiEvent[i-1].Timestamp) : _lastEvent.HasValue ? ev.Timestamp.Subtract(_lastEvent.Value) :  TimeSpan.Zero;
-                        ev.Timestamp = _gameTiming.CurTime + delta + TimeSpan.FromSeconds(TimeBetweenNetMessages*1.25);
+                        ev.Timestamp = curTime + TimeSpan.FromSeconds(TimeBetweenNetMessages*1.25);
+                        Logger.Info($"DT:{delta} TIM:{ev.Timestamp} TIMR:{midiEventMessage.MidiEvent[i].Timestamp} LST:{midiEventMessage.MidiEvent[Math.Max(0, i-1)].Timestamp}");
                         _midiQueue.Enqueue(ev);
                         _lastEvent = ev.Timestamp;
 
@@ -169,7 +178,6 @@ namespace Content.Client.GameObjects.Components.Instruments
                     break;
 
                 case InstrumentStopMidiMessage _:
-                    _renderer?.StopAllNotes();
                     EndRenderer();
                     break;
 
@@ -269,7 +277,7 @@ namespace Content.Client.GameObjects.Components.Instruments
                 if (_renderer == null || _midiQueue.Count == 0) return;
                 var midiEvent = _midiQueue.Dequeue();
                 _renderer.SendMidiEvent(midiEvent);
-                _timer = _midiQueue.Count != 0 ? (MathF.Max((float) midiEvent.Timestamp.Subtract(_gameTiming.CurTime).TotalSeconds, 0f)) : 0;
+                _timer = _midiQueue.Count != 0 ? (MathF.Max((float) _midiQueue.Peek().Timestamp.Subtract(_gameTiming.CurTime).TotalSeconds, 0f)) : 0;
                 if (_timer <= 0f) continue;
                 break;
             }
