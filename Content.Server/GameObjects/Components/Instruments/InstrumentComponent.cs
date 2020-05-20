@@ -18,11 +18,16 @@ namespace Content.Server.GameObjects.Components.Instruments
     public class InstrumentComponent : SharedInstrumentComponent,
         IDropped, IHandSelected, IHandDeselected, IActivate, IUse, IThrown
     {
+        public const int MidiEventsPerSecond = 10;
+
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
         /// </summary>
         private ICommonSession _instrumentPlayer;
         private bool _handheld;
+
+        private float _timer = 0f;
+        private int _midiEventCount = 1;
 
         [ViewVariables]
         private BoundUserInterface _userInterface;
@@ -56,6 +61,12 @@ namespace Content.Server.GameObjects.Components.Instruments
             {
                 case InstrumentMidiEventMessage midiEventMsg:
                     SendNetworkMessage(midiEventMsg);
+                    break;
+                case InstrumentStartMidiMessage startMidi:
+                    SendNetworkMessage(startMidi);
+                    break;
+                case InstrumentStopMidiMessage stopMidi:
+                    SendNetworkMessage(stopMidi);
                     break;
             }
         }
@@ -123,6 +134,11 @@ namespace Content.Server.GameObjects.Components.Instruments
         private void OpenUserInterface(IPlayerSession session)
         {
             _userInterface.Open(session);
+        }
+
+        public override void Update(float delta)
+        {
+            base.Update(delta);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         [CanBeNull]
         private IMidiRenderer _renderer;
-        private int _instrumentProgram = 1;
+        private byte _instrumentProgram = 1;
 
         [ViewVariables]
         private readonly Queue<ValueTuple<MidiEvent, double>> _midiQueue = new Queue<(MidiEvent, double)>();
@@ -66,7 +66,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     Changes the instrument the midi renderer will play.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public int InstrumentProgram
+        public byte InstrumentProgram
         {
             get => _instrumentProgram;
             set
@@ -91,10 +91,23 @@ namespace Content.Client.GameObjects.Components.Instruments
         [ViewVariables]
         public bool IsInputOpen => _renderer?.Status == MidiRendererStatus.Input;
 
+        /// <summary>
+        ///     Whether the midi renderer is alive or not.
+        /// </summary>
+        [ViewVariables]
+        public bool IsRendererAlive => _renderer != null;
+
         public override void Initialize()
         {
             base.Initialize();
             IoCManager.InjectDependencies(this);
+        }
+
+        protected void SetupRenderer()
+        {
+            if (IsRendererAlive)
+                return;
+
             _renderer = _midiManager.GetNewRenderer();
 
             if (_renderer != null)
@@ -105,16 +118,22 @@ namespace Content.Client.GameObjects.Components.Instruments
             }
         }
 
+        protected void EndRenderer()
+        {
+            Timer.Spawn(1000, () => { _renderer?.Dispose(); });
+            _renderer = null;
+        }
+
         protected override void Shutdown()
         {
             base.Shutdown();
-            _renderer?.Dispose();
+            EndRenderer();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _instrumentProgram, "program", 1);
+            serializer.DataField(ref _instrumentProgram, "program", (byte)1);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
@@ -130,7 +149,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             {
                 case InstrumentMidiEventMessage midiEventMessage:
                     // If we're the ones sending the MidiEvents, we ignore this message.
-                    if (IsInputOpen || IsMidiOpen) break;
+                    if (!IsRendererAlive || IsInputOpen || IsMidiOpen) break;
                     for (var i = 0; i < midiEventMessage.MidiEvent.Length; i++)
                     {
                         //_midiQueue.Enqueue((midiEventMessage.MidiEvent[i], (i == 0 ? 0 : 0) + _gameTiming.CurTime.TotalSeconds - midiEventMessage.Timestamp[i]));
@@ -146,12 +165,19 @@ namespace Content.Client.GameObjects.Components.Instruments
                     if (IsInputOpen) CloseInput();
                     if (IsMidiOpen) CloseMidi();
                     break;
+
+                case InstrumentStartMidiMessage _:
+                    SetupRenderer();
+                    break;
             }
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenInput"/>
         public bool OpenInput()
         {
+            SetupRenderer();
+            SendNetworkMessage(new InstrumentStartMidiMessage());
+
             if (_renderer != null && _renderer.OpenInput())
             {
                 _renderer.OnMidiEvent += RendererOnMidiEvent;
@@ -169,13 +195,16 @@ namespace Content.Client.GameObjects.Components.Instruments
                 return false;
             }
 
-            _renderer.OnMidiEvent -= RendererOnMidiEvent;
+            EndRenderer();
             return true;
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenMidi(string)"/>
         public bool OpenMidi(string filename)
         {
+            SetupRenderer();
+            SendNetworkMessage(new InstrumentStartMidiMessage());
+
             if (_renderer == null || !_renderer.OpenMidi(filename))
             {
                 return false;
@@ -193,7 +222,7 @@ namespace Content.Client.GameObjects.Components.Instruments
                 return false;
             }
 
-            _renderer.OnMidiEvent -= RendererOnMidiEvent;
+            EndRenderer();
             return true;
         }
 
@@ -206,7 +235,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             _midiQueue.Enqueue((midiEvent, _gameTiming.CurTime.TotalSeconds));
         }
 
-        public void Update(float delta)
+        public override void Update(float delta)
         {
             _timer -= delta;
 

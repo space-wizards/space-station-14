@@ -9,6 +9,10 @@ namespace Content.Shared.GameObjects.Components.Instruments
     {
         public override string Name => "Instrument";
         public override uint? NetID => ContentNetIDs.INSTRUMENTS;
+
+        public virtual void Update(float delta)
+        {
+        }
     }
 
 
@@ -17,6 +21,14 @@ namespace Content.Shared.GameObjects.Components.Instruments
     /// </summary>
     [Serializable, NetSerializable]
     public class InstrumentStopMidiMessage : ComponentMessage
+    {
+    }
+
+    /// <summary>
+    ///     This message is sent to the client to start the synth.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class InstrumentStartMidiMessage : ComponentMessage
     {
     }
 
