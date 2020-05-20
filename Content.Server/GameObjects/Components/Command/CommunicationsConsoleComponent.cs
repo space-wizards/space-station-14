@@ -67,8 +67,6 @@ namespace Content.Server.GameObjects.Components.Command
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return;
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             if (!Powered)
             {
                 return;

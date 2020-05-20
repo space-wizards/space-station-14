@@ -60,8 +60,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <returns></returns>
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             //Get target and check if it can be poured into
             if (!Owner.TryGetComponent<SolutionComponent>(out var targetSolution))
                 return false;

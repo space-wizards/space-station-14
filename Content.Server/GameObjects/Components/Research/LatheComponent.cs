@@ -152,16 +152,12 @@ namespace Content.Server.GameObjects.Components.Research
                 return;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             OpenUserInterface(actor.playerSession);
         }
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
-            ||  !eventArgs.AttackWith.TryGetComponent(out MaterialComponent material)) return false;
+                ||  !eventArgs.AttackWith.TryGetComponent(out MaterialComponent material)) return false;
 
             var multiplier = 1;
 

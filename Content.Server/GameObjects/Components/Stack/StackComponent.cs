@@ -71,8 +71,6 @@ namespace Content.Server.GameObjects.Components.Stack
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (eventArgs.AttackWith.TryGetComponent<StackComponent>(out var stack))
             {
                 if (!stack.StackType.Equals(StackType))

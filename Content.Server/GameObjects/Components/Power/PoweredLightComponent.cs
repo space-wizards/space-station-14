@@ -51,7 +51,6 @@ namespace Content.Server.GameObjects.Components.Power
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
             return InsertBulb(eventArgs.AttackWith);
         }
 

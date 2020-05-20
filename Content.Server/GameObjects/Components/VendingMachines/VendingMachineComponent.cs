@@ -51,8 +51,6 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             if (!Powered)
                 return;
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             var wires = Owner.GetComponent<WiresComponent>();
             if (wires.IsPanelOpen)
             {

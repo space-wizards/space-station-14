@@ -130,8 +130,6 @@ namespace Content.Server.GameObjects.Components.Cargo
             if (!Powered)
                 return;
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             _userInterface.Open(actor.playerSession);
         }
 

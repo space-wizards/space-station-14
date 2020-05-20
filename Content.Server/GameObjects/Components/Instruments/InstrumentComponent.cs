@@ -98,8 +98,6 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (_instrumentPlayer != null)
                 return;
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             _instrumentPlayer = actor.playerSession;
             OpenUserInterface(actor.playerSession);
         }

@@ -147,8 +147,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             var ammoBoxTransfer = CanTransferFrom(eventArgs.AttackWith);
             if (ammoBoxTransfer.Result) {
                 IEntity bullet;

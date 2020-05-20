@@ -25,8 +25,6 @@ namespace Content.Server.GameObjects.Components
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (!eventArgs.AttackWith.HasComponent<WrenchComponent>())
             {
                 return false;

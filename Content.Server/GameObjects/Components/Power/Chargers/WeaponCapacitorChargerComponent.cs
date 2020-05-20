@@ -31,7 +31,6 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
             var result = TryInsertItem(eventArgs.AttackWith);
             if (!result)
             {
@@ -44,8 +43,6 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             RemoveItemToHand(eventArgs.User);
         }
 

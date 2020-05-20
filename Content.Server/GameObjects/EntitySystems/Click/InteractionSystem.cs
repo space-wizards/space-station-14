@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
 using Content.Shared.Physics;
@@ -28,11 +29,12 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
     /// This interface gives components behavior when being clicked on or "attacked" by a user with an object in their hand
+    /// who is in range and has unobstructed reach of the target entity (allows inside blockers).
     /// </summary>
     public interface IAttackBy
     {
         /// <summary>
-        /// Called when using one object on another
+        /// Called when using one object on another when user is in range of the target entity.
         /// </summary>
         bool AttackBy(AttackByEventArgs eventArgs);
     }
@@ -60,11 +62,12 @@ namespace Content.Server.GameObjects.EntitySystems
 
     /// <summary>
     /// This interface gives components behavior when being clicked on or "attacked" by a user with an empty hand
+    /// who is in range and has unobstructed reach of the target entity (allows inside blockers).
     /// </summary>
     public interface IAttackHand
     {
         /// <summary>
-        /// Called when a player directly interacts with an empty hand
+        /// Called when a player directly interacts with an empty hand when user is in range of the target entity.
         /// </summary>
         bool AttackHand(AttackHandEventArgs eventArgs);
     }
@@ -96,7 +99,8 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
-    /// This interface gives components a behavior when clicking on another object and no interaction occurs
+    /// This interface gives components a behavior when clicking on another object and no interaction occurs,
+    /// at any range.
     /// </summary>
     public interface IAfterAttack
     {
@@ -131,12 +135,13 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
-    ///     This interface gives components behavior when being activated in the world.
+    ///     This interface gives components behavior when being activated in the world when the user
+    ///     is in range and has unobstructed access to the target entity (allows inside blockers).
     /// </summary>
     public interface IActivate
     {
         /// <summary>
-        ///     Called when this component is activated by another entity.
+        ///     Called when this component is activated by another entity who is in range.
         /// </summary>
         void Activate(ActivateEventArgs eventArgs);
     }
@@ -376,7 +381,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            activateComp.Activate(new ActivateEventArgs {User = user, Attacked = used});
+            // all activates should only fire when in range / unbostructed
+            var activateEventArgs = new ActivateEventArgs {User = user, Attacked = used};
+            if (InteractionChecks.InRangeUnobstructed(activateEventArgs))
+            {
+                activateComp.Activate(activateEventArgs);
+            }
         }
 
         private bool HandleWideAttack(ICommonSession session, GridCoordinates coords, EntityUid uid)
@@ -575,12 +585,16 @@ namespace Content.Server.GameObjects.EntitySystems
                 User = user, ClickLocation = clickLocation, AttackWith = weapon, Attacked = attacked
             };
 
-            foreach (var attackBy in attackBys)
+            // all AttackBys should only happen when in range / unobstructed, so no range check is needed
+            if (InteractionChecks.InRangeUnobstructed(attackByEventArgs))
             {
-                if (attackBy.AttackBy(attackByEventArgs))
+                foreach (var attackBy in attackBys)
                 {
-                    // If an AttackBy returns a status completion we finish our attack
-                    return;
+                    if (attackBy.AttackBy(attackByEventArgs))
+                    {
+                        // If an AttackBy returns a status completion we finish our attack
+                        return;
+                    }
                 }
             }
 
@@ -620,12 +634,16 @@ namespace Content.Server.GameObjects.EntitySystems
             var attackHands = attacked.GetAllComponents<IAttackHand>().ToList();
             var attackHandEventArgs = new AttackHandEventArgs {User = user, Attacked = attacked};
 
-            foreach (var attackHand in attackHands)
+            // all attackHands should only fire when in range / unbostructed
+            if (InteractionChecks.InRangeUnobstructed(attackHandEventArgs))
             {
-                if (attackHand.AttackHand(attackHandEventArgs))
+                foreach (var attackHand in attackHands)
                 {
-                    // If an AttackHand returns a status completion we finish our attack
-                    return;
+                    if (attackHand.AttackHand(attackHandEventArgs))
+                    {
+                        // If an AttackHand returns a status completion we finish our attack
+                        return;
+                    }
                 }
             }
 

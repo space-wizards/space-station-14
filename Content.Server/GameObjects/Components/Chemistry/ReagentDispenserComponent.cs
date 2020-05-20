@@ -254,8 +254,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(args)) return;
-
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
@@ -282,8 +280,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <returns></returns>
         bool IAttackBy.AttackBy(AttackByEventArgs args)
         {
-            if (!InteractionChecks.InRangeUnobstructed(args)) return false;
-
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,

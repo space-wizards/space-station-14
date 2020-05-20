@@ -31,8 +31,6 @@ namespace Content.Server.GameObjects.Components.Mining
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             var item = eventArgs.AttackWith;
             if (!item.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent)) return false;
 

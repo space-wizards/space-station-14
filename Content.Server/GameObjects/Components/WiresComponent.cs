@@ -298,8 +298,6 @@ namespace Content.Server.GameObjects.Components
 
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (!eventArgs.AttackWith.HasComponent<ScrewdriverComponent>())
             {
                 return false;

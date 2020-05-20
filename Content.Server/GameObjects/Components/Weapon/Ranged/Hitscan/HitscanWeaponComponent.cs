@@ -69,8 +69,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (!eventArgs.AttackWith.TryGetComponent(out PowerStorageComponent component))
             {
                 return false;

@@ -179,8 +179,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             UpdateUserInterface();
             _userInterface.Open(actor.playerSession);
 
@@ -188,8 +186,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand.Owner;
 
             if(itemEntity.TryGetComponent<PourableComponent>(out var attackPourable))

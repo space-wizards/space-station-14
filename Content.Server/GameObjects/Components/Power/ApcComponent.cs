@@ -114,8 +114,6 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs, insideBlockerValid: true)) return;
-
             _userInterface.Open(actor.playerSession);
         }
 

@@ -111,13 +111,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="eventArgs"></param>
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             //Make sure we have the attacking entity
             if (eventArgs.Attacked == null || !_internalContents.Injector)
             {
                 return;
             }
-
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             var targetEntity = eventArgs.Attacked;
             //Handle injecting/drawing for solutions

@@ -54,8 +54,13 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs, Prototype.CanBuildInImpassable))
-                return false;
+            // default interaction check for AttackBy allows inside blockers, so we will check if its blocked if
+            // we're not allowed to build on impassable stuff
+            if (Prototype.CanBuildInImpassable == false)
+            {
+                if (!InteractionChecks.InRangeUnobstructed(eventArgs, false))
+                    return false;
+            }
 
             var stage = Prototype.Stages[Stage];
 

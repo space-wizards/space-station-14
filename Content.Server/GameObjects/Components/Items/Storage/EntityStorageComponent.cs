@@ -106,8 +106,6 @@ namespace Content.Server.GameObjects.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             if(_noDoor)
                 ToggleLock();
             else

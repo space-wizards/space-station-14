@@ -76,8 +76,6 @@ namespace Content.Server.GameObjects.Components
                 return;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs, insideBlockerValid: true)) return;
-
             if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent looks))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't have any hair!"));

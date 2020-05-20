@@ -60,8 +60,6 @@ namespace Content.Server.GameObjects.Components.Research
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return;
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             OpenUserInterface(actor.playerSession);
         }
 

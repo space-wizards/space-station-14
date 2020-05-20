@@ -125,8 +125,6 @@ namespace Content.Server.GameObjects.Components.Medical
             if (!Powered)
                 return;
 
-            if (!InteractionChecks.InRangeUnobstructed(args)) return;
-
             _userInterface.Open(actor.playerSession);
         }
 

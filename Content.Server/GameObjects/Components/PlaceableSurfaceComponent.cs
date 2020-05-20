@@ -21,8 +21,6 @@ namespace Content.Server.GameObjects.Components
         }
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (!IsPlaceable)
                 return false;
 

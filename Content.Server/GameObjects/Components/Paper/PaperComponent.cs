@@ -65,8 +65,6 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (!eventArgs.AttackWith.HasComponent<WriteComponent>())
                 return false;
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))

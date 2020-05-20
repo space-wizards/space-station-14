@@ -145,8 +145,6 @@ namespace Content.Server.GameObjects
         {
             Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, eventArgs.User.Uid, eventArgs.AttackWith.Uid);
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if(Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
                 return false;
@@ -331,8 +329,6 @@ namespace Content.Server.GameObjects
         /// <inheritdoc />
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             ((IUse) this).UseEntity(new UseEntityEventArgs { User = eventArgs.User });
         }
 

@@ -56,7 +56,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
             if (!eventArgs.AttackWith.HasComponent<PowerCellComponent>()) return false;
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
 
             if (Cell != null) return false;
 

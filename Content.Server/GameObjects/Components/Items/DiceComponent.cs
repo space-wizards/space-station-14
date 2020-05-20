@@ -67,8 +67,6 @@ namespace Content.Server.GameObjects.Components.Items
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             Roll();
         }
 

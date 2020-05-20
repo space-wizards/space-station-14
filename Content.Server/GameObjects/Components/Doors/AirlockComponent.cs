@@ -201,8 +201,6 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (eventArgs.AttackWith.HasComponent<CrowbarComponent>())
             {
                 if (IsPowered())

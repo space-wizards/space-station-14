@@ -43,8 +43,6 @@ namespace Content.Server.BodySystem
                 return;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent attempt))
             {
                 _userInterface.SetState(PrepareBodyScannerInterfaceState(attempt.Template, attempt.PartDictionary));

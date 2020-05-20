@@ -212,8 +212,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (!eventArgs.AttackWith.TryGetComponent(out BallisticMagazineComponent component))
             {
                 return false;

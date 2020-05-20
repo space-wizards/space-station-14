@@ -73,8 +73,6 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (!eventArgs.AttackWith.TryGetComponent(out MopComponent mopComponent))
             {
                 return false;

@@ -83,8 +83,6 @@ namespace Content.Server.GameObjects
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             ActivateImpl(eventArgs);
         }
 

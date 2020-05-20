@@ -91,8 +91,6 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
-
             if (!eventArgs.User.TryGetComponent<IActorComponent>(out var actor))
                 return false;
             if (Status != GravityGeneratorStatus.Off && Status != GravityGeneratorStatus.On)
@@ -106,7 +104,6 @@ namespace Content.Server.GameObjects.Components.Gravity
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
             if (!eventArgs.AttackWith.TryGetComponent<WelderComponent>(out var welder)) return false;
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return false;
 
             if (welder.TryUse(5.0f))
             {

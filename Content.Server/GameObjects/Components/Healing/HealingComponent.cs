@@ -25,11 +25,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             if (eventArgs.Attacked == null)
             {
                 return;
             }
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             if (!eventArgs.Attacked.TryGetComponent(out DamageableComponent damagecomponent)) return;
             if (Owner.TryGetComponent(out StackComponent stackComponent))

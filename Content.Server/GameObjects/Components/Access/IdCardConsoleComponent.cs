@@ -194,8 +194,6 @@ namespace Content.Server.GameObjects.Components.Access
                 return;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
             _userInterface.Open(actor.playerSession);
         }
     }
