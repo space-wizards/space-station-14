@@ -82,10 +82,12 @@
     sprite: Buildings/solar_panel.rsi
     state: normal
   - type: PowerGenerator
+  - type: SolarPanel
     supply: 1500
+  - type: Rotatable
   - type: SnapGrid
     offset: Center
-  - type: Damagable
+  - type: Damageable
   - type: Breakable
     thresholdvalue: 100
 
