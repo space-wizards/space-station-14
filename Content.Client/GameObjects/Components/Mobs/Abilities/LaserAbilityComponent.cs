@@ -5,6 +5,7 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs.Abilities;
 using Content.Shared.Physics;
+using Robust.Client.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
@@ -26,6 +27,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
     {
 #pragma warning disable 649
         [Dependency] private readonly IGameTiming _gameTiming;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         public Ability Ability;
@@ -34,7 +36,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
         {
             base.Initialize();
 
-            Ability = new Ability("/Textures/Objects/Guns/Laser/laser_retro.rsi/laser_retro.png", TriggerAbility, new TimeSpan(10));
+            Ability = new Ability("Laser", "/Textures/Objects/Guns/Laser/laser_retro.rsi/laser_retro.png", TriggerAbility, SelectAbility, new TimeSpan(10));
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -46,6 +48,12 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
                 case GetAbilitiesMessage msg:
                 {
                     msg.Hotbar.AddAbility(Ability);
+                    break;
+                }
+                case PlayerDetachedMsg msg:
+                {
+                    Ability.ActivateAction = null;
+                    Ability.SelectAction = null;
                     break;
                 }
             }
@@ -79,7 +87,25 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
             }
 
             SendNetworkMessage(new FireLaserMessage(coords));
+
+            if (!_entitySystemManager.TryGetEntitySystem<HotbarSystem>(out var hotbarSystem))
+            {
+                return;
+            }
+
+            hotbarSystem.UnbindUse(Ability);
             return;
+        }
+
+        private bool SelectAbility()
+        {
+            if (!_entitySystemManager.TryGetEntitySystem<HotbarSystem>(out var hotbarSystem))
+            {
+                return false;
+            }
+
+            hotbarSystem.BindUse(Ability);
+            return true;
         }
     }
 }

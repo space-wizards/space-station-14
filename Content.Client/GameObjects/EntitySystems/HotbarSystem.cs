@@ -24,6 +24,9 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager;
 #pragma warning restore 649
 
+        private InputCmdHandler _previousHandler;
+        private Ability _boundAbility;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -86,9 +89,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            playerEnt.SendMessage(null, new GetAbilitiesMessage(clientHotbar));
-
-            clientHotbar.AbilityMenu.Open();
+            clientHotbar.OpenAbilityMenu();
         }
 
         private bool HandleHotbarKeybindPressed(int index, in PointerInputCmdArgs args)
@@ -99,7 +100,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            var ability = hotbarComponent.Abilities.ElementAtOrDefault(index);
+            var ability = hotbarComponent._abilities.ElementAtOrDefault(index);
             if (ability == null)
             {
                 return false;
@@ -108,21 +109,68 @@ namespace Content.Client.GameObjects.EntitySystems
             ability.Activate(args);
             return true;
         }
+
+        public void BindUse(Ability ability)
+        {
+            if (!EntitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
+            {
+                return;
+            }
+
+            if (inputSys.BindMap.TryGetHandler(EngineKeyFunctions.Use, out var handler))
+            {
+                _previousHandler = handler;
+            }
+
+            _boundAbility = ability;
+            inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => {
+                    ability.Activate(args);
+                    return true;
+                }));
+        }
+
+        public void UnbindUse(Ability ability)
+        {
+            if (ability != _boundAbility)
+            {
+                return;
+            }
+
+            if (!EntitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
+            {
+                return;
+            }
+
+            _boundAbility = null;
+            inputSys.BindMap.UnbindFunction(EngineKeyFunctions.Use);
+        }
     }
 
     public class Ability
     {
+        public string Name;
         public Texture Texture;
-        public Action<ICommonSession, GridCoordinates, EntityUid, Ability> Action;
+        public Action<ICommonSession, GridCoordinates, EntityUid, Ability> ActivateAction;
+        public Func<bool> SelectAction;
         public TimeSpan? Start;
         public TimeSpan? End;
         public TimeSpan? Cooldown;
 
-        public Ability(string texturePath, Action<ICommonSession, GridCoordinates, EntityUid, Ability> action, TimeSpan? cooldown)
+        public Ability(string name, string texturePath, Action<ICommonSession, GridCoordinates, EntityUid, Ability> activateAction, Func<bool> selectAction, TimeSpan? cooldown)
         {
-            var resCache = IoCManager.Resolve<IResourceCache>();
-            Texture = resCache.GetTexture(texturePath);
-            Action = action;
+            Name = name;
+            if (texturePath != null)
+            {
+                var resCache = IoCManager.Resolve<IResourceCache>();
+                Texture = resCache.GetTexture(texturePath);
+            }
+            else
+            {
+                Texture = null;
+            }
+            ActivateAction = activateAction;
+            SelectAction = selectAction;
             Start = null;
             End = null;
             Cooldown = cooldown;
@@ -130,7 +178,12 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public void Activate(PointerInputCmdArgs args)
         {
-            Action?.Invoke(args.Session, args.Coordinates, args.EntityUid, this);
+            ActivateAction?.Invoke(args.Session, args.Coordinates, args.EntityUid, this);
+        }
+
+        public void Select()
+        {
+            SelectAction?.Invoke();
         }
     }
 

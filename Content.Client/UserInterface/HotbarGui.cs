@@ -21,8 +21,6 @@ namespace Content.Client.UserInterface
             SizeFlagsHorizontal = SizeFlags.FillExpand;
             SizeFlagsVertical = SizeFlags.FillExpand;
 
-            //PanelOverride = new StyleBoxFlat { BackgroundColor = Color.DarkGray };
-
             _vBox = new VBoxContainer();
             AddChild(_vBox);
 
@@ -56,13 +54,14 @@ namespace Content.Client.UserInterface
             {
                 return;
             }
-            //_slots[index].TextureNormal = texture;
+            _slots[index].Texture.Texture = texture;
         }
 
         public class HotbarButton : ContainerButton
         {
             public const string StyleClassButtonRect = "buttonRect";
 
+            public TextureRect Texture;
 
             public int Index;
 
@@ -78,6 +77,14 @@ namespace Content.Client.UserInterface
                     Text = index.ToString(),
                     SizeFlagsVertical = SizeFlags.None
                 });
+
+                Texture = new TextureRect
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    Stretch = TextureRect.StretchMode.Scale
+                };
+                AddChild(Texture);
             }
         }
     }
