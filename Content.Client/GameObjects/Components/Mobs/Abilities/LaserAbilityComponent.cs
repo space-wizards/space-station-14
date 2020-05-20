@@ -34,7 +34,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
         {
             base.Initialize();
 
-            Ability = new Ability("Textures/Objects/Guns/Laser/laser_cannon.rsi/laser_cannon.png", TriggerAbility, new TimeSpan(10));
+            Ability = new Ability("/Textures/Objects/Guns/Laser/laser_retro.rsi/laser_retro.png", TriggerAbility, new TimeSpan(10));
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)

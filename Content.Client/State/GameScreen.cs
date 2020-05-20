@@ -1,4 +1,4 @@
-using Content.Client.Chat;
+﻿using Content.Client.Chat;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Shared.Input;

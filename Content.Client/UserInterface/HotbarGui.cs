@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Robust.Client.Graphics;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface
 {
@@ -16,6 +18,11 @@ namespace Content.Client.UserInterface
 
         public HotbarGui()
         {
+            SizeFlagsHorizontal = SizeFlags.FillExpand;
+            SizeFlagsVertical = SizeFlags.FillExpand;
+
+            //PanelOverride = new StyleBoxFlat { BackgroundColor = Color.DarkGray };
+
             _vBox = new VBoxContainer();
             AddChild(_vBox);
 
@@ -49,10 +56,10 @@ namespace Content.Client.UserInterface
             {
                 return;
             }
-            _slots[index].TextureNormal = texture;
+            //_slots[index].TextureNormal = texture;
         }
 
-        public class HotbarButton : TextureButton
+        public class HotbarButton : ContainerButton
         {
             public const string StyleClassButtonRect = "buttonRect";
 

@@ -89,6 +89,32 @@ namespace Content.Client.UserInterface.Stylesheets
                 Modulate = ButtonColorDisabled
             };
 
+            var buttonRectTex = resCache.GetTexture("/Nano/square.png");
+            var buttonRect = new StyleBoxTexture
+            {
+                Texture = buttonRectTex,
+                Modulate = ButtonColorDefault
+            };
+            buttonRect.SetPatchMargin(StyleBox.Margin.All, 2);
+            buttonRect.SetPadding(StyleBox.Margin.All, 2);
+            buttonRect.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
+            buttonRect.SetContentMarginOverride(StyleBox.Margin.Horizontal, 2);
+
+            var buttonRectHover = new StyleBoxTexture(buttonRect)
+            {
+                Modulate = ButtonColorHovered
+            };
+
+            var buttonRectPressed = new StyleBoxTexture(buttonRect)
+            {
+                Modulate = ButtonColorPressed
+            };
+
+            var buttonRectDisabled = new StyleBoxTexture(buttonRect)
+            {
+                Modulate = ButtonColorDisabled
+            };
+
             var lineEditTex = resCache.GetTexture("/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
             {
@@ -149,6 +175,13 @@ namespace Content.Client.UserInterface.Stylesheets
                 BackgroundColor = new Color(0.25f, 0.50f, 0.25f)
             };
             progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
+
+            var hotbarBackground = new StyleBoxTexture
+            {
+                Texture = windowBackgroundTex,
+            };
+            hotbarBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
+            hotbarBackground.SetExpandMargin(StyleBox.Margin.All, 4);
 
             // CheckBox
             var checkBoxTextureChecked = resCache.GetTexture("/Nano/checkbox_checked.svg.96dpi.png");
@@ -292,6 +325,13 @@ namespace Content.Client.UserInterface.Stylesheets
                         new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                     }),
 
+                // Hotbar background
+                new StyleRule(new SelectorElement(typeof(HotbarGui), null, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, hotbarBackground),
+                    }),
+
                 // Regular buttons!
                 new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
                 {
@@ -322,6 +362,24 @@ namespace Content.Client.UserInterface.Stylesheets
                     {
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
+
+                // Thin buttons
+                new StyleRule(new SelectorElement(typeof(HotbarGui.HotbarButton), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRect),
+                }),
+                new StyleRule(new SelectorElement(typeof(HotbarGui.HotbarButton), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectHover),
+                }),
+                new StyleRule(new SelectorElement(typeof(HotbarGui.HotbarButton), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectPressed),
+                }),
+                new StyleRule(new SelectorElement(typeof(HotbarGui.HotbarButton), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectDisabled),
+                }),
 
                 // Main menu: Make those buttons bigger.
                 new StyleRule(new SelectorChild(

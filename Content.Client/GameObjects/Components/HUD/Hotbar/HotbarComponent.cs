@@ -4,15 +4,20 @@ using Content.Client.UserInterface;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Client.GameObjects.Components.HUD.Hotbar
 {
     [RegisterComponent]
     public class HotbarComponent : Component
     {
+#pragma warning disable 649
+        [Dependency] private readonly IGameHud _gameHud;
+#pragma warning restore 649
+
         public override string Name => "Hotbar";
 
-        public HotbarGui HotbarGui;
+        public HotbarGui _gui;
         public AbilityMenu AbilityMenu;
         public List<Ability> Abilities;
         public List<Ability> Hotbar;
@@ -22,7 +27,7 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
             base.Initialize();
 
             AbilityMenu = new AbilityMenu();
-            HotbarGui = new HotbarGui();
+            _gui = new HotbarGui();
             Abilities = new List<Ability>();
             Hotbar = new List<Ability>();
         }
@@ -36,6 +41,21 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
                 case PlayerAttachedMsg msg:
                 {
                     SendMessage(new GetAbilitiesMessage(this));
+                    if (_gui == null)
+                    {
+                        _gui = new HotbarGui();
+                    }
+                    else
+                    {
+                        _gui.Parent?.RemoveChild(_gui);
+                    }
+
+                    _gameHud.HotbarContainer.AddChild(_gui);
+                    break;
+                }
+                case PlayerDetachedMsg _:
+                {
+                    _gui.Parent?.RemoveChild(_gui);
                     break;
                 }
             }

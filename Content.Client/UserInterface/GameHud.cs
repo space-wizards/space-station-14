@@ -49,6 +49,7 @@ namespace Content.Client.UserInterface
 
         Control HandsContainer { get; }
         Control InventoryQuickButtonContainer { get; }
+        Control HotbarContainer { get; }
 
         bool CombatPanelVisible { get; set; }
         bool CombatModeActive { get; set; }
@@ -83,6 +84,7 @@ namespace Content.Client.UserInterface
 
         public Control HandsContainer { get; private set; }
         public Control InventoryQuickButtonContainer { get; private set; }
+        public Control HotbarContainer { get; private set; }
 
         public bool CombatPanelVisible
         {
@@ -214,6 +216,17 @@ namespace Content.Client.UserInterface
             {
                 SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
+
+            HotbarContainer = new MarginContainer
+            {
+                SizeFlagsVertical = SizeFlags.ShrinkEnd
+            };
+
+            RootControl.AddChild(HotbarContainer);
+
+            LayoutContainer.SetGrowHorizontal(HotbarContainer, LayoutContainer.GrowDirection.End);
+            LayoutContainer.SetGrowVertical(HotbarContainer, LayoutContainer.GrowDirection.Begin);
+            LayoutContainer.SetAnchorAndMarginPreset(HotbarContainer, LayoutContainer.LayoutPreset.BottomLeft, margin: 10);
 
             _combatPanelContainer = new VBoxContainer
             {

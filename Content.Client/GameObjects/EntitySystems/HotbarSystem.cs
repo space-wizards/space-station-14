@@ -21,7 +21,6 @@ namespace Content.Client.GameObjects.EntitySystems
     public class HotbarSystem : EntitySystem
     {
 #pragma warning disable 649
-        [Dependency] private readonly IGameHud _gameHud;
         [Dependency] private readonly IPlayerManager _playerManager;
 #pragma warning restore 649
 
@@ -29,7 +28,10 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
+            if (!EntitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
+            {
+                return;
+            }
             inputSys.BindMap.BindFunction(ContentKeyFunctions.OpenAbilitiesMenu,
                 InputCmdHandler.FromDelegate(s => HandleOpenAbilitiesMenu()));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar0,
@@ -52,6 +54,27 @@ namespace Content.Client.GameObjects.EntitySystems
                 new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(8, args); }));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar9,
                 new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(9, args); }));
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            if (!EntitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
+            {
+                return;
+            }
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.OpenAbilitiesMenu);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar0);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar1);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar2);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar3);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar4);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar5);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar6);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar7);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar8);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar9);
         }
 
         private void HandleOpenAbilitiesMenu()
