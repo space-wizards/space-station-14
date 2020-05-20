@@ -50,14 +50,12 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
-            var transform = Owner.Transform;
-
-            if (!InteractionChecks.InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
+            if (!InteractionChecks.InRangeUnobstructed(Owner, loc.ToMapPos(_mapManager),
+                ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
             {
-                _notifyManager.PopupMessage(transform.GridPosition, Owner,
-                        _localizationManager.GetString("You can't reach there!"));
                 return;
             }
+
 
             if (prototype.Stages.Count < 2)
             {

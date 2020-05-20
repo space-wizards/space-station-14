@@ -74,16 +74,24 @@ namespace Content.Server.Utility
         }
 
         /// <summary>
-        /// Convenient static alternative to <see cref="SharedInteractionSystem.InRangeUnobstructed"/>.
+        /// Convenient static alternative to <see cref="SharedInteractionSystem.InRangeUnobstructed"/>, which also
+        /// shows a popup message if not in range.
         /// </summary>
-        public static bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords,
+        public static bool InRangeUnobstructed(IEntity user, Vector2 targetWorldCoords,
             float range = SharedInteractionSystem.InteractionRange,
             int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null,
             bool insideBlockerValid = false)
         {
             var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
-            return interactionSystem.InRangeUnobstructed(coords, otherCoords, range, collisionMask,
-                ignoredEnt, insideBlockerValid);
+            if (!interactionSystem.InRangeUnobstructed(user.Transform.MapPosition, targetWorldCoords, range, collisionMask,
+                ignoredEnt, insideBlockerValid))
+            {
+                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
+                user.PopupMessage(user, localizationManager.GetString("You can't reach there!"));
+                return false;
+            }
+
+            return true;
         }
 
 
