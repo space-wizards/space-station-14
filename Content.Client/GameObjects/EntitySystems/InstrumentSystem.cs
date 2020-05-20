@@ -1,15 +1,15 @@
-using Content.Shared.GameObjects.Components.Instruments;
+using Content.Client.GameObjects.Components.Instruments;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Client.GameObjects.EntitySystems
 {
     public class InstrumentSystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
-            EntityQuery = new TypeEntityQuery(typeof(SharedInstrumentComponent));
+            EntityQuery = new TypeEntityQuery(typeof(InstrumentComponent));
         }
 
         public override void Update(float frameTime)
@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             foreach (var entity in RelevantEntities)
             {
-                entity.GetComponent<SharedInstrumentComponent>().Update(frameTime);
+                entity.GetComponent<InstrumentComponent>().Update(frameTime);
             }
         }
     }

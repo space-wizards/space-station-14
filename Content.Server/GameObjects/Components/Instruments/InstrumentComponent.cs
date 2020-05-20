@@ -1,5 +1,6 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Instruments;
+using NFluidsynth;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -18,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Instruments
     public class InstrumentComponent : SharedInstrumentComponent,
         IDropped, IHandSelected, IHandDeselected, IActivate, IUse, IThrown
     {
-        public const int MidiEventsPerSecond = 10;
+        public const int MaxMidiEventsPerSecond = 20;
 
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
@@ -26,8 +27,13 @@ namespace Content.Server.GameObjects.Components.Instruments
         private ICommonSession _instrumentPlayer;
         private bool _handheld;
 
+        [ViewVariables]
+        private bool _playing = false;
+
         private float _timer = 0f;
-        private int _midiEventCount = 1;
+
+        [ViewVariables]
+        private int _midiEventCount = 0;
 
         [ViewVariables]
         private BoundUserInterface _userInterface;
@@ -60,19 +66,25 @@ namespace Content.Server.GameObjects.Components.Instruments
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMsg:
-                    SendNetworkMessage(midiEventMsg);
+                    if (!_playing)
+                        return;
+                    if(++_midiEventCount <= MaxMidiEventsPerSecond)
+                        SendNetworkMessage(new InstrumentMidiEventMessage(midiEventMsg.MidiEvent));
                     break;
                 case InstrumentStartMidiMessage startMidi:
-                    SendNetworkMessage(startMidi);
+                    _playing = true;
+                    SendNetworkMessage(new InstrumentStartMidiMessage());
                     break;
                 case InstrumentStopMidiMessage stopMidi:
-                    SendNetworkMessage(stopMidi);
+                    _playing = false;
+                    SendNetworkMessage(new InstrumentStopMidiMessage());
                     break;
             }
         }
 
         public void Dropped(DroppedEventArgs eventArgs)
         {
+            _playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
             _instrumentPlayer = null;
             _userInterface.CloseAll();
@@ -80,6 +92,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         public void Thrown(ThrownEventArgs eventArgs)
         {
+            _playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
             _instrumentPlayer = null;
             _userInterface.CloseAll();
@@ -96,6 +109,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         public void HandDeselected(HandDeselectedEventArgs eventArgs)
         {
+            _playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
             _userInterface.CloseAll();
         }
@@ -128,6 +142,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             {
                 _instrumentPlayer = null;
                 SendNetworkMessage(new InstrumentStopMidiMessage());
+                _playing = false;
             }
         }
 
@@ -139,6 +154,11 @@ namespace Content.Server.GameObjects.Components.Instruments
         public override void Update(float delta)
         {
             base.Update(delta);
+
+            _timer += delta;
+            if (_timer < 1) return;
+            _timer = 0f;
+            _midiEventCount = 0;
         }
     }
 }

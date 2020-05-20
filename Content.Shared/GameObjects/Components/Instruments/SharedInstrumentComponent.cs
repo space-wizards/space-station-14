@@ -30,6 +30,7 @@ namespace Content.Shared.GameObjects.Components.Instruments
     [Serializable, NetSerializable]
     public class InstrumentStartMidiMessage : ComponentMessage
     {
+
     }
 
     /// <summary>
@@ -39,12 +40,10 @@ namespace Content.Shared.GameObjects.Components.Instruments
     public class InstrumentMidiEventMessage : ComponentMessage
     {
         public MidiEvent[] MidiEvent;
-        public double[] Timestamp;
 
-        public InstrumentMidiEventMessage(MidiEvent[] midiEvent, double[] timestamp)
+        public InstrumentMidiEventMessage(MidiEvent[] midiEvent)
         {
             MidiEvent = midiEvent;
-            Timestamp = timestamp;
         }
     }
 
