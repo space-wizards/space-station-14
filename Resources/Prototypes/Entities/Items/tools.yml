@@ -98,6 +98,7 @@
     qualities:
       - Prying
     useSound: /Audio/items/crowbar.ogg
+  - type: TilePrying
 
 - type: entity
   name: Multitool
@@ -131,6 +132,7 @@
       state: jaws_pry
     - type: Item
       sprite: Objects/Tools/jaws_of_life.rsi
+    - type: TilePrying
     - type: Tool
       qualities:
         - Prying

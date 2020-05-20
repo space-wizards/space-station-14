@@ -33,7 +33,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    public class ToolComponent : SharedToolComponent, IAfterAttack
+    public class ToolComponent : SharedToolComponent
     {
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
@@ -140,47 +140,15 @@ namespace Content.Server.GameObjects.Components.Interactable
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(name);
             var file = _robustRandom.Pick(soundCollection.PickFiles);
             _entitySystemManager.GetEntitySystem<AudioSystem>()
-                .Play(file, Owner, AudioParams.Default.WithVolume(volume));
+                .Play(file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
 
-        public void PlayUseSound()
+        public void PlayUseSound(float volume=-5f)
         {
             if(string.IsNullOrEmpty(UseSoundCollection))
-                _audioSystem.Play(UseSound, Owner);
+                _audioSystem.Play(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
             else
-                PlaySoundCollection(UseSoundCollection, 0f);
-        }
-
-        public void AfterAttack(AfterAttackEventArgs eventArgs)
-        {
-            TryPryTile(eventArgs.User, eventArgs.ClickLocation);
-        }
-
-        public bool TryPryTile(IEntity user, GridCoordinates clickLocation)
-        {
-            if (!HasQuality(ToolQuality.Prying))
-                return false;
-
-            var mapGrid = _mapManager.GetGrid(clickLocation.GridID);
-            var tile = mapGrid.GetTileRef(clickLocation);
-
-            var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-
-            if (!_interactionSystem.InRangeUnobstructed(user.Transform.MapPosition, coordinates.ToMapPos(_mapManager), ignoredEnt:user))
-                return false;
-
-            var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
-
-            if (!tileDef.CanCrowbar) return false;
-
-            var underplating = _tileDefinitionManager["underplating"];
-            mapGrid.SetTile(clickLocation, new Tile(underplating.TileId));
-            PlayUseSound();
-
-            //Actually spawn the relevant tile item at the right position and give it some offset to the corner.
-            var tileItem = Owner.EntityManager.SpawnEntity(tileDef.ItemDropPrototypeName, coordinates);
-            tileItem.Transform.WorldPosition += (0.2f, 0.2f);
-            return true;
+                PlaySoundCollection(UseSoundCollection, volume);
         }
     }
 }
