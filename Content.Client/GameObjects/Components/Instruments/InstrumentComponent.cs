@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Instruments;
 using JetBrains.Annotations;
 using NFluidsynth;
@@ -21,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Instruments
     [RegisterComponent]
     public class InstrumentComponent : SharedInstrumentComponent
     {
-        public const float TimeBetweenNetMessages = 0.5f;
+        public const float TimeBetweenNetMessages = 1.0f;
 
         /// <summary>
         ///     Called when a midi song stops playing.
@@ -116,7 +117,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             {
                 _renderer.MidiProgram = _instrumentProgram;
                 _renderer.TrackingEntity = Owner;
-                _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); };
+                _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); EndRenderer(); SendNetworkMessage(new InstrumentStopMidiMessage()); };
             }
         }
 
@@ -124,6 +125,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         {
             Timer.Spawn(1000, () => { _renderer?.Dispose(); });
             _renderer = null;
+            _midiQueue.Clear();
         }
 
         protected override void Shutdown()
@@ -147,24 +149,28 @@ namespace Content.Client.GameObjects.Components.Instruments
                 case InstrumentMidiEventMessage midiEventMessage:
                     // If we're the ones sending the MidiEvents, we ignore this message.
                     if (!IsRendererAlive || IsInputOpen || IsMidiOpen) break;
+                    Logger.Info($"NEW BATCH!!! LENGTH:{midiEventMessage.MidiEvent.Length} QUEUED:{_midiQueue.Count} LAST:{_lastEvent}");
                     for (var i = 0; i < midiEventMessage.MidiEvent.Length; i++)
                     {
                         var ev = midiEventMessage.MidiEvent[i];
-                        var delta = i != 0 ? ev.Timestamp.Subtract(midiEventMessage.MidiEvent[i-1].Timestamp) : _lastEvent.HasValue ? ev.Timestamp.Subtract(_lastEvent.Value) :  TimeSpan.Zero;
+                        var delta = i != 0 ?
+                            ev.Timestamp.Subtract(midiEventMessage.MidiEvent[i-1].Timestamp) : _lastEvent.HasValue ? ev.Timestamp.Subtract(_lastEvent.Value) :  TimeSpan.Zero;
                         ev.Timestamp = _gameTiming.CurTime + delta + TimeSpan.FromSeconds(TimeBetweenNetMessages*1.25);
                         _midiQueue.Enqueue(ev);
                         _lastEvent = ev.Timestamp;
 
                         //var j = i;
-                        //Timer.Spawn((int) ((TimeBetweenNetMessages)*1.5f)*1000,
-                        //    () => _renderer.SendMidiEvent(midiEventMessage.MidiEvent[j]));
+                        //Timer.Spawn((int)ev.Timestamp.Subtract(_gameTiming.CurTime).TotalMilliseconds,
+                        //    () => _renderer?.SendMidiEvent(midiEventMessage.MidiEvent[j]));
                     }
+
+
+
                     break;
 
                 case InstrumentStopMidiMessage _:
                     _renderer?.StopAllNotes();
-                    if (IsInputOpen) CloseInput();
-                    if (IsMidiOpen) CloseMidi();
+                    EndRenderer();
                     break;
 
                 case InstrumentStartMidiMessage _:
@@ -258,10 +264,15 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private void UpdatePlaying(float delta)
         {
-            if(_renderer == null || _midiQueue.Count == 0) return;
-            var midiEvent = _midiQueue.Dequeue();
-            _renderer.SendMidiEvent(midiEvent);
-            _timer = _midiQueue.Count != 0 ? (float) (midiEvent.Timestamp.Subtract(_gameTiming.CurTime).TotalSeconds) : 0; // ???? TODO: fix this
+            while (true)
+            {
+                if (_renderer == null || _midiQueue.Count == 0) return;
+                var midiEvent = _midiQueue.Dequeue();
+                _renderer.SendMidiEvent(midiEvent);
+                _timer = _midiQueue.Count != 0 ? (MathF.Max((float) midiEvent.Timestamp.Subtract(_gameTiming.CurTime).TotalSeconds, 0f)) : 0;
+                if (_timer <= 0f) continue;
+                break;
+            }
         }
 
         private void SendAllMidiMessages()

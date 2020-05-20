@@ -69,15 +69,15 @@ namespace Content.Server.GameObjects.Components.Instruments
                     if (!_playing)
                         return;
                     if(++_midiEventCount <= MaxMidiEventsPerSecond)
-                        SendNetworkMessage(new InstrumentMidiEventMessage(midiEventMsg.MidiEvent));
+                        SendNetworkMessage(midiEventMsg);
                     break;
                 case InstrumentStartMidiMessage startMidi:
                     _playing = true;
-                    SendNetworkMessage(new InstrumentStartMidiMessage());
+                    SendNetworkMessage(startMidi);
                     break;
                 case InstrumentStopMidiMessage stopMidi:
                     _playing = false;
-                    SendNetworkMessage(new InstrumentStopMidiMessage());
+                    SendNetworkMessage(stopMidi);
                     break;
             }
         }
