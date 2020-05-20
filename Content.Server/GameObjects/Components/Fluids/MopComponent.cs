@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Fluids
     /// For cleaning up puddles
     /// </summary>
     [RegisterComponent]
-    public class MopComponent : Component, IAfterAttack
+    public class MopComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -57,10 +57,10 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             Solution solution;
-            if (eventArgs.Attacked == null)
+            if (eventArgs.Using == null)
             {
                 if (CurrentVolume <= 0)
                 {
@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            if (!eventArgs.Attacked.TryGetComponent(out PuddleComponent puddleComponent))
+            if (!eventArgs.Using.TryGetComponent(out PuddleComponent puddleComponent))
             {
                 return;
             }

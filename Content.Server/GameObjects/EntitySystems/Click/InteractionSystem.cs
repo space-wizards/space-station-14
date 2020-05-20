@@ -28,33 +28,33 @@ namespace Content.Server.GameObjects.EntitySystems
     /// <summary>
     /// This interface gives components behavior when being clicked on or "attacked" by a user with an object in their hand
     /// </summary>
-    public interface IAttackBy
+    public interface IInteractUsing
     {
         /// <summary>
         /// Called when using one object on another
         /// </summary>
-        bool AttackBy(AttackByEventArgs eventArgs);
+        bool InteractUsing(InteractUsingEventArgs eventArgs);
     }
 
-    public class AttackByEventArgs : EventArgs
+    public class InteractUsingEventArgs : EventArgs
     {
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
-        public IEntity AttackWith { get; set; }
+        public IEntity Using { get; set; }
     }
 
     /// <summary>
     /// This interface gives components behavior when being clicked on or "attacked" by a user with an empty hand
     /// </summary>
-    public interface IAttackHand
+    public interface IInteractHand
     {
         /// <summary>
         /// Called when a player directly interacts with an empty hand
         /// </summary>
-        bool AttackHand(AttackHandEventArgs eventArgs);
+        bool InteractHand(InteractHandEventArgs eventArgs);
     }
 
-    public class AttackHandEventArgs : EventArgs
+    public class InteractHandEventArgs : EventArgs
     {
         public IEntity User { get; set; }
     }
@@ -83,19 +83,19 @@ namespace Content.Server.GameObjects.EntitySystems
     /// This interface gives components a behavior when clicking on another object and no interaction occurs
     /// Doesn't pass what you clicked on as an argument, but if it becomes necessary we can add it later
     /// </summary>
-    public interface IAfterAttack
+    public interface IAfterInteract
     {
         /// <summary>
         /// Called when we interact with nothing, or when we interact with an entity out of range that has no behavior
         /// </summary>
-        void AfterAttack(AfterAttackEventArgs eventArgs);
+        void AfterInteract(AfterInteractEventArgs eventArgs);
     }
 
-    public class AfterAttackEventArgs : EventArgs
+    public class AfterInteractEventArgs : EventArgs
     {
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
-        public IEntity Attacked { get; set; }
+        public IEntity Using { get; set; }
     }
 
     /// <summary>
@@ -465,7 +465,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (item != null)
                 {
-                    // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterAttack
+                    // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterInteract
                     InteractAfterAttack(player, item, coordinates);
                 }
 
@@ -491,7 +491,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            // RangedAttack/AfterAttack: Check distance between user and clicked item, if too large parse it in the ranged function
+            // RangedAttack/AfterInteract: Check distance between user and clicked item, if too large parse it in the ranged function
             // TODO: have range based upon the item being used? or base it upon some variables of the player himself?
             var distance = (playerTransform.WorldPosition - attacked.Transform.WorldPosition).LengthSquared;
             if (distance > InteractionRangeSquared)
@@ -502,16 +502,16 @@ namespace Content.Server.GameObjects.EntitySystems
                     return;
                 }
 
-                return; // Add some form of ranged AttackHand here if you need it someday, or perhaps just ways to modify the range of AttackHand
+                return; // Add some form of ranged InteractHand here if you need it someday, or perhaps just ways to modify the range of InteractHand
             }
 
             // We are close to the nearby object and the object isn't contained in our active hand
-            // AttackBy/AfterAttack: We will either use the item on the nearby object
+            // InteractUsing/AfterInteract: We will either use the item on the nearby object
             if (item != null)
             {
                 Interaction(player, item, attacked, coordinates);
             }
-            // AttackHand/Activate: Since our hand is empty we will use AttackHand/Activate
+            // InteractHand/Activate: Since our hand is empty we will use InteractHand/Activate
             else
             {
                 Interaction(player, attacked);
@@ -519,7 +519,7 @@ namespace Content.Server.GameObjects.EntitySystems
         }
 
         /// <summary>
-        ///     We didn't click on any entity, try doing an AfterAttack on the click location
+        ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
         private void InteractAfterAttack(IEntity user, IEntity weapon, GridCoordinates clickLocation)
         {
@@ -530,18 +530,18 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            var afterAttacks = weapon.GetAllComponents<IAfterAttack>().ToList();
-            var afterAttackEventArgs = new AfterAttackEventArgs {User = user, ClickLocation = clickLocation};
+            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
+            var afterAttackEventArgs = new AfterInteractEventArgs {User = user, ClickLocation = clickLocation};
 
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterAttack(afterAttackEventArgs);
+                afterAttack.AfterInteract(afterAttackEventArgs);
             }
         }
 
         /// <summary>
         /// Uses a weapon/object on an entity
-        /// Finds components with the AttackBy interface and calls their function
+        /// Finds components with the InteractUsing interface and calls their function
         /// </summary>
         public void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
@@ -552,17 +552,17 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            var attackBys = attacked.GetAllComponents<IAttackBy>().ToList();
-            var attackByEventArgs = new AttackByEventArgs
+            var attackBys = attacked.GetAllComponents<IInteractUsing>().ToList();
+            var attackByEventArgs = new InteractUsingEventArgs
             {
-                User = user, ClickLocation = clickLocation, AttackWith = weapon
+                User = user, ClickLocation = clickLocation, Using = weapon
             };
 
             foreach (var attackBy in attackBys)
             {
-                if (attackBy.AttackBy(attackByEventArgs))
+                if (attackBy.InteractUsing(attackByEventArgs))
                 {
-                    // If an AttackBy returns a status completion we finish our attack
+                    // If an InteractUsing returns a status completion we finish our attack
                     return;
                 }
             }
@@ -575,21 +575,21 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // If we aren't directly attacking the nearby object, lets see if our item has an after attack we can do
-            var afterAttacks = weapon.GetAllComponents<IAfterAttack>().ToList();
-            var afterAttackEventArgs = new AfterAttackEventArgs
+            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
+            var afterAttackEventArgs = new AfterInteractEventArgs
             {
-                User = user, ClickLocation = clickLocation, Attacked = attacked
+                User = user, ClickLocation = clickLocation, Using = attacked
             };
 
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterAttack(afterAttackEventArgs);
+                afterAttack.AfterInteract(afterAttackEventArgs);
             }
         }
 
         /// <summary>
         /// Uses an empty hand on an entity
-        /// Finds components with the AttackHand interface and calls their function
+        /// Finds components with the InteractHand interface and calls their function
         /// </summary>
         public void Interaction(IEntity user, IEntity attacked)
         {
@@ -600,14 +600,14 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            var attackHands = attacked.GetAllComponents<IAttackHand>().ToList();
-            var attackHandEventArgs = new AttackHandEventArgs {User = user};
+            var attackHands = attacked.GetAllComponents<IInteractHand>().ToList();
+            var attackHandEventArgs = new InteractHandEventArgs {User = user};
 
             foreach (var attackHand in attackHands)
             {
-                if (attackHand.AttackHand(attackHandEventArgs))
+                if (attackHand.InteractHand(attackHandEventArgs))
                 {
-                    // If an AttackHand returns a status completion we finish our attack
+                    // If an InteractHand returns a status completion we finish our attack
                     return;
                 }
             }
@@ -865,7 +865,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (t.RangedAttackBy(rangedAttackByEventArgs))
                 {
-                    // If an AttackBy returns a status completion we finish our attack
+                    // If an InteractUsing returns a status completion we finish our attack
                     return;
                 }
             }
@@ -875,16 +875,16 @@ namespace Content.Server.GameObjects.EntitySystems
             if (afterAtkMsg.Handled)
                 return;
 
-            var afterAttacks = weapon.GetAllComponents<IAfterAttack>().ToList();
-            var afterAttackEventArgs = new AfterAttackEventArgs
+            var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
+            var afterAttackEventArgs = new AfterInteractEventArgs
             {
-                User = user, ClickLocation = clickLocation, Attacked = attacked
+                User = user, ClickLocation = clickLocation, Using = attacked
             };
 
             //See if we have a ranged attack interaction
             foreach (var afterAttack in afterAttacks)
             {
-                afterAttack.AfterAttack(afterAttackEventArgs);
+                afterAttack.AfterInteract(afterAttackEventArgs);
             }
         }
 

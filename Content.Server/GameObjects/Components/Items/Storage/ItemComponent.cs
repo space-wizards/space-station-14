@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(StoreableComponent))]
-    public class ItemComponent : StoreableComponent, IAttackHand, IExAct, IEquipped, IUnequipped
+    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects
                 .InRangeUnobstructed(userPos, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
         }
 
-        public bool AttackHand(AttackHandEventArgs eventArgs)
+        public bool InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!CanPickup(eventArgs.User)) return false;
 

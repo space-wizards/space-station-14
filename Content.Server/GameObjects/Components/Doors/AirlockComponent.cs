@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Doors
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(ServerDoorComponent))]
-    public class AirlockComponent : ServerDoorComponent, IWires, IAttackBy
+    public class AirlockComponent : ServerDoorComponent, IWires, IInteractUsing
     {
         public override string Name => "Airlock";
 
@@ -198,9 +198,9 @@ namespace Content.Server.GameObjects.Components.Doors
             return _powerDevice.Powered;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.HasComponent<CrowbarComponent>())
+            if (eventArgs.Using.HasComponent<CrowbarComponent>())
             {
                 if (IsPowered())
                 {

@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// Component to transfer power to nearby components, can create powernets and connect to nodes
     /// </summary>
     [RegisterComponent]
-    public class PowerTransferComponent : Component, IAttackBy
+    public class PowerTransferComponent : Component, IInteractUsing
     {
         public override string Name => "PowerTransfer";
 
@@ -138,9 +138,9 @@ namespace Content.Server.GameObjects.Components.Power
             return Parent != null && Parent.Dirty == false && !Regenerating;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.TryGetComponent(out WirecutterComponent wirecutter))
+            if (eventArgs.Using.TryGetComponent(out WirecutterComponent wirecutter))
             {
                 Owner.Delete();
                 var droppedEnt = Owner.EntityManager.SpawnEntity("CableStack", eventArgs.ClickLocation);

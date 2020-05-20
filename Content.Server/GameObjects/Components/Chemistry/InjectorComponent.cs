@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// containers, and can directly inject into a mobs bloodstream.
     /// </summary>
     [RegisterComponent]
-    public class InjectorComponent : SharedInjectorComponent, IAfterAttack, IUse
+    public class InjectorComponent : SharedInjectorComponent, IAfterInteract, IUse
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
@@ -108,15 +108,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// Called when clicking on entities while holding in active hand
         /// </summary>
         /// <param name="eventArgs"></param>
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             //Make sure we have the attacking entity
-            if (eventArgs.Attacked == null || !_internalContents.Injector)
+            if (eventArgs.Using == null || !_internalContents.Injector)
             {
                 return;
             }
 
-            var targetEntity = eventArgs.Attacked;
+            var targetEntity = eventArgs.Using;
             //Handle injecting/drawing for solutions
             if (targetEntity.TryGetComponent<SolutionComponent>(out var targetSolution) && targetSolution.Injectable)
             {

@@ -22,7 +22,7 @@ using static Content.Shared.Construction.ConstructionStepTool;
 namespace Content.Server.GameObjects.Components.Construction
 {
     [RegisterComponent]
-    public class ConstructionComponent : Component, IAttackBy
+    public class ConstructionComponent : Component, IInteractUsing
     {
         public override string Name => "Construction";
 
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Construction
             var systemman = IoCManager.Resolve<IEntitySystemManager>();
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var playerEntity = eventArgs.User;
             var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var stage = Prototype.Stages[Stage];
 
-            if (TryProcessStep(stage.Forward, eventArgs.AttackWith))
+            if (TryProcessStep(stage.Forward, eventArgs.Using))
             {
                 Stage++;
                 if (Stage == Prototype.Stages.Count - 1)
@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            else if (TryProcessStep(stage.Backward, eventArgs.AttackWith))
+            else if (TryProcessStep(stage.Backward, eventArgs.Using))
             {
                 Stage--;
                 if (Stage == 0)

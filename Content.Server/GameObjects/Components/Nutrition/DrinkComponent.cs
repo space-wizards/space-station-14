@@ -19,7 +19,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class DrinkComponent : Component, IAfterAttack, IUse
+    public class DrinkComponent : Component, IAfterInteract, IUse
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -96,9 +96,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return true;
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            UseDrink(eventArgs.Attacked);
+            UseDrink(eventArgs.Using);
         }
 
         private void UseDrink(IEntity user)

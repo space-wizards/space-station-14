@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    public class PaperComponent : SharedPaperComponent, IExamine, IAttackBy, IUse
+    public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
     {
 
         private BoundUserInterface _userInterface;
@@ -62,9 +62,9 @@ namespace Content.Server.GameObjects.Components.Interactable
             UpdateUserInterface();
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<WriteComponent>())
+            if (!eventArgs.Using.HasComponent<WriteComponent>())
                 return false;
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return false;

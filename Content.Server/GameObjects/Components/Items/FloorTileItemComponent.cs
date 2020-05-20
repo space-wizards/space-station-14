@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Items
 {
     [RegisterComponent]
-    public class FloorTileItemComponent : Component, IAfterAttack
+    public class FloorTileItemComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
@@ -38,9 +38,9 @@ namespace Content.Server.GameObjects.Components.Items
             base.Initialize();
             Stack = Owner.GetComponent<StackComponent>();
         }
-        public void AfterAttack(AfterAttackEventArgs eventArgs)
+        public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            var attacked = eventArgs.Attacked;
+            var attacked = eventArgs.Using;
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
 
