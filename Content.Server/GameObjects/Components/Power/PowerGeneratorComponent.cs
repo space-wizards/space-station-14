@@ -65,7 +65,9 @@ namespace Content.Server.GameObjects.Components.Power
         {
             _supply = value;
             var node = Owner.GetComponent<PowerNodeComponent>();
-            node.Parent.UpdateGenerator(this);
+            if (node != null)
+                if (node.Parent != null)
+                    node.Parent.UpdateGenerator(this);
         }
 
         /// <summary>
