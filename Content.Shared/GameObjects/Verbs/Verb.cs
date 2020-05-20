@@ -19,35 +19,17 @@ namespace Content.Shared.GameObjects
     {
         /// <summary>
         ///     If true, this verb requires the user to be inside within
-        ///     <see cref="InteractionRange"/> meters from the entity on which this verb resides.
+        ///     <see cref="VerbUtility.InteractionRange"/> meters from the entity on which this verb resides.
         /// </summary>
         public virtual bool RequireInteractionRange => true;
 
         /// <summary>
-        ///     Gets the text string that will be shown to <paramref name="user"/> in the right click menu.
+        ///     Gets the visible verb data for the user.
         /// </summary>
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="component">The component instance for which this verb is being loaded.</param>
-        /// <returns>The text string that is shown in the right click menu for this verb.</returns>
-        public abstract string GetText(IEntity user, IComponent component);
-
-        public abstract string GetIcon(IEntity user, IComponent component);
-
-        /// <summary>
-        ///     Gets the category of this verb.
-        /// </summary>
-        /// <param name="user">The entity of the user opening this menu.</param>
-        /// <param name="component">The component instance for which this verb is being loaded.</param>
-        /// <returns>The category of this verb.</returns>
-        public virtual string GetCategory(IEntity user, IComponent component)  => "";
-
-        /// <summary>
-        ///     Gets the visibility level of this verb in the right click menu.
-        /// </summary>
-        /// <param name="user">The entity of the user opening this menu.</param>
-        /// <param name="component">The component instance for which this verb is being loaded.</param>
-        /// <returns>The visibility level of the verb in the client's right click menu.</returns>
-        public abstract VerbVisibility GetVisibility(IEntity user, IComponent component);
+        /// <param name="data">The data that must be filled into.</param>
+        protected abstract void GetData(IEntity user, IComponent component, VerbData data);
 
         /// <summary>
         ///     Invoked when this verb is activated from the right click menu.
@@ -55,6 +37,13 @@ namespace Content.Shared.GameObjects
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="component">The component instance for which this verb is being loaded.</param>
         public abstract void Activate(IEntity user, IComponent component);
+
+        public VerbData GetData(IEntity user, IComponent component)
+        {
+            var data = new VerbData();
+            GetData(user, component, data);
+            return data;
+        }
     }
 
     /// <inheritdoc />
@@ -66,33 +55,12 @@ namespace Content.Shared.GameObjects
     public abstract class Verb<T> : Verb where T : IComponent
     {
         /// <summary>
-        ///     Gets the text string that will be shown to <paramref name="user"/> in the right click menu.
+        ///     Gets the visible verb data for the user.
         /// </summary>
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="component">The component instance for which this verb is being loaded.</param>
-        /// <returns>The text string that is shown in the right click menu for this verb.</returns>
-        protected abstract string GetText(IEntity user, T component);
-
-        protected virtual string GetIcon(IEntity user, T component)
-        {
-            return default;
-        }
-
-        /// <summary>
-        ///     Gets the category of this verb.
-        /// </summary>
-        /// <param name="user">The entity of the user opening this menu.</param>
-        /// <param name="component">The component instance for which this verb is being loaded.</param>
-        /// <returns>The category of this verb.</returns>
-        protected virtual string GetCategory(IEntity user, T component) => "";
-
-        /// <summary>
-        ///     Gets the visibility level of this verb in the right click menu.
-        /// </summary>
-        /// <param name="user">The entity of the user opening this menu.</param>
-        /// <param name="component">The component instance for which this verb is being loaded.</param>
-        /// <returns>The visibility level of the verb in the client's right click menu.</returns>
-        protected abstract VerbVisibility GetVisibility(IEntity user, T component);
+        /// <param name="data">The data that must be filled into.</param>
+        protected abstract void GetData(IEntity user, T component, VerbData data);
 
         /// <summary>
         ///     Invoked when this verb is activated from the right click menu.
@@ -101,27 +69,9 @@ namespace Content.Shared.GameObjects
         /// <param name="component">The component instance for which this verb is being loaded.</param>
         protected abstract void Activate(IEntity user, T component);
 
-        /// <inheritdoc />
-        public sealed override string GetText(IEntity user, IComponent component)
+        protected sealed override void GetData(IEntity user, IComponent component, VerbData data)
         {
-            return GetText(user, (T) component);
-        }
-
-        public sealed override string GetIcon(IEntity user, IComponent component)
-        {
-            return GetIcon(user, (T) component);
-        }
-
-        /// <inheritdoc />
-        public sealed override string GetCategory(IEntity user, IComponent component)
-        {
-            return GetCategory(user, (T) component);
-        }
-
-        /// <inheritdoc />
-        public sealed override VerbVisibility GetVisibility(IEntity user, IComponent component)
-        {
-            return GetVisibility(user, (T) component);
+            GetData(user, (T) component, data);
         }
 
         /// <inheritdoc />
@@ -139,26 +89,5 @@ namespace Content.Shared.GameObjects
     [MeansImplicitUse]
     public sealed class VerbAttribute : Attribute
     {
-    }
-
-    /// <summary>
-    /// Possible states of visibility for the verb in the right click menu.
-    /// </summary>
-    public enum VerbVisibility
-    {
-        /// <summary>
-        /// The verb will be listed in the right click menu.
-        /// </summary>
-        Visible,
-
-        /// <summary>
-        /// The verb will be listed, but it will be grayed out and unable to be clicked on.
-        /// </summary>
-        Disabled,
-
-        /// <summary>
-        /// The verb will not be listed in the right click menu.
-        /// </summary>
-        Invisible
     }
 }

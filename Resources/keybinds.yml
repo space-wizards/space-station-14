@@ -4,6 +4,10 @@ binds:
   type: state
   key: MouseLeft
   canFocus: true
+- function: CloseModals
+  type: state
+  key: Escape
+  priority: 10
 - function: Use
   type: state
   key: MouseLeft
@@ -215,6 +219,7 @@ binds:
 - function: TextReleaseFocus
   type: state
   key: Escape
+  priority: 15
 - function: TextScrollToBottom
   type: state
   key: PageDown

@@ -156,9 +156,13 @@ namespace Content.Client.GameObjects.EntitySystems
             DebugTools.AssertNotNull(_currentVerbListRoot);
 
             var buttons = new Dictionary<string, List<ListedVerbData>>();
+            var groupIcons = new Dictionary<string, string>();
 
             var vBox = _currentVerbListRoot.List;
             vBox.DisposeAllChildren();
+
+            // Local variable so that scope capture ensures this is the correct value.
+            var curEntity = _currentEntity;
 
             foreach (var data in msg.Verbs)
             {
@@ -166,7 +170,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
                 list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString(), () =>
                 {
-                    RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(_currentEntity, data.Key));
+                    RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(curEntity, data.Key));
                     CloseAllMenus();
                 }, data.Icon));
             }
@@ -178,16 +182,20 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
                     continue;
 
-                if (VerbUtility.IsVerbInvisible(verb, user, component, out var vis))
+                var verbData = verb.GetData(user, component);
+
+                if (verbData.IsInvisible)
                     continue;
 
-                var disabled = vis != VerbVisibility.Visible;
-                var category = verb.GetCategory(user, component);
+                var list = buttons.GetOrNew(verbData.Category);
 
-                var list = buttons.GetOrNew(category);
+                if (verbData.CategoryIcon != null && !groupIcons.ContainsKey(verbData.Category))
+                {
+                    groupIcons.Add(verbData.Category, verbData.CategoryIcon);
+                }
 
-                list.Add(new ListedVerbData(verb.GetText(user, component), disabled, verb.ToString(), entity.ToString(),
-                    () => verb.Activate(user, component), verb.GetIcon(user, component)));
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString(), entity.ToString(),
+                    () => verb.Activate(user, component), verbData.Icon));
             }
 
             //Get global verbs. Visible for all entities regardless of their components.
@@ -196,17 +204,21 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
                     continue;
 
-                if (VerbUtility.IsVerbInvisible(globalVerb, user, entity, out var vis))
+                var verbData = globalVerb.GetData(user, entity);
+
+                if (verbData.IsInvisible)
                     continue;
 
-                var disabled = vis != VerbVisibility.Visible;
-                var category = globalVerb.GetCategory(user, entity);
+                var list = buttons.GetOrNew(verbData.Category);
 
-                var list = buttons.GetOrNew(category);
+                if (verbData.CategoryIcon != null && !groupIcons.ContainsKey(verbData.Category))
+                {
+                    groupIcons.Add(verbData.Category, verbData.CategoryIcon);
+                }
 
-                list.Add(new ListedVerbData(globalVerb.GetText(user, entity), disabled, globalVerb.ToString(),
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString(),
                     entity.ToString(),
-                    () => globalVerb.Activate(user, entity), globalVerb.GetIcon(user, entity)));
+                    () => globalVerb.Activate(user, entity), verbData.Icon));
             }
 
             if (buttons.Count > 0)
@@ -228,7 +240,9 @@ namespace Content.Client.GameObjects.EntitySystems
 
                     first = false;
 
-                    vBox.AddChild(CreateCategoryButton(category, verbs));
+                    groupIcons.TryGetValue(category, out var icon);
+
+                    vBox.AddChild(CreateCategoryButton(category, verbs, icon));
                 }
 
                 if (buttons.ContainsKey(""))
@@ -292,11 +306,11 @@ namespace Content.Client.GameObjects.EntitySystems
             return button;
         }
 
-        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons)
+        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, string value)
         {
             verbButtons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.CurrentCulture));
 
-            return new VerbGroupButton(this, verbButtons)
+            return new VerbGroupButton(this, verbButtons, value)
             {
                 Text = $"{text}...",
             };
@@ -504,7 +518,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 set => _icon.Texture = value;
             }
 
-            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons)
+            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, string icon)
             {
                 _system = system;
                 VerbButtons = verbButtons;
@@ -518,8 +532,6 @@ namespace Content.Client.GameObjects.EntitySystems
                         (_icon = new TextureRect
                         {
                             CustomMinimumSize = (32, 32),
-                            Texture = IoCManager.Resolve<IResourceCache>()
-                                .GetTexture("/Textures/UserInterface/VerbIcons/debug.svg.96dpi.png"),
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
 
@@ -536,6 +548,11 @@ namespace Content.Client.GameObjects.EntitySystems
                         }
                     }
                 });
+
+                if (icon != null)
+                {
+                    _icon.Texture = IoCManager.Resolve<IResourceCache>().GetTexture(icon);
+                }
             }
 
             protected override void Draw(DrawingHandleScreen handle)

@@ -22,31 +22,33 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
         [Serializable, NetSerializable]
         public class VerbsResponseMessage : EntitySystemMessage
         {
-            public readonly List<VerbData> Verbs;
+            public readonly NetVerbData[] Verbs;
             public readonly EntityUid Entity;
 
-            public VerbsResponseMessage(List<VerbData> verbs, EntityUid entity)
+            public VerbsResponseMessage(NetVerbData[] verbs, EntityUid entity)
             {
                 Verbs = verbs;
                 Entity = entity;
             }
 
             [Serializable, NetSerializable]
-            public readonly struct VerbData
+            public readonly struct NetVerbData
             {
                 public readonly string Text;
                 public readonly string Key;
                 public readonly string Category;
                 public readonly string Icon;
+                public readonly string CategoryIcon;
                 public readonly bool Available;
 
-                public VerbData(string text, string key, string category, bool available, string icon)
+                public NetVerbData(VerbData data, string key)
                 {
-                    Text = text;
+                    Text = data.Text;
                     Key = key;
-                    Category = category;
-                    Available = available;
-                    Icon = icon;
+                    Category = data.Category;
+                    CategoryIcon = data.CategoryIcon;
+                    Icon = data.Icon;
+                    Available = data.Visibility == VerbVisibility.Visible;
                 }
             }
         }
