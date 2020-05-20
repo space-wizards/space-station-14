@@ -26,7 +26,7 @@ using Robust.Shared.Players;
 namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
-    /// This interface gives components behavior when being clicked on or "attacked" by a user with an object in their hand
+    /// This interface gives components behavior when being clicked on by a user with an object in their hand
     /// </summary>
     public interface IInteractUsing
     {
@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
-    /// This interface gives components behavior when being clicked on or "attacked" by a user with an empty hand
+    /// This interface gives components behavior when being clicked on by a user with an empty hand
     /// </summary>
     public interface IInteractHand
     {
@@ -60,22 +60,23 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
-    /// This interface gives components behavior when being clicked by objects outside the range of direct use
+    /// This interface gives components behavior when being clicked on by a user with an object
+    /// outside the range of direct use
     /// </summary>
-    public interface IRangedAttackBy
+    public interface IRangedInteract
     {
         /// <summary>
         /// Called when we try to interact with an entity out of range
         /// </summary>
         /// <returns></returns>
-        bool RangedAttackBy(RangedAttackByEventArgs eventArgs);
+        bool RangedInteract(RangedInteractEventArgs eventArgs);
     }
 
     [PublicAPI]
-    public class RangedAttackByEventArgs : EventArgs
+    public class RangedInteractEventArgs : EventArgs
     {
         public IEntity User { get; set; }
-        public IEntity Weapon { get; set; }
+        public IEntity Using { get; set; }
         public GridCoordinates ClickLocation { get; set; }
     }
 
@@ -854,16 +855,16 @@ namespace Content.Server.GameObjects.EntitySystems
             if (rangedMsg.Handled)
                 return;
 
-            var rangedAttackBys = attacked.GetAllComponents<IRangedAttackBy>().ToList();
-            var rangedAttackByEventArgs = new RangedAttackByEventArgs
+            var rangedAttackBys = attacked.GetAllComponents<IRangedInteract>().ToList();
+            var rangedAttackByEventArgs = new RangedInteractEventArgs
             {
-                User = user, Weapon = weapon, ClickLocation = clickLocation
+                User = user, Using = weapon, ClickLocation = clickLocation
             };
 
             // See if we have a ranged attack interaction
             foreach (var t in rangedAttackBys)
             {
-                if (t.RangedAttackBy(rangedAttackByEventArgs))
+                if (t.RangedInteract(rangedAttackByEventArgs))
                 {
                     // If an InteractUsing returns a status completion we finish our attack
                     return;
