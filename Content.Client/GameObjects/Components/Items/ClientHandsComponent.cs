@@ -101,6 +101,7 @@ namespace Content.Client.GameObjects
             ActiveIndex = cast.ActiveIndex;
 
             _gui?.UpdateHandIcons();
+            RefreshInHands();
         }
 
         private void _setHand(string hand, IEntity entity)
@@ -189,9 +190,6 @@ namespace Content.Client.GameObjects
 
                 case PlayerDetachedMsg _:
                     _gui.Parent?.RemoveChild(_gui);
-                    break;
-                case RefreshInHandsMsg _:
-                    RefreshInHands();
                     break;
             }
         }

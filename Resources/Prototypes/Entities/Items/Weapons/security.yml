@@ -12,7 +12,7 @@
       state: stunbaton_off
 
     - type: Stunbaton
-      damage: 0.25
+      damage: 1
       range: 0.75
       arcwidth: 0
       arc: default
