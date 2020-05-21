@@ -35,7 +35,7 @@
   id: AcousticGuitarInstrument
   components:
   - type: Instrument
-    program: 24
+    program: 25
   - type: Sprite
     sprite: Objects/Instruments/guitar.rsi
     state: icon
@@ -43,7 +43,7 @@
     sprite: Objects/Instruments/guitar.rsi
     state: icon
   - type: Item
-    Size: 25
+    Size: 24
     sprite: Objects/Instruments/guitar.rsi
 
 - type: entity
