@@ -1,0 +1,143 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC BY-SA 3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at b8758256b31013946fdbd320ca043a663c399656",
+    "states":
+    [
+        {
+            "name": "off-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "off-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+            {
+            "name": "on-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                ],
+            ]
+        },
+            {
+            "name": "on-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                ],
+            ]
+        },
+        {
+            "name": "stunbaton_off",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+                {
+            "name": "stunbaton_nocell",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+                {
+            "name": "stunbaton_on",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                ]
+            ]
+        }
+
+    ]
+}
+

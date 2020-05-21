@@ -14,5 +14,6 @@ namespace Content.Client.Interfaces.GameObjects
         void AttackByInHand(string index);
         void UseActiveHand();
         void ActivateItemInHand(string handIndex);
+        void RefreshInHands();
     }
 }

@@ -75,6 +75,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _cooldownTime, "cooldownTime", 1f);
         }
 
+        public virtual bool OnHitEntities(IReadOnlyList<IEntity> entities)
+        {
+            return false;
+        }
+
         void IAttack.Attack(AttackEventArgs eventArgs)
         {
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
@@ -100,6 +105,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     hitEntities.Add(entity);
                 }
             }
+
+            if(OnHitEntities(hitEntities)) return;
 
             var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
             var emitter = hitEntities.Count == 0 ? eventArgs.User : hitEntities[0];
