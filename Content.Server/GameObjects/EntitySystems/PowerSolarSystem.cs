@@ -25,7 +25,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            TowardsSun += Angle.FromDegrees(frameTime / 10).Reduced();
+            TowardsSun += Angle.FromDegrees(frameTime / 10);
+            TowardsSun = TowardsSun.Reduced();
             foreach (var entity in RelevantEntities)
             {
                 // In the 'sunRelative' coordinate system:
