@@ -83,7 +83,7 @@ namespace Content.Server.PDA
 
         public bool PurchaseItem(UplinkAccount acc, UplinkListingData listing)
         {
-            if (!ContainsListing(listing) || acc.Balance < listing.Price)
+            if (acc == null || !ContainsListing(listing) || acc.Balance < listing.Price)
             {
                 return false;
             }

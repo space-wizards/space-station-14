@@ -1,22 +1,10 @@
 - type: entity
   name: PDA
   parent: BaseItem
-  id: PDAGeneric
+  id: BasePDA
+  abstract: true
   description: Personal Data Assistant
   components:
-  - type: PDA
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: unlit_pda_screen
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Unlit"]
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda
   - type: Appearance
     visuals:
     - type: PDAVisualizer
@@ -32,3 +20,46 @@
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
   - type: Sound
+
+
+- type: entity
+  name: Assistant PDA
+  parent: BasePDA
+  id: AssistantPDA
+  description: Why isn't it gray?
+  components:
+  - type: PDA
+    idCard: AssistantIDCard
+  - type: Icon
+    sprite: Objects/Devices/pda.rsi
+    state: pda
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: unlit_pda_screen
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Unlit"]
+
+- type: entity
+  name: Clown PDA
+  parent: BasePDA
+  id: ClownPDA
+  description: Not used for intended purpose.
+  components:
+  - type: PDA
+    idCard: ClownIDCard
+  - type: Icon
+    sprite: Objects/Devices/pda.rsi
+    state: pda-clown
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-clown
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: unlit_pda_screen
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Unlit"]

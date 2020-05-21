@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.PDA
 {
@@ -21,11 +22,14 @@ namespace Content.Server.GameObjects.Components.PDA
     {
 #pragma warning disable 649
         [Dependency] protected readonly IPDAUplinkManager _uplinkManager;
+        [Dependency] protected readonly IEntityManager _entityManager;
 #pragma warning restore 649
+
         private Container _idSlot;
         private PointLightComponent _pdaLight;
         private bool _lightOn = false;
         private BoundUserInterface _interface;
+        private string _startingIdCard;
         public bool IdSlotEmpty => _idSlot.ContainedEntities.Count < 1;
         public IEntity OriginalOwner { get; private set; }
 
@@ -34,6 +38,12 @@ namespace Content.Server.GameObjects.Components.PDA
         private AppearanceComponent _appearance;
 
         private UplinkAccount _account;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _startingIdCard, "idCard", "AssistantIDCard");
+        }
 
         public override void Initialize()
         {
@@ -44,6 +54,9 @@ namespace Content.Server.GameObjects.Components.PDA
             _interface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(PDAUiKey.Key);
             _interface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.GridPosition);
+            var idCardComponent = idCard.GetComponent<IdCardComponent>();
+            InsertIdCard(idCardComponent);
             UpdatePDAAppearance();
         }
 
@@ -110,19 +123,19 @@ namespace Content.Server.GameObjects.Components.PDA
                 return false;
             }
 
-            if (item.TryGetComponent<IdCardComponent>(out var idCardComponent) && !_idSlot.Contains(item))
+            if (!item.TryGetComponent<IdCardComponent>(out var idCardComponent) || _idSlot.Contains(item))
             {
-                _idSlot.Insert(item);
-                ContainedID = idCardComponent;
-                if (OriginalOwner == null)
-                {
-                    SetPDAOwner(eventArgs.User);
-                }
-                UpdatePDAUserInterface();
-                return true;
+                return false;
             }
 
-            return false;
+            InsertIdCard(idCardComponent);
+            if (OriginalOwner == null)
+            {
+                SetPDAOwner(eventArgs.User);
+            }
+            UpdatePDAUserInterface();
+            return true;
+
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -165,6 +178,12 @@ namespace Content.Server.GameObjects.Components.PDA
             UpdatePDAUserInterface();
         }
 
+        public void InsertIdCard(IdCardComponent card)
+        {
+            _idSlot.Insert(card.Owner);
+            ContainedID = card;
+        }
+
         public void InitUplinkAccount(UplinkAccount acc)
         {
             _account = acc;
@@ -195,7 +214,6 @@ namespace Content.Server.GameObjects.Components.PDA
             UpdatePDAUserInterface();
         }
 
-
         [Verb]
         public sealed class EjectIDVerb : Verb<PDAComponent>
         {
@@ -214,7 +232,5 @@ namespace Content.Server.GameObjects.Components.PDA
                 component.HandleIDEjection(user);
             }
         }
-
-
     }
 }

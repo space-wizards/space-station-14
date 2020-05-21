@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -16,6 +17,7 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
+using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces;
@@ -623,18 +625,28 @@ namespace Content.Server.GameTicking
         {
             var inventory = mob.GetComponent<InventoryComponent>();
 
-            if (!inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent cardItem))
+            if (!inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent pdaItem))
             {
                 return;
             }
 
-            var card = cardItem.Owner;
+            var pda = pdaItem.Owner;
 
-            var cardComponent = card.GetComponent<IdCardComponent>();
-            cardComponent.FullName = characterName;
-            cardComponent.JobTitle = jobPrototype.Name;
+            var pdaComponent = pda.GetComponent<PDAComponent>();
 
-            var access = card.GetComponent<AccessComponent>();
+            if (pdaComponent.IdSlotEmpty)
+            {
+                return;
+            }
+
+
+
+            var card = pdaComponent.ContainedID;
+            card.FullName = characterName;
+            card.JobTitle = jobPrototype.Name;
+            pdaComponent.SetPDAOwner(mob);
+
+            var access = card.Owner.GetComponent<AccessComponent>();
             access.Tags.Clear();
             access.Tags.AddRange(jobPrototype.Access);
         }

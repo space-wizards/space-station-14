@@ -112,6 +112,13 @@ namespace Content.Client.GameObjects.Components.PDA
 
                     break;
                 }
+
+                case PDAUplinkAccountLoginMessage loginMsg:
+                {
+                    _menu.LoggedInAccount = loginMsg.Account;
+                    break;
+                }
+
             }
         }
 
@@ -166,8 +173,15 @@ namespace Content.Client.GameObjects.Components.PDA
                 }
             }
 
+            public UplinkAccount LoggedInAccount
+            {
+                get => _loggedInAccount;
+                set => _loggedInAccount = value;
+            }
+
 
             private UplinkCategory _currentFilter;
+            private UplinkAccount _loggedInAccount;
 
 
             public PDAMenu(PDABoundUserInterface owner, IPrototypeManager prototypeManager)

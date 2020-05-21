@@ -70,6 +70,17 @@ namespace Content.Shared.GameObjects.Components.PDA
     }
 
     [Serializable, NetSerializable]
+    public sealed class PDAUplinkAccountLoginMessage : PDAUBoundUserInterfaceState
+    {
+
+        public UplinkAccount Account;
+        public PDAUplinkAccountLoginMessage(UplinkAccount userAccount)
+        {
+            Account = userAccount;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class PDARequestUplinkListingsMessage : BoundUserInterfaceMessage
     {
         public PDARequestUplinkListingsMessage()
