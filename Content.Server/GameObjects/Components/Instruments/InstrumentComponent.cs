@@ -24,13 +24,18 @@ namespace Content.Server.GameObjects.Components.Instruments
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
         /// </summary>
+        [ViewVariables]
         private ICommonSession _instrumentPlayer;
         private bool _handheld;
 
         [ViewVariables]
         private bool _playing = false;
 
+        [ViewVariables]
         private float _timer = 0f;
+
+        [ViewVariables]
+        public uint _lastSequencerTick = 0;
 
         [ViewVariables]
         private int _midiEventCount = 0;
@@ -43,6 +48,20 @@ namespace Content.Server.GameObjects.Components.Instruments
         /// </summary>
         [ViewVariables]
         public bool Handheld => _handheld;
+
+        /// <summary>
+        ///     Whether the instrument is currently playing or not.
+        /// </summary>
+        [ViewVariables]
+        public bool Playing
+        {
+            get => _playing;
+            set
+            {
+                _playing = value;
+                Dirty();
+            }
+        }
 
         public override void Initialize()
         {
@@ -57,6 +76,11 @@ namespace Content.Server.GameObjects.Components.Instruments
             serializer.DataField(ref _handheld, "handheld", false);
         }
 
+        public override ComponentState GetComponentState()
+        {
+            return new InstrumentState(Playing, _lastSequencerTick);
+        }
+
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -66,25 +90,25 @@ namespace Content.Server.GameObjects.Components.Instruments
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMsg:
-                    if (!_playing)
+                    if (!Playing)
                         return;
                     if(++_midiEventCount <= MaxMidiEventsPerSecond)
                         SendNetworkMessage(midiEventMsg);
+
+                    _lastSequencerTick = midiEventMsg.MidiEvent[-1].Timestamp;
                     break;
                 case InstrumentStartMidiMessage startMidi:
-                    _playing = true;
-                    SendNetworkMessage(startMidi);
+                    Playing = true;
                     break;
                 case InstrumentStopMidiMessage stopMidi:
-                    _playing = false;
-                    SendNetworkMessage(stopMidi);
+                    Playing = false;
                     break;
             }
         }
 
         public void Dropped(DroppedEventArgs eventArgs)
         {
-            _playing = false;
+            Playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
             _instrumentPlayer = null;
             _userInterface.CloseAll();
@@ -92,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         public void Thrown(ThrownEventArgs eventArgs)
         {
-            _playing = false;
+            Playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
             _instrumentPlayer = null;
             _userInterface.CloseAll();
@@ -109,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         public void HandDeselected(HandDeselectedEventArgs eventArgs)
         {
-            _playing = false;
+            Playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
             _userInterface.CloseAll();
         }
@@ -142,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             {
                 _instrumentPlayer = null;
                 SendNetworkMessage(new InstrumentStopMidiMessage());
-                _playing = false;
+                Playing = false;
             }
         }
 

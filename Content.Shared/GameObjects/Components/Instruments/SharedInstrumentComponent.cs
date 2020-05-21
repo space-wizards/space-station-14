@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.BodySystem;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -44,6 +45,19 @@ namespace Content.Shared.GameObjects.Components.Instruments
         public InstrumentMidiEventMessage(MidiEvent[] midiEvent)
         {
             MidiEvent = midiEvent;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class InstrumentState : ComponentState
+    {
+        public bool Playing { get; }
+        public uint SequencerTick { get; }
+
+        public InstrumentState(bool playing, uint sequencerTick = 0) : base(ContentNetIDs.INSTRUMENTS)
+        {
+            Playing = playing;
+            SequencerTick = sequencerTick;
         }
     }
 

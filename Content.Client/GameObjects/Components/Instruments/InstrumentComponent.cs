@@ -47,8 +47,6 @@ namespace Content.Client.GameObjects.Components.Instruments
         [ViewVariables]
         private float _timer = 0f;
 
-        private TimeSpan? _lastEvent = null;
-
         /// <summary>
         ///     Whether a midi song will loop or not.
         /// </summary>
@@ -129,8 +127,12 @@ namespace Content.Client.GameObjects.Components.Instruments
             if (IsMidiOpen)
                 CloseMidi();
 
+            _renderer?.StopAllNotes();
+
             var renderer = _renderer;
-            Timer.Spawn(1000, () => { renderer?.Dispose(); });
+
+            // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
+            Timer.Spawn(2000, () => { renderer?.Dispose(); });
             _renderer = null;
             _midiQueue.Clear();
         }
@@ -156,36 +158,30 @@ namespace Content.Client.GameObjects.Components.Instruments
                 case InstrumentMidiEventMessage midiEventMessage:
                     // If we're the ones sending the MidiEvents, we ignore this message.
                     if (!IsRendererAlive || IsInputOpen || IsMidiOpen) break;
-                    var curTime = _gameTiming.CurTime;
-                    Logger.Info($"NEW BATCH!!! LENGTH:{midiEventMessage.MidiEvent.Length} QUEUED:{_midiQueue.Count} LAST:{_lastEvent}");
                     for (var i = 0; i < midiEventMessage.MidiEvent.Length; i++)
                     {
                         var ev = midiEventMessage.MidiEvent[i];
-                        var delta = i != 0 ?
-                            ev.Timestamp.Subtract(midiEventMessage.MidiEvent[i-1].Timestamp) : _lastEvent.HasValue ? ev.Timestamp.Subtract(_lastEvent.Value) :  TimeSpan.Zero;
-                        ev.Timestamp = curTime + TimeSpan.FromSeconds(TimeBetweenNetMessages*1.25);
-                        Logger.Info($"DT:{delta} TIM:{ev.Timestamp} TIMR:{midiEventMessage.MidiEvent[i].Timestamp} LST:{midiEventMessage.MidiEvent[Math.Max(0, i-1)].Timestamp}");
-                        _midiQueue.Enqueue(ev);
-                        _lastEvent = ev.Timestamp;
+                        var delta = ((uint)TimeBetweenNetMessages*1250) + ev.Timestamp;
 
-                        //var j = i;
-                        //Timer.Spawn((int)ev.Timestamp.Subtract(_gameTiming.CurTime).TotalMilliseconds,
-                        //    () => _renderer?.SendMidiEvent(midiEventMessage.MidiEvent[j]));
+                        _renderer?.ScheduleMidiEvent(ev, delta, true);
                     }
-
-
-
-                    break;
-
-                case InstrumentStopMidiMessage _:
-                    EndRenderer();
-                    break;
-
-                case InstrumentStartMidiMessage _:
-                    SetupRenderer();
-                    Logger.Info("INITIALIZED MIDI RENDERER. I HOPE.");
                     break;
             }
+        }
+
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+            if (!(curState is InstrumentState state)) return;
+
+            if (state.Playing)
+            {
+                Logger.Info($"WE GOT STATE: {state.Playing} {state.SequencerTick}");
+                SetupRenderer();
+                if (_renderer != null) _renderer.SequencerTick = state.SequencerTick;
+            }
+            else
+                EndRenderer();
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenInput"/>
@@ -250,43 +246,25 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <param name="midiEvent">The received midi event</param>
         private void RendererOnMidiEvent(MidiEvent midiEvent)
         {
-            midiEvent.Timestamp = _gameTiming.CurTime;
             _midiQueue.Enqueue(midiEvent);
         }
 
         public override void Update(float delta)
         {
+            if (!IsMidiOpen && !IsInputOpen)
+                return;
+
             _timer -= delta;
 
             if (_timer > 0f) return;
-
-            if (!IsMidiOpen && !IsInputOpen)
-            {
-                UpdatePlaying(delta);
-                return;
-            }
 
             SendAllMidiMessages();
             _timer = TimeBetweenNetMessages;
         }
 
-        private void UpdatePlaying(float delta)
-        {
-            while (true)
-            {
-                if (_renderer == null || _midiQueue.Count == 0) return;
-                var midiEvent = _midiQueue.Dequeue();
-                _renderer.SendMidiEvent(midiEvent);
-                _timer = _midiQueue.Count != 0 ? (MathF.Max((float) _midiQueue.Peek().Timestamp.Subtract(_gameTiming.CurTime).TotalSeconds, 0f)) : 0;
-                if (_timer <= 0f) continue;
-                break;
-            }
-        }
-
         private void SendAllMidiMessages()
         {
-            var count = _midiQueue.Count;
-            if (count == 0) return;
+            if (_midiQueue.Count == 0) return;
             var events = _midiQueue.ToArray();
             _midiQueue.Clear();
 
