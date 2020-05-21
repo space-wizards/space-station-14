@@ -131,6 +131,8 @@
   - type: FootstepSound
   - type: HumanoidAppearance
   - type: HumanInventoryController
+  - type: Stunnable
+  - type: AnimationPlayer
 
 - type: entity
   save: false

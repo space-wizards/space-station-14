@@ -451,12 +451,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var item = hands.GetActiveHand?.Owner;
 
+            if(ActionBlockerSystem.CanChangeDirection(player))
+                playerTransform.LocalRotation = new Angle(coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position);
+
             if (!ActionBlockerSystem.CanInteract(player))
             {
                 return;
             }
-
-            playerTransform.LocalRotation = new Angle(coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position);
 
             // TODO: Check if client should be able to see that object to click on it in the first place
 
