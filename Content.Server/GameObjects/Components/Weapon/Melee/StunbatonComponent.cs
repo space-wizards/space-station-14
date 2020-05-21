@@ -45,10 +45,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _slowdownTime, "slowdownTime", 5f);
         }
 
-        public override void OnHitEntities(IEnumerable<IEntity> entities)
+        public override bool OnHitEntities(IReadOnlyList<IEntity> entities)
         {
-            if (!Activated)
-                return;
+            if (!Activated || entities.Count == 0)
+                return false;
 
             _entitySystemManager.GetEntitySystem<AudioSystem>()
                 .Play("/Audio/weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
@@ -62,6 +62,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 else
                     stunnable.Slowdown(_slowdownTime);
             }
+
+            return false;
         }
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
