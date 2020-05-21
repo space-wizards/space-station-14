@@ -37,6 +37,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         [CanBeNull]
         private IMidiRenderer _renderer;
         private byte _instrumentProgram = 1;
+        private uint _syncSequencerTick;
 
         /// <summary>
         ///     A queue of MidiEvents to be sent to the server.
@@ -161,8 +162,7 @@ namespace Content.Client.GameObjects.Components.Instruments
                     for (var i = 0; i < midiEventMessage.MidiEvent.Length; i++)
                     {
                         var ev = midiEventMessage.MidiEvent[i];
-                        var delta = ((uint)TimeBetweenNetMessages*1250) + ev.Timestamp;
-
+                        var delta = ((uint)TimeBetweenNetMessages*1250) + ev.Timestamp - _syncSequencerTick;
                         _renderer?.ScheduleMidiEvent(ev, delta, true);
                     }
                     break;
@@ -178,7 +178,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             {
                 Logger.Info($"WE GOT STATE: {state.Playing} {state.SequencerTick}");
                 SetupRenderer();
-                if (_renderer != null) _renderer.SequencerTick = state.SequencerTick;
+                _syncSequencerTick = state.SequencerTick;
             }
             else
                 EndRenderer();

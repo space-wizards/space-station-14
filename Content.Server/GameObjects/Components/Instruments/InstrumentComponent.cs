@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Instruments
                     if(++_midiEventCount <= MaxMidiEventsPerSecond)
                         SendNetworkMessage(midiEventMsg);
 
-                    _lastSequencerTick = midiEventMsg.MidiEvent[-1].Timestamp;
+                    _lastSequencerTick = midiEventMsg.MidiEvent[^1].Timestamp;
                     break;
                 case InstrumentStartMidiMessage startMidi:
                     Playing = true;
