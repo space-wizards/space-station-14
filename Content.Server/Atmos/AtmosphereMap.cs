@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Atmos;
@@ -8,6 +9,7 @@ using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -99,8 +101,15 @@ namespace Content.Server.Atmos
                 return null;
             }
 
-            // TODO create default atmosphere
-            atmosphere = new Atmosphere(GetVolumeForCells(connected.Count));
+            var totalVolume = GetVolumeForCells(connected.Count);
+            atmosphere = new Atmosphere(totalVolume);
+            // TODO: Not hardcode this
+            var oneAtmosphere = 101325; // 1 atm in Pa
+            var roomTemp = 293.15f; // 20c in k
+            // Calculating moles to add: n = (PV)/(RT)
+            var totalMoles = (oneAtmosphere * totalVolume) / (Atmosphere.R * roomTemp);
+            atmosphere.Add(new Gas("oxygen"), totalMoles * 0.2f, roomTemp);
+            atmosphere.Add(new Gas("nitrogen"), totalMoles * 0.8f, roomTemp);
 
             foreach (var c in connected)
                 _atmospheres[c] = atmosphere;
@@ -234,9 +243,17 @@ namespace Content.Server.Atmos
                 }
 
                 // If the sides were all connected, this atmosphere is intact
-                // TODO in some way adjust the atmosphere volume
                 if (i == 1)
+                {
+                    if (atmos != null)
+                    {
+                        var coveredVolume = GetVolumeForCells(1);
+                        // Assumption: we covered one cell - so remove that amount of gas
+                        atmos.Take(coveredVolume);
+                        atmos.Volume -= coveredVolume;
+                    }
                     continue;
+                }
 
                 // If any of the sides that used to have this atmosphere are now exposed to space, remove
                 // all the old atmosphere's cells.
@@ -264,7 +281,7 @@ namespace Content.Server.Atmos
                     {
                         newAtmos.Temperature = atmos.Temperature;
                         foreach (var gas in atmos.Gasses)
-                            newAtmos.SetQuantity(gas.Gas, gas.Volume * newAtmos.Volume / atmos.Volume);
+                            newAtmos.SetQuantity(gas.Gas, gas.Quantity * newAtmos.Volume / atmos.Volume);
                     }
 
                     foreach (var cpos in connected)
@@ -301,7 +318,7 @@ namespace Content.Server.Atmos
 
                     // Copy all the gasses across
                     foreach (var gas in atmos.Gasses)
-                        replacement.Add(gas.Gas, gas.Volume, atmos.Temperature);
+                        replacement.Add(gas.Gas, gas.Quantity, atmos.Temperature);
                 }
             }
 
@@ -352,27 +369,35 @@ namespace Content.Server.Atmos
 
     internal class Atmosphere : IAtmosphere
     {
-        // The universal gas constant, in cubic meters/pascals/kelvin/mols
+        // The universal gas constant, in (cubic meters*pascals)/(kelvin*mols)
         // Note this is in pascals, NOT kilopascals - divide by 1000 to convert it
-        private const float R = 8.314462618f;
+        public const float R = 8.314462618f;
 
         private readonly Dictionary<Gas, float> _quantities = new Dictionary<Gas, float>();
         private float _temperature;
+        private float _volume;
 
         public Atmosphere(float volume)
         {
             Volume = volume;
-            UpdateCached();
         }
 
         public IEnumerable<GasProperty> Gasses => _quantities.Select(p => new GasProperty
         {
             Gas = p.Key,
-            Volume = p.Value,
+            Quantity = p.Value,
             PartialPressure = p.Value * PressureRatio
         });
 
-        public float Volume { get; }
+
+        public float Volume {
+            get => _volume;
+            set
+            {
+                _volume = value;
+                UpdateCached();
+            }
+        }
 
         public float Pressure => Quantity * PressureRatio;
 
@@ -445,13 +470,35 @@ namespace Content.Server.Atmos
             return quantity;
         }
 
+        public IAtmosphere Take(float volume)
+        {
+            var taken = Math.Min(volume, Volume);
+            var takenProportion = taken / Volume;
+
+            Debug.Assert(0f <= takenProportion && takenProportion <= 1f);
+
+            var mixture = new Atmosphere(taken);
+
+            foreach (var gas in _quantities.Keys.ToList())
+            {
+                var takenQuantity = _quantities[gas] * takenProportion;
+                _quantities[gas] -= takenQuantity;
+
+                mixture.SetQuantity(gas, takenQuantity);
+            }
+            UpdateCached();
+
+            return mixture;
+        }
+
         private void UpdateCached()
         {
             float q = 0;
             foreach (var value in _quantities.Values) q += value;
             Quantity = q;
 
-            PressureRatio = R * Temperature / Volume;
+            // Remember, R is in Pa - so we divide by 1000 to get kPa
+            PressureRatio = R * Temperature / Volume / 1000;
         }
     }
 }

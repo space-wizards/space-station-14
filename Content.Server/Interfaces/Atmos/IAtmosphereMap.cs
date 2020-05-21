@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.Atmos;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Map;
@@ -51,6 +51,11 @@ namespace Content.Server.Interfaces.Atmos
     /// Airlocks separate
     /// atmospheres (as the name implies) and thus the station will have many different
     /// atmospheres.
+    ///
+    /// Every cell in an atmosphere has a path to every other cell
+    /// without passing through any solid walls, or passing through airlocks
+    /// and similar objects which can block gas flow.
+    /// </remarks>
     /// </remarks>
     public interface IGridAtmosphereManager
     {
@@ -74,13 +79,8 @@ namespace Content.Server.Interfaces.Atmos
     }
 
     /// <summary>
-    /// Represents a single 'region' of the station, inside which air can mix freely.
+    /// Represents a single gas container inside which air can mix freely.
     /// </summary>
-    /// <remarks>
-    /// Every cell in a region has a path to every other cell
-    /// without passing through any solid walls, or passing through airlocks
-    /// and similar objects which can block gas flow.
-    /// </remarks>
     public interface IAtmosphere
     {
         /// <summary>
@@ -89,12 +89,12 @@ namespace Content.Server.Interfaces.Atmos
         IEnumerable<GasProperty> Gasses { get; }
 
         /// <summary>
-        /// The volume of the room enclosed by this atmosphere, in cubic meters
+        /// The volume enclosed by this atmosphere, in cubic meters
         /// </summary>
         float Volume { get; }
 
         /// <summary>
-        /// The total pressure of this room, in kilopascals
+        /// The total pressure of this atmosphere, in kilopascals
         /// </summary>
         /// <remarks>
         /// Governed by the ideal gas law
@@ -102,7 +102,7 @@ namespace Content.Server.Interfaces.Atmos
         float Pressure { get; }
 
         /// <summary>
-        /// The combined quantity of all gasses in this room, in mols
+        /// The combined quantity of all gasses in this atmosphere, in mols
         /// </summary>
         /// <remarks>
         /// This function must be constant time with respect to the contents of the atmosphere.
@@ -175,5 +175,12 @@ namespace Content.Server.Interfaces.Atmos
         /// <param name="volume">The desired volume</param>
         /// <returns>The actual volume</returns>
         float SetQuantity(Gas gas, float quantity);
+
+        /// <summary>
+        /// Remove a given volume of gas from the atmosphere, getting the mixture removed.
+        /// </summary>
+        /// <param name="volume">The volume of gas to remove.</param>
+        /// <returns>A new <see cref="IAtmosphere"/> containing the removed gases.</returns>
+        IAtmosphere Take(float volume);
     }
 }
