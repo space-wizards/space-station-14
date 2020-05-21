@@ -118,7 +118,6 @@ namespace Content.Server.GameObjects.Components.Instruments
                     break;
                 case InstrumentStartMidiMessage startMidi:
                     Playing = true;
-                    _batchesDropped = 0;
                     break;
                 case InstrumentStopMidiMessage stopMidi:
                     Playing = false;
@@ -202,6 +201,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
             if (_batchesDropped > MaxMidiBatchDropped && _instrumentPlayer != null)
             {
+                _batchesDropped = 0;
                 var mob = _instrumentPlayer.AttachedEntity;
                 if (mob.TryGetComponent(out StunnableComponent stun))
                     stun.Stun(1);
