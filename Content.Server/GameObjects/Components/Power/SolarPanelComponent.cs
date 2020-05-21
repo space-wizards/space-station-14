@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         /// <summary>
         /// Current coverage of this panel (from 0 to 1).
-        /// This is updated by PowerSolarSystem.
+        /// This is updated by <see cref='PowerSolarSystem'/>.
         /// </summary>
         private float _coverage = 0;
         [ViewVariables]

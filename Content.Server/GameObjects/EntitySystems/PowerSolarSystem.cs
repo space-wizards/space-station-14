@@ -8,7 +8,7 @@ using System;
 namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
-    ///     Responsible for maintaining the solar-panel sun angle and updating solar panel coverage.
+    ///     Responsible for maintaining the solar-panel sun angle and updating <see cref='SolarPanelComponent'/> coverage.
     /// </summary>
     [UsedImplicitly]
     public class PowerSolarSystem: EntitySystem
