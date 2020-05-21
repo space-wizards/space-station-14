@@ -126,12 +126,13 @@ namespace Content.Shared.GameObjects.Components.PDA
     {
         public string ItemID;
         public int Price;
-        public string Category;
+        public UplinkCategory Category;
         public string Description;
         public string ListingName;
 
         public UplinkListingData(string listingName,string itemId,
-            int price, string category, string description) : base(ContentNetIDs.PDA)
+            int price, UplinkCategory category,
+            string description) : base(ContentNetIDs.PDA)
         {
             ListingName = listingName;
             Price = price;

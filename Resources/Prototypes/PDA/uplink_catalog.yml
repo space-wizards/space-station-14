@@ -1,13 +1,26 @@
 
 - type: uplinkListing
+  id: UplinkPen
+  category: Utility
+  itemId: Pen
+  price: 2
+
+- type: uplinkListing
   id: UplinkPistolClarissa
   category: Weapon
   itemId: PistolClarissa
-  price: 5
+  price: 15
+
 
 - type: uplinkListing
   id:  UplinkPistolDeagle
   category: Weapon
   itemId: PistolDeagle
+  price: 30
+
+- type: uplinkListing
+  id:  UplinkMagazineFedShotgun
+  category: Weapon
+  itemId: MagazineFedShotgun
   price: 50
   description: For when you want ZERO evidence left behind.

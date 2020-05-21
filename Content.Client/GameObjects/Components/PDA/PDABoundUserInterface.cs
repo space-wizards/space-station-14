@@ -17,7 +17,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.PDA
 {
-
     public class PDABoundUserInterface : BoundUserInterface
     {
 #pragma warning disable 649
@@ -25,6 +24,7 @@ namespace Content.Client.GameObjects.Components.PDA
 #pragma warning restore 649
         private PDAMenu _menu;
         private ClientUserInterfaceComponent Owner;
+
         public PDABoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
             Owner = owner;
@@ -39,7 +39,6 @@ namespace Content.Client.GameObjects.Components.PDA
             _menu.FlashLightToggleButton.OnToggled += args =>
             {
                 SendMessage(new PDAToggleFlashlightMessage());
-
             };
 
             _menu.EjectIDButton.OnPressed += args =>
@@ -58,7 +57,7 @@ namespace Content.Client.GameObjects.Components.PDA
 
             _menu.OnListingButtonPressed += args =>
             {
-                if (!_menu.UplinkListingDatas.TryGetValue(args.Button, out var listing))
+                if (!_menu.UplinkListingDataButtons.TryGetValue(args.Button, out var listing))
                 {
                     return;
                 }
@@ -66,7 +65,11 @@ namespace Content.Client.GameObjects.Components.PDA
                 SendMessage(new PDAUplinkBuyListingMessage(listing));
             };
 
-
+            _menu.OnCategoryButtonPressed += (args, category) =>
+            {
+                _menu.CurrentFilterCategory = category;
+                SendMessage(new PDARequestUplinkListingsMessage());
+            };
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -77,11 +80,11 @@ namespace Content.Client.GameObjects.Components.PDA
             var cstate = (PDAUBoundUserInterfaceState) state;
             switch (state)
             {
-
                 case PDAUpdateMainMenuState msg:
                 {
                     _menu.FlashLightToggleButton.Pressed = msg.FlashlightEnabled;
-                    _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("Owner: [color=white]{0}[/color]",msg.PDAOwnerInfo.ActualOwnerName));
+                    _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("Owner: [color=white]{0}[/color]",
+                        msg.PDAOwnerInfo.ActualOwnerName));
 
                     if (msg.PDAOwnerInfo.JobTitle == null || msg.PDAOwnerInfo.IDOwner == null)
                     {
@@ -89,7 +92,8 @@ namespace Content.Client.GameObjects.Components.PDA
                     }
                     else
                     {
-                        _menu.IDInfoLabel.SetMarkup(Loc.GetString("ID: [color=white]{0}[/color], [color=yellow]{1}[/color]",
+                        _menu.IDInfoLabel.SetMarkup(Loc.GetString(
+                            "ID: [color=white]{0}[/color], [color=yellow]{1}[/color]",
                             msg.PDAOwnerInfo.IDOwner,
                             msg.PDAOwnerInfo.JobTitle));
                     }
@@ -105,25 +109,22 @@ namespace Content.Client.GameObjects.Components.PDA
                     {
                         _menu.AddListingGUI(item);
                     }
+
                     break;
                 }
             }
-
         }
-
 
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
             _menu?.Dispose();
-
         }
 
 
         private class PDAMenu : SS14Window
         {
-
             protected override Vector2? CustomSize => (512, 256);
 
             private PDABoundUserInterface _owner { get; }
@@ -139,27 +140,48 @@ namespace Content.Client.GameObjects.Components.PDA
 
             public VBoxContainer UplinkTabContainer { get; }
 
+            protected HSplitContainer CategoryAndListingsContainer;
+
             private IPrototypeManager _prototypeManager;
 
             public VBoxContainer UplinkListingsContainer;
 
-            public Dictionary<BaseButton, UplinkListingData> UplinkListingDatas;
+            public VBoxContainer CategoryListContainer;
 
+            public Dictionary<BaseButton, UplinkListingData> UplinkListingDataButtons;
             public event Action<BaseButton.ButtonEventArgs> OnListingButtonPressed;
+            public event Action<BaseButton.ButtonEventArgs, UplinkCategory> OnCategoryButtonPressed;
+
+            public UplinkCategory CurrentFilterCategory
+            {
+                get => _currentFilter;
+                set
+                {
+                    if (value.GetType() != typeof(UplinkCategory))
+                    {
+                        return;
+                    }
+
+                    _currentFilter = value;
+                }
+            }
+
+
+            private UplinkCategory _currentFilter;
+
 
             public PDAMenu(PDABoundUserInterface owner, IPrototypeManager prototypeManager)
             {
-
                 _owner = owner;
                 _prototypeManager = prototypeManager;
                 Title = Loc.GetString("PDA");
+                UplinkListingDataButtons = new Dictionary<BaseButton, UplinkListingData>();
 
-                UplinkListingDatas = new Dictionary<BaseButton, UplinkListingData>();
+
                 #region MAIN_MENU_TAB
                 //Main menu
                 PDAOwnerLabel = new RichTextLabel
                 {
-
                 };
 
                 IDInfoLabel = new RichTextLabel()
@@ -172,7 +194,6 @@ namespace Content.Client.GameObjects.Components.PDA
                     Text = Loc.GetString("Eject ID"),
                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                     SizeFlagsVertical = SizeFlags.ShrinkCenter
-
                 };
 
                 var innerHBoxContainer = new HBoxContainer
@@ -203,7 +224,7 @@ namespace Content.Client.GameObjects.Components.PDA
                 {
                     SizeFlagsVertical = SizeFlags.FillExpand,
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    CustomMinimumSize = (50,50),
+                    CustomMinimumSize = (50, 50),
 
                     Children =
                     {
@@ -212,62 +233,94 @@ namespace Content.Client.GameObjects.Components.PDA
                         FlashLightToggleButton
                     }
                 };
+
                 #endregion
 
                 #region UPLINK_TAB
-                 //Uplink Tab
 
-                 var uplinkStoreHeader = new Label
-                 {
+                //Uplink Tab
+
+                CategoryListContainer = new VBoxContainer
+                {
+
+                };
+                var uplinkStoreHeader = new Label
+                {
                     Align = Label.AlignMode.Center,
                     Text = Loc.GetString("Uplink Listings"),
-                 };
+                };
 
-                 var masterPanelContainer = new PanelContainer
-                 {
-                     PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Red.WithAlpha(0.20f)},
-                 };
+                //Red background container.
+                var masterPanelContainer = new PanelContainer
+                {
+                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.DarkRed.WithAlpha(0.6f)},
+                    SizeFlagsVertical = SizeFlags.FillExpand
+                };
 
-                 var _uplinkShopScrollContainer = new ScrollContainer
-                 {
-                     SizeFlagsHorizontal = SizeFlags.FillExpand,
-                     SizeFlagsVertical = SizeFlags.Expand,
-                     SizeFlagsStretchRatio = 2,
-                     CustomMinimumSize = (100,256)
-                 };
+                //This contains both the panel of the category buttons and the listings box.
+                CategoryAndListingsContainer = new HSplitContainer
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                };
 
-                 masterPanelContainer.AddChild(_uplinkShopScrollContainer);
-                 UplinkListingsContainer = new VBoxContainer
-                 {
-                     SizeFlagsHorizontal = SizeFlags.FillExpand,
-                     SizeFlagsVertical = SizeFlags.Expand,
-                     SizeFlagsStretchRatio = 2,
-                     CustomMinimumSize = (100,256),
-                 };
 
-                 _uplinkShopScrollContainer.AddChild(UplinkListingsContainer);
+                var _uplinkShopScrollContainer = new ScrollContainer
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    SizeFlagsStretchRatio = 2,
+                    CustomMinimumSize = (100, 256)
+                };
+
+                //Add the category list to the left side. The store to the right.
+                var categoryListContainerBackground = new PanelContainer
+                {
+                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.4f)},
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    Children =
+                    {
+                        CategoryListContainer
+                    }
+
+                };
+
+                CategoryAndListingsContainer.AddChild(categoryListContainerBackground);
+                CategoryAndListingsContainer.AddChild(_uplinkShopScrollContainer);
+                masterPanelContainer.AddChild(CategoryAndListingsContainer);
+
+                //Actual list of buttons.
+                UplinkListingsContainer = new VBoxContainer
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    SizeFlagsStretchRatio = 2,
+                    CustomMinimumSize = (100, 256),
+                };
+                _uplinkShopScrollContainer.AddChild(UplinkListingsContainer);
 
                 var innerVboxContainer = new VBoxContainer
-                 {
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+
                     Children =
                     {
                         uplinkStoreHeader,
                         masterPanelContainer
                     }
-                 };
+                };
 
-                 UplinkTabContainer = new VBoxContainer
-                 {
-                     Children =
-                     {
-                         innerVboxContainer
-                     }
-                 };
+                UplinkTabContainer = new VBoxContainer
+                {
+                    Children =
+                    {
+                        innerVboxContainer
+                    }
+                };
+                PopulateCategories();
                 #endregion
 
                 MasterTabContainer = new TabContainer
                 {
-
                     Children =
                     {
                         mainMenuTabContainer,
@@ -275,18 +328,38 @@ namespace Content.Client.GameObjects.Components.PDA
                     }
                 };
 
-                MasterTabContainer.SetTabTitle(0,Loc.GetString("Main Menu"));
-                MasterTabContainer.SetTabTitle(1,Loc.GetString("Uplink -DEBUG-"));
+                MasterTabContainer.SetTabTitle(0, Loc.GetString("Main Menu"));
+                MasterTabContainer.SetTabTitle(1, Loc.GetString("Uplink -DEBUG-"));
                 Contents.AddChild(MasterTabContainer);
+            }
+
+            private void PopulateCategories()
+            {
+
+                foreach (UplinkCategory cat in Enum.GetValues(typeof (UplinkCategory)))
+                {
+
+                    var catButton = new PDAUplinkCategoryButton
+                    {
+                        Text = Loc.GetString(cat.ToString()),
+                        ButtonCategory = cat
+
+                    };
+
+                    catButton.OnPressed += args => OnCategoryButtonPressed?.Invoke(args, catButton.ButtonCategory);
+
+                    CategoryListContainer.AddChild(catButton);
+                }
+
             }
 
             public void AddListingGUI(UplinkListingData listing)
             {
-
-                if (!_prototypeManager.TryIndex(listing.ItemID, out EntityPrototype prototype))
+                if (!_prototypeManager.TryIndex(listing.ItemID, out EntityPrototype prototype) || listing.Category != CurrentFilterCategory)
                 {
                     return;
                 }
+
 
                 var itemLabel = new Label
                 {
@@ -300,39 +373,75 @@ namespace Content.Client.GameObjects.Components.PDA
                     Text = $"{listing.Price} TC",
                     Align = Label.AlignMode.Right,
                 };
+
+
+                //lmao
+                var itemColor = Color.White;
+                if (listing.Price <= 5)
+                {
+                    itemColor = Color.White;
+                }
+                else if (listing.Price >= 10 && listing.Price < 30)
+                {
+                    itemColor = Color.Yellow;
+                }
+                else if (listing.Price >= 30 && listing.Price < 50)
+                {
+                    itemColor = Color.Orange;
+                }
+                else
+                {
+                    itemColor = Color.Cyan;
+                }
+
+
                 var hbox = new HBoxContainer
                 {
+                    Modulate = itemColor,
                     Children =
                     {
                         itemLabel,
                         priceLabel
                     }
                 };
-                var button = new PDAUplinkItemButton
+
+                var hboxPanelBG = new PanelContainer
                 {
-                    SizeFlagsVertical = SizeFlags.Fill,
                     Children =
                     {
                         hbox
                     }
                 };
 
+                var button = new PDAUplinkItemButton
+                {
+                    SizeFlagsVertical = SizeFlags.Fill,
+                    Children =
+                    {
+                        hboxPanelBG
+                    }
+                };
+
                 button.OnPressed += args => OnListingButtonPressed?.Invoke(args);
                 UplinkListingsContainer.AddChild(button);
-                UplinkListingDatas.Add(button,listing);
+                UplinkListingDataButtons.Add(button, listing);
             }
+
 
             public void ClearListings()
             {
                 UplinkListingsContainer.Children.Clear();
             }
+
             private sealed class PDAUplinkItemButton : ContainerButton
             {
+            }
+
+            public class PDAUplinkCategoryButton : Button
+            {
+                public UplinkCategory ButtonCategory;
 
             }
         }
     }
-
-
-
 }
