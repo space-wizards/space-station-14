@@ -1,4 +1,8 @@
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Instruments;
 using NFluidsynth;
 using Robust.Server.GameObjects;
@@ -8,6 +12,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -21,6 +26,8 @@ namespace Content.Server.GameObjects.Components.Instruments
     public class InstrumentComponent : SharedInstrumentComponent,
         IDropped, IHandSelected, IHandDeselected, IActivate, IUse, IThrown
     {
+        [Dependency] private IServerNotifyManager _notifyManager;
+
         // These 2 values are quite high for now, and this could be easily abused. Change this if people are abusing it.
         public const int MaxMidiEventsPerSecond = 20;
         public const int MaxMidiEventsPerBatch = 50;
@@ -195,7 +202,13 @@ namespace Content.Server.GameObjects.Components.Instruments
 
             if (_batchesDropped > MaxMidiBatchDropped && _instrumentPlayer != null)
             {
-                //TODO
+                var mob = _instrumentPlayer.AttachedEntity;
+                if (mob.TryGetComponent(out StunnableComponent stun))
+                    stun.Stun(1);
+                else
+                    StandingStateHelper.DropAllItemsInHands(mob);
+
+                _notifyManager.PopupMessage(Owner, mob, "Your fingers cramp up from playing!");
             }
 
             _timer += delta;
