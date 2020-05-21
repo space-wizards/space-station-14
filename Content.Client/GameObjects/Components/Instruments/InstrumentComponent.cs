@@ -176,7 +176,6 @@ namespace Content.Client.GameObjects.Components.Instruments
 
             if (state.Playing)
             {
-                Logger.Info($"WE GOT STATE: {state.Playing} {state.SequencerTick}");
                 SetupRenderer();
                 _syncSequencerTick = state.SequencerTick;
             }
