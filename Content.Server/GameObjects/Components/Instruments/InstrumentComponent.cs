@@ -11,6 +11,8 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Logger = Robust.Shared.Log.Logger;
+using MidiEvent = Robust.Shared.Audio.Midi.MidiEvent;
 
 namespace Content.Server.GameObjects.Components.Instruments
 {
@@ -19,7 +21,10 @@ namespace Content.Server.GameObjects.Components.Instruments
     public class InstrumentComponent : SharedInstrumentComponent,
         IDropped, IHandSelected, IHandDeselected, IActivate, IUse, IThrown
     {
+        // These 2 values are quite high for now, and this could be easily abused. Change this if people are abusing it.
         public const int MaxMidiEventsPerSecond = 20;
+        public const int MaxMidiEventsPerBatch = 50;
+        public const int MaxMidiBatchDropped = 20;
 
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
@@ -35,7 +40,10 @@ namespace Content.Server.GameObjects.Components.Instruments
         private float _timer = 0f;
 
         [ViewVariables]
-        public uint _lastSequencerTick = 0;
+        private int _batchesDropped = 0;
+
+        [ViewVariables]
+        private uint _lastSequencerTick = 0;
 
         [ViewVariables]
         private int _midiEventCount = 0;
@@ -92,16 +100,22 @@ namespace Content.Server.GameObjects.Components.Instruments
                 case InstrumentMidiEventMessage midiEventMsg:
                     if (!Playing)
                         return;
-                    if(++_midiEventCount <= MaxMidiEventsPerSecond)
+
+                    if (++_midiEventCount <= MaxMidiEventsPerSecond &&
+                        midiEventMsg.MidiEvent.Length < MaxMidiEventsPerBatch)
                         SendNetworkMessage(midiEventMsg);
+                    else
+                        _batchesDropped++; // Batch dropped!
 
                     _lastSequencerTick = midiEventMsg.MidiEvent[^1].Timestamp;
                     break;
                 case InstrumentStartMidiMessage startMidi:
                     Playing = true;
+                    _batchesDropped = 0;
                     break;
                 case InstrumentStopMidiMessage stopMidi:
                     Playing = false;
+                    _lastSequencerTick = 0;
                     break;
             }
         }
@@ -178,6 +192,11 @@ namespace Content.Server.GameObjects.Components.Instruments
         public override void Update(float delta)
         {
             base.Update(delta);
+
+            if (_batchesDropped > MaxMidiBatchDropped && _instrumentPlayer != null)
+            {
+                //TODO
+            }
 
             _timer += delta;
             if (_timer < 1) return;
