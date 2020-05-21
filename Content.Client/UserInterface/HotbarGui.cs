@@ -14,7 +14,7 @@ namespace Content.Client.UserInterface
         private VBoxContainer _vBox;
         private TextureButton _hideButton;
 
-        public Action<BaseButton.ButtonEventArgs, int> OnPressed;
+        public event Action<BaseButton.ButtonToggledEventArgs, int> OnToggled;
 
         public HotbarGui()
         {
@@ -27,9 +27,9 @@ namespace Content.Client.UserInterface
             HotbarButton CreateSlot(int index)
             {
                 var button = new HotbarButton(null, index);
-                button.OnPressed += args =>
+                button.OnToggled += args =>
                 {
-                    OnPressed?.Invoke(args, index);
+                    OnToggled?.Invoke(args, index);
                 };
                 _slots.Add(button);
                 return button;
@@ -50,11 +50,20 @@ namespace Content.Client.UserInterface
 
         public void SetSlot(int index, Texture texture)
         {
-            if (index >= _slots.Count)
+            if (index < 0 || index >= _slots.Count)
             {
                 return;
             }
             _slots[index].Texture.Texture = texture;
+        }
+
+        public void UnpressSlot(int index)
+        {
+            if (index < 0 || index >= _slots.Count)
+            {
+                return;
+            }
+            _slots[index].Pressed = false;
         }
 
         public class HotbarButton : ContainerButton
@@ -69,6 +78,7 @@ namespace Content.Client.UserInterface
             {
                 AddStyleClass(StyleClassButtonRect);
                 CustomMinimumSize = (64, 64);
+                ToggleMode = true;
 
                 Index = index;
 

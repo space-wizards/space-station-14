@@ -8,6 +8,7 @@ using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
@@ -100,13 +101,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            var ability = hotbarComponent._abilities.ElementAtOrDefault(index);
-            if (ability == null)
-            {
-                return false;
-            }
-
-            ability.Activate(args);
+            hotbarComponent.TriggerAbility(index, args);
             return true;
         }
 
@@ -120,6 +115,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (inputSys.BindMap.TryGetHandler(EngineKeyFunctions.Use, out var handler))
             {
                 _previousHandler = handler;
+                inputSys.BindMap.UnbindFunction(EngineKeyFunctions.Use);
             }
 
             _boundAbility = ability;
@@ -144,6 +140,20 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _boundAbility = null;
             inputSys.BindMap.UnbindFunction(EngineKeyFunctions.Use);
+
+            if (_previousHandler != null)
+            {
+                inputSys.BindMap.BindFunction(EngineKeyFunctions.Use, _previousHandler);
+                _previousHandler = null;
+            }
+
+            if (_playerManager.LocalPlayer.ControlledEntity == null
+                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out HotbarComponent hotbarComponent))
+            {
+                return;
+            }
+
+            hotbarComponent.UnpressHotbarSlot(ability);
         }
     }
 
@@ -152,12 +162,12 @@ namespace Content.Client.GameObjects.EntitySystems
         public string Name;
         public Texture Texture;
         public Action<ICommonSession, GridCoordinates, EntityUid, Ability> ActivateAction;
-        public Func<bool> SelectAction;
+        public Action<BaseButton.ButtonToggledEventArgs> SelectAction;
         public TimeSpan? Start;
         public TimeSpan? End;
         public TimeSpan? Cooldown;
 
-        public Ability(string name, string texturePath, Action<ICommonSession, GridCoordinates, EntityUid, Ability> activateAction, Func<bool> selectAction, TimeSpan? cooldown)
+        public Ability(string name, string texturePath, Action<ICommonSession, GridCoordinates, EntityUid, Ability> activateAction, Action<BaseButton.ButtonToggledEventArgs> selectAction, TimeSpan? cooldown)
         {
             Name = name;
             if (texturePath != null)
@@ -181,9 +191,9 @@ namespace Content.Client.GameObjects.EntitySystems
             ActivateAction?.Invoke(args.Session, args.Coordinates, args.EntityUid, this);
         }
 
-        public void Select()
+        public void Select(BaseButton.ButtonToggledEventArgs args)
         {
-            SelectAction?.Invoke();
+            SelectAction?.Invoke(args);
         }
     }
 

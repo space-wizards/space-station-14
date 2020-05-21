@@ -6,6 +6,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs.Abilities;
 using Content.Shared.Physics;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
@@ -97,15 +98,22 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
             return;
         }
 
-        private bool SelectAbility()
+        private void SelectAbility(BaseButton.ButtonToggledEventArgs args)
         {
             if (!_entitySystemManager.TryGetEntitySystem<HotbarSystem>(out var hotbarSystem))
             {
-                return false;
+                return;
             }
 
-            hotbarSystem.BindUse(Ability);
-            return true;
+            if (args.Pressed)
+            {
+                hotbarSystem.BindUse(Ability);
+            }
+            else
+            {
+                hotbarSystem.UnbindUse(Ability);
+            }
+            return;
         }
     }
 }

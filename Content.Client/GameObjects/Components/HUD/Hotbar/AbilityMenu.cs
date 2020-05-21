@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
     {
         public ItemList ItemList;
 
-        public Action<ItemList.ItemListEventArgs> OnPressed;
+        public event Action<ItemList.ItemListSelectedEventArgs> OnPressed;
 
         public AbilityMenu()
         {
@@ -21,9 +21,9 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
             CustomMinimumSize = (300, 300);
 
             ItemList = new ItemList();
-            AddChild(ItemList);
+            Contents.AddChild(ItemList);
 
-            ItemList.OnItemSelected += OnPressed;
+            ItemList.OnItemSelected += (args) => OnPressed?.Invoke(args);
         }
 
         public void Populate(List<Ability> abilities)
