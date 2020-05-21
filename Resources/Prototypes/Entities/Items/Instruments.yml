@@ -17,7 +17,7 @@
   id: SynthesizerInstrument
   components:
   - type: Instrument
-    program: 2
+    program: 62
   - type: Sprite
     sprite: Objects/Instruments/h_synthesizer.rsi
     state: icon
@@ -35,7 +35,7 @@
   id: AcousticGuitarInstrument
   components:
   - type: Instrument
-    program: 25
+    program: 24
   - type: Sprite
     sprite: Objects/Instruments/guitar.rsi
     state: icon
