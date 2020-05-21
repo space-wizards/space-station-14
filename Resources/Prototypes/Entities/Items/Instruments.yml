@@ -43,7 +43,7 @@
     sprite: Objects/Instruments/guitar.rsi
     state: icon
   - type: Item
-    Size: 24
+    Size: 25
     sprite: Objects/Instruments/guitar.rsi
 
 - type: entity
