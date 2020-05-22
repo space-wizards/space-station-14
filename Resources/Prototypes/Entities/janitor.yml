@@ -78,8 +78,6 @@
   - type: Physics
     mass: 5
     Anchored: false
-  - type: Sound
-
 
 - type: entity
   name: wet floor sign

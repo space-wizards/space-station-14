@@ -148,6 +148,14 @@ namespace Content.Client
                 "RandomPottedPlant",
                 "CommunicationsConsole",
                 "BarSign",
+                "DroppedBodyPart",
+                "DroppedMechanism",
+                "BodyManager",
+                "Stunnable",
+                "SolarPanel",
+                "BodyScanner",
+                "Stunbaton",
+                "EmergencyClosetFill"
             };
 
             foreach (var ignoreName in registerIgnore)
