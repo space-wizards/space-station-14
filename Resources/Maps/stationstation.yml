@@ -1976,7 +1976,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 253
-  type: YellowToolboxItemFilled
+  type: ToolboxElectricalFilled
   components:
   - parent: 0
     pos: -0.8099712,-5.21454
@@ -1988,7 +1988,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 254
-  type: YellowToolboxItemFilled
+  type: ToolboxElectricalFilled
   components:
   - parent: 0
     pos: -0.5597038,-5.679647
