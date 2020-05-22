@@ -37,6 +37,12 @@
   - type: Icon
     state: eng_rad_door
 
+# Filled
+- type: entity
+  id: LockerRadiationSuitFilled
+  parent: LockerRadiationSuit
+  suffix: Filled
+
 # Emergency closet
 - type: entity
   id: LockerEmergency
@@ -51,6 +57,12 @@
 
   - type: Icon
     state: emergency_door
+
+# Filled random
+- type: entity
+  id: LockerEmergencyFilledRandom
+  parent: LockerEmergency
+  suffix: Filled, Random
 
 
 # Fire safety closet
@@ -68,6 +80,11 @@
   - type: Icon
     state: fire_door
 
+# Filled
+- type: entity
+  id: LockerFireFilled
+  parent: LockerFire
+  suffix: Filled
 
 # EOD closet
 - type: entity
@@ -83,3 +100,9 @@
 
   - type: Icon
     state: bomb_door
+
+# Filled
+- type: entity
+  id: LockerBombFilled
+  parent: LockerBomb
+  suffix: Filled
