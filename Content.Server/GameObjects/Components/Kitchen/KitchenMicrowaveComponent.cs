@@ -224,6 +224,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (!itemEntity.TryGetComponent(typeof(FoodComponent), out var food))
             {
+
+                _notifyManager.PopupMessage(Owner, eventArgs.User, "That won't work!");
                 return false;
             }
 
