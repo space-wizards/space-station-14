@@ -148,3 +148,868 @@
 
   - type: Icon
     state: science_door
+
+- type: entity
+  id: LockerArmory
+  name: Armory Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: armory
+    - state: armory_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: armory_open
+      state_closed: armory_door
+
+  - type: Icon
+    state: armory_door
+
+- type: entity
+  id: LockerAlien
+  name: Alien Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: alien
+    - state: alien_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: alien_open
+      state_closed: alien_door
+
+  - type: Icon
+    state: alien_door
+
+- type: entity
+  id: LockerAtmos
+  name: Atmospherics Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: atmos
+    - state: atmos_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: atmos_open
+      state_closed: atmos_door
+
+  - type: Icon
+    state: atmos_door
+
+- type: entity
+  id: LockerAbductor
+  name: Abductor
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: abductor
+    - state: abductor_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: abductor_open
+      state_closed: abductor_door
+
+  - type: Icon
+    state: abductor_door
+
+- type: entity
+  id: LockerBio
+  name: Bio Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: bio
+    - state: bio_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: bio_open
+      state_closed: bio_door
+
+  - type: Icon
+    state: bio_door
+
+- type: entity
+  id: LockerBioJan
+  name: Janitor's Bio Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: bio_jan
+    - state: bio_jan_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: bio_jan_open
+      state_closed: bio_jan_door
+
+  - type: Icon
+    state: bio_jan_door
+
+- type: entity
+  id: LockerBioSec
+  name: Security's Bio Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: bio_sec
+    - state: bio_sec_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: bio_sec_open
+      state_closed: bio_sec_door
+
+  - type: Icon
+    state: bio_sec_door
+
+- type: entity
+  id: LockerBioViro
+  name: Virology's Bio Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: bio_viro
+    - state: bio_viro_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: bio_viro_open
+      state_closed: bio_viro_door
+
+  - type: Icon
+    state: bio_viro_door
+
+- type: entity
+  id: LockerBomb
+  name: Bomb Defusal Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: bomb
+    - state: bomb_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: bomb_open
+      state_closed: bomb_door
+
+  - type: Icon
+    state: bomb_door
+
+- type: entity
+  id: LockerCabinet
+  name: Cabinet
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: cabinet
+    - state: cabinet_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: cabinet_open
+      state_closed: cabinet_door
+
+  - type: Icon
+    state: cabinet_door
+
+- type: entity
+  id: LockerCap
+  name: Captain's Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: cap
+    - state: cap_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: cap_open
+      state_closed: cap_door
+
+  - type: Icon
+    state: cap_door
+
+- type: entity
+  id: LockerCargo
+  name: Cargo Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: cargo
+    - state: cargo_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: cargo_open
+      state_closed: cargo_door
+
+  - type: Icon
+    state: cargo_door
+
+- type: entity
+  id: LockerCE
+  name: Chief Engineer's Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: ce
+    - state: ce_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: ce_open
+      state_closed: ce_door
+
+  - type: Icon
+    state: ce_door
+
+- type: entity
+  id: LockerCMO
+  name: CMO's Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: cmo
+    - state: cmo_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: cmo_open
+      state_closed: cmo_door
+
+  - type: Icon
+    state: cmo_door
+
+- type: entity
+  id: LockerDecursed
+  name: Decursed Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: decursed
+    - state: decursed_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: decursed_open
+      state_closed: decursed_door
+
+  - type: Icon
+    state: decursed_door
+
+- type: entity
+  id: LockerECase
+  name: E-Case
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: ecase
+    - state: ecase_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: ecase_open
+      state_closed: ecase_door
+
+  - type: Icon
+    state: ecase_door
+
+- type: entity
+  id: LockerEmergency
+  name: Emergency Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: emergency
+    - state: emergency_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: emergency_open
+      state_closed: emergency_door
+
+  - type: Icon
+    state: emergency_door
+
+- type: entity
+  id: LockerFire
+  name: Fire Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: fire
+    - state: fire_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: fire_open
+      state_closed: fire_door
+
+  - type: Icon
+    state: fire_door
+
+- type: entity
+  id: LockerFreezer
+  name: Freezer
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: freezer
+    - state: freezer_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: freezer_open
+      state_closed: freezer_door
+
+  - type: Icon
+    state: freezer_door
+
+- type: entity
+  id: LockerHOP
+  name: Head of Personell's Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: hop
+    - state: hop_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: hop_open
+      state_closed: hop_door
+
+  - type: Icon
+    state: hop_door
+
+- type: entity
+  id: LockerHOS
+  name: Head of Security's Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: hos
+    - state: hos_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: hos_open
+      state_closed: hos_door
+
+  - type: Icon
+    state: hos_door
+
+- type: entity
+  id: LockerHydro
+  name: Hydro Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: hydro
+    - state: hydro_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: hydro_open
+      state_closed: hydro_door
+
+  - type: Icon
+    state: hydro_door
+
+- type: entity
+  id: LockerMining
+  name: Mining Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: mining
+    - state: mining_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: mining_open
+      state_closed: mining_door
+
+  - type: Icon
+    state: mining_door
+
+- type: entity
+  id: LockerQM
+  name: Quartermaster's Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: qm
+    - state: qm_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: qm_open
+      state_closed: qm_door
+
+  - type: Icon
+    state: qm_door
+
+- type: entity
+  id: LockerRD
+  name: Research Director's Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: rd
+    - state: rd_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: rd_open
+      state_closed: rd_door
+
+  - type: Icon
+    state: rd_door
+
+- type: entity
+  id: LockerSec
+  name: Security Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: sec
+    - state: sec_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: sec_open
+      state_closed: sec_door
+
+  - type: Icon
+    state: sec_door
+
+- type: entity
+  id: LockerSecure
+  name: Secure Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: secure
+    - state: secure_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: secure_open
+      state_closed: secure_door
+
+  - type: Icon
+    state: secure_door
+
+- type: entity
+  id: LockerSgCase
+  name: Shotgun Case
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: shotguncase
+    - state: shotguncase_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: shotguncase_open
+      state_closed: shotguncase_door
+
+  - type: Icon
+    state: shotguncase_door
+
+- type: entity
+  id: LockerSyndicate
+  name: Syndicate Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: syndicate
+    - state: syndicate_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: syndicate_open
+      state_closed: syndicate_door
+
+  - type: Icon
+    state: syndicate_door
+
+- type: entity
+  id: LockerTac
+  name: Tactical Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: tac
+    - state: tac_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: tac_open
+      state_closed: tac_door
+
+  - type: Icon
+    state: tac_door
+
+- type: entity
+  id: LockerWarden
+  name: Warden's Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: warden
+    - state: warden_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: warden_open
+      state_closed: warden_door
+
+  - type: Icon
+    state: warden_door
+
+# Fucking Kickass Animated Lockers
+
+- type: entity
+  id: LockerCursed
+  name: Cursed Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: cursed
+    - state: cursed_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: cursed_open
+      state_closed: cursed_door
+
+  - type: Icon
+    state: cursed_whole
+
+# Stupid Worthless RP Colored Lockers
+
+- type: entity
+  id: LockerGRed
+  name: Red Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: generic
+    - state: red_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: red_door
+
+  - type: Icon
+    state: red_door
+
+- type: entity
+  id: LockerGOrange
+  name: Orange Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: generic
+    - state: orange_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: orange_door
+
+  - type: Icon
+    state: orange_door
+
+- type: entity
+  id: LockerGYellow
+  name: Yellow Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: generic
+    - state: yellow_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: yellow_door
+
+  - type: Icon
+    state: yellow_door
+
+- type: entity
+  id: LockerGGreen
+  name: Green Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: generic
+    - state: green_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: green_door
+
+  - type: Icon
+    state: green_door
+
+- type: entity
+  id: LockerGBlue
+  name: Blue Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: generic
+    - state: blue_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: blue_door
+
+  - type: Icon
+    state: blue_door
+
+- type: entity
+  id: LockerGMixed
+  name: Mixed Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: generic
+    - state: mixed_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: mixed_door
+
+  - type: Icon
+    state: mixed_door
+
+- type: entity
+  id: LockerGPink
+  name: Pink Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: generic
+    - state: pink_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: pink_door
+
+  - type: Icon
+    state: pink_door
+
+- type: entity
+  id: LockerGWhite
+  name: White Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: generic
+    - state: white_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: white_door
+
+  - type: Icon
+    state: white_door
+
+- type: entity
+  id: LockerGGrey
+  name: Grey Locker
+  parent: LockerGeneric
+  components:
+  - type: Sprite
+    sprite: Buildings/closet.rsi
+    layers:
+    - state: generic
+    - state: white_door
+      map: ["enum.StorageVisualLayers.Door"]
+
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: white_door
+
+  - type: Icon
+    state: white_door
