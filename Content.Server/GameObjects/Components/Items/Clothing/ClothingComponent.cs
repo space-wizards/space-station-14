@@ -11,6 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects
 {
@@ -88,21 +89,38 @@ namespace Content.Server.GameObjects
                     hands.Drop(Owner);
                     inv.Unequip(slot);
                     hands.PutInHand(item);
+
+                    if (!TryEquip(inv, slot, eventArgs.User))
+                    {
+                        hands.Drop(item.Owner);
+                        inv.Equip(slot, item);
+                        hands.PutInHand(Owner.GetComponent<ItemComponent>());
+                    }
                 }
                 else
                 {
                     hands.Drop(Owner);
-                }
-
-                if (!inv.Equip(slot, this, out var reason) && reason != null)
-                {
-                    _serverNotifyManager.PopupMessage(Owner, eventArgs.User, reason);
+                    if (!TryEquip(inv, slot, eventArgs.User))
+                        hands.PutInHand(Owner.GetComponent<ItemComponent>());
                 }
 
                 return true;
             }
 
             return false;
+        }
+
+        private bool TryEquip(InventoryComponent inv, Slots slot, IEntity user)
+        {
+            if (!inv.Equip(slot, this, out var reason))
+            {
+                if (reason != null)
+                    _serverNotifyManager.PopupMessage(Owner, user, reason);
+
+                return false;
+            }
+
+            return true;
         }
     }
 }
