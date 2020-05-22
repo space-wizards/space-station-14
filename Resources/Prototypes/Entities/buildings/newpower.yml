@@ -26,7 +26,7 @@
   - type: IconSmooth
     base: hvcable_
     key: hv_cables
-  - type: HVNode
+  - type: HVWire
   
 - type: entity
   parent: WireBase
@@ -40,7 +40,6 @@
   - type: IconSmooth
     base: mvcable_
     key: mv_cables
-  - type: MVNode
   
 - type: entity
   parent: WireBase
@@ -54,7 +53,7 @@
   - type: IconSmooth
     base: lvcable_
     key: lv_cables
-  - type: LVNode
+  - type: LVWire
   
 #Not Implemented
 
