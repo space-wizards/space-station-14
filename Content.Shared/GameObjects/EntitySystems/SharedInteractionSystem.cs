@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
@@ -48,8 +49,8 @@ namespace Content.Server.GameObjects.EntitySystems
             if (range > 0f && !(dir.LengthSquared <= range * range)) return false;
 
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate, true);
-            if(!rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && (rayResults.HitPos - otherCoords).Length < 1f))
+            var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate).ToList();
+            if(rayResults.Count == 0 || (insideBlockerValid && rayResults.Count > 0 && (rayResults[0].HitPos - otherCoords).Length < 1f))
             {
 
                 if (_mapManager.TryFindGridAt(coords, out var mapGrid) && mapGrid != null)

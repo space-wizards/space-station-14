@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
@@ -90,10 +91,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var angle = new Angle(clickLocation.Position - userPosition);
 
             var ray = new CollisionRay(userPosition, angle.ToVec(), (int)(CollisionGroup.Impassable | CollisionGroup.MobImpassable));
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user, ignoreNonHardCollidables: true);
+            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user).ToList();
 
-            Hit(rayCastResults, energyModifier, user);
-            AfterEffects(user, rayCastResults, angle, energyModifier);
+            if (rayCastResults.Count == 1)
+            {
+                Hit(rayCastResults[0], energyModifier, user);
+                AfterEffects(user, rayCastResults[0], angle, energyModifier);
+            }
         }
 
         protected virtual void Hit(RayCastResults ray, float damageModifier, IEntity user = null)
@@ -109,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
         protected virtual void AfterEffects(IEntity user, RayCastResults ray, Angle angle, float energyModifier)
         {
             var time = IoCManager.Resolve<IGameTiming>().CurTime;
-            var dist = ray.DidHitObject ? ray.Distance : MaxLength;
+            var dist = ray.Distance;
             var offset = angle.ToVec() * dist / 2;
             var message = new EffectSystemMessage
             {
