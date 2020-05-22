@@ -115,9 +115,12 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public virtual bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded)
         {
+            if (!HasQuality(toolQualityNeeded) || !ActionBlockerSystem.CanInteract(user))
+                return false;
+
             PlayUseSound();
 
-            return ActionBlockerSystem.CanInteract(user) && HasQuality(toolQualityNeeded);
+            return true;
         }
 
         protected void PlaySoundCollection(string name, float volume=-5f)
