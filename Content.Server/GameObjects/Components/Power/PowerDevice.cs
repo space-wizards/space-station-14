@@ -95,12 +95,12 @@ namespace Content.Server.GameObjects.Components.Power
         /// Priority for powernet draw, lower will draw first, defined in powernet.cs
         /// </summary>
         [ViewVariables]
-        public virtual Powernet.Priority Priority
+        public virtual PowernetPowerManager.Priority Priority
         {
             get => _priority;
             protected set => _priority = value;
         }
-        private Powernet.Priority _priority = Powernet.Priority.Medium;
+        private PowernetPowerManager.Priority _priority = PowernetPowerManager.Priority.Medium;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IsPowerCut
@@ -186,9 +186,10 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (Owner.TryGetComponent(out PowerNodeComponent node))
             {
-                if (node.Parent != null && node.Parent.HasDevice(this))
+                PowernetPowerManager manager = node?.Parent?.GetManager<PowernetPowerManager>();
+                if (manager != null && manager.HasDevice(this))
                 {
-                    node.Parent.RemoveDevice(this);
+                    manager.RemoveDevice(this);
                 }
 
                 node.OnPowernetConnect -= PowernetConnect;
@@ -213,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Power
             var drawType = DrawType;
             serializer.DataField(ref drawType, "drawtype", DefaultDrawType);
             DrawType = drawType;
-            serializer.DataField(ref _priority, "priority", Powernet.Priority.Medium);
+            serializer.DataField(ref _priority, "priority", PowernetPowerManager.Priority.Medium);
 
             if (SaveLoad)
             {
@@ -238,7 +239,7 @@ namespace Content.Server.GameObjects.Components.Power
             if (Connected == DrawTypes.Node)
             {
                 var node = Owner.GetComponent<PowerNodeComponent>();
-                node.Parent.UpdateDevice(this, oldLoad);
+                node.Parent.GetManager<PowernetPowerManager>().UpdateDevice(this, oldLoad);
             }
             else if (Connected == DrawTypes.Provider)
             {
@@ -349,7 +350,7 @@ namespace Content.Server.GameObjects.Components.Power
             //This sets connected = none so it must be first
             Provider = null;
 
-            eventarg.Powernet.AddDevice(this);
+            eventarg.Powernet.GetManager<PowernetPowerManager>().AddDevice(this);
             Connected = DrawTypes.Node;
         }
 
@@ -360,7 +361,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <param name="eventarg"></param>
         protected virtual void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
         {
-            eventarg.Powernet.AddDevice(this);
+            eventarg.Powernet.GetManager<PowernetPowerManager>().AddDevice(this);
         }
 
         /// <summary>
@@ -370,7 +371,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <param name="eventarg"></param>
         protected virtual void PowernetDisconnect(object sender, PowernetEventArgs eventarg)
         {
-            eventarg.Powernet.RemoveDevice(this);
+            eventarg.Powernet.GetManager<PowernetPowerManager>().RemoveDevice(this);
             Connected = DrawTypes.None;
 
             ConnectToBestProvider();

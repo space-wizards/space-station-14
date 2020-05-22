@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Power
                 _chargePowernet = value;
                 if (Owner.TryGetComponent(out PowerNodeComponent node))
                 {
-                    node.Parent?.UpdateStorageType(this);
+                    node.Parent?.GetManager<PowernetPowerManager>().UpdateStorageType(this);
                 }
             }
         }
@@ -57,10 +57,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (Owner.TryGetComponent(out PowerNodeComponent node))
             {
-                if (node.Parent != null)
-                {
-                    node.Parent.RemovePowerStorage(this);
-                }
+                node.Parent?.GetManager<PowernetPowerManager>().RemovePowerStorage(this);
 
                 node.OnPowernetConnect -= PowernetConnect;
                 node.OnPowernetDisconnect -= PowernetDisconnect;
@@ -77,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <param name="eventarg"></param>
         private void PowernetConnect(object sender, PowernetEventArgs eventarg)
         {
-            eventarg.Powernet.AddPowerStorage(this);
+            eventarg.Powernet.GetManager<PowernetPowerManager>().AddPowerStorage(this);
         }
 
         /// <summary>
@@ -87,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <param name="eventarg"></param>
         private void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
         {
-            eventarg.Powernet.AddPowerStorage(this);
+            eventarg.Powernet.GetManager<PowernetPowerManager>().AddPowerStorage(this);
         }
 
         /// <summary>
@@ -97,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <param name="eventarg"></param>
         private void PowernetDisconnect(object sender, PowernetEventArgs eventarg)
         {
-            eventarg.Powernet.RemovePowerStorage(this);
+            eventarg.Powernet.GetManager<PowernetPowerManager>().RemovePowerStorage(this);
         }
     }
 }

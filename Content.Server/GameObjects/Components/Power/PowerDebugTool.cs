@@ -33,6 +33,7 @@ namespace Content.Server.GameObjects.Components.Power
                 else
                 {
                     var net = node.Parent;
+                    var mgr = net.GetManager<PowernetPowerManager>();
                     builder.AppendFormat(@"  Powernet: {0}
   Wires: {1}, Nodes: {2}
   Generators: {3}, Loaders: {4},
@@ -43,11 +44,11 @@ namespace Content.Server.GameObjects.Components.Power
 ",
                         net.Uid,
                         net.NodeList.Count, net.WireList.Count,
-                        net.GeneratorCount, net.DeviceCount,
-                        net.PowerStorageSupplierCount, net.PowerStorageConsumerCount,
-                        net.Load, net.Supply,
-                        net.LastTotalAvailable, net.LastTotalDraw,
-                        net.LastTotalDemand, net.LastTotalDemandWithSuppliers);
+                        mgr.GeneratorCount, mgr.DeviceCount,
+                        mgr.PowerStorageSupplierCount, mgr.PowerStorageConsumerCount,
+                        mgr.Load, mgr.Supply,
+                        mgr.LastTotalAvailable, mgr.LastTotalDraw,
+                        mgr.LastTotalDemand, mgr.LastTotalDemandWithSuppliers);
                 }
             }
 

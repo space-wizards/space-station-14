@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 if (node.Parent != null)
                 {
-                    node.Parent.RemoveGenerator(this);
+                    node.Parent.GetManager<PowernetPowerManager>().RemoveGenerator(this);
                 }
 
                 node.OnPowernetConnect -= PowernetConnect;
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             _supply = value;
             var node = Owner.GetComponent<PowerNodeComponent>();
-            node?.Parent?.UpdateGenerator(this);
+            node?.Parent?.GetManager<PowernetPowerManager>().UpdateGenerator(this);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <param name="eventarg"></param>
         private void PowernetConnect(object sender, PowernetEventArgs eventarg)
         {
-            eventarg.Powernet.AddGenerator(this);
+            eventarg.Powernet.GetManager<PowernetPowerManager>().AddGenerator(this);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <param name="eventarg"></param>
         private void PowernetRegenerate(object sender, PowernetEventArgs eventarg)
         {
-            eventarg.Powernet.AddGenerator(this);
+            eventarg.Powernet.GetManager<PowernetPowerManager>().AddGenerator(this);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// <param name="eventarg"></param>
         private void PowernetDisconnect(object sender, PowernetEventArgs eventarg)
         {
-            eventarg.Powernet.RemoveGenerator(this);
+            eventarg.Powernet.GetManager<PowernetPowerManager>().RemoveGenerator(this);
         }
     }
 }

@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Power
                 return ApcExternalPowerState.None;
             }
 
-            var net = node.Parent;
+            var net = node.Parent.GetManager<PowernetPowerManager>();
             if (net.LastTotalAvailable <= 0)
             {
                 return ApcExternalPowerState.None;

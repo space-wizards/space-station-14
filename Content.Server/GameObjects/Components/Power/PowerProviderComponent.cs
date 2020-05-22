@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// List storing all the power devices that we are currently providing power to
         /// </summary>
         public SortedSet<PowerDeviceComponent> DeviceLoadList =
-            new SortedSet<PowerDeviceComponent>(new Powernet.DevicePriorityCompare());
+            new SortedSet<PowerDeviceComponent>(new PowernetPowerManager.DevicePriorityCompare());
 
         /// <summary>
         ///     List of devices in range that we "advertised" to.
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         public List<PowerDeviceComponent> DepoweredDevices = new List<PowerDeviceComponent>();
 
-        public override Powernet.Priority Priority { get; protected set; } = Powernet.Priority.Provider;
+        public override PowernetPowerManager.Priority Priority { get; protected set; } = PowernetPowerManager.Priority.Provider;
 
         private bool _mainBreaker = true;
 
