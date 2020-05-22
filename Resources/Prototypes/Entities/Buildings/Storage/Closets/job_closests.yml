@@ -1,0 +1,118 @@
+# Formal
+- type: entity
+  id: LockerFormal
+  parent: WardrobeBlack
+  name: "formal closet"
+  description: "It's a storage unit for formal clothing."
+
+# Chef
+- type: entity
+  id: LockerChef
+  parent: WardrobeBlack
+  name: "chef's closet"
+  description: "It's a storage unit for foodservice garments and mouse traps."
+
+# Janitor
+- type: entity
+  id: LockerJanitor
+  parent: WardrobeMixed
+  name: "custodial closet"
+  description: "It's a storage unit for janitorial clothes and gear."
+
+# Legal
+- type: entity
+  id: LockerLegal
+  parent: WardrobeBlue
+  name: "legal closet"
+  description: "It's a storage unit for courtroom apparel and items."
+
+# Chapel
+- type: entity
+  id: WardrobeChapel
+  parent: WardrobeBlack
+  name: "chaplain's wardrobe"
+  description: "It's a storage unit for Nanotrasen-approved religious attire."
+
+# Security wardrobe
+- type: entity
+  id: WardrobeSecurity
+  parent: WardrobeBase
+  name: "security wardrobe"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state: generic
+      state_closed: red_door
+
+  - type: Icon
+    state: red_door
+
+# Cargo wardrobe
+- type: entity
+  id: WardrobeCargo
+  parent: WardrobePrison
+  name: "cargo wardrobe"
+
+# Atmospherics wardrobe
+- type: entity
+  id: WardrobeAtmospherics
+  parent: WardrobeBase
+  name: "atmospherics wardrobe"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state: generic
+      state_closed: atmos_wardrobe_door
+
+  - type: Icon
+    state: atmos_door
+
+# Engineering wardrobe
+- type: entity
+  id: WardrobeEngineering
+  parent: WardrobeYellow
+  name: "engineering wardrobe"
+
+# Medical doctor wardrobe
+- type: entity
+  id: WardrobeMedicalDoctor
+  parent: WardrobeWhite
+  name: "medical doctor's wardrobe"
+
+# Robotics wardrobe
+- type: entity
+  id: WardrobeRobotics
+  parent: WardrobeBlack
+  name: "robotics wardrobe"
+
+# Chemistry wardrobe
+- type: entity
+  id: WardrobeChemistry
+  parent: WardrobeWhite
+  name: "chemistry wardrobe"
+
+# Genetics wardrobe
+- type: entity
+  id: WardrobeGenetics
+  parent: WardrobeWhite
+  name: "genetics wardrobe"
+
+# Virology wardrobe
+- type: entity
+  id: WardrobeVirology
+  parent: WardrobeWhite
+  name: "virology wardrobe"
+
+# Science wardrobe
+- type: entity
+  id: WardrobeScience
+  parent: WardrobeWhite
+  name: "science wardrobe"
+
+# Botanist wardrobe
+- type: entity
+  id: WardrobeBotanist
+  parent: WardrobeGreen
+  name: "botanist wardrobe"
