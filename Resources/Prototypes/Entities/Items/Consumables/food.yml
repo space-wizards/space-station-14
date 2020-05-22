@@ -295,7 +295,7 @@
 
 - type: entity
   parent: FoodBase
-  id: FoodSpagettiBoiled
+  id: FoodSpaghettiBoiled
   name: Boiled spaghetti
   description: A plain dish of noodles, this sucks.
   components:
