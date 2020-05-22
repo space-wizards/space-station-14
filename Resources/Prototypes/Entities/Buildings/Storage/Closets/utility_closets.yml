@@ -63,7 +63,8 @@
   id: LockerEmergencyFilledRandom
   parent: LockerEmergency
   suffix: Filled, Random
-
+  components:
+  - type: EmergencyClosetFill
 
 # Fire safety closet
 - type: entity
