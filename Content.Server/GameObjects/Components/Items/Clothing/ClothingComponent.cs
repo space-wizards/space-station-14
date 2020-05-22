@@ -4,8 +4,10 @@ using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -17,6 +19,10 @@ namespace Content.Server.GameObjects
     [ComponentReference(typeof(StoreableComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
+#pragma warning disable 649
+        [Dependency] private readonly IServerNotifyManager _serverNotifyManager;
+#pragma warning restore 649
+
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
@@ -88,7 +94,12 @@ namespace Content.Server.GameObjects
                     hands.Drop(Owner);
                 }
 
-                return inv.Equip(slot, this);
+                if (!inv.Equip(slot, this, out var reason) && reason != null)
+                {
+                    _serverNotifyManager.PopupMessage(Owner, eventArgs.User, reason);
+                }
+
+                return true;
             }
 
             return false;
