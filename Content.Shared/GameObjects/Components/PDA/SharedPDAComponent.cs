@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Maths;
@@ -40,46 +41,32 @@ namespace Content.Shared.GameObjects.Components.PDA
     }
 
     [Serializable, NetSerializable]
-    public sealed class PDAUpdateMainMenuState : PDAUBoundUserInterfaceState
+    public sealed class PDAUpdateState : PDAUBoundUserInterfaceState
     {
         public bool FlashlightEnabled;
         public PDAIdInfoText PDAOwnerInfo;
+        public UplinkAccountData Account;
+        public UplinkListingData[] Listings;
 
-
-        public PDAUpdateMainMenuState(bool isFlashlightOn, PDAIdInfoText ownerInfo)
+        public PDAUpdateState(bool isFlashlightOn, PDAIdInfoText ownerInfo)
         {
             FlashlightEnabled = isFlashlightOn;
             PDAOwnerInfo = ownerInfo;
         }
-    }
 
-    [Serializable, NetSerializable]
-    public sealed class PDASendUplinkListingsMessage : PDAUBoundUserInterfaceState
-    {
-
-        public UplinkListingData[] Listings;
-        public PDASendUplinkListingsMessage(UplinkListingData[] listings)
+        public PDAUpdateState(bool isFlashlightOn, PDAIdInfoText ownerInfo, UplinkAccountData accountData)
         {
+            FlashlightEnabled = isFlashlightOn;
+            PDAOwnerInfo = ownerInfo;
+            Account = accountData;
+        }
+
+        public PDAUpdateState(bool isFlashlightOn, PDAIdInfoText ownerInfo, UplinkAccountData accountData, UplinkListingData[] listings)
+        {
+            FlashlightEnabled = isFlashlightOn;
+            PDAOwnerInfo = ownerInfo;
+            Account = accountData;
             Listings = listings;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class PDAUpdateUplinkAccountMessage : PDAUBoundUserInterfaceState
-    {
-
-        public UplinkAccountData Account;
-        public PDAUpdateUplinkAccountMessage(UplinkAccountData userAccount)
-        {
-            Account = userAccount;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class PDARequestUplinkListingsMessage : BoundUserInterfaceMessage
-    {
-        public PDARequestUplinkListingsMessage()
-        {
         }
     }
 

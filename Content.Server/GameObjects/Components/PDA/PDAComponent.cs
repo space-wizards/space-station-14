@@ -84,13 +84,6 @@ namespace Content.Server.GameObjects.Components.PDA
                     break;
                 }
 
-                case PDARequestUplinkListingsMessage msg:
-                {
-                    var listingsMessage = new PDASendUplinkListingsMessage(_uplinkManager.FetchListings().ToArray());
-                    _interface.SetState(listingsMessage);
-                    break;
-                }
-
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
 
@@ -98,8 +91,7 @@ namespace Content.Server.GameObjects.Components.PDA
                     {
                         //TODO: Send a message that tells the buyer they are too poor or something.
                     }
-                    var listingsMessage = new PDASendUplinkListingsMessage(_uplinkManager.FetchListings().ToArray());
-                    _interface.SetState(listingsMessage);
+
                     break;
                 }
             }
@@ -114,12 +106,18 @@ namespace Content.Server.GameObjects.Components.PDA
                 JobTitle = ContainedID?.JobTitle
             };
 
-            _interface.SetState(new PDAUpdateMainMenuState(_lightOn,ownerInfo));
+            //Do we have an account? If so provide the info.
             if (_syndicateUplinkAccount != null)
             {
                 var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder, _syndicateUplinkAccount.Balance);
-                _interface.SetState(new PDAUpdateUplinkAccountMessage(accData));
+                var listings = _uplinkManager.FetchListings().ToArray();
+                _interface.SetState(new PDAUpdateState(_lightOn,ownerInfo,accData,listings));
             }
+            else
+            {
+                _interface.SetState(new PDAUpdateState(_lightOn,ownerInfo));
+            }
+
             UpdatePDAAppearance();
         }
 
@@ -195,16 +193,8 @@ namespace Content.Server.GameObjects.Components.PDA
 
             _syndicateUplinkAccount.BalanceChanged += account =>
             {
-                _syndicateUplinkAccount = account;
-                var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder, _syndicateUplinkAccount.Balance);
-                _interface.SetState(new PDAUpdateUplinkAccountMessage(accData));
-                var listingsMessage = new PDASendUplinkListingsMessage(_uplinkManager.FetchListings().ToArray());
-                _interface.SetState(listingsMessage);
                 UpdatePDAUserInterface();
             };
-
-            var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder, _syndicateUplinkAccount.Balance);
-            _interface.SetState(new PDAUpdateUplinkAccountMessage(accData));
 
             UpdatePDAUserInterface();
         }

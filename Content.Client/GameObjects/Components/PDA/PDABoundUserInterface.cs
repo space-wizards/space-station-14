@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Client.GameObjects.Components.UserInterface;
@@ -51,7 +50,7 @@ namespace Content.Client.GameObjects.Components.PDA
                 var tab = _menu.MasterTabContainer.GetChild(i);
                 if (tab == _menu.UplinkTabContainer)
                 {
-                    SendMessage(new PDARequestUplinkListingsMessage());
+                    SendMessage(new PDARequestUpdateInterfaceMessage());
                 }
             };
 
@@ -63,10 +62,11 @@ namespace Content.Client.GameObjects.Components.PDA
             _menu.OnCategoryButtonPressed += (args, category) =>
             {
                 _menu.CurrentFilterCategory = category;
-                SendMessage(new PDARequestUplinkListingsMessage());
+                SendMessage(new PDARequestUpdateInterfaceMessage());
 
             };
         }
+
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
@@ -76,7 +76,7 @@ namespace Content.Client.GameObjects.Components.PDA
             var cstate = (PDAUBoundUserInterfaceState) state;
             switch (state)
             {
-                case PDAUpdateMainMenuState msg:
+                case PDAUpdateState msg:
                 {
                     _menu.FlashLightToggleButton.Pressed = msg.FlashlightEnabled;
                     _menu.PDAOwnerLabel.SetMarkup(Loc.GetString("Owner: [color=white]{0}[/color]",
@@ -95,23 +95,19 @@ namespace Content.Client.GameObjects.Components.PDA
                     }
 
                     _menu.EjectIDButton.Visible = msg.PDAOwnerInfo.IdOwner != null;
-                    break;
-                }
-
-                case PDASendUplinkListingsMessage msg:
-                {
-                    _menu.ClearListings();
-                    foreach (var item in msg.Listings) //Should probably chunk these out instead. to-do if this clogs the internet tubes.
+                    if (msg.Account != null)
                     {
-                        _menu.AddListingGui(item);
+                        _menu.CurrentLoggedInAccount = msg.Account;
                     }
 
-                    break;
-                }
-
-                case PDAUpdateUplinkAccountMessage loginMsg:
-                {
-                    _menu.CurrentLoggedInAccount = loginMsg.Account;
+                    if (msg.Listings != null)
+                    {
+                        _menu.ClearListings();
+                        foreach (var item in msg.Listings) //Should probably chunk these out instead. to-do if this clogs the internet tubes.
+                        {
+                            _menu.AddListingGui(item);
+                        }
+                    }
                     break;
                 }
 
@@ -148,8 +144,6 @@ namespace Content.Client.GameObjects.Components.PDA
             public VBoxContainer UplinkListingsContainer;
 
             public VBoxContainer CategoryListContainer;
-
-            public Dictionary<BaseButton, UplinkListingData> UplinkListingDataButtons;
             public event Action<BaseButton.ButtonEventArgs, UplinkListingData> OnListingButtonPressed;
             public event Action<BaseButton.ButtonEventArgs, UplinkCategory> OnCategoryButtonPressed;
 
@@ -244,89 +238,82 @@ namespace Content.Client.GameObjects.Components.PDA
 
                 #region UPLINK_TAB
                 //Uplink Tab
-                if (_loggedInUplinkAccount != null)
+                CategoryListContainer = new VBoxContainer
                 {
-                    CategoryListContainer = new VBoxContainer
+                };
+                var uplinkStoreHeader = new Label
+                {
+                    Align = Label.AlignMode.Center,
+                    Text = Loc.GetString("Uplink Listings"),
+                };
+
+                //Red background container.
+                var masterPanelContainer = new PanelContainer
+                {
+                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.DarkRed.WithAlpha(0.6f)},
+                    SizeFlagsVertical = SizeFlags.FillExpand
+                };
+
+                //This contains both the panel of the category buttons and the listings box.
+                CategoryAndListingsContainer = new HSplitContainer
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                };
+
+
+                var uplinkShopScrollContainer = new ScrollContainer
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    SizeFlagsStretchRatio = 2,
+                    CustomMinimumSize = (100, 256)
+                };
+
+                //Add the category list to the left side. The store items to center.
+                var categoryListContainerBackground = new PanelContainer
+                {
+                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.4f)},
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    Children =
                     {
+                        CategoryListContainer
+                    }
+                };
 
-                    };
-                    var uplinkStoreHeader = new Label
+                CategoryAndListingsContainer.AddChild(categoryListContainerBackground);
+                CategoryAndListingsContainer.AddChild(uplinkShopScrollContainer);
+                masterPanelContainer.AddChild(CategoryAndListingsContainer);
+
+                //Actual list of buttons for buying a listing from the uplink.
+                UplinkListingsContainer = new VBoxContainer
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    SizeFlagsStretchRatio = 2,
+                    CustomMinimumSize = (100, 256),
+                };
+                uplinkShopScrollContainer.AddChild(UplinkListingsContainer);
+
+                var innerVboxContainer = new VBoxContainer
+                {
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+
+                    Children =
                     {
-                        Align = Label.AlignMode.Center,
-                        Text = Loc.GetString("Uplink Listings"),
-                    };
+                        uplinkStoreHeader,
+                        masterPanelContainer
+                    }
+                };
 
-                    //Red background container.
-                    var masterPanelContainer = new PanelContainer
+                UplinkTabContainer = new VBoxContainer
+                {
+                    Children =
                     {
-                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.DarkRed.WithAlpha(0.6f)},
-                        SizeFlagsVertical = SizeFlags.FillExpand
-                    };
-
-                    //This contains both the panel of the category buttons and the listings box.
-                    CategoryAndListingsContainer = new HSplitContainer
-                    {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                    };
-
-
-                    var uplinkShopScrollContainer = new ScrollContainer
-                    {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        SizeFlagsStretchRatio = 2,
-                        CustomMinimumSize = (100, 256)
-                    };
-
-                    //Add the category list to the left side. The store items to center.
-                    var categoryListContainerBackground = new PanelContainer
-                    {
-                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.4f)},
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        Children =
-                        {
-                            CategoryListContainer
-                        }
-
-                    };
-
-                    CategoryAndListingsContainer.AddChild(categoryListContainerBackground);
-                    CategoryAndListingsContainer.AddChild(uplinkShopScrollContainer);
-                    masterPanelContainer.AddChild(CategoryAndListingsContainer);
-
-                    //Actual list of buttons for buying a listing from the uplink.
-                    UplinkListingsContainer = new VBoxContainer
-                    {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-                        SizeFlagsStretchRatio = 2,
-                        CustomMinimumSize = (100, 256),
-                    };
-                    uplinkShopScrollContainer.AddChild(UplinkListingsContainer);
-
-                    var innerVboxContainer = new VBoxContainer
-                    {
-                        SizeFlagsVertical = SizeFlags.FillExpand,
-
-                        Children =
-                        {
-                            uplinkStoreHeader,
-                            masterPanelContainer
-                        }
-                    };
-
-                    UplinkTabContainer = new VBoxContainer
-                    {
-                        Children =
-                        {
-                            innerVboxContainer
-                        }
-                    };
-                    PopulateUplinkCategoryButtons();
-                    #endregion
-                }
-
-
+                        innerVboxContainer
+                    }
+                };
+                PopulateUplinkCategoryButtons();
+                #endregion
 
                 //The master menu that contains all of the tabs.
                 MasterTabContainer = new TabContainer
@@ -337,15 +324,10 @@ namespace Content.Client.GameObjects.Components.PDA
                     }
                 };
 
-
                 //Add all the tabs to the Master container.
                 MasterTabContainer.SetTabTitle(0, Loc.GetString("Main Menu"));
-                if (_loggedInUplinkAccount != null)
-                {
-                    MasterTabContainer.AddChild(UplinkTabContainer);
-                    MasterTabContainer.SetTabTitle(1, Loc.GetString("Syndicate Uplink"));
-                }
-
+                MasterTabContainer.AddChild(UplinkTabContainer);
+                MasterTabContainer.SetTabTitle(1, Loc.GetString("Uplink"));
                 Contents.AddChild(MasterTabContainer);
             }
 
