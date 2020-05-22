@@ -201,3 +201,19 @@
     interfaces:
     - key: enum.CommunicationsConsoleUiKey.Key
       type: CommunicationsConsoleBoundUserInterface
+
+- type: entity
+  id: ComputerSolarControl
+  parent: ComputerBase
+  name: Solar Control Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: generic_key
+      screen: solar_screen
+  - type: SolarControlConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.SolarControlConsoleUiKey.Key
+      type: SolarControlConsoleBoundUserInterface
