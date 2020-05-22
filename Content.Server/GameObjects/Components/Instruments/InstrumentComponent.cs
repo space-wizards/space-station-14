@@ -9,6 +9,8 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -37,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         ///     The client channel currently playing the instrument, or null if there's none.
         /// </summary>
         [ViewVariables]
-        private ICommonSession _instrumentPlayer;
+        private IPlayerSession _instrumentPlayer;
         private bool _handheld;
 
         [ViewVariables]
@@ -78,6 +80,29 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
         }
 
+        public IPlayerSession InstrumentPlayer
+        {
+            get => _instrumentPlayer;
+            private set
+            {
+                Playing = false;
+
+                if(_instrumentPlayer != null)
+                    _instrumentPlayer.PlayerStatusChanged -= OnPlayerStatusChanged;
+
+                _instrumentPlayer = value;
+
+                if(value != null)
+                    _instrumentPlayer.PlayerStatusChanged += OnPlayerStatusChanged;
+            }
+        }
+
+        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+        {
+            if (e.NewStatus == SessionStatus.Disconnected)
+                InstrumentPlayer = null;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -100,12 +125,10 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             base.HandleNetworkMessage(message, channel, session);
 
-            // If the client that sent the message isn't the client playing this instrument, we ignore it.
-            if (session != _instrumentPlayer) return;
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMsg:
-                    if (!Playing)
+                    if (!Playing || session != _instrumentPlayer)
                         return;
 
                     if (++_midiEventCount <= MaxMidiEventsPerSecond &&
@@ -130,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             Playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
-            _instrumentPlayer = null;
+            InstrumentPlayer = null;
             _userInterface.CloseAll();
         }
 
@@ -138,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             Playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
-            _instrumentPlayer = null;
+            InstrumentPlayer = null;
             _userInterface.CloseAll();
         }
 
@@ -148,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
             if (session == null) return;
 
-            _instrumentPlayer = session;
+            InstrumentPlayer = session;
         }
 
         public void HandDeselected(HandDeselectedEventArgs eventArgs)
@@ -163,10 +186,10 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (Handheld || !eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return;
 
-            if (_instrumentPlayer != null)
+            if (InstrumentPlayer != null)
                 return;
 
-            _instrumentPlayer = actor.playerSession;
+            InstrumentPlayer = actor.playerSession;
             OpenUserInterface(actor.playerSession);
         }
 
@@ -175,16 +198,16 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return false;
 
-            if(_instrumentPlayer == actor.playerSession)
+            if(InstrumentPlayer == actor.playerSession)
                 OpenUserInterface(actor.playerSession);
             return false;
         }
 
         private void UserInterfaceOnClosed(IPlayerSession player)
         {
-            if (!Handheld && player == _instrumentPlayer)
+            if (!Handheld && player == InstrumentPlayer)
             {
-                _instrumentPlayer = null;
+                InstrumentPlayer = null;
                 SendNetworkMessage(new InstrumentStopMidiMessage());
                 Playing = false;
             }
@@ -199,14 +222,22 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             base.Update(delta);
 
-            if (_batchesDropped > MaxMidiBatchDropped && _instrumentPlayer != null)
+            if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
+                InstrumentPlayer = null;
+
+            if (_batchesDropped > MaxMidiBatchDropped && InstrumentPlayer != null)
             {
                 _batchesDropped = 0;
-                var mob = _instrumentPlayer.AttachedEntity;
+                var mob = InstrumentPlayer.AttachedEntity;
+
+                _userInterface.CloseAll();
+
                 if (mob.TryGetComponent(out StunnableComponent stun))
                     stun.Stun(1);
                 else
                     StandingStateHelper.DropAllItemsInHands(mob);
+
+                InstrumentPlayer = null;
 
                 _notifyManager.PopupMessage(Owner, mob, "Your fingers cramp up from playing!");
             }
