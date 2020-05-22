@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks.Dataflow;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -129,6 +130,9 @@ namespace Content.Server.GameObjects
         {
             var pass = false;
 
+            if (!ActionBlockerSystem.CanEquip(Owner))
+                return false;
+
             if (item is ClothingComponent clothing)
             {
                 if (clothing.SlotFlags != SlotFlags.PREVENTEQUIP && (clothing.SlotFlags & SlotMasks[slot]) != 0)
@@ -185,6 +189,9 @@ namespace Content.Server.GameObjects
         /// </returns>
         public bool CanUnequip(Slots slot)
         {
+            if (!ActionBlockerSystem.CanUnequip(Owner))
+                return false;
+
             var InventorySlot = SlotContainers[slot];
             return InventorySlot.ContainedEntity != null && InventorySlot.CanRemove(InventorySlot.ContainedEntity);
         }

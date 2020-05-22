@@ -234,6 +234,14 @@ namespace Content.Server.GameObjects.Components
                         _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You have no hands."));
                         return;
                     }
+
+                    var interactionSystem = IoCManager.Resolve<EntitySystemManager>().GetEntitySystem<InteractionSystem>();
+                    if (!interactionSystem.InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
+                    {
+                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You can't reach there!"));
+                        return;
+                    }
+
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     switch (msg.Action)
                     {

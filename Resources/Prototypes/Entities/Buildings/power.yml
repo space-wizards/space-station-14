@@ -63,6 +63,35 @@
     offset: Center
 
 - type: entity
+  id: SolarPanel
+  name: Solar Panel
+  description: Generates power from sunlight. Usually used to power replacements for sunlight. Fragile.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer: 31
+  - type: Sprite
+    sprite: Buildings/solar_panel.rsi
+    state: normal
+  - type: Icon
+    sprite: Buildings/solar_panel.rsi
+    state: normal
+  - type: PowerGenerator
+  - type: SolarPanel
+    supply: 1500
+  - type: Rotatable
+  - type: SnapGrid
+    offset: Center
+  - type: Damageable
+  - type: Breakable
+    thresholdvalue: 100
+
+- type: entity
   id: WPPnobattery
   name: WPPnobattery
   description: Supplies power directly to nearby objects

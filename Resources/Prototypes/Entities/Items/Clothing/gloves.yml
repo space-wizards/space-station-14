@@ -768,6 +768,19 @@
 
 - type: entity
   parent: GlovesBase
+  id: GlovesWhite
+  name: White Gloves
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Gloves/white.rsi
+  - type: Icon
+    sprite: Clothing/Gloves/white.rsi
+  - type: Clothing
+    sprite: Clothing/Gloves/white.rsi
+
+- type: entity
+  parent: GlovesBase
   id: GlovesYellow
   name: Insulated gloves
   description: Electrical gloves that keep you from frying

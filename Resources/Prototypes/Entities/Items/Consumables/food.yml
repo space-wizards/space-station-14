@@ -1482,19 +1482,21 @@
   - type: Icon
     sprite: Objects/Food/loadedbakedpotato.rsi
 
-# - type: entity
-#  parent: FoodBase
-#  id: FoodMeat
-#  name: Meat
-#  description: A slab of meat.
-#  components:
-#  - type: Food
-#    uses: 1
-#    restore_amount: 1
-#  - type: Sprite
-#    sprite: Objects/Food/meat.rsi
-#  - type: Icon
-#    sprite: Objects/Food/meat.rsi
+- type: entity
+  parent: FoodBase
+  id: FoodMeat
+  name: Meat
+  description: A slab of meat.
+  components:
+  - type: Food
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 5
+  - type: Sprite
+    sprite: Objects/Food/meat.rsi
+  - type: Icon
+    sprite: Objects/Food/meat.rsi
 
 - type: entity
   parent: FoodBase
@@ -2835,19 +2837,21 @@
   - type: Icon
     sprite: Objects/Food/xenobreadslice.rsi
 
-#- type: entity
-#  parent: FoodBase
-#  id: FoodXenomeat
-#  name: Xenomeat
-#  description: ''
-#  components:
-#  - type: Food
-#    uses: 1
-#    restore_amount: 1
-#  - type: Sprite
-#    sprite: Objects/Food/xenomeat.rsi
-#  - type: Icon
-#    sprite: Objects/Food/xenomeat.rsi
+- type: entity
+  parent: FoodBase
+  id: FoodXenomeat
+  name: Xenomeat
+  description: Yum.
+  components:
+  - type: Food
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 20
+  - type: Sprite
+    sprite: Objects/Food/xenomeat.rsi
+  - type: Icon
+    sprite: Objects/Food/xenomeat.rsi
 
 - type: entity
   parent: FoodBase

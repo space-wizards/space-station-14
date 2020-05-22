@@ -65,8 +65,6 @@ namespace Content.Client.UserInterface
 
         public bool OnButtonPressed(GUIBoundKeyEventArgs args, IEntity item)
         {
-            args.Handle();
-
             if (item == null)
                 return false;
 
@@ -99,6 +97,7 @@ namespace Content.Client.UserInterface
             {
                 return false;
             }
+            args.Handle();
             return true;
         }
 

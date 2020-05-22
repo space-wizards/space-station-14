@@ -13,6 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
@@ -48,8 +49,8 @@ namespace Content.Server.GameObjects
             }
             set
             {
-                Dirty();
                 _equippedPrefix = value;
+                Dirty();
             }
         }
 

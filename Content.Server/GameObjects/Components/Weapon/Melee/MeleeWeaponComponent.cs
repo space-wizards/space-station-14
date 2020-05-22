@@ -28,12 +28,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [Dependency] private readonly IPhysicsManager _physicsManager;
 #pragma warning restore 649
 
-        private int _damage = 1;
-        private float _range = 1;
-        private float _arcWidth = 90;
+        private int _damage;
+        private float _range;
+        private float _arcWidth;
         private string _arc;
         private string _hitSound;
-        private float _cooldownTime = 1f;
+        private float _cooldownTime;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string Arc
@@ -75,6 +75,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _cooldownTime, "cooldownTime", 1f);
         }
 
+        public virtual bool OnHitEntities(IReadOnlyList<IEntity> entities)
+        {
+            return false;
+        }
+
         void IAttack.Attack(AttackEventArgs eventArgs)
         {
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
@@ -101,6 +106,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 }
             }
 
+            if(OnHitEntities(hitEntities)) return;
+
             var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
             var emitter = hitEntities.Count == 0 ? eventArgs.User : hitEntities[0];
             audioSystem.Play(hitEntities.Count > 0 ? _hitSound : "/Audio/weapons/punchmiss.ogg", emitter);
@@ -122,9 +129,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         private HashSet<IEntity> ArcRayCast(Vector2 position, Angle angle, IEntity ignore)
         {
-            // Maybe make this increment count depend on the width/length?
-            const int increments = 5;
             var widthRad = Angle.FromDegrees(ArcWidth);
+            var increments = 1 + (35 * (int) Math.Ceiling(widthRad / (2 * Math.PI)));
             var increment = widthRad / increments;
             var baseAngle = angle - widthRad / 2;
 

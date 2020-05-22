@@ -247,6 +247,23 @@
 
 - type: entity
   parent: UniformBase
+  id: UniformMime
+  name: Mime's Clothes
+  description: ...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_mime.rsi
+    state: icon
+
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_mime.rsi
+    state: icon
+
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_mime.rsi
+
+- type: entity
+  parent: UniformBase
   id: UniformHoS
   name: Head of Security Jumpsuit
   description: A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security.

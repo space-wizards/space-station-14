@@ -40,7 +40,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var canFireSemi = _isFirstShot;
             var state = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
-            if (!_combatModeSystem.IsInCombatMode() && state != BoundKeyState.Down)
+            if (!_combatModeSystem.IsInCombatMode() || state != BoundKeyState.Down)
             {
                 _isFirstShot = true;
                 _blocked = false;

@@ -112,6 +112,10 @@
   - type: Species
     Template: Human
     HeatResistance: 323
+  - type: BodyManager
+    BaseTemplate: bodyTemplate.Humanoid
+    BasePreset: bodyPreset.BasicHuman
+    
   - type: StatusEffectsUI
   - type: OverlayEffectsUI
   - type: HeatResistance
@@ -129,6 +133,8 @@
   - type: FootstepSound
   - type: HumanoidAppearance
   - type: HumanInventoryController
+  - type: Stunnable
+  - type: AnimationPlayer
 
 - type: entity
   save: false
@@ -239,3 +245,4 @@
         - type: SpeciesVisualizer2D
 
     - type: HumanoidAppearance
+    

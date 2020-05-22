@@ -26,6 +26,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
         public ButtonGroup CookTimeButtonGroup { get; }
         private VBoxContainer CookTimeButtonVbox { get; }
 
+        private VBoxContainer ButtonGridContainer { get; }
+
+        private PanelContainer DisableCookingPanelOverlay { get;}
+
+
         public ItemList IngredientsList { get;}
 
         public ItemList IngredientsListReagents { get; }
@@ -35,6 +40,16 @@ namespace Content.Client.GameObjects.Components.Kitchen
         {
             Owner = owner;
             Title = Loc.GetString("Microwave");
+            DisableCookingPanelOverlay = new PanelContainer
+            {
+                MouseFilter = MouseFilterMode.Stop,
+                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.60f)},
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsVertical = SizeFlags.Fill,
+
+            };
+
+
             var hSplit = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.Fill,
@@ -58,14 +73,14 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 SizeFlagsStretchRatio = 2,
                 CustomMinimumSize = (100,128)
             };
-            
+
             hSplit.AddChild(IngredientsListReagents);
             //Padding between the lists.
             hSplit.AddChild(new Control
             {
                 CustomMinimumSize = (0,5),
             });
-            
+
             hSplit.AddChild(IngredientsList);
 
             var vSplit = new VBoxContainer
@@ -76,7 +91,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             hSplit.AddChild(vSplit);
 
-            var buttonGridContainer = new VBoxContainer
+            ButtonGridContainer = new VBoxContainer
             {
                 Align  = BoxContainer.AlignMode.Center,
                 SizeFlagsStretchRatio = 3
@@ -96,10 +111,10 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 TextAlign = Label.AlignMode.Center,
             };
 
-            buttonGridContainer.AddChild(StartButton);
-            buttonGridContainer.AddChild(EjectButton);
-            vSplit.AddChild(buttonGridContainer);
-            
+            ButtonGridContainer.AddChild(StartButton);
+            ButtonGridContainer.AddChild(EjectButton);
+            vSplit.AddChild(ButtonGridContainer);
+
             //Padding
             vSplit.AddChild(new Control
             {
@@ -113,6 +128,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 Align = BoxContainer.AlignMode.Center,
             };
+
 
             var index = 0;
             for (var i = 0; i <= 12; i++)
@@ -134,7 +150,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             var cookTimeOneSecondButton = (Button)CookTimeButtonVbox.GetChild(0);
             cookTimeOneSecondButton.Pressed = true;
-            
+
+
             _cookTimeInfoLabel = new Label
             {
                 Text = Loc.GetString($"COOK TIME: {VisualCookTime}"),
@@ -158,7 +175,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
                         Children =
                         {
-  
+
                             new PanelContainer
                             {
                                 PanelOverride = new StyleBoxFlat(){BackgroundColor = Color.Gray.WithAlpha(0.2f)},
@@ -199,8 +216,15 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             vSplit.AddChild(TimerFacePlate);
             Contents.AddChild(hSplit);
+            Contents.AddChild(DisableCookingPanelOverlay);
 
         }
+
+        public void ToggleBusyDisableOverlayPanel(bool shouldDisable)
+        {
+            DisableCookingPanelOverlay.Visible = shouldDisable;
+        }
+
 
     }
 }

@@ -51,13 +51,17 @@ namespace Content.Server.GameObjects.EntitySystems
             var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate, true);
             if(!rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && (rayResults.HitPos - otherCoords).Length < 1f))
             {
-                _mapManager.TryFindGridAt(coords, out var mapGrid);
-                var srcPos = mapGrid.MapToGrid(coords);
-                var destPos = new GridCoordinates(otherCoords, mapGrid);
-                if (srcPos.InRange(_mapManager, destPos, range))
+
+                if (_mapManager.TryFindGridAt(coords, out var mapGrid) && mapGrid != null)
                 {
-                    return true;
+                    var srcPos = mapGrid.MapToGrid(coords);
+                    var destPos = new GridCoordinates(otherCoords, mapGrid);
+                    if (srcPos.InRange(_mapManager, destPos, range))
+                    {
+                        return true;
+                    }
                 }
+
             }
             return false;
         }
