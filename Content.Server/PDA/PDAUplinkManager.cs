@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Prototypes.PDA;
@@ -21,7 +23,7 @@ namespace Content.Server.PDA
         private List<UplinkAccount> _accounts;
         private List<UplinkListingData> _listings;
 
-        public IReadOnlyList<UplinkListingData> FetchListings()
+        public IReadOnlyList<UplinkListingData> FetchListings() //Shouldn't this be a lambda function or something? I did this when I was tired.
         {
             return _listings;
         }
@@ -31,8 +33,8 @@ namespace Content.Server.PDA
             _listings = new List<UplinkListingData>();
             foreach (var item in _prototypeManager.EnumeratePrototypes<UplinkStoreListingPrototype>())
             {
-                var newListing = new UplinkListingData(item.ListingName, item.ItemID, item.Price, item.Category,
-                    item.Description);
+                var newListing = new UplinkListingData(item.ListingName, item.ItemId, item.Price, item.Category,
+                    item.Description, item.DisplayColor);
 
                 RegisterUplinkListing(newListing);
             }
@@ -51,16 +53,19 @@ namespace Content.Server.PDA
 
         private bool ContainsListing(UplinkListingData listing)
         {
-            if (_listings.Any(otherListing => listing.Equals(otherListing)))
-            {
-                return true;
-            }
-
-            return false;
+            return _listings.Any(otherListing => listing.Equals(otherListing));
         }
 
         public bool AddNewAccount(UplinkAccount acc)
         {
+            var entity = _entityManager.GetEntity(acc.AccountHolder);
+            if (entity.TryGetComponent(out MindComponent mindComponent))
+            {
+                if (mindComponent.Mind.AllRoles.Any(role => !role.Antag))
+                {
+                    return false;
+                }
+            }
             if (_accounts.Contains(acc))
             {
                 return false;
@@ -73,29 +78,32 @@ namespace Content.Server.PDA
         public bool ChangeBalance(UplinkAccount acc, int amt)
         {
             var account = _accounts.Find(uplinkAccount => uplinkAccount.AccountHolder == acc.AccountHolder);
-            if (account.Balance + amt < 0)
+            if (account != null && account.Balance + amt < 0)
             {
                 return false;
             }
-            account.Balance -= amt;
+            account.ModifyAccountBalance(account.Balance + amt);
             return true;
         }
 
-        public bool PurchaseItem(UplinkAccount acc, UplinkListingData listing)
+        public bool TryPurchaseItem(UplinkAccount acc, UplinkListingData listing)
         {
-            if (acc == null || !ContainsListing(listing) || acc.Balance < listing.Price)
+            if (acc == null || listing == null)
+            {
+                return false;
+            }
+            if (!ContainsListing(listing) || acc.Balance < listing.Price)
             {
                 return false;
             }
 
             var player = _entityManager.GetEntity(acc.AccountHolder);
             var hands = player.GetComponent<HandsComponent>();
-            hands.PutInHandOrDrop(_entityManager.SpawnEntity(listing.ItemID,
+            hands.PutInHandOrDrop(_entityManager.SpawnEntity(listing.ItemId,
                 player.Transform.GridPosition).GetComponent<ItemComponent>());
-            return ChangeBalance(acc, listing.Price);
+            return ChangeBalance(acc, -listing.Price);
 
         }
-
 
 
     }

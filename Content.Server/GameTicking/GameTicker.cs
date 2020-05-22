@@ -633,22 +633,20 @@ namespace Content.Server.GameTicking
             var pda = pdaItem.Owner;
 
             var pdaComponent = pda.GetComponent<PDAComponent>();
-
             if (pdaComponent.IdSlotEmpty)
             {
                 return;
             }
 
-
-
             var card = pdaComponent.ContainedID;
             card.FullName = characterName;
             card.JobTitle = jobPrototype.Name;
-            pdaComponent.SetPDAOwner(mob);
+
 
             var access = card.Owner.GetComponent<AccessComponent>();
             access.Tags.Clear();
             access.Tags.AddRange(jobPrototype.Access);
+            pdaComponent.SetPDAOwner(mob);
         }
 
         private void AddManifestEntry(string characterName, string jobId)

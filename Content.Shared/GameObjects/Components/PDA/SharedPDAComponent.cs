@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.PDA
@@ -10,12 +11,6 @@ namespace Content.Shared.GameObjects.Components.PDA
     {
         public override string Name => "PDA";
         public override uint? NetID => ContentNetIDs.PDA;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
 
     }
 
@@ -70,11 +65,11 @@ namespace Content.Shared.GameObjects.Components.PDA
     }
 
     [Serializable, NetSerializable]
-    public sealed class PDAUplinkAccountLoginMessage : PDAUBoundUserInterfaceState
+    public sealed class PDAUpdateUplinkAccountMessage : PDAUBoundUserInterfaceState
     {
 
-        public UplinkAccount Account;
-        public PDAUplinkAccountLoginMessage(UplinkAccount userAccount)
+        public UplinkAccountData Account;
+        public PDAUpdateUplinkAccountMessage(UplinkAccountData userAccount)
         {
             Account = userAccount;
         }
@@ -98,12 +93,21 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage
+    {
+        public PDARequestUpdateInterfaceMessage()
+        {
+
+        }
+    }
+
 
     [NetSerializable, Serializable]
     public struct PDAIdInfoText
     {
         public string ActualOwnerName;
-        public string IDOwner;
+        public string IdOwner;
         public string JobTitle;
     }
 
@@ -119,47 +123,74 @@ namespace Content.Shared.GameObjects.Components.PDA
         Key
     }
 
-    [NetSerializable, Serializable]
     public class UplinkAccount
     {
+        public event Action<UplinkAccount> BalanceChanged;
         public EntityUid AccountHolder;
-        public int Balance;
+        public int Balance { get; private set; }
 
         public UplinkAccount(EntityUid uid, int startingBalance)
         {
             AccountHolder = uid;
             Balance = startingBalance;
         }
+
+        public bool ModifyAccountBalance(int newBalance)
+        {
+            if (newBalance < 0)
+            {
+                return false;
+            }
+            Balance = newBalance;
+            BalanceChanged?.Invoke(this);
+            return true;
+
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public class UplinkAccountData
+    {
+        public EntityUid DataAccountHolder;
+        public int DataBalance;
+
+        public UplinkAccountData(EntityUid dataAccountHolder, int dataBalance)
+        {
+            DataAccountHolder = dataAccountHolder;
+            DataBalance = dataBalance;
+        }
     }
 
     [NetSerializable, Serializable]
     public class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
     {
-        public string ItemID;
+        public string ItemId;
         public int Price;
         public UplinkCategory Category;
         public string Description;
         public string ListingName;
+        public Color DisplayColor;
 
         public UplinkListingData(string listingName,string itemId,
             int price, UplinkCategory category,
-            string description) : base(ContentNetIDs.PDA)
+            string description, Color displayColor) : base(ContentNetIDs.PDA)
         {
             ListingName = listingName;
             Price = price;
             Category = category;
             Description = description;
-            ItemID = itemId;
+            ItemId = itemId;
+            DisplayColor = displayColor;
         }
 
         public bool Equals(UplinkListingData other)
         {
             if (other == null)
             {
-                return false; //eat shit
+                return false;
             }
 
-            return this.ItemID == other.ItemID;
+            return ItemId == other.ItemId;
         }
     }
 

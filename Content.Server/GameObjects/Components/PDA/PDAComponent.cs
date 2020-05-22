@@ -4,14 +4,17 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.PDA;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.PDA
@@ -31,13 +34,13 @@ namespace Content.Server.GameObjects.Components.PDA
         private BoundUserInterface _interface;
         private string _startingIdCard;
         public bool IdSlotEmpty => _idSlot.ContainedEntities.Count < 1;
-        public IEntity OriginalOwner { get; private set; }
+        public IEntity OwnerMob { get; private set; }
 
         public IdCardComponent ContainedID { get; private set; }
 
         private AppearanceComponent _appearance;
 
-        private UplinkAccount _account;
+        private UplinkAccount _syndicateUplinkAccount;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -64,6 +67,11 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             switch (message.Message)
             {
+                case PDARequestUpdateInterfaceMessage msg:
+                {
+                    UpdatePDAUserInterface();
+                    break;
+                }
                 case PDAToggleFlashlightMessage msg:
                 {
                     ToggleLight();
@@ -78,20 +86,20 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDARequestUplinkListingsMessage msg:
                 {
-
                     var listingsMessage = new PDASendUplinkListingsMessage(_uplinkManager.FetchListings().ToArray());
                     _interface.SetState(listingsMessage);
                     break;
                 }
 
-
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-                    if (!_uplinkManager.PurchaseItem(_account, buyMsg.ListingToBuy))
+
+                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ListingToBuy))
                     {
                         //TODO: Send a message that tells the buyer they are too poor or something.
                     }
-
+                    var listingsMessage = new PDASendUplinkListingsMessage(_uplinkManager.FetchListings().ToArray());
+                    _interface.SetState(listingsMessage);
                     break;
                 }
             }
@@ -101,12 +109,17 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             var ownerInfo = new PDAIdInfoText
             {
-                ActualOwnerName = OriginalOwner?.Name,
-                IDOwner = ContainedID?.FullName,
+                ActualOwnerName = OwnerMob?.Name,
+                IdOwner = ContainedID?.FullName,
                 JobTitle = ContainedID?.JobTitle
             };
 
             _interface.SetState(new PDAUpdateMainMenuState(_lightOn,ownerInfo));
+            if (_syndicateUplinkAccount != null)
+            {
+                var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder, _syndicateUplinkAccount.Balance);
+                _interface.SetState(new PDAUpdateUplinkAccountMessage(accData));
+            }
             UpdatePDAAppearance();
         }
 
@@ -127,12 +140,7 @@ namespace Content.Server.GameObjects.Components.PDA
             {
                 return false;
             }
-
             InsertIdCard(idCardComponent);
-            if (OriginalOwner == null)
-            {
-                SetPDAOwner(eventArgs.User);
-            }
             UpdatePDAUserInterface();
             return true;
 
@@ -143,14 +151,6 @@ namespace Content.Server.GameObjects.Components.PDA
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
                 return;
-            }
-            if (OriginalOwner == null)
-            {
-                SetPDAOwner(eventArgs.User);
-            }
-            if (_account == null)
-            {
-                InitUplinkAccount(new UplinkAccount(eventArgs.User.Uid, 500));
             }
             _interface.Open(actor.playerSession);
             UpdatePDAAppearance();
@@ -169,35 +169,54 @@ namespace Content.Server.GameObjects.Components.PDA
 
         public void SetPDAOwner(IEntity mob)
         {
-            if (mob == null || mob == OriginalOwner)
+            if (mob == OwnerMob)
             {
                 return;
             }
 
-            OriginalOwner = mob;
+            OwnerMob = mob;
             UpdatePDAUserInterface();
         }
 
-        public void InsertIdCard(IdCardComponent card)
+        private void InsertIdCard(IdCardComponent card)
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
         }
 
+        /// <summary>
+        /// Initialize the PDA's syndicate uplink account.
+        /// </summary>
+        /// <param name="acc"></param>
         public void InitUplinkAccount(UplinkAccount acc)
         {
-            _account = acc;
-            _uplinkManager.AddNewAccount(_account);
+            _syndicateUplinkAccount = acc;
+            _uplinkManager.AddNewAccount(_syndicateUplinkAccount);
+
+            _syndicateUplinkAccount.BalanceChanged += account =>
+            {
+                _syndicateUplinkAccount = account;
+                var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder, _syndicateUplinkAccount.Balance);
+                _interface.SetState(new PDAUpdateUplinkAccountMessage(accData));
+                var listingsMessage = new PDASendUplinkListingsMessage(_uplinkManager.FetchListings().ToArray());
+                _interface.SetState(listingsMessage);
+                UpdatePDAUserInterface();
+            };
+
+            var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder, _syndicateUplinkAccount.Balance);
+            _interface.SetState(new PDAUpdateUplinkAccountMessage(accData));
+
+            UpdatePDAUserInterface();
         }
 
-        protected void ToggleLight()
+        private void ToggleLight()
         {
             _lightOn = !_lightOn;
             _pdaLight.Enabled = _lightOn;
             UpdatePDAUserInterface();
         }
 
-        protected void HandleIDEjection(IEntity pdaUser)
+        private void HandleIDEjection(IEntity pdaUser)
         {
             if (IdSlotEmpty)
             {
