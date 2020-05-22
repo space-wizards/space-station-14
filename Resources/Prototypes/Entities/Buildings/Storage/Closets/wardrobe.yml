@@ -153,3 +153,64 @@
 
   - type: Icon
     state: mixed_door
+
+
+# WardrobeBlue Filled
+- type: entity
+  id: WardrobeBlueFilled
+  suffix: Filled
+  parent: WardrobeBlue
+
+# WardrobePink Filled
+- type: entity
+  id: WardrobePinkFilled
+  suffix: Filled
+  parent: WardrobePink
+
+# WardrobeBlack Filled
+- type: entity
+  id: WardrobeBlackFilled
+  suffix: Filled
+  parent: WardrobeBlack
+
+# WardrobeGreen Filled
+- type: entity
+  id: WardrobeGreenFilled
+  suffix: Filled
+  parent: WardrobeGreen
+
+# WardrobePrison Filled
+- type: entity
+  id: WardrobePrisonFilled
+  suffix: Filled
+  parent: WardrobePrison
+
+# WardrobeYellow Filled
+- type: entity
+  id: WardrobeYellowFilled
+  suffix: Filled
+  parent: WardrobeYellow
+
+# WardrobeWhite Filled
+- type: entity
+  id: WardrobeWhiteFilled
+  suffix: Filled
+  parent: WardrobeWhite
+
+# WardrobePajama Filled
+- type: entity
+  id: WardrobePajamaFilled
+  suffix: Filled
+  parent: WardrobePajama
+
+# WardrobeGrey Filled
+- type: entity
+  id: WardrobeGreyFilled
+  suffix: Filled
+  parent: WardrobeGrey
+
+# WardrobeMixed Filled
+- type: entity
+  id: WardrobeMixedFilled
+  suffix: Filled
+  parent: WardrobeMixed

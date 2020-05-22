@@ -39,3 +39,21 @@
 
   - type: Icon
     state: sec_door
+
+# LockerHeadOfSecurity Filled
+- type: entity
+  id: LockerHeadOfSecurityFilled
+  suffix: Filled
+  parent: LockerHeadOfSecurity
+
+# LockerWarden Filled
+- type: entity
+  id: LockerWardenFilled
+  suffix: Filled
+  parent: LockerWarden
+
+# LockerSecurity Filled
+- type: entity
+  id: LockerSecurityFilled
+  suffix: Filled
+  parent: LockerSecurity

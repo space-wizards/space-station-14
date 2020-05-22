@@ -11,3 +11,9 @@
 
   - type: Icon
     state: qm_door
+
+# LockerQuarterMaster Filled
+- type: entity
+  id: LockerQuarterMasterFilled
+  suffix: Filled
+  parent: LockerQuarterMaster

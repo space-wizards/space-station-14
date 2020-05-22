@@ -116,3 +116,100 @@
   id: WardrobeBotanist
   parent: WardrobeGreen
   name: "botanist wardrobe"
+
+
+# LockerFormal Filled
+- type: entity
+  id: LockerFormalFilled
+  suffix: Filled
+  parent: LockerFormal
+
+# LockerChef Filled
+- type: entity
+  id: LockerChefFilled
+  suffix: Filled
+  parent: LockerChef
+
+# LockerJanitor Filled
+- type: entity
+  id: LockerJanitorFilled
+  suffix: Filled
+  parent: LockerJanitor
+
+# LockerLegal Filled
+- type: entity
+  id: LockerLegalFilled
+  suffix: Filled
+  parent: LockerLegal
+
+# WardrobeChapel Filled
+- type: entity
+  id: WardrobeChapelFilled
+  suffix: Filled
+  parent: WardrobeChapel
+
+# WardrobeSecurity Filled
+- type: entity
+  id: WardrobeSecurityFilled
+  suffix: Filled
+  parent: WardrobeSecurity
+
+# WardrobeCargo Filled
+- type: entity
+  id: WardrobeCargoFilled
+  suffix: Filled
+  parent: WardrobeCargo
+
+# WardrobeAtmospherics Filled
+- type: entity
+  id: WardrobeAtmosphericsFilled
+  suffix: Filled
+  parent: WardrobeAtmospherics
+
+# WardrobeEngineering Filled
+- type: entity
+  id: WardrobeEngineeringFilled
+  suffix: Filled
+  parent: WardrobeEngineering
+
+# WardrobeMedicalDoctor Filled
+- type: entity
+  id: WardrobeMedicalDoctorFilled
+  suffix: Filled
+  parent: WardrobeMedicalDoctor
+
+# WardrobeRobotics Filled
+- type: entity
+  id: WardrobeRoboticsFilled
+  suffix: Filled
+  parent: WardrobeRobotics
+
+# WardrobeChemistry Filled
+- type: entity
+  id: WardrobeChemistryFilled
+  suffix: Filled
+  parent: WardrobeChemistry
+
+# WardrobeGenetics Filled
+- type: entity
+  id: WardrobeGeneticsFilled
+  suffix: Filled
+  parent: WardrobeGenetics
+
+# WardrobeVirology Filled
+- type: entity
+  id: WardrobeVirologyFilled
+  suffix: Filled
+  parent: WardrobeVirology
+
+# WardrobeScience Filled
+- type: entity
+  id: WardrobeScienceFilled
+  suffix: Filled
+  parent: WardrobeScience
+
+# WardrobeBotanist Filled
+- type: entity
+  id: WardrobeBotanistFilled
+  suffix: Filled
+  parent: WardrobeBotanist

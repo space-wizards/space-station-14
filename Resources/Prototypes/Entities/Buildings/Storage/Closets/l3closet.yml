@@ -51,3 +51,34 @@
 
   - type: Icon
     state: bio_jan_door
+
+
+# LockerL3 Filled
+- type: entity
+  id: LockerL3Filled
+  suffix: Filled, Generic
+  parent: LockerL3
+
+# LockerL3Virology Filled
+- type: entity
+  id: LockerL3VirologyFilled
+  suffix: Filled, Virology
+  parent: LockerL3Virology
+
+# LockerL3Security Filled
+- type: entity
+  id: LockerL3SecurityFilled
+  suffix: Filled, Security
+  parent: LockerL3Security
+
+# LockerL3Janitor Filled
+- type: entity
+  id: LockerL3JanitorFilled
+  suffix: Filled, Janitor
+  parent: LockerL3Janitor
+
+# LockerL3Science Filled
+- type: entity
+  id: LockerL3JanitorFilled
+  suffix: Filled, Science
+  parent: LockerL3Virology

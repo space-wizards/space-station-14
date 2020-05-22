@@ -55,3 +55,28 @@
 
   - type: Icon
     state: cmo_door
+
+
+# LockerMedicine Filled
+- type: entity
+  id: LockerMedicineFilled
+  suffix: Filled
+  parent: LockerMedicine
+
+# LockerMedical Filled
+- type: entity
+  id: LockerMedicalFilled
+  suffix: Filled
+  parent: LockerMedical
+
+# LockerChemistry Filled
+- type: entity
+  id: LockerChemistryFilled
+  suffix: Filled
+  parent: LockerChemistry
+
+# LockerChiefMedicalOfficer Filled
+- type: entity
+  id: LockerChiefMedicalOfficerFilled
+  suffix: Filled
+  parent: LockerChiefMedicalOfficer

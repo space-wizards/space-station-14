@@ -20,3 +20,8 @@
   description: "It's a personal storage unit for operative gear."
 
 
+# LockerSyndicatePersonal Filled
+- type: entity
+  id: LockerSyndicatePersonalFilled
+  suffix: Filled
+  parent: LockerSyndicatePersonal
