@@ -79,6 +79,6 @@
 
 # LockerL3Science Filled
 - type: entity
-  id: LockerL3JanitorFilled
+  id: LockerL3ScienceFilled
   suffix: Filled, Science
   parent: LockerL3Virology
