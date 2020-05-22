@@ -2,6 +2,7 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Localization;
 using Robust.Shared.Timers;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
@@ -23,15 +24,17 @@ namespace Content.Server.GameObjects
             _inventory = Owner.GetComponent<InventoryComponent>();
         }
 
-        bool IInventoryController.CanEquip(Slots slot, IEntity entity, bool flagsCheck)
+        bool IInventoryController.CanEquip(Slots slot, IEntity entity, bool flagsCheck, out string reason)
         {
             var slotMask = SlotMasks[slot];
+            reason = null;
 
             if ((slotMask & (SlotFlags.POCKET | SlotFlags.IDCARD)) != SlotFlags.NONE)
             {
                 // Can't wear stuff in ID card or pockets unless you have a uniform.
                 if (_inventory.GetSlotItem(Slots.INNERCLOTHING) == null)
                 {
+                    reason = Loc.GetString("You need a uniform to store something in your pockets!");
                     return false;
                 }
 
@@ -43,6 +46,10 @@ namespace Content.Server.GameObjects
                     if (itemComponent.ObjectSize <= (int) ReferenceSizes.Pocket)
                     {
                         return true;
+                    }
+                    else if (!flagsCheck)
+                    {
+                        reason = Loc.GetString("This is too large!");
                     }
                 }
             }
