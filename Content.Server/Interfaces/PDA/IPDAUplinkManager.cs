@@ -7,7 +7,7 @@ namespace Content.Server.Interfaces.PDA
 {
     public interface IPDAUplinkManager
     {
-        public IReadOnlyList<UplinkListingData> FetchListings();
+        public IReadOnlyList<UplinkListingData> FetchListings => null;
         void Initialize();
         public bool AddNewAccount(UplinkAccount acc);
 

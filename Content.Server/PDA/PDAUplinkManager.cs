@@ -23,10 +23,7 @@ namespace Content.Server.PDA
         private List<UplinkAccount> _accounts;
         private List<UplinkListingData> _listings;
 
-        public IReadOnlyList<UplinkListingData> FetchListings() //Shouldn't this be a lambda function or something? I did this when I was tired.
-        {
-            return _listings;
-        }
+        public IReadOnlyList<UplinkListingData> FetchListings => _listings;
 
         public void Initialize()
         {

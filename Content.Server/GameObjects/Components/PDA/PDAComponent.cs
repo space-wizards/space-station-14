@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.PDA
             if (_syndicateUplinkAccount != null)
             {
                 var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder, _syndicateUplinkAccount.Balance);
-                var listings = _uplinkManager.FetchListings().ToArray();
+                var listings = _uplinkManager.FetchListings.ToArray();
                 _interface.SetState(new PDAUpdateState(_lightOn,ownerInfo,accData,listings));
             }
             else
