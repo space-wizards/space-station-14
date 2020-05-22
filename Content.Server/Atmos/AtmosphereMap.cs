@@ -208,8 +208,9 @@ namespace Content.Server.Atmos
 
         private void SplitAtmospheres(MapIndices pos)
         {
-            // Remove the now-covered atmosphere
-            _atmospheres.Remove(pos);
+            // Remove the now-covered atmosphere (if there was one)
+            if (_atmospheres.TryGetValue(pos, out var coveredAtmos))
+                _atmospheres.Remove(pos);
 
             var adjacent = GetAdjacentAtmospheres(pos);
             var adjacentPositions = adjacent.Select(p => pos.Offset(p.Key)).ToList();
@@ -245,12 +246,10 @@ namespace Content.Server.Atmos
                 // If the sides were all connected, this atmosphere is intact
                 if (i == 1)
                 {
-                    if (atmos != null)
+                    if (coveredAtmos != null)
                     {
-                        var coveredVolume = GetVolumeForCells(1);
-                        // Assumption: we covered one cell - so remove that amount of gas
-                        atmos.Take(coveredVolume);
-                        atmos.Volume -= coveredVolume;
+                        // We covered one cell - so remove that volume
+                        coveredAtmos.Volume -= GetVolumeForCells(1);
                     }
                     continue;
                 }
@@ -294,9 +293,16 @@ namespace Content.Server.Atmos
         {
             var adjacent = new HashSet<Atmosphere>(GetAdjacentAtmospheres(pos).Values);
 
-            // If this block doesn't separate two atmospheres, there's nothing to do
+            // If this block doesn't separate two atmospheres, there's no merging to do
             if (adjacent.Count <= 1)
+            {
+                var joinedAtmos = adjacent.First();
+                // But this block was missing an atmosphere, so add one
+                // and include this cell's volume in it
+                joinedAtmos.Volume += GetVolumeForCells(1);
+                _atmospheres[pos] = joinedAtmos;
                 return;
+            }
 
             var allCells = new List<MapIndices> {pos};
             foreach (var atmos in adjacent)
