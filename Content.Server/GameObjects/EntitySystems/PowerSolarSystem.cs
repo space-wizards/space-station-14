@@ -31,6 +31,11 @@ namespace Content.Server.GameObjects.EntitySystems
         public Angle TowardsSun = Angle.South;
 
         /// <summary>
+        /// The current sun angular velocity. (This is changed in Initialize)
+        /// </summary>
+        public Angle SunAngularVelocity = Angle.Zero;
+
+        /// <summary>
         /// The distance before the sun is considered to have been 'visible anyway'.
         /// This value, like the occlusion semantics, is borrowed from all the other SS13 stations with solars.
         /// </summary>
@@ -49,17 +54,47 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public TimeSpan SolarCoverageUpdateRandomInterval = TimeSpan.FromSeconds(0.5);
 
+        /// <summary>
+        /// TODO: *Should be moved into the solar tracker when powernet allows for it.*
+        /// The current target panel rotation.
+        /// </summary>
+        public Angle TargetPanelRotation = Angle.Zero;
+
+        /// <summary>
+        /// TODO: *Should be moved into the solar tracker when powernet allows for it.*
+        /// The current target panel velocity.
+        /// </summary>
+        public Angle TargetPanelVelocity = Angle.Zero;
+
+        /// <summary>
+        /// TODO: *Should be moved into the solar tracker when powernet allows for it.*
+        /// Last update of total panel power.
+        /// </summary>
+        public float TotalPanelPower = 0;
+
         public override void Initialize()
         {
             EntityQuery = new TypeEntityQuery(typeof(SolarPanelComponent));
+            // Initialize the sun to something random
+            TowardsSun = Math.PI * 2 * _robustRandom.NextDouble();
+            SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
         }
 
         public override void Update(float frameTime)
         {
-            TowardsSun += Angle.FromDegrees(frameTime / 10);
+            TowardsSun += SunAngularVelocity * frameTime;
             TowardsSun = TowardsSun.Reduced();
+
+            TargetPanelRotation += TargetPanelVelocity * frameTime;
+            TargetPanelRotation = TargetPanelRotation.Reduced();
+
+            TotalPanelPower = 0;
+
             foreach (var entity in RelevantEntities)
             {
+                // There's supposed to be rotational logic here, but that implies putting it somewhere.
+                entity.Transform.WorldRotation = TargetPanelRotation;
+
                 var panel = entity.GetComponent<SolarPanelComponent>();
                 if (panel.TimeOfNextCoverageUpdate < _gameTiming.CurTime)
                 {
@@ -68,6 +103,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     panel.TimeOfNextCoverageUpdate = _gameTiming.CurTime + future;
                     UpdatePanelCoverage(panel);
                 }
+                TotalPanelPower += panel.Coverage * panel.MaxSupply;
             }
         }
 

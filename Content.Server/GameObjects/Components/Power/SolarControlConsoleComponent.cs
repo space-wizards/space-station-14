@@ -34,8 +34,26 @@ namespace Content.Server.GameObjects.Components.Power
             _powerSolarSystem = _entitySystemManager.GetEntitySystem<PowerSolarSystem>();
         }
 
+        public void UpdateUIState()
+        {
+            _userInterface.SetState(new SolarControlConsoleBoundInterfaceState(_powerSolarSystem.TargetPanelRotation, _powerSolarSystem.TargetPanelVelocity, _powerSolarSystem.TotalPanelPower, _powerSolarSystem.TowardsSun));
+        }
+
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            switch (obj.Message)
+            {
+                case SolarControlConsoleAdjustMessage msg:
+                    if (double.IsFinite(msg.Rotation))
+                    {
+                        _powerSolarSystem.TargetPanelRotation = msg.Rotation.Reduced();
+                    }
+                    if (double.IsFinite(msg.AngularVelocity))
+                    {
+                        _powerSolarSystem.TargetPanelVelocity = msg.AngularVelocity.Reduced();
+                    }
+                    break;
+            }
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -50,10 +68,9 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
             }
 
+            // always update the UI immediately before opening, just in case
+            UpdateUIState();
             _userInterface.Open(actor.playerSession);
-
-            // needs to be on-update or something
-            _userInterface.SetState(new SolarControlConsoleBoundInterfaceState());
         }
     }
 }
