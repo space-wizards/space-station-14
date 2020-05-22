@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.HUD.Hotbar;
 using Content.Client.GameObjects.EntitySystems;
+using Content.Client.UserInterface;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs.Abilities;
 using Content.Shared.Physics;
@@ -28,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
     {
 #pragma warning disable 649
         [Dependency] private readonly IGameTiming _gameTiming;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IHotbarManager _hotbarManager;
 #pragma warning restore 649
 
         public Ability Ability;
@@ -37,7 +38,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
         {
             base.Initialize();
 
-            Ability = new Ability("Laser", "/Textures/Objects/Guns/Laser/laser_retro.rsi/laser_retro.png", TriggerAbility, SelectAbility, new TimeSpan(10));
+            Ability = new Ability("Laser", "/Textures/Objects/Guns/Laser/laser_retro.rsi/laser_retro.png", TriggerAbility, ToggleAbility, new TimeSpan(10));
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -49,6 +50,13 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
                 case GetAbilitiesMessage msg:
                 {
                     msg.Hotbar.AddAbility(Ability);
+                    break;
+                }
+                // Stuff to make sure it doesn't break when component gets detached and/or reattached.
+                case PlayerAttachedMsg msg:
+                {
+                    Ability.ActivateAction = TriggerAbility;
+                    Ability.SelectAction = ToggleAbility;
                     break;
                 }
                 case PlayerDetachedMsg msg:
@@ -89,29 +97,24 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
 
             SendNetworkMessage(new FireLaserMessage(coords));
 
-            if (!_entitySystemManager.TryGetEntitySystem<HotbarSystem>(out var hotbarSystem))
-            {
-                return;
-            }
-
-            hotbarSystem.UnbindUse(Ability);
+            _hotbarManager.UnbindUse(Ability);
             return;
         }
 
-        private void SelectAbility(BaseButton.ButtonToggledEventArgs args)
+        private void ToggleAbility(bool pressed)
         {
-            if (!_entitySystemManager.TryGetEntitySystem<HotbarSystem>(out var hotbarSystem))
+            if (!Owner.IsValid())
             {
                 return;
             }
 
-            if (args.Pressed)
+            if (pressed)
             {
-                hotbarSystem.BindUse(Ability);
+                _hotbarManager.BindUse(Ability);
             }
             else
             {
-                hotbarSystem.UnbindUse(Ability);
+                _hotbarManager.UnbindUse(Ability);
             }
             return;
         }

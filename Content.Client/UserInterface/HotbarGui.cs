@@ -12,7 +12,6 @@ namespace Content.Client.UserInterface
         private List<HotbarButton> _slots = new List<HotbarButton>();
 
         private VBoxContainer _vBox;
-        private TextureButton _hideButton;
 
         public event Action<BaseButton.ButtonToggledEventArgs, int> OnToggled;
 

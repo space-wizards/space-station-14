@@ -18,6 +18,7 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
     {
 #pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud;
+        [Dependency] private readonly IHotbarManager _hotbarManager;
 #pragma warning restore 649
 
         public override string Name => "Hotbar";
@@ -33,19 +34,21 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
         {
             base.Initialize();
 
-            _hotbarGui = new HotbarGui();
-            _abilityMenu = new AbilityMenu();
             _abilities = new List<Ability>();
             _hotbar = new List<Ability>();
-
-            _abilityMenu.OnPressed += OnAbilityMenuItemSelected;
-            _abilityMenu.OnClose += DeselectAbilityMenuItem;
-            _hotbarGui.OnToggled += SlotPressed;
 
             for (int i = 0; i < 10; i++)
             {
                 _hotbar.Add(null);
             }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            _hotbarGui?.Dispose();
+            _abilityMenu?.Dispose();
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -60,6 +63,12 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
                     if (_hotbarGui == null)
                     {
                         _hotbarGui = new HotbarGui();
+                        _hotbarGui.OnToggled += SlotPressed;
+
+                        _abilityMenu = new AbilityMenu();
+                        _abilityMenu.OnPressed += OnAbilityMenuItemSelected;
+                        _abilityMenu.OnClose += DeselectAbilityMenuItem;
+
                     }
                     else
                     {
@@ -71,7 +80,7 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
                 }
                 case PlayerDetachedMsg _:
                 {
-                    _hotbarGui.Parent?.RemoveChild(_hotbarGui);
+                    _hotbarGui?.Parent?.RemoveChild(_hotbarGui);
                     break;
                 }
             }
@@ -80,19 +89,19 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
         public void OpenAbilityMenu()
         {
             FetchAbilities();
-            _abilityMenu.Open();
+            _abilityMenu?.Open();
         }
 
         public void AddAbility(Ability ability)
         {
             _abilities.Add(ability);
-            _abilityMenu.Populate(_abilities);
+            _abilityMenu?.Populate(_abilities);
         }
 
         public void RemoveAbility(Ability ability)
         {
             _abilities.Remove(ability);
-            _abilityMenu.Populate(_abilities);
+            _abilityMenu?.Populate(_abilities);
         }
 
         public void TriggerAbility(int index, PointerInputCmdArgs args)
@@ -113,8 +122,18 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
 
         private void DeselectAbilityMenuItem()
         {
-            _abilityMenu.ItemList.ClearSelected();
+            _abilityMenu?.ItemList.ClearSelected();
             _menuAbilitySelected = null;
+        }
+
+        public bool TryGetSlot(Ability ability, out int slot)
+        {
+            slot = _hotbar.IndexOf(ability);
+            if (slot == -1)
+            {
+                return false;
+            }
+            return true;
         }
 
         private void SetSlot(int slot, Ability ability)
@@ -124,9 +143,13 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
                 return;
             }
 
-            if (_hotbar[slot])
+            if (_hotbar[slot] != null)
+            {
+                _hotbarManager.UnbindUse(ability);
+            }
+
             _hotbar[slot] = ability;
-            _hotbarGui.SetSlot(slot, ability.Texture);
+            _hotbarGui?.SetSlot(slot, ability.Texture);
         }
 
         private void SlotPressed(ButtonToggledEventArgs args, int slot)
@@ -135,18 +158,23 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
             {
                 SetSlot(slot, _menuAbilitySelected);
                 DeselectAbilityMenuItem();
-                _hotbarGui.UnpressSlot(slot);
+                _hotbarGui?.UnpressSlot(slot);
             }
             else
             {
-                _hotbar[slot].Select(args);
+                _hotbar[slot].Toggle(args.Pressed);
             }
         }
 
-        public void UnpressHotbarSlot(Ability ability)
+        public void UnpressHotbarAbility(Ability ability)
         {
-            var index = _hotbar.IndexOf(ability);
-            _hotbarGui.UnpressSlot(index);
+            var slot = _hotbar.IndexOf(ability);
+            if (slot == -1)
+            {
+                return;
+            }
+
+            _hotbarGui?.UnpressSlot(slot);
         }
     }
 }

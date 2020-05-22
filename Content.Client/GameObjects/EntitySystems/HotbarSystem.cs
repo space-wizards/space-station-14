@@ -25,9 +25,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager;
 #pragma warning restore 649
 
-        private InputCmdHandler _previousHandler;
-        private Ability _boundAbility;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -104,57 +101,6 @@ namespace Content.Client.GameObjects.EntitySystems
             hotbarComponent.TriggerAbility(index, args);
             return true;
         }
-
-        public void BindUse(Ability ability)
-        {
-            if (!EntitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
-            {
-                return;
-            }
-
-            if (inputSys.BindMap.TryGetHandler(EngineKeyFunctions.Use, out var handler))
-            {
-                _previousHandler = handler;
-                inputSys.BindMap.UnbindFunction(EngineKeyFunctions.Use);
-            }
-
-            _boundAbility = ability;
-            inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => {
-                    ability.Activate(args);
-                    return true;
-                }));
-        }
-
-        public void UnbindUse(Ability ability)
-        {
-            if (ability != _boundAbility)
-            {
-                return;
-            }
-
-            if (!EntitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
-            {
-                return;
-            }
-
-            _boundAbility = null;
-            inputSys.BindMap.UnbindFunction(EngineKeyFunctions.Use);
-
-            if (_previousHandler != null)
-            {
-                inputSys.BindMap.BindFunction(EngineKeyFunctions.Use, _previousHandler);
-                _previousHandler = null;
-            }
-
-            if (_playerManager.LocalPlayer.ControlledEntity == null
-                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out HotbarComponent hotbarComponent))
-            {
-                return;
-            }
-
-            hotbarComponent.UnpressHotbarSlot(ability);
-        }
     }
 
     public class Ability
@@ -162,12 +108,12 @@ namespace Content.Client.GameObjects.EntitySystems
         public string Name;
         public Texture Texture;
         public Action<ICommonSession, GridCoordinates, EntityUid, Ability> ActivateAction;
-        public Action<BaseButton.ButtonToggledEventArgs> SelectAction;
+        public Action<bool> SelectAction;
         public TimeSpan? Start;
         public TimeSpan? End;
         public TimeSpan? Cooldown;
 
-        public Ability(string name, string texturePath, Action<ICommonSession, GridCoordinates, EntityUid, Ability> activateAction, Action<BaseButton.ButtonToggledEventArgs> selectAction, TimeSpan? cooldown)
+        public Ability(string name, string texturePath, Action<ICommonSession, GridCoordinates, EntityUid, Ability> activateAction, Action<bool> selectAction, TimeSpan? cooldown)
         {
             Name = name;
             if (texturePath != null)
@@ -191,9 +137,9 @@ namespace Content.Client.GameObjects.EntitySystems
             ActivateAction?.Invoke(args.Session, args.Coordinates, args.EntityUid, this);
         }
 
-        public void Select(BaseButton.ButtonToggledEventArgs args)
+        public void Toggle(bool pressed)
         {
-            SelectAction?.Invoke(args);
+            SelectAction?.Invoke(pressed);
         }
     }
 
