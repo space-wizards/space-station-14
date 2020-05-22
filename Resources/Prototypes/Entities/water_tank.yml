@@ -2,13 +2,14 @@
   parent: ReagentItem
   id: WaterTank
   name: Water Tank
+  suffix: Empty
   description: "A water tank. It is used to store high amounts of water."
   components:
   - type: Sprite
-    texture: Buildings/WaterTank.png
+    texture: Buildings/watertank.png
 
   - type: Icon
-    texture: Buildings/WaterTank.png
+    texture: Buildings/watertank.png
 
   - type: Clickable
   - type: InteractionOutline
@@ -37,6 +38,7 @@
 - type: entity
   parent: WaterTank
   id: WaterTankFull
+  suffix: Full
   components:
   - type: Solution
     contents:

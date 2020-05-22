@@ -47,7 +47,7 @@
    id: MinimoogInstrument
    components:
    - type: Instrument
-     program: 7
+     program: 81
    - type: Sprite
      sprite: Objects/Instruments/otherinstruments.rsi
      state: minimoog
