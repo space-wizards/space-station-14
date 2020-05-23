@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Atmos;
+﻿using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.Atmos
 {
@@ -43,8 +38,11 @@ namespace Content.Server.Atmos
             return manager;
         }
 
-        public IAtmosphere GetAtmosphere(ITransformComponent position) =>
-            GetGridAtmosphereManager(position.GridID).GetAtmosphere(position.GridPosition);
+        public IAtmosphere GetAtmosphere(ITransformComponent position)
+        {
+            var indices = _mapManager.GetGrid(position.GridID).SnapGridCellFor(position.GridPosition, SnapGridOffset.Center);
+            return GetGridAtmosphereManager(position.GridID).GetAtmosphere(indices);
+        }
 
         public void Update(float frameTime)
         {
@@ -64,53 +62,53 @@ namespace Content.Server.Atmos
         private const float ROOM_HEIGHT = 2.5f;
 
         private readonly IMapGrid _grid;
-        private Dictionary<GridCoordinates, ZoneAtmosphere> _atmospheres = new Dictionary<GridCoordinates, ZoneAtmosphere>();
+        private Dictionary<MapIndices, ZoneAtmosphere> _atmospheres = new Dictionary<MapIndices, ZoneAtmosphere>();
 
-        private HashSet<GridCoordinates> _invalidatedCoords = new HashSet<GridCoordinates>();
+        private HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>();
 
         public GridAtmosphereManager(IMapGrid grid)
         {
             _grid = grid;
         }
 
-        public IAtmosphere GetAtmosphere(GridCoordinates coordinates) => GetZoneAtmosphere(coordinates);
+        public IAtmosphere GetAtmosphere(MapIndices indices) => GetZoneAtmosphere(indices);
 
-        private ZoneAtmosphere GetZoneAtmosphere(GridCoordinates coordinates)
+        private ZoneAtmosphere GetZoneAtmosphere(MapIndices indices)
         {
-            if (_atmospheres.TryGetValue(coordinates, out var atmosphere))
+            if (_atmospheres.TryGetValue(indices, out var atmosphere))
                 return atmosphere;
 
             // If this is clearly space - such as someone moving round outside the station - just return immediately
             // and don't add anything to the grid map
-            if (IsSpace(coordinates))
+            if (IsSpace(indices))
                 return null;
 
             // If the block is obstructed:
             // If the air blocker is marked as 'use adjacent atmosphere' then the cell behaves as if
             // you got one of it's adjacent atmospheres. If not, it returns null.
-            var obstruction = GetObstructingComponent(coordinates);
+            var obstruction = GetObstructingComponent(indices);
             if (obstruction != null)
-                return obstruction.UseAdjacentAtmosphere ? GetAdjacentAtmospheres(coordinates).FirstOrDefault().Value : null;
+                return obstruction.UseAdjacentAtmosphere ? GetAdjacentAtmospheres(indices).FirstOrDefault().Value : null;
 
-            var connected = FindConnectedCells(coordinates);
+            var connected = FindConnectedCells(indices);
 
             if (connected == null)
             {
                 // Since this is on a floor tile, it's fairly likely this is a room with
                 // a breach. As such, cache this position for sake of static objects like
                 // air vents which call this constantly.
-                _atmospheres[coordinates] = null;
+                _atmospheres[indices] = null;
                 return null;
             }
 
             atmosphere = new ZoneAtmosphere(this, connected);
             // TODO: Not hardcode this
-            var oneAtmosphere = 101325; // 1 atm in Pa
-            var roomTemp = 293.15f; // 20c in k
+            //var oneAtmosphere = 101325; // 1 atm in Pa
+            //var roomTemp = 293.15f; // 20c in k
             // Calculating moles to add: n = (PV)/(RT)
-            var totalMoles = (oneAtmosphere * atmosphere.Volume) / (IAtmosphere.R * roomTemp);
-            atmosphere.Add(new Gas("oxygen"), totalMoles * 0.2f, roomTemp);
-            atmosphere.Add(new Gas("nitrogen"), totalMoles * 0.8f, roomTemp);
+            //var totalMoles = (oneAtmosphere * atmosphere.Volume) / (IAtmosphere.R * roomTemp);
+            //atmosphere.Add(new Gas("oxygen"), totalMoles * 0.2f, roomTemp);
+            //atmosphere.Add(new Gas("nitrogen"), totalMoles * 0.8f, roomTemp);
 
             foreach (var c in connected)
                 _atmospheres[c] = atmosphere;
@@ -118,15 +116,15 @@ namespace Content.Server.Atmos
             return atmosphere;
         }
 
-        public void Invalidate(GridCoordinates coordinates)
+        public void Invalidate(MapIndices indices)
         {
-            _invalidatedCoords.Add(coordinates);
+            _invalidatedCoords.Add(indices);
         }
 
-        private List<GridCoordinates> FindConnectedCells(GridCoordinates start)
+        private List<MapIndices> FindConnectedCells(MapIndices start)
         {
-            var inner = new HashSet<GridCoordinates>();
-            var edge = new HashSet<GridCoordinates> {start};
+            var inner = new HashSet<MapIndices>();
+            var edge = new HashSet<MapIndices> {start};
 
             // Basic inner/edge finder
             // The inner list is all the positions we know are empty, and take no further actions.
@@ -136,7 +134,7 @@ namespace Content.Server.Atmos
 
             while (edge.Count > 0)
             {
-                var temp = new List<GridCoordinates>(edge);
+                var temp = new List<MapIndices>(edge);
                 edge.Clear();
                 foreach (var pos in temp)
                 {
@@ -152,12 +150,12 @@ namespace Content.Server.Atmos
                 }
             }
 
-            return new List<GridCoordinates>(inner);
+            return new List<MapIndices>(inner);
         }
 
-        private void Check(ICollection<GridCoordinates> inner, ISet<GridCoordinates> edges, GridCoordinates pos, Direction dir)
+        private void Check(ICollection<MapIndices> inner, ISet<MapIndices> edges, MapIndices pos, Direction dir)
         {
-            pos = pos.Offset(dir.ToVec());
+            pos = pos.Offset(dir);
             if (IsObstructed(pos))
                 return;
 
@@ -167,11 +165,11 @@ namespace Content.Server.Atmos
             edges.Add(pos);
         }
 
-        private bool IsObstructed(GridCoordinates coordinates) => GetObstructingComponent(coordinates) != null;
+        private bool IsObstructed(MapIndices indices) => GetObstructingComponent(indices) != null;
 
-        private AirtightComponent GetObstructingComponent(GridCoordinates coordinates)
+        private AirtightComponent GetObstructingComponent(MapIndices indices)
         {
-            foreach (var v in _grid.GetSnapGridCell(coordinates, SnapGridOffset.Center))
+            foreach (var v in _grid.GetSnapGridCell(indices, SnapGridOffset.Center))
             {
                 if (v.Owner.TryGetComponent<AirtightComponent>(out var ac))
                     return ac;
@@ -180,10 +178,10 @@ namespace Content.Server.Atmos
             return null;
         }
 
-        private bool IsSpace(GridCoordinates coordinates)
+        private bool IsSpace(MapIndices indices)
         {
             // TODO use ContentTileDefinition to define in YAML whether or not a tile is considered space
-            return _grid.GetTileRef(coordinates).Tile.IsEmpty;
+            return _grid.GetTileRef(indices).Tile.IsEmpty;
         }
 
         public void Update(float frameTime)
@@ -194,31 +192,33 @@ namespace Content.Server.Atmos
 
         private void Revalidate()
         {
-            foreach (var coordinates in _invalidatedCoords)
+            foreach (var indices in _invalidatedCoords)
             {
-                if (IsObstructed(coordinates))
-                    SplitAtmospheres(coordinates);
+                if (IsObstructed(indices))
+                    SplitAtmospheres(indices);
                 else
-                    MergeAtmospheres(coordinates);
+                    MergeAtmospheres(indices);
             }
 
             _invalidatedCoords.Clear();
         }
 
-        private void SplitAtmospheres(GridCoordinates coordinates)
+        private void SplitAtmospheres(MapIndices indices)
         {
             // Remove the now-covered atmosphere (if there was one)
-            if (_atmospheres.TryGetValue(coordinates, out var coveredAtmos))
+            if (_atmospheres.TryGetValue(indices, out var coveredAtmos))
             {
-                _atmospheres.Remove(coordinates);
-                coveredAtmos.RemoveCell(coordinates);
+                _atmospheres.Remove(indices);
+
+                if (coveredAtmos != null)
+                    coveredAtmos.RemoveCell(indices);
             }
 
             // The collection of split atmosphere components - each one is a collection
-            // of connected grid coordinates
-            var sides = new List<List<GridCoordinates>>();
+            // of connected grid indices
+            var sides = new List<List<MapIndices>>();
 
-            foreach (var edgeCoordinate in Cardinal().Select(dir => coordinates.Offset(dir.ToVec())))
+            foreach (var edgeCoordinate in Cardinal().Select(dir => indices.Offset(dir)))
             {
                 // If this is true, this edge is already contained in another edge's connected area
                 if (sides.Any(collection => collection != null && collection.Contains(edgeCoordinate)))
@@ -261,9 +261,9 @@ namespace Content.Server.Atmos
             }
         }
 
-        private void MergeAtmospheres(GridCoordinates coordinates)
+        private void MergeAtmospheres(MapIndices indices)
         {
-            var adjacent = new HashSet<ZoneAtmosphere>(GetAdjacentAtmospheres(coordinates).Values);
+            var adjacent = new HashSet<ZoneAtmosphere>(GetAdjacentAtmospheres(indices).Values);
 
             // If this block doesn't separate two atmospheres, there's no merging to do
             if (adjacent.Count <= 1)
@@ -271,12 +271,12 @@ namespace Content.Server.Atmos
                 var joinedAtmos = adjacent.First();
                 // But this block was missing an atmosphere, so add one
                 // and include this cell's volume in it
-                joinedAtmos.AddCell(coordinates);
-                _atmospheres[coordinates] = joinedAtmos;
+                joinedAtmos.AddCell(indices);
+                _atmospheres[indices] = joinedAtmos;
                 return;
             }
 
-            var allCells = new List<GridCoordinates> {coordinates};
+            var allCells = new List<MapIndices> {indices};
             foreach (var atmos in adjacent)
                 allCells.AddRange(atmos.Cells);
 
@@ -301,12 +301,12 @@ namespace Content.Server.Atmos
                 _atmospheres[cellPos] = replacement;
         }
 
-        private Dictionary<Direction, ZoneAtmosphere> GetAdjacentAtmospheres(GridCoordinates coords)
+        private Dictionary<Direction, ZoneAtmosphere> GetAdjacentAtmospheres(MapIndices coords)
         {
             var sides = new Dictionary<Direction, ZoneAtmosphere>();
             foreach (var dir in Cardinal())
             {
-                var side = coords.Offset(dir.ToVec());
+                var side = coords.Offset(dir);
                 if (IsObstructed(side))
                     continue;
 
@@ -332,7 +332,7 @@ namespace Content.Server.Atmos
     internal class ZoneAtmosphere : Atmosphere
     {
         private readonly GridAtmosphereManager _parentGridManager;
-        private readonly ISet<GridCoordinates> _cells;
+        private readonly ISet<MapIndices> _cells;
 
         /// <summary>
         /// The collection of grid cells which are a part of this zone.
@@ -340,7 +340,7 @@ namespace Content.Server.Atmos
         /// <remarks>
         /// This should be kept in sync with the corresponding entries in <see cref="GridAtmosphereManager"/>.
         /// </remarks>
-        public IEnumerable<GridCoordinates> Cells => _cells;
+        public IEnumerable<MapIndices> Cells => _cells;
 
         /// <summary>
         /// The volume of this zone.
@@ -350,10 +350,10 @@ namespace Content.Server.Atmos
         /// </remarks>
         public override float Volume => _parentGridManager.GetVolumeForCells(_cells.Count);
 
-        public ZoneAtmosphere(GridAtmosphereManager parent, IEnumerable<GridCoordinates> cells)
+        public ZoneAtmosphere(GridAtmosphereManager parent, IEnumerable<MapIndices> cells)
         {
             _parentGridManager = parent;
-            _cells = new HashSet<GridCoordinates>(cells);
+            _cells = new HashSet<MapIndices>(cells);
             UpdateCached();
         }
 
@@ -363,8 +363,8 @@ namespace Content.Server.Atmos
         /// <remarks>
         /// This does not update the parent <see cref="GridAtmosphereManager"/>.
         /// </remarks>
-        /// <param name="cell">The coordinates of the cell to add.</param>
-        public void AddCell(GridCoordinates cell)
+        /// <param name="cell">The indices of the cell to add.</param>
+        public void AddCell(MapIndices cell)
         {
             _cells.Add(cell);
             UpdateCached();
@@ -376,8 +376,8 @@ namespace Content.Server.Atmos
         /// <remarks>
         /// This does not update the parent <see cref="GridAtmosphereManager"/>.
         /// </remarks>
-        /// <param name="cell">The coordinates of the cell to remove.</param>
-        public void RemoveCell(GridCoordinates cell)
+        /// <param name="cell">The indices of the cell to remove.</param>
+        public void RemoveCell(MapIndices cell)
         {
             _cells.Remove(cell);
             UpdateCached();
