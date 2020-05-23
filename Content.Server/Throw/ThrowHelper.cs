@@ -12,6 +12,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using System;
+using Robust.Shared.Interfaces.Physics;
 
 namespace Content.Server.Throw
 {
@@ -84,10 +85,21 @@ namespace Content.Server.Throw
             physComp.SetController<ThrowController>();
             (physComp.Controller as ThrowController)?.StartThrow(angle.ToVec() * spd);
 
-            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<PhysicsComponent>(out var physics))
+            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<PhysicsComponent>(out var physics)
+                                       && physics.Controller is MoverController mover)
             {
-                const float ThrowFactor = 5.0f; // Break Newton's Third Law for better gameplay
-                (physics.Controller as MoverController)?.Push(-angle.ToVec(), spd * ThrowFactor / physics.Mass);
+                var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
+
+                if (physicsMgr.IsWeightless(throwSourceEnt.Transform.GridPosition))
+                {
+                    // We don't check for surrounding entities,
+                    // so you'll still get knocked around if you're hugging the station wall in zero g.
+                    // I got kinda lazy is the reason why. Also it makes a bit of sense.
+                    // If somebody wants they can come along and make it so magboots completely hold you still.
+                    // Would be a cool incentive to use them.
+                    const float ThrowFactor = 5.0f; // Break Newton's Third Law for better gameplay
+                    mover.Push(-angle.ToVec(), spd * ThrowFactor / physics.Mass);
+                }
             }
         }
 
