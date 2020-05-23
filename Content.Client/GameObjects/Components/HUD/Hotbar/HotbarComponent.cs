@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
 using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -162,7 +160,14 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
             }
             else
             {
-                _hotbar[slot].Toggle(args.Pressed);
+                if (_hotbar[slot] != null)
+                {
+                    _hotbar[slot]?.Toggle(args.Pressed);
+                }
+                else
+                {
+                    _hotbarGui?.UnpressSlot(slot);
+                }
             }
         }
 
