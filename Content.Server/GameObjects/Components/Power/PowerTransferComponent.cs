@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Server.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;

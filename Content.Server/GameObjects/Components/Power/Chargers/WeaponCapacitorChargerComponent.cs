@@ -1,6 +1,7 @@
 using System;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
@@ -48,28 +49,27 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         [Verb]
         private sealed class InsertVerb : Verb<WeaponCapacitorChargerComponent>
         {
-            protected override string GetText(IEntity user, WeaponCapacitorChargerComponent component)
-            {
-                if (!user.TryGetComponent(out HandsComponent handsComponent) || handsComponent.GetActiveHand == null)
-                {
-                    return "Insert";
-                }
-                return $"Insert {handsComponent.GetActiveHand.Owner.Name}";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, WeaponCapacitorChargerComponent component)
+            protected override void GetData(IEntity user, WeaponCapacitorChargerComponent component, VerbData data)
             {
                 if (!user.TryGetComponent(out HandsComponent handsComponent))
                 {
-                    return VerbVisibility.Invisible;
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
 
-                if (component._container.ContainedEntity != null || handsComponent.GetActiveHand == null)
+                if (handsComponent.GetActiveHand == null)
                 {
-                    return VerbVisibility.Disabled;
+                    data.Visibility = VerbVisibility.Disabled;
+                    data.Text = "Insert";
+                    return;
                 }
 
-                return VerbVisibility.Visible;
+                if (component._container.ContainedEntity != null)
+                {
+                    data.Visibility = VerbVisibility.Disabled;
+                }
+
+                data.Text = $"Insert {handsComponent.GetActiveHand.Owner.Name}";
             }
 
             protected override void Activate(IEntity user, WeaponCapacitorChargerComponent component)
@@ -92,22 +92,16 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         [Verb]
         private sealed class EjectVerb : Verb<WeaponCapacitorChargerComponent>
         {
-            protected override string GetText(IEntity user, WeaponCapacitorChargerComponent component)
+            protected override void GetData(IEntity user, WeaponCapacitorChargerComponent component, VerbData data)
             {
                 if (component._container.ContainedEntity == null)
                 {
-                    return "Eject";
+                    data.Visibility = VerbVisibility.Disabled;
+                    data.Text = "Eject";
+                    return;
                 }
-                return $"Eject {component._container.ContainedEntity.Name}";
-            }
 
-            protected override VerbVisibility GetVisibility(IEntity user, WeaponCapacitorChargerComponent component)
-            {
-                if (component._container.ContainedEntity == null)
-                {
-                    return VerbVisibility.Disabled;
-                }
-                return VerbVisibility.Visible;
+                data.Text = $"Eject {component._container.ContainedEntity.Name}";
             }
 
             protected override void Activate(IEntity user, WeaponCapacitorChargerComponent component)

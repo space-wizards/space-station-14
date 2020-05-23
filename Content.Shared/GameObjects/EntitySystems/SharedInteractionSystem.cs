@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
@@ -36,7 +37,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="range">maximum distance between the two sets of coordinates.</param>
         /// <param name="collisionMask">the mask to check for collisions</param>
         /// <param name="predicate">.</param>
-        /// <param name="mapManager">Map manager containing the two GridIds.</param>
         /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
         /// <returns>True if the two points are within a given range without being obstructed.</returns>
         public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,
@@ -48,8 +48,8 @@ namespace Content.Server.GameObjects.EntitySystems
             if (range > 0f && !(dir.LengthSquared <= range * range)) return false;
 
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate, true);
-            if(!rayResults.DidHitObject || (insideBlockerValid && rayResults.DidHitObject && (rayResults.HitPos - otherCoords).Length < 1f))
+            var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate).ToList();
+            if(rayResults.Count == 0 || (insideBlockerValid && rayResults.Count > 0 && (rayResults[0].HitPos - otherCoords).Length < 1f))
             {
 
                 if (_mapManager.TryFindGridAt(coords, out var mapGrid) && mapGrid != null)
@@ -77,7 +77,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="range">maximum distance between the two sets of coordinates.</param>
         /// <param name="collisionMask">the mask to check for collisions</param>
         /// <param name="ignoredEnt">the entity to be ignored when checking for collisions.</param>
-        /// <param name="mapManager">Map manager containing the two GridIds.</param>
         /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
         /// <returns>True if the two points are within a given range without being obstructed.</returns>
         public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,

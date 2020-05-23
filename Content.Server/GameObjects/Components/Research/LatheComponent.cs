@@ -8,6 +8,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Research;
@@ -97,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Research
 
                     break;
             }
-            
+
 
         }
 
@@ -150,12 +151,13 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 return;
             }
+
             OpenUserInterface(actor.playerSession);
         }
         bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
-            ||  !eventArgs.AttackWith.TryGetComponent(out MaterialComponent material)) return false;
+                ||  !eventArgs.AttackWith.TryGetComponent(out MaterialComponent material)) return false;
 
             var multiplier = 1;
 

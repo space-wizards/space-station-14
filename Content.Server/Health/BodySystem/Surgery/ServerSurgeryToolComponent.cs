@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.BodySystem;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.BodySystem;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
@@ -42,6 +43,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             if (eventArgs.Attacked == null)
                 return;
             if (eventArgs.Attacked.TryGetComponent<BodySystem.BodyManagerComponent>(out BodySystem.BodyManagerComponent bodyManager))

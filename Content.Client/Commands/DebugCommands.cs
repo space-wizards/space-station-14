@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Markers;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -48,8 +49,7 @@ namespace Content.Client.Commands
 
         public bool Execute(IDebugConsole console, params string[] args)
         {
-            IoCManager.Resolve<IEntitySystemManager>()
-                .GetEntitySystem<SubFloorHideSystem>()
+            EntitySystem.Get<SubFloorHideSystem>()
                 .EnableAll ^= true;
 
             return false;

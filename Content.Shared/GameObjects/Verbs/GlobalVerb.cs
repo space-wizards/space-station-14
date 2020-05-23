@@ -21,25 +21,16 @@ namespace Content.Shared.GameObjects
         public virtual bool RequireInteractionRange => true;
 
         /// <summary>
-        ///     Gets the text string that will be shown to <paramref name="user"/> in the right click menu.
+        ///     Gets the visible verb data for the user.
         /// </summary>
+        /// <remarks>
+        ///     Implementations should write into <paramref name="data"/> to return their data.
+        /// </remarks>
         /// <param name="user">The entity of the user opening this menu.</param>
+        /// <param name="target">The entity this verb is being evaluated for.</param>
+        /// <param name="data">The data that must be filled in.</param>
         /// <returns>The text string that is shown in the right click menu for this verb.</returns>
-        public abstract string GetText(IEntity user, IEntity target);
-
-        /// <summary>
-        ///     Gets the category of this verb.
-        /// </summary>
-        /// <param name="user">The entity of the user opening this menu.</param>
-        /// <returns>The category of this verb.</returns>
-        public virtual string GetCategory(IEntity user, IEntity target) => "";
-
-        /// <summary>
-        ///     Gets the visibility level of this verb in the right click menu.
-        /// </summary>
-        /// <param name="user">The entity of the user opening this menu.</param>
-        /// <returns>The visibility level of the verb in the client's right click menu.</returns>
-        public abstract VerbVisibility GetVisibility(IEntity user, IEntity target);
+        public abstract void GetData(IEntity user, IEntity target, VerbData data);
 
         /// <summary>
         ///     Invoked when this verb is activated from the right click menu.
@@ -47,6 +38,13 @@ namespace Content.Shared.GameObjects
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="target">The entity that is being acted upon.</param>
         public abstract void Activate(IEntity user, IEntity target);
+
+        public VerbData GetData(IEntity user, IEntity target)
+        {
+            var data = new VerbData();
+            GetData(user, target, data);
+            return data;
+        }
     }
 
     /// <summary>

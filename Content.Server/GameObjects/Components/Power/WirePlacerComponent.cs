@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -25,6 +26,8 @@ namespace Content.Server.GameObjects.Components.Power
         /// <inheritdoc />
         public void AfterAttack(AfterAttackEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
                 return;
 

@@ -216,21 +216,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Verb]
         private sealed class FillTargetVerb : Verb<SolutionComponent>
         {
-            protected override string GetText(IEntity user, SolutionComponent component)
-            {
-                if(!user.TryGetComponent<HandsComponent>(out var hands))
-                    return "<I SHOULD BE INVISIBLE>";
-
-                if(hands.GetActiveHand == null)
-                    return "<I SHOULD BE INVISIBLE>";
-
-                var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
-                var myName = component.Owner.Prototype?.Name ?? "<Item>";
-
-                return $"Transfer liquid from [{heldEntityName}] to [{myName}].";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, SolutionComponent component)
+            protected override void GetData(IEntity user, SolutionComponent component, VerbData data)
             {
                 if (user.TryGetComponent<HandsComponent>(out var hands))
                 {
@@ -238,13 +224,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     {
                         if (hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
                         {
-                            if ((solution.Capabilities & SolutionCaps.PourOut) != 0 && (component.Capabilities & SolutionCaps.PourIn) != 0)
-                                return VerbVisibility.Visible;
+                            if ((solution.Capabilities & SolutionCaps.PourOut) != 0 &&
+                                (component.Capabilities & SolutionCaps.PourIn) != 0)
+                            {
+                                var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
+                                var myName = component.Owner.Prototype?.Name ?? "<Item>";
+
+                                data.Text= $"Transfer liquid from [{heldEntityName}] to [{myName}].";
+                                return;
+                            }
                         }
                     }
                 }
 
-                return VerbVisibility.Invisible;
+                data.Visibility = VerbVisibility.Invisible;
             }
 
             protected override void Activate(IEntity user, SolutionComponent component)
@@ -269,7 +262,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
                 var transferSolution = handSolutionComp.SplitSolution(transferQuantity);
                 component.TryAddSolution(transferSolution);
-
             }
         }
 
@@ -304,21 +296,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [Verb]
         private sealed class EmptyTargetVerb : Verb<SolutionComponent>
         {
-            protected override string GetText(IEntity user, SolutionComponent component)
-            {
-                if (!user.TryGetComponent<HandsComponent>(out var hands))
-                    return "<I SHOULD BE INVISIBLE>";
-
-                if (hands.GetActiveHand == null)
-                    return "<I SHOULD BE INVISIBLE>";
-
-                var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
-                var myName = component.Owner.Prototype?.Name ?? "<Item>";
-
-                return $"Transfer liquid from [{myName}] to [{heldEntityName}].";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, SolutionComponent component)
+            protected override void GetData(IEntity user, SolutionComponent component, VerbData data)
             {
                 if (user.TryGetComponent<HandsComponent>(out var hands))
                 {
@@ -326,13 +304,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     {
                         if (hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
                         {
-                            if ((solution.Capabilities & SolutionCaps.PourIn) != 0 && (component.Capabilities & SolutionCaps.PourOut) != 0)
-                                return VerbVisibility.Visible;
+                            if ((solution.Capabilities & SolutionCaps.PourIn) != 0 &&
+                                (component.Capabilities & SolutionCaps.PourOut) != 0)
+                            {
+                                var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
+                                var myName = component.Owner.Prototype?.Name ?? "<Item>";
+
+                                data.Text = $"Transfer liquid from [{myName}] to [{heldEntityName}].";
+                                return;
+                            }
                         }
                     }
                 }
 
-                return VerbVisibility.Invisible;
+                data.Visibility = VerbVisibility.Invisible;
             }
 
             protected override void Activate(IEntity user, SolutionComponent component)

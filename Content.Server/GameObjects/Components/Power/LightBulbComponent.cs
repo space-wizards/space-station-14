@@ -4,6 +4,7 @@ using Content.Shared.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -12,6 +13,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -126,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Power
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("glassbreak");
             var file = _random.Pick(soundCollection.PickFiles);
 
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play(file, Owner);
+            EntitySystem.Get<AudioSystem>().Play(file, Owner);
 
             State = LightBulbState.Broken;
         }

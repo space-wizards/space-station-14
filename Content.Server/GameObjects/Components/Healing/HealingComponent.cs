@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -24,6 +25,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             if (eventArgs.Attacked == null)
             {
                 return;

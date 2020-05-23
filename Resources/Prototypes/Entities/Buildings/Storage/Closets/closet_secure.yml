@@ -1,0 +1,5 @@
+- type: entity
+  id: LockerSecureBase
+  parent: LockerGeneric
+  abstract: true
+  # TODO: Access components and such.

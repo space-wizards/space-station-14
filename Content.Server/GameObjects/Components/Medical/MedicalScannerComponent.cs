@@ -4,6 +4,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Power;
+using Content.Server.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -120,22 +121,20 @@ namespace Content.Server.GameObjects.Components.Medical
             {
                 return;
             }
+
             if (!Powered)
                 return;
+
             _userInterface.Open(actor.playerSession);
         }
 
         [Verb]
         public sealed class EnterVerb : Verb<MedicalScannerComponent>
         {
-            protected override string GetText(IEntity user, MedicalScannerComponent component)
+            protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
-                return "Enter";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, MedicalScannerComponent component)
-            {
-                return component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                data.Text = "Enter";
+                data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, MedicalScannerComponent component)
@@ -147,14 +146,10 @@ namespace Content.Server.GameObjects.Components.Medical
         [Verb]
         public sealed class EjectVerb : Verb<MedicalScannerComponent>
         {
-            protected override string GetText(IEntity user, MedicalScannerComponent component)
+            protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
-                return "Eject";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, MedicalScannerComponent component)
-            {
-                return component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
+                data.Text = "Eject";
+                data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 
             protected override void Activate(IEntity user, MedicalScannerComponent component)

@@ -1,17 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Instruments;
 using JetBrains.Annotations;
+using NFluidsynth;
 using Robust.Shared.GameObjects;
 using Robust.Client.Audio.Midi;
-using Robust.Shared.Audio.Midi;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Logger = Robust.Shared.Log.Logger;
+using MidiEvent = Robust.Shared.Audio.Midi.MidiEvent;
 using Timer = Robust.Shared.Timers.Timer;
 
 
@@ -20,6 +22,8 @@ namespace Content.Client.GameObjects.Components.Instruments
     [RegisterComponent]
     public class InstrumentComponent : SharedInstrumentComponent
     {
+        public const float TimeBetweenNetMessages = 1.0f;
+
         /// <summary>
         ///     Called when a midi song stops playing.
         /// </summary>
@@ -27,17 +31,22 @@ namespace Content.Client.GameObjects.Components.Instruments
 
 #pragma warning disable 649
         [Dependency] private IMidiManager _midiManager;
-        [Dependency] private readonly IGameTiming _timing;
+        [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 649
 
         [CanBeNull]
         private IMidiRenderer _renderer;
-        private int _instrumentProgram = 1;
+        private byte _instrumentProgram = 1;
+        private uint _syncSequencerTick;
 
         /// <summary>
         ///     A queue of MidiEvents to be sent to the server.
         /// </summary>
-        private Queue<MidiEvent> _eventQueue = new Queue<MidiEvent>();
+        [ViewVariables]
+        private readonly Queue<MidiEvent> _midiQueue = new Queue<MidiEvent>();
+
+        [ViewVariables]
+        private float _timer = 0f;
 
         /// <summary>
         ///     Whether a midi song will loop or not.
@@ -59,7 +68,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     Changes the instrument the midi renderer will play.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public int InstrumentProgram
+        public byte InstrumentProgram
         {
             get => _instrumentProgram;
             set
@@ -84,61 +93,102 @@ namespace Content.Client.GameObjects.Components.Instruments
         [ViewVariables]
         public bool IsInputOpen => _renderer?.Status == MidiRendererStatus.Input;
 
+        /// <summary>
+        ///     Whether the midi renderer is alive or not.
+        /// </summary>
+        [ViewVariables]
+        public bool IsRendererAlive => _renderer != null;
+
         public override void Initialize()
         {
             base.Initialize();
             IoCManager.InjectDependencies(this);
+        }
+
+        protected void SetupRenderer()
+        {
+            if (IsRendererAlive)
+                return;
+
             _renderer = _midiManager.GetNewRenderer();
 
             if (_renderer != null)
             {
                 _renderer.MidiProgram = _instrumentProgram;
                 _renderer.TrackingEntity = Owner;
-                _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); };
+                _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); EndRenderer(); SendNetworkMessage(new InstrumentStopMidiMessage()); };
             }
+        }
+
+        protected void EndRenderer()
+        {
+            if (IsInputOpen)
+                CloseInput();
+
+            if (IsMidiOpen)
+                CloseMidi();
+
+            _renderer?.StopAllNotes();
+
+            var renderer = _renderer;
+
+            // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
+            Timer.Spawn(2000, () => { renderer?.Dispose(); });
+            _renderer = null;
+            _midiQueue.Clear();
         }
 
         protected override void Shutdown()
         {
             base.Shutdown();
-            _renderer?.Dispose();
+            EndRenderer();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _instrumentProgram, "program", 1);
+            serializer.DataField(ref _instrumentProgram, "program", (byte)1);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
-            if (_renderer == null)
-            {
-                return;
-            }
-
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMessage:
                     // If we're the ones sending the MidiEvents, we ignore this message.
-                    if (IsInputOpen || IsMidiOpen) break;
-                    Timer.Spawn((int) (500 + _timing.CurTime.TotalMilliseconds - midiEventMessage.Timestamp),
-                        () => _renderer.SendMidiEvent(midiEventMessage.MidiEvent));
-                    break;
-
-                case InstrumentStopMidiMessage _:
-                    _renderer.StopAllNotes();
-                    if (IsInputOpen) CloseInput();
-                    if (IsMidiOpen) CloseMidi();
+                    if (!IsRendererAlive || IsInputOpen || IsMidiOpen) break;
+                    for (var i = 0; i < midiEventMessage.MidiEvent.Length; i++)
+                    {
+                        var ev = midiEventMessage.MidiEvent[i];
+                        var delta = ((uint)TimeBetweenNetMessages*1250) + ev.Timestamp - _syncSequencerTick;
+                        _renderer?.ScheduleMidiEvent(ev, delta, true);
+                    }
                     break;
             }
+        }
+
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+            if (!(curState is InstrumentState state)) return;
+
+            if (state.Playing)
+            {
+                SetupRenderer();
+                _syncSequencerTick = state.SequencerTick;
+            }
+            else
+                EndRenderer();
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenInput"/>
         public bool OpenInput()
         {
+            SetupRenderer();
+            SendNetworkMessage(new InstrumentStartMidiMessage());
+
             if (_renderer != null && _renderer.OpenInput())
             {
                 _renderer.OnMidiEvent += RendererOnMidiEvent;
@@ -156,13 +206,17 @@ namespace Content.Client.GameObjects.Components.Instruments
                 return false;
             }
 
-            _renderer.OnMidiEvent -= RendererOnMidiEvent;
+            EndRenderer();
+            SendNetworkMessage(new InstrumentStopMidiMessage());
             return true;
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenMidi(string)"/>
         public bool OpenMidi(string filename)
         {
+            SetupRenderer();
+            SendNetworkMessage(new InstrumentStartMidiMessage());
+
             if (_renderer == null || !_renderer.OpenMidi(filename))
             {
                 return false;
@@ -180,7 +234,8 @@ namespace Content.Client.GameObjects.Components.Instruments
                 return false;
             }
 
-            _renderer.OnMidiEvent -= RendererOnMidiEvent;
+            EndRenderer();
+            SendNetworkMessage(new InstrumentStopMidiMessage());
             return true;
         }
 
@@ -190,7 +245,29 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <param name="midiEvent">The received midi event</param>
         private void RendererOnMidiEvent(MidiEvent midiEvent)
         {
-            SendNetworkMessage(new InstrumentMidiEventMessage(midiEvent, _timing.CurTime.TotalMilliseconds));
+            _midiQueue.Enqueue(midiEvent);
+        }
+
+        public override void Update(float delta)
+        {
+            if (!IsMidiOpen && !IsInputOpen)
+                return;
+
+            _timer -= delta;
+
+            if (_timer > 0f) return;
+
+            SendAllMidiMessages();
+            _timer = TimeBetweenNetMessages;
+        }
+
+        private void SendAllMidiMessages()
+        {
+            if (_midiQueue.Count == 0) return;
+            var events = _midiQueue.ToArray();
+            _midiQueue.Clear();
+
+            SendNetworkMessage(new InstrumentMidiEventMessage(events));
         }
     }
 }

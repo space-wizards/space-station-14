@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         {
             var angle = GetAngleFromClickLocation(source, coord);
             FireAtAngle(source, angle, projectileType, spreadStdDev, projectilesFired, evenSpreadAngle, velocity);
-        } 
+        }
 
         /// <summary>
         ///     Fires projectile in the direction of an angle.
