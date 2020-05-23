@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Gravity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
@@ -11,10 +12,12 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Gravity
 {
@@ -101,6 +104,7 @@ namespace Content.Server.GameObjects.Components.Gravity
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
             if (!eventArgs.AttackWith.TryGetComponent<WelderComponent>(out var welder)) return false;
+
             if (welder.TryUse(5.0f))
             {
                 // Repair generator
@@ -110,10 +114,9 @@ namespace Content.Server.GameObjects.Components.Gravity
                 breakable.broken = false;
                 _intact = true;
 
-                var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
                 var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
 
-                entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
+                EntitySystem.Get<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
                 notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
 
                 return true;

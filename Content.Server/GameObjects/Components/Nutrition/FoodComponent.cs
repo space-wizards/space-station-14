@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
@@ -111,6 +112,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             UseFood(eventArgs.Attacked);
         }
 

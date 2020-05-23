@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics;
@@ -10,6 +11,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
@@ -18,6 +20,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
@@ -129,8 +132,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
                 Shaded = false
             };
-            var mgr = IoCManager.Resolve<IEntitySystemManager>();
-            mgr.GetEntitySystem<EffectSystem>().CreateParticle(message);
+            EntitySystem.Get<EffectSystem>().CreateParticle(message);
             Owner.GetComponent<SoundComponent>().Play(_fireSound, AudioParams.Default.WithVolume(-5));
         }
     }

@@ -30,6 +30,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -105,7 +106,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!TryGetAttachedComponent(session as IPlayerSession, out HandsComponent handsComp))
                 return;
 
-            var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
+            var interactionSystem = EntitySystem.Get<InteractionSystem>();
 
             var oldItem = handsComp.GetActiveHand;
 
@@ -133,9 +134,8 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
-            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
 
-            if(interactionSystem.InRangeUnobstructed(coords.ToMap(_mapManager), ent.Transform.WorldPosition, ignoredEnt: ent))
+            if(EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(coords.ToMap(_mapManager), ent.Transform.WorldPosition, ignoredEnt: ent))
                 if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
                 {
                     handsComp.Drop(handsComp.ActiveIndex, coords);

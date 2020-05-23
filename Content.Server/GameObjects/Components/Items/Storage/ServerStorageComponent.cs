@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
@@ -148,6 +149,8 @@ namespace Content.Server.GameObjects
             {
                 return false;
             }
+
+
 
             return PlayerInsertEntity(eventArgs.User);
          }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Sound;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
@@ -9,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
+using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.Sound
 {
@@ -54,7 +56,7 @@ namespace Content.Client.GameObjects.Components.Sound
             Timer.Spawn((int) schedule.Delay + (_random.Next((int) schedule.RandomDelay)),() =>
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
-                    if (_audioSystem == null) _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                    if (_audioSystem == null) _audioSystem = EntitySystem.Get<AudioSystem>();
                     _audioStreams.Add(schedule,_audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams));
 
                     if (schedule.Times == 0) return;
@@ -87,7 +89,7 @@ namespace Content.Client.GameObjects.Components.Sound
         public override void Initialize()
         {
             base.Initialize();
-            IoCManager.Resolve<IEntitySystemManager>().TryGetEntitySystem(out _audioSystem);
+            EntitySystem.TryGet(out _audioSystem);
         }
 
         public override void ExposeData(ObjectSerializer serializer)

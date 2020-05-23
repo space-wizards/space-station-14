@@ -4,12 +4,14 @@ using Content.Server.GameObjects.Components.Interactable.Tools;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Random;
@@ -18,6 +20,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Construction.ConstructionStepMaterial;
 using static Content.Shared.Construction.ConstructionStepTool;
+using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
@@ -46,18 +50,16 @@ namespace Content.Server.GameObjects.Components.Construction
 
             Sprite = Owner.GetComponent<SpriteComponent>();
             Transform = Owner.GetComponent<ITransformComponent>();
-            var systemman = IoCManager.Resolve<IEntitySystemManager>();
         }
 
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
-            var playerEntity = eventArgs.User;
-            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-            if (!interactionSystem.InRangeUnobstructed(playerEntity.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: Prototype.CanBuildInImpassable))
+            // default interaction check for AttackBy allows inside blockers, so we will check if its blocked if
+            // we're not allowed to build on impassable stuff
+            if (Prototype.CanBuildInImpassable == false)
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, playerEntity,
-                    _localizationManager.GetString("You can't reach there!"));
-                return false;
+                if (!InteractionChecks.InRangeUnobstructed(eventArgs, false))
+                    return false;
             }
 
             var stage = Prototype.Stages[Stage];
@@ -124,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 return false;
             }
-            var sound = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            var sound = EntitySystem.Get<AudioSystem>();
 
             switch (step)
             {

@@ -37,7 +37,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="range">maximum distance between the two sets of coordinates.</param>
         /// <param name="collisionMask">the mask to check for collisions</param>
         /// <param name="predicate">.</param>
-        /// <param name="mapManager">Map manager containing the two GridIds.</param>
         /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
         /// <returns>True if the two points are within a given range without being obstructed.</returns>
         public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,
@@ -78,7 +77,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="range">maximum distance between the two sets of coordinates.</param>
         /// <param name="collisionMask">the mask to check for collisions</param>
         /// <param name="ignoredEnt">the entity to be ignored when checking for collisions.</param>
-        /// <param name="mapManager">Map manager containing the two GridIds.</param>
         /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
         /// <returns>True if the two points are within a given range without being obstructed.</returns>
         public bool InRangeUnobstructed(MapCoordinates coords, Vector2 otherCoords, float range = InteractionRange,

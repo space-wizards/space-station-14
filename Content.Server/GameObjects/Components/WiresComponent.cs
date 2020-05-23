@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -13,12 +14,14 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components
@@ -108,7 +111,7 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            _audioSystem = EntitySystem.Get<AudioSystem>();
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
@@ -235,8 +238,7 @@ namespace Content.Server.GameObjects.Components
                         return;
                     }
 
-                    var interactionSystem = IoCManager.Resolve<EntitySystemManager>().GetEntitySystem<InteractionSystem>();
-                    if (!interactionSystem.InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
+                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
                     {
                         _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You can't reach there!"));
                         return;
@@ -302,8 +304,7 @@ namespace Content.Server.GameObjects.Components
             }
 
             IsPanelOpen = !IsPanelOpen;
-            IoCManager.Resolve<IEntitySystemManager>()
-                .GetEntitySystem<AudioSystem>()
+            EntitySystem.Get<AudioSystem>()
                 .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg");
             return true;
         }

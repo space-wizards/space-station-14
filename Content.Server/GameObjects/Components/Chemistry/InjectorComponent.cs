@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Shared.GameObjects;
@@ -110,6 +111,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="eventArgs"></param>
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             //Make sure we have the attacking entity
             if (eventArgs.Attacked == null || !_internalContents.Injector)
             {

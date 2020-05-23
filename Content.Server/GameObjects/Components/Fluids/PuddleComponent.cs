@@ -9,6 +9,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -17,6 +18,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -137,8 +139,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            entitySystemManager.GetEntitySystem<AudioSystem>().Play(_spillSound);
+            EntitySystem.Get<AudioSystem>().Play(_spillSound);
             return true;
         }
 

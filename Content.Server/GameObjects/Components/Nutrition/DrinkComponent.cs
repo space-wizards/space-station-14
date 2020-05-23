@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
@@ -11,11 +12,13 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Nutrition
 {
@@ -99,23 +102,25 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             UseDrink(eventArgs.Attacked);
         }
 
-        private void UseDrink(IEntity user)
+        private void UseDrink(IEntity targetEntity)
         {
-            if (user == null)
+            if (targetEntity == null)
             {
                 return;
             }
 
             if (UsesLeft() == 0 && !_despawnOnFinish)
             {
-                user.PopupMessage(user, _localizationManager.GetString("Empty"));
+                targetEntity.PopupMessage(targetEntity, _localizationManager.GetString("Empty"));
                 return;
             }
 
-            if (user.TryGetComponent(out StomachComponent stomachComponent))
+            if (targetEntity.TryGetComponent(out StomachComponent stomachComponent))
             {
                 _drinking = true;
                 var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
@@ -125,17 +130,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     // When we split Finish gets called which may delete the can so need to use the entity system for sound
                     if (_useSound != null)
                     {
-                        var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-                        var audioSystem = entitySystemManager.GetEntitySystem<AudioSystem>();
+                        var audioSystem = EntitySystem.Get<AudioSystem>();
                         audioSystem.Play(_useSound, Owner, AudioParams.Default.WithVolume(-2f));
-                        user.PopupMessage(user, _localizationManager.GetString("Slurp"));
+                        targetEntity.PopupMessage(targetEntity, _localizationManager.GetString("Slurp"));
                     }
                 }
                 else
                 {
                     // Add it back in
                     _contents.TryAddSolution(split);
-                    user.PopupMessage(user, _localizationManager.GetString("Can't drink"));
+                    targetEntity.PopupMessage(targetEntity, _localizationManager.GetString("Can't drink"));
                 }
                 _drinking = false;
             }
