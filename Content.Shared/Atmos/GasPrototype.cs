@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 using System;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.Atmos
+namespace Content.Shared.Atmos
 {
     /// <summary>
     /// Convenience struct for representing a gas ID.
@@ -15,7 +15,7 @@ namespace Content.Server.Atmos
         private string _id;
         public string Id => _id;
 
-        internal Gas(string id)
+        public Gas(string id)
         {
             _id = id;
         }

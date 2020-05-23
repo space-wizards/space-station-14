@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Content.Server.Atmos;
+using System.Linq;
+using Content.Shared.Atmos;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Map;
 
@@ -83,6 +84,10 @@ namespace Content.Server.Interfaces.Atmos
     /// </summary>
     public interface IAtmosphere
     {
+        /// <summary>The universal gas constant, in (cubic meters*pascals)/(kelvin*mols)</summary> 
+        /// <remarks>Note this is in pascals, NOT kilopascals - divide by 1000 to convert it</remarks>
+        public const float R = 8.314462618f;
+
         /// <summary>
         /// All the gasses contained in this atmosphere
         /// </summary>
@@ -137,14 +142,20 @@ namespace Content.Server.Interfaces.Atmos
         /// </summary>
         /// <param name="gas">The type of gas to look for</param>
         /// <returns>The quantity of the gas in mols</returns>
-        float QuantityOf(Gas gas);
+        float QuantityOf(Gas gas)
+        {
+            return Gasses.Where(prop => prop.Gas == gas).Sum(prop => prop.Quantity);
+        }
 
         /// <summary>
         /// The partial pressure of a specific gas
         /// </summary>
         /// <param name="gas">The gas in question</param>
         /// <returns>The partial pressure in kilopascals</returns>
-        float PartialPressureOf(Gas gas);
+        float PartialPressureOf(Gas gas)
+        {
+            return QuantityOf(gas) * PressureRatio;
+        }
 
         /// <summary>
         /// Adds a quantity of gas to this room
@@ -179,6 +190,9 @@ namespace Content.Server.Interfaces.Atmos
         /// <summary>
         /// Remove a given volume of gas from the atmosphere, getting the mixture removed.
         /// </summary>
+        /// <remarks>
+        /// This should not reduce the volume of the atmosphere.
+        /// </remarks>
         /// <param name="volume">The volume of gas to remove.</param>
         /// <returns>A new <see cref="IAtmosphere"/> containing the removed gases.</returns>
         IAtmosphere Take(float volume);
