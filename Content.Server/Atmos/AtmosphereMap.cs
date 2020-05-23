@@ -14,10 +14,10 @@ using System.Linq;
 
 namespace Content.Server.Atmos
 {
+    /// <inheritdoc cref="IAtmosphereMap"/>
     internal class AtmosphereMap : IAtmosphereMap
     {
 #pragma warning disable 649
-        // ReSharper disable once InconsistentNaming
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IPauseManager _pauseManager;
 #pragma warning restore 649
@@ -56,6 +56,7 @@ namespace Content.Server.Atmos
         }
     }
 
+    /// <inheritdoc cref="IGridAtmosphereManager"/>
     internal class GridAtmosphereManager : IGridAtmosphereManager
     {
         // Arbitrarily define rooms as being 2.5m high
@@ -121,10 +122,30 @@ namespace Content.Server.Atmos
             _invalidatedCoords.Add(indices);
         }
 
-        private List<MapIndices> FindConnectedCells(MapIndices start)
+        /// <summary>
+        /// Get the collection of grid cells connected to a given cell.
+        /// </summary>
+        /// <param name="start">The cell to start building the collection from.</param>
+        /// <returns>
+        /// <c>null</c>, if the cell is somehow connected to space. Otherwise, the
+        /// collection of all cells connected to the starting cell (inclusive).
+        /// </returns>
+        private ISet<MapIndices> FindConnectedCells(MapIndices start)
         {
             var inner = new HashSet<MapIndices>();
             var edge = new HashSet<MapIndices> {start};
+
+            void Check(MapIndices pos, Direction dir)
+            {
+                pos = pos.Offset(dir);
+                if (IsObstructed(pos))
+                    return;
+
+                if (inner.Contains(pos))
+                    return;
+
+                edge.Add(pos);
+            }
 
             // Basic inner/edge finder
             // The inner list is all the positions we know are empty, and take no further actions.
@@ -134,7 +155,7 @@ namespace Content.Server.Atmos
 
             while (edge.Count > 0)
             {
-                var temp = new List<MapIndices>(edge);
+                var temp = new HashSet<MapIndices>(edge);
                 edge.Clear();
                 foreach (var pos in temp)
                 {
@@ -143,27 +164,16 @@ namespace Content.Server.Atmos
                     if (IsSpace(pos))
                         return null;
 
-                    Check(inner, edge, pos, Direction.North);
-                    Check(inner, edge, pos, Direction.South);
-                    Check(inner, edge, pos, Direction.East);
-                    Check(inner, edge, pos, Direction.West);
+                    foreach (var dir in Cardinal())
+                    {
+                        Check(pos, dir);
+                    }
                 }
             }
 
-            return new List<MapIndices>(inner);
+            return inner;
         }
 
-        private void Check(ICollection<MapIndices> inner, ISet<MapIndices> edges, MapIndices pos, Direction dir)
-        {
-            pos = pos.Offset(dir);
-            if (IsObstructed(pos))
-                return;
-
-            if (inner.Contains(pos))
-                return;
-
-            edges.Add(pos);
-        }
 
         private bool IsObstructed(MapIndices indices) => GetObstructingComponent(indices) != null;
 
@@ -216,7 +226,7 @@ namespace Content.Server.Atmos
 
             // The collection of split atmosphere components - each one is a collection
             // of connected grid indices
-            var sides = new List<List<MapIndices>>();
+            var sides = new HashSet<ISet<MapIndices>>();
 
             foreach (var edgeCoordinate in Cardinal().Select(dir => indices.Offset(dir)))
             {

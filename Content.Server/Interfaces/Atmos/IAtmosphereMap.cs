@@ -57,7 +57,6 @@ namespace Content.Server.Interfaces.Atmos
     /// without passing through any solid walls, or passing through airlocks
     /// and similar objects which can block gas flow.
     /// </remarks>
-    /// </remarks>
     public interface IGridAtmosphereManager
     {
         /// <summary>
