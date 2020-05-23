@@ -26,7 +26,7 @@ namespace Content.Server.Throw
 
             var mapManager = IoCManager.Resolve<IMapManager>();
 
-            colComp.CollisionEnabled = true;
+            colComp.CanCollide = true;
             // I can now collide with player, so that i can do damage.
 
             if (!thrownEnt.TryGetComponent(out ThrownItemComponent projComp))
@@ -37,7 +37,7 @@ namespace Content.Server.Throw
                     colComp.PhysicsShapes.Add(new PhysShapeAabb());
 
                 colComp.PhysicsShapes[0].CollisionMask |= (int) (CollisionGroup.MobImpassable | CollisionGroup.Impassable);
-                colComp.IsScrapingFloor = false;
+                colComp.Status = BodyStatus.InAir;
             }
             var angle = new Angle(targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager));
 
@@ -58,20 +58,16 @@ namespace Content.Server.Throw
             if (!thrownEnt.TryGetComponent(out PhysicsComponent physComp))
                 physComp = thrownEnt.AddComponent<PhysicsComponent>();
 
-            // TODO: Move this into PhysicsSystem, we need an ApplyForce function.
-            var a = throwForce / (float) Math.Max(0.001, physComp.Mass); // a = f / m
-
             var timing = IoCManager.Resolve<IGameTiming>();
-            var spd = a / (1f / timing.TickRate); // acceleration is applied in 1 tick instead of 1 second, scale appropriately
+            var spd = throwForce / (1f / timing.TickRate); // acceleration is applied in 1 tick instead of 1 second, scale appropriately
 
-            physComp.LinearVelocity = angle.ToVec() * spd;
+            physComp.SetController<ThrowController>();
+            (physComp.Controller as ThrowController)?.StartThrow(angle.ToVec() * spd);
 
-            if (throwSourceEnt != null)
+            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<PhysicsComponent>(out var physics))
             {
-                var p = throwSourceEnt.GetComponent<PhysicsComponent>();
-                var playerAccel = 5 * throwForce / (float) Math.Max(0.001, p.Mass);
-                p.LinearVelocity = Angle.FromDegrees(angle.Degrees + 180).ToVec()
-                                   * playerAccel / (1f / timing.TickRate);
+                const float ThrowFactor = 5.0f; // Break Newton's Third Law for better gameplay
+                (physics.Controller as MoverController)?.Push(-angle.ToVec(), spd * ThrowFactor / physics.Mass);
             }
         }
     }

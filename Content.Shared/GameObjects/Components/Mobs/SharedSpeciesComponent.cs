@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             /// <summary>
             ///     Mob is standing up
             /// </summary>
-            Stand,
+            Standing,
 
             /// <summary>
             ///     Mob is laying down

@@ -6,11 +6,25 @@
   components:
   - type: Wirecutter
   - type: Sprite
-    texture: Objects/Tools/wirecutter.png
+    sprite: Objects/Tools/wirecutters.rsi
+    layers:
+    - state: cutters-map
+    - state: cutters-cutty-thingy
   - type: Icon
-    texture: Objects/Tools/wirecutter.png
+    sprite: Objects/Tools/wirecutters.rsi
+    state: cutters-map
   - type: ItemCooldown
   - type: MeleeWeapon
+  - type: RandomToolColor
+    state: cutters
+    colors:
+      blue: "#1861d5"
+      red: "#951710"
+      pink: "#d5188d"
+      brown: "#a05212"
+      green: "#0e7f1b"
+      cyan: "#18a2d5"
+      yellow: "#d58c18"
 
 - type: entity
   name: Screwdriver
@@ -21,17 +35,30 @@
   - type: Screwdriver
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
-    state: screwdriver
+    layers:
+    - state: screwdriver-map
+    - state: screwdriver-screwybits
 
   - type: Icon
     sprite: Objects/Tools/screwdriver.rsi
-    state: screwdriver
+    state: screwdriver-map
 
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
 
   - type: ItemCooldown
   - type: MeleeWeapon
+  - type: RandomToolColor
+    state: screwdriver
+    colors:
+      blue: "#1861d5"
+      red: "#ff0000"
+      pink: "#d5188d"
+      brown: "#a05212"
+      green: "#0e7f1b"
+      cyan: "#18a2d5"
+      yellow: "#ffa500"
+
 
 - type: entity
   name: Welding Tool

@@ -35,6 +35,7 @@ namespace Content.Server
                 "IconSmooth",
                 "SubFloorHide",
                 "LowWall",
+                "ReinforcedWall",
                 "Window",
                 "CharacterInfo",
                 "InteractionOutline",

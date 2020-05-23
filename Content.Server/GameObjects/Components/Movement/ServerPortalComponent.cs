@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Movement
             base.OnAdd();
             if (Owner.TryGetComponent<CollidableComponent>(out var collide))
             {
-                collide.IsHardCollidable = false;
+                //collide.IsHardCollidable = false;
             }
 
             _state = PortalState.Pending;

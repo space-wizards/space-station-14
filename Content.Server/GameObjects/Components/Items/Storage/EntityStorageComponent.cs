@@ -190,7 +190,7 @@ namespace Content.Server.GameObjects.Components
         {
             if (Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
             {
-                collidableComponent.CollisionEnabled = IsCollidableWhenOpen || !Open;
+                collidableComponent.CanCollide = IsCollidableWhenOpen || !Open;
             }
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
@@ -250,7 +250,7 @@ namespace Content.Server.GameObjects.Components
                 entity.Transform.WorldPosition = worldPos;
                 if (entityCollidableComponent != null)
                 {
-                    entityCollidableComponent.CollisionEnabled = false;
+                    entityCollidableComponent.CanCollide = false;
                 }
                 return true;
             }
@@ -265,7 +265,7 @@ namespace Content.Server.GameObjects.Components
                 {
                     if (contained.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
                     {
-                        entityCollidableComponent.CollisionEnabled = true;
+                        entityCollidableComponent.CanCollide = true;
                     }
                 }
             }

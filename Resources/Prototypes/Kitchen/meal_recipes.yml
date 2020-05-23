@@ -174,12 +174,12 @@
 - type: microwaveMealRecipe
   id: RecipeBoiledSpaghetti
   name: Boiled Spaghetti Recipe
-  result: FoodSpagettiBoiled
+  result: FoodSpaghettiBoiled
   time: 5
   reagents:
     chem.H2O: 5
   solids:
-    FoodSpagetti: 1
+    FoodSpaghetti: 1
 
 - type: microwaveMealRecipe
   id: RecipePastaTomato
@@ -189,7 +189,7 @@
   reagents:
     chem.H2O: 5
   solids:
-    FoodSpagetti: 1
+    FoodSpaghetti: 1
     FoodTomato: 2
 
 - type: microwaveMealRecipe
@@ -200,7 +200,7 @@
   reagents:
     chem.H2O: 5
   solids:
-    FoodSpagetti: 1
+    FoodSpaghetti: 1
     FoodMeatball: 2
 
 - type: microwaveMealRecipe

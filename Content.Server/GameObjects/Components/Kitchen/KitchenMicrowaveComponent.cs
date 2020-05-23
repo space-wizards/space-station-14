@@ -224,6 +224,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (!itemEntity.TryGetComponent(typeof(FoodComponent), out var food))
             {
+
+                _notifyManager.PopupMessage(Owner, eventArgs.User, "That won't work!");
                 return false;
             }
 
@@ -274,7 +276,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                            (_currentCookTimerTime == (uint)recipeToCook.CookTime) ? true : false;
 
             SetAppearance(MicrowaveVisualState.Cooking);
-            _audioSystem.Play(_startCookingSound, AudioParams.Default);
+            _audioSystem.Play(_startCookingSound,Owner, AudioParams.Default);
             Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), () =>
             {
 
@@ -290,7 +292,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
                 var entityToSpawn = goodMeal ? recipeToCook.Result : _badRecipeName;
                 _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.GridPosition);
-                _audioSystem.Play(_cookingCompleteSound, AudioParams.Default);
+                _audioSystem.Play(_cookingCompleteSound,Owner, AudioParams.Default);
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
                 UpdateUserInterface();
@@ -395,7 +397,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private void ClickSound()
         {
 
-            _audioSystem.Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
+            _audioSystem.Play("/Audio/machines/machine_switch.ogg",Owner, AudioParams.Default.WithVolume(-2f));
 
         }
 
