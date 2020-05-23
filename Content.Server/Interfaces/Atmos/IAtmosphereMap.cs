@@ -67,16 +67,16 @@ namespace Content.Server.Interfaces.Atmos
         /// This operation may perform expensive tasks (such as finding the outline of
         /// the room), however repeat calls must be fast.
         /// </remarks>
-        /// <param name="coordinates">The position on the grid</param>
+        /// <param name="indices">The position on the grid</param>
         /// <returns>The relevant atmosphere, or <code>null</code> if this cell
         /// is connected to space</returns>
-        IAtmosphere GetAtmosphere(GridCoordinates coordinates);
+        IAtmosphere GetAtmosphere(MapIndices indices);
 
         /// <summary>
         /// Notify the atmosphere system that something at a given position may have changed.
         /// </summary>
-        /// <param name="coordinates"></param>
-        void Invalidate(GridCoordinates coordinates);
+        /// <param name="indices"></param>
+        void Invalidate(MapIndices indices);
     }
 
     /// <summary>
