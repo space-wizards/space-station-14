@@ -7,14 +7,19 @@
     netsync: false
     visible: false
     sprite: Objects/markers.rsi
+    state: cross_blue
 
   - type: Icon
     sprite: Objects/markers.rsi
 
   - type: SpawnPoint
+  - type: Marker
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
 
   placement:
-    mode: SnapgridCenter
+    mode: AlignTileAny
 
 - type: entity
   name: LateJoin Spawn Point
