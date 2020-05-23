@@ -170,11 +170,11 @@
       statusShowBehavior: true
     - type: MultiTool
       tools:
-        - behavior: enum.ToolQuality.Prying
+        - behavior: Prying
           state: jaws_pry
           useSound: /Audio/items/jaws_pry.ogg
           changeSound: /Audio/items/change_jaws.ogg
-        - behavior: enum.ToolQuality.Cutting
+        - behavior: Cutting
           state: jaws_cutter
           useSound: /Audio/items/jaws_cut.ogg
           changeSound: /Audio/items/change_jaws.ogg
@@ -199,11 +199,11 @@
       statusShowBehavior: true
     - type: MultiTool
       tools:
-        - behavior: enum.ToolQuality.Screwing
+        - behavior: Screwing
           state: drill_screw
           useSound: /Audio/items/drill_use.ogg
           changeSound: /Audio/items/change_drill.ogg
-        - behavior: enum.ToolQuality.Anchoring
+        - behavior: Anchoring
           state: drill_bolt
           useSound: /Audio/items/drill_use.ogg
           changeSound: /Audio/items/change_drill.ogg
