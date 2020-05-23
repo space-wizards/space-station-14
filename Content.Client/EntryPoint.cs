@@ -148,6 +148,14 @@ namespace Content.Client
                 "RandomPottedPlant",
                 "CommunicationsConsole",
                 "BarSign",
+                "DroppedBodyPart",
+                "DroppedMechanism",
+                "BodyManager",
+                "Stunnable",
+                "SolarPanel",
+                "BodyScanner",
+                "Stunbaton",
+                "EmergencyClosetFill"
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -239,7 +247,6 @@ namespace Content.Client
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
-            IoCManager.Resolve<IItemSlotManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {

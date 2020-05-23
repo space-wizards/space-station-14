@@ -2,7 +2,11 @@
   id: KitchenMicrowave
   name: Microwave
   description: It's magic.
+  placement:
+    mode: SnapgridCenter
   components:
+  - type: SnapGrid
+    offset: Center
   - type: Microwave
   - type: Clickable
   - type: InteractionOutline
@@ -17,8 +21,6 @@
     interfaces:
     - key: enum.MicrowaveUiKey.Key
       type: MicrowaveBoundUserInterface
-
-
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

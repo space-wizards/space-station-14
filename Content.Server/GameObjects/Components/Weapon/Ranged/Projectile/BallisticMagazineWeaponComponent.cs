@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
@@ -266,14 +267,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         [Verb]
         public sealed class EjectMagazineVerb : Verb<BallisticMagazineWeaponComponent>
         {
-            protected override string GetText(IEntity user, BallisticMagazineWeaponComponent component)
+            protected override void GetData(IEntity user, BallisticMagazineWeaponComponent component, VerbData data)
             {
-                return component.Magazine == null ? "Eject magazine (magazine missing)" : "Eject magazine";
-            }
+                if (component.Magazine == null)
+                {
+                    data.Text = "Eject magazine (magazine missing)";
+                    data.Visibility = VerbVisibility.Disabled;
+                    return;
+                }
 
-            protected override VerbVisibility GetVisibility(IEntity user, BallisticMagazineWeaponComponent component)
-            {
-                return component.Magazine == null ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                data.Text = "Eject magazine";
             }
 
             protected override void Activate(IEntity user, BallisticMagazineWeaponComponent component)

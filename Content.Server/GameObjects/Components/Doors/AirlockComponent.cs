@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;

@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
 using Content.Shared.Physics;
@@ -18,6 +19,7 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -27,36 +29,53 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
     /// This interface gives components behavior when being clicked on by a user with an object in their hand
+    /// who is in range and has unobstructed reach of the target entity (allows inside blockers).
     /// </summary>
     public interface IInteractUsing
     {
         /// <summary>
-        /// Called when using one object on another
+        /// Called when using one object on another when user is in range of the target entity.
         /// </summary>
         bool InteractUsing(InteractUsingEventArgs eventArgs);
     }
 
-    public class InteractUsingEventArgs : EventArgs
+    public class InteractUsingEventArgs : EventArgs, ITargetedAttackEventArgs
     {
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
         public IEntity Using { get; set; }
+        public IEntity Attacked { get; set; }
+    }
+
+    public interface ITargetedAttackEventArgs
+    {
+        /// <summary>
+        /// Performer of the attack
+        /// </summary>
+        IEntity User { get; }
+        /// <summary>
+        /// Target of the attack
+        /// </summary>
+        IEntity Attacked { get; }
+
     }
 
     /// <summary>
     /// This interface gives components behavior when being clicked on by a user with an empty hand
+    /// who is in range and has unobstructed reach of the target entity (allows inside blockers).
     /// </summary>
     public interface IInteractHand
     {
         /// <summary>
-        /// Called when a player directly interacts with an empty hand
+        /// Called when a player directly interacts with an empty hand when user is in range of the target entity.
         /// </summary>
         bool InteractHand(InteractHandEventArgs eventArgs);
     }
 
-    public class InteractHandEventArgs : EventArgs
+    public class InteractHandEventArgs : EventArgs, ITargetedAttackEventArgs
     {
         public IEntity User { get; set; }
+        public IEntity Attacked { get; set; }
     }
 
     /// <summary>
@@ -81,8 +100,8 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
-    /// This interface gives components a behavior when clicking on another object and no interaction occurs
-    /// Doesn't pass what you clicked on as an argument, but if it becomes necessary we can add it later
+    /// This interface gives components a behavior when clicking on another object and no interaction occurs,
+    /// at any range.
     /// </summary>
     public interface IAfterInteract
     {
@@ -117,19 +136,21 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
-    ///     This interface gives components behavior when being activated in the world.
+    ///     This interface gives components behavior when being activated in the world when the user
+    ///     is in range and has unobstructed access to the target entity (allows inside blockers).
     /// </summary>
     public interface IActivate
     {
         /// <summary>
-        ///     Called when this component is activated by another entity.
+        ///     Called when this component is activated by another entity who is in range.
         /// </summary>
         void Activate(ActivateEventArgs eventArgs);
     }
 
-    public class ActivateEventArgs : EventArgs
+    public class ActivateEventArgs : EventArgs, ITargetedAttackEventArgs
     {
         public IEntity User { get; set; }
+        public IEntity Attacked { get; set; }
     }
 
     /// <summary>
@@ -293,6 +314,7 @@ namespace Content.Server.GameObjects.EntitySystems
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IPhysicsManager _physicsManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         public const float InteractionRange = 2;
@@ -360,7 +382,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            activateComp.Activate(new ActivateEventArgs {User = user});
+            // all activates should only fire when in range / unbostructed
+            var activateEventArgs = new ActivateEventArgs {User = user, Attacked = used};
+            if (InteractionChecks.InRangeUnobstructed(activateEventArgs))
+            {
+                activateComp.Activate(activateEventArgs);
+            }
         }
 
         private bool HandleWideAttack(ICommonSession session, GridCoordinates coords, EntityUid uid)
@@ -452,12 +479,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var item = hands.GetActiveHand?.Owner;
 
+            if(ActionBlockerSystem.CanChangeDirection(player))
+                playerTransform.LocalRotation = new Angle(coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position);
+
             if (!ActionBlockerSystem.CanInteract(player))
             {
                 return;
             }
-
-            playerTransform.LocalRotation = new Angle(coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position);
 
             // TODO: Check if client should be able to see that object to click on it in the first place
 
@@ -556,15 +584,19 @@ namespace Content.Server.GameObjects.EntitySystems
             var attackBys = attacked.GetAllComponents<IInteractUsing>().ToList();
             var attackByEventArgs = new InteractUsingEventArgs
             {
-                User = user, ClickLocation = clickLocation, Using = weapon
+                User = user, ClickLocation = clickLocation, Using = weapon, Attacked = attacked
             };
 
-            foreach (var attackBy in attackBys)
+            // all AttackBys should only happen when in range / unobstructed, so no range check is needed
+            if (InteractionChecks.InRangeUnobstructed(attackByEventArgs))
             {
-                if (attackBy.InteractUsing(attackByEventArgs))
+                foreach (var attackBy in attackBys)
                 {
-                    // If an InteractUsing returns a status completion we finish our attack
-                    return;
+                    if (attackBy.InteractUsing(attackByEventArgs))
+                    {
+                        // If an InteractUsing returns a status completion we finish our attack
+                        return;
+                    }
                 }
             }
 
@@ -602,14 +634,18 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var attackHands = attacked.GetAllComponents<IInteractHand>().ToList();
-            var attackHandEventArgs = new InteractHandEventArgs {User = user};
+            var attackHandEventArgs = new InteractHandEventArgs {User = user, Attacked = attacked};
 
-            foreach (var attackHand in attackHands)
+            // all attackHands should only fire when in range / unbostructed
+            if (InteractionChecks.InRangeUnobstructed(attackHandEventArgs))
             {
-                if (attackHand.InteractHand(attackHandEventArgs))
+                foreach (var attackHand in attackHands)
                 {
-                    // If an InteractHand returns a status completion we finish our attack
-                    return;
+                    if (attackHand.InteractHand(attackHandEventArgs))
+                    {
+                        // If an InteractHand returns a status completion we finish our attack
+                        return;
+                    }
                 }
             }
 

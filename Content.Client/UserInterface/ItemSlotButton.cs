@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Client.UserInterface;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -13,7 +14,7 @@ namespace Content.Client.GameObjects
         public TextureRect Button { get; }
         public SpriteView SpriteView { get; }
         public BaseButton StorageButton { get; }
-        public TextureRect CooldownCircle { get; }
+        public CooldownGraphic CooldownDisplay { get; }
 
         public Action<GUIBoundKeyEventArgs> OnPressed { get; set; }
         public Action<GUIBoundKeyEventArgs> OnStoragePressed { get; set; }
@@ -56,12 +57,10 @@ namespace Content.Client.GameObjects
 
             StorageButton.OnPressed += OnStorageButtonPressed;
 
-            AddChild(CooldownCircle = new TextureRect
+            AddChild(CooldownDisplay = new CooldownGraphic
             {
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                Stretch = TextureRect.StretchMode.KeepCentered,
-                TextureScale = (2, 2),
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsVertical = SizeFlags.Fill,
                 Visible = false,
             });
         }

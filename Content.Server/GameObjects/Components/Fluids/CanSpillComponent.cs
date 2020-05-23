@@ -19,19 +19,18 @@ namespace Content.Server.GameObjects.Components.Fluids
         [Verb]
         private sealed class FillTargetVerb : Verb<CanSpillComponent>
         {
-            protected override string GetText(IEntity user, CanSpillComponent component)
+            protected override void GetData(IEntity user, CanSpillComponent component, VerbData data)
             {
-                return "Spill liquid";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, CanSpillComponent component)
-            {
-                if (component.Owner.TryGetComponent(out SolutionComponent solutionComponent))
+                if (!component.Owner.TryGetComponent(out SolutionComponent solutionComponent))
                 {
-                    return solutionComponent.CurrentVolume > ReagentUnit.Zero ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
 
-                return VerbVisibility.Invisible;
+                data.Text = "Spill liquid";
+                data.Visibility = solutionComponent.CurrentVolume > ReagentUnit.Zero
+                    ? VerbVisibility.Visible
+                    : VerbVisibility.Disabled;
             }
 
             protected override void Activate(IEntity user, CanSpillComponent component)

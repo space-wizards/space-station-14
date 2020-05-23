@@ -1,0 +1,7 @@
+- type: sound_collection
+  id: bodyfall
+  files:
+  - /Audio/effects/bodyfall1.ogg
+  - /Audio/effects/bodyfall2.ogg
+  - /Audio/effects/bodyfall3.ogg
+  - /Audio/effects/bodyfall4.ogg

@@ -137,10 +137,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 {
                     Text = (index <= 0 ? 1 : index).ToString(),
                     TextAlign = Label.AlignMode.Center,
+                    ToggleMode = true,
                     Group =  CookTimeButtonGroup,
                 };
                 CookTimeButtonVbox.AddChild(newButton);
-                newButton.OnPressed += args =>
+                newButton.OnToggled += args =>
                 {
                     OnCookTimeSelected?.Invoke(args);
                     _cookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {VisualCookTime}";

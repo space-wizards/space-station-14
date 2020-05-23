@@ -6,11 +6,13 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -63,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Movement
             base.OnAdd();
             if (Owner.TryGetComponent<CollidableComponent>(out var collide))
             {
-                collide.IsHardCollidable = false;
+                //collide.IsHardCollidable = false;
             }
 
             _state = PortalState.Pending;
@@ -195,7 +197,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (!immuneEntities.Contains(entity))
             {
                 var position = _connectingTeleporter.Transform.GridPosition;
-                var soundPlayer = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                var soundPlayer = EntitySystem.Get<AudioSystem>();
 
                 // Departure
                 // Do we need to rate-limit sounds to stop ear BLAST?

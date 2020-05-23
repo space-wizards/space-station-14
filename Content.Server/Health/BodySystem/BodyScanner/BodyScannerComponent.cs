@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Content.Server.Utility;
 using Content.Shared.BodySystem;
 
 
@@ -41,6 +42,7 @@ namespace Content.Server.BodySystem
             {
                 return;
             }
+
             if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent attempt))
             {
                 _userInterface.SetState(PrepareBodyScannerInterfaceState(attempt.Template, attempt.PartDictionary));

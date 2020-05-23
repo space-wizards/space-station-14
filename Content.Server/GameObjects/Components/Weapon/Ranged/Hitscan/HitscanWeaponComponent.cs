@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics;
@@ -9,6 +11,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
@@ -17,6 +20,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
@@ -90,10 +94,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var angle = new Angle(clickLocation.Position - userPosition);
 
             var ray = new CollisionRay(userPosition, angle.ToVec(), (int)(CollisionGroup.Impassable | CollisionGroup.MobImpassable));
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user, ignoreNonHardCollidables: true);
+            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user).ToList();
 
-            Hit(rayCastResults, energyModifier, user);
-            AfterEffects(user, rayCastResults, angle, energyModifier);
+            if (rayCastResults.Count == 1)
+            {
+                Hit(rayCastResults[0], energyModifier, user);
+                AfterEffects(user, rayCastResults[0], angle, energyModifier);
+            }
         }
 
         protected virtual void Hit(RayCastResults ray, float damageModifier, IEntity user = null)
@@ -109,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
         protected virtual void AfterEffects(IEntity user, RayCastResults ray, Angle angle, float energyModifier)
         {
             var time = IoCManager.Resolve<IGameTiming>().CurTime;
-            var dist = ray.DidHitObject ? ray.Distance : MaxLength;
+            var dist = ray.Distance;
             var offset = angle.ToVec() * dist / 2;
             var message = new EffectSystemMessage
             {
@@ -125,8 +132,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
                 Shaded = false
             };
-            var mgr = IoCManager.Resolve<IEntitySystemManager>();
-            mgr.GetEntitySystem<EffectSystem>().CreateParticle(message);
+            EntitySystem.Get<EffectSystem>().CreateParticle(message);
             Owner.GetComponent<SoundComponent>().Play(_fireSound, AudioParams.Default.WithVolume(-5));
         }
     }
