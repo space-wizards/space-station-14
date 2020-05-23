@@ -6,6 +6,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Atmos
 {
+    [Serializable, NetSerializable]
     /// <summary>
     /// Convenience struct for representing a gas ID.
     /// </summary>

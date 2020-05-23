@@ -1,7 +1,10 @@
 ﻿using Content.Shared.Atmos;
+using Robust.Shared.Serialization;
+using System;
 
-namespace Content.Server.Interfaces.Atmos
+namespace Content.Shared.Atmos
 {
+    [Serializable, NetSerializable]
     public struct GasProperty
     {
         /// <summary>

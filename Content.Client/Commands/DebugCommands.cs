@@ -1,3 +1,4 @@
+﻿using Content.Client.Debugging;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces;
 using Content.Shared.GameObjects.Components.Markers;
@@ -69,6 +70,23 @@ namespace Content.Client.Commands
 
             var notifyManager = IoCManager.Resolve<IClientNotifyManager>();
             notifyManager.PopupMessage(message);
+
+            return false;
+        }
+    }
+
+    internal sealed class ToggleZoneDebugCommand : IConsoleCommand
+    {
+        public string Command => "togglezoneinfo";
+        public string Description => "Toggle visibility of atmosphere zones.";
+
+        public string Help => "";
+
+        public bool Execute(IDebugConsole console, params string[] args)
+        {
+            IoCManager.Resolve<IEntitySystemManager>()
+                .GetEntitySystem<DebugZoneSystem>()
+                .DrawZones ^= true;
 
             return false;
         }
