@@ -138,16 +138,16 @@ namespace Content.Client.Debugging
 
                 Vector2 WriteLine(Vector2 textPosition, string s)
                 {
+                    var charPosition = textPosition;
+
                     foreach (var c in s)
                     {
-                        var advance = _parent._font.DrawChar(screenHandle, c, textPosition, _parent._userInterfaceManager.UIScale, Color.White);
+                        var advance = _parent._font.DrawChar(screenHandle, c, charPosition, _parent._userInterfaceManager.UIScale, Color.White);
 
-                        textPosition += new Vector2(advance, 0);
+                        charPosition += new Vector2(advance, 0);
                     }
 
-                    textPosition += new Vector2(0, lineHeight);
-
-                    return textPosition;
+                    return textPosition + new Vector2(0, lineHeight);
                 }
 
                 textPosition = WriteLine(textPosition, _parent.CurrentZone.Cells.Length.ToString());
