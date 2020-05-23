@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IAttackBy, IMapInit
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
     {
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
@@ -53,15 +53,15 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<PowerCellComponent>()) return false;
+            if (!eventArgs.Using.HasComponent<PowerCellComponent>()) return false;
 
             if (Cell != null) return false;
 
             var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
 
-            if (!handsComponent.Drop(eventArgs.AttackWith, _cellContainer))
+            if (!handsComponent.Drop(eventArgs.Using, _cellContainer))
             {
                 return false;
             }

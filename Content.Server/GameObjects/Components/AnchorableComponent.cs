@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class AnchorableComponent : Component, IAttackBy
+    public class AnchorableComponent : Component, IInteractUsing
     {
         public override string Name => "Anchorable";
 
@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components
             Owner.EnsureComponent<PhysicsComponent>();
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out PhysicsComponent physics)
                 || !eventArgs.AttackWith.TryGetComponent(out ToolComponent tool))

@@ -15,7 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
     [RegisterComponent]
-    public class AmmoBoxComponent : Component, IAttackBy, IMapInit
+    public class AmmoBoxComponent : Component, IInteractUsing, IMapInit
     // TODO: Potential improvements:
     // Add verbs for stack splitting
     // Behaviour is largely the same as BallisticMagazine except you can't insert it into a gun.
@@ -145,12 +145,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            var ammoBoxTransfer = CanTransferFrom(eventArgs.AttackWith);
+            var ammoBoxTransfer = CanTransferFrom(eventArgs.Using);
             if (ammoBoxTransfer.Result) {
                 IEntity bullet;
-                if (eventArgs.AttackWith.TryGetComponent(out BallisticMagazineComponent magazineComponent))
+                if (eventArgs.Using.TryGetComponent(out BallisticMagazineComponent magazineComponent))
                 {
                     int fillCount = Math.Min(magazineComponent.CountLoaded, Capacity - CountLeft);
                     for (int i = 0; i < fillCount; i++)
@@ -161,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                     eventArgs.User.PopupMessage(eventArgs.User, $"Transferred {fillCount} rounds");
                     return true;
                 }
-                if (eventArgs.AttackWith.TryGetComponent(out AmmoBoxComponent boxComponent))
+                if (eventArgs.Using.TryGetComponent(out AmmoBoxComponent boxComponent))
                 {
                     int fillCount = Math.Min(boxComponent.CountLeft, Capacity - CountLeft);
                     for (int i = 0; i < fillCount; i++)

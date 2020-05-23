@@ -27,7 +27,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Construction
 {
     [RegisterComponent]
-    public class ConstructionComponent : Component, IAttackBy
+    public class ConstructionComponent : Component, IInteractUsing
     {
         public override string Name => "Construction";
 
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Construction
             Transform = Owner.GetComponent<ITransformComponent>();
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // default interaction check for AttackBy allows inside blockers, so we will check if its blocked if
             // we're not allowed to build on impassable stuff
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var stage = Prototype.Stages[Stage];
 
-            if (TryProcessStep(stage.Forward, eventArgs.AttackWith, eventArgs.User))
+            if (TryProcessStep(stage.Forward, eventArgs.Using, eventArgs.User))
             {
                 Stage++;
                 if (Stage == Prototype.Stages.Count - 1)
@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            else if (TryProcessStep(stage.Backward, eventArgs.AttackWith, eventArgs.User))
+            else if (TryProcessStep(stage.Backward, eventArgs.Using, eventArgs.User))
             {
                 Stage--;
                 if (Stage == 0)

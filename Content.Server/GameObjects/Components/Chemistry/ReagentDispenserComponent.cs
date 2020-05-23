@@ -30,8 +30,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IAttackBy))]
-    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IAttackBy, ISolutionChange
+    [ComponentReference(typeof(IInteractUsing))]
+    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing, ISolutionChange
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
@@ -278,7 +278,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         /// <returns></returns>
-        bool IAttackBy.AttackBy(AttackByEventArgs args)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {

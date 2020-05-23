@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Stack
 
     // TODO: Naming and presentation and such could use some improvement.
     [RegisterComponent]
-    public class StackComponent : SharedStackComponent, IAttackBy, IExamine
+    public class StackComponent : SharedStackComponent, IInteractUsing, IExamine
     {
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
@@ -69,9 +69,9 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.TryGetComponent<StackComponent>(out var stack))
+            if (eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
             {
                 if (!stack.StackType.Equals(StackType))
                 {

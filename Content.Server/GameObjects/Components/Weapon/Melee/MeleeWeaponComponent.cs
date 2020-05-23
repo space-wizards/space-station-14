@@ -141,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), 23), _range, ignore).First();
+                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), 23), _range, ignore).FirstOrDefault();
                 if (res.HitEntity != null)
                 {
                     resSet.Add(res.HitEntity);

@@ -10,20 +10,20 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 namespace Content.Server.GameObjects.Components.Power
 {
     [RegisterComponent]
-    public class PowerDebugTool : SharedPowerDebugTool, IAfterAttack
+    public class PowerDebugTool : SharedPowerDebugTool, IAfterInteract
     {
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.Attacked == null)
+            if (eventArgs.Target == null)
             {
                 return;
             }
 
             var builder = new StringBuilder();
 
-            builder.AppendFormat("Entity: {0} ({1})\n", eventArgs.Attacked.Name, eventArgs.Attacked.Uid);
+            builder.AppendFormat("Entity: {0} ({1})\n", eventArgs.Target.Name, eventArgs.Target.Uid);
 
-            if (eventArgs.Attacked.TryGetComponent<PowerNodeComponent>(out var node))
+            if (eventArgs.Target.TryGetComponent<PowerNodeComponent>(out var node))
             {
                 builder.AppendFormat("Power Node:\n");
                 if (node.Parent == null)
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Power
                 }
             }
 
-            if (eventArgs.Attacked.TryGetComponent<PowerDeviceComponent>(out var device))
+            if (eventArgs.Target.TryGetComponent<PowerDeviceComponent>(out var device))
             {
                 builder.AppendFormat(@"Power Device:
   Load: {0} W
@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Power
                 }
             }
 
-            if (eventArgs.Attacked.TryGetComponent<PowerStorageNetComponent>(out var storage))
+            if (eventArgs.Target.TryGetComponent<PowerStorageNetComponent>(out var storage))
             {
                 var stateSeconds = (DateTime.Now - storage.LastChargeStateChange).TotalSeconds;
                 builder.AppendFormat(@"Power Storage:
@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Power
 ", storage.Capacity, storage.Charge, storage.ChargeRate, storage.DistributionRate, storage.ChargePowernet, storage.LastChargeState, storage.GetChargeState(), stateSeconds);
             }
 
-            if (eventArgs.Attacked.TryGetComponent<PowerTransferComponent>(out var transfer))
+            if (eventArgs.Target.TryGetComponent<PowerTransferComponent>(out var transfer))
             {
                 builder.AppendFormat(@"Power Transfer:
   Powernet: {0}

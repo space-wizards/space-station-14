@@ -1,11 +1,8 @@
-﻿using System;
-using System.Net;
-using Content.Server.GameObjects.Components;
+﻿using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
-using Content.Server.Observer;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Maps;
@@ -13,7 +10,6 @@ using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.Configuration;
@@ -26,13 +22,12 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Network;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -50,6 +45,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IRobustRandom _robustRandom;
         [Dependency] private readonly IConfigurationManager _configurationManager;
         [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly IPhysicsManager _physicsManager;
 #pragma warning restore 649
 
         private AudioSystem _audioSystem;
@@ -155,25 +151,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 physics.SetController<MoverController>();
             }
 
-            var weightless = false;
+            var weightless = _physicsManager.IsWeightless(transform.GridPosition);
 
-            var tile = _mapManager.GetGrid(transform.GridID).GetTileRef(transform.GridPosition).Tile;
-
-            if ((!_mapManager.GetGrid(transform.GridID).HasGravity || tile.IsEmpty) && collider != null)
+            if (weightless && collider != null)
             {
-                weightless = true;
                 // No gravity: is our entity touching anything?
-                var touching = false;
-                foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
-                {
-                    if (entity.TryGetComponent<CollidableComponent>(out var otherCollider))
-                    {
-                        if (otherCollider.Owner == transform.Owner) continue; // Don't try to push off of yourself!
-                        touching |= ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
-                                     || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
-                                    && !entity.HasComponent<ItemComponent>(); // This can't be an item
-                    }
-                }
+                var touching = IsAroundCollider(transform, mover, collider);
 
                 if (!touching)
                 {
@@ -236,6 +219,33 @@ namespace Content.Server.GameObjects.EntitySystems
                     }
                 }
             }
+        }
+
+        private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover, CollidableComponent collider)
+        {
+            foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
+            {
+                if (entity == transform.Owner)
+                {
+                    continue; // Don't try to push off of yourself!
+                }
+
+                if (!entity.TryGetComponent<CollidableComponent>(out var otherCollider))
+                {
+                    continue;
+                }
+
+                var touching = ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
+                                || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
+                               && !entity.HasComponent<ItemComponent>(); // This can't be an item
+
+                if (touching)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static void HandleDirChange(ICommonSession session, Direction dir, bool state)

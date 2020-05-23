@@ -12,6 +12,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
@@ -61,7 +62,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 projectile.Transform.GridPosition = source.Transform.GridPosition; //move projectile to entity it is being fired from
                 projectile.GetComponent<ProjectileComponent>().IgnoreEntity(source);//make sure it doesn't hit the source entity
                 var finalvelocity = projectile.GetComponent<ProjectileComponent>().Velocity + velocity;//add velocity
-                projectile.GetComponent<PhysicsComponent>().LinearVelocity = finalangle.ToVec() * finalvelocity;//Rotate the bullets sprite to the correct direction
+                var physicsComponent = projectile.GetComponent<PhysicsComponent>();
+                physicsComponent.Status = BodyStatus.InAir;
+                physicsComponent.LinearVelocity = finalangle.ToVec() * finalvelocity;//Rotate the bullets sprite to the correct direction
                 projectile.Transform.LocalRotation = finalangle.Theta;
             }
             PlayFireSound();

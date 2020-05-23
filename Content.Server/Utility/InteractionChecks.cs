@@ -25,13 +25,13 @@ namespace Content.Server.Utility
         /// Validates that attacker is in range of the attacked entity. Additionally shows a popup if
         /// validation fails.
         /// </summary>
-        public static bool InRangeUnobstructed(ITargetedAttackEventArgs eventArgs, bool insideBlockerValid = true)
+        public static bool InRangeUnobstructed(ITargetedInteractEventArgs eventArgs, bool insideBlockerValid = true)
         {
             if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
-                eventArgs.Attacked.Transform.WorldPosition, ignoredEnt: eventArgs.Attacked, insideBlockerValid: insideBlockerValid))
+                eventArgs.Target.Transform.WorldPosition, ignoredEnt: eventArgs.Target, insideBlockerValid: insideBlockerValid))
             {
                 var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                eventArgs.Attacked.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
+                eventArgs.Target.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
                 return false;
             }
 
@@ -45,15 +45,15 @@ namespace Content.Server.Utility
         /// If there is no attacked entity, validates that they are in range of the clicked position.
         /// Additionally shows a popup if validation fails.
         /// </summary>
-        public static bool InRangeUnobstructed(AfterAttackEventArgs eventArgs, bool insideBlockerValid = true)
+        public static bool InRangeUnobstructed(AfterInteractEventArgs eventArgs, bool insideBlockerValid = true)
         {
-            if (eventArgs.Attacked != null)
+            if (eventArgs.Target != null)
             {
                 if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
-                    eventArgs.Attacked.Transform.WorldPosition, ignoredEnt: eventArgs.Attacked, insideBlockerValid: insideBlockerValid))
+                    eventArgs.Target.Transform.WorldPosition, ignoredEnt: eventArgs.Target, insideBlockerValid: insideBlockerValid))
                 {
                     var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                    eventArgs.Attacked.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
+                    eventArgs.Target.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
                     return false;
                 }
             }

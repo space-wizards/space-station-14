@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     ///      Guns that have a magazine.
     /// </summary>
     [RegisterComponent]
-    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackBy, IMapInit
+    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IInteractUsing, IMapInit
     {
         private const float BulletOffset = 0.2f;
 
@@ -210,9 +210,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return true;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent(out BallisticMagazineComponent component))
+            if (!eventArgs.Using.TryGetComponent(out BallisticMagazineComponent component))
             {
                 return false;
             }
@@ -226,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 Owner.PopupMessage(eventArgs.User, "Magazine doesn't fit.");
                 return false;
             }
-            return InsertMagazine(eventArgs.AttackWith);
+            return InsertMagazine(eventArgs.Using);
         }
 
         private void MagazineAmmoCountChanged()

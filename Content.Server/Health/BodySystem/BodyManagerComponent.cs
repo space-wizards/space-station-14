@@ -17,7 +17,7 @@ namespace Content.Server.BodySystem {
     ///     Component representing the many BodyParts attached to each other. 
     /// </summary>
     [RegisterComponent]
-    public class BodyManagerComponent : Component, IAttackHand {
+    public class BodyManagerComponent : Component, IInteractHand {
 
         public sealed override string Name => "BodyManager";
 #pragma warning disable CS0649
@@ -117,7 +117,7 @@ namespace Content.Server.BodySystem {
         /////////  Server-specific stuff
         /////////
 
-        public bool AttackHand(AttackHandEventArgs eventArgs)
+        public bool InteractHand(InteractHandEventArgs eventArgs)
         {
             //TODO: remove organs? 
             return false;

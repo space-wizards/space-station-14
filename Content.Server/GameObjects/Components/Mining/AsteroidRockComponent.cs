@@ -13,7 +13,7 @@ using Robust.Shared.Random;
 namespace Content.Server.GameObjects.Components.Mining
 {
     [RegisterComponent]
-    public class AsteroidRockComponent : Component, IAttackBy
+    public class AsteroidRockComponent : Component, IInteractUsing
     {
         public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
@@ -29,9 +29,9 @@ namespace Content.Server.GameObjects.Components.Mining
             spriteComponent.LayerSetState(0, _random.Pick(SpriteStates));
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            var item = eventArgs.AttackWith;
+            var item = eventArgs.Using;
             if (!item.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent)) return false;
 
             Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, meleeWeaponComponent.Damage, item, eventArgs.User);
