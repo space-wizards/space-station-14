@@ -478,8 +478,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var item = hands.GetActiveHand?.Owner;
 
-            if(ActionBlockerSystem.CanChangeDirection(player))
-                playerTransform.LocalRotation = new Angle(coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position);
+            if (ActionBlockerSystem.CanChangeDirection(player))
+            {
+                var diff = coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position;
+                if (diff.LengthSquared > 0.01f)
+                {
+                    playerTransform.LocalRotation = new Angle(diff);
+                }
+            }
 
             if (!ActionBlockerSystem.CanInteract(player))
             {
