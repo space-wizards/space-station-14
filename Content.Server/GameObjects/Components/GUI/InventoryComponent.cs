@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
@@ -301,7 +301,7 @@ namespace Content.Server.GameObjects
                             hands.PutInHand(clothing);
 
                             if (reason != null)
-                                _serverNotifyManager.PopupMessage(Owner, Owner, reason);
+                                _serverNotifyManager.PopupMessageCursor(Owner, reason);
                         }
                     }
                     break;
