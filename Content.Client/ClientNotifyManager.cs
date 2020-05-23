@@ -63,9 +63,9 @@ namespace Content.Client
                 Text = message,
                 StyleClasses = { StyleNano.StyleClassPopupMessage },
             };
+            _userInterfaceManager.PopupRoot.AddChild(label);
             var minimumSize = label.CombinedMinimumSize;
             LayoutContainer.SetPosition(label, label.InitialPos = coordinates.Position - minimumSize / 2);
-            _userInterfaceManager.PopupRoot.AddChild(label);
             _aliveLabels.Add(label);
         }
 
