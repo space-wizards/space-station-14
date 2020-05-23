@@ -30,21 +30,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IInputManager _inputManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
 #pragma warning restore 0649
-
-        private const int CooldownLevels = 8;
-
-        private readonly Texture[] _texturesCooldownOverlay = new Texture[CooldownLevels];
-
-        public void Initialize()
-        {
-            for (var i = 0; i < CooldownLevels; i++)
-            {
-                _texturesCooldownOverlay[i] =
-                    _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/cooldown-{i}.png");
-            }
-        }
 
         public bool SetItemSlot(ItemSlotButton button, IEntity entity)
         {
@@ -103,7 +89,7 @@ namespace Content.Client.UserInterface
 
         public void UpdateCooldown(ItemSlotButton button, IEntity entity)
         {
-            var cooldownTexture = button.CooldownCircle;
+            var cooldownDisplay = button.CooldownDisplay;
 
             if (entity != null
                 && entity.TryGetComponent(out ItemCooldownComponent cooldown)
@@ -115,30 +101,23 @@ namespace Content.Client.UserInterface
 
                 var length = (end - start).TotalSeconds;
                 var progress = (_gameTiming.CurTime - start).TotalSeconds;
-                var ratio = (float)(progress / length);
+                var ratio = 1 - (float)(progress / length).Clamp(0, 1);
 
-                var textureIndex = CalculateCooldownLevel(ratio);
-                if (textureIndex == CooldownLevels)
+                cooldownDisplay.Fraction = ratio;
+
+                if (ratio > 0)
                 {
-                    cooldownTexture.Visible = false;
+                    cooldownDisplay.Visible = true;
                 }
                 else
                 {
-                    cooldownTexture.Visible = true;
-                    cooldownTexture.Texture = _texturesCooldownOverlay[textureIndex];
+                    cooldownDisplay.Visible = false;
                 }
             }
             else
             {
-                cooldownTexture.Visible = false;
+                cooldownDisplay.Visible = false;
             }
-        }
-
-        internal static int CalculateCooldownLevel(float cooldownValue)
-        {
-            var val = cooldownValue.Clamp(0, 1);
-            val *= CooldownLevels;
-            return (int)Math.Floor(val);
         }
     }
 }
