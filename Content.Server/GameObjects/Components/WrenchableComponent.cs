@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class WrenchableComponent : Component, IAttackBy
+    public class WrenchableComponent : Component, IInteractUsing
     {
         public override string Name => "Wrenchable";
         private AudioSystem _audioSystem;
@@ -23,9 +23,9 @@ namespace Content.Server.GameObjects.Components
             _audioSystem = EntitySystem.Get<AudioSystem>();
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<WrenchComponent>())
+            if (!eventArgs.Using.HasComponent<WrenchComponent>())
             {
                 return false;
             }

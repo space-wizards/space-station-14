@@ -25,7 +25,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
     [RegisterComponent]
-    public class HitscanWeaponComponent : Component, IAttackBy
+    public class HitscanWeaponComponent : Component, IInteractUsing
     {
         private const float MaxLength = 20;
         public override string Name => "HitscanWeapon";
@@ -68,9 +68,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent(out PowerStorageComponent component))
+            if (!eventArgs.Using.TryGetComponent(out PowerStorageComponent component))
             {
                 return false;
             }

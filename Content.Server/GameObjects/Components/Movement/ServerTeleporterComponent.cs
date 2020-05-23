@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Movement
 {
 
     [RegisterComponent]
-    public class ServerTeleporterComponent : Component, IAfterAttack
+    public class ServerTeleporterComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Movement
             _state = newState;
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (_teleporterType == TeleporterType.Directed)
             {

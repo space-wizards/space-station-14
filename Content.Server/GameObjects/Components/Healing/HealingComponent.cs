@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
-    public class HealingComponent : Component, IAfterAttack, IUse
+    public class HealingComponent : Component, IAfterInteract, IUse
     {
         public override string Name => "Healing";
 
@@ -23,16 +23,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref Damage, "damage", DamageType.Brute);
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
-            if (eventArgs.Attacked == null)
+            if (eventArgs.Target == null)
             {
                 return;
             }
 
-            if (!eventArgs.Attacked.TryGetComponent(out DamageableComponent damagecomponent)) return;
+            if (!eventArgs.Target.TryGetComponent(out DamageableComponent damagecomponent)) return;
             if (Owner.TryGetComponent(out StackComponent stackComponent))
             {
                 if (!stackComponent.Use(1))

@@ -22,7 +22,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IAttackBy, IBreakAct, IAttackHand
+    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
     {
         private BoundUserInterface _userInterface;
 
@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Gravity
             serializer.DataField(ref _intact, "intact", true);
         }
 
-        bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent<IActorComponent>(out var actor))
                 return false;
@@ -101,9 +101,9 @@ namespace Content.Server.GameObjects.Components.Gravity
             return true;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent<WelderComponent>(out var welder)) return false;
+            if (!eventArgs.Using.TryGetComponent<WelderComponent>(out var welder)) return false;
 
             if (welder.TryUse(5.0f))
             {

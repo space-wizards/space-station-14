@@ -11,7 +11,7 @@ using Robust.Shared.Map;
 namespace Content.Server.GameObjects.Components.Interactable.Tools
 {
     [RegisterComponent]
-    public class CrowbarComponent : ToolComponent, IAfterAttack
+    public class CrowbarComponent : ToolComponent, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
         /// </summary>
         public override string Name => "Crowbar";
 
-        public void AfterAttack(AfterAttackEventArgs eventArgs)
+        public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 

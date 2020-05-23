@@ -17,7 +17,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class FoodComponent : Component, IAfterAttack, IUse
+    public class FoodComponent : Component, IAfterInteract, IUse
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -110,11 +110,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return true;
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
-            UseFood(eventArgs.Attacked);
+            UseFood(eventArgs.Target);
         }
 
         void UseFood(IEntity user)

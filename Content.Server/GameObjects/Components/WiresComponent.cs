@@ -27,7 +27,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class WiresComponent : SharedWiresComponent, IAttackBy, IExamine
+    public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine
     {
 #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
@@ -296,9 +296,9 @@ namespace Content.Server.GameObjects.Components
             _userInterface.SetState(new WiresBoundUserInterfaceState(clientList, _statuses.Values.ToList()));
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<ScrewdriverComponent>())
+            if (!eventArgs.Using.HasComponent<ScrewdriverComponent>())
             {
                 return false;
             }

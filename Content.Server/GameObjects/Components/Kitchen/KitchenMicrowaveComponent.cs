@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class KitchenMicrowaveComponent : SharedMicrowaveComponent, IActivate, IAttackBy, ISolutionChange
+    public class KitchenMicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -184,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand.Owner;
 

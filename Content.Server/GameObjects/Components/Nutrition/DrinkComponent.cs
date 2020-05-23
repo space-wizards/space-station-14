@@ -23,7 +23,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class DrinkComponent : Component, IAfterAttack, IUse
+    public class DrinkComponent : Component, IAfterInteract, IUse
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -100,11 +100,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return true;
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
-            UseDrink(eventArgs.Attacked);
+            UseDrink(eventArgs.Target);
         }
 
         private void UseDrink(IEntity targetEntity)

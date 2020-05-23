@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// (DrinkComponent adds a SolutionComponent if one isn't present).
     /// </summary>
     [RegisterComponent]
-    class PourableComponent : Component, IAttackBy
+    class PourableComponent : Component, IInteractUsing
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="eventArgs">Attack event args</param>
         /// <returns></returns>
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             //Get target and check if it can be poured into
             if (!Owner.TryGetComponent<SolutionComponent>(out var targetSolution))
@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
 
             //Get attack entity and check if it can pour out.
-            var attackEntity = eventArgs.AttackWith;
+            var attackEntity = eventArgs.Using;
             if (!attackEntity.TryGetComponent<SolutionComponent>(out var attackSolution) || !attackSolution.CanPourOut)
                 return false;
             if (!attackEntity.TryGetComponent<PourableComponent>(out var attackPourable))
