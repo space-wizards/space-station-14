@@ -1,6 +1,7 @@
 using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -21,6 +22,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     {
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
+        [Dependency] private IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
         public override string Name => "Welder";
@@ -82,17 +84,28 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             var canUse = base.UseTool(user, target, toolQualityNeeded);
 
-            return toolQualityNeeded.HasFlag(ToolQuality.Welding) ? canUse && TryWeld(DefaultFuelCost) : canUse;
+            return toolQualityNeeded.HasFlag(ToolQuality.Welding) ? canUse && TryWeld(DefaultFuelCost, user) : canUse;
         }
 
         public bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded, float fuelConsumed)
         {
-            return base.UseTool(user, target, toolQualityNeeded) && TryWeld(fuelConsumed);
+            return base.UseTool(user, target, toolQualityNeeded) && TryWeld(fuelConsumed, user);
         }
 
-        private bool TryWeld(float value)
+        private bool TryWeld(float value, IEntity user = null)
         {
-            if (!WelderLit || !CanWeld(value) || _solutionComponent == null)
+            if (!WelderLit)
+            {
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder is turned off!"));
+                return false;
+            }
+
+            if (!CanWeld(value))
+            {
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder does not have enough fuel for that!"));
+            }
+
+            if (_solutionComponent == null)
                 return false;
 
             return _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
@@ -111,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         /// Deactivates welding tool if active, activates welding tool if possible
         /// </summary>
-        private bool ToggleWelderStatus()
+        private bool ToggleWelderStatus(IEntity user = null)
         {
             if (WelderLit)
             {
@@ -123,7 +136,11 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return true;
             }
 
-            if (!CanLitWelder()) return false;
+            if (!CanLitWelder())
+            {
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder has no fuel left!"));
+                return false;
+            }
 
             WelderLit = true;
             _spriteComponent.LayerSetVisible(1, true);
@@ -134,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            return ToggleWelderStatus();
+            return ToggleWelderStatus(eventArgs.User);
         }
 
         public void Examine(FormattedMessage message)
