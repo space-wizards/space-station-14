@@ -18,6 +18,8 @@ namespace Content.Server.GameObjects.Components
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
+        private bool _shouldCollide = true;
+
         public override string Name => "ThrownItem";
 
         /// <summary>
@@ -25,32 +27,37 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         public IEntity User;
 
-        void ICollideBehavior.CollideWith(List<IEntity> collidedwith)
+        void ICollideBehavior.CollideWith(IEntity entity)
         {
-            foreach (var entity in collidedwith)
+            if (!_shouldCollide) return;
+            if (entity.TryGetComponent(out DamageableComponent damage))
             {
-                if (entity.TryGetComponent(out DamageableComponent damage))
-                {
-                    damage.TakeDamage(DamageType.Brute, 10, Owner, User);
-                }
+                damage.TakeDamage(DamageType.Brute, 10, Owner, User);
             }
-
             // Stop colliding with mobs, this mimics not having enough velocity to do damage
             // after impacting the first object.
             // For realism this should actually be changed when the velocity of the object is less than a threshold.
             // This would allow ricochets off walls, and weird gravity effects from slowing the object.
-            if (collidedwith.Count > 0 && Owner.TryGetComponent(out CollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            if (Owner.TryGetComponent(out CollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            {
+                _shouldCollide = false;
+            }
+        }
+
+        public void PostCollide(int collideCount)
+        {
+
+            if (collideCount > 0 && Owner.TryGetComponent(out CollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 body.PhysicsShapes[0].CollisionMask &= (int)~CollisionGroup.MobImpassable;
-                body.IsScrapingFloor = true;
 
                 // KYS, your job is finished. Trigger ILand as well.
+                var physics = Owner.GetComponent<PhysicsComponent>();
+                (physics.Controller as ThrowController).StopThrow();
+                physics.RemoveController();
                 Owner.RemoveComponent<ThrownItemComponent>();
                 _entitySystemManager.GetEntitySystem<InteractionSystem>().LandInteraction(User, Owner, Owner.Transform.GridPosition);
             }
-
-
-
         }
     }
 }

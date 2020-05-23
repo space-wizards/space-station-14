@@ -17,7 +17,7 @@
   id: SynthesizerInstrument
   components:
   - type: Instrument
-    program: 2
+    program: 62
   - type: Sprite
     sprite: Objects/Instruments/h_synthesizer.rsi
     state: icon

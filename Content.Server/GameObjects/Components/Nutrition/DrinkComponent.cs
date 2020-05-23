@@ -10,6 +10,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Maths;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -129,9 +130,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     // When we split Finish gets called which may delete the can so need to use the entity system for sound
                     if (_useSound != null)
                     {
-
                         var audioSystem = EntitySystem.Get<AudioSystem>();
-                        audioSystem.Play(_useSound);
+                        audioSystem.Play(_useSound, Owner, AudioParams.Default.WithVolume(-2f));
                         targetEntity.PopupMessage(targetEntity, _localizationManager.GetString("Slurp"));
                     }
                 }

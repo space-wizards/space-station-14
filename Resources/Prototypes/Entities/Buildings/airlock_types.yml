@@ -40,16 +40,6 @@
   - type: Icon
     sprite: Buildings/Doors/airlock_engineering_glass.rsi
 
-
-- type: entity
-  parent: airlock_engineering
-  id: airlock_engineering_locked
-  name: Locked Engineering Airlock
-  components:
-  - type: AccessReader
-    required: ["engineering"]
-
-
 - type: entity
   parent: Airlock
   id: airlock_medical
