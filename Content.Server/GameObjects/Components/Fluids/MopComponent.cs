@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             Solution solution;
-            if (eventArgs.Using == null)
+            if (eventArgs.Target == null)
             {
                 if (CurrentVolume <= 0)
                 {
@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            if (!eventArgs.Using.TryGetComponent(out PuddleComponent puddleComponent))
+            if (!eventArgs.Target.TryGetComponent(out PuddleComponent puddleComponent))
             {
                 return;
             }

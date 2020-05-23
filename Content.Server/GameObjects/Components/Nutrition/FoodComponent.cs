@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
-            UseFood(eventArgs.Using);
+            UseFood(eventArgs.Target);
         }
 
         void UseFood(IEntity user)

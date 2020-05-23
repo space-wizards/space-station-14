@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Items
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
-            var attacked = eventArgs.Using;
+            var attacked = eventArgs.Target;
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];

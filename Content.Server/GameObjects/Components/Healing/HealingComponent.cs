@@ -27,12 +27,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
-            if (eventArgs.Using == null)
+            if (eventArgs.Target == null)
             {
                 return;
             }
 
-            if (!eventArgs.Using.TryGetComponent(out DamageableComponent damagecomponent)) return;
+            if (!eventArgs.Target.TryGetComponent(out DamageableComponent damagecomponent)) return;
             if (Owner.TryGetComponent(out StackComponent stackComponent))
             {
                 if (!stackComponent.Use(1))

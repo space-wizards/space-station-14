@@ -39,15 +39,15 @@ namespace Content.Server.GameObjects.EntitySystems
         bool InteractUsing(InteractUsingEventArgs eventArgs);
     }
 
-    public class InteractUsingEventArgs : EventArgs, ITargetedAttackEventArgs
+    public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
         public IEntity Using { get; set; }
-        public IEntity Attacked { get; set; }
+        public IEntity Target { get; set; }
     }
 
-    public interface ITargetedAttackEventArgs
+    public interface ITargetedInteractEventArgs
     {
         /// <summary>
         /// Performer of the attack
@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         /// Target of the attack
         /// </summary>
-        IEntity Attacked { get; }
+        IEntity Target { get; }
 
     }
 
@@ -72,10 +72,10 @@ namespace Content.Server.GameObjects.EntitySystems
         bool InteractHand(InteractHandEventArgs eventArgs);
     }
 
-    public class InteractHandEventArgs : EventArgs, ITargetedAttackEventArgs
+    public class InteractHandEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public IEntity User { get; set; }
-        public IEntity Attacked { get; set; }
+        public IEntity Target { get; set; }
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
-        public IEntity Using { get; set; }
+        public IEntity Target { get; set; }
     }
 
     /// <summary>
@@ -147,10 +147,10 @@ namespace Content.Server.GameObjects.EntitySystems
         void Activate(ActivateEventArgs eventArgs);
     }
 
-    public class ActivateEventArgs : EventArgs, ITargetedAttackEventArgs
+    public class ActivateEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public IEntity User { get; set; }
-        public IEntity Attacked { get; set; }
+        public IEntity Target { get; set; }
     }
 
     /// <summary>
@@ -383,7 +383,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // all activates should only fire when in range / unbostructed
-            var activateEventArgs = new ActivateEventArgs {User = user, Attacked = used};
+            var activateEventArgs = new ActivateEventArgs {User = user, Target = used};
             if (InteractionChecks.InRangeUnobstructed(activateEventArgs))
             {
                 activateComp.Activate(activateEventArgs);
@@ -584,7 +584,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var attackBys = attacked.GetAllComponents<IInteractUsing>().ToList();
             var attackByEventArgs = new InteractUsingEventArgs
             {
-                User = user, ClickLocation = clickLocation, Using = weapon, Attacked = attacked
+                User = user, ClickLocation = clickLocation, Using = weapon, Target = attacked
             };
 
             // all AttackBys should only happen when in range / unobstructed, so no range check is needed
@@ -611,7 +611,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterAttackEventArgs = new AfterInteractEventArgs
             {
-                User = user, ClickLocation = clickLocation, Using = attacked
+                User = user, ClickLocation = clickLocation, Target = attacked
             };
 
             foreach (var afterAttack in afterAttacks)
@@ -634,7 +634,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             var attackHands = attacked.GetAllComponents<IInteractHand>().ToList();
-            var attackHandEventArgs = new InteractHandEventArgs {User = user, Attacked = attacked};
+            var attackHandEventArgs = new InteractHandEventArgs {User = user, Target = attacked};
 
             // all attackHands should only fire when in range / unbostructed
             if (InteractionChecks.InRangeUnobstructed(attackHandEventArgs))
@@ -915,7 +915,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterAttackEventArgs = new AfterInteractEventArgs
             {
-                User = user, ClickLocation = clickLocation, Using = attacked
+                User = user, ClickLocation = clickLocation, Target = attacked
             };
 
             //See if we have a ranged attack interaction

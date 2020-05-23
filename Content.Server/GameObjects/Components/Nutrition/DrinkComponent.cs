@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
-            UseDrink(eventArgs.Using);
+            UseDrink(eventArgs.Target);
         }
 
         private void UseDrink(IEntity targetEntity)

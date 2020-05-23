@@ -114,12 +114,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             //Make sure we have the attacking entity
-            if (eventArgs.Using == null || !_internalContents.Injector)
+            if (eventArgs.Target == null || !_internalContents.Injector)
             {
                 return;
             }
 
-            var targetEntity = eventArgs.Using;
+            var targetEntity = eventArgs.Target;
             //Handle injecting/drawing for solutions
             if (targetEntity.TryGetComponent<SolutionComponent>(out var targetSolution) && targetSolution.Injectable)
             {

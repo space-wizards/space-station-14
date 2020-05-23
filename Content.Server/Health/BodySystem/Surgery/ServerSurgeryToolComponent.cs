@@ -45,9 +45,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
-            if (eventArgs.Using == null)
+            if (eventArgs.Target == null)
                 return;
-            if (eventArgs.Using.TryGetComponent<BodySystem.BodyManagerComponent>(out BodySystem.BodyManagerComponent bodyManager))
+            if (eventArgs.Target.TryGetComponent<BodySystem.BodyManagerComponent>(out BodySystem.BodyManagerComponent bodyManager))
             {
                 _surgeryOptionsCache.Clear();
                 var toSend = new Dictionary<string, string>();
