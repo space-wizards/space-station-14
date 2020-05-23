@@ -2,11 +2,11 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
-using Content.Server.Players;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
 
-                        if (!mapMan.GridExists(spawnPosition.GridID))
+                        if (spawnPosition.GridID == GridId.Invalid || !mapMan.GridExists(spawnPosition.GridID))
                         {
                             spawnPosition = IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
                         }

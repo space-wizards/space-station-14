@@ -133,11 +133,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
             if (!removed)
             {
-                mindComp.Mind.Visit(Owner);
+                mindComp.Mind?.Visit(Owner);
             }
             else
             {
-                mindComp.Mind.UnVisit();
+                mindComp.Mind?.UnVisit();
             }
         }
     }
