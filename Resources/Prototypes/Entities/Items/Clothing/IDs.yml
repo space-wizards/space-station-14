@@ -193,6 +193,23 @@
 
 - type: entity
   parent: IDCardStandard
+  id: ChefIDCard
+  name: Chef ID Card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idcook
+  - type: Icon
+    state: idcook
+  - type: IdCard
+    jobTitle: Chef
+  - type: Access
+    tags: ["maintenance", "service"]
+
+- type: entity
+  parent: IDCardStandard
   id: HoPIDCard
   name: Head of Personnel ID Card
   components:
