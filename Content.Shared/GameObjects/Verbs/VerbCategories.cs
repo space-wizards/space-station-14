@@ -1,9 +1,10 @@
 namespace Content.Shared.GameObjects
 {
+    /// <summary>
+    ///     Standard verb categories.
+    /// </summary>
     public static class VerbCategories
     {
-        public static readonly VerbCategoryData None = ("", null);
-
         public static readonly VerbCategoryData Debug =
             ("Debug", "/Textures/UserInterface/VerbIcons/debug.svg.96dpi.png");
 

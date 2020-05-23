@@ -23,6 +23,9 @@ namespace Content.Shared.GameObjects
         /// <summary>
         ///     Gets the visible verb data for the user.
         /// </summary>
+        /// <remarks>
+        ///     Implementations should write into <paramref name="data"/> to return their data.
+        /// </remarks>
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="target">The entity this verb is being evaluated for.</param>
         /// <param name="data">The data that must be filled in.</param>

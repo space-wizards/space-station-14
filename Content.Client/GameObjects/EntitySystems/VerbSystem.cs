@@ -20,6 +20,7 @@ using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
@@ -151,7 +152,7 @@ namespace Content.Client.GameObjects.EntitySystems
             DebugTools.AssertNotNull(_currentVerbListRoot);
 
             var buttons = new Dictionary<string, List<ListedVerbData>>();
-            var groupIcons = new Dictionary<string, string>();
+            var groupIcons = new Dictionary<string, SpriteSpecifier>();
 
             var vBox = _currentVerbListRoot.List;
             vBox.DisposeAllChildren();
@@ -162,6 +163,11 @@ namespace Content.Client.GameObjects.EntitySystems
             foreach (var data in msg.Verbs)
             {
                 var list = buttons.GetOrNew(data.Category);
+
+                if (data.CategoryIcon != null && !groupIcons.ContainsKey(data.Category))
+                {
+                    groupIcons.Add(data.Category, data.CategoryIcon);
+                }
 
                 list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString(), () =>
                 {
@@ -279,7 +285,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             if (data.Icon != null)
             {
-                button.Icon = _resourceCache.GetTexture(data.Icon);
+                button.Icon = data.Icon.Frame0();
             }
 
             if (!data.Disabled)
@@ -301,11 +307,11 @@ namespace Content.Client.GameObjects.EntitySystems
             return button;
         }
 
-        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, string value)
+        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, SpriteSpecifier icon)
         {
             verbButtons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.CurrentCulture));
 
-            return new VerbGroupButton(this, verbButtons, value)
+            return new VerbGroupButton(this, verbButtons, icon)
             {
                 Text = text,
             };
@@ -513,7 +519,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 set => _icon.Texture = value;
             }
 
-            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, string icon)
+            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, SpriteSpecifier icon)
             {
                 _system = system;
                 VerbButtons = verbButtons;
@@ -549,7 +555,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
                 if (icon != null)
                 {
-                    _icon.Texture = IoCManager.Resolve<IResourceCache>().GetTexture(icon);
+                    _icon.Texture = icon.Frame0();
                 }
             }
 
@@ -615,11 +621,11 @@ namespace Content.Client.GameObjects.EntitySystems
             public bool Disabled { get; }
             public string VerbName { get; }
             public string OwnerName { get; }
-            public string Icon { get; }
+            public SpriteSpecifier Icon { get; }
             public Action Action { get; }
 
             public ListedVerbData(string text, bool disabled, string verbName, string ownerName,
-                Action action, string icon)
+                Action action, SpriteSpecifier icon)
             {
                 Text = text;
                 Disabled = disabled;

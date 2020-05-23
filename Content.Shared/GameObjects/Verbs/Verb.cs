@@ -26,6 +26,9 @@ namespace Content.Shared.GameObjects
         /// <summary>
         ///     Gets the visible verb data for the user.
         /// </summary>
+        /// <remarks>
+        ///     Implementations should write into <paramref name="data"/> to return their data.
+        /// </remarks>
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="component">The component instance for which this verb is being loaded.</param>
         /// <param name="data">The data that must be filled into.</param>
@@ -57,6 +60,9 @@ namespace Content.Shared.GameObjects
         /// <summary>
         ///     Gets the visible verb data for the user.
         /// </summary>
+        /// <remarks>
+        ///     Implementations should write into <paramref name="data"/> to return their data.
+        /// </remarks>
         /// <param name="user">The entity of the user opening this menu.</param>
         /// <param name="component">The component instance for which this verb is being loaded.</param>
         /// <param name="data">The data that must be filled into.</param>
