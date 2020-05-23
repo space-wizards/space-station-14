@@ -43,7 +43,14 @@ namespace Content.Client
 
         private void DoNotifyMessage(MsgDoNotify message)
         {
-            PopupMessage(_eyeManager.WorldToScreen(message.Coordinates), message.Message);
+            if (message.AtCursor)
+            {
+                PopupMessage(message.Message);
+            }
+            else
+            {
+                PopupMessage(_eyeManager.WorldToScreen(message.Coordinates), message.Message);
+            }
         }
 
         public override void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message)
@@ -54,6 +61,16 @@ namespace Content.Client
             }
 
             PopupMessage(_eyeManager.WorldToScreen(coordinates), message);
+        }
+
+        public override void PopupMessageCursor(IEntity viewer, string message)
+        {
+            if (viewer != _playerManager.LocalPlayer.ControlledEntity)
+            {
+                return;
+            }
+
+            PopupMessage(message);
         }
 
         public void PopupMessage(ScreenCoordinates coordinates, string message)
