@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
@@ -156,6 +156,11 @@ namespace Content.Server.GameObjects
             {
                 pass = controller.CanEquip(slot, item.Owner, pass, out var controllerReason);
                 reason = controllerReason ?? reason;
+            }
+
+            if (!pass && reason == null)
+            {
+                reason = Loc.GetString("You can't equip this!");
             }
 
             return pass && SlotContainers[slot].CanInsert(item.Owner);

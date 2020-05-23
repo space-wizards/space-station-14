@@ -34,7 +34,9 @@ namespace Content.Server.GameObjects
                 // Can't wear stuff in ID card or pockets unless you have a uniform.
                 if (_inventory.GetSlotItem(Slots.INNERCLOTHING) == null)
                 {
-                    reason = Loc.GetString("You need a uniform to store something in your pockets!");
+                    reason = Loc.GetString(slotMask == SlotFlags.IDCARD
+                        ? "You need a uniform to store something in your ID slot!"
+                        : "You need a uniform to store something in your pockets!");
                     return false;
                 }
 
