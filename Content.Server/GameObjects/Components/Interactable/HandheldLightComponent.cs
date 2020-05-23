@@ -250,14 +250,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         [Verb]
         public sealed class EjectCellVerb : Verb<HandheldLightComponent>
         {
-            protected override string GetText(IEntity user, HandheldLightComponent component)
+            protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
             {
-                return component.Cell == null ? "Eject cell (cell missing)" : "Eject cell";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, HandheldLightComponent component)
-            {
-                return component.Cell == null ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                if (component.Cell == null)
+                {
+                    data.Text = "Eject cell (cell missing)";
+                    data.Visibility = VerbVisibility.Disabled;
+                }
+                else
+                {
+                    data.Text = "Eject cell";
+                }
             }
 
             protected override void Activate(IEntity user, HandheldLightComponent component)

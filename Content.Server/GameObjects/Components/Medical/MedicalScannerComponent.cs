@@ -128,14 +128,10 @@ namespace Content.Server.GameObjects.Components.Medical
         [Verb]
         public sealed class EnterVerb : Verb<MedicalScannerComponent>
         {
-            protected override string GetText(IEntity user, MedicalScannerComponent component)
+            protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
-                return "Enter";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, MedicalScannerComponent component)
-            {
-                return component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                data.Text = "Enter";
+                data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, MedicalScannerComponent component)
@@ -147,14 +143,10 @@ namespace Content.Server.GameObjects.Components.Medical
         [Verb]
         public sealed class EjectVerb : Verb<MedicalScannerComponent>
         {
-            protected override string GetText(IEntity user, MedicalScannerComponent component)
+            protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
-                return "Eject";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, MedicalScannerComponent component)
-            {
-                return component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
+                data.Text = "Eject";
+                data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 
             protected override void Activate(IEntity user, MedicalScannerComponent component)
