@@ -31,6 +31,18 @@ namespace Content.Shared.GameObjects.Components.Storage
     }
 
     /// <summary>
+    /// Component message for adding an entity to the storage entity.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class InsertEntityMessage : ComponentMessage
+    {
+        public InsertEntityMessage()
+        {
+            Directed = true;
+        }
+    }
+
+    /// <summary>
     /// Component message for removing a contained entity from the storage entity
     /// </summary>
     [Serializable, NetSerializable]

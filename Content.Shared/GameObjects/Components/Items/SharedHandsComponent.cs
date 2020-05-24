@@ -9,7 +9,6 @@ namespace Content.Shared.GameObjects
     {
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
-        public sealed override Type StateType => typeof(HandsComponentState);
     }
 
     // The IDs of the items get synced over the network.
@@ -27,14 +26,29 @@ namespace Content.Shared.GameObjects
     }
 
     /// <summary>
-    /// A message that activates the inhand, presumed for now the activation will occur only on the active hand
+    /// A message that calls the use interaction on an item in hand, presumed for now the interaction will occur only on the active hand.
     /// </summary>
     [Serializable, NetSerializable]
-    public class ActivateInhandMsg : ComponentMessage
+    public class UseInHandMsg : ComponentMessage
     {
-        public ActivateInhandMsg()
+        public UseInHandMsg()
         {
             Directed = true;
+        }
+    }
+
+    /// <summary>
+    /// A message that calls the activate interaction on the item in Index.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class ActivateInHandMsg : ComponentMessage
+    {
+        public string Index { get; }
+
+        public ActivateInHandMsg(string index)
+        {
+            Directed = true;
+            Index = index;
         }
     }
 

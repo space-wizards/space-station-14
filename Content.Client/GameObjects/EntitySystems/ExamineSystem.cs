@@ -46,13 +46,6 @@ namespace Content.Client.GameObjects.EntitySystems
             inputSys.BindMap.BindFunction(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine));
         }
 
-        public override void RegisterMessageTypes()
-        {
-            base.RegisterMessageTypes();
-
-            RegisterMessageType<ExamineSystemMessages.ExamineInfoResponseMessage>();
-        }
-
         private bool HandleExamine(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             if (!uid.IsValid() || !_entityManager.TryGetEntity(uid, out var examined))
@@ -73,23 +66,22 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public async void DoExamine(IEntity entity)
         {
+            const float minWidth = 300;
             CloseTooltip();
 
             var popupPos = _inputManager.MouseScreenPosition;
 
-
-
             // Actually open the tooltip.
             _examineTooltipOpen = new Popup();
-            _userInterfaceManager.StateRoot.AddChild(_examineTooltipOpen);
+            _userInterfaceManager.ModalRoot.AddChild(_examineTooltipOpen);
             var panel = new PanelContainer();
             panel.AddStyleClass(StyleClassEntityTooltip);
             panel.ModulateSelfOverride = Color.LightGray.WithAlpha(0.90f);
             _examineTooltipOpen.AddChild(panel);
-            panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
+            //panel.SetAnchorAndMarginPreset(Control.LayoutPreset.Wide);
             var vBox = new VBoxContainer();
             panel.AddChild(vBox);
-            var hBox = new HBoxContainer { SeparationOverride = 5};
+            var hBox = new HBoxContainer {SeparationOverride = 5};
             vBox.AddChild(hBox);
             if (entity.TryGetComponent(out ISpriteComponent sprite))
             {
@@ -102,10 +94,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 SizeFlagsHorizontal = Control.SizeFlags.FillExpand,
             });
 
-            const float minWidth = 300;
             var size = Vector2.ComponentMax((minWidth, 0), panel.CombinedMinimumSize);
-
-            popupPos += Vector2.ComponentMin(Vector2.Zero, _userInterfaceManager.StateRoot.Size - (size + popupPos));
 
             _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos, size));
 
@@ -122,7 +111,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 _requestCancelTokenSource = new CancellationTokenSource();
                 response =
-                    await AwaitNetMessage<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
+                    await AwaitNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
                         .Token);
             }
             catch (TaskCanceledException)
@@ -144,8 +133,6 @@ namespace Content.Client.GameObjects.EntitySystems
                     break;
                 }
             }
-
-            _examineTooltipOpen.Position += Vector2.ComponentMin(Vector2.Zero,_userInterfaceManager.StateRoot.Size - (panel.Size + _examineTooltipOpen.Position));
         }
 
         public void CloseTooltip()

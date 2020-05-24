@@ -1,13 +1,9 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,6 +11,7 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
@@ -92,34 +89,35 @@ namespace Content.Server.GameObjects
         ///     This will fail if there is already an item in the specified slot.
         /// </remarks>
         /// <param name="slot">The slot to put the item in.</param>
-        /// <param name="clothing">The item to insert into the slot.</param>
+        /// <param name="item">The item to insert into the slot.</param>
         /// <returns>True if the item was successfully inserted, false otherwise.</returns>
-        public bool Equip(Slots slot, ClothingComponent clothing)
+        public bool Equip(Slots slot, ItemComponent item)
         {
-            if (clothing == null)
+            if (item == null)
             {
-                throw new ArgumentNullException(nameof(clothing),
+                throw new ArgumentNullException(nameof(item),
                     "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
             }
 
-            if (clothing.SlotFlags == SlotFlags.PREVENTEQUIP //Flag to prevent equipping at all
-                || (clothing.SlotFlags & SlotMasks[slot]) == 0
-            ) //Does the clothing flag have any of our requested slot flags
+            if (!CanEquip(slot, item))
             {
                 return false;
             }
 
             var inventorySlot = SlotContainers[slot];
-            if (!inventorySlot.Insert(clothing.Owner))
+            if (!inventorySlot.Insert(item.Owner))
             {
                 return false;
             }
 
-            clothing.EquippedToSlot();
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
 
             Dirty();
             return true;
         }
+
+        public bool Equip(Slots slot, IEntity entity) => Equip(slot, entity.GetComponent<ItemComponent>());
+
 
         /// <summary>
         ///     Checks whether an item can be put in the specified slot.
@@ -127,10 +125,27 @@ namespace Content.Server.GameObjects
         /// <param name="slot">The slot to check for.</param>
         /// <param name="item">The item to check for.</param>
         /// <returns>True if the item can be inserted into the specified slot.</returns>
-        public bool CanEquip(Slots slot, ClothingComponent item)
+        public bool CanEquip(Slots slot, ItemComponent item)
         {
-            return SlotContainers[slot].CanInsert(item.Owner);
+            var pass = false;
+
+            if (item is ClothingComponent clothing)
+            {
+                if (clothing.SlotFlags != SlotFlags.PREVENTEQUIP && (clothing.SlotFlags & SlotMasks[slot]) != 0)
+                {
+                    pass = true;
+                }
+            }
+
+            if (Owner.TryGetComponent(out IInventoryController controller))
+            {
+                pass = controller.CanEquip(slot, item.Owner, pass);
+            }
+
+            return pass && SlotContainers[slot].CanInsert(item.Owner);
         }
+
+        public bool CanEquip(Slots slot, IEntity entity) => CanEquip(slot, entity.GetComponent<ItemComponent>());
 
         /// <summary>
         ///     Drops the item in a slot.
@@ -151,11 +166,12 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            item.RemovedFromSlot();
-
             // TODO: The item should be dropped to the container our owner is in, if any.
             var itemTransform = item.Owner.GetComponent<ITransformComponent>();
             itemTransform.GridPosition = Owner.GetComponent<ITransformComponent>().GridPosition;
+
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
+
             Dirty();
             return true;
         }
@@ -256,7 +272,7 @@ namespace Content.Server.GameObjects
                 {
                     var hands = Owner.GetComponent<HandsComponent>();
                     var activeHand = hands.GetActiveHand;
-                    if (activeHand != null && activeHand.Owner.TryGetComponent(out ClothingComponent clothing))
+                    if (activeHand != null && activeHand.Owner.TryGetComponent(out ItemComponent clothing))
                     {
                         hands.Drop(hands.ActiveIndex);
                         if (!Equip(msg.Inventoryslot, clothing))
@@ -290,16 +306,35 @@ namespace Content.Server.GameObjects
         }
 
         /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case ContainerContentsModifiedMessage msg:
+                    if (msg.Removed)
+                        ForceUnequip(msg.Container, msg.Entity);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        /// <inheritdoc />
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        {
+            base.HandleNetworkMessage(message, netChannel, session);
+
+            if (session == null)
+            {
+                throw new ArgumentNullException(nameof(session));
+            }
 
             switch (message)
             {
                 case ClientInventoryMessage msg:
-                    var playerMan = IoCManager.Resolve<IPlayerManager>();
-                    var session = playerMan.GetSessionByChannel(netChannel);
                     var playerentity = session.AttachedEntity;
 
                     if (playerentity == Owner)
@@ -312,11 +347,6 @@ namespace Content.Server.GameObjects
                     var item = GetSlotItem(msg.Slot);
                     if (item != null && item.Owner.TryGetComponent(out ServerStorageComponent storage))
                         storage.OpenStorageUI(Owner);
-                    break;
-
-                case ContainerContentsModifiedMessage msg:
-                    if (msg.Removed)
-                        ForceUnequip(msg.Container, msg.Entity);
                     break;
             }
         }

@@ -1,28 +1,15 @@
 ﻿using Content.Server.Explosions;
 using Content.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Explosive
+namespace Content.Server.GameObjects.Components.Explosion
 {
     [RegisterComponent]
     public class ExplosiveComponent : Component, ITimerTrigger, IDestroyAct
     {
-#pragma warning disable 649
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IServerEntityManager _serverEntityManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IRobustRandom _robustRandom;
-#pragma warning restore 649
-
         public override string Name => "Explosive";
-        
+
         public int DevastationRange = 0;
         public int HeavyImpactRange = 0;
         public int LightImpactRange = 0;

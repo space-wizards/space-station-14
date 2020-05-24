@@ -41,10 +41,10 @@ namespace Content.Client.Construction
         private List<CategoryNode> FlattenedCategories;
         private readonly PlacementManager Placement;
 
+        protected override Vector2? CustomSize => (500, 350);
+
         public ConstructionMenu()
         {
-            Size = (500, 350);
-
             IoCManager.InjectDependencies(this);
             Placement = (PlacementManager) IoCManager.Resolve<IPlacementManager>();
             Placement.PlacementCanceled += OnPlacementCanceled;
@@ -91,14 +91,14 @@ namespace Content.Client.Construction
             BuildButton = new Button
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 Text = "Build!",
                 Disabled = true,
                 ToggleMode = false
             };
             EraseButton = new Button
             {
-                TextAlign = Button.AlignMode.Center, Text = "Clear Ghosts", ToggleMode = true
+                TextAlign = Label.AlignMode.Center, Text = "Clear Ghosts", ToggleMode = true
             };
             buttonsContainer.AddChild(BuildButton);
             buttonsContainer.AddChild(EraseButton);

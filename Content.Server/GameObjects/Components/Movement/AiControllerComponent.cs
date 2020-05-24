@@ -57,16 +57,47 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
         /// <summary>
-        ///     Movement speed (m/s) that the entity walks.
+        ///     Movement speed (m/s) that the entity walks, after modifiers
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float WalkMoveSpeed { get; set; } = 4.0f;
+        [ViewVariables]
+        public float CurrentWalkSpeed
+        {
+            get
+            {
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                {
+                    return component.CurrentWalkSpeed;
+                }
+
+                return MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            }
+        }
 
         /// <summary>
-        ///     Movement speed (m/s) that the entity sprints.
+        ///     Movement speed (m/s) that the entity walks, after modifiers
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float SprintMoveSpeed { get; set; } = 10.0f;
+        [ViewVariables]
+        public float CurrentSprintSpeed
+        {
+            get
+            {
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                {
+                    return component.CurrentSprintSpeed;
+                }
+
+                return MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+            }
+        }
+
+        /// <inheritdoc />
+        [ViewVariables]
+        public float CurrentPushSpeed => 5.0f;
+
+        /// <inheritdoc />
+        [ViewVariables]
+        public float GrabRange => 0.2f;
+
 
         /// <summary>
         ///     Is the entity Sprinting (running)?
@@ -84,5 +115,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float StepSoundDistance { get; set; }
+
+        public void SetVelocityDirection(Direction direction, bool enabled) { }
     }
 }

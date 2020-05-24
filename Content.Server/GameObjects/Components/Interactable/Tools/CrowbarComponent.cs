@@ -43,8 +43,7 @@ namespace Content.Server.GameObjects.Components.Interactable.Tools
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(underplating.TileId));
                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/crowbar.ogg", Owner);
                 //Actually spawn the relevant tile item at the right position and give it some offset to the corner.
-                var tileItem = Owner.EntityManager.SpawnEntity(tileDef.ItemDropPrototypeName);
-                tileItem.Transform.GridPosition = coordinates;
+                var tileItem = Owner.EntityManager.SpawnEntity(tileDef.ItemDropPrototypeName, coordinates);
                 tileItem.Transform.WorldPosition += (0.2f, 0.2f);
             }
         }

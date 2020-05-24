@@ -38,10 +38,6 @@ namespace Content.Client.UserInterface.Cargo
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                MarginTop = 5f,
-                MarginLeft = 5f,
-                MarginRight = -5f,
-                MarginBottom = -5f,
             };
 
             margin.AddChild(_accounts);

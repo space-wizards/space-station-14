@@ -8,15 +8,16 @@ namespace Content.Server.Mobs.Roles
 {
     public class Job : Role
     {
-        private readonly JobPrototype _jobPrototype;
+        public JobPrototype Prototype { get; }
 
         public override string Name { get; }
+        public override bool Antag => false;
 
-        public String StartingGear => _jobPrototype.StartingGear;
+        public string StartingGear => Prototype.StartingGear;
 
         public Job(Mind mind, JobPrototype jobPrototype) : base(mind)
         {
-            _jobPrototype = jobPrototype;
+            Prototype = jobPrototype;
             Name = jobPrototype.Name;
         }
 
@@ -25,9 +26,7 @@ namespace Content.Server.Mobs.Roles
             base.Greet();
 
             var chat = IoCManager.Resolve<IChatManager>();
-            chat.DispatchServerMessage(
-                Mind.Session,
-                String.Format("You're a new {0}. Do your best!", Name));
+            chat.DispatchServerMessage(Mind.Session, $"You're a new {Name}. Do your best!");
         }
     }
 

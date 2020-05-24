@@ -13,7 +13,6 @@ namespace Content.Shared.GameObjects.Components.Research
     {
         public override string Name => "TechnologyDatabase";
         public override uint? NetID => ContentNetIDs.TECHNOLOGY_DATABASE;
-        public override Type StateType => typeof(TechnologyDatabaseState);
 
         protected List<TechnologyPrototype> _technologies = new List<TechnologyPrototype>();
 

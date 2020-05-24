@@ -1,7 +1,7 @@
-﻿using System;
-using Content.Shared.Interfaces.Chemistry;
+﻿using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry
@@ -10,18 +10,17 @@ namespace Content.Shared.Chemistry
     class DefaultMetabolizable : IMetabolizable
     {
         //Rate of metabolism in units / second
-        private int _metabolismRate = 1;
-        public int MetabolismRate => _metabolismRate;
+        private decimal _metabolismRate = 1;
+        public decimal MetabolismRate => _metabolismRate;
 
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _metabolismRate, "rate", 1);
         }
 
-        int IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
+        ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            int metabolismAmount = (int)Math.Round(MetabolismRate * tickTime);
-            return metabolismAmount;
+            return ReagentUnit.New(MetabolismRate * (decimal)tickTime);
         }
     }
 }

@@ -6,6 +6,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 
@@ -14,7 +15,7 @@ namespace Content.Client.GameObjects.Components.Sound
     [RegisterComponent]
     public class SoundComponent : SharedSoundComponent
     {
-        private readonly List<ScheduledSound> _schedules = new List<ScheduledSound>();
+        private readonly Dictionary<ScheduledSound, IPlayingAudioStream> _audioStreams = new Dictionary<ScheduledSound, IPlayingAudioStream>();
         private AudioSystem _audioSystem;
         #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
@@ -22,26 +23,27 @@ namespace Content.Client.GameObjects.Components.Sound
 
         public override void StopAllSounds()
         {
-            foreach (var schedule in _schedules)
+            foreach (var kvp in _audioStreams)
             {
-                schedule.Play = false;
+                kvp.Key.Play = false;
+                kvp.Value.Stop();
             }
-            _schedules.Clear();
+            _audioStreams.Clear();
         }
 
         public override void StopScheduledSound(string filename)
         {
-            foreach (var schedule in _schedules.ToArray())
+            foreach (var kvp in _audioStreams)
             {
-                if (schedule.Filename != filename) continue;
-                schedule.Play = false;
-                _schedules.Remove(schedule);
+                if (kvp.Key.Filename != filename) continue;
+                kvp.Key.Play = false;
+                kvp.Value.Stop();
+                _audioStreams.Remove(kvp.Key);
             }
         }
 
         public override void AddScheduledSound(ScheduledSound schedule)
         {
-            _schedules.Add(schedule);
             Play(schedule);
         }
 
@@ -53,24 +55,19 @@ namespace Content.Client.GameObjects.Components.Sound
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
                     if (_audioSystem == null) _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    _audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams);
+                    _audioStreams.Add(schedule,_audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams));
 
-                    if (schedule.Times == 0)
-                    {
-                        _schedules.Remove(schedule);
-                        return;
-                    }
+                    if (schedule.Times == 0) return;
 
-                    if (schedule.Times > 0)
-                        schedule.Times--;
+                    if (schedule.Times > 0) schedule.Times--;
 
                     Play(schedule);
                 });
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, channel, session);
             switch (message)
             {
                 case ScheduledSoundMessage msg:

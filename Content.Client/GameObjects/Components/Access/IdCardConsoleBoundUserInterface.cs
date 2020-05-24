@@ -3,6 +3,7 @@ using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Access.SharedIdCardConsoleComponent;
 
 namespace Content.Client.GameObjects.Components.Access
@@ -11,6 +12,7 @@ namespace Content.Client.GameObjects.Components.Access
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
         public IdCardConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -22,7 +24,7 @@ namespace Content.Client.GameObjects.Components.Access
         {
             base.Open();
 
-            _window = new IdCardConsoleWindow(this, _localizationManager);
+            _window = new IdCardConsoleWindow(this, _localizationManager, _prototypeManager);
             _window.Title = Owner.Owner.Name;
             _window.OnClose += Close;
             _window.OpenCentered();

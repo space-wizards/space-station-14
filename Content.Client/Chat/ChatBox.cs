@@ -17,29 +17,15 @@ namespace Content.Client.Chat
 
         public delegate void FilterToggledHandler(ChatBox chatBox, BaseButton.ButtonToggledEventArgs e);
 
-        private const int MaxLinePixelLength = 500;
+        private readonly ILocalizationManager _localize = IoCManager.Resolve<ILocalizationManager>();
 
-        private readonly IList<string> _inputHistory = new List<string>();
-
-        private readonly ILocalizationManager localize = IoCManager.Resolve<ILocalizationManager>();
-
-        public LineEdit Input { get; private set; }
+        public HistoryLineEdit Input { get; private set; }
         public OutputPanel Contents { get; }
 
         // Buttons for filtering
         public Button AllButton { get; }
         public Button LocalButton { get; }
         public Button OOCButton { get; }
-
-        /// <summary>
-        ///     Index while cycling through the input history. -1 means not going through history.
-        /// </summary>
-        private int _inputIndex = -1;
-
-        /// <summary>
-        ///     Message that WAS being input before going through history began.
-        /// </summary>
-        private string _inputTemp;
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -50,13 +36,14 @@ namespace Content.Client.Chat
 
         public ChatBox()
         {
-                        MarginLeft = -475.0f;
+            /*MarginLeft = -475.0f;
             MarginTop = 10.0f;
             MarginRight = -10.0f;
             MarginBottom = 235.0f;
 
             AnchorLeft = 1.0f;
-            AnchorRight = 1.0f;
+            AnchorRight = 1.0f;*/
+            MouseFilter = MouseFilterMode.Stop;
 
             var outerVBox = new VBoxContainer();
 
@@ -81,14 +68,14 @@ namespace Content.Client.Chat
             contentMargin.AddChild(Contents);
             vBox.AddChild(contentMargin);
 
-            Input = new LineEdit();
+            Input = new HistoryLineEdit();
             Input.OnKeyBindDown += InputKeyBindDown;
             Input.OnTextEntered += Input_OnTextEntered;
             vBox.AddChild(Input);
 
             AllButton = new Button
             {
-                Text = localize.GetString("All"),
+                Text = _localize.GetString("All"),
                 Name = "ALL",
                 SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand,
                 ToggleMode = true,
@@ -96,14 +83,14 @@ namespace Content.Client.Chat
 
             LocalButton = new Button
             {
-                Text = localize.GetString("Local"),
+                Text = _localize.GetString("Local"),
                 Name = "Local",
                 ToggleMode = true,
             };
 
             OOCButton = new Button
             {
-                Text = localize.GetString("OOC"),
+                Text = _localize.GetString("OOC"),
                 Name = "OOC",
                 ToggleMode = true,
             };
@@ -139,44 +126,6 @@ namespace Content.Client.Chat
                 args.Handle();
                 return;
             }
-            else if (args.Function == EngineKeyFunctions.TextHistoryPrev)
-            {
-                if (_inputIndex == -1 && _inputHistory.Count != 0)
-                {
-                    _inputTemp = Input.Text;
-                    _inputIndex++;
-                }
-                else if (_inputIndex + 1 < _inputHistory.Count)
-                {
-                    _inputIndex++;
-                }
-
-                if (_inputIndex != -1)
-                {
-                    Input.Text = _inputHistory[_inputIndex];
-                }
-                Input.CursorPos = Input.Text.Length;
-
-                args.Handle();
-                return;
-            }
-            else if (args.Function == EngineKeyFunctions.TextHistoryNext)
-            {
-                if (_inputIndex == 0)
-                {
-                    Input.Text = _inputTemp;
-                    _inputTemp = "";
-                    _inputIndex--;
-                }
-                else if (_inputIndex != -1)
-                {
-                    _inputIndex--;
-                    Input.Text = _inputHistory[_inputIndex];
-                }
-                Input.CursorPos = Input.Text.Length;
-
-                args.Handle();
-            }
         }
 
         public event TextSubmitHandler TextSubmitted;
@@ -202,10 +151,7 @@ namespace Content.Client.Chat
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
                 TextSubmitted?.Invoke(this, args.Text);
-                _inputHistory.Insert(0, args.Text);
             }
-
-            _inputIndex = -1;
 
             Input.Clear();
 

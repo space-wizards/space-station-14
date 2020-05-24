@@ -1,20 +1,15 @@
 ﻿using Content.Client.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
-using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
-using Content.Client.Utility;
+using Content.Client.UserInterface.Stylesheets;
 
 namespace Content.Client.UserInterface.Cargo
 {
@@ -22,7 +17,6 @@ namespace Content.Client.UserInterface.Cargo
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IResourceCache _resourceCache;
 #pragma warning restore 649
 
         protected override Vector2? CustomSize => (400, 600);
@@ -59,18 +53,12 @@ namespace Content.Client.UserInterface.Cargo
             else
                 Title = _loc.GetString("Cargo Shuttle Console");
 
-            var rows = new VBoxContainer
-            {
-                MarginTop = 0
-            };
+            var rows = new VBoxContainer();
 
-            var accountName = new HBoxContainer()
-            {
-                MarginTop = 0
-            };
+            var accountName = new HBoxContainer();
             var accountNameLabel = new Label {
                 Text = _loc.GetString("Account Name: "),
-                StyleClasses = { NanoStyle.StyleClassLabelKeyText }
+                StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _accountNameLabel = new Label {
                 Text = "None" //Owner.Bank.Account.Name
@@ -83,7 +71,7 @@ namespace Content.Client.UserInterface.Cargo
             var pointsLabel = new Label
             {
                 Text = _loc.GetString("Points: "),
-                StyleClasses = { NanoStyle.StyleClassLabelKeyText }
+                StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _pointsLabel = new Label
             {
@@ -97,7 +85,7 @@ namespace Content.Client.UserInterface.Cargo
             var shuttleStatusLabel = new Label
             {
                 Text = _loc.GetString("Shuttle Status: "),
-                StyleClasses = { NanoStyle.StyleClassLabelKeyText }
+                StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _shuttleStatusLabel = new Label
             {
@@ -111,13 +99,13 @@ namespace Content.Client.UserInterface.Cargo
             CallShuttleButton = new Button()
             {
                 Text = _loc.GetString("Call Shuttle"),
-                TextAlign = Button.AlignMode.Center,
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand
             };
             PermissionsButton = new Button()
             {
                 Text = _loc.GetString("Permissions"),
-                TextAlign = Button.AlignMode.Center
+                TextAlign = Label.AlignMode.Center
             };
             buttons.AddChild(CallShuttleButton);
             buttons.AddChild(PermissionsButton);
@@ -286,7 +274,7 @@ namespace Content.Client.UserInterface.Cargo
             _orders.RemoveAllChildren();
             _requests.RemoveAllChildren();
 
-            foreach (var order in Owner.Orders.Orders) 
+            foreach (var order in Owner.Orders.Orders)
             {
                 var row = new CargoOrderRow();
                 row.Order = order;
@@ -358,14 +346,12 @@ namespace Content.Client.UserInterface.Cargo
 
             var hBox = new HBoxContainer
             {
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
-                MouseFilter = MouseFilterMode.Ignore
+                SizeFlagsHorizontal = SizeFlags.FillExpand
             };
 
             Icon = new TextureRect
             {
                 CustomMinimumSize = new Vector2(32.0f, 32.0f),
-                MouseFilter = MouseFilterMode.Ignore,
                 RectClipContent = true
             };
             hBox.AddChild(Icon);
@@ -379,7 +365,6 @@ namespace Content.Client.UserInterface.Cargo
             var panel = new PanelContainer
             {
                 PanelOverride = new StyleBoxFlat { BackgroundColor = new Color(37, 37, 42) },
-                MouseFilter = MouseFilterMode.Ignore
             };
             PointCost = new Label
             {
@@ -395,10 +380,6 @@ namespace Content.Client.UserInterface.Cargo
 
     internal class CargoOrderRow : PanelContainer
     {
-#pragma warning disable 649
-        [Dependency] readonly IResourceCache _resourceCache;
-#pragma warning restore 649
-
         public CargoOrderData Order { get; set; }
         public TextureRect Icon { get; private set; }
         public Label ProductName { get; private set; }
@@ -413,13 +394,11 @@ namespace Content.Client.UserInterface.Cargo
             var hBox = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                MouseFilter = MouseFilterMode.Ignore
             };
 
             Icon = new TextureRect
             {
                 CustomMinimumSize = new Vector2(32.0f, 32.0f),
-                MouseFilter = MouseFilterMode.Ignore,
                 RectClipContent = true
             };
             hBox.AddChild(Icon);
@@ -432,13 +411,13 @@ namespace Content.Client.UserInterface.Cargo
             ProductName = new Label
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                StyleClasses = { NanoStyle.StyleClassLabelSubText },
+                StyleClasses = { StyleNano.StyleClassLabelSubText },
                 ClipText = true
             };
             Description = new Label
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                StyleClasses = { NanoStyle.StyleClassLabelSubText },
+                StyleClasses = { StyleNano.StyleClassLabelSubText },
                 ClipText = true
             };
             vBox.AddChild(ProductName);
@@ -448,14 +427,14 @@ namespace Content.Client.UserInterface.Cargo
             Approve = new Button
             {
                 Text = "Approve",
-                StyleClasses = { NanoStyle.StyleClassLabelSubText }
+                StyleClasses = { StyleNano.StyleClassLabelSubText }
             };
             hBox.AddChild(Approve);
 
             Cancel = new Button
             {
                 Text = "Cancel",
-                StyleClasses = { NanoStyle.StyleClassLabelSubText }
+                StyleClasses = { StyleNano.StyleClassLabelSubText }
             };
             hBox.AddChild(Cancel);
 

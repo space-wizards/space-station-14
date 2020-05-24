@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 
@@ -14,7 +15,7 @@ namespace Content.Client.UserInterface
             {
                 Children = {(_label = new Label
                 {
-                    StyleClasses = {NanoStyle.StyleClassLabelHeading}
+                    StyleClasses = {StyleNano.StyleClassLabelHeading}
                 })}
             };
             AddChild(_panel);
@@ -33,7 +34,7 @@ namespace Content.Client.UserInterface
             return _panel.CombinedMinimumSize;
         }
 
-        protected override void SortChildren()
+        protected override void LayoutUpdateOverride()
         {
             FitChildInBox(_panel, SizeBox);
         }

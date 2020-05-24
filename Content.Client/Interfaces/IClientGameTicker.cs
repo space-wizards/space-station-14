@@ -1,10 +1,16 @@
-using Robust.Shared.Timing;
+using System;
 
 namespace Content.Client.Interfaces
 {
     public interface IClientGameTicker
     {
+        bool IsGameStarted { get; }
+        string ServerInfoBlob { get; }
+        bool AreWeReady { get; }
+        DateTime StartTime { get; }
+
         void Initialize();
-        void FrameUpdate(FrameEventArgs FrameEventArgs);
+        event Action InfoBlobUpdated;
+        event Action LobbyStatusUpdated;
     }
 }

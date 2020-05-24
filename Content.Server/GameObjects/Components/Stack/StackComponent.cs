@@ -1,12 +1,11 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -16,41 +15,38 @@ namespace Content.Server.GameObjects.Components.Stack
 
     // TODO: Naming and presentation and such could use some improvement.
     [RegisterComponent]
-    public class StackComponent : Component, IAttackBy, IExamine
+    public class StackComponent : SharedStackComponent, IAttackBy, IExamine
     {
-
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
 #pragma warning restore 649
 
-        private const string SerializationCache = "stack";
-        private int _count = 50;
-        private int _maxCount = 50;
+        private bool _throwIndividually = false;
 
-        public override string Name => "Stack";
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int Count
+        public override int Count
         {
-            get => _count;
+            get => base.Count;
             set
             {
-                _count = value;
-                if (_count <= 0)
+                base.Count = value;
+
+                if (Count <= 0)
                 {
                     Owner.Delete();
                 }
             }
         }
 
-        [ViewVariables]
-        public int MaxCount { get => _maxCount; private set => _maxCount = value; }
-
-        [ViewVariables]
-        public int AvailableSpace => MaxCount - Count;
-
-        [ViewVariables]
-        public object StackType { get; private set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ThrowIndividually
+        {
+            get => _throwIndividually;
+            private set
+            {
+                _throwIndividually = value;
+                Dirty();
+            }
+        }
 
         public void Add(int amount)
         {
@@ -72,42 +68,6 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            serializer.DataFieldCached(ref _maxCount, "max", 50);
-            serializer.DataFieldCached(ref _count, "count", MaxCount);
-
-            if (!serializer.Reading)
-            {
-                return;
-            }
-
-            if (serializer.TryGetCacheData(SerializationCache, out object stackType))
-            {
-                StackType = stackType;
-                return;
-            }
-
-            if (serializer.TryReadDataFieldCached("stacktype", out string raw))
-            {
-                var refl = IoCManager.Resolve<IReflectionManager>();
-                if (refl.TryParseEnumReference(raw, out var @enum))
-                {
-                    stackType = @enum;
-                }
-                else
-                {
-                    stackType = raw;
-                }
-            }
-            else
-            {
-                stackType = Owner.Prototype.ID;
-            }
-            serializer.SetCacheData(SerializationCache, stackType);
-            StackType = stackType;
-        }
-
         public bool AttackBy(AttackByEventArgs eventArgs)
         {
             if (eventArgs.AttackWith.TryGetComponent<StackComponent>(out var stack))
@@ -122,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Stack
                 stack.Add(toTransfer);
 
                 var popupPos = eventArgs.ClickLocation;
-                if (popupPos == GridCoordinates.Nullspace)
+                if (popupPos == GridCoordinates.InvalidGrid)
                 {
                     popupPos = eventArgs.User.Transform.GridPosition;
                 }
@@ -137,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Stack
 
                         Timer.Spawn(300, () => _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is now full."));
                     }
-
+                    return true;
                 }
                 else if (toTransfer == 0 && stack.AvailableSpace == 0)
                 {
@@ -156,15 +116,5 @@ namespace Content.Server.GameObjects.Components.Stack
                 "There is [color=lightgray]1[/color] thing in the stack",
                 "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
         }
-    }
-
-    public enum StackType
-    {
-        Metal,
-        Glass,
-        Cable,
-        Ointment,
-        Brutepack,
-        FloorTileSteel
     }
 }

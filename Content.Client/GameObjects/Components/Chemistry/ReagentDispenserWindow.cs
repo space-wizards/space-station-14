@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Client.Graphics.Drawing;
@@ -54,6 +55,8 @@ namespace Content.Client.GameObjects.Components.Chemistry
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
+
+        protected override Vector2? CustomSize => (500, 600);
 
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
@@ -118,7 +121,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
                             //Currently empty, when server sends state data this will have container contents and fill volume.
                             (ContainerInfo = new VBoxContainer
                             {
-                                MarginLeft = 5.0f,
                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                                 Children =
                                 {
@@ -169,7 +171,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
             Title = castState.DispenserName;
             UpdateContainerInfo(castState);
 
-            switch (castState.SelectedDispenseAmount)
+            switch (castState.SelectedDispenseAmount.Int())
             {
                 case 1:
                     DispenseButton1.Pressed = true;
@@ -217,7 +219,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                     new Label
                     {
                         Text = $"{state.BeakerCurrentVolume}/{state.BeakerMaxVolume}",
-                        StyleClasses = {NanoStyle.StyleClassLabelSecondaryColor}
+                        StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                     }
                 }
             });
@@ -246,12 +248,12 @@ namespace Content.Client.GameObjects.Components.Chemistry
                             new Label
                             {
                                 Text = $"{name}: ",
-                                StyleClasses = {NanoStyle.StyleClassPowerStateGood}
+                                StyleClasses = {StyleNano.StyleClassPowerStateGood}
                             },
                             new Label
                             {
                                 Text = $"{reagent.Quantity}u",
-                                StyleClasses = {NanoStyle.StyleClassPowerStateGood}
+                                StyleClasses = {StyleNano.StyleClassPowerStateGood}
                             }
                         }
                     });
@@ -266,7 +268,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                             new Label
                             {
                                 Text = $"{reagent.Quantity}u",
-                                StyleClasses = {NanoStyle.StyleClassLabelSecondaryColor}
+                                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                             }
                         }
                     });

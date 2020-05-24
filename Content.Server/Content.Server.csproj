@@ -3,33 +3,26 @@
   <PropertyGroup>
     <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
     <TargetFramework>$(TargetFramework)</TargetFramework>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>8</LangVersion>
     <IsPackable>false</IsPackable>
     <Platforms>x64</Platforms>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\Content.Server\</OutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="YamlDotNet" Version="6.1.2" />
+    <PackageReference Include="YamlDotNet" Version="8.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj">
-      <Private>false</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj">
-      <Private>false</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj">
-      <Private>false</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj">
-      <Private>false</Private>
-    </ProjectReference>
+    <ProjectReference Include="..\Content.Server.Database\Content.Server.Database.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Condition="'$(UseNetCore)' != 'true'" Include="System.Net.Http" />
   </ItemGroup>
 </Project>

@@ -2,8 +2,9 @@
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
-using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -11,8 +12,9 @@ namespace Content.Client.GameObjects
 {
     public abstract class InventoryInterfaceController : IDisposable
     {
-        // ReSharper disable once UnassignedGetOnlyAutoProperty
-        [field: Dependency] protected IGameHud GameHud { get; }
+#pragma warning disable 649
+        [Dependency] protected readonly IGameHud _gameHud;
+#pragma warning restore 649
 
         protected InventoryInterfaceController(ClientInventoryComponent owner)
         {
@@ -29,8 +31,8 @@ namespace Content.Client.GameObjects
 
         public virtual void PlayerAttached()
         {
-            GameHud.InventoryButtonVisible = true;
-            GameHud.InventoryButtonToggled = b =>
+            _gameHud.InventoryButtonVisible = true;
+            _gameHud.InventoryButtonToggled = b =>
             {
                 if (b)
                 {
@@ -45,7 +47,7 @@ namespace Content.Client.GameObjects
 
         public virtual void PlayerDetached()
         {
-            GameHud.InventoryButtonVisible = false;
+            _gameHud.InventoryButtonVisible = false;
             Window.Close();
         }
 
@@ -61,48 +63,37 @@ namespace Content.Client.GameObjects
         {
         }
 
-        protected void HandleInventoryKeybind(BaseButton.ButtonEventArgs args)
+        protected virtual void HandleInventoryKeybind(GUIBoundKeyEventArgs args, EquipmentSlotDefines.Slots slot)
         {
-            if (args.Event.Function == ContentKeyFunctions.ActivateItemInWorld)
+            if (args.Function == EngineKeyFunctions.UIClick)
             {
-                OpenStorage(args);
-            }
-            else if (args.Event.CanFocus)
-            {
-                UseItemOnInventory(args);
+                UseItemOnInventory(slot);
             }
         }
 
-        protected void AddToInventory(BaseButton.ButtonEventArgs args)
+        protected void AddToInventory(GUIBoundKeyEventArgs args, EquipmentSlotDefines.Slots slot)
         {
-            if (!args.Event.CanFocus)
+            if (args.Function != EngineKeyFunctions.UIClick)
             {
                 return;
             }
-            args.Button.Pressed = false;
-            var control = (InventoryButton) args.Button.Parent;
 
-            Owner.SendEquipMessage(control.Slot);
+            Owner.SendEquipMessage(slot);
         }
 
-        protected void UseItemOnInventory(BaseButton.ButtonEventArgs args)
+        protected void UseItemOnInventory(EquipmentSlotDefines.Slots slot)
         {
-            args.Button.Pressed = false;
-            var control = (InventoryButton)args.Button.Parent;
-
-            Owner.SendUseMessage(control.Slot);
+            Owner.SendUseMessage(slot);
         }
 
-        protected void OpenStorage(BaseButton.ButtonEventArgs args)
+        protected void OpenStorage(GUIBoundKeyEventArgs args, EquipmentSlotDefines.Slots slot)
         {
-            if (!args.Event.CanFocus && args.Event.Function != ContentKeyFunctions.ActivateItemInWorld)
+            if (args.Function != EngineKeyFunctions.UIClick && args.Function != ContentKeyFunctions.ActivateItemInWorld)
             {
                 return;
             }
-            args.Button.Pressed = false;
-            var control = (InventoryButton)args.Button.Parent;
 
-            Owner.SendOpenStorageUIMessage(control.Slot);
+            Owner.SendOpenStorageUIMessage(slot);
         }
     }
 }

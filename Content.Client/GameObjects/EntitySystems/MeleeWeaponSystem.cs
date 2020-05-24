@@ -1,11 +1,10 @@
-using Content.Client.GameObjects.Components.Mobs;
+﻿using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Weapons.Melee;
 using Content.Shared.GameObjects.Components.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -24,28 +23,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Initialize()
         {
-            base.Initialize();
-
+            SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
             EntityQuery = new TypeEntityQuery(typeof(MeleeWeaponArcAnimationComponent));
-        }
-
-        public override void RegisterMessageTypes()
-        {
-            base.RegisterMessageTypes();
-
-            RegisterMessageType<PlayMeleeWeaponAnimationMessage>();
-        }
-
-        public override void HandleNetMessage(INetChannel channel, EntitySystemMessage message)
-        {
-            base.HandleNetMessage(channel, message);
-
-            switch (message)
-            {
-                case PlayMeleeWeaponAnimationMessage playMsg:
-                    PlayWeaponArc(playMsg);
-                    break;
-            }
         }
 
         public override void FrameUpdate(float frameTime)
@@ -71,7 +50,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
             lunge.SetData(msg.Angle);
 
-            var entity = EntityManager.SpawnEntityAt("WeaponArc", attacker.Transform.GridPosition);
+            var entity = EntityManager.SpawnEntity("WeaponArc", attacker.Transform.GridPosition);
             entity.Transform.LocalRotation = msg.Angle;
 
             var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();

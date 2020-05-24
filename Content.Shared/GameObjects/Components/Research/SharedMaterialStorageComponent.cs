@@ -14,7 +14,6 @@ namespace Content.Shared.GameObjects.Components.Research
         protected virtual Dictionary<string, int> Storage { get; set; }
         public override string Name => "MaterialStorage";
         public sealed override uint? NetID => ContentNetIDs.MATERIAL_STORAGE;
-        public sealed override Type StateType => typeof(MaterialStorageState);
 
         public int this[string ID]
         {

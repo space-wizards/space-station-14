@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Client.Interfaces;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
@@ -57,9 +58,13 @@ namespace Content.Client
 
         public void PopupMessage(ScreenCoordinates coordinates, string message)
         {
-            var label = new PopupLabel {Text = message};
+            var label = new PopupLabel
+            {
+                Text = message,
+                StyleClasses = { StyleNano.StyleClassPopupMessage },
+            };
             var minimumSize = label.CombinedMinimumSize;
-            label.InitialPos = label.Position = coordinates.Position - minimumSize / 2;
+            LayoutContainer.SetPosition(label, label.InitialPos = coordinates.Position - minimumSize / 2);
             _userInterfaceManager.PopupRoot.AddChild(label);
             _aliveLabels.Add(label);
         }
@@ -71,17 +76,20 @@ namespace Content.Client
 
         public void FrameUpdate(FrameEventArgs eventArgs)
         {
-            foreach (var label in _aliveLabels)
+            _aliveLabels.ForEach(l =>
             {
-                label.Update(eventArgs);
-            }
+                if (l.TimeLeft > 3f)
+                {
+                    l.Dispose();
+                }
+            });
 
             _aliveLabels.RemoveAll(l => l.Disposed);
         }
 
         private class PopupLabel : Label
         {
-            private float _timeLeft;
+            public float TimeLeft { get; private set; }
             public Vector2 InitialPos { get; set; }
 
             public PopupLabel()
@@ -91,17 +99,13 @@ namespace Content.Client
                 FontColorShadowOverride = Color.Black;
             }
 
-            public void Update(FrameEventArgs eventArgs)
+            protected override void Update(FrameEventArgs eventArgs)
             {
-                _timeLeft += eventArgs.DeltaSeconds;
-                Position = InitialPos - new Vector2(0, 20 * (_timeLeft * _timeLeft + _timeLeft));
-                if (_timeLeft > 0.5f)
+                TimeLeft += eventArgs.DeltaSeconds;
+                LayoutContainer.SetPosition(this, InitialPos - (0, 20 * (TimeLeft * TimeLeft + TimeLeft)));
+                if (TimeLeft > 0.5f)
                 {
-                    Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(_timeLeft - 0.5f, 3f));
-                    if (_timeLeft > 3f)
-                    {
-                        Dispose();
-                    }
+                    Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(TimeLeft - 0.5f, 3f));
                 }
             }
         }

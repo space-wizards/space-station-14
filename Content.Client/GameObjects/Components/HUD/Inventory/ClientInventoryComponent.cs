@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects;
+using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -30,11 +31,16 @@ namespace Content.Client.GameObjects
 
         private ISpriteComponent _sprite;
 
+        private bool _playerAttached = false;
+
         public override void OnRemove()
         {
             base.OnRemove();
 
-            InterfaceController?.PlayerDetached();
+            if (_playerAttached)
+            {
+                InterfaceController?.PlayerDetached();
+            }
             InterfaceController?.Dispose();
         }
 
@@ -101,24 +107,54 @@ namespace Content.Client.GameObjects
 
         private void _setSlot(Slots slot, IEntity entity)
         {
-            if (_sprite != null && entity.TryGetComponent(out ClothingComponent clothing))
+            SetSlotVisuals(slot, entity);
+
+            InterfaceController?.AddToSlot(slot, entity);
+        }
+
+        internal void SetSlotVisuals(Slots slot, IEntity entity)
+        {
+            if (_sprite == null)
+            {
+                return;
+            }
+
+            if (entity != null && entity.TryGetComponent(out ClothingComponent clothing))
             {
                 var flag = SlotMasks[slot];
                 var data = clothing.GetEquippedStateInfo(flag);
-                if (data == null)
-                {
-                    _sprite.LayerSetVisible(slot, false);
-                }
-                else
+                if (data != null)
                 {
                     var (rsi, state) = data.Value;
                     _sprite.LayerSetVisible(slot, true);
-                    _sprite.LayerSetRSI(slot, rsi);
-                    _sprite.LayerSetState(slot, state);
+                    _sprite.LayerSetState(slot, state, rsi);
+
+                    if (slot == Slots.INNERCLOTHING)
+                    {
+                        _sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothing.FemaleMask switch
+                        {
+                            FemaleClothingMask.NoMask => "female_none",
+                            FemaleClothingMask.UniformTop => "female_top",
+                            _ => "female_full",
+                        });
+                    }
+
+                    return;
                 }
             }
 
-            InterfaceController?.AddToSlot(slot, entity);
+            _sprite.LayerSetVisible(slot, false);
+        }
+
+        internal void ClearAllSlotVisuals()
+        {
+            foreach (var slot in InventoryInstance.SlotMasks)
+            {
+                if (slot != Slots.NONE)
+                {
+                    _sprite.LayerSetVisible(slot, false);
+                }
+            }
         }
 
         private void _clearSlot(Slots slot)
@@ -144,21 +180,27 @@ namespace Content.Client.GameObjects
             SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleMessage(message, component);
 
             switch (message)
             {
                 case PlayerAttachedMsg _:
                     InterfaceController.PlayerAttached();
+                    _playerAttached = true;
                     break;
 
                 case PlayerDetachedMsg _:
                     InterfaceController.PlayerDetached();
+                    _playerAttached = false;
                     break;
             }
+        }
+
+        public bool TryGetSlot(Slots slot, out IEntity item)
+        {
+            return _slots.TryGetValue(slot, out item);
         }
     }
 }

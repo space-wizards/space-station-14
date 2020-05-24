@@ -17,6 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -150,6 +151,12 @@ namespace Content.Server.GameObjects
             return success;
         }
 
+        public void PutInHandOrDrop(ItemComponent item)
+        {
+            if (!PutInHand(item))
+                item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+        }
+
         public bool CanPutInHand(ItemComponent item)
         {
             foreach (var hand in ActivePriorityEnumerable())
@@ -191,10 +198,14 @@ namespace Content.Server.GameObjects
 
             var inventorySlot = hands[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+
             if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
             {
                 return false;
             }
+
+            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+                return false;
 
             item.RemovedFromSlot();
 
@@ -230,6 +241,10 @@ namespace Content.Server.GameObjects
 
             var inventorySlot = hands[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+
+            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+                return false;
+
             if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
             {
                 return false;
@@ -444,17 +459,19 @@ namespace Content.Server.GameObjects
             return false;
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, channel, session);
+
+            if (session == null)
+            {
+                throw new ArgumentNullException(nameof(session));
+            }
 
             switch (message)
             {
                 case ClientChangedHandMsg msg:
                 {
-                    var playerMan = IoCManager.Resolve<IPlayerManager>();
-                    var session = playerMan.GetSessionByChannel(netChannel);
                     var playerEntity = session.AttachedEntity;
 
                     if (playerEntity == Owner && HasHand(msg.Index))
@@ -471,8 +488,6 @@ namespace Content.Server.GameObjects
                         return;
                     }
 
-                    var playerMan = IoCManager.Resolve<IPlayerManager>();
-                    var session = playerMan.GetSessionByChannel(netChannel);
                     var playerEntity = session.AttachedEntity;
                     var used = GetActiveHand?.Owner;
 
@@ -482,7 +497,7 @@ namespace Content.Server.GameObjects
                         if (used != null)
                         {
                             interactionSystem.Interaction(Owner, used, slot.ContainedEntity,
-                                GridCoordinates.Nullspace);
+                                GridCoordinates.InvalidGrid);
                         }
                         else
                         {
@@ -496,10 +511,8 @@ namespace Content.Server.GameObjects
                     break;
                 }
 
-                case ActivateInhandMsg msg:
+                case UseInHandMsg msg:
                 {
-                    var playerMan = IoCManager.Resolve<IPlayerManager>();
-                    var session = playerMan.GetSessionByChannel(netChannel);
                     var playerEntity = session.AttachedEntity;
                     var used = GetActiveHand?.Owner;
 
@@ -509,6 +522,19 @@ namespace Content.Server.GameObjects
                         interactionSystem.TryUseInteraction(Owner, used);
                     }
 
+                    break;
+                }
+
+                case ActivateInHandMsg msg:
+                {
+                    var playerEntity = session.AttachedEntity;
+                    var used = GetHand(msg.Index)?.Owner;
+
+                    if (playerEntity == Owner && used != null)
+                    {
+                        var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+                        interactionSystem.TryInteractionActivate(Owner, used);
+                    }
                     break;
                 }
             }

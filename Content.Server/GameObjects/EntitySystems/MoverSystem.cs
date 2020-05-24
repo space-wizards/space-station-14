@@ -1,20 +1,28 @@
-﻿using Content.Server.GameObjects.Components;
+﻿using System;
+using System.Net;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Server.Observer;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Timing;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
@@ -22,6 +30,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -37,6 +47,8 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IRobustRandom _robustRandom;
+        [Dependency] private readonly IConfigurationManager _configurationManager;
+        [Dependency] private readonly IEntityManager _entityManager;
 #pragma warning restore 649
 
         private AudioSystem _audioSystem;
@@ -62,8 +74,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 session => HandleDirChange(session, Direction.South, true),
                 session => HandleDirChange(session, Direction.South, false));
             var runCmdHandler = InputCmdHandler.FromDelegate(
-                session => HandleRunChange(session, true),
-                session => HandleRunChange(session, false));
+                session => HandleRunChange(session, false),
+                session => HandleRunChange(session, true));
 
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
 
@@ -73,24 +85,28 @@ namespace Content.Server.GameObjects.EntitySystems
             input.BindMap.BindFunction(EngineKeyFunctions.MoveDown, moveDownCmdHandler);
             input.BindMap.BindFunction(EngineKeyFunctions.Run, runCmdHandler);
 
-            SubscribeEvent<PlayerAttachSystemMessage>(PlayerAttached);
-            SubscribeEvent<PlayerDetachedSystemMessage>(PlayerDetached);
+            SubscribeLocalEvent<PlayerAttachSystemMessage>(PlayerAttached);
+            SubscribeLocalEvent<PlayerDetachedSystemMessage>(PlayerDetached);
 
             _audioSystem = EntitySystemManager.GetEntitySystem<AudioSystem>();
+
+            _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
         }
 
-        private static void PlayerAttached(object sender, PlayerAttachSystemMessage ev)
+        private static void PlayerAttached(PlayerAttachSystemMessage ev)
         {
-            if (ev.Entity.HasComponent<IMoverComponent>())
+            if (!ev.Entity.HasComponent<IMoverComponent>())
             {
-                ev.Entity.RemoveComponent<IMoverComponent>();
+                ev.Entity.AddComponent<PlayerInputMoverComponent>();
             }
-            ev.Entity.AddComponent<PlayerInputMoverComponent>();
         }
 
-        private static void PlayerDetached(object sender, PlayerDetachedSystemMessage ev)
+        private static void PlayerDetached(PlayerDetachedSystemMessage ev)
         {
-            ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
+            if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
+            {
+                ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
+            }
         }
 
         /// <inheritdoc />
@@ -119,26 +135,69 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
                 var mover = entity.GetComponent<IMoverComponent>();
                 var physics = entity.GetComponent<PhysicsComponent>();
-
-                UpdateKinematics(entity.Transform, mover, physics);
+                if (entity.TryGetComponent<CollidableComponent>(out var collider))
+                {
+                    UpdateKinematics(entity.Transform, mover, physics, collider);
+                }
+                else
+                {
+                    UpdateKinematics(entity.Transform, mover, physics);
+                }
             }
         }
 
-        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics)
+        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics, CollidableComponent collider = null)
         {
+            bool weightless = false;
+
+            var tile = _mapManager.GetGrid(transform.GridID).GetTileRef(transform.GridPosition).Tile;
+
+            if ((!_mapManager.GetGrid(transform.GridID).HasGravity || tile.IsEmpty) && collider != null)
+            {
+                weightless = true;
+                // No gravity: is our entity touching anything?
+                var touching = false;
+                foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
+                {
+                    if (entity.TryGetComponent<CollidableComponent>(out var otherCollider))
+                    {
+                        if (otherCollider.Owner == transform.Owner) continue; // Don't try to push off of yourself!
+                        touching |= ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
+                                     || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
+                                    && !entity.HasComponent<ItemComponent>(); // This can't be an item
+                    }
+                }
+                if (!touching)
+                {
+                    return;
+                }
+            }
             if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
             {
                 if (physics.LinearVelocity != Vector2.Zero)
                     physics.LinearVelocity = Vector2.Zero;
+
             }
             else
             {
-                physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.SprintMoveSpeed : mover.WalkMoveSpeed);
+                if (weightless)
+                {
+                    physics.LinearVelocity = mover.VelocityDir * mover.CurrentPushSpeed;
+                    transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
+                    return;
+                }
+
+                physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
 
                 // Handle footsteps.
-                var distance = transform.GridPosition.Distance(_mapManager, mover.LastPosition);
-                mover.StepSoundDistance += distance;
+                if (_mapManager.GridExists(mover.LastPosition.GridID))
+                {
+                    // Can happen when teleporting between grids.
+                    var distance = transform.GridPosition.Distance(_mapManager, mover.LastPosition);
+                    mover.StepSoundDistance += distance;
+                }
+
                 mover.LastPosition = transform.GridPosition;
                 float distanceNeeded;
                 if (mover.Sprinting)
@@ -174,22 +233,33 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private static void HandleDirChange(ICommonSession session, Direction dir, bool state)
         {
-            if(!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
+            var playerSes = session as IPlayerSession;
+            if (!TryGetAttachedComponent(playerSes, out IMoverComponent moverComp))
                 return;
+
+            var owner = playerSes?.AttachedEntity;
+
+            if (owner != null)
+            {
+                foreach (var comp in owner.GetAllComponents<IRelayMoveInput>())
+                {
+                    comp.MoveInputPressed(playerSes);
+                }
+            }
 
             moverComp.SetVelocityDirection(dir, state);
         }
 
         private static void HandleRunChange(ICommonSession session, bool running)
         {
-            if(!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
+            if (!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
                 return;
 
             moverComp.Sprinting = running;
         }
 
         private static bool TryGetAttachedComponent<T>(IPlayerSession session, out T component)
-            where T: Component
+            where T : IComponent
         {
             component = default;
 

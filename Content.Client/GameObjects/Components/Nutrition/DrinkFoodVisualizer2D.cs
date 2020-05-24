@@ -23,12 +23,12 @@ namespace Content.Client.GameObjects.Components.Nutrition
         public override void OnChangeData(AppearanceComponent component)
         {
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData<int>(SharedFoodComponent.FoodVisuals.MaxUses, out var maxUses))
+            if (!component.TryGetData<float>(SharedFoodComponent.FoodVisuals.MaxUses, out var maxUses))
             {
                 return;
             }
 
-            if (component.TryGetData<int>(SharedFoodComponent.FoodVisuals.Visual, out var usesLeft))
+            if (component.TryGetData<float>(SharedFoodComponent.FoodVisuals.Visual, out var usesLeft))
             {
                 var step = ContentHelpers.RoundToLevels(usesLeft, maxUses, _steps);
                 sprite.LayerSetState(0, $"icon-{step}");

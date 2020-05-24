@@ -6,6 +6,7 @@ namespace Content.Shared.GameObjects.Components.Power
     [Serializable, NetSerializable]
     public enum PowerDeviceVisuals
     {
+        VisualState,
         Powered
     }
 }

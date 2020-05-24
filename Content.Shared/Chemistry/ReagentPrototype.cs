@@ -21,6 +21,7 @@ namespace Content.Shared.Chemistry
         private string _description;
         private Color _substanceColor;
         private List<IMetabolizable> _metabolism;
+        private string _spritePath;
 
         public string ID => _id;
         public string Name => _name;
@@ -28,6 +29,8 @@ namespace Content.Shared.Chemistry
         public Color SubstanceColor => _substanceColor;
         //List of metabolism effects this reagent has, should really only be used server-side.
         public List<IMetabolizable> Metabolism => _metabolism;
+
+        public string SpriteReplacementPath => _spritePath;
 
         public ReagentPrototype()
         {
@@ -42,6 +45,7 @@ namespace Content.Shared.Chemistry
             serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _description, "desc", string.Empty);
             serializer.DataField(ref _substanceColor, "color", Color.White);
+            serializer.DataField(ref _spritePath, "spritePath", string.Empty);
 
             if (_moduleManager.IsServerModule)
                 serializer.DataField(ref _metabolism, "metabolism", new List<IMetabolizable> {new DefaultMetabolizable()});

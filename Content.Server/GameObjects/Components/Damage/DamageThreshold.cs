@@ -1,5 +1,7 @@
 ﻿using System;
 using Content.Shared.GameObjects;
+using JetBrains.Annotations;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects
 {
@@ -58,6 +60,39 @@ namespace Content.Server.GameObjects
             DamageThreshold = threshold;
             Passed = passed;
             ExcessDamage = excess;
+        }
+    }
+
+    public class DamageEventArgs : EventArgs
+    {
+        /// <summary>
+        ///     Type of damage.
+        /// </summary>
+        public DamageType Type { get; }
+
+        /// <summary>
+        ///     Change in damage.
+        /// </summary>
+        public int Damage { get; }
+
+        /// <summary>
+        ///     The entity that damaged this one.
+        ///     Could be null.
+        /// </summary>
+        public IEntity Source { get; }
+
+        /// <summary>
+        ///     The mob entity that damaged this one.
+        ///     Could be null.
+        /// </summary>
+        public IEntity SourceMob { get; }
+
+        public DamageEventArgs(DamageType type, int damage, IEntity source, IEntity sourceMob)
+        {
+            Type = type;
+            Damage = damage;
+            Source = source;
+            SourceMob = sourceMob;
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Content.Shared.GameObjects
 
         public sealed override string Name => "Inventory";
         public sealed override uint? NetID => ContentNetIDs.STORAGE;
-        public sealed override Type StateType => typeof(InventoryComponentState);
 
         [ViewVariables]
         protected Inventory InventoryInstance { get; private set; }

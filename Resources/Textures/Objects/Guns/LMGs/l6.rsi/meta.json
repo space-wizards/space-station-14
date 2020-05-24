@@ -8,15 +8,6 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/237d8f7894617007d75c71d5d9feb4354c78debd/icons/obj/guns/lmg.dmi",
     "states": [
         {
-            "name": "l6-5",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
             "name": "l6-4",
             "directions": 1,
             "delays": [

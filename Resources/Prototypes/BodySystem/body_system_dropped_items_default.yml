@@ -1,0 +1,19 @@
+- type: entity
+  name: "BaseDroppedBodyPart"
+  parent: BaseItem
+  id: BaseDroppedBodyPart
+  components:
+  - type: DroppedBodyPart
+  - type: Sprite
+    texture: Objects\BodySystem\Organs\eyes_grey.png
+  - type: Icon
+    
+- type: entity
+  name: "BaseDroppedMechanism"
+  parent: BaseItem
+  id: BaseDroppedMechanism
+  components:
+  - type: DroppedMechanism
+  - type: Sprite
+    texture: Objects\BodySystem\Organs\eyes_grey.png
+  - type: Icon

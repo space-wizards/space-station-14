@@ -1,4 +1,5 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -51,10 +52,16 @@ namespace Content.Server.GameObjects.Components.Access
                 return;
             }
 
-            var tempFullName = string.IsNullOrWhiteSpace(FullName) ? "Unknown" : FullName;
-            var tempJobTitle = string.IsNullOrWhiteSpace(JobTitle) ? "N/A" : JobTitle;
+            var jobSuffix = string.IsNullOrWhiteSpace(JobTitle) ? "" : $" ({JobTitle})";
 
-            Owner.Name = $"{_ownerOriginalName} ({tempFullName}, {tempJobTitle})";
+            if (string.IsNullOrWhiteSpace(FullName))
+            {
+                Owner.Name = Loc.GetString("{0}{1}", _ownerOriginalName, jobSuffix);
+            }
+            else
+            {
+                Owner.Name = Loc.GetString("{0}'s ID card{1}", FullName, jobSuffix);
+            }
         }
 
         public override void Initialize()

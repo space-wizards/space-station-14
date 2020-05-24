@@ -1,11 +1,14 @@
-using System;
+﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
+using Content.Shared.Maths;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -32,19 +35,19 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         private string _finishPrototype;
 
-        public int TransferAmount => _transferAmount;
+        public ReagentUnit TransferAmount => _transferAmount;
         [ViewVariables]
-        private int _transferAmount = 2;
+        private ReagentUnit _transferAmount = ReagentUnit.New(2);
 
-        public int MaxVolume
+        public ReagentUnit MaxVolume
         {
             get => _contents.MaxVolume;
             set => _contents.MaxVolume = value;
         }
 
-        private Solution _initialContents; // This is just for loading from yaml
-
         private bool _despawnOnFinish;
+
+        private bool _drinking;
 
         public int UsesLeft()
         {
@@ -53,57 +56,37 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 return 0;
             }
-            return Math.Max(1, _contents.CurrentVolume / _transferAmount);
+            return Math.Max(1, (int)Math.Ceiling((_contents.CurrentVolume / _transferAmount).Float()));
         }
 
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _initialContents, "contents", null);
             serializer.DataField(ref _useSound, "use_sound", "/Audio/items/drink.ogg");
             // E.g. cola can when done or clear bottle, whatever
-            // Currently this will enforce it has the same volume but this may change.
-            serializer.DataField(ref _despawnOnFinish, "despawn_empty", true);
+            // Currently this will enforce it has the same volume but this may change. - TODO: this should be implemented in a separate component
+            serializer.DataField(ref _despawnOnFinish, "despawn_empty", false);
             serializer.DataField(ref _finishPrototype, "spawn_on_finish", null);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            if (_contents == null)
-            {
-                if (Owner.TryGetComponent(out SolutionComponent solutionComponent))
-                {
-                    _contents = solutionComponent;
-                }
-                else
-                {
-                    _contents = Owner.AddComponent<SolutionComponent>();
-                    _contents.Initialize();
-                }
-            }
-
-            _contents.MaxVolume = _initialContents.TotalVolume;
         }
 
         protected override void Startup()
         {
             base.Startup();
-            if (_initialContents != null)
-            {
-                _contents.TryAddSolution(_initialContents, true, true);
-            }
-            _initialContents = null;
+            _contents = Owner.GetComponent<SolutionComponent>();
+            _contents.Capabilities = SolutionCaps.PourIn
+                                     | SolutionCaps.PourOut
+                                     | SolutionCaps.Injectable;
+            _drinking = false;
             Owner.TryGetComponent(out AppearanceComponent appearance);
             _appearanceComponent = appearance;
-            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.MaxUses, MaxVolume);
+            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.MaxUses, MaxVolume.Float());
             _updateAppearance();
         }
 
         private void _updateAppearance()
         {
-            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.Visual, UsesLeft());
+            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.Visual, _contents.CurrentVolume.Float());
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -118,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             UseDrink(eventArgs.Attacked);
         }
 
-        void UseDrink(IEntity user)
+        private void UseDrink(IEntity user)
         {
             if (user == null)
             {
@@ -133,13 +116,17 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (user.TryGetComponent(out StomachComponent stomachComponent))
             {
-                var transferAmount = Math.Min(_transferAmount, _contents.CurrentVolume);
+                _drinking = true;
+                var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
                 var split = _contents.SplitSolution(transferAmount);
                 if (stomachComponent.TryTransferSolution(split))
                 {
+                    // When we split Finish gets called which may delete the can so need to use the entity system for sound
                     if (_useSound != null)
                     {
-                        Owner.GetComponent<SoundComponent>()?.Play(_useSound);
+                        var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+                        var audioSystem = entitySystemManager.GetEntitySystem<AudioSystem>();
+                        audioSystem.Play(_useSound);
                         user.PopupMessage(user, _localizationManager.GetString("Slurp"));
                     }
                 }
@@ -149,35 +136,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     _contents.TryAddSolution(split);
                     user.PopupMessage(user, _localizationManager.GetString("Can't drink"));
                 }
-            }
-
-            // Drink containers are mostly transient.
-            if (!_despawnOnFinish || UsesLeft() > 0)
-            {
-                return;
-
-            }
-
-            Owner.Delete();
-
-            if (_finishPrototype != null)
-            {
-                var finisher = Owner.EntityManager.SpawnEntity(_finishPrototype);
-                if (user.TryGetComponent(out HandsComponent handsComponent) && finisher.TryGetComponent(out ItemComponent itemComponent))
-                {
-                    if (handsComponent.CanPutInHand(itemComponent))
-                    {
-                        handsComponent.PutInHand(itemComponent);
-                        return;
-                    }
-                }
-
-                finisher.Transform.GridPosition = user.Transform.GridPosition;
-                if (finisher.TryGetComponent(out DrinkComponent drinkComponent))
-                {
-                    drinkComponent.MaxVolume = MaxVolume;
-                }
-                return;
+                _drinking = false;
             }
         }
     }

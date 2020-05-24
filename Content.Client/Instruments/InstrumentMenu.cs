@@ -1,10 +1,13 @@
 using Content.Client.GameObjects.Components.Instruments;
+using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.Audio.Midi;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 
@@ -27,7 +30,7 @@ namespace Content.Client.Instruments
         public InstrumentMenu(InstrumentBoundUserInterface owner)
         {
             IoCManager.InjectDependencies(this);
-            Title = "Instrument";
+            Title = Loc.GetString("Instrument");
 
             _owner = owner;
 
@@ -37,21 +40,13 @@ namespace Content.Client.Instruments
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                MarginTop = 5f,
-                MarginLeft = 5f,
-                MarginRight = -5f,
-                MarginBottom = -5f,
             };
-
-            margin.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var vBox = new VBoxContainer()
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SeparationOverride = 5,
             };
-
-            vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
 
             var hBoxTopButtons = new HBoxContainer()
             {
@@ -63,8 +58,8 @@ namespace Content.Client.Instruments
 
             midiInputButton = new Button()
             {
-                Text = "MIDI Input",
-                TextAlign = Button.AlignMode.Center,
+                Text = Loc.GetString("MIDI Input"),
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
                 ToggleMode = true,
@@ -81,8 +76,8 @@ namespace Content.Client.Instruments
 
             var midiFileButton = new Button()
             {
-                Text = "Open File",
-                TextAlign = Button.AlignMode.Center,
+                Text = Loc.GetString("Play MIDI File"),
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
             };
@@ -99,8 +94,8 @@ namespace Content.Client.Instruments
 
             midiLoopButton = new Button()
             {
-                Text = "Loop",
-                TextAlign = Button.AlignMode.Center,
+                Text = Loc.GetString("Loop"),
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
                 ToggleMode = true,
@@ -118,8 +113,8 @@ namespace Content.Client.Instruments
 
             midiStopButton = new Button()
             {
-                Text = "Stop",
-                TextAlign = Button.AlignMode.Center,
+                Text = Loc.GetString("Stop"),
+                TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
                 Disabled = !_owner.Instrument.IsMidiOpen,
@@ -140,6 +135,26 @@ namespace Content.Client.Instruments
 
             margin.AddChild(vBox);
 
+            if (!_midiManager.IsAvailable)
+            {
+                margin.AddChild(new PanelContainer
+                {
+                    MouseFilter = MouseFilterMode.Stop,
+                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.90f)},
+                    Children =
+                    {
+                        new Label
+                        {
+                            Align = Label.AlignMode.Center,
+                            SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                            SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                            StyleClasses = {StyleNano.StyleClassLabelBig},
+                            Text = Loc.GetString("MIDI support is currently\nnot available on your platform.")
+                        }
+                    }
+                });
+            }
+
             Contents.AddChild(margin);
         }
 
@@ -156,7 +171,8 @@ namespace Content.Client.Instruments
 
         private async void MidiFileButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
         {
-            var filename = await _fileDialogManager.OpenFile();
+            var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
+            var filename = await _fileDialogManager.OpenFile(filters);
 
             if (filename == null) return;
 
@@ -168,7 +184,7 @@ namespace Content.Client.Instruments
 
             if (!_owner.Instrument.OpenMidi(filename)) return;
             MidiPlaybackSetButtonsDisabled(false);
-            if(midiInputButton.Pressed)
+            if (midiInputButton.Pressed)
                 midiInputButton.Pressed = false;
         }
 

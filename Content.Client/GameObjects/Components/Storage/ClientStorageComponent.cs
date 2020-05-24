@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Storage;
+using Content.Client.Interfaces.GameObjects;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -38,9 +42,10 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnRemove();
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
+            base.HandleNetworkMessage(message, channel, session);
+
             switch (message)
             {
                 //Updates what we are storing for the UI
@@ -101,14 +106,47 @@ namespace Content.Client.GameObjects.Components.Storage
             private Label Information;
             public ClientStorageComponent StorageEntity;
 
+            private StyleBoxFlat _HoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.35f)};
+            private StyleBoxFlat  _unHoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.0f)};
+
+            protected override Vector2? CustomSize => (180, 320);
+
             public StorageWindow()
             {
-                Size = (180, 320);
-
                 Title = "Storage Item";
                 RectClipContent = true;
 
-                VSplitContainer = new VBoxContainer();
+                var containerButton = new ContainerButton
+                {
+                    SizeFlagsHorizontal = SizeFlags.Fill,
+                    SizeFlagsVertical = SizeFlags.Fill,
+                    MouseFilter = MouseFilterMode.Pass,
+                };
+
+                var innerContainerButton = new PanelContainer
+                {
+                    PanelOverride = _unHoveredBox,
+                    SizeFlagsHorizontal = SizeFlags.Fill,
+                    SizeFlagsVertical = SizeFlags.Fill,
+                };
+
+
+                containerButton.AddChild(innerContainerButton);
+                containerButton.OnPressed += args =>
+                {
+                    var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
+
+                    if (controlledEntity.TryGetComponent(out IHandsComponent hands))
+                    {
+                        StorageEntity.SendNetworkMessage(new InsertEntityMessage());
+                    }
+                };
+
+                VSplitContainer = new VBoxContainer()
+                {
+                    MouseFilter = MouseFilterMode.Ignore,
+                };
+                containerButton.AddChild(VSplitContainer);
                 Information = new Label
                 {
                     Text = "Items: 0 Volume: 0/0 Stuff",
@@ -121,7 +159,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     SizeFlagsVertical = SizeFlags.FillExpand,
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
                     HScrollEnabled = true,
-                    VScrollEnabled = true
+                    VScrollEnabled = true,
                 };
                 EntityList = new VBoxContainer
                 {
@@ -129,7 +167,18 @@ namespace Content.Client.GameObjects.Components.Storage
                 };
                 listScrollContainer.AddChild(EntityList);
                 VSplitContainer.AddChild(listScrollContainer);
-                Contents.AddChild(VSplitContainer);
+
+                Contents.AddChild(containerButton);
+
+                listScrollContainer.OnMouseEntered += args =>
+                {
+                    innerContainerButton.PanelOverride = _HoveredBox;
+                };
+
+                listScrollContainer.OnMouseExited += args =>
+                {
+                    innerContainerButton.PanelOverride = _unHoveredBox;
+                };
             }
 
             public override void Close()
@@ -153,7 +202,8 @@ namespace Content.Client.GameObjects.Components.Storage
 
                     var button = new EntityButton()
                     {
-                        EntityuID = entityuid.Key
+                        EntityuID = entityuid.Key,
+                        MouseFilter = MouseFilterMode.Stop,
                     };
                     button.ActualButton.OnToggled += OnItemButtonToggled;
                     //Name and Size labels set
@@ -191,6 +241,19 @@ namespace Content.Client.GameObjects.Components.Storage
                 args.Button.Pressed = false;
                 StorageEntity.Interact(control.EntityuID);
             }
+
+            /// <summary>
+            /// Function assigned to button that adds items to the storage entity.
+            /// </summary>
+            private void OnAddItemButtonPressed(BaseButton.ButtonEventArgs args)
+            {
+                var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
+
+                if (controlledEntity.TryGetComponent(out IHandsComponent hands))
+                {
+                    StorageEntity.SendNetworkMessage(new InsertEntityMessage());
+                }
+            }
         }
 
         /// <summary>
@@ -216,37 +279,36 @@ namespace Content.Client.GameObjects.Components.Storage
                 };
                 AddChild(ActualButton);
 
-                var hBoxContainer = new HBoxContainer {MouseFilter = MouseFilterMode.Ignore};
+                var hBoxContainer = new HBoxContainer();
                 EntitySpriteView = new SpriteView
                 {
-                    CustomMinimumSize = new Vector2(32.0f, 32.0f), MouseFilter = MouseFilterMode.Ignore
+                    CustomMinimumSize = new Vector2(32.0f, 32.0f)
                 };
                 EntityName = new Label
                 {
                     SizeFlagsVertical = SizeFlags.ShrinkCenter,
                     Text = "Backpack",
-                    MouseFilter = MouseFilterMode.Ignore
                 };
                 hBoxContainer.AddChild(EntitySpriteView);
                 hBoxContainer.AddChild(EntityName);
 
                 EntityControl = new Control
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand, MouseFilter = MouseFilterMode.Ignore
+                    SizeFlagsHorizontal = SizeFlags.FillExpand
                 };
                 EntitySize = new Label
                 {
                     SizeFlagsVertical = SizeFlags.ShrinkCenter,
                     Text = "Size 6",
                     Align = Label.AlignMode.Right,
-                    AnchorLeft = 1.0f,
+                    /*AnchorLeft = 1.0f,
                     AnchorRight = 1.0f,
                     AnchorBottom = 0.5f,
                     AnchorTop = 0.5f,
                     MarginLeft = -38.0f,
                     MarginTop = -7.0f,
                     MarginRight = -5.0f,
-                    MarginBottom = 7.0f
+                    MarginBottom = 7.0f*/
                 };
 
                 EntityControl.AddChild(EntitySize);
