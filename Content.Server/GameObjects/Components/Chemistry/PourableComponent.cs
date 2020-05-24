@@ -60,16 +60,37 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <returns></returns>
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            //Get target and check if it can be poured into
+            //Get target solution component
             if (!Owner.TryGetComponent<SolutionComponent>(out var targetSolution))
                 return false;
-            if (!targetSolution.CanPourIn)
+
+            //Get attack solution component
+            var attackEntity = eventArgs.Using;
+            if (!attackEntity.TryGetComponent<SolutionComponent>(out var attackSolution))
                 return false;
 
-            //Get attack entity and check if it can pour out.
-            var attackEntity = eventArgs.Using;
-            if (!attackEntity.TryGetComponent<SolutionComponent>(out var attackSolution) || !attackSolution.CanPourOut)
-                return false;
+            // Calculate possibe solution transfer
+            if (targetSolution.CanPourIn && attackSolution.CanPourOut)
+            {
+                // default logic (beakers and glasses)
+                // transfer solution from object in hand to attacked
+                return TryTransfer(eventArgs, attackSolution, targetSolution);
+            }
+            else if (targetSolution.CanPourOut && attackSolution.CanPourIn)
+            {
+                // storage tanks and sinks logic
+                // drain solution from attacked object to object in hand
+                return TryTransfer(eventArgs, targetSolution, attackSolution);
+            }
+
+            // No transfer possible
+            return false;
+        }
+
+        bool TryTransfer(InteractUsingEventArgs eventArgs, SolutionComponent attackSolution, SolutionComponent targetSolution)
+        {
+            var attackEntity = attackSolution.Owner;
+
             if (!attackEntity.TryGetComponent<PourableComponent>(out var attackPourable))
                 return false;
 
