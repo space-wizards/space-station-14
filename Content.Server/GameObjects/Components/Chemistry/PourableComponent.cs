@@ -4,12 +4,15 @@ using System.Text;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -20,11 +23,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// (DrinkComponent adds a SolutionComponent if one isn't present).
     /// </summary>
     [RegisterComponent]
-    class PourableComponent : Component, IAttackBy
+    class PourableComponent : Component, IInteractUsing
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         public override string Name => "Pourable";
@@ -54,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="eventArgs">Attack event args</param>
         /// <returns></returns>
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             //Get target and check if it can be poured into
             if (!Owner.TryGetComponent<SolutionComponent>(out var targetSolution))
@@ -63,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
 
             //Get attack entity and check if it can pour out.
-            var attackEntity = eventArgs.AttackWith;
+            var attackEntity = eventArgs.Using;
             if (!attackEntity.TryGetComponent<SolutionComponent>(out var attackSolution) || !attackSolution.CanPourOut)
                 return false;
             if (!attackEntity.TryGetComponent<PourableComponent>(out var attackPourable))

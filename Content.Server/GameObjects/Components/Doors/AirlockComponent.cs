@@ -1,11 +1,13 @@
 using System;
 using System.Threading;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Doors;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -19,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Doors
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(ServerDoorComponent))]
-    public class AirlockComponent : ServerDoorComponent, IWires, IAttackBy
+    public class AirlockComponent : ServerDoorComponent, IWires, IInteractUsing
     {
         public override string Name => "Airlock";
 
@@ -198,29 +200,27 @@ namespace Content.Server.GameObjects.Components.Doors
             return _powerDevice.Powered;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.HasComponent<CrowbarComponent>())
-            {
-                if (IsPowered())
-                {
-                    var notify = IoCManager.Resolve<IServerNotifyManager>();
-                    notify.PopupMessage(Owner, eventArgs.User, "The powered motors block your efforts!");
-                    return true;
-                }
+            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
+                return false;
 
-                if (State == DoorState.Closed)
-                {
-                    Open();
-                }
-                else if(State == DoorState.Open)
-                {
-                    Close();
-                }
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying)) return false;
+
+            if (IsPowered())
+            {
+                var notify = IoCManager.Resolve<IServerNotifyManager>();
+                notify.PopupMessage(Owner, eventArgs.User, "The powered motors block your efforts!");
                 return true;
             }
 
-            return false;
+            if (State == DoorState.Closed)
+                Open();
+            else if(State == DoorState.Open)
+                Close();
+
+            return true;
+
         }
     }
 }

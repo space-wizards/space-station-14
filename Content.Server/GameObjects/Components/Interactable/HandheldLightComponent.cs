@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
@@ -21,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IAttackBy, IMapInit
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
     {
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
@@ -52,15 +53,15 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<PowerCellComponent>()) return false;
+            if (!eventArgs.Using.HasComponent<PowerCellComponent>()) return false;
 
             if (Cell != null) return false;
 
             var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
 
-            if (!handsComponent.Drop(eventArgs.AttackWith, _cellContainer))
+            if (!handsComponent.Drop(eventArgs.Using, _cellContainer))
             {
                 return false;
             }
@@ -250,14 +251,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         [Verb]
         public sealed class EjectCellVerb : Verb<HandheldLightComponent>
         {
-            protected override string GetText(IEntity user, HandheldLightComponent component)
+            protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
             {
-                return component.Cell == null ? "Eject cell (cell missing)" : "Eject cell";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, HandheldLightComponent component)
-            {
-                return component.Cell == null ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                if (component.Cell == null)
+                {
+                    data.Text = "Eject cell (cell missing)";
+                    data.Visibility = VerbVisibility.Disabled;
+                }
+                else
+                {
+                    data.Text = "Eject cell";
+                }
             }
 
             protected override void Activate(IEntity user, HandheldLightComponent component)

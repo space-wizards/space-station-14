@@ -70,6 +70,7 @@
   - showtime
   - group
   - addai
+  - warp
   CanViewVar: true
   CanAdminPlace: true
 
@@ -132,6 +133,7 @@
   - saveconfig
   - gc
   - gc_mode
+  - warp
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

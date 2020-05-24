@@ -22,7 +22,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class StunnableComponent : Component, IActionBlocker, IAttackHand, IMoveSpeedModifier
+    public class StunnableComponent : Component, IActionBlocker, IInteractHand, IMoveSpeedModifier
     {
         public override string Name => "Stunnable";
 
@@ -161,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             _stunnedTimer = 0f;
         }
 
-        public bool AttackHand(AttackHandEventArgs eventArgs)
+        public bool InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!_canHelp || !KnockedDown)
                 return false;

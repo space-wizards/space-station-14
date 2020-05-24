@@ -1,25 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using Content.Client.State;
+using Content.Client.UserInterface;
+using Content.Client.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
+using Robust.Client.Graphics;
+using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.State;
+using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -31,10 +43,20 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IInputManager _inputManager;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager;
+        [Dependency] private readonly IGameTiming _gameTiming;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
+        [Dependency] private readonly IResourceCache _resourceCache;
 #pragma warning restore 649
 
-        private VerbPopup _currentPopup;
+        private EntityList _currentEntityList;
+        private VerbPopup _currentVerbListRoot;
+        private VerbPopup _currentGroupList;
+
         private EntityUid _currentEntity;
+
+        private bool IsAnyContextMenuOpen => _currentEntityList != null || _currentVerbListRoot != null;
+
 
         public override void Initialize()
         {
@@ -51,29 +73,28 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public void OpenContextMenu(IEntity entity, ScreenCoordinates screenCoordinates)
         {
-            if (_currentPopup != null)
+            if (_currentVerbListRoot != null)
             {
-                CloseContextMenu();
+                CloseVerbMenu();
             }
 
             _currentEntity = entity.Uid;
-            _currentPopup = new VerbPopup();
-            _currentPopup.UserInterfaceManager.ModalRoot.AddChild(_currentPopup);
-            _currentPopup.OnPopupHide += CloseContextMenu;
+            _currentVerbListRoot = new VerbPopup();
+            _userInterfaceManager.ModalRoot.AddChild(_currentVerbListRoot);
+            _currentVerbListRoot.OnPopupHide += CloseVerbMenu;
 
-            _currentPopup.List.AddChild(new Label {Text = "Waiting on Server..."});
+            _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
             RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
 
-            var size = _currentPopup.List.CombinedMinimumSize;
-            var box = UIBox2.FromDimensions(screenCoordinates.Position, size);
-            _currentPopup.Open(box);
+            var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
+            _currentVerbListRoot.Open(box);
         }
 
         private bool OnOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (_currentPopup != null)
+            if (IsAnyContextMenuOpen)
             {
-                CloseContextMenu();
+                CloseAllMenus();
                 return true;
             }
 
@@ -89,20 +110,29 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            _currentPopup = new VerbPopup();
-            _currentPopup.OnPopupHide += CloseContextMenu;
-            foreach (var entity in entities)
+            _currentEntityList = new EntityList();
+            _currentEntityList.OnPopupHide += CloseAllMenus;
+            for (var i = 0; i < entities.Count; i++)
             {
-                var button = new Button {Text = entity.Name};
-                _currentPopup.List.AddChild(button);
-                button.OnPressed += _ => OnContextButtonPressed(entity);
+                if (i != 0)
+                {
+                    _currentEntityList.List.AddChild(new PanelContainer
+                    {
+                        CustomMinimumSize = (0, 2),
+                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
+                    });
+                }
+
+                var entity = entities[i];
+
+                _currentEntityList.List.AddChild(new EntityButton(this, entity));
             }
 
-            _currentPopup.UserInterfaceManager.ModalRoot.AddChild(_currentPopup);
+            _userInterfaceManager.ModalRoot.AddChild(_currentEntityList);
 
-            var size = _currentPopup.List.CombinedMinimumSize;
+            var size = _currentEntityList.List.CombinedMinimumSize;
             var box = UIBox2.FromDimensions(args.ScreenCoordinates.Position, size);
-            _currentPopup.Open(box);
+            _currentEntityList.Open(box);
 
             return true;
         }
@@ -119,28 +149,31 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            DebugTools.AssertNotNull(_currentPopup);
+            DebugTools.AssertNotNull(_currentVerbListRoot);
 
-            var buttons = new Dictionary<string, List<Button>>();
+            var buttons = new Dictionary<string, List<ListedVerbData>>();
+            var groupIcons = new Dictionary<string, SpriteSpecifier>();
 
-            var vBox = _currentPopup.List;
+            var vBox = _currentVerbListRoot.List;
             vBox.DisposeAllChildren();
+
+            // Local variable so that scope capture ensures this is the correct value.
+            var curEntity = _currentEntity;
+
             foreach (var data in msg.Verbs)
             {
-                var button = new Button {Text = data.Text, Disabled = !data.Available};
-                if (data.Available)
+                var list = buttons.GetOrNew(data.Category);
+
+                if (data.CategoryIcon != null && !groupIcons.ContainsKey(data.Category))
                 {
-                    button.OnPressed += _ =>
-                    {
-                        RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(_currentEntity, data.Key));
-                        CloseContextMenu();
-                    };
+                    groupIcons.Add(data.Category, data.CategoryIcon);
                 }
 
-                if(!buttons.ContainsKey(data.Category))
-                    buttons[data.Category] = new List<Button>();
-
-                buttons[data.Category].Add(button);
+                list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString(), () =>
+                {
+                    RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(curEntity, data.Key));
+                    CloseAllMenus();
+                }, data.Icon));
             }
 
             var user = GetUserEntity();
@@ -150,55 +183,87 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
                     continue;
 
-                if (VerbUtility.IsVerbInvisible(verb, user, component, out var vis))
+                var verbData = verb.GetData(user, component);
+
+                if (verbData.IsInvisible)
                     continue;
 
-                var disabled = vis != VerbVisibility.Visible;
-                var category = verb.GetCategory(user, component);
+                var list = buttons.GetOrNew(verbData.Category);
 
+                if (verbData.CategoryIcon != null && !groupIcons.ContainsKey(verbData.Category))
+                {
+                    groupIcons.Add(verbData.Category, verbData.CategoryIcon);
+                }
 
-                if(!buttons.ContainsKey(category))
-                    buttons[category] = new List<Button>();
-
-                buttons[category].Add(CreateVerbButton(verb.GetText(user, component), disabled, verb.ToString(),
-                    entity.ToString(), () => verb.Activate(user, component)));
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString(), entity.ToString(),
+                    () => verb.Activate(user, component), verbData.Icon));
             }
+
             //Get global verbs. Visible for all entities regardless of their components.
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
                 if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
                     continue;
 
-                if (VerbUtility.IsVerbInvisible(globalVerb, user, entity, out var vis))
+                var verbData = globalVerb.GetData(user, entity);
+
+                if (verbData.IsInvisible)
                     continue;
 
-                var disabled = vis != VerbVisibility.Visible;
-                var category = globalVerb.GetCategory(user, entity);
+                var list = buttons.GetOrNew(verbData.Category);
 
-                if(!buttons.ContainsKey(category))
-                    buttons[category] = new List<Button>();
+                if (verbData.CategoryIcon != null && !groupIcons.ContainsKey(verbData.Category))
+                {
+                    groupIcons.Add(verbData.Category, verbData.CategoryIcon);
+                }
 
-                buttons[category].Add(CreateVerbButton(globalVerb.GetText(user, entity), disabled, globalVerb.ToString(),
-                    entity.ToString(), () => globalVerb.Activate(user, entity)));
+                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString(),
+                    entity.ToString(),
+                    () => globalVerb.Activate(user, entity), verbData.Icon));
             }
 
             if (buttons.Count > 0)
             {
+                var first = true;
                 foreach (var (category, verbs) in buttons)
                 {
                     if (string.IsNullOrEmpty(category))
                         continue;
 
-                    vBox.AddChild(CreateCategoryButton(category, verbs));
+                    if (!first)
+                    {
+                        vBox.AddChild(new PanelContainer
+                        {
+                            CustomMinimumSize = (0, 2),
+                            PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
+                        });
+                    }
+
+                    first = false;
+
+                    groupIcons.TryGetValue(category, out var icon);
+
+                    vBox.AddChild(CreateCategoryButton(category, verbs, icon));
                 }
 
                 if (buttons.ContainsKey(""))
                 {
-                    buttons[""].Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
+                    buttons[""].Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.CurrentCulture));
 
                     foreach (var verb in buttons[""])
                     {
-                        vBox.AddChild(verb);
+                        if (!first)
+                        {
+                            vBox.AddChild(new PanelContainer
+                            {
+                                CustomMinimumSize = (0, 2),
+                                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
+                            });
+                        }
+
+                        first = false;
+
+                        vBox.AddChild(CreateVerbButton(verb));
                     }
                 }
             }
@@ -210,60 +275,91 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        private Button CreateVerbButton(string text, bool disabled, string verbName, string ownerName, Action action)
+        private VerbButton CreateVerbButton(ListedVerbData data)
         {
-            var button = new Button
+            var button = new VerbButton
             {
-                Text = text,
-                Disabled = disabled
+                Text = data.Text,
+                Disabled = data.Disabled
             };
-            if (!disabled)
+
+            if (data.Icon != null)
+            {
+                button.Icon = data.Icon.Frame0();
+            }
+
+            if (!data.Disabled)
             {
                 button.OnPressed += _ =>
                 {
-                    CloseContextMenu();
+                    CloseAllMenus();
                     try
                     {
-                        action.Invoke();
+                        data.Action.Invoke();
                     }
                     catch (Exception e)
                     {
-                        Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verbName, ownerName, e);
+                        Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", data.VerbName, data.OwnerName, e);
                     }
                 };
             }
+
             return button;
         }
 
-        private Button CreateCategoryButton(string text, List<Button> verbButtons)
+        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, SpriteSpecifier icon)
         {
-            verbButtons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
+            verbButtons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.CurrentCulture));
 
-            var button = new Button
+            return new VerbGroupButton(this, verbButtons, icon)
             {
-                Text = $"{text}...",
+                Text = text,
             };
-            button.OnPressed += _ =>
-                {
-                    _currentPopup.List.DisposeAllChildren();
-                    foreach (var verb in verbButtons)
-                    {
-                        _currentPopup.List.AddChild(verb);
-                    }
-                };
-            return button;
         }
 
-        private void CloseContextMenu()
+        private void CloseVerbMenu()
         {
-            _currentPopup?.Dispose();
-            _currentPopup = null;
+            _currentVerbListRoot?.Dispose();
+            _currentVerbListRoot = null;
             _currentEntity = EntityUid.Invalid;
+        }
+
+        private void CloseEntityList()
+        {
+            _currentEntityList?.Dispose();
+            _currentEntityList = null;
+        }
+
+        private void CloseAllMenus()
+        {
+            CloseVerbMenu();
+            CloseEntityList();
+            CloseGroupMenu();
+        }
+
+        private void CloseGroupMenu()
+        {
+            _currentGroupList?.Dispose();
+            _currentGroupList = null;
         }
 
         private IEntity GetUserEntity()
         {
             return _playerManager.LocalPlayer.ControlledEntity;
+        }
+
+        private sealed class EntityList : Popup
+        {
+            public VBoxContainer List { get; }
+
+            public EntityList()
+            {
+                AddChild(new PanelContainer
+                {
+                    Children = {(List = new VBoxContainer())},
+                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#111E")}
+                });
+            }
         }
 
         private sealed class VerbPopup : Popup
@@ -272,7 +368,271 @@ namespace Content.Client.GameObjects.EntitySystems
 
             public VerbPopup()
             {
-                AddChild(List = new VBoxContainer());
+                AddChild(new PanelContainer
+                {
+                    Children = {(List = new VBoxContainer())},
+                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#111E")}
+                });
+            }
+        }
+
+        private sealed class EntityButton : Control
+        {
+            private readonly VerbSystem _master;
+            private readonly IEntity _entity;
+
+            public EntityButton(VerbSystem master, IEntity entity)
+            {
+                _master = master;
+                _entity = entity;
+
+                MouseFilter = MouseFilterMode.Stop;
+
+                var control = new HBoxContainer {SeparationOverride = 6};
+                if (entity.TryGetComponent(out ISpriteComponent sprite))
+                {
+                    control.AddChild(new SpriteView {Sprite = sprite});
+                }
+
+                control.AddChild(new MarginContainer
+                {
+                    MarginLeftOverride = 4,
+                    MarginRightOverride = 4,
+                    Children = {new Label {Text = entity.Name}}
+                });
+
+                AddChild(control);
+            }
+
+            protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+            {
+                base.KeyBindDown(args);
+
+                if (args.Function == ContentKeyFunctions.OpenContextMenu)
+                {
+                    _master.OnContextButtonPressed(_entity);
+                    return;
+                }
+
+                if (args.Function == EngineKeyFunctions.Use)
+                {
+                    var inputSys = _master.EntitySystemManager.GetEntitySystem<InputSystem>();
+
+                    var func = args.Function;
+                    var funcId = _master._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
+
+                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, funcId, BoundKeyState.Down,
+                        _entity.Transform.GridPosition,
+                        args.PointerLocation, _entity.Uid);
+
+                    // client side command handlers will always be sent the local player session.
+                    var session = _master._playerManager.LocalPlayer.Session;
+                    inputSys.HandleInputCommand(session, func, message);
+
+                    _master.CloseAllMenus();
+                    return;
+                }
+
+                if (_master._itemSlotManager.OnButtonPressed(args, _entity))
+                {
+                    _master.CloseAllMenus();
+                }
+            }
+
+            protected override void Draw(DrawingHandleScreen handle)
+            {
+                base.Draw(handle);
+
+                if (UserInterfaceManager.CurrentlyHovered == this)
+                {
+                    handle.DrawRect(PixelSizeBox, Color.DarkSlateGray);
+                }
+            }
+        }
+
+        private sealed class VerbButton : BaseButton
+        {
+            private readonly Label _label;
+            private readonly TextureRect _icon;
+
+            public Texture Icon
+            {
+                get => _icon.Texture;
+                set => _icon.Texture = value;
+            }
+
+            public string Text
+            {
+                get => _label.Text;
+                set => _label.Text = value;
+            }
+
+            public VerbButton()
+            {
+                AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        (_icon = new TextureRect
+                        {
+                            CustomMinimumSize = (32, 32),
+                            Stretch = TextureRect.StretchMode.KeepCentered
+                        }),
+                        (_label = new Label()),
+                        // Padding
+                        new Control {CustomMinimumSize = (8, 0)}
+                    }
+                });
+            }
+
+            protected override void Draw(DrawingHandleScreen handle)
+            {
+                base.Draw(handle);
+
+                if (DrawMode == DrawModeEnum.Hover)
+                {
+                    handle.DrawRect(PixelSizeBox, Color.DarkSlateGray);
+                }
+            }
+        }
+
+        private sealed class VerbGroupButton : Control
+        {
+            private static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
+
+            private readonly VerbSystem _system;
+            public List<ListedVerbData> VerbButtons { get; }
+            private readonly Label _label;
+            private readonly TextureRect _icon;
+
+            private CancellationTokenSource _openCancel;
+
+            public string Text
+            {
+                get => _label.Text;
+                set => _label.Text = value;
+            }
+
+            public Texture Icon
+            {
+                get => _icon.Texture;
+                set => _icon.Texture = value;
+            }
+
+            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, SpriteSpecifier icon)
+            {
+                _system = system;
+                VerbButtons = verbButtons;
+
+                MouseFilter = MouseFilterMode.Stop;
+
+                AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        (_icon = new TextureRect
+                        {
+                            CustomMinimumSize = (32, 32),
+                            Stretch = TextureRect.StretchMode.KeepCentered
+                        }),
+
+                        (_label = new Label
+                        {
+                            SizeFlagsHorizontal = SizeFlags.FillExpand
+                        }),
+
+                        // Padding
+                        new Control {CustomMinimumSize = (8, 0)},
+
+                        new TextureRect
+                        {
+                            Texture = IoCManager.Resolve<IResourceCache>()
+                                .GetTexture("/Textures/UserInterface/VerbIcons/group.svg.96dpi.png"),
+                            Stretch = TextureRect.StretchMode.KeepCentered,
+                        }
+                    }
+                });
+
+                if (icon != null)
+                {
+                    _icon.Texture = icon.Frame0();
+                }
+            }
+
+            protected override void Draw(DrawingHandleScreen handle)
+            {
+                base.Draw(handle);
+
+                if (this == UserInterfaceManager.CurrentlyHovered)
+                {
+                    handle.DrawRect(PixelSizeBox, Color.DarkSlateGray);
+                }
+            }
+
+            protected override void MouseEntered()
+            {
+                base.MouseEntered();
+
+                _openCancel = new CancellationTokenSource();
+
+                Timer.Spawn(HoverDelay, () =>
+                {
+                    if (_system._currentGroupList != null)
+                    {
+                        _system.CloseGroupMenu();
+                    }
+
+                    var popup = _system._currentGroupList = new VerbPopup();
+
+                    var first = true;
+                    foreach (var verb in VerbButtons)
+                    {
+                        if (!first)
+                        {
+                            popup.List.AddChild(new PanelContainer
+                            {
+                                CustomMinimumSize = (0, 2),
+                                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
+                            });
+                        }
+
+                        first = false;
+
+                        popup.List.AddChild(_system.CreateVerbButton(verb));
+                    }
+
+                    UserInterfaceManager.ModalRoot.AddChild(popup);
+                    popup.Open(UIBox2.FromDimensions(GlobalPosition + (Width, 0), (1, 1)), GlobalPosition);
+                }, _openCancel.Token);
+            }
+
+            protected override void MouseExited()
+            {
+                base.MouseExited();
+
+                _openCancel?.Cancel();
+                _openCancel = null;
+            }
+        }
+
+        private sealed class ListedVerbData
+        {
+            public string Text { get; }
+            public bool Disabled { get; }
+            public string VerbName { get; }
+            public string OwnerName { get; }
+            public SpriteSpecifier Icon { get; }
+            public Action Action { get; }
+
+            public ListedVerbData(string text, bool disabled, string verbName, string ownerName,
+                Action action, SpriteSpecifier icon)
+            {
+                Text = text;
+                Disabled = disabled;
+                VerbName = verbName;
+                OwnerName = ownerName;
+                Action = action;
+                Icon = icon;
             }
         }
     }

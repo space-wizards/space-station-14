@@ -45,6 +45,7 @@
         public const uint MICROWAVE = 1040;
         public const uint GRAVITY_GENERATOR = 1041;
         public const uint SURGERY = 1042;
-        public const uint LASER_ABILITY = 1043;
+        public const uint MULTITOOLS = 1043;
+        public const uint LASER_ABILITY = 1044;
     }
 }

@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
@@ -16,7 +17,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class FoodComponent : Component, IAfterAttack, IUse
+    public class FoodComponent : Component, IAfterInteract, IUse
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -109,9 +110,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return true;
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            UseFood(eventArgs.Attacked);
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
+            UseFood(eventArgs.Target);
         }
 
         void UseFood(IEntity user)

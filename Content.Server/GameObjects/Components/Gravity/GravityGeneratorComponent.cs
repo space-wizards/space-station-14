@@ -1,9 +1,11 @@
 using Content.Server.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Gravity;
+using Content.Shared.GameObjects.Components.Interactable;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -11,15 +13,17 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IAttackBy, IBreakAct, IAttackHand
+    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
     {
         private BoundUserInterface _userInterface;
 
@@ -86,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Gravity
             serializer.DataField(ref _intact, "intact", true);
         }
 
-        bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent<IActorComponent>(out var actor))
                 return false;
@@ -98,29 +102,26 @@ namespace Content.Server.GameObjects.Components.Gravity
             return true;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent<WelderComponent>(out var welder)) return false;
-            if (welder.TryUse(5.0f))
-            {
-                // Repair generator
-                var damagable = Owner.GetComponent<DamageableComponent>();
-                var breakable = Owner.GetComponent<BreakableComponent>();
-                damagable.HealAllDamage();
-                breakable.broken = false;
-                _intact = true;
-
-                var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-                var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
-
-                entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
-                notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
-
-                return true;
-            } else
-            {
+            if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
                 return false;
-            }
+
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 5f))
+                return false;
+
+            // Repair generator
+            var damageable = Owner.GetComponent<DamageableComponent>();
+            var breakable = Owner.GetComponent<BreakableComponent>();
+            damageable.HealAllDamage();
+            breakable.broken = false;
+            _intact = true;
+
+            var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
+
+            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
+
+            return true;
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)

@@ -1,0 +1,230 @@
+# Base
+- type: entity
+  id: SpawnPointJobBase
+  parent: spawn_point
+  abstract: true
+  components:
+  - type: SpawnPoint
+    spawn_type: Job
+
+# Assistant
+- type: entity
+  id: SpawnPointAssistant
+  parent: SpawnPointJobBase
+  name: Spawn Point (Assistant)
+  components:
+  - type: SpawnPoint
+    job_id: Assistant
+  - type: Sprite
+    state: Assistant
+  - type: Icon
+    state: Assistant
+
+# Cargo tech
+- type: entity
+  id: SpawnPointCargoTechnician
+  parent: SpawnPointJobBase
+  name: Spawn Point (CargoTechnician)
+  components:
+  - type: SpawnPoint
+    job_id: CargoTechnician
+  - type: Sprite
+    state: Cargo Technician
+  - type: Icon
+    state: Cargo Technician
+
+# Bartender
+- type: entity
+  id: SpawnPointBartender
+  parent: SpawnPointJobBase
+  name: Spawn Point (Bartender)
+
+  components:
+  - type: SpawnPoint
+    job_id: Bartender
+  - type: Sprite
+    state: Bartender
+  - type: Icon
+    state: Bartender
+
+# Bartender
+- type: entity
+  id: SpawnPointChef
+  parent: SpawnPointJobBase
+  name: Spawn Point (Chef)
+
+  components:
+  - type: SpawnPoint
+    job_id: Chef
+  - type: Sprite
+    state: Cook
+  - type: Icon
+    state: Cook
+
+# Clown
+- type: entity
+  id: SpawnPointClown
+  parent: SpawnPointJobBase
+  name: Spawn Point (Clown)
+
+  components:
+  - type: SpawnPoint
+    job_id: Clown
+  - type: Sprite
+    state: Clown
+  - type: Icon
+    state: Clown
+
+# Janitor
+- type: entity
+  id: SpawnPointJanitor
+  parent: SpawnPointJobBase
+  name: Spawn Point (Janitor)
+
+  components:
+  - type: SpawnPoint
+    job_id: Janitor
+  - type: Sprite
+    state: Janitor
+  - type: Icon
+    state: Janitor
+
+# Captain
+- type: entity
+  id: SpawnPointCaptain
+  parent: SpawnPointJobBase
+  name: Spawn Point (Captain)
+
+  components:
+  - type: SpawnPoint
+    job_id: Captain
+  - type: Sprite
+    state: Captain
+  - type: Icon
+    state: Captain
+
+# Head of Personnel
+- type: entity
+  id: SpawnPointHeadOfPersonnel
+  parent: SpawnPointJobBase
+  name: Spawn Point (HeadOfPersonnel)
+
+  components:
+  - type: SpawnPoint
+    job_id: HeadOfPersonnel
+  - type: Sprite
+    state: Head of Personnel
+  - type: Icon
+    state: Head of Personnel
+
+# ChiefEngineer
+- type: entity
+  id: SpawnPointChiefEngineer
+  parent: SpawnPointJobBase
+  name: Spawn Point (ChiefEngineer)
+
+  components:
+  - type: SpawnPoint
+    job_id: ChiefEngineer
+  - type: Sprite
+    state: Chief Engineer
+  - type: Icon
+    state: Chief Engineer
+
+# StationEngineer
+- type: entity
+  id: SpawnPointStationEngineer
+  parent: SpawnPointJobBase
+  name: Spawn Point (StationEngineer)
+
+  components:
+  - type: SpawnPoint
+    job_id: StationEngineer
+  - type: Sprite
+    state: Station Engineer
+  - type: Icon
+    state: Station Engineer
+
+# ChiefMedicalOfficer
+- type: entity
+  id: SpawnPointChiefMedicalOfficer
+  parent: SpawnPointJobBase
+  name: Spawn Point (ChiefMedicalOfficer)
+
+  components:
+  - type: SpawnPoint
+    job_id: ChiefMedicalOfficer
+  - type: Sprite
+    state: Chief Medical Officer
+  - type: Icon
+    state: Chief Medical Officer
+
+# MedicalDoctor
+- type: entity
+  id: SpawnPointMedicalDoctor
+  parent: SpawnPointJobBase
+  name: Spawn Point (MedicalDoctor)
+
+  components:
+  - type: SpawnPoint
+    job_id: MedicalDoctor
+  - type: Sprite
+    state: Medical Doctor
+  - type: Icon
+    state: Medical Doctor
+
+# ResearchDirector
+- type: entity
+  id: SpawnPointResearchDirector
+  parent: SpawnPointJobBase
+  name: Spawn Point (ResearchDirector)
+
+  components:
+  - type: SpawnPoint
+    job_id: ResearchDirector
+  - type: Sprite
+    state: Research Director
+  - type: Icon
+    state: Research Director
+
+# Scientist
+- type: entity
+  id: SpawnPointScientist
+  parent: SpawnPointJobBase
+  name: Spawn Point (Scientist)
+
+  components:
+  - type: SpawnPoint
+    job_id: Scientist
+  - type: Sprite
+    state: Scientist
+  - type: Icon
+    state: Scientist
+
+# HeadOfSecurity
+- type: entity
+  id: SpawnPointHeadOfSecurity
+  parent: SpawnPointJobBase
+  name: Spawn Point (HeadOfSecurity)
+
+  components:
+  - type: SpawnPoint
+    job_id: HeadOfSecurity
+  - type: Sprite
+    state: Head of Security
+  - type: Icon
+    state: Head of Security
+
+# SecurityOfficer
+- type: entity
+  id: SpawnPointSecurityOfficer
+  parent: SpawnPointJobBase
+  name: Spawn Point (SecurityOfficer)
+
+  components:
+  - type: SpawnPoint
+    job_id: SecurityOfficer
+  - type: Sprite
+    state: Security Officer
+  - type: Icon
+    state: Security Officer

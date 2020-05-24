@@ -7,7 +7,7 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.15,-0.3,0.2,0.3"
-      mask: 26
+      mask: 0
       layer: 32
   - type: PowerCell
   - type: Appearance
@@ -116,7 +116,7 @@
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer2D
-  - type: Wrenchable
+  - type: Anchorable
   - type: Physics
     mass: 5
   - type: Clickable
@@ -148,7 +148,7 @@
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer2D
-  - type: Wrenchable
+  - type: Anchorable
   - type: Physics
     mass: 5
   - type: Clickable

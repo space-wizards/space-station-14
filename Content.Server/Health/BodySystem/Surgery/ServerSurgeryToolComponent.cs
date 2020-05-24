@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.BodySystem;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.BodySystem;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
@@ -27,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
 
     [RegisterComponent]
-    public class ServerSurgeryToolComponent : SharedSurgeryToolComponent, IAfterAttack
+    public class ServerSurgeryToolComponent : SharedSurgeryToolComponent, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -40,11 +41,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private BodyManagerComponent _targetCache;
         private IEntity _performerCache;
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.Attacked == null)
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
+            if (eventArgs.Target == null)
                 return;
-            if (eventArgs.Attacked.TryGetComponent<BodySystem.BodyManagerComponent>(out BodySystem.BodyManagerComponent bodyManager))
+            if (eventArgs.Target.TryGetComponent<BodySystem.BodyManagerComponent>(out BodySystem.BodyManagerComponent bodyManager))
             {
                 _surgeryOptionsCache.Clear();
                 var toSend = new Dictionary<string, string>();

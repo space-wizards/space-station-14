@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects
 
             if (entity.TryGetComponent(out CollidableComponent collidable))
             {
-                collidable.CollisionEnabled = false;
+                collidable.CanCollide = false;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Content.Server.GameObjects
 
             if (entity.TryGetComponent(out CollidableComponent collidable))
             {
-                collidable.CollisionEnabled = true;
+                collidable.CanCollide = true;
             }
         }
 

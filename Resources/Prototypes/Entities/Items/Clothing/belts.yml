@@ -28,6 +28,7 @@
 - type: entity
   id: UtilityBeltClothingFilled
   parent: UtilityBeltClothing
+  suffix: Filled
   components:
   - type: UtilityBeltClothingFill
 

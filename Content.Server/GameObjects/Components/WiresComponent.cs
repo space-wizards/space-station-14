@@ -1,18 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Interactable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -20,11 +23,12 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class WiresComponent : SharedWiresComponent, IAttackBy, IExamine
+    public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine
     {
 #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
@@ -108,7 +112,7 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            _audioSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            _audioSystem = EntitySystem.Get<AudioSystem>();
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
@@ -235,38 +239,38 @@ namespace Content.Server.GameObjects.Components
                         return;
                     }
 
-                    var interactionSystem = IoCManager.Resolve<EntitySystemManager>().GetEntitySystem<InteractionSystem>();
-                    if (!interactionSystem.InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
+                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
                     {
                         _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You can't reach there!"));
                         return;
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
+                    activeHandEntity.TryGetComponent<ToolComponent>(out var tool);
                     switch (msg.Action)
                     {
                         case WiresAction.Cut:
-                            if (activeHandEntity?.HasComponent<WirecutterComponent>() != true)
+                            if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
                             {
                                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
                             }
-                            _audioSystem.Play("/Audio/items/wirecutter.ogg", Owner);
+                            tool.PlayUseSound();
                             wire.IsCut = true;
                             UpdateUserInterface();
                             break;
                         case WiresAction.Mend:
-                            if (activeHandEntity?.HasComponent<WirecutterComponent>() != true)
+                            if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
                             {
                                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
                             }
-                            _audioSystem.Play("/Audio/items/wirecutter.ogg", Owner);
+                            tool.PlayUseSound();
                             wire.IsCut = false;
                             UpdateUserInterface();
                             break;
                         case WiresAction.Pulse:
-                            if (activeHandEntity?.HasComponent<MultitoolComponent>() != true)
+                            if (tool == null || !tool.HasQuality(ToolQuality.Multitool))
                             {
                                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a multitool in your hand!"));
                                 return;
@@ -294,17 +298,16 @@ namespace Content.Server.GameObjects.Components
             _userInterface.SetState(new WiresBoundUserInterfaceState(clientList, _statuses.Values.ToList()));
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<ScrewdriverComponent>())
-            {
+            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
-            }
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Screwing))
+                return false;
 
             IsPanelOpen = !IsPanelOpen;
-            IoCManager.Resolve<IEntitySystemManager>()
-                .GetEntitySystem<AudioSystem>()
-                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg");
+            EntitySystem.Get<AudioSystem>()
+                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg", Owner);
             return true;
         }
 

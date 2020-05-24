@@ -2,6 +2,7 @@ using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Fluids
     /// Can a mop click on this entity and dump its fluids
     /// </summary>
     [RegisterComponent]
-    public class BucketComponent : Component, IAttackBy
+    public class BucketComponent : Component, IInteractUsing
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -70,9 +71,9 @@ namespace Content.Server.GameObjects.Components.Fluids
             return true;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent(out MopComponent mopComponent))
+            if (!eventArgs.Using.TryGetComponent(out MopComponent mopComponent))
             {
                 return false;
             }

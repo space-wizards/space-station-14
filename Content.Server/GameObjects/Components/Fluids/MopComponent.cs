@@ -2,6 +2,7 @@ using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Fluids
     /// For cleaning up puddles
     /// </summary>
     [RegisterComponent]
-    public class MopComponent : Component, IAfterAttack
+    public class MopComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -57,10 +58,12 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             Solution solution;
-            if (eventArgs.Attacked == null)
+            if (eventArgs.Target == null)
             {
                 if (CurrentVolume <= 0)
                 {
@@ -74,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            if (!eventArgs.Attacked.TryGetComponent(out PuddleComponent puddleComponent))
+            if (!eventArgs.Target.TryGetComponent(out PuddleComponent puddleComponent))
             {
                 return;
             }

@@ -14,12 +14,12 @@
     amount: 2
     icon: Buildings/wall_girder.png
     reverse:
-      tool: Wrench
+      tool: Anchoring
 
   - material: Metal
     amount: 2
     reverse:
-      tool: Wrench
+      tool: Anchoring
 
 - type: construction
   name: Table
@@ -65,12 +65,12 @@
     amount: 2
     icon: Buildings/wall_girder.png
     reverse:
-      tool: Wrench
+      tool: Anchoring
 
   - material: Metal
     amount: 2
     reverse:
-      tool: Wrench
+      tool: Anchoring
 
 - type: construction
   name: Rein Window
@@ -87,11 +87,11 @@
   - material: Glass
     amount: 2
     reverse:
-      tool: Wrench
+      tool: Anchoring
 
 # Should be replaced with Metal Rods when someone puts them in.
   - material: Metal
     amount: 2
     reverse:
       # Should be replaced with Wirecutter when someone makes it work.
-      tool: Wrench
+      tool: Anchoring

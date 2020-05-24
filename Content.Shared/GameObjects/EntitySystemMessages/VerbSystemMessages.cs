@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.EntitySystemMessages
 {
@@ -21,29 +22,33 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
         [Serializable, NetSerializable]
         public class VerbsResponseMessage : EntitySystemMessage
         {
-            public readonly List<VerbData> Verbs;
+            public readonly NetVerbData[] Verbs;
             public readonly EntityUid Entity;
 
-            public VerbsResponseMessage(List<VerbData> verbs, EntityUid entity)
+            public VerbsResponseMessage(NetVerbData[] verbs, EntityUid entity)
             {
                 Verbs = verbs;
                 Entity = entity;
             }
 
             [Serializable, NetSerializable]
-            public readonly struct VerbData
+            public readonly struct NetVerbData
             {
                 public readonly string Text;
                 public readonly string Key;
                 public readonly string Category;
+                public readonly SpriteSpecifier Icon;
+                public readonly SpriteSpecifier CategoryIcon;
                 public readonly bool Available;
 
-                public VerbData(string text, string key, string category, bool available)
+                public NetVerbData(VerbData data, string key)
                 {
-                    Text = text;
+                    Text = data.Text;
                     Key = key;
-                    Category = category;
-                    Available = available;
+                    Category = data.Category;
+                    CategoryIcon = data.CategoryIcon;
+                    Icon = data.Icon;
+                    Available = data.Visibility == VerbVisibility.Visible;
                 }
             }
         }

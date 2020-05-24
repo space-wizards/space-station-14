@@ -21,13 +21,14 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Robust.Shared.Audio;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class KitchenMicrowaveComponent : SharedMicrowaveComponent, IActivate, IAttackBy, ISolutionChange
+    public class KitchenMicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -177,12 +178,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 return;
             }
+
             UpdateUserInterface();
             _userInterface.Open(actor.playerSession);
 
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand.Owner;
 
@@ -224,6 +226,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (!itemEntity.TryGetComponent(typeof(FoodComponent), out var food))
             {
+
+                _notifyManager.PopupMessage(Owner, eventArgs.User, "That won't work!");
                 return false;
             }
 

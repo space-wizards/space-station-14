@@ -1,12 +1,14 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Construction;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
@@ -16,6 +18,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
@@ -47,15 +50,12 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
-            var transform = Owner.Transform;
-
-            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-            if (!interactionSystem.InRangeUnobstructed(loc.ToMap(_mapManager), Owner.Transform.WorldPosition, ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
+            if (!InteractionChecks.InRangeUnobstructed(Owner, loc.ToMapPos(_mapManager),
+                ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
             {
-                _notifyManager.PopupMessage(transform.GridPosition, Owner,
-                        _localizationManager.GetString("You can't reach there!"));
                 return;
             }
+
 
             if (prototype.Stages.Count < 2)
             {

@@ -3,7 +3,7 @@ using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -30,8 +30,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return false;
             }
 
-            return IoCManager.Resolve<IEntitySystemManager>()
-                .GetEntitySystem<SharedInteractionSystem>()
+            return EntitySystem.Get<SharedInteractionSystem>()
                 .InRangeUnobstructed(examiner.Transform.MapPosition, examined.Transform.MapPosition.Position,
                     ExamineRange, predicate: entity => entity == examiner || entity == examined, insideBlockerValid:true);
         }
