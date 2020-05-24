@@ -6,7 +6,7 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["External"]
+    necessary: ["External"]
 
 - type: entity
   parent: AirlockEngineering
@@ -15,7 +15,7 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["Engineering"]
+    necessary: ["Engineering"]
 - type: entity
   parent: AirlockEngineeringGlass
   id: AirlockEngineeringGlassLocked
@@ -23,7 +23,7 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["Engineering"]
+    necessary: ["Engineering"]
 
 - type: entity
   parent: AirlockMedical
@@ -32,7 +32,7 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["Medical"]
+    necessary: ["Medical"]
 - type: entity
   parent: AirlockMedicalGlass
   id: AirlockMedicalGlassLocked
@@ -40,7 +40,7 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["Medical"]
+    necessary: ["Medical"]
 
 - type: entity
   parent: AirlockScience
@@ -49,7 +49,7 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["Science"]
+    necessary: ["Science"]
 - type: entity
   parent: AirlockScienceGlass
   id: AirlockScienceGlassLocked
@@ -57,7 +57,7 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["Science"]
+    necessary: ["Science"]
 
 - type: entity
   parent: AirlockCommand
@@ -66,7 +66,7 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["Command"]
+    necessary: ["Command"]
 - type: entity
   parent: AirlockCommandGlass
   id: AirlockCommandGlassLocked
@@ -74,7 +74,7 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["Command"]
+    necessary: ["Command"]
 
 - type: entity
   parent: AirlockSecurity
@@ -83,7 +83,7 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["Security"]
+    necessary: ["Security"]
 - type: entity
   parent: AirlockSecurityGlass
   id: AirlockSecurityGlassLocked
@@ -91,4 +91,4 @@
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["Security"]
+    necessary: ["Security"]
