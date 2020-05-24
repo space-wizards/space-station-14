@@ -82,6 +82,10 @@
   - type: Icon
     sprite: Objects/Tools/welder.rsi
     state: welder
+  - type: Item
+    Size: 10
+    sprite: Objects/Tools/welder.rsi
+    HeldPrefix: off
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: ItemStatus
@@ -92,6 +96,7 @@
       reagents:
         - ReagentId: chem.WeldingFuel
           Quantity: 100
+
   - type: Welder
     useSoundCollection: Welder
 
@@ -102,9 +107,13 @@
   description: A common tool for assembly and disassembly, righty tighty lefty loosey
   components:
   - type: Sprite
-    texture: Objects/Tools/wrench.png
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Tools/wrench.png
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/wrench.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
@@ -119,9 +128,35 @@
   description: A multipurpose tool to pry open doors and fight interdimensional invaders
   components:
   - type: Sprite
-    texture: Objects/Tools/crowbar.png
+    sprite: Objects/Tools/crowbar.rsi
+    state: icon
   - type: Icon
-    texture: Objects/Tools/crowbar.png
+    sprite: Objects/Tools/crowbar.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/crowbar.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Tool
+    qualities:
+      - Prying
+    useSound: /Audio/items/crowbar.ogg
+  - type: TilePrying
+
+- type: entity
+  name: Emergency Crowbar
+  parent: BaseItem
+  id: CrowbarRed
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/crowbar_red.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Tools/crowbar_red.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/crowbar_red.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool

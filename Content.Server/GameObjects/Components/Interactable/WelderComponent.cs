@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -126,10 +126,13 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// </summary>
         private bool ToggleWelderStatus(IEntity user = null)
         {
+            var item = Owner.GetComponent<ItemComponent>();
+
             if (WelderLit)
             {
                 WelderLit = false;
                 // Layer 1 is the flame.
+                item.EquippedPrefix = "off";
                 _spriteComponent.LayerSetVisible(1, false);
                 PlaySoundCollection("WelderOff", -5);
                 _welderSystem.Unsubscribe(this);
@@ -143,6 +146,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             WelderLit = true;
+            item.EquippedPrefix = "on";
             _spriteComponent.LayerSetVisible(1, true);
             PlaySoundCollection("WelderOn", -5);
             _welderSystem.Subscribe(this);
