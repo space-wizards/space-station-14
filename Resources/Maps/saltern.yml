@@ -18121,14 +18121,14 @@ entities:
   components:
   - parent: 0
     pos: 0.5,-19.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2389
   type: airlock_science
   components:
   - parent: 0
     pos: 0.5,-20.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2390
   type: airlock_science_glass
@@ -18149,21 +18149,21 @@ entities:
   components:
   - parent: 0
     pos: -12.5,-19.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2393
   type: airlock_science
   components:
   - parent: 0
     pos: -12.5,-20.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2394
   type: airlock_science
   components:
   - parent: 0
     pos: -8.5,-21.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2395
   type: Table
@@ -19194,12 +19194,14 @@ entities:
   components:
   - parent: 0
     pos: 0.5,17.5
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2527
   type: AirlockCommand
   components:
   - parent: 0
     pos: 6.5,17.5
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2528
   type: Table
@@ -21964,4 +21966,130 @@ entities:
     pos: -12.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
+- uid: 2852
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: -36.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: escape
+    type: WarpPoint
+- uid: 2853
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: -24.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: dorms
+    type: WarpPoint
+- uid: 2854
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: -4.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: bar
+    type: WarpPoint
+- uid: 2855
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: -6.5,-19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: sci
+    type: WarpPoint
+- uid: 2856
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: 14.5,-9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: med
+    type: WarpPoint
+- uid: 2857
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: 34.5,4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: eng
+    type: WarpPoint
+- uid: 2858
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: 19.5,11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: cargo
+    type: WarpPoint
+- uid: 2859
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: -6.5,13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: sec
+    type: WarpPoint
+- uid: 2860
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: 3.5,29.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: bridge
+    type: WarpPoint
+- uid: 2861
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: 9.5,19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: hop
+    type: WarpPoint
+- uid: 2862
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: 49.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: grav
+    type: WarpPoint
+- uid: 2863
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: 16.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: chem
+    type: WarpPoint
+- uid: 2864
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: 8.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: eva
+    type: WarpPoint
+- uid: 2865
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: 7.5,25.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: cap
+    type: WarpPoint
 ...
