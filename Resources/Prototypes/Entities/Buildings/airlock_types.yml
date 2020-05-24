@@ -5,10 +5,8 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_external.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_external.rsi
-
   - type: Appearance
     visuals:
     - type: AirlockVisualizer2D
@@ -24,10 +22,8 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_engineering.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_engineering.rsi
-
 
 - type: entity
   parent: AirlockGlass
@@ -36,7 +32,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_engineering_glass.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_engineering_glass.rsi
 
@@ -47,7 +42,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_medical.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_medical.rsi
 
@@ -58,10 +52,8 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_medical_glass.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_medical_glass.rsi
-
 
 - type: entity
   parent: Airlock
@@ -70,7 +62,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_science.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_science.rsi
 
@@ -81,10 +72,8 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_science_glass.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_science_glass.rsi
-
 
 - type: entity
   parent: Airlock
@@ -93,7 +82,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_command.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_command.rsi
 
@@ -104,10 +92,8 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_command_glass.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_command_glass.rsi
-
 
 - type: entity
   parent: Airlock
@@ -116,7 +102,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_security.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_security.rsi
 
@@ -127,7 +112,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_security_glass.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_security_glass.rsi
 
@@ -138,7 +122,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_maint.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_maint.rsi
 
@@ -150,7 +133,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_maint_cargo.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_cargo.rsi
 
@@ -162,7 +144,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_maint_command.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_command.rsi
 
@@ -174,7 +155,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_maint_common.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_common.rsi
 
@@ -186,7 +166,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_maint_engi.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_engi.rsi
 
@@ -198,7 +177,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_maint_int.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_int.rsi
 
@@ -210,7 +188,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_maint_med.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_med.rsi
 
@@ -222,7 +199,6 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_maint_rnd.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_rnd.rsi
 
@@ -234,6 +210,5 @@
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_maint_sec.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_sec.rsi
