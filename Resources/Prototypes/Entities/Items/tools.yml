@@ -28,6 +28,8 @@
       green: "#0e7f1b"
       cyan: "#18a2d5"
       yellow: "#d58c18"
+  - type: Item
+    sprite: Objects/Tools/wirecutters.rsi
 
 - type: entity
   name: Screwdriver
