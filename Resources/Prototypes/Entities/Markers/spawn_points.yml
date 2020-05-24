@@ -34,3 +34,17 @@
 
   - type: Icon
     state: cross_red
+
+- type: entity
+  name: Observer Spawn Point
+  id: SpawnPointObserver
+  parent: spawn_point
+  components:
+  - type: Sprite
+    state: observer_start
+
+  - type: SpawnPoint
+    spawn_type: Observer
+
+  - type: Icon
+    state: observer_start
