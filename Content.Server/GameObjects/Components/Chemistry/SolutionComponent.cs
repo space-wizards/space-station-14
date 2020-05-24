@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private Solution _containedSolution = new Solution();
         private ReagentUnit _maxVolume;
         private SolutionCaps _capabilities;
-        private string _fillInitState;
+        private string _fillInitState = "";
         private int _fillInitSteps;
         private string _fillPathString = "Objects/Chemistry/fillings.rsi";
         private ResourcePath _fillPath;
