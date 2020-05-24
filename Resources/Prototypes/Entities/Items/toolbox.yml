@@ -28,8 +28,11 @@
 
 - type: entity
   id: ToolboxEmergencyFilled
+  name: Emergency Toolbox
   parent: ToolboxEmergency
   suffix: Filled
+  components:
+  - type: ToolboxEmergencyFill
 
 - type: entity
   name: Mechanical Toolbox
@@ -113,3 +116,11 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+
+- type: entity
+  id: ToolboxGoldFilled
+  name: Golden Toolbox
+  parent: ToolboxGolden
+  suffix: Filled
+  components:
+  - type: ToolboxGoldFill
