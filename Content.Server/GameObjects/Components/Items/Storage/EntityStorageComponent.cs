@@ -32,19 +32,8 @@ namespace Content.Server.GameObjects.Components
         private bool IsCollidableWhenOpen;
         private Container Contents;
         private IEntityQuery entityQuery;
-        private bool _locked;
         private bool _showContents;
-        private bool _noDoor;
-
-        /// <summary>
-        /// Determines if the storage is locked, meaning it cannot be opened.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Locked
-        {
-            get => _locked;
-            set => _locked = value;
-        }
+        private bool _open;
 
         /// <summary>
         /// Determines if the container contents should be drawn when the container is closed.
@@ -60,17 +49,6 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
-        /// <summary>
-        /// Disables door control, and synchronizes the door with the lock. This is used for
-        /// attaching entities to the container without having a toggleable door.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool NoDoor
-        {
-            get => _noDoor;
-            set => _noDoor = value;
-        }
-
         /// <inheritdoc />
         public override void Initialize()
         {
@@ -79,9 +57,6 @@ namespace Content.Server.GameObjects.Components
             entityQuery = new IntersectingEntityQuery(Owner);
 
             Contents.ShowContents = _showContents;
-
-            if (_noDoor && !_locked)
-                Open = true;
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
@@ -96,20 +71,20 @@ namespace Content.Server.GameObjects.Components
 
             serializer.DataField(ref StorageCapacityMax, "Capacity", 30);
             serializer.DataField(ref IsCollidableWhenOpen, "IsCollidableWhenOpen", false);
-            serializer.DataField(ref _locked, "locked", false);
             serializer.DataField(ref _showContents, "showContents", false);
-            serializer.DataField(ref _noDoor, "noDoor", false);
+            serializer.DataField(ref _open, "open", false);
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Open { get; private set; }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
+        public bool Open
         {
-            if(_noDoor)
-                ToggleLock();
-            else
-                ToggleOpen();
+            get => _open;
+            private set => _open = value;
+        }
+
+        public virtual void Activate(ActivateEventArgs eventArgs)
+        {
+            ToggleOpen();
         }
 
         private void ToggleOpen()
@@ -122,22 +97,6 @@ namespace Content.Server.GameObjects.Components
             {
                 OpenStorage();
             }
-        }
-
-        private void ToggleLock()
-        {
-            _locked = !_locked;
-
-            if(_noDoor)
-            {
-                if(_locked)
-                    CloseStorage();
-                else
-                    OpenStorage();
-            }
-
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-                soundComponent.Play(_locked ? "/Audio/machines/lockenable.ogg" : "/Audio/machines/lockreset.ogg");
         }
 
         private void CloseStorage()
@@ -175,9 +134,6 @@ namespace Content.Server.GameObjects.Components
 
         private void OpenStorage()
         {
-            if (_locked)
-                return;
-
             Open = true;
             EmptyContents();
             ModifyComponents();
@@ -323,35 +279,11 @@ namespace Content.Server.GameObjects.Components
             return Contents.CanInsert(entity);
         }
 
-        /// <summary>
-        /// Adds a verb that toggles the lock of the storage.
-        /// </summary>
-        [Verb]
-        private sealed class LockToggleVerb : Verb<EntityStorageComponent>
-        {
-            protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
-            {
-                data.Text = component._locked ? "Unlock" : "Lock";
-            }
-
-            /// <inheritdoc />
-            protected override void Activate(IEntity user, EntityStorageComponent component)
-            {
-                component.ToggleLock();
-            }
-        }
-
         [Verb]
         private sealed class OpenToggleVerb : Verb<EntityStorageComponent>
         {
             protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
             {
-                if (component.NoDoor)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
                 data.Text = component.Open ? "Close" : "Open";
             }
 
