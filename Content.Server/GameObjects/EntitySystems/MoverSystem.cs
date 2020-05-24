@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Sound;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -151,7 +152,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 physics.SetController<MoverController>();
             }
 
-            var weightless = _physicsManager.IsWeightless(transform.GridPosition);
+            var weightless = !transform.Owner.HasComponent<MovementIgnoreGravityComponent>() &&
+                             _physicsManager.IsWeightless(transform.GridPosition);
 
             if (weightless && collider != null)
             {
