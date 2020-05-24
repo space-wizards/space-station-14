@@ -3,7 +3,7 @@ using Robust.Shared.IoC;
 using System;
 using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.Components.NodeGroup
+namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     public interface INodeGroupFactory
     {
@@ -45,5 +45,13 @@ namespace Content.Server.GameObjects.Components.NodeGroup
             }
             throw new ArgumentException($"{nodeGroupType} did not have an associated {nameof(INodeGroup)}.");
         }
+    }
+
+    public enum NodeGroupID
+    {
+        Default,
+        HVPower,
+        MVPower,
+        LVPower,
     }
 }

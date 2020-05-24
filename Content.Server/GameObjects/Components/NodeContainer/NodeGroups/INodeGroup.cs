@@ -1,8 +1,8 @@
-﻿using Robust.Shared.ViewVariables;
+﻿using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Content.Server.GameObjects.Components.NodeGroup
+namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     //todo: add virtual methods for power network to override
 
@@ -20,6 +20,10 @@ namespace Content.Server.GameObjects.Components.NodeGroup
 
         void CombineGroup(INodeGroup group);
 
+        /// <summary>
+        ///     Causes all <see cref="INode"/>s to remake their groups. Called when a <see cref="INode"/> is removed
+        ///     and may have split a group in two, so multiple new groups may need to be formed.
+        /// </summary>
         void RemakeGroup();
     }
 
@@ -52,6 +56,7 @@ namespace Content.Server.GameObjects.Components.NodeGroup
             //This should now be GC-able
         }
 
+        // <inheritdoc cref="INodeGroup"/>
         public void RemakeGroup()
         {
             foreach (var node in Nodes)
@@ -62,7 +67,7 @@ namespace Content.Server.GameObjects.Components.NodeGroup
             {
                 if (node.TryAssignGroupIfNeeded())
                 {
-                    node.SpreadRemadeGroup();
+                    node.SpreadGroup();
                 }
             }
             //This should now be GC-able

@@ -12,7 +12,8 @@ using Content.Shared.Kitchen;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.IoC;
-using Content.Server.GameObjects.Components.NodeGroup;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 
 namespace Content.Server
 {
@@ -32,6 +33,7 @@ namespace Content.Server
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
+            IoCManager.Register<INodeFactory, NodeFactory>();
         }
     }
 }

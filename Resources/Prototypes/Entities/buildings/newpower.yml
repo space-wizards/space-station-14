@@ -26,7 +26,8 @@
   - type: IconSmooth
     base: hvcable_
     key: hv_cables
-  - type: HVWire
+  - type: NodeContainer
+    nodeTypes: {HVPower : AdjacentNode}
   
 - type: entity
   parent: WireBase
@@ -53,7 +54,6 @@
   - type: IconSmooth
     base: lvcable_
     key: lv_cables
-  - type: LVWire
   
 #Not Implemented
 

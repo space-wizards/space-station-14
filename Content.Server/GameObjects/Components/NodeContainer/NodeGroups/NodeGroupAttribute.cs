@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Content.Server.GameObjects.Components.NodeGroup
+namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     /// <summary>
     ///     Associates a <see cref="INodeGroup"/> implementation with a <see cref="NodeGroupID"/>.

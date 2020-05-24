@@ -144,7 +144,8 @@ namespace Content.Client
                 "Mop",
                 "Bucket",
                 "Puddle",
-                "CanSpill"
+                "CanSpill",
+                "NodeContainer",
             };
 
             foreach (var ignoreName in registerIgnore)

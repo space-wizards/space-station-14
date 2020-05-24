@@ -1,60 +1,76 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Content.Server.GameObjects.Components.NodeGroup
+namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
     /// <summary>
-    ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="@string"/>s
-    ///     that they can "reach" and have the same <see cref="NodeGroupID"/>.
+    ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="INode"/>s
+    ///     that they can "reach" and have the same <see cref="INode.NodeGroupID"/>.
     /// </summary>
     public interface INode
     {
+        /// <summary>
+        ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
+        ///     implementation is used as a group, detailed in <see cref="INodeGroupFactory"/>.
+        /// </summary>
         NodeGroupID NodeGroupID { get; }
 
+        /// <summary>
+        ///     The <see cref="INodeGroup"/> this <see cref="Node"/> is currently in.
+        /// </summary>
         public INodeGroup NodeGroup { get; set; }
+
+        void OnContainerInitialize();
+
+        void OnContainerRemove();
 
         bool TryAssignGroupIfNeeded();
 
-        void SpreadRemadeGroup();
+        void SpreadGroup();
     }
 
-    public abstract class NodeComponent : Component, INode
+    public abstract class Node : INode
     {
+        // <inheritdoc cref="INode"/>
         [ViewVariables]
-        public NodeGroupID NodeGroupID => _nodeGroupID;
-        private NodeGroupID _nodeGroupID;
+        public NodeGroupID NodeGroupID { get; }
 
+        // <inheritdoc cref="INode"/>
         [ViewVariables]
         public INodeGroup NodeGroup { get => _nodeGroup; set => SetNodeGroup(value); }
         private INodeGroup _nodeGroup;
+
+        /// <summary>
+        ///     The <see cref="NodeContainerComponent"/> this <see cref="Node"/> is held in.
+        /// </summary>
+        [ViewVariables]
+        public NodeContainerComponent Container { get; private set; }
 
 #pragma warning disable 649
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
 #pragma warning restore 649
 
-        public override void ExposeData(ObjectSerializer serializer)
+        protected Node(NodeGroupID nodeGroupID, NodeContainerComponent container)
         {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _nodeGroupID, "nodeGroupID", NodeGroupID.Default);
+            NodeGroupID = nodeGroupID;
+            Container = container;
         }
 
-        public override void Initialize()
+        public void OnContainerInitialize()
         {
-            base.Initialize();
             TryAssignGroupIfNeeded();
-            SpreadGroup();
+            CombineGroupWithReachable();
         }
 
-        public override void OnRemove()
+        public void OnContainerRemove()
         {
-            base.OnRemove();
             NodeGroup.RemoveNode(this);
             _nodeGroup = null;
+            Container = null;
         }
 
         public bool TryAssignGroupIfNeeded()
@@ -67,22 +83,22 @@ namespace Content.Server.GameObjects.Components.NodeGroup
             return true;
         }
 
-        public void SpreadRemadeGroup()
+        public void SpreadGroup()
         {
             Debug.Assert(NodeGroup != null);
             foreach (var node in GetReachableCompatibleNodes().Where(node => node.NodeGroup == null))
             {
                 node.NodeGroup = NodeGroup;
-                node.SpreadRemadeGroup();
+                node.SpreadGroup();
             }
         }
 
         /// <summary>
-        ///     Strategy for how to find other reachable <see cref="@string"/>s to group with.
+        ///     Strategy for how to find other reachable <see cref="INode"/>s to group with.
         /// </summary>
-        protected abstract IEnumerable<NodeComponent> GetReachableNodes();
+        protected abstract IEnumerable<INode> GetReachableNodes();
 
-        private IEnumerable<NodeComponent> GetReachableCompatibleNodes()
+        private IEnumerable<INode> GetReachableCompatibleNodes()
         {
             return GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID)
                 .Where(node => node != this);
@@ -94,7 +110,7 @@ namespace Content.Server.GameObjects.Components.NodeGroup
                 .Where(group => group != NodeGroup);
         }
 
-        private void SpreadGroup(bool remakingGroup = false)
+        private void CombineGroupWithReachable()
         {
             Debug.Assert(NodeGroup != null);
             foreach (var group in GetReachableCompatibleGroups())
@@ -113,13 +129,5 @@ namespace Content.Server.GameObjects.Components.NodeGroup
         {
             return _nodeGroupFactory.MakeNodeGroup(NodeGroupID);
         }
-    }
-
-    public enum NodeGroupID
-    {
-        Default,
-        HVPower,
-        MVPower,
-        LVPower,
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Content.Server.Cargo;
-using Content.Server.GameObjects.Components.NodeGroup;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
@@ -84,6 +85,7 @@ namespace Content.Server
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
+            IoCManager.Resolve<INodeFactory>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
