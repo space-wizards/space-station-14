@@ -87,15 +87,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return false;
         }
 
-        bool TryTransfer(InteractUsingEventArgs eventArgs, SolutionComponent attackSolution, SolutionComponent targetSolution)
+        bool TryTransfer(InteractUsingEventArgs eventArgs, SolutionComponent fromSolution, SolutionComponent toSolution)
         {
-            var attackEntity = attackSolution.Owner;
-
-            if (!attackEntity.TryGetComponent<PourableComponent>(out var attackPourable))
+            var fromEntity = fromSolution.Owner;
+            if (!fromEntity.TryGetComponent<PourableComponent>(out var fromPourable))
                 return false;
 
             //Get transfer amount. May be smaller than _transferAmount if not enough room
-            var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, targetSolution.EmptyVolume);
+            var realTransferAmount = ReagentUnit.Min(fromPourable.TransferAmount, toSolution.EmptyVolume);
             if (realTransferAmount <= 0) //Special message if container is full
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
@@ -104,8 +103,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Move units from attackSolution to targetSolution
-            var removedSolution = attackSolution.SplitSolution(realTransferAmount);
-            if (!targetSolution.TryAddSolution(removedSolution))
+            var removedSolution = fromSolution.SplitSolution(realTransferAmount);
+            if (!toSolution.TryAddSolution(removedSolution))
                 return false;
 
             _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
