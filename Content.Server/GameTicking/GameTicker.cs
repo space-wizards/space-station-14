@@ -98,6 +98,7 @@ namespace Content.Server.GameTicking
         }
 
         public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
+        public event Action<GameRuleAddedEventArgs> OnRuleAdded;
 
         private TimeSpan LobbyDuration =>
             TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
@@ -327,7 +328,23 @@ namespace Content.Server.GameTicking
             _gameRules.Add(instance);
             instance.Added();
 
+            OnRuleAdded?.Invoke(new GameRuleAddedEventArgs(instance));
+
             return instance;
+        }
+
+        public bool HasGameRule(Type t)
+        {
+            if (t == null || !t.IsAssignableFrom(typeof(GameRule)))
+                return false;
+
+            foreach (var rule in _gameRules)
+            {
+                if (rule.GetType().Equals(t))
+                    return true;
+            }
+
+            return false;
         }
 
         public void RemoveGameRule(GameRule rule)
@@ -785,5 +802,15 @@ The current game mode is: [color=white]{0}[/color].
 
         public GameRunLevel OldRunLevel { get; }
         public GameRunLevel NewRunLevel { get; }
+    }
+
+    public class GameRuleAddedEventArgs : EventArgs
+    {
+        public GameRule GameRule { get; }
+
+        public GameRuleAddedEventArgs(GameRule rule)
+        {
+            GameRule = rule;
+        }
     }
 }

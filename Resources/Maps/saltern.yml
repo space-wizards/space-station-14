@@ -17189,8 +17189,7 @@ entities:
     pos: -1.7489221,25.142187
     rot: 3.141592653589793 rad
     type: Transform
-  - maxVol: 0
-    fillingSteps: 0
+  - fillingSteps: 0
     type: Solution
 - uid: 2287
   type: Pen
@@ -21080,6 +21079,11 @@ entities:
     pos: 0.5,26.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2756
   type: WardrobeCargoFilled
   components:
@@ -21409,6 +21413,11 @@ entities:
     pos: -39.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2780
   type: PottedPlantRandom
   components:
@@ -21416,6 +21425,11 @@ entities:
     pos: -25.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2781
   type: LockerEmergencyFilledRandom
   components:
@@ -21437,6 +21451,11 @@ entities:
     pos: -2.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2783
   type: LockerEmergencyFilledRandom
   components:
@@ -21486,6 +21505,11 @@ entities:
     pos: 7.5,23.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2787
   type: PottedPlantRandom
   components:
@@ -21493,6 +21517,11 @@ entities:
     pos: 10.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2788
   type: LockerEmergencyFilledRandom
   components:
@@ -21528,6 +21557,11 @@ entities:
     pos: -24.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2791
   type: LockerEmergencyFilledRandom
   components:
@@ -21549,6 +21583,11 @@ entities:
     pos: 1.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2793
   type: LockerBoozeFilled
   components:
@@ -21593,6 +21632,11 @@ entities:
     pos: 5.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2797
   type: PottedPlantRandom
   components:
@@ -21600,6 +21644,11 @@ entities:
     pos: 12.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2798
   type: PottedPlantRandomPlastic
   components:
@@ -21607,6 +21656,11 @@ entities:
     pos: 29.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2799
   type: PottedPlantRandom
   components:
@@ -21614,6 +21668,11 @@ entities:
     pos: 21.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2800
   type: PottedPlantRandomPlastic
   components:
@@ -21621,6 +21680,11 @@ entities:
     pos: -12.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2801
   type: SpawnPointCargoTechnician
   components:
@@ -22858,6 +22922,188 @@ entities:
   components:
   - parent: 0
     pos: 17.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2977
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: -20.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2978
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: -28.5,13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2979
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: -29.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2980
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: -0.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2981
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 6.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2982
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 10.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2983
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 15.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2984
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 10.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2985
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 18.5,-24.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2986
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 17.5,-20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2987
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 22.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2988
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: 23.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2989
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: -2.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2990
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: -14.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2991
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: -32.5,-8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2992
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 0
+    pos: -18.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2993
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 0
+    pos: -31.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2994
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 0
+    pos: -20.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2995
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: -7.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2996
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: -7.5,21.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2997
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 0
+    pos: 6.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2998
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: 0.5,28.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2999
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: 6.5,28.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3000
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 0
+    pos: -13.5,24.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3001
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: -4.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3002
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: 5.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
 ...
