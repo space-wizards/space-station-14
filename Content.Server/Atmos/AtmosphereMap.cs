@@ -10,12 +10,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Content.Server.Atmos
 {
     /// <inheritdoc cref="IAtmosphereMap"/>
-    internal class AtmosphereMap : IAtmosphereMap
+    internal class AtmosphereMap : IAtmosphereMap, IPostInjectInit
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -24,6 +25,11 @@ namespace Content.Server.Atmos
 
         private readonly Dictionary<GridId, GridAtmosphereManager> _gridAtmosphereManagers =
             new Dictionary<GridId, GridAtmosphereManager>();
+
+        public void PostInject()
+        {
+            _mapManager.TileChanged += AtmosphereMapOnTileChanged;
+        }
 
         public IGridAtmosphereManager GetGridAtmosphereManager(GridId grid)
         {
@@ -53,6 +59,29 @@ namespace Content.Server.Atmos
 
                 atmos.Update(frameTime);
             }
+        }
+
+        private void AtmosphereMapOnTileChanged(object sender, TileChangedEventArgs eventArgs)
+        {
+            // When a tile changes, we want to update it only if it's gone from
+            // space -> not space or vice versa. So if the old tile is the
+            // same as the new tile in terms of space-ness, ignore the change
+
+            if (eventArgs.NewTile.Tile.IsEmpty == eventArgs.OldTile.IsEmpty)
+            {
+                return;
+            }
+
+            // If the grid itself has no atmosphere simulation, there's no need
+            // create one - since the atmospheres will be built correctly as
+            // necessary later. That's why we *don't* use GetGridAtmosphereManager()
+
+            if (!_gridAtmosphereManagers.TryGetValue(eventArgs.NewTile.GridIndex, out var gridManager))
+            {
+                return;
+            }
+
+            gridManager.Invalidate(eventArgs.NewTile.GridIndices);
         }
     }
 
@@ -204,10 +233,18 @@ namespace Content.Server.Atmos
         {
             foreach (var indices in _invalidatedCoords)
             {
-                if (IsObstructed(indices))
+                if (IsSpace(indices))
+                {
+                    ClearAtmospheres(indices);
+                }
+                else if (IsObstructed(indices))
+                {
                     SplitAtmospheres(indices);
+                }
                 else
+                {
                     MergeAtmospheres(indices);
+                }
             }
 
             _invalidatedCoords.Clear();
@@ -215,6 +252,8 @@ namespace Content.Server.Atmos
 
         private void SplitAtmospheres(MapIndices indices)
         {
+            Debug.Assert(IsObstructed(indices));
+
             // Remove the now-covered atmosphere (if there was one)
             if (_atmospheres.TryGetValue(indices, out var coveredAtmos))
             {
@@ -273,21 +312,39 @@ namespace Content.Server.Atmos
 
         private void MergeAtmospheres(MapIndices indices)
         {
+            Debug.Assert(!IsObstructed(indices));
+
             var adjacent = new HashSet<ZoneAtmosphere>(GetAdjacentAtmospheres(indices).Values);
 
             // If this block doesn't separate two atmospheres, there's no merging to do
             if (adjacent.Count <= 1)
             {
-                var joinedAtmos = adjacent.First();
-                // But this block was missing an atmosphere, so add one
-                // and include this cell's volume in it
-                joinedAtmos.AddCell(indices);
-                _atmospheres[indices] = joinedAtmos;
+                var joinedAtmos = adjacent.FirstOrDefault();
+
+                if (joinedAtmos != null)
+                {
+                    // If the block is not in space, just add it to the existing zone
+                    joinedAtmos.AddCell(indices);
+                    _atmospheres[indices] = joinedAtmos;
+                    return;
+                }
+                else
+                {
+                    // Otherwise, try to create a new zone around the block
+                    var connectedCells = FindConnectedCells(indices);
+
+                    if (connectedCells != null)
+                    {
+                        var newZone = new ZoneAtmosphere(this, connectedCells);
+                        foreach (var cell in connectedCells)
+                            _atmospheres[cell] = newZone;
+                    }
+                }
                 return;
             }
 
             var allCells = new List<MapIndices> {indices};
-            foreach (var atmos in adjacent)
+            foreach (var atmos in adjacent.Where(zone => zone != null))
                 allCells.AddRange(atmos.Cells);
 
             // Fuse all adjacent atmospheres
@@ -309,6 +366,28 @@ namespace Content.Server.Atmos
 
             foreach (var cellPos in allCells)
                 _atmospheres[cellPos] = replacement;
+        }
+
+        /// <summary>
+        /// Empty the atmospheres of a tile known to be space.
+        /// </summary>
+        /// <param name="indices"></param>
+        private void ClearAtmospheres(MapIndices indices)
+        {
+            Debug.Assert(IsSpace(indices));
+
+            _atmospheres[indices] = null;
+
+            foreach (var (_, atmosphere) in GetAdjacentAtmospheres(indices))
+            {
+                if (atmosphere == null)
+                    continue;
+
+                foreach (var cell in atmosphere.Cells)
+                {
+                    _atmospheres[cell] = null;
+                }
+            }
         }
 
         private Dictionary<Direction, ZoneAtmosphere> GetAdjacentAtmospheres(MapIndices coords)
