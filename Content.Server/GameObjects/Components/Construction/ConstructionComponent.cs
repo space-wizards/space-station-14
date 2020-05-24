@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -64,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var stage = Prototype.Stages[Stage];
 
-            if (TryProcessStep(stage.Forward, eventArgs.Using))
+            if (TryProcessStep(stage.Forward, eventArgs.Using, eventArgs.User))
             {
                 Stage++;
                 if (Stage == Prototype.Stages.Count - 1)
@@ -84,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            else if (TryProcessStep(stage.Backward, eventArgs.Using))
+            else if (TryProcessStep(stage.Backward, eventArgs.Using, eventArgs.User))
             {
                 Stage--;
                 if (Stage == 0)
@@ -120,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         }
 
-        bool TryProcessStep(ConstructionStep step, IEntity slapped)
+        bool TryProcessStep(ConstructionStep step, IEntity slapped, IEntity user)
         {
             if (step == null)
             {
@@ -143,52 +144,16 @@ namespace Content.Server.GameObjects.Components.Construction
                         sound.Play("/Audio/items/deconstruct.ogg", Transform.GridPosition);
                     return true;
                 case ConstructionStepTool toolStep:
-                    switch (toolStep.Tool)
-                    {
-                        case ToolType.Crowbar:
-                            if (slapped.HasComponent<CrowbarComponent>())
-                            {
-                                sound.Play("/Audio/items/crowbar.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Welder:
-                            if (slapped.TryGetComponent(out WelderComponent welder) && welder.TryUse(toolStep.Amount))
-                            {
-                                if (_random.NextDouble() > 0.5)
-                                    sound.Play("/Audio/items/welder.ogg", Transform.GridPosition);
-                                else
-                                    sound.Play("/Audio/items/welder2.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Wrench:
-                            if (slapped.HasComponent<WrenchComponent>())
-                            {
-                                sound.Play("/Audio/items/ratchet.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Screwdriver:
-                            if (slapped.HasComponent<ScrewdriverComponent>())
-                            {
-                                if (_random.NextDouble() > 0.5)
-                                    sound.Play("/Audio/items/screwdriver.ogg", Transform.GridPosition);
-                                else
-                                    sound.Play("/Audio/items/screwdriver2.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Wirecutters:
-                            if (slapped.HasComponent<WirecutterComponent>())
-                            {
-                                sound.Play("/Audio/items/wirecutter.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        default:
-                            throw new NotImplementedException();
-                    }
+                    if (!slapped.TryGetComponent<ToolComponent>(out var tool))
+                        return false;
+
+                    // Handle welder manually since tool steps specify fuel amount needed, for some reason.
+                    if (toolStep.ToolQuality.HasFlag(ToolQuality.Welding))
+                        return slapped.TryGetComponent<WelderComponent>(out var welder)
+                               && welder.UseTool(user, Owner, toolStep.ToolQuality, toolStep.Amount);
+
+                    return tool.UseTool(user, Owner, toolStep.ToolQuality);
+
                 default:
                     throw new NotImplementedException();
             }

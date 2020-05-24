@@ -52,7 +52,7 @@ namespace Content.Client
 
             var registerIgnore = new[]
             {
-                "Wrenchable",
+                "Anchorable",
                 "AmmoBox",
                 "Breakable",
                 "Pickaxe",
@@ -155,7 +155,10 @@ namespace Content.Client
                 "SolarPanel",
                 "BodyScanner",
                 "Stunbaton",
-                "EmergencyClosetFill"
+                "EmergencyClosetFill",
+                "Tool",
+                "TilePrying",
+                "RandomToolColor",
             };
 
             foreach (var ignoreName in registerIgnore)

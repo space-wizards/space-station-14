@@ -1,39 +1,44 @@
-﻿using System;
-using Content.Client.UserInterface;
+using System;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    public class WelderComponent : Component, IItemStatus
+    public class WelderComponent : SharedToolComponent, IItemStatus
     {
         public override string Name => "Welder";
         public override uint? NetID => ContentNetIDs.WELDER;
 
+        private ToolQuality _behavior;
+        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public float FuelCapacity { get; private set; }
         [ViewVariables] public float Fuel { get; private set; }
         [ViewVariables] public bool Activated { get; private set; }
+        [ViewVariables] public override ToolQuality Qualities => _behavior;
 
-        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+        }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is WelderComponentState cast))
+            if (!(curState is WelderComponentState weld))
                 return;
 
-            FuelCapacity = cast.FuelCapacity;
-            Fuel = cast.Fuel;
-            Activated = cast.Activated;
-
+            FuelCapacity = weld.FuelCapacity;
+            Fuel = weld.Fuel;
+            Activated = weld.Activated;
+            _behavior = weld.Quality;
             _uiUpdateNeeded = true;
         }
 

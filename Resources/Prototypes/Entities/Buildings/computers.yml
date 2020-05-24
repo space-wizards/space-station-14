@@ -20,7 +20,7 @@
   - type: Computer
   - type: PowerDevice
     priority: High
-  - type: Wrenchable
+  - type: Anchorable
 
   - type: Sprite
     sprite: Buildings/computer.rsi

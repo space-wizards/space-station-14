@@ -1,4 +1,4 @@
-- type: sound_collection
+- type: soundCollection
   id: footstep_carpet
   files:
   - /Audio/effects/footsteps/carpet1.ogg
@@ -7,7 +7,7 @@
   - /Audio/effects/footsteps/carpet4.ogg
   - /Audio/effects/footsteps/carpet5.ogg
 
-- type: sound_collection
+- type: soundCollection
   id: footstep_wood
   files:
   - /Audio/effects/footsteps/wood1.ogg
@@ -16,7 +16,7 @@
   - /Audio/effects/footsteps/wood4.ogg
   - /Audio/effects/footsteps/wood5.ogg
 
-- type: sound_collection
+- type: soundCollection
   id: footstep_catwalk
   files:
   - /Audio/effects/footsteps/catwalk1.ogg
@@ -25,7 +25,7 @@
   - /Audio/effects/footsteps/catwalk4.ogg
   - /Audio/effects/footsteps/catwalk5.ogg
 
-- type: sound_collection
+- type: soundCollection
   id: footstep_floor
   files:
   - /Audio/effects/footsteps/floor1.ogg
@@ -34,7 +34,7 @@
   - /Audio/effects/footsteps/floor4.ogg
   - /Audio/effects/footsteps/floor5.ogg
 
-- type: sound_collection
+- type: soundCollection
   id: footstep_hull
   files:
   - /Audio/effects/footsteps/hull1.ogg
@@ -43,7 +43,7 @@
   - /Audio/effects/footsteps/hull4.ogg
   - /Audio/effects/footsteps/hull5.ogg
 
-- type: sound_collection
+- type: soundCollection
   id: footstep_plating
   files:
   - /Audio/effects/footsteps/plating1.ogg
@@ -52,7 +52,7 @@
   - /Audio/effects/footsteps/plating4.ogg
   - /Audio/effects/footsteps/plating5.ogg
 
-- type: sound_collection
+- type: soundCollection
   id: footstep_tile
   files:
   - /Audio/effects/footsteps/tile1.ogg
@@ -61,19 +61,19 @@
   - /Audio/effects/footsteps/tile4.ogg
   - /Audio/effects/footsteps/tile5.ogg
 
-- type: sound_collection
+- type: soundCollection
   id: footstep_clown
   files:
   - /Audio/effects/footsteps/clownstep1.ogg
   - /Audio/effects/footsteps/clownstep2.ogg
 
-- type: sound_collection
+- type: soundCollection
   id: footstep_heavy
   files:
   - /Audio/effects/footsteps/suitstep1.ogg
   - /Audio/effects/footsteps/suitstep2.ogg
 
-- type: sound_collection
+- type: soundCollection
   id: footstep_asteroid
   files:
   - /Audio/effects/footsteps/asteroid1.ogg
