@@ -2,28 +2,28 @@
 - type: entity
   id: LockerFormal
   parent: WardrobeBlack
-  name: "formal closet"
+  name: "Formal Closet"
   description: "It's a storage unit for formal clothing."
 
 # Chef
 - type: entity
   id: LockerChef
   parent: WardrobeBlack
-  name: "chef's closet"
+  name: "Chef's Closet"
   description: "It's a storage unit for foodservice garments and mouse traps."
 
 # Janitor
 - type: entity
   id: LockerJanitor
   parent: WardrobeMixed
-  name: "custodial closet"
+  name: "Custodial Closet"
   description: "It's a storage unit for janitorial clothes and gear."
 
 # Legal
 - type: entity
   id: LockerLegal
   parent: WardrobeBlue
-  name: "legal closet"
+  name: "Legal Closet"
   description: "It's a storage unit for courtroom apparel and items."
 
 # Chapel

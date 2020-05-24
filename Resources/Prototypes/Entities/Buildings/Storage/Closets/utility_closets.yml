@@ -1,7 +1,7 @@
 # Tool closet
 - type: entity
   id: LockerTool
-  name: tool closet
+  name: Tool Closet
   parent: LockerGeneric
   description: "It's a storage unit for tools."
   components:
@@ -24,7 +24,7 @@
 # Radiation suit closet
 - type: entity
   id: LockerRadiationSuit
-  name: radiation suit closet
+  name: Rad Suit Closet
   parent: LockerGeneric
   description: "It's a storage unit for rad-protective suits."
   components:
@@ -46,7 +46,7 @@
 # Emergency closet
 - type: entity
   id: LockerEmergency
-  name: emergency closet
+  name: Emergency Closet
   parent: LockerGeneric
   description: "It's a storage unit for emergency breath masks and O2 tanks."
   components:
@@ -69,7 +69,7 @@
 # Fire safety closet
 - type: entity
   id: LockerFire
-  name: fire-safety closet
+  name: Fire Gear Closet
   parent: LockerGeneric
   description: "It's a storage unit for fire-fighting supplies."
   components:
@@ -90,7 +90,7 @@
 # EOD closet
 - type: entity
   id: LockerBomb
-  name: EOD closet
+  name: EOD Closet
   parent: LockerGeneric
   description: "It's a storage unit for explosion-protective suits."
   components:

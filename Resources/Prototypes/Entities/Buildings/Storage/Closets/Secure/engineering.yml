@@ -2,7 +2,7 @@
 - type: entity
   id: LockerChiefEngineer
   parent: LockerSecureBase
-  name: "chief engineer's locker"
+  name: "Chief Engineer's Locker"
   components:
   - type: Appearance
     visuals:
@@ -16,7 +16,7 @@
 - type: entity
   id: LockerElectricalSupplies
   parent: LockerSecureBase
-  name: "electrical supplies locker"
+  name: "Electrical Supplies Locker"
   components:
   - type: Appearance
     visuals:
@@ -31,7 +31,7 @@
 - type: entity
   id: LockerWeldingSupplies
   parent: LockerSecureBase
-  name: "welding supplies locker"
+  name: "Welding Supplies Locker"
   components:
   - type: Appearance
     visuals:
@@ -46,7 +46,7 @@
 - type: entity
   id: LockerAtmospherics
   parent: LockerSecureBase
-  name: "atmospheric technician's locker"
+  name: "Atmospheric Technician's Locker"
   components:
   - type: Appearance
     visuals:
@@ -60,7 +60,7 @@
 - type: entity
   id: LockerEngineer
   parent: LockerSecureBase
-  name: "engineer's locker"
+  name: "Engineer's Locker"
   components:
   - type: Appearance
     visuals:

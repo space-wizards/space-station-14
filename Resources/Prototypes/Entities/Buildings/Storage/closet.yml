@@ -1,6 +1,6 @@
 - type: entity
   id: LockerGeneric
-  name: closet
+  name: Closet
   description: A standard-issue Nanotrasen storage unit.
   components:
   - type: Sprite

@@ -2,7 +2,7 @@
 - type: entity
   id: LockerL3
   parent: LockerGeneric
-  name: "level 3 biohazard gear closet"
+  name: "L3 Biohazard Closet"
   description: "It's a storage unit for level 3 biohazard gear."
   components:
   - type: Appearance

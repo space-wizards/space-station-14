@@ -1,7 +1,7 @@
 - type: entity
   id: LockerFreezer
   parent: LockerSecureBase
-  name: "freezer"
+  name: "Freezer"
   components:
   - type: Appearance
     visuals:

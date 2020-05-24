@@ -2,8 +2,8 @@
 - type: entity
   id: LockerMedicine
   parent: LockerSecureBase
-  name: "medicine locker"
-  description: "Filled to the brim with medical junk."
+  name: "Medical Locker"
+  description: "Filled to the brim with medical supplies."
   components:
   - type: Appearance
     visuals:
@@ -17,7 +17,7 @@
 - type: entity
   id: LockerMedical
   parent: LockerSecureBase
-  name: "medical doctor's locker"
+  name: "Medical Doctor's Locker"
   components:
   - type: Appearance
     visuals:
@@ -31,7 +31,7 @@
 - type: entity
   id: LockerChemistry
   parent: LockerSecureBase
-  name: "chemical closet"
+  name: "Chemical Locker"
   components:
   - type: Appearance
     visuals:
@@ -46,7 +46,8 @@
 - type: entity
   id: LockerChiefMedicalOfficer
   parent: LockerSecureBase
-  name: "chief medical officer's locker"
+  name: "CMO's locker"
+  description: "Chief Medical Doctor's Locker."
   components:
   - type: Appearance
     visuals:

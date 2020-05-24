@@ -8,7 +8,7 @@
 - type: entity
   id: WardrobeBlue
   parent: WardrobeBase
-  name: blue wardrobe
+  name: Blue Wardrobe
   components:
   - type: Appearance
     visuals:
@@ -24,7 +24,7 @@
 - type: entity
   id: WardrobePink
   parent: WardrobeBase
-  name: pink wardrobe
+  name: Pink Wardrobe
   components:
   - type: Appearance
     visuals:
@@ -40,7 +40,7 @@
 - type: entity
   id: WardrobeBlack
   parent: WardrobeBase
-  name: black wardrobe
+  name: Black Wardrobe
   components:
   - type: Appearance
     visuals:
@@ -56,7 +56,7 @@
 - type: entity
   id: WardrobeGreen
   parent: WardrobeBase
-  name: green wardrobe
+  name: Green Wardrobe
   components:
   - type: Appearance
     visuals:
@@ -72,7 +72,7 @@
 - type: entity
   id: WardrobePrison
   parent: WardrobeBase
-  name: prison wardrobe
+  name: Prison Wardrobe
   components:
   - type: Appearance
     visuals:
@@ -88,7 +88,7 @@
 - type: entity
   id: WardrobeYellow
   parent: WardrobeBase
-  name: yellow wardrobe
+  name: Yellow Wardrobe
   components:
   - type: Appearance
     visuals:
@@ -104,7 +104,7 @@
 - type: entity
   id: WardrobeWhite
   parent: WardrobeBase
-  name: white wardrobe
+  name: White Wardrobe
   components:
   - type: Appearance
     visuals:
@@ -120,14 +120,14 @@
 - type: entity
   id: WardrobePajama
   parent: WardrobeWhite
-  name: pajama wardrobe
+  name: Pajama Wardrobe
 
 
 # Grey wardrobe
 - type: entity
   id: WardrobeGrey
   parent: WardrobeBase
-  name: grey wardrobe
+  name: Grey Wardrobe
   components:
   - type: Appearance
     visuals:
@@ -143,7 +143,7 @@
 - type: entity
   id: WardrobeMixed
   parent: WardrobeBase
-  name: mixed wardrobe
+  name: Mixed Wardrobe
   components:
   - type: Appearance
     visuals:

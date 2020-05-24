@@ -1,7 +1,7 @@
 - type: entity
   id: LockerBooze
   parent: LockerSecureBase
-  name: "booze storage"
+  name: "Alcohol Storage"
   components:
   - type: Appearance
     visuals:
@@ -17,4 +17,3 @@
   id: LockerBoozeFilled
   suffix: Filled
   parent: LockerBooze
-

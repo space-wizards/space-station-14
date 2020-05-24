@@ -1,7 +1,7 @@
 # Base syndicate closet
 - type: entity
   id: LockerSyndicateBase
-  name: armory closet
+  name: Armory Closet
   parent: LockerGeneric
   abstract: true
   components:

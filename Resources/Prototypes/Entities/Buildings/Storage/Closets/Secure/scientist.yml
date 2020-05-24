@@ -1,7 +1,7 @@
 - type: entity
   id: LockerResearchDirector
   parent: LockerSecureBase
-  name: "research director's locker"
+  name: "Research Director's Locker"
   components:
   - type: Appearance
     visuals:
@@ -17,4 +17,3 @@
   id: LockerResearchDirectorFilled
   suffix: Filled
   parent: LockerResearchDirector
-

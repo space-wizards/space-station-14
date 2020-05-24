@@ -2,7 +2,7 @@
 - type: entity
   id: LockerCaptain
   parent: LockerSecureBase
-  name: "captain's locker"
+  name: "Captain's Locker"
   components:
   - type: Appearance
     visuals:
@@ -16,7 +16,7 @@
 - type: entity
   id: LockerHeadOfPersonnel
   parent: LockerSecureBase
-  name: "head of personnel's locker"
+  name: "Head of Personnel's Locker"
   components:
   - type: Appearance
     visuals:
