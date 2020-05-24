@@ -83,12 +83,9 @@
     sprite: Objects/Tools/welder.rsi
     state: welder
   - type: Item
+    Size: 10
     sprite: Objects/Tools/welder.rsi
-    layers:
-    - state: inhand-off-right, inhand-off-left
-    - state: inhand-on-right, inhand-on-left
-      shader: unshaded
-      visible: false
+    HeldPrefix: off
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: ItemStatus
