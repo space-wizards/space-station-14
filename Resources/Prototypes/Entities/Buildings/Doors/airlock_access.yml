@@ -1,5 +1,14 @@
 # Current access: "Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"
 - type: entity
+  parent: Airlock
+  id: AirlockLocked
+  name: Airlock
+  suffix: Locked
+  components:
+  - type: AccessReader
+    necessary: ["Maintenance"]
+
+- type: entity
   parent: AirlockExternal
   id: AirlockExternalLocked
   name: External airlock
