@@ -202,7 +202,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent<ToolComponent>(out var tool))
+            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying)) return false;

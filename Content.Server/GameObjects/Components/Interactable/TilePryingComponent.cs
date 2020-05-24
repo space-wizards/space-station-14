@@ -13,7 +13,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    public class TilePryingComponent : Component, IAfterAttack
+    public class TilePryingComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         public override string Name => "TilePrying";
         private bool _toolComponentNeeded = true;
 
-        public void AfterAttack(AfterAttackEventArgs eventArgs)
+        public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
             TryPryTile(eventArgs.User, eventArgs.ClickLocation);
         }

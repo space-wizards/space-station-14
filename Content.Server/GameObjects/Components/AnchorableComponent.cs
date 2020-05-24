@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out PhysicsComponent physics)
-                || !eventArgs.AttackWith.TryGetComponent(out ToolComponent tool))
+                || !eventArgs.Using.TryGetComponent(out ToolComponent tool))
                 return false;
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Anchoring))
