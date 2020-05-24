@@ -163,6 +163,7 @@ namespace Content.Server.GameObjects.Components.Construction
         = new Dictionary<StackType, MaterialType>
         {
             { StackType.Cable, MaterialType.Cable },
+            { StackType.Gold, MaterialType.Gold },
             { StackType.Glass, MaterialType.Glass },
             { StackType.Metal, MaterialType.Metal }
         };

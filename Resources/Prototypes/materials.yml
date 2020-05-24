@@ -17,3 +17,12 @@
   electricresistivity: 1.0e+13
   thermalconductivity: 0.9
   specificheat: 840
+
+- type: material
+  id: gold
+  name: Gold
+  icon: Objects/Materials/goldbar_single.png
+  density: 10000
+  electricresistivity: 8.0e-9
+  thermalconductivity: 30
+  specificheat: 1000

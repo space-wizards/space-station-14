@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
@@ -121,6 +121,7 @@ namespace Content.Shared.GameObjects.Components
         Metal,
         Glass,
         Cable,
+        Gold,
         Ointment,
         Brutepack,
         FloorTileSteel,
