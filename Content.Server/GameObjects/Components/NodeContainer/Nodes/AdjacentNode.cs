@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 .Select(entity => entity.TryGetComponent<NodeContainerComponent>(out var container) ? container : null)
                 .Where(container => container != null)
                 .SelectMany(container => container.Nodes)
-                .Where(node => node != null);
+                .Where(node => node != null && node != this);
         }
     }
 }

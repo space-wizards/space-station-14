@@ -27,7 +27,7 @@
     base: hvcable_
     key: hv_cables
   - type: NodeContainer
-    nodeTypes: {HVPower : AdjacentNode}
+    nodeTypes: { HVPower : ["AdjacentNode"] }
   
 - type: entity
   parent: WireBase
@@ -41,6 +41,8 @@
   - type: IconSmooth
     base: mvcable_
     key: mv_cables
+  - type: NodeContainer
+    nodeTypes: { MVPower : ["AdjacentNode"] }
   
 - type: entity
   parent: WireBase
@@ -54,6 +56,8 @@
   - type: IconSmooth
     base: lvcable_
     key: lv_cables
+  - type: NodeContainer
+    nodeTypes: { LVPower : ["AdjacentNode"] }
   
 #Not Implemented
 

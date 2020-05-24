@@ -29,12 +29,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer
         ///     to be created and held in this container.
         /// </summary>
         [ViewVariables]
-        private Dictionary<NodeGroupID, string> _nodeTypes; //todo: convert to kvp list
+        private Dictionary<NodeGroupID, List<string>> _nodeTypes;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _nodeTypes, "nodeTypes", new Dictionary<NodeGroupID, string> { });
+            serializer.DataField(ref _nodeTypes, "nodeTypes", new Dictionary<NodeGroupID, List<string>> { });
         }
 
         public override void Initialize()
@@ -42,7 +42,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             base.Initialize();
             foreach (var nodeType in _nodeTypes)
             {
-                _nodes.Add(MakeNewNode(nodeType.Value, nodeType.Key, this));
+                var nodeGroupID = nodeType.Key;
+                foreach (var nodeName in nodeType.Value)
+                {
+                    _nodes.Add(MakeNewNode(nodeName, nodeGroupID, this));
+                }
             }
             foreach (var node in _nodes)
             {

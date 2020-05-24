@@ -3,6 +3,7 @@ using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
@@ -27,7 +28,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             var nodeTypes = _reflectionManager.GetAllChildren<Node>();
             foreach (var nodeType in nodeTypes)
             {
-                var att = (NodeAttribute) Attribute.GetCustomAttribute(nodeType, typeof(NodeAttribute));
+                var att = nodeType.GetCustomAttribute<NodeAttribute>();
                 if (att != null)
                 {
                     _groupTypes.Add(att.Name, nodeType);

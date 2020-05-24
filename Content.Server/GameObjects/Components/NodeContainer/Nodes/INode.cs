@@ -95,13 +95,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         /// <summary>
         ///     Strategy for how to find other reachable <see cref="INode"/>s to group with.
+        ///     Returns a set of <see cref="INode"/>s to consider grouping with. Should not return this current <see cref="INode"/>. 
         /// </summary>
         protected abstract IEnumerable<INode> GetReachableNodes();
 
         private IEnumerable<INode> GetReachableCompatibleNodes()
         {
-            return GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID)
-                .Where(node => node != this);
+            return GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID);
         }
 
         private IEnumerable<INodeGroup> GetReachableCompatibleGroups()

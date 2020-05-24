@@ -2,6 +2,7 @@
 using Robust.Shared.IoC;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
@@ -26,7 +27,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             var nodeGroupTypes = _reflectionManager.GetAllChildren<NodeGroup>();
             foreach (var nodeGroupType in nodeGroupTypes)
             {
-                var att = (NodeGroupAttribute) Attribute.GetCustomAttribute(nodeGroupType, typeof(NodeGroupAttribute));
+                var att = nodeGroupType.GetCustomAttribute<NodeGroupAttribute>();
                 if (att != null)
                 {
                     foreach (var groupID in att.NodeGroupIDs)
