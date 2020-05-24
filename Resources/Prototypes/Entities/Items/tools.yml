@@ -40,9 +40,6 @@
     layers:
       - state: screwdriver-map
       - state: screwdriver-screwybits
-  - type: Icon
-    sprite: Objects/Tools/screwdriver.rsi
-    state: screwdriver
 
   - type: Icon
     sprite: Objects/Tools/screwdriver.rsi
