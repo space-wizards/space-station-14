@@ -6,9 +6,7 @@
   startingGear: DoctorGear
   department:
   - Medical
-
   icon: "MedicalDoctor"
-
   access:
   - Medical
 

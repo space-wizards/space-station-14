@@ -6,9 +6,7 @@
   startingGear: ScientistGear
   department:
   - Science
-
   icon: "Scientist"
-
   access:
   - Research
 

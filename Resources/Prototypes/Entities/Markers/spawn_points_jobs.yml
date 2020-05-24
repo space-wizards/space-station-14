@@ -1,7 +1,7 @@
 # Base
 - type: entity
   id: SpawnPointJobBase
-  parent: spawn_point
+  parent: SpawnPoint
   abstract: true
   components:
   - type: SpawnPoint

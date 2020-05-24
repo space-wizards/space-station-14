@@ -6,12 +6,11 @@
   startingGear: SecurityOfficerGear
   department:
   - Security
-
   icon: "SecurityOfficer"
-
   access:
   - Security
   - Maintenance
+  - Service
 
 - type: startingGear
   id: SecurityOfficerGear

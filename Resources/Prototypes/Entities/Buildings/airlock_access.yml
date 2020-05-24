@@ -1,4 +1,4 @@
-# "Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"
+# Current access: "Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"
 - type: entity
   parent: AirlockExternal
   id: AirlockExternalLocked

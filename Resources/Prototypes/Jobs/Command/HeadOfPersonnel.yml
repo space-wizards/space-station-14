@@ -7,9 +7,7 @@
   department:
   - Command
   - Civilian
-
   icon: "HeadOfPersonnel"
-
   access:
   - Command
   - IdCard

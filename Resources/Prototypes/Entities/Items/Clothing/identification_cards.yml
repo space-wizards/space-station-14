@@ -223,7 +223,7 @@
   - type: IdCard
     jobTitle: Head of Personnel
   - type: Access
-    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service","Command", "External"]
+    tags: ["Maintenance", "Cargo", "Security", "Service","Command"]
 
 - type: entity
   parent: IDCardStandard

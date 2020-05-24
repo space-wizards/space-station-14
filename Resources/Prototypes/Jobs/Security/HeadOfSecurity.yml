@@ -7,13 +7,12 @@
   department:
   - Command
   - Security
-
   icon: "HeadOfSecurity"
-
   access:
   - Command
   - Security
   - Maintenance
+  - Service
 
 - type: startingGear
   id: HoSGear

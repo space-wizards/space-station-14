@@ -5,11 +5,10 @@
   startingGear: AssistantGear
   department:
   - Civilian
-
   icon: "Assistant"
-
   access:
   - Maintenance
+  - Service
 
 - type: startingGear
   id: AssistantGear
