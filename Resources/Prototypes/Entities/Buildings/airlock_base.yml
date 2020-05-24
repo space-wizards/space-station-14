@@ -1,6 +1,7 @@
 - type: entity
   id: Airlock
-  name: Airlock
+  name: Airlock base
+  abstract: True
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: Clickable

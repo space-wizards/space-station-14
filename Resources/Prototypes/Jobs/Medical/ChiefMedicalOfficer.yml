@@ -13,8 +13,8 @@
   icon: "ChiefMedicalOfficer"
 
   access:
-  - medical
-  - command
+  - Medical
+  - Command
 
 - type: startingGear
   id: CMOGear

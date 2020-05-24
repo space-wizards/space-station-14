@@ -11,12 +11,12 @@
   icon: "HeadOfPersonnel"
 
   access:
-  - command
-  - idCard
-  - security # HoPcurity strikes again
-  - service
-  - cargo
-  - maintenance
+  - Command
+  - IdCard
+  - Security # HoPcurity strikes again
+  - Service
+  - Cargo
+  - Maintenance
   # I mean they'll give themselves the rest of the access levels *anyways*.
 
 - type: startingGear

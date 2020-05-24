@@ -10,8 +10,8 @@
   icon: "StationEngineer"
 
   access:
-  - maintenance
-  - engineering
+  - Maintenance
+  - Engineering
 
 - type: startingGear
   id: StationEngineerGear

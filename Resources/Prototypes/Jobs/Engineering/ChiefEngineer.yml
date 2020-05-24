@@ -11,9 +11,9 @@
   icon: "ChiefEngineer"
 
   access:
-  - maintenance
-  - engineering
-  - command
+  - Maintenance
+  - Engineering
+  - Command
 
 - type: startingGear
   id: ChiefEngineerGear

@@ -1,8 +1,94 @@
+# "Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"
 - type: entity
-  parent: airlock_engineering
-  id: airlock_engineering_locked
-  name: Engineering Airlock
+  parent: AirlockExternal
+  id: AirlockExternalLocked
+  name: External airlock
   suffix: Locked
   components:
   - type: AccessReader
-    required: ["engineering"]
+    required: ["External"]
+
+- type: entity
+  parent: AirlockEngineering
+  id: AirlockEngineeringLocked
+  name: Engineering airlock
+  suffix: Locked
+  components:
+  - type: AccessReader
+    required: ["Engineering"]
+- type: entity
+  parent: AirlockEngineeringGlass
+  id: AirlockEngineeringGlassLocked
+  name: Glass engineering airlock
+  suffix: Locked
+  components:
+  - type: AccessReader
+    required: ["Engineering"]
+
+- type: entity
+  parent: AirlockMedical
+  id: AirlockMedicalLocked
+  name:  Medical airlock
+  suffix: Locked
+  components:
+  - type: AccessReader
+    required: ["Medical"]
+- type: entity
+  parent: AirlockMedicalGlass
+  id: AirlockMedicalGlassLocked
+  name:  Glass medical airlock
+  suffix: Locked
+  components:
+  - type: AccessReader
+    required: ["Medical"]
+
+- type: entity
+  parent: AirlockScience
+  id: AirlockScienceLocked
+  name:  Science airlock
+  suffix: Locked
+  components:
+  - type: AccessReader
+    required: ["Science"]
+- type: entity
+  parent: AirlockScienceGlass
+  id: AirlockScienceGlassLocked
+  name: Glass science airlock
+  suffix: Locked
+  components:
+  - type: AccessReader
+    required: ["Science"]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockCommandLocked
+  name:  Airlock command
+  suffix: Locked
+  components:
+  - type: AccessReader
+    required: ["Command"]
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockCommandGlassLocked
+  name: Glass command airlock
+  suffix: Locked
+  components:
+  - type: AccessReader
+    required: ["Command"]
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockSecurityLocked
+  name: Security airlock
+  suffix: Locked
+  components:
+  - type: AccessReader
+    required: ["Security"]
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockSecurityGlassLocked
+  name: Glass security airlock
+  suffix: Locked
+  components:
+  - type: AccessReader
+    required: ["Security"]

@@ -10,8 +10,8 @@
   icon: "SecurityOfficer"
 
   access:
-  - security
-  - maintenance
+  - Security
+  - Maintenance
 
 - type: startingGear
   id: SecurityOfficerGear

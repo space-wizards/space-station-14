@@ -11820,14 +11820,14 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1659
-  type: Airlock
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -18.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1660
-  type: Airlock
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -20.5,0.5
@@ -17486,14 +17486,14 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2314
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -39.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2315
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -39.5,4.5
@@ -17645,49 +17645,49 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2334
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 17.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2335
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 10.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2336
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 11.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2337
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 7.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2338
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 20.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2339
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 20.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2340
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 8.5,-12.5
@@ -18117,49 +18117,49 @@ entities:
   - parent: 2386
     type: Transform
 - uid: 2388
-  type: airlock_science
+  type: AirlockScience
   components:
   - parent: 0
     pos: 0.5,-19.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 2389
-  type: airlock_science
+  type: AirlockScience
   components:
   - parent: 0
     pos: 0.5,-20.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 2390
-  type: airlock_science_glass
+  type: AirlockScienceGlass
   components:
   - parent: 0
     pos: -3.5,-18.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 2391
-  type: airlock_science_glass
+  type: AirlockScienceGlass
   components:
   - parent: 0
     pos: -3.5,-21.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 2392
-  type: airlock_science
+  type: AirlockScience
   components:
   - parent: 0
     pos: -12.5,-19.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 2393
-  type: airlock_science
+  type: AirlockScience
   components:
   - parent: 0
     pos: -12.5,-20.5
     rot: 3.141592653589793 rad
     type: Transform
 - uid: 2394
-  type: airlock_science
+  type: AirlockScience
   components:
   - parent: 0
     pos: -8.5,-21.5
@@ -18720,28 +18720,28 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2460
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -41.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2461
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -41.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2462
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -39.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2463
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -37.5,-3.5
@@ -18826,70 +18826,70 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2474
-  type: Airlock
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -21.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2475
-  type: Airlock
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -26.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2476
-  type: Airlock
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -21.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2477
-  type: Airlock
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -22.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2478
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: 20.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2479
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: 22.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2480
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: 22.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2481
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: 20.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2482
-  type: airlock_engineering
+  type: AirlockEngineering
   components:
   - parent: 0
     pos: 41.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2483
-  type: airlock_engineering
+  type: AirlockEngineering
   components:
   - parent: 0
     pos: 40.5,10.5
@@ -19190,7 +19190,7 @@ entities:
     pos: 7.5,25.5
     type: Transform
 - uid: 2526
-  type: Airlock
+  type: AirlockExternal
   components:
   - parent: 0
     pos: 0.5,17.5
@@ -20098,7 +20098,7 @@ entities:
   - parent: 788
     type: Transform
 - uid: 2653
-  type: Airlock
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -20.5,-7.5

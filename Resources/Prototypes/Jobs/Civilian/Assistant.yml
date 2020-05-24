@@ -9,7 +9,7 @@
   icon: "Assistant"
 
   access:
-  - maintenance
+  - Maintenance
 
 - type: startingGear
   id: AssistantGear

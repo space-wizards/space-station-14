@@ -11,9 +11,9 @@
   icon: "HeadOfSecurity"
 
   access:
-  - command
-  - security
-  - maintenance
+  - Command
+  - Security
+  - Maintenance
 
 - type: startingGear
   id: HoSGear

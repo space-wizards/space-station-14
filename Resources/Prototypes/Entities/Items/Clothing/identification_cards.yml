@@ -14,8 +14,6 @@
     - idcard
     sprite: Clothing/id_cards.rsi
     HeldPrefix: default
-  - type: IdCard
-  - type: Access
 
 #IDs with layers
 
@@ -34,7 +32,7 @@
   - type: IdCard
     jobTitle: Assistant
   - type: Access
-    tags: ["maintenance", "service"]
+    tags: ["Maintenance", "Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -53,7 +51,7 @@
   - type: IdCard
     jobTitle: Captain
   - type: Access
-    tags: ["maintenance", "cargo", "engineering", "medical", "research", "security", "service", "captain", "command"]
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"]
 
 - type: entity
   parent: IDCardStandard
@@ -70,7 +68,7 @@
   - type: IdCard
     jobTitle: Security Officer
   - type: Access
-    tags: ["security"]
+    tags: ["Security", "Maintenance", "Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -87,7 +85,7 @@
   - type: IdCard
     jobTitle: Engineer
   - type: Access
-    tags: ["engineering"]
+    tags: ["Engineering", "Maintenance", "External"]
 
 - type: entity
   parent: IDCardStandard
@@ -104,7 +102,7 @@
   - type: IdCard
     jobTitle: Doctor
   - type: Access
-    tags: ["medical"]
+    tags: ["Medical"]
 
 - type: entity
   parent: IDCardStandard
@@ -121,7 +119,7 @@
   - type: IdCard
     jobTitle: Cargo Technician
   - type: Access
-    tags: ["cargo"]
+    tags: ["Cargo", "Maintenance"]
 
 - type: entity
   parent: IDCardStandard
@@ -138,7 +136,7 @@
   - type: IdCard
     jobTitle: Scientist
   - type: Access
-    tags: ["research"]
+    tags: ["Research"]
 
 - type: entity
   parent: IDCardStandard
@@ -155,7 +153,7 @@
   - type: IdCard
     jobTitle: Clown
   - type: Access
-    tags: ["maintenance", "service"]
+    tags: ["Maintenance", "Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -172,7 +170,7 @@
   - type: IdCard
     jobTitle: Janitor
   - type: Access
-    tags: ["maintenance", "service"]
+    tags: ["Maintenance", "Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -189,7 +187,7 @@
   - type: IdCard
     jobTitle: Bartender
   - type: Access
-    tags: ["maintenance", "service"]
+    tags: ["Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -206,7 +204,7 @@
   - type: IdCard
     jobTitle: Chef
   - type: Access
-    tags: ["maintenance", "service"]
+    tags: ["Maintenance", "Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -225,7 +223,7 @@
   - type: IdCard
     jobTitle: Head of Personnel
   - type: Access
-    tags: ["command"]
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service","Command", "External"]
 
 - type: entity
   parent: IDCardStandard
@@ -244,7 +242,7 @@
   - type: IdCard
     jobTitle: Chief Engineer
   - type: Access
-    tags: ["engineering", "command"]
+    tags: ["Engineering", "Command", "Maintenance", "External"]
 
 - type: entity
   parent: IDCardStandard
@@ -263,7 +261,7 @@
   - type: IdCard
     jobTitle: Chief Medical Officer
   - type: Access
-    tags: ["medical", "command"]
+    tags: ["Medical", "Command", "Maintenance"]
 
 - type: entity
   parent: IDCardStandard
@@ -282,7 +280,7 @@
   - type: IdCard
     jobTitle: Research Director
   - type: Access
-    tags: ["research", "command"]
+    tags: ["Research", "Command", "Maintenance"]
 
 - type: entity
   parent: IDCardStandard
@@ -301,7 +299,7 @@
   - type: IdCard
     jobTitle: Head of Security
   - type: Access
-    tags: ["security", "command"]
+    tags: ["Security", "Maintenance", "Service", "Command"]
 
 - type: entity
   parent: IDCardStandard
@@ -320,4 +318,4 @@
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
-    tags: ["maintenance", "cargo", "engineering", "medical", "research", "security", "service", "captain", "command"]
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"]

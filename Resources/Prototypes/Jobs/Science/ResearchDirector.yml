@@ -11,8 +11,8 @@
   icon: "ResearchDirector"
 
   access:
-  - research
-  - command
+  - Research
+  - Command
 
 - type: startingGear
   id: ResearchDirectorGear
