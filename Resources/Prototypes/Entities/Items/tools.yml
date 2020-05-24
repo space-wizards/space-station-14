@@ -4,7 +4,6 @@
   id: Wirecutter
   description: This kills the wire.
   components:
-  - type: Wirecutter
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
     layers:
@@ -15,6 +14,10 @@
     state: cutters-map
   - type: ItemCooldown
   - type: MeleeWeapon
+  - type: Tool
+    qualities:
+      - Cutting
+    useSound: /Audio/items/wirecutter.ogg
   - type: RandomToolColor
     state: cutters
     colors:
@@ -32,12 +35,14 @@
   id: Screwdriver
   description: Industrial grade torque in a small screwdriving package
   components:
-  - type: Screwdriver
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
     layers:
-    - state: screwdriver-map
-    - state: screwdriver-screwybits
+      - state: screwdriver-map
+      - state: screwdriver-screwybits
+  - type: Icon
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver
 
   - type: Icon
     sprite: Objects/Tools/screwdriver.rsi
@@ -45,9 +50,12 @@
 
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
-
   - type: ItemCooldown
   - type: MeleeWeapon
+  - type: Tool
+    qualities:
+      - Screwing
+    useSoundCollection: Screwdriver
   - type: RandomToolColor
     state: screwdriver
     colors:
@@ -59,14 +67,12 @@
       cyan: "#18a2d5"
       yellow: "#ffa500"
 
-
 - type: entity
   name: Welding Tool
   parent: BaseItem
   id: Welder
   description: Melts anything as long as it's fueled, don't forget your eye protection!
   components:
-  - type: Welder
   - type: Sprite
     sprite: Objects/Tools/welder.rsi
     layers:
@@ -74,13 +80,21 @@
     - state: welder_flame
       shader: unshaded
       visible: false
-
   - type: Icon
     sprite: Objects/Tools/welder.rsi
     state: welder
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: ItemStatus
+  - type: Solution
+    maxVol: 100
+    caps: 9
+    contents:
+      reagents:
+        - ReagentId: chem.WeldingFuel
+          Quantity: 100
+  - type: Welder
+    useSoundCollection: Welder
 
 - type: entity
   name: Wrench
@@ -88,24 +102,16 @@
   id: Wrench
   description: A common tool for assembly and disassembly, righty tighty lefty loosey
   components:
-  - type: Wrench
   - type: Sprite
     texture: Objects/Tools/wrench.png
   - type: Icon
     texture: Objects/Tools/wrench.png
   - type: ItemCooldown
   - type: MeleeWeapon
-
-- type: sound_collection
-  id: welder_on
-  files:
-  - /Audio/items/lighter1.ogg
-  - /Audio/items/lighter2.ogg
-
-- type: sound_collection
-  id: welder_off
-  files:
-  - /Audio/effects/zzzt.ogg
+  - type: Tool
+    qualities:
+      - Anchoring
+    useSound: /Audio/items/ratchet.ogg
 
 - type: entity
   name: Crowbar
@@ -113,13 +119,17 @@
   id: Crowbar
   description: A multipurpose tool to pry open doors and fight interdimensional invaders
   components:
-  - type: Crowbar
   - type: Sprite
     texture: Objects/Tools/crowbar.png
   - type: Icon
     texture: Objects/Tools/crowbar.png
   - type: ItemCooldown
   - type: MeleeWeapon
+  - type: Tool
+    qualities:
+      - Prying
+    useSound: /Audio/items/crowbar.ogg
+  - type: TilePrying
 
 - type: entity
   name: Multitool
@@ -127,14 +137,73 @@
   id: Multitool
   description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
   components:
-  - type: Multitool
   - type: Sprite
     sprite: Objects/Tools/multitool.rsi
     state: multitool
-
   - type: Icon
     sprite: Objects/Tools/multitool.rsi
     state: multitool
-
   - type: Item
     sprite: Objects/Tools/multitool.rsi
+  - type: Tool
+    qualities:
+      - Multitool
+
+- type: entity
+  name: Jaws of life
+  parent: BaseItem
+  id: JawsOfLife
+  description: A set of jaws of life, compressed through the magic of science.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/jaws_of_life.rsi
+      state: jaws_pry
+    - type: Icon
+      sprite: Objects/Tools/jaws_of_life.rsi
+      state: jaws_pry
+    - type: Item
+      sprite: Objects/Tools/jaws_of_life.rsi
+    - type: TilePrying
+    - type: Tool
+      qualities:
+        - Prying
+      statusShowBehavior: true
+    - type: MultiTool
+      tools:
+        - behavior: Prying
+          state: jaws_pry
+          useSound: /Audio/items/jaws_pry.ogg
+          changeSound: /Audio/items/change_jaws.ogg
+        - behavior: Cutting
+          state: jaws_cutter
+          useSound: /Audio/items/jaws_cut.ogg
+          changeSound: /Audio/items/change_jaws.ogg
+
+- type: entity
+  name: Power Drill
+  parent: BaseItem
+  id: PowerDrill
+  description: A simple powered hand drill.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/drill.rsi
+      state: drill_screw
+    - type: Icon
+      sprite: Objects/Tools/drill.rsi
+      state: drill_screw
+    - type: Item
+      sprite: Objects/Tools/drill.rsi
+    - type: Tool
+      qualities:
+        - Screwing
+      statusShowBehavior: true
+    - type: MultiTool
+      tools:
+        - behavior: Screwing
+          state: drill_screw
+          useSound: /Audio/items/drill_use.ogg
+          changeSound: /Audio/items/change_drill.ogg
+        - behavior: Anchoring
+          state: drill_bolt
+          useSound: /Audio/items/drill_use.ogg
+          changeSound: /Audio/items/change_drill.ogg

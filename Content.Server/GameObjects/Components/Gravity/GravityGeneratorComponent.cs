@@ -1,10 +1,11 @@
 using Content.Server.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Gravity;
+using Content.Shared.GameObjects.Components.Interactable;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -103,27 +104,24 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent<WelderComponent>(out var welder)) return false;
-
-            if (welder.TryUse(5.0f))
-            {
-                // Repair generator
-                var damagable = Owner.GetComponent<DamageableComponent>();
-                var breakable = Owner.GetComponent<BreakableComponent>();
-                damagable.HealAllDamage();
-                breakable.broken = false;
-                _intact = true;
-
-                var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
-
-                EntitySystem.Get<AudioSystem>().Play("/Audio/items/welder2.ogg", Owner);
-                notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
-
-                return true;
-            } else
-            {
+            if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
                 return false;
-            }
+
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 5f))
+                return false;
+
+            // Repair generator
+            var damageable = Owner.GetComponent<DamageableComponent>();
+            var breakable = Owner.GetComponent<BreakableComponent>();
+            damageable.HealAllDamage();
+            breakable.broken = false;
+            _intact = true;
+
+            var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
+
+            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
+
+            return true;
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)

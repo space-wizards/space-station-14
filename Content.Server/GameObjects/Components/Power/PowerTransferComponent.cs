@@ -1,7 +1,8 @@
 ﻿using System.Linq;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Interactable;
 using Content.Server.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -141,17 +142,16 @@ namespace Content.Server.GameObjects.Components.Power
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.Using.TryGetComponent(out WirecutterComponent wirecutter))
-            {
-                Owner.Delete();
-                var droppedEnt = Owner.EntityManager.SpawnEntity("CableStack", eventArgs.ClickLocation);
+            if (!eventArgs.Using.TryGetComponent(out ToolComponent tool)) return false;
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Cutting)) return false;
 
-                if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
-                    stackComp.Count = 1;
+            Owner.Delete();
+            var droppedEnt = Owner.EntityManager.SpawnEntity("CableStack", eventArgs.ClickLocation);
 
-                return true;
-            }
-            return false;
+            if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
+                stackComp.Count = 1;
+
+            return true;
         }
     }
 }

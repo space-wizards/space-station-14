@@ -116,7 +116,7 @@
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer2D
-  - type: Wrenchable
+  - type: Anchorable
   - type: Physics
     mass: 5
   - type: Clickable
@@ -148,7 +148,7 @@
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer2D
-  - type: Wrenchable
+  - type: Anchorable
   - type: Physics
     mass: 5
   - type: Clickable
