@@ -96,6 +96,7 @@
       reagents:
         - ReagentId: chem.WeldingFuel
           Quantity: 100
+
   - type: Welder
     useSoundCollection: Welder
 
