@@ -12,13 +12,34 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Robust.Shared.Interfaces.Physics;
 
 namespace Content.Server.Throw
 {
     public static class ThrowHelper
     {
+        /// <summary>
+        ///     Throw an entity in the direction of <paramref name="targetLoc"/> from <paramref name="sourceLoc"/>.
+        /// </summary>
+        /// <param name="thrownEnt">The entity to throw.</param>
+        /// <param name="throwForce">
+        /// The force to throw the entity with.
+        /// Total impulse applied is equal to this force applied for one second.
+        /// </param>
+        /// <param name="targetLoc">
+        /// The target location to throw at.
+        /// This is only used to calculate a direction,
+        /// actual distance is purely determined by <paramref name="throwForce"/>.
+        /// </param>
+        /// <param name="sourceLoc">
+        /// The position to start the throw from.
+        /// </param>
+        /// <param name="spread">
+        /// If true, slightly spread the actual throw angle.
+        /// </param>
+        /// <param name="throwSourceEnt">
+        /// The entity that did the throwing. An opposite impulse will be applied to this entity if passed in.
+        /// </param>
         public static void Throw(IEntity thrownEnt, float throwForce, GridCoordinates targetLoc, GridCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
             if (!thrownEnt.TryGetComponent(out CollidableComponent colComp))
@@ -64,11 +85,68 @@ namespace Content.Server.Throw
             physComp.SetController<ThrowController>();
             (physComp.Controller as ThrowController)?.StartThrow(angle.ToVec() * spd);
 
-            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<PhysicsComponent>(out var physics))
+            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<PhysicsComponent>(out var physics)
+                                       && physics.Controller is MoverController mover)
             {
-                const float ThrowFactor = 5.0f; // Break Newton's Third Law for better gameplay
-                (physics.Controller as MoverController)?.Push(-angle.ToVec(), spd * ThrowFactor / physics.Mass);
+                var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
+
+                if (physicsMgr.IsWeightless(throwSourceEnt.Transform.GridPosition))
+                {
+                    // We don't check for surrounding entities,
+                    // so you'll still get knocked around if you're hugging the station wall in zero g.
+                    // I got kinda lazy is the reason why. Also it makes a bit of sense.
+                    // If somebody wants they can come along and make it so magboots completely hold you still.
+                    // Would be a cool incentive to use them.
+                    const float ThrowFactor = 5.0f; // Break Newton's Third Law for better gameplay
+                    mover.Push(-angle.ToVec(), spd * ThrowFactor / physics.Mass);
+                }
             }
+        }
+
+        /// <summary>
+        ///     Throw an entity at the position of <paramref name="targetLoc"/> from <paramref name="sourceLoc"/>,
+        ///     without overshooting.
+        /// </summary>
+        /// <param name="thrownEnt">The entity to throw.</param>
+        /// <param name="throwForceMax">
+        /// The MAXIMUM force to throw the entity with.
+        /// Throw force increases with distance to target, this is the maximum force allowed.
+        /// </param>
+        /// <param name="targetLoc">
+        /// The target location to throw at.
+        /// This function will try to land at this exact spot,
+        /// if <paramref name="throwForceMax"/> is large enough to allow for it to be reached.
+        /// </param>
+        /// <param name="sourceLoc">
+        /// The position to start the throw from.
+        /// </param>
+        /// <param name="spread">
+        /// If true, slightly spread the actual throw angle.
+        /// </param>
+        /// <param name="throwSourceEnt">
+        /// The entity that did the throwing. An opposite impulse will be applied to this entity if passed in.
+        /// </param>
+        public static void ThrowTo(IEntity thrownEnt, float throwForceMax, GridCoordinates targetLoc,
+            GridCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
+        {
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            var timing = IoCManager.Resolve<IGameTiming>();
+
+            // Calculate the force necessary to land a throw based on throw duration, mass and distance.
+            var distance = (targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager)).Length;
+            var throwDuration = ThrowController.DefaultThrowTime;
+            var mass = 1f;
+            if (thrownEnt.TryGetComponent(out PhysicsComponent physicsComponent))
+            {
+                mass = physicsComponent.Mass;
+            }
+
+            var velocityNecessary = distance / throwDuration;
+            var impulseNecessary = velocityNecessary * mass;
+            var forceNecessary = impulseNecessary * (1f / timing.TickRate);
+
+            // Then clamp it to the max force allowed and call Throw().
+            Throw(thrownEnt, Math.Min(forceNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
         }
     }
 }

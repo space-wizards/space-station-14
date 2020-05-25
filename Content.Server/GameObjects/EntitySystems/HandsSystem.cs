@@ -1,36 +1,23 @@
-﻿using System;
-using System.Linq;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components;
+﻿using System.Linq;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Throw;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
-using Content.Shared.Interfaces;
-using Content.Shared.Physics;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -195,7 +182,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     newStackComp.Count = 1;
             }
 
-            ThrowHelper.Throw(throwEnt, ThrowForce, coords, plyEnt.Transform.GridPosition, false, plyEnt);
+            ThrowHelper.ThrowTo(throwEnt, ThrowForce, coords, plyEnt.Transform.GridPosition, false, plyEnt);
 
             return true;
         }
