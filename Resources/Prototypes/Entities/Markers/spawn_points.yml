@@ -37,9 +37,7 @@
   components:
   - type: Sprite
     state: observer_start
-
   - type: SpawnPoint
     spawn_type: Observer
-
   - type: Icon
     state: observer_start
