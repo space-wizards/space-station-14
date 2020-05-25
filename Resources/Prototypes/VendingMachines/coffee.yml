@@ -4,6 +4,6 @@
   description: A vending machine that dispenses hot drinks.
   animationDuration: 3.4
   spriteName: coffee
-  startinginventory:
+  startingInventory:
     DrinkHotCoffee: 20
     DrinkTeaGlass: 20
