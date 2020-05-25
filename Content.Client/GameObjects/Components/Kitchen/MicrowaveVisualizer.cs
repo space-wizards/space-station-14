@@ -39,6 +39,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     var schedSound = new ScheduledSound();
                     schedSound.Filename = "/Audio/machines/microwave_loop.ogg";
                     schedSound.AudioParams = audioParams;
+                    _soundComponent.StopAllSounds();
                     _soundComponent.AddScheduledSound(schedSound);
                     break;
 

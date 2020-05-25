@@ -5,7 +5,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Chemistry;
 using Robust.Shared.Serialization;
 using Robust.Shared.Interfaces.GameObjects;
@@ -21,7 +20,6 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
 using Robust.Shared.Audio;
 
 namespace Content.Server.GameObjects.Components.Kitchen
@@ -64,6 +62,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private bool _powered => _powerDevice.Powered;
         private bool _hasContents => _solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0;
         private bool _uiDirty = true;
+        private bool _lostPower = false;
         private int _currentCookTimeButtonIndex = 0;
 
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => _uiDirty = true;
@@ -152,6 +151,17 @@ namespace Content.Server.GameObjects.Components.Kitchen
             if (!_powered)
             {
                 //TODO:If someone cuts power currently, microwave magically keeps going. FIX IT!
+                SetAppearance(MicrowaveVisualState.Idle);
+            }
+
+            if (_busy && !_powered)
+            {
+                //we lost power while we were cooking/busy!
+                _lostPower = true;
+                VaporizeReagents();
+                EjectSolids();
+                _busy = false;
+                _uiDirty = true;
             }
 
             if (_uiDirty)
@@ -272,7 +282,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _audioSystem.Play(_startCookingSound,Owner, AudioParams.Default);
             Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), () =>
             {
-
+                if (_lostPower)
+                {
+                    return;
+                }
                 if (goodMeal)
                 {
                     SubtractContents(recipeToCook);
@@ -291,8 +304,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _audioSystem.Play(_cookingCompleteSound,Owner,AudioParams.Default.WithVolume(-1f));
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
+
                 _uiDirty = true;
             });
+            _lostPower = false;
             _uiDirty = true;
         }
 
