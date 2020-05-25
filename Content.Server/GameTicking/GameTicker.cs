@@ -643,8 +643,9 @@ namespace Content.Server.GameTicking
             card.JobTitle = jobPrototype.Name;
 
             var access = card.Owner.GetComponent<AccessComponent>();
-            access.Tags.Clear();
-            access.Tags.AddRange(jobPrototype.Access);
+            var accessTags = access.GetTags();
+            accessTags.AddRange(jobPrototype.Access);
+            access.SetTags(accessTags);
             pdaComponent.SetPDAOwner(mob);
             var mindComponent = mob.GetComponent<MindComponent>();
             if (mindComponent.HasMind)//Redundancy checks.

@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Access
                 return;
             }
             var targetIdAccess = targetIdEntity.GetComponent<AccessComponent>();
-            targetIdAccess.Tags = newAccessList;
+            targetIdAccess.SetTags(newAccessList);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Access
                     true,
                     targetIdComponent.FullName,
                     targetIdComponent.JobTitle,
-                    targetAccessComponent.Tags,
+                    targetAccessComponent.GetTags(),
                     _privilegedIdContainer.ContainedEntity?.Name ?? "",
                     _targetIdContainer.ContainedEntity?.Name ?? "");
             }

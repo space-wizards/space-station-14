@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.PDA;
@@ -21,7 +23,7 @@ namespace Content.Server.GameObjects.Components.PDA
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse
+    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess
     {
 #pragma warning disable 649
         [Dependency] protected readonly IPDAUplinkManager _uplinkManager;
@@ -236,6 +238,16 @@ namespace Content.Server.GameObjects.Components.PDA
             {
                 component.HandleIDEjection(user);
             }
+        }
+
+        public List<string> GetTags()
+        {
+            return ContainedID?.Owner.GetComponent<AccessComponent>()?.GetTags();
+        }
+
+        public void SetTags(List<string> newTags)
+        {
+            ContainedID?.Owner.GetComponent<AccessComponent>().SetTags(newTags);
         }
     }
 }
