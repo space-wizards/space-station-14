@@ -4,7 +4,7 @@
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower, NodeGroupID.LVPower)]
     public class PowerNodeGroup : NodeGroup
     {
-        private IPowerNetwork _powerNet;
+
     }
 
     //todo: add interface for power components to use for adding/updating/removing themselves

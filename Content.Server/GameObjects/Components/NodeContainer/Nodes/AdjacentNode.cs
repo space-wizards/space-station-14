@@ -11,12 +11,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     [Node("AdjacentNode")]
     public class AdjacentNode : Node
     {
-        public AdjacentNode(NodeGroupID nodeGroupID, NodeContainerComponent container) : base(nodeGroupID, container) { }
-
         protected override IEnumerable<INode> GetReachableNodes()
         {
-            return Container.Owner
-                .GetComponent<SnapGridComponent>()
+            return Owner.GetComponent<SnapGridComponent>()
                 .GetCardinalNeighborCells()
                 .SelectMany(sgc => sgc.GetLocal())
                 .Select(entity => entity.TryGetComponent<NodeContainerComponent>(out var container) ? container : null)

@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using System;
@@ -11,7 +12,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     {
         void Initialize();
 
-        INode MakeNode(string nodeName, NodeGroupID groupID, NodeContainerComponent container);
+        INode MakeNode(string nodeName, NodeGroupID groupID, IEntity owner);
     }
 
     public class NodeFactory : INodeFactory
@@ -36,11 +37,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
-        public INode MakeNode(string nodeName, NodeGroupID groupID, NodeContainerComponent container)
+        public INode MakeNode(string nodeName, NodeGroupID groupID, IEntity owner)
         {
             if (_groupTypes.TryGetValue(nodeName, out var type))
             {
-                return (INode) _typeFactory.CreateInstance(type, new object[] { groupID, container });
+                var newNode = _typeFactory.CreateInstance<Node>(type);
+                newNode.Initialize(groupID, owner);
+                return newNode;
             }
             throw new ArgumentException($"{nodeName} did not have an associated {nameof(INode)}.");
         }

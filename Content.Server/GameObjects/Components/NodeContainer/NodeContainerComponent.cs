@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -45,7 +46,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer
                 var nodeGroupID = nodeType.Key;
                 foreach (var nodeName in nodeType.Value)
                 {
-                    _nodes.Add(MakeNewNode(nodeName, nodeGroupID, this));
+                    _nodes.Add(MakeNewNode(nodeName, nodeGroupID, Owner));
                 }
             }
             foreach (var node in _nodes)
@@ -65,9 +66,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             base.OnRemove();
         }
 
-        private INode MakeNewNode(string nodeName, NodeGroupID groupID, NodeContainerComponent container)
+        private INode MakeNewNode(string nodeName, NodeGroupID groupID, IEntity owner)
         {
-            return _nodeFactory.MakeNode(nodeName, groupID, container);
+            return _nodeFactory.MakeNode(nodeName, groupID, owner);
         }
     }
 }

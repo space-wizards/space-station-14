@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
@@ -24,6 +25,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         public INodeGroup NodeGroup { get; set; }
 
+        /// <summary>
+        ///     The <see cref="IEntity"/> this node is on.
+        /// </summary>
+        IEntity Owner { get; }
+
         void OnContainerInitialize();
 
         void OnContainerRemove();
@@ -37,27 +43,25 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     {
         // <inheritdoc cref="INode"/>
         [ViewVariables]
-        public NodeGroupID NodeGroupID { get; }
+        public NodeGroupID NodeGroupID { get; private set; }
 
         // <inheritdoc cref="INode"/>
         [ViewVariables]
         public INodeGroup NodeGroup { get => _nodeGroup; set => SetNodeGroup(value); }
         private INodeGroup _nodeGroup;
 
-        /// <summary>
-        ///     The <see cref="NodeContainerComponent"/> this <see cref="Node"/> is held in.
-        /// </summary>
+        // <inheritdoc cref="INode"/>
         [ViewVariables]
-        public NodeContainerComponent Container { get; private set; }
+        public IEntity Owner { get; private set; }
 
 #pragma warning disable 649
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
 #pragma warning restore 649
 
-        protected Node(NodeGroupID nodeGroupID, NodeContainerComponent container)
+        public void Initialize(NodeGroupID nodeGroupID, IEntity owner)
         {
             NodeGroupID = nodeGroupID;
-            Container = container;
+            Owner = owner;
         }
 
         public void OnContainerInitialize()
@@ -70,7 +74,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             NodeGroup.RemoveNode(this);
             _nodeGroup = null;
-            Container = null;
+            Owner = null;
         }
 
         public bool TryAssignGroupIfNeeded()
