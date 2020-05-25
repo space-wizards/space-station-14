@@ -57,7 +57,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             _menu.OnCookTimeSelected += (args,buttonIndex) =>
             {
-                var actualButton = args.Button as MicrowaveMenu.MicrowaveCookTimeButton;
+                var actualButton = (MicrowaveMenu.MicrowaveCookTimeButton) args.Button ;
                 var newTime = actualButton.CookTime;
                 SendMessage(new SharedMicrowaveComponent.MicrowaveSelectCookTimeMessage(buttonIndex,actualButton.CookTime));
             };
@@ -87,7 +87,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             RefreshContentsDisplay(cstate.ReagentQuantities, cstate.ContainedSolids);
             var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cstate.ActiveButtonIndex);
             currentlySelectedTimeButton.Pressed = true;
-            var label = cstate.ActiveButtonIndex <= 0 ? "INSTANT" : cstate.CurrentCookTime.ToString();
+            var label = cstate.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cstate.CurrentCookTime.ToString();
             _menu._cookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {label}";
         }
 
@@ -253,7 +253,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 {
                     var newButton = new MicrowaveCookTimeButton
                     {
-                        Text = index <= 0 ? "INSTANT" : index.ToString(),
+                        Text = index <= 0 ? Loc.GetString("INSTANT") : index.ToString(),
                         CookTime = (uint)index,
                         TextAlign = Label.AlignMode.Center,
                         ToggleMode = true,

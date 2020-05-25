@@ -12,7 +12,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeClownBurger
-  name: Cheeseburger Recipe
+  name: Clownburger Recipe
   result: FoodClownBurger
   time: 5
   reagents:

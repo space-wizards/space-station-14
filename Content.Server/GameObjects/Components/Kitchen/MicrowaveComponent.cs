@@ -279,7 +279,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                            (_currentCookTimerTime == (uint)recipeToCook.CookTime);
 
             SetAppearance(MicrowaveVisualState.Cooking);
-            _audioSystem.Play(_startCookingSound,Owner, AudioParams.Default);
+            _audioSystem.Play(_startCookingSound, Owner, AudioParams.Default);
             Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), () =>
             {
                 if (_lostPower)
@@ -301,7 +301,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     var entityToSpawn = goodMeal ? recipeToCook.Result : _badRecipeName;
                     _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.GridPosition);
                 }
-                _audioSystem.Play(_cookingCompleteSound,Owner,AudioParams.Default.WithVolume(-1f));
+                _audioSystem.Play(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
 
