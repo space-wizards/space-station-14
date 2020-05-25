@@ -10,6 +10,9 @@
     - state: generic
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
     sprite: Buildings/closet.rsi
     state: generic_door
