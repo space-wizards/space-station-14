@@ -20,7 +20,12 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 31
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

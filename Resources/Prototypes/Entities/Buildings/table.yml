@@ -16,7 +16,9 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 20
+      layer:
+      - SmallImpassable
+      - MobImpassable
 
   - type: SnapGrid
     offset: Center

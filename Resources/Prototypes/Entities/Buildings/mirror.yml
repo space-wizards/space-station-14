@@ -11,7 +11,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 32
+      layer: [Clickable]
   - type: Clickable
   - type: InteractionOutline
   - type: Physics

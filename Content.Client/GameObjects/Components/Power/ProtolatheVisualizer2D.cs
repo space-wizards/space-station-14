@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -16,6 +16,7 @@ namespace Content.Client.GameObjects.Components.Power
         private Animation _buildingAnimation;
         private Animation _insertingMetalAnimation;
         private Animation _insertingGlassAnimation;
+        private Animation _insertingGoldAnimation;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -24,6 +25,7 @@ namespace Content.Client.GameObjects.Components.Power
             _buildingAnimation = PopulateAnimation("protolathe_building", 0.9f);
             _insertingMetalAnimation = PopulateAnimation("protolathe_metal", 0.9f);
             _insertingGlassAnimation = PopulateAnimation("protolathe_glass", 0.9f);
+            _insertingGoldAnimation = PopulateAnimation("protolathe_gold", 0.9f);
         }
 
         private Animation PopulateAnimation(string sprite, float length)
@@ -85,6 +87,12 @@ namespace Content.Client.GameObjects.Components.Power
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(_insertingGlassAnimation, AnimationKey);
+                    }
+                    break;
+                case LatheVisualState.InsertingGold:
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(_insertingGoldAnimation, AnimationKey);
                     }
                     break;
                 default:

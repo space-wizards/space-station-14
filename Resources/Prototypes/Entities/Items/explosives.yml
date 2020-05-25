@@ -18,7 +18,7 @@
     Size: 5
 
   - type: OnUseTimerTrigger
-    delay: 5
+    delay: 3.5
 
   - type: Explosive
     devastationRange: 1

@@ -214,6 +214,7 @@ namespace Content.Shared.Construction
             Metal,
             Glass,
             Cable,
+            Gold,
         }
     }
 }

@@ -25,7 +25,11 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.4,0.25,0.4"
-      layer: 15
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
     IsScrapingFloor: true
   - type: Sprite
     netsync: false

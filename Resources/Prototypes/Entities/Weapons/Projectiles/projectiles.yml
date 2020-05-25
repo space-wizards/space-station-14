@@ -17,8 +17,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.2,0.2,0.2"
-      layer: 32
-      mask: 30
+      layer: [Clickable]
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Physics
     edgeslide: false
   - type: Projectile
