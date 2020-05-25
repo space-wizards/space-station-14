@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Physics;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects
 
         private string activeIndex;
 
-        private PullableComponent _pulledObject = null;
+        private PhysicsComponent _pulledObject = null;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string ActiveIndex
@@ -473,21 +473,22 @@ namespace Content.Server.GameObjects
         {
             if (isPulling)
             {
-                _pulledObject.StopPull();
+                (_pulledObject.Controller as PullController).StopPull();
             }
-            _pulledObject = pullable;
-            _pulledObject.GetPulled(Owner);
+            _pulledObject = pullable.Owner.GetComponent<PhysicsComponent>();
+            (_pulledObject.Controller as PullController).StartPull(Owner.GetComponent<PhysicsComponent>());
         }
 
         public void StopPulling()
         {
-            _pulledObject.StopPull();
+            (_pulledObject.Controller as PullController).StopPull();
             _pulledObject = null;
         }
 
         public void MovePulledObject(GridCoordinates coords)
         {
-            _pulledObject?.MoveTo(coords);
+            if (_pulledObject == null) return;
+            (_pulledObject.Controller as PullController).MoveTo(coords);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)

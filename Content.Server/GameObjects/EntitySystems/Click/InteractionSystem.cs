@@ -1,21 +1,19 @@
 using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects.Components.Interactable;
+using Content.Server.Physics;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
-using Content.Shared.Physics;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -481,7 +479,11 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            if (!pull.GettingPulled)
+            var physics = pull.Owner.GetComponent<PhysicsComponent>();
+
+            physics.SetController<PullController>();
+
+            if (!(pull.Owner.GetComponent<PhysicsComponent>().Controller as PullController).GettingPulled)
             {
                 hands.StartPulling(pull);
             }
