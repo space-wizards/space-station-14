@@ -44,6 +44,27 @@
       map: ["enum.PDAVisualLayers.Unlit"]
 
 - type: entity
+  name: Chef PDA
+  parent: BasePDA
+  id: ChefPDA
+  description: Why isn't it gray?
+  components:
+  - type: PDA
+    idCard: ChefIDCard
+  - type: Icon
+    sprite: Objects/Devices/pda.rsi
+    state: pda-chef
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-chef
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: unlit_pda_screen
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Unlit"]
+
+- type: entity
   name: Clown PDA
   parent: BasePDA
   id: ClownPDA
@@ -88,7 +109,7 @@
 - type: entity
   name: Bartender PDA
   parent: BasePDA
-  id: BarPDA
+  id: BartenderPDA
   description: Smells like beer.
   components:
   - type: PDA

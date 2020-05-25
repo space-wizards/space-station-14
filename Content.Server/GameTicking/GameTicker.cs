@@ -642,11 +642,20 @@ namespace Content.Server.GameTicking
             card.FullName = characterName;
             card.JobTitle = jobPrototype.Name;
 
-
             var access = card.Owner.GetComponent<AccessComponent>();
             access.Tags.Clear();
             access.Tags.AddRange(jobPrototype.Access);
             pdaComponent.SetPDAOwner(mob);
+            var mindComponent = mob.GetComponent<MindComponent>();
+            if (mindComponent.HasMind)//Redundancy checks.
+            {
+                if (mindComponent.Mind.AllRoles.Any(role => role.Antag)) //Give antags a new uplinkaccount.
+                {
+                    var uplinkAccount = new UplinkAccount(mob.Uid, 20); //TODO: make me into a variable based on server pop or something.
+                    pdaComponent.InitUplinkAccount(uplinkAccount);
+                }
+            }
+
         }
 
         private void AddManifestEntry(string characterName, string jobId)

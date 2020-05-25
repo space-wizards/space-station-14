@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.PDA
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class PDAComponent : SharedPDAComponent, IAttackBy, IActivate, IUse
+    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse
     {
 #pragma warning disable 649
         [Dependency] protected readonly IPDAUplinkManager _uplinkManager;
@@ -126,9 +126,9 @@ namespace Content.Server.GameObjects.Components.PDA
             _appearance?.SetData(PDAVisuals.ScreenLit, _lightOn);
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            var item = eventArgs.AttackWith;
+            var item = eventArgs.Using;
             if (!IdSlotEmpty)
             {
                 return false;
@@ -226,14 +226,10 @@ namespace Content.Server.GameObjects.Components.PDA
         [Verb]
         public sealed class EjectIDVerb : Verb<PDAComponent>
         {
-            protected override string GetText(IEntity user, PDAComponent component)
+            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
             {
-                return Loc.GetString("Eject ID");
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, PDAComponent component)
-            {
-                return component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                data.Text = Loc.GetString("Eject ID");
+                data.Visibility = component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, PDAComponent component)

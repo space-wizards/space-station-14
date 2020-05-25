@@ -17,6 +17,10 @@ namespace Content.Client.GameObjects.Components.PDA
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
+            if (component.Owner.Deleted)
+            {
+                return;
+            }
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             sprite.LayerSetVisible(PDAVisualLayers.Unlit, false);
             if(!component.TryGetData<bool>(PDAVisuals.ScreenLit, out var isScreenLit))
