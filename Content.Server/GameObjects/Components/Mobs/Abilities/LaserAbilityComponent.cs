@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs.Abilities;
@@ -54,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
             serializer.DataField(ref _baseFireCost, "baseFireCost", 300);
             serializer.DataField(ref _lowerChargeLimit, "lowerChargeLimit", 10);
             serializer.DataField(ref _fireSound, "fireSound", "Audio/Guns/Gunshots/laser.ogg");
-            serializer.DataField(ref _cooldown, "cooldown", TimeSpan.FromSeconds(2));
+            serializer.DataField(ref _cooldown, "cooldown", TimeSpan.FromSeconds(0));
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
@@ -86,11 +87,14 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 
-            var ray = new CollisionRay(userPosition, angle.ToVec(), (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable));
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user, ignoreNonHardCollidables: true);
+            var ray = new CollisionRay(userPosition, angle.ToVec(), (int)(CollisionGroup.Impassable | CollisionGroup.MobImpassable));
+            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user).ToList();
 
-            Hit(rayCastResults, user);
-            AfterEffects(user, rayCastResults, angle);
+            if (rayCastResults.Count == 1)
+            {
+                Hit(rayCastResults[0], user);
+                AfterEffects(user, rayCastResults[0], angle);
+            }
         }
 
         protected virtual void Hit(RayCastResults ray, IEntity user = null)
@@ -98,15 +102,13 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
             if (ray.HitEntity != null && ray.HitEntity.TryGetComponent(out DamageableComponent damage))
             {
                 damage.TakeDamage(DamageType.Heat, _damage, Owner, user);
-                //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
-                //even numbers if halfway between two numbers, rather than rounding to nearest
             }
         }
 
         protected virtual void AfterEffects(IEntity user, RayCastResults ray, Angle angle)
         {
             var time = IoCManager.Resolve<IGameTiming>().CurTime;
-            var dist = ray.DidHitObject ? ray.Distance : MaxLength;
+            var dist = ray.Distance;
             var offset = angle.ToVec() * dist / 2;
             var message = new EffectSystemMessage
             {
