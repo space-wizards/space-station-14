@@ -7,8 +7,8 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.15,-0.3,0.2,0.3"
-      mask: 0
-      layer: 32
+      layer:
+      - Clickable
   - type: PowerCell
   - type: Appearance
   - type: Sprite
@@ -125,8 +125,8 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
-      mask: 2
-      layer: 32
+      mask: [Impassable]
+      layer: [Clickable]
     IsScrapingFloor: true
 
 - type: entity
@@ -157,8 +157,8 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
-      mask: 2
-      layer: 32
+      mask: [Impassable]
+      layer: [Clickable]
     IsScrapingFloor: true
 
 - type: entity
@@ -188,6 +188,6 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
-      mask: 2
-      layer: 32
+      mask: [Impassable]
+      layer: [Clickable]
     IsScrapingFloor: true

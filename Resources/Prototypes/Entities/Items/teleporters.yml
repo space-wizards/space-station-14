@@ -53,7 +53,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      mask: 10
+      mask: [Impassable, MobImpassable]
   - type: Portal
   - type: Sprite
     netsync: false

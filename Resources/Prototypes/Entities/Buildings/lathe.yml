@@ -35,7 +35,11 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 15
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: Lathe
@@ -80,7 +84,11 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 15
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: ResearchClient

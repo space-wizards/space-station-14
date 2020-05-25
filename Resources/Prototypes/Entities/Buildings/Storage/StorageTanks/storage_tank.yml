@@ -10,8 +10,17 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5,-0.5,0.5,0.5"
-      mask: 30
-      layer: 31
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
     IsScrapingFloor: true
   - type: Physics
     mass: 15
