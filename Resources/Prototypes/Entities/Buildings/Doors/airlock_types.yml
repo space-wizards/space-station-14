@@ -27,7 +27,6 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockEngineeringGlass
-  name: Glass airlock
   suffix: Engineering
   components:
   - type: Sprite
@@ -47,7 +46,6 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockMedicalGlass
-  name: Glass airlock
   suffix: Medical
   components:
   - type: Sprite
@@ -67,7 +65,6 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockScienceGlass
-  name: Glass airlock
   suffix: Science
   components:
   - type: Sprite
@@ -87,7 +84,6 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockCommandGlass
-  name: Glass airlock
   suffix: Command
   components:
   - type: Sprite
@@ -107,7 +103,6 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockSecurityGlass
-  name: Glass airlock
   suffix: Security
   components:
   - type: Sprite

@@ -132,15 +132,15 @@ namespace Content.Client.GameObjects.Components.Access
                 };
                 vBox.AddChild(grid);
 
-                foreach (var AccessLevel in prototypeManager.EnumeratePrototypes<AccessLevelPrototype>())
+                foreach (var accessLevel in prototypeManager.EnumeratePrototypes<AccessLevelPrototype>())
                 {
                     var newButton = new Button
                     {
-                        Text = AccessLevel.Name,
+                        Text = accessLevel.Name,
                         ToggleMode = true,
                     };
                     grid.AddChild(newButton);
-                    _accessButtons.Add(AccessLevel.ID, newButton);
+                    _accessButtons.Add(accessLevel.ID, newButton);
                     newButton.OnPressed += _ => SubmitData();
                 }
             }

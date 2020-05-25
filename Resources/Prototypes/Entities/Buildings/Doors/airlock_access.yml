@@ -1,12 +1,3 @@
-# Current access: "Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"
-- type: entity
-  parent: Airlock
-  id: AirlockLocked
-  suffix: Locked
-  components:
-  - type: AccessReader
-    necessary: ["Maintenance"]
-
 - type: entity
   parent: AirlockExternal
   id: AirlockExternalLocked
@@ -25,7 +16,6 @@
 - type: entity
   parent: AirlockEngineeringGlass
   id: AirlockEngineeringGlassLocked
-  name: Glass airlock
   suffix: Glass, Locked
   components:
   - type: AccessReader
@@ -34,7 +24,6 @@
 - type: entity
   parent: AirlockMedical
   id: AirlockMedicalLocked
-  name:  Airlock
   suffix: Medical, Locked
   components:
   - type: AccessReader
@@ -42,7 +31,6 @@
 - type: entity
   parent: AirlockMedicalGlass
   id: AirlockMedicalGlassLocked
-  name:  Glass airlock
   suffix: Medical, Locked
   components:
   - type: AccessReader
@@ -51,7 +39,6 @@
 - type: entity
   parent: AirlockScience
   id: AirlockScienceLocked
-  name:  Airlock
   suffix: Science, Locked
   components:
   - type: AccessReader
@@ -59,7 +46,6 @@
 - type: entity
   parent: AirlockScienceGlass
   id: AirlockScienceGlassLocked
-  name: Glass airlock
   suffix: Science, Locked
   components:
   - type: AccessReader
@@ -68,7 +54,6 @@
 - type: entity
   parent: AirlockCommand
   id: AirlockCommandLocked
-  name:  Airlock
   suffix: Command, Locked
   components:
   - type: AccessReader
@@ -76,7 +61,6 @@
 - type: entity
   parent: AirlockCommandGlass
   id: AirlockCommandGlassLocked
-  name: Glass airlock
   suffix: Command, Locked
   components:
   - type: AccessReader
@@ -92,7 +76,6 @@
 - type: entity
   parent: AirlockSecurityGlass
   id: AirlockSecurityGlassLocked
-  name: Glass airlock
   suffix: Security, Locked
   components:
   - type: AccessReader
