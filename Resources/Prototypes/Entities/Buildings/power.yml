@@ -103,7 +103,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: Clickable
+      layer: [Clickable]
   - type: Sprite
     drawdepth: WallMountedItems
     texture: Objects/Power/provider.png
