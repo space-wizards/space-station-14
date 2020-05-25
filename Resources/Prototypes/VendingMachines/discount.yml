@@ -3,7 +3,7 @@
   name: Discount Dan's
   description: A vending machine containing discount snacks from the infamous 'Discount Dan' franchise.
   spriteName: discount
-  startinginventory:
+  startingInventory:
     Food4NoRaisins: 10
     FoodCandy: 10
     FoodCandyCorn: 2
@@ -12,7 +12,7 @@
     FoodCookie: 2
     FoodDonut: 1
     FoodFrostedDonut: 1
-    FoodHotDog: 2
+    FoodHotdog: 2
     FoodLiquidFood: 1
     FoodSosJerky: 5
     FoodSpaceTwinkie: 3
