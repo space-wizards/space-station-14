@@ -33,7 +33,7 @@
 - type: entity
   name: Observer Spawn Point
   id: SpawnPointObserver
-  parent: spawn_point
+  parent: SpawnPoint
   components:
   - type: Sprite
     state: observer_start

@@ -55,7 +55,7 @@
 - type: entity
   id: AirlockGlass
   parent: Airlock
-  name: Glass airlock
+  name: Glass Airlock
   components:
   - type: Airlock
     occludes: false
