@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: canOpen
+  files:
+  - /Audio/items/can_open1.ogg
+  - /Audio/items/can_open2.ogg
+  - /Audio/items/can_open3.ogg
