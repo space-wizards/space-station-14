@@ -10,7 +10,6 @@
   - type: Pourable
     transferAmount: 5
   - type: Drink
-    despawn_empty: false
   - type: Sound
   - type: Sprite
     state: icon

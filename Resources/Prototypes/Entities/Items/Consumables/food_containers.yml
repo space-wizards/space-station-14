@@ -1,10 +1,9 @@
 - type: entity
   parent: BaseItem
-  id: DrinkFoodContainerBase
+  id: FoodContainerBase
   abstract: true
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
   - type: Sprite
     state: icon
     netsync: false
@@ -13,435 +12,414 @@
 
 # Containers
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Apple cake
-  id: DrinkFoodContainerAppleCake
+  id: FoodContainerAppleCake
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
-    prototypes: 
+  - type: FoodContainer
+    prototypes:
       FoodAppleCakeSlice: 100
-    spawn_on_finish: TrashTray
+    trash: TrashTray
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/apple_cake.rsi
+    sprite: Objects/FoodContainers/apple_cake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/apple_cake.rsi
+    sprite: Objects/FoodContainers/apple_cake.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Banana bread
-  id: DrinkFoodContainerBananaBread
+  id: FoodContainerBananaBread
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodBananaBreadSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/bananabread.rsi
+    sprite: Objects/FoodContainers/bananabread.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/bananabread.rsi
+    sprite: Objects/FoodContainers/bananabread.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Birthday cake
-  id: DrinkFoodContainerBirthdayCake
+  id: FoodContainerBirthdayCake
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
-    prototypes: 
+  - type: FoodContainer
+    prototypes:
       FoodBirthdayCakeSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/birthdaycake.rsi
+    sprite: Objects/FoodContainers/birthdaycake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/birthdaycake.rsi
+    sprite: Objects/FoodContainers/birthdaycake.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Brain cake
-  id: DrinkFoodContainerBrainCake
+  id: FoodContainerBrainCake
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodBrainCakeSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/braincake.rsi
+    sprite: Objects/FoodContainers/braincake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/braincake.rsi
+    sprite: Objects/FoodContainers/braincake.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Bread
-  id: DrinkFoodContainerBread
+  id: FoodContainerBread
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodBreadSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/bread.rsi
+    sprite: Objects/FoodContainers/bread.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/bread.rsi
+    sprite: Objects/FoodContainers/bread.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Carrot cake
-  id: DrinkFoodContainerCarrotCake
+  id: FoodContainerCarrotCake
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodCarrotCakeSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/carrotcake.rsi
+    sprite: Objects/FoodContainers/carrotcake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/carrotcake.rsi
+    sprite: Objects/FoodContainers/carrotcake.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Cheesecake
-  id: DrinkFoodContainerCheeseCake
+  id: FoodContainerCheeseCake
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodCheeseCakeSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/cheesecake.rsi
+    sprite: Objects/FoodContainers/cheesecake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/cheesecake.rsi
+    sprite: Objects/FoodContainers/cheesecake.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Cheese wheel
-  id: DrinkFoodContainerCheeseWheel
+  id: FoodContainerCheeseWheel
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodCheeseWedge: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/apple_cake.rsi
+    sprite: Objects/FoodContainers/apple_cake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/apple_cake.rsi
+    sprite: Objects/FoodContainers/apple_cake.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Chocolate cake
-  id: DrinkFoodContainerChocolateCake
+  id: FoodContainerChocolateCake
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodChocolateCakeSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/chocolatecake.rsi
+    sprite: Objects/FoodContainers/chocolatecake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/chocolatecake.rsi
+    sprite: Objects/FoodContainers/chocolatecake.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Cream cheese bread
-  id: DrinkFoodContainerCreamCheeseBread
+  id: FoodContainerCreamCheeseBread
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodCreamCheeseBreadSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/creamcheesebread.rsi
+    sprite: Objects/FoodContainers/creamcheesebread.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/creamcheesebread.rsi
+    sprite: Objects/FoodContainers/creamcheesebread.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Donut box
-  id: DrinkFoodContainerDonutBox
+  id: FoodContainerDonutBox
   components:
-  - type: DrinkFoodContainer
+  - type: FoodContainer
     capacity: 6
     prototypes:
       FoodDonut: 70
       FoodFrostedDonut: 30
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/donutbox.rsi
+    sprite: Objects/FoodContainers/donutbox.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/donutbox.rsi
+    sprite: Objects/FoodContainers/donutbox.rsi
   - type: Appearance
     visuals:
-    - type: DrinkFoodContainerVisualizer2D
+    - type: FoodContainerVisualizer2D
       mode: Discrete
       base_state: donutbox
       steps: 7
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Egg box (shut)
-  id: DrinkFoodContainerEggBoxShut
+  id: FoodContainerEggBoxShut
   components:
-  - type: DrinkFoodContainer
+  - type: FoodContainer
     capacity: 1
     prototypes:
-      DrinkFoodContainerEggBox: 100
+      FoodContainerEggBox: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/eggbox_shut.rsi
+    sprite: Objects/FoodContainers/eggbox_shut.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/eggbox_shut.rsi
+    sprite: Objects/FoodContainers/eggbox_shut.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Egg box
-  id: DrinkFoodContainerEggBox
+  id: FoodContainerEggBox
   components:
-  - type: DrinkFoodContainer
+  - type: FoodContainer
     capacity: 12
     prototypes:
       FoodEgg: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/eggbox.rsi
+    sprite: Objects/FoodContainers/eggbox.rsi
     state: eggbox-12
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/eggbox.rsi
+    sprite: Objects/FoodContainers/eggbox.rsi
     state: eggbox-12
   - type: Appearance
     visuals:
-    - type: DrinkFoodContainerVisualizer2D
+    - type: FoodContainerVisualizer2D
       mode: Discrete
       base_state: eggbox
       steps: 13
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Lemon cake
-  id: DrinkFoodContainerLemonCake
+  id: FoodContainerLemonCake
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodLemonCakeSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/lemoncake.rsi
+    sprite: Objects/FoodContainers/lemoncake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/lemoncake.rsi
+    sprite: Objects/FoodContainers/lemoncake.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Lime cake
-  id: DrinkFoodContainerLimeCake
+  id: FoodContainerLimeCake
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodLimeCakeSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/limecake.rsi
+    sprite: Objects/FoodContainers/limecake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/limecake.rsi
+    sprite: Objects/FoodContainers/limecake.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Meat bread
-  id: DrinkFoodContainerMeatBread
+  id: FoodContainerMeatBread
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodMeatBreadSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/meatbread.rsi
+    sprite: Objects/FoodContainers/meatbread.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/meatbread.rsi
+    sprite: Objects/FoodContainers/meatbread.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Meat pizza
-  id: DrinkFoodContainerMeatPizza
+  id: FoodContainerMeatPizza
   components:
-  - type: DrinkFoodContainer
+  - type: FoodContainer
     capacity: 6
     prototypes:
       FoodMeatPizzaSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/meatpizza.rsi
+    sprite: Objects/FoodContainers/meatpizza.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/meatpizza.rsi
+    sprite: Objects/FoodContainers/meatpizza.rsi
 
 # These two will probably get moved one day
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Monkey cube box
-  id: DrinkFoodContainerMonkeyCubeBox
+  id: FoodContainerMonkeyCubeBox
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
-      DrinkFoodContainerMonkeyCubeWrap: 100
+      FoodContainerMonkeyCubeWrap: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/monkeycubebox.rsi
+    sprite: Objects/FoodContainers/monkeycubebox.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/monkeycubebox.rsi
+    sprite: Objects/FoodContainers/monkeycubebox.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Monkey cube wrap
-  id: DrinkFoodContainerMonkeyCubeWrap
+  id: FoodContainerMonkeyCubeWrap
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodMonkeyCube: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/monkeycubewrap.rsi
+    sprite: Objects/FoodContainers/monkeycubewrap.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/monkeycubewrap.rsi
+    sprite: Objects/FoodContainers/monkeycubewrap.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Mushroom pizza
-  id: DrinkFoodContainerMushroomPizza
+  id: FoodContainerMushroomPizza
   components:
-  - type: DrinkFoodContainer
+  - type: FoodContainer
     capacity: 6
     prototypes:
       FoodMushroomPizzaSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/mushroompizza.rsi
+    sprite: Objects/FoodContainers/mushroompizza.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/mushroompizza.rsi
+    sprite: Objects/FoodContainers/mushroompizza.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Orange cake
-  id: DrinkFoodContainerOrangeCake
+  id: FoodContainerOrangeCake
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodOrangeCakeSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/orangecake.rsi
+    sprite: Objects/FoodContainers/orangecake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/orangecake.rsi
+    sprite: Objects/FoodContainers/orangecake.rsi
 
 # TODO: Probably replace it with a stacking thing
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Pizza box stack
-  id: DrinkFoodContainerPizzaBoxStack
+  id: FoodContainerPizzaBoxStack
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
-      DrinkFoodContainerPizzaBox: 100
+      FoodContainerPizzaBox: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/pizzaboxstack.rsi
+    sprite: Objects/FoodContainers/pizzaboxstack.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/pizzaboxstack.rsi
+    sprite: Objects/FoodContainers/pizzaboxstack.rsi
   - type: Appearance
     visuals:
-    - type: DrinkFoodContainerVisualizer2D
+    - type: FoodContainerVisualizer2D
       mode: Discrete
       base_state: pizzaboxstack
       steps: 5
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Pizza box
-  id: DrinkFoodContainerPizzaBox
+  id: FoodContainerPizzaBox
   components:
-  - type: DrinkFoodContainer
+  - type: FoodContainer
     capacity: 1
     prototypes:
-      DrinkFoodContainerMeatPizza: 25
-      DrinkFoodContainerMargheritaPizza: 25
-      DrinkFoodContainerMushroomPizza: 25
-      DrinkFoodContainerVegetablePizza: 25
+      FoodContainerMeatPizza: 25
+      FoodContainerMargheritaPizza: 25
+      FoodContainerMushroomPizza: 25
+      FoodContainerVegetablePizza: 25
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/pizzabox_open.rsi
+    sprite: Objects/FoodContainers/pizzabox_open.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/pizzabox_open.rsi
+    sprite: Objects/FoodContainers/pizzabox_open.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Margherita pizza
-  id: DrinkFoodContainerMargheritaPizza
+  id: FoodContainerMargheritaPizza
   components:
-  - type: DrinkFoodContainer
+  - type: FoodContainer
     capacity: 6
     prototypes:
       FoodMargheritaPizzaSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/pizzamargherita.rsi
+    sprite: Objects/FoodContainers/pizzamargherita.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/pizzamargherita.rsi
+    sprite: Objects/FoodContainers/pizzamargherita.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Plain cake
-  id: DrinkFoodContainerPlainCake
+  id: FoodContainerPlainCake
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodPlainCakeSlice: 100
-    spawn_on_finish: TrashTray
+    trash: TrashTray
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/plaincake.rsi
+    sprite: Objects/FoodContainers/plaincake.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/plaincake.rsi
+    sprite: Objects/FoodContainers/plaincake.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Pumpkin pie
-  id: DrinkFoodContainerPumpkinPie
+  id: FoodContainerPumpkinPie
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodPumpkinPieSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/pumpkinpie.rsi
+    sprite: Objects/FoodContainers/pumpkinpie.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/pumpkinpie.rsi
+    sprite: Objects/FoodContainers/pumpkinpie.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Tofu bread
-  id: DrinkFoodContainerTofuBread
+  id: FoodContainerTofuBread
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodTofuBreadSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/tofubread.rsi
+    sprite: Objects/FoodContainers/tofubread.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/tofubread.rsi
+    sprite: Objects/FoodContainers/tofubread.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Vegetable pizza
-  id: DrinkFoodContainerVegetablePizza
+  id: FoodContainerVegetablePizza
   components:
-  - type: DrinkFoodContainer
+  - type: FoodContainer
     capacity: 6
     prototypes:
       FoodVegetablePizzaSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/vegetablepizza.rsi
+    sprite: Objects/FoodContainers/vegetablepizza.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/vegetablepizza.rsi
+    sprite: Objects/FoodContainers/vegetablepizza.rsi
 
 - type: entity
-  parent: DrinkFoodContainerBase
+  parent: FoodContainerBase
   name: Xenomeat bread
-  id: DrinkFoodContainerXenomeatBread
+  id: FoodContainerXenomeatBread
   components:
-  - type: DrinkFoodContainer
-    capacity: 5
+  - type: FoodContainer
     prototypes:
       FoodXenomeatBreadSlice: 100
   - type: Sprite
-    sprite: Objects/DrinkFoodContainers/xenomeatbread.rsi
+    sprite: Objects/FoodContainers/xenomeatbread.rsi
   - type: Icon
-    sprite: Objects/DrinkFoodContainers/xenomeatbread.rsi
+    sprite: Objects/FoodContainers/xenomeatbread.rsi
