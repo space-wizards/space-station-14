@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "copyright": "github.com/tgstation/tgstation",
+  "license": "CCNA",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bed",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}
