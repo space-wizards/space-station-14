@@ -2602,6 +2602,19 @@
   parent: HatBase
 
 - type: entity
+  id: HatSkub
+  name: Skub Hat
+  description: 'Huh, Skub.'
+  components:
+  - sprite: Clothing/Head/skubhead.rsi
+    type: Sprite
+  - sprite: Clothing/Head/skubhead.rsi
+    type: Icon
+  - sprite: Clothing/Head/skubhead.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
   id: HatSombrero
   name: Sombrero
   description: ''
