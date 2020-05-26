@@ -22623,185 +22623,192 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2943
-  type: AirlockMaintRnD
-  components:
-  - parent: 0
-    pos: -4.5,-11.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2944
   type: AirlockServiceGlassLocked
   components:
   - parent: 0
     pos: -20.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2945
+- uid: 2944
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: -16.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2946
+- uid: 2945
   type: AirlockMaintLocked
   components:
   - parent: 0
     pos: 27.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2947
+- uid: 2946
   type: AirlockEVALocked
   components:
   - parent: 0
     pos: 9.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2948
+- uid: 2947
   type: AirlockMaintIntLocked
   components:
   - parent: 0
     pos: -31.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2949
+- uid: 2948
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: -8.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2950
+- uid: 2949
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: 21.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2951
+- uid: 2950
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: 6.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2952
+- uid: 2951
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: 1.5,-23.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2953
+- uid: 2952
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: -16.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2954
+- uid: 2953
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: -34.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2955
+- uid: 2954
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: -32.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2956
+- uid: 2955
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: -33.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2957
+- uid: 2956
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: 0.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2958
+- uid: 2957
   type: AirlockMaintIntLocked
   components:
   - parent: 0
     pos: -13.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2959
+- uid: 2958
   type: AirlockMaintIntLocked
   components:
   - parent: 0
     pos: -12.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2960
+- uid: 2959
   type: AirlockMaintIntLocked
   components:
   - parent: 0
     pos: -16.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2961
+- uid: 2960
   type: AirlockMaintIntLocked
   components:
   - parent: 0
     pos: -14.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2962
+- uid: 2961
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: -23.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2963
+- uid: 2962
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: 1.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2964
+- uid: 2963
   type: AirlockMaintIntLocked
   components:
   - parent: 0
     pos: -20.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2965
+- uid: 2964
   type: AirlockEVALocked
   components:
   - parent: 0
     pos: 8.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2966
+- uid: 2965
   type: AirlockEVALocked
   components:
   - parent: 0
     pos: 7.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2967
+- uid: 2966
   type: AirlockVaultLocked
   components:
   - parent: 0
     pos: 0.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2968
+- uid: 2967
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: 5.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2968
+  type: AirlockMaintRnDLocked
+  components:
+  - parent: 0
+    pos: -4.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2969
+  type: AirlockMaintEngiLocked
+  components:
+  - parent: 0
+    pos: 28.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
 ...
