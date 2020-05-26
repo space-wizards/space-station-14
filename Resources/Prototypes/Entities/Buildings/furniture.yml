@@ -80,3 +80,14 @@
     color: "white"
   - type: Icon
     state: wooden_chair
+
+- type: entity
+  name: Bed
+  id: Bed
+  components:
+  - type: Sprite
+    sprite: Buildings/furniture.rsi
+    state: bed
+  - type: Icon
+    sprite: Buildings/furniture.rsi
+    state: bed
