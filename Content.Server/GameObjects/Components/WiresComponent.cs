@@ -239,7 +239,7 @@ namespace Content.Server.GameObjects.Components
                         return;
                     }
 
-                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.WorldPosition, ignoredEnt: Owner))
+                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.MapPosition, ignoredEnt: Owner))
                     {
                         _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You can't reach there!"));
                         return;

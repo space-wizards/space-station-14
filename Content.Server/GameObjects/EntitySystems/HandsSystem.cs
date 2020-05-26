@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
 
 
-            if(EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(coords.ToMap(_mapManager), ent.Transform.WorldPosition, ignoredEnt: ent))
+            if(EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(coords.ToMap(_mapManager), ent.Transform.MapPosition, ignoredEnt: ent))
                 if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
                 {
                     handsComp.Drop(handsComp.ActiveIndex, coords);
