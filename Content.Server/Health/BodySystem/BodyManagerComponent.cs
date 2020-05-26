@@ -191,10 +191,10 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it. 
         /// </summary>
-        public void DisconnectBodyPart(BodyPart part, bool dropEntity)
+        public IEntity DisconnectBodyPart(BodyPart part, bool dropEntity)
         {
             if (!_partDictionary.ContainsValue(part))
-                return;
+                return null;
             if (part != null)
             {
                 string slotName = _partDictionary.FirstOrDefault(x => x.Value == part).Key;
@@ -213,8 +213,10 @@ namespace Content.Server.BodySystem {
                 {
                     var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
                     partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
+                    return partEntity;
                 }
             }
+            return null;
         }
 
         /// <summary>
