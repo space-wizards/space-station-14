@@ -65,3 +65,13 @@
     sprite: Buildings/Doors/airlock_glass.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_glass.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockMaint
+  name: Maintenance Hatch
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_maint.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_maint.rsi

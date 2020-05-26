@@ -51,7 +51,7 @@
   - type: IdCard
     jobTitle: Captain
   - type: Access
-    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"]
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", IdCard]
 
 - type: entity
   parent: IDCardStandard
@@ -223,7 +223,7 @@
   - type: IdCard
     jobTitle: Head of Personnel
   - type: Access
-    tags: ["Maintenance", "Cargo", "Security", "Service","Command"]
+    tags: ["Maintenance", "Cargo", "Security", "Service","Command", IdCard]
 
 - type: entity
   parent: IDCardStandard
@@ -318,4 +318,4 @@
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
-    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"]
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", IdCard]
