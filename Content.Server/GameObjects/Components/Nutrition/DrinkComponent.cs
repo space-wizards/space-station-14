@@ -88,16 +88,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         private void UpdateName()
         {
-            if (!Empty && Opened)
+            if (Opened)
             {
-                Owner.Name = string.Empty;
-                Owner.Name = $"{_originalName} {Loc.GetString("(opened)")}";
-            }
-
-            if (Opened && Empty)
-            {
-                Owner.Name = string.Empty;
-                Owner.Name = $"{_originalName} {Loc.GetString("(empty)")}";
+                if (Empty)
+                {
+                    Owner.Name = $"{_originalName} {Loc.GetString("(empty)")}";
+                }
+                else
+                {
+                    Owner.Name = $"{_originalName} {Loc.GetString("(opened)")}";
+                }
             }
 
         }
