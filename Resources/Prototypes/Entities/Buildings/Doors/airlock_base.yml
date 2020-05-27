@@ -1,6 +1,6 @@
 - type: entity
   id: Airlock
-  name: Airlock
+  name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: Clickable
@@ -55,7 +55,7 @@
 - type: entity
   id: AirlockGlass
   parent: Airlock
-  name: Glass Airlock
+  name: glass airlock
   components:
   - type: Airlock
     occludes: false
@@ -69,7 +69,7 @@
 - type: entity
   parent: Airlock
   id: AirlockMaint
-  name: Maintenance Hatch
+  name: maintenance hatch
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_maint.rsi
