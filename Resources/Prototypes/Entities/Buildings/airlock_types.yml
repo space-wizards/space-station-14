@@ -77,6 +77,26 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockCargo
+  name: Cargo Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_cargo.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_cargo.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockCargoGlass
+  name: Glass Cargo Airlock
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_cargo_glass.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_cargo_glass.rsi
+
+- type: entity
+  parent: Airlock
   id: AirlockCommand
   name: Command Airlock
   components:
