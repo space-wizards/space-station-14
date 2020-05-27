@@ -24,6 +24,14 @@
     necessary: ["Engineering"]
 
 - type: entity
+  parent: AirlockCargo
+  id: AirlockCargoLocked
+  suffix: Cargo, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Cargo"]
+
+- type: entity
   parent: AirlockMedical
   id: AirlockMedicalLocked
   suffix: Medical, Locked
@@ -87,6 +95,14 @@
   components:
   - type: AccessReader
     necessary: ["Engineering"]
+
+- type: entity
+  parent: AirlockCargoGlass
+  id: AirlockCargoGlassLocked
+  suffix: Cargo, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Cargo"]
 
 - type: entity
   parent: AirlockMedicalGlass

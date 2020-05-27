@@ -28,6 +28,16 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockCargo
+  suffix: Cargo 
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_cargo.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_cargo.rsi
+
+- type: entity
+  parent: Airlock
   id: AirlockMedical
   suffix: Medical
   components:
@@ -77,6 +87,16 @@
   - type: Icon
     sprite: Buildings/Doors/airlock_engineering_glass.rsi
 
+- type: entity
+  parent: AirlockGlass
+  id: AirlockCargoGlass
+  suffix: Cargo
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_cargo_glass.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_cargo_glass.rsi
+  
 - type: entity
   parent: AirlockGlass
   id: AirlockMedicalGlass
