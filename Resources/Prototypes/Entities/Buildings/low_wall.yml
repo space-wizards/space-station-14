@@ -22,7 +22,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 20
+      layer: [SmallImpassable, MobImpassable]
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

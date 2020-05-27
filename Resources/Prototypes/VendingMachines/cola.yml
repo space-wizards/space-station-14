@@ -4,7 +4,7 @@
   description: A softdrink vendor provided by Robust Industries, LLC.
   animationDuration: 1.1
   spriteName: cola
-  startinginventory:
+  startingInventory:
     DrinkFoodContainerColaCanUnopened: 10
     DrinkFoodContainerIceTeaCanUnopened: 10
     DrinkFoodContainerLemonLimeCanUnopened: 10

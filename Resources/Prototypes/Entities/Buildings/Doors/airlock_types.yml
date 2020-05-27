@@ -1,14 +1,12 @@
 - type: entity
   parent: Airlock
-  id: airlock_external
-  name: External Airlock
+  id: AirlockExternal
+  suffix: External
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_external.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_external.rsi
-
   - type: Appearance
     visuals:
     - type: AirlockVisualizer2D
@@ -19,114 +17,95 @@
 
 - type: entity
   parent: Airlock
-  id: airlock_engineering
-  name: Engineering Airlock
+  id: AirlockEngineering
+  suffix: Engineering
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_engineering.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_engineering.rsi
-
-
 - type: entity
   parent: AirlockGlass
   id: AirlockEngineeringGlass
-  name: Glass Engineering Airlock
+  suffix: Engineering
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_engineering_glass.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_engineering_glass.rsi
 
 - type: entity
   parent: Airlock
-  id: airlock_medical
-  name: Medical Airlock
+  id: AirlockMedical
+  suffix: Medical
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_medical.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_medical.rsi
-
 - type: entity
   parent: AirlockGlass
-  id: airlock_medical_glass
-  name: Glass Medical Airlock
+  id: AirlockMedicalGlass
+  suffix: Medical
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_medical_glass.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_medical_glass.rsi
-
 
 - type: entity
   parent: Airlock
-  id: airlock_science
-  name: Science Airlock
+  id: AirlockScience
+  suffix: Science
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_science.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_science.rsi
-
 - type: entity
   parent: AirlockGlass
-  id: airlock_science_glass
-  name: Glass Science Airlock
+  id: AirlockScienceGlass
+  suffix: Science
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_science_glass.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_science_glass.rsi
-
 
 - type: entity
   parent: Airlock
   id: AirlockCommand
-  name: Command Airlock
+  suffix: Command
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_command.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_command.rsi
-
 - type: entity
   parent: AirlockGlass
   id: AirlockCommandGlass
-  name: Glass Command Airlock
+  suffix: Command
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_command_glass.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_command_glass.rsi
-
 
 - type: entity
   parent: Airlock
   id: AirlockSecurity
-  name: Security Airlock
+  suffix: Security
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_security.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_security.rsi
-
 - type: entity
   parent: AirlockGlass
   id: AirlockSecurityGlass
-  name: Glass Security Airlock
+  suffix: Security
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_security_glass.rsi
-
   - type: Icon
     sprite: Buildings/Doors/airlock_security_glass.rsi

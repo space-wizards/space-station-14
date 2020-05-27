@@ -21,7 +21,11 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.3, 0.5"
-      layer: 30
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100
