@@ -6,43 +6,43 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine
+    public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine, IMapInit
     {
 #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
         private AudioSystem _audioSystem;
         private AppearanceComponent _appearance;
         private BoundUserInterface _userInterface;
 
         private bool _isPanelOpen;
+
         /// <summary>
         /// Opening the maintenance panel (typically with a screwdriver) changes this.
         /// </summary>
+        [ViewVariables]
         public bool IsPanelOpen
         {
             get => _isPanelOpen;
@@ -52,15 +52,18 @@ namespace Content.Server.GameObjects.Components
                 {
                     return;
                 }
+
                 _isPanelOpen = value;
                 UpdateAppearance();
             }
         }
 
         private bool _isPanelVisible = true;
+
         /// <summary>
         /// Components can set this to prevent the maintenance panel overlay from showing even if it's open
         /// </summary>
+        [ViewVariables]
         public bool IsPanelVisible
         {
             get => _isPanelVisible;
@@ -70,8 +73,31 @@ namespace Content.Server.GameObjects.Components
                 {
                     return;
                 }
+
                 _isPanelVisible = value;
                 UpdateAppearance();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string BoardName
+        {
+            get => _boardName;
+            set
+            {
+                _boardName = value;
+                UpdateUserInterface();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string SerialNumber
+        {
+            get => _serialNumber;
+            set
+            {
+                _serialNumber = value;
+                UpdateUserInterface();
             }
         }
 
@@ -88,26 +114,27 @@ namespace Content.Server.GameObjects.Components
         /// <summary>
         /// Status messages are displayed at the bottom of the UI.
         /// </summary>
-        private readonly Dictionary<object, string> _statuses = new Dictionary<object, string>();
+        private readonly Dictionary<object, object> _statuses = new Dictionary<object, object>();
 
         /// <summary>
-        /// <see cref="AssignColor"/> and <see cref="WiresBuilder.CreateWire"/>.
+        /// <see cref="AssignAppearance"/> and <see cref="WiresBuilder.CreateWire"/>.
         /// </summary>
-        private readonly List<Color> _availableColors = new List<Color>()
-        {
-            Color.Red,
-            Color.Blue,
-            Color.Green,
-            Color.Orange,
-            Color.Brown,
-            Color.Gold,
-            Color.Gray,
-            Color.Cyan,
-            Color.Navy,
-            Color.Purple,
-            Color.Pink,
-            Color.Fuchsia,
-        };
+        private readonly List<WireColor> _availableColors =
+            new List<WireColor>((WireColor[]) Enum.GetValues(typeof(WireColor)));
+
+        private readonly List<WireLetter> _availableLetters =
+            new List<WireLetter>((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
+
+        private string _boardName;
+
+        private string _serialNumber;
+
+        // Used to generate wire appearance randomization client side.
+        // We honestly don't care what it is or such but do care that it doesn't change between UI re-opens.
+        [ViewVariables]
+        private int _wireSeed;
+        [ViewVariables]
+        private string _layoutId;
 
         public override void Initialize()
         {
@@ -120,14 +147,87 @@ namespace Content.Server.GameObjects.Components
             _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
         }
 
+        private void GenerateSerialNumber()
+        {
+            var random = IoCManager.Resolve<IRobustRandom>();
+            Span<char> data = stackalloc char[9];
+            data[4] = '-';
+
+            if (random.Prob(0.01f))
+            {
+                for (var i = 0; i < 4; i++)
+                {
+                    // Cyrillic Letters
+                    data[i] = (char) random.Next(0x0410, 0x0430);
+                }
+            }
+            else
+            {
+                for (var i = 0; i < 4; i++)
+                {
+                    // Letters
+                    data[i] = (char) random.Next(0x41, 0x5B);
+                }
+            }
+
+            for (var i = 5; i < 9; i++)
+            {
+                // Digits
+                data[i] = (char) random.Next(0x30, 0x3A);
+            }
+
+            SerialNumber = new string(data);
+        }
+
         protected override void Startup()
         {
             base.Startup();
 
+
+            WireLayout layout = null;
+            var hackingSystem = EntitySystem.Get<WireHackingSystem>();
+            if (_layoutId != null)
+            {
+                hackingSystem.TryGetLayout(_layoutId, out layout);
+            }
+
             foreach (var wiresProvider in Owner.GetAllComponents<IWires>())
             {
-                var builder = new WiresBuilder(this, wiresProvider);
+                var builder = new WiresBuilder(this, wiresProvider, layout);
                 wiresProvider.RegisterWires(builder);
+            }
+
+            if (layout != null)
+            {
+                WiresList.Sort((a, b) =>
+                {
+                    var pA = layout.Specifications[a.Identifier].Position;
+                    var pB = layout.Specifications[b.Identifier].Position;
+
+                    return pA.CompareTo(pB);
+                });
+            }
+            else
+            {
+                IoCManager.Resolve<IRobustRandom>().Shuffle(WiresList);
+
+                if (_layoutId != null)
+                {
+                    var dict = new Dictionary<object, WireLayout.WireData>();
+                    for (var i = 0; i < WiresList.Count; i++)
+                    {
+                        var d = WiresList[i];
+                        dict.Add(d.Identifier, new WireLayout.WireData(d.Letter, d.Color, i));
+                    }
+
+                    hackingSystem.AddLayout(_layoutId, new WireLayout(dict));
+                }
+            }
+
+            var id = 0;
+            foreach (var wire in WiresList)
+            {
+                wire.Id = ++id;
             }
 
             UpdateUserInterface();
@@ -140,39 +240,53 @@ namespace Content.Server.GameObjects.Components
         public bool IsWireCut(object identifier)
         {
             var wire = WiresList.Find(x => x.Identifier.Equals(identifier));
-            if(wire == null) throw new ArgumentException();
+            if (wire == null) throw new ArgumentException();
             return wire.IsCut;
         }
 
         public class Wire
         {
             /// <summary>
-            /// Used in client-server communication to identify a wire without telling the client what the wire does.
-            /// </summary>
-            public readonly Guid Guid;
-            /// <summary>
-            /// Registered by components implementing IWires, used to identify which wire the client interacted with.
-            /// </summary>
-            public readonly object Identifier;
-            /// <summary>
-            /// The color of the wire. It needs to have a corresponding entry in <see cref="Robust.Shared.Maths.Color.DefaultColors"/>.
-            /// </summary>
-            public readonly Color Color;
-            /// <summary>
             /// The component that registered the wire.
             /// </summary>
-            public readonly IWires Owner;
+            public IWires Owner { get; }
+
             /// <summary>
             /// Whether the wire is cut.
             /// </summary>
-            public bool IsCut;
-            public Wire(Guid guid, object identifier, Color color, IWires owner, bool isCut)
+            public bool IsCut { get; set; }
+
+            /// <summary>
+            /// Used in client-server communication to identify a wire without telling the client what the wire does.
+            /// </summary>
+            [ViewVariables]
+            public int Id { get; set; }
+
+            /// <summary>
+            /// The color of the wire.
+            /// </summary>
+            [ViewVariables]
+            public WireColor Color { get; }
+
+            /// <summary>
+            /// The greek letter shown below the wire.
+            /// </summary>
+            [ViewVariables]
+            public WireLetter Letter { get; }
+
+            /// <summary>
+            /// Registered by components implementing IWires, used to identify which wire the client interacted with.
+            /// </summary>
+            [ViewVariables]
+            public object Identifier { get; }
+
+            public Wire(IWires owner, bool isCut, WireColor color, WireLetter letter, object identifier)
             {
-                Guid = guid;
-                Identifier = identifier;
-                Color = color;
                 Owner = owner;
                 IsCut = isCut;
+                Color = color;
+                Letter = letter;
+                Identifier = identifier;
             }
         }
 
@@ -183,24 +297,42 @@ namespace Content.Server.GameObjects.Components
         {
             [NotNull] private readonly WiresComponent _wires;
             [NotNull] private readonly IWires _owner;
+            [CanBeNull] private readonly WireLayout _layout;
 
-            public WiresBuilder(WiresComponent wires, IWires owner)
+            public WiresBuilder(WiresComponent wires, IWires owner, WireLayout layout)
             {
                 _wires = wires;
                 _owner = owner;
+                _layout = layout;
             }
 
-            public void CreateWire(object identifier, Color? color = null, bool isCut = false)
+            public void CreateWire(object identifier, (WireColor, WireLetter)? appearance = null, bool isCut = false)
             {
-                if (!color.HasValue)
+                WireLetter letter;
+                WireColor color;
+                if (!appearance.HasValue)
                 {
-                    color = _wires.AssignColor();
+                    if (_layout != null && _layout.Specifications.TryGetValue(identifier, out var specification))
+                    {
+                        color = specification.Color;
+                        letter = specification.Letter;
+                        _wires._availableColors.Remove(color);
+                        _wires._availableLetters.Remove(letter);
+                    }
+                    else
+                    {
+                        (color, letter) = _wires.AssignAppearance();
+                    }
                 }
                 else
                 {
-                    _wires._availableColors.Remove(color.Value);
+                    (color, letter) = appearance.Value;
+                    _wires._availableColors.Remove(color);
+                    _wires._availableLetters.Remove(letter);
                 }
-                _wires.WiresList.Add(new Wire(Guid.NewGuid(), identifier, color.Value, _owner, isCut));
+
+                // TODO: ENSURE NO RANDOM OVERLAP.
+                _wires.WiresList.Add(new Wire(_owner, isCut, color, letter, identifier));
             }
         }
 
@@ -208,13 +340,12 @@ namespace Content.Server.GameObjects.Components
         /// Picks a color from <see cref="_availableColors"/> and removes it from the list.
         /// </summary>
         /// <returns>The picked color.</returns>
-        private Color AssignColor()
+        private (WireColor, WireLetter) AssignAppearance()
         {
-            if(_availableColors.Count == 0)
-            {
-                return Color.Black;
-            }
-            return _random.PickAndTake(_availableColors);
+            var color = _availableColors.Count == 0 ? WireColor.Red : _random.PickAndTake(_availableColors);
+            var letter = _availableLetters.Count == 0 ? WireLetter.α : _random.PickAndTake(_availableLetters);
+
+            return (color, letter);
         }
 
         /// <summary>
@@ -231,30 +362,41 @@ namespace Content.Server.GameObjects.Components
             switch (message)
             {
                 case WiresActionMessage msg:
-                    var wire = WiresList.Find(x => x.Guid == msg.Guid);
+                    var wire = WiresList.Find(x => x.Id == msg.Id);
+                    if (wire == null)
+                    {
+                        return;
+                    }
+
                     var player = serverMsg.Session.AttachedEntity;
                     if (!player.TryGetComponent(out IHandsComponent handsComponent))
                     {
-                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You have no hands."));
+                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
+                            Loc.GetString("You have no hands."));
                         return;
                     }
 
                     if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.MapPosition, ignoredEnt: Owner))
                     {
-                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You can't reach there!"));
+                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
+                            Loc.GetString("You can't reach there!"));
                         return;
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
-                    activeHandEntity.TryGetComponent<ToolComponent>(out var tool);
+                    ToolComponent tool = null;
+                    activeHandEntity?.TryGetComponent(out tool);
+
                     switch (msg.Action)
                     {
                         case WiresAction.Cut:
                             if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
                             {
-                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a wirecutter in your hand!"));
+                                _notifyManager.PopupMessageCursor(player,
+                                    Loc.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
                             }
+
                             tool.PlayUseSound();
                             wire.IsCut = true;
                             UpdateUserInterface();
@@ -262,9 +404,11 @@ namespace Content.Server.GameObjects.Components
                         case WiresAction.Mend:
                             if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
                             {
-                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a wirecutter in your hand!"));
+                                _notifyManager.PopupMessageCursor(player,
+                                    Loc.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
                             }
+
                             tool.PlayUseSound();
                             wire.IsCut = false;
                             UpdateUserInterface();
@@ -272,17 +416,22 @@ namespace Content.Server.GameObjects.Components
                         case WiresAction.Pulse:
                             if (tool == null || !tool.HasQuality(ToolQuality.Multitool))
                             {
-                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You need to hold a multitool in your hand!"));
+                                _notifyManager.PopupMessageCursor(player,
+                                    Loc.GetString("You need to hold a multitool in your hand!"));
                                 return;
                             }
+
                             if (wire.IsCut)
                             {
-                                _notifyManager.PopupMessage(Owner.Transform.GridPosition, player, _localizationManager.GetString("You can't pulse a wire that's been cut!"));
+                                _notifyManager.PopupMessageCursor(player,
+                                    Loc.GetString("You can't pulse a wire that's been cut!"));
                                 return;
                             }
+
                             _audioSystem.Play("/Audio/effects/multitool_pulse.ogg", Owner);
                             break;
                     }
+
                     wire.Owner.WiresUpdate(new WiresUpdateEventArgs(wire.Identifier, msg.Action));
                     break;
             }
@@ -293,9 +442,27 @@ namespace Content.Server.GameObjects.Components
             var clientList = new List<ClientWire>();
             foreach (var entry in WiresList)
             {
-                clientList.Add(new ClientWire(entry.Guid, entry.Color, entry.IsCut));
+                clientList.Add(new ClientWire(entry.Id, entry.IsCut, entry.Color,
+                    entry.Letter));
             }
-            _userInterface.SetState(new WiresBoundUserInterfaceState(clientList, _statuses.Values.ToList()));
+
+            _userInterface.SetState(
+                new WiresBoundUserInterfaceState(
+                    clientList.ToArray(),
+                    _statuses.Select(p => new StatusEntry(p.Key, p.Value)).ToArray(),
+                    BoardName,
+                    SerialNumber,
+                    _wireSeed));
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _boardName, "BoardName", "Wires");
+            serializer.DataField(ref _serialNumber, "SerialNumber", null);
+            serializer.DataField(ref _wireSeed, "WireSeed", 0);
+            serializer.DataField(ref _layoutId, "LayoutId", null);
         }
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -307,7 +474,8 @@ namespace Content.Server.GameObjects.Components
 
             IsPanelOpen = !IsPanelOpen;
             EntitySystem.Get<AudioSystem>()
-                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg", Owner);
+                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg",
+                    Owner);
             return true;
         }
 
@@ -320,17 +488,32 @@ namespace Content.Server.GameObjects.Components
                 : "The [color=lightgray]maintenance panel[/color] is [color=darkred]closed[/color]."));
         }
 
-        public void SetStatus(object statusIdentifier, string newMessage)
+        public void SetStatus(object statusIdentifier, object status)
         {
             if (_statuses.TryGetValue(statusIdentifier, out var storedMessage))
             {
-                if (storedMessage == newMessage)
+                if (storedMessage == status)
                 {
                     return;
                 }
             }
-            _statuses[statusIdentifier] = newMessage;
+
+            _statuses[statusIdentifier] = status;
             UpdateUserInterface();
+        }
+
+        void IMapInit.MapInit()
+        {
+            if (SerialNumber == null)
+            {
+                GenerateSerialNumber();
+            }
+
+            if (_wireSeed == 0)
+            {
+                _wireSeed = IoCManager.Resolve<IRobustRandom>().Next(1, int.MaxValue);
+                UpdateUserInterface();
+            }
         }
     }
 }
