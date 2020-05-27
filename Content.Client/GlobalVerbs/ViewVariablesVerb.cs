@@ -12,17 +12,19 @@ namespace Content.Client.GlobalVerbs
     [GlobalVerb]
     class ViewVariablesVerb : GlobalVerb
     {
-        public override string GetText(IEntity user, IEntity target) => "View variables";
-        public override string GetCategory(IEntity user, IEntity target) => "Debug";
-
         public override bool RequireInteractionRange => false;
 
-        public override VerbVisibility GetVisibility(IEntity user, IEntity target)
+        public override void GetData(IEntity user, IEntity target, VerbData data)
         {
             var groupController = IoCManager.Resolve<IClientConGroupController>();
-            if (groupController.CanViewVar())
-                return VerbVisibility.Visible;
-            return VerbVisibility.Invisible;
+            if (!groupController.CanViewVar())
+            {
+                data.Visibility = VerbVisibility.Invisible;
+                return;
+            }
+
+            data.Text = "View Variables";
+            data.CategoryData = VerbCategories.Debug;
         }
 
         public override void Activate(IEntity user, IEntity target)

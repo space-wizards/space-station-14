@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -60,7 +61,6 @@ namespace Content.Server.GameObjects.Components.Research
                 return;
 
             OpenUserInterface(actor.playerSession);
-            return;
         }
 
         public void UpdateUserInterface()

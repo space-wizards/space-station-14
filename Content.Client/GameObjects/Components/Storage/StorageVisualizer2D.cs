@@ -59,11 +59,32 @@ namespace Content.Client.GameObjects.Components.Storage
             sprite.LayerSetState(StorageVisualLayers.Door, open
                 ? _stateOpen ?? $"{_stateBase}_open"
                 : _stateClosed ?? $"{_stateBase}_door");
+
+            if (component.TryGetData(StorageVisuals.CanLock, out bool canLock) && canLock)
+            {
+                if (!component.TryGetData(StorageVisuals.Locked, out bool locked))
+                {
+                    locked = true;
+                }
+
+                sprite.LayerSetVisible(StorageVisualLayers.Lock, !open);
+                if (!open)
+                {
+                    sprite.LayerSetState(StorageVisualLayers.Lock, locked ? "locked" : "unlocked");
+                }
+            }
+
+            if (component.TryGetData(StorageVisuals.Welded, out bool weldedVal))
+            {
+                sprite.LayerSetVisible(StorageVisualLayers.Welded, weldedVal);
+            }
         }
     }
 
     public enum StorageVisualLayers
     {
-        Door
+        Door,
+        Welded,
+        Lock
     }
 }

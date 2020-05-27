@@ -41,7 +41,8 @@ namespace Content.Server
                 "InteractionOutline",
                 "MeleeWeaponArcAnimation",
                 "AnimationsTest",
-                "ItemStatus"
+                "ItemStatus",
+                "Marker",
             };
 
             foreach (var ignoreName in registerIgnore)

@@ -1,22 +1,32 @@
-﻿using Content.Server.GameObjects.Components.Interactable.Tools;
-using Robust.Shared.GameObjects;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Interactable;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    class WelderSystem : EntitySystem
+    /// <summary>
+    ///     Despite the name, it's only really used for the welder logic in tools. Go figure.
+    /// </summary>
+    public class WelderSystem : EntitySystem
     {
-        public override void Initialize()
+        private readonly HashSet<WelderComponent> _activeWelders = new HashSet<WelderComponent>();
+
+        public bool Subscribe(WelderComponent welder)
         {
-            EntityQuery = new TypeEntityQuery(typeof(WelderComponent));
+            return _activeWelders.Add(welder);
+        }
+
+        public bool Unsubscribe(WelderComponent welder)
+        {
+            return _activeWelders.Remove(welder);
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var tool in _activeWelders.ToArray())
             {
-                var comp = entity.GetComponent<WelderComponent>();
-                comp.OnUpdate(frameTime);
+                tool.OnUpdate(frameTime);
             }
         }
     }

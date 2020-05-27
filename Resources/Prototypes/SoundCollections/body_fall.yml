@@ -1,4 +1,4 @@
-- type: sound_collection
+- type: soundCollection
   id: bodyfall
   files:
   - /Audio/effects/bodyfall1.ogg

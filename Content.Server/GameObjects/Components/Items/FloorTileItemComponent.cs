@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -14,7 +15,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Items
 {
     [RegisterComponent]
-    public class FloorTileItemComponent : Component, IAfterAttack
+    public class FloorTileItemComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
@@ -38,20 +39,13 @@ namespace Content.Server.GameObjects.Components.Items
             base.Initialize();
             Stack = Owner.GetComponent<StackComponent>();
         }
-        public void AfterAttack(AfterAttackEventArgs eventArgs)
+        public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            var attacked = eventArgs.Attacked;
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
+            var attacked = eventArgs.Target;
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
-
-            var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-            float distance = coordinates.Distance(_mapManager, Owner.Transform.GridPosition);
-
-            if (distance > InteractionSystem.InteractionRange)
-            {
-                return;
-            }
-
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
             if (tileDef.IsSubFloor && attacked == null && Stack.Use(1))
             {
@@ -63,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Items
                 }
             }
 
-            
+
         }
 
     }

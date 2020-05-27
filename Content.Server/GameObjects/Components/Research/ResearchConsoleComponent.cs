@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
@@ -110,6 +111,7 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 return;
             }
+
             OpenUserInterface(actor.playerSession);
             PlayKeyboardSound();
             return;

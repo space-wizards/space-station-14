@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     ///      Guns that have a magazine.
     /// </summary>
     [RegisterComponent]
-    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackBy, IMapInit
+    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IInteractUsing, IMapInit
     {
         private const float BulletOffset = 0.2f;
 
@@ -209,9 +210,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return true;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent(out BallisticMagazineComponent component))
+            if (!eventArgs.Using.TryGetComponent(out BallisticMagazineComponent component))
             {
                 return false;
             }
@@ -225,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 Owner.PopupMessage(eventArgs.User, "Magazine doesn't fit.");
                 return false;
             }
-            return InsertMagazine(eventArgs.AttackWith);
+            return InsertMagazine(eventArgs.Using);
         }
 
         private void MagazineAmmoCountChanged()
@@ -266,14 +267,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         [Verb]
         public sealed class EjectMagazineVerb : Verb<BallisticMagazineWeaponComponent>
         {
-            protected override string GetText(IEntity user, BallisticMagazineWeaponComponent component)
+            protected override void GetData(IEntity user, BallisticMagazineWeaponComponent component, VerbData data)
             {
-                return component.Magazine == null ? "Eject magazine (magazine missing)" : "Eject magazine";
-            }
+                if (component.Magazine == null)
+                {
+                    data.Text = "Eject magazine (magazine missing)";
+                    data.Visibility = VerbVisibility.Disabled;
+                    return;
+                }
 
-            protected override VerbVisibility GetVisibility(IEntity user, BallisticMagazineWeaponComponent component)
-            {
-                return component.Magazine == null ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                data.Text = "Eject magazine";
             }
 
             protected override void Activate(IEntity user, BallisticMagazineWeaponComponent component)

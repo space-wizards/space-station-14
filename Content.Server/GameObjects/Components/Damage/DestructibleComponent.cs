@@ -71,10 +71,11 @@ namespace Content.Server.GameObjects.Components.Destructible
             if (e.Passed && e.DamageThreshold == Threshold && destroyed == false)
             {
                 destroyed = true;
+                var pos = Owner.Transform.GridPosition;
                 _actSystem.HandleDestruction(Owner, true);
                 if(destroySound != string.Empty)
                 {
-                    _entitySystemManager.GetEntitySystem<AudioSystem>().Play(destroySound, Owner);
+                    _entitySystemManager.GetEntitySystem<AudioSystem>().Play(destroySound, pos);
                 }
 
 

@@ -14,7 +14,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 31
+      layer: [MobMask]
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

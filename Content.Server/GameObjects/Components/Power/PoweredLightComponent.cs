@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -19,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Power
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IAttackHand, IAttackBy
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing
     {
         public override string Name => "PoweredLight";
 
@@ -48,12 +49,12 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            return InsertBulb(eventArgs.AttackWith);
+            return InsertBulb(eventArgs.Using);
         }
 
-        public bool AttackHand(AttackHandEventArgs eventArgs)
+        public bool InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out DamageableComponent damageableComponent))
             {

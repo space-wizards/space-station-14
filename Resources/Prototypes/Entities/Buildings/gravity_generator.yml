@@ -21,7 +21,11 @@
       shapes:
         - !type:PhysShapeAabb
           bounds: "-1.5,-1.5,1.5,1.5"
-          layer: 15
+          layer:
+          - Opaque
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
     - type: Clickable
     - type: InteractionOutline
     - type: Damageable

@@ -77,3 +77,27 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  name: Gold Bar
+  id: GoldStack
+  parent: MaterialStack
+  components:
+  - type: Material
+    materials:
+    - key: enum.MaterialKeys.Stack
+      mat: gold
+  - type: Stack
+    stacktype: enum.StackType.Gold
+  - type: Sprite
+    texture: Objects/Materials/goldbar_single.png
+  - type: Icon
+    texture: Objects/Materials/goldbar_single.png
+
+- type: entity
+  id: GoldStack1
+  name: Gold Bar 1
+  parent: GoldStack
+  components:
+  - type: Stack
+    count: 1

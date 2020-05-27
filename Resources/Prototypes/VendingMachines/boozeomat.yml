@@ -3,7 +3,7 @@
   name: Booze-O-Mat
   description: A vending machine containing multiple drinks for bartending.
   spriteName: boozeomat
-  startinginventory:
+  startingInventory:
     DrinkAbsintheBottleFull: 3
     DrinkAlcoGreenFull: 3
     DrinkAleBottleFull: 3

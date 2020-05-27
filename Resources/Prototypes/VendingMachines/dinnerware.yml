@@ -3,7 +3,7 @@
   name: Dinnerware
   description: A vending machine containing kitchen and restaurant equipment.
   spriteName: dinnerware
-  startinginventory:
+  startingInventory:
     ButchCleaver: 1
     DrinkBaseCup: 10
     DrinkPitcher: 1

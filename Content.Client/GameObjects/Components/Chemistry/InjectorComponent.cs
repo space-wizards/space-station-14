@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
         //Handle net updates
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cast = (InjectorComponentState) curState; 
+            var cast = (InjectorComponentState) curState;
             if (cast != null)
             {
                 CurrentVolume = cast.CurrentVolume;
@@ -64,7 +64,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 {
                     return;
                 }
-                
+
                 _parent._uiUpdateNeeded = false;
 
                 //Update current volume and injector state

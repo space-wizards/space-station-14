@@ -52,7 +52,7 @@ namespace Content.Client
 
             var registerIgnore = new[]
             {
-                "Wrenchable",
+                "Anchorable",
                 "AmmoBox",
                 "Breakable",
                 "Pickaxe",
@@ -68,6 +68,9 @@ namespace Content.Client
                 "Explosive",
                 "OnUseTimerTrigger",
                 "ToolboxElectricalFill",
+                "ToolboxEmergencyFill",
+                "WarpPoint",
+                "ToolboxGoldFill",
                 "ToolLockerFill",
                 "EmitSoundOnUse",
                 "FootstepModifier",
@@ -155,7 +158,10 @@ namespace Content.Client
                 "SolarPanel",
                 "BodyScanner",
                 "Stunbaton",
-                "EmergencyClosetFill"
+                "EmergencyClosetFill",
+                "Tool",
+                "TilePrying",
+                "RandomToolColor",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -247,7 +253,6 @@ namespace Content.Client
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
-            IoCManager.Resolve<IItemSlotManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {
