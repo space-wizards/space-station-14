@@ -91,9 +91,7 @@ namespace Content.Client.GameObjects.Components.Power
             public Label OutputPower;
             public Label SunAngle;
 
-            public string OldSetPanelRotation;
             public LineEdit PanelRotation;
-            public string OldSetPanelVelocity;
             public LineEdit PanelVelocity;
 
             public SolarControlWindow()
