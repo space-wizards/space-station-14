@@ -1,6 +1,6 @@
 - type: entity
   id: Window
-  name: Window
+  name: window
   description: Don't smudge up the glass down there.
   placement:
     mode: SnapgridCenter
@@ -36,7 +36,7 @@
 
 - type: entity
   id: ReinforcedWindow
-  name: Reinforced Window
+  name: reinforced window
   parent: Window
   components:
   - type: Sprite

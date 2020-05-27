@@ -1,5 +1,5 @@
 - type: vendingMachineInventory
   id: AutoDrobe
-  name: AutoDrobe
+  name: autodrobe
   description: A vending machine containing costumes.
   spriteName: theater

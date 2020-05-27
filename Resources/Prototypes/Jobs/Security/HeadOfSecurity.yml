@@ -1,6 +1,6 @@
 - type: job
   id: HeadOfSecurity
-  name: "Head Of Security"
+  name: "head of security"
   head: true
   positions: 1
   startingGear: HoSGear

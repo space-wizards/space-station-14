@@ -8,7 +8,7 @@
   - type: AmmoBox
     caliber: A32
     capacity: 40
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 # Ammo boxes
@@ -35,7 +35,7 @@
 
 - type: entity
   id: box_32f
-  name: ".32 box (Flash)"
+  name: ".32 box (flash)"
   parent: box_32_empty
   components:
   - type: AmmoBox
@@ -56,7 +56,7 @@
 
 - type: entity
   id: box_32hv
-  name: ".32 box (High-velocity)"
+  name: ".32 box (high-velocity)"
   parent: box_32_empty
   components:
   - type: AmmoBox
@@ -77,7 +77,7 @@
 
 - type: entity
   id: box_32p
-  name: ".32 box (Practice)"
+  name: ".32 box (practice)"
   parent: box_32_empty
   components:
   - type: AmmoBox
@@ -98,7 +98,7 @@
 
 - type: entity
   id: box_32r
-  name: ".32 box (Rubber)"
+  name: ".32 box (rubber)"
   parent: box_32_empty
   components:
   - type: AmmoBox

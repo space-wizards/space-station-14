@@ -1,5 +1,5 @@
 - type: entity
-  name: Spawn Point
+  name: spawn point
   id: spawn_point
   abstract: true
   components:
@@ -22,7 +22,7 @@
     mode: AlignTileAny
 
 - type: entity
-  name: LateJoin Spawn Point
+  name: latejoin spawn point
   id: spawn_point_latejoin
   parent: spawn_point
   components:
@@ -36,7 +36,7 @@
     state: cross_red
 
 - type: entity
-  name: Observer Spawn Point
+  name: observer spawn point
   id: SpawnPointObserver
   parent: spawn_point
   components:

@@ -1,5 +1,5 @@
 - type: entity
-  name: Stool
+  name: stool
   id: Stool
   components:
   - type: Clickable
@@ -25,7 +25,7 @@
     state: bar_stool
 
 - type: entity
-  name: White Office Chair
+  name: white office chair
   id: ChairOfficeLight
   components:
   - type: Rotatable
@@ -40,7 +40,7 @@
     state: officechair_white
 
 - type: entity
-  name: Dark Office Chair
+  name: dark office chair
   id: ChairOfficeDark
   components:
   - type: Rotatable
@@ -55,7 +55,7 @@
     state: officechair_dark
 
 - type: entity
-  name: Chair
+  name: chair
   id: Chair
   components:
   - type: Clickable
@@ -71,7 +71,7 @@
 
 
 - type: entity
-  name: Wooden Chair
+  name: wooden chair
   id: ChairWood
   parent: Chair
   components:

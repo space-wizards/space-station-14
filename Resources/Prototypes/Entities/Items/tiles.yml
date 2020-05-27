@@ -1,5 +1,5 @@
 - type: entity
-  name: Carpet Floor Tile
+  name: carpet floor tile
   parent: BaseItem
   id: FloorTileItemCarpet
   description: Those could work as a pretty decent throwing weapon.
@@ -20,7 +20,7 @@
     max: 8
 
 - type: entity
-  name: Wood Floor Tile
+  name: wood floor tile
   parent: BaseItem
   id: FloorTileItemWood
   description: Those could work as a pretty decent throwing weapon.
@@ -41,7 +41,7 @@
     max: 8
 
 - type: entity
-  name: White Floor Tile
+  name: white floor tile
   parent: BaseItem
   id: FloorTileItemWhite
   description: Those could work as a pretty decent throwing weapon.
@@ -62,7 +62,7 @@
     max: 8
 
 - type: entity
-  name: Dark Floor Tile
+  name: dark floor tile
   parent: BaseItem
   id: FloorTileItemDark
   description: Those could work as a pretty decent throwing weapon.
@@ -83,7 +83,7 @@
     max: 8
 
 - type: entity
-  name: Steel Floor Tile
+  name: steel floor tile
   parent: BaseItem
   id: FloorTileItemSteel
   description: Those could work as a pretty decent throwing weapon.

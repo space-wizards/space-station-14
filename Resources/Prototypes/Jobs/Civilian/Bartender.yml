@@ -1,6 +1,6 @@
 - type: job
   id: Bartender
-  name: "Bartender"
+  name: "bartender"
   positions: 1
   startingGear: BartenderGear
   department:

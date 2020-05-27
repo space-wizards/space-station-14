@@ -1,5 +1,5 @@
 - type: entity
-  name: Pickaxe
+  name: pickaxe
   parent: BaseItem
   id: Pickaxe
   components:

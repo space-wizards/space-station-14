@@ -1,6 +1,6 @@
 - type: job
   id: ResearchDirector
-  name: "Research Director"
+  name: "research director"
   head: true
   positions: 1
   startingGear: ResearchDirectorGear

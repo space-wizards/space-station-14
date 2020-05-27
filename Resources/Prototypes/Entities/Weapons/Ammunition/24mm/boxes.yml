@@ -8,7 +8,7 @@
   - type: AmmoBox
     caliber: A24mm
     capacity: 200
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 # Ammo boxes

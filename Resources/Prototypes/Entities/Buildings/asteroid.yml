@@ -1,6 +1,6 @@
 - type: entity
   id: AsteroidRock
-  name: Asteroid Rock
+  name: asteroid rock
   components:
   - type: AsteroidRock
   - type: Clickable

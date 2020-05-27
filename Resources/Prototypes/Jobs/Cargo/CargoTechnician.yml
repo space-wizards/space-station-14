@@ -1,6 +1,6 @@
 - type: job
   id: CargoTechnician
-  name: "Cargo Technician"
+  name: "cargo technician"
   positions: 2
   spawnPositions: 1
   startingGear: CargoTechGear

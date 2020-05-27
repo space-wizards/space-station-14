@@ -1,6 +1,6 @@
 - type: entity
   id: KitchenMicrowave
-  name: Microwave
+  name: microwave
   description: It's magic.
   placement:
     mode: SnapgridCenter

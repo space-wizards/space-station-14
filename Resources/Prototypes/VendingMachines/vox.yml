@@ -1,5 +1,5 @@
 - type: vendingMachineInventory
   id: Trader Supply
-  name: Trader Supply
+  name: trader supply
   description: Make much coin.
   spriteName: vox

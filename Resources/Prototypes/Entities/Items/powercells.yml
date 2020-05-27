@@ -15,7 +15,7 @@
     netsync: false
 
 - type: entity
-  name: Small Standard Power Cell
+  name: small standard power cell
   id: PowerCellSmallStandard
   parent: PowerCellSmallBase
   components:
@@ -36,7 +36,7 @@
 
 
 - type: entity
-  name: Small High-Capacity Power Cell
+  name: small high-capacity power cell
   id: PowerCellSmallHigh
   parent: PowerCellSmallBase
   components:
@@ -57,7 +57,7 @@
 
 
 - type: entity
-  name: Small Super-Capacity Power Cell
+  name: small super-capacity power cell
   id: PowerCellSmallSuper
   parent: PowerCellSmallBase
   components:
@@ -78,7 +78,7 @@
 
 
 - type: entity
-  name: Small Hyper-Capacity Power Cell
+  name: small hyper-capacity power cell
   id: PowerCellSmallHyper
   parent: PowerCellSmallBase
   components:
@@ -98,7 +98,7 @@
       prefix: s_hy
 
 - type: entity
-  name: Cell Recharger
+  name: cell recharger
   id: PowerCellRecharger
   components:
   - type: Sprite
@@ -130,7 +130,7 @@
     IsScrapingFloor: true
 
 - type: entity
-  name: Recharger
+  name: recharger
   id: WeaponCapacitorRecharger
   components:
   - type: Sprite
@@ -162,7 +162,7 @@
     IsScrapingFloor: true
 
 - type: entity
-  name: Wall recharger
+  name: wall recharger
   id: WallWeaponCapacitorRecharger
   components:
   - type: Sprite

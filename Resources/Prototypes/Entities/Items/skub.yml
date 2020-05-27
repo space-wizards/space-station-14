@@ -1,5 +1,5 @@
 - type: entity
-  name: Skub
+  name: skub
   parent: BaseItem
   id: Skub
   description: Skub is the fifth Chaos God.

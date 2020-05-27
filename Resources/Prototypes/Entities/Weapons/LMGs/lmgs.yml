@@ -1,5 +1,5 @@
 - type: entity
-  name: BaseLMG
+  name: baselmg
   parent: BaseItem
   id: LmgBase
   description: A rooty tooty point and shooty.
@@ -12,7 +12,7 @@
     firerate: 10
   - type: BallisticMagazineWeapon
     caliber: A762mm
-    magazines: 
+    magazines:
     - A762mm
     default_magazine: magazine_pk
     auto_eject_magazine: false
@@ -23,7 +23,7 @@
     sound_gunshot: /Audio/Guns/Gunshots/lmg.ogg
 
 - type: entity
-  name: L6
+  name: l6
   parent: LmgBase
   id: LmgL6
   description: A rooty tooty point and shooty.
@@ -41,7 +41,7 @@
     firerate: 10
   - type: BallisticMagazineWeapon
     caliber: A762mm
-    magazines: 
+    magazines:
     - A762mm
     default_magazine: magazine_a762
   - type: Appearance
@@ -54,7 +54,7 @@
     sprite: Objects/Guns/LMGs/l6.rsi
 
 - type: entity
-  name: PK
+  name: pk
   parent: LmgBase
   id: LmgPk
   description: A rooty tooty point and shooty.
@@ -72,7 +72,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A762mm
-    magazines: 
+    magazines:
     - A762mm
     default_magazine: magazine_pk
   - type: Appearance

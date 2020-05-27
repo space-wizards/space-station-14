@@ -18,7 +18,7 @@
 
 - type: entity
   id: BarSignMalteseFalcon
-  name: Maltese Falcon
+  name: maltese falcon
   parent: BarSign
   components:
   - type: BarSign

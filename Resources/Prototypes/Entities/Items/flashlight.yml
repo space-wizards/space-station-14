@@ -1,5 +1,5 @@
 - type: entity
-  name: Flashlight
+  name: flashlight
   parent: BaseItem
   id: FlashlightLantern
   description: They light the way to freedom

@@ -29,7 +29,7 @@
   destroyThreshold: -120
   resistance: 7.0
   size: 7
-  compatibility: Biological	
+  compatibility: Biological
   surgeryDataType: BiologicalsurgeryDataType
   mechanisms:
     - mechanism.Brain.BasicHuman
@@ -48,14 +48,14 @@
   destroyThreshold: -80
   resistance: 3.0
   size: 5
-  compatibility: Biological	
+  compatibility: Biological
   surgeryDataType: BiologicalsurgeryDataType
   properties:
     - !type:ArmLength
       length: 2.4
-  
-  
-  
+
+
+
 - type: bodyPart
   id: bodyPart.Hand.BasicHuman
   name: "human hand"
@@ -67,10 +67,10 @@
   destroyThreshold: -60
   resistance: 2.0
   size: 3
-  compatibility: Biological	
+  compatibility: Biological
   surgeryDataType: BiologicalsurgeryDataType
-       
-      
+
+
 - type: bodyPart
   id: bodyPart.Leg.BasicHuman
   name: "human leg"
@@ -82,10 +82,10 @@
   destroyThreshold: -90
   resistance: 2.0
   size: 6
-  compatibility: Biological	
+  compatibility: Biological
   surgeryDataType: BiologicalsurgeryDataType
-     
-     
+
+
 - type: bodyPart
   id: bodyPart.Foot.BasicHuman
   name: "human foot"
@@ -97,6 +97,6 @@
   destroyThreshold: -60
   resistance: 3.0
   size: 2
-  compatibility: Biological	
+  compatibility: Biological
   surgeryDataType: BiologicalsurgeryDataType
-      
+

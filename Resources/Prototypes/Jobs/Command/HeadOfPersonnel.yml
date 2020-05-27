@@ -1,6 +1,6 @@
 - type: job
   id: HeadOfPersonnel
-  name: "Head Of Personnel"
+  name: "head of personnel"
   head: true
   positions: 1
   startingGear: HoPGear

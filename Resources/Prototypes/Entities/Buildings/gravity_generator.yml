@@ -1,6 +1,6 @@
 - type: entity
   id: GravityGenerator
-  name: Gravity Generator
+  name: gravity generator
   description: It's what keeps you to the floor.
   components:
     - type: Sprite

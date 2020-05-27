@@ -1,6 +1,6 @@
 - type: entity
   id: CrateGeneric
-  name: Crate
+  name: crate
   description: A large container for items.
   components:
   - type: Sprite

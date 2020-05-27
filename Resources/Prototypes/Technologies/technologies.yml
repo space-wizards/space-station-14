@@ -4,7 +4,7 @@
 # Base Technology
 
 - type: technology
-  name: "Basic Research Technology"
+  name: "basic research technology"
   id: BasicResearch
   description: Nanotransen basic research technologies.
   icon: Buildings/research.rsi/server-on.png
@@ -13,7 +13,7 @@
 # Biological Technology Tree
 
 - type: technology
-  name: "Biological Technology"
+  name: "biological technology"
   id: BiologicalTechnology
   description: Investigations into the natural world.
   icon: Buildings/plants.rsi/plant_1.png
@@ -24,7 +24,7 @@
 # Data Theory Technology Tree
 
 - type: technology
-  name: "Data Theory"
+  name: "data theory"
   id: DataTheory
   description: Just like regular data, but in space!
   icon: Buildings/computer.rsi/computer-datatheory.png
@@ -35,7 +35,7 @@
 # Industrial Engineering Technology Tree
 
 - type: technology
-  name: "Industrial Engineering"
+  name: "industrial engineering"
   id: IndustrialEngineering
   description: A refresher course on modern engineering technology.
   icon: Buildings/research.rsi/protolathe.png
@@ -44,7 +44,7 @@
     - BasicResearch
 
 - type: technology
-  name: Material sheet printing
+  name: material sheet printing
   id: Sheets
   description: Print those sheets!
   icon: Objects/Materials/sheet_metal.png
@@ -58,7 +58,7 @@
 # Electromagnetic Theory Technology Tree
 
 - type: technology
-  name: "Electromagnetic Theory"
+  name: "electromagnetic theory"
   id: ElectromagneticTheory
   description: Try not to fry yourself.
   icon: Buildings/apc.rsi/apcewires.png
@@ -69,7 +69,7 @@
 # Bluespace Theory Technology Tree
 
 - type: technology
-  name: "Basic Bluespace Theory"
+  name: "basic bluespace theory"
   id: BluespaceTheory
   description: An experimental course on the mysterious technology known as bluespace.
   icon: Objects/Misc/hand_tele.png

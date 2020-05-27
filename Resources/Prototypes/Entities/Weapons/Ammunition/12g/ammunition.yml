@@ -9,13 +9,13 @@
     caliber: A12g
     magazine: A12g
     capacity: 8
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 #Magazines
 - type: entity
   id: magazine_12g_shotgun
-  name: "12g Magazine"
+  name: "12g magazine"
   parent: magazine_12g_empty
   components:
   - type: BallisticMagazine

@@ -8,7 +8,7 @@
   - type: AmmoBox
     caliber: A9mm
     capacity: 30
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 # Ammo boxes
@@ -35,7 +35,7 @@
 
 - type: entity
   id: box_9mmf
-  name: "9mm box (Flash)"
+  name: "9mm box (flash)"
   parent: box_9mm_empty
   components:
   - type: AmmoBox
@@ -56,7 +56,7 @@
 
 - type: entity
   id: box_9mmhv
-  name: "9mm box (High-velocity)"
+  name: "9mm box (high-velocity)"
   parent: box_9mm_empty
   components:
   - type: AmmoBox
@@ -77,7 +77,7 @@
 
 - type: entity
   id: box_9mmp
-  name: "9mm box (Practice)"
+  name: "9mm box (practice)"
   parent: box_9mm_empty
   components:
   - type: AmmoBox
@@ -98,7 +98,7 @@
 
 - type: entity
   id: box_9mmr
-  name: "9mm box (Rubber)"
+  name: "9mm box (rubber)"
   parent: box_9mm_empty
   components:
   - type: AmmoBox

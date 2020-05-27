@@ -1,5 +1,5 @@
 - type: entity
-  name: "BaseDice"
+  name: "basedice"
   parent: BaseItem
   id: BaseDice
   abstract: true

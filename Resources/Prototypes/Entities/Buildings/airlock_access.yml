@@ -1,7 +1,7 @@
 - type: entity
   parent: airlock_engineering
   id: airlock_engineering_locked
-  name: Engineering Airlock
+  name: engineering airlock
   suffix: Locked
   components:
   - type: AccessReader

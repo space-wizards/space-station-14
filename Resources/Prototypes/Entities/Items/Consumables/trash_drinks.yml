@@ -1,6 +1,6 @@
 # These can still be used as containers
 - type: entity
-  name: Base empty bottle
+  name: base empty bottle
   parent: BaseItem
   abstract: true
   id: DrinkBottleBase
@@ -19,7 +19,7 @@
 
 # Containers
 - type: entity
-  name: Jailbreaker Verte bottle
+  name: jailbreaker verte bottle
   parent: DrinkBottleBase
   id: DrinkBottleAbsinthe
   components:
@@ -29,7 +29,7 @@
     sprite: Objects/TrashDrinks/absinthebottle_empty.rsi
 
 - type: entity
-  name: Alcohol bottle
+  name: alcohol bottle
   parent: DrinkBottleBase
   id: DrinkBottleAlcoClear
   components:
@@ -39,7 +39,7 @@
     sprite: Objects/TrashDrinks/alco-clear.rsi
 
 - type: entity
-  name: Ale bottle
+  name: ale bottle
   parent: DrinkBottleBase
   id: DrinkBottleAle
   components:
@@ -49,7 +49,7 @@
     sprite: Objects/TrashDrinks/alebottle_empty.rsi
 
 - type: entity
-  name: Beer bottle
+  name: beer bottle
   parent: DrinkBottleBase
   id: DrinkBottleBeer
   components:
@@ -59,7 +59,7 @@
     sprite: Objects/TrashDrinks/beer_empty.rsi
 
 - type: entity
-  name: Broken bottle
+  name: broken bottle
   parent: DrinkBottleBase  # Can't hold liquids
   id: DrinkBrokenBottle
   components:
@@ -69,7 +69,7 @@
     sprite: Objects/TrashDrinks/broken_bottle.rsi
 
 - type: entity
-  name: Cognac bottle
+  name: cognac bottle
   parent: DrinkBottleBase
   id: DrinkBottleCognac
   components:
@@ -79,7 +79,7 @@
     sprite: Objects/TrashDrinks/cognacbottle_empty.rsi
 
 - type: entity
-  name: Griffeater gin bottle
+  name: griffeater gin bottle
   parent: DrinkBottleBase
   id: DrinkBottleGin
   components:
@@ -89,7 +89,7 @@
     sprite: Objects/TrashDrinks/ginbottle_empty.rsi
 
 - type: entity
-  name: Goldschlager bottle
+  name: goldschlager bottle
   parent: DrinkBottleBase
   id: DrinkBottleGoldschlager
   components:
@@ -99,7 +99,7 @@
     sprite: Objects/TrashDrinks/goldschlagerbottle_empty.rsi
 
 - type: entity
-  name: Kahlua bottle
+  name: kahlua bottle
   parent: DrinkBottleBase
   id: DrinkBottleKahlua
   components:
@@ -109,7 +109,7 @@
     sprite: Objects/TrashDrinks/kahluabottle_empty.rsi
 
 - type: entity
-  name: NT Cahors bottle
+  name: nt cahors bottle
   parent: DrinkBottleBase
   id: DrinkBottleNTCahors
   components:
@@ -119,7 +119,7 @@
     sprite: Objects/TrashDrinks/ntcahors_empty.rsi
 
 - type: entity
-  name: Patron bottle
+  name: patron bottle
   parent: DrinkBottleBase
   id: DrinkBottlePatron
   components:
@@ -129,7 +129,7 @@
     sprite: Objects/TrashDrinks/patronbottle_empty.rsi
 
 - type: entity
-  name: Poison wine bottle
+  name: poison wine bottle
   parent: DrinkBottleBase
   id: DrinkBottlePoisonWine
   components:
@@ -139,7 +139,7 @@
     sprite: Objects/TrashDrinks/pwinebottle_empty.rsi
 
 - type: entity
-  name: Rum bottle
+  name: rum bottle
   parent: DrinkBottleBase
   id: DrinkBottleRum
   components:
@@ -149,7 +149,7 @@
     sprite: Objects/TrashDrinks/rumbottle_empty.rsi
 
 - type: entity
-  name: Tequila bottle
+  name: tequila bottle
   parent: DrinkBottleBase
   id: DrinkBottleTequila
   components:
@@ -159,7 +159,7 @@
     sprite: Objects/TrashDrinks/tequillabottle_empty.rsi
 
 - type: entity
-  name: Vermouth bottle
+  name: vermouth bottle
   parent: DrinkBottleBase
   id: DrinkBottleVermouth
   components:
@@ -169,7 +169,7 @@
     sprite: Objects/TrashDrinks/vermouthbottle_empty.rsi
 
 - type: entity
-  name: Vodka bottle
+  name: vodka bottle
   parent: DrinkBottleBase
   id: DrinkBottleVodka
   components:
@@ -179,7 +179,7 @@
     sprite: Objects/TrashDrinks/vodkabottle_empty.rsi
 
 - type: entity
-  name: Whiskey bottle
+  name: whiskey bottle
   parent: DrinkBottleBase
   id: DrinkBottleWhiskey
   components:
@@ -189,7 +189,7 @@
     sprite: Objects/TrashDrinks/whiskeybottle_empty.rsi
 
 - type: entity
-  name: Wine bottle
+  name: wine bottle
   parent: DrinkBottleBase
   id: DrinkBottleWine
   components:

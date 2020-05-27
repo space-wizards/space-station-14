@@ -90,7 +90,7 @@
 # EOD closet
 - type: entity
   id: LockerBomb
-  name: EOD closet
+  name: eod closet
   parent: LockerGeneric
   description: "It's a storage unit for explosion-protective suits."
   components:
