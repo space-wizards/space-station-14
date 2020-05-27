@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Linq;
 using Content.Client.GameObjects.Components.HUD.Hotbar;
-using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.Input;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
@@ -33,8 +30,8 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 return;
             }
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.OpenAbilitiesMenu,
-                InputCmdHandler.FromDelegate(s => HandleOpenAbilitiesMenu()));
+            inputSys.BindMap.BindFunction(ContentKeyFunctions.OpenActionsMenu,
+                InputCmdHandler.FromDelegate(s => HandleOpenActionsMenu()));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar0,
                 new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(0, args); }));
             inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar1,
@@ -65,7 +62,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 return;
             }
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.OpenAbilitiesMenu);
+            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.OpenActionsMenu);
             inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar0);
             inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar1);
             inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar2);
@@ -78,7 +75,7 @@ namespace Content.Client.GameObjects.EntitySystems
             inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar9);
         }
 
-        private void HandleOpenAbilitiesMenu()
+        private void HandleOpenActionsMenu()
         {
             var playerEnt = _playerManager.LocalPlayer.ControlledEntity;
             if (playerEnt == null
@@ -87,7 +84,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            clientHotbar.OpenAbilityMenu();
+            clientHotbar.OpenActionMenu();
         }
 
         private bool HandleHotbarKeybindPressed(int index, in PointerInputCmdArgs args)
@@ -98,22 +95,22 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            hotbarComponent.TriggerAbility(index, args);
+            hotbarComponent.TriggerAction(index, args);
             return true;
         }
     }
 
-    public class Ability
+    public class HotbarAction
     {
         public string Name;
         public Texture Texture;
-        public Action<ICommonSession, GridCoordinates, EntityUid, Ability> ActivateAction;
+        public Action<ICommonSession, GridCoordinates, EntityUid, HotbarAction> ActivateAction;
         public Action<bool> SelectAction;
         public TimeSpan? Start;
         public TimeSpan? End;
         public TimeSpan? Cooldown;
 
-        public Ability(string name, string texturePath, Action<ICommonSession, GridCoordinates, EntityUid, Ability> activateAction, Action<bool> selectAction, TimeSpan? cooldown)
+        public HotbarAction(string name, string texturePath, Action<ICommonSession, GridCoordinates, EntityUid, HotbarAction> activateAction, Action<bool> selectAction, TimeSpan? cooldown)
         {
             Name = name;
             if (texturePath != null)
@@ -143,11 +140,11 @@ namespace Content.Client.GameObjects.EntitySystems
         }
     }
 
-    public class GetAbilitiesMessage : ComponentMessage
+    public class GetActionsMessage : ComponentMessage
     {
         public HotbarComponent Hotbar;
 
-        public GetAbilitiesMessage(HotbarComponent hotbar)
+        public GetActionsMessage(HotbarComponent hotbar)
         {
             Hotbar = hotbar;
         }

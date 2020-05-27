@@ -1,10 +1,15 @@
-﻿using Content.Client.GameObjects.Components.HUD.Hotbar;
+﻿using System;
+using System.Collections.Generic;
+using Content.Client.GameObjects.Components.HUD.Hotbar;
 using Content.Client.GameObjects.EntitySystems;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Players;
 
 namespace Content.Client.UserInterface
 {
@@ -15,8 +20,9 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
+        private Dictionary<string, HotbarAction> _hotbarActions;
         private InputCmdHandler _previousHandler;
-        private Ability _boundAbility;
+        private HotbarAction _boundHotbarAction;
 
         private HotbarGui _hotbarGui;
 
@@ -24,7 +30,25 @@ namespace Content.Client.UserInterface
         {
         }
 
-        public void BindUse(Ability ability)
+        public void AddHotbarAction(string name, string texturePath,
+            Action<ICommonSession, GridCoordinates, EntityUid, HotbarAction> activateAction,
+            Action<bool> selectAction, TimeSpan? cooldown)
+        {
+        }
+
+        public void RemoveAction(HotbarAction action)
+        {
+            // Maybe this can be replaced by a variable here set by the HotbarComponent OnPlayerAttached and OnPlayerDetached?
+            if (_playerManager.LocalPlayer.ControlledEntity == null
+                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out HotbarComponent hotbarComponent))
+            {
+                return;
+            }
+
+            hotbarComponent.RemoveAction(action);
+        }
+
+        public void BindUse(HotbarAction action)
         {
             if (!_entitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
             {
@@ -37,17 +61,17 @@ namespace Content.Client.UserInterface
                 inputSys.BindMap.UnbindFunction(EngineKeyFunctions.Use);
             }
 
-            _boundAbility = ability;
+            _boundHotbarAction = action;
             inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
                 new PointerInputCmdHandler((in PointerInputCmdHandler.PointerInputCmdArgs args) => {
-                    ability.Activate(args);
+                    action.Activate(args);
                     return true;
                 }));
         }
 
-        public void UnbindUse(Ability ability)
+        public void UnbindUse(HotbarAction action)
         {
-            if (ability != _boundAbility)
+            if (action != _boundHotbarAction)
             {
                 return;
             }
@@ -57,7 +81,7 @@ namespace Content.Client.UserInterface
                 return;
             }
 
-            _boundAbility = null;
+            _boundHotbarAction = null;
             inputSys.BindMap.UnbindFunction(EngineKeyFunctions.Use);
 
             if (_previousHandler != null)
@@ -72,7 +96,7 @@ namespace Content.Client.UserInterface
                 return;
             }
 
-            hotbarComponent.UnpressHotbarAbility(ability);
+            hotbarComponent.UnpressHotbarAction(action);
         }
     }
 }

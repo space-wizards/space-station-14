@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems;
-using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.HUD.Hotbar
 {
-    public class AbilityMenu : SS14Window
+    public class ActionMenu : SS14Window
     {
         public ItemList ItemList;
 
         public event Action<ItemList.ItemListSelectedEventArgs> OnPressed;
 
-        public AbilityMenu()
+        public ActionMenu()
         {
-            Title = "Abilities";
+            Title = "Actions";
             CustomMinimumSize = (300, 300);
 
             ItemList = new ItemList();
@@ -26,13 +23,13 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
             ItemList.OnItemSelected += (args) => OnPressed?.Invoke(args);
         }
 
-        public void Populate(List<Ability> abilities)
+        public void Populate(List<HotbarAction> actions)
         {
             ItemList.Clear();
 
-            foreach (var ability in abilities)
+            foreach (var action in actions)
             {
-                ItemList.AddItem(ability.Name, ability.Texture);
+                ItemList.AddItem(action.Name, action.Texture);
             }
         }
     }

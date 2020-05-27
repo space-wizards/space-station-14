@@ -1,28 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using Content.Client.GameObjects.Components.HUD.Hotbar;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Mobs.Abilities;
-using Content.Shared.Physics;
+using Content.Shared.GameObjects.Components.Mobs.Actions;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
 
-namespace Content.Client.GameObjects.Components.Mobs.Abilities
+namespace Content.Client.GameObjects.Components.Mobs.Actions
 {
     [RegisterComponent]
     public class LaserAbilityComponent : SharedLaserAbilityComponent
@@ -32,13 +21,20 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
         [Dependency] private readonly IHotbarManager _hotbarManager;
 #pragma warning restore 649
 
-        public Ability Ability;
+        private HotbarAction _hotbarAction;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            Ability = new Ability("Laser", "/Textures/Objects/Guns/Laser/laser_retro.rsi/laser_retro.png", TriggerAbility, ToggleAbility, new TimeSpan(10));
+            _hotbarAction = new HotbarAction("Laser", "/Textures/Objects/Guns/Laser/laser_retro.rsi/laser_retro.png", TriggerHotbarAction, ToggleHotbarAction, new TimeSpan(10));
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            _hotbarManager.RemoveAction(_hotbarAction);
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -47,22 +43,22 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
 
             switch (message)
             {
-                case GetAbilitiesMessage msg:
+                case GetActionsMessage msg:
                 {
-                    msg.Hotbar.AddAbility(Ability);
+                    msg.Hotbar.AddAction(_hotbarAction);
                     break;
                 }
                 // Stuff to make sure it doesn't break when component gets detached and/or reattached.
                 case PlayerAttachedMsg msg:
                 {
-                    Ability.ActivateAction = TriggerAbility;
-                    Ability.SelectAction = ToggleAbility;
+                    _hotbarAction.ActivateAction = TriggerHotbarAction;
+                    _hotbarAction.SelectAction = ToggleHotbarAction;
                     break;
                 }
                 case PlayerDetachedMsg msg:
                 {
-                    Ability.ActivateAction = null;
-                    Ability.SelectAction = null;
+                    _hotbarAction.ActivateAction = null;
+                    _hotbarAction.SelectAction = null;
                     break;
                 }
             }
@@ -76,32 +72,32 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
             {
                 case FireLaserCooldownMessage msg:
                 {
-                    Ability.Start = msg.Start;
-                    Ability.End = msg.End;
+                    _hotbarAction.Start = msg.Start;
+                    _hotbarAction.End = msg.End;
                     break;
                 }
             }
         }
 
-        private void TriggerAbility(ICommonSession session, GridCoordinates coords, EntityUid uid, Ability ability)
+        private void TriggerHotbarAction(ICommonSession session, GridCoordinates coords, EntityUid uid, HotbarAction action)
         {
             if (!Owner.IsValid())
             {
                 return;
             }
 
-            if (_gameTiming.CurTime < Ability.End) // + TimeSpan(latency) for prediction maybe?
+            if (_gameTiming.CurTime < _hotbarAction.End) // + TimeSpan(latency) for prediction maybe?
             {
                 return;
             }
 
             SendNetworkMessage(new FireLaserMessage(coords));
 
-            _hotbarManager.UnbindUse(Ability);
+            _hotbarManager.UnbindUse(_hotbarAction);
             return;
         }
 
-        private void ToggleAbility(bool pressed)
+        private void ToggleHotbarAction(bool pressed)
         {
             if (!Owner.IsValid())
             {
@@ -110,11 +106,11 @@ namespace Content.Client.GameObjects.Components.Mobs.Abilities
 
             if (pressed)
             {
-                _hotbarManager.BindUse(Ability);
+                _hotbarManager.BindUse(_hotbarAction);
             }
             else
             {
-                _hotbarManager.UnbindUse(Ability);
+                _hotbarManager.UnbindUse(_hotbarAction);
             }
             return;
         }

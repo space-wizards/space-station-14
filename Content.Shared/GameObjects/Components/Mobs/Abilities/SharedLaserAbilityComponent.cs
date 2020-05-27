@@ -4,7 +4,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Mobs.Abilities
+namespace Content.Shared.GameObjects.Components.Mobs.Actions
 {
     public abstract class SharedLaserAbilityComponent : Component
     {

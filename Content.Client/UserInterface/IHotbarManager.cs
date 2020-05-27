@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Content.Client.GameObjects.EntitySystems;
 
 namespace Content.Client.UserInterface
 {
     public interface IHotbarManager
     {
-        void BindUse(GameObjects.EntitySystems.Ability ability);
-        void UnbindUse(GameObjects.EntitySystems.Ability ability);
+        void BindUse(HotbarAction action);
+        void UnbindUse(HotbarAction action);
+        void RemoveAction(HotbarAction action);
     }
 }

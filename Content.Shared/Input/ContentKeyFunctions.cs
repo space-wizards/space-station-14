@@ -27,7 +27,7 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenTileSpawnWindow = "OpenTileSpawnWindow";
         public static readonly BoundKeyFunction TakeScreenshot = "TakeScreenshot";
         public static readonly BoundKeyFunction TakeScreenshotNoUI = "TakeScreenshotNoUI";
-        public static readonly BoundKeyFunction OpenAbilitiesMenu = "OpenAbilitiesMenu";
+        public static readonly BoundKeyFunction OpenActionsMenu = "OpenAbilitiesMenu";
         public static readonly BoundKeyFunction Hotbar0 = "Hotbar0";
         public static readonly BoundKeyFunction Hotbar1 = "Hotbar1";
         public static readonly BoundKeyFunction Hotbar2 = "Hotbar2";

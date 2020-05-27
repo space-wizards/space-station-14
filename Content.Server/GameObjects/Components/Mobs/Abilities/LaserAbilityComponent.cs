@@ -2,7 +2,7 @@
 using System.Linq;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Mobs.Abilities;
+using Content.Shared.GameObjects.Components.Mobs.Actions;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
