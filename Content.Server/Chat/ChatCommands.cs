@@ -85,12 +85,15 @@ namespace Content.Server.Chat
 
         public string Description => "Commits suicide";
 
-        public string Help => "suicide";
+        public string Help => "The suicide command gives you a quick way out of a round while remaining in-character.\n" +
+            "The method varies, first it will attempt to use the held item in your active hand.\n" +
+            "If that fails, it will attempt to use an object in the environment.\n" +
+            "Finally, if neither of the above worked, you will die by biting your tongue.";
 
         private void DealDamage(ISuicideAct suicide, IChatManager chat, DamageableComponent damageableComponent, IEntity source, IEntity target)
         {
             SuicideKind kind = suicide.Suicide(target, chat);
-            if (kind != SuicideKind.Special && damageableComponent != null)
+            if (kind != SuicideKind.Special)
             {
                 damageableComponent.TakeDamage(kind switch
                 {
@@ -115,12 +118,12 @@ namespace Content.Server.Chat
 
             var chat = IoCManager.Resolve<IChatManager>();
             var owner = player.ContentData().Mind.OwnedMob.Owner;
-            owner.TryGetComponent<DamageableComponent>(out var dmgComponent);
+            var dmgComponent = owner.GetComponent<DamageableComponent>();
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent ressurection?
 
             // Held item suicide
-            owner.TryGetComponent<HandsComponent>(out var handsComponent);
+            var handsComponent = owner.GetComponent<HandsComponent>();
             var itemComponent = handsComponent.GetActiveHand;
             if (itemComponent != null)
             {
@@ -148,11 +151,8 @@ namespace Content.Server.Chat
                 }
             }
             // Default suicide, bite your tongue
-            if (dmgComponent != null)
-            {
-                chat.EntityMe(owner, Loc.GetString("is attempting to bite {0:their} own tongue, looks like {0:theyre} trying to commit suicide!", owner)); //TODO: theyre macro
-                dmgComponent.TakeDamage(DamageType.Brute, 500, owner, owner); //TODO: dmg value needs to be a max damage of some sorts
-            }
+            chat.EntityMe(owner, Loc.GetString("is attempting to bite {0:their} own tongue, looks like {0:theyre} trying to commit suicide!", owner)); //TODO: theyre macro
+            dmgComponent.TakeDamage(DamageType.Brute, 500, owner, owner); //TODO: dmg value needs to be a max damage of some sorts
         }
     }
 }

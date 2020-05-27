@@ -409,20 +409,18 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-            victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent);
-            if (bodyManagerComponent != null)
+            int headCount = 0;
+            if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
             {
                 var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
                     var droppedHead = bodyManagerComponent.DisconnectBodyPart(head, true);
-                    _storage.Insert(droppedHead);   
+                    _storage.Insert(droppedHead);
+                    headCount++;
                 }
-                chat.EntityMe(victim, Loc.GetString("is trying to cook {0:their} " + (heads.Count() > 1 ? "heads!": "head!"), victim));
-            } else
-            {
-                chat.EntityMe(victim, Loc.GetString("is trying to cook {0:their} head!", victim));
             }
+            chat.EntityMe(victim, Loc.GetPluralString("is trying to cook {0:their} head!", "is trying to cook {0:their} heads!", headCount, victim));
             _currentCookTimerTime = 10;
             ClickSound();
             UpdateUserInterface();

@@ -189,8 +189,9 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it. 
+        /// Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it. 
         /// </summary>
+        /// <returns>Returns the dropped entity, or null if no part is dropped</returns>
         public IEntity DisconnectBodyPart(BodyPart part, bool dropEntity)
         {
             if (!_partDictionary.ContainsValue(part))
