@@ -1,7 +1,9 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Sound
@@ -32,10 +34,10 @@ namespace Content.Server.GameObjects.Components.Sound
             {
                 if (_pitchVariation > 0.0)
                 {
-                    Owner.GetComponent<SoundComponent>().Play(_soundName, AudioHelpers.WithVariation(_pitchVariation).WithVolume(-2f));
+                    EntitySystem.Get<AudioSystem>().Play(_soundName, Owner, AudioHelpers.WithVariation(_pitchVariation).WithVolume(-2f));
                     return true;
                 }
-                Owner.GetComponent<SoundComponent>().Play(_soundName, AudioParams.Default.WithVolume(-2f));
+                EntitySystem.Get<AudioSystem>().Play(_soundName, Owner, AudioParams.Default.WithVolume(-2f));
                 return true;
             }
             return false;

@@ -31,7 +31,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             return EntitySystem.Get<SharedInteractionSystem>()
-                .InRangeUnobstructed(examiner.Transform.MapPosition, examined.Transform.MapPosition.Position,
+                .InRangeUnobstructed(examiner.Transform.MapPosition, examined.Transform.MapPosition,
                     ExamineRange, predicate: entity => entity == examiner || entity == examined, insideBlockerValid:true);
         }
     }
