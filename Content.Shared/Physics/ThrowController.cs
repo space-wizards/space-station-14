@@ -11,7 +11,7 @@ namespace Content.Shared.Physics
         private float _throwTime;
         private SharedPhysicsComponent _component;
 
-        private const float DefaultThrowTime = 0.25f;
+        public const float DefaultThrowTime = 0.25f;
 
         public float ThrowTime
         {

@@ -86,6 +86,9 @@ namespace Content.Shared.GameObjects.Components.Storage
     [Serializable]
     public enum StorageVisuals
     {
-        Open
+        Open,
+        CanLock,
+        Welded,
+        Locked
     }
 }

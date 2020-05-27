@@ -10,6 +10,9 @@
     - state: generic
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
     sprite: Buildings/closet.rsi
     state: generic_door
@@ -19,8 +22,17 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5,-0.25,0.5,0.25"
-      mask: 30
-      layer: 31
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
     IsScrapingFloor: true
   - type: Physics
     mass: 25

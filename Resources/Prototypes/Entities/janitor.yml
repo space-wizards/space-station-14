@@ -44,8 +44,11 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
-      mask: 3
-      layer: 1
+      mask:
+      - Impassable
+      - Opaque
+      layer:
+      - Opaque
     IsScrapingFloor: true
   - type: Physics
     mass: 5
@@ -72,8 +75,11 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
-      mask: 3
-      layer: 1
+      mask:
+      - Impassable
+      - Opaque
+      layer:
+      - Opaque
     IsScrapingFloor: true
   - type: Physics
     mass: 5

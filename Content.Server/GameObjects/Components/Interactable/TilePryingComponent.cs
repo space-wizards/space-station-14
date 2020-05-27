@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
 
-            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().InRangeUnobstructed(user.Transform.MapPosition, coordinates.ToMapPos(_mapManager), ignoredEnt:user))
+            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().InRangeUnobstructed(user.Transform.MapPosition, coordinates.ToMap(_mapManager), ignoredEnt:user))
                 return;
 
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];

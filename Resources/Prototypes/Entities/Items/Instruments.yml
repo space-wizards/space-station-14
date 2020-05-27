@@ -193,3 +193,20 @@
   - type: Item
     Size: 24
     sprite: Objects/Instruments/glockenspiel.rsi
+
+- type: entity
+  name: Banjo
+  parent: BaseHandheldInstrument
+  id: BanjoInstrument
+  components:
+  - type: Instrument
+    program: 105
+  - type: Sprite
+    sprite: Objects/Instruments/banjo.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Instruments/banjo.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/banjo.rsi
