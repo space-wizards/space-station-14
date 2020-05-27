@@ -22811,4 +22811,53 @@ entities:
     pos: 28.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
+- uid: 2970
+  type: AirlockCargoLocked
+  components:
+  - parent: 0
+    pos: 13.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2971
+  type: AirlockCargoGlassLocked
+  components:
+  - parent: 0
+    pos: 20.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2972
+  type: AirlockCargoGlassLocked
+  components:
+  - parent: 0
+    pos: 20.5,16.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2973
+  type: AirlockCargoGlassLocked
+  components:
+  - parent: 0
+    pos: 22.5,16.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2974
+  type: AirlockCargoGlassLocked
+  components:
+  - parent: 0
+    pos: 22.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2975
+  type: AirlockCargoLocked
+  components:
+  - parent: 0
+    pos: 17.5,11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2976
+  type: AirlockCargoLocked
+  components:
+  - parent: 0
+    pos: 17.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
 ...
