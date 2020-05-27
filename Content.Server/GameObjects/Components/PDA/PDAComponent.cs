@@ -23,6 +23,7 @@ namespace Content.Server.GameObjects.Components.PDA
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(IAccess))]
     public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess
     {
 #pragma warning disable 649
@@ -240,12 +241,12 @@ namespace Content.Server.GameObjects.Components.PDA
             }
         }
 
-        public List<string> GetTags()
+        List<string> IAccess.GetTags()
         {
             return ContainedID?.Owner.GetComponent<AccessComponent>()?.GetTags();
         }
 
-        public void SetTags(List<string> newTags)
+        void IAccess.SetTags(List<string> newTags)
         {
             ContainedID?.Owner.GetComponent<AccessComponent>().SetTags(newTags);
         }

@@ -7,6 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Access
 {
     [RegisterComponent]
+    [ComponentReference(typeof(IAccess))]
     public class AccessComponent : Component, IAccess
     {
         public override string Name => "Access";
