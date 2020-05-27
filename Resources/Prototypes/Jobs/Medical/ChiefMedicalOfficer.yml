@@ -9,12 +9,11 @@
   department:
   - Command
   - Medical
-
   icon: "ChiefMedicalOfficer"
-
   access:
-  - medical
-  - command
+  - Medical
+  - Command
+  - Maintenance
 
 - type: startingGear
   id: CMOGear

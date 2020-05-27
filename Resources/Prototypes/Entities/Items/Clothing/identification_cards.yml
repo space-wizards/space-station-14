@@ -14,8 +14,6 @@
     - idcard
     sprite: Clothing/id_cards.rsi
     HeldPrefix: default
-  - type: IdCard
-  - type: Access
 
 #IDs with layers
 
@@ -26,15 +24,15 @@
   components:
   - type: Sprite
     layers:
-            - state: default
-            - state: assigned
-            - state: idassistant
+    - state: default
+    - state: assigned
+    - state: idassistant
   - type: Icon
     state: default
   - type: IdCard
     jobTitle: Assistant
   - type: Access
-    tags: ["maintenance", "service"]
+    tags: ["Maintenance", "Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -43,9 +41,9 @@
   components:
   - type: Sprite
     layers:
-            - state: gold
-            - state: assigned
-            - state: idcaptain
+    - state: gold
+    - state: assigned
+    - state: idcaptain
   - type: Icon
     state: gold
   - type: Clothing
@@ -53,7 +51,7 @@
   - type: IdCard
     jobTitle: Captain
   - type: Access
-    tags: ["maintenance", "cargo", "engineering", "medical", "research", "security", "service", "captain", "command"]
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"]
 
 - type: entity
   parent: IDCardStandard
@@ -62,15 +60,15 @@
   components:
   - type: Sprite
     layers:
-            - state: default
-            - state: assigned
-            - state: idsecurityofficer
+    - state: default
+    - state: assigned
+    - state: idsecurityofficer
   - type: Icon
     state: idsecurityofficer
   - type: IdCard
     jobTitle: Security Officer
   - type: Access
-    tags: ["security"]
+    tags: ["Security", "Maintenance", "Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -79,15 +77,15 @@
   components:
   - type: Sprite
     layers:
-            - state: default
-            - state: assigned
-            - state: idstationengineer
+    - state: default
+    - state: assigned
+    - state: idstationengineer
   - type: Icon
     state: idstationengineer
   - type: IdCard
     jobTitle: Engineer
   - type: Access
-    tags: ["engineering"]
+    tags: ["Engineering", "Maintenance", "External"]
 
 - type: entity
   parent: IDCardStandard
@@ -96,15 +94,15 @@
   components:
   - type: Sprite
     layers:
-            - state: default
-            - state: assigned
-            - state: idmedicaldoctor
+    - state: default
+    - state: assigned
+    - state: idmedicaldoctor
   - type: Icon
     state: idmedicaldoctor
   - type: IdCard
     jobTitle: Doctor
   - type: Access
-    tags: ["medical"]
+    tags: ["Medical"]
 
 - type: entity
   parent: IDCardStandard
@@ -113,15 +111,15 @@
   components:
   - type: Sprite
     layers:
-            - state: default
-            - state: assigned
-            - state: idcargotechnician
+    - state: default
+    - state: assigned
+    - state: idcargotechnician
   - type: Icon
     state: idcargotechnician
   - type: IdCard
     jobTitle: Cargo Technician
   - type: Access
-    tags: ["cargo"]
+    tags: ["Cargo", "Maintenance"]
 
 - type: entity
   parent: IDCardStandard
@@ -130,15 +128,15 @@
   components:
   - type: Sprite
     layers:
-            - state: default
-            - state: assigned
-            - state: idscientist
+    - state: default
+    - state: assigned
+    - state: idscientist
   - type: Icon
     state: idscientist
   - type: IdCard
     jobTitle: Scientist
   - type: Access
-    tags: ["research"]
+    tags: ["Research"]
 
 - type: entity
   parent: IDCardStandard
@@ -147,15 +145,15 @@
   components:
   - type: Sprite
     layers:
-            - state: default
-            - state: assigned
-            - state: idclown
+    - state: default
+    - state: assigned
+    - state: idclown
   - type: Icon
     state: idclown
   - type: IdCard
     jobTitle: Clown
   - type: Access
-    tags: ["maintenance", "service"]
+    tags: ["Maintenance", "Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -164,15 +162,15 @@
   components:
   - type: Sprite
     layers:
-            - state: default
-            - state: assigned
-            - state: idjanitor
+    - state: default
+    - state: assigned
+    - state: idjanitor
   - type: Icon
     state: idjanitor
   - type: IdCard
     jobTitle: Janitor
   - type: Access
-    tags: ["maintenance", "service"]
+    tags: ["Maintenance", "Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -189,7 +187,7 @@
   - type: IdCard
     jobTitle: Bartender
   - type: Access
-    tags: ["maintenance", "service"]
+    tags: ["Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -206,7 +204,7 @@
   - type: IdCard
     jobTitle: Chef
   - type: Access
-    tags: ["maintenance", "service"]
+    tags: ["Maintenance", "Service"]
 
 - type: entity
   parent: IDCardStandard
@@ -215,9 +213,9 @@
   components:
   - type: Sprite
     layers:
-            - state: silver
-            - state: assigned
-            - state: idheadofpersonnel
+    - state: silver
+    - state: assigned
+    - state: idheadofpersonnel
   - type: Icon
     state: idheadofpersonnel
   - type: Clothing
@@ -225,7 +223,7 @@
   - type: IdCard
     jobTitle: Head of Personnel
   - type: Access
-    tags: ["command"]
+    tags: ["Maintenance", "Cargo", "Security", "Service","Command"]
 
 - type: entity
   parent: IDCardStandard
@@ -234,9 +232,9 @@
   components:
   - type: Sprite
     layers:
-            - state: silver
-            - state: assigned
-            - state: idchiefengineer
+    - state: silver
+    - state: assigned
+    - state: idchiefengineer
   - type: Icon
     state: idchiefengineer
   - type: Clothing
@@ -244,7 +242,7 @@
   - type: IdCard
     jobTitle: Chief Engineer
   - type: Access
-    tags: ["engineering", "command"]
+    tags: ["Engineering", "Command", "Maintenance", "External"]
 
 - type: entity
   parent: IDCardStandard
@@ -253,9 +251,9 @@
   components:
   - type: Sprite
     layers:
-            - state: silver
-            - state: assigned
-            - state: idchiefmedicalofficer
+    - state: silver
+    - state: assigned
+    - state: idchiefmedicalofficer
   - type: Icon
     state: idchiefmedicalofficer
   - type: Clothing
@@ -263,7 +261,7 @@
   - type: IdCard
     jobTitle: Chief Medical Officer
   - type: Access
-    tags: ["medical", "command"]
+    tags: ["Medical", "Command", "Maintenance"]
 
 - type: entity
   parent: IDCardStandard
@@ -272,9 +270,9 @@
   components:
   - type: Sprite
     layers:
-            - state: silver
-            - state: assigned
-            - state: idresearchdirector
+    - state: silver
+    - state: assigned
+    - state: idresearchdirector
   - type: Icon
     state: idresearchdirector
   - type: Clothing
@@ -282,7 +280,7 @@
   - type: IdCard
     jobTitle: Research Director
   - type: Access
-    tags: ["research", "command"]
+    tags: ["Research", "Command", "Maintenance"]
 
 - type: entity
   parent: IDCardStandard
@@ -291,9 +289,9 @@
   components:
   - type: Sprite
     layers:
-            - state: silver
-            - state: assigned
-            - state: idheadofsecurity
+    - state: silver
+    - state: assigned
+    - state: idheadofsecurity
   - type: Icon
     state: idheadofsecurity
   - type: Clothing
@@ -301,7 +299,7 @@
   - type: IdCard
     jobTitle: Head of Security
   - type: Access
-    tags: ["security", "command"]
+    tags: ["Security", "Maintenance", "Service", "Command"]
 
 - type: entity
   parent: IDCardStandard
@@ -310,9 +308,9 @@
   components:
   - type: Sprite
     layers:
-            - state: gold
-            - state: assigned
-            - state: idcentcom
+    - state: gold
+    - state: assigned
+    - state: idcentcom
   - type: Icon
     state: idcentcom
   - type: Clothing
@@ -320,4 +318,4 @@
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
-    tags: ["maintenance", "cargo", "engineering", "medical", "research", "security", "service", "captain", "command"]
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"]

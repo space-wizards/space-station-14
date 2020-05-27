@@ -1,9 +1,9 @@
 - type: accessLevel
-  id: command
+  id: Command
 
 - type: accessLevel
-  id: captain
+  id: Captain
 
 - type: accessLevel
-  id: idCard
+  id: IdCard
   name: ID modification

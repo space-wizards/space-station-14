@@ -7,12 +7,11 @@
   department:
   - Command
   - Science
-
   icon: "ResearchDirector"
-
   access:
-  - research
-  - command
+  - Research
+  - Command
+  - Maintenance
 
 - type: startingGear
   id: ResearchDirectorGear
