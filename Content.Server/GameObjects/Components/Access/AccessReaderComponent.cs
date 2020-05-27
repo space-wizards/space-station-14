@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
@@ -53,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Access
         [CanBeNull]
         private static List<string> FindAccessTags(IEntity entity)
         {
-            if (entity.TryGetComponent(out AccessComponent accessComponent))
+            if (entity.TryGetComponent(out IAccess accessComponent))
             {
                 return accessComponent.GetTags();
             }
@@ -62,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Access
             {
                 var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                 if (activeHandEntity != null &&
-                    activeHandEntity.TryGetComponent(out AccessComponent handAccessComponent))
+                    activeHandEntity.TryGetComponent(out IAccess handAccessComponent))
                 {
                     return handAccessComponent.GetTags();
                 }
@@ -75,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Access
             {
                 if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
                     inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent item) &&
-                    item.Owner.TryGetComponent(out AccessComponent idAccessComponent)
+                    item.Owner.TryGetComponent(out IAccess idAccessComponent)
                     )
                 {
                     return idAccessComponent.GetTags();
