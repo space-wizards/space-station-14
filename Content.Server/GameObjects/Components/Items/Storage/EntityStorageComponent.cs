@@ -367,6 +367,10 @@ namespace Content.Server.GameObjects.Components
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
+
+            if (Open)
+                return false;
+
             if (!CanWeldShut)
                 return false;
 

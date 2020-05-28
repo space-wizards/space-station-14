@@ -27,6 +27,43 @@ namespace Content.Server.GameObjects.EntitySystems
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         /// <summary>
+        ///     Traces a ray from coords to otherCoords and returns the length
+        ///     of the vector between coords and the ray's first hit.
+        /// </summary>
+        /// <param name="coords">Set of coordinates to use.</param>
+        /// <param name="otherCoords">Other set of coordinates to use.</param>
+        /// <param name="collisionMask">the mask to check for collisions</param>
+        /// <param name="predicate">.</param>
+        /// <returns>Length of resulting ray.</returns>
+        public float UnobstructedRayLength(MapCoordinates coords, MapCoordinates otherCoords,
+            int collisionMask = (int) CollisionGroup.Impassable, Func<IEntity, bool> predicate = null)
+        {
+            var dir = otherCoords.Position - coords.Position;
+
+            if (dir.LengthSquared.Equals(0f)) return 0f;
+
+            var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
+            var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate, returnOnFirstHit: false).ToList();
+
+            if (rayResults.Count == 0) return dir.Length;
+            return (rayResults[0].HitPos - coords.Position).Length;
+        }
+
+        /// <summary>
+        ///     Traces a ray from coords to otherCoords and returns the length
+        ///     of the vector between coords and the ray's first hit.
+        /// </summary>
+        /// <param name="coords">Set of coordinates to use.</param>
+        /// <param name="otherCoords">Other set of coordinates to use.</param>
+        /// <param name="collisionMask">the mask to check for collisions</param>
+        /// <param name="ignoredEnt">the entity to be ignored when checking for collisions.</param>
+        /// <returns>Length of resulting ray.</returns>
+        public float UnobstructedRayLength(MapCoordinates coords, MapCoordinates otherCoords,
+            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null) =>
+            UnobstructedRayLength(coords, otherCoords, collisionMask,
+                ignoredEnt == null ? null : (Func<IEntity, bool>) (entity => ignoredEnt == entity));
+
+        /// <summary>
         ///     Checks that these coordinates are within a certain distance without any
         ///     entity that matches the collision mask obstructing them.
         ///     If the <paramref name="range"/> is zero or negative,
@@ -51,7 +88,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if (range > 0f && !(dir.LengthSquared <= range * range)) return false;
 
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
-            var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate).ToList();
+            var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate, returnOnFirstHit: false).ToList();
             return rayResults.Count == 0 || (insideBlockerValid && rayResults.Count > 0 && (rayResults[0].HitPos - otherCoords.Position).Length < 1f);
         }
 
