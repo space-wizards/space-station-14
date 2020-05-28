@@ -42,6 +42,8 @@
     - type: WiresVisualizer2D
   - type: PowerDevice
   - type: Wires
+    BoardName: "Airlock Control"
+    LayoutId: Airlock
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key

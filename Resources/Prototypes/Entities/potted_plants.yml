@@ -11,6 +11,7 @@
   - type: Icon
     sprite: Objects/potted_plants.rsi
 
+  - type: PottedPlantHide
 
 - type: entity
   id: PottedPlantRandom

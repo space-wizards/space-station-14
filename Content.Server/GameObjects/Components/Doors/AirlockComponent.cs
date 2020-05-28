@@ -5,7 +5,6 @@ using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Server.GameObjects;
@@ -13,6 +12,8 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
+using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent.WiresAction;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -40,6 +41,7 @@ namespace Content.Server.GameObjects.Components.Doors
         private CancellationTokenSource _powerWiresPulsedTimerCancel;
 
         private bool _powerWiresPulsed;
+
         /// <summary>
         /// True if either power wire was pulsed in the last <see cref="PowerWiresTimeout"/>.
         /// </summary>
@@ -56,16 +58,30 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void UpdateWiresStatus()
         {
-            var powerMessage = "A yellow light is on.";
+            var powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
             if (PowerWiresPulsed)
             {
-                powerMessage = "A yellow light is blinking rapidly.";
-            } else if (_wires.IsWireCut(Wires.MainPower) &&
-                       _wires.IsWireCut(Wires.BackupPower))
-            {
-                powerMessage = "A red light is on.";
+                powerLight = new StatusLightData(Color.Yellow, StatusLightState.BlinkingFast, "POWR");
             }
-            _wires.SetStatus(WiresStatus.PowerIndicator, _localizationMgr.GetString(powerMessage));
+            else if (_wires.IsWireCut(Wires.MainPower) &&
+                     _wires.IsWireCut(Wires.BackupPower))
+            {
+                powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
+            }
+
+            _wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
+            _wires.SetStatus(1, new StatusLightData(Color.Red, StatusLightState.Off, "BOLT"));
+            _wires.SetStatus(2, new StatusLightData(Color.Lime, StatusLightState.On, "BLTL"));
+            _wires.SetStatus(3, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
+            _wires.SetStatus(4, new StatusLightData(Color.Orange, StatusLightState.Off, "TIME"));
+            _wires.SetStatus(5, new StatusLightData(Color.Red, StatusLightState.Off, "SAFE"));
+            /*
+            _wires.SetStatus(6, powerLight);
+            _wires.SetStatus(7, powerLight);
+            _wires.SetStatus(8, powerLight);
+            _wires.SetStatus(9, powerLight);
+            _wires.SetStatus(10, powerLight);
+            _wires.SetStatus(11, powerLight);*/
         }
 
         private void UpdatePowerCutStatus()
@@ -125,19 +141,26 @@ namespace Content.Server.GameObjects.Components.Doors
             /// Mending restores power.
             /// </summary>
             MainPower,
+
             /// <see cref="MainPower"/>
             BackupPower,
-        }
-
-        private enum WiresStatus
-        {
-            PowerIndicator,
         }
 
         public void RegisterWires(WiresComponent.WiresBuilder builder)
         {
             builder.CreateWire(Wires.MainPower);
             builder.CreateWire(Wires.BackupPower);
+            builder.CreateWire(1);
+            builder.CreateWire(2);
+            builder.CreateWire(3);
+            builder.CreateWire(4);
+            /*builder.CreateWire(5);
+            builder.CreateWire(6);
+            builder.CreateWire(7);
+            builder.CreateWire(8);
+            builder.CreateWire(9);
+            builder.CreateWire(10);
+            builder.CreateWire(11);*/
             UpdateWiresStatus();
         }
 
@@ -192,6 +215,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 return;
             }
+
             base.Deny();
         }
 
@@ -216,11 +240,10 @@ namespace Content.Server.GameObjects.Components.Doors
 
             if (State == DoorState.Closed)
                 Open();
-            else if(State == DoorState.Open)
+            else if (State == DoorState.Open)
                 Close();
 
             return true;
-
         }
     }
 }
