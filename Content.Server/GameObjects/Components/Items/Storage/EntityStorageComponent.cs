@@ -140,7 +140,6 @@ namespace Content.Server.GameObjects.Components
         private void CloseStorage()
         {
             Open = false;
-            CanWeldShut = true;
             var entities = Owner.EntityManager.GetEntities(entityQuery);
             var count = 0;
             foreach (var entity in entities)
@@ -175,7 +174,6 @@ namespace Content.Server.GameObjects.Components
         private void OpenStorage()
         {
             Open = true;
-            CanWeldShut = false;
             EmptyContents();
             ModifyComponents();
             if (Owner.TryGetComponent(out SoundComponent soundComponent))
@@ -369,6 +367,10 @@ namespace Content.Server.GameObjects.Components
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
+
+            if (Open)
+                return false;
+
             if (!CanWeldShut)
                 return false;
 
