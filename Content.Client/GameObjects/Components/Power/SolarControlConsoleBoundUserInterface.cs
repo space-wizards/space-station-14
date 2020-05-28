@@ -210,19 +210,22 @@ namespace Content.Client.GameObjects.Components.Power
 
                 for (int i = 0; i < gridLinesRadial; i++)
                 {
-                    double angle = (Math.PI / gridLinesRadial) * i;
-                    Vector2 aExtent = (RadiusCircle * (float) -Math.Sin(angle), RadiusCircle * (float) -Math.Cos(angle));
+                    Angle angle = (Math.PI / gridLinesRadial) * i;
+                    Vector2 aExtent = angle.ToVec() * RadiusCircle;
                     handle.DrawLine((point, point) - aExtent, (point, point) + aExtent, gridLines);
                 }
 
-                float predictedPanelRotation = (float) (_lastState.Rotation + (_lastState.AngularVelocity * ((_gameTiming.CurTime - _lastStateTime).TotalSeconds)));
+                // The rotations need to be adjusted because Y is inverted in Robust (like BYOND)
+                Vector2 rotMul = (1, -1);
 
-                Vector2 extent = (RadiusCircle * MathF.Cos(predictedPanelRotation), RadiusCircle * -MathF.Sin(predictedPanelRotation));
-                Vector2 extentOrthogonal = (extent.Y, -extent.X);
-                handle.DrawLine((point, point) - extent, (point, point) + extent, Color.White);
-                handle.DrawLine((point, point) + (extentOrthogonal / panelExtentCutback), (point, point) + extentOrthogonal - (extentOrthogonal / panelExtentCutback), Color.DarkGray);
+                Angle predictedPanelRotation = _lastState.Rotation + (_lastState.AngularVelocity * ((_gameTiming.CurTime - _lastStateTime).TotalSeconds));
 
-                Vector2 sunExtent = (RadiusCircle * (float) -Math.Sin(_lastState.TowardsSun), RadiusCircle * (float) -Math.Cos(_lastState.TowardsSun));
+                Vector2 extent = predictedPanelRotation.ToVec() * rotMul * RadiusCircle;
+                Vector2 extentOrtho = (extent.Y, -extent.X);
+                handle.DrawLine((point, point) - extentOrtho, (point, point) + extentOrtho, Color.White);
+                handle.DrawLine((point, point) + (extent / panelExtentCutback), (point, point) + extent - (extent / panelExtentCutback), Color.DarkGray);
+
+                Vector2 sunExtent = _lastState.TowardsSun.ToVec() * rotMul * RadiusCircle;
                 handle.DrawLine((point, point) + sunExtent, (point, point), Color.Yellow);
             }
         }
