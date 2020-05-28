@@ -29,7 +29,9 @@ namespace Content.Server.GameObjects.Components.Instruments
     public class InstrumentComponent : SharedInstrumentComponent,
         IDropped, IHandSelected, IHandDeselected, IActivate, IUse, IThrown
     {
+#pragma warning disable 649
         [Dependency] private IServerNotifyManager _notifyManager;
+#pragma warning restore 649
 
         // These 2 values are quite high for now, and this could be easily abused. Change this if people are abusing it.
         public const int MaxMidiEventsPerSecond = 20;
@@ -98,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
         }
 
-        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+        private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus == SessionStatus.Disconnected)
                 InstrumentPlayer = null;

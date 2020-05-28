@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Instruments;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using NFluidsynth;
 using Robust.Shared.GameObjects;
@@ -31,7 +32,6 @@ namespace Content.Client.GameObjects.Components.Instruments
 
 #pragma warning disable 649
         [Dependency] private IMidiManager _midiManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 649
 
         [CanBeNull]
@@ -110,6 +110,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             if (IsRendererAlive)
                 return;
 
+            _midiManager.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
             _renderer = _midiManager.GetNewRenderer();
 
             if (_renderer != null)

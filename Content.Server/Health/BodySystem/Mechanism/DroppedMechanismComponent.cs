@@ -13,16 +13,10 @@ namespace Content.Server.BodySystem {
 
     /// <summary>
     ///    Component containing the data for a dropped Mechanism entity.
-    /// </summary>	
+    /// </summary>
     [RegisterComponent]
     public class DroppedMechanismComponent : Component
     {
-
-        #pragma warning disable CS0649
-            [Dependency]
-            private IPrototypeManager _prototypeManager;
-        #pragma warning restore
-
         public sealed override string Name => "DroppedMechanism";
 
         [ViewVariables]

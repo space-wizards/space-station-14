@@ -12,7 +12,7 @@ namespace Content.Shared.BodySystem {
 
     /// <summary>
     ///    Prototype for the Mechanism class.
-    /// </summary>	
+    /// </summary>
     [Prototype("mechanism")]
     [NetSerializable, Serializable]
     public class MechanismPrototype : IPrototype, IIndexedPrototype {
@@ -20,7 +20,6 @@ namespace Content.Shared.BodySystem {
         private string _name;
 		private string _description;
 		private string _examineMessage;
-        private string _spritePath;
         private string _rsiPath;
         private string _rsiState;
         private int _durability;
@@ -34,10 +33,10 @@ namespace Content.Shared.BodySystem {
 
         [ViewVariables]
         public string Name => _name;
-					
+
 		[ViewVariables]
-        public string Description => _description;		
-  
+        public string Description => _description;
+
 		[ViewVariables]
 		public string ExamineMessage => _examineMessage;
 
@@ -49,19 +48,19 @@ namespace Content.Shared.BodySystem {
 
         [ViewVariables]
 		public int Durability => _durability;
-				
+
 		[ViewVariables]
-		public int DestroyThreshold => _destroyThreshold;	
-		
+		public int DestroyThreshold => _destroyThreshold;
+
 		[ViewVariables]
 		public int Resistance => _resistance;
-			
+
 		[ViewVariables]
 		public int Size => _size;
 
         [ViewVariables]
-        public BodyPartCompatibility Compatibility => _compatibility;	
-		
+        public BodyPartCompatibility Compatibility => _compatibility;
+
         public virtual void LoadFrom(YamlMappingNode mapping){
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
@@ -74,9 +73,9 @@ namespace Content.Shared.BodySystem {
             serializer.DataField(ref _durability, "durability", 0);
             serializer.DataField(ref _destroyThreshold, "destroyThreshold", 0);
             serializer.DataField(ref _resistance, "resistance", 0);
-            serializer.DataField(ref _size, "size", 2);  
+            serializer.DataField(ref _size, "size", 2);
             serializer.DataField(ref _compatibility, "compatibility", BodyPartCompatibility.Universal);
-        }		
+        }
 	}
 }
 

@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Runtime.Remoting;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -18,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
-    public class WelderComponent : ToolComponent, IExamine, IUse
+    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct
     {
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
@@ -92,17 +96,18 @@ namespace Content.Server.GameObjects.Components.Interactable
             return base.UseTool(user, target, toolQualityNeeded) && TryWeld(fuelConsumed, user);
         }
 
-        private bool TryWeld(float value, IEntity user = null)
+        private bool TryWeld(float value, IEntity user = null, bool silent = false)
         {
             if (!WelderLit)
             {
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder is turned off!"));
+                if(!silent) _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder is turned off!"));
                 return false;
             }
 
             if (!CanWeld(value))
             {
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder does not have enough fuel for that!"));
+                if(!silent) _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder does not have enough fuel for that!"));
+                return false;
             }
 
             if (_solutionComponent == null)
@@ -184,6 +189,18 @@ namespace Content.Server.GameObjects.Components.Interactable
                 ToggleWelderStatus();
 
             Dirty();
+        }
+
+        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        {
+            if (TryWeld(5, victim, silent: true))
+            {
+                PlaySoundCollection("Welder", -5);
+                chat.EntityMe(victim, Loc.GetString("welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim)); //TODO: theyre macro
+                return SuicideKind.Heat;
+            }
+            chat.EntityMe(victim, Loc.GetString("bashes {0:themselves} with the {1}!", victim, Owner.Name));
+            return SuicideKind.Brute;
         }
     }
 }

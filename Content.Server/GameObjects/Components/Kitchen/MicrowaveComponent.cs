@@ -21,6 +21,10 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Content.Server.Interfaces;
 using Robust.Shared.Audio;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.Chat;
+using Content.Server.BodySystem;
+using Content.Shared.BodySystem;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -410,5 +414,25 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _audioSystem.Play("/Audio/machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
         }
 
+        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        {
+            int headCount = 0;
+            if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
+            {
+                var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
+                foreach (var head in heads)
+                {
+                    var droppedHead = bodyManagerComponent.DisconnectBodyPart(head, true);
+                    _storage.Insert(droppedHead);
+                    headCount++;
+                }
+            }
+            chat.EntityMe(victim, Loc.GetPluralString("is trying to cook {0:their} head!", "is trying to cook {0:their} heads!", headCount, victim));
+            _currentCookTimerTime = 10;
+            ClickSound();
+            UpdateUserInterface();
+            wzhzhzh();
+            return SuicideKind.Heat;
+        }
     }
 }
