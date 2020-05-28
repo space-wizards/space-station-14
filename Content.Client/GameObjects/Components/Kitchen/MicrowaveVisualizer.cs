@@ -13,7 +13,6 @@ namespace Content.Client.GameObjects.Components.Kitchen
     public sealed class MicrowaveVisualizer : AppearanceVisualizer
     {
         private SoundComponent _soundComponent;
-        private const string MicrowaveSoundLoop = "/Audio/machines/microwave_loop.ogg";
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -38,8 +37,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     var audioParams = AudioParams.Default;
                     audioParams.Loop = true;
                     var schedSound = new ScheduledSound();
-                    schedSound.Filename = MicrowaveSoundLoop;
+                    schedSound.Filename = "/Audio/machines/microwave_loop.ogg";
                     schedSound.AudioParams = audioParams;
+                    _soundComponent.StopAllSounds();
                     _soundComponent.AddScheduledSound(schedSound);
                     break;
 
@@ -51,10 +51,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
 
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
             sprite.LayerSetVisible(MicrowaveVisualizerLayers.BaseUnlit, glowingPartsVisible);
-
-
         }
-
 
         private enum MicrowaveVisualizerLayers
         {

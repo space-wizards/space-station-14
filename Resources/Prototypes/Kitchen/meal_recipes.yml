@@ -11,6 +11,16 @@
     FoodMeat: 1
 
 - type: microwaveMealRecipe
+  id: RecipeClownBurger
+  name: Clownburger Recipe
+  result: FoodClownBurger
+  time: 5
+  reagents:
+    chem.Flour: 5
+  solids:
+    MaskClown: 1
+
+- type: microwaveMealRecipe
   id: RecipeTofuBurger
   name: Tofu Burger Recipe
   result: FoodTofuBurger
