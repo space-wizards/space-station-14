@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -96,6 +98,12 @@ namespace Content.Server.GameObjects
             }
             if (entity.HasComponent(typeof(SpeciesComponent)))
             {
+                if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
+                if (!entity.TryGetComponent<ITransformComponent>(out var entityTransform)) return;
+                if (!Owner.TryGetComponent<ITransformComponent>(out var ownerTransform)) return;
+
+                var dotProduct = Vector2.Dot(mover.VelocityDir.Normalized, (entityTransform.WorldPosition - ownerTransform.WorldPosition).Normalized);
+                if (dotProduct <= -0.9f)
                     TryOpen(entity);
             }
         }
