@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using System;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -121,22 +122,13 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
+            var entCoords = ent.Transform.GridPosition.Position;
+            var entToDesiredDropCoords = coords.Position - entCoords;
+            var targetLength = Math.Min(entToDesiredDropCoords.Length, InteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
+            var newCoords = new GridCoordinates((entToDesiredDropCoords.Normalized * targetLength) + entCoords, coords.GridID);
+            var rayLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedRayLength(ent.Transform.MapPosition, newCoords.ToMap(_mapManager), ignoredEnt: ent);
 
-            if(EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(coords.ToMap(_mapManager), ent.Transform.MapPosition, ignoredEnt: ent))
-                if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
-                {
-                    handsComp.Drop(handsComp.ActiveIndex, coords);
-                }
-                else
-                {
-                    var entCoords = ent.Transform.GridPosition.Position;
-                    var entToDesiredDropCoords = coords.Position - entCoords;
-                    var clampedDropCoords = ((entToDesiredDropCoords.Normalized * InteractionSystem.InteractionRange) + entCoords);
-
-                    handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(clampedDropCoords, coords.GridID));
-                }
-            else
-                handsComp.Drop(handsComp.ActiveIndex, ent.Transform.GridPosition);
+            handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(entCoords + (entToDesiredDropCoords.Normalized * rayLength), coords.GridID));
 
             return true;
         }
