@@ -1,0 +1,62 @@
+- type: entity
+  id: CartridgeClRifleBase
+  name: Cartridge (.25 rifle)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Ammo
+    caliber: ClRifle
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: s-casing
+    drawdepth: FloorObjects
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: s-casing
+
+- type: entity
+  id: CartridgeClRifle
+  name: Cartridge (.25 caseless)
+  parent: CartridgeClRifleBase
+  components:
+  - type: Ammo
+    projectile: BulletClRifle
+    caseless: true
+
+- type: entity
+  id: CartridgeClRifleFlash
+  name: Cartridge (.25 caseless flash)
+  parent: CartridgeClRifleBase
+  components:
+  - type: Ammo
+    projectile: BulletClRifleFlash
+    caseless: true
+
+- type: entity
+  id: CartridgeClRifleHV
+  name: Cartridge (.25 caseless high-velocity)
+  parent: CartridgeClRifleBase
+  components:
+  - type: Ammo
+    projectile: BulletClRifleHV
+    ammoVelocity: 30
+    caseless: true
+
+- type: entity
+  id: CartridgeClRiflePractice
+  name: Cartridge (.25 caseless practice)
+  parent: CartridgeClRifleBase
+  components:
+  - type: Ammo
+    projectile: BulletClRiflePractice
+    caseless: true
+
+- type: entity
+  id: CartridgeClRifleRubber
+  name: Cartridge (.25 caseless rubber)
+  parent: CartridgeClRifleBase
+  components:
+  - type: Ammo
+    projectile: BulletClRifleRubber
+    caseless: true

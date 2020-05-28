@@ -1,0 +1,77 @@
+- type: entity
+  id: PelletShotgunSlug
+  name: Pellet (.50 slug)
+  abstract: true
+  parent: BulletBase
+  components:
+  - type: Sprite
+    sprite: Objects/Guns/Projectiles/slug.rsi
+    state: base
+  - type: Projectile
+    damages:
+      Brute: 13
+
+- type: entity
+  id: PelletShotgunBeanbag
+  name: Beanbag (.50)
+  abstract: true
+  parent: BulletBase
+  components:
+  - type: Sprite
+    sprite: Objects/Guns/Projectiles/buckshot.rsi
+    state: base
+  - type: Projectile
+    damages:
+      Brute: 10
+
+- type: entity
+  id: PelletShotgun
+  name: Pellet (.50)
+  abstract: true
+  parent: BulletBase
+  components:
+  - type: Sprite
+    sprite: Objects/Guns/Projectiles/buckshot.rsi
+    state: base
+  - type: Projectile
+    damages:
+      Brute: 13
+
+- type: entity
+  id: PelletShotgunFlash
+  name: Pellet (.50 flash)
+  abstract: true
+  parent: BulletBaseFlash
+  components:
+  - type: Sprite
+    sprite: Objects/Guns/Projectiles/buckshot.rsi
+    state: base
+  - type: Projectile
+    damages:
+      Brute: 13
+
+- type: entity
+  id: PelletShotgunIncendiary
+  name: Pellet (.50 incendiary)
+  abstract: true
+  parent: BulletBase
+  components:
+  - type: Sprite
+    sprite: Objects/Guns/Projectiles/buckshot.rsi
+    state: base
+  - type: Projectile
+    damages:
+      Brute: 13
+
+- type: entity
+  id: PelletShotgunPractice
+  name: Pellet (.50 practice)
+  abstract: true
+  parent: BulletBasePractice
+  components:
+  - type: Sprite
+    sprite: Objects/Guns/Projectiles/buckshot.rsi
+    state: base
+  - type: Projectile
+    damages:
+      Brute: 1

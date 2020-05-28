@@ -2,9 +2,12 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -18,24 +21,32 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         public bool IgnoreShooter = true;
 
-        private EntityUid Shooter = EntityUid.Invalid;
+        private EntityUid _shooter = EntityUid.Invalid;
 
         private Dictionary<DamageType, int> _damages;
+
         [ViewVariables]
-        public Dictionary<DamageType, int> Damages => _damages;
-        private float _velocity;
-        public float Velocity
+        public Dictionary<DamageType, int> Damages
         {
-            get => _velocity;
-            set => _velocity = value;
+            get => _damages;
+            set => _damages = value;
         }
+        
+        public bool DeleteOnCollide => _deleteOnCollide;
+        private bool _deleteOnCollide;
+
+        // Get that juicy FPS hit sound
+        private string _soundHit;
+        private string _soundHitSpecies;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+            serializer.DataField(ref _deleteOnCollide, "delete_on_collide", true);
             // If not specified 0 damage
             serializer.DataField(ref _damages, "damages", new Dictionary<DamageType, int>());
-            serializer.DataField(ref _velocity, "velocity", 20f);
+            serializer.DataField(ref _soundHit, "soundHit", null);
+            serializer.DataField(ref _soundHitSpecies, "soundHitSpecies", null);
         }
 
         public float TimeLeft { get; set; } = 10;
@@ -46,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <param name="shooter"></param>
         public void IgnoreEntity(IEntity shooter)
         {
-            Shooter = shooter.Uid;
+            _shooter = shooter.Uid;
         }
 
         /// <summary>

@@ -1,0 +1,49 @@
+- type: entity
+  id: BulletMagnum
+  name: Bullet (.40 magnum)
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 32
+
+- type: entity
+  id: BulletMagnumFlash
+  name: Bullet (.40 magnum flash)
+  parent: BulletBaseFlash
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 32
+
+- type: entity
+  id: BulletMagnumHV
+  name: Bullet (.40 magnum high-velocity)
+  parent: BulletBaseHV
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 35
+
+- type: entity
+  id: BulletMagnumPractice
+  name: Bullet (.40 magnum practice)
+  parent: BulletBasePractice
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 32
+
+- type: entity
+  id: BulletMagnumRubber
+  name: Bullet (.40 magnum rubber)
+  parent: BulletBaseRubber
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 32

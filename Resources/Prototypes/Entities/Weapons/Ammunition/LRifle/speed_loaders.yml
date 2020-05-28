@@ -1,0 +1,25 @@
+- type: entity
+  id: SLLRifle
+  name: "Speed loader (.30 rifle)"
+  parent: BaseItem
+  components:
+  - type: SpeedLoader
+    caliber: LRifle
+    capacity: 5
+    fillPrototype: CartridgeLRifle
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/SpeedLoaders/LRifle/l_rifle_sl.rsi
+    state: icon
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Ammunition/SpeedLoaders/LRifle/l_rifle_sl.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedMagazineVisualLayers.Base"]
+    - state: mag-5
+      map: ["enum.RangedMagazineVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: RangedMagazineVisualizer2D
+      magState: mag
+      steps: 5

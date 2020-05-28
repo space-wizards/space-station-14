@@ -7,11 +7,13 @@
   components:
   - type: Clickable
   - type: Sprite
+    netsync: false
     directional: false
-    texture: Objects/Projectiles/bullet.png
-    #rotation: -180
+    sprite: Objects/Guns/Projectiles/bullet.rsi
+    state: bullet
   - type: Icon
-    texture: Objects/Projectiles/bullet.png
+    sprite: Objects/Guns/Projectiles/bullet.rsi
+    state: bullet
   - type: Collidable
     hard: false
     shapes:
@@ -26,14 +28,9 @@
   - type: Physics
     edgeslide: false
   - type: Projectile
+    soundHit: /Audio/Guns/Hits/bullet_hit.ogg
     damages:
       Brute: 20
-
-- type: entity
-  id: ProjectileBullet
-  name: ProjectileBullet
-  parent: BulletBase
-  abstract: true
 
 - type: entity
   id: BulletBaseFlash
@@ -42,31 +39,20 @@
   abstract: true
   components:
   - type: Projectile
-    velocity: 20
+    soundHit: /Audio/Guns/Hits/snap.ogg
     damages:
       Brute: 10
+  # - type: FlashProjectile
 
 - type: entity
-  id: BulletBaseHighVelocity
+  id: BulletBaseHV
   name: Base Bullet High-Velocity
   parent: BulletBase
   abstract: true
   components:
   - type: Projectile
-    velocity: 27
     damages:
       Brute: 12
-
-- type: entity
-  id: BulletBaseL
-  name: Base Bullet L
-  parent: BulletBase
-  abstract: true
-  components:
-  - type: Projectile
-    velocity: 15
-    damages:
-      Brute: 10
 
 - type: entity
   id: BulletBasePractice
@@ -75,9 +61,8 @@
   abstract: true
   components:
   - type: Projectile
-    velocity: 20
     damages:
-      Brute: 0
+      Brute: 2
 
 - type: entity
   id: BulletBaseRubber
@@ -86,6 +71,43 @@
   abstract: true
   components:
   - type: Projectile
-    velocity: 20
+    soundHit: /Audio/Guns/Hits/snap.ogg
     damages:
-      Brute: 2
+      Brute: 3
+  #- type: StunProjectile
+  #  stun_amount: 15
+
+- type: entity
+  name : Taser
+  id: BulletTaser
+  abstract: true
+  components:
+  - type: Ammo
+    isProjectile: true
+    ammoVelocity: 20
+    caliber: Energy
+  - type: Projectile
+    soundHitSpecies: "/Audio/Guns/Hits/taser_hit.ogg"
+    damages:
+      Heat: 5
+  #- type: StunProjectile
+  - type: Sprite
+    directional: false
+    sprite: Objects/Guns/Projectiles/spark.rsi
+    color: "#ffff33"
+    layers:
+    - state: spark
+      shader: unshaded
+  - type: Icon
+    sprite: Objects/Guns/Projectiles/spark.rsi
+    state: spark
+    color: "#ffff33"
+  - type: Collidable
+    hard: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.2,0.2,0.2"
+      layer: 32
+      mask: 30
+  - type: Physics
+    edgeslide: false

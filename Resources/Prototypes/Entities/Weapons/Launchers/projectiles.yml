@@ -1,0 +1,90 @@
+- type: entity
+  id: BulletRocket
+  name: Rocket
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Projectiles/rocket.rsi
+    state: frag
+  - type: ExplosiveProjectile
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 3
+    heavyImpactRange: 5
+    lightImpactRange: 7
+    flashRange: 10
+
+- type: entity
+  id: BulletGrenadeBaton
+  name: Baton grenade
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Projectiles/grenade.rsi
+    state: grenade
+  #- type: StunProjectile
+  - type: Projectile
+    deleteOnCollide: false
+
+- type: entity
+  id: BulletGrenadeBlast
+  name: Blast grenade
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Projectiles/grenade.rsi
+    state: grenade
+  - type: ExplosiveProjectile
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 0
+    heavyImpactRange: 0
+    lightImpactRange: 3
+    flashRange: 10
+
+- type: entity
+  id: BulletGrenadeFlash
+  name: Flash grenade
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Projectiles/grenade.rsi
+    state: grenade
+  - type: ExplosiveProjectile
+  #- type: FlashProjectile
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 0
+    heavyImpactRange: 0
+    lightImpactRange: 3
+    flashRange: 10
+
+- type: entity
+  id: BulletGrenadeFrag
+  name: Frag grenade
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Projectiles/grenade.rsi
+    state: grenade
+  - type: ExplosiveProjectile
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 3
+    heavyImpactRange: 5
+    lightImpactRange: 7
+    flashRange: 10

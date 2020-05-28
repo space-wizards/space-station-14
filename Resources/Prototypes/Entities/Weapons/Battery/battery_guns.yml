@@ -1,0 +1,169 @@
+- type: entity
+  name: Retro Laser Gun
+  parent: BaseItem
+  id: LaserGun
+  description: A weapon using light amplified by the stimulated emission of radiation. Ancient inefficient model.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Battery/laser_retro.rsi
+    layers:
+      - state: base
+        map: ["enum.BatteryBarrelVisualLayers.Base"]
+      - state: battery-4
+        map: ["enum.BatteryBarrelVisualLayers.Battery"]
+        shader: unshaded
+  - type: Icon
+    sprite: Objects/Guns/Battery/laser_retro.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Guns/Battery/laser_retro.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    minAngle: 10
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    currentSelector: Single
+    allSelectors: Single
+    fireRate: 2
+    powerCellPrototype: PowerCellSmallStandard
+    ammoPrototype: RedLaser
+    soundGunshot: /Audio/Guns/Gunshots/laser.ogg
+  - type: Sound
+  - type: Appearance
+    visuals:
+    - type: BatteryBarrelVisualizer2D
+      baseState: base
+      batteryState: battery
+      batterySteps: 5
+      emptyState: true
+
+- type: entity
+  name: Laser Cannon
+  parent: BaseItem
+  id: LaserCannon
+  description: With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Battery/laser_cannon.rsi
+    layers:
+      - state: base
+        map: ["enum.BatteryBarrelVisualLayers.Base"]
+      - state: battery-4
+        map: ["enum.BatteryBarrelVisualLayers.Battery"]
+        shader: unshaded
+  - type: Icon
+    sprite: Objects/Guns/Battery/laser_cannon.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Guns/Battery/laser_cannon.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors: Single
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallSuper
+    ammoPrototype: RedHeavyLaser
+    soundGunshot: /Audio/Guns/Gunshots/laser_cannon.ogg
+  - type: Sound
+  - type: Appearance
+    visuals:
+    - type: BatteryBarrelVisualizer2D
+      baseState: base
+      batteryState: battery
+      batterySteps: 5
+      emptyState: false
+
+- type: entity
+  name: X-Ray Cannon
+  parent: BaseItem
+  id: XrayCannon
+  description: Blah blah blah
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Battery/xray.rsi
+    layers:
+      - state: base
+        map: ["enum.BatteryBarrelVisualLayers.Base"]
+      - state: battery-0
+        map: ["enum.BatteryBarrelVisualLayers.Battery"]
+        shader: unshaded
+  - type: Icon
+    sprite: Objects/Guns/Battery/xray.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Guns/Battery/xray.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors: Single
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallSuper
+    base_fire_cost: 600
+    ammoPrototype: XrayLaser
+    soundGunshot: /Audio/Guns/Gunshots/laser3.ogg
+  - type: Sound
+  - type: Appearance
+    visuals:
+    - type: BatteryBarrelVisualizer2D
+      baseState: base
+      batteryState: battery
+      batterySteps: 5
+      emptyState: true
+
+- type: entity
+  name: Taser
+  parent: BaseItem
+  id: TaserGun
+  description: Literally just a dummy for a screenshot at this point, sorry!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Battery/taser.rsi
+    layers:
+      - state: base
+        map: ["enum.BatteryBarrelVisualLayers.Base"]
+      - state: battery-0
+        map: ["enum.BatteryBarrelVisualLayers.Battery"]
+        shader: unshaded
+  - type: Icon
+    sprite: Objects/Guns/Battery/taser.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Guns/Battery/taser.rsi
+    prefix: icon
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors: Single
+    fireRate: 2
+    minAngle: 5
+    maxAngle: 45
+    angleIncrease: 20
+    angleDecay: 15
+    powerCellPrototype: PowerCellSmallStandard
+    ammoPrototype: BulletTaser
+    soundGunshot: /Audio/Guns/Gunshots/taser.ogg
+  - type: Sound
+  - type: Appearance
+    visuals:
+    - type: BatteryBarrelVisualizer2D
+      baseState: base
+      batteryState: battery
+      batterySteps: 5
+      emptyState: true

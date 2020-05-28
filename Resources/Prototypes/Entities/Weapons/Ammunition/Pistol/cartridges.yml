@@ -1,0 +1,57 @@
+- type: entity
+  id: CartridgePistolBase
+  name: Cartridge (.35 auto)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Ammo
+    caliber: Pistol
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: s-casing
+    drawdepth: FloorObjects
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: s-casing
+
+- type: entity
+  id: CartridgePistol
+  name: Cartridge (.35 auto)
+  parent: CartridgePistolBase
+  components:
+  - type: Ammo
+    projectile: BulletPistol
+
+- type: entity
+  id: CartridgePistolFlash
+  name: Cartridge (.35 auto flash)
+  parent: CartridgePistolBase
+  components:
+  - type: Ammo
+    projectile: BulletPistolFlash
+
+- type: entity
+  id: CartridgePistolHV
+  name: Cartridge (.35 auto high-velocity)
+  parent: CartridgePistolBase
+  components:
+  - type: Ammo
+    projectile: BulletPistolHV
+    ammoVelocity: 30
+
+- type: entity
+  id: CartridgePistolPractice
+  name: Cartridge (.35 auto practice)
+  parent: CartridgePistolBase
+  components:
+  - type: Ammo
+    projectile: BulletPistolPractice
+
+- type: entity
+  id: CartridgePistolRubber
+  name: Cartridge (.35 auto rubber)
+  parent: CartridgePistolBase
+  components:
+  - type: Ammo
+    projectile: BulletPistolRubber

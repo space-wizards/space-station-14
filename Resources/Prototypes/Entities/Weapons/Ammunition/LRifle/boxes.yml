@@ -1,0 +1,76 @@
+- type: entity
+  id: BoxLRifleBase
+  name: "Ammunition box (.30 rifle)"
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: AmmoBox
+    caliber: LRifle
+    capacity: 30
+  - type: Icon
+    state: icon
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: base
+      map: ["enum.RangedMagazineVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedMagazineVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: RangedMagazineVisualizer2D
+      magState: mag
+      steps: 1
+
+# Boxes
+- type: entity
+  id: BoxLRifleBigBox
+  name: "Ammunition box (.30 rifle)"
+  parent: BoxLRifleBase
+  components:
+  - type: AmmoBox
+    capacity: 200
+    fillPrototype: CartridgeLRifle
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Boxes/LRifle/l_rifle_big_box.rsi
+  - type: Sprite
+    sprite: Objects/Guns/Ammunition/Boxes/LRifle/l_rifle_big_box.rsi
+
+- type: entity
+  id: BoxLRifleBoxHV
+  name: "Ammunition box (.30 rifle high-velocity)"
+  parent: BoxLRifleBase
+  components:
+  - type: AmmoBox
+    capacity: 50
+    fillPrototype: CartridgeLRifleHV
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Boxes/LRifle/l_rifle_box_hv.rsi
+  - type: Sprite
+    sprite: Objects/Guns/Ammunition/Boxes/LRifle/l_rifle_box_hv.rsi
+
+- type: entity
+  id: BoxLRifleBoxPractice
+  name: "Ammunition box (.30 rifle practice)"
+  parent: BoxLRifleBase
+  components:
+  - type: AmmoBox
+    capacity: 50
+    fillPrototype: CartridgeLRiflePractice
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Boxes/LRifle/l_rifle_box_practice.rsi
+  - type: Sprite
+    sprite: Objects/Guns/Ammunition/Boxes/LRifle/l_rifle_box_practice.rsi
+
+- type: entity
+  id: BoxLRifleBoxRubber
+  name: "Ammunition box (.30 rifle rubber)"
+  parent: BoxLRifleBase
+  components:
+  - type: AmmoBox
+    capacity: 50
+    fillPrototype: CartridgeLRifleRubber
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Boxes/LRifle/l_rifle_box_rubber.rsi
+  - type: Sprite
+    sprite: Objects/Guns/Ammunition/Boxes/LRifle/l_rifle_box_rubber.rsi

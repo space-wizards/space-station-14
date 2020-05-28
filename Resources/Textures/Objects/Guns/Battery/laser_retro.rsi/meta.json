@@ -1,0 +1,131 @@
+{
+	"version": 1,
+	"size": {
+		"x": 32,
+		"y": 32
+	}, 
+	"license": "CC-BY-SA-3.0", 
+	"copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at commit 125c975f1b3bf9826b37029e9ab5a5f89e975a7e", 
+	"states": [
+		{
+			"name": "icon",
+			"directions": 1
+		}, 
+		{
+			"name": "base",
+			"directions": 1
+		}, 
+		{
+			"name": "battery-0", 
+			"directions": 1
+		},
+		{
+			"name": "battery-1", 
+			"directions": 1
+		},
+		{
+			"name": "battery-2", 
+			"directions": 1
+		},
+		{
+			"name": "battery-3", 
+			"directions": 1
+		},
+		{
+			"name": "battery-4", 
+			"directions": 1
+		},
+		{
+			"name": "inhand-left-0", 
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "inhand-right-0", 
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "inhand-left-1", 
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "inhand-right-1", 
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "inhand-left-2", 
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "inhand-right-2", 
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "inhand-left-3", 
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "inhand-right-3", 
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "inhand-left", 
+			"directions": 4,
+			"delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+		},
+		{
+			"name": "inhand-right", 
+			"directions": 4,
+			"delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+		}
+	]
+}

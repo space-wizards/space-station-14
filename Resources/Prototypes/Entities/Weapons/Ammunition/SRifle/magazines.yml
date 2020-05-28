@@ -1,0 +1,86 @@
+# Empty mags
+- type: entity
+  id: MagazineSRifleBase
+  name: "Magazine (.20 rifle)"
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: RangedMagazine
+    caliber: SRifle
+    magazineType: Rifle
+    capacity: 25
+  - type: Icon
+    state: icon
+  - type: Sprite 
+    netsync: false
+    layers:
+    - state: base
+      map: ["enum.RangedMagazineVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.RangedMagazineVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: RangedMagazineVisualizer2D
+      mag_state: mag
+      steps: 1
+
+# Magazines
+- type: entity
+  id: MagazineSRifle
+  name: "Magazine (.20 rifle)"
+  parent: MagazineSRifleBase
+  components:
+  - type: RangedMagazine
+    fillPrototype: CartridgeSRifle
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag.rsi
+  - type: Sprite
+    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag.rsi
+
+- type: entity
+  id: MagazineSRifleFlash
+  name: "Magazine (.20 rifle flash)"
+  parent: MagazineSRifleBase
+  components:
+  - type: RangedMagazine
+    fillPrototype: CartridgeSRifleFlash
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_flash.rsi
+  - type: Sprite
+    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_flash.rsi
+
+- type: entity
+  id: MagazineSRifleHV
+  name: "Magazine (.20 rifle high-velocity)"
+  parent: MagazineSRifleBase
+  components:
+  - type: RangedMagazine
+    fillPrototype: CartridgeSRifleHV
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_hv.rsi
+  - type: Sprite
+    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_hv.rsi
+
+- type: entity
+  id: MagazineSRiflePractice
+  name: "Magazine (.20 rifle practice)"
+  parent: MagazineSRifleBase
+  components:
+  - type: RangedMagazine
+    fillPrototype: CartridgeSRiflePractice
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_practice.rsi
+  - type: Sprite
+    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_practice.rsi
+
+- type: entity
+  id: MagazineSRifleRubber
+  name: "Magazine (.20 rifle rubber)"
+  parent: MagazineSRifleBase
+  components:
+  - type: RangedMagazine
+    fillPrototype: CartridgeSRifleRubber
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_rubber.rsi
+  - type: Sprite
+    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_rubber.rsi

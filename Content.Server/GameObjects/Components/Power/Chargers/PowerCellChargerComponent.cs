@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            RemoveItemToHand(eventArgs.User);
+            RemoveItem(eventArgs.User);
         }
 
         [Verb]
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
             protected override void Activate(IEntity user, PowerCellChargerComponent component)
             {
-                component.RemoveItem();
+                component.RemoveItem(user);
             }
         }
 

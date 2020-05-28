@@ -58,37 +58,22 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         }
 
         /// <summary>
-        /// This will remove the item directly into the user's hand rather than the floor
+        /// This will remove the item directly into the user's hand / floor
         /// </summary>
         /// <param name="user"></param>
-        public void RemoveItemToHand(IEntity user)
+        public void RemoveItem(IEntity user)
         {
             var heldItem = _container.ContainedEntity;
             if (heldItem == null)
             {
                 return;
             }
-            RemoveItem();
 
-            if (user.TryGetComponent(out HandsComponent handsComponent) &&
-                heldItem.TryGetComponent(out ItemComponent itemComponent))
+            _container.Remove(heldItem);
+            if (user.TryGetComponent(out HandsComponent handsComponent))
             {
-                handsComponent.PutInHand(itemComponent);
+                handsComponent.PutInHandOrDrop(heldItem.GetComponent<ItemComponent>());
             }
-        }
-
-        /// <summary>
-        ///  Will put the charger's item on the floor if available
-        /// </summary>
-        public void RemoveItem()
-        {
-            if (_container.ContainedEntity == null)
-            {
-                return;
-            }
-
-            _container.Remove(_heldItem);
-            UpdateStatus();
         }
 
         protected void PowerUpdate(object sender, PowerStateEventArgs eventArgs)
