@@ -1,0 +1,29 @@
+
+- type: uplinkListing
+  id: UplinkPen
+  category: Utility
+  itemId: Pen
+  price: 2
+  displayColor: Blue
+
+- type: uplinkListing
+  id: UplinkPistolClarissa
+  category: Weapon
+  itemId: PistolClarissa
+  price: 15
+  displayColor: Yellow
+
+# - type: uplinkListing
+#   id:  UplinkPistolDeagle
+#   category: Weapon
+#   itemId: PistolDeagle
+#   price: 30
+#   displayColor: Red
+
+# - type: uplinkListing
+#   id:  UplinkMagazineFedShotgun
+#   category: Weapon
+#   itemId: MagazineFedShotgun
+#   price: 50
+#   description: For when you want ZERO evidence left behind.
+#   displayColor: Red
