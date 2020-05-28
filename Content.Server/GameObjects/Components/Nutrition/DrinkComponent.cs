@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             base.Initialize();
             Owner.TryGetComponent(out _appearanceComponent);
-            Owner.TryGetComponent<SolutionComponent>(out _contents);
+            _contents = Owner.GetComponent<SolutionComponent>();
             _contents.Capabilities = SolutionCaps.PourIn
                                      | SolutionCaps.PourOut
                                      | SolutionCaps.Injectable;
@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             var color = Opened ? "yellow" : "white";
             var openedText = Opened ? Loc.GetString("opened") : Loc.GetString("closed");
-            message.AddMarkup(Loc.GetString($"It is [color={color}]{openedText}[/color].") );
+            message.AddMarkup(Loc.GetString("It is [color={0}]{1}[/color].", color, openedText));
         }
 
         private bool TryUseDrink(IEntity target)
@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             //Stomach was full or can't handle whatever solution we have.
             _contents.TryAddSolution(split);
-            target.PopupMessage(target, Loc.GetString($"You've had enough {Owner.Name}!"));
+            target.PopupMessage(target, Loc.GetString("You've had enough {0}!", Owner.Name));
             return false;
         }
     }
