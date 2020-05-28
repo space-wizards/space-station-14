@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             switch (message.Message)
             {
                 case MicrowaveStartCookMessage msg :
-                    HandleCooking();
+                    wzhzhzh();
                     break;
                 case MicrowaveEjectMessage msg :
                     if (_hasContents)
@@ -248,8 +248,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
             return true;
         }
 
-        //The fabled wzhwzhwzh function.
-        private void HandleCooking()
+        // ReSharper disable once InconsistentNaming
+        // ReSharper disable once IdentifierTypo
+        private void wzhzhzh()
         {
             if (!_hasContents)
             {
@@ -430,7 +431,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             chat.EntityMe(victim, Loc.GetPluralString("is trying to cook {0:their} head!", "is trying to cook {0:their} heads!", headCount, victim));
             _currentCookTimerTime = 10;
             ClickSound();
-            UpdateUserInterface();
+            _uiDirty = true;
             wzhzhzh();
             return SuicideKind.Heat;
         }
