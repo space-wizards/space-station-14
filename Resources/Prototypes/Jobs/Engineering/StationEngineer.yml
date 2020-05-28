@@ -6,12 +6,11 @@
   startingGear: StationEngineerGear
   department:
   - Engineering
-
   icon: "StationEngineer"
-
   access:
-  - maintenance
-  - engineering
+  - Maintenance
+  - Engineering
+  - External
 
 - type: startingGear
   id: StationEngineerGear

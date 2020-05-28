@@ -44,6 +44,8 @@
   - type: PowerDevice
     priority: Low
   - type: Wires
+    BoardName: "Vending Machine"
+    LayoutId: Vending
   - type: Anchorable
 
 - type: entity

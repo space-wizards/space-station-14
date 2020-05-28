@@ -5,8 +5,10 @@
   startingGear: ClownGear
   department:
   - Civilian
-
   icon: "Clown"
+  access:
+  - Service
+  - Maintenance
 
 - type: startingGear
   id: ClownGear

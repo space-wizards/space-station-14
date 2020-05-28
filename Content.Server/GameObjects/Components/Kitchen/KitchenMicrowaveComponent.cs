@@ -23,12 +23,16 @@ using Robust.Shared.Localization;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Robust.Shared.Audio;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.Chat;
+using Content.Server.BodySystem;
+using Content.Shared.BodySystem;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class KitchenMicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange
+    public class KitchenMicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange, ISuicideAct
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -403,5 +407,25 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         }
 
+        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        {
+            int headCount = 0;
+            if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
+            {
+                var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
+                foreach (var head in heads)
+                {
+                    var droppedHead = bodyManagerComponent.DisconnectBodyPart(head, true);
+                    _storage.Insert(droppedHead);
+                    headCount++;
+                }
+            }
+            chat.EntityMe(victim, Loc.GetPluralString("is trying to cook {0:their} head!", "is trying to cook {0:their} heads!", headCount, victim));
+            _currentCookTimerTime = 10;
+            ClickSound();
+            UpdateUserInterface();
+            wzhzhzh();
+            return SuicideKind.Heat;
+        }
     }
 }

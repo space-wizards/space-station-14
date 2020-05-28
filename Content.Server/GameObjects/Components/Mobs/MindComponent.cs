@@ -7,6 +7,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
@@ -124,13 +125,12 @@ namespace Content.Server.GameObjects.Components.Mobs
                 if (species.CurrentDamageState is DeadState)
                     dead = true;
 
-            // TODO: Use gendered pronouns depending on the entity
             if(!HasMind)
                 message.AddMarkup(!dead
-                    ? $"[color=red]They are totally catatonic. The stresses of life in deep-space must have been too much for them. Any recovery is unlikely.[/color]"
-                    : $"[color=purple]Their soul has departed.[/color]");
-            else if(Mind.Session == null)
-                message.AddMarkup("[color=yellow]They have a blank, absent-minded stare and appears completely unresponsive to anything. They may snap out of it soon.[/color]");
+                    ? $"[color=red]" + Loc.GetString("{0:They} are totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.", Owner) + "[/color]"
+                    : $"[color=purple]" + Loc.GetString("{0:Their} soul has departed.", Owner) + "[/color]");
+            else if (Mind.Session == null)
+                message.AddMarkup("[color=yellow]" + Loc.GetString("{0:They} have a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner) + "[/color]");
         }
     }
 }

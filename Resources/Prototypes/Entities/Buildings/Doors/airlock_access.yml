@@ -1,0 +1,82 @@
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalLocked
+  suffix: External, Locked
+  components:
+  - type: AccessReader
+    necessary: ["External"]
+
+- type: entity
+  parent: AirlockEngineering
+  id: AirlockEngineeringLocked
+  suffix: Engineering, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Engineering"]
+- type: entity
+  parent: AirlockEngineeringGlass
+  id: AirlockEngineeringGlassLocked
+  suffix: Glass, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Engineering"]
+
+- type: entity
+  parent: AirlockMedical
+  id: AirlockMedicalLocked
+  suffix: Medical, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Medical"]
+- type: entity
+  parent: AirlockMedicalGlass
+  id: AirlockMedicalGlassLocked
+  suffix: Medical, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Medical"]
+
+- type: entity
+  parent: AirlockScience
+  id: AirlockScienceLocked
+  suffix: Science, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Science"]
+- type: entity
+  parent: AirlockScienceGlass
+  id: AirlockScienceGlassLocked
+  suffix: Science, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Science"]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockCommandLocked
+  suffix: Command, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Command"]
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockCommandGlassLocked
+  suffix: Command, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Command"]
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockSecurityLocked
+  suffix: Security, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Security"]
+- type: entity
+  parent: AirlockSecurityGlass
+  id: AirlockSecurityGlassLocked
+  suffix: Security, Locked
+  components:
+  - type: AccessReader
+    necessary: ["Security"]

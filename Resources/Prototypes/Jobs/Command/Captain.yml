@@ -6,22 +6,21 @@
   startingGear: CaptainGear
   department:
   - Command
-
   icon: "Captain"
-
   access:
   # All of em.
   # Could probably do with some kind of wildcard or whatever to automate this.
-  - captain
-  - idCard
-  - command
-  - security
-  - engineering
-  - medical
-  - cargo
-  - research
-  - service
-  - maintenance
+  - Captain
+  - IdCard
+  - Command
+  - Security
+  - Engineering
+  - Medical
+  - Cargo
+  - Research
+  - Service
+  - Maintenance
+  - External
 
 - type: startingGear
   id: CaptainGear

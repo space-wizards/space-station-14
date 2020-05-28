@@ -6,8 +6,10 @@
   startingGear: CargoTechGear
   department:
   - Cargo
-
   icon: "CargoTechnician"
+  access:
+  - Cargo
+  - Maintenance
 
 - type: startingGear
   id: CargoTechGear

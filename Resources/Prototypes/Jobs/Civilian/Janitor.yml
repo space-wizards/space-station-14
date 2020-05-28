@@ -5,12 +5,10 @@
   startingGear: JanitorGear
   department:
   - Civilian
-
   icon: "Janitor"
-
   access:
-  - service
-  - maintenance
+  - Service
+  - Maintenance
 
 - type: startingGear
   id: JanitorGear
