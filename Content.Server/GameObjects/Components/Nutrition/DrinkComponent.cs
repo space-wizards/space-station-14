@@ -52,7 +52,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private AppearanceComponent _appearanceComponent;
         private bool _opened = false;
         private string _soundCollection;
-        private string _originalName;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -71,10 +70,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
                                      | SolutionCaps.PourOut
                                      | SolutionCaps.Injectable;
             _opened = _defaultToOpened;
-            _originalName = Owner.Name;
             if (_opened)
             {
-                UpdateName();
             }
 
             UpdateAppearance();
@@ -82,25 +79,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
-            UpdateName();
             UpdateAppearance();
         }
 
-        private void UpdateName()
-        {
-            if (Opened)
-            {
-                if (Empty)
-                {
-                    Owner.Name = $"{_originalName} {Loc.GetString("(empty)")}";
-                }
-                else
-                {
-                    Owner.Name = $"{_originalName} {Loc.GetString("(opened)")}";
-                }
-            }
-
-        }
 
         private void UpdateAppearance()
         {
@@ -116,7 +97,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 _audioSystem = _entitySystem.GetEntitySystem<AudioSystem>();
                 _audioSystem.Play(file, Owner, AudioParams.Default);
                 _opened = true;
-                UpdateName();
                 return false;
             }
             return TryUseDrink(args.User);
@@ -130,9 +110,14 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public void Examine(FormattedMessage message)
         {
-            var color = Opened ? "yellow" : "white";
-            var openedText = Opened ? Loc.GetString("opened") : Loc.GetString("closed");
-            message.AddMarkup(Loc.GetString("It is [color={0}]{1}[/color].", color, openedText));
+            if (!Opened)
+            {
+                return;
+            }
+            var color = Empty ? "gray" : "yellow";
+            var openedText = Loc.GetString(Empty ? "Empty" : "Opened");
+            message.AddMarkup(Loc.GetString("[color={0}]{1}[/color]", color, openedText));
+
         }
 
         private bool TryUseDrink(IEntity target)
@@ -165,7 +150,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 if (_useSound == null) return false;
                 _audioSystem.Play(_useSound, Owner, AudioParams.Default.WithVolume(-2f));
                 target.PopupMessage(target, Loc.GetString("Slurp"));
-                UpdateName();
                 UpdateAppearance();
                 return true;
             }
