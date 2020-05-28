@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects.Components.Research
                     break;
             }
 
-            Timer.Spawn(InsertionTime, async () =>
+            Timer.Spawn(InsertionTime, () =>
             {
                 State = LatheState.Base;
                 SetAppearance(LatheVisualState.Idle);

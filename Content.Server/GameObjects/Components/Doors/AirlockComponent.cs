@@ -26,10 +26,6 @@ namespace Content.Server.GameObjects.Components.Doors
     {
         public override string Name => "Airlock";
 
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationMgr;
-#pragma warning restore 649
-
         /// <summary>
         /// Duration for which power will be disabled after pulsing either power wire.
         /// </summary>

@@ -32,7 +32,6 @@ namespace Content.Client.GameObjects.Components.Instruments
 
 #pragma warning disable 649
         [Dependency] private IMidiManager _midiManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 649
 
         [CanBeNull]
