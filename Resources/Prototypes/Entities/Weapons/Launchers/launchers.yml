@@ -57,7 +57,7 @@
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-1
+      - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
     sprite: Objects/Guns/Launchers/rocket.rsi
@@ -76,6 +76,6 @@
     soundInsert: /Audio/Guns/MagIn/batrifle_magin.ogg
   - type: Appearance
     visuals:
-    - type: MagazineBarrelMagVisualizer2D
+    - type: BarrelMagVisualizer2D
       magState: mag
       steps: 1

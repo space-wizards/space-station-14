@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -65,7 +66,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         private void UpdateAppearance()
         {
-            // Currently none but they should probably exist...
+            // Placeholder, at this stage it's just here for the RPG
+            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, ShotsLeft > 0);
+            _appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
+            _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
         public bool TryInsertBullet(IEntity user, IEntity entity)
@@ -142,9 +146,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             IEntity bullet = null;
             if (ammo != null)
             {
-                bullet = ammo.GetComponent<AmmoComponent>().TakeBullet();
+                var ammoComponent = ammo.GetComponent<AmmoComponent>();
+                bullet = ammoComponent.TakeBullet();
+                if (ammoComponent.Caseless)
+                {
+                    _ammoSlots[_currentSlot] = null;
+                    _ammoContainer.Remove(ammo);
+                }
             }
             Cycle();
+            UpdateAppearance();
             return bullet;
         }
 
@@ -190,27 +201,24 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return true;
         }
 
-        public override bool AttackBy(AttackByEventArgs eventArgs)
+        public override bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            return TryInsertBullet(eventArgs.User, eventArgs.AttackWith);
+            return TryInsertBullet(eventArgs.User, eventArgs.Using);
         }
         
         [Verb]
         private sealed class SpinRevolverVerb : Verb<RevolverBarrelComponent>
         {
-            protected override string GetText(IEntity user, RevolverBarrelComponent component)
+            protected override void GetData(IEntity user, RevolverBarrelComponent component, VerbData data)
             {
-                return Loc.GetString("Spin");
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, RevolverBarrelComponent component)
-            {
+                data.Text = Loc.GetString("Spin");
                 if (component.Capacity <= 1)
                 {
-                    return VerbVisibility.Invisible;
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
-                
-                return component.ShotsLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
+
+                data.Visibility = component.ShotsLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
             }
 
             protected override void Activate(IEntity user, RevolverBarrelComponent component)

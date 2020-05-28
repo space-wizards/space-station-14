@@ -167,9 +167,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             UpdateAppearance();
         }
 
-        public bool TryInsertBullet(AttackByEventArgs eventArgs)
+        public bool TryInsertBullet(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent(out AmmoComponent ammoComponent))
+            if (!eventArgs.Using.TryGetComponent(out AmmoComponent ammoComponent))
             {
                 return false;
             }
@@ -182,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (_chamberContainer.ContainedEntity == null)
             {
-                _chamberContainer.Insert(eventArgs.AttackWith);
+                _chamberContainer.Insert(eventArgs.Using);
                 // Dirty();
                 UpdateAppearance();
                 if (_soundInsert != null)
@@ -194,8 +194,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (_ammoContainer.ContainedEntities.Count < Capacity - 1)
             {
-                _ammoContainer.Insert(eventArgs.AttackWith);
-                _spawnedAmmo.Push(eventArgs.AttackWith);
+                _ammoContainer.Insert(eventArgs.Using);
+                _spawnedAmmo.Push(eventArgs.Using);
                 // Dirty();
                 UpdateAppearance();
                 if (_soundInsert != null)
@@ -216,7 +216,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return true;
         }
 
-        public override bool AttackBy(AttackByEventArgs eventArgs)
+        public override bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs);
         }

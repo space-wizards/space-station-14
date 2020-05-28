@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using Content.Server.GameObjects.Components.StatusEffects;
+using Content.Server.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -35,20 +34,14 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
         }
 
-        public void CollideWith(List<IEntity> collidedwith)
+        void ICollideBehavior.CollideWith(IEntity entity)
         {
-            if (collidedwith.Count == 0)
+            if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
             {
-                return;
-            }
-
-            foreach (var entity in collidedwith)
-            {
-                if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
-                {
-                    stunnableComponent.AddStun(_stunAmount);
-                }
+                stunnableComponent.Paralyze(_stunAmount);
             }
         }
+
+        void ICollideBehavior.PostCollide(int collidedCount) {}
     }
 }

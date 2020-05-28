@@ -7,12 +7,14 @@
   - type: Ammo
     caliber: Rocket
     projectile: BulletRocket
+    caseless: true
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Rockets/rpg.rsi
+    netsync: false
+    sprite: Objects/Guns/Ammunition/Explosives/rpg.rsi
     state: frag
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Rockets/rpg.rsi
+    sprite: Objects/Guns/Ammunition/Explosives/rpg.rsi
     state: frag
 
 - type: entity
@@ -25,11 +27,13 @@
     projectile: BulletGrenadeBlast
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Ammunition/Grenades/blast.rsi
-    state: base
+    sprite: Objects/Guns/Ammunition/Explosives/grenade_blast.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Grenades/blast.rsi
+    sprite: Objects/Guns/Ammunition/Explosives/grenade_blast.rsi
     state: base
   - type: Appearance
     visuals:
@@ -45,11 +49,13 @@
     projectile: BulletGrenadeFlash
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Ammunition/Grenades/flash.rsi
-    state: base
+    sprite: Objects/Guns/Ammunition/Explosives/grenade_flash.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Grenades/flash.rsi
+    sprite: Objects/Guns/Ammunition/Explosives/grenade_flash.rsi
     state: base
   - type: Appearance
     visuals:
@@ -65,11 +71,13 @@
     projectile: BulletGrenadeFrag
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Ammunition/Grenades/frag.rsi
-    state: base
+    sprite: Objects/Guns/Ammunition/Explosives/grenade_frag.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Grenades/frag.rsi
+    sprite: Objects/Guns/Ammunition/Explosives/grenade_frag.rsi
     state: base
   - type: Appearance
     visuals:

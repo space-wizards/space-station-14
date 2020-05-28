@@ -273,14 +273,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return true;
         }
 
-        public override bool AttackBy(AttackByEventArgs eventArgs)
+        public override bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<PowerStorageComponent>())
+            if (!eventArgs.Using.HasComponent<PowerStorageComponent>())
             {
                 return false;
             }
 
-            return TryInsertPowerCell(eventArgs.AttackWith);
+            return TryInsertPowerCell(eventArgs.Using);
         }
     }
 }

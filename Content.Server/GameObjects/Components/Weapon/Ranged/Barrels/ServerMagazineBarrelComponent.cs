@@ -313,10 +313,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             UpdateAppearance();
         }
 
-        public override bool AttackBy(AttackByEventArgs eventArgs)
+        public override bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // Insert magazine
-            if (eventArgs.AttackWith.TryGetComponent(out RangedMagazineComponent magazineComponent))
+            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent magazineComponent))
             {
                 if ((_magazineTypes & magazineComponent.MagazineType) == 0)
                 {
@@ -343,7 +343,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                         _soundComponent?.Play(_soundMagInsert);
                     }
                     Owner.PopupMessage(eventArgs.User, Loc.GetString("Magazine inserted"));
-                    _magazineContainer.Insert(eventArgs.AttackWith);
+                    _magazineContainer.Insert(eventArgs.Using);
                     Dirty();
                     UpdateAppearance();
                     return true;
@@ -354,7 +354,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             // Insert 1 ammo
-            if (eventArgs.AttackWith.TryGetComponent(out AmmoComponent ammoComponent))
+            if (eventArgs.Using.TryGetComponent(out AmmoComponent ammoComponent))
             {
                 if (!BoltOpen)
                 {
@@ -371,7 +371,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 if (_chamberContainer.ContainedEntity == null)
                 {
                     Owner.PopupMessage(eventArgs.User, Loc.GetString("Ammo inserted"));
-                    _chamberContainer.Insert(eventArgs.AttackWith);
+                    _chamberContainer.Insert(eventArgs.Using);
                     Dirty();
                     UpdateAppearance();
                     return true;
@@ -387,21 +387,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [Verb]
         private sealed class EjectMagazineVerb : Verb<ServerMagazineBarrelComponent>
         {
-            protected override string GetText(IEntity user, ServerMagazineBarrelComponent component)
+            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, VerbData data)
             {
-                return Loc.GetString("Eject magazine");
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, ServerMagazineBarrelComponent component)
-            {
+                data.Text = Loc.GetString("Eject magazine");
                 if (component.MagNeedsOpenBolt)
                 {
-                    return component.HasMagazine && component.BoltOpen
+                    data.Visibility = component.HasMagazine && component.BoltOpen
                         ? VerbVisibility.Visible
                         : VerbVisibility.Disabled;
+                    return;
                 }
-                
-                return component.HasMagazine ? VerbVisibility.Visible : VerbVisibility.Disabled;
+
+                data.Visibility = component.HasMagazine ? VerbVisibility.Visible : VerbVisibility.Disabled;
             }
 
             protected override void Activate(IEntity user, ServerMagazineBarrelComponent component)
@@ -413,14 +410,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [Verb]
         private sealed class OpenBoltVerb : Verb<ServerMagazineBarrelComponent>
         {
-            protected override string GetText(IEntity user, ServerMagazineBarrelComponent component)
+            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, VerbData data)
             {
-                return Loc.GetString("Open bolt");
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, ServerMagazineBarrelComponent component)
-            {
-                return component.BoltOpen ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                data.Text = Loc.GetString("Open bolt");
+                data.Visibility = component.BoltOpen ? VerbVisibility.Disabled : VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, ServerMagazineBarrelComponent component)
@@ -432,14 +425,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [Verb]
         private sealed class CloseBoltVerb : Verb<ServerMagazineBarrelComponent>
         {
-            protected override string GetText(IEntity user, ServerMagazineBarrelComponent component)
+            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, VerbData data)
             {
-                return Loc.GetString("Close bolt");
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, ServerMagazineBarrelComponent component)
-            {
-                return component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                data.Text = Loc.GetString("Close bolt");
+                data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Disabled;
             }
 
             protected override void Activate(IEntity user, ServerMagazineBarrelComponent component)

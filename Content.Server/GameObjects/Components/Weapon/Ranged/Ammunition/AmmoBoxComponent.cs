@@ -24,7 +24,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 {
     [RegisterComponent]
-    public sealed class AmmoBoxComponent : Component, IAttackBy, IUse, IAttackHand, IMapInit
+    public sealed class AmmoBoxComponent : Component, IInteractUsing, IUse, IInteractHand, IMapInit
     {
         public override string Name => "AmmoBox";
 
@@ -122,14 +122,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return true;
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.HasComponent<AmmoComponent>())
+            if (eventArgs.Using.HasComponent<AmmoComponent>())
             {
-                return TryInsertAmmo(eventArgs.User, eventArgs.AttackWith);
+                return TryInsertAmmo(eventArgs.User, eventArgs.Using);
             }
 
-            if (eventArgs.AttackWith.TryGetComponent(out RangedMagazineComponent rangedMagazine))
+            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent rangedMagazine))
             {
                 for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
                 {
@@ -217,7 +217,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return TryUse(eventArgs.User);
         }
 
-        bool IAttackHand.AttackHand(AttackHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryUse(eventArgs.User);
         }
@@ -226,14 +226,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         [Verb]
         private sealed class DumpVerb : Verb<AmmoBoxComponent>
         {
-            protected override string GetText(IEntity user, AmmoBoxComponent component)
+            protected override void GetData(IEntity user, AmmoBoxComponent component, VerbData data)
             {
-                return Loc.GetString("Dump 10");
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, AmmoBoxComponent component)
-            {
-                return component.AmmoLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                data.Text = Loc.GetString("Dump 10");
+                data.Visibility = component.AmmoLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
             }
 
             protected override void Activate(IEntity user, AmmoBoxComponent component)

@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             var effectSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EffectSystem>();
             _startTime = IoCManager.Resolve<IGameTiming>().CurTime;
             _deathTime = _startTime + TimeSpan.FromSeconds(1);
-            var distance = ray.DidHitObject ? ray.Distance : MaxLength;
+            var distance = ray.HitEntity != null ? ray.Distance : MaxLength;
             
             var afterEffect = AfterEffects(user.Transform.GridPosition, ray, angle,  distance, 1.0f);
             if (afterEffect != null)
@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 }
             }
 
-            if (ray.DidHitObject && _soundHitWall != null)
+            if (ray.HitEntity != null && _soundHitWall != null)
             {
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
                 // TODO: No wall component so ?
@@ -151,12 +151,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         private EffectSystemMessage ImpactFlash(RayCastResults ray, Angle angle)
         {
-            if (_impactFlash == null || !ray.DidHitObject)
+            if (_impactFlash == null || ray.HitEntity != null)
             {
                 return null;
             }
             
-            var dist = (ray.DidHitObject ? ray.Distance : MaxLength);
+            var dist = (ray.HitEntity != null ? ray.Distance : MaxLength);
             
             var message = new EffectSystemMessage
             {

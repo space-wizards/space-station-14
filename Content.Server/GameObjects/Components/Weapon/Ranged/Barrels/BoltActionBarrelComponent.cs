@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private int _capacity;
 
         private ContainerSlot _chamberContainer;
-        private Stack<IEntity> _spawnedAmmo = null;
+        private Stack<IEntity> _spawnedAmmo;
         private Container _ammoContainer;
 
         private BallisticCaliber _caliber;
@@ -283,22 +283,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return true;
         }
 
-        public override bool AttackBy(AttackByEventArgs eventArgs)
+        public override bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            return TryInsertBullet(eventArgs.User, eventArgs.AttackWith);
+            return TryInsertBullet(eventArgs.User, eventArgs.Using);
         }
         
         [Verb]
         private sealed class OpenBoltVerb : Verb<BoltActionBarrelComponent>
         {
-            protected override string GetText(IEntity user, BoltActionBarrelComponent component)
+            protected override void GetData(IEntity user, BoltActionBarrelComponent component, VerbData data)
             {
-                return Loc.GetString("Open bolt");
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, BoltActionBarrelComponent component)
-            {
-                return component.BoltOpen ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                data.Text = Loc.GetString("Open bolt");
+                data.Visibility = component.BoltOpen ? VerbVisibility.Disabled : VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, BoltActionBarrelComponent component)
@@ -310,14 +306,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [Verb]
         private sealed class CloseBoltVerb : Verb<BoltActionBarrelComponent>
         {
-            protected override string GetText(IEntity user, BoltActionBarrelComponent component)
+            protected override void GetData(IEntity user, BoltActionBarrelComponent component, VerbData data)
             {
-                return Loc.GetString("Close bolt");
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, BoltActionBarrelComponent component)
-            {
-                return component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                data.Text = Loc.GetString("Close bolt");
+                data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Disabled;
             }
 
             protected override void Activate(IEntity user, BoltActionBarrelComponent component)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
@@ -21,6 +22,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -32,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// All of the ranged weapon components inherit from this to share mechanics like shooting etc.
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
-    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IAttackBy
+    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing
     {
         public override FireRateSelector FireRateSelector => _fireRateSelector;
         private FireRateSelector _fireRateSelector;
@@ -170,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
 
         public abstract bool UseEntity(UseEntityEventArgs eventArgs);
-        public abstract bool AttackBy(AttackByEventArgs eventArgs);
+        public abstract bool InteractUsing(InteractUsingEventArgs eventArgs);
 
         public void ChangeFireSelector(FireRateSelector rateSelector)
         {
@@ -305,7 +307,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 var physicsComponent = projectile.GetComponent<PhysicsComponent>();
-                // TODO: InAir
+                physicsComponent.Status = BodyStatus.InAir;
                 projectile.Transform.GridPosition = Owner.Transform.GridPosition;
                 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
@@ -337,9 +339,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
             var ray = new CollisionRay(Owner.Transform.GridPosition.Position, angle.ToVec(), (int) hitscan.CollisionMask);
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, true);
+            var physicsManager = IoCManager.Resolve<IPhysicsManager>();
+            var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter);
+            var firstResult = rayCastResults.ToArray()[0];
 
-            if (rayCastResults.HitEntity != null && rayCastResults.HitEntity.TryGetComponent(out DamageableComponent damageableComponent))
+            if (firstResult.HitEntity != null &&
+                firstResult.HitEntity.TryGetComponent(out DamageableComponent damageableComponent))
             {
                 damageableComponent.TakeDamage(
                     hitscan.DamageType, 
@@ -350,7 +355,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 //even numbers if halfway between two numbers, rather than rounding to nearest
             }
             
-            hitscan.FireEffects(shooter, rayCastResults, angle);
+            hitscan.FireEffects(shooter, firstResult, angle);
         }
         #endregion
     }

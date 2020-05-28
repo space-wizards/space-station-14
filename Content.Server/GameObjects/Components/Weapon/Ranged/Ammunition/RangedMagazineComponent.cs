@@ -15,7 +15,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 {
     [RegisterComponent]
-    public class RangedMagazineComponent : Component, IMapInit, IAttackBy, IUse
+    public class RangedMagazineComponent : Component, IMapInit, IInteractUsing, IUse
     {
         public override string Name => "RangedMagazine";
 
@@ -132,9 +132,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return ammo;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            return TryInsertAmmo(eventArgs.User, eventArgs.AttackWith);
+            return TryInsertAmmo(eventArgs.User, eventArgs.Using);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

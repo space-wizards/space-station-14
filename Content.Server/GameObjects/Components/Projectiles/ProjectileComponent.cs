@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <returns></returns>
         bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
         {
-            if (IgnoreShooter && collidedwith.Owner.Uid == Shooter)
+            if (IgnoreShooter && collidedwith.Owner.Uid == _shooter)
                 return true;
             return false;
         }
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         {
             if (entity.TryGetComponent(out DamageableComponent damage))
             {
-                Owner.EntityManager.TryGetEntity(Shooter, out var shooter);
+                Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
 
                 foreach (var (damageType, amount) in _damages)
                 {
@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         void ICollideBehavior.PostCollide(int collideCount)
         {
-            if (collideCount > 0) Owner.Delete();
+            if (collideCount > 0 && DeleteOnCollide) Owner.Delete();
         }
     }
 }

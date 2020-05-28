@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     /// Used to load certain ranged weapons quickly
     /// </summary>
     [RegisterComponent]
-    public class SpeedLoaderComponent : Component, IAfterAttack, IAttackBy, IMapInit
+    public class SpeedLoaderComponent : Component, IAfterInteract, IInteractUsing, IMapInit
     {
         public override string Name => "SpeedLoader";
 
@@ -115,9 +115,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return entity;
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.Attacked == null)
+            if (eventArgs.Target == null)
             {
                 return;
             }
@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             // This area is dirty but not sure of an easier way to do it besides add an interface or somethin
             bool changed = false;
             
-            if (eventArgs.Attacked.TryGetComponent(out RevolverBarrelComponent revolverBarrel))
+            if (eventArgs.Target.TryGetComponent(out RevolverBarrelComponent revolverBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {
@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                     TryInsertAmmo(eventArgs.User, ammo);
                     break;
                 }
-            } else if (eventArgs.Attacked.TryGetComponent(out BoltActionBarrelComponent boltActionBarrel))
+            } else if (eventArgs.Target.TryGetComponent(out BoltActionBarrelComponent boltActionBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
                 {
@@ -174,9 +174,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            return TryInsertAmmo(eventArgs.User, eventArgs.AttackWith);
+            return TryInsertAmmo(eventArgs.User, eventArgs.Using);
         }
     }
 }
