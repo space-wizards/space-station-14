@@ -11,6 +11,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using System;
+using System.Linq;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -143,7 +144,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 // FIXME: The "Opaque" collision group doesn't seem to work right now.
                 var ray = new CollisionRay(entity.Transform.WorldPosition, TowardsSun.ToVec(), (int) CollisionGroup.Opaque);
                 var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(entity.Transform.MapID, ray, SunOcclusionCheckDistance, entity);
-                if (rayCastResults.GetEnumerator().MoveNext())
+                if (rayCastResults.Any())
                     coverage = 0;
             }
 
