@@ -6,8 +6,10 @@
   startingGear: CargoTechGear
   department:
   - Cargo
-
   icon: "CargoTechnician"
+  access:
+  - Cargo
+  - Maintenance
 
 - type: startingGear
   id: CargoTechGear
@@ -15,4 +17,4 @@
     innerclothing: UniformCargoTech
     backpack: BackpackClothing
     shoes: ShoesBlack
-    idcard: CargoIDCard
+    idcard: CargoPDA

@@ -1,0 +1,321 @@
+- type: entity
+  parent: Clothing
+  id: IDCardStandard
+  name: identification card
+  description: A card necessary to access various areas aboard the station
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Clothing/id_cards.rsi
+  - type: Icon
+    sprite: Clothing/id_cards.rsi
+  - type: Clothing
+    Slots:
+    - idcard
+    sprite: Clothing/id_cards.rsi
+    HeldPrefix: default
+
+#IDs with layers
+
+- type: entity
+  parent: IDCardStandard
+  id: AssistantIDCard
+  name: assistant ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idassistant
+  - type: Icon
+    state: default
+  - type: IdCard
+    jobTitle: Assistant
+  - type: Access
+    tags: ["Maintenance", "Service"]
+
+- type: entity
+  parent: IDCardStandard
+  id: CaptainIDCard
+  name: captain ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: assigned
+    - state: idcaptain
+  - type: Icon
+    state: gold
+  - type: Clothing
+    HeldPrefix: gold
+  - type: IdCard
+    jobTitle: Captain
+  - type: Access
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", IdCard]
+
+- type: entity
+  parent: IDCardStandard
+  id: SecurityIDCard
+  name: security ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idsecurityofficer
+  - type: Icon
+    state: idsecurityofficer
+  - type: IdCard
+    jobTitle: Security Officer
+  - type: Access
+    tags: ["Security", "Maintenance", "Service"]
+
+- type: entity
+  parent: IDCardStandard
+  id: EngineeringIDCard
+  name: engineer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idstationengineer
+  - type: Icon
+    state: idstationengineer
+  - type: IdCard
+    jobTitle: Engineer
+  - type: Access
+    tags: ["Engineering", "Maintenance", "External"]
+
+- type: entity
+  parent: IDCardStandard
+  id: MedicalIDCard
+  name: medical ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idmedicaldoctor
+  - type: Icon
+    state: idmedicaldoctor
+  - type: IdCard
+    jobTitle: Doctor
+  - type: Access
+    tags: ["Medical"]
+
+- type: entity
+  parent: IDCardStandard
+  id: CargoIDCard
+  name: cargo ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idcargotechnician
+  - type: Icon
+    state: idcargotechnician
+  - type: IdCard
+    jobTitle: Cargo Technician
+  - type: Access
+    tags: ["Cargo", "Maintenance"]
+
+- type: entity
+  parent: IDCardStandard
+  id: ResearchIDCard
+  name: research ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idscientist
+  - type: Icon
+    state: idscientist
+  - type: IdCard
+    jobTitle: Scientist
+  - type: Access
+    tags: ["Research"]
+
+- type: entity
+  parent: IDCardStandard
+  id: ClownIDCard
+  name: clown ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idclown
+  - type: Icon
+    state: idclown
+  - type: IdCard
+    jobTitle: Clown
+  - type: Access
+    tags: ["Maintenance", "Service"]
+
+- type: entity
+  parent: IDCardStandard
+  id: JanitorIDCard
+  name: janitor ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idjanitor
+  - type: Icon
+    state: idjanitor
+  - type: IdCard
+    jobTitle: Janitor
+  - type: Access
+    tags: ["Maintenance", "Service"]
+
+- type: entity
+  parent: IDCardStandard
+  id: BartenderIDCard
+  name: bartender ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idbartender
+  - type: Icon
+    state: idbartender
+  - type: IdCard
+    jobTitle: Bartender
+  - type: Access
+    tags: ["Service"]
+
+- type: entity
+  parent: IDCardStandard
+  id: ChefIDCard
+  name: chef ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idcook
+  - type: Icon
+    state: idcook
+  - type: IdCard
+    jobTitle: Chef
+  - type: Access
+    tags: ["Maintenance", "Service"]
+
+- type: entity
+  parent: IDCardStandard
+  id: HoPIDCard
+  name: head of personnel ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: assigned
+    - state: idheadofpersonnel
+  - type: Icon
+    state: idheadofpersonnel
+  - type: Clothing
+    HeldPrefix: silver
+  - type: IdCard
+    jobTitle: Head of Personnel
+  - type: Access
+    tags: ["Maintenance", "Cargo", "Security", "Service","Command", IdCard]
+
+- type: entity
+  parent: IDCardStandard
+  id: CEIDCard
+  name: chief engineer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: assigned
+    - state: idchiefengineer
+  - type: Icon
+    state: idchiefengineer
+  - type: Clothing
+    HeldPrefix: silver
+  - type: IdCard
+    jobTitle: Chief Engineer
+  - type: Access
+    tags: ["Engineering", "Command", "Maintenance", "External"]
+
+- type: entity
+  parent: IDCardStandard
+  id: CMOIDCard
+  name: chief medical officer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: assigned
+    - state: idchiefmedicalofficer
+  - type: Icon
+    state: idchiefmedicalofficer
+  - type: Clothing
+    HeldPrefix: silver
+  - type: IdCard
+    jobTitle: Chief Medical Officer
+  - type: Access
+    tags: ["Medical", "Command", "Maintenance"]
+
+- type: entity
+  parent: IDCardStandard
+  id: RDIDCard
+  name: research director ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: assigned
+    - state: idresearchdirector
+  - type: Icon
+    state: idresearchdirector
+  - type: Clothing
+    HeldPrefix: silver
+  - type: IdCard
+    jobTitle: Research Director
+  - type: Access
+    tags: ["Research", "Command", "Maintenance"]
+
+- type: entity
+  parent: IDCardStandard
+  id: HoSIDCard
+  name: head of security ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: assigned
+    - state: idheadofsecurity
+  - type: Icon
+    state: idheadofsecurity
+  - type: Clothing
+    HeldPrefix: silver
+  - type: IdCard
+    jobTitle: Head of Security
+  - type: Access
+    tags: ["Security", "Maintenance", "Service", "Command"]
+
+- type: entity
+  parent: IDCardStandard
+  id: CentcomIDCard
+  name: command officer ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: assigned
+    - state: idcentcom
+  - type: Icon
+    state: idcentcom
+  - type: Clothing
+    HeldPrefix: gold
+  - type: IdCard
+    jobTitle: Central Commander
+  - type: Access
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", IdCard]

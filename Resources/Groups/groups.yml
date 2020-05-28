@@ -12,6 +12,7 @@
   - observe
   - toggleready
   - ghost
+  - suicide
 
 - Index: 50
   Name: Moderator
@@ -28,6 +29,7 @@
   - observe
   - toggleready
   - ghost
+  - suicide
   - kick
   - listplayers
   - loc
@@ -47,6 +49,7 @@
   - observe
   - toggleready
   - ghost
+  - suicide
   - spawn
   - delete
   - tp
@@ -89,6 +92,7 @@
   - observe
   - toggleready
   - ghost
+  - suicide
   - spawn
   - delete
   - tp
