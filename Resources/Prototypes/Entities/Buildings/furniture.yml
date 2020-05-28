@@ -69,7 +69,6 @@
     sprite: Buildings/furniture.rsi
     state: chair
 
-
 - type: entity
   name: Wooden Chair
   id: ChairWood
@@ -91,3 +90,5 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: bed
+  placement:
+    mode: SnapgridCenter
