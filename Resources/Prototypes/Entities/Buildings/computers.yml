@@ -131,7 +131,7 @@
 - type: entity
   id: ComputerResearchAndDevelopment
   parent: ComputerBase
-  name: r&d computer
+  name: R&D computer
   components:
   - type: Appearance
     visuals:
@@ -155,7 +155,7 @@
 - type: entity
   id: ComputerId
   parent: ComputerBase
-  name: id card computer
+  name: ID card computer
   components:
   - type: AccessReader
     necessary: ["IdCard"]

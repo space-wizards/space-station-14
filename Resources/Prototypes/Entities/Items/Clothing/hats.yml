@@ -300,7 +300,7 @@
 
 - type: entity
   id: HatBeretHoS
-  name: beret hos
+  name: beret HoS
   description: ''
   components:
   - sprite: Clothing/Head/beret_hos.rsi
@@ -315,7 +315,7 @@
 
 - type: entity
   id: HatBeretNavyHos
-  name: beret navy hos
+  name: beret navy HoS
   description: ''
   components:
   - sprite: Clothing/Head/beret_navy_hos.rsi
@@ -1069,7 +1069,7 @@
 
 - type: entity
   id: HatEvaRig
-  name: eva rig
+  name: EVA rig
   description: ''
   components:
   - sprite: Clothing/Head/eva_rig.rsi
@@ -1082,7 +1082,7 @@
 
 - type: entity
   id: HatEvaRigSealed
-  name: eva rig sealed
+  name: EVA rig sealed
   description: ''
   components:
   - sprite: Clothing/Head/eva_rig_sealed.rsi
@@ -1459,7 +1459,7 @@
 
 - type: entity
   id: HatHmHelmet
-  name: hm helmet
+  name: HM helmet
   description: ''
   components:
   - sprite: Clothing/Head/hm_helmet.rsi
@@ -1485,7 +1485,7 @@
 
 - type: entity
   id: HatHoshat
-  name: hos hat
+  name: HoS hat
   description: ''
   components:
   - sprite: Clothing/Head/hoshat.rsi
@@ -1498,7 +1498,7 @@
 
 - type: entity
   id: HatIhsvoidhelm
-  name: ihs voidhelm
+  name: IHS voidhelm
   description: ''
   components:
   - sprite: Clothing/Head/ihsvoidhelm.rsi
@@ -1511,7 +1511,7 @@
 
 - type: entity
   id: HatIhsvoidhelmOn
-  name: ihs voidhelm (on)
+  name: IHS voidhelm (on)
   description: ''
   components:
   - sprite: Clothing/Head/ihsvoidhelm_on.rsi
@@ -1524,7 +1524,7 @@
 
 - type: entity
   id: HatIhsRig
-  name: ihs rig
+  name: IHS rig
   description: ''
   components:
   - sprite: Clothing/Head/ihs_rig.rsi
@@ -1537,7 +1537,7 @@
 
 - type: entity
   id: HatIhsRigSealed
-  name: ihs rig (sealed)
+  name: IHS rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/ihs_rig_sealed.rsi

@@ -151,7 +151,7 @@
     sprite: Objects/Guns/Rifles/dallas.rsi
 
 - type: entity
-  name: ih heavy rifle
+  name: IH heavy rifle
   parent: RifleBase
   id: RifleIhHeavy
   description: A rooty tooty point and shooty.

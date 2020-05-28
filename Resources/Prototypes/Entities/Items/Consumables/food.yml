@@ -2476,7 +2476,7 @@
 - type: entity
   parent: FoodBase
   id: FoodSuperBiteBurger
-  name: super bite burger
+  name: Super Bite Burger
   description: This is a mountain of a burger. FOOD!
   components:
   - type: Food

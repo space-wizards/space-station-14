@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_10mml
-  name: 10mm bullet (l)
+  name: 10mm bullet (L)
   parent: BulletBase
   abstract: true
   components:

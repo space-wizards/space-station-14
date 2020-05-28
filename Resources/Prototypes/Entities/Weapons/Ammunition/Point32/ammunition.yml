@@ -78,7 +78,7 @@
 
 - type: entity
   id: magazine_32l
-  name: ".32 magazine (l)"
+  name: ".32 magazine (L)"
   parent: magazine_32_empty
   components:
   - type: BallisticMagazine
@@ -190,7 +190,7 @@
 
 - type: entity
   id: ammo_casing_32_l
-  name: ".32 casing (l)"
+  name: ".32 casing (L)"
   parent: BaseItem
   components:
   - type: BallisticBullet

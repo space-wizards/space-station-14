@@ -19,7 +19,7 @@
     sound_gunshot: /Audio/Guns/Gunshots/pistol.ogg
 
 - type: entity
-  name: clarissa
+  name: Clarissa
   parent: PistolBase
   id: PistolClarissa
   description: A rooty tooty point and shooty.
@@ -83,7 +83,7 @@
     sprite: Objects/Guns/Pistols/clarissa_s.rsi
 
 - type: entity
-  name: deagle
+  name: Deagle
   parent: PistolBase
   id: PistolDeagle
   description: A rooty tooty point and shooty.
@@ -119,7 +119,7 @@
     sprite: Objects/Guns/Pistols/deagle.rsi
 
 - type: entity
-  name: deckard
+  name: Deckard
   parent: PistolBase
   id: PistolDeckard
   description: A rooty tooty point and shooty.
@@ -255,7 +255,7 @@
     sprite: Objects/Guns/Pistols/gyropistol.rsi
 
 - type: entity
-  name: ih machine pistol
+  name: IH machine pistol
   parent: PistolBase
   id: PistolIhmp
   description: A rooty tooty point and shooty.
@@ -289,7 +289,7 @@
     sprite: Objects/Guns/Pistols/ih_mp.rsi
 
 - type: entity
-  name: ih machine pistol (silenced)
+  name: IH machine pistol (silenced)
   parent: PistolBase
   id: PistolIhmpS
   description: Pewsh pewsh
@@ -323,7 +323,7 @@
     sprite: Objects/Guns/Pistols/ih_mp_s.rsi
 
 - type: entity
-  name: ih sidearm
+  name: IH sidearm
   parent: PistolBase
   id: PistolIhSidearm
   description: A rooty tooty point and shooty.
@@ -356,7 +356,7 @@
     sprite: Objects/Guns/Pistols/ih_sidearm.rsi
 
 - type: entity
-  name: ih sidearm (silenced)
+  name: IH sidearm (silenced)
   parent: PistolBase
   id: PistolIhSidearmS
   description: A rooty tooty point and shooty.

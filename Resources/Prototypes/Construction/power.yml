@@ -36,7 +36,7 @@
     amount: 2
 
 - type: construction
-  name: apc
+  name: APC
   id: APC
   category: Machines/Power
   placementmode: SnapgridCenter

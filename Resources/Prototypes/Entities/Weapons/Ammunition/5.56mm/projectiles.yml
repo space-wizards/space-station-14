@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_556mml
-  name: 5.56mm bullet (l)
+  name: 5.56mm bullet (L)
   parent: BulletBaseL
   abstract: true
   components:

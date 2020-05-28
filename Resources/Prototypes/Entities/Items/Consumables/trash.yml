@@ -141,7 +141,7 @@
     sprite: Objects/Trash/snack_bowl.rsi
 
 - type: entity
-  name: sos jerky (trash)
+  name: SOS jerky (trash)
   parent: TrashBase
   id: TrashSOSJerky
   components:

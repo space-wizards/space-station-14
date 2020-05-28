@@ -300,7 +300,7 @@
 - type: entity
   parent: GlovesBase
   id: GlovesEvaRig
-  name: eva rig gloves
+  name: EVA rig gloves
   description: ''
   components:
   - type: Sprite
@@ -313,7 +313,7 @@
 - type: entity
   parent: GlovesBase
   id: GlovesEvaRigSealed
-  name: eva rig sealed gloves
+  name: EVA rig sealed gloves
   description: ''
   components:
   - type: Sprite
@@ -404,7 +404,7 @@
 - type: entity
   parent: GlovesBase
   id: GlovesIhscombat
-  name: ihs combat gloves
+  name: IHS combat gloves
   description: ''
   components:
   - type: Sprite
@@ -417,7 +417,7 @@
 - type: entity
   parent: GlovesBase
   id: GlovesIhsRig
-  name: ihs rig gloves
+  name: IHS rig gloves
   description: ''
   components:
   - type: Sprite
@@ -430,7 +430,7 @@
 - type: entity
   parent: GlovesBase
   id: GlovesIhsRigSealed
-  name: ihs rig sealed gloves
+  name: IHS rig sealed gloves
   description: ''
   components:
   - type: Sprite
@@ -730,7 +730,7 @@
 - type: entity
   parent: GlovesBase
   id: GlovesSNinja
-  name: s ninja gloves
+  name: S ninja gloves
   description: ''
   components:
   - type: Sprite
@@ -743,7 +743,7 @@
 - type: entity
   parent: GlovesBase
   id: GlovesSNinjak
-  name: s ninjak gloves
+  name: S ninjak gloves
   description: ''
   components:
   - type: Sprite
@@ -756,7 +756,7 @@
 - type: entity
   parent: GlovesBase
   id: GlovesSNinjan
-  name: s ninjan gloves
+  name: S ninjan gloves
   description: ''
   components:
   - type: Sprite

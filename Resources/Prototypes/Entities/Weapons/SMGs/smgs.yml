@@ -53,7 +53,7 @@
     sprite: Objects/Guns/SMGs/c20r.rsi
 
 - type: entity
-  name: ih smg
+  name: IH SMG
   parent: SmgBase
   id: SmgIhSmg
   description: Pla-ket-ket-ket-ket
@@ -85,7 +85,7 @@
     sprite: Objects/Guns/SMGs/ih_smg.rsi
 
 - type: entity
-  name: ih smg (silenced)
+  name: IH SMG (silenced)
   parent: SmgBase
   id: SmgIhSmgS
   description: Pewsh pewsh

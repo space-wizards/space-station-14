@@ -51,7 +51,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineAmmo
-  name: ammovend
+  name: AmmoVend
   components:
   - type: VendingMachine
     pack: AmmoVend
@@ -61,7 +61,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineBooze
-  name: booze-o-mat
+  name: Booze-O-Mat
   components:
   - type: VendingMachine
     pack: Booze-O-Mat
@@ -71,7 +71,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCart
-  name: ptech
+  name: PTech
   components:
   - type: VendingMachine
     pack: PTech
@@ -81,7 +81,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineChapel
-  name: pietyvend
+  name: PietyVend
   components:
   - type: VendingMachine
     pack: PietyVend
@@ -91,7 +91,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCigs
-  name: cigarette machine
+  name: Cigarette machine
   components:
   - type: VendingMachine
     pack: Cigarette machine
@@ -101,7 +101,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCoffee
-  name: hot drinks machine
+  name: Hot Drinks machine
   components:
   - type: VendingMachine
     pack: Hot Drinks machine
@@ -121,7 +121,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCola
-  name: robust softdrinks
+  name: Robust Softdrinks
   components:
   - type: VendingMachine
     pack: Robust Softdrinks
@@ -131,7 +131,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineDinnerware
-  name: dinnerware
+  name: Dinnerware
   components:
   - type: VendingMachine
     pack: Dinnerware
@@ -141,7 +141,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineDiscount
-  name: discount dan's
+  name: Discount Dan's
   components:
   - type: VendingMachine
     pack: Discount Dan's
@@ -151,7 +151,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineEngivend
-  name: engi-vend
+  name: Engi-Vend
   components:
   - type: VendingMachine
     pack: Engi-Vend
@@ -161,7 +161,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineHats
-  name: hatlord 9000
+  name: Hatlord 9000
   components:
   - type: VendingMachine
     pack: Hatlord 9000
@@ -171,7 +171,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineMagivend
-  name: magivend
+  name: MagiVend
   components:
   - type: VendingMachine
     pack: MagiVend
@@ -181,7 +181,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineMedical
-  name: nanomed plus
+  name: NanoMed Plus
   components:
   - type: VendingMachine
     pack: NanoMed Plus
@@ -191,7 +191,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineMining
-  name: dwarven mining equipment
+  name: Dwarven Mining Equipment
   components:
   - type: VendingMachine
     pack: Dwarven Mining Equipment
@@ -201,7 +201,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineNutri
-  name: nutrimax
+  name: NutriMax
   components:
   - type: VendingMachine
     pack: NutriMax
@@ -211,7 +211,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineRobotics
-  name: robotech deluxe
+  name: Robotech Deluxe
   components:
   - type: VendingMachine
     pack: Robotech Deluxe
@@ -221,7 +221,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSales
-  name: sales
+  name: Sales
   components:
   - type: VendingMachine
     pack: Sales
@@ -231,7 +231,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSec
-  name: sectech
+  name: SecTech
   components:
   - type: VendingMachine
     pack: SecTech
@@ -241,7 +241,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSeeds
-  name: megaseed servitor
+  name: MegaSeed Servitor
   components:
   - type: VendingMachine
     pack: MegaSeed Servitor
@@ -251,7 +251,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineShoes
-  name: shoelord 9000
+  name: Shoelord 9000
   components:
   - type: VendingMachine
     pack: Shoelord 9000
@@ -261,7 +261,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSmartFridge
-  name: smartfridge
+  name: SmartFridge
   components:
   - type: VendingMachine
     pack: SmartFridge
@@ -271,7 +271,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSnack
-  name: getmore chocolate corp
+  name: Getmore Chocolate Corp
   components:
   - type: VendingMachine
     pack: Getmore Chocolate Corp
@@ -281,7 +281,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSoviet
-  name: товарищ-vend
+  name: Товарищ-vend
   components:
   - type: VendingMachine
     pack: soviet
@@ -291,7 +291,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSovietSoda
-  name: boda
+  name: BODA
   components:
   - type: VendingMachine
     pack: BODA
@@ -301,7 +301,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSuits
-  name: suitlord 9000
+  name: Suitlord 9000
   components:
   - type: VendingMachine
     pack: Suitlord 9000
@@ -311,7 +311,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineTheater
-  name: autodrobe
+  name: AutoDrobe
   components:
   - type: VendingMachine
     pack: AutoDrobe
@@ -321,7 +321,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineVendomat
-  name: vendomat
+  name: Vendomat
   components:
   - type: VendingMachine
     pack: Vendomat
@@ -331,7 +331,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineVox
-  name: trader supply
+  name: Trader Supply
   components:
   - type: VendingMachine
     pack: Trader Supply
@@ -341,7 +341,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineWallMedical
-  name: nanomed
+  name: NanoMed
   components:
   - type: VendingMachine
     pack: NanoMed
@@ -351,7 +351,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineYouTool
-  name: youtool
+  name: YouTool
   components:
   - type: VendingMachine
     pack: YouTool

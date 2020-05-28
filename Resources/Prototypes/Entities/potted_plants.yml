@@ -46,7 +46,7 @@
 - type: entity
   id: PottedPlantRD
   parent: PottedPlantBase
-  name: "rd's potted plant"
+  name: "RD's potted plant"
   description: "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
   components:
   - type: Sprite

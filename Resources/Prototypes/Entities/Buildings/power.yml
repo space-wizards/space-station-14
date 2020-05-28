@@ -119,7 +119,7 @@
 - type: entity
   parent: WPPnobattery
   id: WPP
-  name: wpp
+  name: WPP
   description: Supplies power at range, has a backup battery just in case
   components:
   - type: PowerStorage
@@ -131,7 +131,7 @@
 - type: entity
   parent: WPP
   id: APC
-  name: apc
+  name: APC
   components:
   - type: Apc
   - type: Sprite

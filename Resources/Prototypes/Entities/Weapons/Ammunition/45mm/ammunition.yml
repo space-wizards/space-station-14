@@ -14,7 +14,7 @@
 
 - type: entity
   id: magazine_45mm_smg_empty
-  name: ".45mm smg magazine - empty"
+  name: ".45mm SMG magazine - empty"
   parent: BaseItem
   abstract: true
   components:
@@ -91,7 +91,7 @@
 
 - type: entity
   id: magazine_45mml
-  name: ".45mm magazine (l)"
+  name: ".45mm magazine (L)"
   parent: magazine_45mm_empty
   components:
   - type: BallisticMagazine
@@ -154,7 +154,7 @@
 
 - type: entity
   id: magazine_45mm_smg
-  name: ".45mm smg magazine"
+  name: ".45mm SMG magazine"
   parent: magazine_45mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -175,7 +175,7 @@
 
 - type: entity
   id: magazine_45mmf_smg
-  name: ".45mm smg magazine (flash)"
+  name: ".45mm SMG magazine (flash)"
   parent: magazine_45mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -196,7 +196,7 @@
 
 - type: entity
   id: magazine_45mmhv_smg
-  name: ".45mm smg magazine (high velocity)"
+  name: ".45mm SMG magazine (high velocity)"
   parent: magazine_45mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -217,7 +217,7 @@
 
 - type: entity
   id: magazine_45mml_smg
-  name: ".45mm smg magazine (l)"
+  name: ".45mm SMG magazine (L)"
   parent: magazine_45mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -238,7 +238,7 @@
 
 - type: entity
   id: magazine_45mmp_smg
-  name: ".45mm smg magazine (practice)"
+  name: ".45mm SMG magazine (practice)"
   parent: magazine_45mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -259,7 +259,7 @@
 
 - type: entity
   id: magazine_45mmr_smg
-  name: ".45mm smg magazine (rubber)"
+  name: ".45mm SMG magazine (rubber)"
   parent: magazine_45mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -329,7 +329,7 @@
 
 - type: entity
   id: ammo_casing_45mm_l
-  name: ".45mm casing (l)"
+  name: ".45mm casing (L)"
   parent: BaseItem
   components:
   - type: BallisticBullet

@@ -78,7 +78,7 @@
 
 - type: entity
   id: magazine_65mml
-  name: "6.5mm magazine (l)"
+  name: "6.5mm magazine (L)"
   parent: magazine_65mm_empty
   components:
   - type: BallisticMagazine
@@ -190,7 +190,7 @@
 
 - type: entity
   id: ammo_casing_65mm_l
-  name: "6.5mm casing (l)"
+  name: "6.5mm casing (L)"
   parent: BaseItem
   components:
   - type: BallisticBullet

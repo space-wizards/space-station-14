@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: urist mchands
+  name: Urist McHands
   id: HumanMob_Content
   description: A miserable pile of secrets
   drawdepth: Mobs
@@ -142,7 +142,7 @@
 
 - type: entity
   save: false
-  name: urist mchands
+  name: Urist McHands
   id: HumanMob_Dummy
   description: A dummy human meant to be used in character setup
   components:

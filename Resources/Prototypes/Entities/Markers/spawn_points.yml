@@ -1,6 +1,6 @@
 - type: entity
   name: spawn point
-  id: spawn_point
+  id: SpawnPoint
   abstract: true
   components:
   - type: Sprite
@@ -19,15 +19,9 @@
     mode: AlignTileAny
 
 - type: entity
-<<<<<<< HEAD
   name: latejoin spawn point
-  id: spawn_point_latejoin
-  parent: spawn_point
-=======
-  name: LateJoin Spawn Point
   id: SpawnPointLatejoin
   parent: SpawnPoint
->>>>>>> SalternDoors
   components:
   - type: Sprite
     state: cross_red

@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_357l
-  name: .357 bullet (l)
+  name: .357 bullet (L)
   parent: BulletBaseL
   abstract: true
   components:

@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_45mml
-  name: .45mm bullet (l)
+  name: .45mm bullet (L)
   parent: BulletBaseL
   abstract: true
   components:

@@ -32,7 +32,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeSuperBiteBurger
-  name: super bite burger recipe
+  name: Super Bite Burger recipe
   result: FoodSuperBiteBurger
   time: 20
   reagents:
@@ -223,7 +223,7 @@
 
 # - type: microwaveMealRecipe
 #   id: RecipeMoMMISpaghetti
-#   name: mommi spaghetti recipe
+#   name: MoMMI spaghetti recipe
 #   result: FoodMoMMISpaghetti
 #   time: 10
 #   reagents:

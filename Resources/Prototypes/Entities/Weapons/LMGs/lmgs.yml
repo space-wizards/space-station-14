@@ -23,7 +23,7 @@
     sound_gunshot: /Audio/Guns/Gunshots/lmg.ogg
 
 - type: entity
-  name: l6
+  name: L6
   parent: LmgBase
   id: LmgL6
   description: A rooty tooty point and shooty.
@@ -54,7 +54,7 @@
     sprite: Objects/Guns/LMGs/l6.rsi
 
 - type: entity
-  name: pk
+  name: PK
   parent: LmgBase
   id: LmgPk
   description: A rooty tooty point and shooty.

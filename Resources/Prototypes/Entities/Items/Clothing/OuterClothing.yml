@@ -118,7 +118,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBiocmo
-  name: bio (cmo)
+  name: bio (CMO)
   description: ''
   components:
   - type: Sprite
@@ -586,7 +586,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingEvarig
-  name: eva rig
+  name: EVA rig
   description: Get in the EVA
   components:
   - type: Sprite
@@ -599,7 +599,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingEvarigsealed
-  name: eva rig (sealed)
+  name: EVA rig (sealed)
   description: Get in the EVA
   components:
   - type: Sprite
@@ -755,7 +755,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingHmarmorvest
-  name: hm armor vest
+  name: HM armor vest
   description: ''
   components:
   - type: Sprite
@@ -768,7 +768,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingHos
-  name: hos armor vest
+  name: HoS armor vest
   description: ''
   components:
   - type: Sprite
@@ -781,7 +781,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingIhsrig
-  name: ihs rig
+  name: IHS rig
   description: ''
   components:
   - type: Sprite
@@ -794,7 +794,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingIhsrigsealed
-  name: ihs rig (sealed)
+  name: IHS rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -807,7 +807,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingIhvoidsuit
-  name: ih voidsuit
+  name: IH voidsuit
   description: ''
   components:
   - type: Sprite
@@ -911,7 +911,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatcmo
-  name: lab coat (cmo)
+  name: lab coat (CMO)
   description: ''
   components:
   - type: Sprite
@@ -924,7 +924,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatcmoopen
-  name: lab coat (cmo open)
+  name: lab coat (CMO open)
   description: ''
   components:
   - type: Sprite
@@ -1288,7 +1288,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingQmcoat
-  name: qm coat
+  name: QM coat
   description: ''
   components:
   - type: Sprite
@@ -1704,7 +1704,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSninja
-  name: s ninja
+  name: S ninja
   description: ''
   components:
   - type: Sprite

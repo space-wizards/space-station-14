@@ -75,7 +75,7 @@
 
 - type: entity
   id: magazine_50l
-  name: ".50 cal magazine (l)"
+  name: ".50 cal magazine (L)"
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
@@ -184,7 +184,7 @@
 
 - type: entity
   id: ammo_casing_50_l
-  name: ".50 cal casing (l)"
+  name: ".50 cal casing (L)"
   parent: BaseItem
   components:
   - type: BallisticBullet

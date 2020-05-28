@@ -78,7 +78,7 @@
 
 - type: entity
   id: magazine_44l
-  name: ".44 magazine (l)"
+  name: ".44 magazine (L)"
   parent: magazine_44_empty
   components:
   - type: BallisticMagazine
@@ -190,7 +190,7 @@
 
 - type: entity
   id: ammo_casing_44_l
-  name: ".44 casing (l)"
+  name: ".44 casing (L)"
   parent: BaseItem
   components:
   - type: BallisticBullet

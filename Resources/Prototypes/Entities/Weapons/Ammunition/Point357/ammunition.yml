@@ -64,7 +64,7 @@
 #
 #- type: entity
 #  id: ammo_casing_357_l
-#  name: ".357 casing (l)"
+#  name: ".357 casing (L)"
 #  parent: BaseItem
 #  components:
 #  - type: BallisticBullet

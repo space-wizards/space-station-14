@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_762mml
-  name: 7.62mm bullet (l)
+  name: 7.62mm bullet (L)
   parent: BulletBase
   abstract: true
   components:

@@ -339,7 +339,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesEvaRig
-  name: eva rig shoes
+  name: EVA rig shoes
   description: ''
   components:
   - type: Sprite
@@ -352,7 +352,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesEvaRigSealed
-  name: eva rig sealed shoes
+  name: EVA rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -456,7 +456,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesIhsRig
-  name: ihs rig shoes
+  name: IHS rig shoes
   description: ''
   components:
   - type: Sprite
@@ -469,7 +469,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesIhsRigOld
-  name: ihs rig old shoes
+  name: IHS rig old shoes
   description: ''
   components:
   - type: Sprite
@@ -482,7 +482,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesIhsRigSealed
-  name: ihs rig sealed shoes
+  name: IHS rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -495,7 +495,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesIhsRigSealedOld
-  name: ihs rig sealed old shoes
+  name: IHS rig sealed old shoes
   description: ''
   components:
   - type: Sprite
@@ -872,7 +872,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesSNinja
-  name: s ninja shoes
+  name: S ninja shoes
   description: ''
   components:
   - type: Sprite

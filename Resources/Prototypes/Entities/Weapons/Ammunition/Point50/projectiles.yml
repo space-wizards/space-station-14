@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_50l
-  name: .50 cal bullet (l)
+  name: .50 cal bullet (L)
   parent: BulletBaseL
   abstract: true
   components:

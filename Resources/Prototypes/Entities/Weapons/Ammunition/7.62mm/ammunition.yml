@@ -15,7 +15,7 @@
 # Magazines
 - type: entity
   id: magazine_a762
-  name: "a762 magazine"
+  name: "A762 magazine"
   parent: magazine_762mm_empty
   components:
   - type: BallisticMagazine
@@ -36,7 +36,7 @@
 
 - type: entity
   id: magazine_aksr
-  name: "ak magazine (short rubber)"
+  name: "AK magazine (short rubber)"
   parent: magazine_762mm_empty
   components:
   - type: BallisticMagazine
@@ -57,7 +57,7 @@
 
 - type: entity
   id: magazine_ak
-  name: "ak magazine"
+  name: "AK magazine"
   parent: magazine_762mm_empty
   components:
   - type: BallisticMagazine
@@ -78,7 +78,7 @@
 
 - type: entity
   id: magazine_akf
-  name: "ak magazine (flash)"
+  name: "AK magazine (flash)"
   parent: magazine_762mm_empty
   components:
   - type: BallisticMagazine
@@ -99,7 +99,7 @@
 
 - type: entity
   id: magazine_akhv
-  name: "ak magazine (high-velocity)"
+  name: "AK magazine (high-velocity)"
   parent: magazine_762mm_empty
   components:
   - type: BallisticMagazine
@@ -120,7 +120,7 @@
 
 - type: entity
   id: magazine_akl
-  name: "ak magazine (l)"
+  name: "AK magazine (L)"
   parent: magazine_762mm_empty
   components:
   - type: BallisticMagazine
@@ -141,7 +141,7 @@
 
 - type: entity
   id: magazine_akp
-  name: "ak magazine (practice)"
+  name: "AK magazine (practice)"
   parent: magazine_762mm_empty
   components:
   - type: BallisticMagazine
@@ -162,7 +162,7 @@
 
 - type: entity
   id: magazine_akr
-  name: "ak magazine (rubber)"
+  name: "AK magazine (rubber)"
   parent: magazine_762mm_empty
   components:
   - type: BallisticMagazine
@@ -246,7 +246,7 @@
 
 - type: entity
   id: magazine_c762l
-  name: "c762 magazine (l)"
+  name: "c762 magazine (L)"
   parent: magazine_762mm_empty
   components:
   - type: BallisticMagazine
@@ -401,7 +401,7 @@
 
 - type: entity
   id: ammo_casing_762mm_l
-  name: "7.62mm casing (l)"
+  name: "7.62mm casing (L)"
   parent: BaseItem
   components:
   - type: BallisticBullet

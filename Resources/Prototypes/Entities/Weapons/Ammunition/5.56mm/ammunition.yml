@@ -37,7 +37,7 @@
 
 - type: entity
   id: magazine_556mms
-  name: "5.56mm magazine s"
+  name: "5.56mm magazine S"
   parent: magazine_556mm_empty
   components:
   - type: BallisticMagazine
@@ -174,7 +174,7 @@
 
 - type: entity
   id: ammo_casing_556mm_l
-  name: "5.56mm casing (l)"
+  name: "5.56mm casing (L)"
   parent: BaseItem
   components:
   - type: BallisticBullet
