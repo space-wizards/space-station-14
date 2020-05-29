@@ -65,15 +65,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             base.Initialize();
             Owner.TryGetComponent(out _appearanceComponent);
-            _contents = Owner.GetComponent<SolutionComponent>();
+            if(!Owner.TryGetComponent(out _contents))
+            {
+                _contents = Owner.AddComponent<SolutionComponent>();
+            }
+
             _contents.Capabilities = SolutionCaps.PourIn
                                      | SolutionCaps.PourOut
                                      | SolutionCaps.Injectable;
             _opened = _defaultToOpened;
-            if (_opened)
-            {
-            }
-
             UpdateAppearance();
         }
 
