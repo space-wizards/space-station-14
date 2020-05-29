@@ -265,7 +265,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (NoExamine)
             {
@@ -281,7 +281,26 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {
-                    message.AddText($"{proto.Name}: {reagent.Quantity}u\n");
+                    if (inDetailsRange)
+                    {
+                        message.AddText($"{proto.Name}: {reagent.Quantity}u\n");
+                    }
+                    else
+                    {
+                        //This is trash but it shows the general idea 
+                        var colour = proto.SubstanceColor;
+                        var colourIsh = "Red";
+                        if (colour.G > colour.R)
+                        {
+                            colourIsh = "Green";
+                        }
+                        if (colour.B > colour.G || colour.B > colour.R)
+                        {
+                            colourIsh = "Blue";
+                        }
+
+                        message.AddText(_loc.GetString("A {0} liquid\n", colourIsh));
+                    }
                 }
                 else
                 {

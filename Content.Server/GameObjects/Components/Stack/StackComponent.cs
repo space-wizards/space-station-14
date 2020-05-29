@@ -110,12 +110,15 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-            message.AddMarkup(loc.GetPluralString(
-                "There is [color=lightgray]1[/color] thing in the stack",
-                "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
+            if (inDetailsRange)
+            {
+                var loc = IoCManager.Resolve<ILocalizationManager>();
+                message.AddMarkup(loc.GetPluralString(
+                    "There is [color=lightgray]1[/color] thing in the stack",
+                    "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
+            }
         }
     }
 }

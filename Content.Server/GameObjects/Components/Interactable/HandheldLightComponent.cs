@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
 
