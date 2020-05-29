@@ -167,6 +167,9 @@ namespace Content.Client
                 "Tool",
                 "TilePrying",
                 "RandomToolColor",
+                "BatteryBarrel",
+                "FlashBang",
+                "FlashProjectile",
             };
 
             foreach (var ignoreName in registerIgnore)
