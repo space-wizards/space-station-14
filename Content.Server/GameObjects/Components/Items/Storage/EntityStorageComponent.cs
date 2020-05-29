@@ -10,6 +10,7 @@ using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -28,6 +29,9 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(IStorageComponent))]
     public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing
     {
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
         public override string Name => "EntityStorage";
 
         private const float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
@@ -164,10 +168,7 @@ namespace Content.Server.GameObjects.Components
             }
 
             ModifyComponents();
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-            {
-                soundComponent.Play("/Audio/machines/closetclose.ogg");
-            }
+            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/machines/closetclose.ogg", Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -176,10 +177,8 @@ namespace Content.Server.GameObjects.Components
             Open = true;
             EmptyContents();
             ModifyComponents();
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-            {
-                soundComponent.Play("/Audio/machines/closetopen.ogg");
-            }
+            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/machines/closetopen.ogg", Owner);
+
         }
 
         private void ModifyComponents()

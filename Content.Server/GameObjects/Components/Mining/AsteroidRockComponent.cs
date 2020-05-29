@@ -4,8 +4,10 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
@@ -20,6 +22,7 @@ namespace Content.Server.GameObjects.Components.Mining
 
 #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         public override void Initialize()
@@ -37,10 +40,9 @@ namespace Content.Server.GameObjects.Components.Mining
             Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, meleeWeaponComponent.Damage, item, eventArgs.User);
 
             if (!item.TryGetComponent(out PickaxeComponent pickaxeComponent)) return true;
-            if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound) &&
-                item.TryGetComponent<SoundComponent>(out var soundComponent))
+            if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound))
             {
-                soundComponent.Play(pickaxeComponent.MiningSound, AudioParams.Default);
+                _entitySystemManager.GetEntitySystem<AudioSystem>().Play(pickaxeComponent.MiningSound, Owner, AudioParams.Default);
             }
             return true;
         }

@@ -22,15 +22,16 @@ namespace Content.Server.GameObjects.Components.Power
     [RegisterComponent]
     public class PoweredLightComponent : Component, IInteractHand, IInteractUsing
     {
+
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
 
         private TimeSpan _lastThunk;
 
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
 
         private LightBulbType BulbType = LightBulbType.Tube;
 
@@ -174,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Power
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            Owner.GetComponent<SoundComponent>().Play("/Audio/machines/light_tube_on.ogg", AudioParams.Default.WithVolume(-10f));
+                            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else

@@ -1,12 +1,13 @@
-﻿using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
+﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -14,6 +15,9 @@ namespace Content.Server.GameObjects.Components.Power
     [ComponentReference(typeof(IActivate))]
     public sealed class ApcComponent : SharedApcComponent, IActivate
     {
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
         PowerStorageComponent Storage;
         AppearanceComponent Appearance;
         private PowerProviderComponent _provider;
@@ -119,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void _clickSound()
         {
-            Owner.GetComponent<SoundComponent>().Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
+            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
         }
     }
 }

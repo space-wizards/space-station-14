@@ -19,6 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -36,6 +37,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         [ViewVariables] private BoundUserInterface _userInterface;
@@ -320,10 +322,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void ClickSound()
         {
-            if (Owner.TryGetComponent(out SoundComponent sound))
-            {
-                sound.Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
-            }
+
+            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+
         }
 
 
