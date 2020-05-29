@@ -5,6 +5,7 @@
   components:
   - type: Drink
     openSounds: bottleOpenSounds
+  - type: Solution
   - type: Sprite
     state: icon
   - type: Icon
