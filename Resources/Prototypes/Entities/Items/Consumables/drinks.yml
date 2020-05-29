@@ -17,25 +17,6 @@
   - type: Icon
     state: icon
 
-# Transformable container - normal glass
-- type: entity
-  name: Drinking glass
-  parent: DrinkBase
-  id: DrinkGlass
-  components:
-  - type: Sprite
-    sprite: Objects/Drinks/glass_clear.rsi
-  - type: Icon
-    sprite: Objects/Drinks/glass_clear.rsi
-  - type: Solution
-    fillingState: glass
-    maxVol: 50
-    caps: 16
-  - type: Drink
-  - type: Pourable
-    transferAmount: 5
-  - type: TransformableContainer
-
 - type: entity
   parent: DrinkBase
   id: DrinkAleglass
@@ -635,7 +616,7 @@
     sprite: Objects/Drinks/ginvodkaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+ parent: DrinkBase
   id: DrinkGlassBrown
   name: Bilk
   description: This appears to be beer mixed with milk. Disgusting.
@@ -647,7 +628,7 @@
     sprite: Objects/Drinks/glass_brown.rsi
 
 - type: entity
-  parent: DrinkBase
+ parent: DrinkBase
   id: DrinkGlassBrown2
   name: Hooch
   description: Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?
@@ -659,7 +640,7 @@
     sprite: Objects/Drinks/glass_brown2.rsi
 
 - type: entity
-  parent: DrinkBase
+ parent: DrinkBase
   id: DrinkGlassClear
   name: Moonshine
   description: You've really hit rock bottom now... your liver packed its bags and left last night.
@@ -671,7 +652,7 @@
     sprite: Objects/Drinks/glass_clear.rsi
 
 - type: entity
-  parent: DrinkBase
+ parent: DrinkBase
   id: DrinkGlassGreen
   name: Lime juice
   description: The sweet-sour juice of limes.
@@ -683,7 +664,7 @@
     sprite: Objects/Drinks/glass_green.rsi
 
 - type: entity
-  parent: DrinkBase
+ parent: DrinkBase
   id: DrinkGlassOrange
   name: Orange juice
   description: Liquid extract of the orange tree fruit, produced by squeezing or reaming oranges.
@@ -695,7 +676,7 @@
     sprite: Objects/Drinks/glass_orange.rsi
 
 - type: entity
-  parent: DrinkBase
+ parent: DrinkBase
   id: DrinkGlassRed
   name: Tomato juice
   description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails
@@ -707,7 +688,7 @@
     sprite: Objects/Drinks/glass_red.rsi
 
 - type: entity
-  parent: DrinkBase
+ parent: DrinkBase
   id: DrinkGlassWhite
   name: Milk
   description: An opaque white liquid produced by the mammary glands of mammals.
@@ -725,7 +706,7 @@
 
 # Made this up
 - type: entity
-  parent: DrinkBase
+ parent: DrinkBase
   id: DrinkGlassYellow
   name: Lemon juice
   description: ''
