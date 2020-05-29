@@ -1,6 +1,10 @@
 using Content.Server.GameObjects.Components.Weapon;
 using Content.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Explosion
@@ -13,11 +17,10 @@ namespace Content.Server.GameObjects.Components.Explosion
     {
         public override string Name => "FlashBang";
 
-        public float Range => _range;
         private float _range;
-        public double Duration => _duration;
         private double _duration;
         private string _sound;
+        private bool _deleteOnFlash;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -25,13 +28,30 @@ namespace Content.Server.GameObjects.Components.Explosion
 
             serializer.DataField(ref _range, "range", 7.0f);
             serializer.DataField(ref _duration, "duration", 8.0);
-            serializer.DataField(ref _sound, "sound", "/Audio/effects/bang.ogg");
+            serializer.DataField(ref _sound, "sound", "/Audio/effects/flash_bang.ogg");
+            serializer.DataField(ref _deleteOnFlash, "deleteOnFlash", true);
         }
 
         public bool Explode()
         {
-            ServerFlashableComponent.FlashAreaHelper(Owner, _range, _duration, _sound);
-            Owner.Delete();
+            // If we're in a locker or whatever then can't flash anything
+            ContainerHelpers.TryGetContainer(Owner, out var container);
+            if (container == null || !container.Owner.HasComponent<EntityStorageComponent>())
+            {
+                ServerFlashableComponent.FlashAreaHelper(Owner, _range, _duration);
+            }
+
+            if (_sound != null)
+            {
+                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                soundSystem.Play(_sound);
+            }
+
+            if (_deleteOnFlash && !Owner.Deleted)
+            {
+                Owner.Delete();
+            }
+            
             return true;
         }
 

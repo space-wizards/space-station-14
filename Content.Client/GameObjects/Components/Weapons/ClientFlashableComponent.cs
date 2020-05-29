@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Client.GameObjects.Components.Weapons
@@ -132,13 +133,17 @@ namespace Content.Client.GameObjects.Components.Weapons
 
         private float GetAlpha(double ratio)
         {
+            // Ideally you just want a smooth slope to finish it so it's not jarring at the end
+            // By all means put in a better curve
             const float slope = -9.0f;
             const float exponent = 0.1f;
             const float yOffset = 9.0f;
             const float xOffset = 0.0f;
 
             // Overkill but easy to adjust if you want to mess around with the design
-            return (float) Math.Clamp(slope * (float) Math.Pow(ratio - xOffset, exponent) + yOffset, 0.0, 1.0);
+            var result = (float) Math.Clamp(slope * (float) Math.Pow(ratio - xOffset, exponent) + yOffset, 0.0, 1.0);
+            DebugTools.Assert(!float.IsNaN(result));
+            return result;
         }
     }
 }

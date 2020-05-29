@@ -42,7 +42,8 @@
     soundHit: /Audio/Guns/Hits/snap.ogg
     damages:
       Brute: 10
-  # - type: FlashProjectile
+  - type: FlashProjectile
+    range: 1
 
 - type: entity
   id: BulletBaseHV

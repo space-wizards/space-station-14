@@ -13,20 +13,20 @@ namespace Content.Server.GameObjects.Components.Projectiles
     /// Upon colliding with an object this will flash in an area around it
     /// </summary>
     [RegisterComponent]
-    public class FlashProjectileComponent : Component, ICollideBehavior, ICollideSpecial
+    public class FlashProjectileComponent : Component, ICollideBehavior
     {
         public override string Name => "FlashProjectile";
 
         private double _range;
         private double _duration;
-        private string _sound;
+
+        private bool _flashed;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _range, "range", 1.0);
             serializer.DataField(ref _duration, "duration", 8.0);
-            serializer.DataField(ref _sound, "sound", "/Audio/effects/snap.ogg");
         }
 
         public override void Initialize()
@@ -39,31 +39,20 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
         }
 
-        /// <summary>
-        /// Special collision override, can be used to give custom behaviors deciding when to collide
-        /// </summary>
-        /// <param name="collidedwith"></param>
-        /// <returns></returns>
-        bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
+        void ICollideBehavior.CollideWith(IEntity entity)
         {
-            if (Owner.TryGetComponent(out ProjectileComponent projectileComponent))
-            {
-                if (projectileComponent.IgnoreShooter && collidedwith.Owner.Uid == projectileComponent.Shooter)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        void ICollideBehavior.CollideWith(List<IEntity> collidedwith)
-        {
-            if (collidedwith.Count == 0)
+            if (_flashed)
             {
                 return;
             }
-            ServerFlashableComponent.FlashAreaHelper(Owner, _range, _duration, _sound);
+            ServerFlashableComponent.FlashAreaHelper(Owner, _range, _duration);
+            _flashed = true;
+        }
+
+        // Projectile should handle the deleting
+        void ICollideBehavior.PostCollide(int collisionCount)
+        {
+            return;
         }
     }
 }

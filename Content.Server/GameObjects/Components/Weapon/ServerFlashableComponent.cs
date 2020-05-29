@@ -33,17 +33,17 @@ namespace Content.Server.GameObjects.Components.Weapon
         public static void FlashAreaHelper(IEntity source, double range, double duration, string sound = null)
         {
             var physicsManager = IoCManager.Resolve<IPhysicsManager>();
-            var componentManager = IoCManager.Resolve<IComponentManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            foreach (var component in componentManager.GetAllComponents(typeof(ServerFlashableComponent)))
+            foreach (var entity in entityManager.GetEntities(new TypeEntityQuery(typeof(ServerFlashableComponent))))
             {
-                if (component.Owner.Transform.MapID != source.Transform.MapID ||
-                    component.Owner == source)
+                if (source.Transform.MapID != entity.Transform.MapID ||
+                entity == source)
                 {
                     continue;
                 }
-
-                var direction = component.Owner.Transform.WorldPosition - source.Transform.WorldPosition;
+                
+                var direction = entity.Transform.WorldPosition - source.Transform.WorldPosition;
 
                 if (direction.Length > range)
                 {
@@ -54,18 +54,28 @@ namespace Content.Server.GameObjects.Components.Weapon
                 if (direction != Vector2.Zero)
                 {
                     var ray = new CollisionRay(source.Transform.WorldPosition, direction.Normalized, (int) CollisionGroup.Opaque);
-                    var rayResult = physicsManager.IntersectRay(component.Owner.Transform.MapID, ray, direction.Length, source);
+                    var rayResult = physicsManager.IntersectRay(source.Transform.MapID, ray, direction.Length, source);
                     // Doesn't matter whether the Flashable target blocks light or not
-                    if (rayResult.DidHitObject)
+                    var hit = false;
+                    foreach (var result in rayResult)
+                    {
+                        if (result.HitEntity == entity)
+                        {
+                            hit = true;
+                        }
+                        break;
+                    }
+
+                    // Next entity thanks mate
+                    if (!hit)
                     {
                         continue;
                     }
                 }
 
                 // Doesn't matter whether the Flashable target blocks light or not
-                var flashable = (ServerFlashableComponent) component;
+                var flashable = entity.GetComponent<ServerFlashableComponent>();
                 flashable.Flash(duration);
-
             }
 
             if (sound != null)

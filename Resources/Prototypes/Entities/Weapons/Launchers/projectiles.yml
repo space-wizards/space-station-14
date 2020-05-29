@@ -62,10 +62,11 @@
     netsync: false
     sprite: Objects/Guns/Projectiles/grenade.rsi
     state: grenade
-  #- type: FlashProjectile
   - type: Projectile
     deleteOnCollide: false
     soundHit: /Audio/effects/flash_bang.ogg
+  - type: FlashProjectile
+    range: 7
 
 # This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
