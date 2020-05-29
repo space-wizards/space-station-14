@@ -50,5 +50,6 @@
         public const uint SURGERY = 1045;
         public const uint MULTITOOLS = 1046;
         public const uint PDA = 1047;
+        public const uint FLASHABLE = 1048;
     }
 }
