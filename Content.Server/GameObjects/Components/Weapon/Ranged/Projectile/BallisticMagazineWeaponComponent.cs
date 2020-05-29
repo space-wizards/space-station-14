@@ -12,6 +12,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -110,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
             if (_magInSound != null && playSound)
             {
-                _entitySystemManager.GetEntitySystem<AudioSystem>().Play(_magInSound, Owner);
+                EntitySystem.Get<AudioSystem>().Play(_magInSound, Owner);
             }
             magazinetype.OnAmmoCountChanged += MagazineAmmoCountChanged;
             if (GetChambered(0) == null)
@@ -139,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 entity.Transform.GridPosition = Owner.Transform.GridPosition;
                 if (_magOutSound != null && playSound)
                 {
-                    _entitySystemManager.GetEntitySystem<AudioSystem>().Play(_magOutSound, Owner, AudioParams.Default.WithVolume(20));
+                    EntitySystem.Get<AudioSystem>().Play(_magOutSound, Owner, AudioParams.Default.WithVolume(20));
                 }
                 UpdateAppearance();
                 Dirty();
@@ -165,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             entity.Transform.GridPosition = Owner.Transform.GridPosition.Offset(offsetPos);
             entity.Transform.LocalRotation = _bulletDropRandom.Pick(RandomBulletDirs).ToAngle();
             var effect = $"/Audio/Guns/Casings/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play(effect, Owner, AudioParams.Default.WithVolume(-3));
+            EntitySystem.Get<AudioSystem>().Play(effect, Owner, AudioParams.Default.WithVolume(-3));
 
             if (Magazine != null)
             {
@@ -196,7 +197,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             EjectMagazine();
             if (_autoEjectSound != null)
             {
-                _entitySystemManager.GetEntitySystem<AudioSystem>().Play(_autoEjectSound, Owner, AudioParams.Default.WithVolume(-5));
+                EntitySystem.Get<AudioSystem>().Play(_autoEjectSound, Owner, AudioParams.Default.WithVolume(-5));
             }
             Dirty();
         }

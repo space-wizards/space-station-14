@@ -6,6 +6,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
@@ -138,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return true;
         }
 
-        private void PlayEmptySound() => _entitySystemManager.GetEntitySystem<AudioSystem>().Play(_soundGunEmpty, Owner);
+        private void PlayEmptySound() => EntitySystem.Get<AudioSystem>().Play(_soundGunEmpty, Owner);
 
         protected sealed class Chamber
         {

@@ -10,6 +10,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -121,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Research
         {
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
             var file = _random.Pick(soundCollection.PickFiles);
-            var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            var audioSystem = EntitySystem.Get<AudioSystem>();
             audioSystem.Play(file,Owner,AudioParams.Default);
         }
 

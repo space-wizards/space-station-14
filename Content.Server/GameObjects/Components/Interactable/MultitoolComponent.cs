@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
@@ -66,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.TryGetComponent(out _tool);
             Owner.TryGetComponent(out _sprite);
 
-            _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            _audioSystem = EntitySystem.Get<AudioSystem>();
 
             SetTool();
         }

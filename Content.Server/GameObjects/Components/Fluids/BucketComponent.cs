@@ -7,6 +7,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -68,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play(_sound, Owner);
+            EntitySystem.Get<AudioSystem>().Play(_sound, Owner);
 
             return true;
         }
@@ -113,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play(_sound, Owner);
+            EntitySystem.Get<AudioSystem>().Play(_sound, Owner);
 
             return true;
 

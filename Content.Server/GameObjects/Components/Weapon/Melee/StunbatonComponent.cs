@@ -11,6 +11,7 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -86,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (!Activated || entities.Count == 0 || cell == null || !cell.CanDeductCharge(EnergyPerUse))
                 return false;
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().Play("/Audio/weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
             {
@@ -101,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             cell.DeductCharge(EnergyPerUse);
             if(cell.Charge < EnergyPerUse)
             {
-                _entitySystemManager.GetEntitySystem<AudioSystem>().Play(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().Play(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
                 TurnOff();
             }
 
@@ -132,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var sprite = Owner.GetComponent<SpriteComponent>();
             var item = Owner.GetComponent<ItemComponent>();
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().Play(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
             item.EquippedPrefix = "off";
             sprite.LayerSetState(0, "stunbaton_off");
@@ -152,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (cell == null)
             {
-                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().Play("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
                 return;
@@ -160,12 +161,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (cell.Charge < EnergyPerUse)
             {
-                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().Play("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
                 return;
             }
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().Play(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "stunbaton_on");
@@ -192,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/weapons/pistol_magin.ogg");
+            EntitySystem.Get<AudioSystem>().Play("/Audio/items/weapons/pistol_magin.ogg");
 
             Dirty();
 
@@ -223,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
             }
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/weapons/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().Play("/Audio/items/weapons/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Examine(FormattedMessage message)

@@ -14,6 +14,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -168,7 +169,7 @@ namespace Content.Server.GameObjects.Components
             }
 
             ModifyComponents();
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/machines/closetclose.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().Play("/Audio/machines/closetclose.ogg", Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -177,7 +178,7 @@ namespace Content.Server.GameObjects.Components
             Open = true;
             EmptyContents();
             ModifyComponents();
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/machines/closetopen.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().Play("/Audio/machines/closetopen.ogg", Owner);
 
         }
 
