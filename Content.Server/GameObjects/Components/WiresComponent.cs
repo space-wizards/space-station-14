@@ -481,9 +481,6 @@ namespace Content.Server.GameObjects.Components
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!inDetailsRange)
-                return;
-
             var loc = IoCManager.Resolve<ILocalizationManager>();
 
             message.AddMarkup(loc.GetString(IsPanelOpen

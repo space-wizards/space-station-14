@@ -288,18 +288,18 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     else
                     {
                         //This is trash but it shows the general idea 
-                        var colour = proto.SubstanceColor;
-                        var colourIsh = "Red";
-                        if (colour.G > colour.R)
+                        var color = proto.SubstanceColor;
+                        var colorIsh = "Red";
+                        if (color.G > color.R)
                         {
-                            colourIsh = "Green";
+                            colorIsh = "Green";
                         }
-                        if (colour.B > colour.G || colour.B > colour.R)
+                        if (color.B > color.G && color.B > color.R)
                         {
-                            colourIsh = "Blue";
+                            colorIsh = "Blue";
                         }
 
-                        message.AddText(_loc.GetString("A {0} liquid\n", colourIsh));
+                        message.AddText(_loc.GetString("A {0} liquid\n", colorIsh));
                     }
                 }
                 else
