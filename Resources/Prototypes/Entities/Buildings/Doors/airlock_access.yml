@@ -77,7 +77,7 @@
   suffix: EVA, Locked
   components:
   - type: AccessReader
-    sufficient: ["Command", "Engineering", "External"]
+    necessary: ["External"]
 
 # Glass Airlocks
 - type: entity

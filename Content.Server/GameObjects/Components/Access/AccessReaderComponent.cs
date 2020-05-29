@@ -47,9 +47,8 @@ namespace Content.Server.GameObjects.Components.Access
                 {
                     return false;
                 }
-                return true;
             }
-            return false;
+            return true;
         }
 
         [CanBeNull]
