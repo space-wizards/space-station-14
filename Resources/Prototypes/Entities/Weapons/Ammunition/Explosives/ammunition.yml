@@ -18,6 +18,28 @@
     state: frag
 
 - type: entity
+  id: GrenadeBaton
+  name: Baton grenade
+  parent: BaseItem
+  components:
+  - type: Ammo
+    caliber: Grenade
+    projectile: BulletGrenadeBaton
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Guns/Ammunition/Explosives/grenade_baton.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+    drawdepth: FloorObjects
+  - type: Icon
+    sprite: Objects/Guns/Ammunition/Explosives/grenade_baton.rsi
+    state: base
+  - type: Appearance
+    visuals:
+    - type: SpentAmmoVisualizer2D
+
+- type: entity
   id: GrenadeBlast
   name: Blast grenade
   parent: BaseItem

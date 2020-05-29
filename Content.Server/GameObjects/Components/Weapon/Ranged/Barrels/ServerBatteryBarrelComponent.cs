@@ -8,8 +8,10 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Logger = Robust.Shared.Log.Logger;
@@ -68,7 +70,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private AppearanceComponent _appearanceComponent;
         
         // Sounds
-        private SoundComponent _soundComponent;
         private string _soundPowerCellInsert;
         private string _soundPowerCellEject;
 
@@ -105,11 +106,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _ammoContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-ammo-container", Owner);
             }
 
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-            {
-                _soundComponent = soundComponent;
-            }
-
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
@@ -130,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return new BatteryBarrelComponentState(FireRateSelector, count, SoundGunshot);
         }
 
-        private void UpdateAppearance()
+        public void UpdateAppearance()
         {
             _appearanceComponent?.SetData(BatteryBarrelVisuals.BatteryLoaded, _powerCellContainer.ContainedEntity != null);
             _appearanceComponent?.SetData(BatteryBarrelVisuals.AmmoCount, ShotsLeft);
@@ -224,7 +220,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (_soundPowerCellInsert != null)
             {
-                _soundComponent?.Play(_soundPowerCellInsert);
+                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                soundSystem.Play(_soundPowerCellInsert);
             }
 
             _powerCellContainer.Insert(entity);
@@ -244,7 +241,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _powerCellContainer.Remove(entity);
             if (_soundPowerCellEject != null)
             {
-                _soundComponent?.Play(_soundPowerCellEject);
+                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                soundSystem.Play(_soundPowerCellEject);
             }
             
             UpdateAppearance();
@@ -254,6 +252,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         public override bool UseEntity(UseEntityEventArgs eventArgs)
         {
+            if (!_powerCellRemovable)
+            {
+                return false;
+            }
+            
             if (!eventArgs.User.TryGetComponent(out HandsComponent handsComponent) || 
                 PowerCellEntity == null)
             {

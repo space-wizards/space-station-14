@@ -74,8 +74,8 @@
     soundHit: /Audio/Guns/Hits/snap.ogg
     damages:
       Brute: 3
-  #- type: StunProjectile
-  #  stun_amount: 15
+  - type: StunProjectile
+    paralyzeAmount: 2
 
 - type: entity
   name : Taser
@@ -90,7 +90,7 @@
     soundHitSpecies: "/Audio/Guns/Hits/taser_hit.ogg"
     damages:
       Heat: 5
-  #- type: StunProjectile
+  - type: StunProjectile
   - type: Sprite
     directional: false
     sprite: Objects/Guns/Projectiles/spark.rsi

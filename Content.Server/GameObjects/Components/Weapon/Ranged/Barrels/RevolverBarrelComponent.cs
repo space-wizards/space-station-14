@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -31,7 +32,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private AppearanceComponent _appearanceComponent;
 
         // Sounds
-        private SoundComponent _soundComponent;
         private string _soundEject;
         private string _soundInsert;
         private string _soundSpin;
@@ -46,16 +46,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // Sounds
             serializer.DataField(ref _soundEject, "soundEject", "/Audio/Guns/MagOut/revolver_magout.ogg");
             serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Guns/MagIn/revolver_magin.ogg");
-            serializer.DataField(ref _soundSpin, "soundSpin", null);
+            serializer.DataField(ref _soundSpin, "soundSpin", "/Audio/Guns/Misc/revolver_spin.ogg");
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-            {
-                _soundComponent = soundComponent;
-            }
             _ammoContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-ammoContainer", Owner);
 
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
@@ -96,9 +92,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     _currentSlot = i;
                     _ammoSlots[i] = entity;
                     _ammoContainer.Insert(entity);
-                    if (_soundInsert != null && _soundComponent != null)
+                    if (_soundInsert != null)
                     {
-                        _soundComponent.Play(_soundInsert);
+                        var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                        soundSystem.Play(_soundInsert);
                     }
 
                     // Dirty();
@@ -126,7 +123,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var random = IoCManager.Resolve<IRobustRandom>().Next(_ammoSlots.Length - 1);
             _currentSlot = random;
-            _soundComponent?.Play(_soundSpin);
+            if (_soundSpin != null)
+            {
+                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                soundSystem.Play(_soundSpin);
+            }
         }
 
         public override IEntity PeekAmmo()
@@ -176,9 +177,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (_ammoContainer.ContainedEntities.Count > 0)
             {
-                if (_soundEject != null && _soundComponent != null)
+                if (_soundEject != null)
                 {
-                    _soundComponent.Play(_soundEject);
+                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                    soundSystem.Play(_soundEject);
                 }
             }
 

@@ -18,7 +18,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
     [RegisterComponent]
     public sealed class ServerRangedWeaponComponent : SharedRangedWeaponComponent, IHandSelected
     {
-        public const int MaxFireDelayAttempts = 2;
         private TimeSpan _lastFireTime;
         
         public Func<bool> WeaponCanFireHandler;
@@ -42,10 +41,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         }
         private ServerRangedBarrelComponent _barrel;
 
-        public FireRateSelector FireRateSelector => _barrel?.FireRateSelector ?? FireRateSelector.Safety;
-
-        public string SoundGunshot => Barrel?.SoundGunshot;
-        public string SoundEmpty => Barrel?.SoundEmpty;
+        private FireRateSelector FireRateSelector => _barrel?.FireRateSelector ?? FireRateSelector.Safety;
 
         public bool SetGunshotSound(string soundPath)
         {
@@ -87,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                         return;
                     }
 
-                    _tryFire(user, msg.Target, 0);
+                    _tryFire(user, msg.Target);
                     break;
             }
         }
@@ -97,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             return new RangedWeaponComponentState(FireRateSelector);
         }
 
-        private void _tryFire(IEntity user, GridCoordinates coordinates, int attemptCount)
+        private void _tryFire(IEntity user, GridCoordinates coordinates)
         {
             if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand?.Owner != Owner)
             {
@@ -121,13 +117,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             var span = curTime - _lastFireTime;
             if (span.TotalSeconds < 1 / _barrel.FireRate)
             {
-                if (attemptCount >= MaxFireDelayAttempts)
-                {
-                    return;
-                }
-
-                Timer.Spawn(TimeSpan.FromSeconds(1 / _barrel.FireRate) - span,
-                    () => _tryFire(user, coordinates, attemptCount + 1));
                 return;
             }
 

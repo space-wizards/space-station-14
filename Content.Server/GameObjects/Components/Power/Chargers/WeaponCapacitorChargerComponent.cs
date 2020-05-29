@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             }
 
             if (_container.ContainedEntity.TryGetComponent(out ServerBatteryBarrelComponent component) &&
-                Math.Abs(component.Capacity - component.PowerCell.Charge) < 0.01)
+                Math.Abs(component.PowerCell.Capacity - component.PowerCell.Charge) < 0.01)
             {
                 return CellChargerStatus.Charged;
             }
@@ -147,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             // Two numbers: One for how much power actually goes into the device (chargeAmount) and
             // chargeLoss which is how much is drawn from the powernet
-            var powerCell = _container.ContainedEntity.GetComponent<PowerCellComponent>();
+            var powerCell = _container.ContainedEntity.GetComponent<ServerBatteryBarrelComponent>().PowerCell;
             var chargeLoss = powerCell.RequestCharge(frameTime) * _transferRatio;
             _powerDevice.Load = chargeLoss;
 
@@ -167,6 +167,5 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             }
             UpdateStatus();
         }
-
     }
 }

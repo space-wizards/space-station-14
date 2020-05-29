@@ -78,6 +78,16 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <param name="entity"></param>
         void ICollideBehavior.CollideWith(IEntity entity)
         {
+            if (_soundHitSpecies != null && entity.HasComponent<SpeciesComponent>())
+            {
+                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                soundSystem.Play(_soundHitSpecies, entity.Transform.GridPosition);
+            } else if (_soundHit != null)
+            {
+                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                soundSystem.Play(_soundHit, entity.Transform.GridPosition);
+            }
+            
             if (entity.TryGetComponent(out DamageableComponent damage))
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);

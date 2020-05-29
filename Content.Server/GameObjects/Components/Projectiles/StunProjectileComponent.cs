@@ -16,12 +16,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
     {
         public override string Name => "StunProjectile";
 
-        private int _stunAmount;
+        private int _paralyzeAmount;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _stunAmount, "stun_amount", 50);
+            serializer.DataField(ref _paralyzeAmount, "paralyzeAmount", 5);
         }
 
         public override void Initialize()
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         {
             if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
             {
-                stunnableComponent.Paralyze(_stunAmount);
+                stunnableComponent.Paralyze(_paralyzeAmount);
             }
         }
 

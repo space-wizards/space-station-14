@@ -27,9 +27,11 @@
     netsync: false
     sprite: Objects/Guns/Projectiles/grenade.rsi
     state: grenade
-  #- type: StunProjectile
   - type: Projectile
     deleteOnCollide: false
+    soundHit: /Audio/effects/gen_hit.ogg
+  - type: StunProjectile
+    paralyzeAmount: 8
 
 - type: entity
   id: BulletGrenadeBlast
@@ -45,9 +47,9 @@
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
-    devastationRange: 0
-    heavyImpactRange: 0
-    lightImpactRange: 3
+    devastationRange: 3
+    heavyImpactRange: 5
+    lightImpactRange: 7
     flashRange: 10
 
 - type: entity
@@ -60,16 +62,12 @@
     netsync: false
     sprite: Objects/Guns/Projectiles/grenade.rsi
     state: grenade
-  - type: ExplosiveProjectile
   #- type: FlashProjectile
   - type: Projectile
     deleteOnCollide: false
-  - type: Explosive
-    devastationRange: 0
-    heavyImpactRange: 0
-    lightImpactRange: 3
-    flashRange: 10
+    soundHit: /Audio/effects/flash_bang.ogg
 
+# This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
   id: BulletGrenadeFrag
   name: Frag grenade

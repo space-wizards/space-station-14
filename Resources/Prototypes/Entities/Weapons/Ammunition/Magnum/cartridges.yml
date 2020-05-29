@@ -17,7 +17,7 @@
 
 - type: entity
   id: CartridgeMagnum
-  name: Cartridge (.40 magnum flash)
+  name: Cartridge (.40 magnum)
   parent: CartridgeMagnumBase
   components:
   - type: Ammo

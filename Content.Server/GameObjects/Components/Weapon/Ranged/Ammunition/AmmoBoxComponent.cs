@@ -201,10 +201,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             if (soundCollection != null)
             {
                 // Just so sound doesn't get spammed if we drop a big box
-                for (var i = 0; i < Math.Min(5, droppedCount); i++)
+                for (var i = 0; i < Math.Min(soundCollection.PickFiles.Count, droppedCount); i++)
                 {
                     var randomFile = robustRandom.Pick(soundCollection.PickFiles);
-                    
                     soundSystem.Play(randomFile, AudioParams.Default.WithVolume(-1));
                 }
             }

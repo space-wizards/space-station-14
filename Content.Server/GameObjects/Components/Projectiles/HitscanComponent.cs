@@ -57,14 +57,13 @@ namespace Content.Server.GameObjects.Components.Projectiles
             serializer.DataField(ref _soundHitWall, "soundHitWall", "/Audio/Guns/Hits/laser_sear_wall.ogg");
         }
 
-        public void FireEffects(IEntity user, RayCastResults ray, Angle angle)
+        public void FireEffects(IEntity user, float distance, Angle angle, IEntity hitEntity = null)
         {
             var effectSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EffectSystem>();
             _startTime = IoCManager.Resolve<IGameTiming>().CurTime;
             _deathTime = _startTime + TimeSpan.FromSeconds(1);
-            var distance = ray.HitEntity != null ? ray.Distance : MaxLength;
-            
-            var afterEffect = AfterEffects(user.Transform.GridPosition, ray, angle,  distance, 1.0f);
+
+            var afterEffect = AfterEffects(user.Transform.GridPosition, angle, distance, 1.0f);
             if (afterEffect != null)
             {
                 effectSystem.CreateParticle(afterEffect);
@@ -73,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             // if we're too close we'll stop the impact and muzzle / impact sprites from clipping
             if (distance > 1.0f)
             {
-                var impactEffect = ImpactFlash(ray, angle);
+                var impactEffect = ImpactFlash(distance, angle);
                 if (impactEffect != null)
                 {
                     effectSystem.CreateParticle(impactEffect);
@@ -86,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 }
             }
 
-            if (ray.HitEntity != null && _soundHitWall != null)
+            if (hitEntity != null && _soundHitWall != null)
             {
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
                 // TODO: No wall component so ?
@@ -128,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             return message;
         }
 
-        private EffectSystemMessage AfterEffects(GridCoordinates origin, RayCastResults ray, Angle angle, float distance, float offset = 0.0f)
+        private EffectSystemMessage AfterEffects(GridCoordinates origin, Angle angle, float distance, float offset = 0.0f)
         {
             var midPointOffset = angle.ToVec() * distance / 2;
             var message = new EffectSystemMessage
@@ -149,21 +148,19 @@ namespace Content.Server.GameObjects.Components.Projectiles
             return message;
         }
 
-        private EffectSystemMessage ImpactFlash(RayCastResults ray, Angle angle)
+        private EffectSystemMessage ImpactFlash(float distance, Angle angle)
         {
-            if (_impactFlash == null || ray.HitEntity != null)
+            if (_impactFlash == null)
             {
                 return null;
             }
-            
-            var dist = (ray.HitEntity != null ? ray.Distance : MaxLength);
-            
+
             var message = new EffectSystemMessage
             {
                 EffectSprite = _impactFlash,
                 Born = _startTime,
                 DeathTime = _deathTime,
-                Coordinates = Owner.Transform.GridPosition.Translated(angle.ToVec() * dist),
+                Coordinates = Owner.Transform.GridPosition.Translated(angle.ToVec() * distance),
                 //Rotated from east facing
                 Rotation = (float) angle.FlipPositive(),
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),

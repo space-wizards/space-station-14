@@ -36,7 +36,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 32
+      Brute: 1
 
 - type: entity
   id: BulletMagnumRubber
@@ -46,4 +46,4 @@
   components:
   - type: Projectile
     damages:
-      Brute: 32
+      Brute: 3

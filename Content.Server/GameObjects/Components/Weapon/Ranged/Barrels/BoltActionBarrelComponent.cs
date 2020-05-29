@@ -7,10 +7,12 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
@@ -57,18 +59,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     return;
                 }
 
+                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                
                 if (value)
                 {
                     if (_soundBoltOpen != null)
                     {
-                        _soundComponent?.Play(_soundBoltOpen);
+                        soundSystem.Play(_soundBoltOpen);
                     }
                 }
                 else
                 {
                     if (_soundBoltClosed != null)
                     {
-                        _soundComponent?.Play(_soundBoltClosed);
+                        soundSystem.Play(_soundBoltClosed);
                     }
                 }
                 
@@ -81,7 +85,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         private AppearanceComponent _appearanceComponent;
         // Sounds
-        private SoundComponent _soundComponent;
         private string _soundCycle;
         private string _soundBoltOpen;
         private string _soundBoltClosed;
@@ -128,16 +131,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             _chamberContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-chamber-container", Owner);
 
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-            {
-                _soundComponent = soundComponent;
-            }
-            
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
             
+            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
             UpdateAppearance();
         }
 
@@ -212,7 +211,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundCycle != null)
                 {
-                    _soundComponent?.Play(_soundCycle);
+                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                    soundSystem.Play(_soundCycle);
                 }
             }
             
@@ -244,7 +244,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _chamberContainer.Insert(ammo);
                 if (_soundInsert != null)
                 {
-                    _soundComponent?.Play(_soundInsert);
+                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                    soundSystem.Play(_soundInsert);
                 }
                 // Dirty();
                 UpdateAppearance();
@@ -257,7 +258,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _spawnedAmmo.Push(ammo);
                 if (_soundInsert != null)
                 {
-                    _soundComponent?.Play(_soundInsert);
+                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                    soundSystem.Play(_soundInsert);
                 }
                 // Dirty();
                 UpdateAppearance();

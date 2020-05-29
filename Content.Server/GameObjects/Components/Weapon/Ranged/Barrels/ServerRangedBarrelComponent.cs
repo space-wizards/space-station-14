@@ -36,6 +36,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// </summary>
     public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing
     {
+#pragma warning disable 649
+        [Dependency] private IGameTiming _gameTiming;
+        [Dependency] private IRobustRandom _robustRandom;
+#pragma warning restore 649
+        
         public override FireRateSelector FireRateSelector => _fireRateSelector;
         private FireRateSelector _fireRateSelector;
         public override FireRateSelector AllRateSelectors => _allRateSelectors;
@@ -43,7 +48,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override float FireRate => _fireRate;
         private float _fireRate;
         
-        private IGameTiming _gameTiming;
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
         private TimeSpan _lastFire;
         
@@ -52,7 +56,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         // Casing ejection
         private const float BulletEjectOffset = 0.2f;
-        [Dependency] private IRobustRandom _robustRandom;
         private readonly Direction[] _randomBulletDirs =
         {
             Direction.North,
@@ -80,8 +83,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private bool _canMuzzleFlash = true;
 
         // Sounds
-        private SoundComponent _soundComponent;
-
         public string SoundGunshot
         {
             get => _soundGunshot;
@@ -100,14 +101,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             // This hard-to-read area's dealing with recoil
             // Use degrees in yaml as it's easier to read compared to "0.0125f"
-            var minAngle = serializer.ReadDataField("minAngle", 5) / 2;
+            var minAngle = serializer.ReadDataField("minAngle", 0) / 2;
             _minAngle = Angle.FromDegrees(minAngle);
             // Random doubles it as it's +/- so uhh we'll just half it here for readability 
             var maxAngle = serializer.ReadDataField("maxAngle", 45) / 2;
             _maxAngle = Angle.FromDegrees(maxAngle);
-            var angleIncrease = serializer.ReadDataField("angleIncrease", (100 / _fireRate));
+            var angleIncrease = serializer.ReadDataField("angleIncrease", (40 / _fireRate));
             _angleIncrease = angleIncrease * (float) Math.PI / 180;
-            var angleDecay = serializer.ReadDataField("angleDecay", (float) _maxAngle.Theta * 2);
+            var angleDecay = serializer.ReadDataField("angleDecay", (float) 20);
             _angleDecay = angleDecay * (float) Math.PI / 180;
             serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
             
@@ -128,16 +129,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 Logger.Error($"Set an invalid FireRateSelector for {Name}");
                 throw new InvalidOperationException();
-            }
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            _gameTiming = IoCManager.Resolve<IGameTiming>();
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-            {
-                _soundComponent = soundComponent;
             }
         }
 
@@ -193,9 +184,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         private void Fire(IEntity shooter, GridCoordinates target)
         {
+            var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
             if (ShotsLeft == 0)
             {
-                _soundComponent?.Play(_soundEmpty);
+                if (_soundEmpty != null)
+                {
+                    soundSystem.Play(_soundEmpty);
+                }
                 return;
             }
 
@@ -203,7 +198,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var projectile = TakeProjectile();
             if (projectile == null)
             {
-                _soundComponent?.Play(_soundEmpty);
+                soundSystem.Play(_soundEmpty);
                 return;
             }
 
@@ -239,7 +234,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 throw new InvalidOperationException();
             }
             
-            _soundComponent?.Play(_soundGunshot);
+            soundSystem.Play(_soundGunshot);
             _lastFire = _gameTiming.CurTime;
 
             return;
@@ -259,7 +254,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             
             var soundCollection = IoCManager.Resolve<IPrototypeManager>().Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
             var randomFile = _robustRandom.Pick(soundCollection.PickFiles);
-            _soundComponent?.Play(randomFile, AudioParams.Default.WithVolume(-1));
+            var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            soundSystem.Play(randomFile, AudioParams.Default.WithVolume(-1));
             
         }
 
@@ -340,22 +336,35 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var ray = new CollisionRay(Owner.Transform.GridPosition.Position, angle.ToVec(), (int) hitscan.CollisionMask);
             var physicsManager = IoCManager.Resolve<IPhysicsManager>();
-            var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter);
-            var firstResult = rayCastResults.ToArray()[0];
-
-            if (firstResult.HitEntity != null &&
-                firstResult.HitEntity.TryGetComponent(out DamageableComponent damageableComponent))
+            var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter).ToArray();
+            bool effect = false;
+            foreach (var result in rayCastResults)
             {
-                damageableComponent.TakeDamage(
-                    hitscan.DamageType, 
-                    (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), 
-                    Owner, 
-                    shooter);
-                //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
-                //even numbers if halfway between two numbers, rather than rounding to nearest
+                if (!effect)
+                {
+                    effect = true;
+                    var distance = result.HitEntity != null ? result.Distance : hitscan.MaxLength;
+                    hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
+                }
+
+                if (result.HitEntity == null || !result.HitEntity.TryGetComponent(out DamageableComponent damageable))
+                {
+                    continue;
+                }
+                
+                damageable.TakeDamage(
+                        hitscan.DamageType, 
+                        (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), 
+                        Owner, 
+                        shooter);
+                    //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
+                    //even numbers if halfway between two numbers, rather than rounding to nearest
             }
-            
-            hitscan.FireEffects(shooter, firstResult, angle);
+
+            if (!effect)
+            {
+                hitscan.FireEffects(shooter, hitscan.MaxLength, angle);
+            }
         }
         #endregion
     }

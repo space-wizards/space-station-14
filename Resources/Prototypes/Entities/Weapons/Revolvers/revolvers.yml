@@ -20,21 +20,35 @@
   components:
   - type: Sprite
     sprite: Objects/Guns/Revolvers/deckard.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+    - state: mag-unshaded-3
+      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Icon
     sprite: Objects/Guns/Revolvers/deckard.rsi
   - type: Item
     Size: 24
     sprite: Objects/Guns/Revolvers/deckard.rsi
   - type: RangedWeapon
-  - type: RevolverBarrel
+  - type: BoltActionBarrel
     currentSelector: Single
     allSelectors: Single
     caliber: Magnum
     capacity: 5
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
+    autoCycle: true
     soundGunshot: /Audio/Guns/Gunshots/revolver.ogg
-    soundEject: /Audio/Guns/MagOut/revolver_magout.ogg
+    soundEmpty: /Audio/Guns/Empty/empty.ogg
     soundInsert: /Audio/Guns/MagIn/revolver_magin.ogg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer2D
+    - type: BarrelMagVisualizer2D
+      magState: mag
+      steps: 4
 
 - type: entity
   name: Inspector

@@ -2,14 +2,21 @@ using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
@@ -149,8 +156,28 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             {
                 return false;
             }
-            
-            handsComponent.PutInHandOrDrop(ammo.GetComponent<ItemComponent>());
+
+            var itemComponent = ammo.GetComponent<ItemComponent>();
+            if (!handsComponent.CanPutInHand(itemComponent))
+            {
+                var ammoComponent = ammo.GetComponent<AmmoComponent>();
+                ammo.Transform.GridPosition = eventArgs.User.Transform.GridPosition;
+                if (ammoComponent.SoundCollectionEject != null)
+                {
+                    var robustRandom = IoCManager.Resolve<IRobustRandom>();
+                    var soundCollection = IoCManager
+                        .Resolve<IPrototypeManager>()
+                        .Index<SoundCollectionPrototype>(ammoComponent.SoundCollectionEject);
+                    var randomFile = robustRandom.Pick(soundCollection.PickFiles);
+                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                    soundSystem.Play(randomFile, AudioParams.Default.WithVolume(-1));
+                }
+            }
+            else
+            {
+                handsComponent.PutInHand(itemComponent);
+            }
+
             return true;
         }
     }

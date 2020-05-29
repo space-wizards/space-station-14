@@ -1,4 +1,5 @@
 using System;
+using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -74,6 +75,13 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             {
                 handsComponent.PutInHandOrDrop(heldItem.GetComponent<ItemComponent>());
             }
+
+            if (heldItem.TryGetComponent(out ServerBatteryBarrelComponent batteryBarrelComponent))
+            {
+                batteryBarrelComponent.UpdateAppearance();
+            }
+            
+            UpdateStatus();
         }
 
         protected void PowerUpdate(object sender, PowerStateEventArgs eventArgs)
@@ -119,8 +127,6 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             }
 
             _appearanceComponent?.SetData(CellVisual.Occupied, _container.ContainedEntity != null);
-
-            _status = status;
         }
 
         public void OnUpdate(float frameTime)

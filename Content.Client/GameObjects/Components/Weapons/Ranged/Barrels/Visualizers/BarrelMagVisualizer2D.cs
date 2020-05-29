@@ -58,7 +58,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
                     return;
                 }
                 
-                var step = ContentHelpers.RoundToLevels(current, Math.Max(0, capacity - 2), _magSteps);
+                var step = ContentHelpers.RoundToLevels(current, capacity, _magSteps);
 
                 if (sprite.LayerMapTryGet(RangedBarrelVisualLayers.Mag, out _))
                 {
@@ -74,7 +74,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
             }
             else
             {
-                sprite.LayerSetVisible(RangedBarrelVisualLayers.Mag, false);
+                if (sprite.LayerMapTryGet(RangedBarrelVisualLayers.Mag, out _))
+                {
+                    sprite.LayerSetVisible(RangedBarrelVisualLayers.Mag, false);
+                }
+                
                 if (sprite.LayerMapTryGet(RangedBarrelVisualLayers.MagUnshaded, out _))
                 {
                     sprite.LayerSetVisible(RangedBarrelVisualLayers.MagUnshaded, false);

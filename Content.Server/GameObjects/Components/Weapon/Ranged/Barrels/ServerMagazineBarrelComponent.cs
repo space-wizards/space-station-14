@@ -9,10 +9,12 @@ using Content.Shared.Interfaces;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -79,7 +81,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private AppearanceComponent _appearanceComponent;
 
         // Sounds
-        private SoundComponent _soundComponent;
         private string _soundBoltOpen;
         private string _soundBoltClosed;
         private string _soundRack;
@@ -127,10 +128,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void Initialize()
         {
             base.Initialize();
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-            {
-                _soundComponent = soundComponent;
-            }
 
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
             {
@@ -146,18 +143,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // For magazines only when we normally set BoltOpen we'll defer the UpdateAppearance until everything is done
             // Whereas this will just call it straight up.
             BoltOpen = !BoltOpen;
+            var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
             if (BoltOpen)
             {
                 if (_soundBoltOpen != null)
                 {
-                    _soundComponent?.Play(_soundBoltOpen);
+                    soundSystem.Play(_soundBoltOpen);
                 }
             }
             else
             {
                 if (_soundBoltClosed != null)
                 {
-                    _soundComponent?.Play(_soundBoltClosed);
+                    soundSystem.Play(_soundBoltClosed);
                 }
             }
             Dirty();
@@ -208,12 +206,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 // If you're really into gunporn you could put a sound here
                 _chamberContainer.Insert(nextRound);
             }
+            
+            var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
 
             if (_autoEjectMag && magazine != null && magazine.GetComponent<RangedMagazineComponent>().ShotsLeft == 0)
             {
                 if (_soundAutoEject != null)
                 {
-                    _soundComponent?.Play(_soundAutoEject, AudioParams.Default.WithVolume(-5));
+                    soundSystem.Play(_soundAutoEject, AudioParams.Default.WithVolume(-5));
                 }
 
                 _magazineContainer.Remove(magazine);
@@ -223,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundBoltOpen != null)
                 {
-                    _soundComponent?.Play(_soundBoltOpen);
+                    soundSystem.Play(_soundBoltOpen);
                 }
 
                 if (ContainerHelpers.TryGetContainer(Owner, out var container))
@@ -240,7 +240,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundRack != null)
                 {
-                    _soundComponent?.Play(_soundRack);
+                    soundSystem.Play(_soundRack);
                 }
             }
             
@@ -268,7 +268,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundBoltClosed != null)
                 {
-                    _soundComponent?.Play(_soundBoltClosed);
+                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                    soundSystem.Play(_soundBoltClosed);
                 }
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("Bolt closed"));
                 BoltOpen = false;
@@ -301,7 +302,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _magazineContainer.Remove(mag);
             if (_soundMagEject != null)
             {
-                _soundComponent?.Play(_soundMagEject);
+                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                soundSystem.Play(_soundMagEject);
             }
 
             if (user.TryGetComponent(out HandsComponent handsComponent))
@@ -340,7 +342,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     if (_soundMagInsert != null)
                     {
-                        _soundComponent?.Play(_soundMagInsert);
+                        var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                        soundSystem.Play(_soundMagInsert);
                     }
                     Owner.PopupMessage(eventArgs.User, Loc.GetString("Magazine inserted"));
                     _magazineContainer.Insert(eventArgs.Using);
