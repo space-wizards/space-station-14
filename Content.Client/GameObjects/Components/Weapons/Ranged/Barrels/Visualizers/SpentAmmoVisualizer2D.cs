@@ -18,14 +18,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
                 return;
             }
 
-            if (spent)
-            {
-                sprite.LayerSetState(AmmoVisualLayers.Base, "spent");
-            }
-            else
-            {
-                sprite.LayerSetState(AmmoVisualLayers.Base, "base");
-            }
+            sprite.LayerSetState(AmmoVisualLayers.Base, spent ? "spent" : "base");
         }
     }
 

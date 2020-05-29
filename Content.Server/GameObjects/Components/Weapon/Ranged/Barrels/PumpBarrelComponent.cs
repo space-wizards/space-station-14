@@ -94,7 +94,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
             }
 
-            _chamberContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-chamber-container", Owner);
+            _chamberContainer = 
+                ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-chamber-container", Owner, out existing);
+            if (existing)
+            {
+                _unspawnedCount--;
+            }
 
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
             {
@@ -177,6 +182,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return false;
             }
 
+            // So we never put straight into the chamber which means if a single shell is put in it
+            // has to be pumped coz it's cooler. If this changes then here ya's code
+            /*
             if (_chamberContainer.ContainedEntity == null)
             {
                 _chamberContainer.Insert(eventArgs.Using);
@@ -189,6 +197,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
                 return true;
             }
+            */
 
             if (_ammoContainer.ContainedEntities.Count < Capacity - 1)
             {

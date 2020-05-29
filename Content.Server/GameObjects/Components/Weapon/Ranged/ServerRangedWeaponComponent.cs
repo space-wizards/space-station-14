@@ -43,18 +43,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
         private FireRateSelector FireRateSelector => _barrel?.FireRateSelector ?? FireRateSelector.Safety;
 
-        public bool SetGunshotSound(string soundPath)
-        {
-            if (_barrel == null)
-            {
-                return false;
-            }
-
-            _barrel.SoundGunshot = soundPath;
-            Dirty();
-            return true;
-        }
-        
         private bool WeaponCanFire()
         {
             return WeaponCanFireHandler == null || WeaponCanFireHandler();
@@ -108,11 +96,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             {
                 return;
             }
-
-            // Firing delays are quite complicated.
-            // Sometimes the client's fire messages come in just too early.
-            // Generally this is a frame or two of being early.
-            // In that case we try them a few times the next frames to avoid having to drop them.
+            
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
             var span = curTime - _lastFireTime;
             if (span.TotalSeconds < 1 / _barrel.FireRate)

@@ -104,8 +104,8 @@ namespace Content.Client.GameObjects.Components.Weapons
     public sealed class FlashOverlay : Overlay
     {
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
-        private IGameTiming _timer;
-        private IClyde _displayManager;
+        private readonly IGameTiming _timer;
+        private readonly IClyde _displayManager;
         public TimeSpan StartTime { get; set; }
         public double Duration { get; set; }
         public FlashOverlay(double duration) : base(nameof(FlashOverlay))

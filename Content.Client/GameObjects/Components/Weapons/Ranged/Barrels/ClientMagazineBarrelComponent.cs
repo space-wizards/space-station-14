@@ -16,7 +16,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Magazine
+namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 {
     [RegisterComponent]
     public class ClientMagazineBarrelComponent : Component, IItemStatus

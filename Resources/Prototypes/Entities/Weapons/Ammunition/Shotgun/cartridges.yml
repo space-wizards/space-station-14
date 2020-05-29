@@ -35,8 +35,6 @@
     ammoSpread: 0
     projectile: PelletShotgunBeanbag
     projectilesFired: 1
-  - type: StunProjectile
-    paralyzeAmount: 5
 
 - type: entity
   id: ShellShotgunSlug

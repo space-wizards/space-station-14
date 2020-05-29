@@ -23,6 +23,7 @@
   - type: Projectile
     damages:
       Brute: 10
+  - type: StunProjectile
 
 - type: entity
   id: PelletShotgun
