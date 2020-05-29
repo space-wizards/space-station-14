@@ -4,6 +4,8 @@
     "x": 32,
     "y": 32
   },
+  "license": "CCBYNA3",
+  "copyright": "https://github.com/tgstation/tgstation",
   "states": [
     {
       "name": "random_bedsheet",
