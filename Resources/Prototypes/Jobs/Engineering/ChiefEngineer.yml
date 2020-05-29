@@ -7,13 +7,12 @@
   department:
   - Command
   - Engineering
-
   icon: "ChiefEngineer"
-
   access:
-  - maintenance
-  - engineering
-  - command
+  - Maintenance
+  - Engineering
+  - Command
+  - External
 
 - type: startingGear
   id: ChiefEngineerGear
@@ -22,4 +21,4 @@
     innerclothing: UniformChiefEngineer
     backpack: BackpackEngineering
     shoes: ShoesBrown
-    idcard: CEIDCard
+    idcard: CEPDA

@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects
                 return false;
 
             var userPos = user.Transform.MapPosition;
-            var itemPos = Owner.Transform.WorldPosition;
+            var itemPos = Owner.Transform.MapPosition;
 
             return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
         }

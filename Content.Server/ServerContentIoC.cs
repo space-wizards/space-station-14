@@ -4,6 +4,8 @@ using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Server.Interfaces.PDA;
+using Content.Server.PDA;
 using Content.Server.Preferences;
 using Content.Server.Sandbox;
 using Content.Server.Utility;
@@ -30,6 +32,7 @@ namespace Content.Server
             IoCManager.Register<IModuleManager, ServerModuleManager>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
+            IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
         }
     }
 }

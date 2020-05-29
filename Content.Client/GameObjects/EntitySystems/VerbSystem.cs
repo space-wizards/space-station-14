@@ -46,7 +46,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IItemSlotManager _itemSlotManager;
         [Dependency] private readonly IGameTiming _gameTiming;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
 #pragma warning restore 649
 
         private EntityList _currentEntityList;

@@ -5,11 +5,10 @@
   startingGear: AssistantGear
   department:
   - Civilian
-
   icon: "Assistant"
-
   access:
-  - maintenance
+  - Maintenance
+  - Service
 
 - type: startingGear
   id: AssistantGear
@@ -17,5 +16,5 @@
     innerclothing: UniformColorGrey
     backpack: BackpackClothing
     shoes: ShoesBlack
-    idcard: AssistantIDCard
+    idcard: AssistantPDA
 

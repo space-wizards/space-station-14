@@ -5,8 +5,10 @@
   startingGear: ChefGear
   department:
   - Civilian
-
   icon: "Chef"
+  access:
+  - Service
+  - Maintenance
 
 - type: startingGear
   id: ChefGear
@@ -14,4 +16,4 @@
     innerclothing: UniformChef
     backpack: BackpackClothing
     shoes: ShoesBlack
-    idcard: ChefIDCard
+    idcard: ChefPDA

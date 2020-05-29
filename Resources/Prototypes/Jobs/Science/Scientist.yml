@@ -6,11 +6,9 @@
   startingGear: ScientistGear
   department:
   - Science
-
   icon: "Scientist"
-
   access:
-  - research
+  - Research
 
 - type: startingGear
   id: ScientistGear
@@ -19,4 +17,4 @@
     backpack: BackpackClothing
     shoes: ShoesWhite
     outerclothing: OuterclothingLabcoattoxopen
-    idcard: ResearchIDCard
+    idcard: SciencePDA

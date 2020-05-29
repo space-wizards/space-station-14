@@ -58,7 +58,7 @@ namespace Content.Client.State
             if (_playerManager.LocalPlayer.ControlledEntity != null && entityToClick != null)
             {
                 var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.MapPosition;
-                var entityPos = entityToClick.Transform.WorldPosition;
+                var entityPos = entityToClick.Transform.MapPosition;
                 inRange = _entitySystemManager.GetEntitySystem<SharedInteractionSystem>()
                     .InRangeUnobstructed(playerPos, entityPos, predicate:entity => entity != _playerManager.LocalPlayer.ControlledEntity || entity != entityToClick);
             }

@@ -36,9 +36,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     public class ToolComponent : SharedToolComponent
     {
 #pragma warning disable 649
-        [Dependency] private IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IRobustRandom _robustRandom;
 #pragma warning restore 649

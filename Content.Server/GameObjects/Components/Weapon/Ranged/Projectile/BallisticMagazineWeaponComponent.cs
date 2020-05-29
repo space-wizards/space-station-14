@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             {
                 return false;
             }
-            if (_magInSound != null)
+            if (_magInSound != null && playSound)
             {
                 Owner.GetComponent<SoundComponent>().Play(_magInSound);
             }
@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             if (_magazineSlot.Remove(entity))
             {
                 entity.Transform.GridPosition = Owner.Transform.GridPosition;
-                if (_magOutSound != null)
+                if (_magOutSound != null && playSound)
                 {
                     Owner.GetComponent<SoundComponent>().Play(_magOutSound, AudioParams.Default.WithVolume(20));
                 }
