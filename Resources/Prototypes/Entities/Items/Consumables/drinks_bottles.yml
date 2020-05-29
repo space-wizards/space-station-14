@@ -1,5 +1,18 @@
 - type: entity
-  parent: DrinkBase
+  parent: BaseItem
+  id: DrinkBottleBaseFull
+  abstract: true
+  components:
+  - type: Drink
+    openSounds: bottleOpenSounds
+  - type: Solution
+  - type: Sprite
+    state: icon
+  - type: Icon
+    state: icon
+
+- type: entity
+  parent: DrinkBottleBaseFull
   id: DrinkAbsintheBottleFull
   name: jailbreaker verte
   description: One sip of this and you just know you're gonna have a good time.
@@ -11,7 +24,7 @@
     sprite: Objects/Drinks/absinthebottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkAlcoGreenFull
   name: emeraldine melon liquor
   description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
@@ -23,7 +36,7 @@
     sprite: Objects/Drinks/alco-green.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkAleBottleFull
   name: magm-ale
   description: A true dorf's drink of choice.
@@ -40,7 +53,7 @@
     sprite: Objects/Drinks/alebottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkBottleOfNothingFull
   name: bottle of nothing
   description: A bottle filled with nothing
@@ -52,7 +65,7 @@
     sprite: Objects/Drinks/bottleofnothing.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkCognacBottleFull
   name: cognac bottle
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
@@ -69,7 +82,7 @@
     sprite: Objects/Drinks/cognacbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkGinBottleFull
   name: griffeater gin bottle
   description: A bottle of high quality gin, produced in the New London Space Station.
@@ -81,7 +94,7 @@
     sprite: Objects/Drinks/ginbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkGoldschlagerBottleFull
   name: goldschlager bottle
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
@@ -93,7 +106,7 @@
     sprite: Objects/Drinks/goldschlagerbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkKahluaBottleFull
   name: kahlua bottle
   description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK
@@ -110,7 +123,7 @@
     sprite: Objects/Drinks/kahluabottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkPatronBottleFull
   name: wrapp artiste patron bottle
   description: Silver laced tequilla, served in space night clubs across the galaxy.
@@ -122,7 +135,7 @@
     sprite: Objects/Drinks/patronbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkPoisonWinebottleFull
   name: warlock's velvet bottle
   description: What a delightful packaging for a surely high quality wine! The vintage must be amazing!
@@ -134,7 +147,7 @@
     sprite: Objects/Drinks/pwinebottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkRumbottleFull
   name: captain pete's cuban spiced rum
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
@@ -146,7 +159,7 @@
     sprite: Objects/Drinks/rumbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkTequilabottleFull
   name: caccavo guaranteed quality tequila bottle
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
@@ -158,7 +171,7 @@
     sprite: Objects/Drinks/tequillabottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkVermouthBottleFull
   name: goldeneye vermouth bottle
   description: Sweet, sweet dryness~
@@ -170,7 +183,7 @@
     sprite: Objects/Drinks/vermouthbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkVodkaBottleFull
   name: vodka bottle
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
@@ -187,7 +200,7 @@
     sprite: Objects/Drinks/vodkabottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkWhiskeyBottleFull
   name: uncle git's special reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
@@ -204,7 +217,7 @@
     sprite: Objects/Drinks/whiskeybottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkWineBottleFull
   name: doublebearded bearded special wine bottle
   description: A faint aura of unease and asspainery surrounds the bottle.

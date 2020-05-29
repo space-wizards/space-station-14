@@ -28,8 +28,6 @@ namespace Content.Client.GameObjects.EntitySystems
 #pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud;
         [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IOverlayManager _overlayManager;
         [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 649
 

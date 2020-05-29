@@ -30,8 +30,6 @@ namespace Content.Server.GameObjects.Components.Construction
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)

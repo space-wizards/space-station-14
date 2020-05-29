@@ -11,6 +11,16 @@
     FoodMeat: 1
 
 - type: microwaveMealRecipe
+  id: RecipeClownBurger
+  name: clownburger recipe
+  result: FoodClownBurger
+  time: 5
+  reagents:
+    chem.Flour: 5
+  solids:
+    MaskClown: 1
+
+- type: microwaveMealRecipe
   id: RecipeTofuBurger
   name: tofu burger recipe
   result: FoodTofuBurger
@@ -32,7 +42,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeSuperBiteBurger
-  name: Super Bite Burger recipe
+  name: super bite burger recipe
   result: FoodSuperBiteBurger
   time: 20
   reagents:
@@ -49,7 +59,7 @@
 - type: microwaveMealRecipe
   id: RecipeBread
   name: bread recipe
-  result: DrinkFoodContainerBread
+  result: FoodContainerBread
   time: 15
   reagents:
     chem.Flour: 15
@@ -94,7 +104,7 @@
 - type: microwaveMealRecipe
   id: RecipeCreamCheeseBread
   name: cream cheese bread recipe
-  result: DrinkFoodContainerCreamCheeseBread
+  result: FoodContainerCreamCheeseBread
   time: 20
   reagents:
     chem.Flour: 15
@@ -104,7 +114,7 @@
 - type: microwaveMealRecipe
   id: RecipeBananaBread
   name: banana bread recipe
-  result: DrinkFoodContainerBananaBread
+  result: FoodContainerBananaBread
   time: 25
   reagents:
     chem.Flour: 15
@@ -119,7 +129,7 @@
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
   name: margherita pizza recipe
-  result: DrinkFoodContainerMargheritaPizza
+  result: FoodContainerMargheritaPizza
   time: 30
   reagents:
     chem.Flour: 10
@@ -130,7 +140,7 @@
 - type: microwaveMealRecipe
   id: RecipeMushroomPizza
   name: mushroom pizza recipe
-  result: DrinkFoodContainerMushroomPizza
+  result: FoodContainerMushroomPizza
   time: 25
   reagents:
     chem.Flour: 10
@@ -140,7 +150,7 @@
 - type: microwaveMealRecipe
   id: RecipeMeatPizza
   name: meat pizza recipe
-  result: DrinkFoodContainerMeatPizza
+  result: FoodContainerMeatPizza
   time: 30
   reagents:
     chem.Flour: 10
@@ -152,7 +162,7 @@
 - type: microwaveMealRecipe
   id: RecipeVegetablePizza
   name: vegetable pizza recipe
-  result: DrinkFoodContainerVegetablePizza
+  result: FoodContainerVegetablePizza
   time: 30
   reagents:
     chem.Flour: 10
@@ -223,7 +233,7 @@
 
 # - type: microwaveMealRecipe
 #   id: RecipeMoMMISpaghetti
-#   name: MoMMI spaghetti recipe
+#   name: mommi spaghetti recipe
 #   result: FoodMoMMISpaghetti
 #   time: 10
 #   reagents:

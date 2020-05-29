@@ -5,11 +5,11 @@
   animationDuration: 1.1
   spriteName: cola
   startingInventory:
-    DrinkFoodContainerColaCanUnopened: 10
-    DrinkFoodContainerIceTeaCanUnopened: 10
-    DrinkFoodContainerLemonLimeCanUnopened: 10
-    DrinkFoodContainerPurpleCanUnopened: 10
-    DrinkFoodContainerSpaceMountainWindCanUnopened: 10
-    DrinkFoodContainerSpaceUpCanUnopened: 10
-    DrinkFoodContaineStarkistCanUnopened: 10
-    DrinkFoodContaineThirteenLokoCanUnopened: 10
+    DrinkColaCan: 10
+    DrinkIceTeaCan: 10
+    DrinkLemonLimeCan: 10
+    DrinkPurpleCan: 10
+    DrinkSpaceMountainWindCan: 10
+    DrinkSpaceUpCan: 10
+    DrinkDrinkFoodContaineStarkistCan: 10
+    DrinkFoodContaineThirteenLokoCan: 10

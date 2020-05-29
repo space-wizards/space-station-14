@@ -182,6 +182,7 @@ namespace Content.Client.Instruments
                 return;
             }
 
+            MidiStopButtonOnPressed(null);
             if (!_owner.Instrument.OpenMidi(filename)) return;
             MidiPlaybackSetButtonsDisabled(false);
             if (midiInputButton.Pressed)

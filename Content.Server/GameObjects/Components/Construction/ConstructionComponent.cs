@@ -20,9 +20,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Construction.ConstructionStepMaterial;
-using static Content.Shared.Construction.ConstructionStepTool;
-using Robust.Shared.Utility;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
@@ -38,12 +35,6 @@ namespace Content.Server.GameObjects.Components.Construction
 
         SpriteComponent Sprite;
         ITransformComponent Transform;
-#pragma warning disable 649
-        [Dependency] private IRobustRandom _random;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
 
         public override void Initialize()
         {

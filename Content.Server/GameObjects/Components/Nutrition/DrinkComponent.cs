@@ -1,148 +1,163 @@
-﻿using System;
-using System.Linq;
+using System;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces;
-using Content.Shared.Maths;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class DrinkComponent : Component, IAfterInteract, IUse
+    [ComponentReference(typeof(IAfterInteract))]
+    public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange,IExamine
     {
 #pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IRobustRandom _random;
+        [Dependency] private readonly IEntitySystemManager _entitySystem;
 #pragma warning restore 649
+
+        private AudioSystem _audioSystem;
         public override string Name => "Drink";
+
         [ViewVariables]
         private SolutionComponent _contents;
-
-        private AppearanceComponent _appearanceComponent;
-
         [ViewVariables]
         private string _useSound;
         [ViewVariables]
-        private string _finishPrototype;
-
-        public ReagentUnit TransferAmount => _transferAmount;
+        private bool _defaultToOpened;
         [ViewVariables]
-        private ReagentUnit _transferAmount = ReagentUnit.New(2);
+        public ReagentUnit TransferAmount { get; private set; } = ReagentUnit.New(2);
 
-        public ReagentUnit MaxVolume
-        {
-            get => _contents.MaxVolume;
-            set => _contents.MaxVolume = value;
-        }
+        [ViewVariables]
+        public bool Opened => _opened;
 
-        private bool _despawnOnFinish;
+        [ViewVariables]
+        public bool Empty => _contents.CurrentVolume.Float() <= 0;
 
-        private bool _drinking;
-
-        public int UsesLeft()
-        {
-            // In case transfer amount exceeds volume left
-            if (_contents.CurrentVolume == 0)
-            {
-                return 0;
-            }
-            return Math.Max(1, (int)Math.Ceiling((_contents.CurrentVolume / _transferAmount).Float()));
-        }
-
+        private AppearanceComponent _appearanceComponent;
+        private bool _opened = false;
+        private string _soundCollection;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "use_sound", "/Audio/items/drink.ogg");
-            // E.g. cola can when done or clear bottle, whatever
-            // Currently this will enforce it has the same volume but this may change. - TODO: this should be implemented in a separate component
-            serializer.DataField(ref _despawnOnFinish, "despawn_empty", false);
-            serializer.DataField(ref _finishPrototype, "spawn_on_finish", null);
+            serializer.DataField(ref _useSound, "useSound", "/Audio/items/drink.ogg");
+            serializer.DataField(ref _defaultToOpened, "isOpen", false); //For things like cups of coffee.
+            serializer.DataField(ref _soundCollection, "openSounds","canOpenSounds");
         }
 
-        protected override void Startup()
+        public override void Initialize()
         {
-            base.Startup();
-            _contents = Owner.GetComponent<SolutionComponent>();
+            base.Initialize();
+            Owner.TryGetComponent(out _appearanceComponent);
+            if(!Owner.TryGetComponent(out _contents))
+            {
+                _contents = Owner.AddComponent<SolutionComponent>();
+            }
+
             _contents.Capabilities = SolutionCaps.PourIn
                                      | SolutionCaps.PourOut
                                      | SolutionCaps.Injectable;
-            _drinking = false;
-            Owner.TryGetComponent(out AppearanceComponent appearance);
-            _appearanceComponent = appearance;
-            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.MaxUses, MaxVolume.Float());
-            _updateAppearance();
+            _opened = _defaultToOpened;
+            UpdateAppearance();
         }
 
-        private void _updateAppearance()
+        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
+        {
+            UpdateAppearance();
+        }
+
+
+        private void UpdateAppearance()
         {
             _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.Visual, _contents.CurrentVolume.Float());
         }
-
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        bool IUse.UseEntity(UseEntityEventArgs args)
         {
-            UseDrink(eventArgs.User);
-
-            return true;
+            if (!_opened)
+            {
+                //Do the opening stuff like playing the sounds.
+                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
+                var file = _random.Pick(soundCollection.PickFiles);
+                _audioSystem = _entitySystem.GetEntitySystem<AudioSystem>();
+                _audioSystem.Play(file, Owner, AudioParams.Default);
+                _opened = true;
+                return false;
+            }
+            return TryUseDrink(args.User);
         }
 
+        //Force feeding a drink to someone.
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
-            UseDrink(eventArgs.Target);
+            TryUseDrink(eventArgs.Target);
         }
 
-        private void UseDrink(IEntity targetEntity)
+        public void Examine(FormattedMessage message)
         {
-            if (targetEntity == null)
+            if (!Opened)
             {
                 return;
             }
+            var color = Empty ? "gray" : "yellow";
+            var openedText = Loc.GetString(Empty ? "Empty" : "Opened");
+            message.AddMarkup(Loc.GetString("[color={0}]{1}[/color]", color, openedText));
 
-            if (UsesLeft() == 0 && !_despawnOnFinish)
+        }
+
+        private bool TryUseDrink(IEntity target)
+        {
+            if (target == null)
             {
-                targetEntity.PopupMessage(targetEntity, _localizationManager.GetString("Empty"));
-                return;
+                return false;
             }
 
-            if (targetEntity.TryGetComponent(out StomachComponent stomachComponent))
+            if (!_opened)
             {
-                _drinking = true;
-                var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
-                var split = _contents.SplitSolution(transferAmount);
-                if (stomachComponent.TryTransferSolution(split))
-                {
-                    // When we split Finish gets called which may delete the can so need to use the entity system for sound
-                    if (_useSound != null)
-                    {
-                        var audioSystem = EntitySystem.Get<AudioSystem>();
-                        audioSystem.Play(_useSound, Owner, AudioParams.Default.WithVolume(-2f));
-                        targetEntity.PopupMessage(targetEntity, _localizationManager.GetString("Slurp"));
-                    }
-                }
-                else
-                {
-                    // Add it back in
-                    _contents.TryAddSolution(split);
-                    targetEntity.PopupMessage(targetEntity, _localizationManager.GetString("Can't drink"));
-                }
-                _drinking = false;
+                target.PopupMessage(target, Loc.GetString("Open it first!"));
             }
+
+            if (_contents.CurrentVolume.Float() <= 0)
+            {
+                target.PopupMessage(target, Loc.GetString("It's empty!"));
+                return false;
+            }
+
+            if (!target.TryGetComponent(out StomachComponent stomachComponent))
+            {
+                return false;
+            }
+
+            var transferAmount = ReagentUnit.Min(TransferAmount, _contents.CurrentVolume);
+            var split = _contents.SplitSolution(transferAmount);
+            if (stomachComponent.TryTransferSolution(split))
+            {
+                if (_useSound == null) return false;
+                _audioSystem.Play(_useSound, Owner, AudioParams.Default.WithVolume(-2f));
+                target.PopupMessage(target, Loc.GetString("Slurp"));
+                UpdateAppearance();
+                return true;
+            }
+
+            //Stomach was full or can't handle whatever solution we have.
+            _contents.TryAddSolution(split);
+            target.PopupMessage(target, Loc.GetString("You've had enough {0}!", Owner.Name));
+            return false;
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Content.Server.GameObjects.EntitySystems
     public class SharedInteractionSystem : EntitySystem
     {
         #pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IPhysicsManager _physicsManager;
         #pragma warning restore 649
 

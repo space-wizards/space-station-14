@@ -315,12 +315,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IPhysicsManager _physicsManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
-
-        public const float InteractionRange = 2;
-        public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public override void Initialize()
         {
