@@ -22,7 +22,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     public sealed class ServerBatteryBarrelComponent : ServerRangedBarrelComponent
     {
         public override string Name => "BatteryBarrel";
-        public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
 
         // The minimum change we need before we can fire
         [ViewVariables] private float _lowerChargeLimit;
@@ -113,19 +112,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             
             UpdateAppearance();
         }
-
-        public override ComponentState GetComponentState()
-        {
-            (int, int)? count = null;
-            var powerCell = _powerCellContainer.ContainedEntity;
-            if (powerCell != null)
-            {
-                count = (ShotsLeft, Capacity);
-            }
-            
-            return new BatteryBarrelComponentState(FireRateSelector, count, SoundGunshot);
-        }
-
+        
         public void UpdateAppearance()
         {
             _appearanceComponent?.SetData(BatteryBarrelVisuals.BatteryLoaded, _powerCellContainer.ContainedEntity != null);

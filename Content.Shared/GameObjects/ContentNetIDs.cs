@@ -44,12 +44,9 @@
         public const uint GHOST = 1039;
         public const uint MICROWAVE = 1040;
         public const uint GRAVITY_GENERATOR = 1041;
-        public const uint BATTERY_BARREL = 1042;
-        public const uint BOLT_BARREL = 1043;
-        public const uint REVOLVER_BARREL = 1044;
-        public const uint SURGERY = 1045;
-        public const uint MULTITOOLS = 1046;
-        public const uint PDA = 1047;
-        public const uint FLASHABLE = 1048;
+        public const uint SURGERY = 1043;
+        public const uint MULTITOOLS = 1044;
+        public const uint PDA = 1045;
+        public const uint FLASHABLE = 1046;
     }
 }
