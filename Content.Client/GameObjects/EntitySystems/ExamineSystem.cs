@@ -5,7 +5,6 @@ using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
@@ -14,6 +13,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -42,8 +42,15 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             IoCManager.InjectDependencies(this);
 
-            var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine));
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine))
+                .Register<ExamineSystem>();
+        }
+
+        public override void Shutdown()
+        {
+            CommandBinds.Unregister<ExamineSystem>();
+            base.Shutdown();
         }
 
         private bool HandleExamine(ICommonSession session, GridCoordinates coords, EntityUid uid)
