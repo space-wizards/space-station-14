@@ -11,7 +11,6 @@
     transferAmount: 5
   - type: Drink
     isOpen: true
-  - type: Sound
   - type: Sprite
     state: icon
   - type: Icon
