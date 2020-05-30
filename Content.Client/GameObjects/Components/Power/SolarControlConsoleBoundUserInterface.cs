@@ -57,7 +57,7 @@ namespace Content.Client.GameObjects.Components.Power
 
         private string FormatAngle(Angle d)
         {
-            return (Math.Floor(d.Degrees * 10) / 10).ToString();
+            return d.Degrees.ToString("F1");
         }
 
         // The idea behind this is to prevent every update from the server
@@ -194,19 +194,17 @@ namespace Content.Client.GameObjects.Components.Power
                 Color gridLines = new Color(0.08f, 0.08f, 0.08f);
                 int panelExtentCutback = 4;
                 int gridLinesRadial = 8;
-                //int gridLinesEquatorial = 8;
+                int gridLinesEquatorial = 8;
 
                 // Draw base
                 handle.DrawCircle((point, point), RadiusCircle + 1, fakeAA);
                 handle.DrawCircle((point, point), RadiusCircle, Color.Black);
 
                 // Draw grid lines
-                /* Requires RobustToolbox#1084
                 for (int i = 0; i < gridLinesEquatorial; i++)
                 {
                     handle.DrawCircle((point, point), (RadiusCircle / gridLinesEquatorial) * i, gridLines, false);
                 }
-                */
 
                 for (int i = 0; i < gridLinesRadial; i++)
                 {
