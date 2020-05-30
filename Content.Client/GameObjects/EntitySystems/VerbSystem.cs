@@ -432,6 +432,12 @@ namespace Content.Client.GameObjects.EntitySystems
                     return;
                 }
 
+                if (args.Function == ContentKeyFunctions.ExamineEntity)
+                {
+                    Get<ExamineSystem>().DoExamine(_entity);
+                    return;
+                }
+
                 if (_master._itemSlotManager.OnButtonPressed(args, _entity))
                 {
                     _master.CloseAllMenus();
