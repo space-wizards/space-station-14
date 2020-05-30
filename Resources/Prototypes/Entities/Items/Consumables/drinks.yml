@@ -17,25 +17,6 @@
   - type: Icon
     state: icon
 
-# Transformable container - normal glass
-- type: entity
-  name: Drinking glass
-  parent: DrinkBase
-  id: DrinkGlass
-  components:
-  - type: Sprite
-    sprite: Objects/Drinks/glass_clear.rsi
-  - type: Icon
-    sprite: Objects/Drinks/glass_clear.rsi
-  - type: Solution
-    fillingState: glass
-    maxVol: 50
-    caps: 16
-  - type: Drink
-  - type: Pourable
-    transferAmount: 5
-  - type: TransformableContainer
-
 - type: entity
   parent: DrinkBase
   id: DrinkAleglass
