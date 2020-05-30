@@ -38,7 +38,6 @@
     fillingState: glass
     maxVol: 50
     caps: 16
-
   - type: Pourable
     transferAmount: 5
   - type: TransformableContainer
