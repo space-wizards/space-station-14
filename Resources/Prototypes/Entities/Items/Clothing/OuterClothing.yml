@@ -1588,7 +1588,7 @@
   parent: OuterclothingBase
   id: OuterclothingSkub
   name: Skub Suit
-  description: 'Huh, Skub.'
+  description: 'Skub is crudely written on the outside of this cylindrical suit.'
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/skubbody.rsi

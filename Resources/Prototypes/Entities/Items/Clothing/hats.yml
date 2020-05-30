@@ -2605,14 +2605,14 @@
   parent: HatBase
   id: HatSkub
   name: Skub Hat
-  description: 'Huh, Skub.'
+  description: 'Best paired with the Skub Suit.'
   components:
-  - sprite: Clothing/Head/skubhead.rsi
     type: Sprite
   - sprite: Clothing/Head/skubhead.rsi
     type: Icon
   - sprite: Clothing/Head/skubhead.rsi
     type: Clothing
+  - sprite: Clothing/Head/skubhead.rsi
 
 - type: entity
   id: HatSombrero
