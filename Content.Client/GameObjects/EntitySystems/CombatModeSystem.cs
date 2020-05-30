@@ -42,7 +42,7 @@ namespace Content.Client.GameObjects.EntitySystems
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ToggleCombatMode,
                     InputCmdHandler.FromDelegate(CombatModeToggled))
-                .Register<CombatModeSystem, InputSystem>();
+                .Register<CombatModeSystem>();
         }
 
         public override void Shutdown()

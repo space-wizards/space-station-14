@@ -323,7 +323,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
                     new PointerInputCmdHandler(HandleActivateItemInWorld))
-                .Register<InteractionSystem, InputSystem>();
+                .Register<InteractionSystem>();
         }
 
         public override void Shutdown()

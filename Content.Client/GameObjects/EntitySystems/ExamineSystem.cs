@@ -45,7 +45,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine))
-                .Register<ExamineSystem, InputSystem>();
+                .Register<ExamineSystem>();
         }
 
         public override void Shutdown()
