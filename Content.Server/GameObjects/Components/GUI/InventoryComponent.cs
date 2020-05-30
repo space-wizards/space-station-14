@@ -30,7 +30,9 @@ namespace Content.Server.GameObjects
 #pragma warning restore 649
 
         [ViewVariables]
-        private readonly Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
+        private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new Dictionary<Slots, ContainerSlot>();
+
+        public IReadOnlyDictionary<Slots, ContainerSlot> SlotContainers => _slotContainers;
 
         public override void Initialize()
         {
@@ -47,7 +49,7 @@ namespace Content.Server.GameObjects
 
         public override void OnRemove()
         {
-            var slots = SlotContainers.Keys.ToList();
+            var slots = _slotContainers.Keys.ToList();
             foreach (var slot in slots)
             {
                 RemoveSlot(slot);
@@ -77,7 +79,7 @@ namespace Content.Server.GameObjects
         }
         public T GetSlotItem<T>(Slots slot) where T : ItemComponent
         {
-            return SlotContainers[slot].ContainedEntity?.GetComponent<T>();
+            return _slotContainers[slot].ContainedEntity?.GetComponent<T>();
         }
 
         public bool TryGetSlotItem<T>(Slots slot, out T itemComponent) where T : ItemComponent
@@ -109,7 +111,7 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            var inventorySlot = SlotContainers[slot];
+            var inventorySlot = _slotContainers[slot];
             if (!inventorySlot.Insert(item.Owner))
             {
                 return false;
@@ -163,7 +165,7 @@ namespace Content.Server.GameObjects
                 reason = Loc.GetString("You can't equip this!");
             }
 
-            return pass && SlotContainers[slot].CanInsert(item.Owner);
+            return pass && _slotContainers[slot].CanInsert(item.Owner);
         }
 
         public bool CanEquip(Slots slot, ItemComponent item) => CanEquip(slot, item, out var _);
@@ -182,7 +184,7 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            var inventorySlot = SlotContainers[slot];
+            var inventorySlot = _slotContainers[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
             if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
             {
@@ -211,7 +213,7 @@ namespace Content.Server.GameObjects
             if (!ActionBlockerSystem.CanUnequip(Owner))
                 return false;
 
-            var InventorySlot = SlotContainers[slot];
+            var InventorySlot = _slotContainers[slot];
             return InventorySlot.ContainedEntity != null && InventorySlot.CanRemove(InventorySlot.ContainedEntity);
         }
 
@@ -230,7 +232,7 @@ namespace Content.Server.GameObjects
             }
 
             Dirty();
-            return SlotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
+            return _slotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
         }
 
         /// <summary>
@@ -254,7 +256,7 @@ namespace Content.Server.GameObjects
                     "Unable to remove slot as the contained clothing could not be dropped");
             }
 
-            SlotContainers.Remove(slot);
+            _slotContainers.Remove(slot);
             Dirty();
         }
 
@@ -265,7 +267,7 @@ namespace Content.Server.GameObjects
         /// <returns>True if the slot exists, false otherwise.</returns>
         public bool HasSlot(Slots slot)
         {
-            return SlotContainers.ContainsKey(slot);
+            return _slotContainers.ContainsKey(slot);
         }
 
         /// <summary>
@@ -277,7 +279,7 @@ namespace Content.Server.GameObjects
             // make sure this is one of our containers.
             // Technically the correct way would be to enumerate the possible slot names
             // comparing with this container, but I might as well put the dictionary to good use.
-            if (!(container is ContainerSlot slot) || !SlotContainers.ContainsValue(slot))
+            if (!(container is ContainerSlot slot) || !_slotContainers.ContainsValue(slot))
                 return;
 
             if (entity.TryGetComponent(out ItemComponent itemComp))
@@ -383,7 +385,7 @@ namespace Content.Server.GameObjects
         public override ComponentState GetComponentState()
         {
             var list = new List<KeyValuePair<Slots, EntityUid>>();
-            foreach (var (slot, container) in SlotContainers)
+            foreach (var (slot, container) in _slotContainers)
             {
                 if (container.ContainedEntity != null)
                 {

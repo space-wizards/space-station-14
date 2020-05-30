@@ -1,10 +1,11 @@
-﻿using Content.Server.GameObjects.Components.Power;
+﻿using Content.Server.GameObjects.Components.HUD.Hotbar;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.HUD.Hotbar;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -22,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit, IHotbarAction
     {
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
@@ -279,6 +280,23 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.GridPosition);
             _cellContainer.Insert(cell);
+        }
+
+        void IHotbarAction.HotbarAction(HotbarActionEventArgs eventArgs)
+        {
+            if (eventArgs.AbilityId != HotbarActionId.HandheldLight)
+            {
+                return;
+            }
+
+            if (eventArgs.Enabled)
+            {
+                TurnOn(eventArgs.User);
+            }
+            else
+            {
+                TurnOff();
+            }
         }
     }
 }

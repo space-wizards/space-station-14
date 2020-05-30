@@ -45,7 +45,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             {
                 case GetActionsMessage msg:
                 {
-                    msg.Hotbar.AddAction(_hotbarAction);
+                    msg.Hotbar.AddActionToMenu(_hotbarAction);
                     break;
                 }
                 // Stuff to make sure it doesn't break when component gets detached and/or reattached.
@@ -79,7 +79,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             }
         }
 
-        private void TriggerHotbarAction(ICommonSession session, GridCoordinates coords, EntityUid uid, HotbarAction action)
+        private void TriggerHotbarAction(HotbarAction action, ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             if (!Owner.IsValid())
             {
@@ -97,7 +97,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
             return;
         }
 
-        private void ToggleHotbarAction(bool pressed)
+        private void ToggleHotbarAction(HotbarAction action, bool pressed)
         {
             if (!Owner.IsValid())
             {

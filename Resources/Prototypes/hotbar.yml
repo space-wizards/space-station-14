@@ -1,0 +1,6 @@
+- type: hotbarAction
+  id: HandheldLight
+  hotbarActionId: HandheldLight
+  name: "Toggle flashlights"
+  icon: "/Textures/Objects/Tools/flashlight.rsi/Flashlight.png"
+  description: "Toggles flashlights in hands and inventory."

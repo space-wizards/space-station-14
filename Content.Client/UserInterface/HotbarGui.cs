@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface
 {
@@ -56,13 +54,13 @@ namespace Content.Client.UserInterface
             _slots[index].Texture.Texture = texture;
         }
 
-        public void UnpressSlot(int index)
+        public void SetSlotPressed(int index, bool pressed)
         {
             if (index < 0 || index >= _slots.Count)
             {
                 return;
             }
-            _slots[index].Pressed = false;
+            _slots[index].Pressed = pressed;
         }
 
         public class HotbarButton : ContainerButton

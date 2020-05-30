@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
+using Content.Shared.GameObjects.Components.HUD.Hotbar;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -11,14 +12,12 @@ using Robust.Shared.IoC;
 namespace Content.Client.GameObjects.Components.HUD.Hotbar
 {
     [RegisterComponent]
-    public class HotbarComponent : Component
+    public class HotbarComponent : SharedHotbarComponent
     {
 #pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud;
         [Dependency] private readonly IHotbarManager _hotbarManager;
 #pragma warning restore 649
-
-        public override string Name => "Hotbar";
 
         private HotbarGui _hotbarGui;
         private ActionMenu _actionMenu;
@@ -88,16 +87,21 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
             _actionMenu?.Open();
         }
 
-        public void AddAction(HotbarAction action)
+        public void AddActionToMenu(HotbarAction action)
         {
             _actions.Add(action);
             _actionMenu?.Populate(_actions);
         }
 
-        public void RemoveAction(HotbarAction action)
+        public void RemoveActionFromMenu(HotbarAction action)
         {
             _actions.Remove(action);
             _actionMenu?.Populate(_actions);
+        }
+
+        public int GetSlotOf(HotbarAction action)
+        {
+            return _hotbar.IndexOf(action);
         }
 
         public void TriggerAction(int index, PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -109,6 +113,14 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
         {
             _actions.Clear();
             SendMessage(new GetActionsMessage(this));
+
+            var actions = _hotbarManager.GetGlobalActions();
+            if (actions == null)
+            {
+                return;
+            }
+            _actions.AddRange(actions.Values);
+            _actionMenu?.Populate(_actions);
         }
 
         private void OnActionMenuItemSelected(ItemList.ItemListSelectedEventArgs args)
@@ -134,9 +146,16 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
 
         private void SetSlot(int slot, HotbarAction action)
         {
-            if (slot < 0 || _hotbar.Count - 1 < slot)
+            if (slot < 0 || _hotbar.Count - 1 < slot || _hotbar[slot] == action)
             {
                 return;
+            }
+
+            if (_hotbar.Contains(action))
+            {
+                var index = _hotbar.IndexOf(action);
+                _hotbar.Remove(action);
+                _hotbarGui?.SetSlot(index, null);
             }
 
             if (_hotbar[slot] != null)
@@ -152,9 +171,13 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
         {
             if (_menuActionSelected != null)
             {
+                if (_hotbar[slot] != null)
+                {
+                    _hotbar[slot].Active = false;
+                }
                 SetSlot(slot, _menuActionSelected);
                 DeselectActionMenuItem();
-                _hotbarGui?.UnpressSlot(slot);
+                SetHotbarSlotPressed(slot, false);
             }
             else
             {
@@ -164,20 +187,23 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
                 }
                 else
                 {
-                    _hotbarGui?.UnpressSlot(slot);
+                    _hotbarGui?.SetSlotPressed(slot, false);
                 }
             }
         }
 
-        public void UnpressHotbarAction(HotbarAction action)
+        public void SetHotbarSlotPressed(int slot, bool pressed)
         {
-            var slot = _hotbar.IndexOf(action);
             if (slot == -1)
             {
                 return;
             }
 
-            _hotbarGui?.UnpressSlot(slot);
+            if (_hotbar[slot] != null)
+            {
+                _hotbar[slot].Active = pressed;
+            }
+            _hotbarGui?.SetSlotPressed(slot, pressed);
         }
     }
 }

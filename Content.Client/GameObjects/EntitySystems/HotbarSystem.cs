@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Client.GameObjects.Components.HUD.Hotbar;
 using Content.Client.Utility;
+using Content.Shared.GameObjects.Components.HUD.Hotbar;
 using Content.Shared.Input;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
@@ -103,14 +104,16 @@ namespace Content.Client.GameObjects.EntitySystems
     public class HotbarAction
     {
         public string Name;
+        public HotbarActionId Id;
         public Texture Texture;
-        public Action<ICommonSession, GridCoordinates, EntityUid, HotbarAction> ActivateAction;
-        public Action<bool> SelectAction;
+        public bool Active;
+        public Action<HotbarAction, ICommonSession, GridCoordinates, EntityUid> ActivateAction;
+        public Action<HotbarAction, bool> SelectAction;
         public TimeSpan? Start;
         public TimeSpan? End;
         public TimeSpan? Cooldown;
 
-        public HotbarAction(string name, string texturePath, Action<ICommonSession, GridCoordinates, EntityUid, HotbarAction> activateAction, Action<bool> selectAction, TimeSpan? cooldown)
+        public HotbarAction(string name, string texturePath, Action<HotbarAction, ICommonSession, GridCoordinates, EntityUid> activateAction, Action<HotbarAction, bool> selectAction, TimeSpan? cooldown)
         {
             Name = name;
             if (texturePath != null)
@@ -122,6 +125,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 Texture = null;
             }
+            Active = false;
             ActivateAction = activateAction;
             SelectAction = selectAction;
             Start = null;
@@ -131,12 +135,13 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public void Activate(PointerInputCmdArgs args)
         {
-            ActivateAction?.Invoke(args.Session, args.Coordinates, args.EntityUid, this);
+            ActivateAction?.Invoke(this, args.Session, args.Coordinates, args.EntityUid);
         }
 
         public void Toggle(bool pressed)
         {
-            SelectAction?.Invoke(pressed);
+            Active = pressed;
+            SelectAction?.Invoke(this, pressed);
         }
     }
 

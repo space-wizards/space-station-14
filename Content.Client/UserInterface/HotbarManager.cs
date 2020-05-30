@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.HUD.Hotbar;
 using Content.Client.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.HUD.Hotbar;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
@@ -10,6 +11,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
@@ -18,16 +20,50 @@ namespace Content.Client.UserInterface
 #pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
 
-        private Dictionary<string, HotbarAction> _hotbarActions;
+        private Dictionary<HotbarActionId, HotbarAction> _hotbarActions;
         private InputCmdHandler _previousHandler;
         private HotbarAction _boundHotbarAction;
 
-        private HotbarGui _hotbarGui;
-
-        public HotbarManager()
+        public void Initialize()
         {
+            _hotbarActions = new Dictionary<HotbarActionId, HotbarAction>();
+            foreach (var prototype in _prototypeManager.EnumeratePrototypes<HotbarActionPrototype>())
+            {
+                var hotbarAction = new HotbarAction(prototype.Name, prototype.TexturePath, ToggleAction, SelectAction, new TimeSpan(0));
+                hotbarAction.Id = prototype.HotbarActionId;
+                _hotbarActions.Add(prototype.HotbarActionId, hotbarAction);
+            }
+        }
+
+        public IReadOnlyDictionary<HotbarActionId, HotbarAction> GetGlobalActions()
+        {
+            return _hotbarActions;
+        }
+
+        private void SelectAction(HotbarAction action, bool enabled)
+        {
+            // Solve implementation and show enabled/disabled
+            if (_playerManager.LocalPlayer.ControlledEntity == null
+                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out HotbarComponent hotbarComponent))
+            {
+                return;
+            }
+
+            _playerManager.LocalPlayer.ControlledEntity.SendNetworkMessage(hotbarComponent, new HotbarActionMessage(action.Id, enabled));
+        }
+
+        private void ToggleAction(HotbarAction action, ICommonSession session, GridCoordinates coords, EntityUid uid)
+        {
+            if (_playerManager.LocalPlayer.ControlledEntity == null
+                || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out HotbarComponent hotbarComponent))
+            {
+                return;
+            }
+            hotbarComponent.SetHotbarSlotPressed(hotbarComponent.GetSlotOf(action), !action.Active);
+            SelectAction(action, action.Active);
         }
 
         public void AddHotbarAction(string name, string texturePath,
@@ -45,7 +81,7 @@ namespace Content.Client.UserInterface
                 return;
             }
 
-            hotbarComponent.RemoveAction(action);
+            hotbarComponent.RemoveActionFromMenu(action);
         }
 
         public void BindUse(HotbarAction action)
@@ -96,7 +132,7 @@ namespace Content.Client.UserInterface
                 return;
             }
 
-            hotbarComponent.UnpressHotbarAction(action);
+            hotbarComponent.SetHotbarSlotPressed(hotbarComponent.GetSlotOf(action), false);
         }
     }
 }
